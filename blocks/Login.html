@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>musematic — Login (reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* Login = split de temas opuestos FIJO (no sigue el tema activo). Paletas explícitas.
+     Esta es la referencia pixel-true para apps/web/app/(auth)/layout.tsx + login/page.tsx */
+  :root {
+    /* Panel de marca — OSCURO */
+    --d-bg:#0C1F16; --d-text:#ECF1EE; --d-dim:#A7B6AE; --d-faint:#70817A;
+    --d-brand:#33CE73; --d-acc-text:#7FD9A8; --d-acc-dim:#1E3328; --d-line:#22332C;
+    /* Form — CLARO */
+    --l-bg:#F4F6EE; --l-card:#FBFCF7; --l-text:#13241B; --l-dim:#5E6B62; --l-faint:#8A958C;
+    --l-brand:#1B8F52; --l-line:#DCE1D2; --l-input:#EDF0E4; --l-btn:#1E9D5B; --l-btn-ink:#FBFEF8;
+    --sans:"Geist","Helvetica Neue",Arial,sans-serif;
+    --mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body { font-family:var(--sans); -webkit-font-smoothing:antialiased; color:var(--l-text); }
+
+  .split { display:flex; min-height:100vh; width:100%; background:var(--l-bg); }
+
+  /* ── Panel de marca (izq, oscuro) ─────────────────────────────────────── */
+  .brand {
+    position:relative; width:46%; flex:0 0 46%; overflow:hidden;
+    background:var(--d-bg); color:var(--d-text);
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:clamp(40px,4.4vw,64px) clamp(40px,4vw,60px);
+  }
+  .brand-glow {
+    position:absolute; right:-140px; top:-140px; width:420px; height:420px; border-radius:50%;
+    background:var(--d-brand); opacity:.10; filter:blur(10px); pointer-events:none;
+  }
+  .brand-wordmark { position:relative; width:250px; height:70px; }
+  .brand-hero { position:relative; max-width:430px; }
+  .kicker {
+    font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--d-acc-text); margin:0 0 20px;
+  }
+  .brand-hero h1 {
+    margin:0; font-weight:700; font-size:clamp(34px,3.1vw,46px); line-height:1.08;
+    letter-spacing:-.032em; text-wrap:balance;
+  }
+  .brand-hero h1 .accent { color:var(--d-brand); }
+  .bullets { display:flex; flex-direction:column; gap:15px; margin-top:clamp(26px,3vw,38px); }
+  .bullet { display:flex; align-items:center; gap:13px; }
+  .bullet .chk {
+    flex:0 0 auto; width:23px; height:23px; border-radius:7px;
+    background:var(--d-acc-dim); color:var(--d-acc-text);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .bullet span:last-child { font-size:15px; color:var(--d-dim); }
+  .brand-foot { position:relative; display:flex; align-items:center; gap:10px; }
+  .brand-foot .dot {
+    width:8px; height:8px; border-radius:50%; background:var(--d-brand);
+    box-shadow:0 0 0 3px var(--d-acc-dim);
+  }
+  .brand-foot span:last-child { font-family:var(--mono); font-size:11.5px; color:var(--d-faint); }
+
+  /* ── Form (der, claro) ────────────────────────────────────────────────── */
+  .form-pane {
+    flex:1; display:flex; align-items:center; justify-content:center;
+    padding:clamp(32px,5vw,56px) clamp(24px,4vw,40px);
+  }
+  .form-col { width:100%; max-width:392px; }
+
+  .tenant {
+    display:flex; align-items:center; gap:12px; margin-bottom:30px;
+    padding-bottom:24px; border-bottom:1px solid var(--l-line);
+  }
+  .tenant .logo {
+    width:40px; height:40px; border-radius:9px; flex:0 0 auto;
+    border:1px solid var(--l-line); background:var(--l-card);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:13px; letter-spacing:.02em; color:var(--l-brand);
+  }
+  .tenant .t-name { font-weight:600; font-size:14px; color:var(--l-text); line-height:1.2; }
+  .tenant .t-kind { font-size:12px; color:var(--l-faint); margin-top:2px; }
+
+  .f-kicker {
+    font-size:12px; font-weight:600; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--l-brand); margin:0 0 10px;
+  }
+  .form-col h2 { margin:0; font-weight:600; font-size:30px; letter-spacing:-.025em; color:var(--l-text); }
+  .lede { font-size:14px; line-height:1.5; color:var(--l-dim); margin:9px 0 28px; }
+
+  .field { display:block; margin-bottom:18px; }
+  .field > .label { display:block; font-size:13px; font-weight:500; color:var(--l-text); margin-bottom:7px; }
+  .input {
+    display:flex; align-items:center; gap:10px; height:44px; padding:0 14px;
+    border-radius:10px; background:var(--l-card); border:1px solid var(--l-line);
+  }
+  .input svg { color:var(--l-faint); flex:0 0 auto; }
+  .input .val { font-size:14px; color:var(--l-text); }
+  .input .val.ph { color:var(--l-faint); }
+  .input .val.pw { font-family:var(--mono); letter-spacing:.18em; }
+
+  .btn-primary {
+    display:flex; align-items:center; justify-content:center; gap:8px; width:100%; height:46px;
+    background:var(--l-btn); color:var(--l-btn-ink); border:none; border-radius:10px;
+    font-family:var(--sans); font-weight:600; font-size:14.5px; cursor:pointer; margin-top:4px;
+  }
+  .help-row { display:flex; align-items:center; justify-content:space-between; font-size:13px; margin-top:16px; }
+  .help-row .muted { color:var(--l-dim); }
+  .help-row a { color:var(--l-brand); font-weight:500; text-decoration:none; }
+
+  .signup { text-align:center; font-size:13px; color:var(--l-dim); margin-top:22px; }
+  .signup a { color:var(--l-brand); font-weight:500; text-decoration:none; }
+
+  .sso-divider { display:flex; align-items:center; gap:12px; margin:24px 0 16px; }
+  .sso-divider .ln { flex:1; height:1px; background:var(--l-line); }
+  .sso-divider .lbl {
+    font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--l-faint);
+  }
+  .oauth { display:flex; flex-direction:column; gap:11px; }
+  .btn-oauth {
+    display:flex; align-items:center; justify-content:center; gap:9px; width:100%; height:44px;
+    background:var(--l-card); color:var(--l-text); border:1px solid var(--l-line); border-radius:10px;
+    font-family:var(--sans); font-weight:500; font-size:13.5px; cursor:pointer;
+  }
+  .btn-oauth svg { flex:0 0 auto; }
+
+  /* Responsive: bajo 900px el panel de marca se oculta (como lg:flex del repo) */
+  @media (max-width:900px) {
+    .brand { display:none; }
+    .form-pane { padding:40px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="split">
+
+  <!-- Panel de marca — OSCURO (fijo) -->
+  <aside class="brand">
+    <div class="brand-glow"></div>
+    <img class="brand-wordmark" src="../assets/musematic-wordmark-ondark.svg" alt="Musematic" style="height: 70px; width: 250px; padding: 0px; margin: 0px" />
+
+    <div class="brand-hero" style="width: 430px">
+      <p class="kicker">Control plane · agents</p>
+      <h1>Trust the workflow,<br /><span class="accent">not the tab chaos.</span></h1>
+      <div class="bullets">
+        <div class="bullet">
+          <span class="chk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span>Fleet, runs and costs on a single plane</span>
+        </div>
+        <div class="bullet">
+          <span class="chk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span>Policies your agents can't bypass</span>
+        </div>
+        <div class="bullet">
+          <span class="chk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span>Immutable audit, exportable to SIEM</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-foot">
+      <span class="dot"></span>
+      <span>MFA · recovery codes · audited access</span>
+    </div>
+  </aside>
+
+  <!-- Form — CLARO (fijo) -->
+  <main class="form-pane">
+    <div class="form-col" style="height: 682px">
+
+      <!-- Chip de tenant (login/page.tsx) -->
+      <div class="tenant">
+        <div class="logo">AC</div>
+        <div>
+          <div class="t-name">Acme Corp</div>
+          <div class="t-kind">Enterprise workspace</div>
+        </div>
+      </div>
+
+      <!-- LoginForm.tsx -->
+      <p class="f-kicker">Secure access</p>
+      <h2>Sign in to Musematic</h2>
+      <p class="lede">Use your workspace credentials to continue into the control surface.</p>
+
+      <label class="field">
+        <span class="label">Email</span>
+        <span class="input">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+          <span class="val ph">name@company.com</span>
+        </span>
+      </label>
+
+      <label class="field">
+        <span class="label">Password</span>
+        <span class="input">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span class="val pw">••••••••••••</span>
+        </span>
+      </label>
+
+      <button class="btn-primary" type="button">Sign in</button>
+
+      <div class="help-row">
+        <span class="muted">Need help getting back in?</span>
+        <a href="#">Forgot password?</a>
+      </div>
+
+      <p class="signup" style="font-size: 15px">New to Musematic? <a href="#">Sign up</a></p>
+
+      <!-- OAuthProviderButtons -->
+      <div class="sso-divider">
+        <span class="ln"></span><span class="lbl">Single sign-on</span><span class="ln"></span>
+      </div>
+      <div class="oauth">
+        <button class="btn-oauth" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-1.8c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+          Continue with GitHub
+        </button>
+        <button class="btn-oauth" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20 15.3 15.3 0 0 1 0-20"/></svg>
+          Continue with Google
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+</body>
+</html>

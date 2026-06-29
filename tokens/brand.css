@@ -1,0 +1,147 @@
+/* ============================================================================
+   Gntik UI · brand.css — TOKEN LAYER (the single swap point between products)
+   ----------------------------------------------------------------------------
+   To re-skin for a new product: duplicate this file, change the values in the
+   marked "BRAND" blocks (primary hue + a few accents) and swap the logo asset.
+   NOTHING else in the library hardcodes a color — every component references
+   these tokens. shadcn-compatible: drop straight into Tailwind globals.css.
+   Themes: :root = light · .dark · .high_contrast
+   Color format: HSL channels (so Tailwind can do `hsl(var(--x) / <alpha>)`).
+   ============================================================================ */
+
+:root{
+  /* ── BRAND (change per product) ───────────────────────────────────────── */
+  --primary:145 61% 50%;            /* musematic green */
+  --primary-foreground:150 45% 8%;
+  --brand-secondary:152 52% 26%;
+  --brand-accent:146 60% 38%;
+  --ring:145 61% 50%;
+
+  /* ── Neutrals & surfaces (light) ──────────────────────────────────────── */
+  --background:78 28% 96%;
+  --foreground:153 32% 11%;
+  --card:0 0% 100%;
+  --card-foreground:153 32% 11%;
+  --popover:0 0% 100%;
+  --popover-foreground:153 32% 11%;
+  --muted:76 20% 93%;
+  --muted-foreground:150 8% 40%;
+  --secondary:76 20% 92%;
+  --secondary-foreground:153 30% 16%;
+  --accent:145 45% 92%;
+  --accent-foreground:153 55% 22%;
+  --border:90 14% 86%;
+  --input:90 14% 86%;
+
+  /* chrome = app-shell sidebar/topbar. In light it equals the topbar tone. */
+  --chrome:80 24% 97%;
+
+  /* ── Semantic / status ────────────────────────────────────────────────── */
+  --destructive:0 72% 48%;
+  --destructive-foreground:0 0% 100%;
+  --success:145 61% 50%;
+  --warning:38 92% 50%;
+  --info:205 78% 40%;
+
+  /* categorical accents (charts, tags) */
+  --category-rose:347 77% 50%;
+  --category-violet:262 62% 55%;
+  --category-amber:38 92% 50%;
+  --category-cyan:190 80% 42%;
+
+  /* ── Type ─────────────────────────────────────────────────────────────── */
+  --font-sans:"Geist","Helvetica Neue",Arial,sans-serif;
+  --font-mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+
+  /* ── Radius ───────────────────────────────────────────────────────────── */
+  --radius:0.625rem;            /* 10px base */
+  --radius-sm:calc(var(--radius) - 4px);
+  --radius-md:calc(var(--radius) - 2px);
+  --radius-lg:var(--radius);
+  --radius-xl:calc(var(--radius) + 6px);
+
+  /* ── Shadows (flat, brand-tinted; no heavy drop shadows) ──────────────── */
+  --shadow-sm:0 1px 2px -1px hsl(152 40% 4% / .16),0 1px 1px hsl(152 40% 4% / .08);
+  --shadow-md:0 4px 12px -2px hsl(152 40% 4% / .12),0 12px 32px -12px hsl(152 40% 4% / .18);
+  --shadow-lg:0 2px 4px -2px hsl(152 40% 4% / .2),0 16px 40px -16px hsl(152 40% 4% / .2);
+}
+
+.dark{
+  --primary:145 61% 50%;
+  --primary-foreground:150 45% 7%;
+  --brand-secondary:150 48% 32%;
+  --brand-accent:148 66% 64%;
+  --ring:145 61% 50%;
+
+  --background:152 30% 7.5%;
+  --foreground:140 14% 94%;
+  --card:150 26% 10%;
+  --card-foreground:140 14% 94%;
+  --popover:150 28% 9%;
+  --popover-foreground:140 14% 94%;
+  --muted:150 18% 18%;
+  --muted-foreground:145 10% 68%;
+  --secondary:150 18% 16%;
+  --secondary-foreground:140 14% 94%;
+  --accent:150 26% 16%;
+  --accent-foreground:145 55% 72%;
+  --border:150 16% 20%;
+  --input:150 16% 20%;
+
+  /* chrome deeper than content (framed dark shell) */
+  --chrome:153 38% 5%;
+
+  --destructive:0 72% 52%;
+  --destructive-foreground:0 0% 100%;
+  --success:145 61% 50%;
+  --warning:38 95% 58%;
+  --info:200 82% 64%;
+
+  --category-rose:347 80% 60%;
+  --category-violet:262 70% 68%;
+  --category-amber:38 95% 60%;
+  --category-cyan:190 82% 56%;
+
+  --shadow-sm:0 1px 2px -1px hsl(152 60% 2% / .55),0 1px 1px hsl(152 60% 2% / .35);
+  --shadow-md:0 4px 14px -2px hsl(152 70% 1% / .6),0 14px 36px -14px hsl(152 70% 1% / .55);
+  --shadow-lg:0 2px 4px -2px hsl(152 70% 1% / .6),0 16px 40px -16px hsl(152 70% 1% / .55);
+}
+
+.high_contrast{
+  --primary:56 100% 50%;
+  --primary-foreground:0 0% 0%;
+  --brand-secondary:188 100% 50%;
+  --brand-accent:136 100% 48%;
+  --ring:56 100% 50%;
+
+  --background:0 0% 0%;
+  --foreground:0 0% 100%;
+  --card:0 0% 4%;
+  --card-foreground:0 0% 100%;
+  --popover:0 0% 6%;
+  --popover-foreground:0 0% 100%;
+  --muted:0 0% 12%;
+  --muted-foreground:0 0% 88%;
+  --secondary:0 0% 12%;
+  --secondary-foreground:0 0% 100%;
+  --accent:188 100% 50%;
+  --accent-foreground:0 0% 0%;
+  --border:0 0% 72%;
+  --input:0 0% 72%;
+  --chrome:0 0% 0%;
+
+  --destructive:0 100% 62%;
+  --destructive-foreground:0 0% 0%;
+  --success:136 100% 48%;
+  --warning:44 100% 50%;
+  --info:188 100% 50%;
+
+  --category-rose:0 100% 62%;
+  --category-violet:280 100% 70%;
+  --category-amber:44 100% 50%;
+  --category-cyan:188 100% 50%;
+
+  --shadow-sm:0 0 0 1px hsl(0 0% 72%);
+  --shadow-md:0 0 0 1px hsl(0 0% 72%);
+  --shadow-lg:0 0 0 2px hsl(0 0% 80%);
+}

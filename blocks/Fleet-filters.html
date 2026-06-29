@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>musematic — Fleet filters (reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --background:78 28% 96%;--foreground:153 32% 11%;--card:0 0% 100%;--card-foreground:153 32% 11%;
+    --popover:0 0% 100%;--popover-foreground:153 32% 11%;--muted:76 20% 93%;--muted-foreground:150 8% 40%;
+    --border:90 14% 86%;--input:90 14% 86%;--primary:145 61% 50%;--primary-foreground:150 45% 8%;
+    --secondary:76 20% 92%;--secondary-foreground:153 30% 16%;--accent:145 45% 92%;--accent-foreground:153 55% 22%;
+    --ring:145 61% 50%;--destructive:0 72% 48%;--warning:38 92% 50%;--info:205 78% 40%;
+    --chrome:80 24% 97%;--radius:0.625rem;
+    --font-sans:"Geist","Helvetica Neue",Arial,sans-serif;--font-mono:"Geist Mono",ui-monospace,Menlo,monospace;
+    --shadow-md:0 4px 12px -2px hsl(152 40% 4% / .12),0 12px 32px -12px hsl(152 40% 4% / .18);
+  }
+  html.dark{
+    --background:152 30% 7.5%;--foreground:140 14% 94%;--card:150 26% 10%;--card-foreground:140 14% 94%;
+    --popover:150 28% 9%;--popover-foreground:140 14% 94%;--muted:150 18% 18%;--muted-foreground:145 10% 68%;
+    --border:150 16% 20%;--input:150 16% 20%;--primary:145 61% 50%;--primary-foreground:150 45% 7%;
+    --secondary:150 18% 16%;--secondary-foreground:140 14% 94%;--accent:150 26% 16%;--accent-foreground:145 55% 72%;
+    --ring:145 61% 50%;--destructive:0 72% 52%;--warning:38 95% 58%;--info:200 82% 64%;
+    --chrome:153 38% 5%;--shadow-md:0 4px 14px -2px hsl(152 70% 1% / .6),0 14px 36px -14px hsl(152 70% 1% / .55);
+  }
+  html.high_contrast{
+    --background:0 0% 0%;--foreground:0 0% 100%;--card:0 0% 4%;--card-foreground:0 0% 100%;
+    --popover:0 0% 4%;--popover-foreground:0 0% 100%;--muted:0 0% 12%;--muted-foreground:0 0% 88%;
+    --border:0 0% 72%;--input:0 0% 72%;--primary:56 100% 50%;--primary-foreground:0 0% 0%;
+    --secondary:0 0% 12%;--secondary-foreground:0 0% 100%;--accent:188 100% 50%;--accent-foreground:0 0% 0%;
+    --ring:56 100% 50%;--destructive:0 100% 62%;--warning:44 100% 50%;--info:188 100% 50%;--chrome:0 0% 0%;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:var(--font-sans);-webkit-font-smoothing:antialiased;
+    background:hsl(var(--background));color:hsl(var(--foreground));padding:34px 40px 60px;}
+  .mono{font-family:var(--font-mono);}
+  svg{display:block;}
+
+  .wrap{max-width:1180px;margin:0 auto;}
+
+  /* page header */
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px;}
+  .kick{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:hsl(var(--primary));margin-bottom:10px;}
+  .page-head h1{margin:0;font-size:26px;font-weight:700;letter-spacing:-.03em;}
+  .page-head .sub{font-size:13.5px;color:hsl(var(--muted-foreground));margin-top:6px;max-width:440px;line-height:1.5;}
+  .page-actions{display:flex;gap:10px;}
+  .btn{display:flex;align-items:center;gap:7px;height:38px;padding:0 15px;border-radius:9px;font-size:13px;
+    font-weight:600;cursor:pointer;border:1px solid hsl(var(--border));background:hsl(var(--card));color:hsl(var(--foreground));white-space:nowrap;}
+  .btn.primary{background:hsl(var(--primary));color:hsl(var(--primary-foreground));border-color:transparent;}
+  .btn svg{width:15px;height:15px;}
+
+  /* ════ FILTER TOOLBAR — una sola fila compacta ════ */
+  .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:10px;border:1px solid hsl(var(--border));border-radius:12px;background:hsl(var(--card));}
+  .search{display:flex;align-items:center;gap:9px;height:38px;flex:1;min-width:220px;padding:0 13px;
+    border-radius:9px;border:1px solid hsl(var(--border));background:hsl(var(--background)/.6);}
+  .search svg{width:16px;height:16px;color:hsl(var(--muted-foreground));flex:0 0 auto;}
+  .search input{flex:1;border:none;background:none;outline:none;font-family:var(--font-sans);font-size:13.5px;
+    color:hsl(var(--foreground));}
+  .search input::placeholder{color:hsl(var(--muted-foreground));}
+  .tb-divider{width:1px;height:24px;background:hsl(var(--border));}
+
+  /* botón-filtro que abre popover */
+  .filter-wrap{position:relative;}
+  .fbtn{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:9px;cursor:pointer;
+    border:1px solid hsl(var(--border));background:hsl(var(--background)/.6);color:hsl(var(--foreground));
+    font-family:var(--font-sans);font-size:13px;font-weight:500;white-space:nowrap;}
+  .fbtn:hover{border-color:hsl(var(--muted-foreground)/.5);}
+  .fbtn.has{border-color:hsl(var(--primary)/.6);background:hsl(var(--primary)/.08);color:hsl(var(--foreground));}
+  .fbtn .lead{color:hsl(var(--muted-foreground));}
+  .fbtn.has .lead{color:hsl(var(--primary));}
+  .fbtn .count{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;
+    border-radius:5px;background:hsl(var(--primary));color:hsl(var(--primary-foreground));
+    font-family:var(--font-mono);font-size:10px;font-weight:700;}
+  .fbtn .chev{width:14px;height:14px;color:hsl(var(--muted-foreground));transition:transform .15s ease;}
+  .filter-wrap.open .fbtn .chev{transform:rotate(180deg);}
+
+  .pop{position:absolute;top:calc(100% + 7px);left:0;min-width:212px;z-index:50;background:hsl(var(--popover));
+    border:1px solid hsl(var(--border));border-radius:11px;box-shadow:var(--shadow-md);padding:7px;display:none;}
+  .filter-wrap.open .pop{display:block;animation:popin .12s ease;}
+  @keyframes popin{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+  .pop .lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+    color:hsl(var(--muted-foreground));padding:5px 9px 6px;}
+  .opt{display:flex;align-items:center;gap:10px;height:34px;padding:0 9px;border-radius:7px;cursor:pointer;font-size:13px;}
+  .opt:hover{background:hsl(var(--secondary)/.7);}
+  .opt .box{width:17px;height:17px;border-radius:5px;border:1.5px solid hsl(var(--border));flex:0 0 auto;
+    display:flex;align-items:center;justify-content:center;color:transparent;}
+  .opt.on .box{background:hsl(var(--primary));border-color:hsl(var(--primary));color:hsl(var(--primary-foreground));}
+  .opt .dot{width:7px;height:7px;border-radius:50%;}
+  .pop-foot{display:flex;justify-content:space-between;align-items:center;padding:7px 6px 3px;margin-top:4px;
+    border-top:1px solid hsl(var(--border));}
+  .lnk{font-size:12px;font-weight:500;color:hsl(var(--muted-foreground));cursor:pointer;background:none;border:none;padding:4px 6px;border-radius:6px;}
+  .lnk:hover{color:hsl(var(--foreground));}
+  .lnk.primary{color:hsl(var(--primary));}
+
+  /* min-health: slider compacto dentro del popover */
+  .health-pop{min-width:230px;}
+  .health-val{font-family:var(--font-mono);font-size:13px;font-weight:600;color:hsl(var(--primary));}
+  .slider{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;margin:14px 9px 6px;width:calc(100% - 18px);
+    background:linear-gradient(90deg,hsl(var(--primary)) var(--p,40%),hsl(var(--secondary)) var(--p,40%));outline:none;}
+  .slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+    background:hsl(var(--primary));border:2px solid hsl(var(--card));cursor:pointer;box-shadow:var(--shadow-md);}
+  .ticks{display:flex;justify-content:space-between;padding:0 9px 4px;font-family:var(--font-mono);font-size:9.5px;color:hsl(var(--muted-foreground));}
+
+  .tb-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+  .count-txt{font-family:var(--font-mono);font-size:11.5px;color:hsl(var(--muted-foreground));white-space:nowrap;}
+  .count-txt b{color:hsl(var(--foreground));}
+  .saved{display:flex;align-items:center;gap:7px;height:38px;padding:0 12px;border-radius:9px;cursor:pointer;
+    border:1px solid hsl(var(--border));background:hsl(var(--background)/.6);font-size:13px;color:hsl(var(--foreground));}
+  .saved svg{width:14px;height:14px;color:hsl(var(--muted-foreground));}
+  .icon-btn{width:38px;height:38px;border-radius:9px;border:1px solid hsl(var(--border));background:hsl(var(--background)/.6);
+    color:hsl(var(--muted-foreground));display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .icon-btn:hover{color:hsl(var(--foreground));}
+
+  /* ════ CHIPS de filtros activos ════ */
+  .chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;min-height:28px;}
+  .chips-empty{font-size:12.5px;color:hsl(var(--muted-foreground));font-style:italic;}
+  .chip{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 6px 0 11px;border-radius:8px;
+    background:hsl(var(--accent));color:hsl(var(--accent-foreground));font-size:12.5px;font-weight:500;}
+  .chip .ck{color:hsl(var(--muted-foreground));font-family:var(--font-mono);font-size:10px;}
+  .chip b{font-weight:600;}
+  .chip .x{width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:hsl(var(--accent-foreground)/.7);}
+  .chip .x:hover{background:hsl(var(--foreground)/.12);color:hsl(var(--foreground));}
+  .clear-all{font-size:12.5px;font-weight:500;color:hsl(var(--muted-foreground));cursor:pointer;background:none;border:none;
+    padding:5px 8px;border-radius:7px;}
+  .clear-all:hover{color:hsl(var(--destructive));}
+
+  /* ════ TABLA ════ */
+  .panel{margin-top:18px;border:1px solid hsl(var(--border));border-radius:12px;background:hsl(var(--card));overflow:hidden;}
+  .tbl-head,.tbl-row{display:grid;grid-template-columns:1.5fr .8fr .7fr 1fr .7fr;align-items:center;}
+  .tbl-head{padding:12px 20px;border-bottom:1px solid hsl(var(--border));background:hsl(var(--secondary)/.4);}
+  .tbl-head span{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.08em;
+    text-transform:uppercase;color:hsl(var(--muted-foreground));}
+  .tbl-row{padding:14px 20px;border-bottom:1px solid hsl(var(--border)/.5);font-size:13.5px;}
+  .tbl-row:last-child{border-bottom:0;}
+  .tbl-row .nm{font-weight:600;}
+  .pill{display:inline-flex;align-items:center;gap:6px;height:23px;padding:0 9px;border-radius:6px;
+    font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.03em;}
+  .pill .pd{width:6px;height:6px;border-radius:50%;}
+  .pill.active{background:hsl(var(--primary)/.14);color:hsl(var(--primary));}.pill.active .pd{background:hsl(var(--primary));}
+  .pill.degraded{background:hsl(var(--warning)/.16);color:hsl(var(--warning));}.pill.degraded .pd{background:hsl(var(--warning));}
+  .pill.paused{background:hsl(var(--muted-foreground)/.16);color:hsl(var(--muted-foreground));}.pill.paused .pd{background:hsl(var(--muted-foreground));}
+  .pill.archived{background:hsl(var(--info)/.14);color:hsl(var(--info));}.pill.archived .pd{background:hsl(var(--info));}
+  .topo{font-family:var(--font-mono);font-size:12px;color:hsl(var(--muted-foreground));}
+  .mono-s{font-family:var(--font-mono);font-size:12.5px;}
+  .muted{color:hsl(var(--muted-foreground));}
+  .health{display:flex;align-items:center;gap:9px;}
+  .health .bar{width:54px;height:5px;border-radius:3px;background:hsl(var(--secondary));overflow:hidden;}
+  .health .fill{height:100%;border-radius:3px;}
+  .empty{padding:54px;text-align:center;}
+  .empty .t{font-size:15px;font-weight:600;}
+  .empty .s{font-size:13px;color:hsl(var(--muted-foreground));margin-top:6px;}
+
+  .theme-switch{position:fixed;bottom:16px;right:16px;display:flex;gap:4px;padding:4px;border-radius:10px;
+    background:hsl(var(--card));border:1px solid hsl(var(--border));box-shadow:var(--shadow-md);z-index:80;}
+  .theme-switch button{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    padding:6px 10px;border-radius:6px;border:none;cursor:pointer;background:transparent;color:hsl(var(--muted-foreground));}
+  .theme-switch button.on{background:hsl(var(--primary));color:hsl(var(--primary-foreground));}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-head">
+    <div>
+      <span class="kick">Fleet dashboard</span>
+      <h1>Operational fleet overview</h1>
+      <div class="sub">Track topology posture, member counts, and live health across every orchestration fleet.</div>
+    </div>
+    <div class="page-actions">
+      <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg>Export</button>
+      <button class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>New fleet</button>
+    </div>
+  </div>
+
+  <!-- ════ TOOLBAR ════ -->
+  <div class="toolbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" placeholder="Search fleets…" />
+    </div>
+
+    <div class="tb-divider"></div>
+
+    <!-- Topology -->
+    <div class="filter-wrap" data-filter="topology">
+      <button class="fbtn"><span class="lead">Topology</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></button>
+      <div class="pop">
+        <div class="lbl">Topology</div>
+        <div class="opt" data-val="Hierarchical"><span class="box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Hierarchical</div>
+        <div class="opt" data-val="Mesh"><span class="box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Mesh</div>
+        <div class="opt" data-val="Hybrid"><span class="box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Hybrid</div>
+        <div class="pop-foot"><button class="lnk" data-clear>Clear</button><button class="lnk primary" data-apply>Done</button></div>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="filter-wrap" data-filter="status">
+      <button class="fbtn"><span class="lead">Status</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></button>
+      <div class="pop">
+        <div class="lbl">Status</div>
+        <div class="opt" data-val="Active"><span class="box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><span class="dot" style="background:hsl(var(--primary))"></span>Active</div>
+        <div class="opt" data-val="Degraded"><span class="box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><span class="dot" style="background:hsl(var(--warning))"></span>Degraded</div>
+        <div class="opt" data-val="Paused"><span class="box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><span class="dot" style="background:hsl(var(--muted-foreground))"></span>Paused</div>
+        <div class="opt" data-val="Archived"><span class="box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><span class="dot" style="background:hsl(var(--info))"></span>Archived</div>
+        <div class="pop-foot"><button class="lnk" data-clear>Clear</button><button class="lnk primary" data-apply>Done</button></div>
+      </div>
+    </div>
+
+    <!-- Min health -->
+    <div class="filter-wrap" data-filter="health">
+      <button class="fbtn"><span class="lead">Min health</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></button>
+      <div class="pop health-pop">
+        <div class="lbl" style="display:flex;justify-content:space-between"><span>Minimum health</span><span class="health-val" id="hval">Any</span></div>
+        <input type="range" class="slider" id="hslider" min="0" max="100" step="5" value="0" />
+        <div class="ticks"><span>Any</span><span>50%</span><span>100%</span></div>
+        <div class="pop-foot"><button class="lnk" data-clear>Reset</button><button class="lnk primary" data-apply>Done</button></div>
+      </div>
+    </div>
+
+    <div class="tb-right">
+      <span class="count-txt"><b id="vcount">8</b> fleets</span>
+      <div class="tb-divider"></div>
+      <div class="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/></svg>Saved views</div>
+      <button class="icon-btn" title="Save current view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg></button>
+    </div>
+  </div>
+
+  <!-- ════ CHIPS ════ -->
+  <div class="chips" id="chips"><span class="chips-empty">No filters applied — showing all fleets.</span></div>
+
+  <!-- ════ TABLA ════ -->
+  <div class="panel">
+    <div class="tbl-head"><span>fleet</span><span>topology</span><span>members</span><span>health</span><span>status</span></div>
+    <div id="rows"></div>
+  </div>
+
+</div>
+
+<div class="theme-switch" id="themeSwitch">
+  <button data-t="dark" class="on">Dark</button>
+  <button data-t="light">Light</button>
+  <button data-t="high_contrast">HC</button>
+</div>
+
+<script>
+  const DATA=[
+    ['atlas-orchestrator','Hierarchical',42,98,'Active'],
+    ['mesh-relay-eu','Mesh',128,91,'Active'],
+    ['hybrid-edge-01','Hybrid',64,76,'Degraded'],
+    ['nightly-batch','Hierarchical',8,99,'Active'],
+    ['legacy-pipeline','Mesh',16,54,'Degraded'],
+    ['sandbox-fleet','Hybrid',4,88,'Paused'],
+    ['archive-2024','Hierarchical',0,0,'Archived'],
+    ['lead-enrich-mesh','Mesh',23,94,'Active'],
+  ];
+  const STATE={topology:new Set(),status:new Set(),health:0,q:''};
+
+  const healthColor=h=> h>=85?'hsl(var(--primary))':h>=60?'hsl(var(--warning))':'hsl(var(--destructive))';
+  const pillClass=s=>s.toLowerCase();
+
+  function render(){
+    const rows=DATA.filter(d=>{
+      if(STATE.q && !d[0].toLowerCase().includes(STATE.q.toLowerCase())) return false;
+      if(STATE.topology.size && !STATE.topology.has(d[1])) return false;
+      if(STATE.status.size && !STATE.status.has(d[4])) return false;
+      if(d[3] < STATE.health) return false;
+      return true;
+    });
+    document.getElementById('vcount').textContent=rows.length;
+    const el=document.getElementById('rows');
+    if(!rows.length){el.innerHTML=`<div class="empty"><div class="t">No fleets found</div><div class="s">No fleets match the active filters.</div></div>`;}
+    else el.innerHTML=rows.map(d=>`
+      <div class="tbl-row">
+        <span class="nm">${d[0]}</span>
+        <span class="topo">${d[1].toLowerCase()}</span>
+        <span class="mono-s ${d[2]?'':'muted'}">${d[2]}</span>
+        <span>${d[4]==='Archived'?'<span class="mono-s muted">—</span>':`<span class="health"><span class="bar"><span class="fill" style="width:${d[3]}%;background:${healthColor(d[3])}"></span></span><span class="mono-s">${d[3]}%</span></span>`}</span>
+        <span><span class="pill ${pillClass(d[4])}"><span class="pd"></span>${d[4]}</span></span>
+      </div>`).join('');
+    renderChips();
+  }
+
+  function renderChips(){
+    const c=document.getElementById('chips');const chips=[];
+    if(STATE.topology.size) chips.push(chip('Topology',[...STATE.topology].join(', '),()=>{STATE.topology.clear();syncOpts('topology');}));
+    if(STATE.status.size) chips.push(chip('Status',[...STATE.status].join(', '),()=>{STATE.status.clear();syncOpts('status');}));
+    if(STATE.health>0) chips.push(chip('Min health','≥ '+STATE.health+'%',()=>{STATE.health=0;document.getElementById('hslider').value=0;updateHval();}));
+    if(STATE.q) chips.push(chip('Search','“'+STATE.q+'”',()=>{STATE.q='';document.getElementById('search').value='';}));
+    if(!chips.length){c.innerHTML='<span class="chips-empty">No filters applied — showing all fleets.</span>';return;}
+    c.innerHTML='';chips.forEach(n=>c.appendChild(n));
+    const clr=document.createElement('button');clr.className='clear-all';clr.textContent='Clear all';
+    clr.onclick=()=>{STATE.topology.clear();STATE.status.clear();STATE.health=0;STATE.q='';
+      document.getElementById('hslider').value=0;document.getElementById('search').value='';
+      syncOpts('topology');syncOpts('status');updateHval();};
+    c.appendChild(clr);
+  }
+  function chip(label,val,onx){
+    const d=document.createElement('span');d.className='chip';
+    d.innerHTML=`<span class="ck">${label}:</span><b>${val}</b><span class="x"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg></span>`;
+    d.querySelector('.x').onclick=()=>{onx();render();};
+    return d;
+  }
+
+  function syncBtn(filter){
+    const wrap=document.querySelector(`[data-filter="${filter}"]`);const btn=wrap.querySelector('.fbtn');
+    let n=0;if(filter==='topology')n=STATE.topology.size;if(filter==='status')n=STATE.status.size;
+    const lead=btn.querySelector('.lead');
+    btn.querySelector('.count')?.remove();
+    if(n>0){btn.classList.add('has');const c=document.createElement('span');c.className='count';c.textContent=n;
+      btn.insertBefore(c,btn.querySelector('.chev'));}
+    else btn.classList.remove('has');
+  }
+  function syncOpts(filter){
+    const set=STATE[filter];
+    document.querySelectorAll(`[data-filter="${filter}"] .opt`).forEach(o=>o.classList.toggle('on',set.has(o.dataset.val)));
+    syncBtn(filter);
+  }
+  function updateHval(){
+    const v=STATE.health;document.getElementById('hval').textContent=v>0?v+'%':'Any';
+    const s=document.getElementById('hslider');s.style.setProperty('--p',v+'%');
+    const wrap=document.querySelector('[data-filter="health"]');const btn=wrap.querySelector('.fbtn');
+    btn.querySelector('.count')?.remove();
+    if(v>0){btn.classList.add('has');const c=document.createElement('span');c.className='count';c.textContent='≥'+v;
+      btn.insertBefore(c,btn.querySelector('.chev'));}
+    else btn.classList.remove('has');
+  }
+
+  // popover open/close
+  function closeAll(){document.querySelectorAll('.filter-wrap.open').forEach(w=>w.classList.remove('open'));}
+  document.querySelectorAll('.filter-wrap .fbtn').forEach(btn=>{
+    btn.addEventListener('click',e=>{e.stopPropagation();const w=btn.closest('.filter-wrap');
+      const open=w.classList.contains('open');closeAll();if(!open)w.classList.add('open');});
+  });
+  document.addEventListener('click',e=>{if(!e.target.closest('.filter-wrap'))closeAll();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll();});
+
+  // checkbox opts
+  document.querySelectorAll('.filter-wrap[data-filter="topology"] .opt,.filter-wrap[data-filter="status"] .opt').forEach(o=>{
+    o.addEventListener('click',e=>{e.stopPropagation();const f=o.closest('.filter-wrap').dataset.filter;const v=o.dataset.val;
+      STATE[f].has(v)?STATE[f].delete(v):STATE[f].add(v);syncOpts(f);render();});
+  });
+  // pop foot buttons
+  document.querySelectorAll('.filter-wrap').forEach(w=>{
+    const f=w.dataset.filter;
+    w.querySelector('[data-clear]')?.addEventListener('click',e=>{e.stopPropagation();
+      if(f==='health'){STATE.health=0;document.getElementById('hslider').value=0;updateHval();}
+      else {STATE[f].clear();syncOpts(f);}render();});
+    w.querySelector('[data-apply]')?.addEventListener('click',e=>{e.stopPropagation();closeAll();});
+  });
+  // slider
+  const sl=document.getElementById('hslider');
+  sl.addEventListener('input',()=>{STATE.health=+sl.value;updateHval();render();});
+  // search
+  document.getElementById('search').addEventListener('input',e=>{STATE.q=e.target.value;render();});
+
+  // theme
+  const ts=document.getElementById('themeSwitch');
+  ts.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const t=b.dataset.t;
+    document.documentElement.className=(t==='light'?'':t);[...ts.children].forEach(x=>x.classList.toggle('on',x===b));});
+
+  updateHval();render();
+</script>
+</body>
+</html>

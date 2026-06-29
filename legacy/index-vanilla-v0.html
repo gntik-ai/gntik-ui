@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gntik UI — component library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens/brand.css" />
+<link rel="stylesheet" href="styles/components.css" />
+<style>
+  html,body{margin:0;padding:0;height:100%;}
+  body{font-family:var(--font-sans);background:hsl(var(--background));color:hsl(var(--foreground));-webkit-font-smoothing:antialiased;}
+  svg{display:block;}
+  a{color:inherit;text-decoration:none;}
+  .app{display:flex;height:100vh;overflow:hidden;}
+
+  /* sidebar */
+  .sidebar{width:248px;flex:0 0 248px;display:flex;flex-direction:column;background:hsl(var(--chrome));border-right:1px solid hsl(var(--border)/.6);}
+  .sb-head{padding:18px 18px 14px;}
+  .sb-head .wm{width:100%;height:auto;}
+  html:not(.dark):not(.high_contrast) .wm-dark{display:none;}
+  html.dark .wm-light,html.high_contrast .wm-light{display:none;}
+  .sb-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:hsl(var(--muted-foreground));margin-top:8px;padding-left:2px;}
+  .sb-nav{flex:1;overflow-y:auto;padding:8px 12px 16px;}
+  .sb-nav::-webkit-scrollbar{width:9px;}.sb-nav::-webkit-scrollbar-thumb{background:hsl(var(--border));border-radius:6px;border:3px solid transparent;background-clip:content-box;}
+  .nav-group{font-family:var(--font-mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:hsl(var(--muted-foreground)/.7);padding:14px 10px 6px;}
+  .nav-item{display:flex;align-items:center;gap:9px;height:32px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:500;color:hsl(var(--muted-foreground));cursor:pointer;}
+  .nav-item:hover{background:hsl(var(--accent)/.5);color:hsl(var(--foreground));}
+  .nav-item.on{background:hsl(var(--accent));color:hsl(var(--accent-foreground));font-weight:600;}
+  .nav-item .st{margin-left:auto;width:6px;height:6px;border-radius:50%;}
+  .st.done{background:hsl(var(--primary));}
+  .st.plan{background:hsl(var(--muted-foreground)/.4);}
+
+  /* main */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .topbar{height:60px;flex:0 0 60px;display:flex;align-items:center;gap:14px;padding:0 24px;background:hsl(var(--chrome));border-bottom:1px solid hsl(var(--border)/.6);}
+  .crumb{display:flex;align-items:center;gap:8px;font-size:13px;color:hsl(var(--muted-foreground));}
+  .crumb .cur{color:hsl(var(--foreground));font-weight:600;}
+  .theme-seg{margin-left:auto;display:flex;gap:3px;padding:3px;border-radius:9px;background:hsl(var(--secondary)/.6);}
+  .theme-seg button{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:6px 11px;border-radius:6px;border:none;cursor:pointer;background:transparent;color:hsl(var(--muted-foreground));}
+  .theme-seg button.on{background:hsl(var(--card));color:hsl(var(--foreground));box-shadow:var(--shadow-sm);}
+
+  .content{flex:1;overflow-y:auto;padding:34px 40px 80px;}
+  .content::-webkit-scrollbar{width:11px;}.content::-webkit-scrollbar-thumb{background:hsl(var(--border));border-radius:6px;border:3px solid transparent;background-clip:content-box;}
+  .wrap{max-width:980px;}
+  .sec-kick{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:hsl(var(--primary));}
+  h1.sec{margin:8px 0 0;font-size:30px;font-weight:700;letter-spacing:-.03em;}
+  .sec-lede{font-size:14px;color:hsl(var(--muted-foreground));margin-top:8px;max-width:620px;line-height:1.6;}
+  h2.grp{font-size:13px;font-weight:600;margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid hsl(var(--border));letter-spacing:-.01em;}
+  .specimen{border:1px solid hsl(var(--border));border-radius:var(--radius-xl);background:hsl(var(--card));padding:24px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+  .specimen.col{flex-direction:column;align-items:stretch;}
+  .spec-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+  .spec-label{font-family:var(--font-mono);font-size:10px;color:hsl(var(--muted-foreground));width:100%;margin-bottom:-4px;}
+
+  /* foundations */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+  .sw{border:1px solid hsl(var(--border));border-radius:var(--radius-lg);overflow:hidden;background:hsl(var(--card));}
+  .sw .chip{height:60px;}
+  .sw .meta{padding:9px 11px;}
+  .sw .nm{font-size:12px;font-weight:600;}
+  .sw .vr{font-family:var(--font-mono);font-size:10px;color:hsl(var(--muted-foreground));margin-top:2px;}
+  .type-row{display:flex;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid hsl(var(--border)/.5);}
+  .type-row .lbl{font-family:var(--font-mono);font-size:10px;color:hsl(var(--muted-foreground));width:70px;flex:0 0 auto;}
+  .radii{display:flex;gap:18px;flex-wrap:wrap;}
+  .radii .r{text-align:center;}
+  .radii .box{width:78px;height:64px;background:hsl(var(--accent));border:1px solid hsl(var(--border));}
+  .radii .cap{font-family:var(--font-mono);font-size:10px;color:hsl(var(--muted-foreground));margin-top:7px;}
+  .shadows{display:flex;gap:20px;flex-wrap:wrap;}
+  .shadows .s{width:120px;height:74px;border-radius:var(--radius-lg);background:hsl(var(--card));border:1px solid hsl(var(--border)/.5);display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-family:var(--font-mono);font-size:10px;color:hsl(var(--muted-foreground));}
+
+  /* block cards */
+  .blocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+  .blockcard{border:1px solid hsl(var(--border));border-radius:var(--radius-xl);background:hsl(var(--card));overflow:hidden;cursor:pointer;transition:border-color .12s;}
+  .blockcard:hover{border-color:hsl(var(--primary)/.5);}
+  .blockcard .prev{height:140px;background:hsl(var(--secondary)/.5);display:flex;align-items:center;justify-content:center;color:hsl(var(--muted-foreground));border-bottom:1px solid hsl(var(--border));}
+  .blockcard .prev svg{width:46px;height:46px;}
+  .blockcard .bmeta{padding:14px 16px;}
+  .blockcard .bt{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .blockcard .bd{font-size:12.5px;color:hsl(var(--muted-foreground));margin-top:5px;line-height:1.5;}
+  .badge-done{background:hsl(var(--primary)/.14);color:hsl(var(--primary));font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:5px;text-transform:uppercase;}
+
+  .section{display:none;}
+  .section.on{display:block;}
+</style>
+</head>
+<body class="gu">
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="sb-head">
+      <img class="wm wm-dark" src="assets/musematic-wordmark-ondark.svg" alt="Gntik UI" />
+      <img class="wm wm-light" src="assets/musematic-wordmark-onlight.svg" alt="Gntik UI" />
+      <div class="sb-tag">Component library · v0.1</div>
+    </div>
+    <nav class="sb-nav" id="nav"></nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="crumb"><span>Gntik UI</span><span style="opacity:.4">/</span><span class="cur" id="crumb">Foundations</span></div>
+      <div class="theme-seg" id="themeSeg">
+        <button data-t="dark" class="on">Dark</button>
+        <button data-t="light">Light</button>
+        <button data-t="high_contrast">HC</button>
+      </div>
+    </header>
+
+    <div class="content"><div class="wrap" id="view"></div></div>
+  </div>
+</div>
+
+<script>
+const NAV=[
+  ['Foundations',[['foundations','Foundations','done']]],
+  ['Primitives',[
+    ['buttons','Button','done'],['badges','Badge & Pill','done'],['inputs','Inputs','done'],
+    ['selection','Selection','done'],['feedback','Feedback','done'],['navigation','Navigation','done'],
+    ['display','Data display','done'],
+  ]],
+  ['Blocks',[['blocks','Blocks','done']]],
+  ['Templates',[['templates','Templates','plan']]],
+];
+const ICON=(p)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+
+// ---- views ----
+const V={};
+V.foundations=()=>`
+  <div class="sec-kick">Foundations</div><h1 class="sec">Design tokens</h1>
+  <p class="sec-lede">The brand layer. Every component reads these — re-skinning a product means editing only the values here and swapping the logo. All three themes derive from the same token names.</p>
+  <h2 class="grp">Brand & surfaces</h2>
+  <div class="swatches">${swatches([
+    ['Primary','--primary'],['Primary fg','--primary-foreground'],['Brand accent','--brand-accent'],
+    ['Background','--background'],['Card','--card'],['Chrome','--chrome'],['Muted','--muted'],
+    ['Accent','--accent'],['Border','--border'],['Foreground','--foreground'],['Muted fg','--muted-foreground'],
+  ])}</div>
+  <h2 class="grp">Status & categorical</h2>
+  <div class="swatches">${swatches([
+    ['Success','--success'],['Warning','--warning'],['Info','--info'],['Destructive','--destructive'],
+    ['Rose','--category-rose'],['Violet','--category-violet'],['Amber','--category-amber'],['Cyan','--category-cyan'],
+  ])}</div>
+  <h2 class="grp">Type scale · Geist + Geist Mono</h2>
+  <div class="specimen col">
+    <div class="type-row"><span class="lbl">30 / 700</span><span style="font-size:30px;font-weight:700;letter-spacing:-.03em">Operational fleet overview</span></div>
+    <div class="type-row"><span class="lbl">24 / 700</span><span style="font-size:24px;font-weight:700;letter-spacing:-.025em">Page heading</span></div>
+    <div class="type-row"><span class="lbl">15 / 600</span><span style="font-size:15px;font-weight:600">Card title weight</span></div>
+    <div class="type-row"><span class="lbl">13.5 / 400</span><span style="font-size:13.5px">Body copy — the quick brown fox jumps over the lazy dog.</span></div>
+    <div class="type-row"><span class="lbl">mono 11</span><span class="mono" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:hsl(var(--muted-foreground))">LABEL · METADATA · CODE</span></div>
+  </div>
+  <h2 class="grp">Radius</h2>
+  <div class="specimen"><div class="radii">
+    <div class="r"><div class="box" style="border-radius:var(--radius-sm)"></div><div class="cap">sm 6px</div></div>
+    <div class="r"><div class="box" style="border-radius:var(--radius-md)"></div><div class="cap">md 8px</div></div>
+    <div class="r"><div class="box" style="border-radius:var(--radius-lg)"></div><div class="cap">lg 10px</div></div>
+    <div class="r"><div class="box" style="border-radius:var(--radius-xl)"></div><div class="cap">xl 16px</div></div>
+  </div></div>
+  <h2 class="grp">Elevation</h2>
+  <div class="specimen"><div class="shadows">
+    <div class="s" style="box-shadow:var(--shadow-sm)">sm</div>
+    <div class="s" style="box-shadow:var(--shadow-md)">md</div>
+    <div class="s" style="box-shadow:var(--shadow-lg)">lg</div>
+  </div></div>`;
+
+V.buttons=()=>`
+  <div class="sec-kick">Primitives</div><h1 class="sec">Button</h1>
+  <p class="sec-lede">Variants and sizes. Maps to <code>components/ui/button.tsx</code>.</p>
+  <h2 class="grp">Variants</h2>
+  <div class="specimen">
+    <button class="btn btn-primary">Primary</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-outline">Outline</button>
+    <button class="btn btn-ghost">Ghost</button>
+    <button class="btn btn-destructive">Destructive</button>
+    <button class="btn btn-link">Link</button>
+  </div>
+  <h2 class="grp">With icon · sizes · state</h2>
+  <div class="specimen">
+    <button class="btn btn-primary">${ICON('<path d="M12 5v14M5 12h14"/>')}New fleet</button>
+    <button class="btn btn-outline btn-sm">Small</button>
+    <button class="btn btn-outline">Default</button>
+    <button class="btn btn-outline btn-lg">Large</button>
+    <button class="btn btn-outline btn-icon">${ICON('<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>')}</button>
+    <button class="btn btn-primary" disabled>Disabled</button>
+  </div>`;
+
+V.badges=()=>`
+  <div class="sec-kick">Primitives</div><h1 class="sec">Badge & status pill</h1>
+  <p class="sec-lede">Maps to <code>components/ui/badge.tsx</code> and the status-badge feature components.</p>
+  <h2 class="grp">Status pills (with dot)</h2>
+  <div class="specimen">
+    <span class="badge badge-primary"><span class="pd"></span>Active</span>
+    <span class="badge badge-warning"><span class="pd"></span>Degraded</span>
+    <span class="badge badge-muted"><span class="pd"></span>Paused</span>
+    <span class="badge badge-info"><span class="pd"></span>Archived</span>
+    <span class="badge badge-destructive"><span class="pd"></span>Failed</span>
+  </div>
+  <h2 class="grp">Plain & outline</h2>
+  <div class="specimen">
+    <span class="badge badge-primary">Fleet dashboard</span>
+    <span class="badge badge-outline">v0.1</span>
+    <span class="badge badge-muted">mesh</span>
+  </div>`;
+
+V.inputs=()=>`
+  <div class="sec-kick">Primitives</div><h1 class="sec">Inputs</h1>
+  <p class="sec-lede">Text, search, textarea, select trigger. Maps to <code>input.tsx</code>, <code>textarea.tsx</code>, <code>select.tsx</code>.</p>
+  <h2 class="grp">Text & search</h2>
+  <div class="specimen col" style="gap:14px">
+    <div class="input" style="max-width:380px"><input placeholder="name@company.com" /></div>
+    <div class="input" style="max-width:380px">${ICON('<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>')}<input placeholder="Search fleets…" /></div>
+    <div class="input select-trigger" style="max-width:380px"><span style="font-size:13.5px">Production workspace</span><span class="chev">${ICON('<path d="m6 9 6 6 6-6"/>')}</span></div>
+    <div class="input textarea" style="max-width:380px"><span style="font-size:13.5px;color:hsl(var(--muted-foreground))">Multi-line notes…</span></div>
+  </div>`;
+
+V.selection=()=>`
+  <div class="sec-kick">Primitives</div><h1 class="sec">Selection</h1>
+  <p class="sec-lede">Checkbox, switch, radio, tabs. Maps to <code>checkbox.tsx</code>, <code>switch.tsx</code>, <code>tabs.tsx</code>.</p>
+  <h2 class="grp">Checkbox · switch · radio</h2>
+  <div class="specimen" style="gap:28px">
+    <label style="display:flex;align-items:center;gap:10px;font-size:13.5px;cursor:pointer"><span class="checkbox on">${ICON('<path d="M20 6 9 17l-5-5"/>')}</span>Checked</label>
+    <label style="display:flex;align-items:center;gap:10px;font-size:13.5px;cursor:pointer"><span class="checkbox"></span>Unchecked</label>
+    <label style="display:flex;align-items:center;gap:10px;font-size:13.5px;cursor:pointer"><span class="switch on"></span>On</label>
+    <label style="display:flex;align-items:center;gap:10px;font-size:13.5px;cursor:pointer"><span class="switch"></span>Off</label>
+    <label style="display:flex;align-items:center;gap:10px;font-size:13.5px;cursor:pointer"><span class="radio on"></span>Selected</label>
+  </div>
+  <h2 class="grp">Tabs</h2>
+  <div class="specimen"><div class="tabs"><button class="tab on">Overview</button><button class="tab">Members</button><button class="tab">Activity</button></div></div>`;
+
+V.feedback=()=>`
+  <div class="sec-kick">Primitives</div><h1 class="sec">Feedback</h1>
+  <p class="sec-lede">Alert, progress, skeleton, tooltip. Maps to <code>alert.tsx</code>, <code>progress.tsx</code>, <code>skeleton.tsx</code>, <code>tooltip.tsx</code>, <code>toast.tsx</code>.</p>
+  <h2 class="grp">Alerts</h2>
+  <div class="specimen col" style="gap:12px">
+    <div class="alert alert-info">${ICON('<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>')}<div><div class="at">New policy activated</div><div class="ad">pii-redaction is now enforced across all fleets.</div></div></div>
+    <div class="alert alert-warning">${ICON('<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/>')}<div><div class="at">Budget near limit</div><div class="ad">contract-summarize reached 97% of daily budget.</div></div></div>
+    <div class="alert alert-destructive">${ICON('<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/>')}<div><div class="at">Connection lost</div><div class="ad">Unable to reach the orchestration plane.</div></div></div>
+  </div>
+  <h2 class="grp">Progress · skeleton · tooltip</h2>
+  <div class="specimen col" style="gap:18px">
+    <div class="progress" style="max-width:360px"><div class="fill" style="width:64%"></div></div>
+    <div style="display:flex;gap:12px;align-items:center;max-width:360px;width:100%"><div class="skeleton" style="width:42px;height:42px"></div><div style="flex:1;display:flex;flex-direction:column;gap:7px"><div class="skeleton" style="height:11px;width:70%"></div><div class="skeleton" style="height:11px;width:45%"></div></div></div>
+    <div class="tooltip">Pause draining work</div>
+  </div>`;
+
+V.navigation=()=>`
+  <div class="sec-kick">Primitives</div><h1 class="sec">Navigation</h1>
+  <p class="sec-lede">Breadcrumb, avatar, separator, dropdown menu. Maps to <code>breadcrumb.tsx</code>, <code>avatar.tsx</code>, <code>dropdown-menu.tsx</code>.</p>
+  <h2 class="grp">Breadcrumb · avatar</h2>
+  <div class="specimen" style="gap:28px">
+    <div class="breadcrumb"><span>Operation</span><span class="sep">/</span><span>Fleet</span><span class="sep">/</span><span class="cur">atlas-orchestrator</span></div>
+    <div style="display:flex;gap:8px"><span class="avatar">MR</span><span class="avatar avatar-round" style="background:hsl(var(--primary));color:hsl(var(--primary-foreground))">AC</span></div>
+  </div>`;
+
+V.display=()=>`
+  <div class="sec-kick">Primitives</div><h1 class="sec">Data display</h1>
+  <p class="sec-lede">Card, table, inline health bar. Maps to <code>card.tsx</code>, <code>table.tsx</code>, <code>components/shared/DataTable</code>.</p>
+  <h2 class="grp">Card</h2>
+  <div class="specimen" style="gap:16px">
+    <div class="card card-pad" style="max-width:240px"><div class="card-title">Topology-first</div><div class="card-desc">Hierarchical, mesh, and hybrid fleets in one surface.</div></div>
+    <div class="card card-pad" style="max-width:240px"><div class="card-title">Health-aware</div><div class="card-desc">Color-coded scores surface degraded fleets immediately.</div></div>
+  </div>
+  <h2 class="grp">Table</h2>
+  <div class="gtable">
+    <div class="thead" style="grid-template-columns:1.4fr .8fr .8fr"><span>fleet</span><span>health</span><span>status</span></div>
+    <div class="trow" style="grid-template-columns:1.4fr .8fr .8fr"><span style="font-weight:600">atlas-orchestrator</span><span><span class="progress" style="width:60px;display:inline-block;vertical-align:middle"><span class="fill" style="width:98%"></span></span></span><span><span class="badge badge-primary"><span class="pd"></span>Active</span></span></div>
+    <div class="trow" style="grid-template-columns:1.4fr .8fr .8fr"><span style="font-weight:600">hybrid-edge-01</span><span><span class="progress" style="width:60px;display:inline-block;vertical-align:middle"><span class="fill" style="width:76%;background:hsl(var(--warning))"></span></span></span><span><span class="badge badge-warning"><span class="pd"></span>Degraded</span></span></div>
+  </div>`;
+
+V.blocks=()=>`
+  <div class="sec-kick">Blocks</div><h1 class="sec">Composed blocks</h1>
+  <p class="sec-lede">Full patterns built from primitives. These are the approved references — each becomes a shadcn implementation spec for the product repos.</p>
+  <div class="blocks" style="margin-top:24px">
+    ${blockcard('blocks/Shell.html','App shell','Sidebar + topbar + collapsible nav groups, deep chrome, popover menus.','M3 3h18v18H3zM3 8h18M8 8v13')}
+    ${blockcard('blocks/Login.html','Auth split','Brand panel + real login form, OAuth SSO, fixed-theme split.','M15 3h6v18h-6M10 17l5-5-5-5M15 12H3')}
+    ${blockcard('blocks/Fleet-filters.html','Filter toolbar','Compact search + popover filters + active chips + saved views.','M3 6h18M6 12h12M10 18h4')}
+  </div>`;
+
+V.templates=()=>`
+  <div class="sec-kick">Templates</div><h1 class="sec">Page templates</h1>
+  <p class="sec-lede">Full-page assemblies (Fleet, Settings, Audit…). Coming next — each composes the shell + blocks above.</p>
+  <div class="specimen" style="margin-top:24px;color:hsl(var(--muted-foreground));font-size:13.5px">Roadmap: Fleet · Operators · Costs · Audit · Policies · Settings · Login (done).</div>`;
+
+function swatches(list){return list.map(([nm,v])=>`
+  <div class="sw"><div class="chip" style="background:hsl(var(${v}))"></div><div class="meta"><div class="nm">${nm}</div><div class="vr">${v}</div></div></div>`).join('');}
+function blockcard(href,t,d,icon){return `
+  <a class="blockcard" href="${href}" target="_blank"><div class="prev">${ICON(icon)}</div>
+    <div class="bmeta"><div class="bt">${t}<span class="badge-done">Done</span></div><div class="bd">${d}</div></div></a>`;}
+
+// ---- nav render + routing ----
+const nav=document.getElementById('nav');
+nav.innerHTML=NAV.map(([g,items])=>`<div class="nav-group">${g}</div>${items.map(([id,label,st])=>
+  `<div class="nav-item" data-id="${id}"><span>${label}</span><span class="st ${st}"></span></div>`).join('')}`).join('');
+
+function show(id){
+  document.getElementById('view').innerHTML=(V[id]||V.foundations)();
+  document.getElementById('crumb').textContent=document.querySelector(`[data-id="${id}"] span`).textContent;
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('on',n.dataset.id===id));
+  document.querySelector('.content').scrollTop=0;
+}
+nav.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',()=>show(n.dataset.id)));
+
+// theme
+const seg=document.getElementById('themeSeg');
+seg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  document.documentElement.className=(b.dataset.t==='light'?'':b.dataset.t);
+  [...seg.children].forEach(x=>x.classList.toggle('on',x===b));});
+
+show('foundations');
+</script>
+</body>
+</html>
