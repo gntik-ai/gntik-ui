@@ -58,6 +58,7 @@ const REGISTRY = [
     { id: 'alerts', label: 'Alerts', icon: 'alert', status: 'done', blurb: 'Info, warning y destructive, con acciones.' },
     { id: 'empty-states', label: 'Empty states', icon: 'inbox', status: 'done', blurb: 'Estados vacíos con CTA.' },
     { id: 'skeletons', label: 'Skeletons', icon: 'bricks', status: 'done', blurb: 'Loading states: bloques, lista, tabla y swap cargando → cargado.' },
+    { id: 'spinners', label: 'Spinners', icon: 'refresh', status: 'done', blurb: 'Indicadores de carga: tres puntos, circular y loader de marca musematic.' },
   ]},
   { group: 'Navegación', icon: 'compass', items: [
     { id: 'navbars', label: 'Navbars', icon: 'menu', status: 'done', blurb: 'Barra superior con nav, buscador y perfil.' },
@@ -92,6 +93,9 @@ const REGISTRY = [
   ]},
   { group: 'Flow', icon: 'flowGraph', items: [
     { id: 'reactflow', label: 'ReactFlow', icon: 'flowGraph', status: 'done', blurb: 'Lienzo de nodos: arrastrar, zoom/pan, handles y edges.' },
+  ]},
+  { group: 'Editores', icon: 'code', items: [
+    { id: 'monaco', label: 'Monaco Editor', icon: 'code', status: 'done', blurb: 'El editor de VS Code tematizado: edición, diff, embebido y multi-lenguaje.' },
   ]},
 ];
 

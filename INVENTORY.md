@@ -26,7 +26,7 @@ El contador del sidebar y del Overview se calcula solo desde `registry.jsx`.
 | **Gráficas** | Area · Bar · Line · Combo · Donut charts | 🟢 |
 | **Listas** | Stacked lists · Tables · Grid lists · List containers · Feeds | 🟢 |
 | **Formularios** | Form layouts · Input groups · **File upload** · Textareas · Select menus · Comboboxes · Checkboxes · Radio groups · Toggles · Action panels · Date & time picker · Sign-in & registro | 🟢 |
-| **Feedback** | Alerts · Empty states · **Skeletons** | 🟢 |
+| **Feedback** | Alerts · Empty states · Skeletons · **Spinners** | 🟢 |
 | **Navegación** | Navbars · Breadcrumbs · Tabs · Vertical nav · Sidebar nav · Pagination · Progress bars · Command palettes | 🟢 |
 | **Overlays** | Modal dialogs · Drawers · Notifications · **Tooltips** | 🟢 |
 | **Elementos** | Buttons · Button groups · Badges & pills · Avatars · Dropdowns · Dividers | 🟢 |
@@ -36,6 +36,7 @@ El contador del sidebar y del Overview se calcula solo desde `registry.jsx`.
 
 ### Último pase
 - 🟢 **Tooltips** (Overlays) — sólido invertido + toolbar de iconos con atajo + tooltip enriquecido en card.
+- 🟢 **Spinners** (Feedback) — tres puntos en onda, anillo circular (SVG + bordes) y loader de marca musematic; swap en contexto.
 - 🟢 **Skeletons** (Feedback) — primitiva `animate-pulse`, lista, tabla y swap cargando → cargado.
 - 🟢 **File upload** (Formularios) — dropzone multi-archivo con progreso y estados, input compacto y subida de logo.
 
