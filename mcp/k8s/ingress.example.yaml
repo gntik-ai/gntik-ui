@@ -1,0 +1,25 @@
+# Ejemplo de exposición fuera del clúster. Ajusta host, class y TLS.
+# En OpenShift puedes usar una Route en su lugar:
+#   oc create route edge gntik-ui-mcp --service=gntik-ui-mcp --port=http
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gntik-ui-mcp
+  annotations:
+    # nginx.ingress.kubernetes.io/proxy-body-size: 8m   # páginas grandes en analyze/validate
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: gntik-ui-mcp.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gntik-ui-mcp
+                port:
+                  name: http
+  # tls:
+  #   - hosts: [gntik-ui-mcp.example.com]
+  #     secretName: gntik-ui-mcp-tls

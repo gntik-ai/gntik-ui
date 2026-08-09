@@ -1,0 +1,13 @@
+{
+  "//": "Copia esto como .mcp.json en la RAÍZ del repo de la app que vas a remaquetar (ajusta la ruta al checkout de gntik-ui). Alternativa HTTP (k8s): usa la entrada gntik-ui-k8s y borra la stdio.",
+  "mcpServers": {
+    "gntik-ui": {
+      "command": "node",
+      "args": ["/ruta/a/gntik-ui/mcp/dist/index.js", "--stdio"]
+    },
+    "gntik-ui-k8s": {
+      "type": "http",
+      "url": "https://gntik-ui-mcp.example.com/mcp"
+    }
+  }
+}

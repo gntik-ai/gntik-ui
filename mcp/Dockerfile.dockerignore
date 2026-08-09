@@ -1,0 +1,9 @@
+# ignore file específico de mcp/Dockerfile (BuildKit)
+.git
+.idea
+legacy
+uploads
+mcp/node_modules
+mcp/dist
+mcp/k8s
+**/*.log

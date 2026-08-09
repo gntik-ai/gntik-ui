@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gntik-ui-mcp
+  labels:
+    app.kubernetes.io/name: gntik-ui-mcp
+    app.kubernetes.io/part-of: gntik-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gntik-ui-mcp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gntik-ui-mcp
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: server
+          image: ghcr.io/gntik-ai/gntik-ui-mcp:latest
+          imagePullPolicy: Always
+          args: ["--http"]
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: MCP_TRANSPORT
+              value: http
+            - name: PORT
+              value: "8080"
+            # ── Opcional: seguir el catálogo en vivo en lugar del snapshot ──
+            # (borra GNTIK_UI_DIR del contenedor definiendo el repo; el clon
+            #  va a /tmp, que es un emptyDir escribible)
+            # - name: GNTIK_UI_DIR
+            #   value: ""
+            # - name: GNTIK_UI_REPO
+            #   value: https://github.com/gntik-ai/gntik-ui.git
+            # - name: GNTIK_UI_REF
+            #   value: main
+            # - name: GNTIK_UI_CACHE
+            #   value: /tmp/gntik-ui
+            # - name: GNTIK_UI_SYNC_MINUTES
+            #   value: "15"
+            # - name: GITHUB_TOKEN            # solo si el repo es privado
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: gntik-ui-mcp
+            #       key: github-token
+          resources:
+            requests:
+              cpu: 50m
+              memory: 96Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 20
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
