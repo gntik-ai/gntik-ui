@@ -10,6 +10,9 @@ const ids = registry.registry.map((item) => item.id);
 const THEME_SAMPLE = ['overview', 'foundations', 'app-shell', 'buttons', 'tables', 'form-layouts', 'alerts', 'area-charts'];
 // Monaco and the flow canvas draw asynchronously; give them extra time.
 const SLOW = { monaco: 4000, reactflow: 1500 };
+// Too tall for one full-page image (200+ live examples): snapshot the first viewport;
+// the whole page is covered by the axe gate (library.a11y.spec.js).
+const VIEWPORT_ONLY = new Set(['ui-components']);
 
 const cases = [
   ...ids.map((id) => ({ id, theme: 'dark' })),
@@ -26,9 +29,11 @@ for (const { id, theme } of cases) {
     await page.goto(`/#${id}`);
     await page.locator('main h1').first().waitFor();
     // Let the scroll container grow so the full section lands in one image.
-    await page.addStyleTag({ content: '.h-screen{height:auto!important} main{overflow:visible!important}' });
+    if (!VIEWPORT_ONLY.has(id)) {
+      await page.addStyleTag({ content: '.h-screen{height:auto!important} main{overflow:visible!important}' });
+    }
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(SLOW[id] ?? 600);
-    await expect(page).toHaveScreenshot(`${name}.png`, { fullPage: true });
+    await expect(page).toHaveScreenshot(`${name}.png`, { fullPage: !VIEWPORT_ONLY.has(id) });
   });
 }
