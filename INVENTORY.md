@@ -52,18 +52,6 @@ Plus llama *Page Examples*):
 Lo abrimos cuando se decida; cada página se ensambla con piezas ya existentes.
 
 ## Estructura de archivos
-```
-gntik-ui/
-├─ index.html        ← catálogo (Tailwind config + tokens + carga JSX + mount)
-├─ tokens/brand.css  ← capa de marca (el único punto de re-skin)
-├─ kit.jsx           ← primitivas: Icon · Logo · CodeBlock · Card · ScaleFrame · hooks
-├─ chartkit.jsx      ← motor de gráficas (Recharts con tema de marca)
-├─ registry.jsx      ← INVENTARIO (fuente única: grupos · estado · helpers)
-├─ catalog.jsx       ← marco: sidebar + topbar + theme switch + router
-├─ overview.jsx      ← dashboard de progreso / inventario
-├─ foundations.jsx   ← tokens visualizados
-├─ app-shell.jsx     ← shell interactivo + código
-└─ <grupo>.jsx       ← una sección por archivo, registrada en window.SECTIONS
-```
-Añadir un componente = nueva sección en su `.jsx` + `window.SECTIONS['id'] = ...` +
-su `<script>` en `index.html` + `status: 'done'` en `registry.jsx`.
+Ver `README.md` (monorepo pnpm: `apps/docs` = catálogo, `packages/tokens`, `packages/mcp`).
+Añadir un componente = sección en `apps/docs/src/catalog/<grupo>.jsx` + `window.SECTIONS['id']`
++ import en `apps/docs/src/main.jsx` + `status: 'done'` en `registry.jsx` + `pnpm registry`.

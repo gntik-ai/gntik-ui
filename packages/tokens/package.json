@@ -1,0 +1,25 @@
+{
+  "name": "@gntik-ai/tokens",
+  "version": "0.1.0",
+  "description": "gntik-ui brand tokens: CSS variables for light, dark and high-contrast themes, plus a Tailwind v4 bridge.",
+  "license": "MIT",
+  "type": "module",
+  "files": ["src"],
+  "exports": {
+    "./brand.css": "./src/brand.css",
+    "./tailwind.css": "./src/tailwind.css",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": ["*.css"],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gntik-ai/gntik-ui.git",
+    "directory": "packages/tokens"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}

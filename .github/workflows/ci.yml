@@ -1,0 +1,62 @@
+# ============================================================================
+# CI — lint, types, unit tests, registry freshness, docs build, visual baselines
+# ============================================================================
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: corepack enable
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Unit tests (tokens freeze, MCP indexer/validate/analyze)
+        run: pnpm test
+      - name: registry.json is up to date
+        run: pnpm registry:check
+      - name: Build
+        run: pnpm build
+
+  visual:
+    needs: checks
+    runs-on: ubuntu-latest
+    # Baselines were first recorded outside CI; if fonts or antialiasing differ
+    # on the runner, regenerate them with `pnpm visual:update` from CI output.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - run: corepack enable
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @gntik-ai/docs build
+      - run: pnpm --filter @gntik-ai/docs exec playwright install --with-deps chromium
+      - name: Visual baselines (59 entries dark + 8 in light and high contrast)
+        run: pnpm visual
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-report
+          path: |
+            apps/docs/playwright-report
+            apps/docs/test-results

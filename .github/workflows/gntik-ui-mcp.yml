@@ -12,28 +12,26 @@ on:
     tags: ['mcp-v*']
   pull_request:
     paths:
-      - 'mcp/**'
+      - 'packages/mcp/**'
+      - 'registry.json'
       - '.github/workflows/gntik-ui-mcp.yml'
   workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: mcp
     steps:
       - uses: actions/checkout@v7
+      - run: corepack enable
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: mcp/package-lock.json
-      - run: npm ci --no-audit --no-fund
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - name: Unit tests (indexer · validate · analyze contra el catálogo real)
-        run: npm test
+        run: pnpm --filter @gntik-ai/gntik-ui-mcp test
       - name: Smoke E2E (cliente MCP por stdio)
-        run: npm run smoke
+        run: pnpm --filter @gntik-ai/gntik-ui-mcp smoke
 
   image:
     needs: test
@@ -62,7 +60,7 @@ jobs:
       - uses: docker/build-push-action@v7
         with:
           context: .
-          file: mcp/Dockerfile
+          file: packages/mcp/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}

@@ -23,32 +23,32 @@ React/Tailwind** para pegar. Rumbo: monorepo estilo Astryx (ver la propuesta de 
 - **Una canónica por componente**; luego se afina con feedback, uno a uno.
 
 ## Tokens = la marca (único punto de re-skin)
-`tokens/brand.css` define todo: color, tipografía, radios, sombras × 3 temas. HSL en
-canales (sin `hsl()`) → habilita `bg-primary/14`. Re-skinear un producto = editar el
-bloque de marca + cambiar el logo. Claves: verde `145 61% 50%`, Geist + Geist Mono,
-`--chrome` (sidebar/topbar; negro-verde en dark), `--radius 0.625rem`, sombras planas.
+`packages/tokens/src/brand.css` (`@gntik-ai/tokens`) define todo: color, tipografía, radios,
+sombras × 3 temas. HSL en canales (sin `hsl()`) → habilita `bg-primary/14`. Un test congela
+los valores (`packages/tokens/test/frozen-values.json`). `tailwind.css` es el puente Tailwind v4
+(token → utilidad). Claves: verde `145 61% 50%`, Geist + Geist Mono, `--chrome` (sidebar/topbar;
+negro-verde en dark), `--radius 0.625rem`, sombras planas.
 
-## Arquitectura (modular · <1000 líneas/archivo)
-- `index.html` — Tailwind config (mapea cada token a `hsl(var(--token) / <alpha-value>)`)
-  + carga los `.jsx` + monta `CatalogShell`.
-- `kit.jsx` — primitivas: Icon, Logo/Wordmark, CodeBlock (copiar), Card, SectionHead,
-  StatusTag, ScaleFrame, useClickOutside; exporta los hooks a `window`.
-- `registry.jsx` — **INVENTARIO** (fuente única): grupos → items con `status`. Mueve el
-  sidebar, el dashboard y el contador a la vez.
-- `catalog.jsx` — marco: sidebar (nav desde registry con estado) + topbar (theme switch)
-  + router (hash + localStorage). Expone `window.__goto` y `window.__setTheme`.
-- `overview.jsx` — dashboard de progreso / inventario (la landing).
-- `foundations.jsx`, `app-shell.jsx`, … — una sección por archivo, registrada en
-  `window.SECTIONS['id']`.
+## Arquitectura (monorepo pnpm · Node 24 · <1000 líneas/archivo)
+- `apps/docs` — el catálogo: Vite 8 + React 19 + Tailwind 4. `src/main.jsx` importa los
+  `.jsx` de `src/catalog/` en orden; `src/globals.js` expone React, Recharts y ReactFlow en
+  `window` (las secciones siguen leyendo de `window`). `src/styles.css` = Tailwind + tokens.
+- `apps/docs/src/catalog/kit.jsx` — primitivas: Icon, Logo/Wordmark, CodeBlock, Card,
+  SectionHead, StatusTag, ScaleFrame, useClickOutside.
+- `apps/docs/src/catalog/registry.jsx` — **INVENTARIO** (fuente única): grupos → items con
+  `status`. Mueve el sidebar, el dashboard y el contador a la vez.
+- `catalog.jsx` (marco + router + theme switch), `overview.jsx` (landing), y una sección por
+  archivo registrada en `window.SECTIONS['id']`.
+- `packages/mcp` — MCP server; sirve `registry.json` (raíz), generado con `pnpm registry`.
 
 ## Cómo añadir un componente
-1. Crear/editar el `.jsx` de su grupo: sección con preview interactivo + `<CodeBlock>`
-   con el código React/Tailwind real para pegar.
-2. `window.SECTIONS['id'] = Seccion`; si es archivo nuevo, añadir su `<script>` en `index.html`.
-3. Poner `status:'done'` en `registry.jsx` (contador y placeholders se actualizan solos).
-Cada `<script type="text/babel">` tiene su scope: leer de `window` arriba
-(`const { ... } = window;`) y exportar a `window` al final. Nombrar los objetos de estilo
-de forma única (nunca `const styles`).
+1. Crear/editar el `.jsx` de su grupo en `apps/docs/src/catalog/`: sección con preview
+   interactivo + `<CodeBlock>` con el código React/Tailwind real para pegar.
+2. `window.SECTIONS['id'] = Seccion`; si es archivo nuevo, importarlo en `apps/docs/src/main.jsx`.
+3. Poner `status:'done'` en `registry.jsx`, luego `pnpm registry` y `pnpm visual:update`.
+Cada archivo lee de `window` arriba (`const { ... } = window;`) y exporta a `window` al final.
+Nombrar los objetos de estilo de forma única (nunca `const styles`).
+Antes de dar algo por hecho: `pnpm lint && pnpm typecheck && pnpm test && pnpm registry:check`.
 
 ## Reglas (duras)
 - Sobrio: sin degradados, sin glow; sombras planas brand-tinted. Mono-brand verde (hue 145)

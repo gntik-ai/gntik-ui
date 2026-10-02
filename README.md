@@ -1,41 +1,58 @@
-# Gntik UI — template de componentes de marca
+# Gntik UI
 
-Layout + estilos extraídos de **musematic**, para reutilizar en futuras apps.
-Catálogo estilo Tailwind Plus: **ves** cada componente y copias su **código React/Tailwind**.
-Una capa de tokens, muchos productos: re-skinear = editar `tokens/brand.css` + cambiar el logo.
+The design system for gntik-ai products (musematic, Falcone, llmwiki…). One token layer,
+many products: each product is a theme preset (logo, name, assets) over the same palette.
+The catalog is Tailwind Plus-style: every component is **shown** with an interactive preview
+and ships its **React/Tailwind code** to copy.
 
-> Verde `#33CE73` (hue 145) · Geist + Geist Mono · `--radius 0.625rem` · dark = superficie principal · 3 temas.
+> Green `145 61% 50%` (hue 145) · Geist + Geist Mono · `--radius 0.625rem` · dark is the
+> default theme · light and high contrast. Colour values are frozen (see `CLAUDE.md`).
 
-## Abrir
-`index.html` — autocontenido (React + Babel + Tailwind por CDN). Tema **dark** por defecto;
-switch (light · dark · HC) en la topbar.
+## Workspace
 
-## Estructura
+pnpm monorepo, Node 24 (`.nvmrc`), pnpm 11 (`packageManager`).
+
 ```
 gntik-ui/
-├─ index.html        catálogo: Tailwind config + tokens + carga JSX + mount
-├─ tokens/brand.css  capa de marca — el único punto de re-skin (3 temas)
-├─ kit.jsx           primitivas: Icon · Logo · CodeBlock · Card · ScaleFrame · hooks
-├─ registry.jsx      INVENTARIO (fuente única: grupos · estado · contador)
-├─ catalog.jsx       marco: sidebar + topbar + theme switch + router
-├─ overview.jsx      dashboard de progreso / inventario
-├─ foundations.jsx   tokens visualizados
-├─ app-shell.jsx     shell interactivo + código
-├─ chartkit.jsx      motor de gráficas (Recharts con tema de marca)
-├─ <grupo>.jsx       una sección por grupo (tooltips · skeletons · file-upload · …)
-├─ blocks/           referencias HTML sueltas (Shell · Login · Fleet-filters)
-├─ assets/           logos / símbolo / wordmarks
-└─ INVENTORY.md      espejo en texto del inventario + tandas sugeridas
+├─ apps/
+│  └─ docs/                 the catalog: Vite + React 19 + Tailwind 4
+│     ├─ src/catalog/       one section per file (registry.jsx = the inventory)
+│     ├─ e2e/               Playwright visual baselines
+├─ packages/
+│  ├─ tokens/               @gntik-ai/tokens: brand.css (3 themes) + Tailwind v4 bridge
+│  └─ mcp/                  @gntik-ai/gntik-ui-mcp: MCP server for Claude Code
+├─ blocks/                  static HTML references (Shell · Login · Fleet-filters)
+├─ registry.json            generated index of the catalog (`pnpm registry`)
+└─ INVENTORY.md             text mirror of the inventory
 ```
 
-## Adoptar en un producto
-1. `@import "./tokens/brand.css"` en `globals.css` (`:root` light · `.dark` · `.high_contrast`).
-2. Mapear los tokens en `tailwind.config` como `hsl(var(--token) / <alpha-value>)` (habilita `bg-primary/50`).
-3. Activar tema por clase en `<html>` (`""` = light · `dark` · `high_contrast`).
-4. Copiar el código de cada componente desde el catálogo y pegarlo.
+## Develop
 
-## Estado
-Inventario + progreso en la sección **Overview** del catálogo (y en `INVENTORY.md`).
-La librería de **componentes** está completa: **59 / 59** (todos los grupos en verde).
-Siguiente terreno, aún abierto: **layouts** — páginas completas que compongan los
-componentes (dashboard del Fleet, detalle de agent, settings…). El contador sale de `registry.jsx`.
+```bash
+corepack enable
+pnpm install
+pnpm dev              # catalog at http://localhost:5173
+pnpm lint && pnpm typecheck && pnpm test
+pnpm build
+pnpm visual           # Playwright visual baselines (pnpm visual:update after intended changes)
+pnpm registry         # regenerate registry.json after touching the catalog
+```
+
+## Adopt in a product
+
+1. Install the tokens (GitHub Packages, scope `@gntik-ai`):
+   `.npmrc` → `@gntik-ai:registry=https://npm.pkg.github.com`, then `pnpm add @gntik-ai/tokens`.
+2. In the global CSS, after Tailwind v4:
+   ```css
+   @import "tailwindcss";
+   @import "@gntik-ai/tokens/tailwind.css";   /* brand.css + token → utility mapping */
+   ```
+   Every token becomes a utility (`bg-primary`, `text-muted-foreground`, `bg-primary/14`).
+3. Activate the theme by class on `<html>`: `dark` (default) · `""` (light) · `high_contrast`.
+4. Load Geist and Geist Mono (`@fontsource/geist`, `@fontsource/geist-mono`).
+5. Copy each component's code from the catalog.
+
+## Status
+
+59 catalog entries (Overview → Inventory). The evolution plan (layouts, page templates,
+blocks, packages) follows the design-system proposal; this workspace is its Phase 1.

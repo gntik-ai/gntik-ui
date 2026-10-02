@@ -1,0 +1,9 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Supply-chain guard: only resolve releases published at least 7 days ago.
+minimumReleaseAge: 10080
+
+allowBuilds:
+  esbuild: true
