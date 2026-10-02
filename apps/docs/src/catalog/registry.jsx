@@ -12,6 +12,9 @@ const REGISTRY = [
   { group: 'Fundamentos', icon: 'palette', items: [
     { id: 'foundations', label: 'Foundations', icon: 'palette', status: 'done', blurb: 'Tokens: color, tipografía, espaciado, radios, sombras e iconos.' },
   ]},
+  { group: 'Library', icon: 'bricks', items: [
+    { id: 'ui-components', label: '@gntik-ai/ui', icon: 'bricks', status: 'done', blurb: 'Package components on Base UI: live examples, keyboard contract and source.' },
+  ]},
   { group: 'App shell', icon: 'layout', items: [
     { id: 'app-shell', label: 'App shell', icon: 'layout', status: 'done', blurb: 'Sidebar + topbar + cabecera de página. El chrome compartido.' },
   ]},

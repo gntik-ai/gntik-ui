@@ -11,6 +11,7 @@
 @import "@xyflow/react/dist/style.css";
 
 @source "./catalog";
+@source "../../../packages/ui/src";
 
 /* Tailwind v3 defaults the catalog was written against (v4 changed them). */
 @layer base {

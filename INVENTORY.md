@@ -11,7 +11,7 @@ Estado: 🟢 listo · 🟡 en curso · ⬜ pendiente
 
 ---
 
-## Estado: **59 / 59 listos** 🟢
+## Estado: **60 / 60 listos** 🟢
 
 Todos los componentes del inventario están construidos (preview interactivo + código).
 El contador del sidebar y del Overview se calcula solo desde `registry.jsx`.
@@ -20,6 +20,7 @@ El contador del sidebar y del Overview se calcula solo desde `registry.jsx`.
 |---|---|---|
 | **Empezar** | Overview | 🟢 |
 | **Fundamentos** | Foundations (color · tipografía · espaciado · radios · sombras · iconos) | 🟢 |
+| **Library** | @gntik-ai/ui (componentes del paquete, en vivo) | 🟢 |
 | **App shell** | App shell (sidebar + topbar + cabecera de página) | 🟢 |
 | **Headings** | Page headings · Section headings · Card headings | 🟢 |
 | **Datos** | Description lists · Stats · Billing & usage · Calendars | 🟢 |
