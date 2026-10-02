@@ -1,0 +1,116 @@
+/* ============================================================================
+   @gntik-ai/flow/styles.css — React Flow themed by the gntik-ui brand tokens.
+   Load once, after the token layer (@gntik-ai/tokens/brand.css). Every --xy-*
+   variable points at a brand token, so the three themes of brand.css
+   (:root = light · .dark · .high_contrast) re-skin the canvas with no JS.
+   Scope: anything inside `.gu-flow` (FlowCanvas adds it to its wrapper).
+   ============================================================================ */
+@import "@xyflow/react/dist/style.css";
+
+/* ── Variables: light (:root) and dark (.dark) share the mapping; the tokens differ ── */
+.gu-flow,
+.dark .gu-flow {
+  --xy-background-color: transparent;
+  --xy-background-pattern-color: hsl(var(--border));
+
+  --xy-edge-stroke: hsl(var(--muted-foreground) / 0.45);
+  --xy-edge-stroke-width: 1.5;
+  --xy-edge-stroke-selected: hsl(var(--primary));
+  --xy-edge-label-background-color: hsl(var(--card));
+  --xy-edge-label-color: hsl(var(--foreground));
+  --xy-connectionline-stroke: hsl(var(--primary));
+  --xy-connectionline-stroke-width: 1.75;
+
+  --xy-node-color: hsl(var(--card-foreground));
+  --xy-node-background-color: hsl(var(--card));
+  --xy-node-border: 1px solid hsl(var(--border));
+  --xy-node-border-radius: var(--radius-md);
+  --xy-node-group-background-color: hsl(var(--muted) / 0.4);
+  --xy-node-boxshadow-hover: var(--shadow-sm);
+  --xy-node-boxshadow-selected: 0 0 0 2px hsl(var(--primary) / 0.35);
+
+  --xy-handle-background-color: hsl(var(--card));
+  --xy-handle-border-color: hsl(var(--muted-foreground) / 0.55);
+
+  --xy-selection-background-color: hsl(var(--primary) / 0.08);
+  --xy-selection-border: 1px dashed hsl(var(--primary) / 0.6);
+  --xy-resize-background-color: hsl(var(--primary));
+
+  --xy-controls-button-background-color: hsl(var(--card));
+  --xy-controls-button-background-color-hover: hsl(var(--secondary));
+  --xy-controls-button-color: hsl(var(--foreground));
+  --xy-controls-button-color-hover: hsl(var(--foreground));
+  --xy-controls-button-border-color: hsl(var(--border));
+  --xy-controls-box-shadow: var(--shadow-md);
+
+  --xy-minimap-background-color: hsl(var(--card));
+  --xy-minimap-mask-background-color: hsl(var(--muted-foreground) / 0.12);
+  --xy-minimap-mask-stroke-color: hsl(var(--border));
+  --xy-minimap-mask-stroke-width: 1;
+  --xy-minimap-node-background-color: hsl(var(--muted-foreground) / 0.4);
+  --xy-minimap-node-stroke-color: transparent;
+
+  --xy-attribution-background-color: transparent;
+}
+
+/* ── High contrast: solid strokes, stronger handles and mask ─────────────────── */
+.high_contrast .gu-flow {
+  --xy-edge-stroke: hsl(var(--foreground) / 0.75);
+  --xy-edge-stroke-width: 2;
+  --xy-handle-border-color: hsl(var(--foreground));
+  --xy-node-border: 2px solid hsl(var(--border));
+  --xy-selection-border: 2px solid hsl(var(--primary));
+  --xy-minimap-mask-background-color: hsl(var(--foreground) / 0.18);
+}
+
+/* ── Structure ───────────────────────────────────────────────────────────────── */
+.gu-flow .react-flow__pane { cursor: grab; }
+.gu-flow .react-flow__pane.dragging { cursor: grabbing; }
+
+/* Active (animated) edges and the edge being connected are primary. */
+.gu-flow .react-flow__edge.animated .react-flow__edge-path { stroke: hsl(var(--primary)); stroke-width: 1.75px; }
+.gu-flow .react-flow__edge:focus-visible .react-flow__edge-path { stroke: hsl(var(--primary)); }
+.gu-flow .react-flow__edge-text { font-family: var(--font-mono); font-size: 10px; font-weight: 500; }
+
+/* Handles: small card dot → primary on hover / while connecting. */
+.gu-flow .react-flow__handle {
+  width: 9px; height: 9px; min-width: 0; min-height: 0; border-width: 1.5px; border-radius: 9999px;
+  transition: background-color 0.12s, border-color 0.12s;
+}
+.gu-flow .react-flow__handle:hover,
+.gu-flow .react-flow__handle.connectingto,
+.gu-flow .react-flow__handle.connectingfrom,
+.gu-flow .react-flow__handle.valid { background: hsl(var(--primary)); border-color: hsl(var(--primary)); }
+
+/* Nodes: the brand card draws its own border/ring; reset the built-in node boxes
+   (default/input/output/group) so a custom type named like one never gets the white box. */
+.gu-flow .react-flow__node { font-family: var(--font-sans); }
+.gu-flow .react-flow__node:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; border-radius: var(--radius-lg); }
+.gu-flow .react-flow__node.selected { box-shadow: none; }
+.gu-flow .react-flow__node-default,
+.gu-flow .react-flow__node-input,
+.gu-flow .react-flow__node-output,
+.gu-flow .react-flow__node-group {
+  padding: 0; width: auto; background: transparent; border: none; border-radius: 0;
+  color: inherit; box-shadow: none; text-align: left;
+}
+
+/* Controls + minimap. */
+.gu-flow .react-flow__controls { border: 1px solid hsl(var(--border)); border-radius: var(--radius-md); overflow: hidden; }
+.gu-flow .react-flow__controls-button { width: 26px; height: 26px; }
+.gu-flow .react-flow__controls-button:last-child { border-bottom: none; }
+.gu-flow .react-flow__controls-button svg { fill: currentColor; max-width: 13px; max-height: 13px; }
+.gu-flow .react-flow__minimap { border: 1px solid hsl(var(--border)); border-radius: var(--radius-md); overflow: hidden; }
+
+/* Attribution: discreet. */
+.gu-flow .react-flow__attribution { padding: 2px 5px; }
+.gu-flow .react-flow__attribution a { color: hsl(var(--muted-foreground) / 0.55); font-size: 9px; }
+
+/* "Running" node: a primary segment travels around the card border. */
+.gu-flow-run-frame { overflow: visible; }
+.gu-flow-run {
+  x: 1.25px; y: 1.25px; width: calc(100% - 2.5px); height: calc(100% - 2.5px); rx: 9px;
+  animation: gu-flow-run 1.8s linear infinite;
+}
+@keyframes gu-flow-run { to { stroke-dashoffset: -100; } }
+@media (prefers-reduced-motion: reduce) { .gu-flow-run { animation: none; } }

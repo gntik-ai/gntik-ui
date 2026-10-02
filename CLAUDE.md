@@ -61,7 +61,8 @@ Nombrar los objetos de estilo de forma única (nunca `const styles`).
 Componente de paquete: seguir `packages/ui/CONTRIBUTING.md`, exportarlo en `src/index.ts` y
 añadir un changeset. ESLint aplica las reglas de marca (sin paleta Tailwind, sin `dark:`, sin
 degradados, sin hex).
-Antes de dar algo por hecho: `pnpm lint && pnpm typecheck && pnpm test && pnpm registry:check`.
+Antes de dar algo por hecho: `pnpm lint && pnpm typecheck && pnpm test && pnpm registry:check`
+(+ `pnpm a11y` si se toca `packages/ui`).
 
 ## Reglas (duras)
 - Sobrio: sin degradados, sin glow; sombras planas brand-tinted. Mono-brand verde (hue 145)

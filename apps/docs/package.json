@@ -9,8 +9,9 @@
     "prebuild": "node scripts/copy-monaco.mjs",
     "build": "vite build",
     "preview": "vite preview --port 4173 --strictPort",
-    "visual": "playwright test",
-    "visual:update": "playwright test --update-snapshots"
+    "visual": "playwright test catalog.visual",
+    "visual:update": "playwright test catalog.visual --update-snapshots",
+    "a11y": "playwright test library.a11y"
   },
   "dependencies": {
     "@fontsource/geist": "^5.3.0",

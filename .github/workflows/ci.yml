@@ -35,6 +35,22 @@ jobs:
       - name: Build
         run: pnpm build
 
+  a11y:
+    needs: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: corepack enable
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @gntik-ai/docs build
+      - run: pnpm --filter @gntik-ai/docs exec playwright install --with-deps chromium
+      - name: axe on @gntik-ai/ui in dark, light and high contrast (against a11y-baseline.json)
+        run: pnpm a11y
+
   visual:
     needs: checks
     runs-on: ubuntu-latest
@@ -51,7 +67,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @gntik-ai/docs build
       - run: pnpm --filter @gntik-ai/docs exec playwright install --with-deps chromium
-      - name: Visual baselines (59 entries dark + 8 in light and high contrast)
+      - name: Visual baselines (60 entries dark + 8 in light and high contrast)
         run: pnpm visual
       - if: failure()
         uses: actions/upload-artifact@v7

@@ -165,7 +165,7 @@ function SectionHead({ kicker, title, intro, status }) {
   return (
     <div className="mb-8 max-w-3xl">
       <div className="flex items-center gap-3 mb-3">
-        {kicker && <div className="font-mono text-[11px] tracking-[0.18em] uppercase text-primary">{kicker}</div>}
+        {kicker && <div className="font-mono text-[11px] tracking-[0.18em] uppercase text-primary-text">{kicker}</div>}
         {status && <StatusTag status={status} />}
       </div>
       <h1 className="font-sans font-bold text-[2rem] leading-tight tracking-tight text-foreground" style={{ letterSpacing: '-0.03em' }}>{title}</h1>
@@ -176,8 +176,8 @@ function SectionHead({ kicker, title, intro, status }) {
 /* ── Etiqueta de estado (done / wip / todo) ──────────────────────────────── */
 function StatusTag({ status }) {
   const map = {
-    done: ['Listo', 'bg-primary/14 text-primary'],
-    wip: ['En curso', 'bg-warning/16 text-warning'],
+    done: ['Listo', 'bg-primary/14 text-primary-text'],
+    wip: ['En curso', 'bg-warning/16 text-warning-text'],
     todo: ['Pendiente', 'bg-muted-foreground/16 text-muted-foreground'],
   };
   const [label, cls] = map[status] || map.todo;

@@ -42,6 +42,7 @@ pnpm dev              # catalog at http://localhost:5173
 pnpm lint && pnpm typecheck && pnpm test
 pnpm build
 pnpm visual           # Playwright visual baselines (pnpm visual:update after intended changes)
+pnpm a11y             # axe on the @gntik-ai/ui examples in all three themes
 pnpm registry         # regenerate registry.json after touching the catalog
 pnpm changeset        # describe a change to a published package
 ```
@@ -58,6 +59,8 @@ pnpm changeset        # describe a change to a published package
    ```
    Every token becomes a utility (`bg-primary`, `text-muted-foreground`, `bg-primary/14`).
    Brand-coloured text uses the contrast-safe aliases (`text-primary-text`, `text-warning-text`…).
+   Using charts or flow too? Add `@source "../node_modules/@gntik-ai/charts/dist";` (and
+   `flow`), and `@import "@gntik-ai/flow/styles.css";` for the canvas.
 3. Wrap the app: `<ThemeProvider brand={musematicPreset}>` (dark by default; light,
    high_contrast or system; persisted). Inline `themeScript()` in `<head>` to avoid a flash.
 4. Load Geist and Geist Mono (`@fontsource/geist`, `@fontsource/geist-mono`).
