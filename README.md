@@ -25,8 +25,7 @@ gntik-ui/
 ├─ <grupo>.jsx       una sección por grupo (tooltips · skeletons · file-upload · …)
 ├─ blocks/           referencias HTML sueltas (Shell · Login · Fleet-filters)
 ├─ assets/           logos / símbolo / wordmarks
-├─ INVENTORY.md      espejo en texto del inventario + tandas sugeridas
-└─ legacy/           v0 (galería vanilla) — solo histórico
+└─ INVENTORY.md      espejo en texto del inventario + tandas sugeridas
 ```
 
 ## Adoptar en un producto
@@ -37,6 +36,6 @@ gntik-ui/
 
 ## Estado
 Inventario + progreso en la sección **Overview** del catálogo (y en `INVENTORY.md`).
-La librería de **componentes** está completa: **57 / 57** (todos los grupos en verde).
+La librería de **componentes** está completa: **59 / 59** (todos los grupos en verde).
 Siguiente terreno, aún abierto: **layouts** — páginas completas que compongan los
 componentes (dashboard del Fleet, detalle de agent, settings…). El contador sale de `registry.jsx`.

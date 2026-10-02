@@ -12,7 +12,7 @@
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useEffect, useRef } = window;
 
-const MONACO_VERSION = '0.55.1';
+const MONACO_VERSION = '0.57.0';
 const CDN = `https://cdn.jsdelivr.net/npm/monaco-editor@${MONACO_VERSION}/min`;
 const MONO = 'Geist Mono, ui-monospace, SFMono-Regular, Menlo, monospace';
 
@@ -20,14 +20,8 @@ const MONO = 'Geist Mono, ui-monospace, SFMono-Regular, Menlo, monospace';
 function loadMonaco() {
   if (window.__monacoPromise) return window.__monacoPromise;
   window.__monacoPromise = new Promise((resolve, reject) => {
-    // Worker vía blob: Monaco corre los servicios de lenguaje y el cálculo del
-    // diff en web workers; servidos desde CDN cross-origin necesitan este shim.
-    window.MonacoEnvironment = {
-      getWorkerUrl() {
-        const src = `self.MonacoEnvironment={baseUrl:'${CDN}/'};importScripts('${CDN}/vs/base/worker/workerMain.js');`;
-        return URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
-      },
-    };
+    // Workers: el bundle AMD de Monaco instala su propio MonacoEnvironment.getWorker
+    // (blob + assets con hash), así que no hace falta ningún shim aquí.
     const s = document.createElement('script');
     s.src = `${CDN}/vs/loader.js`;
     s.onload = () => {
@@ -535,13 +529,17 @@ function ThemeMap() {
 /* ── snippets ────────────────────────────────────────────────────────────── */
 const CODE_EDITOR = `import { useEffect, useRef, useState } from "react";
 
-// Monaco corre sus servicios de lenguaje en web workers; servido desde CDN
-// cross-origin necesita este shim de worker (vía blob).
+// Monaco (ESM) con Vite: cada servicio de lenguaje corre en su propio worker.
+import * as monaco from "monaco-editor";
+import EditorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
+import JsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
+import TsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+
 self.MonacoEnvironment = {
-  getWorkerUrl() {
-    const src = \`self.MonacoEnvironment={baseUrl:'\${CDN}/'};\` +
-      \`importScripts('\${CDN}/vs/base/worker/workerMain.js');\`;
-    return URL.createObjectURL(new Blob([src], { type: "text/javascript" }));
+  getWorker(_, label) {
+    if (label === "json") return new JsonWorker();
+    if (label === "typescript" || label === "javascript") return new TsWorker();
+    return new EditorWorker();
   },
 };
 

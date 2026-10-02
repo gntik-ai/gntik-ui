@@ -6,7 +6,7 @@
 # una rama en vivo sin reconstruir (con GNTIK_UI_SYNC_MINUTES).
 # ============================================================================
 
-FROM node:22-alpine AS build
+FROM node:24-alpine AS build
 WORKDIR /build
 COPY mcp/package.json mcp/package-lock.json ./
 RUN npm ci --no-audit --no-fund
@@ -14,7 +14,7 @@ COPY mcp/tsconfig.json ./
 COPY mcp/src ./src
 RUN npm run build && npm prune --omit=dev
 
-FROM node:22-alpine
+FROM node:24-alpine
 RUN apk add --no-cache git tini
 ENV NODE_ENV=production \
     GNTIK_UI_DIR=/app/design-system \

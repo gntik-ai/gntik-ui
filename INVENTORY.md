@@ -11,7 +11,7 @@ Estado: 🟢 listo · 🟡 en curso · ⬜ pendiente
 
 ---
 
-## Estado: **57 / 57 listos** 🟢
+## Estado: **59 / 59 listos** 🟢
 
 Todos los componentes del inventario están construidos (preview interactivo + código).
 El contador del sidebar y del Overview se calcula solo desde `registry.jsx`.
@@ -33,6 +33,7 @@ El contador del sidebar y del Overview se calcula solo desde `registry.jsx`.
 | **Layout** | Containers · Cards | 🟢 |
 | **Filtros** | Filters (buscador + popovers + chips + vistas guardadas) | 🟢 |
 | **Flow** | ReactFlow (arrastrar nodos · zoom/pan · handles · edges) | 🟢 |
+| **Editores** | Monaco Editor (edición · diff · embebido · multi-lenguaje) | 🟢 |
 
 ### Último pase
 - 🟢 **Tooltips** (Overlays) — sólido invertido + toolbar de iconos con atajo + tooltip enriquecido en card.

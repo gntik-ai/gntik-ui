@@ -22,7 +22,7 @@ function OverviewSection() {
   const c = regCounts();
   const pct = Math.round((c.done / c.total) * 100);
   const codeCss = `/* globals.css */\n@import "./tokens/brand.css";   /* :root · .dark · .high_contrast */`;
-  const codeTw = `// tailwind.config.ts → mapea cada token a hsl(var(--token))\nconst hsl = (v) => \`hsl(var(\${v}))\`;\nmodule.exports = {\n  darkMode: ["class", ".dark"],\n  theme: { extend: { colors: {\n    background: hsl("--background"), foreground: hsl("--foreground"),\n    card: { DEFAULT: hsl("--card"), foreground: hsl("--card-foreground") },\n    primary: { DEFAULT: hsl("--primary"), foreground: hsl("--primary-foreground") },\n    chrome: hsl("--chrome"), border: hsl("--border"), ring: hsl("--ring"),\n    success: hsl("--success"), warning: hsl("--warning"), info: hsl("--info"),\n  }}}},\n};`;
+  const codeTw = `// tailwind.config.ts → mapea cada token a hsl(var(--token))\nconst hsl = (v) => \`hsl(var(\${v}) / <alpha-value>)\`;\nmodule.exports = {\n  darkMode: ["class", ".dark"],\n  theme: { extend: { colors: {\n    background: hsl("--background"), foreground: hsl("--foreground"),\n    card: { DEFAULT: hsl("--card"), foreground: hsl("--card-foreground") },\n    primary: { DEFAULT: hsl("--primary"), foreground: hsl("--primary-foreground") },\n    chrome: hsl("--chrome"), border: hsl("--border"), ring: hsl("--ring"),\n    success: hsl("--success"), warning: hsl("--warning"), info: hsl("--info"),\n  }}}},\n};`;
 
   return (
     <div>
