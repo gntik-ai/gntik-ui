@@ -39,7 +39,17 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
   `status`. Mueve el sidebar, el dashboard y el contador a la vez.
 - `catalog.jsx` (marco + router + theme switch), `overview.jsx` (landing), y una sección por
   archivo registrada en `window.SECTIONS['id']`.
-- `packages/mcp` — MCP server; sirve `registry.json` (raíz), generado con `pnpm registry`.
+- `packages/ui` (`@gntik-ai/ui`) — componentes sobre Base UI + ThemeProvider + presets (gntik,
+  musematic). Contrato por carpeta en `packages/ui/CONTRIBUTING.md` (Name.tsx, name.variants.ts
+  con tailwind-variants, Name.doc.ts, examples/, test de teclado + axe, index.ts).
+- `packages/icons` (lucide + `Icon`), `charts` (Recharts 3), `flow` (@xyflow/react 12),
+  `editor` (Monaco 0.57): leen tokens solo vía `@gntik-ai/tokens/runtime`.
+- `packages/tokens/src/pairing.css` — alias de contraste (`text-primary-text`, `-success-`,
+  `-warning-`, `-destructive-text`, `outline-focus-ring`) que apuntan a tokens existentes;
+  un test exige AA en los 3 temas.
+- `packages/mcp` — MCP server (privado, imagen Docker); sirve `registry.json` (raíz), generado
+  con `pnpm registry`.
+- Releases: Changesets (`pnpm changeset`) → workflow Release → GitHub Packages.
 
 ## Cómo añadir un componente
 1. Crear/editar el `.jsx` de su grupo en `apps/docs/src/catalog/`: sección con preview
@@ -48,6 +58,9 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
 3. Poner `status:'done'` en `registry.jsx`, luego `pnpm registry` y `pnpm visual:update`.
 Cada archivo lee de `window` arriba (`const { ... } = window;`) y exporta a `window` al final.
 Nombrar los objetos de estilo de forma única (nunca `const styles`).
+Componente de paquete: seguir `packages/ui/CONTRIBUTING.md`, exportarlo en `src/index.ts` y
+añadir un changeset. ESLint aplica las reglas de marca (sin paleta Tailwind, sin `dark:`, sin
+degradados, sin hex).
 Antes de dar algo por hecho: `pnpm lint && pnpm typecheck && pnpm test && pnpm registry:check`.
 
 ## Reglas (duras)

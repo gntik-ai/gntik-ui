@@ -1,0 +1,31 @@
+/* ============================================================================
+   @gntik-ai/tokens · pairing.css — contrast-safe text and focus aliases
+   ----------------------------------------------------------------------------
+   brand.css values are frozen. Where a brand colour is too light to read as
+   text on the light theme (green 2.07:1, amber 2.14:1 on white) these aliases
+   point at an EXISTING darker token instead. No new colour is introduced:
+   every alias is var(--existing-token), as HSL channels.
+   Use the `text-primary-text`, `text-success-text`, `text-warning-text`,
+   `text-destructive-text` and `ring-focus-ring` utilities for text and focus.
+   ============================================================================ */
+:root {
+  --primary-text: var(--accent-foreground);
+  --success-text: var(--accent-foreground);
+  --warning-text: var(--foreground);
+  --destructive-text: var(--destructive);
+  --focus-ring: var(--brand-secondary);
+}
+.dark {
+  --primary-text: var(--primary);
+  --success-text: var(--success);
+  --warning-text: var(--warning);
+  --destructive-text: var(--category-rose);
+  --focus-ring: var(--ring);
+}
+.high_contrast {
+  --primary-text: var(--primary);
+  --success-text: var(--success);
+  --warning-text: var(--warning);
+  --destructive-text: var(--destructive);
+  --focus-ring: var(--ring);
+}

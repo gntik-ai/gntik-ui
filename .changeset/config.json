@@ -1,0 +1,12 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@4.0.1/schema.json",
+  "baseBranch": "main",
+  "access": "restricted",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [["@gntik-ai/ui", "@gntik-ai/icons", "@gntik-ai/charts", "@gntik-ai/flow", "@gntik-ai/editor"]],
+  "updateInternalDependencies": "patch",
+  "privatePackages": { "version": false, "tag": false },
+  "ignore": ["@gntik-ai/docs"]
+}

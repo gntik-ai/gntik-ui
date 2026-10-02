@@ -17,9 +17,13 @@
     "registry": "pnpm --filter @gntik-ai/gntik-ui-mcp registry",
     "registry:check": "pnpm --filter @gntik-ai/gntik-ui-mcp registry:check",
     "visual": "pnpm --filter @gntik-ai/docs visual",
-    "visual:update": "pnpm --filter @gntik-ai/docs visual:update"
+    "visual:update": "pnpm --filter @gntik-ai/docs visual:update",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm -r build && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.3",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.11.0",
     "eslint-plugin-react-hooks": "^7.1.1",

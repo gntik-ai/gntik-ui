@@ -8,6 +8,7 @@
    Themes switch by class on <html>: "" (light) · "dark" · "high_contrast".
    ============================================================================ */
 @import "./brand.css";
+@import "./pairing.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -41,6 +42,11 @@
   --color-category-violet: hsl(var(--category-violet));
   --color-category-amber: hsl(var(--category-amber));
   --color-category-cyan: hsl(var(--category-cyan));
+  --color-primary-text: hsl(var(--primary-text));
+  --color-success-text: hsl(var(--success-text));
+  --color-warning-text: hsl(var(--warning-text));
+  --color-destructive-text: hsl(var(--destructive-text));
+  --color-focus-ring: hsl(var(--focus-ring));
 }
 
 /* Radius, shadow and font scales: brand.css declares --radius-*, --shadow-*

@@ -1,6 +1,7 @@
 {
   "name": "@gntik-ai/gntik-ui-mcp",
   "version": "0.1.0",
+  "private": true,
   "description": "MCP server del design system gntik-ui — remaquetación asistida desde Claude Code",
   "license": "MIT",
   "type": "module",
