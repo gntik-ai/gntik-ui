@@ -78,3 +78,17 @@ export * from './components/Tooltip';
 export * from './components/UserMenu';
 export * from './components/VisuallyHidden';
 export * from './components/WorkspaceSwitcher';
+
+// Layouts
+export * from './layouts/AuthLayout';
+export * from './layouts/CanvasLayout';
+export * from './layouts/DocsLayout';
+export * from './layouts/InspectorLayout';
+export * from './layouts/Page';
+export * from './layouts/PrintLayout';
+export * from './layouts/SettingsLayout';
+export * from './layouts/SidebarLayout';
+export * from './layouts/SplitLayout';
+export * from './layouts/StackedLayout';
+export * from './layouts/StatusLayout';
+export * from './layouts/WizardLayout';
