@@ -53,6 +53,37 @@ const RULES: ReadonlyArray<readonly [token: string, color: string, fontStyle?: s
   ['metatag', 'category-rose'],
 ];
 
+const channel = (hex: string, i: number) => parseInt(hex.slice(1 + 2 * i, 3 + 2 * i), 16);
+const luminance = (hex: string) => {
+  const [r, g, b] = [0, 1, 2].map((i) => {
+    const v = channel(hex, i) / 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!;
+};
+export const contrastRatio = (a: string, b: string) => {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi! + 0.05) / (lo! + 0.05);
+};
+/** Syntax text target: AA (4.5:1) with headroom for the current-line highlight. */
+const SYNTAX_CONTRAST = 4.7;
+
+/**
+ * Keeps a syntax colour's hue but mixes it toward `fg` in 10% steps until it reaches
+ * SYNTAX_CONTRAST on `bg` (green, amber and cyan on the light theme's white card otherwise
+ * fall to 2–3:1). Token values never change; only the mix is derived from them.
+ */
+export function readableOn(color: string, bg: string, fg: string): string {
+  for (let step = 0; step <= 10; step++) {
+    const t = step / 10;
+    const hex = `#${[0, 1, 2]
+      .map((i) => Math.round(channel(color, i) * (1 - t) + channel(fg, i) * t).toString(16).padStart(2, '0'))
+      .join('')}`;
+    if (contrastRatio(hex, bg) >= SYNTAX_CONTRAST) return hex;
+  }
+  return fg;
+}
+
 /**
  * Builds Monaco theme data from the live brand tokens read on `el`
  * (default: <html>). Every colour comes from `tokenHex`; alpha is a hex suffix.
@@ -73,7 +104,7 @@ export function brandThemeData(theme: Theme, el?: Element): editor.IStandaloneTh
     inherit: true,
     rules: RULES.map(([token, color, fontStyle]) => ({
       token,
-      foreground: c(color).slice(1),
+      foreground: readableOn(c(color), card, fg).slice(1),
       ...(fontStyle ? { fontStyle } : {}),
     })),
     colors: {
