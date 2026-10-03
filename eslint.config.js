@@ -30,7 +30,7 @@ export default tseslint.config(
   },
   {
     // Component packages: TypeScript + React hooks + brand rules.
-    files: ['packages/{ui,icons,charts,flow,editor}/**/*.{ts,tsx}'],
+    files: ['packages/{ui,icons,charts,flow,editor,chat,blocks,templates}/**/*.{ts,tsx}'],
     extends: [tseslint.configs.recommended],
     plugins: { 'react-hooks': reactHooks },
     languageOptions: { globals: globals.browser },
