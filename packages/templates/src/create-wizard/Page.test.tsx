@@ -21,6 +21,8 @@ describe('CreateWizardPage', () => {
     await userEvent.click(screen.getByRole('button', { name: /Next/ }));
     await userEvent.click(screen.getByRole('button', { name: /Next/ }));
     expect(screen.getByRole('heading', { level: 1, name: 'Review and create' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Summary' })).toBeNull();
+    expect(screen.getAllByRole('heading', { level: 2 }).length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText('Start from a template')).toBeInTheDocument();
     await expectNoAxeViolations(container);
 

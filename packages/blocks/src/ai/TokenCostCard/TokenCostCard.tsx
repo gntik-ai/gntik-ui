@@ -24,6 +24,8 @@ export interface TokenCostCardProps {
   title?: string;
   /** Subtitle, e.g. the model or project the usage belongs to. */
   description?: string;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -37,6 +39,7 @@ export function TokenCostCard({
   currency = 'USD',
   title = 'Token usage',
   description = 'All models · current project',
+  titleAs = 'h3',
   className,
 }: TokenCostCardProps) {
   const [periodId, setPeriodId] = useState(defaultPeriod ?? periods[1]?.id ?? periods[0]?.id ?? '');
@@ -57,7 +60,7 @@ export function TokenCostCard({
     <Card className={cn('w-full', className)}>
       <CardHeader>
         <div>
-          <CardTitle>{title}</CardTitle>
+          <CardTitle as={titleAs}>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>
         </div>
         {periods.length > 1 && (

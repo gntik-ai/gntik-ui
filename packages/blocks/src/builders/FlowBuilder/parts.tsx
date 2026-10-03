@@ -4,16 +4,26 @@ import { FLOW_TONES, KIND_CHIP, KindGlyph, type FlowNode, type FlowNodeData, typ
 import { Button, Field, FieldLabel, Input, SimpleSelect, cn } from '@gntik-ai/ui';
 import type { ConsoleEntry, PaletteItem } from './fixtures';
 
+/** Heading level of a panel title (one below the builder's title). */
+export type PanelHeading = 'h3' | 'h4' | 'h5';
+
 const panelTitle = 'px-3 pt-3 pb-2 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase';
 
+export interface NodePaletteProps {
+  items: PaletteItem[];
+  onAdd: (item: PaletteItem) => void;
+  /** Heading level of the panel title (default h3). */
+  titleAs?: PanelHeading;
+}
+
 /** Left rail: node kinds to add to the canvas. */
-export function NodePalette({ items, onAdd }: { items: PaletteItem[]; onAdd: (item: PaletteItem) => void }) {
+export function NodePalette({ items, onAdd, titleAs: TitleTag = 'h3' }: NodePaletteProps) {
   const titleId = useId();
   return (
     <div className="flex h-full min-h-0 flex-col bg-card">
-      <h3 id={titleId} className={panelTitle}>
+      <TitleTag id={titleId} className={panelTitle}>
         Nodes
-      </h3>
+      </TitleTag>
       <ul aria-labelledby={titleId} className="flex-1 overflow-y-auto px-2 pb-2">
         {items.map((item) => (
           <li key={item.kind + item.title}>
@@ -49,16 +59,18 @@ export interface NodeInspectorProps {
   node: FlowNode | undefined;
   onChange: (id: string, patch: Partial<FlowNodeData>) => void;
   onDelete: (id: string) => void;
+  /** Heading level of the panel title (default h3). */
+  titleAs?: PanelHeading;
 }
 
 /** Right rail: the selected node's editable fields. */
-export function NodeInspector({ node, onChange, onDelete }: NodeInspectorProps) {
+export function NodeInspector({ node, onChange, onDelete, titleAs: TitleTag = 'h3' }: NodeInspectorProps) {
   const titleId = useId();
   return (
     <div className="flex h-full min-h-0 flex-col bg-card">
-      <h3 id={titleId} className={panelTitle}>
+      <TitleTag id={titleId} className={panelTitle}>
         Inspector
-      </h3>
+      </TitleTag>
       {node ? (
         <form
           aria-labelledby={titleId}
@@ -112,12 +124,19 @@ const CONSOLE_LEVEL: Record<ConsoleEntry['level'], string> = {
   error: 'text-destructive-text',
 };
 
+export interface RunConsoleProps {
+  entries: ConsoleEntry[];
+  onClear: () => void;
+  /** Heading level of the panel title (default h3). */
+  titleAs?: PanelHeading;
+}
+
 /** Bottom panel: run output (role="log"). */
-export function RunConsole({ entries, onClear }: { entries: ConsoleEntry[]; onClear: () => void }) {
+export function RunConsole({ entries, onClear, titleAs: TitleTag = 'h3' }: RunConsoleProps) {
   return (
     <div className="flex h-full min-h-0 flex-col bg-card">
       <div className="flex items-center justify-between border-b border-border pr-2">
-        <h3 className={cn(panelTitle, 'pb-2')}>Run console</h3>
+        <TitleTag className={cn(panelTitle, 'pb-2')}>Run console</TitleTag>
         <Button variant="ghost" size="sm" onClick={onClear} disabled={entries.length === 0} className="h-7">
           Clear
         </Button>

@@ -28,6 +28,8 @@ export interface DescriptionListCardProps {
   editLabel?: string;
   /** Called after a value is copied. */
   onCopy?: (item: DescriptionItem) => void;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -70,12 +72,13 @@ export function DescriptionListCard({
   onEdit,
   editLabel = 'Edit',
   onCopy,
+  titleAs = 'h3',
   className,
 }: DescriptionListCardProps) {
   return (
     <Card className={className}>
       <CardHeader divided>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle as={titleAs}>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
         {onEdit && (
           <CardAction>

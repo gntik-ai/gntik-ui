@@ -28,7 +28,6 @@ import {
   TabsPanel,
   TabsTab,
   Textarea,
-  VisuallyHidden,
   type BreadcrumbItem,
 } from '@gntik-ai/ui';
 import { useState } from 'react';
@@ -55,6 +54,12 @@ export interface ResourceDetailProps {
   meta: PageHeaderMetaItem[];
   actions: PageChromeAction[];
   details: readonly DescriptionItem[];
+  /** Title of the Overview details card (default "Configuration"). */
+  overviewTitle: string;
+  /** Description of the Overview details card. */
+  overviewDescription: string;
+  /** Title of the Overview status-history card (default "Status history"). */
+  historyTitle: string;
   events: readonly StatusEvent[];
   activity: readonly ActivityItem[];
   dangerActions: DangerZoneAction[];
@@ -85,6 +90,9 @@ export default function ResourceDetailPage({
     { label: 'Redeploy', icon: RotateCw, variant: 'primary' },
   ],
   details = detailItems,
+  overviewTitle = 'Configuration',
+  overviewDescription = 'Settings of this resource.',
+  historyTitle = 'Status history',
   events = detailEvents,
   activity = detailActivity,
   dangerActions = detailDangerActions,
@@ -123,10 +131,16 @@ export default function ResourceDetailPage({
           </TabsList>
 
           <TabsPanel value="overview">
-            <VisuallyHidden render={<h2 />}>Overview</VisuallyHidden>
             <Grid cols={{ base: 1, lg: 5 }} gap={6} align="start">
-              <DescriptionListCard className="lg:col-span-3" items={details} onEdit={onEditDetails} />
-              <Section variant="card" padding="md" title="Status history" className="lg:col-span-2" headingLevel="h3">
+              <DescriptionListCard
+                className="lg:col-span-3"
+                titleAs="h2"
+                title={overviewTitle}
+                description={overviewDescription}
+                items={details}
+                onEdit={onEditDetails}
+              />
+              <Section variant="card" padding="md" title={historyTitle} className="lg:col-span-2">
                 <StatusTimeline events={events} maxVisible={4} />
               </Section>
             </Grid>

@@ -98,12 +98,10 @@ export default function HomeDashboardPage<P extends object = CostPoint, S extend
       >
         <Stack gap={6}>
           <KpiRow items={kpis} />
-          <Section title="Trends" description="Spend and traffic over the selected range.">
-            <Grid cols={{ base: 1, lg: 2 }} gap={6}>
-              <ChartCard<P> {...primaryChart} />
-              <ChartCard<S> {...secondary} ranges={requestRanges} dataByRange={requestsByRange} />
-            </Grid>
-          </Section>
+          <Grid cols={{ base: 1, lg: 2 }} gap={6}>
+            <ChartCard<P> titleAs="h2" {...primaryChart} />
+            <ChartCard<S> titleAs="h2" {...secondary} ranges={requestRanges} dataByRange={requestsByRange} />
+          </Grid>
           <Grid cols={{ base: 1, lg: 3 }} gap={6} align="start">
             <GridItem span={{ base: 1, lg: 2 }}>
               <Section

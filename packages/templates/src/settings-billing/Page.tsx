@@ -33,15 +33,11 @@ export default function SettingsBillingPage({
 }: Partial<SettingsBillingProps>) {
   return (
     <SettingsFrame page="billing" width="wide" description="Your plan, usage this cycle, payment method and invoices." {...frame}>
-      <Section title="Plan">
-        <PlanCard plan={plan} onUpgrade={onUpgrade} onManage={onManagePlan} onCycleChange={onCycleChange} />
-      </Section>
+      <PlanCard titleAs="h2" plan={plan} onUpgrade={onUpgrade} onManage={onManagePlan} onCycleChange={onCycleChange} />
       <Section title="Usage" description="Resets at the start of each billing cycle.">
         <QuotaMeters quotas={quotas} title="Plan quotas" />
       </Section>
-      <Section title="Payment">
-        <PaymentMethodCard method={paymentMethod} description="Charged on the first day of each cycle." onUpdate={onUpdatePaymentMethod} />
-      </Section>
+      <PaymentMethodCard titleAs="h2" method={paymentMethod} description="Charged on the first day of each cycle." onUpdate={onUpdatePaymentMethod} />
       <Section title="Invoices">
         <InvoiceTable invoices={invoices} currency={currency} onDownload={onDownloadInvoice} />
       </Section>

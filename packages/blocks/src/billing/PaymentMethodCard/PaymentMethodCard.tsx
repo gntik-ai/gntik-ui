@@ -23,6 +23,8 @@ export interface PaymentMethodCardProps {
   onUpdate?: () => void;
   onRemove?: () => void;
   updateLabel?: string;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -39,6 +41,7 @@ export function PaymentMethodCard({
   onUpdate,
   onRemove,
   updateLabel = 'Update',
+  titleAs = 'h3',
   className,
 }: PaymentMethodCardProps) {
   const expiry = `${String(method.expMonth).padStart(2, '0')}/${String(method.expYear).slice(-2)}`;
@@ -46,7 +49,7 @@ export function PaymentMethodCard({
   return (
     <Card className={cn(className)}>
       <CardHeader divided>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle as={titleAs}>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
         <CardAction className="flex items-center gap-2">
           {onRemove && (

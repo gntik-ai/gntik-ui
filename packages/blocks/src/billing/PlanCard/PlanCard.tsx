@@ -32,6 +32,8 @@ export interface PlanCardProps {
   onManage?: () => void;
   upgradeLabel?: string;
   manageLabel?: string;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -51,6 +53,7 @@ export function PlanCard({
   onManage,
   upgradeLabel = 'Upgrade plan',
   manageLabel = 'Manage',
+  titleAs: TitleTag = 'h3',
   className,
 }: PlanCardProps) {
   const [cycle, setCycle] = useState<BillingCycle>(defaultCycle);
@@ -73,7 +76,7 @@ export function PlanCard({
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-[17px] font-semibold tracking-tight text-foreground">{plan.name} plan</h3>
+            <TitleTag className="text-[17px] font-semibold tracking-tight text-foreground">{plan.name} plan</TitleTag>
             <Badge tone={status.tone} dot>
               {status.label}
             </Badge>

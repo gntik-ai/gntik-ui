@@ -28,13 +28,15 @@ export interface ResourceCardGridProps {
   getActions?: (item: ResourceCard) => Array<MoreMenuAction | 'separator'>;
   /** Columns at the widest breakpoint. */
   columns?: 2 | 3 | 4;
+  /** Heading level of each card's name, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
 const COLS = { 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-3 xl:grid-cols-4' } as const;
 
 /** Responsive grid of resource cards: icon or avatar, name, status, meta figures and a row-actions MoreMenu. */
-export function ResourceCardGrid({ items = RESOURCE_CARDS, label = 'Resources', onAction, getActions, columns = 3, className }: ResourceCardGridProps) {
+export function ResourceCardGrid({ items = RESOURCE_CARDS, label = 'Resources', onAction, getActions, columns = 3, titleAs: TitleTag = 'h3', className }: ResourceCardGridProps) {
   const defaults = (item: ResourceCard): Array<MoreMenuAction | 'separator'> => [
     { label: 'Open', icon: ExternalLink, onSelect: () => onAction?.('open', item) },
     { label: 'Rename', icon: Pencil, onSelect: () => onAction?.('rename', item) },
@@ -63,7 +65,7 @@ export function ResourceCardGrid({ items = RESOURCE_CARDS, label = 'Resources', 
               </div>
             </div>
             <div className="mt-4 min-w-0">
-              <h3 className="truncate text-[14px] font-semibold text-foreground">{item.name}</h3>
+              <TitleTag className="truncate text-[14px] font-semibold text-foreground">{item.name}</TitleTag>
               {item.description && <p className="mt-0.5 truncate text-[12.5px] text-muted-foreground">{item.description}</p>}
             </div>
             {item.meta && item.meta.length > 0 && (

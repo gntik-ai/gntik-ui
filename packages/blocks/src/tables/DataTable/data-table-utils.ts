@@ -3,6 +3,21 @@ import type { ReactNode } from 'react';
 export type SortDirectionValue = 'ascending' | 'descending';
 export type CellValue = string | number | boolean | Date | null | undefined;
 
+export type DataTableColumnVariant = 'default' | 'mono' | 'muted' | 'numeric';
+
+/** Body-cell classes of each column variant. */
+export const COLUMN_VARIANT_CLASSES: Record<DataTableColumnVariant, string> = {
+  default: '',
+  mono: 'font-mono text-[12px]',
+  muted: 'text-[12.5px] text-muted-foreground',
+  numeric: 'font-mono text-[12.5px] tabular-nums',
+};
+
+/** Effective alignment of a column (numeric columns default to right). */
+export function columnAlign<T>(column: DataTableColumn<T>): DataTableColumn<T>['align'] {
+  return column.align ?? (column.variant === 'numeric' ? 'right' : undefined);
+}
+
 /** One typed column of a DataTable. */
 export interface DataTableColumn<T> {
   /** Stable key (sorting, visibility). */
@@ -19,7 +34,12 @@ export interface DataTableColumn<T> {
   hideable?: boolean;
   /** Hidden until turned on in the column menu. */
   defaultHidden?: boolean;
-  /** Classes for the body cells. */
+  /**
+   * Presentational preset for the body cells: `mono` (monospace ids, regions), `muted`
+   * (secondary text), `numeric` (monospace tabular figures, right-aligned unless `align` is set).
+   */
+  variant?: DataTableColumnVariant;
+  /** Classes for the body cells (merged after the variant's). */
   className?: string;
   /** Classes for the header cell (e.g. a width). */
   headClassName?: string;

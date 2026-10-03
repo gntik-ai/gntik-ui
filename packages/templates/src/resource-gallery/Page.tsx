@@ -1,6 +1,6 @@
 import { DataTable, NoResultsEmpty, PageHeader, PageToolbar, ResourceCardGrid, type ResourceAction, type ResourceCard } from '@gntik-ai/blocks';
 import { Plus } from '@gntik-ai/icons';
-import { Page, Section, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
+import { Page, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
 import { useState } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import { galleryBreadcrumbs, galleryColumns, galleryItems, galleryViews, searchResources } from './data';
@@ -69,11 +69,14 @@ export default function ResourceGalleryPage({
             }}
             primaryAction={{ label: createLabel, icon: Plus, onClick: onCreate }}
           />
-          <Section title="All resources" description={`${visible.length} of ${items.length} shown`}>
+          <Stack gap={3}>
+            <p aria-live="polite" className="text-[12.5px] text-muted-foreground">
+              {visible.length} of {items.length} shown
+            </p>
             {visible.length === 0 ? (
-              <NoResultsEmpty entity="resources" query={query} filterCount={0} onClearSearch={() => setQuery('')} titleAs="h3" bordered />
+              <NoResultsEmpty entity="resources" query={query} filterCount={0} onClearSearch={() => setQuery('')} titleAs="h2" bordered />
             ) : view === 'grid' ? (
-              <ResourceCardGrid items={visible} label="Resources" onAction={handleAction} />
+              <ResourceCardGrid items={visible} label="Resources" onAction={handleAction} titleAs="h2" />
             ) : (
               <DataTable<ResourceCard>
                 rows={visible}
@@ -89,7 +92,7 @@ export default function ResourceGalleryPage({
                 ]}
               />
             )}
-          </Section>
+          </Stack>
         </Stack>
       </Page>
     </ConsoleShell>

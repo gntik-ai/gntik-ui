@@ -16,6 +16,8 @@ export interface CostBreakdownProps {
   centerLabel?: string;
   /** Donut diameter in px. */
   size?: number;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -37,6 +39,7 @@ export function CostBreakdown({
   title = 'Cost breakdown',
   centerLabel = 'this cycle',
   size = 176,
+  titleAs: TitleTag = 'h3',
   className,
 }: CostBreakdownProps) {
   const ranked = [...items].sort((a, b) => b.amount - a.amount);
@@ -47,7 +50,7 @@ export function CostBreakdown({
   return (
     <Card className={cn('p-6', className)}>
       <div className="flex items-baseline justify-between gap-3">
-        <h3 className="text-[15px] font-semibold tracking-tight text-foreground">{title}</h3>
+        <TitleTag className="text-[15px] font-semibold tracking-tight text-foreground">{title}</TitleTag>
         <span className="font-mono text-[13px] font-semibold text-foreground tabular-nums">{money(total)}</span>
       </div>
       <div className="mt-5 flex flex-col items-center gap-6 sm:flex-row sm:items-center">

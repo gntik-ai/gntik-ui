@@ -22,6 +22,8 @@ export interface AgendaListProps {
   maxHeight?: number;
   emptyTitle?: string;
   emptyDescription?: string;
+  /** Heading level of the title, to fit the page outline (default h3); inner headings use the next level. */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -37,8 +39,10 @@ export function AgendaList({
   maxHeight,
   emptyTitle = 'Nothing scheduled',
   emptyDescription = 'There is no scheduled work in this period.',
+  titleAs: TitleTag = 'h3',
   className,
 }: AgendaListProps) {
+  const SubTag = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
   const uid = useId();
   const start = from === undefined ? today : from;
   const groups = useMemo(() => {
@@ -58,13 +62,13 @@ export function AgendaList({
   return (
     <section aria-label={title} className={cn('overflow-hidden rounded-xl border border-border bg-card', className)}>
       <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-5">
-        <h3 className="text-[15px] font-semibold tracking-tight text-foreground">{title}</h3>
+        <TitleTag className="text-[15px] font-semibold tracking-tight text-foreground">{title}</TitleTag>
         <span className="font-mono text-[11px] text-muted-foreground">
           {groups.reduce((n, [, list]) => n + list.length, 0)} scheduled
         </span>
       </div>
       {groups.length === 0 ? (
-        <EmptyState icon={CalendarDays} title={emptyTitle} titleAs="h4" description={emptyDescription} className="py-12" />
+        <EmptyState icon={CalendarDays} title={emptyTitle} titleAs={TitleTag === 'h2' ? 'h3' : 'h4'} description={emptyDescription} className="py-12" />
       ) : (
         <div
           style={maxHeight ? { maxHeight } : undefined}
@@ -78,12 +82,12 @@ export function AgendaList({
             const headingId = `${uid}-${key}`;
             return (
               <div key={key}>
-                <h4
+                <SubTag
                   id={headingId}
                   className="border-b border-border bg-secondary/30 px-4 py-2 font-mono text-[11px] tracking-wide text-muted-foreground uppercase sm:px-5"
                 >
                   {dayLabel(first.start)}
-                </h4>
+                </SubTag>
                 <ul aria-labelledby={headingId} className="divide-y divide-border border-b border-border last:border-b-0">
                   {list.map((event) => {
                     const kind = kindOf(event, kinds);

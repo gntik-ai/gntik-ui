@@ -42,6 +42,8 @@ export interface ModelKeysListProps {
   onRevoke?: (key: ModelKey) => void;
   /** Shows an "Add key" button. */
   onAdd?: () => void;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -55,6 +57,7 @@ export function ModelKeysList({
   onTest = simulateTest,
   onRevoke,
   onAdd,
+  titleAs = 'h3',
   className,
 }: ModelKeysListProps) {
   const titleId = useId();
@@ -96,7 +99,7 @@ export function ModelKeysList({
     <Card className={cn('w-full', className)} aria-labelledby={titleId} role="region">
       <CardHeader divided>
         <div>
-          <CardTitle id={titleId}>{title}</CardTitle>
+          <CardTitle as={titleAs} id={titleId}>{title}</CardTitle>
           <CardDescription>Keys are stored encrypted and only shown masked.</CardDescription>
         </div>
         {onAdd && (

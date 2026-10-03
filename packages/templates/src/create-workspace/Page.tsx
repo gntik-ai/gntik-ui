@@ -1,7 +1,6 @@
-import type { PricingTier, RoleOption } from '@gntik-ai/blocks';
+import { PricingTable, type PricingTier, type RoleOption } from '@gntik-ai/blocks';
 import { Globe } from '@gntik-ai/icons';
 import {
-  Badge,
   Field,
   FieldDescription,
   FieldError,
@@ -21,7 +20,6 @@ import {
 import { useId, useState, type ReactNode } from 'react';
 import {
   EMAIL_RE,
-  planPrice,
   slugify,
   workspaceInitialValues,
   workspacePlans,
@@ -60,7 +58,7 @@ function StepIntro({ id, title, children }: { id: string; title: string; childre
 
 const emailError = (token: string) => (EMAIL_RE.test(token) ? null : `${token} is not a valid email address`);
 
-/** Workspace onboarding: name, region and plan as selectable cards, then inline invitations. */
+/** Workspace onboarding: name and region as selectable cards, the plan as a selectable PricingTable, then inline invitations. */
 export default function CreateWorkspacePage({
   steps = workspaceSteps,
   initialValues = workspaceInitialValues,
@@ -152,27 +150,20 @@ export default function CreateWorkspacePage({
             <StepIntro id={`${id}-plan`} title="Pick a plan">
               Change or cancel at any time from Billing.
             </StepIntro>
-            <SelectableCardGroup aria-labelledby={`${id}-plan`} value={values.plan} onValueChange={(v) => set('plan', v)} columns={1}>
-              {plans.map((tier) => (
-                <SelectableCard
-                  key={tier.id}
-                  value={tier.id}
-                  title={tier.name}
-                  description={tier.description}
-                  meta={
-                    <>
-                      {planPrice(tier)}
-                      {tier.badge && (
-                        <>
-                          {' '}
-                          <Badge tone="primary">{tier.badge}</Badge>
-                        </>
-                      )}
-                    </>
-                  }
-                />
-              ))}
-            </SelectableCardGroup>
+            <PricingTable
+              className="p-0 sm:p-0"
+              tiers={[...plans]}
+              title={null}
+              eyebrow={null}
+              description={null}
+              aria-labelledby={`${id}-plan`}
+              headingLevel="h2"
+              showCycleToggle={false}
+              columns={1}
+              selectable
+              value={values.plan}
+              onValueChange={(v) => set('plan', v)}
+            />
           </Stack>
         </section>
       )}

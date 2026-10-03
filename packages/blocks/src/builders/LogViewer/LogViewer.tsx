@@ -31,6 +31,8 @@ export interface LogViewerProps {
   defaultFollow?: boolean;
   /** Called after a line is copied. */
   onCopyLine?: (line: LogLine) => void;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -74,6 +76,7 @@ export function LogViewer({
   defaultLevels = LOG_LEVELS,
   defaultFollow = true,
   onCopyLine,
+  titleAs: TitleTag = 'h3',
   className,
 }: LogViewerProps) {
   const titleId = useId();
@@ -133,9 +136,9 @@ export function LogViewer({
     >
       <div className="flex flex-col gap-3 border-b border-border bg-secondary/35 px-3 py-2.5 lg:flex-row lg:items-center">
         <div className="flex items-center gap-2">
-          <h3 id={titleId} className="text-[13px] font-semibold text-foreground">
+          <TitleTag id={titleId} className="text-[13px] font-semibold text-foreground">
             {title}
-          </h3>
+          </TitleTag>
           <span className="font-mono text-[11px] text-muted-foreground">
             {visible.length} of {lines.length}
           </span>

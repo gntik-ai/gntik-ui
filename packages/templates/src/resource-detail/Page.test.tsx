@@ -9,7 +9,8 @@ describe('ResourceDetailPage', () => {
     expect(screen.getByRole('main')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 1, name: 'orders-api' })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'Overview' })).toHaveAttribute('aria-selected', 'true');
-    expect(screen.getByRole('heading', { name: 'Configuration' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Configuration' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Status history' })).toBeInTheDocument();
     expect(screen.getByRole('list', { name: 'Status history' })).toBeInTheDocument();
     await expectNoAxeViolations(container);
   });
@@ -35,5 +36,12 @@ describe('ResourceDetailPage', () => {
     expect(onSaveSettings).toHaveBeenCalledWith(expect.objectContaining({ name: 'orders-api-v2' }));
     expect(screen.getByRole('heading', { name: 'Danger zone' })).toBeInTheDocument();
     await expectNoAxeViolations(container);
+  });
+
+  it('takes the Overview card copy from props', { timeout: 15000 }, () => {
+    render(<ResourceDetailPage overviewTitle="Function settings" overviewDescription="Runtime and limits." historyTitle="Deploy history" />);
+    expect(screen.getByRole('heading', { level: 2, name: 'Function settings' })).toBeInTheDocument();
+    expect(screen.getByText('Runtime and limits.')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Deploy history' })).toBeInTheDocument();
   });
 });

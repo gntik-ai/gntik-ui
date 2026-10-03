@@ -28,6 +28,8 @@ export interface QuotaMetersProps {
   formatValue?: (value: number) => string;
   defaultScope?: QuotaScope;
   onScopeChange?: (scope: QuotaScope) => void;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -39,6 +41,7 @@ export function QuotaMeters({
   formatValue = formatQuantity,
   defaultScope = 'current',
   onScopeChange,
+  titleAs: TitleTag = 'h3',
   className,
 }: QuotaMetersProps) {
   const [scope, setScope] = useState<QuotaScope>(defaultScope);
@@ -55,7 +58,7 @@ export function QuotaMeters({
   return (
     <section aria-label={title} className={cn('grid gap-5', className)}>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="text-[13px] font-medium text-muted-foreground">{title}</h3>
+        <TitleTag className="text-[13px] font-medium text-muted-foreground">{title}</TitleTag>
         {canProject && (
           <ToggleGroup size="sm" aria-label="Usage period" value={[scope]} onValueChange={changeScope}>
             <Toggle value="current">Current cycle</Toggle>

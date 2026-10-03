@@ -5,7 +5,8 @@ import type { BreadcrumbItem } from '@gntik-ai/ui';
 export interface UsageRow {
   id: string;
   project: string;
-  environment: 'Production' | 'Staging' | 'Preview';
+  /** Environment name, e.g. "Production". */
+  environment: string;
   region: string;
   requests: number;
   errorRate: number;
@@ -22,7 +23,7 @@ export interface TrafficPoint {
 export const usageBreadcrumbs: BreadcrumbItem[] = [{ label: 'Overview', href: '/overview' }, { label: 'Analytics' }];
 
 const PROJECTS = ['orders-api', 'billing-sync', 'search-index', 'auth-gateway', 'media-resizer', 'webhooks', 'reports', 'checkout-web'];
-const ENVS: UsageRow['environment'][] = ['Production', 'Production', 'Staging', 'Preview'];
+const ENVS = ['Production', 'Production', 'Staging', 'Preview'];
 const REGIONS = ['eu-west-1', 'us-east-1', 'ap-south-1', 'eu-central-1'];
 
 /** Usage per project and environment over the selected range. */
@@ -47,7 +48,10 @@ export const usageSavedViews: SavedView[] = [
   { value: 'eu', label: 'EU regions', filters: [{ field: 'region', value: 'eu-west-1' }, { field: 'region', value: 'eu-central-1' }] },
 ];
 
-/** Search by project name; filters on the same field are OR, across fields AND. */
+/**
+ * Search by project name; filters match the row field named by the filter id (same field OR,
+ * across fields AND). Filters on fields the row does not have are ignored.
+ */
 export function filterUsage(rows: readonly UsageRow[], query: string, filters: readonly ActiveFilter[]): UsageRow[] {
   const q = query.trim().toLowerCase();
   const byField = new Map<string, string[]>();
@@ -55,8 +59,8 @@ export function filterUsage(rows: readonly UsageRow[], query: string, filters: r
   return rows.filter((row) => {
     if (q && !row.project.toLowerCase().includes(q)) return false;
     for (const [field, values] of byField) {
-      const value = field === 'environment' ? row.environment : field === 'region' ? row.region : undefined;
-      if (value !== undefined && !values.includes(value)) return false;
+      const value: unknown = (row as unknown as Record<string, unknown>)[field];
+      if (value !== undefined && value !== null && !values.includes(String(value))) return false;
     }
     return true;
   });

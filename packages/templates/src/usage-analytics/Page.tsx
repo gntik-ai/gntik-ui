@@ -6,7 +6,11 @@ import {
   NoResultsEmpty,
   PageHeader,
   type ActiveFilter,
+  type ChartCardProps,
   type ChartCardRange,
+  type CostPoint,
+  type DataTableColumn,
+  type FilterField,
   type SavedView,
 } from '@gntik-ai/blocks';
 import { chartFmt } from '@gntik-ai/charts';
@@ -35,33 +39,68 @@ export interface UsageExportRequest {
   rows: UsageRow[];
 }
 
-export interface UsageAnalyticsProps {
+/** Second-chart settings (everything but its data and ranges, which have their own props). */
+export type UsageSecondaryChart<T extends object> = Omit<ChartCardProps<T>, 'dataByRange' | 'ranges'>;
+
+/**
+ * `P` is the row type of the first chart (default: the infrastructure-cost fixture), `T` the row
+ * type of the second one (default: requests per environment and day).
+ */
+export interface UsageAnalyticsProps<P extends object = CostPoint, T extends object = TrafficPoint> {
   title: string;
   description: string;
   breadcrumbs: BreadcrumbItem[];
   rows: readonly UsageRow[];
+  /** Breakdown table columns (default: project, environment, region, requests, error rate, cost). */
+  columns: DataTableColumn<UsageRow>[];
+  /** FilterBar fields; each id is matched against the row field of the same name. */
+  filterFields: FilterField[];
+  searchPlaceholder: string;
   savedViews: readonly SavedView[];
-  trafficByRange: Readonly<Record<string, readonly TrafficPoint[]>>;
+  /**
+   * First chart: any ChartCard props (title, description, ranges, dataByRange, index, categories,
+   * colors, kind, valueFormatter…). Unset fields keep the infrastructure-cost fixture.
+   */
+  primaryChart: ChartCardProps<P>;
+  /** Data of the second chart, per range key. */
+  trafficByRange: Readonly<Record<string, readonly T[]>>;
   trafficRanges: readonly ChartCardRange[];
+  /** Second chart: title, description, index, categories, colors, kind… (merged over the traffic defaults). */
+  secondaryChart: UsageSecondaryChart<T>;
   /** Fires when the date range changes (server-side products refetch here). */
   onRangeChange: (range: DateRange) => void;
   onExport: (request: UsageExportRequest) => void;
   shell: Omit<ConsoleShellProps, 'children'>;
 }
 
+const TRAFFIC_CHART: UsageSecondaryChart<TrafficPoint> = {
+  title: 'Requests by environment',
+  description: 'Daily requests',
+  index: 'day',
+  categories: ['Production', 'Staging', 'Preview'],
+  kind: 'bar',
+  valueFormatter: chartFmt.compact,
+};
+
 /** Usage analytics: date range + filters, two charts and a sortable breakdown table with export. */
-export default function UsageAnalyticsPage({
+export default function UsageAnalyticsPage<P extends object = CostPoint, T extends object = TrafficPoint>({
   title = 'Usage analytics',
   description = 'Traffic, errors and spend by project and environment.',
   breadcrumbs = usageBreadcrumbs,
   rows = usageRows,
+  columns = usageColumns,
+  filterFields = usageFilterFields,
+  searchPlaceholder = 'Search projects…',
   savedViews = usageSavedViews,
-  trafficByRange: traffic = trafficByRange,
+  primaryChart,
+  trafficByRange: traffic = trafficByRange as unknown as Readonly<Record<string, readonly T[]>>,
   trafficRanges: ranges = trafficRanges,
+  secondaryChart,
   onRangeChange,
   onExport,
   shell,
-}: Partial<UsageAnalyticsProps>) {
+}: Partial<UsageAnalyticsProps<P, T>>) {
+  const secondary = { ...(TRAFFIC_CHART as unknown as UsageSecondaryChart<T>), ...secondaryChart };
   const [range, setRange] = useState<DateRange | null>(null);
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<ActiveFilter[]>([]);
@@ -91,36 +130,25 @@ export default function UsageAnalyticsPage({
             />
             <FilterBar
               className="min-w-0 flex-1"
-              fields={usageFilterFields}
+              fields={filterFields}
               query={query}
               onQueryChange={setQuery}
               filters={filters}
               onFiltersChange={setFilters}
               defaultFilters={[]}
               views={savedViews}
-              placeholder="Search projects…"
+              placeholder={searchPlaceholder}
               resultCount={visible.length}
             />
           </HStack>
-          <Section title="Trends" description="Spend and traffic over the selected range.">
-            <Grid cols={{ base: 1, lg: 2 }} gap={6}>
-              <ChartCard />
-              <ChartCard<TrafficPoint>
-                title="Requests by environment"
-                description="Daily requests"
-                ranges={ranges}
-                dataByRange={traffic}
-                index="day"
-                categories={['Production', 'Staging', 'Preview']}
-                kind="bar"
-                valueFormatter={chartFmt.compact}
-              />
-            </Grid>
-          </Section>
+          <Grid cols={{ base: 1, lg: 2 }} gap={6}>
+            <ChartCard<P> titleAs="h2" {...primaryChart} />
+            <ChartCard<T> titleAs="h2" {...secondary} ranges={ranges} dataByRange={traffic} />
+          </Grid>
           <Section title="Breakdown" description="Per project and environment. Sort by any column.">
             <DataTable<UsageRow>
               rows={visible}
-              columns={usageColumns}
+              columns={columns}
               getRowLabel={(r) => `${r.project} (${r.environment})`}
               caption="Usage by project"
               selectable={false}

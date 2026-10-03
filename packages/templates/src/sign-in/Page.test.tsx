@@ -32,4 +32,10 @@ describe('SignInPage', () => {
     expect(onSso).toHaveBeenCalledWith('sso');
     expect(screen.getByRole('button', { name: 'Continue with Google' })).toBeDisabled();
   });
+
+  it('takes the heading copy from props', () => {
+    render(<SignInPage title="Welcome back to the console" description="Sign in with your tenant account." />);
+    expect(screen.getByRole('heading', { level: 1, name: 'Welcome back to the console' })).toBeInTheDocument();
+    expect(screen.getByText('Sign in with your tenant account.')).toBeInTheDocument();
+  });
 });

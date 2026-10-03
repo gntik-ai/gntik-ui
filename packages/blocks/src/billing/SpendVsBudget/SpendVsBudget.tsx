@@ -22,6 +22,8 @@ export interface SpendVsBudgetProps {
   period?: string;
   /** Chart plot height in px. */
   height?: number;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -48,6 +50,7 @@ export function SpendVsBudget({
   title = 'Spend vs budget',
   period = 'May cycle',
   height = 240,
+  titleAs: TitleTag = 'h3',
   className,
 }: SpendVsBudgetProps) {
   const toDate = lastValue(data.map((d) => d.spend)) ?? 0;
@@ -65,7 +68,7 @@ export function SpendVsBudget({
     <Card className={cn('p-6', className)}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h3 className="text-[15px] font-semibold tracking-tight text-foreground">{title}</h3>
+          <TitleTag className="text-[15px] font-semibold tracking-tight text-foreground">{title}</TitleTag>
           {period && <p className="mt-0.5 text-[12.5px] text-muted-foreground">{period}</p>}
         </div>
         <Badge tone={over ? 'warning' : 'success'} dot>

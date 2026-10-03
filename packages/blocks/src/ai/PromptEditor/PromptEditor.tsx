@@ -23,6 +23,8 @@ export interface PromptEditorProps {
   maxTokensLimit?: number;
   /** Called on Run; return a promise to show the running state until it settles. */
   onRun?: (input: PromptRunInput) => void | Promise<unknown>;
+  /** Heading level of the title, to fit the page outline (default h3); inner headings use the next level. */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -47,8 +49,10 @@ export function PromptEditor({
   defaultMaxTokens = promptDefaults.maxTokens,
   maxTokensLimit = 8192,
   onRun,
+  titleAs: TitleTag = 'h3',
   className,
 }: PromptEditorProps) {
+  const SubTag = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
   const titleId = useId();
   const [system, setSystem] = useState(defaultSystem);
   const [user, setUser] = useState(defaultUser);
@@ -84,9 +88,9 @@ export function PromptEditor({
       className={cn('overflow-hidden rounded-lg border border-border bg-card shadow-sm', className)}
     >
       <header className="flex items-center justify-between gap-3 border-b border-border bg-secondary/35 px-4 py-2.5">
-        <h3 id={titleId} className="text-[13.5px] font-semibold text-foreground">
+        <TitleTag id={titleId} className="text-[13.5px] font-semibold text-foreground">
           {title}
-        </h3>
+        </TitleTag>
         <Button size="sm" icon={Play} loading={running} disabled={!canRun && !running} onClick={run}>
           {running ? 'Running…' : 'Run'}
         </Button>
@@ -108,7 +112,7 @@ export function PromptEditor({
         </div>
         <div className="flex flex-col gap-5 border-t border-border bg-secondary/20 p-4 md:border-t-0 md:border-l">
           <div>
-            <h4 className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">Variables</h4>
+            <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">Variables</SubTag>
             {variables.length === 0 ? (
               <p className="mt-2 text-[12.5px] text-muted-foreground">No variables in the prompts.</p>
             ) : (
@@ -142,7 +146,7 @@ export function PromptEditor({
             )}
           </div>
           <div className="flex flex-col gap-4">
-            <h4 className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">Parameters</h4>
+            <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">Parameters</SubTag>
             <Slider
               label="Temperature"
               showValue

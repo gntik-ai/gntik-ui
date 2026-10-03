@@ -20,6 +20,8 @@ export interface AssistantCardGridProps {
   onSelect?: (assistant: Assistant) => void;
   /** Shows a "New assistant" button. */
   onCreate?: () => void;
+  /** Heading level of the section title (default h2); card names use the next level. */
+  titleAs?: 'h2' | 'h3';
   className?: string;
 }
 
@@ -29,6 +31,7 @@ export function AssistantCardGrid({
   title = 'Assistants',
   onSelect,
   onCreate,
+  titleAs: TitleTag = 'h2',
   className,
 }: AssistantCardGridProps) {
   const titleId = useId();
@@ -37,9 +40,9 @@ export function AssistantCardGrid({
     <section aria-labelledby={titleId} className={cn('flex flex-col gap-4', className)}>
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 id={titleId} className="text-[15px] font-semibold tracking-tight text-foreground">
+          <TitleTag id={titleId} className="text-[15px] font-semibold tracking-tight text-foreground">
             {title}
-          </h2>
+          </TitleTag>
           <p className="text-[12.5px] text-muted-foreground">
             {assistants.length} total · {active} active
           </p>
@@ -54,6 +57,7 @@ export function AssistantCardGrid({
         <EmptyState
           icon={Bot}
           title="No assistants yet"
+          titleAs={TitleTag === 'h2' ? 'h3' : 'h4'}
           description="Create an assistant to automate a task with a model."
           primaryAction={onCreate ? <Button size="sm" icon={Plus} onClick={onCreate}>New assistant</Button> : undefined}
         />
@@ -63,7 +67,7 @@ export function AssistantCardGrid({
             <li key={a.id} className="flex">
               <ClickableCard
                 className="w-full"
-                titleAs="h3"
+                titleAs={TitleTag === 'h2' ? 'h3' : 'h4'}
                 href={a.href}
                 onClick={() => onSelect?.(a)}
                 icon={<Bot aria-hidden />}

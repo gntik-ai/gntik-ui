@@ -70,7 +70,8 @@ export interface CreateWizardCopy {
   previewsDescription: string;
   reviewTitle: string;
   reviewIntro: string;
-  summaryHeading: string;
+  /** @deprecated No longer rendered: the review cards are the step's h2 headings. Kept for compatibility. */
+  summaryHeading?: string;
   reviewDetailsTitle: string;
   reviewDetailsDescription: string;
   editDetailsLabel: string;

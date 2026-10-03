@@ -20,4 +20,10 @@ describe('SignInCardPage', () => {
     await userEvent.click(screen.getByRole('link', { name: 'Forgot password?' }));
     expect(onForgotPassword).toHaveBeenCalledOnce();
   });
+
+  it('takes the heading copy from props', () => {
+    render(<SignInCardPage title="Welcome back to the console" description="Sign in with your tenant account." />);
+    expect(screen.getByRole('heading', { level: 1, name: 'Welcome back to the console' })).toBeInTheDocument();
+    expect(screen.getByText('Sign in with your tenant account.')).toBeInTheDocument();
+  });
 });

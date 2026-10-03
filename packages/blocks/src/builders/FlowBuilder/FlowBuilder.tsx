@@ -1,4 +1,4 @@
-import { useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { Play } from '@gntik-ai/icons';
 import { FlowCanvas, useFlowState, type FlowNode, type FlowNodeData } from '@gntik-ai/flow';
 import { Button, ResizablePanel, ResizablePanelGroup, ResizeHandle, cn } from '@gntik-ai/ui';
@@ -14,20 +14,40 @@ import {
 import { NodeInspector, NodePalette, RunConsole } from './parts';
 
 export type { ConsoleEntry, FlowEdge, PaletteItem } from './fixtures';
+/** Graph types re-exported so apps can type nodes without depending on @gntik-ai/flow. */
+export type { FlowNode, FlowNodeData, FlowNodeKind, FlowTone } from '@gntik-ai/flow';
 
 export interface FlowBuilderProps {
   title?: string;
   nodes?: FlowNode[];
   edges?: FlowEdge[];
   palette?: PaletteItem[];
-  /** Initial console output. */
+  /**
+   * Console output (controlled). Run and Clear then report the next list through
+   * `onConsoleChange` instead of updating it internally.
+   */
   consoleEntries?: ConsoleEntry[];
+  /** Initial console output (uncontrolled). Defaults to the sample entries. */
+  defaultConsoleEntries?: ConsoleEntry[];
+  /** Called with the next console list after a run appends to it or it is cleared. */
+  onConsoleChange?: (entries: ConsoleEntry[]) => void;
+  /** Called when the console's Clear button is pressed. */
+  onConsoleClear?: () => void;
+  /** Heading level of the builder title (default h2); panel titles use the next level. */
+  titleAs?: 'h2' | 'h3' | 'h4';
   /** Total height of the builder on wide screens (px). */
   height?: number;
-  /** Called with the current graph when Run is pressed (the console also logs a simulated run). */
-  onRun?: (graph: { nodes: FlowNode[]; edges: FlowEdge[] }) => void;
+  /**
+   * Called with the current graph when Run is pressed. Return console entries (or a promise
+   * of them) to log the real run; return nothing to log a simulated run. While a returned
+   * promise is pending the Run button shows a loading state; a rejection is logged as an error.
+   */
+  onRun?: (graph: { nodes: FlowNode[]; edges: FlowEdge[] }) => FlowRunResult | Promise<FlowRunResult>;
   className?: string;
 }
+
+/** What `onRun` may return: entries to append, or nothing for the simulated run. */
+export type FlowRunResult = ConsoleEntry[] | void | undefined;
 
 const WIDE_QUERY = '(min-width: 768px)';
 
@@ -60,17 +80,28 @@ export function FlowBuilder({
   nodes: initialNodes = builderNodes,
   edges: initialEdges = builderEdges,
   palette = builderPalette,
-  consoleEntries = builderConsole,
+  consoleEntries,
+  defaultConsoleEntries = builderConsole,
+  onConsoleChange,
+  onConsoleClear,
+  titleAs: TitleTag = 'h2',
   height = 600,
   onRun,
   className,
 }: FlowBuilderProps) {
   const wide = useIsWide();
+  const panelAs = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
   const { nodes, edges, setNodes, setEdges, onNodesChange, onEdgesChange, onConnect } = useFlowState<FlowNode, FlowEdge>(
     initialNodes,
     initialEdges,
   );
-  const [log, setLog] = useState<ConsoleEntry[]>(consoleEntries);
+  const [innerLog, setInnerLog] = useState<ConsoleEntry[]>(defaultConsoleEntries);
+  const log = consoleEntries ?? innerLog;
+  const latestLog = useRef(log);
+  useEffect(() => {
+    latestLog.current = log;
+  });
+  const [running, setRunning] = useState(false);
   const seq = useRef(0);
   const runs = useRef(0);
   const selected = nodes.find((n) => n.selected);
@@ -100,14 +131,16 @@ export function FlowBuilder({
     setEdges((es) => es.filter((e) => e.source !== id && e.target !== id));
   };
 
-  const run = () => {
-    runs.current += 1;
-    const n = runs.current;
-    onRun?.({ nodes, edges });
+  const commitLog = (next: ConsoleEntry[]) => {
+    latestLog.current = next;
+    if (consoleEntries === undefined) setInnerLog(next);
+    onConsoleChange?.(next);
+  };
+
+  const simulate = (n: number): ConsoleEntry[] => {
     const ordered = [...nodes].sort((a, b) => a.position.x - b.position.x || a.position.y - b.position.y);
     const t = clock();
-    setLog((prev) => [
-      ...prev,
+    return [
       { id: `run-${n}-start`, time: t, level: 'info', message: `Run #${n} started · ${nodes.length} nodes` },
       ...ordered.map<ConsoleEntry>((node, i) => ({
         id: `run-${n}-${node.id}`,
@@ -116,7 +149,33 @@ export function FlowBuilder({
         message: `${node.data.title} ${node.data.tone === 'failed' ? 'failed' : 'completed'} in ${40 + ((i * 37) % 160)}ms`,
       })),
       { id: `run-${n}-end`, time: t, level: 'info', message: `Run #${n} finished` },
-    ]);
+    ];
+  };
+
+  const run = async () => {
+    runs.current += 1;
+    const n = runs.current;
+    const result = onRun?.({ nodes, edges });
+    let added: ConsoleEntry[];
+    if (result instanceof Promise) {
+      setRunning(true);
+      try {
+        added = (await result) ?? simulate(n);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        added = [{ id: `run-${n}-error`, time: clock(), level: 'error', message: `Run #${n} failed: ${message}` }];
+      } finally {
+        setRunning(false);
+      }
+    } else {
+      added = result ?? simulate(n);
+    }
+    commitLog([...latestLog.current, ...added]);
+  };
+
+  const clearLog = () => {
+    onConsoleClear?.();
+    commitLog([]);
   };
 
   const canvas = (h: number | string) => (
@@ -131,9 +190,9 @@ export function FlowBuilder({
       showMiniMap={wide}
     />
   );
-  const palettePanel = <NodePalette items={palette} onAdd={addNode} />;
-  const inspector = <NodeInspector node={selected} onChange={updateNode} onDelete={deleteNode} />;
-  const consolePanel = <RunConsole entries={log} onClear={() => setLog([])} />;
+  const palettePanel = <NodePalette items={palette} onAdd={addNode} titleAs={panelAs} />;
+  const inspector = <NodeInspector node={selected} onChange={updateNode} onDelete={deleteNode} titleAs={panelAs} />;
+  const consolePanel = <RunConsole entries={log} onClear={clearLog} titleAs={panelAs} />;
 
   let body: ReactNode;
   if (wide) {
@@ -175,12 +234,12 @@ export function FlowBuilder({
     <section aria-label={title} className={cn('overflow-hidden rounded-lg border border-border bg-card shadow-sm', className)}>
       <header className="flex items-center justify-between gap-3 border-b border-border bg-secondary/35 px-3 py-2">
         <div className="min-w-0">
-          <h2 className="truncate text-[13.5px] font-semibold text-foreground">{title}</h2>
+          <TitleTag className="truncate text-[13.5px] font-semibold text-foreground">{title}</TitleTag>
           <p className="font-mono text-[11px] text-muted-foreground">
             {nodes.length} nodes · {edges.length} edges
           </p>
         </div>
-        <Button size="sm" icon={Play} onClick={run}>
+        <Button size="sm" icon={Play} loading={running} onClick={() => void run()}>
           Run
         </Button>
       </header>

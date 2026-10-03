@@ -1,7 +1,7 @@
 import { Inbox } from '@gntik-ai/icons';
 import { Checkbox, cn, EmptyState, MoreMenu, Skeleton, TableBody, TableCell, TableRow, type MoreMenuAction } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
-import { formatCell, type DataTableColumn } from './data-table-utils';
+import { COLUMN_VARIANT_CLASSES, columnAlign, formatCell, type DataTableColumn } from './data-table-utils';
 
 export interface DataTableBodyProps<T> {
   rows: readonly T[];
@@ -44,8 +44,8 @@ export function DataTableBody<T>({
               </TableCell>
             )}
             {columns.map((c) => (
-              <TableCell key={c.id} align={c.align}>
-                <Skeleton className={cn('h-3.5', c.align === 'right' ? 'ml-auto w-16' : 'w-24')} />
+              <TableCell key={c.id} align={columnAlign(c)}>
+                <Skeleton className={cn('h-3.5', columnAlign(c) === 'right' ? 'ml-auto w-16' : 'w-24')} />
               </TableCell>
             ))}
             {rowActions && <TableCell className="w-12" />}
@@ -79,7 +79,7 @@ export function DataTableBody<T>({
               </TableCell>
             )}
             {columns.map((c) => (
-              <TableCell key={c.id} align={c.align} className={cn('whitespace-nowrap', c.className)}>
+              <TableCell key={c.id} align={columnAlign(c)} className={cn('whitespace-nowrap', COLUMN_VARIANT_CLASSES[c.variant ?? 'default'], c.className)}>
                 {c.cell ? c.cell(row) : formatCell(c.accessor?.(row))}
               </TableCell>
             ))}

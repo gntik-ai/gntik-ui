@@ -17,7 +17,10 @@ describe('UpgradeRequiredPage', () => {
     const onUpgrade = vi.fn();
     render(<UpgradeRequiredPage onUpgrade={onUpgrade} />);
     const main = screen.getByRole('main');
-    await userEvent.click(within(main).getByRole('button', { name: /Current plan/ }));
+    const current = within(main).getByRole('button', { name: /Current plan/ });
+    expect(current).toBeDisabled();
+    expect(within(main).getByRole('listitem', { name: 'Starter' })).toHaveAttribute('aria-current', 'true');
+    await userEvent.click(current);
     expect(onUpgrade).not.toHaveBeenCalled();
     await userEvent.click(within(main).getByRole('button', { name: /Start free trial/ }));
     expect(onUpgrade).toHaveBeenCalledWith(expect.objectContaining({ id: 'team' }), 'monthly');

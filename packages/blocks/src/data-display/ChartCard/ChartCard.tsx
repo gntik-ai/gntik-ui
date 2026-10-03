@@ -35,6 +35,8 @@ export interface ChartCardProps<T extends object> {
   action?: ReactNode;
   /** Footer content under the chart. */
   footer?: ReactNode;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -63,6 +65,7 @@ export function ChartCard<T extends object = CostPoint>({
   onRangeChange,
   action,
   footer,
+  titleAs = 'h3',
   className,
 }: ChartCardProps<T>) {
   const [inner, setInner] = useState(defaultRange ?? ranges[0]?.value ?? '');
@@ -74,7 +77,7 @@ export function ChartCard<T extends object = CostPoint>({
   return (
     <Card className={className}>
       <CardHeader className="pb-2">
-        <CardTitle>{title}</CardTitle>
+        <CardTitle as={titleAs}>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
         <CardAction className="flex items-center gap-2">
           {ranges.length > 1 && (

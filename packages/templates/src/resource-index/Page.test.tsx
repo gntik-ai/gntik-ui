@@ -28,6 +28,7 @@ describe('ResourceIndexPage', () => {
     await userEvent.click(screen.getByRole('checkbox', { name: new RegExp(`^Select ${second.name}`) }));
     const bar = screen.getByRole('toolbar', { name: 'Bulk actions' });
     expect(within(bar).getByRole('status')).toHaveTextContent('2 of 24 deployments selected');
+    expect(screen.queryByText('2 selected')).toBeNull(); // DataTable's own summary is off
     await expectNoAxeViolations(container);
     await userEvent.click(within(bar).getByRole('button', { name: 'Delete' }));
     expect(onBulkAction).toHaveBeenCalledWith('delete', [first.id, second.id]);

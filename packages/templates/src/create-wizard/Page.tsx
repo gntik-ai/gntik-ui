@@ -14,7 +14,6 @@ import {
   Stack,
   Text,
   Textarea,
-  VisuallyHidden,
   WizardLayout,
   type StepItem,
 } from '@gntik-ai/ui';
@@ -178,8 +177,8 @@ export default function CreateWizardPage({
             <StepIntro id={`${id}-review`} title={copy.reviewTitle}>
               {copy.reviewIntro}
             </StepIntro>
-            <VisuallyHidden render={<h2 />}>{copy.summaryHeading}</VisuallyHidden>
             <DescriptionListCard
+              titleAs="h2"
               title={copy.reviewDetailsTitle}
               description={copy.reviewDetailsDescription}
               items={[
@@ -190,6 +189,7 @@ export default function CreateWizardPage({
               editLabel={copy.editDetailsLabel}
             />
             <DescriptionListCard
+              titleAs="h2"
               title={copy.reviewSourceTitle}
               description={copy.reviewSourceDescription}
               items={[

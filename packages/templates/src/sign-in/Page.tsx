@@ -5,6 +5,12 @@ import { BrandPanel, type BrandPanelCopy } from './BrandPanel';
 import { signInBrand, signInSsoProviders } from './data';
 
 export interface SignInPageProps {
+  /** Heading above the form (default "Sign in to your workspace"). */
+  title: ReactNode;
+  /** Line under the heading (default "Use your work email to continue."). */
+  description: ReactNode;
+  /** Small label above the heading. */
+  eyebrow: ReactNode;
   /** Signs in. A returned promise shows the loading state; a rejection's message shows in the alert. */
   onSubmit: (values: SignInValues) => void | Promise<void>;
   /** Starts single sign-on with a provider id; the button spins until the page navigates away. */
@@ -23,6 +29,9 @@ export interface SignInPageProps {
 
 /** Split sign-in: AuthLayout brand panel + SignInForm with SsoButtons. */
 export default function SignInPage({
+  title,
+  description,
+  eyebrow,
   onSubmit,
   onSso,
   ssoProviders = signInSsoProviders,
@@ -39,6 +48,9 @@ export default function SignInPage({
   return (
     <AuthLayout fullScreen variant="split" logo={logo} brand={<BrandPanel {...brand} />} brandFooter={brandFooter}>
       <SignInForm
+        title={title}
+        description={description}
+        eyebrow={eyebrow}
         onSubmit={onSubmit}
         error={error}
         forgotPasswordHref={forgotPasswordHref}

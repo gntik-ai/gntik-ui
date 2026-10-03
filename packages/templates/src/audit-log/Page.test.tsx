@@ -38,4 +38,10 @@ describe('AuditLogPage', () => {
     expect(rows.map((e) => e.id)).toEqual(['evt_9f0a', 'evt_9ef3']);
     expect(auditEventsToCsv(rows).split('\n')[0]).toBe('time,actor,email,action,resource,target,ip,result');
   });
+
+  it('takes the heading copy from props', { timeout: 15000 }, () => {
+    render(<AuditLogPage title="Tenant activity" description="Changes across this tenant." />);
+    expect(screen.getByRole('heading', { level: 1, name: 'Tenant activity' })).toBeInTheDocument();
+    expect(screen.getByText('Changes across this tenant.')).toBeInTheDocument();
+  });
 });

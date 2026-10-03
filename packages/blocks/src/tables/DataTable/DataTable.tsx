@@ -3,7 +3,7 @@ import { useState, type ReactNode } from 'react';
 import { PaginationFooter } from '../PaginationFooter/PaginationFooter';
 import { ColumnVisibilityMenu } from './column-menu';
 import { DataTableBody } from './data-table-body';
-import { paginate, selectionState, sortRows, toggleAll, toggleOne, type DataTableColumn, type SortState } from './data-table-utils';
+import { columnAlign, paginate, selectionState, sortRows, toggleAll, toggleOne, type DataTableColumn, type SortState } from './data-table-utils';
 import { DensityToggle } from './density-toggle';
 import { DEPLOYMENT_COLUMNS, DEPLOYMENT_ROWS } from './fixtures';
 
@@ -25,6 +25,11 @@ export interface DataTableProps<T> {
   onSelectionChange?: (ids: string[]) => void;
   /** Rendered in the toolbar while rows are selected. */
   bulkActions?: (selectedIds: string[]) => ReactNode;
+  /**
+   * Shows the "N selected" text in the toolbar while rows are selected (default true). Turn it
+   * off when the page renders its own count, e.g. a BulkActionBar.
+   */
+  selectionSummary?: boolean;
 
   /** Row-actions menu items. */
   rowActions?: (row: T) => Array<MoreMenuAction | 'separator'>;
@@ -76,6 +81,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   defaultSelectedIds = [],
   onSelectionChange,
   bulkActions,
+  selectionSummary = true,
   rowActions,
   sort: sortProp,
   defaultSort = null,
@@ -142,7 +148,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       return next;
     });
 
-  const hasSelection = selectable && selectedList.length > 0;
+  const hasSelection = selectable && selectedList.length > 0 && (selectionSummary || bulkActions != null);
   const showToolbar = toolbar != null || showDensityToggle || showColumnMenu || hasSelection;
 
   return (
@@ -157,10 +163,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
             {hasSelection ? (
               <>
-                <span className="text-[12.5px] font-semibold text-foreground" aria-live="polite">
-                  {selectedList.length} selected
-                </span>
-                {bulkActions && <span aria-hidden className="h-4 w-px bg-border" />}
+                {selectionSummary && (
+                  <span className="text-[12.5px] font-semibold text-foreground" aria-live="polite">
+                    {selectedList.length} selected
+                  </span>
+                )}
+                {selectionSummary && bulkActions && <span aria-hidden className="h-4 w-px bg-border" />}
                 {bulkActions?.(selectedList)}
               </>
             ) : (
@@ -191,7 +199,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             {visibleColumns.map((c) => (
               <TableHead
                 key={c.id}
-                align={c.align}
+                align={columnAlign(c)}
                 className={c.headClassName}
                 sortable={c.sortable}
                 sortDirection={sort?.columnId === c.id ? sort.direction : 'none'}

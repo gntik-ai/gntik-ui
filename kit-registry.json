@@ -5834,7 +5834,6 @@
       ],
       "dependencies": [
         "@gntik-ai/blocks",
-        "@gntik-ai/flow",
         "@gntik-ai/icons",
         "@gntik-ai/ui"
       ],

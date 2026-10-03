@@ -12,7 +12,7 @@ export interface UpgradeRequiredProps {
   currentPlan: string;
   description: string;
   tiers: PricingTier[];
-  /** Id of the tier the workspace is on (its CTA is ignored). */
+  /** Id of the tier the workspace is on (badge + disabled "Current plan" CTA). */
   currentTierId: string;
   /** Called with the chosen tier and billing cycle. */
   onUpgrade: (tier: PricingTier, cycle: PricingCycle) => void;
@@ -67,6 +67,7 @@ export default function UpgradeRequiredPage(props: Partial<UpgradeRequiredProps>
             title="Compare plans"
             description="Switch at any time. Upgrades apply immediately and are prorated."
             tiers={tiers}
+            currentTierId={currentTierId}
             onSelectTier={(tier, cycle) => {
               if (tier.id !== currentTierId) onUpgrade?.(tier, cycle);
             }}

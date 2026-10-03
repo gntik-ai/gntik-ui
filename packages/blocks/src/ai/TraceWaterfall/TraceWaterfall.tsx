@@ -27,6 +27,8 @@ export interface TraceWaterfallProps {
   /** Span ids collapsed initially. */
   defaultCollapsed?: string[];
   onSelect?: (span: TraceSpan) => void;
+  /** Heading level of the title, to fit the page outline (default h3); inner headings use the next level. */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -68,8 +70,10 @@ export function TraceWaterfall({
   defaultSelectedId,
   defaultCollapsed = [],
   onSelect,
+  titleAs: TitleTag = 'h3',
   className,
 }: TraceWaterfallProps) {
+  const SubTag = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
   const titleId = useId();
   const [collapsed, setCollapsed] = useState(() => new Set(defaultCollapsed));
   const [selectedId, setSelectedId] = useState(defaultSelectedId ?? spans.find((s) => !s.parentId)?.id);
@@ -98,9 +102,9 @@ export function TraceWaterfall({
     >
       <div className="min-w-0">
         <header className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-border bg-secondary/35 px-3 py-2.5">
-          <h3 id={titleId} className="text-[13px] font-semibold text-foreground">
+          <TitleTag id={titleId} className="text-[13px] font-semibold text-foreground">
             {title}
-          </h3>
+          </TitleTag>
           <span className="font-mono text-[11px] text-muted-foreground">
             {spans.length} spans · {formatSpanDuration(total)}
           </span>
@@ -184,7 +188,7 @@ export function TraceWaterfall({
         {selected ? (
           <div className="flex flex-col gap-3">
             <div>
-              <h4 className="text-[13.5px] font-semibold break-words text-foreground">{selected.name}</h4>
+              <SubTag className="text-[13.5px] font-semibold break-words text-foreground">{selected.name}</SubTag>
               <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                 <Badge variant="soft" size="sm">
                   {selected.kind}

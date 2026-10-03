@@ -24,6 +24,8 @@ export interface EvaluationScorecardProps {
   baselineLabel?: string;
   /** Pass-rate drop (ratio) that counts as a regression. */
   passRateTolerance?: number;
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -92,6 +94,7 @@ export function EvaluationScorecard({
   title = 'Evaluation results',
   baselineLabel = 'baseline',
   passRateTolerance = 0.02,
+  titleAs: TitleTag = 'h3',
   className,
 }: EvaluationScorecardProps) {
   const titleId = useId();
@@ -108,9 +111,9 @@ export function EvaluationScorecard({
     <section aria-labelledby={titleId} className={cn('overflow-hidden rounded-lg border border-border bg-card shadow-sm', className)}>
       <header className="flex flex-col gap-3 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 id={titleId} className="text-[13.5px] font-semibold text-foreground">
+          <TitleTag id={titleId} className="text-[13.5px] font-semibold text-foreground">
             {title}
-          </h3>
+          </TitleTag>
           <p className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[12px] text-muted-foreground">
             <span>
               Pass rate <span className="font-mono font-semibold text-foreground">{formatValue(overall)}</span>

@@ -32,6 +32,8 @@ export interface StatCardProps {
   tone?: SparklineTone;
   /** Footer link-style action ("View requests →"). */
   action?: { label: string; onClick?: () => void; href?: string };
+  /** Heading level of the title, to fit the page outline (default h3). */
+  titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
 }
 
@@ -46,6 +48,7 @@ export function StatCard({
   chart = 'area',
   tone = 'primary',
   action = { label: 'View requests' },
+  titleAs: TitleTag = 'h3',
   className,
 }: StatCardProps) {
   const [inner, setInner] = useState(defaultRange ?? ranges[0]?.value ?? '');
@@ -63,7 +66,7 @@ export function StatCard({
             <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary/14 text-primary-chip-text">
               <IconCmp size={18} aria-hidden />
             </span>
-            <h3 className="truncate text-[13px] font-medium text-muted-foreground">{label}</h3>
+            <TitleTag className="truncate text-[13px] font-medium text-muted-foreground">{label}</TitleTag>
           </div>
           {ranges.length > 1 && (
             <ToggleGroup

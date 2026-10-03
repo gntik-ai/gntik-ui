@@ -1,5 +1,4 @@
-import { FlowBuilder, type FlowEdge, type PaletteItem } from '@gntik-ai/blocks';
-import type { FlowNode } from '@gntik-ai/flow';
+import { FlowBuilder, type ConsoleEntry, type FlowBuilderProps, type FlowEdge, type FlowNode, type PaletteItem } from '@gntik-ai/blocks';
 import { Save, Upload } from '@gntik-ai/icons';
 import { Breadcrumbs, Button, CanvasLayout, StatusTag, type BreadcrumbItem } from '@gntik-ai/ui';
 import { useState } from 'react';
@@ -13,7 +12,14 @@ export interface FlowBuilderPageProps {
   nodes: FlowNode[];
   edges: FlowEdge[];
   palette: PaletteItem[];
-  onRun: (graph: { nodes: FlowNode[]; edges: FlowEdge[] }) => void;
+  /** Return console entries (or a promise of them) to log the real run; nothing logs a simulated run. */
+  onRun: NonNullable<FlowBuilderProps['onRun']>;
+  /** Run console output (controlled); report changes with `onConsoleChange`. */
+  consoleEntries: ConsoleEntry[];
+  /** Initial run console output (uncontrolled). */
+  defaultConsoleEntries: ConsoleEntry[];
+  onConsoleChange: (entries: ConsoleEntry[]) => void;
+  onConsoleClear: () => void;
   onSave: () => void | Promise<void>;
   onPublish: () => void;
   breadcrumbs: BreadcrumbItem[];
@@ -34,6 +40,10 @@ export default function FlowBuilderPage(props: Partial<FlowBuilderPageProps>) {
     edges,
     palette,
     onRun,
+    consoleEntries,
+    defaultConsoleEntries,
+    onConsoleChange,
+    onConsoleClear,
     onSave,
     onPublish,
     breadcrumbs = flowBuilderBreadcrumbs,
@@ -80,7 +90,18 @@ export default function FlowBuilderPage(props: Partial<FlowBuilderPageProps>) {
       }
     >
       <div className="h-full overflow-auto p-3 sm:p-4">
-        <FlowBuilder title={title} nodes={nodes} edges={edges} palette={palette} onRun={onRun} height={height} />
+        <FlowBuilder
+          title={title}
+          nodes={nodes}
+          edges={edges}
+          palette={palette}
+          onRun={onRun}
+          consoleEntries={consoleEntries}
+          defaultConsoleEntries={defaultConsoleEntries}
+          onConsoleChange={onConsoleChange}
+          onConsoleClear={onConsoleClear}
+          height={height}
+        />
       </div>
     </CanvasLayout>
   );

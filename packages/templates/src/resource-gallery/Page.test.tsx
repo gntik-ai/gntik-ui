@@ -11,6 +11,9 @@ describe('ResourceGalleryPage', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Resources' })).toBeInTheDocument();
     expect(screen.getByRole('toolbar', { name: 'Resources toolbar' })).toBeInTheDocument();
     expect(within(screen.getByRole('list', { name: 'Resources' })).getAllByRole('listitem')).toHaveLength(galleryItems.length);
+    expect(screen.getByRole('heading', { level: 2, name: galleryItems[0]!.name })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'All resources' })).toBeNull();
+    expect(screen.getByText(`${galleryItems.length} of ${galleryItems.length} shown`)).toBeInTheDocument();
     await expectNoAxeViolations(container);
   });
 
@@ -32,6 +35,6 @@ describe('ResourceGalleryPage', () => {
     await userEvent.type(search, 'orders');
     expect(within(screen.getByRole('list', { name: 'Resources' })).getAllByRole('listitem')).toHaveLength(2);
     await userEvent.type(search, '-nope');
-    expect(screen.getByRole('heading', { name: /No resources match/ })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: /No resources match/ })).toBeInTheDocument();
   });
 });

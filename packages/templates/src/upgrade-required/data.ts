@@ -15,7 +15,5 @@ export const upgradeBreadcrumbs: BreadcrumbItem[] = [
   { label: 'Audit log' },
 ];
 
-/** The sample tiers with the current plan's CTA relabelled. */
-export const upgradeTiers: PricingTier[] = samplePricingTiers.map((tier) =>
-  tier.id === 'starter' ? { ...tier, cta: 'Current plan' } : tier,
-);
+/** The sample tiers; PricingTable marks the current one via `currentTierId`. */
+export const upgradeTiers: PricingTier[] = samplePricingTiers;

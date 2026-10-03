@@ -30,6 +30,10 @@ import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import { auditBreadcrumbs, auditEvents, auditFilterFields, auditResultStatuses, type AuditEvent } from './data';
 
 export interface AuditLogProps {
+  /** Page heading (default "Audit log"). */
+  title: string;
+  /** Line under the heading. */
+  description: string;
   events: AuditEvent[];
   filterFields: FilterField[];
   /** Initial date range; defaults to the last 7 days. */
@@ -93,6 +97,8 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
     onExport = downloadCsv,
     breadcrumbs = auditBreadcrumbs,
     currentHref = '/activity',
+    title = 'Audit log',
+    description = 'Every change made in this workspace: who did it, when, from where and what changed.',
     shell,
   } = props;
   const [query, setQuery] = useState('');
@@ -163,8 +169,8 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
         header={
           <PageHeader
             breadcrumbs={null}
-            title="Audit log"
-            description="Every change made in this workspace: who did it, when, from where and what changed."
+            title={title}
+            description={description}
             status=""
             meta={[]}
             tabs={null}

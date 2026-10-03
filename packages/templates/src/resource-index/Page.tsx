@@ -162,6 +162,8 @@ export default function ResourceIndexPage<T extends object = ResourceRow>({
             loading={loading}
             selectedIds={visibleSelected}
             onSelectionChange={setSelected}
+            // The BulkActionBar above already announces the count.
+            selectionSummary={false}
             rowActions={(row) => [
               { label: 'Open', onSelect: () => onOpen?.(row) },
               'separator',

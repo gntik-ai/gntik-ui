@@ -8,7 +8,9 @@ describe('SettingsBillingPage', () => {
   it('renders plan, usage, payment and invoices', () => {
     render(<SettingsBillingPage />);
     expect(screen.getByRole('heading', { level: 1, name: 'Billing' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Scale plan' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Scale plan' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Payment method' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Plan' })).toBeNull();
     expect(screen.getByRole('region', { name: 'Plan quotas' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Invoices' })).toBeInTheDocument();
     expect(screen.getByRole('table')).toBeInTheDocument();

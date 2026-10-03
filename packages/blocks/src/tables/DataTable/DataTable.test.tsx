@@ -47,6 +47,34 @@ describe('DataTable', () => {
     expect(all).toHaveAttribute('aria-checked', 'false');
   });
 
+  it('hides its own selection count with selectionSummary={false}', async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(<DataTable selectionSummary={false} toolbar={<span>Filters here</span>} />);
+    await user.click(screen.getByRole('checkbox', { name: `Select ${DEPLOYMENT_ROWS[0]!.name}` }));
+    expect(screen.queryByText('1 selected')).toBeNull();
+    expect(screen.getByText('Filters here')).toBeInTheDocument();
+    rerender(<DataTable selectionSummary={false} toolbar={<span>Filters here</span>} bulkActions={() => <button type="button">Pause</button>} />);
+    expect(screen.queryByText('1 selected')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
+  });
+
+  it('applies column variant presets', () => {
+    type Row = { id: string; name: string; region: string; note: string; cost: number };
+    const columns: Array<DataTableColumn<Row>> = [
+      { id: 'name', header: 'Name', accessor: (r) => r.name },
+      { id: 'region', header: 'Region', accessor: (r) => r.region, variant: 'mono' },
+      { id: 'note', header: 'Note', accessor: (r) => r.note, variant: 'muted' },
+      { id: 'cost', header: 'Cost', accessor: (r) => r.cost, variant: 'numeric', className: 'font-semibold' },
+    ];
+    render(<DataTable<Row> rows={[{ id: 'a', name: 'api', region: 'eu-west-1', note: 'Paused', cost: 12 }]} columns={columns} selectable={false} />);
+    expect(screen.getByText('api').closest('td')).not.toHaveClass('font-mono');
+    expect(screen.getByText('eu-west-1').closest('td')).toHaveClass('font-mono');
+    expect(screen.getByText('Paused').closest('td')).toHaveClass('text-muted-foreground');
+    const cost = screen.getByText('12').closest('td')!;
+    expect(cost).toHaveClass('tabular-nums', 'font-semibold');
+    expect(cost.className).toMatch(/text-right|justify-end/);
+  });
+
   it('toggles columns, density and pages', async () => {
     const user = userEvent.setup();
     render(<DataTable />);
