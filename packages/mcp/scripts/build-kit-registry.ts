@@ -47,19 +47,39 @@ async function load(file: string, exportName: string): Promise<Meta> {
   return m;
 }
 
-/** External packages and sibling registry folders imported by a set of files. */
-function scanImports(files: string[], folderToId: Map<string, string>, self: string) {
+const RESOLVE_EXT = ['', '.ts', '.tsx', '/index.ts', '/index.tsx'];
+const resolveFile = (base: string) => RESOLVE_EXT.map((e) => base + e).find((f) => fs.existsSync(f) && fs.statSync(f).isFile());
+
+/**
+ * External packages, sibling registry items and shared helper files reached from a set of files.
+ * A relative import into another item's folder becomes a registry dependency; one into a file
+ * that belongs to no item (a family-level helper such as billing/format.ts) is copied along
+ * with the item, recursively.
+ */
+function scanImports(entry: string[], folderToId: Map<string, string>, self: string) {
   const deps = new Set<string>();
   const reg = new Set<string>();
-  for (const f of files) {
+  const files = new Set(entry);
+  const queue = [...entry];
+  while (queue.length) {
+    const f = queue.pop()!;
     if (!/\.tsx?$/.test(f)) continue;
     const src = fs.readFileSync(f, 'utf8');
     for (const m of src.matchAll(/(?:import|export)[^'"]*?from\s+['"]([^'"]+)['"]|import\(\s*['"]([^'"]+)['"]\s*\)/g)) {
       const spec = m[1] ?? m[2] ?? '';
       if (spec.startsWith('.')) {
         const target = path.resolve(path.dirname(f), spec);
+        let owner: string | undefined;
         for (const [folder, id] of folderToId) {
-          if (id !== self && (target === folder || target.startsWith(folder + path.sep))) reg.add(id);
+          if (target === folder || target.startsWith(folder + path.sep)) owner = id;
+        }
+        if (owner && owner !== self) reg.add(owner);
+        if (!owner) {
+          const file = resolveFile(target);
+          if (file && !files.has(file) && !/\.(test|doc|meta)\.tsx?$/.test(file)) {
+            files.add(file);
+            queue.push(file);
+          }
         }
       } else {
         const name = spec.startsWith('@') ? spec.split('/').slice(0, 2).join('/') : spec.split('/')[0]!;
@@ -67,7 +87,7 @@ function scanImports(files: string[], folderToId: Map<string, string>, self: str
       }
     }
   }
-  return { dependencies: [...deps].sort(), registryDependencies: [...reg].sort() };
+  return { dependencies: [...deps].sort(), registryDependencies: [...reg].sort(), files: [...files].sort() };
 }
 
 interface Source { kind: Kind; pkg: string; dir: string; metaFile: string; metaExport: string; targetBase: string; id?: string; meta?: Meta }
@@ -111,8 +131,11 @@ async function build() {
   for (const s of sources) {
     const meta = s.meta ?? (await load(s.metaFile, s.metaExport));
     const id = idOf(s);
-    const files = walk(s.dir).filter((f) => isSource(path.basename(f)));
-    const { dependencies, registryDependencies } = scanImports(files, folderToId, id);
+    const own = walk(s.dir).filter((f) => isSource(path.basename(f)));
+    const { dependencies, registryDependencies, files } = scanImports(own, folderToId, id);
+    // Shared helpers live outside the item folder: keep their path relative to the package src.
+    const srcRoot = s.dir.slice(0, s.dir.indexOf(`${path.sep}src${path.sep}`) + 5);
+    const targetRoot = s.targetBase.split('/').slice(0, -path.relative(srcRoot, s.dir).split(path.sep).length).join('/');
     items.push({
       id,
       kind: s.kind,
@@ -121,7 +144,12 @@ async function build() {
       group: meta.group ?? meta.family ?? '',
       status: meta.status ?? 'stable',
       description: meta.description ?? '',
-      files: files.map((f) => ({ path: rel(f), target: `${s.targetBase}/${path.relative(s.dir, f).split(path.sep).join('/')}` })),
+      files: files.map((f) => ({
+        path: rel(f),
+        target: f.startsWith(s.dir + path.sep)
+          ? `${s.targetBase}/${path.relative(s.dir, f).split(path.sep).join('/')}`
+          : `${targetRoot}/${path.relative(srcRoot, f).split(path.sep).join('/')}`,
+      })),
       dependencies,
       registryDependencies,
       ...(s.metaFile ? { docs: rel(s.metaFile) } : {}),
