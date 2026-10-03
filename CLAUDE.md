@@ -55,7 +55,8 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
   (`embedded` cuando van dentro de un shell que ya tiene `<main>`).
 - `kit-registry.json` (raíz, generado por `pnpm registry`): todo lo instalable, lo leen CLI y MCP.
   Los ids son únicos entre componentes, layouts, bloques y plantillas.
-- `apps/musematic` (puerta de la Fase 3: solo kit, verificado por `scripts/check-kit-only.mjs`),
+- `apps/musematic` y `apps/falcone` (puerta de la Fase 3: solo kit, verificado por
+  `scripts/check-kit-only.mjs` en CI; Falcone usa `falconePreset`, logo placeholder),
   `apps/example-vite`, `apps/example-next`. `apps/docs/preview.html` = un bloque/layout/plantilla
   por iframe (galerías Layouts · Blocks · Templates).
 - `packages/mcp` — MCP server (privado, imagen Docker); sirve `registry.json` (raíz), generado
@@ -66,7 +67,8 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
 1. Crear/editar el `.jsx` de su grupo en `apps/docs/src/catalog/`: sección con preview
    interactivo + `<CodeBlock>` con el código React/Tailwind real para pegar.
 2. `window.SECTIONS['id'] = Seccion`; si es archivo nuevo, importarlo en `apps/docs/src/main.jsx`.
-3. Poner `status:'done'` en `registry.jsx`, luego `pnpm registry` y `pnpm visual:update`.
+3. Poner `status:'done'` en `registry.jsx`, luego `pnpm registry`; las baselines visuales se
+   regeneran en CI con `[visual-update]` en el mensaje del commit.
 Cada archivo lee de `window` arriba (`const { ... } = window;`) y exporta a `window` al final.
 Nombrar los objetos de estilo de forma única (nunca `const styles`).
 Componente de paquete: seguir `packages/ui/CONTRIBUTING.md`, exportarlo en `src/index.ts` y

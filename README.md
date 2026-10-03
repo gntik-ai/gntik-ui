@@ -20,6 +20,7 @@ gntik-ui/
 │  │  ├─ preview.html       renders one block / layout / template per iframe
 │  │  └─ e2e/               Playwright visual baselines + axe gates
 │  ├─ musematic/            musematic rebuilt only from the kit (the Phase 3 gate)
+│  ├─ falcone/              Falcone on the kit (second product; placeholder brand preset)
 │  ├─ example-vite/         neutral starter a new product clones
 │  └─ example-next/         the kit on Next.js 16 (App Router, SSR-safe theme)
 ├─ packages/
@@ -90,4 +91,7 @@ Phase 3 of the design-system proposal is in: 79 components and 12 layouts in `@g
 the catalog (63 entries), the package Library, and Layouts / Blocks / Templates galleries
 previewed per device and theme. Gates: keyboard + axe unit tests in every package, axe in the
 browser on every composition in three themes (`pnpm a11y`), and musematic rebuilt only from
-the kit (`node apps/musematic/scripts/check-kit-only.mjs`). Next: Phase 4 (ecosystem).
+the kit (`node apps/musematic/scripts/check-kit-only.mjs`), with Falcone as the second
+product on it (`apps/falcone`, placeholder logo until its artwork lands). Visual baselines are
+recorded on the CI runner: push a commit whose message contains `[visual-update]` to re-record
+them after an intended visual change. Next: Phase 4 (ecosystem).
