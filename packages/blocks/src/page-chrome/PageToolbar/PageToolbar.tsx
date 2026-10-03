@@ -21,9 +21,8 @@ export interface PageToolbarProps {
   searchPlaceholder?: string;
   /**
    * Filter controls. Use ToolbarButton (optionally with `render` for a Menu/Popover trigger) so they
-   * join the toolbar's arrow-key navigation. Defaults to a single "Filters" button.
+   * join the toolbar's arrow-key navigation. Omitted: a single "Filters" button; `null` hides it.
    */
-  /** Filter controls; omit for the default "Filters" button, `null` to hide it. */
   filters?: ReactNode;
   /** View modes for the segmented toggle; `null` or an empty list hides it. */
   views?: PageToolbarView[] | null;
