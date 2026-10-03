@@ -1,6 +1,6 @@
 # Gntik UI
 
-The design system for gntik-ai products (musematic, Falcone, llmwiki…). One token layer,
+The design system for gntik-ai products (musematic, Falcone…). One token layer,
 many products: each product is a theme preset (logo, name, assets) over the same palette.
 The catalog is Tailwind Plus-style: every component is **shown** with an interactive preview
 and ships its **React/Tailwind code** to copy.

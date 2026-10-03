@@ -1,14 +1,14 @@
 # Gntik UI — sistema de diseño de marca (CLAUDE.md)
 
 Este proyecto ES **gntik-ui**: el design system **agnóstico** de los productos gntik-ai
-(musematic, Falcone, llmwiki…), con layout + estilos nacidos en musematic. Hoy es un catálogo
+(musematic, Falcone…), con layout + estilos nacidos en musematic. Hoy es un catálogo
 estilo Tailwind Plus: cada componente se **ve** (preview interactivo) y trae su **código
 React/Tailwind** para pegar. Rumbo: monorepo estilo Astryx (ver la propuesta de evolución).
 
 ## Decisiones (fijadas con el usuario — no revertir sin preguntar)
-- **Contenido: agnóstico.** El núcleo no nombra ningún producto. musematic, Falcone y
-  llmwiki son *presets* de tema (logo, nombre, assets) + apps de ejemplo; sus datos de
-  dominio viven en fixtures, nunca en los componentes.
+- **Contenido: agnóstico.** El núcleo no nombra ningún producto. musematic y Falcone
+  son *presets* de tema (logo, nombre, assets) + apps de ejemplo; sus datos de dominio
+  viven en fixtures, nunca en los componentes. llmwiki queda fuera (usa otra UI por ahora).
 - **Colores congelados:** los valores HSL de `tokens/brand.css` no cambian. Los presets
   solo difieren en logo, nombre y assets. El contraste se arregla emparejando tokens
   existentes (texto verde/ámbar en light → tokens más oscuros), nunca cambiando valores.

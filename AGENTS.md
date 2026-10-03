@@ -8,7 +8,7 @@ agent-oriented summary.
 
 gntik-ui is the **product-agnostic** design system of gntik-ai: React 19 + Tailwind CSS 4
 components on Base UI, layouts, page blocks and page templates over one token layer. Products
-(musematic, Falcone, llmwiki…) are **presets** (name + logo + assets) plus example apps; their
+(musematic, Falcone…) are **presets** (name + logo + assets) plus example apps; their
 domain data lives in fixtures, never in components. pnpm monorepo, Node 24, pnpm 11.
 
 | Package | What |
