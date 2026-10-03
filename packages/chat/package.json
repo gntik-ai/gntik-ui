@@ -1,0 +1,58 @@
+{
+  "name": "@gntik-ai/chat",
+  "version": "0.1.0",
+  "description": "AI chat pack for gntik-ui: chat layout, messages, streaming markdown, composer, tool calls and citations.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gntik-ai/gntik-ui.git",
+    "directory": "packages/chat"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@gntik-ai/tokens": "workspace:*",
+    "@gntik-ai/ui": "workspace:*",
+    "lucide-react": "^1.48.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "axe-core": "^4.13.0",
+    "jsdom": "^30.1.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tsdown": "^0.23.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.2"
+  }
+}

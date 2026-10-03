@@ -23,8 +23,8 @@
     "start:http": "node dist/index.js --http",
     "test": "npm run build && node --test test/*.test.mjs",
     "smoke": "npm run build && node scripts/smoke.mjs",
-    "registry": "tsc -p tsconfig.json && node dist/build-registry.js",
-    "registry:check": "tsc -p tsconfig.json && node dist/build-registry.js --check",
+    "registry": "tsc -p tsconfig.json && node dist/build-registry.js && tsx scripts/build-kit-registry.ts",
+    "registry:check": "tsc -p tsconfig.json && node dist/build-registry.js --check && tsx scripts/build-kit-registry.ts --check",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

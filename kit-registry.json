@@ -1,0 +1,1216 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "accordion",
+      "kind": "component",
+      "name": "Accordion",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "stable",
+      "description": "A stack of collapsible sections separated by dividers, flush or inside a card. Single (default) or multiple open items; the chevron rotates and the height animates. Compound parts: Accordion, AccordionItem, AccordionTrigger, AccordionPanel.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Accordion/Accordion.tsx",
+          "target": "components/ui/accordion/Accordion.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Accordion/accordion.variants.ts",
+          "target": "components/ui/accordion/accordion.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Accordion/index.ts",
+          "target": "components/ui/accordion/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Accordion/Accordion.doc.ts"
+    },
+    {
+      "id": "alert",
+      "kind": "component",
+      "name": "Alert",
+      "package": "@gntik-ai/ui",
+      "group": "Feedback",
+      "status": "stable",
+      "description": "Inline banner in four tones (info, success, warning, destructive) with title, description, an action row and an optional dismiss button. Destructive alerts use role=\"alert\"; the others role=\"status\".",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Alert/Alert.tsx",
+          "target": "components/ui/alert/Alert.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Alert/alert.variants.ts",
+          "target": "components/ui/alert/alert.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Alert/index.ts",
+          "target": "components/ui/alert/index.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Alert/Alert.doc.ts"
+    },
+    {
+      "id": "alert-dialog",
+      "kind": "component",
+      "name": "AlertDialog",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "stable",
+      "description": "Confirmation that interrupts the user and demands a decision: tone icon (destructive, warning, info), title, consequence and Cancel + confirm actions. An outside press does not dismiss it. Parts: AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/AlertDialog/AlertDialog.tsx",
+          "target": "components/ui/alert-dialog/AlertDialog.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/AlertDialog/alertDialog.variants.ts",
+          "target": "components/ui/alert-dialog/alertDialog.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/AlertDialog/index.ts",
+          "target": "components/ui/alert-dialog/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "dialog",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/AlertDialog/AlertDialog.doc.ts"
+    },
+    {
+      "id": "avatar",
+      "kind": "component",
+      "name": "Avatar",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "stable",
+      "description": "Person or entity avatar: image with an initials (or icon) fallback, five sizes (xs–xl), round or rounded, tinted tones and an optional presence dot. AvatarGroup stacks avatars with a \"+N more\" overflow.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Avatar/Avatar.tsx",
+          "target": "components/ui/avatar/Avatar.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Avatar/avatar.variants.ts",
+          "target": "components/ui/avatar/avatar.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Avatar/index.ts",
+          "target": "components/ui/avatar/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Avatar/Avatar.doc.ts"
+    },
+    {
+      "id": "badge",
+      "kind": "component",
+      "name": "Badge",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "stable",
+      "description": "Compact label for status, counts and categories. Semantic tones (neutral, primary, success, warning, destructive, info) plus four category tones, in soft, outline or solid; optional dot and remove button for tags.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Badge/Badge.tsx",
+          "target": "components/ui/badge/Badge.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Badge/badge.variants.ts",
+          "target": "components/ui/badge/badge.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Badge/index.ts",
+          "target": "components/ui/badge/index.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Badge/Badge.doc.ts"
+    },
+    {
+      "id": "breadcrumbs",
+      "kind": "component",
+      "name": "Breadcrumbs",
+      "package": "@gntik-ai/ui",
+      "group": "Navigation",
+      "status": "stable",
+      "description": "Location trail in a nav landmark: chevron or slash separators, an optional icon-only root, and the current page marked with aria-current. With `maxItems` the middle collapses into an ellipsis button that expands the full trail in place.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Breadcrumbs/Breadcrumbs.tsx",
+          "target": "components/ui/breadcrumbs/Breadcrumbs.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Breadcrumbs/breadcrumbs.variants.ts",
+          "target": "components/ui/breadcrumbs/breadcrumbs.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Breadcrumbs/index.ts",
+          "target": "components/ui/breadcrumbs/index.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "link",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Breadcrumbs/Breadcrumbs.doc.ts"
+    },
+    {
+      "id": "button",
+      "kind": "component",
+      "name": "Button",
+      "package": "@gntik-ai/ui",
+      "group": "Actions",
+      "status": "stable",
+      "description": "Triggers an action. Five variants (primary, secondary, soft, ghost, destructive), three sizes, icons and a loading state. IconButton is the square, icon-only form.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Button/Button.tsx",
+          "target": "components/ui/button/Button.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Button/button.variants.ts",
+          "target": "components/ui/button/button.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Button/index.ts",
+          "target": "components/ui/button/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "spinner",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Button/Button.doc.ts"
+    },
+    {
+      "id": "card",
+      "kind": "component",
+      "name": "Card",
+      "package": "@gntik-ai/ui",
+      "group": "Layout",
+      "status": "stable",
+      "description": "The base content surface: border, token radius, generous padding and a flat shadow. Parts: Card, CardHeader (optionally divided), CardTitle, CardDescription, CardAction (header right slot), CardBody and CardFooter. Variants: default, well and outline.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Card/Card.tsx",
+          "target": "components/ui/card/Card.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Card/card.variants.ts",
+          "target": "components/ui/card/card.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Card/index.ts",
+          "target": "components/ui/card/index.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Card/Card.doc.ts"
+    },
+    {
+      "id": "checkbox",
+      "kind": "component",
+      "name": "Checkbox",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "stable",
+      "description": "Checkbox with optional label and description, including the indeterminate state. CheckboxGroup shares state across several checkboxes (plain or bordered list layout) and supports a parent \"select all\" checkbox.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Checkbox/Checkbox.tsx",
+          "target": "components/ui/checkbox/Checkbox.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Checkbox/checkbox.variants.ts",
+          "target": "components/ui/checkbox/checkbox.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Checkbox/index.ts",
+          "target": "components/ui/checkbox/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Checkbox/Checkbox.doc.ts"
+    },
+    {
+      "id": "collapsible",
+      "kind": "component",
+      "name": "Collapsible",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "stable",
+      "description": "A single show/hide section: an inline toggle (\"Advanced settings\") or a full-width row in the Accordion family. The chevron rotates and the height animates. Compound parts: Collapsible, CollapsibleTrigger, CollapsiblePanel.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Collapsible/Collapsible.tsx",
+          "target": "components/ui/collapsible/Collapsible.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Collapsible/collapsible.variants.ts",
+          "target": "components/ui/collapsible/collapsible.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Collapsible/index.ts",
+          "target": "components/ui/collapsible/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Collapsible/Collapsible.doc.ts"
+    },
+    {
+      "id": "combobox",
+      "kind": "component",
+      "name": "Combobox",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "stable",
+      "description": "Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Combobox/Combobox.tsx",
+          "target": "components/ui/combobox/Combobox.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Combobox/combobox.variants.ts",
+          "target": "components/ui/combobox/combobox.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Combobox/index.ts",
+          "target": "components/ui/combobox/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "select",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Combobox/Combobox.doc.ts"
+    },
+    {
+      "id": "dialog",
+      "kind": "component",
+      "name": "Dialog",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "stable",
+      "description": "Modal window for focused tasks: forms, details, confirmations. Compound parts (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose) in four sizes.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Dialog/Dialog.tsx",
+          "target": "components/ui/dialog/Dialog.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Dialog/dialog.variants.ts",
+          "target": "components/ui/dialog/dialog.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Dialog/index.ts",
+          "target": "components/ui/dialog/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Dialog/Dialog.doc.ts"
+    },
+    {
+      "id": "drawer",
+      "kind": "component",
+      "name": "Drawer",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "stable",
+      "description": "Panel that slides in from the right, left or bottom edge for details, edit forms and navigation. Fixed header and footer, scrollable body, swipe to dismiss. Parts: Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Drawer/Drawer.tsx",
+          "target": "components/ui/drawer/Drawer.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Drawer/drawer.variants.ts",
+          "target": "components/ui/drawer/drawer.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Drawer/index.ts",
+          "target": "components/ui/drawer/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Drawer/Drawer.doc.ts"
+    },
+    {
+      "id": "empty-state",
+      "kind": "component",
+      "name": "EmptyState",
+      "package": "@gntik-ai/ui",
+      "group": "Feedback",
+      "status": "stable",
+      "description": "Placeholder for an empty list, table or page: a neutral icon halo, a title, a short explanation and primary / secondary actions. Three sizes and an optional dashed border.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/EmptyState/EmptyState.tsx",
+          "target": "components/ui/empty-state/EmptyState.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/EmptyState/emptyState.variants.ts",
+          "target": "components/ui/empty-state/emptyState.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/EmptyState/index.ts",
+          "target": "components/ui/empty-state/index.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/EmptyState/EmptyState.doc.ts"
+    },
+    {
+      "id": "field",
+      "kind": "component",
+      "name": "Field",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "stable",
+      "description": "Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Field/Field.tsx",
+          "target": "components/ui/field/Field.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Field/field.variants.ts",
+          "target": "components/ui/field/field.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Field/index.ts",
+          "target": "components/ui/field/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Field/Field.doc.ts"
+    },
+    {
+      "id": "input",
+      "kind": "component",
+      "name": "Input",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "stable",
+      "description": "Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Input/Input.tsx",
+          "target": "components/ui/input/Input.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Input/index.ts",
+          "target": "components/ui/input/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Input/input.variants.ts",
+          "target": "components/ui/input/input.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Input/Input.doc.ts"
+    },
+    {
+      "id": "kbd",
+      "kind": "component",
+      "name": "Kbd",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "stable",
+      "description": "Keyboard key chip (<kbd>) for shortcuts and hints, in three sizes. KbdCombo renders a key combination such as ⌘ K. Symbol keys are announced by name (Command, Shift, Enter…).",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Kbd/Kbd.tsx",
+          "target": "components/ui/kbd/Kbd.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Kbd/index.ts",
+          "target": "components/ui/kbd/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Kbd/kbd.variants.ts",
+          "target": "components/ui/kbd/kbd.variants.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Kbd/Kbd.doc.ts"
+    },
+    {
+      "id": "link",
+      "kind": "component",
+      "name": "Link",
+      "package": "@gntik-ai/ui",
+      "group": "Navigation",
+      "status": "stable",
+      "description": "Styled anchor in brand green with an underline on hover. `external` adds the external icon, a hidden \"opens in a new tab\" hint and safe rel/target. LinkProvider supplies the app router link so internal links navigate client-side; `render` swaps the element per link.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Link/Link.tsx",
+          "target": "components/ui/link/Link.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Link/index.ts",
+          "target": "components/ui/link/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Link/link.variants.ts",
+          "target": "components/ui/link/link.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Link/Link.doc.ts"
+    },
+    {
+      "id": "menu",
+      "kind": "component",
+      "name": "Menu",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "stable",
+      "description": "Dropdown list of actions or options: items with icon, shortcut hint and destructive tone, checkbox and radio items, labelled groups, separators and submenus. MoreMenu is the row-actions shorthand (icon button + items array).",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Menu/Menu.tsx",
+          "target": "components/ui/menu/Menu.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Menu/MoreMenu.tsx",
+          "target": "components/ui/menu/MoreMenu.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Menu/index.ts",
+          "target": "components/ui/menu/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Menu/menu.variants.ts",
+          "target": "components/ui/menu/menu.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Menu/Menu.doc.ts"
+    },
+    {
+      "id": "meter",
+      "kind": "component",
+      "name": "Meter",
+      "package": "@gntik-ai/ui",
+      "group": "Feedback",
+      "status": "stable",
+      "description": "Usage meter for quotas and limits: label, value text, and a level set by thresholds (healthy → warning near the cap → destructive at or over it), with an optional note under the bar.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Meter/Meter.tsx",
+          "target": "components/ui/meter/Meter.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Meter/index.ts",
+          "target": "components/ui/meter/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Meter/meter.variants.ts",
+          "target": "components/ui/meter/meter.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Meter/Meter.doc.ts"
+    },
+    {
+      "id": "pagination",
+      "kind": "component",
+      "name": "Pagination",
+      "package": "@gntik-ai/ui",
+      "group": "Navigation",
+      "status": "stable",
+      "description": "Moves through pages of results. Pagination is numbered (first, last, siblings of the current page and ellipses, constant width) and page-size agnostic: page, pageCount, onPageChange. PaginationCompact is the table-footer form: \"1–10 of 97\" with previous/next.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Pagination/Pagination.tsx",
+          "target": "components/ui/pagination/Pagination.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Pagination/index.ts",
+          "target": "components/ui/pagination/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Pagination/pageRange.ts",
+          "target": "components/ui/pagination/pageRange.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Pagination/pagination.variants.ts",
+          "target": "components/ui/pagination/pagination.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Pagination/Pagination.doc.ts"
+    },
+    {
+      "id": "popover",
+      "kind": "component",
+      "name": "Popover",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "stable",
+      "description": "Non-modal floating panel anchored to a trigger, for short forms, details and filters. Optional arrow, four sides, three paddings. Parts: Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Popover/Popover.tsx",
+          "target": "components/ui/popover/Popover.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Popover/index.ts",
+          "target": "components/ui/popover/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Popover/popover.variants.ts",
+          "target": "components/ui/popover/popover.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Popover/Popover.doc.ts"
+    },
+    {
+      "id": "progress",
+      "kind": "component",
+      "name": "Progress",
+      "package": "@gntik-ai/ui",
+      "group": "Feedback",
+      "status": "stable",
+      "description": "Progress bar for a running task: optional label and formatted value, four tones (primary, success, warning, destructive), three heights, and an indeterminate state (value null) that stops pulsing under reduced motion.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Progress/Progress.tsx",
+          "target": "components/ui/progress/Progress.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Progress/index.ts",
+          "target": "components/ui/progress/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Progress/progress.variants.ts",
+          "target": "components/ui/progress/progress.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Progress/Progress.doc.ts"
+    },
+    {
+      "id": "radio-group",
+      "kind": "component",
+      "name": "RadioGroup",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "stable",
+      "description": "Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/RadioGroup/RadioGroup.tsx",
+          "target": "components/ui/radio-group/RadioGroup.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/RadioGroup/index.ts",
+          "target": "components/ui/radio-group/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/RadioGroup/radio-group.variants.ts",
+          "target": "components/ui/radio-group/radio-group.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/RadioGroup/RadioGroup.doc.ts"
+    },
+    {
+      "id": "select",
+      "kind": "component",
+      "name": "Select",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "stable",
+      "description": "Pick one value from a short list in a popup. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Select/Select.tsx",
+          "target": "components/ui/select/Select.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Select/index.ts",
+          "target": "components/ui/select/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Select/select.variants.ts",
+          "target": "components/ui/select/select.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Select/Select.doc.ts"
+    },
+    {
+      "id": "separator",
+      "kind": "component",
+      "name": "Separator",
+      "package": "@gntik-ai/ui",
+      "group": "Layout",
+      "status": "stable",
+      "description": "Thin rule between content. Horizontal or vertical, default / subtle / strong weight, and an optional label (plain text, mono kicker or pill) placed at the start, centre or end of a horizontal line.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Separator/Separator.tsx",
+          "target": "components/ui/separator/Separator.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Separator/index.ts",
+          "target": "components/ui/separator/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Separator/separator.variants.ts",
+          "target": "components/ui/separator/separator.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Separator/Separator.doc.ts"
+    },
+    {
+      "id": "skeleton",
+      "kind": "component",
+      "name": "Skeleton",
+      "package": "@gntik-ai/ui",
+      "group": "Feedback",
+      "status": "stable",
+      "description": "Loading placeholder in the shape of the content: block, text (one or more lines, the last shorter) or circle. Pulses gently and stops under prefers-reduced-motion. Decorative; announce loading on the container.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Skeleton/Skeleton.tsx",
+          "target": "components/ui/skeleton/Skeleton.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Skeleton/index.ts",
+          "target": "components/ui/skeleton/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Skeleton/skeleton.variants.ts",
+          "target": "components/ui/skeleton/skeleton.variants.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Skeleton/Skeleton.doc.ts"
+    },
+    {
+      "id": "slider",
+      "kind": "component",
+      "name": "Slider",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "stable",
+      "description": "Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Slider/Slider.tsx",
+          "target": "components/ui/slider/Slider.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Slider/index.ts",
+          "target": "components/ui/slider/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Slider/slider.variants.ts",
+          "target": "components/ui/slider/slider.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Slider/Slider.doc.ts"
+    },
+    {
+      "id": "spinner",
+      "kind": "component",
+      "name": "Spinner",
+      "package": "@gntik-ai/ui",
+      "group": "Feedback",
+      "status": "stable",
+      "description": "Indeterminate loading indicator that inherits the current text colour.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Spinner/Spinner.tsx",
+          "target": "components/ui/spinner/Spinner.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Spinner/index.ts",
+          "target": "components/ui/spinner/index.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Spinner/Spinner.doc.ts"
+    },
+    {
+      "id": "status-tag",
+      "kind": "component",
+      "name": "StatusTag",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "stable",
+      "description": "State pill with a dot (running, queued, paused, failed, draft…). The state → tone mapping is a prop-driven dictionary merged over generic defaults, so products add their own states without touching the component.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/StatusTag/StatusTag.tsx",
+          "target": "components/ui/status-tag/StatusTag.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/StatusTag/index.ts",
+          "target": "components/ui/status-tag/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/StatusTag/statusTag.variants.ts",
+          "target": "components/ui/status-tag/statusTag.variants.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "badge",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/StatusTag/StatusTag.doc.ts"
+    },
+    {
+      "id": "switch",
+      "kind": "component",
+      "name": "Switch",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "stable",
+      "description": "On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Switch/Switch.tsx",
+          "target": "components/ui/switch/Switch.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Switch/index.ts",
+          "target": "components/ui/switch/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Switch/switch.variants.ts",
+          "target": "components/ui/switch/switch.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Switch/Switch.doc.ts"
+    },
+    {
+      "id": "table",
+      "kind": "component",
+      "name": "Table",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "stable",
+      "description": "Styled semantic table parts: Table, TableHeader, TableBody, TableFooter, TableRow (selected state), TableHead (optional sort button with aria-sort), TableCell and TableCaption. Compact or comfortable density and an optional sticky header.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Table/Table.tsx",
+          "target": "components/ui/table/Table.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Table/index.ts",
+          "target": "components/ui/table/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Table/table.variants.ts",
+          "target": "components/ui/table/table.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Table/Table.doc.ts"
+    },
+    {
+      "id": "tabs",
+      "kind": "component",
+      "name": "Tabs",
+      "package": "@gntik-ai/ui",
+      "group": "Navigation",
+      "status": "stable",
+      "description": "Switches between views of the same block without leaving the page. Two variants (underline, pills), optional icons and count badges, a sliding indicator and a full-width layout. Compound parts: Tabs, TabsList, TabsTab, TabsIndicator, TabsPanel.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Tabs/Tabs.tsx",
+          "target": "components/ui/tabs/Tabs.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Tabs/index.ts",
+          "target": "components/ui/tabs/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Tabs/tabs.variants.ts",
+          "target": "components/ui/tabs/tabs.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Tabs/Tabs.doc.ts"
+    },
+    {
+      "id": "textarea",
+      "kind": "component",
+      "name": "Textarea",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "stable",
+      "description": "Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Textarea/Textarea.tsx",
+          "target": "components/ui/textarea/Textarea.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Textarea/index.ts",
+          "target": "components/ui/textarea/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Textarea/textarea.variants.ts",
+          "target": "components/ui/textarea/textarea.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Textarea/Textarea.doc.ts"
+    },
+    {
+      "id": "theme",
+      "kind": "component",
+      "name": "ThemeProvider",
+      "package": "@gntik-ai/ui",
+      "group": "Theme",
+      "status": "stable",
+      "description": "ThemeProvider (dark default, light, high contrast, system; persisted), themeScript, Logo and brand presets.",
+      "files": [
+        {
+          "path": "packages/ui/src/theme/Logo.tsx",
+          "target": "components/theme/Logo.tsx"
+        },
+        {
+          "path": "packages/ui/src/theme/ThemeProvider.tsx",
+          "target": "components/theme/ThemeProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/theme/musematic-mark.ts",
+          "target": "components/theme/musematic-mark.ts"
+        },
+        {
+          "path": "packages/ui/src/theme/presets.tsx",
+          "target": "components/theme/presets.tsx"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "ui-utils"
+      ]
+    },
+    {
+      "id": "toast",
+      "kind": "component",
+      "name": "Toast",
+      "package": "@gntik-ai/ui",
+      "group": "Feedback",
+      "status": "stable",
+      "description": "Short-lived notification stacked bottom-right. Five tones (neutral, success, info, warning, destructive), title, description, one inline action and a close button; auto-dismiss pauses on hover and focus. Mount ToastProvider + Toaster once and queue with the useToast() hook.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Toast/Toast.tsx",
+          "target": "components/ui/toast/Toast.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Toast/index.ts",
+          "target": "components/ui/toast/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Toast/toast.variants.ts",
+          "target": "components/ui/toast/toast.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Toast/Toast.doc.ts"
+    },
+    {
+      "id": "toggle-group",
+      "kind": "component",
+      "name": "ToggleGroup",
+      "package": "@gntik-ai/ui",
+      "group": "Actions",
+      "status": "stable",
+      "description": "Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined looks, two sizes, icon-only items.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/ToggleGroup/ToggleGroup.tsx",
+          "target": "components/ui/toggle-group/ToggleGroup.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/ToggleGroup/index.ts",
+          "target": "components/ui/toggle-group/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ToggleGroup/toggle-group.variants.ts",
+          "target": "components/ui/toggle-group/toggle-group.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/ToggleGroup/ToggleGroup.doc.ts"
+    },
+    {
+      "id": "toolbar",
+      "kind": "component",
+      "name": "Toolbar",
+      "package": "@gntik-ai/ui",
+      "group": "Actions",
+      "status": "stable",
+      "description": "Action bar above tables and lists: search, filters and actions with a single Tab stop and arrow-key navigation. Start / center / end lanes, groups, separators, links and inputs; buttons use the kit Button styles. Variants: bar, floating, plain.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Toolbar/Toolbar.tsx",
+          "target": "components/ui/toolbar/Toolbar.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Toolbar/index.ts",
+          "target": "components/ui/toolbar/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Toolbar/toolbar.variants.ts",
+          "target": "components/ui/toolbar/toolbar.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "button",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Toolbar/Toolbar.doc.ts"
+    },
+    {
+      "id": "tooltip",
+      "kind": "component",
+      "name": "Tooltip",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "stable",
+      "description": "Short visual hint that appears on hover or keyboard focus. Solid inverted chip for labels (optional shortcut), rich variant on the popover surface for a few lines. Parts: TooltipProvider, Tooltip, TooltipTrigger, TooltipContent, plus the SimpleTooltip shorthand. Never the only source of essential information.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Tooltip/Tooltip.tsx",
+          "target": "components/ui/tooltip/Tooltip.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Tooltip/index.ts",
+          "target": "components/ui/tooltip/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Tooltip/tooltip.variants.ts",
+          "target": "components/ui/tooltip/tooltip.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Tooltip/Tooltip.doc.ts"
+    },
+    {
+      "id": "ui-utils",
+      "kind": "component",
+      "name": "UI utilities",
+      "package": "@gntik-ai/ui",
+      "group": "Utilities",
+      "status": "stable",
+      "description": "cn() class merging and tv() variants helpers used by every component.",
+      "files": [
+        {
+          "path": "packages/ui/src/utils/cn.ts",
+          "target": "components/utils/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/tv.ts",
+          "target": "components/utils/tv.ts"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "tailwind-variants"
+      ],
+      "registryDependencies": []
+    }
+  ]
+}
