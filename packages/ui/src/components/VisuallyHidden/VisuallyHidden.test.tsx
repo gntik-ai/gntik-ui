@@ -33,7 +33,8 @@ describe('SkipLink', () => {
     expect(link).toHaveFocus();
     expect(link).toHaveClass('sr-only', 'focus:not-sr-only');
     await user.keyboard('{Enter}');
-    const main = screen.getByRole('main');
+    // The demo target is a div (a docs page already has its own <main>).
+    const main = document.getElementById('skip-link-demo-main');
     expect(main).toHaveFocus();
     expect(main).toHaveAttribute('tabindex', '-1');
   });

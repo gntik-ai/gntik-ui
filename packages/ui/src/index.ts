@@ -1,5 +1,6 @@
 // @gntik-ai/ui — public API. One export block per component folder (alphabetical).
 export { cn } from './utils/cn';
+export { tv, type VariantProps } from './utils/tv';
 export type { ComponentDoc } from './doc';
 
 // Theme

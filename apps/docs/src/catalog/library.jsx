@@ -9,7 +9,9 @@ import { useMemo, useState } from 'react';
 const { SectionHead, CodeBlock } = window;
 
 const docs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', { eager: true, import: 'doc' });
-const examples = import.meta.glob('../../../../packages/ui/src/components/*/examples/*.tsx', { eager: true, import: 'default' });
+// Whole modules: helper files in examples/ (fixtures, demo routers) have no default export.
+const exampleModules = import.meta.glob('../../../../packages/ui/src/components/*/examples/*.tsx', { eager: true });
+const examples = Object.fromEntries(Object.entries(exampleModules).filter(([, m]) => typeof m.default === 'function').map(([p, m]) => [p, m.default]));
 const sources = import.meta.glob('../../../../packages/ui/src/components/*/examples/*.tsx', { eager: true, query: '?raw', import: 'default' });
 
 const folderOf = (path) => path.split('/components/')[1].split('/')[0];

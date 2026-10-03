@@ -24,7 +24,7 @@ export default tseslint.config(
   { ignores: ['**/node_modules/**', '**/dist/**', 'apps/docs/public/**', 'apps/docs/legacy-index.html', 'registry.json'] },
   js.configs.recommended,
   {
-    files: ['packages/mcp/src/**/*.ts'],
+    files: ['packages/mcp/src/**/*.ts', 'packages/mcp/scripts/**/*.ts', 'packages/cli/src/**/*.ts', 'packages/cli/test/**/*.ts'],
     extends: [tseslint.configs.recommended],
     languageOptions: { globals: globals.node },
   },
