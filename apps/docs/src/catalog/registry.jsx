@@ -8,6 +8,7 @@
 const REGISTRY = [
   { group: 'Get started', icon: 'home', items: [
     { id: 'overview', label: 'Overview', icon: 'home', status: 'done', blurb: 'Inventory, progress and how to adopt the template.' },
+    { id: 'install', label: 'Install', icon: 'bricks', status: 'done', blurb: 'Three ways in: gntik-ui CLI, shadcn CLI (/r/<id>.json) and package import.' },
   ]},
   { group: 'Foundations', icon: 'palette', items: [
     { id: 'foundations', label: 'Foundations', icon: 'palette', status: 'done', blurb: 'Tokens: color, typography, spacing, radii, shadows and icons.' },

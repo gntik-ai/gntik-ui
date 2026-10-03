@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner",
+  "type": "registry:ui",
+  "title": "Spinner",
+  "description": "Indeterminate loading indicator that inherits the current text colour.",
+  "author": "gntik-ai",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Spinner/Spinner.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/spinner/Spinner.tsx",
+      "content": "import type { SVGAttributes } from 'react';\nimport { cn } from '../../utils/cn';\n\nexport interface SpinnerProps extends SVGAttributes<SVGSVGElement> {\n  size?: number;\n  /** Accessible label. Without it the spinner is decorative (aria-hidden). */\n  label?: string;\n}\n\n/** Indeterminate loading indicator; inherits currentColor. */\nexport function Spinner({ size = 16, label, className, ...props }: SpinnerProps) {\n  return (\n    <svg\n      width={size}\n      height={size}\n      viewBox=\"0 0 24 24\"\n      className={cn('block shrink-0 animate-spin motion-reduce:animate-[spin_1.6s_linear_infinite]', className)}\n      role={label ? 'status' : undefined}\n      aria-label={label}\n      aria-hidden={label ? undefined : true}\n      {...props}\n    >\n      <circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"2.6\" strokeOpacity=\"0.25\" />\n      <path d=\"M21 12a9 9 0 0 0-9-9\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"2.6\" strokeLinecap=\"round\" />\n    </svg>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Spinner/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/spinner/index.ts",
+      "content": "export { Spinner, type SpinnerProps } from './Spinner';\nexport { doc as spinnerDoc } from './Spinner.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Spinner/Spinner.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/spinner/Spinner.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Spinner',\n  group: 'Feedback',\n  status: 'stable',\n  description: 'Indeterminate loading indicator that inherits the current text colour.',\n  pattern: 'status',\n  tokens: ['currentColor'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Feedback"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Spinner/Spinner.doc.ts"
+  }
+}

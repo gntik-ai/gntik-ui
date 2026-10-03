@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "invite-members-dialog",
+  "type": "registry:block",
+  "title": "Invite members dialog",
+  "description": "Dialog to invite people by email (validated chips) with a role and an optional message; submits with a loading state.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/forms/InviteMembersDialog/InviteMembersDialog.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/forms/invite-members-dialog/InviteMembersDialog.tsx",
+      "content": "import {\n  Alert,\n  Button,\n  Dialog,\n  DialogBody,\n  DialogClose,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogTitle,\n  DialogTrigger,\n  Field,\n  FieldDescription,\n  FieldError,\n  FieldLabel,\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  Textarea,\n  TokenInput,\n} from '@gntik-ai/ui';\nimport { UserPlus } from '@gntik-ai/icons';\nimport { useState, type ReactElement } from 'react';\nimport { EMAIL_RE, memberRoles, type RoleOption } from './fixtures';\n\nexport type { RoleOption } from './fixtures';\n\nexport interface InvitePayload {\n  emails: string[];\n  role: string;\n  message: string;\n}\n\nexport interface InviteMembersDialogProps {\n  roles?: RoleOption[];\n  defaultRole?: string;\n  /** Sends the invitations. A returned promise shows a loading state; a rejection shows its message. */\n  onInvite?: (payload: InvitePayload) => void | Promise<void>;\n  /** Maximum number of addresses per batch. */\n  maxInvites?: number;\n  open?: boolean;\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  /** Trigger element (rendered through Dialog.Trigger). Pass `null` when controlling `open` yourself. */\n  trigger?: ReactElement | null;\n  title?: string;\n  description?: string;\n}\n\nconst emailError = (t: string) => (EMAIL_RE.test(t) ? null : `${t} is not a valid email address`);\n\n/** Invite dialog: email chips with validation, a role and an optional message; submit with loading. */\nexport function InviteMembersDialog({\n  roles = memberRoles,\n  defaultRole = 'member',\n  onInvite,\n  maxInvites = 20,\n  open: openProp,\n  defaultOpen = false,\n  onOpenChange,\n  trigger = <Button icon={UserPlus} />,\n  title = 'Invite members',\n  description = 'Invitations expire after 7 days. Separate addresses with commas or Enter.',\n}: InviteMembersDialogProps) {\n  const [innerOpen, setInnerOpen] = useState(defaultOpen);\n  const [emails, setEmails] = useState<string[]>([]);\n  const [role, setRole] = useState(defaultRole);\n  const [message, setMessage] = useState('');\n  const [submitted, setSubmitted] = useState(false);\n  const [loading, setLoading] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n  const open = openProp ?? innerOpen;\n\n  const invalidCount = emails.filter((e) => emailError(e)).length;\n  const emailsProblem = emails.length === 0 ? 'Add at least one email address.' : invalidCount > 0 ? `Fix ${invalidCount} invalid ${invalidCount === 1 ? 'address' : 'addresses'}.` : null;\n  const showEmailError = submitted && emailsProblem != null;\n\n  const setOpen = (next: boolean) => {\n    if (loading && !next) return;\n    if (!next) {\n      setEmails([]);\n      setRole(defaultRole);\n      setMessage('');\n      setSubmitted(false);\n      setError(null);\n    }\n    setInnerOpen(next);\n    onOpenChange?.(next);\n  };\n\n  const submit = async () => {\n    setSubmitted(true);\n    setError(null);\n    if (emailsProblem) return;\n    setLoading(true);\n    try {\n      await onInvite?.({ emails, role, message: message.trim() });\n      setLoading(false);\n      setOpen(false);\n    } catch (e) {\n      setLoading(false);\n      setError(e instanceof Error ? e.message : 'The invitations could not be sent.');\n    }\n  };\n\n  const roleLabel = roles.find((r) => r.value === role)?.description;\n\n  return (\n    <Dialog open={open} onOpenChange={setOpen}>\n      {trigger && <DialogTrigger render={trigger}>{title}</DialogTrigger>}\n      <DialogContent size=\"lg\">\n        <DialogHeader>\n          <DialogTitle>{title}</DialogTitle>\n          <DialogDescription>{description}</DialogDescription>\n        </DialogHeader>\n        <form\n          noValidate\n          onSubmit={(e) => {\n            e.preventDefault();\n            void submit();\n          }}\n        >\n          <DialogBody className=\"grid gap-5\">\n            <Field invalid={showEmailError}>\n              <FieldLabel required>Email addresses</FieldLabel>\n              <TokenInput\n                value={emails}\n                onValueChange={setEmails}\n                validate={emailError}\n                maxItems={maxInvites}\n                placeholder=\"name@company.com\"\n                listLabel=\"Invited addresses\"\n                invalid={showEmailError}\n              />\n              <FieldError match={showEmailError}>{emailsProblem}</FieldError>\n            </Field>\n            <Field>\n              <FieldLabel>Role</FieldLabel>\n              <Select value={role} onValueChange={(v) => v != null && setRole(v)} items={roles.map(({ value, label }) => ({ value, label }))}>\n                <SelectTrigger className=\"w-full\" />\n                <SelectContent>\n                  {roles.map((r) => (\n                    <SelectItem key={r.value} value={r.value}>\n                      {r.label}\n                    </SelectItem>\n                  ))}\n                </SelectContent>\n              </Select>\n              {roleLabel && <FieldDescription>{roleLabel}</FieldDescription>}\n            </Field>\n            <Field>\n              <FieldLabel>Message (optional)</FieldLabel>\n              <Textarea rows={3} value={message} onValueChange={setMessage} placeholder=\"Join us on the billing-dashboard project.\" />\n            </Field>\n            {error && <Alert tone=\"destructive\" title=\"Invitations not sent\" description={error} />}\n          </DialogBody>\n          <DialogFooter>\n            <DialogClose render={<Button variant=\"ghost\" disabled={loading} />}>Cancel</DialogClose>\n            <Button type=\"submit\" loading={loading}>\n              {emails.length > 1 ? `Send ${emails.length} invitations` : 'Send invitation'}\n            </Button>\n          </DialogFooter>\n        </form>\n      </DialogContent>\n    </Dialog>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/forms/InviteMembersDialog/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/forms/invite-members-dialog/fixtures.ts",
+      "content": "export interface RoleOption {\n  value: string;\n  label: string;\n  description?: string;\n}\n\nexport const memberRoles: RoleOption[] = [\n  { value: 'owner', label: 'Owner', description: 'Full access, including billing and deletion.' },\n  { value: 'admin', label: 'Admin', description: 'Manage members, projects and settings.' },\n  { value: 'member', label: 'Member', description: 'Create and deploy projects.' },\n  { value: 'viewer', label: 'Viewer', description: 'Read-only access.' },\n];\n\nexport const EMAIL_RE = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "forms"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/forms/InviteMembersDialog/block.meta.ts"
+  }
+}

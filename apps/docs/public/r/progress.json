@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress",
+  "type": "registry:ui",
+  "title": "Progress",
+  "description": "Progress bar for a running task: optional label and formatted value, four tones (primary, success, warning, destructive), three heights, and an indeterminate state (value null) that stops pulsing under reduced motion.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Progress/Progress.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/progress/Progress.tsx",
+      "content": "import { Progress as BaseProgress } from '@base-ui/react/progress';\nimport type { ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { progressVariants, type ProgressVariantProps } from './progress.variants';\n\nexport interface ProgressProps extends Omit<BaseProgress.Root.Props, 'className' | 'children'>, ProgressVariantProps {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** Visible label; also the accessible name. Without it, pass `aria-label`. */\n  label?: ReactNode;\n  /** Shows the formatted value (e.g. \"72%\") opposite the label. */\n  showValue?: boolean;\n}\n\n/**\n * Task progress bar (role=\"progressbar\") on Base UI Progress. `value={null}` makes it\n * indeterminate: a pulsing segment that holds still under reduced motion.\n */\nexport function Progress({ tone, size, label, showValue = false, className, ...props }: ProgressProps) {\n  const s = progressVariants({ tone, size });\n  const indeterminate = props.value == null;\n  return (\n    <BaseProgress.Root className={cn(s.root(), className)} {...props}>\n      {(label != null || (showValue && !indeterminate)) && (\n        <div className={s.header()}>\n          {label != null ? <BaseProgress.Label className={s.label()}>{label}</BaseProgress.Label> : <span />}\n          {showValue && !indeterminate && <BaseProgress.Value className={s.value()} />}\n        </div>\n      )}\n      <BaseProgress.Track className={s.track()}>\n        <BaseProgress.Indicator className={s.indicator()} />\n      </BaseProgress.Track>\n    </BaseProgress.Root>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Progress/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/progress/index.ts",
+      "content": "export { Progress, type ProgressProps } from './Progress';\nexport { progressVariants, type ProgressVariantProps } from './progress.variants';\nexport { doc as progressDoc } from './Progress.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Progress/progress.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/progress/progress.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const progressVariants = tv({\n  slots: {\n    root: 'grid w-full gap-1.5',\n    header: 'flex items-center justify-between gap-3',\n    label: 'text-[12.5px] font-medium text-foreground',\n    value: 'font-mono text-[11.5px] font-semibold tabular-nums',\n    track: 'relative w-full overflow-hidden rounded-full bg-secondary',\n    indicator: [\n      'block h-full rounded-full transition-[width] duration-400 ease-out motion-reduce:transition-none',\n      'data-[indeterminate]:w-2/5 data-[indeterminate]:animate-pulse motion-reduce:data-[indeterminate]:animate-none',\n    ],\n  },\n  variants: {\n    tone: {\n      primary: { indicator: 'bg-primary', value: 'text-foreground' },\n      success: { indicator: 'bg-success', value: 'text-success-text' },\n      warning: { indicator: 'bg-warning', value: 'text-warning-text' },\n      destructive: { indicator: 'bg-destructive', value: 'text-destructive-text' },\n    },\n    size: {\n      sm: { track: 'h-1.5' },\n      md: { track: 'h-2' },\n      lg: { track: 'h-2.5' },\n    },\n  },\n  defaultVariants: { tone: 'primary', size: 'md' },\n});\n\nexport type ProgressVariantProps = VariantProps<typeof progressVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Progress/Progress.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/progress/Progress.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Progress',\n  group: 'Feedback',\n  status: 'stable',\n  description: 'Progress bar for a running task: optional label and formatted value, four tones (primary, success, warning, destructive), three heights, and an indeterminate state (value null) that stops pulsing under reduced motion.',\n  primitive: '@base-ui/react/progress',\n  pattern: 'progressbar',\n  tokens: ['primary', 'success', 'success-text', 'warning', 'warning-text', 'destructive', 'destructive-text', 'secondary', 'foreground'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Feedback"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Progress/Progress.doc.ts"
+  }
+}

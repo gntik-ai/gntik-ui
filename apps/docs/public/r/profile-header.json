@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "profile-header",
+  "type": "registry:block",
+  "title": "Profile header",
+  "description": "Profile header with a large avatar and change action, name, role badge, headline, meta row and edit button.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/team/ProfileHeader/ProfileHeader.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/team/profile-header/ProfileHeader.tsx",
+      "content": "import { Avatar, Badge, Button, IconButton, cn } from '@gntik-ai/ui';\nimport { Camera, Pencil } from '@gntik-ai/icons';\nimport { useRef, useState, type ReactNode } from 'react';\nimport { profile as defaultProfile, type Profile } from './fixtures';\n\nexport type { Profile, ProfileMetaItem } from './fixtures';\n\nexport interface ProfileHeaderProps {\n  profile?: Profile;\n  /** Called with the picked image; the avatar previews it right away. `null` hides the change action. */\n  onAvatarChange?: ((file: File) => void) | null;\n  /** Called by the Edit profile button. `null` hides it. */\n  onEdit?: (() => void) | null;\n  /** Extra actions next to Edit. */\n  actions?: ReactNode;\n  headingLevel?: 'h1' | 'h2';\n  className?: string;\n}\n\n/** Profile header: large avatar with a change action, name, role, headline, meta row and edit button. */\nexport function ProfileHeader({\n  profile = defaultProfile,\n  onAvatarChange = () => {},\n  onEdit = () => {},\n  actions,\n  headingLevel: Heading = 'h1',\n  className,\n}: ProfileHeaderProps) {\n  const fileRef = useRef<HTMLInputElement | null>(null);\n  const [preview, setPreview] = useState<string | null>(null);\n\n  const pick = (file: File) => {\n    onAvatarChange?.(file);\n    try {\n      const url = URL.createObjectURL(file);\n      if (preview) URL.revokeObjectURL(preview);\n      setPreview(url);\n    } catch {\n      // No object URLs (e.g. server or test environments): keep the current image.\n    }\n  };\n\n  return (\n    <div className={cn('flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6', className)}>\n      <div className=\"relative w-fit shrink-0\">\n        <Avatar size=\"xl\" name={profile.name} src={preview ?? profile.avatarUrl} />\n        {onAvatarChange && (\n          <>\n            <IconButton\n              icon={Camera}\n              label=\"Change avatar\"\n              size=\"sm\"\n              variant=\"secondary\"\n              className=\"absolute -end-1 -bottom-1 rounded-full\"\n              onClick={() => fileRef.current?.click()}\n            />\n            <input\n              ref={fileRef}\n              type=\"file\"\n              accept=\"image/*\"\n              hidden\n              onChange={(e) => {\n                const file = e.target.files?.[0];\n                if (file) pick(file);\n                e.target.value = '';\n              }}\n            />\n          </>\n        )}\n      </div>\n      <div className=\"min-w-0 flex-1\">\n        <div className=\"flex flex-wrap items-center gap-2.5\">\n          <Heading className=\"truncate text-[22px] font-semibold tracking-tight text-foreground\">{profile.name}</Heading>\n          {profile.role && (\n            <Badge tone=\"primary\" size=\"lg\">\n              {profile.role}\n            </Badge>\n          )}\n        </div>\n        {profile.headline && <p className=\"mt-1 text-[13.5px] text-muted-foreground\">{profile.headline}</p>}\n        {profile.meta && profile.meta.length > 0 && (\n          <ul aria-label=\"Details\" className=\"mt-3 flex flex-wrap gap-x-5 gap-y-1.5\">\n            {profile.meta.map(({ icon: MetaIcon, label }) => (\n              <li key={label} className=\"flex items-center gap-1.5 text-[12.5px] text-muted-foreground\">\n                {MetaIcon && <MetaIcon size={14} aria-hidden />}\n                {label}\n              </li>\n            ))}\n          </ul>\n        )}\n      </div>\n      {(onEdit || actions) && (\n        <div className=\"flex shrink-0 flex-wrap items-center gap-2\">\n          {actions}\n          {onEdit && (\n            <Button variant=\"secondary\" icon={Pencil} onClick={onEdit}>\n              Edit profile\n            </Button>\n          )}\n        </div>\n      )}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/team/ProfileHeader/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/team/profile-header/fixtures.ts",
+      "content": "import { Building2, CalendarDays, Mail, MapPin, type LucideIcon } from '@gntik-ai/icons';\n\nexport interface ProfileMetaItem {\n  icon?: LucideIcon;\n  label: string;\n}\n\nexport interface Profile {\n  name: string;\n  /** Role or title shown as a badge. */\n  role?: string;\n  /** One-line headline under the name. */\n  headline?: string;\n  avatarUrl?: string;\n  meta?: ProfileMetaItem[];\n}\n\nexport const profile: Profile = {\n  name: 'Avery Collins',\n  role: 'Owner',\n  headline: 'Platform lead · keeps deployments boring',\n  meta: [\n    { icon: Mail, label: 'avery@example.com' },\n    { icon: Building2, label: 'Platform team' },\n    { icon: MapPin, label: 'Lisbon, Portugal' },\n    { icon: CalendarDays, label: 'Joined March 2024' },\n  ],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "team"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/team/ProfileHeader/block.meta.ts"
+  }
+}

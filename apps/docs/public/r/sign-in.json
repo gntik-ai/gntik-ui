@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sign-in",
+  "type": "registry:block",
+  "title": "Sign in",
+  "description": "Split sign-in: brand panel with a short value pitch, email and password form, forgot-password link and single sign-on options.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/sign-in/BrandPanel.tsx",
+      "type": "registry:component",
+      "target": "app/templates/sign-in/BrandPanel.tsx",
+      "content": "import { Check } from '@gntik-ai/icons';\nimport { Stack, Text } from '@gntik-ai/ui';\n\nexport interface BrandPanelCopy {\n  eyebrow: string;\n  headline: string;\n  features: string[];\n}\n\n/** Brand panel body for AuthLayout `split`: eyebrow, headline and a short feature list (text only). */\nexport function BrandPanel({ eyebrow, headline, features }: BrandPanelCopy) {\n  return (\n    <Stack gap={8}>\n      <Stack gap={4}>\n        <Text variant=\"caption\" tone=\"primary\" className=\"font-mono tracking-[0.18em] uppercase\">\n          {eyebrow}\n        </Text>\n        <Text variant=\"display\" className=\"text-[32px] text-balance\">\n          {headline}\n        </Text>\n      </Stack>\n      <Stack as=\"ul\" gap={3}>\n        {features.map((feature) => (\n          <Stack as=\"li\" key={feature} direction=\"row\" align=\"center\" gap={3}>\n            <Check size={16} aria-hidden className=\"shrink-0 text-primary-text\" />\n            <Text variant=\"supporting\" tone=\"muted\">\n              {feature}\n            </Text>\n          </Stack>\n        ))}\n      </Stack>\n    </Stack>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/sign-in/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/sign-in/Page.tsx",
+      "content": "import { SignInForm, SsoButtons, type SignInValues, type SsoProvider } from '@gntik-ai/blocks';\nimport { AuthLayout } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport { BrandPanel, type BrandPanelCopy } from './BrandPanel';\nimport { signInBrand, signInSsoProviders } from './data';\n\nexport interface SignInPageProps {\n  /** Heading above the form (default \"Sign in to your workspace\"). */\n  title: ReactNode;\n  /** Line under the heading (default \"Use your work email to continue.\"). */\n  description: ReactNode;\n  /** Small label above the heading. */\n  eyebrow: ReactNode;\n  /** Signs in. A returned promise shows the loading state; a rejection's message shows in the alert. */\n  onSubmit: (values: SignInValues) => void | Promise<void>;\n  /** Starts single sign-on with a provider id; the button spins until the page navigates away. */\n  onSso: (providerId: string) => void;\n  ssoProviders: SsoProvider[];\n  error: string | null;\n  forgotPasswordHref: string;\n  onForgotPassword: () => void;\n  signUpHref: string;\n  onSignUp: () => void;\n  /** Brand panel copy (split layout, large screens). */\n  brand: BrandPanelCopy;\n  brandFooter: ReactNode;\n  logo: ReactNode;\n}\n\n/** Split sign-in: AuthLayout brand panel + SignInForm with SsoButtons. */\nexport default function SignInPage({\n  title,\n  description,\n  eyebrow,\n  onSubmit,\n  onSso,\n  ssoProviders = signInSsoProviders,\n  error,\n  forgotPasswordHref,\n  onForgotPassword,\n  signUpHref,\n  onSignUp,\n  brand = signInBrand,\n  brandFooter = signInBrand.footer,\n  logo,\n}: Partial<SignInPageProps>) {\n  const [ssoLoading, setSsoLoading] = useState<string | null>(null);\n  return (\n    <AuthLayout fullScreen variant=\"split\" logo={logo} brand={<BrandPanel {...brand} />} brandFooter={brandFooter}>\n      <SignInForm\n        title={title}\n        description={description}\n        eyebrow={eyebrow}\n        onSubmit={onSubmit}\n        error={error}\n        forgotPasswordHref={forgotPasswordHref}\n        onForgotPassword={onForgotPassword}\n        signUpHref={signUpHref}\n        onSignUp={onSignUp}\n        sso={\n          <SsoButtons\n            providers={ssoProviders}\n            loadingId={ssoLoading}\n            onSelect={(id) => {\n              setSsoLoading(id);\n              onSso?.(id);\n            }}\n          />\n        }\n      />\n    </AuthLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/sign-in/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/sign-in/data.ts",
+      "content": "import { ssoProviders } from '@gntik-ai/blocks';\n\nexport { ssoProviders as signInSsoProviders };\n\n/** Brand panel copy for the split layout. */\nexport const signInBrand = {\n  eyebrow: 'Control plane',\n  headline: 'Ship with confidence, not guesswork.',\n  features: ['Every deployment reviewed and audited', 'Roles and access per project', 'Usage and spend in one place'],\n  footer: 'MFA · recovery codes · audited access',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Auth"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "stable",
+    "source": "packages/templates/src/sign-in/template.meta.ts"
+  }
+}

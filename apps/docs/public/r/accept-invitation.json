@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accept-invitation",
+  "type": "registry:block",
+  "title": "Accept invitation",
+  "description": "Centred card invitation: inviter, workspace, role and member count, the invited email with a switch-account link, and Join / Decline with result states.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/accept-invitation/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/accept-invitation/Page.tsx",
+      "content": "import { AuthHeader } from '@gntik-ai/blocks';\nimport { Alert, AuthLayout, Avatar, Badge, Button, Link, Separator, Stack, Text } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport { sampleInvitation, type Invitation } from './data';\n\nexport interface AcceptInvitationPageProps {\n  invitation: Invitation;\n  /** Joins the workspace. A returned promise shows the loading state; a rejection shows in the alert. */\n  onAccept: () => void | Promise<void>;\n  /** Declines the invitation. */\n  onDecline: () => void | Promise<void>;\n  /** From the joined state. */\n  onOpenWorkspace: () => void;\n  switchAccountHref: string;\n  logo: ReactNode;\n}\n\ntype Outcome = 'pending' | 'accepted' | 'declined';\n\n/** Card invitation: inviter, workspace, role → Join / Decline. */\nexport default function AcceptInvitationPage({\n  invitation = sampleInvitation,\n  onAccept,\n  onDecline,\n  onOpenWorkspace,\n  switchAccountHref = '#switch-account',\n  logo,\n}: Partial<AcceptInvitationPageProps>) {\n  const [outcome, setOutcome] = useState<Outcome>('pending');\n  const [busy, setBusy] = useState<'accept' | 'decline' | null>(null);\n  const [error, setError] = useState<string | null>(null);\n  const { workspace, role, roleDescription, memberCount, inviter, inviteeEmail, expiresIn } = invitation;\n\n  const act = async (kind: 'accept' | 'decline') => {\n    setError(null);\n    setBusy(kind);\n    try {\n      await (kind === 'accept' ? onAccept?.() : onDecline?.());\n      setOutcome(kind === 'accept' ? 'accepted' : 'declined');\n    } catch (e) {\n      setError(e instanceof Error ? e.message : 'Something went wrong. Try again.');\n    }\n    setBusy(null);\n  };\n\n  const body =\n    outcome === 'accepted' ? (\n      <Stack gap={2}>\n        <AuthHeader eyebrow=\"Invitation accepted\" title={`Welcome to ${workspace}`} description={`You joined as ${role}. ${inviter.name} has been notified.`} />\n        <Button size=\"lg\" className=\"w-full\" onClick={onOpenWorkspace}>\n          Open workspace\n        </Button>\n      </Stack>\n    ) : outcome === 'declined' ? (\n      <AuthHeader\n        className=\"mb-0\"\n        eyebrow=\"Invitation declined\"\n        title=\"No problem\"\n        description={`You declined the invitation to ${workspace}. ${inviter.name} can invite you again at any time.`}\n      />\n    ) : (\n      <>\n        <AuthHeader eyebrow=\"Invitation\" title={`Join ${workspace}`} description={`${inviter.name} invited you to collaborate. This invitation expires in ${expiresIn}.`} />\n        <Stack gap={5}>\n          {error && <Alert tone=\"destructive\" description={error} />}\n          <Stack direction=\"row\" align=\"center\" gap={3}>\n            <Avatar name={inviter.name} src={inviter.avatarUrl} size=\"md\" aria-hidden />\n            <Stack gap={0}>\n              <Text variant=\"label\">{inviter.name}</Text>\n              <Text variant=\"caption\">{inviter.email}</Text>\n            </Stack>\n          </Stack>\n          <Separator />\n          <Stack as=\"dl\" gap={3}>\n            <Stack direction=\"row\" justify=\"between\" align=\"center\" gap={4}>\n              <Text as=\"dt\" variant=\"supporting\" tone=\"muted\">Workspace</Text>\n              <Text as=\"dd\" variant=\"label\">{workspace}</Text>\n            </Stack>\n            <Stack direction=\"row\" justify=\"between\" align=\"center\" gap={4}>\n              <Text as=\"dt\" variant=\"supporting\" tone=\"muted\">Role</Text>\n              <Text as=\"dd\" variant=\"label\">\n                <Badge tone=\"primary\">{role}</Badge>\n              </Text>\n            </Stack>\n            <Stack direction=\"row\" justify=\"between\" align=\"center\" gap={4}>\n              <Text as=\"dt\" variant=\"supporting\" tone=\"muted\">Members</Text>\n              <Text as=\"dd\" variant=\"label\">{memberCount}</Text>\n            </Stack>\n          </Stack>\n          <Text variant=\"caption\">{roleDescription}</Text>\n          <Stack gap={2}>\n            <Button size=\"lg\" className=\"w-full\" loading={busy === 'accept'} disabled={busy === 'decline'} onClick={() => void act('accept')}>\n              Join {workspace}\n            </Button>\n            <Button variant=\"ghost\" size=\"lg\" className=\"w-full\" loading={busy === 'decline'} disabled={busy === 'accept'} onClick={() => void act('decline')}>\n              Decline\n            </Button>\n          </Stack>\n        </Stack>\n      </>\n    );\n\n  return (\n    <AuthLayout\n      fullScreen\n      variant=\"card\"\n      logo={logo}\n      skipLinkLabel=\"Skip to invitation\"\n      footer={\n        <>\n          Signed in as <span className=\"font-medium text-foreground\">{inviteeEmail}</span>. <Link href={switchAccountHref}>Not you?</Link>\n        </>\n      }\n    >\n      {body}\n      <span role=\"status\" className=\"sr-only\">\n        {outcome === 'accepted' ? `You joined ${workspace}.` : outcome === 'declined' ? 'Invitation declined.' : ''}\n      </span>\n    </AuthLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/accept-invitation/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/accept-invitation/data.ts",
+      "content": "/** Sample invitation: who invited whom, to which workspace and with what role. */\nexport interface Invitation {\n  workspace: string;\n  role: string;\n  /** What the role can do, in one line. */\n  roleDescription: string;\n  memberCount: number;\n  inviter: { name: string; email: string; avatarUrl?: string };\n  /** Signed-in (or invited) email. */\n  inviteeEmail: string;\n  expiresIn: string;\n}\n\nexport const sampleInvitation: Invitation = {\n  workspace: 'Acme Industries',\n  role: 'Developer',\n  roleDescription: 'Create projects, deploy to staging and view usage.',\n  memberCount: 24,\n  inviter: { name: 'Priya Raman', email: 'priya@acme.example' },\n  inviteeEmail: 'dana@example.com',\n  expiresIn: '6 days',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Auth"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/accept-invitation/template.meta.ts"
+  }
+}

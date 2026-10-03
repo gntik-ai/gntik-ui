@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "validation-summary",
+  "type": "registry:block",
+  "title": "Validation summary",
+  "description": "Error summary that lists every problem with a link to its field and takes focus after a failed submit.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/forms/ValidationSummary/ValidationSummary.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/forms/validation-summary/ValidationSummary.tsx",
+      "content": "import { Alert, Link, cn } from '@gntik-ai/ui';\nimport { useEffect, useRef, type ReactNode } from 'react';\nimport { validationIssues, type ValidationIssue } from './fixtures';\n\nexport type { ValidationIssue } from './fixtures';\n\nexport interface ValidationSummaryProps {\n  errors?: ValidationIssue[];\n  /** Increment on every submit attempt: the summary takes focus when there are errors. */\n  submitCount?: number;\n  /** Title; defaults to \"There are N problems with this form\". */\n  title?: ReactNode;\n  className?: string;\n}\n\nconst focusField = (fieldId: string) => {\n  const el = document.getElementById(fieldId);\n  if (!el) return;\n  el.focus();\n  el.scrollIntoView?.({ block: 'center' });\n};\n\n/**\n * Error summary for long forms: lists every problem with a link that moves focus to the field.\n * After a failed submit it takes focus, so screen readers announce it.\n */\nexport function ValidationSummary({ errors = validationIssues, submitCount = 0, title, className }: ValidationSummaryProps) {\n  const ref = useRef<HTMLDivElement | null>(null);\n  const hasErrors = errors.length > 0;\n\n  useEffect(() => {\n    if (submitCount > 0 && hasErrors) ref.current?.focus();\n  }, [submitCount, hasErrors]);\n\n  if (!hasErrors) return null;\n  const heading = title ?? `There ${errors.length === 1 ? 'is 1 problem' : `are ${errors.length} problems`} with this form`;\n  return (\n    <Alert ref={ref} tabIndex={-1} role=\"region\" tone=\"destructive\" title={heading} className={cn('focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring', className)}>\n      <ul className=\"mt-1 list-disc space-y-1 ps-4\">\n        {errors.map((e) => (\n          <li key={e.fieldId}>\n            <Link\n              href={`#${e.fieldId}`}\n              tone=\"inherit\"\n              underline=\"always\"\n              onClick={(ev) => {\n                ev.preventDefault();\n                focusField(e.fieldId);\n              }}\n            >\n              {e.label ? `${e.label}: ` : ''}\n              {e.message}\n            </Link>\n          </li>\n        ))}\n      </ul>\n    </Alert>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/forms/ValidationSummary/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/forms/validation-summary/fixtures.ts",
+      "content": "export interface ValidationIssue {\n  /** Id of the control to focus (the link target). */\n  fieldId: string;\n  /** Field name shown before the message. */\n  label?: string;\n  message: string;\n}\n\nexport const validationIssues: ValidationIssue[] = [\n  { fieldId: 'project-name', label: 'Project name', message: 'Enter a project name.' },\n  { fieldId: 'billing-email', label: 'Billing email', message: 'Enter a valid email address, like name@company.com.' },\n  { fieldId: 'region', label: 'Region', message: 'Choose a region.' },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "forms"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/forms/ValidationSummary/block.meta.ts"
+  }
+}

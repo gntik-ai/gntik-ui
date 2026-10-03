@@ -1,0 +1,59 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "suggestion-chips",
+  "type": "registry:ui",
+  "title": "SuggestionChips",
+  "description": "Prompt suggestions: a two-column grid of cards with descriptions for an empty conversation, or a row of pills for follow-ups after a reply. Choosing one calls onSelect with its prompt.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/chat/src/SuggestionChips/SuggestionChips.tsx",
+      "type": "registry:ui",
+      "target": "components/chat/suggestion-chips/SuggestionChips.tsx",
+      "content": "import { cn } from '@gntik-ai/ui';\nimport { useId, type ComponentType, type ReactNode } from 'react';\nimport { suggestionChipsStyles as s } from './suggestionChips.variants';\n\ntype IconComponent = ComponentType<{ size?: number; className?: string; 'aria-hidden'?: boolean }>;\n\nexport interface Suggestion {\n  /** Stable key; defaults to the label. */\n  id?: string;\n  /** Short title shown on the chip. */\n  label: string;\n  /** Second line (card layout only). */\n  description?: string;\n  /** Prompt sent when chosen; defaults to the label. */\n  prompt?: string;\n  icon?: IconComponent;\n}\n\nexport interface SuggestionChipsProps {\n  suggestions: ReadonlyArray<Suggestion | string>;\n  onSelect: (prompt: string, suggestion: Suggestion) => void;\n  /** `cards` (two-column grid with descriptions) for an empty thread, `chips` (pills) for follow-ups. */\n  layout?: 'cards' | 'chips';\n  /** Heading above the group; also its accessible name. */\n  heading?: ReactNode;\n  /** Accessible name when there is no visible heading. */\n  label?: string;\n  disabled?: boolean;\n  className?: string;\n}\n\nconst normalize = (x: Suggestion | string): Suggestion => (typeof x === 'string' ? { label: x } : x);\n\n/** Prompt suggestions for an empty conversation (cards) or as follow-ups after a reply (chips). */\nexport function SuggestionChips({\n  suggestions,\n  onSelect,\n  layout = 'cards',\n  heading,\n  label = 'Suggested prompts',\n  disabled = false,\n  className,\n}: SuggestionChipsProps) {\n  const headingId = useId();\n  const items = suggestions.map(normalize);\n  return (\n    <div\n      role=\"group\"\n      aria-labelledby={heading ? headingId : undefined}\n      aria-label={heading ? undefined : label}\n      className={cn(s.root, className)}\n    >\n      {heading && (\n        <div id={headingId} className={s.heading}>\n          {heading}\n        </div>\n      )}\n      <div className={layout === 'cards' ? s.grid : s.row}>\n        {items.map((item) => {\n          const Icon = item.icon;\n          const prompt = item.prompt ?? item.label;\n          return (\n            <button\n              key={item.id ?? item.label}\n              type=\"button\"\n              disabled={disabled}\n              className={layout === 'cards' ? s.card : s.chip}\n              onClick={() => onSelect(prompt, item)}\n            >\n              {Icon && <Icon size={layout === 'cards' ? 16 : 14} aria-hidden className={layout === 'cards' ? s.icon : 'shrink-0 text-muted-foreground'} />}\n              {layout === 'cards' ? (\n                <span className=\"min-w-0\">\n                  <span className={s.label}>{item.label}</span>\n                  {item.description && <span className={s.description}>{item.description}</span>}\n                </span>\n              ) : (\n                item.label\n              )}\n            </button>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/chat/src/SuggestionChips/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/suggestion-chips/index.ts",
+      "content": "export { SuggestionChips, type Suggestion, type SuggestionChipsProps } from './SuggestionChips';\nexport { suggestionChipsStyles } from './suggestionChips.variants';\nexport { doc as suggestionChipsDoc } from './SuggestionChips.doc';\n"
+    },
+    {
+      "path": "packages/chat/src/SuggestionChips/suggestionChips.variants.ts",
+      "type": "registry:ui",
+      "target": "components/chat/suggestion-chips/suggestionChips.variants.ts",
+      "content": "import { focusRing } from '../utils/focus';\n\n/** Slot classes for SuggestionChips. */\nexport const suggestionChipsStyles = {\n  root: 'w-full',\n  heading: 'mb-2.5 text-[12px] font-semibold tracking-wide text-muted-foreground uppercase',\n  grid: 'grid gap-2 sm:grid-cols-2',\n  row: 'flex flex-wrap gap-2',\n  card: [\n    'group flex w-full cursor-pointer items-start gap-2.5 rounded-lg border border-border bg-card px-3.5 py-3 text-start shadow-sm',\n    'transition-colors hover:border-primary/40 hover:bg-secondary/40 motion-reduce:transition-none',\n    'disabled:pointer-events-none disabled:opacity-50',\n    focusRing,\n  ].join(' '),\n  chip: [\n    'inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border border-border bg-card px-3 text-[12.5px] font-medium text-foreground',\n    'transition-colors hover:border-primary/40 hover:bg-secondary/40 motion-reduce:transition-none',\n    'disabled:pointer-events-none disabled:opacity-50',\n    focusRing,\n  ].join(' '),\n  icon: 'mt-0.5 shrink-0 text-muted-foreground group-hover:text-primary-text',\n  label: 'block text-[13px] font-medium text-foreground',\n  description: 'mt-0.5 block text-[12px] leading-5 text-muted-foreground',\n} as const;\n"
+    },
+    {
+      "path": "packages/chat/src/utils/focus.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/focus.ts",
+      "content": "/** Focus ring shared by every interactive element in the pack (brand rule). */\nexport const focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';\n"
+    },
+    {
+      "path": "packages/chat/src/SuggestionChips/SuggestionChips.doc.ts",
+      "type": "registry:ui",
+      "target": "components/chat/suggestion-chips/SuggestionChips.doc.ts",
+      "content": "import type { ComponentDoc } from '@gntik-ai/ui';\n\nexport const doc: ComponentDoc = {\n  name: 'SuggestionChips',\n  group: 'Actions',\n  status: 'beta',\n  description:\n    'Prompt suggestions: a two-column grid of cards with descriptions for an empty conversation, or a row of pills for follow-ups after a reply. Choosing one calls onSelect with its prompt.',\n  pattern: 'button group',\n  keyboard: [\n    ['Tab', 'Moves between suggestions'],\n    ['Enter', 'Sends the focused suggestion'],\n    ['Space', 'Sends the focused suggestion'],\n  ],\n  tokens: ['card', 'border', 'primary', 'primary-text', 'secondary', 'muted-foreground', 'focus-ring'],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "component",
+    "Actions"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/chat",
+    "status": "beta",
+    "source": "packages/chat/src/SuggestionChips/SuggestionChips.doc.ts"
+  }
+}

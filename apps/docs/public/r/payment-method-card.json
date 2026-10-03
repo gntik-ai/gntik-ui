@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "payment-method-card",
+  "type": "registry:block",
+  "title": "Payment method card",
+  "description": "The card on file as text (brand, last four digits, expiry, holder) with default/expiry badges and update/remove actions; no card artwork.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/billing/PaymentMethodCard/PaymentMethodCard.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/billing/payment-method-card/PaymentMethodCard.tsx",
+      "content": "import { Badge, Button, Card, CardAction, CardDescription, CardHeader, CardTitle, cn, type BadgeTone } from '@gntik-ai/ui';\nimport { CreditCard } from '@gntik-ai/icons';\nimport { samplePaymentMethod } from './fixtures';\n\nexport type PaymentMethodStatus = 'valid' | 'expiring' | 'expired';\n\nexport interface PaymentMethod {\n  /** Card network as text, e.g. \"Visa\", \"Mastercard\", \"Amex\". */\n  brand: string;\n  last4: string;\n  expMonth: number;\n  expYear: number;\n  holder?: string;\n  isDefault?: boolean;\n  /** Computed by the app (the block never reads the clock). */\n  status?: PaymentMethodStatus;\n}\n\nexport interface PaymentMethodCardProps {\n  method?: PaymentMethod;\n  title?: string;\n  description?: string;\n  onUpdate?: () => void;\n  onRemove?: () => void;\n  updateLabel?: string;\n  /** Heading level of the title, to fit the page outline (default h3). */\n  titleAs?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\nconst STATUS: Record<Exclude<PaymentMethodStatus, 'valid'>, { label: string; tone: BadgeTone }> = {\n  expiring: { label: 'Expires soon', tone: 'warning' },\n  expired: { label: 'Expired', tone: 'destructive' },\n};\n\n/** The payment method on file: brand, masked number, expiry and an update action. No card artwork. */\nexport function PaymentMethodCard({\n  method = samplePaymentMethod,\n  title = 'Payment method',\n  description = 'Charged at the start of each billing cycle.',\n  onUpdate,\n  onRemove,\n  updateLabel = 'Update',\n  titleAs = 'h3',\n  className,\n}: PaymentMethodCardProps) {\n  const expiry = `${String(method.expMonth).padStart(2, '0')}/${String(method.expYear).slice(-2)}`;\n  const status = method.status && method.status !== 'valid' ? STATUS[method.status] : undefined;\n  return (\n    <Card className={cn(className)}>\n      <CardHeader divided>\n        <CardTitle as={titleAs}>{title}</CardTitle>\n        {description && <CardDescription>{description}</CardDescription>}\n        <CardAction className=\"flex items-center gap-2\">\n          {onRemove && (\n            <Button variant=\"ghost\" size=\"sm\" onClick={onRemove}>\n              Remove\n            </Button>\n          )}\n          <Button variant=\"secondary\" size=\"sm\" onClick={onUpdate}>\n            {updateLabel}\n          </Button>\n        </CardAction>\n      </CardHeader>\n      <div className=\"flex flex-wrap items-center gap-4 px-5 py-4\">\n        <span\n          aria-hidden\n          className=\"grid h-10 w-14 shrink-0 place-items-center rounded-md border border-border bg-secondary font-mono text-[10.5px] font-semibold tracking-wide text-foreground uppercase\"\n        >\n          {method.brand.slice(0, 4)}\n        </span>\n        <div className=\"min-w-0 flex-1\">\n          <p className=\"flex flex-wrap items-center gap-2 text-[13.5px] font-medium text-foreground\">\n            <span>\n              {method.brand} ending in <span className=\"font-mono tabular-nums\">{method.last4}</span>\n            </span>\n            {method.isDefault && <Badge tone=\"neutral\">Default</Badge>}\n            {status && (\n              <Badge tone={status.tone} dot>\n                {status.label}\n              </Badge>\n            )}\n          </p>\n          <p className=\"mt-0.5 flex items-center gap-1.5 text-[12px] text-muted-foreground\">\n            <CreditCard size={13} aria-hidden className=\"shrink-0\" />\n            Expires <span className=\"font-mono tabular-nums\">{expiry}</span>\n            {method.holder && <> · {method.holder}</>}\n          </p>\n        </div>\n      </div>\n    </Card>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/PaymentMethodCard/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/payment-method-card/fixtures.ts",
+      "content": "import type { PaymentMethod } from './PaymentMethodCard';\n\n/** Sample default payment method. */\nexport const samplePaymentMethod: PaymentMethod = {\n  brand: 'Visa',\n  last4: '4242',\n  expMonth: 8,\n  expYear: 2028,\n  holder: 'Alex Morgan',\n  isDefault: true,\n  status: 'valid',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "billing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/billing/PaymentMethodCard/block.meta.ts"
+  }
+}

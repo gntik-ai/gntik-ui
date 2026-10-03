@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination-footer",
+  "type": "registry:block",
+  "title": "Pagination footer",
+  "description": "Table footer with a rows-per-page Select, a \"1–10 of 97\" summary and numbered Pagination; controlled or uncontrolled.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/tables/PaginationFooter/PaginationFooter.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/tables/pagination-footer/PaginationFooter.tsx",
+      "content": "import { cn, Pagination, SimpleSelect } from '@gntik-ai/ui';\nimport { useState } from 'react';\n\nexport interface PaginationFooterProps {\n  /** Total number of rows. */\n  total?: number;\n  /** Current page, 1-based (controlled). */\n  page?: number;\n  defaultPage?: number;\n  onPageChange?: (page: number) => void;\n  /** Rows per page (controlled). */\n  pageSize?: number;\n  defaultPageSize?: number;\n  onPageSizeChange?: (pageSize: number) => void;\n  pageSizeOptions?: readonly number[];\n  /** What the rows are, for the accessible names (\"Deployments\"). */\n  noun?: string;\n  locale?: string;\n  className?: string;\n}\n\n/** Table footer: rows-per-page Select, a \"1–10 of 97\" summary and numbered Pagination. Stacks on small screens. */\nexport function PaginationFooter({\n  total = 97,\n  page: pageProp,\n  defaultPage = 1,\n  onPageChange,\n  pageSize: sizeProp,\n  defaultPageSize = 10,\n  onPageSizeChange,\n  pageSizeOptions = [10, 25, 50, 100],\n  noun = 'Rows',\n  locale = 'en-US',\n  className,\n}: PaginationFooterProps) {\n  const [innerPage, setInnerPage] = useState(defaultPage);\n  const [innerSize, setInnerSize] = useState(defaultPageSize);\n  const pageSize = sizeProp ?? innerSize;\n  const pageCount = Math.max(1, Math.ceil(total / Math.max(1, pageSize)));\n  const page = Math.min(Math.max(1, pageProp ?? innerPage), pageCount);\n  const from = total === 0 ? 0 : (page - 1) * pageSize + 1;\n  const to = Math.min(page * pageSize, total);\n  const fmt = (n: number) => n.toLocaleString(locale);\n\n  const goTo = (next: number) => {\n    setInnerPage(next);\n    onPageChange?.(next);\n  };\n  const resize = (value: string | null) => {\n    const next = Number(value);\n    if (!next || next === pageSize) return;\n    setInnerSize(next);\n    onPageSizeChange?.(next);\n    // Keep the first visible row on screen.\n    const nextPage = Math.floor((from - 1) / next) + 1;\n    if (nextPage !== page) goTo(Math.max(1, nextPage));\n  };\n\n  return (\n    <div className={cn('flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between', className)}>\n      <div className=\"flex items-center gap-2.5\">\n        <span className=\"text-[12.5px] text-muted-foreground\" aria-hidden>\n          Rows per page\n        </span>\n        <SimpleSelect\n          aria-label=\"Rows per page\"\n          size=\"sm\"\n          className=\"w-[76px] font-mono\"\n          value={String(pageSize)}\n          onValueChange={resize}\n          items={pageSizeOptions.map((n) => ({ value: String(n), label: String(n) }))}\n        />\n      </div>\n      <div className=\"flex flex-col gap-3 sm:flex-row sm:items-center\">\n        <p className=\"text-[12.5px] text-muted-foreground tabular-nums\" aria-live=\"polite\">\n          <span className=\"font-mono text-foreground\">\n            {fmt(from)}–{fmt(to)}\n          </span>{' '}\n          of <span className=\"font-mono text-foreground\">{fmt(total)}</span>\n        </p>\n        <Pagination page={page} pageCount={pageCount} onPageChange={goTo} size=\"sm\" labels={{ nav: `${noun} pagination` }} />\n      </div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "tables"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/tables/PaginationFooter/block.meta.ts"
+  }
+}

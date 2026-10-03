@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-card",
+  "type": "registry:block",
+  "title": "Chart card",
+  "description": "A Card with title, optional headline and delta, a 7d/30d/90d range toggle and an area, line or bar chart with an interactive legend.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/charts",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/data-display/ChartCard/ChartCard.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/data-display/chart-card/ChartCard.tsx",
+      "content": "import { AreaChart, BarChart, LineChart, chartFmt, type ChartColor, type ValueFormatter } from '@gntik-ai/charts';\nimport { Card, CardAction, CardDescription, CardHeader, CardTitle, cn, Toggle, ToggleGroup } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport { TrendDelta, type KpiDelta } from '../shared/TrendDelta';\nimport { COST_BY_RANGE, COST_RANGES, type CostPoint } from './fixtures';\n\nexport interface ChartCardRange {\n  /** Range key (\"7d\"); also the key into `dataByRange`. */\n  value: string;\n  label: string;\n  /** Optional headline for this range. */\n  summary?: { value: string; delta?: KpiDelta };\n}\n\nexport interface ChartCardProps<T extends object> {\n  title?: string;\n  description?: string;\n  ranges?: readonly ChartCardRange[];\n  /** Chart rows per range key. */\n  dataByRange?: Readonly<Record<string, readonly T[]>>;\n  /** X-axis field. */\n  index?: Extract<keyof T, string>;\n  /** Series fields (one legend entry each). */\n  categories?: ReadonlyArray<Extract<keyof T, string>>;\n  kind?: 'area' | 'line' | 'bar';\n  stacked?: boolean;\n  colors?: readonly ChartColor[];\n  valueFormatter?: ValueFormatter;\n  showLegend?: boolean;\n  height?: number;\n  defaultRange?: string;\n  range?: string;\n  onRangeChange?: (range: string) => void;\n  /** Extra header control (e.g. a MoreMenu), after the range toggle. */\n  action?: ReactNode;\n  /** Footer content under the chart. */\n  footer?: ReactNode;\n  /** Heading level of the title, to fit the page outline (default h3). */\n  titleAs?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\nconst DEFAULT_CATEGORIES = ['Compute', 'Storage', 'Network'] as const;\nconst DEFAULT_COLORS: readonly ChartColor[] = ['primary', 'violet', 'cyan'];\n\n/**\n * Chart in a Card: title, optional headline value + delta, a 7d/30d/90d range ToggleGroup, and an\n * @gntik-ai/charts chart with its interactive legend.\n */\nexport function ChartCard<T extends object = CostPoint>({\n  title = 'Infrastructure cost',\n  description = 'Spend by resource',\n  ranges = COST_RANGES,\n  dataByRange = COST_BY_RANGE as unknown as Readonly<Record<string, readonly T[]>>,\n  index = 'day' as Extract<keyof T, string>,\n  categories = DEFAULT_CATEGORIES as unknown as ReadonlyArray<Extract<keyof T, string>>,\n  kind = 'area',\n  stacked = true,\n  colors = DEFAULT_COLORS,\n  valueFormatter = chartFmt.usd,\n  showLegend = true,\n  height = 240,\n  defaultRange,\n  range: rangeProp,\n  onRangeChange,\n  action,\n  footer,\n  titleAs = 'h3',\n  className,\n}: ChartCardProps<T>) {\n  const [inner, setInner] = useState(defaultRange ?? ranges[0]?.value ?? '');\n  const current = rangeProp ?? inner;\n  const active = ranges.find((r) => r.value === current) ?? ranges[0];\n  const data = (active && dataByRange[active.value]) ?? [];\n  const chartLabel = `${title}${active ? `, ${active.label}` : ''}`;\n  const common = { data, index, categories, colors, valueFormatter, showLegend, height, 'aria-label': chartLabel };\n  return (\n    <Card className={className}>\n      <CardHeader className=\"pb-2\">\n        <CardTitle as={titleAs}>{title}</CardTitle>\n        {description && <CardDescription>{description}</CardDescription>}\n        <CardAction className=\"flex items-center gap-2\">\n          {ranges.length > 1 && (\n            <ToggleGroup\n              aria-label={`${title} range`}\n              size=\"sm\"\n              value={[current]}\n              onValueChange={(v) => {\n                const next = v[0];\n                if (!next) return;\n                setInner(next);\n                onRangeChange?.(next);\n              }}\n            >\n              {ranges.map((r) => (\n                <Toggle key={r.value} value={r.value} className=\"font-mono\">\n                  {r.label}\n                </Toggle>\n              ))}\n            </ToggleGroup>\n          )}\n          {action}\n        </CardAction>\n      </CardHeader>\n      {active?.summary && (\n        <p className=\"flex flex-wrap items-baseline gap-x-2 px-5\" aria-live=\"polite\">\n          <span className=\"text-[24px] font-semibold tracking-tight text-foreground tabular-nums\">{active.summary.value}</span>\n          {active.summary.delta && <TrendDelta {...active.summary.delta} />}\n        </p>\n      )}\n      <div className={cn('px-3 pb-4 pt-3 sm:px-4', !footer && 'pb-5')}>\n        {kind === 'bar' ? (\n          <BarChart {...common} stacked={stacked} />\n        ) : kind === 'line' ? (\n          <LineChart {...common} />\n        ) : (\n          <AreaChart {...common} stacked={stacked} />\n        )}\n      </div>\n      {footer && <div className=\"border-t border-border px-5 py-3 text-[12.5px] text-muted-foreground\">{footer}</div>}\n    </Card>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/data-display/ChartCard/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/data-display/chart-card/fixtures.ts",
+      "content": "import type { ChartCardRange } from './ChartCard';\n\nexport interface CostPoint {\n  day: string;\n  Compute: number;\n  Storage: number;\n  Network: number;\n}\n\nconst series = (labels: string[], base: [number, number, number], step: [number, number, number]): CostPoint[] =>\n  labels.map((day, i) => ({\n    day,\n    Compute: Math.round(base[0] + step[0] * i + ((i * 37) % 11) * 4),\n    Storage: Math.round(base[1] + step[1] * i + ((i * 13) % 7) * 2),\n    Network: Math.round(base[2] + step[2] * i + ((i * 29) % 5) * 3),\n  }));\n\nconst DAYS7 = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];\nconst DAYS30 = Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`);\nconst WEEKS13 = Array.from({ length: 13 }, (_, i) => `Week ${i + 1}`);\n\n/** Infrastructure cost by resource, per range. */\nexport const COST_BY_RANGE: Record<string, CostPoint[]> = {\n  '7d': series(DAYS7, [180, 42, 120], [6, 1, 2]),\n  '30d': series(DAYS30, [160, 40, 110], [2, 0.4, 1]),\n  '90d': series(WEEKS13, [1100, 280, 760], [40, 6, 18]),\n};\n\nexport const COST_RANGES: ChartCardRange[] = [\n  { value: '7d', label: '7d', summary: { value: '$2,412', delta: { value: '+9.7%', direction: 'up', sentiment: 'negative' } } },\n  { value: '30d', label: '30d', summary: { value: '$9,880', delta: { value: '+4.1%', direction: 'up', sentiment: 'negative' } } },\n  { value: '90d', label: '90d', summary: { value: '$27,306', delta: { value: '−2.3%', direction: 'down', sentiment: 'positive' } } },\n];\n"
+    },
+    {
+      "path": "packages/blocks/src/data-display/shared/TrendDelta.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/data-display/shared/TrendDelta.tsx",
+      "content": "import { cn } from '@gntik-ai/ui';\n\n/** Arrow shape of a change. */\nexport type DeltaDirection = 'up' | 'down' | 'flat';\n/** Whether the change is good, bad or neither — independent of its direction (lower latency is good). */\nexport type DeltaSentiment = 'positive' | 'negative' | 'neutral';\n\nexport interface KpiDelta {\n  /** Display text, e.g. \"+12.4%\". */\n  value: string;\n  direction: DeltaDirection;\n  sentiment: DeltaSentiment;\n  /** Comparison context, e.g. \"vs. previous 24h\". */\n  note?: string;\n}\n\nconst SENTIMENT_CLASS: Record<DeltaSentiment, string> = {\n  positive: 'text-success-text',\n  negative: 'text-destructive-text',\n  neutral: 'text-muted-foreground',\n};\n\nconst DIRECTION_TEXT: Record<DeltaDirection, string> = { up: 'Increased by', down: 'Decreased by', flat: 'Unchanged:' };\nconst SENTIMENT_TEXT: Record<DeltaSentiment, string> = { positive: 'favourable', negative: 'unfavourable', neutral: '' };\n\nexport interface TrendDeltaProps extends KpiDelta {\n  className?: string;\n}\n\n/**\n * Mono delta with a triangle: the arrow follows `direction`, the colour follows `sentiment`.\n * Screen readers get the direction and sentiment in words.\n */\nexport function TrendDelta({ value, direction, sentiment, className }: TrendDeltaProps) {\n  const sr = [DIRECTION_TEXT[direction], value, SENTIMENT_TEXT[sentiment] && `(${SENTIMENT_TEXT[sentiment]})`].filter(Boolean).join(' ');\n  return (\n    <span\n      data-sentiment={sentiment}\n      className={cn('inline-flex items-center gap-1 font-mono text-[12px] font-medium tabular-nums', SENTIMENT_CLASS[sentiment], className)}\n    >\n      <svg width=\"9\" height=\"9\" viewBox=\"0 0 10 10\" aria-hidden className=\"shrink-0\">\n        {direction === 'up' && <path d=\"M5 1.5 9 8.5H1z\" fill=\"currentColor\" />}\n        {direction === 'down' && <path d=\"M5 8.5 1 1.5h8z\" fill=\"currentColor\" />}\n        {direction === 'flat' && <path d=\"M1 4h8v2H1z\" fill=\"currentColor\" />}\n      </svg>\n      <span aria-hidden>{value}</span>\n      <span className=\"sr-only\">{sr}</span>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/charts/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "data-display"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/data-display/ChartCard/block.meta.ts"
+  }
+}

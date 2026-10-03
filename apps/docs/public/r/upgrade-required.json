@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "upgrade-required",
+  "type": "registry:block",
+  "title": "Upgrade required",
+  "description": "Plan gate inside the console: what the locked feature does, the current plan, and a PricingTable comparison whose CTA starts the upgrade.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/shared/ConsoleShell.tsx",
+      "type": "registry:component",
+      "target": "app/templates/shared/ConsoleShell.tsx",
+      "content": "import {\n  AppSidebarFooter,\n  AppSidebarHeader,\n  AppSidebarNav,\n  AppTopbar,\n  type AppSidebarFooterProps,\n  type AppSidebarHeaderProps,\n  type AppTopbarProps,\n} from '@gntik-ai/blocks';\nimport { SidebarLayout, type BreadcrumbItem, type NavGroup, type SidebarLayoutProps, type UserMenuUser, type Workspace } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\n\nexport interface ConsoleShellProps\n  extends Pick<AppSidebarHeaderProps, 'currentWorkspaceId' | 'onWorkspaceChange' | 'onCreateWorkspace'>,\n    Pick<AppSidebarFooterProps, 'usage' | 'helpHref' | 'helpLabel' | 'userMenuItems' | 'onSignOut'>,\n    Pick<SidebarLayoutProps, 'sidebarLabel' | 'collapseMode'> {\n  /** Page content (usually a <Page>). */\n  children: ReactNode;\n  /** Sidebar navigation; defaults to the AppSidebar sample groups. */\n  nav?: NavGroup[];\n  /** Href of the current page, marks the active nav item. */\n  currentHref?: string;\n  breadcrumbs?: BreadcrumbItem[] | null;\n  workspaces?: Workspace[] | null;\n  user?: UserMenuUser | null;\n  /** Extra AppTopbar props (environment, notifications, theme control…). */\n  topbar?: Omit<AppTopbarProps, 'breadcrumbs' | 'user'>;\n  /** localStorage key for the collapsed sidebar; `undefined` disables persistence. */\n  storageKey?: string;\n}\n\n/**\n * The console frame shared by the templates: SidebarLayout with the AppSidebar header, nav and\n * footer, and the AppTopbar (breadcrumb, ⌘K search, notifications, theme, user menu).\n * Templates fill it with a Page; products swap the nav, workspaces, user, usage meter, help\n * link and user-menu items.\n */\nexport function ConsoleShell({\n  children,\n  nav,\n  currentHref,\n  breadcrumbs,\n  workspaces,\n  currentWorkspaceId,\n  onWorkspaceChange,\n  onCreateWorkspace,\n  user,\n  usage,\n  helpHref,\n  helpLabel,\n  userMenuItems,\n  onSignOut,\n  topbar,\n  storageKey,\n  sidebarLabel,\n  collapseMode,\n}: ConsoleShellProps) {\n  return (\n    <SidebarLayout\n      fullScreen\n      storageKey={storageKey}\n      sidebarLabel={sidebarLabel}\n      collapseMode={collapseMode}\n      sidebarHeader={({ collapsed }) => (\n        <AppSidebarHeader\n          collapsed={collapsed}\n          workspaces={workspaces}\n          currentWorkspaceId={currentWorkspaceId}\n          onWorkspaceChange={onWorkspaceChange}\n          onCreateWorkspace={onCreateWorkspace}\n        />\n      )}\n      sidebar={({ collapsed }) => <AppSidebarNav groups={nav} currentHref={currentHref} collapsed={collapsed} />}\n      sidebarFooter={({ collapsed }) => (\n        <AppSidebarFooter\n          collapsed={collapsed}\n          user={user}\n          usage={usage}\n          helpHref={helpHref}\n          helpLabel={helpLabel}\n          userMenuItems={userMenuItems}\n          onSignOut={onSignOut}\n        />\n      )}\n      topbar={<AppTopbar breadcrumbs={breadcrumbs} user={user} {...topbar} />}\n    >\n      {children}\n    </SidebarLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/upgrade-required/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/upgrade-required/Page.tsx",
+      "content": "import { InlineCallout, PageHeader, PricingTable, type PricingCycle, type PricingTier } from '@gntik-ai/blocks';\nimport { MessageSquare } from '@gntik-ai/icons';\nimport { Page, Stack, type BreadcrumbItem } from '@gntik-ai/ui';\nimport { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';\nimport { upgradeBreadcrumbs, upgradeContent, upgradeTiers } from './data';\n\nexport interface UpgradeRequiredProps {\n  /** The locked feature, e.g. \"Audit log\". */\n  feature: string;\n  /** Lowest plan that includes it. */\n  requiredPlan: string;\n  currentPlan: string;\n  description: string;\n  tiers: PricingTier[];\n  /** Id of the tier the workspace is on (badge + disabled \"Current plan\" CTA). */\n  currentTierId: string;\n  /** Called with the chosen tier and billing cycle. */\n  onUpgrade: (tier: PricingTier, cycle: PricingCycle) => void;\n  onContactSales: () => void;\n  breadcrumbs: BreadcrumbItem[];\n  currentHref: string;\n  /** ConsoleShell props (app nav, user, workspaces, sidebar footer, topbar…). */\n  shell: Omit<ConsoleShellProps, 'children'>;\n}\n\n/** Plan gate: ConsoleShell + Page with PageHeader, a current-plan callout and a PricingTable. */\nexport default function UpgradeRequiredPage(props: Partial<UpgradeRequiredProps>) {\n  const {\n    feature = upgradeContent.feature,\n    requiredPlan = upgradeContent.requiredPlan,\n    currentPlan = upgradeContent.currentPlan,\n    description = upgradeContent.description,\n    tiers = upgradeTiers,\n    currentTierId = 'starter',\n    onUpgrade,\n    onContactSales,\n    breadcrumbs = upgradeBreadcrumbs,\n    currentHref = '/settings',\n    shell,\n  } = props;\n  return (\n    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref} {...shell}>\n      <Page\n        width=\"wide\"\n        header={\n          <PageHeader\n            breadcrumbs={null}\n            title={`${feature} is available on ${requiredPlan}`}\n            description={description}\n            status=\"\"\n            meta={[]}\n            tabs={null}\n            actions={[{ label: 'Contact sales', icon: MessageSquare, variant: 'secondary', onClick: onContactSales }]}\n          />\n        }\n      >\n        <Stack gap={2}>\n          <InlineCallout\n            tone=\"info\"\n            title={`Your workspace is on the ${currentPlan} plan`}\n            description={`Upgrade to ${requiredPlan} or above to turn on ${feature.toLowerCase()}. Your data and settings carry over.`}\n            actions={[]}\n          />\n          <PricingTable\n            className=\"px-0 py-8 sm:px-0 sm:py-10\"\n            eyebrow={null}\n            title=\"Compare plans\"\n            description=\"Switch at any time. Upgrades apply immediately and are prorated.\"\n            tiers={tiers}\n            currentTierId={currentTierId}\n            onSelectTier={(tier, cycle) => {\n              if (tier.id !== currentTierId) onUpgrade?.(tier, cycle);\n            }}\n          />\n        </Stack>\n      </Page>\n    </ConsoleShell>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/upgrade-required/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/upgrade-required/data.ts",
+      "content": "import { samplePricingTiers, type PricingTier } from '@gntik-ai/blocks';\nimport type { BreadcrumbItem } from '@gntik-ai/ui';\n\n/** Neutral fixtures for the plan gate. */\nexport const upgradeContent = {\n  feature: 'Audit log',\n  requiredPlan: 'Team',\n  currentPlan: 'Starter',\n  description: 'Keep a searchable record of every change in your workspace: who did what, when, and what changed.',\n};\n\nexport const upgradeBreadcrumbs: BreadcrumbItem[] = [\n  { label: 'Acme Industries', href: '/overview' },\n  { label: 'Settings', href: '/settings' },\n  { label: 'Audit log' },\n];\n\n/** The sample tiers; PricingTable marks the current one via `currentTierId`. */\nexport const upgradeTiers: PricingTier[] = samplePricingTiers;\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "System"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/upgrade-required/template.meta.ts"
+  }
+}

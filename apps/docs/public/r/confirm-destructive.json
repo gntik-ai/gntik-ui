@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "confirm-destructive",
+  "type": "registry:block",
+  "title": "Confirm destructive",
+  "description": "AlertDialog for irreversible actions that requires typing the resource name, with async confirm and error display.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/feedback/ConfirmDestructive/ConfirmDestructive.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/feedback/confirm-destructive/ConfirmDestructive.tsx",
+      "content": "import { Trash2 } from '@gntik-ai/icons';\nimport {\n  AlertDialog,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n  Button,\n  Field,\n  FieldLabel,\n  Input,\n} from '@gntik-ai/ui';\nimport { useState, type FormEvent, type ReactNode } from 'react';\n\nexport interface ConfirmDestructiveProps {\n  /** Exact name the user must type to unlock the action. */\n  resourceName?: string;\n  /** What kind of resource it is (used in the default copy). */\n  resourceType?: string;\n  title?: ReactNode;\n  description?: ReactNode;\n  /** What will be lost, as a short list. */\n  consequences?: string[];\n  /** Label of the confirming button (and of the default trigger). */\n  confirmLabel?: string;\n  /** Default trigger button text; `null` renders no trigger (control `open` instead). */\n  triggerLabel?: string | null;\n  open?: boolean;\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  /** Runs on confirm. Returning a promise keeps the dialog open with a spinner until it settles; a rejection shows its message. */\n  onConfirm?: () => void | Promise<void>;\n}\n\n/**\n * Typed-confirmation for irreversible actions: an AlertDialog whose destructive button stays\n * disabled until the resource name is typed exactly.\n */\nexport function ConfirmDestructive({\n  resourceName = 'acme-web',\n  resourceType = 'project',\n  title,\n  description,\n  consequences = ['All deployments and preview URLs', 'Environment variables and secrets', 'The audit log for this project'],\n  confirmLabel,\n  triggerLabel,\n  open,\n  defaultOpen = false,\n  onOpenChange,\n  onConfirm,\n}: ConfirmDestructiveProps) {\n  const [innerOpen, setInnerOpen] = useState(defaultOpen);\n  const [typed, setTyped] = useState('');\n  const [pending, setPending] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n  const isOpen = open ?? innerOpen;\n  const label = confirmLabel ?? `Delete ${resourceType}`;\n  const matches = typed === resourceName;\n\n  const setOpen = (next: boolean) => {\n    if (!next) {\n      setTyped('');\n      setError(null);\n    }\n    setInnerOpen(next);\n    onOpenChange?.(next);\n  };\n\n  const confirm = async (event: FormEvent) => {\n    event.preventDefault();\n    if (!matches || pending) return;\n    setPending(true);\n    setError(null);\n    try {\n      await onConfirm?.();\n      setPending(false);\n      setOpen(false);\n    } catch (err) {\n      setPending(false);\n      setError(err instanceof Error ? err.message : 'Something went wrong. Try again.');\n    }\n  };\n\n  return (\n    <AlertDialog open={isOpen} onOpenChange={(next) => !pending && setOpen(next)}>\n      {triggerLabel !== null && (\n        <AlertDialogTrigger render={<Button variant=\"destructive\" icon={Trash2} />}>{triggerLabel ?? label}</AlertDialogTrigger>\n      )}\n      <AlertDialogContent>\n        <AlertDialogHeader tone=\"destructive\">\n          <AlertDialogTitle>{title ?? `Delete ${resourceType}?`}</AlertDialogTitle>\n          <AlertDialogDescription>\n            {description ?? (\n              <>\n                This permanently deletes <span className=\"font-mono text-foreground\">{resourceName}</span>. This action cannot be undone.\n              </>\n            )}\n          </AlertDialogDescription>\n        </AlertDialogHeader>\n        {consequences.length > 0 && (\n          <ul className=\"mt-4 list-disc space-y-1 rounded-md border border-destructive/25 bg-destructive/5 py-2.5 pe-3 ps-8 text-[12.5px] text-muted-foreground\">\n            {consequences.map((c) => (\n              <li key={c}>{c}</li>\n            ))}\n          </ul>\n        )}\n        <form onSubmit={(e) => void confirm(e)} className=\"mt-4\">\n          <Field>\n            <FieldLabel>\n              Type <span className=\"font-mono font-semibold text-foreground\">{resourceName}</span> to confirm\n            </FieldLabel>\n            <Input\n              value={typed}\n              onChange={(e) => setTyped(e.target.value)}\n              autoComplete=\"off\"\n              spellCheck={false}\n              disabled={pending}\n            />\n          </Field>\n          {error && (\n            <p role=\"alert\" className=\"mt-2 text-[12.5px] text-destructive-text\">\n              {error}\n            </p>\n          )}\n          <AlertDialogFooter className=\"mt-5\">\n            <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>\n            <Button type=\"submit\" variant=\"destructive\" loading={pending} disabled={!matches}>\n              {label}\n            </Button>\n          </AlertDialogFooter>\n        </form>\n      </AlertDialogContent>\n    </AlertDialog>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "feedback"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/feedback/ConfirmDestructive/block.meta.ts"
+  }
+}

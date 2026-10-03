@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-workspace",
+  "type": "registry:block",
+  "title": "Workspace settings",
+  "description": "Workspace name, URL slug, logo upload and data region, with a danger zone for transfer and deletion.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/settings-profile.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/settings-workspace/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/settings-workspace/Page.tsx",
+      "content": "import { DangerZone, FileUploadPanel, FormSection, StickyActionBar, type DangerZoneAction } from '@gntik-ai/blocks';\nimport { Field, FieldDescription, FieldError, FieldLabel, Input, SimpleSelect, Stack } from '@gntik-ai/ui';\nimport { useState } from 'react';\nimport { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';\nimport { SLUG_RE, regions as defaultRegions, workspaceDangerActions, workspaceValues, type RegionOption, type WorkspaceValues } from './data';\n\nexport interface SettingsWorkspaceProps extends SettingsFrameOptions {\n  values: WorkspaceValues;\n  regions: RegionOption[];\n  /** URL prefix shown before the slug. */\n  urlPrefix: string;\n  /** Danger zone rows; defaults to transfer and delete (typing the slug). */\n  dangerActions: DangerZoneAction[];\n  onSave: (values: WorkspaceValues) => void | Promise<void>;\n  /** Uploads the logo; defaults to a demo upload. */\n  onLogoUpload: (file: File, onProgress: (pct: number) => void) => Promise<void>;\n  onDangerAction: (actionId: string) => void | Promise<void>;\n}\n\n/** Workspace settings: general FormSection (name, slug, region), logo FileUploadPanel, DangerZone. */\nexport default function SettingsWorkspacePage({\n  values: saved = workspaceValues,\n  regions = defaultRegions,\n  urlPrefix = 'app.example.com/',\n  dangerActions,\n  onSave,\n  onLogoUpload,\n  onDangerAction,\n  ...frame\n}: Partial<SettingsWorkspaceProps>) {\n  const [base, setBase] = useState(saved);\n  const [draft, setDraft] = useState(saved);\n  const [saving, setSaving] = useState(false);\n  const dirty = draft.name !== base.name || draft.slug !== base.slug || draft.region !== base.region;\n  const slugInvalid = !SLUG_RE.test(draft.slug);\n  const set = (key: keyof WorkspaceValues) => (value: string | null) => setDraft((d) => ({ ...d, [key]: value ?? '' }));\n\n  const save = async () => {\n    if (slugInvalid) return;\n    setSaving(true);\n    try {\n      await onSave?.(draft);\n      setBase(draft);\n    } finally {\n      setSaving(false);\n    }\n  };\n\n  return (\n    <SettingsFrame page=\"workspace\" description=\"Details every member sees, and where your data is stored.\" {...frame}>\n      <Stack gap={8}>\n        <FormSection title=\"General\" description=\"The name and URL of this workspace.\">\n          <div className=\"grid grid-cols-1 gap-4 sm:grid-cols-2\">\n            <Field>\n              <FieldLabel>Workspace name</FieldLabel>\n              <Input value={draft.name} onValueChange={set('name')} />\n            </Field>\n            <Field invalid={slugInvalid}>\n              <FieldLabel>URL slug</FieldLabel>\n              <Input value={draft.slug} onValueChange={set('slug')} leadingAddon={urlPrefix} inputClassName=\"font-mono\" />\n              <FieldDescription>Lowercase letters, numbers and dashes.</FieldDescription>\n              <FieldError match={slugInvalid}>Use lowercase letters, numbers and single dashes.</FieldError>\n            </Field>\n          </div>\n        </FormSection>\n        <FormSection title=\"Logo\" description=\"Shown in the sidebar and in emails. Square PNG or SVG, at least 256 px.\" divided>\n          <FileUploadPanel label=\"Workspace logo\" accept=\".png,.svg,.jpg\" maxSize={2 * 1024 * 1024} multiple={false} defaultFiles={[]} onUpload={onLogoUpload} />\n        </FormSection>\n        <FormSection title=\"Data region\" description=\"Where projects, logs and backups are stored. Moving regions is done by support.\" divided>\n          <SimpleSelect label=\"Region\" items={regions} value={draft.region} onValueChange={set('region')} className=\"w-full sm:w-80\" />\n        </FormSection>\n      </Stack>\n      <DangerZone\n        description=\"These actions affect the whole workspace and every member in it.\"\n        actions={dangerActions ?? workspaceDangerActions(base.slug)}\n        onConfirm={onDangerAction}\n      />\n      <StickyActionBar dirty={dirty} saving={saving} onSave={() => void save()} onCancel={() => setDraft(base)} aria-label=\"Workspace changes\" />\n    </SettingsFrame>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/settings-workspace/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/settings-workspace/data.ts",
+      "content": "import type { DangerZoneAction } from '@gntik-ai/blocks';\n\nexport interface WorkspaceValues {\n  name: string;\n  slug: string;\n  region: string;\n}\n\nexport interface RegionOption {\n  value: string;\n  label: string;\n}\n\nexport const workspaceValues: WorkspaceValues = {\n  name: 'Northwind Labs',\n  slug: 'northwind-labs',\n  region: 'eu-west',\n};\n\nexport const regions: RegionOption[] = [\n  { value: 'eu-west', label: 'EU West · Frankfurt' },\n  { value: 'us-east', label: 'US East · Virginia' },\n  { value: 'us-west', label: 'US West · Oregon' },\n  { value: 'ap-south', label: 'AP South · Singapore' },\n];\n\nexport const workspaceDangerActions = (slug: string): DangerZoneAction[] => [\n  {\n    id: 'transfer',\n    title: 'Transfer ownership',\n    description: 'Make another admin the owner of this workspace. You stay on as an admin.',\n    actionLabel: 'Transfer',\n    destructive: false,\n  },\n  {\n    id: 'delete',\n    title: 'Delete workspace',\n    description: `Permanently deletes ${slug}, its projects, members and billing history. This cannot be undone.`,\n    actionLabel: 'Delete workspace',\n    confirmText: slug,\n  },\n];\n\nexport const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Settings"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/settings-workspace/template.meta.ts"
+  }
+}

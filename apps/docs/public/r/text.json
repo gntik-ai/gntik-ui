@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text",
+  "type": "registry:ui",
+  "title": "Text",
+  "description": "Type roles on the brand scale. Text: body, label, supporting, caption, code and display, with tones (default, muted, primary, success, warning, destructive — contrast-safe *-text aliases). Heading: semantic level 1–6 with an independent visual size. Both truncate or clamp to N lines and render any element via `as` / `render`.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Text/Text.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/text/Text.tsx",
+      "content": "import { mergeProps } from '@base-ui/react/merge-props';\nimport { useRender } from '@base-ui/react/use-render';\nimport { cn } from '../../utils/cn';\nimport { headingVariants, textVariants } from './text.variants';\n\nexport type TextVariant = 'body' | 'label' | 'supporting' | 'caption' | 'code' | 'display';\nexport type TextTone = 'default' | 'muted' | 'primary' | 'success' | 'warning' | 'destructive' | 'inherit';\n\n/** Tone each variant uses when `tone` is not set. */\nconst DEFAULT_TONE: Record<TextVariant, TextTone> = {\n  body: 'default',\n  label: 'default',\n  supporting: 'muted',\n  caption: 'muted',\n  code: 'default',\n  display: 'default',\n};\n\nconst DEFAULT_TAG: Record<TextVariant, 'p' | 'span' | 'code'> = {\n  body: 'p',\n  label: 'span',\n  supporting: 'p',\n  caption: 'span',\n  code: 'code',\n  display: 'p',\n};\n\nexport interface TextProps extends Omit<useRender.ComponentProps<'p'>, 'className'> {\n  className?: string;\n  /** Type role. Default `body`. */\n  variant?: TextVariant;\n  /** Colour role; brand / status tones use the contrast-safe `*-text` aliases. Defaults per variant. */\n  tone?: TextTone;\n  /** Tag to render; defaults per variant (p, span or code). `render` wins when both are set. */\n  as?: 'p' | 'span' | 'div' | 'code' | 'small' | 'strong' | 'em' | 'label' | 'dt' | 'dd' | 'li' | 'figcaption';\n  /** Single line with an ellipsis. */\n  truncate?: boolean;\n  /** Clamp to N lines (1–6) with an ellipsis. */\n  lineClamp?: 1 | 2 | 3 | 4 | 5 | 6;\n}\n\n/** Body copy and small type roles: body, label, supporting, caption, code and display. */\nexport function Text({\n  variant = 'body',\n  tone,\n  as,\n  truncate,\n  lineClamp,\n  className,\n  render,\n  ref,\n  ...props\n}: TextProps) {\n  return useRender({\n    defaultTagName: as ?? DEFAULT_TAG[variant],\n    render,\n    ref,\n    props: mergeProps<'p'>(props, {\n      className: cn(textVariants({ variant, tone: tone ?? DEFAULT_TONE[variant], truncate, lineClamp }), className),\n    }),\n  });\n}\n\nexport type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;\nexport type HeadingSize = 'display' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | '2xs';\n\nconst LEVEL_SIZE: Record<HeadingLevel, HeadingSize> = { 1: 'xl', 2: 'lg', 3: 'md', 4: 'sm', 5: 'xs', 6: '2xs' };\n\nexport interface HeadingProps extends Omit<useRender.ComponentProps<'h2'>, 'className'> {\n  className?: string;\n  /** Semantic level (h1–h6) that fits the page outline. Default 2. */\n  level?: HeadingLevel;\n  /** Visual size, independent of the level. Defaults to the level's size. */\n  size?: HeadingSize;\n  tone?: 'default' | 'muted' | 'primary' | 'inherit';\n  truncate?: boolean;\n  lineClamp?: 1 | 2 | 3;\n}\n\n/** Section and page titles: the semantic level and the visual size are chosen separately. */\nexport function Heading({ level = 2, size, tone, truncate, lineClamp, className, render, ref, ...props }: HeadingProps) {\n  return useRender({\n    defaultTagName: `h${level}`,\n    render,\n    ref,\n    props: mergeProps<'h2'>(props, {\n      className: cn(headingVariants({ size: size ?? LEVEL_SIZE[level], tone, truncate, lineClamp }), className),\n    }),\n  });\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Text/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/text/index.ts",
+      "content": "export {\n  Text,\n  Heading,\n  type TextProps,\n  type TextVariant,\n  type TextTone,\n  type HeadingProps,\n  type HeadingLevel,\n  type HeadingSize,\n} from './Text';\nexport { textVariants, headingVariants, type TextVariantProps, type HeadingVariantProps } from './text.variants';\nexport { doc as textDoc } from './Text.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Text/text.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/text/text.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const textVariants = tv({\n  base: 'min-w-0',\n  variants: {\n    variant: {\n      body: 'text-[0.9375rem] leading-relaxed',\n      label: 'text-[13px] leading-tight font-medium',\n      supporting: 'text-[13px] leading-snug',\n      caption: 'text-[12px] leading-snug',\n      code: 'rounded-sm bg-secondary px-1 py-0.5 font-mono text-[0.92em]',\n      display: 'text-[2.875rem] leading-[1.04] font-bold tracking-tight',\n    },\n    tone: {\n      default: 'text-foreground',\n      muted: 'text-muted-foreground',\n      primary: 'text-primary-text',\n      success: 'text-success-text',\n      warning: 'text-warning-text',\n      destructive: 'text-destructive-text',\n      inherit: 'text-inherit',\n    },\n    truncate: { true: 'truncate' },\n    lineClamp: {\n      1: 'line-clamp-1',\n      2: 'line-clamp-2',\n      3: 'line-clamp-3',\n      4: 'line-clamp-4',\n      5: 'line-clamp-5',\n      6: 'line-clamp-6',\n    },\n  },\n  defaultVariants: { variant: 'body' },\n});\n\nexport const headingVariants = tv({\n  base: 'min-w-0 text-balance',\n  variants: {\n    size: {\n      display: 'text-[2.875rem] leading-[1.04] font-bold tracking-tight',\n      xl: 'text-[1.875rem] leading-tight font-bold tracking-tight',\n      lg: 'text-[1.5rem] leading-snug font-bold tracking-tight',\n      md: 'text-xl leading-snug font-semibold tracking-tight',\n      sm: 'text-[17px] leading-snug font-semibold tracking-tight',\n      xs: 'text-[15px] leading-snug font-semibold tracking-tight',\n      '2xs': 'text-[13px] leading-snug font-semibold',\n    },\n    tone: {\n      default: 'text-foreground',\n      muted: 'text-muted-foreground',\n      primary: 'text-primary-text',\n      inherit: 'text-inherit',\n    },\n    truncate: { true: 'truncate' },\n    lineClamp: {\n      1: 'line-clamp-1',\n      2: 'line-clamp-2',\n      3: 'line-clamp-3',\n    },\n  },\n  defaultVariants: { tone: 'default' },\n});\n\nexport type TextVariantProps = VariantProps<typeof textVariants>;\nexport type HeadingVariantProps = VariantProps<typeof headingVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Text/Text.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/text/Text.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Text',\n  group: 'Display',\n  status: 'stable',\n  description:\n    'Type roles on the brand scale. Text: body, label, supporting, caption, code and display, with tones (default, muted, primary, success, warning, destructive — contrast-safe *-text aliases). Heading: semantic level 1–6 with an independent visual size. Both truncate or clamp to N lines and render any element via `as` / `render`.',\n  primitive: '@base-ui/react/use-render',\n  tokens: ['foreground', 'muted-foreground', 'primary-text', 'success-text', 'warning-text', 'destructive-text', 'secondary'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Display"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Text/Text.doc.ts"
+  }
+}

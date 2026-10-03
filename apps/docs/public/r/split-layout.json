@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "split-layout",
+  "type": "registry:block",
+  "title": "SplitLayout",
+  "description": "Master–detail layout: a resizable list pane beside a detail pane, built on ResizablePanelGroup (sizes can persist with autoSaveId). Below lg only one pane shows: the list, or the detail with a Back button; `showDetail` is controllable so selecting an item can switch panes. Both panes are labelled regions. Fills its container.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/button.json",
+    "https://gntik-ui.invalid/r/resizable.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/layouts/SplitLayout/SplitLayout.tsx",
+      "type": "registry:component",
+      "target": "components/layouts/split-layout/SplitLayout.tsx",
+      "content": "import { ArrowLeft } from 'lucide-react';\nimport { useId, useRef, useState, type ReactNode } from 'react';\nimport { cn } from '../../utils/cn';\nimport { Button } from '../../ui/button';\nimport { ResizablePanel, ResizablePanelGroup, ResizeHandle } from '../../ui/resizable';\nimport { useI18n } from '../../i18n/I18nProvider';\nimport { splitLayoutVariants } from './split-layout.variants';\n\nexport interface SplitLayoutProps {\n  className?: string;\n  /** The list pane (records, threads, files…). */\n  list: ReactNode;\n  /** The detail pane for the selected item. */\n  detail: ReactNode;\n  /** Header of the list pane (title, search, filters). */\n  listHeader?: ReactNode;\n  /** Header of the detail pane, after the Back button. */\n  detailHeader?: ReactNode;\n  /** Small screens: which pane is visible. Large screens always show both. */\n  showDetail?: boolean;\n  defaultShowDetail?: boolean;\n  onShowDetailChange?: (showDetail: boolean) => void;\n  /** Accessible names of the two regions. */\n  listLabel?: string;\n  detailLabel?: string;\n  backLabel?: string;\n  /** List pane size in % of the width (large screens). */\n  defaultListSize?: number;\n  minListSize?: number;\n  maxListSize?: number;\n  /** Remembers the pane sizes in localStorage. */\n  autoSaveId?: string;\n  fullScreen?: boolean;\n}\n\n/**\n * Master–detail layout: a resizable list pane beside a detail pane (ResizablePanelGroup). Below lg\n * only one pane shows: the list, or the detail with a Back button (`showDetail`, controllable).\n */\nexport function SplitLayout({\n  className,\n  list,\n  detail,\n  listHeader,\n  detailHeader,\n  showDetail: showDetailProp,\n  defaultShowDetail = false,\n  onShowDetailChange,\n  listLabel: listLabelProp,\n  detailLabel: detailLabelProp,\n  backLabel: backLabelProp,\n  defaultListSize = 35,\n  minListSize = 20,\n  maxListSize = 60,\n  autoSaveId,\n  fullScreen = false,\n}: SplitLayoutProps) {\n  const { t } = useI18n();\n  const listLabel = listLabelProp ?? t('split.list');\n  const detailLabel = detailLabelProp ?? t('split.details');\n  const backLabel = backLabelProp ?? t('common.back');\n  const id = useId();\n  const listRef = useRef<HTMLElement>(null);\n  const [showDetailState, setShowDetailState] = useState(defaultShowDetail);\n  const showDetail = showDetailProp ?? showDetailState;\n  const s = splitLayoutVariants({ fullScreen, showDetail });\n\n  function back() {\n    setShowDetailState(false);\n    onShowDetailChange?.(false);\n    // The list pane becomes visible again: take focus there so keyboard users don't land on <body>.\n    requestAnimationFrame(() => listRef.current?.focus());\n  }\n\n  return (\n    <div className={cn(s.root(), className)} data-show-detail={showDetail || undefined}>\n      <ResizablePanelGroup className={s.group()} autoSaveId={autoSaveId}>\n        <ResizablePanel id={`${id}-list`} defaultSize={defaultListSize} minSize={minListSize} maxSize={maxListSize} className={s.list()}>\n          <section ref={listRef} tabIndex={-1} aria-label={listLabel} className={s.pane()}>\n            {listHeader && <div className={s.paneHeader()}>{listHeader}</div>}\n            <div className={s.paneBody()}>{list}</div>\n          </section>\n        </ResizablePanel>\n        <ResizeHandle aria-label={`Resize ${listLabel.toLowerCase()}`} className={s.handle()} />\n        <ResizablePanel id={`${id}-detail`} className={s.detail()}>\n          <section aria-label={detailLabel} className={s.pane()}>\n            <div className={cn(s.paneHeader(), !detailHeader && 'lg:hidden')}>\n              <Button variant=\"ghost\" size=\"sm\" icon={ArrowLeft} className={s.back()} onClick={back}>\n                {backLabel}\n              </Button>\n              {detailHeader}\n            </div>\n            <div className={s.paneBody()}>{detail}</div>\n          </section>\n        </ResizablePanel>\n      </ResizablePanelGroup>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/SplitLayout/index.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/split-layout/index.ts",
+      "content": "export { SplitLayout, type SplitLayoutProps } from './SplitLayout';\nexport { splitLayoutVariants, type SplitLayoutVariantProps } from './split-layout.variants';\nexport { doc as splitLayoutDoc } from './SplitLayout.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/SplitLayout/split-layout.variants.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/split-layout/split-layout.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const splitLayoutVariants = tv({\n  slots: {\n    root: 'flex w-full min-w-0 overflow-hidden bg-background text-foreground',\n    group: 'h-full',\n    pane: 'flex h-full min-h-0 min-w-0 flex-col focus:outline-none',\n    list: 'bg-card',\n    detail: 'bg-background',\n    paneHeader: 'flex h-12 shrink-0 items-center gap-2 border-b border-border/60 px-3',\n    back: 'lg:hidden',\n    paneBody: 'min-h-0 flex-1 overflow-y-auto',\n    handle: 'max-lg:hidden',\n  },\n  variants: {\n    fullScreen: { true: { root: 'h-dvh' }, false: { root: 'h-full min-h-0' } },\n    showDetail: {\n      true: { list: 'max-lg:hidden' },\n      false: { detail: 'max-lg:hidden' },\n    },\n  },\n  defaultVariants: { fullScreen: false, showDetail: false },\n});\n\nexport type SplitLayoutVariantProps = VariantProps<typeof splitLayoutVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/SplitLayout/SplitLayout.doc.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/split-layout/SplitLayout.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'SplitLayout',\n  group: 'Layout',\n  status: 'beta',\n  description:\n    'Master–detail layout: a resizable list pane beside a detail pane, built on ResizablePanelGroup (sizes can persist with autoSaveId). Below lg only one pane shows: the list, or the detail with a Back button; `showDetail` is controllable so selecting an item can switch panes. Both panes are labelled regions. Fills its container.',\n  primitive: 'Resizable (role=\"separator\")',\n  pattern: 'window splitter + two labelled regions',\n  keyboard: [\n    ['Arrow Left / Right', 'On the resize handle: shrinks / grows the list pane (from Resizable)'],\n    ['Home / End', 'On the resize handle: list pane to its minimum / maximum size'],\n    ['Enter / Space', 'On Back (small screens): returns to the list and moves focus to it'],\n  ],\n  tokens: ['background', 'card', 'border', 'accent', 'muted-foreground', 'primary', 'focus-ring'],\n};\n"
+    }
+  ],
+  "categories": [
+    "layout",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "layout",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/layouts/SplitLayout/SplitLayout.doc.ts"
+  }
+}

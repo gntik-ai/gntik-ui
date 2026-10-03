@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sticky-action-bar",
+  "type": "registry:block",
+  "title": "Sticky action bar",
+  "description": "Sticky bottom bar for long forms with an unsaved-changes status, Discard and Save (with saving state).",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/page-chrome/StickyActionBar/StickyActionBar.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/page-chrome/sticky-action-bar/StickyActionBar.tsx",
+      "content": "import { Button, cn } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\n\nexport interface StickyActionBarProps {\n  /** Whether the form has unsaved changes; Save and Discard are disabled while clean. */\n  dirty?: boolean;\n  /** Shows a spinner on Save and blocks both buttons. */\n  saving?: boolean;\n  onSave?: () => void;\n  onCancel?: () => void;\n  /** Text while dirty. */\n  dirtyMessage?: ReactNode;\n  /** Text while clean. */\n  cleanMessage?: ReactNode;\n  saveLabel?: string;\n  cancelLabel?: string;\n  /** Render nothing while clean (the bar slides in only when there is something to save). */\n  hideWhenClean?: boolean;\n  /** Accessible name of the region. */\n  'aria-label'?: string;\n  className?: string;\n}\n\n/** Bottom bar for long forms: unsaved-changes status plus Discard / Save, sticky to the viewport. */\nexport function StickyActionBar({\n  dirty = true,\n  saving = false,\n  onSave,\n  onCancel,\n  dirtyMessage = 'You have unsaved changes',\n  cleanMessage = 'All changes saved',\n  saveLabel = 'Save changes',\n  cancelLabel = 'Discard',\n  hideWhenClean = false,\n  'aria-label': ariaLabel = 'Save changes',\n  className,\n}: StickyActionBarProps) {\n  if (hideWhenClean && !dirty && !saving) return null;\n  return (\n    <section\n      aria-label={ariaLabel}\n      className={cn('sticky bottom-0 z-20 border-t border-border bg-card px-4 py-3 shadow-sm sm:px-6', className)}\n    >\n      <div className=\"mx-auto flex max-w-5xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between\">\n        <p role=\"status\" className=\"flex items-center gap-2 text-[13px] text-foreground\">\n          <span aria-hidden className={cn('size-2 shrink-0 rounded-full', dirty ? 'bg-warning' : 'bg-success')} />\n          {saving ? 'Saving…' : dirty ? dirtyMessage : cleanMessage}\n        </p>\n        <div className=\"flex items-center gap-2 sm:justify-end [&>*]:flex-1 sm:[&>*]:flex-none\">\n          <Button variant=\"ghost\" disabled={!dirty || saving} onClick={onCancel}>\n            {cancelLabel}\n          </Button>\n          <Button variant=\"primary\" loading={saving} disabled={!dirty} onClick={onSave}>\n            {saveLabel}\n          </Button>\n        </div>\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "page-chrome"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/page-chrome/StickyActionBar/block.meta.ts"
+  }
+}

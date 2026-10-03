@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "user-menu",
+  "type": "registry:ui",
+  "title": "UserMenu",
+  "description": "Account menu for the topbar: avatar trigger (optionally with the name) opening a name/email header, data-driven items (buttons or router links), a Theme submenu bound to useTheme(), and a destructive Sign out.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0",
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/avatar.json",
+    "https://gntik-ui.invalid/r/link.json",
+    "https://gntik-ui.invalid/r/menu.json",
+    "https://gntik-ui.invalid/r/theme.json",
+    "https://gntik-ui.invalid/r/theme-switcher.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/UserMenu/UserMenu.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/user-menu/UserMenu.tsx",
+      "content": "import { Menu as BaseMenu } from '@base-ui/react/menu';\nimport { LogOut, Palette } from 'lucide-react';\nimport { createElement, type ComponentType, type ReactNode } from 'react';\nimport { useTheme, type ThemeMode } from '../../theme/ThemeProvider';\nimport { cn } from '../../utils/cn';\nimport { Avatar, getInitials } from '../avatar';\nimport { useLinkComponent } from '../link';\nimport {\n  Menu,\n  MenuContent,\n  MenuGroup,\n  MenuItem,\n  MenuRadioGroup,\n  MenuRadioItem,\n  MenuSeparator,\n  MenuSub,\n  MenuSubContent,\n  MenuSubTrigger,\n  MenuTrigger,\n  menuVariants,\n} from '../menu';\nimport { useThemeOptions, type ThemeOption } from '../theme-switcher/ThemeSwitcher';\nimport { useI18n } from '../../i18n/I18nProvider';\nimport { userMenuVariants } from './user-menu.variants';\n\ntype IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean; className?: string }>;\n\nexport interface UserMenuUser {\n  name: string;\n  email?: string;\n  /** Avatar image URL; initials show while it loads or if it fails. */\n  avatarSrc?: string;\n}\n\nexport interface UserMenuAction {\n  label: string;\n  icon?: IconComponent;\n  /** Renders a link (through LinkProvider) instead of a button item. */\n  href?: string;\n  shortcut?: string;\n  destructive?: boolean;\n  disabled?: boolean;\n  onSelect?: () => void;\n}\n\nexport type UserMenuEntry = UserMenuAction | 'separator';\n\nexport interface UserMenuProps {\n  className?: string;\n  user: UserMenuUser;\n  /** Items between the header and the theme / sign-out section (Profile, Settings…). */\n  items?: UserMenuEntry[];\n  /** Adds a Theme submenu (radio items bound to useTheme). */\n  showTheme?: boolean;\n  themeOptions?: ThemeOption[];\n  themeLabel?: string;\n  /** Adds a destructive \"Sign out\" item at the end. */\n  onSignOut?: () => void;\n  signOutLabel?: string;\n  /** Show the user's name next to the avatar in the trigger. */\n  showName?: boolean;\n  /** Accessible name of the trigger. */\n  triggerLabel?: string;\n  /** Extra content at the end of the menu (before sign out). */\n  children?: ReactNode;\n}\n\nfunction ActionItem({ action }: { action: UserMenuAction }) {\n  const RouterLink = useLinkComponent();\n  const m = menuVariants({ destructive: action.destructive });\n  const IconCmp = action.icon;\n  if (action.href !== undefined) {\n    return (\n      <BaseMenu.LinkItem\n        href={action.href}\n        closeOnClick\n        render={RouterLink ? createElement(RouterLink) : undefined}\n        className={cn(m.item(), 'no-underline')}\n        onClick={action.onSelect}\n      >\n        {IconCmp && <IconCmp size={15} aria-hidden className={m.itemIcon()} />}\n        <span className={m.itemLabel()}>{action.label}</span>\n        {action.shortcut && (\n          <span aria-hidden className={m.shortcut()}>\n            {action.shortcut}\n          </span>\n        )}\n      </BaseMenu.LinkItem>\n    );\n  }\n  return (\n    <MenuItem icon={IconCmp} shortcut={action.shortcut} destructive={action.destructive} disabled={action.disabled} onClick={action.onSelect}>\n      {action.label}\n    </MenuItem>\n  );\n}\n\n/**\n * Account menu: avatar trigger opening a header (name, email), the given items, an optional\n * Theme submenu wired to useTheme(), and Sign out.\n */\nexport function UserMenu({\n  className,\n  user,\n  items = [],\n  showTheme = true,\n  themeOptions: themeOptionsProp,\n  themeLabel: themeLabelProp,\n  onSignOut,\n  signOutLabel: signOutLabelProp,\n  showName = false,\n  triggerLabel,\n  children,\n}: UserMenuProps) {\n  const { t } = useI18n();\n  const themeLabel = themeLabelProp ?? t('theme.label');\n  const signOutLabel = signOutLabelProp ?? t('userMenu.signOut');\n  const themeOptions = useThemeOptions(themeOptionsProp);\n  const { mode, setMode } = useTheme();\n  const s = userMenuVariants({ showName });\n  const hasEnd = showTheme || children || onSignOut;\n  return (\n    <Menu>\n      <MenuTrigger aria-label={triggerLabel ?? t('userMenu.label', { name: user.name })} className={cn(s.trigger(), className)}>\n        <Avatar src={user.avatarSrc} initials={getInitials(user.name)} size=\"sm\" shape=\"rounded\" />\n        {showName && <span className={s.triggerName()}>{user.name}</span>}\n      </MenuTrigger>\n      <MenuContent align=\"end\" className={s.popup()}>\n        <MenuGroup aria-label={user.name}>\n          <div className={s.header()}>\n            <Avatar src={user.avatarSrc} initials={getInitials(user.name)} size=\"sm\" shape=\"rounded\" tone=\"accent\" />\n            <div className={s.headerText()}>\n              <div className={s.name()}>{user.name}</div>\n              {user.email && <div className={s.email()}>{user.email}</div>}\n            </div>\n          </div>\n        </MenuGroup>\n        {items.length > 0 && <MenuSeparator />}\n        {items.map((entry, i) => (entry === 'separator' ? <MenuSeparator key={`sep-${i}`} /> : <ActionItem key={entry.label} action={entry} />))}\n        {hasEnd && <MenuSeparator />}\n        {showTheme && (\n          <MenuSub>\n            <MenuSubTrigger icon={Palette}>{themeLabel}</MenuSubTrigger>\n            <MenuSubContent className=\"min-w-[180px]\">\n              <MenuRadioGroup value={mode} onValueChange={(v: ThemeMode) => setMode(v)}>\n                {themeOptions.map((o) => (\n                  <MenuRadioItem key={o.value} value={o.value}>\n                    <span className=\"flex items-center gap-2.5\">\n                      <o.icon size={15} aria-hidden className=\"text-muted-foreground\" />\n                      {o.label}\n                    </span>\n                  </MenuRadioItem>\n                ))}\n              </MenuRadioGroup>\n            </MenuSubContent>\n          </MenuSub>\n        )}\n        {children}\n        {onSignOut && (\n          <MenuItem icon={LogOut} destructive onClick={onSignOut}>\n            {signOutLabel}\n          </MenuItem>\n        )}\n      </MenuContent>\n    </Menu>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/UserMenu/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/user-menu/index.ts",
+      "content": "export { UserMenu, type UserMenuProps, type UserMenuUser, type UserMenuAction, type UserMenuEntry } from './UserMenu';\nexport { userMenuVariants, type UserMenuVariantProps } from './user-menu.variants';\nexport { doc as userMenuDoc } from './UserMenu.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/UserMenu/user-menu.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/user-menu/user-menu.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const userMenuVariants = tv({\n  slots: {\n    trigger: [\n      'inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-lg transition-colors outline-none',\n      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n      'data-popup-open:ring-2 data-popup-open:ring-ring/40',\n    ],\n    triggerName: 'pe-1 text-[13px] font-semibold text-foreground',\n    popup: 'w-60',\n    header: 'flex items-center gap-2.5 px-2.5 py-2',\n    headerText: 'min-w-0',\n    name: 'truncate text-[13px] font-semibold text-foreground',\n    email: 'truncate font-mono text-[10.5px] text-muted-foreground',\n  },\n  variants: {\n    showName: {\n      true: { trigger: 'h-9 pe-2 ps-0.5 hover:bg-secondary/60' },\n    },\n  },\n});\n\nexport type UserMenuVariantProps = VariantProps<typeof userMenuVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/UserMenu/UserMenu.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/user-menu/UserMenu.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'UserMenu',\n  group: 'Navigation',\n  status: 'beta',\n  description:\n    'Account menu for the topbar: avatar trigger (optionally with the name) opening a name/email header, data-driven items (buttons or router links), a Theme submenu bound to useTheme(), and a destructive Sign out.',\n  primitive: '@base-ui/react/menu',\n  pattern: 'menu button',\n  keyboard: [\n    ['Enter / Space / ArrowDown', 'On the avatar: opens the menu and focuses the first item'],\n    ['ArrowDown / ArrowUp', 'Moves between items (wraps)'],\n    ['ArrowRight / ArrowLeft', 'Opens / closes the Theme submenu'],\n    ['Enter', 'Runs the highlighted item (or selects a theme) and closes the menu'],\n    ['Escape', 'Closes the menu and returns focus to the avatar'],\n  ],\n  tokens: ['popover', 'border', 'primary', 'primary-foreground', 'accent', 'accent-foreground', 'secondary', 'muted-foreground', 'destructive-text', 'focus-ring'],\n};\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Navigation"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/components/UserMenu/UserMenu.doc.ts"
+  }
+}

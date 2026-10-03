@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-row",
+  "type": "registry:block",
+  "title": "Settings row",
+  "description": "A setting with its label and description on the left and a control (Switch by default) on the right.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/forms/SettingsRow/SettingsRow.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/forms/settings-row/SettingsRow.tsx",
+      "content": "import { Switch, cn } from '@gntik-ai/ui';\nimport { useId, type ReactNode } from 'react';\n\nexport interface SettingsRowControlIds {\n  /** Id of the label element: pass it as `aria-labelledby` to the control. */\n  labelId: string;\n  /** Id of the description element (when there is one): pass it as `aria-describedby`. */\n  descriptionId: string | undefined;\n}\n\nexport interface SettingsRowProps {\n  label?: ReactNode;\n  description?: ReactNode;\n  /**\n   * Custom control. A function receives the label/description ids to wire the control's\n   * accessible name. Without it, a Switch driven by `checked` / `defaultChecked` is rendered.\n   */\n  control?: ReactNode | ((ids: SettingsRowControlIds) => ReactNode);\n  checked?: boolean;\n  defaultChecked?: boolean;\n  onCheckedChange?: (checked: boolean) => void;\n  disabled?: boolean;\n  /** Extra content under the description (status, link). */\n  children?: ReactNode;\n  className?: string;\n}\n\n/** One setting: label and description on the left, its control (a Switch by default) on the right. */\nexport function SettingsRow({\n  label = 'Deployment notifications',\n  description = 'Email the project owners when a deployment fails or is rolled back.',\n  control,\n  checked,\n  defaultChecked = true,\n  onCheckedChange,\n  disabled,\n  children,\n  className,\n}: SettingsRowProps) {\n  const id = useId();\n  const labelId = `${id}-label`;\n  const descriptionId = description != null ? `${id}-desc` : undefined;\n  const content =\n    typeof control === 'function' ? (\n      control({ labelId, descriptionId })\n    ) : control !== undefined ? (\n      control\n    ) : (\n      <Switch\n        aria-labelledby={labelId}\n        aria-describedby={descriptionId}\n        checked={checked}\n        defaultChecked={checked === undefined ? defaultChecked : undefined}\n        onCheckedChange={(next) => onCheckedChange?.(next)}\n        disabled={disabled}\n      />\n    );\n  return (\n    <div className={cn('flex items-start justify-between gap-6 py-4', disabled && 'opacity-70', className)}>\n      <div className=\"min-w-0\">\n        <div id={labelId} className=\"text-[13.5px] font-medium text-foreground\">\n          {label}\n        </div>\n        {description != null && (\n          <p id={descriptionId} className=\"mt-0.5 max-w-xl text-[12.5px] leading-5 text-pretty text-muted-foreground\">\n            {description}\n          </p>\n        )}\n        {children}\n      </div>\n      <div className=\"shrink-0 pt-0.5\">{content}</div>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "forms"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/forms/SettingsRow/block.meta.ts"
+  }
+}

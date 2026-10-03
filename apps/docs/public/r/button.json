@@ -1,0 +1,64 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button",
+  "type": "registry:ui",
+  "title": "Button",
+  "description": "Triggers an action. Five variants (primary, secondary, soft, ghost, destructive), three sizes, icons and a loading state. IconButton is the square, icon-only form.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/spinner.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Button/Button.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/button/Button.tsx",
+      "content": "import { Button as BaseButton } from '@base-ui/react/button';\nimport type { ComponentType, ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { rtlIconClass } from '../../utils/rtl';\nimport { Spinner } from '../spinner/Spinner';\nimport { buttonVariants, BUTTON_ICON_SIZE, type ButtonVariantProps } from './button.variants';\n\ntype IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean; className?: string }>;\n\nexport interface ButtonProps extends Omit<BaseButton.Props, 'className'>, ButtonVariantProps {\n  className?: string;\n  ref?: Ref<HTMLButtonElement>;\n  /** Leading icon (a lucide icon component). Directional ones (ChevronLeft, ArrowRight…) mirror under RTL. */\n  icon?: IconComponent;\n  /** Trailing icon. */\n  trailingIcon?: IconComponent;\n  /** Shows a spinner, disables the button and sets aria-busy. */\n  loading?: boolean;\n  children?: ReactNode;\n}\n\n/** Primary action control. Renders a native <button> unless `render` swaps the element. */\nexport function Button({\n  variant,\n  size = 'md',\n  iconOnly,\n  icon: LeadingIcon,\n  trailingIcon: TrailingIcon,\n  loading = false,\n  disabled,\n  className,\n  children,\n  type = 'button',\n  ...props\n}: ButtonProps) {\n  const px = BUTTON_ICON_SIZE[size];\n  return (\n    <BaseButton\n      type={type}\n      disabled={disabled || loading}\n      focusableWhenDisabled={loading}\n      aria-busy={loading || undefined}\n      className={cn(buttonVariants({ variant, size, iconOnly }), className)}\n      {...props}\n    >\n      {loading ? <Spinner size={px} /> : LeadingIcon && <LeadingIcon size={px} aria-hidden className={rtlIconClass(LeadingIcon)} />}\n      {children}\n      {!loading && TrailingIcon && <TrailingIcon size={px} aria-hidden className={rtlIconClass(TrailingIcon)} />}\n    </BaseButton>\n  );\n}\n\nexport interface IconButtonProps extends Omit<ButtonProps, 'icon' | 'trailingIcon' | 'children' | 'iconOnly'> {\n  icon: IconComponent;\n  /** Required accessible name (also used as the tooltip text by callers). */\n  label: string;\n}\n\n/** Square, icon-only button. `label` becomes its accessible name. */\nexport function IconButton({ icon: IconCmp, label, size = 'md', variant = 'ghost', loading, className, ...props }: IconButtonProps) {\n  const px = BUTTON_ICON_SIZE[size];\n  return (\n    <Button\n      aria-label={label}\n      size={size}\n      variant={variant}\n      iconOnly\n      loading={loading}\n      className={className}\n      {...props}\n    >\n      {!loading && <IconCmp size={px} aria-hidden className={rtlIconClass(IconCmp)} />}\n    </Button>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Button/button.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/button/button.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const buttonVariants = tv({\n  base: [\n    'inline-flex shrink-0 items-center justify-center font-semibold whitespace-nowrap transition-colors select-none',\n    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n    'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',\n  ],\n  variants: {\n    variant: {\n      primary: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90',\n      secondary: 'border border-border bg-card text-foreground shadow-sm hover:bg-secondary/70',\n      soft: 'bg-primary/14 text-primary-chip-text hover:bg-primary/20',\n      ghost: 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground',\n      destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',\n    },\n    size: {\n      sm: 'h-8 gap-1.5 px-3 text-[12.5px] rounded-md',\n      md: 'h-9 gap-1.5 px-3.5 text-[13px] rounded-lg',\n      lg: 'h-11 gap-2 px-5 text-[14.5px] rounded-lg',\n    },\n    iconOnly: { true: 'px-0' },\n  },\n  compoundVariants: [\n    { iconOnly: true, size: 'sm', class: 'size-8' },\n    { iconOnly: true, size: 'md', class: 'size-9' },\n    { iconOnly: true, size: 'lg', class: 'size-11' },\n  ],\n  defaultVariants: { variant: 'primary', size: 'md', iconOnly: false },\n});\n\nexport type ButtonVariantProps = VariantProps<typeof buttonVariants>;\n\n/** Icon size (px) per button size. */\nexport const BUTTON_ICON_SIZE = { sm: 14, md: 15, lg: 17 } as const;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Button/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/button/index.ts",
+      "content": "export { Button, IconButton, type ButtonProps, type IconButtonProps } from './Button';\nexport { buttonVariants, type ButtonVariantProps } from './button.variants';\nexport { doc as buttonDoc } from './Button.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/utils/rtl.ts",
+      "type": "registry:ui",
+      "target": "components/utils/rtl.ts",
+      "content": "\n/** Mirrors a directional glyph (chevron, arrow) in right-to-left text. */\nexport const RTL_FLIP = 'rtl:-scale-x-100';\n\nconst DIRECTIONAL = /^(?:Chevrons?(?:Left|Right)|Arrow(?:Left|Right)\\w*|Move(?:Left|Right)|Panel(?:Left|Right)\\w*|Undo\\d?|Redo\\d?|Corner\\w+(?:Left|Right)|Indent\\w*|Outdent\\w*)$/;\n\n/**\n * True for lucide icons that point along the inline axis (ChevronLeft, ArrowRight,\n * PanelLeftClose…), which mirror under RTL. Detected from the icon's displayName.\n */\nexport function isDirectionalIcon(icon: unknown): boolean {\n  const name = (icon as { displayName?: unknown } | null | undefined)?.displayName;\n  return typeof name === 'string' && DIRECTIONAL.test(name);\n}\n\n/** `RTL_FLIP` for a directional icon, else undefined. */\nexport const rtlIconClass = (icon: unknown) => (isDirectionalIcon(icon) ? RTL_FLIP : undefined);\n"
+    },
+    {
+      "path": "packages/ui/src/components/Button/Button.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/button/Button.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Button',\n  group: 'Actions',\n  status: 'stable',\n  description: 'Triggers an action. Five variants (primary, secondary, soft, ghost, destructive), three sizes, icons and a loading state. IconButton is the square, icon-only form.',\n  primitive: '@base-ui/react/button',\n  pattern: 'button',\n  keyboard: [\n    ['Enter', 'Activates the button'],\n    ['Space', 'Activates the button'],\n    ['Tab', 'Moves focus; a loading button stays focusable'],\n  ],\n  tokens: ['primary', 'primary-foreground', 'card', 'border', 'secondary', 'destructive', 'primary-text', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Actions"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Button/Button.doc.ts"
+  }
+}

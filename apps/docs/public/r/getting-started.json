@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "getting-started",
+  "type": "registry:block",
+  "title": "Getting started",
+  "description": "Onboarding checklist in the console shell: setup progress, checkable steps with a completion message, and cards linking to the docs.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/getting-started/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/getting-started/Page.tsx",
+      "content": "import { PageHeader } from '@gntik-ai/blocks';\nimport { Alert, Checkbox, ClickableCard, Grid, GridItem, Page, Progress, Section, Stack, type BreadcrumbItem } from '@gntik-ai/ui';\nimport { useState } from 'react';\nimport { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';\nimport { docLinks, setupInitialDone, setupTasks, startBreadcrumbs, type DocLink, type SetupTask } from './data';\n\nexport interface GettingStartedProps {\n  title: string;\n  description: string;\n  breadcrumbs: BreadcrumbItem[];\n  tasks: readonly SetupTask[];\n  /** Ids of the tasks already done (initial state). */\n  defaultDone: readonly string[];\n  /** Fires with every change of the done list. */\n  onDoneChange: (done: string[]) => void;\n  docs: readonly DocLink[];\n  onDocOpen: (id: string) => void;\n  shell: Omit<ConsoleShellProps, 'children'>;\n}\n\n/** Getting started: a setup checklist with progress, and cards linking to the docs. */\nexport default function GettingStartedPage({\n  title = 'Get started',\n  description = 'A few steps to set up your workspace. You can come back to this page at any time.',\n  breadcrumbs = startBreadcrumbs,\n  tasks = setupTasks,\n  defaultDone = setupInitialDone,\n  onDoneChange,\n  docs = docLinks,\n  onDocOpen,\n  shell,\n}: Partial<GettingStartedProps>) {\n  const [done, setDone] = useState<string[]>(() => [...defaultDone]);\n  const count = tasks.filter((t) => done.includes(t.id)).length;\n  const percent = tasks.length ? Math.round((count / tasks.length) * 100) : 0;\n\n  const toggle = (id: string, checked: boolean) => {\n    const next = checked ? [...done.filter((d) => d !== id), id] : done.filter((d) => d !== id);\n    setDone(next);\n    onDoneChange?.(next);\n  };\n\n  return (\n    <ConsoleShell currentHref=\"/overview\" breadcrumbs={breadcrumbs} {...shell}>\n      <Page header={<PageHeader breadcrumbs={null} title={title} description={description} status=\"\" meta={[]} actions={[]} tabs={null} />}>\n        <Grid cols={{ base: 1, lg: 3 }} gap={6} align=\"start\">\n          <GridItem span={{ base: 1, lg: 2 }}>\n            <Section variant=\"card\" padding=\"lg\" divided title=\"Setup checklist\" description={`${count} of ${tasks.length} steps complete`}>\n              <Progress value={percent} label=\"Setup progress\" showValue tone={count === tasks.length ? 'success' : undefined} />\n              {count === tasks.length && (\n                <Alert tone=\"success\" title=\"You’re all set\" description=\"Your workspace is ready. Explore the docs to go further.\" />\n              )}\n              <Stack gap={4}>\n                {tasks.map((task) => (\n                  <Checkbox\n                    key={task.id}\n                    label={task.title}\n                    description={task.description}\n                    checked={done.includes(task.id)}\n                    onCheckedChange={(checked) => toggle(task.id, checked)}\n                  />\n                ))}\n              </Stack>\n            </Section>\n          </GridItem>\n          <Section title=\"Learn more\" description=\"Guides and reference for every step.\">\n            <Stack gap={3}>\n              {docs.map((doc) => {\n                const Icon = doc.icon;\n                return (\n                  <ClickableCard\n                    key={doc.id}\n                    title={doc.title}\n                    description={doc.description}\n                    href={doc.href}\n                    icon={<Icon aria-hidden />}\n                    onClick={() => onDocOpen?.(doc.id)}\n                  />\n                );\n              })}\n            </Stack>\n          </Section>\n        </Grid>\n      </Page>\n    </ConsoleShell>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/getting-started/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/getting-started/data.ts",
+      "content": "import { BookOpen, Code2, LifeBuoy, PlayCircle, type LucideIcon } from '@gntik-ai/icons';\nimport type { BreadcrumbItem } from '@gntik-ai/ui';\n\nexport interface SetupTask {\n  id: string;\n  title: string;\n  description: string;\n}\n\nexport interface DocLink {\n  id: string;\n  title: string;\n  description: string;\n  href: string;\n  icon: LucideIcon;\n}\n\nexport const startBreadcrumbs: BreadcrumbItem[] = [{ label: 'Overview', href: '/overview' }, { label: 'Get started' }];\n\nexport const setupTasks: SetupTask[] = [\n  { id: 'workspace', title: 'Create your workspace', description: 'Name it and pick the region where your data lives.' },\n  { id: 'project', title: 'Create a project', description: 'Import a repository or start from a template.' },\n  { id: 'deploy', title: 'Ship your first deployment', description: 'Push to the main branch or deploy from the console.' },\n  { id: 'invite', title: 'Invite your team', description: 'Add teammates and choose what each of them can do.' },\n  { id: 'billing', title: 'Add a payment method', description: 'Needed before you go over the free plan limits.' },\n];\n\nexport const setupInitialDone: string[] = ['workspace', 'project'];\n\nexport const docLinks: DocLink[] = [\n  { id: 'quickstart', title: 'Quickstart', description: 'Deploy a sample service in five minutes.', href: '#quickstart', icon: PlayCircle },\n  { id: 'concepts', title: 'Core concepts', description: 'Workspaces, projects, environments and deployments.', href: '#concepts', icon: BookOpen },\n  { id: 'api', title: 'API reference', description: 'Automate everything you can do in the console.', href: '#api', icon: Code2 },\n  { id: 'support', title: 'Get help', description: 'Guides, community forum and support.', href: '#support', icon: LifeBuoy },\n];\n"
+    },
+    {
+      "path": "packages/templates/src/shared/ConsoleShell.tsx",
+      "type": "registry:component",
+      "target": "app/templates/shared/ConsoleShell.tsx",
+      "content": "import {\n  AppSidebarFooter,\n  AppSidebarHeader,\n  AppSidebarNav,\n  AppTopbar,\n  type AppSidebarFooterProps,\n  type AppSidebarHeaderProps,\n  type AppTopbarProps,\n} from '@gntik-ai/blocks';\nimport { SidebarLayout, type BreadcrumbItem, type NavGroup, type SidebarLayoutProps, type UserMenuUser, type Workspace } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\n\nexport interface ConsoleShellProps\n  extends Pick<AppSidebarHeaderProps, 'currentWorkspaceId' | 'onWorkspaceChange' | 'onCreateWorkspace'>,\n    Pick<AppSidebarFooterProps, 'usage' | 'helpHref' | 'helpLabel' | 'userMenuItems' | 'onSignOut'>,\n    Pick<SidebarLayoutProps, 'sidebarLabel' | 'collapseMode'> {\n  /** Page content (usually a <Page>). */\n  children: ReactNode;\n  /** Sidebar navigation; defaults to the AppSidebar sample groups. */\n  nav?: NavGroup[];\n  /** Href of the current page, marks the active nav item. */\n  currentHref?: string;\n  breadcrumbs?: BreadcrumbItem[] | null;\n  workspaces?: Workspace[] | null;\n  user?: UserMenuUser | null;\n  /** Extra AppTopbar props (environment, notifications, theme control…). */\n  topbar?: Omit<AppTopbarProps, 'breadcrumbs' | 'user'>;\n  /** localStorage key for the collapsed sidebar; `undefined` disables persistence. */\n  storageKey?: string;\n}\n\n/**\n * The console frame shared by the templates: SidebarLayout with the AppSidebar header, nav and\n * footer, and the AppTopbar (breadcrumb, ⌘K search, notifications, theme, user menu).\n * Templates fill it with a Page; products swap the nav, workspaces, user, usage meter, help\n * link and user-menu items.\n */\nexport function ConsoleShell({\n  children,\n  nav,\n  currentHref,\n  breadcrumbs,\n  workspaces,\n  currentWorkspaceId,\n  onWorkspaceChange,\n  onCreateWorkspace,\n  user,\n  usage,\n  helpHref,\n  helpLabel,\n  userMenuItems,\n  onSignOut,\n  topbar,\n  storageKey,\n  sidebarLabel,\n  collapseMode,\n}: ConsoleShellProps) {\n  return (\n    <SidebarLayout\n      fullScreen\n      storageKey={storageKey}\n      sidebarLabel={sidebarLabel}\n      collapseMode={collapseMode}\n      sidebarHeader={({ collapsed }) => (\n        <AppSidebarHeader\n          collapsed={collapsed}\n          workspaces={workspaces}\n          currentWorkspaceId={currentWorkspaceId}\n          onWorkspaceChange={onWorkspaceChange}\n          onCreateWorkspace={onCreateWorkspace}\n        />\n      )}\n      sidebar={({ collapsed }) => <AppSidebarNav groups={nav} currentHref={currentHref} collapsed={collapsed} />}\n      sidebarFooter={({ collapsed }) => (\n        <AppSidebarFooter\n          collapsed={collapsed}\n          user={user}\n          usage={usage}\n          helpHref={helpHref}\n          helpLabel={helpLabel}\n          userMenuItems={userMenuItems}\n          onSignOut={onSignOut}\n        />\n      )}\n      topbar={<AppTopbar breadcrumbs={breadcrumbs} user={user} {...topbar} />}\n    >\n      {children}\n    </SidebarLayout>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Onboarding"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/getting-started/template.meta.ts"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sessions-devices",
+  "type": "registry:block",
+  "title": "Sessions and devices",
+  "description": "Signed-in sessions with device, client, location, last seen and a current-device badge; revoke one or all others.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/team/SessionsDevices/SessionsDevices.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/team/sessions-devices/SessionsDevices.tsx",
+      "content": "import { Badge, Button, Timestamp, cn } from '@gntik-ai/ui';\nimport { LogOut, Monitor, Smartphone, Tablet, type LucideIcon } from '@gntik-ai/icons';\nimport { useId, useState, type ReactNode } from 'react';\nimport { deviceSessions, type DeviceKind, type DeviceSession } from './fixtures';\n\nexport type { DeviceKind, DeviceSession } from './fixtures';\n\nconst KIND_ICON: Record<DeviceKind, LucideIcon> = { desktop: Monitor, mobile: Smartphone, tablet: Tablet };\n\nexport interface SessionsDevicesProps {\n  sessions?: DeviceSession[];\n  onRevoke?: (session: DeviceSession) => void;\n  /** Signs out every session except the current one. */\n  onRevokeOthers?: (sessions: DeviceSession[]) => void;\n  title?: ReactNode;\n  description?: ReactNode;\n  headingLevel?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\n/** Signed-in sessions and devices: client, location, last seen, the current one marked, and revoke. */\nexport function SessionsDevices({\n  sessions = deviceSessions,\n  onRevoke,\n  onRevokeOthers,\n  title = 'Sessions and devices',\n  description = \"Places where you're signed in. Revoke anything you don't recognise.\",\n  headingLevel: Heading = 'h2',\n  className,\n}: SessionsDevicesProps) {\n  const id = useId();\n  const [revoked, setRevoked] = useState<string[]>([]);\n  const [announcement, setAnnouncement] = useState('');\n  const rows = sessions.filter((s) => !revoked.includes(s.id));\n  const others = rows.filter((s) => !s.current);\n\n  const revoke = (list: DeviceSession[]) => {\n    setRevoked((r) => [...r, ...list.map((s) => s.id)]);\n    setAnnouncement(list.length === 1 ? `Signed out of ${list[0]?.device}.` : `Signed out of ${list.length} sessions.`);\n  };\n\n  return (\n    <section aria-labelledby={`${id}-title`} className={cn('rounded-lg border border-border bg-card shadow-sm', className)}>\n      <div className=\"flex flex-col gap-3 border-b border-border px-5 py-4 sm:flex-row sm:items-start sm:justify-between\">\n        <div className=\"min-w-0\">\n          <Heading id={`${id}-title`} className=\"text-[14px] font-semibold tracking-tight text-foreground\">\n            {title}\n          </Heading>\n          {description != null && <p className=\"mt-0.5 text-[12.5px] text-muted-foreground\">{description}</p>}\n        </div>\n        <Button\n          variant=\"secondary\"\n          size=\"sm\"\n          icon={LogOut}\n          disabled={others.length === 0}\n          className=\"self-start\"\n          onClick={() => {\n            revoke(others);\n            onRevokeOthers?.(others);\n          }}\n        >\n          Sign out other sessions\n        </Button>\n      </div>\n      <ul className=\"divide-y divide-border\">\n        {rows.map((s) => {\n          const KindIcon = KIND_ICON[s.kind];\n          return (\n            <li key={s.id} className=\"flex items-center gap-3 px-5 py-3.5\">\n              <span className={cn('grid size-9 shrink-0 place-items-center rounded-md', s.current ? 'bg-primary/14 text-primary-chip-text' : 'bg-secondary text-muted-foreground')}>\n                <KindIcon size={17} aria-hidden />\n              </span>\n              <div className=\"min-w-0 flex-1\">\n                <div className=\"flex flex-wrap items-center gap-2\">\n                  <span className=\"text-[13px] font-medium text-foreground\">{s.device}</span>\n                  {s.current && (\n                    <Badge size=\"sm\" tone=\"success\" dot>\n                      This device\n                    </Badge>\n                  )}\n                </div>\n                <div className=\"mt-0.5 truncate text-[12px] text-muted-foreground\">\n                  {s.client} · {s.location}\n                  {s.ip && <span className=\"hidden font-mono sm:inline\"> · {s.ip}</span>}\n                </div>\n                <div className=\"text-[12px] text-muted-foreground\">\n                  {s.current ? 'Active now' : (\n                    <>\n                      Last seen <Timestamp value={s.lastSeen} tooltip={false} />\n                    </>\n                  )}\n                </div>\n              </div>\n              {!s.current && (\n                <Button\n                  variant=\"ghost\"\n                  size=\"sm\"\n                  aria-label={`Revoke session on ${s.device}`}\n                  onClick={() => {\n                    revoke([s]);\n                    onRevoke?.(s);\n                  }}\n                >\n                  Revoke\n                </Button>\n              )}\n            </li>\n          );\n        })}\n      </ul>\n      <span role=\"status\" className=\"sr-only\">\n        {announcement}\n      </span>\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/team/SessionsDevices/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/team/sessions-devices/fixtures.ts",
+      "content": "const ago = (minutes: number) => new Date(Date.now() - minutes * 60_000).toISOString();\n\nexport type DeviceKind = 'desktop' | 'mobile' | 'tablet';\n\nexport interface DeviceSession {\n  id: string;\n  /** Device name, e.g. \"MacBook Pro\". */\n  device: string;\n  /** Browser or client, e.g. \"Chrome 128 on macOS\". */\n  client: string;\n  kind: DeviceKind;\n  location: string;\n  ip?: string;\n  /** ISO date of the last request. */\n  lastSeen: string;\n  /** The session making this request. */\n  current?: boolean;\n}\n\nexport const deviceSessions: DeviceSession[] = [\n  { id: 's1', device: 'MacBook Pro', client: 'Chrome 128 on macOS', kind: 'desktop', location: 'Lisbon, Portugal', ip: '192.0.2.14', lastSeen: ago(0), current: true },\n  { id: 's2', device: 'Pixel 8', client: 'Mobile app 4.2', kind: 'mobile', location: 'Lisbon, Portugal', ip: '198.51.100.7', lastSeen: ago(42) },\n  { id: 's3', device: 'iPad Air', client: 'Safari 17 on iPadOS', kind: 'tablet', location: 'Madrid, Spain', ip: '203.0.113.88', lastSeen: ago(60 * 30) },\n  { id: 's4', device: 'Workstation', client: 'Firefox 130 on Linux', kind: 'desktop', location: 'Berlin, Germany', ip: '203.0.113.5', lastSeen: ago(60 * 24 * 12) },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "team"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/team/SessionsDevices/block.meta.ts"
+  }
+}

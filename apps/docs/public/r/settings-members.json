@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-members",
+  "type": "registry:block",
+  "title": "Members settings",
+  "description": "Workspace members with inline roles, pending invitations, an invite dialog and a role permission matrix.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/settings-profile.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/settings-members/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/settings-members/Page.tsx",
+      "content": "import { InviteMembersDialog, MembersTable, PendingInvitations, type Invitation, type InvitePayload, type Member, type RoleOption } from '@gntik-ai/blocks';\nimport { Check, Minus, UserPlus } from '@gntik-ai/icons';\nimport { Section, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@gntik-ai/ui';\nimport { useState } from 'react';\nimport { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';\nimport { invitations as defaultInvitations, members as defaultMembers, rolePermissions as defaultPermissions, roles as defaultRoles, type RolePermission } from './data';\n\nexport interface SettingsMembersProps extends SettingsFrameOptions {\n  members: Member[];\n  invitations: Invitation[];\n  roles: RoleOption[];\n  /** Rows of the role matrix. */\n  permissions: RolePermission[];\n  /** Id of the signed-in member. */\n  currentUserId: string;\n  /** Sends invitations. A rejection keeps the dialog open with its message. */\n  onInvite: (payload: InvitePayload) => void | Promise<void>;\n  onRoleChange: (memberId: string, role: string) => void;\n  onRemove: (member: Member) => void;\n  onResendInvitation: (invitation: Invitation) => void | Promise<void>;\n  onRevokeInvitation: (invitation: Invitation) => void;\n}\n\n/** Members settings: MembersTable, PendingInvitations, InviteMembersDialog (header action), role matrix. */\nexport default function SettingsMembersPage({\n  members = defaultMembers,\n  invitations = defaultInvitations,\n  roles = defaultRoles,\n  permissions = defaultPermissions,\n  currentUserId = 'u1',\n  onInvite,\n  onRoleChange,\n  onRemove,\n  onResendInvitation,\n  onRevokeInvitation,\n  ...frame\n}: Partial<SettingsMembersProps>) {\n  const [inviteOpen, setInviteOpen] = useState(false);\n  const [sent, setSent] = useState<Invitation[]>([]);\n  const roleLabel = (value: string) => roles.find((r) => r.value === value)?.label ?? value;\n\n  const invite = async (payload: InvitePayload) => {\n    await onInvite?.(payload);\n    const now = new Date().toISOString();\n    setSent((list) => [\n      ...payload.emails.map((email, i) => ({ id: `new-${list.length + i}-${email}`, email, role: roleLabel(payload.role), invitedBy: 'You', invitedAt: now })),\n      ...list,\n    ]);\n  };\n\n  return (\n    <SettingsFrame\n      page=\"members\"\n      width=\"wide\"\n      description=\"Invite people to the workspace and manage what they can do.\"\n      actions={[{ label: 'Invite members', icon: UserPlus, variant: 'primary', onClick: () => setInviteOpen(true) }]}\n      {...frame}\n    >\n      <Section title=\"Members\" description={`${members.length} people have access to this workspace.`}>\n        <MembersTable members={members} roles={roles} currentUserId={currentUserId} onRoleChange={onRoleChange} onRemove={onRemove} />\n      </Section>\n      <PendingInvitations invitations={[...sent, ...invitations]} onResend={onResendInvitation} onRevoke={onRevokeInvitation} />\n      <Section title=\"Roles\" description=\"What each role can do. Owners can change any member's role.\">\n        <Table className=\"min-w-[560px]\">\n          <TableCaption srOnly>Permissions by role</TableCaption>\n          <TableHeader>\n            <TableRow>\n              <TableHead>Permission</TableHead>\n              {roles.map((r) => (\n                <TableHead key={r.value} align=\"center\">\n                  {r.label}\n                </TableHead>\n              ))}\n            </TableRow>\n          </TableHeader>\n          <TableBody>\n            {permissions.map((p) => (\n              <TableRow key={p.id}>\n                <TableHead scope=\"row\" className=\"font-normal text-foreground\">\n                  {p.label}\n                </TableHead>\n                {roles.map((r) => {\n                  const allowed = p.roles.includes(r.value);\n                  const Glyph = allowed ? Check : Minus;\n                  return (\n                    <TableCell key={r.value} align=\"center\">\n                      <Glyph size={15} aria-hidden className={allowed ? 'mx-auto text-primary-text' : 'mx-auto text-muted-foreground'} />\n                      <span className=\"sr-only\">{allowed ? 'Allowed' : 'Not allowed'}</span>\n                    </TableCell>\n                  );\n                })}\n              </TableRow>\n            ))}\n          </TableBody>\n        </Table>\n      </Section>\n      <InviteMembersDialog trigger={null} open={inviteOpen} onOpenChange={setInviteOpen} roles={roles} onInvite={invite} />\n    </SettingsFrame>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/settings-members/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/settings-members/data.ts",
+      "content": "import { memberRoles, sampleInvitations, sampleMembers, type Invitation, type Member, type RoleOption } from '@gntik-ai/blocks';\n\nexport const members: Member[] = sampleMembers;\nexport const invitations: Invitation[] = sampleInvitations;\nexport const roles: RoleOption[] = memberRoles;\n\nexport interface RolePermission {\n  id: string;\n  label: string;\n  /** Role values that have this permission. */\n  roles: string[];\n}\n\nexport const rolePermissions: RolePermission[] = [\n  { id: 'view', label: 'View projects and deployments', roles: ['owner', 'admin', 'member', 'viewer'] },\n  { id: 'deploy', label: 'Create and deploy projects', roles: ['owner', 'admin', 'member'] },\n  { id: 'secrets', label: 'Manage environment secrets', roles: ['owner', 'admin'] },\n  { id: 'members', label: 'Invite and remove members', roles: ['owner', 'admin'] },\n  { id: 'billing', label: 'Manage billing and plans', roles: ['owner'] },\n  { id: 'delete', label: 'Delete the workspace', roles: ['owner'] },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Settings"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/settings-members/template.meta.ts"
+  }
+}

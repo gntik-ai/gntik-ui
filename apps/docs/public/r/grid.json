@@ -1,0 +1,58 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid",
+  "type": "registry:ui",
+  "title": "Grid",
+  "description": "Responsive CSS grid. `cols` takes 1–12 or a per-breakpoint object ({ base, sm, md, lg, xl }) mapped to static classes; `minChildWidth` auto-fills as many columns as fit. GridItem spans columns (also responsive, or `full`). Gap on the spacing scale.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/stack.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Grid/Grid.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/grid/Grid.tsx",
+      "content": "import { mergeProps } from '@base-ui/react/merge-props';\nimport { useRender } from '@base-ui/react/use-render';\nimport type { CSSProperties } from 'react';\nimport { cn } from '../../utils/cn';\nimport { GAP_CLASSES, type SpaceScale } from '../stack/stack.variants';\nimport type { LayoutElement } from '../stack/Stack';\nimport {\n  COL_SPAN,\n  COL_SPAN_FULL,\n  GRID_COLS,\n  gridVariants,\n  type GridBreakpoint,\n  type GridColumns,\n  type GridVariantProps,\n} from './grid.variants';\n\n/** A value per breakpoint (mobile-first: `base` applies below `sm`). */\nexport type Responsive<T> = T | Partial<Record<GridBreakpoint, T>>;\n\nconst BREAKPOINTS: GridBreakpoint[] = ['base', 'sm', 'md', 'lg', 'xl'];\n\nfunction responsiveClasses<T>(value: Responsive<T> | undefined, pick: (bp: GridBreakpoint, v: T) => string) {\n  if (value == null) return [];\n  if (typeof value !== 'object') return [pick('base', value)];\n  const map = value as Partial<Record<GridBreakpoint, T>>;\n  return BREAKPOINTS.flatMap((bp) => {\n    const v = map[bp];\n    return v == null ? [] : [pick(bp, v)];\n  });\n}\n\nexport interface GridProps extends Omit<useRender.ComponentProps<'div'>, 'className'> {\n  className?: string;\n  as?: LayoutElement;\n  /** Column count (1–12), or one per breakpoint: `{ base: 1, md: 2, xl: 4 }`. */\n  cols?: Responsive<GridColumns>;\n  /**\n   * Auto-fill as many columns as fit, each at least this wide (`'14rem'`, or a number in px).\n   * Overrides `cols`.\n   */\n  minChildWidth?: string | number;\n  /** Gap on the spacing scale (0–12). */\n  gap?: SpaceScale;\n  /** Separate row gap (otherwise `gap` applies to both axes). */\n  rowGap?: SpaceScale;\n  align?: GridVariantProps['align'];\n  flow?: GridVariantProps['flow'];\n}\n\nconst ROW_GAP: Record<SpaceScale, string> = {\n  0: 'gap-y-0', 1: 'gap-y-1', 2: 'gap-y-2', 3: 'gap-y-3', 4: 'gap-y-4', 5: 'gap-y-5', 6: 'gap-y-6',\n  7: 'gap-y-7', 8: 'gap-y-8', 9: 'gap-y-9', 10: 'gap-y-10', 11: 'gap-y-11', 12: 'gap-y-12',\n};\n\n/** CSS grid with a responsive column count or an auto-fill minimum child width. */\nexport function Grid({\n  as = 'div',\n  cols,\n  minChildWidth,\n  gap = 4,\n  rowGap,\n  align,\n  flow,\n  className,\n  style,\n  render,\n  ref,\n  ...props\n}: GridProps) {\n  const autoFill: CSSProperties | undefined =\n    minChildWidth != null\n      ? {\n          gridTemplateColumns: `repeat(auto-fill, minmax(min(${\n            typeof minChildWidth === 'number' ? `${minChildWidth}px` : minChildWidth\n          }, 100%), 1fr))`,\n        }\n      : undefined;\n  return useRender({\n    defaultTagName: as,\n    render,\n    ref,\n    props: mergeProps<'div'>(props, {\n      className: cn(\n        gridVariants({ align, flow }),\n        minChildWidth == null && responsiveClasses(cols, (bp, n) => GRID_COLS[bp][n]),\n        GAP_CLASSES[gap],\n        rowGap != null && ROW_GAP[rowGap],\n        className,\n      ),\n      style: autoFill || style ? { ...autoFill, ...style } : undefined,\n    }),\n  });\n}\n\nexport interface GridItemProps extends Omit<useRender.ComponentProps<'div'>, 'className'> {\n  className?: string;\n  as?: LayoutElement;\n  /** Columns to span (1–12 or `'full'`), or one per breakpoint. */\n  span?: Responsive<GridColumns | 'full'>;\n}\n\n/** A grid cell that spans several columns. */\nexport function GridItem({ as = 'div', span, className, render, ref, ...props }: GridItemProps) {\n  return useRender({\n    defaultTagName: as,\n    render,\n    ref,\n    props: mergeProps<'div'>(props, {\n      className: cn(\n        'min-w-0',\n        responsiveClasses(span, (bp, n) => (n === 'full' ? COL_SPAN_FULL[bp] : COL_SPAN[bp][n])),\n        className,\n      ),\n    }),\n  });\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Grid/grid.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/grid/grid.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport type GridBreakpoint = 'base' | 'sm' | 'md' | 'lg' | 'xl';\nexport type GridColumns = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;\n\n/** Static `grid-cols-*` per breakpoint so Tailwind sees every class. */\nexport const GRID_COLS: Record<GridBreakpoint, Record<GridColumns, string>> = {\n  base: { 1: 'grid-cols-1', 2: 'grid-cols-2', 3: 'grid-cols-3', 4: 'grid-cols-4', 5: 'grid-cols-5', 6: 'grid-cols-6', 7: 'grid-cols-7', 8: 'grid-cols-8', 9: 'grid-cols-9', 10: 'grid-cols-10', 11: 'grid-cols-11', 12: 'grid-cols-12' },\n  sm: { 1: 'sm:grid-cols-1', 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-3', 4: 'sm:grid-cols-4', 5: 'sm:grid-cols-5', 6: 'sm:grid-cols-6', 7: 'sm:grid-cols-7', 8: 'sm:grid-cols-8', 9: 'sm:grid-cols-9', 10: 'sm:grid-cols-10', 11: 'sm:grid-cols-11', 12: 'sm:grid-cols-12' },\n  md: { 1: 'md:grid-cols-1', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3', 4: 'md:grid-cols-4', 5: 'md:grid-cols-5', 6: 'md:grid-cols-6', 7: 'md:grid-cols-7', 8: 'md:grid-cols-8', 9: 'md:grid-cols-9', 10: 'md:grid-cols-10', 11: 'md:grid-cols-11', 12: 'md:grid-cols-12' },\n  lg: { 1: 'lg:grid-cols-1', 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4', 5: 'lg:grid-cols-5', 6: 'lg:grid-cols-6', 7: 'lg:grid-cols-7', 8: 'lg:grid-cols-8', 9: 'lg:grid-cols-9', 10: 'lg:grid-cols-10', 11: 'lg:grid-cols-11', 12: 'lg:grid-cols-12' },\n  xl: { 1: 'xl:grid-cols-1', 2: 'xl:grid-cols-2', 3: 'xl:grid-cols-3', 4: 'xl:grid-cols-4', 5: 'xl:grid-cols-5', 6: 'xl:grid-cols-6', 7: 'xl:grid-cols-7', 8: 'xl:grid-cols-8', 9: 'xl:grid-cols-9', 10: 'xl:grid-cols-10', 11: 'xl:grid-cols-11', 12: 'xl:grid-cols-12' },\n};\n\n/** Static `col-span-*` per breakpoint. */\nexport const COL_SPAN: Record<GridBreakpoint, Record<GridColumns, string>> = {\n  base: { 1: 'col-span-1', 2: 'col-span-2', 3: 'col-span-3', 4: 'col-span-4', 5: 'col-span-5', 6: 'col-span-6', 7: 'col-span-7', 8: 'col-span-8', 9: 'col-span-9', 10: 'col-span-10', 11: 'col-span-11', 12: 'col-span-12' },\n  sm: { 1: 'sm:col-span-1', 2: 'sm:col-span-2', 3: 'sm:col-span-3', 4: 'sm:col-span-4', 5: 'sm:col-span-5', 6: 'sm:col-span-6', 7: 'sm:col-span-7', 8: 'sm:col-span-8', 9: 'sm:col-span-9', 10: 'sm:col-span-10', 11: 'sm:col-span-11', 12: 'sm:col-span-12' },\n  md: { 1: 'md:col-span-1', 2: 'md:col-span-2', 3: 'md:col-span-3', 4: 'md:col-span-4', 5: 'md:col-span-5', 6: 'md:col-span-6', 7: 'md:col-span-7', 8: 'md:col-span-8', 9: 'md:col-span-9', 10: 'md:col-span-10', 11: 'md:col-span-11', 12: 'md:col-span-12' },\n  lg: { 1: 'lg:col-span-1', 2: 'lg:col-span-2', 3: 'lg:col-span-3', 4: 'lg:col-span-4', 5: 'lg:col-span-5', 6: 'lg:col-span-6', 7: 'lg:col-span-7', 8: 'lg:col-span-8', 9: 'lg:col-span-9', 10: 'lg:col-span-10', 11: 'lg:col-span-11', 12: 'lg:col-span-12' },\n  xl: { 1: 'xl:col-span-1', 2: 'xl:col-span-2', 3: 'xl:col-span-3', 4: 'xl:col-span-4', 5: 'xl:col-span-5', 6: 'xl:col-span-6', 7: 'xl:col-span-7', 8: 'xl:col-span-8', 9: 'xl:col-span-9', 10: 'xl:col-span-10', 11: 'xl:col-span-11', 12: 'xl:col-span-12' },\n};\n\nexport const COL_SPAN_FULL: Record<GridBreakpoint, string> = {\n  base: 'col-span-full',\n  sm: 'sm:col-span-full',\n  md: 'md:col-span-full',\n  lg: 'lg:col-span-full',\n  xl: 'xl:col-span-full',\n};\n\nexport const gridVariants = tv({\n  base: 'grid min-w-0',\n  variants: {\n    align: { start: 'items-start', center: 'items-center', end: 'items-end', stretch: 'items-stretch' },\n    flow: { row: 'grid-flow-row', column: 'grid-flow-col', dense: 'grid-flow-row-dense' },\n  },\n});\n\nexport type GridVariantProps = VariantProps<typeof gridVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Grid/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/grid/index.ts",
+      "content": "export { Grid, GridItem, type GridProps, type GridItemProps, type Responsive } from './Grid';\nexport {\n  gridVariants,\n  GRID_COLS,\n  COL_SPAN,\n  COL_SPAN_FULL,\n  type GridBreakpoint,\n  type GridColumns,\n  type GridVariantProps,\n} from './grid.variants';\nexport { doc as gridDoc } from './Grid.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Grid/Grid.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/grid/Grid.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Grid',\n  group: 'Layout',\n  status: 'stable',\n  description:\n    'Responsive CSS grid. `cols` takes 1–12 or a per-breakpoint object ({ base, sm, md, lg, xl }) mapped to static classes; `minChildWidth` auto-fills as many columns as fit. GridItem spans columns (also responsive, or `full`). Gap on the spacing scale.',\n  primitive: '@base-ui/react/use-render',\n  tokens: [],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Grid/Grid.doc.ts"
+  }
+}

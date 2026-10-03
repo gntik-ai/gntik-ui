@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pending-invitations",
+  "type": "registry:block",
+  "title": "Pending invitations",
+  "description": "List of pending invitations with role, sender, age and expiry, and resend / revoke actions.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/team/PendingInvitations/PendingInvitations.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/team/pending-invitations/PendingInvitations.tsx",
+      "content": "import { Badge, Button, EmptyState, StatusTag, Timestamp, cn } from '@gntik-ai/ui';\nimport { Check, Mail, RotateCw, X } from '@gntik-ai/icons';\nimport { useId, useState, type ReactNode } from 'react';\nimport { invitations as defaultInvitations, type Invitation } from './fixtures';\n\nexport type { Invitation } from './fixtures';\n\nexport interface PendingInvitationsProps {\n  invitations?: Invitation[];\n  /** Resends one invitation. A returned promise shows a loading state. */\n  onResend?: (invitation: Invitation) => void | Promise<void>;\n  onRevoke?: (invitation: Invitation) => void;\n  title?: ReactNode;\n  headingLevel?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\n/** Pending invitations with who sent them, expiry, and resend / revoke actions. */\nexport function PendingInvitations({\n  invitations = defaultInvitations,\n  onResend,\n  onRevoke,\n  title = 'Pending invitations',\n  headingLevel: Heading = 'h2',\n  className,\n}: PendingInvitationsProps) {\n  const id = useId();\n  const [revoked, setRevoked] = useState<string[]>([]);\n  const [sending, setSending] = useState<string | null>(null);\n  const [sent, setSent] = useState<string[]>([]);\n  const [announcement, setAnnouncement] = useState('');\n  const [now] = useState(() => Date.now());\n  const rows = invitations.filter((i) => !revoked.includes(i.id));\n\n  const resend = async (inv: Invitation) => {\n    setSending(inv.id);\n    try {\n      await onResend?.(inv);\n      setSent((s) => [...s, inv.id]);\n      setAnnouncement(`Invitation resent to ${inv.email}.`);\n    } catch {\n      setAnnouncement(`Could not resend the invitation to ${inv.email}.`);\n    }\n    setSending(null);\n  };\n\n  return (\n    <section aria-labelledby={`${id}-title`} className={cn('rounded-lg border border-border bg-card shadow-sm', className)}>\n      <div className=\"flex items-center gap-2 border-b border-border px-5 py-3.5\">\n        <Heading id={`${id}-title`} className=\"text-[14px] font-semibold tracking-tight text-foreground\">\n          {title}\n        </Heading>\n        <Badge size=\"sm\">{rows.length}</Badge>\n      </div>\n      {rows.length === 0 ? (\n        <EmptyState size=\"sm\" icon={Mail} title=\"No pending invitations\" description=\"Invitations you send appear here until they are accepted.\" className=\"mx-auto\" />\n      ) : (\n        <ul className=\"divide-y divide-border\">\n          {rows.map((inv) => {\n            const expired = inv.expiresAt != null && new Date(inv.expiresAt).getTime() < now;\n            const wasSent = sent.includes(inv.id);\n            return (\n              <li key={inv.id} className=\"flex flex-col gap-3 px-5 py-3.5 sm:flex-row sm:items-center sm:gap-4\">\n                <div className=\"flex min-w-0 flex-1 items-center gap-3\">\n                  <span className=\"grid size-9 shrink-0 place-items-center rounded-full bg-secondary text-muted-foreground\">\n                    <Mail size={16} aria-hidden />\n                  </span>\n                  <div className=\"min-w-0\">\n                    <div className=\"flex flex-wrap items-center gap-2\">\n                      <span className=\"truncate text-[13px] font-medium text-foreground\">{inv.email}</span>\n                      <Badge size=\"sm\">{inv.role}</Badge>\n                      {expired && !wasSent && <StatusTag status=\"expired\" label=\"Expired\" statuses={{ expired: { label: 'Expired', tone: 'warning' } }} size=\"sm\" />}\n                    </div>\n                    <div className=\"mt-0.5 text-[12px] text-muted-foreground\">\n                      {inv.invitedBy ? `Invited by ${inv.invitedBy} · ` : 'Invited '}\n                      <Timestamp value={inv.invitedAt} tooltip={false} />\n                    </div>\n                  </div>\n                </div>\n                <div className=\"flex shrink-0 items-center gap-1.5 ps-12 sm:ps-0\">\n                  <Button\n                    variant=\"secondary\"\n                    size=\"sm\"\n                    icon={wasSent ? Check : RotateCw}\n                    loading={sending === inv.id}\n                    disabled={wasSent}\n                    aria-label={`Resend invitation to ${inv.email}`}\n                    onClick={() => void resend(inv)}\n                  >\n                    {wasSent ? 'Sent' : 'Resend'}\n                  </Button>\n                  <Button\n                    variant=\"ghost\"\n                    size=\"sm\"\n                    icon={X}\n                    aria-label={`Revoke invitation to ${inv.email}`}\n                    onClick={() => {\n                      setRevoked((r) => [...r, inv.id]);\n                      setAnnouncement(`Invitation to ${inv.email} revoked.`);\n                      onRevoke?.(inv);\n                    }}\n                  >\n                    Revoke\n                  </Button>\n                </div>\n              </li>\n            );\n          })}\n        </ul>\n      )}\n      <span role=\"status\" className=\"sr-only\">\n        {announcement}\n      </span>\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/team/PendingInvitations/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/team/pending-invitations/fixtures.ts",
+      "content": "const daysFromNow = (d: number) => new Date(Date.now() + d * 86_400_000).toISOString();\n\nexport interface Invitation {\n  id: string;\n  email: string;\n  role: string;\n  invitedBy?: string;\n  /** ISO date the invitation was sent. */\n  invitedAt: string;\n  /** ISO date it expires. */\n  expiresAt?: string;\n}\n\nexport const invitations: Invitation[] = [\n  { id: 'i1', email: 'taylor@example.com', role: 'Member', invitedBy: 'Avery Collins', invitedAt: daysFromNow(-1), expiresAt: daysFromNow(6) },\n  { id: 'i2', email: 'casey@example.com', role: 'Admin', invitedBy: 'Sam Rivera', invitedAt: daysFromNow(-4), expiresAt: daysFromNow(3) },\n  { id: 'i3', email: 'drew@example.com', role: 'Viewer', invitedBy: 'Avery Collins', invitedAt: daysFromNow(-9), expiresAt: daysFromNow(-2) },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "team"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/team/PendingInvitations/block.meta.ts"
+  }
+}

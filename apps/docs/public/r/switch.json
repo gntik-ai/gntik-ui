@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "type": "registry:ui",
+  "title": "Switch",
+  "description": "On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Switch/Switch.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/switch/Switch.tsx",
+      "content": "import { Switch as BaseSwitch } from '@base-ui/react/switch';\nimport type { ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { switchVariants, type SwitchVariantProps } from './switch.variants';\n\nexport interface SwitchProps extends Omit<BaseSwitch.Root.Props, 'className'>, SwitchVariantProps {\n  className?: string;\n  ref?: Ref<HTMLButtonElement>;\n  /** Visible label. Without it, pass `aria-label` or wrap in a Field. */\n  label?: ReactNode;\n  /** Label placement relative to the track. */\n  labelPosition?: 'start' | 'end';\n}\n\n/** On/off setting. Controlled with `checked` + `onCheckedChange`, or uncontrolled with `defaultChecked`. */\nexport function Switch({ size, label, labelPosition = 'end', className, ...props }: SwitchProps) {\n  const s = switchVariants({ size });\n  const control = (\n    <BaseSwitch.Root className={cn(s.root(), !label && className)} {...props}>\n      <BaseSwitch.Thumb className={s.thumb()} />\n    </BaseSwitch.Root>\n  );\n  if (!label) return control;\n  return (\n    <label className={cn(s.label(), props.disabled && 'opacity-70', className)}>\n      {labelPosition === 'start' && label}\n      {control}\n      {labelPosition === 'end' && label}\n    </label>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Switch/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/switch/index.ts",
+      "content": "export { Switch, type SwitchProps } from './Switch';\nexport { switchVariants } from './switch.variants';\nexport { doc as switchDoc } from './Switch.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Switch/switch.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/switch/switch.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const switchVariants = tv({\n  slots: {\n    root: [\n      'relative inline-flex shrink-0 cursor-pointer items-center rounded-full bg-secondary transition-colors',\n      'data-checked:bg-primary',\n      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n      'data-disabled:cursor-not-allowed data-disabled:opacity-50',\n    ],\n    thumb: 'pointer-events-none ms-[2px] grid place-items-center rounded-full bg-background shadow-sm transition-transform motion-reduce:transition-none',\n    label: 'inline-flex items-center gap-2.5 text-[13px] text-foreground',\n  },\n  variants: {\n    size: {\n      sm: { root: 'h-[18px] w-8', thumb: 'size-3.5 data-checked:translate-x-[14px] rtl:data-checked:-translate-x-[14px]' },\n      md: { root: 'h-[22px] w-[40px]', thumb: 'size-[18px] data-checked:translate-x-[18px] rtl:data-checked:-translate-x-[18px]' },\n      lg: { root: 'h-[26px] w-[46px]', thumb: 'size-[22px] data-checked:translate-x-[20px] rtl:data-checked:-translate-x-[20px]' },\n    },\n  },\n  defaultVariants: { size: 'md' },\n});\n\nexport type SwitchVariantProps = VariantProps<typeof switchVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Switch/Switch.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/switch/Switch.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Switch',\n  group: 'Forms',\n  status: 'stable',\n  description: 'On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form.',\n  primitive: '@base-ui/react/switch',\n  pattern: 'switch',\n  keyboard: [\n    ['Space', 'Toggles the switch'],\n    ['Enter', 'Toggles the switch'],\n    ['Tab', 'Moves focus to and from the switch'],\n  ],\n  tokens: ['primary', 'secondary', 'background', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Forms"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Switch/Switch.doc.ts"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mobile-nav",
+  "type": "registry:ui",
+  "title": "MobileNav",
+  "description": "Small-screen navigation: a menu icon button opens a Drawer sheet (chrome surface) with the NavList groups and an optional footer slot. Activating an item closes the sheet; focus is trapped while open and returns to the button.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/button.json",
+    "https://gntik-ui.invalid/r/drawer.json",
+    "https://gntik-ui.invalid/r/nav-list.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/MobileNav/MobileNav.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/mobile-nav/MobileNav.tsx",
+      "content": "import { Menu as MenuIcon } from 'lucide-react';\nimport { useState, type ReactNode } from 'react';\nimport { cn } from '../../utils/cn';\nimport { IconButton } from '../button';\nimport { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger, type DrawerSide } from '../drawer';\nimport { NavList, type NavGroup, type NavItem } from '../nav-list';\nimport { useI18n } from '../../i18n/I18nProvider';\nimport { mobileNavVariants } from './mobile-nav.variants';\n\nexport interface MobileNavProps {\n  /** Classes for the trigger, e.g. `lg:hidden` to show it only on small screens. */\n  className?: string;\n  /** Classes for the sheet panel. */\n  contentClassName?: string;\n  groups: NavGroup[];\n  currentHref?: string;\n  /** Sheet heading (brand or workspace name). Also the dialog's accessible name. */\n  title?: ReactNode;\n  /** Accessible name of the sheet when `title` is not plain text, and of the nav landmark. */\n  label?: string;\n  /** Accessible name of the menu button. */\n  triggerLabel?: string;\n  /** Content under the navigation (e.g. a WorkspaceSwitcher or UserMenu). */\n  footer?: ReactNode;\n  side?: Extract<DrawerSide, 'left' | 'right'>;\n  open?: boolean;\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  /** Called when an item is activated; the sheet then closes. */\n  onNavigate?: (item: NavItem) => void;\n}\n\n/**\n * Small-screen navigation: a menu icon button that opens a Drawer holding a NavList. The sheet\n * closes when an item is activated, on Escape, on an outside press or on swipe.\n */\nexport function MobileNav({\n  className,\n  contentClassName,\n  groups,\n  currentHref,\n  title,\n  label: labelProp,\n  triggerLabel: triggerLabelProp,\n  footer,\n  side = 'left',\n  open: openProp,\n  defaultOpen = false,\n  onOpenChange,\n  onNavigate,\n}: MobileNavProps) {\n  const { t } = useI18n();\n  const label = labelProp ?? t('nav.navigation');\n  const triggerLabel = triggerLabelProp ?? t('nav.openNavigation');\n  const [openState, setOpenState] = useState(defaultOpen);\n  const open = openProp ?? openState;\n  const setOpen = (next: boolean) => {\n    setOpenState(next);\n    onOpenChange?.(next);\n  };\n  const s = mobileNavVariants();\n  return (\n    <Drawer side={side} open={open} onOpenChange={(next) => setOpen(next)}>\n      <DrawerTrigger render={<IconButton icon={MenuIcon} label={triggerLabel} className={className} />} />\n      <DrawerContent size=\"sm\" className={cn(s.popup(), contentClassName)} closeLabel={t('nav.closeNavigation')}>\n        <DrawerHeader className={s.header()}>\n          <DrawerTitle className={s.title()}>{title ?? label}</DrawerTitle>\n        </DrawerHeader>\n        <DrawerBody className={s.body()}>\n          <NavList\n            groups={groups}\n            currentHref={currentHref}\n            label={label}\n            onNavigate={(item) => {\n              onNavigate?.(item);\n              setOpen(false);\n            }}\n          />\n        </DrawerBody>\n        {footer && <DrawerFooter className={s.footer()}>{footer}</DrawerFooter>}\n      </DrawerContent>\n    </Drawer>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/MobileNav/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/mobile-nav/index.ts",
+      "content": "export { MobileNav, type MobileNavProps } from './MobileNav';\nexport { mobileNavVariants, type MobileNavVariantProps } from './mobile-nav.variants';\nexport { doc as mobileNavDoc } from './MobileNav.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/MobileNav/mobile-nav.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/mobile-nav/mobile-nav.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const mobileNavVariants = tv({\n  slots: {\n    popup: 'bg-chrome',\n    header: 'px-4',\n    title: 'flex items-center gap-2',\n    body: 'px-3 py-3',\n    footer: 'justify-start px-3 py-3',\n  },\n});\n\nexport type MobileNavVariantProps = VariantProps<typeof mobileNavVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/MobileNav/MobileNav.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/mobile-nav/MobileNav.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'MobileNav',\n  group: 'Navigation',\n  status: 'beta',\n  description:\n    'Small-screen navigation: a menu icon button opens a Drawer sheet (chrome surface) with the NavList groups and an optional footer slot. Activating an item closes the sheet; focus is trapped while open and returns to the button.',\n  primitive: '@base-ui/react/drawer',\n  pattern: 'modal dialog containing a navigation landmark',\n  keyboard: [\n    ['Enter / Space', 'On the menu button: opens the sheet and moves focus inside'],\n    ['Tab / Shift+Tab', 'Cycles through the sheet (focus is trapped)'],\n    ['Enter', 'Follows the focused link and closes the sheet'],\n    ['Escape', 'Closes the sheet and returns focus to the menu button'],\n  ],\n  tokens: ['chrome', 'popover', 'border', 'accent', 'accent-foreground', 'primary', 'muted-foreground', 'focus-ring'],\n};\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Navigation"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/components/MobileNav/MobileNav.doc.ts"
+  }
+}

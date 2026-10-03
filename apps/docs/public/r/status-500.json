@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-500",
+  "type": "registry:block",
+  "title": "500 Server error",
+  "description": "Full-page server error: StatusLayout message with an ErrorPanel (status code, copyable request id, retry, technical details) and links home and to the status page.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/status-500/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/status-500/Page.tsx",
+      "content": "import { ErrorPanel, type FeedbackAction } from '@gntik-ai/blocks';\nimport { ServerCrash } from '@gntik-ai/icons';\nimport { Link, Logo, StatusLayout } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\nimport { serverErrorContent, simulateRetry } from './data';\n\nexport interface Status500Props {\n  title: ReactNode;\n  description: ReactNode;\n  /** Status or error code on the ErrorPanel chip. */\n  errorCode: string | number;\n  /** Correlation id for support (copyable). */\n  requestId: string;\n  /** Raw details behind the disclosure. */\n  details: string;\n  /** Retry handler; a returned promise shows the loading state. */\n  onRetry: () => void | Promise<void>;\n  /** Extra action next to Retry; `null` hides it. */\n  supportAction: FeedbackAction | null;\n  homeHref: string;\n  statusHref: string;\n  header: ReactNode;\n  fullScreen: boolean;\n}\n\n/** 500 page: StatusLayout + ErrorPanel with request id, retry and technical details. */\nexport default function Status500Page(props: Partial<Status500Props>) {\n  const {\n    title = serverErrorContent.title,\n    description = serverErrorContent.description,\n    errorCode = serverErrorContent.errorCode,\n    requestId = serverErrorContent.requestId,\n    details = serverErrorContent.details,\n    onRetry = simulateRetry,\n    supportAction = { label: 'Contact support', variant: 'ghost' },\n    homeHref = serverErrorContent.homeHref,\n    statusHref = serverErrorContent.statusHref,\n    header = <Logo size={24} wordmark />,\n    fullScreen = true,\n  } = props;\n  return (\n    <StatusLayout\n      fullScreen={fullScreen}\n      tone=\"destructive\"\n      header={header}\n      icon={ServerCrash}\n      code={serverErrorContent.code}\n      title={title}\n      description={description}\n      footer={\n        <>\n          <Link href={homeHref}>{serverErrorContent.homeLabel}</Link>\n          <Link href={statusHref}>{serverErrorContent.statusLabel}</Link>\n        </>\n      }\n    >\n      <ErrorPanel\n        titleAs=\"h2\"\n        className=\"text-start\"\n        title={serverErrorContent.panelTitle}\n        message={serverErrorContent.panelMessage}\n        code={errorCode}\n        requestId={requestId}\n        details={details}\n        onRetry={onRetry}\n        secondaryAction={supportAction}\n      />\n    </StatusLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/status-500/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/status-500/data.ts",
+      "content": "/** Neutral fixtures for the 500 page. */\nexport const serverErrorContent = {\n  code: '500 · Server error',\n  title: 'Something went wrong on our side',\n  description: 'The page failed to load. Nothing you did caused this, and your data is safe.',\n  panelTitle: 'The request failed',\n  panelMessage: 'An unexpected error interrupted the request. Try again; if it keeps happening, share the request ID with support.',\n  errorCode: 500,\n  requestId: 'req_3b91e6c2f04d',\n  details: 'GET /v1/projects/web-app/overview\\n500 Internal Server Error\\nunhandled exception in handler (trace: 7c1e9a42)',\n  homeLabel: 'Go to dashboard',\n  homeHref: '/',\n  statusLabel: 'System status',\n  statusHref: '/status',\n};\n\n/** Simulated retry for the standalone page. */\nexport const simulateRetry = () => new Promise<void>((resolve) => setTimeout(resolve, 1200));\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "System"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/status-500/template.meta.ts"
+  }
+}

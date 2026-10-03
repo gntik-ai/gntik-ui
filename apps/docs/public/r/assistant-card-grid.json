@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "assistant-card-grid",
+  "type": "registry:block",
+  "title": "Assistant card grid",
+  "description": "Responsive grid of clickable assistant cards: name, description, model and runtime, status and last update, with a create action.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/ai/AssistantCardGrid/AssistantCardGrid.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/ai/assistant-card-grid/AssistantCardGrid.tsx",
+      "content": "import { useId } from 'react';\nimport { Bot, Plus } from '@gntik-ai/icons';\nimport { Button, ClickableCard, EmptyState, StatusTag, cn, type StatusDefinition } from '@gntik-ai/ui';\nimport { assistants as defaultAssistants, type Assistant, type AssistantStatus } from './fixtures';\n\nexport type { Assistant, AssistantStatus } from './fixtures';\n\nexport const ASSISTANT_STATUSES: Record<AssistantStatus, StatusDefinition> = {\n  active: { label: 'Active', tone: 'success' },\n  paused: { label: 'Paused', tone: 'neutral' },\n  draft: { label: 'Draft', tone: 'neutral' },\n  degraded: { label: 'Degraded', tone: 'warning' },\n  failed: { label: 'Failed', tone: 'destructive' },\n};\n\nexport interface AssistantCardGridProps {\n  assistants?: Assistant[];\n  title?: string;\n  /** Called when a card is activated (cards with `href` also navigate). */\n  onSelect?: (assistant: Assistant) => void;\n  /** Shows a \"New assistant\" button. */\n  onCreate?: () => void;\n  /** Heading level of the section title (default h2); card names use the next level. */\n  titleAs?: 'h2' | 'h3';\n  className?: string;\n}\n\n/** Grid of assistants as clickable cards (1 → 2 → 3 columns). */\nexport function AssistantCardGrid({\n  assistants = defaultAssistants,\n  title = 'Assistants',\n  onSelect,\n  onCreate,\n  titleAs: TitleTag = 'h2',\n  className,\n}: AssistantCardGridProps) {\n  const titleId = useId();\n  const active = assistants.filter((a) => a.status === 'active').length;\n  return (\n    <section aria-labelledby={titleId} className={cn('flex flex-col gap-4', className)}>\n      <div className=\"flex flex-wrap items-end justify-between gap-3\">\n        <div>\n          <TitleTag id={titleId} className=\"text-[15px] font-semibold tracking-tight text-foreground\">\n            {title}\n          </TitleTag>\n          <p className=\"text-[12.5px] text-muted-foreground\">\n            {assistants.length} total · {active} active\n          </p>\n        </div>\n        {onCreate && (\n          <Button size=\"sm\" icon={Plus} onClick={onCreate}>\n            New assistant\n          </Button>\n        )}\n      </div>\n      {assistants.length === 0 ? (\n        <EmptyState\n          icon={Bot}\n          title=\"No assistants yet\"\n          titleAs={TitleTag === 'h2' ? 'h3' : 'h4'}\n          description=\"Create an assistant to automate a task with a model.\"\n          primaryAction={onCreate ? <Button size=\"sm\" icon={Plus} onClick={onCreate}>New assistant</Button> : undefined}\n        />\n      ) : (\n        <ul className=\"grid gap-3 sm:grid-cols-2 xl:grid-cols-3\">\n          {assistants.map((a) => (\n            <li key={a.id} className=\"flex\">\n              <ClickableCard\n                className=\"w-full\"\n                titleAs={TitleTag === 'h2' ? 'h3' : 'h4'}\n                href={a.href}\n                onClick={() => onSelect?.(a)}\n                icon={<Bot aria-hidden />}\n                title={a.name}\n                description={a.description}\n                meta={\n                  <span className=\"flex flex-wrap items-center gap-x-2 gap-y-1.5\">\n                    <StatusTag status={a.status} statuses={ASSISTANT_STATUSES} />\n                    <span className=\"font-mono text-[11px] text-muted-foreground\">\n                      {a.model} · {a.runtime}\n                    </span>\n                    {a.updated && <span className=\"text-[11px] text-muted-foreground\">Updated {a.updated}</span>}\n                  </span>\n                }\n              />\n            </li>\n          ))}\n        </ul>\n      )}\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/ai/AssistantCardGrid/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/ai/assistant-card-grid/fixtures.ts",
+      "content": "export type AssistantStatus = 'active' | 'paused' | 'draft' | 'degraded' | 'failed';\n\nexport interface Assistant {\n  id: string;\n  name: string;\n  description: string;\n  /** Model identifier, e.g. \"general-large\". */\n  model: string;\n  /** Where it runs, e.g. \"openai-compatible\" or \"self-hosted\". */\n  runtime: string;\n  status: AssistantStatus;\n  /** Relative update time, e.g. \"2h ago\". */\n  updated?: string;\n  /** Optional link to the assistant's page. */\n  href?: string;\n}\n\nexport const assistants: Assistant[] = [\n  { id: 'a1', name: 'Support triage', description: 'Classifies incoming tickets and drafts first replies.', model: 'general-large', runtime: 'openai-compatible', status: 'active', updated: '2h ago' },\n  { id: 'a2', name: 'Release notes writer', description: 'Summarises merged changes into customer-facing notes.', model: 'general-medium', runtime: 'Provider A', status: 'active', updated: 'yesterday' },\n  { id: 'a3', name: 'Invoice checker', description: 'Flags invoices whose totals do not match the usage report.', model: 'reasoning-small', runtime: 'self-hosted', status: 'degraded', updated: '3d ago' },\n  { id: 'a4', name: 'Onboarding guide', description: 'Answers setup questions from the product documentation.', model: 'general-small', runtime: 'self-hosted', status: 'paused', updated: '1w ago' },\n  { id: 'a5', name: 'Data cleanup', description: 'Normalises imported records before they reach the warehouse.', model: 'general-medium', runtime: 'openai-compatible', status: 'draft' },\n  { id: 'a6', name: 'Incident summariser', description: 'Builds a timeline from alerts and chat during an incident.', model: 'general-large', runtime: 'Provider A', status: 'failed', updated: '5h ago' },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "ai"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/ai/AssistantCardGrid/block.meta.ts"
+  }
+}

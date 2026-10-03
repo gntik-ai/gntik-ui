@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sso-buttons",
+  "type": "registry:block",
+  "title": "SSO buttons",
+  "description": "Neutral \"Continue with …\" provider buttons with lucide icons and a per-provider loading state.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/auth/SsoButtons/SsoButtons.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/auth/sso-buttons/SsoButtons.tsx",
+      "content": "import { Button, cn } from '@gntik-ai/ui';\nimport { ssoProviders, type SsoProvider } from './fixtures';\n\nexport type { SsoProvider } from './fixtures';\n\nexport interface SsoButtonsProps {\n  providers?: SsoProvider[];\n  /** Called with the provider id. */\n  onSelect?: (providerId: string) => void;\n  /** Provider currently redirecting (shows a spinner and disables the others). */\n  loadingId?: string | null;\n  disabled?: boolean;\n  /** `stack` (full-width rows, default) or `grid` (two columns from `sm`). */\n  layout?: 'stack' | 'grid';\n  /** Accessible name of the group. */\n  label?: string;\n  className?: string;\n}\n\n/** Neutral single-sign-on buttons: text labels and lucide icons, no brand colours or logos. */\nexport function SsoButtons({\n  providers = ssoProviders,\n  onSelect,\n  loadingId = null,\n  disabled = false,\n  layout = 'stack',\n  label = 'Single sign-on',\n  className,\n}: SsoButtonsProps) {\n  return (\n    <div role=\"group\" aria-label={label} className={cn('grid gap-2.5', layout === 'grid' && 'sm:grid-cols-2', className)}>\n      {providers.map((p) => (\n        <Button\n          key={p.id}\n          variant=\"secondary\"\n          size=\"lg\"\n          icon={p.icon}\n          loading={loadingId === p.id}\n          disabled={disabled || (loadingId != null && loadingId !== p.id)}\n          onClick={() => onSelect?.(p.id)}\n          className=\"w-full text-[13.5px] font-medium\"\n        >\n          {p.label}\n        </Button>\n      ))}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/auth/SsoButtons/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/auth/sso-buttons/fixtures.ts",
+      "content": "import { Building2, Globe, KeyRound, type LucideIcon } from '@gntik-ai/icons';\n\nexport interface SsoProvider {\n  id: string;\n  /** Full button text, e.g. \"Continue with SSO\". */\n  label: string;\n  /** A neutral lucide icon (no brand logos or colours). */\n  icon?: LucideIcon;\n}\n\nexport const ssoProviders: SsoProvider[] = [\n  { id: 'sso', label: 'Continue with SSO', icon: Building2 },\n  { id: 'google', label: 'Continue with Google', icon: Globe },\n  { id: 'passkey', label: 'Continue with a passkey', icon: KeyRound },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "auth"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/auth/SsoButtons/block.meta.ts"
+  }
+}

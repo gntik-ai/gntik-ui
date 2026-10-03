@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cost-breakdown",
+  "type": "registry:block",
+  "title": "Cost breakdown",
+  "description": "Cost composition: a donut with the total in the hole and the categories ranked by amount with share bars, in categorical (non-severity) colours.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/charts",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/billing/CostBreakdown/CostBreakdown.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/billing/cost-breakdown/CostBreakdown.tsx",
+      "content": "import { Card, cn } from '@gntik-ai/ui';\nimport { CHART_COLORS, DonutChart, type ChartColor } from '@gntik-ai/charts';\nimport { formatMoney } from '../format';\nimport { sampleCosts } from './fixtures';\n\nexport interface CostItem {\n  label: string;\n  amount: number;\n}\n\nexport interface CostBreakdownProps {\n  items?: CostItem[];\n  currency?: string;\n  title?: string;\n  /** Caption under the total in the donut hole. */\n  centerLabel?: string;\n  /** Donut diameter in px. */\n  size?: number;\n  /** Heading level of the title, to fit the page outline (default h3). */\n  titleAs?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\n/** Swatch classes matching the chart series tokens (categorical accents, never severity). */\nconst SWATCH: Record<ChartColor, string> = {\n  primary: 'bg-primary',\n  emerald: 'bg-brand-accent',\n  violet: 'bg-category-violet',\n  cyan: 'bg-category-cyan',\n  amber: 'bg-category-amber',\n  rose: 'bg-category-rose',\n  info: 'bg-info',\n};\n\n/** Where the spend goes: a donut by category plus the categories ranked by amount. */\nexport function CostBreakdown({\n  items = sampleCosts,\n  currency = 'USD',\n  title = 'Cost breakdown',\n  centerLabel = 'this cycle',\n  size = 176,\n  titleAs: TitleTag = 'h3',\n  className,\n}: CostBreakdownProps) {\n  const ranked = [...items].sort((a, b) => b.amount - a.amount);\n  const total = ranked.reduce((sum, i) => sum + i.amount, 0);\n  const money = (n: number) => formatMoney(n, currency);\n  const colorAt = (i: number): ChartColor => CHART_COLORS[i % CHART_COLORS.length] ?? 'primary';\n\n  return (\n    <Card className={cn('p-6', className)}>\n      <div className=\"flex items-baseline justify-between gap-3\">\n        <TitleTag className=\"text-[15px] font-semibold tracking-tight text-foreground\">{title}</TitleTag>\n        <span className=\"font-mono text-[13px] font-semibold text-foreground tabular-nums\">{money(total)}</span>\n      </div>\n      <div className=\"mt-5 flex flex-col items-center gap-6 sm:flex-row sm:items-center\">\n        <DonutChart\n          data={ranked}\n          index=\"label\"\n          category=\"amount\"\n          showLegend={false}\n          centerLabel={centerLabel}\n          valueFormatter={(n) => formatMoney(n, currency, true)}\n          height={size}\n          aria-label={`${title}: ${ranked.map((i) => `${i.label} ${money(i.amount)}`).join(', ')}`}\n          className=\"shrink-0\"\n        />\n        <ol aria-label=\"Categories by cost\" className=\"grid w-full min-w-0 flex-1 gap-3\">\n          {ranked.map((item, i) => {\n            const pct = total > 0 ? (item.amount / total) * 100 : 0;\n            return (\n              <li key={item.label} className=\"grid gap-1.5\">\n                <div className=\"flex items-center justify-between gap-3\">\n                  <span className=\"flex min-w-0 items-center gap-2 text-[13px] text-foreground\">\n                    <span aria-hidden className=\"w-4 shrink-0 font-mono text-[11px] text-muted-foreground tabular-nums\">\n                      {i + 1}\n                    </span>\n                    <span aria-hidden className={cn('size-2.5 shrink-0 rounded-[3px]', SWATCH[colorAt(i)])} />\n                    <span className=\"truncate\">{item.label}</span>\n                  </span>\n                  <span className=\"shrink-0 font-mono text-[12.5px] whitespace-nowrap text-muted-foreground tabular-nums\">\n                    <span className=\"font-semibold text-foreground\">{money(item.amount)}</span> · {pct.toFixed(1)}%\n                  </span>\n                </div>\n                <div aria-hidden className=\"h-1.5 overflow-hidden rounded-full bg-secondary\">\n                  <div className={cn('h-full rounded-full', SWATCH[colorAt(i)])} style={{ width: `${pct}%` }} />\n                </div>\n              </li>\n            );\n          })}\n        </ol>\n      </div>\n    </Card>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/CostBreakdown/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/cost-breakdown/fixtures.ts",
+      "content": "import type { CostItem } from './CostBreakdown';\n\n/** Sample cycle cost by category. */\nexport const sampleCosts: CostItem[] = [\n  { label: 'Tokens', amount: 410 },\n  { label: 'Compute', amount: 740 },\n  { label: 'Add-ons', amount: 280 },\n  { label: 'Storage', amount: 190 },\n];\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/format.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/format.ts",
+      "content": "/** Shared formatting for the billing blocks (en-US, Intl). */\n\n/** A calendar date: a `Date` or an ISO `YYYY-MM-DD` string (read as a local date, no UTC shift). */\nexport type DateInput = Date | string;\n\nexport function toDate(value: DateInput): Date {\n  if (value instanceof Date) return value;\n  const m = /^(\\d{4})-(\\d{2})-(\\d{2})$/.exec(value);\n  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));\n  return new Date(value);\n}\n\nconst dateFmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });\nconst shortDateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });\n\n/** \"June 1, 2026\". */\nexport function formatDate(value: DateInput): string {\n  return dateFmt.format(toDate(value));\n}\n\n/** \"Jun 1, 2026\". */\nexport function formatShortDate(value: DateInput): string {\n  return shortDateFmt.format(toDate(value));\n}\n\n/** Money with the currency symbol: \"$1,620.00\" (or no decimals with `whole`). */\nexport function formatMoney(amount: number, currency = 'USD', whole = false): string {\n  return new Intl.NumberFormat('en-US', {\n    style: 'currency',\n    currency,\n    minimumFractionDigits: whole ? 0 : 2,\n    maximumFractionDigits: whole ? 0 : 2,\n  }).format(amount);\n}\n\n/** Grouped number, compact above a million: \"412,800\", \"78.4M\". */\nexport function formatQuantity(value: number): string {\n  if (Math.abs(value) >= 1_000_000) {\n    return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value);\n  }\n  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(value);\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/charts/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "billing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/billing/CostBreakdown/block.meta.ts"
+  }
+}

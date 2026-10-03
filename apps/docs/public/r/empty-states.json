@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-states",
+  "type": "registry:block",
+  "title": "Empty states",
+  "description": "Three canonical empty states: first run (with checklist), no results (clear filters/search) and no access (request access).",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/feedback/EmptyStates/EmptyStates.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/feedback/empty-states/EmptyStates.tsx",
+      "content": "import { Check, FolderPlus, Lock, SearchX } from '@gntik-ai/icons';\nimport type { LucideIcon } from '@gntik-ai/icons';\nimport { Button, EmptyState, Link, cn } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport { firstRunSteps, noAccessSample, noResultsSample } from './fixtures';\n\ninterface SharedEmptyProps {\n  /** Heading level that fits the page outline. */\n  titleAs?: 'h2' | 'h3' | 'h4';\n  /** Dashed border around the state (use inside a card or table). */\n  bordered?: boolean;\n  className?: string;\n}\n\nexport interface FirstRunEmptyProps extends SharedEmptyProps {\n  icon?: LucideIcon;\n  title?: ReactNode;\n  description?: ReactNode;\n  actionLabel?: string;\n  onAction?: () => void;\n  /** Secondary link (docs, guide). `null` hides it. */\n  secondary?: { label: string; href: string } | null;\n  /** Short checklist of what the first run involves. */\n  steps?: string[];\n}\n\n/** First-run state: nothing created yet; explains the value and offers the first action. */\nexport function FirstRunEmpty({\n  icon = FolderPlus,\n  title = 'Create your first project',\n  description = 'Projects group your services, environments and deployments. Start one from a repository in a couple of minutes.',\n  actionLabel = 'New project',\n  onAction,\n  secondary = { label: 'Read the guide', href: '#guide' },\n  steps = firstRunSteps,\n  titleAs,\n  bordered = true,\n  className,\n}: FirstRunEmptyProps) {\n  return (\n    <EmptyState\n      icon={icon}\n      title={title}\n      titleAs={titleAs}\n      description={description}\n      bordered={bordered}\n      className={cn('mx-auto', className)}\n      primaryAction={<Button onClick={onAction}>{actionLabel}</Button>}\n      secondaryAction={\n        secondary ? (\n          <Link underline=\"hover\" href={secondary.href} className=\"inline-flex h-9 items-center px-2 text-[13px] font-semibold\">\n            {secondary.label}\n          </Link>\n        ) : undefined\n      }\n    >\n      {steps.length > 0 && (\n        <ol className=\"mt-6 grid gap-2 text-start text-[12.5px] text-muted-foreground\">\n          {steps.map((step, i) => (\n            <li key={step} className=\"flex items-center gap-2.5\">\n              <span className=\"grid size-5 shrink-0 place-items-center rounded-full bg-primary/14 font-mono text-[10.5px] font-semibold text-primary-chip-text\">\n                {i + 1}\n              </span>\n              {step}\n            </li>\n          ))}\n        </ol>\n      )}\n    </EmptyState>\n  );\n}\n\nexport interface NoResultsEmptyProps extends SharedEmptyProps {\n  /** The search text that matched nothing. */\n  query?: string;\n  /** Number of active filters (shows \"Clear filters\" when > 0). */\n  filterCount?: number;\n  /** Plural noun for what is being searched. */\n  entity?: string;\n  onClearFilters?: () => void;\n  onClearSearch?: () => void;\n}\n\n/** No-results state for a filtered list or table: echoes the query and offers ways out. */\nexport function NoResultsEmpty({\n  query = noResultsSample.query,\n  filterCount = noResultsSample.filterCount,\n  entity = noResultsSample.entity,\n  onClearFilters,\n  onClearSearch,\n  titleAs,\n  bordered = false,\n  className,\n}: NoResultsEmptyProps) {\n  const filters = filterCount > 0 ? ` with ${filterCount} ${filterCount === 1 ? 'filter' : 'filters'} applied` : '';\n  return (\n    <EmptyState\n      icon={SearchX}\n      size=\"sm\"\n      titleAs={titleAs}\n      bordered={bordered}\n      className={cn('mx-auto', className)}\n      title={query ? <>No {entity} match “<span className=\"font-mono\">{query}</span>”</> : `No ${entity} found`}\n      description={`Check the spelling or try a broader search${filters}.`}\n      primaryAction={\n        filterCount > 0 ? (\n          <Button variant=\"secondary\" size=\"sm\" onClick={onClearFilters}>\n            Clear filters\n          </Button>\n        ) : undefined\n      }\n      secondaryAction={\n        query ? (\n          <Button variant=\"ghost\" size=\"sm\" onClick={onClearSearch}>\n            Clear search\n          </Button>\n        ) : undefined\n      }\n    />\n  );\n}\n\nexport interface NoAccessEmptyProps extends SharedEmptyProps {\n  /** What the viewer cannot see. */\n  resource?: string;\n  /** Who can grant access. */\n  owner?: string;\n  /** Called on \"Request access\"; may return a promise (the button shows a spinner). */\n  onRequestAccess?: () => void | Promise<void>;\n  /** Start in the \"requested\" state (e.g. a pending request exists). */\n  defaultRequested?: boolean;\n}\n\n/** Permission state: the viewer lacks access; explains who can grant it and lets them ask. */\nexport function NoAccessEmpty({\n  resource = noAccessSample.resource,\n  owner = noAccessSample.owner,\n  onRequestAccess,\n  defaultRequested = false,\n  titleAs,\n  bordered = true,\n  className,\n}: NoAccessEmptyProps) {\n  const [state, setState] = useState<'idle' | 'pending' | 'requested'>(defaultRequested ? 'requested' : 'idle');\n  const request = async () => {\n    setState('pending');\n    try {\n      await onRequestAccess?.();\n      setState('requested');\n    } catch {\n      setState('idle');\n    }\n  };\n  return (\n    <EmptyState\n      icon={Lock}\n      titleAs={titleAs}\n      bordered={bordered}\n      className={cn('mx-auto', className)}\n      title={`You don’t have access to ${resource}`}\n      description={`Ask ${owner} to grant you a role that includes ${resource.toLowerCase()} permissions.`}\n      primaryAction={\n        <Button\n          variant={state === 'requested' ? 'secondary' : 'primary'}\n          icon={state === 'requested' ? Check : undefined}\n          loading={state === 'pending'}\n          disabled={state === 'requested'}\n          onClick={() => void request()}\n        >\n          {state === 'requested' ? 'Access requested' : 'Request access'}\n        </Button>\n      }\n    >\n      <p role=\"status\" className=\"sr-only\">\n        {state === 'requested' ? 'Access request sent' : ''}\n      </p>\n    </EmptyState>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/feedback/EmptyStates/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/feedback/empty-states/fixtures.ts",
+      "content": "/** Neutral sample copy for the empty states. */\nexport const firstRunSteps = ['Connect a Git repository', 'Configure build settings', 'Deploy to an environment'];\n\nexport const noResultsSample = { query: 'billing-api', filterCount: 2, entity: 'projects' } as const;\n\nexport const noAccessSample = { resource: 'Billing', owner: 'an organization admin' } as const;\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "feedback"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/feedback/EmptyStates/block.meta.ts"
+  }
+}

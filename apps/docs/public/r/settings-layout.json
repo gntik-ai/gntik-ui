@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-layout",
+  "type": "registry:block",
+  "title": "SettingsLayout",
+  "description": "Settings shell: section nav (NavList groups) on the left · a content column with the page title and form sections · a sticky save bar slot (Discard · Save changes). The current section is controllable with `value` / `onValueChange`; `href` items navigate as links and still report the change. Below `lg` the nav becomes a Select at the top of the page. Fills its container; `fullScreen` switches to `h-dvh`.",
+  "author": "gntik-ai",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/nav-list.json",
+    "https://gntik-ui.invalid/r/select.json",
+    "https://gntik-ui.invalid/r/ui-utils.json",
+    "https://gntik-ui.invalid/r/visually-hidden.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/layouts/SettingsLayout/SettingsLayout.tsx",
+      "type": "registry:component",
+      "target": "components/layouts/settings-layout/SettingsLayout.tsx",
+      "content": "import { useState, type HTMLAttributes, type ReactNode, type Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { NavList, type NavGroup, type NavItem } from '../../ui/nav-list';\nimport { navItemKey } from '../../ui/nav-list/nav-context';\nimport { SimpleSelect } from '../../ui/select';\nimport { SkipLink } from '../../ui/visually-hidden';\nimport { useI18n } from '../../i18n/I18nProvider';\nimport { settingsLayoutVariants, type SettingsLayoutVariantProps } from './settings-layout.variants';\n\n/** Every selectable (leaf) item, depth-first. */\nfunction flattenLeaves(items: NavItem[]): NavItem[] {\n  return items.flatMap((item) => (item.items?.length ? flattenLeaves(item.items) : [item]));\n}\n\nfunction markCurrent(items: NavItem[], value: string | undefined): NavItem[] {\n  return items.map((item) =>\n    item.items?.length ? { ...item, items: markCurrent(item.items, value) } : { ...item, current: item.current ?? navItemKey(item) === value },\n  );\n}\n\nexport interface SettingsLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title' | 'defaultValue'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** Section navigation (NavList groups). Items are keyed by `id`, then `href`, then `label`. */\n  groups: NavGroup[];\n  /** Key of the current section (controlled). */\n  value?: string;\n  /** Initial section (uncontrolled). Defaults to the first item. */\n  defaultValue?: string;\n  /** Called when a section is chosen from the nav or the small-screen Select. Route here for `href` sections. */\n  onValueChange?: (value: string, item: NavItem) => void;\n  /** Heading above the section nav and accessible name of the nav. */\n  navLabel?: string;\n  /** Page title (an `<h1>`). */\n  title?: ReactNode;\n  description?: ReactNode;\n  /** Replaces the default title block. */\n  header?: ReactNode;\n  /** Form sections of the current page. */\n  children?: ReactNode;\n  /** Sticky bar at the bottom of the content (Discard · Save changes). */\n  saveBar?: ReactNode;\n  /** Max width of the content column. */\n  width?: SettingsLayoutVariantProps['width'];\n  /**\n   * Inside an app shell that already owns <main> and the skip link (SidebarLayout, StackedLayout):\n   * render the content region as a plain <div> and drop this layout's skip link.\n   */\n  embedded?: boolean;\n  /** Label of the small-screen section Select. */\n  selectLabel?: string;\n  mainId?: string;\n  skipLinkLabel?: string;\n  fullScreen?: boolean;\n}\n\n/**\n * Settings shell: section nav (NavList) on the left · content with form sections · sticky save bar.\n * Below `lg` the nav becomes a Select at the top of the page. The current section is\n * controllable (`value` / `onValueChange`).\n */\nexport function SettingsLayout({\n  groups,\n  value: valueProp,\n  defaultValue,\n  onValueChange,\n  navLabel: navLabelProp,\n  title,\n  description,\n  header,\n  children,\n  saveBar,\n  width,\n  selectLabel: selectLabelProp,\n  embedded = false,\n  mainId = 'main',\n  skipLinkLabel: skipLinkLabelProp,\n  fullScreen = false,\n  className,\n  ...props\n}: SettingsLayoutProps) {\n  const { t } = useI18n();\n  const navLabel = navLabelProp ?? t('common.settings');\n  const selectLabel = selectLabelProp ?? t('settings.section');\n  const skipLinkLabel = skipLinkLabelProp ?? t('skip.content');\n  const MainTag = embedded ? 'div' : 'main';\n  const leaves = groups.flatMap((g) => flattenLeaves(g.items));\n  const firstKey = leaves[0] ? navItemKey(leaves[0]) : undefined;\n  const [inner, setInner] = useState(defaultValue ?? firstKey);\n  const value = valueProp ?? inner;\n  const s = settingsLayoutVariants({ width, fullScreen });\n\n  const select = (key: string, item: NavItem) => {\n    if (valueProp === undefined) setInner(key);\n    onValueChange?.(key, item);\n  };\n  const marked = groups.map((g) => ({ ...g, items: markCurrent(g.items, value) }));\n  const options = leaves.filter((i) => !i.disabled).map((i) => ({ value: navItemKey(i), label: i.label }));\n\n  return (\n    <div className={cn(s.root(), className)} {...props}>\n      {!embedded && (\n        <SkipLink targetId={mainId} className={s.skipLink()}>\n          {skipLinkLabel}\n        </SkipLink>\n      )}\n      <div className={s.sidebar()}>\n        <p className={s.sidebarHeading()} aria-hidden>\n          {navLabel}\n        </p>\n        <NavList label={navLabel} groups={marked} onNavigate={(item) => select(navItemKey(item), item)} />\n      </div>\n      <div className={s.compactNav()}>\n        <SimpleSelect\n          aria-label={selectLabel}\n          items={options}\n          value={value ?? null}\n          onValueChange={(key) => {\n            const item = leaves.find((i) => navItemKey(i) === key);\n            if (key != null && item) select(key, item);\n          }}\n          className=\"w-full\"\n        />\n      </div>\n      <MainTag id={mainId} tabIndex={-1} className={s.main()}>\n        <div className={s.content()}>\n          {header ??\n            (title != null && (\n              <div className={s.header()}>\n                <h1 className={s.title()}>{title}</h1>\n                {description != null && <p className={s.description()}>{description}</p>}\n              </div>\n            ))}\n          {children}\n        </div>\n        {saveBar != null && <div className={s.saveBar()}>{saveBar}</div>}\n      </MainTag>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/SettingsLayout/index.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/settings-layout/index.ts",
+      "content": "export { SettingsLayout, type SettingsLayoutProps } from './SettingsLayout';\nexport { settingsLayoutVariants, type SettingsLayoutVariantProps } from './settings-layout.variants';\nexport { doc as settingsLayoutDoc } from './SettingsLayout.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/SettingsLayout/settings-layout.variants.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/settings-layout/settings-layout.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const settingsLayoutVariants = tv({\n  slots: {\n    root: 'relative flex flex-col overflow-hidden bg-background font-sans text-foreground lg:flex-row',\n    skipLink: 'focus:absolute',\n    sidebar: 'hidden w-60 shrink-0 flex-col gap-4 overflow-y-auto border-e border-border bg-background px-3 py-6 lg:flex',\n    sidebarHeading: 'px-2.5 text-[13px] font-semibold tracking-tight text-foreground',\n    compactNav: 'shrink-0 border-b border-border px-4 py-3 lg:hidden',\n    main: 'flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto outline-none',\n    content: 'mx-auto flex w-full flex-1 flex-col gap-8 px-4 py-6 sm:px-8 lg:py-8',\n    header: 'flex flex-col gap-1 border-b border-border pb-5',\n    title: 'text-[20px] font-semibold tracking-tight text-foreground',\n    description: 'text-[13px] leading-relaxed text-muted-foreground',\n    saveBar: [\n      'sticky bottom-0 z-10 mt-auto border-t border-border bg-card/95 shadow-sm',\n      'flex items-center justify-end gap-2 px-4 py-3 sm:px-8',\n    ],\n  },\n  variants: {\n    width: {\n      narrow: { content: 'max-w-2xl' },\n      default: { content: 'max-w-3xl' },\n      wide: { content: 'max-w-5xl' },\n    },\n    fullScreen: {\n      true: { root: 'h-dvh' },\n      false: { root: 'h-full min-h-full' },\n    },\n  },\n  defaultVariants: { width: 'default', fullScreen: false },\n});\n\nexport type SettingsLayoutVariantProps = VariantProps<typeof settingsLayoutVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/SettingsLayout/SettingsLayout.doc.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/settings-layout/SettingsLayout.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'SettingsLayout',\n  group: 'Layout',\n  status: 'beta',\n  description:\n    'Settings shell: section nav (NavList groups) on the left · a content column with the page title and form sections · a sticky save bar slot (Discard · Save changes). The current section is controllable with `value` / `onValueChange`; `href` items navigate as links and still report the change. Below `lg` the nav becomes a Select at the top of the page. Fills its container; `fullScreen` switches to `h-dvh`.',\n  primitive: '@base-ui/react/select (small screens)',\n  pattern: 'landmarks (labelled nav, main) + select-only combobox on small screens',\n  keyboard: [\n    ['Tab', 'Skip link, then the section nav items, then the content and the save bar'],\n    ['Enter', 'Opens the focused section (aria-current=\"page\" moves to it)'],\n    ['Enter / Space / ↓ on the section Select', 'Small screens: opens the list; arrows move, Enter picks a section'],\n  ],\n  tokens: ['background', 'foreground', 'card', 'border', 'muted-foreground', 'primary', 'focus-ring'],\n};\n"
+    }
+  ],
+  "categories": [
+    "layout",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "layout",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/layouts/SettingsLayout/SettingsLayout.doc.ts"
+  }
+}

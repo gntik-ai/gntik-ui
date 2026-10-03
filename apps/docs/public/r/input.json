@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "type": "registry:ui",
+  "title": "Input",
+  "description": "Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Input/Input.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/input/Input.tsx",
+      "content": "import { Input as BaseInput } from '@base-ui/react/input';\nimport type { ComponentType, ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { inputVariants, INPUT_ICON_SIZE, type InputVariantProps } from './input.variants';\n\ntype IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean; className?: string }>;\n\nexport interface InputProps extends Omit<BaseInput.Props, 'className' | 'size'>, InputVariantProps {\n  /** Classes for the outer wrapper (border, width, layout). */\n  className?: string;\n  /** Classes for the native <input>. */\n  inputClassName?: string;\n  ref?: Ref<HTMLInputElement>;\n  /** Decorative icon before the text (a lucide icon component). */\n  leadingIcon?: IconComponent;\n  /** Decorative icon after the text. */\n  trailingIcon?: IconComponent;\n  /** Content before the input: a text prefix (\"https://\") or a compact control. */\n  leadingAddon?: ReactNode;\n  /** Content after the input: a unit (\"req/s\"), a keyboard hint or an icon button. */\n  trailingAddon?: ReactNode;\n  /** Marks the value as invalid (sets aria-invalid). Inside a Field, `Field invalid` does this. */\n  invalid?: boolean;\n}\n\n/**\n * Single-line text input on Base UI Input (works with Field out of the box). The wrapper\n * carries the border, focus outline and invalid/disabled styling; icons and addons sit inside it.\n */\nexport function Input({\n  size = 'md',\n  className,\n  inputClassName,\n  leadingIcon: LeadingIcon,\n  trailingIcon: TrailingIcon,\n  leadingAddon,\n  trailingAddon,\n  invalid,\n  ...props\n}: InputProps) {\n  const s = inputVariants({ size });\n  const px = INPUT_ICON_SIZE[size];\n  return (\n    <div className={cn(s.root(), className)} data-invalid={invalid || undefined}>\n      {LeadingIcon && <LeadingIcon size={px} aria-hidden className={s.icon()} />}\n      {leadingAddon != null && <span className={s.addon()}>{leadingAddon}</span>}\n      <BaseInput\n        className={cn(s.input(), inputClassName)}\n        aria-invalid={invalid || undefined}\n        {...props}\n      />\n      {trailingAddon != null && <span className={s.addon()}>{trailingAddon}</span>}\n      {TrailingIcon && <TrailingIcon size={px} aria-hidden className={s.icon()} />}\n    </div>\n  );\n}\n\n/** Keyboard-shortcut hint for a trailing addon, e.g. `<InputKbd>⌘K</InputKbd>`. */\nexport function InputKbd({ className, children }: { className?: string; children: ReactNode }) {\n  return (\n    <kbd\n      className={cn(\n        'inline-flex h-[18px] items-center rounded border border-border bg-card px-1.5 font-mono text-[10px] font-medium text-muted-foreground',\n        className,\n      )}\n    >\n      {children}\n    </kbd>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Input/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/input/index.ts",
+      "content": "export { Input, InputKbd, type InputProps } from './Input';\nexport { inputVariants, INPUT_ICON_SIZE, type InputVariantProps } from './input.variants';\nexport { doc as inputDoc } from './Input.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Input/input.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/input/input.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\n/**\n * The brand field: a recessed (bg-background) wrapper that owns the border and the focus\n * outline, so icons, addons and the bare input focus as one piece.\n */\nexport const inputVariants = tv({\n  slots: {\n    root: [\n      'flex w-full min-w-0 items-center rounded-md border border-border bg-background text-foreground shadow-sm transition-colors motion-reduce:transition-none',\n      'has-[input:focus-visible]:border-primary/60 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-focus-ring',\n      'data-invalid:border-destructive/70 has-[input[data-invalid]]:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70',\n      'has-[input:disabled]:cursor-not-allowed has-[input:disabled]:bg-secondary/50 has-[input:disabled]:text-muted-foreground',\n      'has-[input:read-only]:bg-secondary/40',\n    ],\n    input: [\n      'h-full w-full min-w-0 bg-transparent text-foreground outline-none placeholder:text-muted-foreground',\n      'disabled:cursor-not-allowed disabled:text-muted-foreground read-only:text-muted-foreground',\n    ],\n    icon: 'pointer-events-none shrink-0 text-muted-foreground',\n    addon: 'flex shrink-0 items-center text-muted-foreground select-none',\n  },\n  variants: {\n    size: {\n      sm: { root: 'h-8 gap-2 px-2.5 text-[12px]', input: 'text-[12px]' },\n      md: { root: 'h-9 gap-2.5 px-3 text-[13px]', input: 'text-[13px]' },\n    },\n  },\n  defaultVariants: { size: 'md' },\n});\n\nexport type InputVariantProps = VariantProps<typeof inputVariants>;\n\n/** Icon size (px) per input size. */\nexport const INPUT_ICON_SIZE = { sm: 14, md: 15 } as const;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Input/Input.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/input/Input.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Input',\n  group: 'Forms',\n  status: 'stable',\n  description: 'Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field.',\n  primitive: '@base-ui/react/input',\n  pattern: 'textbox',\n  keyboard: [\n    ['Tab', 'Moves focus into the input; trailing addon buttons follow in tab order'],\n    ['Click on label', 'Inside a Field, focuses the input'],\n  ],\n  tokens: ['background', 'border', 'foreground', 'muted-foreground', 'primary', 'destructive', 'secondary', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Forms"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Input/Input.doc.ts"
+  }
+}

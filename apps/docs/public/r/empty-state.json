@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-state",
+  "type": "registry:ui",
+  "title": "EmptyState",
+  "description": "Placeholder for an empty list, table or page: a neutral icon halo, a title, a short explanation and primary / secondary actions. Three sizes and an optional dashed border.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/EmptyState/EmptyState.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/empty-state/EmptyState.tsx",
+      "content": "import type { LucideIcon } from 'lucide-react';\nimport type { HTMLAttributes, ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { EMPTY_STATE_ICON_SIZE, emptyStateVariants, type EmptyStateVariantProps } from './emptyState.variants';\n\nexport interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title'>, EmptyStateVariantProps {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** Neutral icon in a soft halo (a lucide icon component). */\n  icon?: LucideIcon;\n  title: ReactNode;\n  /** Heading level that fits the page outline. */\n  titleAs?: 'h2' | 'h3' | 'h4';\n  description?: ReactNode;\n  /** Main call to action (e.g. a primary Button). */\n  primaryAction?: ReactNode;\n  /** Secondary action shown after the primary one. */\n  secondaryAction?: ReactNode;\n  /** Extra content under the actions (templates, links…). */\n  children?: ReactNode;\n}\n\n/** Placeholder for a list, table or page with nothing to show yet: why, and what to do next. */\nexport function EmptyState({\n  icon: Icon,\n  title,\n  titleAs: Heading = 'h3',\n  description,\n  primaryAction,\n  secondaryAction,\n  size,\n  bordered,\n  className,\n  children,\n  ...props\n}: EmptyStateProps) {\n  const s = emptyStateVariants({ size, bordered });\n  return (\n    <div className={cn(s.root(), className)} {...props}>\n      {Icon && (\n        <div className={s.icon()}>\n          <Icon size={EMPTY_STATE_ICON_SIZE[size ?? 'md']} aria-hidden />\n        </div>\n      )}\n      <Heading className={cn(s.title(), !Icon && 'mt-0')}>{title}</Heading>\n      {description != null && <p className={s.description()}>{description}</p>}\n      {(primaryAction != null || secondaryAction != null) && (\n        <div className={s.actions()}>\n          {primaryAction}\n          {secondaryAction}\n        </div>\n      )}\n      {children}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/EmptyState/emptyState.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/empty-state/emptyState.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const emptyStateVariants = tv({\n  slots: {\n    root: 'mx-auto flex w-full flex-col items-center justify-center text-center',\n    icon: 'grid place-items-center bg-secondary/70 text-muted-foreground ring-1 ring-border',\n    title: 'font-semibold tracking-tight text-foreground',\n    description: 'text-muted-foreground',\n    actions: 'flex flex-wrap items-center justify-center gap-2',\n  },\n  variants: {\n    size: {\n      sm: { root: 'max-w-sm px-4 py-6', icon: 'size-10 rounded-xl', title: 'mt-3 text-[14px]', description: 'mt-1 text-[12.5px] leading-5', actions: 'mt-4' },\n      md: { root: 'max-w-md px-6 py-10', icon: 'size-12 rounded-2xl', title: 'mt-4 text-[15px]', description: 'mt-1.5 text-[13px] leading-6', actions: 'mt-5' },\n      lg: { root: 'max-w-lg px-6 py-16', icon: 'size-14 rounded-2xl', title: 'mt-5 text-[17px]', description: 'mt-2 text-[14px] leading-6', actions: 'mt-6' },\n    },\n    bordered: {\n      true: { root: 'max-w-none rounded-lg border border-dashed border-border' },\n    },\n  },\n  defaultVariants: { size: 'md', bordered: false },\n});\n\nexport type EmptyStateVariantProps = VariantProps<typeof emptyStateVariants>;\n\n/** Icon size (px) per empty-state size. */\nexport const EMPTY_STATE_ICON_SIZE = { sm: 18, md: 22, lg: 26 } as const;\n"
+    },
+    {
+      "path": "packages/ui/src/components/EmptyState/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/empty-state/index.ts",
+      "content": "export { EmptyState, type EmptyStateProps } from './EmptyState';\nexport { emptyStateVariants, EMPTY_STATE_ICON_SIZE, type EmptyStateVariantProps } from './emptyState.variants';\nexport { doc as emptyStateDoc } from './EmptyState.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/EmptyState/EmptyState.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/empty-state/EmptyState.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'EmptyState',\n  group: 'Feedback',\n  status: 'stable',\n  description: 'Placeholder for an empty list, table or page: a neutral icon halo, a title, a short explanation and primary / secondary actions. Three sizes and an optional dashed border.',\n  tokens: ['secondary', 'border', 'foreground', 'muted-foreground'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Feedback"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/EmptyState/EmptyState.doc.ts"
+  }
+}

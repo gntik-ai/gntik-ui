@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell-topnav",
+  "type": "registry:block",
+  "title": "Top-nav shell",
+  "description": "Top-navigation starter: brand, primary links (drawer on small screens), search, notifications, theme and user menu, a page header and an empty body.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/shell-topnav/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/shell-topnav/Page.tsx",
+      "content": "import { AppTopbar, FirstRunEmpty, PageHeader } from '@gntik-ai/blocks';\nimport { Logo, Stack, StackedLayout, type NavItem, type NotificationItem, type UserMenuUser } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport { shellTopnavCopy, shellTopnavLinks, shellTopnavNotifications, shellTopnavUser } from './data';\n\nexport interface ShellTopnavPageProps {\n  /** Brand at the start of the navbar; defaults to the preset Logo with wordmark. */\n  brand: ReactNode;\n  links: NavItem[];\n  /** Initial current link (uncontrolled). */\n  defaultHref: string;\n  onNavigate: (item: NavItem) => void;\n  user: UserMenuUser | null;\n  notifications: NotificationItem[] | null;\n  onSignOut: () => void;\n  title: ReactNode;\n  description: ReactNode;\n  emptyTitle: ReactNode;\n  emptyDescription: ReactNode;\n  emptyActionLabel: string;\n  emptySteps: string[];\n  onCreate: () => void;\n  footer: ReactNode;\n  /** Replaces the empty state with real page content. */\n  children: ReactNode;\n}\n\n/** Top-navigation starter: StackedLayout with brand, links, AppTopbar actions, a PageHeader and an empty body. */\nexport default function ShellTopnavPage({\n  brand = <Logo size={24} wordmark />,\n  links = shellTopnavLinks,\n  defaultHref = shellTopnavCopy.currentHref,\n  onNavigate,\n  user = shellTopnavUser,\n  notifications = shellTopnavNotifications,\n  onSignOut,\n  title = shellTopnavCopy.title,\n  description = shellTopnavCopy.description,\n  emptyTitle = shellTopnavCopy.emptyTitle,\n  emptyDescription = shellTopnavCopy.emptyDescription,\n  emptyActionLabel = shellTopnavCopy.emptyActionLabel,\n  emptySteps = shellTopnavCopy.emptySteps,\n  onCreate,\n  footer = shellTopnavCopy.footer,\n  children,\n}: Partial<ShellTopnavPageProps>) {\n  const [current, setCurrent] = useState(defaultHref);\n  return (\n    <StackedLayout\n      fullScreen\n      brand={brand}\n      links={links}\n      currentHref={current}\n      onNavigate={(item) => {\n        if (item.href) setCurrent(item.href);\n        onNavigate?.(item);\n      }}\n      mobileTitle=\"Navigation\"\n      actions={<AppTopbar breadcrumbs={null} environment={null} notifications={notifications} user={user} onSignOut={onSignOut} />}\n      footer={footer}\n    >\n      {/* PageHeader renders a <header>: inside <main> it is not a second banner landmark. */}\n      <Stack gap={6}>\n        <PageHeader breadcrumbs={null} title={title} description={description} status=\"\" meta={[]} actions={[]} tabs={null} />\n        {children ?? (\n          <FirstRunEmpty\n            titleAs=\"h2\"\n            title={emptyTitle}\n            description={emptyDescription}\n            actionLabel={emptyActionLabel}\n            onAction={onCreate}\n            steps={emptySteps}\n          />\n        )}\n      </Stack>\n    </StackedLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/shell-topnav/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/shell-topnav/data.ts",
+      "content": "import { appSidebarUser, appTopbarNotifications, firstRunSteps } from '@gntik-ai/blocks';\nimport { BarChart3, FolderKanban, Home, Rocket, Users } from '@gntik-ai/icons';\nimport type { NavItem } from '@gntik-ai/ui';\n\nexport { appSidebarUser as shellTopnavUser, appTopbarNotifications as shellTopnavNotifications };\n\nexport const shellTopnavLinks: NavItem[] = [\n  { label: 'Overview', href: '#overview', icon: Home },\n  { label: 'Projects', href: '#projects', icon: FolderKanban },\n  { label: 'Deployments', href: '#deployments', icon: Rocket },\n  { label: 'Analytics', href: '#analytics', icon: BarChart3 },\n  { label: 'Members', href: '#members', icon: Users },\n];\n\nexport const shellTopnavCopy = {\n  currentHref: '#projects',\n  title: 'Projects',\n  description: 'Services, environments and deployments, grouped by project.',\n  emptyTitle: 'Create your first project',\n  emptyDescription: 'Projects group your services, environments and deployments. Start one from a repository in a couple of minutes.',\n  emptyActionLabel: 'New project',\n  emptySteps: firstRunSteps,\n  footer: '© 2026 Acme Industries · Status · Privacy',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Shells"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "stable",
+    "source": "packages/templates/src/shell-topnav/template.meta.ts"
+  }
+}

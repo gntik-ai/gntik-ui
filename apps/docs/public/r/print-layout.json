@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "print-layout",
+  "type": "registry:block",
+  "title": "PrintLayout",
+  "description": "Printable document frame for invoices, reports and receipts: an A4 or Letter page (`size`) with margins (`margin`), header and footer slots and a `PageBreak` helper. On screen it is a paper sheet (bg-card / text-card-foreground, border, shadow-sm) on a muted backdrop in the current theme; `print:` variants drop the chrome (no backdrop, border, shadow or outer padding) and an `@page` rule sets paper size and margins (`pageRule`). The header and footer print once, at the top and end of the document. The consuming app should print with the light theme (ThemeProvider `defaultMode=\"light\"`, or `setMode('light')` before `window.print()`); no print-only colours are defined.",
+  "author": "gntik-ai",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json",
+    "https://gntik-ui.invalid/r/visually-hidden.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/layouts/PrintLayout/PrintLayout.tsx",
+      "type": "registry:component",
+      "target": "components/layouts/print-layout/PrintLayout.tsx",
+      "content": "import type { HTMLAttributes, ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { SkipLink } from '../../ui/visually-hidden';\nimport { useI18n } from '../../i18n/I18nProvider';\nimport { printLayoutVariants, type PrintLayoutVariantProps } from './print-layout.variants';\n\ntype PageSize = NonNullable<PrintLayoutVariantProps['size']>;\ntype PageMargin = NonNullable<PrintLayoutVariantProps['margin']>;\n\nconst PAGE_SIZE: Record<PageSize, string> = { a4: 'A4', letter: 'letter' };\nconst PAGE_MARGIN: Record<PageMargin, string> = { narrow: '12mm', normal: '20mm', wide: '28mm' };\n\nexport interface PrintLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** Paper size: A4 (210 × 297 mm) or US Letter (8.5 × 11 in). */\n  size?: PageSize;\n  /** Page margins (12 · 20 · 28 mm), on screen as padding and in print as the `@page` margin. */\n  margin?: PageMargin;\n  /** Document header: logo, sender, document number. */\n  header?: ReactNode;\n  /** Document footer: legal line, page note. */\n  footer?: ReactNode;\n  /** The document body. Use `PageBreak` between pages. */\n  children?: ReactNode;\n  /** Emit an `@page` rule with the size and margin (one PrintLayout per printed page set). */\n  pageRule?: boolean;\n  /** Accessible name of the document. */\n  'aria-label'?: string;\n  mainId?: string;\n  skipLinkLabel?: string;\n  fullScreen?: boolean;\n}\n\n/**\n * Printable document frame (invoice, report, receipt). On screen it is a paper sheet (card surface,\n * border, flat shadow) at A4 or Letter size on a muted backdrop, in the current theme; in print\n * the chrome drops (no backdrop, border, shadow or outer padding) and `@page` sets size and margins.\n * Print with the light theme (ThemeProvider `defaultMode=\"light\"` or `setMode('light')`).\n */\nexport function PrintLayout({\n  size = 'a4',\n  margin = 'normal',\n  header,\n  footer,\n  children,\n  pageRule = true,\n  'aria-label': ariaLabel,\n  mainId = 'main',\n  skipLinkLabel: skipLinkLabelProp,\n  fullScreen = false,\n  className,\n  ...props\n}: PrintLayoutProps) {\n  const { t } = useI18n();\n  const skipLinkLabel = skipLinkLabelProp ?? t('skip.document');\n  const s = printLayoutVariants({ size, margin, fullScreen });\n  return (\n    <div className={cn(s.root(), className)} {...props}>\n      {pageRule && <style>{`@page { size: ${PAGE_SIZE[size]}; margin: ${PAGE_MARGIN[margin]}; }`}</style>}\n      <SkipLink targetId={mainId} className={s.skipLink()}>\n        {skipLinkLabel}\n      </SkipLink>\n      <main id={mainId} tabIndex={-1} className={s.main()}>\n        <article aria-label={ariaLabel} className={s.sheet()}>\n          {header != null && <header className={s.header()}>{header}</header>}\n          <div className={s.content()}>{children}</div>\n          {footer != null && <footer className={s.footer()}>{footer}</footer>}\n        </article>\n      </main>\n    </div>\n  );\n}\n\nexport interface PageBreakProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'> {\n  className?: string;\n  /** On-screen marker text (hidden in print). Pass `null` to hide it. */\n  label?: ReactNode;\n}\n\n/** Forces a new printed page; on screen it shows as a dashed divider. */\nexport function PageBreak({ className, label: labelProp, ...props }: PageBreakProps) {\n  const { t } = useI18n();\n  const label = labelProp ?? t('print.pageBreak');\n  const s = printLayoutVariants();\n  return (\n    <div aria-hidden className={cn(s.pageBreak(), className)} {...props}>\n      {label != null && <span className={s.pageBreakLabel()}>{label}</span>}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/PrintLayout/index.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/print-layout/index.ts",
+      "content": "export { PrintLayout, PageBreak, type PrintLayoutProps, type PageBreakProps } from './PrintLayout';\nexport { printLayoutVariants, type PrintLayoutVariantProps } from './print-layout.variants';\nexport { doc as printLayoutDoc } from './PrintLayout.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/PrintLayout/print-layout.variants.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/print-layout/print-layout.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const printLayoutVariants = tv({\n  slots: {\n    root: [\n      'relative overflow-auto bg-secondary/40 px-4 py-8 font-sans text-foreground sm:px-8',\n      'print:h-auto print:min-h-0 print:overflow-visible print:bg-transparent print:p-0',\n    ],\n    skipLink: 'focus:absolute print:hidden',\n    main: 'outline-none',\n    sheet: [\n      'mx-auto flex flex-col border border-border bg-card text-card-foreground shadow-sm',\n      'print:m-0 print:w-auto print:min-h-0 print:max-w-none print:border-0 print:shadow-none',\n    ],\n    header: 'flex items-start justify-between gap-6 border-b border-border pb-6',\n    content: 'flex-1 py-8 text-[13px] leading-relaxed',\n    footer: 'border-t border-border pt-4 text-[11px] text-muted-foreground',\n    pageBreak: [\n      'relative my-10 border-t border-dashed border-border',\n      'break-after-page print:my-0 print:border-0',\n    ],\n    pageBreakLabel: 'absolute -top-2 left-1/2 -translate-x-1/2 bg-card px-2 font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase print:hidden',\n  },\n  variants: {\n    size: {\n      a4: { sheet: 'w-[210mm] max-w-full min-h-[297mm]' },\n      letter: { sheet: 'w-[8.5in] max-w-full min-h-[11in]' },\n    },\n    margin: {\n      narrow: { sheet: 'p-[12mm] print:p-0' },\n      normal: { sheet: 'p-[20mm] print:p-0' },\n      wide: { sheet: 'p-[28mm] print:p-0' },\n    },\n    fullScreen: {\n      true: { root: 'h-dvh' },\n      false: { root: 'h-full min-h-full' },\n    },\n  },\n  defaultVariants: { size: 'a4', margin: 'normal', fullScreen: false },\n});\n\nexport type PrintLayoutVariantProps = VariantProps<typeof printLayoutVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/PrintLayout/PrintLayout.doc.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/print-layout/PrintLayout.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'PrintLayout',\n  group: 'Layout',\n  status: 'beta',\n  description:\n    'Printable document frame for invoices, reports and receipts: an A4 or Letter page (`size`) with margins (`margin`), header and footer slots and a `PageBreak` helper. On screen it is a paper sheet (bg-card / text-card-foreground, border, shadow-sm) on a muted backdrop in the current theme; `print:` variants drop the chrome (no backdrop, border, shadow or outer padding) and an `@page` rule sets paper size and margins (`pageRule`). The header and footer print once, at the top and end of the document. The consuming app should print with the light theme (ThemeProvider `defaultMode=\"light\"`, or `setMode(\\'light\\')` before `window.print()`); no print-only colours are defined.',\n  pattern: 'landmark (main) + labelled article',\n  keyboard: [['—', 'None: a static document (the skip link still moves focus to it)']],\n  tokens: ['card', 'card-foreground', 'secondary', 'border', 'muted-foreground'],\n};\n"
+    }
+  ],
+  "categories": [
+    "layout",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "layout",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/layouts/PrintLayout/PrintLayout.doc.ts"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stat-card",
+  "type": "registry:block",
+  "title": "Stat card",
+  "description": "One rich stat: icon tile, value and delta that recalculate per range (7d/30d/90d), a trend chart and a footer action.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/data-display/StatCard/StatCard.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/data-display/stat-card/StatCard.tsx",
+      "content": "import { Activity, ArrowRight, type LucideIcon } from '@gntik-ai/icons';\nimport { Button, Card, cn, Link, Sparkline, Toggle, ToggleGroup, type SparklineTone } from '@gntik-ai/ui';\nimport { useState } from 'react';\nimport { TrendDelta, type KpiDelta } from '../shared/TrendDelta';\nimport { STAT_RANGES } from './fixtures';\n\nexport interface StatCardRange {\n  /** Range key, e.g. \"7d\". */\n  value: string;\n  /** Toggle label. */\n  label: string;\n  /** Pre-formatted headline value for this range. */\n  stat: string;\n  delta?: KpiDelta;\n  /** Series drawn under the value, oldest first. */\n  series: readonly number[];\n}\n\nexport interface StatCardProps {\n  label?: string;\n  /** Leading icon tile (a lucide icon). */\n  icon?: LucideIcon;\n  /** One entry per range; with a single entry the range toggle is hidden. */\n  ranges?: readonly StatCardRange[];\n  /** Initially selected range (uncontrolled). */\n  defaultRange?: string;\n  /** Selected range (controlled). */\n  range?: string;\n  onRangeChange?: (range: string) => void;\n  /** `area` line (default) or daily `bar` shape. */\n  chart?: 'area' | 'bar';\n  tone?: SparklineTone;\n  /** Footer link-style action (\"View requests →\"). */\n  action?: { label: string; onClick?: () => void; href?: string };\n  /** Heading level of the title, to fit the page outline (default h3). */\n  titleAs?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\n/** A single rich stat: icon tile, label, value, delta, a range toggle and a trend chart, with a footer action. */\nexport function StatCard({\n  label = 'Requests',\n  icon: IconCmp = Activity,\n  ranges = STAT_RANGES,\n  defaultRange,\n  range: rangeProp,\n  onRangeChange,\n  chart = 'area',\n  tone = 'primary',\n  action = { label: 'View requests' },\n  titleAs: TitleTag = 'h3',\n  className,\n}: StatCardProps) {\n  const [inner, setInner] = useState(defaultRange ?? ranges[0]?.value ?? '');\n  const current = rangeProp ?? inner;\n  const active = ranges.find((r) => r.value === current) ?? ranges[0];\n  const select = (next: string) => {\n    setInner(next);\n    onRangeChange?.(next);\n  };\n  return (\n    <Card className={cn('flex flex-col', className)}>\n      <div className=\"flex flex-1 flex-col p-5\">\n        <div className=\"flex items-start justify-between gap-3\">\n          <div className=\"flex min-w-0 items-center gap-3\">\n            <span className=\"inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary/14 text-primary-chip-text\">\n              <IconCmp size={18} aria-hidden />\n            </span>\n            <TitleTag className=\"truncate text-[13px] font-medium text-muted-foreground\">{label}</TitleTag>\n          </div>\n          {ranges.length > 1 && (\n            <ToggleGroup\n              aria-label={`${label} range`}\n              size=\"sm\"\n              value={[current]}\n              onValueChange={(v) => {\n                const next = v[0];\n                if (next) select(next);\n              }}\n            >\n              {ranges.map((r) => (\n                <Toggle key={r.value} value={r.value} className=\"font-mono\">\n                  {r.label}\n                </Toggle>\n              ))}\n            </ToggleGroup>\n          )}\n        </div>\n        {active && (\n          <>\n            <p className=\"mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1\" aria-live=\"polite\">\n              <span className=\"text-[26px] font-semibold tracking-tight text-foreground tabular-nums\">{active.stat}</span>\n              {active.delta && <TrendDelta {...active.delta} />}\n            </p>\n            {active.delta?.note && <p className=\"mt-1 text-[12px] text-muted-foreground\">{active.delta.note}</p>}\n            <Sparkline\n              data={active.series}\n              label={`${label}, ${active.label}`}\n              variant={chart === 'bar' ? 'bar' : 'line'}\n              area={chart === 'area'}\n              markers={chart === 'area' ? ['last'] : []}\n              tone={tone}\n              width={280}\n              height={56}\n              className=\"mt-4 block h-auto w-full\"\n            />\n          </>\n        )}\n      </div>\n      {action && (\n        <div className=\"border-t border-border px-5 py-3\">\n          {action.href ? (\n            <Link underline=\"hover\" href={action.href} className=\"inline-flex items-center gap-1 text-[12.5px] font-semibold\">\n              {action.label}\n              <ArrowRight size={14} aria-hidden />\n            </Link>\n          ) : (\n            <Button variant=\"ghost\" size=\"sm\" trailingIcon={ArrowRight} className=\"-mx-2 text-primary-text hover:text-primary-text\" onClick={action.onClick}>\n              {action.label}\n            </Button>\n          )}\n        </div>\n      )}\n    </Card>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/data-display/StatCard/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/data-display/stat-card/fixtures.ts",
+      "content": "import type { StatCardRange } from './StatCard';\n\n/** Requests per range: the value and delta recalculate when the range changes. */\nexport const STAT_RANGES: StatCardRange[] = [\n  {\n    value: '7d',\n    label: '7d',\n    stat: '38,921',\n    delta: { value: '+12.4%', direction: 'up', sentiment: 'positive', note: 'vs. previous 7 days' },\n    series: [31, 34, 33, 38, 36, 41, 39],\n  },\n  {\n    value: '30d',\n    label: '30d',\n    stat: '1.09M',\n    delta: { value: '+9.6%', direction: 'up', sentiment: 'positive', note: 'vs. previous 30 days' },\n    series: [28, 30, 29, 33, 31, 30, 34, 32, 36, 35, 38, 37],\n  },\n  {\n    value: '90d',\n    label: '90d',\n    stat: '3.02M',\n    delta: { value: '+22.8%', direction: 'up', sentiment: 'positive', note: 'vs. previous 90 days' },\n    series: [22, 24, 23, 26, 25, 28, 27, 30, 29, 33, 32, 36],\n  },\n];\n"
+    },
+    {
+      "path": "packages/blocks/src/data-display/shared/TrendDelta.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/data-display/shared/TrendDelta.tsx",
+      "content": "import { cn } from '@gntik-ai/ui';\n\n/** Arrow shape of a change. */\nexport type DeltaDirection = 'up' | 'down' | 'flat';\n/** Whether the change is good, bad or neither — independent of its direction (lower latency is good). */\nexport type DeltaSentiment = 'positive' | 'negative' | 'neutral';\n\nexport interface KpiDelta {\n  /** Display text, e.g. \"+12.4%\". */\n  value: string;\n  direction: DeltaDirection;\n  sentiment: DeltaSentiment;\n  /** Comparison context, e.g. \"vs. previous 24h\". */\n  note?: string;\n}\n\nconst SENTIMENT_CLASS: Record<DeltaSentiment, string> = {\n  positive: 'text-success-text',\n  negative: 'text-destructive-text',\n  neutral: 'text-muted-foreground',\n};\n\nconst DIRECTION_TEXT: Record<DeltaDirection, string> = { up: 'Increased by', down: 'Decreased by', flat: 'Unchanged:' };\nconst SENTIMENT_TEXT: Record<DeltaSentiment, string> = { positive: 'favourable', negative: 'unfavourable', neutral: '' };\n\nexport interface TrendDeltaProps extends KpiDelta {\n  className?: string;\n}\n\n/**\n * Mono delta with a triangle: the arrow follows `direction`, the colour follows `sentiment`.\n * Screen readers get the direction and sentiment in words.\n */\nexport function TrendDelta({ value, direction, sentiment, className }: TrendDeltaProps) {\n  const sr = [DIRECTION_TEXT[direction], value, SENTIMENT_TEXT[sentiment] && `(${SENTIMENT_TEXT[sentiment]})`].filter(Boolean).join(' ');\n  return (\n    <span\n      data-sentiment={sentiment}\n      className={cn('inline-flex items-center gap-1 font-mono text-[12px] font-medium tabular-nums', SENTIMENT_CLASS[sentiment], className)}\n    >\n      <svg width=\"9\" height=\"9\" viewBox=\"0 0 10 10\" aria-hidden className=\"shrink-0\">\n        {direction === 'up' && <path d=\"M5 1.5 9 8.5H1z\" fill=\"currentColor\" />}\n        {direction === 'down' && <path d=\"M5 8.5 1 1.5h8z\" fill=\"currentColor\" />}\n        {direction === 'flat' && <path d=\"M1 4h8v2H1z\" fill=\"currentColor\" />}\n      </svg>\n      <span aria-hidden>{value}</span>\n      <span className=\"sr-only\">{sr}</span>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "data-display"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/data-display/StatCard/block.meta.ts"
+  }
+}

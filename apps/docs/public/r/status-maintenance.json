@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-maintenance",
+  "type": "registry:block",
+  "title": "Maintenance",
+  "description": "Full-page maintenance state: message, Check again and a status page link, with a maintenance SystemBanner carrying the window and a subscribe link.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/status-maintenance/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/status-maintenance/Page.tsx",
+      "content": "import { SystemBanner } from '@gntik-ai/blocks';\nimport { ExternalLink, RefreshCw, Wrench } from '@gntik-ai/icons';\nimport { Button, Logo, StatusLayout } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport { maintenanceContent } from './data';\n\nexport interface StatusMaintenanceProps {\n  title: ReactNode;\n  description: ReactNode;\n  /** Bold lead-in and message of the maintenance banner. */\n  bannerTitle: ReactNode;\n  bannerMessage: ReactNode;\n  statusHref: string;\n  subscribeHref: string;\n  /**\n   * \"Check again\" handler. Resolve `true` when the service is back (the product then navigates);\n   * anything else shows the \"still in maintenance\" note.\n   */\n  onCheckAgain: () => boolean | void | Promise<boolean | void>;\n  header: ReactNode;\n  fullScreen: boolean;\n}\n\n/** Maintenance page: StatusLayout with Check again, a status page link and a maintenance SystemBanner. */\nexport default function StatusMaintenancePage(props: Partial<StatusMaintenanceProps>) {\n  const {\n    title = maintenanceContent.title,\n    description = maintenanceContent.description,\n    bannerTitle = maintenanceContent.bannerTitle,\n    bannerMessage = maintenanceContent.bannerMessage,\n    statusHref = maintenanceContent.statusHref,\n    subscribeHref = maintenanceContent.subscribeHref,\n    onCheckAgain,\n    header = <Logo size={24} wordmark />,\n    fullScreen = true,\n  } = props;\n  const [checking, setChecking] = useState(false);\n  const [note, setNote] = useState('');\n\n  const check = async () => {\n    setChecking(true);\n    setNote('');\n    try {\n      const back = await onCheckAgain?.();\n      if (back !== true) setNote(maintenanceContent.stillDown);\n    } finally {\n      setChecking(false);\n    }\n  };\n\n  return (\n    <StatusLayout\n      fullScreen={fullScreen}\n      tone=\"warning\"\n      header={header}\n      icon={Wrench}\n      code={maintenanceContent.code}\n      title={title}\n      description={description}\n      primaryAction={\n        <Button icon={RefreshCw} loading={checking} onClick={() => void check()}>\n          Check again\n        </Button>\n      }\n      secondaryAction={\n        <Button variant=\"secondary\" trailingIcon={ExternalLink} render={<a href={statusHref} />} nativeButton={false}>\n          {maintenanceContent.statusLabel}\n        </Button>\n      }\n    >\n      <SystemBanner\n        kind=\"maintenance\"\n        dismissible={false}\n        title={bannerTitle}\n        message={bannerMessage}\n        action={{ label: maintenanceContent.subscribeLabel, href: subscribeHref }}\n        className=\"rounded-lg border text-start\"\n      />\n      <p aria-live=\"polite\" className=\"mt-3 min-h-4 text-[12.5px] text-muted-foreground\">\n        {note}\n      </p>\n    </StatusLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/status-maintenance/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/status-maintenance/data.ts",
+      "content": "/** Neutral fixtures for the maintenance page. */\nexport const maintenanceContent = {\n  code: 'Scheduled maintenance',\n  title: 'We’ll be back shortly',\n  description: 'We are upgrading the database. Running services are not affected; the dashboard is read-only until 14:30 UTC.',\n  bannerTitle: 'Maintenance in progress.',\n  bannerMessage: 'Started 13:00 UTC · expected to end 14:30 UTC.',\n  statusLabel: 'View status page',\n  statusHref: '/status',\n  subscribeLabel: 'Subscribe to updates',\n  subscribeHref: '/status/subscribe',\n  stillDown: 'Still in maintenance. Try again in a few minutes.',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "System"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/status-maintenance/template.meta.ts"
+  }
+}

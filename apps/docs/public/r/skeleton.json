@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton",
+  "type": "registry:ui",
+  "title": "Skeleton",
+  "description": "Loading placeholder in the shape of the content: block, text (one or more lines, the last shorter) or circle. Pulses gently and stops under prefers-reduced-motion. Decorative; announce loading on the container.",
+  "author": "gntik-ai",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Skeleton/Skeleton.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/skeleton/Skeleton.tsx",
+      "content": "import type { HTMLAttributes, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { skeletonVariants, type SkeletonVariantProps } from './skeleton.variants';\n\nexport interface SkeletonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'>, SkeletonVariantProps {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** For `shape=\"text\"`: number of lines; the last one is shorter. */\n  lines?: number;\n}\n\n/**\n * Loading placeholder. Always decorative (aria-hidden): announce loading on the container,\n * e.g. `<div role=\"status\" aria-label=\"Loading members\">`. The pulse stops under reduced motion.\n */\nexport function Skeleton({ shape, lines = 1, className, ...props }: SkeletonProps) {\n  const s = skeletonVariants({ shape });\n  if (shape === 'text' && lines > 1) {\n    return (\n      <div aria-hidden className={cn(s.lines(), className)} {...props}>\n        {Array.from({ length: lines }, (_, i) => (\n          <div key={i} className={cn(s.block(), i === lines - 1 && 'w-2/3')} />\n        ))}\n      </div>\n    );\n  }\n  return <div aria-hidden className={cn(s.block(), className)} {...props} />;\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Skeleton/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/skeleton/index.ts",
+      "content": "export { Skeleton, type SkeletonProps } from './Skeleton';\nexport { skeletonVariants, type SkeletonVariantProps } from './skeleton.variants';\nexport { doc as skeletonDoc } from './Skeleton.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Skeleton/skeleton.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/skeleton/skeleton.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const skeletonVariants = tv({\n  slots: {\n    block: 'animate-pulse bg-muted motion-reduce:animate-none',\n    lines: 'grid gap-2',\n  },\n  variants: {\n    shape: {\n      block: { block: 'h-4 w-full rounded-md' },\n      text: { block: 'h-3 w-full rounded-md' },\n      circle: { block: 'size-10 shrink-0 rounded-full' },\n    },\n  },\n  defaultVariants: { shape: 'block' },\n});\n\nexport type SkeletonVariantProps = VariantProps<typeof skeletonVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Skeleton/Skeleton.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/skeleton/Skeleton.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Skeleton',\n  group: 'Feedback',\n  status: 'stable',\n  description: 'Loading placeholder in the shape of the content: block, text (one or more lines, the last shorter) or circle. Pulses gently and stops under prefers-reduced-motion. Decorative; announce loading on the container.',\n  tokens: ['muted'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Feedback"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Skeleton/Skeleton.doc.ts"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "danger-zone",
+  "type": "registry:block",
+  "title": "Danger zone",
+  "description": "Bordered destructive section whose actions open an alert dialog that can require typing the resource name.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/forms/DangerZone/ConfirmDestructiveDialog.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/forms/danger-zone/ConfirmDestructiveDialog.tsx",
+      "content": "import {\n  AlertDialog,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogTitle,\n  Alert,\n  Button,\n  Field,\n  FieldLabel,\n  Input,\n} from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\n\nexport interface ConfirmDestructiveDialogProps {\n  open: boolean;\n  onOpenChange: (open: boolean) => void;\n  title: ReactNode;\n  description: ReactNode;\n  /** Text that must be typed exactly to enable the confirming button. */\n  confirmText?: string;\n  confirmLabel: string;\n  /** Runs on confirm; a returned promise shows a loading state and keeps the dialog open until it settles. */\n  onConfirm?: () => void | Promise<void>;\n}\n\n/** Destructive confirmation (alertdialog) that can require typing the resource name first. */\nexport function ConfirmDestructiveDialog({ open, onOpenChange, title, description, confirmText, confirmLabel, onConfirm }: ConfirmDestructiveDialogProps) {\n  const [typed, setTyped] = useState('');\n  const [loading, setLoading] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n  const matches = confirmText == null || typed === confirmText;\n\n  const change = (next: boolean) => {\n    if (loading) return;\n    if (!next) {\n      setTyped('');\n      setError(null);\n    }\n    onOpenChange(next);\n  };\n\n  const confirm = async () => {\n    if (!matches) return;\n    setError(null);\n    setLoading(true);\n    try {\n      await onConfirm?.();\n      setLoading(false);\n      setTyped('');\n      onOpenChange(false);\n    } catch (e) {\n      setLoading(false);\n      setError(e instanceof Error ? e.message : 'Something went wrong. Try again.');\n    }\n  };\n\n  return (\n    <AlertDialog open={open} onOpenChange={change}>\n      <AlertDialogContent size=\"md\">\n        <AlertDialogHeader tone=\"destructive\">\n          <AlertDialogTitle>{title}</AlertDialogTitle>\n          <AlertDialogDescription>{description}</AlertDialogDescription>\n        </AlertDialogHeader>\n        <form\n          className=\"mt-5 grid gap-4\"\n          onSubmit={(e) => {\n            e.preventDefault();\n            void confirm();\n          }}\n        >\n          {confirmText != null && (\n            <Field>\n              <FieldLabel>\n                Type <span className=\"font-mono font-semibold text-foreground\">{confirmText}</span> to confirm\n              </FieldLabel>\n              <Input value={typed} onValueChange={setTyped} autoComplete=\"off\" spellCheck={false} disabled={loading} />\n            </Field>\n          )}\n          {error && <Alert tone=\"destructive\" description={error} />}\n          <AlertDialogFooter className=\"mt-1\">\n            <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>\n            <Button type=\"submit\" variant=\"destructive\" disabled={!matches} loading={loading}>\n              {confirmLabel}\n            </Button>\n          </AlertDialogFooter>\n        </form>\n      </AlertDialogContent>\n    </AlertDialog>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/forms/DangerZone/DangerZone.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/forms/danger-zone/DangerZone.tsx",
+      "content": "import { Button, cn } from '@gntik-ai/ui';\nimport { useId, useState, type ReactNode } from 'react';\nimport { ConfirmDestructiveDialog } from './ConfirmDestructiveDialog';\nimport { dangerZoneActions, type DangerZoneAction } from './fixtures';\n\nexport type { DangerZoneAction } from './fixtures';\n\nexport interface DangerZoneProps {\n  title?: ReactNode;\n  description?: ReactNode;\n  actions?: DangerZoneAction[];\n  /** Called after the user confirms an action. A returned promise shows a loading state. */\n  onConfirm?: (actionId: string) => void | Promise<void>;\n  headingLevel?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\n/**\n * Bordered destructive section. Each action opens a confirmation dialog; actions with\n * `confirmText` require typing it (e.g. the project name) before the confirm button enables.\n */\nexport function DangerZone({\n  title = 'Danger zone',\n  description = 'These actions affect the whole project and every member who can access it.',\n  actions = dangerZoneActions,\n  onConfirm,\n  headingLevel: Heading = 'h2',\n  className,\n}: DangerZoneProps) {\n  const id = useId();\n  const [pending, setPending] = useState<DangerZoneAction | null>(null);\n  const [open, setOpen] = useState(false);\n\n  return (\n    <section aria-labelledby={`${id}-title`} className={cn('rounded-lg border border-destructive/35 bg-card shadow-sm', className)}>\n      <div className=\"border-b border-destructive/20 px-6 py-4\">\n        <Heading id={`${id}-title`} className=\"text-[15px] font-semibold tracking-tight text-destructive-text\">\n          {title}\n        </Heading>\n        {description != null && <p className=\"mt-1 text-[13px] leading-6 text-pretty text-muted-foreground\">{description}</p>}\n      </div>\n      <ul className=\"divide-y divide-border\">\n        {actions.map((action) => (\n          <li key={action.id} className=\"flex flex-col gap-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6\">\n            <div className=\"min-w-0\">\n              <div className=\"text-[13.5px] font-semibold text-foreground\">{action.title}</div>\n              <p className=\"mt-0.5 max-w-xl text-[12.5px] leading-5 text-pretty text-muted-foreground\">{action.description}</p>\n            </div>\n            <Button\n              variant={action.destructive === false ? 'secondary' : 'destructive'}\n              className=\"shrink-0 self-start sm:self-auto\"\n              onClick={() => {\n                setPending(action);\n                setOpen(true);\n              }}\n            >\n              {action.actionLabel}\n            </Button>\n          </li>\n        ))}\n      </ul>\n      {pending && (\n        <ConfirmDestructiveDialog\n          key={pending.id}\n          open={open}\n          onOpenChange={setOpen}\n          title={`${pending.title}?`}\n          description={pending.description}\n          confirmText={pending.confirmText}\n          confirmLabel={pending.actionLabel}\n          onConfirm={() => onConfirm?.(pending.id)}\n        />\n      )}\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/forms/DangerZone/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/forms/danger-zone/fixtures.ts",
+      "content": "export interface DangerZoneAction {\n  id: string;\n  title: string;\n  description: string;\n  /** Label of the row button and of the confirming button. */\n  actionLabel: string;\n  /** Text the user must type to confirm (e.g. the resource name). Omit for a plain confirmation. */\n  confirmText?: string;\n  /** Use the destructive button style in the row (default true); `false` renders a secondary button. */\n  destructive?: boolean;\n}\n\nexport const dangerZoneActions: DangerZoneAction[] = [\n  {\n    id: 'transfer',\n    title: 'Transfer project',\n    description: 'Move this project and its deployments to another workspace you administer.',\n    actionLabel: 'Transfer',\n    destructive: false,\n  },\n  {\n    id: 'archive',\n    title: 'Archive project',\n    description: 'Stops every deployment and makes the project read-only. You can restore it later.',\n    actionLabel: 'Archive',\n    confirmText: 'billing-dashboard',\n  },\n  {\n    id: 'delete',\n    title: 'Delete project',\n    description: 'Permanently deletes billing-dashboard, its deployments, secrets and audit log. This cannot be undone.',\n    actionLabel: 'Delete project',\n    confirmText: 'billing-dashboard',\n  },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "forms"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/forms/DangerZone/block.meta.ts"
+  }
+}

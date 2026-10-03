@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "invoice-table",
+  "type": "registry:block",
+  "title": "Invoice table",
+  "description": "Invoice history table with number, date, amount, a status badge (paid, due, overdue, void) and a per-row PDF download.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/billing/InvoiceTable/InvoiceTable.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/billing/invoice-table/InvoiceTable.tsx",
+      "content": "import { Badge, Button, Link, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, cn, type BadgeTone } from '@gntik-ai/ui';\nimport { Download } from '@gntik-ai/icons';\nimport { formatMoney, formatShortDate, type DateInput } from '../format';\nimport { sampleInvoices } from './fixtures';\n\nexport type InvoiceStatus = 'paid' | 'open' | 'overdue' | 'void' | 'draft';\n\nexport interface Invoice {\n  id: string;\n  /** Human invoice number, e.g. \"INV-2026-0004\". */\n  number: string;\n  /** Issue date. */\n  date: DateInput;\n  amount: number;\n  /** ISO 4217 code. Default: the table's currency. */\n  currency?: string;\n  status: InvoiceStatus;\n  /** PDF URL. Without it the download control calls `onDownload` only. */\n  url?: string;\n}\n\nexport interface InvoiceTableProps {\n  invoices?: Invoice[];\n  /** Table caption (screen-reader only unless `showCaption`). */\n  caption?: string;\n  showCaption?: boolean;\n  currency?: string;\n  /** Called when a download control is activated. */\n  onDownload?: (invoice: Invoice) => void;\n  /** Row density. */\n  density?: 'compact' | 'comfortable';\n  className?: string;\n}\n\nconst STATUS: Record<InvoiceStatus, { label: string; tone: BadgeTone }> = {\n  paid: { label: 'Paid', tone: 'success' },\n  open: { label: 'Due', tone: 'warning' },\n  overdue: { label: 'Overdue', tone: 'destructive' },\n  void: { label: 'Void', tone: 'neutral' },\n  draft: { label: 'Draft', tone: 'neutral' },\n};\n\n/** Invoice history: number, date, amount, status and a per-row PDF download. */\nexport function InvoiceTable({\n  invoices = sampleInvoices,\n  caption = 'Invoice history',\n  showCaption = false,\n  currency = 'USD',\n  onDownload,\n  density = 'comfortable',\n  className,\n}: InvoiceTableProps) {\n  return (\n    <div className={cn('overflow-hidden rounded-lg border border-border bg-card', className)}>\n      <Table density={density}>\n        <TableCaption srOnly={!showCaption}>{caption}</TableCaption>\n        <TableHeader>\n          <TableRow>\n            <TableHead>Invoice</TableHead>\n            <TableHead>Date</TableHead>\n            <TableHead>Status</TableHead>\n            <TableHead align=\"right\">Amount</TableHead>\n            <TableHead align=\"right\">\n              <span className=\"sr-only\">Download</span>\n            </TableHead>\n          </TableRow>\n        </TableHeader>\n        <TableBody>\n          {invoices.map((inv) => {\n            const status = STATUS[inv.status];\n            const label = `Download ${inv.number}`;\n            return (\n              <TableRow key={inv.id}>\n                <TableCell className=\"font-mono text-[12.5px] font-medium text-foreground\">{inv.number}</TableCell>\n                <TableCell className=\"whitespace-nowrap text-muted-foreground\">{formatShortDate(inv.date)}</TableCell>\n                <TableCell>\n                  <Badge tone={status.tone} dot>\n                    {status.label}\n                  </Badge>\n                </TableCell>\n                <TableCell align=\"right\" className=\"font-mono tabular-nums text-foreground\">\n                  {formatMoney(inv.amount, inv.currency ?? currency)}\n                </TableCell>\n                <TableCell align=\"right\">\n                  {inv.url ? (\n                    <Link\n                      href={inv.url}\n                      download\n                      aria-label={label}\n                      onClick={() => onDownload?.(inv)}\n                      className=\"inline-flex items-center gap-1.5 text-[12.5px] font-semibold\"\n                    >\n                      <Download size={14} aria-hidden />\n                      PDF\n                    </Link>\n                  ) : onDownload && inv.status !== 'void' && inv.status !== 'draft' ? (\n                    <Button variant=\"ghost\" size=\"sm\" icon={Download} aria-label={label} onClick={() => onDownload(inv)}>\n                      PDF\n                    </Button>\n                  ) : (\n                    <span className=\"text-[12px] text-muted-foreground\">—</span>\n                  )}\n                </TableCell>\n              </TableRow>\n            );\n          })}\n        </TableBody>\n      </Table>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/InvoiceTable/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/invoice-table/fixtures.ts",
+      "content": "import type { Invoice } from './InvoiceTable';\n\n/** Sample invoice history. */\nexport const sampleInvoices: Invoice[] = [\n  { id: 'inv_0526', number: 'INV-2026-0005', date: '2026-06-01', amount: 1620, status: 'open', url: '#invoice-INV-2026-0005' },\n  { id: 'inv_0426', number: 'INV-2026-0004', date: '2026-05-01', amount: 1584.2, status: 'paid', url: '#invoice-INV-2026-0004' },\n  { id: 'inv_0326', number: 'INV-2026-0003', date: '2026-04-01', amount: 1498, status: 'paid', url: '#invoice-INV-2026-0003' },\n  { id: 'inv_0226', number: 'INV-2026-0002', date: '2026-03-01', amount: 1432.6, status: 'overdue', url: '#invoice-INV-2026-0002' },\n  { id: 'inv_0126', number: 'INV-2026-0001', date: '2026-02-01', amount: 1200, status: 'void' },\n];\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/format.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/format.ts",
+      "content": "/** Shared formatting for the billing blocks (en-US, Intl). */\n\n/** A calendar date: a `Date` or an ISO `YYYY-MM-DD` string (read as a local date, no UTC shift). */\nexport type DateInput = Date | string;\n\nexport function toDate(value: DateInput): Date {\n  if (value instanceof Date) return value;\n  const m = /^(\\d{4})-(\\d{2})-(\\d{2})$/.exec(value);\n  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));\n  return new Date(value);\n}\n\nconst dateFmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });\nconst shortDateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });\n\n/** \"June 1, 2026\". */\nexport function formatDate(value: DateInput): string {\n  return dateFmt.format(toDate(value));\n}\n\n/** \"Jun 1, 2026\". */\nexport function formatShortDate(value: DateInput): string {\n  return shortDateFmt.format(toDate(value));\n}\n\n/** Money with the currency symbol: \"$1,620.00\" (or no decimals with `whole`). */\nexport function formatMoney(amount: number, currency = 'USD', whole = false): string {\n  return new Intl.NumberFormat('en-US', {\n    style: 'currency',\n    currency,\n    minimumFractionDigits: whole ? 0 : 2,\n    maximumFractionDigits: whole ? 0 : 2,\n  }).format(amount);\n}\n\n/** Grouped number, compact above a million: \"412,800\", \"78.4M\". */\nexport function formatQuantity(value: number): string {\n  if (Math.abs(value) >= 1_000_000) {\n    return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value);\n  }\n  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(value);\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "billing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/billing/InvoiceTable/block.meta.ts"
+  }
+}

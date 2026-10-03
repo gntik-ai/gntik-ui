@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "activity-feed",
+  "type": "registry:block",
+  "title": "Activity feed",
+  "description": "Who did what, when: actor avatar, action, target and Timestamp, grouped by day (Today, Yesterday, date), with optional Load more.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/data-display/ActivityFeed/ActivityFeed.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/data-display/activity-feed/ActivityFeed.tsx",
+      "content": "import { Avatar, Button, cn, Timestamp, toDate, type DateInput } from '@gntik-ai/ui';\nimport { useId, useState } from 'react';\nimport { PROJECT_ACTIVITY } from './fixtures';\n\nexport interface ActivityItem {\n  id: string;\n  actor: { name: string; src?: string };\n  /** Verb phrase (\"deployed\", \"invited\"). */\n  action: string;\n  /** Object of the action, emphasised (\"orders-api v2.14.0\"). */\n  target?: string;\n  at: DateInput;\n}\n\nexport interface ActivityFeedProps {\n  /** Items, newest first. */\n  items?: readonly ActivityItem[];\n  /** Accessible name of the feed. */\n  label?: string;\n  /** Reference \"now\" for the Today / Yesterday headings (defaults to the mount time). */\n  now?: DateInput;\n  locale?: string;\n  /** Shows a \"Load more\" button. */\n  onLoadMore?: () => void;\n  loadingMore?: boolean;\n  /** Heading level of the day-group titles, to fit the page outline (default h3). */\n  groupHeadingAs?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\ninterface DayGroup {\n  key: string;\n  label: string;\n  items: ActivityItem[];\n}\n\nconst dayKey = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;\n\n/** Groups items by calendar day (local time), labelled Today, Yesterday or the date. */\nexport function groupActivityByDay(items: readonly ActivityItem[], now: Date, locale?: string): DayGroup[] {\n  const today = dayKey(now);\n  const yesterday = dayKey(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1));\n  const fmt = new Intl.DateTimeFormat(locale, { weekday: 'long', month: 'short', day: 'numeric' });\n  const groups: DayGroup[] = [];\n  for (const item of items) {\n    const date = toDate(item.at);\n    if (!date) continue;\n    const key = dayKey(date);\n    let group = groups.find((g) => g.key === key);\n    if (!group) {\n      group = { key, label: key === today ? 'Today' : key === yesterday ? 'Yesterday' : fmt.format(date), items: [] };\n      groups.push(group);\n    }\n    group.items.push(item);\n  }\n  return groups;\n}\n\n/** Activity feed: actor avatar, action, target and Timestamp, grouped by day. */\nexport function ActivityFeed({ items = PROJECT_ACTIVITY, label = 'Recent activity', now, locale, onLoadMore, loadingMore, groupHeadingAs: GroupTag = 'h3', className }: ActivityFeedProps) {\n  const [mountedAt] = useState(() => Date.now());\n  const reference = toDate(now ?? mountedAt) ?? new Date(mountedAt);\n  const groups = groupActivityByDay(items, reference, locale);\n  const id = useId();\n  return (\n    <section aria-label={label} className={cn('flex flex-col gap-6', className)}>\n      {groups.map((group) => {\n        const headingId = `${id}-${group.key}`;\n        return (\n          <div key={group.key}>\n            <GroupTag id={headingId} className=\"mb-3 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase\">\n              {group.label}\n            </GroupTag>\n            <ul aria-labelledby={headingId} className=\"flex flex-col\">\n              {group.items.map((item, i) => (\n                <li key={item.id} className=\"relative flex gap-3 pb-5 last:pb-0\">\n                  {i < group.items.length - 1 && <span aria-hidden className=\"absolute top-7 bottom-0.5 start-[11.5px] w-px bg-border\" />}\n                  <Avatar name={item.actor.name} src={item.actor.src} size=\"xs\" className=\"mt-0.5\" />\n                  <div className=\"flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4\">\n                    <p className=\"min-w-0 text-[13px] text-muted-foreground\">\n                      <span className=\"font-semibold text-foreground\">{item.actor.name}</span> {item.action}\n                      {item.target && (\n                        <>\n                          {' '}\n                          <span className=\"font-medium text-foreground\">{item.target}</span>\n                        </>\n                      )}\n                    </p>\n                    <Timestamp value={item.at} locale={locale} className=\"shrink-0 font-mono text-[11px]\" />\n                  </div>\n                </li>\n              ))}\n            </ul>\n          </div>\n        );\n      })}\n      {onLoadMore && (\n        <Button variant=\"secondary\" size=\"sm\" className=\"self-start\" loading={loadingMore} onClick={onLoadMore}>\n          Load more\n        </Button>\n      )}\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/data-display/ActivityFeed/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/data-display/activity-feed/fixtures.ts",
+      "content": "import type { ActivityItem } from './ActivityFeed';\n\nconst MIN = 60_000;\nconst HOUR = 60 * MIN;\nconst DAY = 24 * HOUR;\n/** Relative to load time so the docs always show Today / Yesterday groups. */\nconst NOW = Date.now();\n\n/** Project activity, newest first. */\nexport const PROJECT_ACTIVITY: ActivityItem[] = [\n  { id: 'a1', actor: { name: 'Ana Lopez' }, action: 'deployed', target: 'orders-api v2.14.0', at: NOW - 12 * MIN },\n  { id: 'a2', actor: { name: 'Sam Carter' }, action: 'approved the release of', target: 'orders-api', at: NOW - 40 * MIN },\n  { id: 'a3', actor: { name: 'Priya Nair' }, action: 'invited', target: 'jordan@example.com', at: NOW - 2 * HOUR },\n  { id: 'a4', actor: { name: 'Ana Lopez' }, action: 'rotated the API key', target: 'billing-sync', at: NOW - DAY - HOUR },\n  { id: 'a5', actor: { name: 'Lee Wong' }, action: 'paused', target: 'nightly-export', at: NOW - DAY - 5 * HOUR },\n  { id: 'a6', actor: { name: 'Priya Nair' }, action: 'created the project', target: 'Checkout', at: NOW - 3 * DAY },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "data-display"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/data-display/ActivityFeed/block.meta.ts"
+  }
+}

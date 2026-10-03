@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-layout",
+  "type": "registry:block",
+  "title": "StatusLayout",
+  "description": "Full-page status for 404, 403, 500 and maintenance: a centred message (`code`, `title` as the page h1, `description`) with an illustration or icon halo, a primary and a secondary action, and minimal chrome (optional header with the Logo and a footer line). `tone` colours the code and halo with the severity tokens; brand green is only for positive states. Fills its container; `fullScreen` switches to `h-dvh`.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json",
+    "https://gntik-ui.invalid/r/visually-hidden.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/layouts/StatusLayout/StatusLayout.tsx",
+      "type": "registry:component",
+      "target": "components/layouts/status-layout/StatusLayout.tsx",
+      "content": "import type { LucideIcon } from 'lucide-react';\nimport type { HTMLAttributes, ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { SkipLink } from '../../ui/visually-hidden';\nimport { useI18n } from '../../i18n/I18nProvider';\nimport { statusLayoutVariants, type StatusLayoutVariantProps } from './status-layout.variants';\n\nexport interface StatusLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title' | 'children'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** Short status above the title: \"404\", \"403 · Forbidden\", \"Maintenance\". */\n  code?: ReactNode;\n  /** The message, rendered as the page `<h1>`. */\n  title: ReactNode;\n  description?: ReactNode;\n  /** Neutral icon in a halo, when there is no illustration. */\n  icon?: LucideIcon;\n  /** Custom illustration (SVG, image). Decorative unless it carries its own alt text. */\n  illustration?: ReactNode;\n  /** The way forward (a primary Button). Comes first in tab order. */\n  primaryAction?: ReactNode;\n  /** Alternative (go back, contact support). */\n  secondaryAction?: ReactNode;\n  /** Extra content below the actions (search, request id, status list). */\n  children?: ReactNode;\n  /** Minimal top bar (usually just the Logo). */\n  header?: ReactNode;\n  /** Bottom line (status page, support, request id). */\n  footer?: ReactNode;\n  /** Colour of the code and icon halo. Brand green is for positive states only (e.g. \"Back online\"). */\n  tone?: StatusLayoutVariantProps['tone'];\n  mainId?: string;\n  skipLinkLabel?: string;\n  fullScreen?: boolean;\n}\n\n/**\n * Full-page status (404 · 403 · 500 · maintenance): a centred message with an illustration or\n * icon, a primary and a secondary action, and minimal chrome. The primary action comes first in\n * the DOM and in tab order.\n */\nexport function StatusLayout({\n  code,\n  title,\n  description,\n  icon: Icon,\n  illustration,\n  primaryAction,\n  secondaryAction,\n  children,\n  header,\n  footer,\n  tone,\n  mainId = 'main',\n  skipLinkLabel: skipLinkLabelProp,\n  fullScreen = false,\n  className,\n  ...props\n}: StatusLayoutProps) {\n  const { t } = useI18n();\n  const skipLinkLabel = skipLinkLabelProp ?? t('skip.content');\n  const s = statusLayoutVariants({ tone, fullScreen });\n  return (\n    <div className={cn(s.root(), className)} {...props}>\n      <SkipLink targetId={mainId} className={s.skipLink()}>\n        {skipLinkLabel}\n      </SkipLink>\n      {header != null && <header className={s.header()}>{header}</header>}\n      <main id={mainId} tabIndex={-1} className={s.main()}>\n        <div className={s.content()}>\n          {illustration != null ? (\n            <div className={s.illustration()}>{illustration}</div>\n          ) : (\n            Icon && (\n              <div className={s.illustration()}>\n                <span className={s.iconHalo()}>\n                  <Icon size={26} aria-hidden />\n                </span>\n              </div>\n            )\n          )}\n          {code != null && <p className={s.code()}>{code}</p>}\n          <h1 className={s.title()}>{title}</h1>\n          {description != null && <p className={s.description()}>{description}</p>}\n          {(primaryAction != null || secondaryAction != null) && (\n            <div className={s.actions()}>\n              {primaryAction}\n              {secondaryAction}\n            </div>\n          )}\n          {children != null && <div className={s.extra()}>{children}</div>}\n        </div>\n      </main>\n      {footer != null && <footer className={s.footer()}>{footer}</footer>}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/StatusLayout/index.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/status-layout/index.ts",
+      "content": "export { StatusLayout, type StatusLayoutProps } from './StatusLayout';\nexport { statusLayoutVariants, type StatusLayoutVariantProps } from './status-layout.variants';\nexport { doc as statusLayoutDoc } from './StatusLayout.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/StatusLayout/status-layout.variants.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/status-layout/status-layout.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const statusLayoutVariants = tv({\n  slots: {\n    root: 'relative flex flex-col overflow-hidden bg-background font-sans text-foreground',\n    skipLink: 'focus:absolute',\n    header: 'flex h-14 shrink-0 items-center gap-3 px-5 sm:px-8',\n    main: 'flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto px-6 py-10 text-center outline-none',\n    content: 'flex w-full max-w-md flex-col items-center',\n    illustration: 'mb-6 flex justify-center text-muted-foreground',\n    iconHalo: 'grid size-14 place-items-center rounded-full bg-secondary text-muted-foreground ring-1 ring-border',\n    code: 'font-mono text-[12px] font-semibold tracking-[0.2em] uppercase',\n    title: 'mt-3 text-[24px] font-semibold tracking-[-0.02em] text-balance text-foreground',\n    description: 'mt-2 text-[14px] leading-relaxed text-pretty text-muted-foreground',\n    actions: 'mt-7 flex flex-wrap items-center justify-center gap-2.5',\n    extra: 'mt-6 w-full',\n    footer: 'flex shrink-0 flex-wrap items-center justify-center gap-x-4 gap-y-1 px-5 py-4 text-[12.5px] text-muted-foreground',\n  },\n  variants: {\n    tone: {\n      neutral: { code: 'text-muted-foreground' },\n      primary: { code: 'text-primary-text', iconHalo: 'bg-primary/14 text-primary-chip-text ring-primary/30' },\n      warning: { code: 'text-warning-text', iconHalo: 'bg-warning/14 text-warning-chip-text ring-warning/30' },\n      destructive: { code: 'text-destructive-text', iconHalo: 'bg-destructive/14 text-destructive-chip-text ring-destructive/30' },\n    },\n    fullScreen: {\n      true: { root: 'h-dvh' },\n      false: { root: 'h-full min-h-full' },\n    },\n  },\n  defaultVariants: { tone: 'neutral', fullScreen: false },\n});\n\nexport type StatusLayoutVariantProps = VariantProps<typeof statusLayoutVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/layouts/StatusLayout/StatusLayout.doc.ts",
+      "type": "registry:lib",
+      "target": "components/layouts/status-layout/StatusLayout.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'StatusLayout',\n  group: 'Layout',\n  status: 'beta',\n  description:\n    'Full-page status for 404, 403, 500 and maintenance: a centred message (`code`, `title` as the page h1, `description`) with an illustration or icon halo, a primary and a secondary action, and minimal chrome (optional header with the Logo and a footer line). `tone` colours the code and halo with the severity tokens; brand green is only for positive states. Fills its container; `fullScreen` switches to `h-dvh`.',\n  pattern: 'landmarks (header, main, footer) + skip link',\n  keyboard: [\n    ['Tab', 'Skip link, header links, then the primary action first and the secondary action next, then the footer'],\n  ],\n  tokens: ['background', 'foreground', 'secondary', 'border', 'muted-foreground', 'primary-text', 'warning-text', 'destructive-text', 'focus-ring'],\n};\n"
+    }
+  ],
+  "categories": [
+    "layout",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "layout",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/layouts/StatusLayout/StatusLayout.doc.ts"
+  }
+}

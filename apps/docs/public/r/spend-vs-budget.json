@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spend-vs-budget",
+  "type": "registry:block",
+  "title": "Spend vs budget",
+  "description": "Cumulative spend line with the end-of-period forecast and a flat budget line, a summary row and a within/over budget status.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/charts",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/billing/SpendVsBudget/SpendVsBudget.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/billing/spend-vs-budget/SpendVsBudget.tsx",
+      "content": "import { Badge, Card, cn } from '@gntik-ai/ui';\nimport { LineChart } from '@gntik-ai/charts';\nimport { formatMoney } from '../format';\nimport { sampleBudget, sampleSpend } from './fixtures';\n\nexport interface SpendPoint {\n  /** X-axis label, e.g. \"May 12\". */\n  label: string;\n  /** Cumulative actual spend; null after today. */\n  spend: number | null;\n  /** Cumulative forecast; null before today. Start it on the last actual point to join the lines. */\n  forecast?: number | null;\n}\n\nexport interface SpendVsBudgetProps {\n  data?: SpendPoint[];\n  /** Budget cap for the period (drawn as a flat line). */\n  budget?: number;\n  currency?: string;\n  title?: string;\n  /** Period caption, e.g. \"May cycle\". */\n  period?: string;\n  /** Chart plot height in px. */\n  height?: number;\n  /** Heading level of the title, to fit the page outline (default h3). */\n  titleAs?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\ninterface ChartRow {\n  day: string;\n  Spend: number | null;\n  Forecast: number | null;\n  Budget: number;\n}\n\nfunction lastValue(values: Array<number | null | undefined>): number | undefined {\n  for (let i = values.length - 1; i >= 0; i--) {\n    const v = values[i];\n    if (v != null) return v;\n  }\n  return undefined;\n}\n\n/** Cumulative spend against a budget cap, with the end-of-period forecast. */\nexport function SpendVsBudget({\n  data = sampleSpend,\n  budget = sampleBudget,\n  currency = 'USD',\n  title = 'Spend vs budget',\n  period = 'May cycle',\n  height = 240,\n  titleAs: TitleTag = 'h3',\n  className,\n}: SpendVsBudgetProps) {\n  const toDate = lastValue(data.map((d) => d.spend)) ?? 0;\n  const forecast = lastValue(data.map((d) => d.forecast)) ?? toDate;\n  const over = forecast > budget;\n  const rows: ChartRow[] = data.map((d) => ({ day: d.label, Spend: d.spend, Forecast: d.forecast ?? null, Budget: budget }));\n  const money = (n: number) => formatMoney(n, currency, true);\n  const stats = [\n    { label: 'Spend to date', value: formatMoney(toDate, currency) },\n    { label: 'Forecast', value: formatMoney(forecast, currency) },\n    { label: 'Budget', value: formatMoney(budget, currency) },\n  ];\n\n  return (\n    <Card className={cn('p-6', className)}>\n      <div className=\"flex flex-wrap items-start justify-between gap-3\">\n        <div>\n          <TitleTag className=\"text-[15px] font-semibold tracking-tight text-foreground\">{title}</TitleTag>\n          {period && <p className=\"mt-0.5 text-[12.5px] text-muted-foreground\">{period}</p>}\n        </div>\n        <Badge tone={over ? 'warning' : 'success'} dot>\n          {over ? 'Forecast over budget' : 'Within budget'}\n        </Badge>\n      </div>\n      <dl className=\"mt-4 grid grid-cols-3 gap-4\">\n        {stats.map((s) => (\n          <div key={s.label} className=\"min-w-0\">\n            <dt className=\"text-[11.5px] text-muted-foreground\">{s.label}</dt>\n            <dd className=\"mt-1 truncate font-mono text-[14px] font-semibold text-foreground tabular-nums\">{s.value}</dd>\n          </div>\n        ))}\n      </dl>\n      <LineChart\n        className=\"mt-5\"\n        data={rows}\n        index=\"day\"\n        categories={['Spend', 'Forecast', 'Budget']}\n        colors={['primary', 'cyan', 'amber']}\n        valueFormatter={money}\n        height={height}\n        aria-label={`${title}: ${formatMoney(toDate, currency)} spent, ${formatMoney(forecast, currency)} forecast against a ${formatMoney(budget, currency)} budget`}\n      />\n    </Card>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/SpendVsBudget/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/spend-vs-budget/fixtures.ts",
+      "content": "import type { SpendPoint } from './SpendVsBudget';\n\n/**\n * Sample cumulative spend for a 30-day cycle: actuals through day 18, forecast after.\n * The forecast starts on the last actual point so the two lines join.\n */\nexport const sampleSpend: SpendPoint[] = Array.from({ length: 30 }, (_, i) => {\n  const day = i + 1;\n  const actual = Math.round(day * 64 + Math.sin(day / 2) * 22);\n  const lastActual = 18 * 64 + Math.round(Math.sin(9) * 22);\n  return {\n    label: `May ${day}`,\n    spend: day <= 18 ? actual : null,\n    forecast: day >= 18 ? Math.round(lastActual + (day - 18) * 46) : null,\n  };\n});\n\nexport const sampleBudget = 2000;\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/format.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/format.ts",
+      "content": "/** Shared formatting for the billing blocks (en-US, Intl). */\n\n/** A calendar date: a `Date` or an ISO `YYYY-MM-DD` string (read as a local date, no UTC shift). */\nexport type DateInput = Date | string;\n\nexport function toDate(value: DateInput): Date {\n  if (value instanceof Date) return value;\n  const m = /^(\\d{4})-(\\d{2})-(\\d{2})$/.exec(value);\n  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));\n  return new Date(value);\n}\n\nconst dateFmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });\nconst shortDateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });\n\n/** \"June 1, 2026\". */\nexport function formatDate(value: DateInput): string {\n  return dateFmt.format(toDate(value));\n}\n\n/** \"Jun 1, 2026\". */\nexport function formatShortDate(value: DateInput): string {\n  return shortDateFmt.format(toDate(value));\n}\n\n/** Money with the currency symbol: \"$1,620.00\" (or no decimals with `whole`). */\nexport function formatMoney(amount: number, currency = 'USD', whole = false): string {\n  return new Intl.NumberFormat('en-US', {\n    style: 'currency',\n    currency,\n    minimumFractionDigits: whole ? 0 : 2,\n    maximumFractionDigits: whole ? 0 : 2,\n  }).format(amount);\n}\n\n/** Grouped number, compact above a million: \"412,800\", \"78.4M\". */\nexport function formatQuantity(value: number): string {\n  if (Math.abs(value) >= 1_000_000) {\n    return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value);\n  }\n  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(value);\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/charts/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "billing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/billing/SpendVsBudget/block.meta.ts"
+  }
+}

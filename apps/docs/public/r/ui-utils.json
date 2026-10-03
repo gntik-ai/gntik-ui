@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ui-utils",
+  "type": "registry:ui",
+  "title": "UI utilities",
+  "description": "cn() class merging and tv() variants helpers used by every component.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.7.0",
+    "tailwind-variants@^3.3.1"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/utils/cn.ts",
+      "type": "registry:ui",
+      "target": "components/utils/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\n/** Joins class names and resolves Tailwind conflicts (last one wins). */\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n"
+    },
+    {
+      "path": "packages/ui/src/utils/tv.ts",
+      "type": "registry:ui",
+      "target": "components/utils/tv.ts",
+      "content": "export { tv, type VariantProps } from 'tailwind-variants';\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Utilities"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "meter",
+  "type": "registry:ui",
+  "title": "Meter",
+  "description": "Usage meter for quotas and limits: label, value text, and a level set by thresholds (healthy → warning near the cap → destructive at or over it), with an optional note under the bar.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Meter/Meter.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/meter/Meter.tsx",
+      "content": "import { Meter as BaseMeter } from '@base-ui/react/meter';\nimport type { ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { getMeterLevel, meterVariants, type MeterThresholds, type MeterVariantProps } from './meter.variants';\n\nexport interface MeterProps extends Omit<BaseMeter.Root.Props, 'className' | 'children'>, Omit<MeterVariantProps, 'level'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** Visible label; also the accessible name. Without it, pass `aria-label`. */\n  label?: ReactNode;\n  /** Replaces the formatted value, e.g. \"8.2k / 10k requests\". Pair with `aria-valuetext`. */\n  valueLabel?: ReactNode;\n  /** Hides the value text. */\n  hideValue?: boolean;\n  /** Percent-of-max thresholds for the warning and destructive levels. */\n  thresholds?: MeterThresholds;\n  /** Helper line under the bar, coloured by level (e.g. \"Overage billed at $0.002 / request\"). */\n  note?: ReactNode;\n}\n\n/**\n * Quota / usage meter (role=\"meter\") on Base UI Meter. Values over `max` are clamped for\n * assistive tech and the bar, but the level (and your `valueLabel`) reflect the overage.\n */\nexport function Meter({\n  value,\n  min = 0,\n  max = 100,\n  size,\n  label,\n  valueLabel,\n  hideValue = false,\n  thresholds,\n  note,\n  className,\n  ...props\n}: MeterProps) {\n  const range = max - min;\n  const percent = range > 0 ? ((value - min) / range) * 100 : 0;\n  const level = getMeterLevel(percent, thresholds);\n  const s = meterVariants({ level, size });\n  const clamped = Math.min(Math.max(value, min), max);\n  return (\n    <BaseMeter.Root value={clamped} min={min} max={max} data-level={level} className={cn(s.root(), className)} {...props}>\n      {(label != null || !hideValue) && (\n        <div className={s.header()}>\n          {label != null ? <BaseMeter.Label className={s.label()}>{label}</BaseMeter.Label> : <span />}\n          {!hideValue && (valueLabel != null ? <span className={s.value()}>{valueLabel}</span> : <BaseMeter.Value className={s.value()} />)}\n        </div>\n      )}\n      <BaseMeter.Track className={s.track()}>\n        <BaseMeter.Indicator className={s.indicator()} />\n      </BaseMeter.Track>\n      {note != null && <p className={s.note()}>{note}</p>}\n    </BaseMeter.Root>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Meter/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/meter/index.ts",
+      "content": "export { Meter, type MeterProps } from './Meter';\nexport { meterVariants, getMeterLevel, type MeterVariantProps, type MeterLevel, type MeterThresholds } from './meter.variants';\nexport { doc as meterDoc } from './Meter.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Meter/meter.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/meter/meter.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\n/**\n * Usage meter. The level comes from the thresholds: green while healthy, amber near the cap,\n * red at or over it. The brand green never signals severity on its own.\n */\nexport const meterVariants = tv({\n  slots: {\n    root: 'grid w-full gap-1.5',\n    header: 'flex items-baseline justify-between gap-3',\n    label: 'text-[13px] font-medium text-foreground',\n    value: 'font-mono text-[11.5px] font-semibold tabular-nums',\n    track: 'relative w-full overflow-hidden rounded-full bg-secondary',\n    indicator: 'block h-full rounded-full transition-[width] duration-400 ease-out motion-reduce:transition-none',\n    note: 'font-mono text-[11px]',\n  },\n  variants: {\n    level: {\n      ok: { indicator: 'bg-primary', value: 'text-foreground', note: 'text-muted-foreground' },\n      warning: { indicator: 'bg-warning', value: 'text-warning-text', note: 'text-warning-text' },\n      critical: { indicator: 'bg-destructive', value: 'text-destructive-text', note: 'text-destructive-text' },\n    },\n    size: {\n      sm: { track: 'h-1.5' },\n      md: { track: 'h-2' },\n      lg: { track: 'h-2.5' },\n    },\n  },\n  defaultVariants: { level: 'ok', size: 'md' },\n});\n\nexport type MeterVariantProps = VariantProps<typeof meterVariants>;\nexport type MeterLevel = NonNullable<MeterVariantProps['level']>;\n\nexport interface MeterThresholds {\n  /** Percent of max at which the meter turns amber. Default 80. */\n  warning?: number;\n  /** Percent of max at which the meter turns red. Default 100. */\n  destructive?: number;\n}\n\n/** Maps a percentage of max to a level using the thresholds. */\nexport function getMeterLevel(percent: number, { warning = 80, destructive = 100 }: MeterThresholds = {}): MeterLevel {\n  if (percent >= destructive) return 'critical';\n  if (percent >= warning) return 'warning';\n  return 'ok';\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Meter/Meter.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/meter/Meter.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Meter',\n  group: 'Feedback',\n  status: 'stable',\n  description: 'Usage meter for quotas and limits: label, value text, and a level set by thresholds (healthy → warning near the cap → destructive at or over it), with an optional note under the bar.',\n  primitive: '@base-ui/react/meter',\n  pattern: 'meter',\n  tokens: ['primary', 'warning', 'warning-text', 'destructive', 'destructive-text', 'secondary', 'foreground', 'muted-foreground'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Feedback"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Meter/Meter.doc.ts"
+  }
+}

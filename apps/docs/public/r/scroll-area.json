@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-area",
+  "type": "registry:ui",
+  "title": "ScrollArea",
+  "description": "Native scroll container with thin token-styled scrollbars that fade in on hover and while scrolling. Vertical, horizontal or both; optional bordered surface. With an aria-label the viewport is a named region, and it joins the Tab order whenever it overflows.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/ScrollArea/ScrollArea.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/scroll-area/ScrollArea.tsx",
+      "content": "import { ScrollArea as BaseScrollArea } from '@base-ui/react/scroll-area';\nimport type { ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { scrollAreaVariants } from './scroll-area.variants';\n\nexport interface ScrollAreaProps extends Omit<BaseScrollArea.Root.Props, 'className' | 'children'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  children?: ReactNode;\n  /** Which scrollbars to draw. Default `vertical`. */\n  orientation?: 'vertical' | 'horizontal' | 'both';\n  /** Draws a bordered card surface around the area. */\n  bordered?: boolean;\n  /**\n   * Accessible name of the scrollable region. When set (or `aria-labelledby`), the viewport becomes a\n   * labelled `role=\"region\"`; it joins the Tab order whenever its content overflows.\n   */\n  'aria-label'?: string;\n  'aria-labelledby'?: string;\n  /** Class for the viewport (the scroll container). */\n  viewportClassName?: string;\n  /** Class for the content wrapper inside the viewport (padding goes here). */\n  contentClassName?: string;\n  viewportRef?: Ref<HTMLDivElement>;\n}\n\n/**\n * Native scroll container with thin, token-styled scrollbars that fade in on hover and while\n * scrolling. Overflowing viewports are focusable (Tab), so arrow keys / Page keys scroll natively.\n */\nexport function ScrollArea({\n  orientation = 'vertical',\n  bordered,\n  className,\n  viewportClassName,\n  contentClassName,\n  viewportRef,\n  children,\n  'aria-label': ariaLabel,\n  'aria-labelledby': ariaLabelledBy,\n  ...props\n}: ScrollAreaProps) {\n  const s = scrollAreaVariants({ bordered });\n  const labelled = ariaLabel != null || ariaLabelledBy != null;\n  return (\n    <BaseScrollArea.Root className={cn(s.root(), className)} {...props}>\n      <BaseScrollArea.Viewport\n        ref={viewportRef}\n        className={cn(s.viewport(), viewportClassName)}\n        {...(labelled ? { role: 'region', 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledBy } : {})}\n      >\n        <BaseScrollArea.Content className={cn(s.content(), orientation !== 'vertical' && 'min-w-fit', contentClassName)}>\n          {children}\n        </BaseScrollArea.Content>\n      </BaseScrollArea.Viewport>\n      {orientation !== 'horizontal' && (\n        <BaseScrollArea.Scrollbar orientation=\"vertical\" className={s.scrollbar()}>\n          <BaseScrollArea.Thumb className={s.thumb()} />\n        </BaseScrollArea.Scrollbar>\n      )}\n      {orientation !== 'vertical' && (\n        <BaseScrollArea.Scrollbar orientation=\"horizontal\" className={s.scrollbar()}>\n          <BaseScrollArea.Thumb className={s.thumb()} />\n        </BaseScrollArea.Scrollbar>\n      )}\n      {orientation === 'both' && <BaseScrollArea.Corner className={s.corner()} />}\n    </BaseScrollArea.Root>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/ScrollArea/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/scroll-area/index.ts",
+      "content": "export { ScrollArea, type ScrollAreaProps } from './ScrollArea';\nexport { scrollAreaVariants, type ScrollAreaVariantProps } from './scroll-area.variants';\nexport { doc as scrollAreaDoc } from './ScrollArea.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/ScrollArea/scroll-area.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/scroll-area/scroll-area.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const scrollAreaVariants = tv({\n  slots: {\n    root: 'relative min-h-0 overflow-hidden',\n    viewport:\n      'size-full overscroll-contain rounded-[inherit] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',\n    content: '',\n    scrollbar:\n      'pointer-events-none flex touch-none p-0.5 opacity-0 transition-opacity duration-150 select-none motion-reduce:transition-none data-hovering:pointer-events-auto data-hovering:opacity-100 data-scrolling:pointer-events-auto data-scrolling:opacity-100 data-scrolling:duration-0 data-[orientation=horizontal]:h-2.5 data-[orientation=horizontal]:flex-col data-[orientation=vertical]:w-2.5',\n    thumb: 'flex-1 rounded-full bg-border hover:bg-muted-foreground/50 active:bg-muted-foreground/60',\n    corner: 'bg-transparent',\n  },\n  variants: {\n    bordered: {\n      true: { root: 'rounded-lg border border-border bg-card' },\n    },\n  },\n  defaultVariants: { bordered: false },\n});\n\nexport type ScrollAreaVariantProps = VariantProps<typeof scrollAreaVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/ScrollArea/ScrollArea.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/scroll-area/ScrollArea.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'ScrollArea',\n  group: 'Layout',\n  status: 'stable',\n  description:\n    'Native scroll container with thin token-styled scrollbars that fade in on hover and while scrolling. Vertical, horizontal or both; optional bordered surface. With an aria-label the viewport is a named region, and it joins the Tab order whenever it overflows.',\n  primitive: '@base-ui/react/scroll-area',\n  pattern: 'region',\n  keyboard: [\n    ['Tab', 'Focuses the scrollable viewport (only when its content overflows)'],\n    ['ArrowUp / ArrowDown / PageUp / PageDown / Home / End', 'Scrolls the focused viewport natively'],\n  ],\n  tokens: ['border', 'muted-foreground', 'card', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/ScrollArea/ScrollArea.doc.ts"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion",
+  "type": "registry:ui",
+  "title": "Accordion",
+  "description": "A stack of collapsible sections separated by dividers, flush or inside a card. Single (default) or multiple open items; the chevron rotates and the height animates. Compound parts: Accordion, AccordionItem, AccordionTrigger, AccordionPanel.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0",
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Accordion/Accordion.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/accordion/Accordion.tsx",
+      "content": "import { Accordion as BaseAccordion } from '@base-ui/react/accordion';\nimport { ChevronDown } from 'lucide-react';\nimport { createContext, useContext, type KeyboardEvent, type ReactNode, type Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { accordionVariants, type AccordionVariantProps } from './accordion.variants';\n\ntype AccordionVariant = NonNullable<AccordionVariantProps['variant']>;\nconst AccordionContext = createContext<AccordionVariant>('flush');\n\nconst ROOT_SELECTOR = '[data-slot=\"accordion\"]';\nconst TRIGGER_SELECTOR = '[data-slot=\"accordion-trigger\"]';\n\n/**\n * Moves focus between the triggers of one accordion (ArrowDown/ArrowUp wrap, Home/End jump).\n * Base UI 1.8 dropped roving focus for accordions, so the kit adds it back as plain focus moves:\n * every trigger stays in the Tab order.\n */\nfunction moveTriggerFocus(event: KeyboardEvent<HTMLElement>) {\n  const root = event.currentTarget;\n  const target = event.target as HTMLElement;\n  if (!target.matches(TRIGGER_SELECTOR) || target.closest(ROOT_SELECTOR) !== root) return;\n  const triggers = Array.from(root.querySelectorAll<HTMLElement>(TRIGGER_SELECTOR)).filter(\n    (el) => el.closest(ROOT_SELECTOR) === root && !el.hasAttribute('disabled') && !el.hasAttribute('data-disabled'),\n  );\n  const index = triggers.indexOf(target);\n  if (index === -1 || triggers.length === 0) return;\n  let next: number | undefined;\n  if (event.key === 'ArrowDown') next = (index + 1) % triggers.length;\n  else if (event.key === 'ArrowUp') next = (index - 1 + triggers.length) % triggers.length;\n  else if (event.key === 'Home') next = 0;\n  else if (event.key === 'End') next = triggers.length - 1;\n  if (next === undefined) return;\n  event.preventDefault();\n  triggers[next]?.focus();\n}\n\nexport interface AccordionProps<Value = string> extends Omit<BaseAccordion.Root.Props<Value>, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** `flush` (dividers only) or `card` (bordered surface). */\n  variant?: AccordionVariant;\n}\n\n/**\n * A stack of collapsible sections. One open at a time by default; pass `multiple` to allow several.\n * Controlled with `value` + `onValueChange` (an array of item values), or uncontrolled with `defaultValue`.\n */\nexport function Accordion<Value = string>({ variant = 'flush', className, onKeyDown, ...props }: AccordionProps<Value>) {\n  return (\n    <AccordionContext.Provider value={variant}>\n      <BaseAccordion.Root<Value>\n        data-slot=\"accordion\"\n        className={cn(accordionVariants({ variant }).root(), className)}\n        onKeyDown={(event) => {\n          onKeyDown?.(event);\n          if (!event.defaultPrevented) moveTriggerFocus(event);\n        }}\n        {...props}\n      />\n    </AccordionContext.Provider>\n  );\n}\n\nexport interface AccordionItemProps extends Omit<BaseAccordion.Item.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n}\n\n/** One section. Give it a `value` to control it from the root. */\nexport function AccordionItem({ className, ...props }: AccordionItemProps) {\n  const variant = useContext(AccordionContext);\n  return <BaseAccordion.Item className={cn(accordionVariants({ variant }).item(), className)} {...props} />;\n}\n\nexport interface AccordionTriggerProps extends Omit<BaseAccordion.Trigger.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLButtonElement>;\n  /** Heading level of the wrapping header element. */\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  children?: ReactNode;\n}\n\n/** The section heading + toggle button. The chevron rotates when the panel is open. */\nexport function AccordionTrigger({ headingLevel = 3, className, children, ...props }: AccordionTriggerProps) {\n  const variant = useContext(AccordionContext);\n  const s = accordionVariants({ variant });\n  const Heading = `h${headingLevel}` as const;\n  return (\n    <BaseAccordion.Header className={s.header()} render={<Heading />}>\n      <BaseAccordion.Trigger data-slot=\"accordion-trigger\" className={cn(s.trigger(), className)} {...props}>\n        {children}\n        <ChevronDown size={16} className={s.chevron()} aria-hidden />\n      </BaseAccordion.Trigger>\n    </BaseAccordion.Header>\n  );\n}\n\nexport interface AccordionPanelProps extends Omit<BaseAccordion.Panel.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  children?: ReactNode;\n}\n\n/** The collapsible content. Height animates; reduced motion turns the animation off. */\nexport function AccordionPanel({ className, children, ...props }: AccordionPanelProps) {\n  const variant = useContext(AccordionContext);\n  const s = accordionVariants({ variant });\n  return (\n    <BaseAccordion.Panel className={s.panel()} {...props}>\n      <div className={cn(s.content(), className)}>{children}</div>\n    </BaseAccordion.Panel>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Accordion/accordion.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/accordion/accordion.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const accordionVariants = tv({\n  slots: {\n    root: 'flex w-full flex-col divide-y divide-border',\n    item: 'data-disabled:opacity-60',\n    header: 'm-0',\n    trigger: [\n      'group flex w-full cursor-pointer items-center gap-3 py-3.5 text-start text-[13px] font-medium text-foreground transition-colors',\n      'hover:text-foreground/80 data-disabled:cursor-not-allowed',\n      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-sm',\n    ],\n    chevron: [\n      'ms-auto shrink-0 text-muted-foreground transition-transform duration-200 motion-reduce:transition-none',\n      'group-data-panel-open:rotate-180',\n    ],\n    panel: [\n      'h-(--accordion-panel-height) overflow-hidden transition-[height] duration-200 ease-out motion-reduce:transition-none',\n      'data-starting-style:h-0 data-ending-style:h-0',\n    ],\n    content: 'pb-4 text-[13px] leading-relaxed text-muted-foreground text-pretty',\n  },\n  variants: {\n    variant: {\n      /** Dividers only; fills the parent. */\n      flush: {},\n      /** Inside a bordered card; rows get horizontal padding. */\n      card: {\n        root: 'overflow-hidden rounded-xl border border-border bg-card',\n        trigger: 'px-4 hover:bg-secondary/40 focus-visible:-outline-offset-2 rounded-none',\n        content: 'px-4',\n      },\n    },\n  },\n  defaultVariants: { variant: 'flush' },\n});\n\nexport type AccordionVariantProps = VariantProps<typeof accordionVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Accordion/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/accordion/index.ts",
+      "content": "export {\n  Accordion,\n  AccordionItem,\n  AccordionTrigger,\n  AccordionPanel,\n  type AccordionProps,\n  type AccordionItemProps,\n  type AccordionTriggerProps,\n  type AccordionPanelProps,\n} from './Accordion';\nexport { accordionVariants, type AccordionVariantProps } from './accordion.variants';\nexport { doc as accordionDoc } from './Accordion.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Accordion/Accordion.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/accordion/Accordion.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Accordion',\n  group: 'Display',\n  status: 'stable',\n  description:\n    'A stack of collapsible sections separated by dividers, flush or inside a card. Single (default) or multiple open items; the chevron rotates and the height animates. Compound parts: Accordion, AccordionItem, AccordionTrigger, AccordionPanel.',\n  primitive: '@base-ui/react/accordion',\n  pattern: 'accordion',\n  keyboard: [\n    ['Enter / Space', 'Expands or collapses the focused section'],\n    ['ArrowDown / ArrowUp', 'Moves focus to the next / previous trigger (wraps around)'],\n    ['Home / End', 'Moves focus to the first / last trigger'],\n    ['Tab', 'Moves focus through the triggers and any focusable content in open panels'],\n  ],\n  tokens: ['border', 'card', 'secondary', 'foreground', 'muted-foreground', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Display"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Accordion/Accordion.doc.ts"
+  }
+}

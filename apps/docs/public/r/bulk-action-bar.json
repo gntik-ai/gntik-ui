@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bulk-action-bar",
+  "type": "registry:block",
+  "title": "Bulk action bar",
+  "description": "Toolbar that appears while table rows are selected: selection count, bulk actions and clear selection.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/page-chrome/BulkActionBar/BulkActionBar.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/page-chrome/bulk-action-bar/BulkActionBar.tsx",
+      "content": "import { Archive, Download, Trash2, X } from '@gntik-ai/icons';\nimport { Toolbar, ToolbarButton, ToolbarEnd, ToolbarSeparator, ToolbarStart, cn } from '@gntik-ai/ui';\nimport type { PageChromeAction } from '../types';\n\nexport interface BulkActionBarProps {\n  /** Number of selected rows; the bar renders nothing at 0. */\n  selectedCount?: number;\n  /** Total rows, shown as \"3 of 24 selected\". */\n  totalCount?: number;\n  /** Noun for the count, singular and plural. */\n  noun?: [singular: string, plural: string];\n  actions?: PageChromeAction[];\n  onClear?: () => void;\n  clearLabel?: string;\n  className?: string;\n}\n\nconst bulkActionBarDefaultActions: PageChromeAction[] = [\n  { label: 'Export', icon: Download },\n  { label: 'Archive', icon: Archive },\n  { label: 'Delete', icon: Trash2, variant: 'destructive' },\n];\n\n/** Contextual toolbar shown while rows are selected: count, bulk actions and clear selection. */\nexport function BulkActionBar({\n  selectedCount = 3,\n  totalCount,\n  noun = ['item', 'items'],\n  actions = bulkActionBarDefaultActions,\n  onClear,\n  clearLabel = 'Clear selection',\n  className,\n}: BulkActionBarProps) {\n  if (selectedCount <= 0) return null;\n  const word = selectedCount === 1 ? noun[0] : noun[1];\n  return (\n    <Toolbar\n      variant=\"plain\"\n      aria-label=\"Bulk actions\"\n      className={cn('flex-wrap gap-y-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 shadow-sm', className)}\n    >\n      <ToolbarStart>\n        <p role=\"status\" className=\"text-[13px] font-medium text-foreground\">\n          <span className=\"font-mono tabular-nums\">{selectedCount.toLocaleString('en-US')}</span>\n          {totalCount != null && <span className=\"text-muted-foreground\"> of {totalCount.toLocaleString('en-US')}</span>} {word} selected\n        </p>\n        <ToolbarSeparator />\n        <ToolbarButton icon={X} onClick={onClear}>\n          {clearLabel}\n        </ToolbarButton>\n      </ToolbarStart>\n      <ToolbarEnd className=\"flex-wrap\">\n        {actions.map((a) => (\n          <ToolbarButton\n            key={a.id ?? a.label}\n            variant={a.variant ?? 'secondary'}\n            icon={a.icon}\n            disabled={a.disabled}\n            onClick={a.onClick}\n          >\n            {a.label}\n          </ToolbarButton>\n        ))}\n      </ToolbarEnd>\n    </Toolbar>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/page-chrome/types.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/page-chrome/types.ts",
+      "content": "import type { ButtonProps, MoreMenuAction } from '@gntik-ai/ui';\nimport type { LucideIcon } from '@gntik-ai/icons';\n\n/** A header/toolbar action rendered as a kit Button (or a MoreMenu item when folded). */\nexport interface PageChromeAction {\n  /** Stable key; defaults to `label`. */\n  id?: string;\n  label: string;\n  icon?: LucideIcon;\n  /** Button style; when omitted the block picks one (primary for the main action, secondary otherwise). */\n  variant?: ButtonProps['variant'];\n  disabled?: boolean;\n  onClick?: () => void;\n}\n\n/** Maps a PageChromeAction to a MoreMenu item (destructive variant → destructive item). */\nexport function toMenuAction(action: PageChromeAction): MoreMenuAction {\n  return {\n    label: action.label,\n    icon: action.icon,\n    disabled: action.disabled,\n    destructive: action.variant === 'destructive',\n    onSelect: action.onClick,\n  };\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "page-chrome"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/page-chrome/BulkActionBar/block.meta.ts"
+  }
+}
