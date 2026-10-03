@@ -21,16 +21,16 @@ const brandRule = [
 ];
 
 export default tseslint.config(
-  { ignores: ['**/node_modules/**', '**/dist/**', '**/.next/**', '**/next-env.d.ts', 'apps/docs/public/**', 'apps/docs/legacy-index.html', 'registry.json'] },
+  { ignores: ['**/node_modules/**', '**/dist/**', '**/.next/**', '**/next-env.d.ts', 'apps/docs/public/**', 'apps/docs/legacy-index.html', '**/test/fixtures/**', 'registry.json'] },
   js.configs.recommended,
   {
-    files: ['packages/mcp/src/**/*.ts', 'packages/mcp/scripts/**/*.ts', 'packages/cli/src/**/*.ts', 'packages/cli/test/**/*.ts'],
+    files: ['packages/mcp/src/**/*.ts', 'packages/mcp/scripts/**/*.ts', 'packages/cli/src/**/*.ts', 'packages/cli/test/**/*.ts', 'packages/codemods/src/**/*.ts', 'packages/codemods/test/**/*.ts'],
     extends: [tseslint.configs.recommended],
     languageOptions: { globals: globals.node },
   },
   {
     // Component packages: TypeScript + React hooks + brand rules.
-    files: ['packages/{ui,icons,charts,flow,editor,chat,blocks,templates}/**/*.{ts,tsx}', 'apps/{example-vite,example-next,musematic,falcone}/**/*.{ts,tsx}'],
+    files: ['packages/{ui,icons,charts,flow,editor,chat,blocks,templates}/**/*.{ts,tsx}', 'apps/{example-vite,example-next,musematic,falcone,sandbox}/**/*.{ts,tsx}'],
     extends: [tseslint.configs.recommended],
     plugins: { 'react-hooks': reactHooks },
     languageOptions: { globals: globals.browser },
