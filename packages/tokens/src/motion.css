@@ -1,0 +1,26 @@
+/* ============================================================================
+   @gntik-ai/tokens · motion.css — durations and easings
+   ----------------------------------------------------------------------------
+   Sober motion: short, functional transitions, no bounce or overshoot.
+   Kept out of brand.css (whose keys are frozen by test). Theme-independent.
+   Under prefers-reduced-motion every duration collapses to 0ms, so anything
+   that reads these tokens (the `transition` default, `duration-fast|normal|
+   slow`, `ease-standard|emphasized|exit`) stops animating with no extra code.
+   ============================================================================ */
+:root {
+  --duration-fast: 120ms;    /* hovers, toggles, focus, small state changes */
+  --duration-normal: 200ms;  /* popovers, menus, tooltips, accordions */
+  --duration-slow: 320ms;    /* dialogs, drawers, page-level transitions */
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);      /* on-screen movement */
+  --ease-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1); /* entering elements */
+  --ease-exit: cubic-bezier(0.3, 0, 1, 1);          /* leaving elements */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+  }
+}

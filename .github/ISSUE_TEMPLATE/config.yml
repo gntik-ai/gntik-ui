@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Governance and contribution guides
+    url: https://github.com/gntik-ai/gntik-ui/tree/main/docs/governance
+    about: Lifecycle, review rubric, spec template and release process.

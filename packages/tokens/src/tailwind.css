@@ -9,6 +9,7 @@
    ============================================================================ */
 @import "./brand.css";
 @import "./pairing.css";
+@import "./motion.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -71,4 +72,29 @@
   --default-ring-width: 3px;
   --default-ring-color: hsl(var(--ring) / 0.5);
   --spacing-18: 4.5rem;
+}
+
+/* Motion (motion.css): `ease-standard|emphasized|exit` come from the --ease-*
+   theme namespace; Tailwind 4 has no duration namespace, so the three named
+   durations are static utilities. The bare `transition*` utilities default to
+   the brand duration and easing, so they collapse under reduced motion too. */
+@theme inline {
+  --ease-standard: var(--ease-standard);
+  --ease-emphasized: var(--ease-emphasized);
+  --ease-exit: var(--ease-exit);
+  --default-transition-duration: var(--duration-fast);
+  --default-transition-timing-function: var(--ease-standard);
+}
+
+@utility duration-fast {
+  --tw-duration: var(--duration-fast);
+  transition-duration: var(--duration-fast);
+}
+@utility duration-normal {
+  --tw-duration: var(--duration-normal);
+  transition-duration: var(--duration-normal);
+}
+@utility duration-slow {
+  --tw-duration: var(--duration-slow);
+  transition-duration: var(--duration-slow);
 }
