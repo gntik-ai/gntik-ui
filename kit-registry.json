@@ -4718,6 +4718,1124 @@
         "visually-hidden"
       ],
       "docs": "packages/ui/src/layouts/WizardLayout/WizardLayout.doc.ts"
+    },
+    {
+      "id": "accept-invitation",
+      "kind": "template",
+      "name": "Accept invitation",
+      "package": "@gntik-ai/templates",
+      "group": "Auth",
+      "status": "beta",
+      "description": "Centred card invitation: inviter, workspace, role and member count, the invited email with a switch-account link, and Join / Decline with result states.",
+      "files": [
+        {
+          "path": "packages/templates/src/accept-invitation/Page.tsx",
+          "target": "app/templates/accept-invitation/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/accept-invitation/data.ts",
+          "target": "app/templates/accept-invitation/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/accept-invitation/template.meta.ts"
+    },
+    {
+      "id": "assistant-chat",
+      "kind": "template",
+      "name": "Assistant chat",
+      "package": "@gntik-ai/templates",
+      "group": "AI",
+      "status": "experimental",
+      "description": "Workspace assistant in the console: @gntik-ai/chat ChatLayout with suggestions, ChatMessage turns, a ToolCallCard, a mock-streamed markdown reply with Citations, Stop / Retry / feedback and a ChatComposer; a details panel lists the context sources. Streaming timers are cleared on Stop and unmount.",
+      "files": [
+        {
+          "path": "packages/templates/src/assistant-chat/Page.tsx",
+          "target": "app/templates/assistant-chat/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/assistant-chat/data.ts",
+          "target": "app/templates/assistant-chat/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/chat",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/assistant-chat/template.meta.ts"
+    },
+    {
+      "id": "audit-log",
+      "kind": "template",
+      "name": "Audit log",
+      "package": "@gntik-ai/templates",
+      "group": "Work",
+      "status": "beta",
+      "description": "Workspace audit trail: FilterBar (search, actor / resource / result filters) and DateRangeFilter over a DataTable of events with actor, action, target and result; a drawer shows the change diff (CodeBlock); export to CSV.",
+      "files": [
+        {
+          "path": "packages/templates/src/audit-log/Page.tsx",
+          "target": "app/templates/audit-log/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/audit-log/data.ts",
+          "target": "app/templates/audit-log/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/audit-log/template.meta.ts"
+    },
+    {
+      "id": "create-wizard",
+      "kind": "template",
+      "name": "Create wizard",
+      "package": "@gntik-ai/templates",
+      "group": "Resources",
+      "status": "beta",
+      "description": "Focus-mode create flow: details, source (selectable cards), configuration and a review step with editable summary cards.",
+      "files": [
+        {
+          "path": "packages/templates/src/create-wizard/Page.tsx",
+          "target": "app/templates/create-wizard/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/create-wizard/data.ts",
+          "target": "app/templates/create-wizard/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/create-wizard/template.meta.ts"
+    },
+    {
+      "id": "create-workspace",
+      "kind": "template",
+      "name": "Create workspace",
+      "package": "@gntik-ai/templates",
+      "group": "Onboarding",
+      "status": "beta",
+      "description": "Workspace onboarding wizard: name with address preview, data region and plan as selectable cards, and inline team invitations with email chips and a role.",
+      "files": [
+        {
+          "path": "packages/templates/src/create-workspace/Page.tsx",
+          "target": "app/templates/create-workspace/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/create-workspace/data.ts",
+          "target": "app/templates/create-workspace/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/create-workspace/template.meta.ts"
+    },
+    {
+      "id": "forgot-password",
+      "kind": "template",
+      "name": "Forgot password",
+      "package": "@gntik-ai/templates",
+      "group": "Auth",
+      "status": "stable",
+      "description": "Centred card password recovery: request a reset link by email, then a check-your-inbox state with resend and a way back to sign in.",
+      "files": [
+        {
+          "path": "packages/templates/src/forgot-password/Page.tsx",
+          "target": "app/templates/forgot-password/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/forgot-password/data.ts",
+          "target": "app/templates/forgot-password/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/forgot-password/template.meta.ts"
+    },
+    {
+      "id": "getting-started",
+      "kind": "template",
+      "name": "Getting started",
+      "package": "@gntik-ai/templates",
+      "group": "Onboarding",
+      "status": "beta",
+      "description": "Onboarding checklist in the console shell: setup progress, checkable steps with a completion message, and cards linking to the docs.",
+      "files": [
+        {
+          "path": "packages/templates/src/getting-started/Page.tsx",
+          "target": "app/templates/getting-started/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/getting-started/data.ts",
+          "target": "app/templates/getting-started/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/getting-started/template.meta.ts"
+    },
+    {
+      "id": "home-dashboard",
+      "kind": "template",
+      "name": "Home dashboard",
+      "package": "@gntik-ai/templates",
+      "group": "Overview",
+      "status": "beta",
+      "description": "Workspace home in the console shell: page header, KPI row, cost and traffic charts, recent activity and quick-action cards.",
+      "files": [
+        {
+          "path": "packages/templates/src/home-dashboard/Page.tsx",
+          "target": "app/templates/home-dashboard/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/home-dashboard/data.ts",
+          "target": "app/templates/home-dashboard/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/charts",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/home-dashboard/template.meta.ts"
+    },
+    {
+      "id": "landing",
+      "kind": "template",
+      "name": "Landing",
+      "package": "@gntik-ai/templates",
+      "group": "Overview",
+      "status": "experimental",
+      "description": "Public landing: Hero, FeatureGrid, PricingTable, Faq",
+      "files": [
+        {
+          "path": "packages/templates/src/landing/Page.tsx",
+          "target": "app/templates/landing/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/landing/data.ts",
+          "target": "app/templates/landing/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/landing/template.meta.ts"
+    },
+    {
+      "id": "mfa",
+      "kind": "template",
+      "name": "Two-step verification",
+      "package": "@gntik-ai/templates",
+      "group": "Auth",
+      "status": "stable",
+      "description": "Centred card second-factor step: one-time code that auto-submits, backup-code fallback, resend with countdown and a way back to sign in.",
+      "files": [
+        {
+          "path": "packages/templates/src/mfa/Page.tsx",
+          "target": "app/templates/mfa/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/mfa/data.ts",
+          "target": "app/templates/mfa/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/mfa/template.meta.ts"
+    },
+    {
+      "id": "notification-inbox",
+      "kind": "template",
+      "name": "Notification inbox",
+      "package": "@gntik-ai/templates",
+      "group": "Work",
+      "status": "beta",
+      "description": "Master–detail inbox in the console: All / Unread / Mentions filter (ToggleGroup), read and unread rows, a detail pane with Open, Mark as unread and Archive, and Back on small screens.",
+      "files": [
+        {
+          "path": "packages/templates/src/notification-inbox/Page.tsx",
+          "target": "app/templates/notification-inbox/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/notification-inbox/data.ts",
+          "target": "app/templates/notification-inbox/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/notification-inbox/template.meta.ts"
+    },
+    {
+      "id": "reset-password",
+      "kind": "template",
+      "name": "Reset password",
+      "package": "@gntik-ai/templates",
+      "group": "Auth",
+      "status": "stable",
+      "description": "Centred card new-password step: password with a strength meter and confirmation, then a success state that continues to sign in.",
+      "files": [
+        {
+          "path": "packages/templates/src/reset-password/Page.tsx",
+          "target": "app/templates/reset-password/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/reset-password/data.ts",
+          "target": "app/templates/reset-password/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/reset-password/template.meta.ts"
+    },
+    {
+      "id": "resource-detail",
+      "kind": "template",
+      "name": "Resource detail",
+      "package": "@gntik-ai/templates",
+      "group": "Resources",
+      "status": "beta",
+      "description": "Detail page for one resource: header with status, meta and actions, then Overview (details + status history), Activity and Settings (general form + danger zone) tabs.",
+      "files": [
+        {
+          "path": "packages/templates/src/resource-detail/Page.tsx",
+          "target": "app/templates/resource-detail/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/resource-detail/data.ts",
+          "target": "app/templates/resource-detail/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/resource-detail/template.meta.ts"
+    },
+    {
+      "id": "resource-form",
+      "kind": "template",
+      "name": "Resource form",
+      "package": "@gntik-ai/templates",
+      "group": "Resources",
+      "status": "beta",
+      "description": "Long create/edit form: two-column form sections, an error summary that links to each invalid field after submit, and a sticky save bar that tracks unsaved changes.",
+      "files": [
+        {
+          "path": "packages/templates/src/resource-form/Page.tsx",
+          "target": "app/templates/resource-form/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/resource-form/data.ts",
+          "target": "app/templates/resource-form/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/resource-form/template.meta.ts"
+    },
+    {
+      "id": "resource-gallery",
+      "kind": "template",
+      "name": "Resource gallery",
+      "package": "@gntik-ai/templates",
+      "group": "Resources",
+      "status": "beta",
+      "description": "Card gallery of resources with a toolbar (search, grid/table view toggle, create action), per-card actions and a no-results state.",
+      "files": [
+        {
+          "path": "packages/templates/src/resource-gallery/Page.tsx",
+          "target": "app/templates/resource-gallery/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/resource-gallery/data.ts",
+          "target": "app/templates/resource-gallery/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/resource-gallery/template.meta.ts"
+    },
+    {
+      "id": "resource-index",
+      "kind": "template",
+      "name": "Resource index",
+      "package": "@gntik-ai/templates",
+      "group": "Resources",
+      "status": "beta",
+      "description": "List page for any resource: header with the create action, filter bar with saved views, a selectable sortable table with pagination, a sticky bulk action bar and a no-results state.",
+      "files": [
+        {
+          "path": "packages/templates/src/resource-index/Page.tsx",
+          "target": "app/templates/resource-index/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/resource-index/data.ts",
+          "target": "app/templates/resource-index/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/resource-index/template.meta.ts"
+    },
+    {
+      "id": "search-results",
+      "kind": "template",
+      "name": "Search results",
+      "package": "@gntik-ai/templates",
+      "group": "Work",
+      "status": "beta",
+      "description": "Workspace search: query field, facets as Checkbox groups with counts, results grouped by type under SectionHeaders, arrow-key navigation through the results, and NoResultsEmpty.",
+      "files": [
+        {
+          "path": "packages/templates/src/search-results/Page.tsx",
+          "target": "app/templates/search-results/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/search-results/data.ts",
+          "target": "app/templates/search-results/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/search-results/template.meta.ts"
+    },
+    {
+      "id": "settings-api-keys",
+      "kind": "template",
+      "name": "API keys settings",
+      "package": "@gntik-ai/templates",
+      "group": "Settings",
+      "status": "beta",
+      "description": "API key list with scopes and last use, a create-key dialog that shows the secret once, and typed revoke confirmation.",
+      "files": [
+        {
+          "path": "packages/templates/src/settings-api-keys/Page.tsx",
+          "target": "app/templates/settings-api-keys/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-api-keys/data.ts",
+          "target": "app/templates/settings-api-keys/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "settings-profile"
+      ],
+      "docs": "packages/templates/src/settings-api-keys/template.meta.ts"
+    },
+    {
+      "id": "settings-appearance",
+      "kind": "template",
+      "name": "Appearance settings",
+      "package": "@gntik-ai/templates",
+      "group": "Settings",
+      "status": "beta",
+      "description": "Theme switcher wired to the ThemeProvider, table density and interface language.",
+      "files": [
+        {
+          "path": "packages/templates/src/settings-appearance/Page.tsx",
+          "target": "app/templates/settings-appearance/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-appearance/data.ts",
+          "target": "app/templates/settings-appearance/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "settings-profile"
+      ],
+      "docs": "packages/templates/src/settings-appearance/template.meta.ts"
+    },
+    {
+      "id": "settings-billing",
+      "kind": "template",
+      "name": "Billing settings",
+      "package": "@gntik-ai/templates",
+      "group": "Settings",
+      "status": "beta",
+      "description": "Current plan with billing cycle, quota meters, the default payment method and invoice history.",
+      "files": [
+        {
+          "path": "packages/templates/src/settings-billing/Page.tsx",
+          "target": "app/templates/settings-billing/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-billing/data.ts",
+          "target": "app/templates/settings-billing/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "settings-profile"
+      ],
+      "docs": "packages/templates/src/settings-billing/template.meta.ts"
+    },
+    {
+      "id": "settings-integrations",
+      "kind": "template",
+      "name": "Integrations settings",
+      "package": "@gntik-ai/templates",
+      "group": "Settings",
+      "status": "beta",
+      "description": "Connector cards with on/off switches, webhook endpoints and a filterable delivery log.",
+      "files": [
+        {
+          "path": "packages/templates/src/settings-integrations/Page.tsx",
+          "target": "app/templates/settings-integrations/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-integrations/data.ts",
+          "target": "app/templates/settings-integrations/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "settings-profile"
+      ],
+      "docs": "packages/templates/src/settings-integrations/template.meta.ts"
+    },
+    {
+      "id": "settings-members",
+      "kind": "template",
+      "name": "Members settings",
+      "package": "@gntik-ai/templates",
+      "group": "Settings",
+      "status": "beta",
+      "description": "Workspace members with inline roles, pending invitations, an invite dialog and a role permission matrix.",
+      "files": [
+        {
+          "path": "packages/templates/src/settings-members/Page.tsx",
+          "target": "app/templates/settings-members/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-members/data.ts",
+          "target": "app/templates/settings-members/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "settings-profile"
+      ],
+      "docs": "packages/templates/src/settings-members/template.meta.ts"
+    },
+    {
+      "id": "settings-notifications",
+      "kind": "template",
+      "name": "Notification settings",
+      "package": "@gntik-ai/templates",
+      "group": "Settings",
+      "status": "beta",
+      "description": "Event × channel notification matrix with bulk row and column toggles and a sticky save bar.",
+      "files": [
+        {
+          "path": "packages/templates/src/settings-notifications/Page.tsx",
+          "target": "app/templates/settings-notifications/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-notifications/data.ts",
+          "target": "app/templates/settings-notifications/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "settings-profile"
+      ],
+      "docs": "packages/templates/src/settings-notifications/template.meta.ts"
+    },
+    {
+      "id": "settings-profile",
+      "kind": "template",
+      "name": "Profile settings",
+      "package": "@gntik-ai/templates",
+      "group": "Settings",
+      "status": "beta",
+      "description": "Personal profile: avatar header, name and email, locale and time zone, with a sticky save bar.",
+      "files": [
+        {
+          "path": "packages/templates/src/settings-profile/Page.tsx",
+          "target": "app/templates/settings-profile/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-profile/SettingsFrame.tsx",
+          "target": "app/templates/settings-profile/SettingsFrame.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-profile/data.ts",
+          "target": "app/templates/settings-profile/data.ts"
+        },
+        {
+          "path": "packages/templates/src/settings-profile/settings-nav.ts",
+          "target": "app/templates/settings-profile/settings-nav.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/settings-profile/template.meta.ts"
+    },
+    {
+      "id": "settings-security",
+      "kind": "template",
+      "name": "Security settings",
+      "package": "@gntik-ai/templates",
+      "group": "Settings",
+      "status": "beta",
+      "description": "Password change, two-factor setup with a one-time code dialog, and signed-in sessions and devices.",
+      "files": [
+        {
+          "path": "packages/templates/src/settings-security/MfaSetupDialog.tsx",
+          "target": "app/templates/settings-security/MfaSetupDialog.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-security/Page.tsx",
+          "target": "app/templates/settings-security/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-security/data.ts",
+          "target": "app/templates/settings-security/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "settings-profile"
+      ],
+      "docs": "packages/templates/src/settings-security/template.meta.ts"
+    },
+    {
+      "id": "settings-workspace",
+      "kind": "template",
+      "name": "Workspace settings",
+      "package": "@gntik-ai/templates",
+      "group": "Settings",
+      "status": "beta",
+      "description": "Workspace name, URL slug, logo upload and data region, with a danger zone for transfer and deletion.",
+      "files": [
+        {
+          "path": "packages/templates/src/settings-workspace/Page.tsx",
+          "target": "app/templates/settings-workspace/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-workspace/data.ts",
+          "target": "app/templates/settings-workspace/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "settings-profile"
+      ],
+      "docs": "packages/templates/src/settings-workspace/template.meta.ts"
+    },
+    {
+      "id": "shell-sidebar",
+      "kind": "template",
+      "name": "Sidebar shell",
+      "package": "@gntik-ai/templates",
+      "group": "Shells",
+      "status": "stable",
+      "description": "Console starter: app sidebar, topbar and an empty Page with a title, description and a first-run empty state.",
+      "files": [
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        },
+        {
+          "path": "packages/templates/src/shell-sidebar/Page.tsx",
+          "target": "app/templates/shell-sidebar/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/shell-sidebar/data.ts",
+          "target": "app/templates/shell-sidebar/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/shell-sidebar/template.meta.ts"
+    },
+    {
+      "id": "shell-topnav",
+      "kind": "template",
+      "name": "Top-nav shell",
+      "package": "@gntik-ai/templates",
+      "group": "Shells",
+      "status": "stable",
+      "description": "Top-navigation starter: brand, primary links (drawer on small screens), search, notifications, theme and user menu, a page header and an empty body.",
+      "files": [
+        {
+          "path": "packages/templates/src/shell-topnav/Page.tsx",
+          "target": "app/templates/shell-topnav/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/shell-topnav/data.ts",
+          "target": "app/templates/shell-topnav/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/shell-topnav/template.meta.ts"
+    },
+    {
+      "id": "sign-in",
+      "kind": "template",
+      "name": "Sign in",
+      "package": "@gntik-ai/templates",
+      "group": "Auth",
+      "status": "stable",
+      "description": "Split sign-in: brand panel with a short value pitch, email and password form, forgot-password link and single sign-on options.",
+      "files": [
+        {
+          "path": "packages/templates/src/sign-in/BrandPanel.tsx",
+          "target": "app/templates/sign-in/BrandPanel.tsx"
+        },
+        {
+          "path": "packages/templates/src/sign-in/Page.tsx",
+          "target": "app/templates/sign-in/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/sign-in/data.ts",
+          "target": "app/templates/sign-in/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/sign-in/template.meta.ts"
+    },
+    {
+      "id": "sign-in-card",
+      "kind": "template",
+      "name": "Sign in (card)",
+      "package": "@gntik-ai/templates",
+      "group": "Auth",
+      "status": "stable",
+      "description": "Centred card sign-in: email and password form with remember me and forgot-password link, legal footer, no single sign-on.",
+      "files": [
+        {
+          "path": "packages/templates/src/sign-in-card/Page.tsx",
+          "target": "app/templates/sign-in-card/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/sign-in-card/data.ts",
+          "target": "app/templates/sign-in-card/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/sign-in-card/template.meta.ts"
+    },
+    {
+      "id": "sign-up",
+      "kind": "template",
+      "name": "Sign up",
+      "package": "@gntik-ai/templates",
+      "group": "Auth",
+      "status": "stable",
+      "description": "Split sign-up: brand panel with the value pitch, name, work email and password with a strength meter, terms consent and single sign-on.",
+      "files": [
+        {
+          "path": "packages/templates/src/sign-up/Page.tsx",
+          "target": "app/templates/sign-up/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/sign-up/data.ts",
+          "target": "app/templates/sign-up/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "sign-in"
+      ],
+      "docs": "packages/templates/src/sign-up/template.meta.ts"
+    },
+    {
+      "id": "sso-login",
+      "kind": "template",
+      "name": "Single sign-on",
+      "package": "@gntik-ai/templates",
+      "group": "Auth",
+      "status": "beta",
+      "description": "Centred card SSO entry: work email lookup, then a \"Redirecting to your identity provider\" state with cancel and a password fallback.",
+      "files": [
+        {
+          "path": "packages/templates/src/sso-login/Page.tsx",
+          "target": "app/templates/sso-login/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/sso-login/data.ts",
+          "target": "app/templates/sso-login/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/sso-login/template.meta.ts"
+    },
+    {
+      "id": "status-403",
+      "kind": "template",
+      "name": "403 Forbidden",
+      "package": "@gntik-ai/templates",
+      "group": "System",
+      "status": "beta",
+      "description": "Full-page permission state: explains who can grant access, with a Request access action (idle · pending · requested, like NoAccessEmpty) and a way home.",
+      "files": [
+        {
+          "path": "packages/templates/src/status-403/Page.tsx",
+          "target": "app/templates/status-403/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/status-403/data.ts",
+          "target": "app/templates/status-403/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/status-403/template.meta.ts"
+    },
+    {
+      "id": "status-404",
+      "kind": "template",
+      "name": "404 Not found",
+      "package": "@gntik-ai/templates",
+      "group": "System",
+      "status": "beta",
+      "description": "Full-page not-found state: code, message, a primary way home, Go back and a support link.",
+      "files": [
+        {
+          "path": "packages/templates/src/status-404/Page.tsx",
+          "target": "app/templates/status-404/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/status-404/data.ts",
+          "target": "app/templates/status-404/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/status-404/template.meta.ts"
+    },
+    {
+      "id": "status-500",
+      "kind": "template",
+      "name": "500 Server error",
+      "package": "@gntik-ai/templates",
+      "group": "System",
+      "status": "beta",
+      "description": "Full-page server error: StatusLayout message with an ErrorPanel (status code, copyable request id, retry, technical details) and links home and to the status page.",
+      "files": [
+        {
+          "path": "packages/templates/src/status-500/Page.tsx",
+          "target": "app/templates/status-500/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/status-500/data.ts",
+          "target": "app/templates/status-500/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/status-500/template.meta.ts"
+    },
+    {
+      "id": "status-maintenance",
+      "kind": "template",
+      "name": "Maintenance",
+      "package": "@gntik-ai/templates",
+      "group": "System",
+      "status": "beta",
+      "description": "Full-page maintenance state: message, Check again and a status page link, with a maintenance SystemBanner carrying the window and a subscribe link.",
+      "files": [
+        {
+          "path": "packages/templates/src/status-maintenance/Page.tsx",
+          "target": "app/templates/status-maintenance/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/status-maintenance/data.ts",
+          "target": "app/templates/status-maintenance/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/status-maintenance/template.meta.ts"
+    },
+    {
+      "id": "upgrade-required",
+      "kind": "template",
+      "name": "Upgrade required",
+      "package": "@gntik-ai/templates",
+      "group": "System",
+      "status": "beta",
+      "description": "Plan gate inside the console: what the locked feature does, the current plan, and a PricingTable comparison whose CTA starts the upgrade.",
+      "files": [
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        },
+        {
+          "path": "packages/templates/src/upgrade-required/Page.tsx",
+          "target": "app/templates/upgrade-required/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/upgrade-required/data.ts",
+          "target": "app/templates/upgrade-required/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/upgrade-required/template.meta.ts"
+    },
+    {
+      "id": "usage-analytics",
+      "kind": "template",
+      "name": "Usage analytics",
+      "package": "@gntik-ai/templates",
+      "group": "Overview",
+      "status": "beta",
+      "description": "Analytics page: date range and filter bar, spend and traffic charts, a sortable breakdown table and a CSV export action.",
+      "files": [
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        },
+        {
+          "path": "packages/templates/src/usage-analytics/Page.tsx",
+          "target": "app/templates/usage-analytics/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/usage-analytics/data.ts",
+          "target": "app/templates/usage-analytics/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/charts",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/usage-analytics/template.meta.ts"
+    },
+    {
+      "id": "verify-email",
+      "kind": "template",
+      "name": "Verify email",
+      "package": "@gntik-ai/templates",
+      "group": "Auth",
+      "status": "beta",
+      "description": "Centred card check-your-inbox step after sign-up: the address the link went to, resend with a countdown, change email and a support link.",
+      "files": [
+        {
+          "path": "packages/templates/src/verify-email/Page.tsx",
+          "target": "app/templates/verify-email/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/verify-email/data.ts",
+          "target": "app/templates/verify-email/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/verify-email/template.meta.ts"
+    },
+    {
+      "id": "workflow-builder",
+      "kind": "template",
+      "name": "Flow builder",
+      "package": "@gntik-ai/templates",
+      "group": "Builders",
+      "status": "experimental",
+      "description": "Full-screen editor: CanvasLayout top bar (breadcrumb, title, status, Save and Publish) around the FlowBuilder block (palette, React Flow canvas, inspector, run console). The app must import '@gntik-ai/flow/styles.css' once for the canvas styles.",
+      "files": [
+        {
+          "path": "packages/templates/src/workflow-builder/Page.tsx",
+          "target": "app/templates/workflow-builder/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/workflow-builder/data.ts",
+          "target": "app/templates/workflow-builder/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/flow",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/workflow-builder/template.meta.ts"
     }
   ]
 }
