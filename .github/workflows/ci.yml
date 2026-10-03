@@ -24,16 +24,18 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # Packages consume each other's built dist (chat/blocks/templates → ui), so build first
+      # (pnpm -r build runs in dependency order).
+      - name: Build
+        run: pnpm build
       - name: Lint
         run: pnpm lint
       - name: Typecheck
         run: pnpm typecheck
-      - name: Unit tests (tokens freeze, MCP indexer/validate/analyze)
+      - name: Unit tests (all packages, keyboard + axe contracts)
         run: pnpm test
-      - name: registry.json is up to date
+      - name: registry.json and kit-registry.json are up to date
         run: pnpm registry:check
-      - name: Build
-        run: pnpm build
 
   a11y:
     needs: checks
