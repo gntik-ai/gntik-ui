@@ -3,9 +3,10 @@ import { useHiddenSeries, legendFocus } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
 import { cx, identity, type ValueFormatter } from './format';
 import { accessibleName, field, numField, type DataKey } from './shared';
+import { ChartDataTable, chartStateView, resolveState, type ChartStateProps } from './states';
 import { CHART_COLORS, seriesColor, useChartTheme, type ChartColor } from './theme';
 
-export interface DonutChartProps<T extends object> {
+export interface DonutChartProps<T extends object> extends ChartStateProps {
   data: readonly T[];
   /** Key of the slice name field. */
   index: DataKey<T>;
@@ -46,6 +47,11 @@ export function DonutChart<T extends object>({
   description,
   className,
   'aria-label': ariaLabel,
+  state,
+  emptyMessage,
+  errorMessage,
+  onRetry,
+  dataTable = false,
 }: DonutChartProps<T>) {
   const t = useChartTheme();
   const [hidden, toggle] = useHiddenSeries();
@@ -64,6 +70,14 @@ export function DonutChart<T extends object>({
     title,
     slices.map((s) => s.name),
   );
+  const effective = resolveState(state, slices.length);
+  const placeholder = chartStateView(effective, { height, emptyMessage, errorMessage, onRetry });
+  if (placeholder)
+    return (
+      <div role="figure" aria-label={name} aria-busy={effective === 'loading' || undefined} className={cx('w-full font-sans', className)}>
+        {placeholder}
+      </div>
+    );
   return (
     <div role="figure" aria-label={name} className={cx('flex flex-col items-center gap-6 font-sans sm:flex-row', className)}>
       <div className="relative shrink-0" style={{ width: height, height }}>
@@ -126,6 +140,9 @@ export function DonutChart<T extends object>({
             );
           })}
         </div>
+      )}
+      {dataTable && (
+        <ChartDataTable caption={name} columns={[index, category]} rows={slices.map((sl) => [sl.name, valueFormatter(sl.value)])} />
       )}
     </div>
   );

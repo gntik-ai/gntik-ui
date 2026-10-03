@@ -1,8 +1,9 @@
 import { Bar, BarChart as RBarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
 import { ChartLegend, useHiddenSeries } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
-import { identity } from './format';
-import { accessibleName, axisProps, CHART_MARGIN, ChartFrame, type BaseChartProps, type DataKey } from './shared';
+import { formatAny, identity } from './format';
+import { accessibleName, cartesianTable, axisProps, CHART_MARGIN, ChartFrame, type BaseChartProps, type DataKey } from './shared';
+import { resolveState } from './states';
 import { CHART_COLORS, seriesColor, useChartTheme } from './theme';
 
 export interface BarChartProps<T extends object> extends BaseChartProps<T> {
@@ -32,6 +33,11 @@ export function BarChart<T extends object>({
   description,
   className,
   'aria-label': ariaLabel,
+  state,
+  emptyMessage,
+  errorMessage,
+  onRetry,
+  dataTable = false,
 }: BarChartProps<T>) {
   const t = useChartTheme();
   const [hidden, toggle] = useHiddenSeries();
@@ -43,6 +49,11 @@ export function BarChart<T extends object>({
   return (
     <ChartFrame
       label={name}
+      state={resolveState(state, data.length)}
+      emptyMessage={emptyMessage}
+      errorMessage={errorMessage}
+      onRetry={onRetry}
+      table={dataTable && cartesianTable(name, data, index, categories, (v) => formatAny(v, valueFormatter))}
       height={height}
       className={className}
       legend={

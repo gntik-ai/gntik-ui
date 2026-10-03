@@ -1,4 +1,5 @@
 import { cx, identity, type ValueFormatter } from './format';
+import { chartStateView, resolveState, type ChartStateProps } from './states';
 import { field, numField, type DataKey } from './shared';
 
 const BAR_LIST_BG = {
@@ -9,7 +10,7 @@ const BAR_LIST_BG = {
   rose: 'bg-category-rose/20',
 } as const;
 
-export interface BarListProps<T extends object> {
+export interface BarListProps<T extends object> extends Omit<ChartStateProps, 'dataTable'> {
   data: readonly T[];
   index: DataKey<T>;
   category: DataKey<T>;
@@ -30,7 +31,19 @@ export function BarList<T extends object>({
   sortOrder = 'desc',
   className,
   'aria-label': ariaLabel = 'Bar list',
+  state,
+  emptyMessage,
+  errorMessage,
+  onRetry,
 }: BarListProps<T>) {
+  const effective = resolveState(state, data.length);
+  const placeholder = chartStateView(effective, { height: 160, emptyMessage, errorMessage, onRetry });
+  if (placeholder)
+    return (
+      <div role="figure" aria-label={ariaLabel} aria-busy={effective === 'loading' || undefined} className={cx('font-sans', className)}>
+        {placeholder}
+      </div>
+    );
   const rows = data.slice();
   if (sortOrder === 'desc') rows.sort((a, b) => numField(b, category) - numField(a, category));
   else if (sortOrder === 'asc') rows.sort((a, b) => numField(a, category) - numField(b, category));
