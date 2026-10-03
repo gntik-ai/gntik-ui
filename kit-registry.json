@@ -6789,7 +6789,7 @@
       "package": "@gntik-ai/templates",
       "group": "Help",
       "status": "experimental",
-      "description": "Documentation article on DocsLayout: left NavList, scroll-spy Outline (Collapsible below lg), CodeBlock, Blockquote, a tip callout, “Was this helpful?” feedback with an optional comment, and previous / next links.",
+      "description": "Documentation article on DocsLayout: left NavList, Breadcrumbs, scroll-spy Outline (Collapsible below lg), an underlined inline Link, a reference Table, CodeBlock, Blockquote, a tip callout, “Was this helpful?” feedback with an optional comment, and previous / next links.",
       "files": [
         {
           "path": "packages/templates/src/docs-article/ArticleFeedback.tsx",
@@ -6954,6 +6954,36 @@
       ],
       "registryDependencies": [],
       "docs": "packages/templates/src/home-dashboard/template.meta.ts"
+    },
+    {
+      "id": "incident-board",
+      "kind": "template",
+      "name": "Incident board",
+      "package": "@gntik-ai/templates",
+      "group": "Overview",
+      "status": "experimental",
+      "description": "Incident triage Kanban in the console: page header with Export / Declare incident, a KPI strip (open, SEV1, unassigned, resolved), a FilterBar (search, severity, service, owner) and a KanbanBoard by stage (Triage · Investigating · Mitigated · Resolved) whose cards show severity, owner and age; pointer and keyboard moves with live announcements, and a details Drawer whose stage select also moves the card.",
+      "files": [
+        {
+          "path": "packages/templates/src/incident-board/Page.tsx",
+          "target": "app/templates/incident-board/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/incident-board/data.ts",
+          "target": "app/templates/incident-board/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/incident-board/template.meta.ts"
     },
     {
       "id": "incident-console",

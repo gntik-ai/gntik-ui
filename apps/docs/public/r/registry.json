@@ -3105,7 +3105,7 @@
       "name": "docs-article",
       "type": "registry:block",
       "title": "Docs article",
-      "description": "Documentation article on DocsLayout: left NavList, scroll-spy Outline (Collapsible below lg), CodeBlock, Blockquote, a tip callout, “Was this helpful?” feedback with an optional comment, and previous / next links.",
+      "description": "Documentation article on DocsLayout: left NavList, Breadcrumbs, scroll-spy Outline (Collapsible below lg), an underlined inline Link, a reference Table, CodeBlock, Blockquote, a tip callout, “Was this helpful?” feedback with an optional comment, and previous / next links.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",
@@ -4254,6 +4254,52 @@
           "path": "packages/ui/src/doc.ts",
           "type": "registry:ui",
           "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "incident-board",
+      "type": "registry:block",
+      "title": "Incident board",
+      "description": "Incident triage Kanban in the console: page header with Export / Declare incident, a KPI strip (open, SEV1, unassigned, resolved), a FilterBar (search, severity, service, owner) and a KanbanBoard by stage (Triage · Investigating · Mitigated · Resolved) whose cards show severity, owner and age; pointer and keyboard moves with live announcements, and a details Drawer whose stage select also moves the card.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Overview"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/incident-board/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/incident-board/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/incident-board/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/incident-board/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/incident-board/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
         }
       ]
     },

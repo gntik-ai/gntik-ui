@@ -220,3 +220,10 @@ export { default as ContactPage } from './contact/Page';
 export { meta as contactTemplateMeta } from './contact/template.meta';
 export type { ContactProps } from './contact/Page';
 export type { ContactTopic, ContactValues, Office } from './contact/data';
+
+// Incident triage board + docs article additions
+export { default as IncidentBoardPage } from './incident-board/Page';
+export { meta as incidentBoardTemplateMeta } from './incident-board/template.meta';
+export type { IncidentBoardProps } from './incident-board/Page';
+export { applyVisibleMove, formatAge as formatIncidentAge, type TriageIncident, type TriageSeverity, type TriageStage } from './incident-board/data';
+export type { SignatureHeader } from './docs-article/data';

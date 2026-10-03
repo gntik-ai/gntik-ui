@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 97 components, 12 layouts, 70 blocks, 57 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 97 components, 12 layouts, 70 blocks, 58 templates.
 
 Packages are published as `@gntik-ai/*` on GitHub Packages: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -7812,7 +7812,7 @@ export default function Route() {
 
 ### Docs article (`docs-article`)
 
-Documentation article on DocsLayout: left NavList, scroll-spy Outline (Collapsible below lg), CodeBlock, Blockquote, a tip callout, “Was this helpful?” feedback with an optional comment, and previous / next links.
+Documentation article on DocsLayout: left NavList, Breadcrumbs, scroll-spy Outline (Collapsible below lg), an underlined inline Link, a reference Table, CodeBlock, Blockquote, a tip callout, “Was this helpful?” feedback with an optional comment, and previous / next links.
 
 - Package: `@gntik-ai/templates` · export `DocsArticlePage` · group Help · status experimental
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/docs-article/template.meta.ts
@@ -7966,6 +7966,29 @@ import { HomeDashboardPage } from '@gntik-ai/templates';
 // Every prop is optional: unset ones fall back to the template fixtures.
 export default function Route() {
   return <HomeDashboardPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
+### Incident board (`incident-board`)
+
+Incident triage Kanban in the console: page header with Export / Declare incident, a KPI strip (open, SEV1, unassigned, resolved), a FilterBar (search, severity, service, owner) and a KanbanBoard by stage (Triage · Investigating · Mitigated · Resolved) whose cards show severity, owner and age; pointer and keyboard moves with live announcements, and a details Drawer whose stage select also moves the card.
+
+- Package: `@gntik-ai/templates` · export `IncidentBoardPage` · group Overview · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/incident-board/template.meta.ts
+- Layout: SidebarLayout · Page
+- Blocks: app-sidebar, app-topbar, page-header, kpi-row, filter-bar
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=incident-board
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add incident-board`
+
+Usage:
+
+```tsx
+import { IncidentBoardPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <IncidentBoardPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
 }
 ```
 

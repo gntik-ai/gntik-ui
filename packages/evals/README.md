@@ -105,5 +105,6 @@ first, look at `usage` in their JSON, and only then run the full battery.
    every battery task to have a script.
 3. Run `npx vitest run` and `npx tsx src/run.ts --dry-run --only <id>`.
 
-After `pnpm registry` adds templates (for example a docs-article or incident template), review the
-expectations of the tasks that have no template today (`incident-kanban`, `docs-article`).
+When `pnpm registry` adds a template that answers a task, point the task's `expect.templates` at it
+and script the dry run to use it (as done for `incident-kanban` → `incident-board` and
+`docs-article` → `docs-article`).

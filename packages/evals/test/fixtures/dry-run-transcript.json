@@ -1095,7 +1095,7 @@
           },
           {
             "type": "text",
-            "text": "No kanban item in the kit, so I will compose one.",
+            "text": "Checking the templates first.",
             "citations": null
           },
           {
@@ -1103,16 +1103,16 @@
             "id": "toolu_dry_046",
             "name": "list_kit",
             "input": {
-              "query": "kanban"
+              "kind": "template",
+              "query": "incident kanban"
             }
           },
           {
             "type": "tool_use",
             "id": "toolu_dry_047",
-            "name": "list_kit",
+            "name": "get_template",
             "input": {
-              "kind": "component",
-              "query": "status"
+              "id": "incident-board"
             }
           }
         ],
@@ -1132,60 +1132,25 @@
             "signature": "dry-run-signature"
           },
           {
+            "type": "text",
+            "text": "The incident-board template fits; submitting it with the product shell.",
+            "citations": null
+          },
+          {
             "type": "tool_use",
             "id": "toolu_dry_048",
-            "name": "get_component",
-            "input": {
-              "id": "card"
-            }
-          },
-          {
-            "type": "tool_use",
-            "id": "toolu_dry_049",
-            "name": "get_component",
-            "input": {
-              "id": "status-tag"
-            }
-          },
-          {
-            "type": "tool_use",
-            "id": "toolu_dry_050",
-            "name": "get_block",
-            "input": {
-              "id": "page-header"
-            }
-          }
-        ],
-        "usage": {
-          "input_tokens": 40,
-          "output_tokens": 400,
-          "cache_creation_input_tokens": 1800,
-          "cache_read_input_tokens": 5200
-        }
-      },
-      {
-        "stop_reason": "tool_use",
-        "content": [
-          {
-            "type": "thinking",
-            "thinking": "",
-            "signature": "dry-run-signature"
-          },
-          {
-            "type": "tool_use",
-            "id": "toolu_dry_051",
             "name": "submit_page",
             "input": {
-              "filename": "IncidentBoard.tsx",
-              "code": "import { PageHeader } from '@gntik-ai/blocks';\nimport { ConsoleShell } from '@gntik-ai/templates';\nimport { Card, CardBody, CardHeader, CardTitle, Grid, Page, Stack, StatusTag, type StatusDefinition } from '@gntik-ai/ui';\n\ninterface Incident {\n  id: string;\n  title: string;\n  severity: 'sev1' | 'sev2' | 'sev3';\n  status: 'open' | 'investigating' | 'resolved';\n}\n\nconst SEVERITIES: Record<string, StatusDefinition> = {\n  sev1: { label: 'SEV 1', tone: 'destructive' },\n  sev2: { label: 'SEV 2', tone: 'warning' },\n  sev3: { label: 'SEV 3', tone: 'info' },\n};\n\nconst COLUMNS: Array<{ id: Incident['status']; label: string }> = [\n  { id: 'open', label: 'Open' },\n  { id: 'investigating', label: 'Investigating' },\n  { id: 'resolved', label: 'Resolved' },\n];\n\nconst INCIDENTS: Incident[] = [\n  { id: 'INC-101', title: 'Elevated error rate on the API gateway', severity: 'sev1', status: 'open' },\n  { id: 'INC-102', title: 'Slow dashboard queries', severity: 'sev3', status: 'investigating' },\n  { id: 'INC-103', title: 'Webhook deliveries delayed', severity: 'sev2', status: 'resolved' },\n];\n\nexport default function IncidentBoard() {\n  return (\n    <ConsoleShell currentHref=\"/incidents\">\n      <Page width=\"wide\" header={<PageHeader title=\"Incidents\" description=\"Every open incident, by status.\" />}>\n        <Grid cols={{ base: 1, md: 3 }} gap={4}>\n          {COLUMNS.map((column) => (\n            <Stack key={column.id} gap={3}>\n              <h2 className=\"text-sm font-semibold text-foreground\">{column.label}</h2>\n              {INCIDENTS.filter((i) => i.status === column.id).map((incident) => (\n                <Card key={incident.id}>\n                  <CardHeader>\n                    <CardTitle>{incident.title}</CardTitle>\n                  </CardHeader>\n                  <CardBody>\n                    <StatusTag status={incident.severity} statuses={SEVERITIES} size=\"sm\" />\n                  </CardBody>\n                </Card>\n              ))}\n            </Stack>\n          ))}\n        </Grid>\n      </Page>\n    </ConsoleShell>\n  );\n}\n"
+              "filename": "IncidentBoardRoute.tsx",
+              "code": "import { IncidentBoardPage, type ConsoleShellProps } from '@gntik-ai/templates';\n\n/** Your product frame: nav, workspaces, user and topbar (shared by every console page). */\nconst shell: Omit<ConsoleShellProps, 'children'> = {\n  currentHref: '/incidents',\n  // nav: navGroups, workspaces, user: currentUser, topbar: { … }\n};\n\n/** Incident board — triage Kanban by stage with severity, owner and age on each card, KPIs, filters and a details drawer. */\nexport default function IncidentBoardRoute() {\n  return <IncidentBoardPage shell={shell} />;\n}\n"
             }
           }
         ],
         "usage": {
           "input_tokens": 40,
-          "output_tokens": 2400,
+          "output_tokens": 900,
           "cache_creation_input_tokens": 1800,
-          "cache_read_input_tokens": 7000
+          "cache_read_input_tokens": 5200
         }
       }
     ],
@@ -1224,23 +1189,15 @@
           },
           {
             "type": "text",
-            "text": "No docs-page; the layout is docs-layout.",
+            "text": "No docs-page component; there is a docs-article template.",
             "citations": null
           },
           {
             "type": "tool_use",
             "id": "toolu_dry_053",
-            "name": "get_component",
+            "name": "get_template",
             "input": {
-              "id": "docs-layout"
-            }
-          },
-          {
-            "type": "tool_use",
-            "id": "toolu_dry_054",
-            "name": "get_component",
-            "input": {
-              "id": "markdown"
+              "id": "docs-article"
             }
           }
         ],
@@ -1261,17 +1218,17 @@
           },
           {
             "type": "tool_use",
-            "id": "toolu_dry_055",
+            "id": "toolu_dry_054",
             "name": "submit_page",
             "input": {
-              "filename": "DocsArticle.tsx",
-              "code": "import { Markdown } from '@gntik-ai/chat';\nimport { Breadcrumbs, DocsLayout } from '@gntik-ai/ui';\n\nconst TOC = [\n  { id: 'prerequisites', label: 'Prerequisites' },\n  { id: 'configure', label: 'Configure the project' },\n  { id: 'ship', label: 'Ship it' },\n];\n\nconst ARTICLE = `# Deploy a project\n\n## Prerequisites\n\nA repository and an account with deploy access.\n\n## Configure the project\n\nPick a region and set the environment variables.\n\n## Ship it\n\nPush to the default branch.`;\n\nexport default function DocsArticle() {\n  return (\n    <DocsLayout toc={TOC}>\n      <Breadcrumbs items={[{ label: 'Docs', href: '/docs' }, { label: 'Deploy a project' }]} />\n      <Markdown>{ARTICLE}</Markdown>\n    </DocsLayout>\n  );\n}\n"
+              "filename": "DocsArticleRoute.tsx",
+              "code": "import { DocsArticlePage } from '@gntik-ai/templates';\n\n/** Docs article — DocsLayout with side nav, breadcrumbs, the article, an on-this-page outline, previous / next links and feedback. */\nexport default function DocsArticleRoute() {\n  return <DocsArticlePage />;\n}\n"
             }
           }
         ],
         "usage": {
           "input_tokens": 40,
-          "output_tokens": 1800,
+          "output_tokens": 900,
           "cache_creation_input_tokens": 1800,
           "cache_read_input_tokens": 7000
         }

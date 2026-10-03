@@ -24,7 +24,7 @@
   {
     "id": "incident-kanban",
     "prompt": "A kanban board for incidents: columns for each status, a card per incident with its severity.",
-    "expect": { "blocks": ["page-header"], "components": ["card", "status-tag"], "layout": "sidebar-layout" }
+    "expect": { "templates": ["incident-board"], "blocks": ["page-header", "kpi-row"], "layout": "sidebar-layout" }
   },
   {
     "id": "audit-log",
@@ -56,7 +56,7 @@
   {
     "id": "docs-article",
     "prompt": "A docs article page with a table of contents.",
-    "expect": { "components": ["markdown", "breadcrumbs"], "layout": "docs-layout" },
+    "expect": { "templates": ["docs-article"], "blocks": ["inline-callout"], "layout": "docs-layout" },
     "mustNot": ["data-table"]
   },
   {

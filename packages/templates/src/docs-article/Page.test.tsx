@@ -11,6 +11,12 @@ describe('DocsArticlePage', () => {
     const outline = screen.getByRole('navigation', { name: 'On this page' });
     expect(within(outline).getByRole('link', { name: 'Node.js example' })).toHaveAttribute('href', '#verify-node');
     expect(screen.getByText('verify.ts')).toBeInTheDocument();
+    const trail = screen.getByRole('navigation', { name: /breadcrumb/i });
+    expect(within(trail).getByRole('link', { name: 'Docs' })).toHaveAttribute('href', '/docs');
+    expect(screen.getByRole('link', { name: 'Create a webhook' })).toHaveClass('underline');
+    const table = screen.getByRole('table', { name: 'Headers sent with every delivery' });
+    expect(within(table).getAllByRole('row')).toHaveLength(4);
+    expect(screen.getByText('Tip')).toBeInTheDocument();
     expect(screen.getByRole('navigation', { name: 'Previous and next articles' })).toBeInTheDocument();
     await expectNoAxeViolations();
   });
