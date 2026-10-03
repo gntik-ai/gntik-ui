@@ -1,0 +1,1281 @@
+{
+  "note": "Synthetic transcript (hand-scripted, not recorded from the API) used by `--dry-run` and the tests. Tool calls are executed for real against the kit; only the model turns are replayed. Usage numbers are illustrative.",
+  "model": "claude-opus-5-5",
+  "tasks": {
+    "members": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "Checking the templates first.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_001",
+            "name": "list_kit",
+            "input": {
+              "kind": "template",
+              "query": "members"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_002",
+            "name": "get_template",
+            "input": {
+              "id": "settings-members"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_003",
+            "name": "scaffold_page",
+            "input": {
+              "template": "settings-members",
+              "route": "/settings/members"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_004",
+            "name": "validate_page",
+            "input": {
+              "code": "import { SettingsMembersPage } from '@gntik-ai/templates';\n\n/** Members settings — Workspace members with inline roles, pending invitations, an invite dialog and a role permission matrix. */\nexport default function SettingsMembersRoute() {\n  return <SettingsMembersPage />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "The page uses the template; submitting.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_005",
+            "name": "submit_page",
+            "input": {
+              "filename": "SettingsMembersRoute.tsx",
+              "code": "import { SettingsMembersPage } from '@gntik-ai/templates';\n\n/** Members settings — Workspace members with inline roles, pending invitations, an invite dialog and a role permission matrix. */\nexport default function SettingsMembersRoute() {\n  return <SettingsMembersPage />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 900,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 8800
+        }
+      }
+    ],
+    "usage-dashboard": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "Checking the templates first.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_006",
+            "name": "list_kit",
+            "input": {
+              "kind": "template",
+              "query": "usage"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_007",
+            "name": "get_template",
+            "input": {
+              "id": "usage-analytics"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_008",
+            "name": "scaffold_page",
+            "input": {
+              "template": "usage-analytics",
+              "route": "/usage"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_009",
+            "name": "validate_page",
+            "input": {
+              "code": "import { UsageAnalyticsPage, type ConsoleShellProps } from '@gntik-ai/templates';\n\n/** Your product frame: nav, workspaces, user and topbar (shared by every console page). */\nconst shell: Omit<ConsoleShellProps, 'children'> = {\n  currentHref: '/usage',\n  // nav: navGroups, workspaces, user: currentUser, topbar: { … }\n};\n\n/** Usage analytics — Analytics page: date range and filter bar, spend and traffic charts, a sortable breakdown table and a CSV export action. */\nexport default function UsageAnalyticsRoute() {\n  return <UsageAnalyticsPage shell={shell} />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "The page uses the template; submitting.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_010",
+            "name": "submit_page",
+            "input": {
+              "filename": "UsageAnalyticsRoute.tsx",
+              "code": "import { UsageAnalyticsPage, type ConsoleShellProps } from '@gntik-ai/templates';\n\n/** Your product frame: nav, workspaces, user and topbar (shared by every console page). */\nconst shell: Omit<ConsoleShellProps, 'children'> = {\n  currentHref: '/usage',\n  // nav: navGroups, workspaces, user: currentUser, topbar: { … }\n};\n\n/** Usage analytics — Analytics page: date range and filter bar, spend and traffic charts, a sortable breakdown table and a CSV export action. */\nexport default function UsageAnalyticsRoute() {\n  return <UsageAnalyticsPage shell={shell} />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 900,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 8800
+        }
+      }
+    ],
+    "sso-sign-in": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "Checking the templates first.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_011",
+            "name": "list_kit",
+            "input": {
+              "kind": "template",
+              "query": "sso"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_012",
+            "name": "get_template",
+            "input": {
+              "id": "sso-login"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_013",
+            "name": "scaffold_page",
+            "input": {
+              "template": "sso-login",
+              "route": "/sso"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "The page uses the template; submitting.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_014",
+            "name": "submit_page",
+            "input": {
+              "filename": "SsoLoginRoute.tsx",
+              "code": "import { SsoLoginPage } from '@gntik-ai/templates';\n\n/** Single sign-on — Centred card SSO entry: work email lookup, then a \"Redirecting to your identity provider\" state with cancel and a password fallback. */\nexport default function SsoLoginRoute() {\n  return <SsoLoginPage />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 900,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      }
+    ],
+    "api-keys": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "Checking the templates first.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_015",
+            "name": "list_kit",
+            "input": {
+              "kind": "template",
+              "query": "api keys"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_016",
+            "name": "get_template",
+            "input": {
+              "id": "settings-api-keys"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_017",
+            "name": "scaffold_page",
+            "input": {
+              "template": "settings-api-keys",
+              "route": "/settings/api-keys"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_018",
+            "name": "validate_page",
+            "input": {
+              "code": "import { SettingsApiKeysPage } from '@gntik-ai/templates';\n\n/** API keys settings — API key list with scopes and last use, a create-key dialog that shows the secret once, and typed revoke confirmation. */\nexport default function SettingsApiKeysRoute() {\n  return <SettingsApiKeysPage />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "The page uses the template; submitting.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_019",
+            "name": "submit_page",
+            "input": {
+              "filename": "SettingsApiKeysRoute.tsx",
+              "code": "import { SettingsApiKeysPage } from '@gntik-ai/templates';\n\n/** API keys settings — API key list with scopes and last use, a create-key dialog that shows the secret once, and typed revoke confirmation. */\nexport default function SettingsApiKeysRoute() {\n  return <SettingsApiKeysPage />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 900,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 8800
+        }
+      }
+    ],
+    "audit-log": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "Checking the templates first.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_020",
+            "name": "list_kit",
+            "input": {
+              "kind": "template",
+              "query": "audit"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_021",
+            "name": "get_template",
+            "input": {
+              "id": "audit-log"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_022",
+            "name": "scaffold_page",
+            "input": {
+              "template": "audit-log",
+              "route": "/audit-log"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_023",
+            "name": "validate_page",
+            "input": {
+              "code": "import { AuditLogPage, type ConsoleShellProps } from '@gntik-ai/templates';\n\n/** Your product frame: nav, workspaces, user and topbar (shared by every console page). */\nconst shell: Omit<ConsoleShellProps, 'children'> = {\n  currentHref: '/audit-log',\n  // nav: navGroups, workspaces, user: currentUser, topbar: { … }\n};\n\n/** Audit log — Workspace audit trail: FilterBar (search, actor / resource / result filters) and DateRangeFilter over a DataTable of events with actor, action, target and result; a drawer shows the change diff (CodeBlock); export to CSV. */\nexport default function AuditLogRoute() {\n  return <AuditLogPage shell={shell} />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "The page uses the template; submitting.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_024",
+            "name": "submit_page",
+            "input": {
+              "filename": "AuditLogRoute.tsx",
+              "code": "import { AuditLogPage, type ConsoleShellProps } from '@gntik-ai/templates';\n\n/** Your product frame: nav, workspaces, user and topbar (shared by every console page). */\nconst shell: Omit<ConsoleShellProps, 'children'> = {\n  currentHref: '/audit-log',\n  // nav: navGroups, workspaces, user: currentUser, topbar: { … }\n};\n\n/** Audit log — Workspace audit trail: FilterBar (search, actor / resource / result filters) and DateRangeFilter over a DataTable of events with actor, action, target and result; a drawer shows the change diff (CodeBlock); export to CSV. */\nexport default function AuditLogRoute() {\n  return <AuditLogPage shell={shell} />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 900,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 8800
+        }
+      }
+    ],
+    "onboarding-wizard": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "Checking the templates first.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_025",
+            "name": "list_kit",
+            "input": {
+              "kind": "template",
+              "query": "workspace"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_026",
+            "name": "get_template",
+            "input": {
+              "id": "create-workspace"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_027",
+            "name": "scaffold_page",
+            "input": {
+              "template": "create-workspace",
+              "route": "/onboarding"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "The page uses the template; submitting.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_028",
+            "name": "submit_page",
+            "input": {
+              "filename": "CreateWorkspaceRoute.tsx",
+              "code": "import { CreateWorkspacePage } from '@gntik-ai/templates';\n\n/** Create workspace — Workspace onboarding wizard: name with address preview, data region and plan as selectable cards, and inline team invitations with email chips and a role. */\nexport default function CreateWorkspaceRoute() {\n  return <CreateWorkspacePage />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 900,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      }
+    ],
+    "notifications-inbox": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "Checking the templates first.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_029",
+            "name": "list_kit",
+            "input": {
+              "kind": "template",
+              "query": "notification"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_030",
+            "name": "get_template",
+            "input": {
+              "id": "notification-inbox"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_031",
+            "name": "scaffold_page",
+            "input": {
+              "template": "notification-inbox",
+              "route": "/inbox"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_032",
+            "name": "validate_page",
+            "input": {
+              "code": "import { NotificationInboxPage, type ConsoleShellProps } from '@gntik-ai/templates';\n\n/** Your product frame: nav, workspaces, user and topbar (shared by every console page). */\nconst shell: Omit<ConsoleShellProps, 'children'> = {\n  currentHref: '/inbox',\n  // nav: navGroups, workspaces, user: currentUser, topbar: { … }\n};\n\n/** Notification inbox — Master–detail inbox in the console: All / Unread / Mentions filter (ToggleGroup), read and unread rows, a detail pane with Open, Mark as unread and Archive, and Back on small screens. */\nexport default function NotificationInboxRoute() {\n  return <NotificationInboxPage shell={shell} />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "The page uses the template; submitting.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_033",
+            "name": "submit_page",
+            "input": {
+              "filename": "NotificationInboxRoute.tsx",
+              "code": "import { NotificationInboxPage, type ConsoleShellProps } from '@gntik-ai/templates';\n\n/** Your product frame: nav, workspaces, user and topbar (shared by every console page). */\nconst shell: Omit<ConsoleShellProps, 'children'> = {\n  currentHref: '/inbox',\n  // nav: navGroups, workspaces, user: currentUser, topbar: { … }\n};\n\n/** Notification inbox — Master–detail inbox in the console: All / Unread / Mentions filter (ToggleGroup), read and unread rows, a detail pane with Open, Mark as unread and Archive, and Back on small screens. */\nexport default function NotificationInboxRoute() {\n  return <NotificationInboxPage shell={shell} />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 900,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 8800
+        }
+      }
+    ],
+    "not-found": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "Checking the templates first.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_034",
+            "name": "list_kit",
+            "input": {
+              "kind": "template",
+              "query": "404"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_035",
+            "name": "get_template",
+            "input": {
+              "id": "status-404"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_036",
+            "name": "scaffold_page",
+            "input": {
+              "template": "status-404",
+              "route": "/404"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "The page uses the template; submitting.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_037",
+            "name": "submit_page",
+            "input": {
+              "filename": "Status404Route.tsx",
+              "code": "import { Status404Page } from '@gntik-ai/templates';\n\n/** 404 Not found — Full-page not-found state: code, message, a primary way home, Go back and a support link. */\nexport default function Status404Route() {\n  return <Status404Page />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 900,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      }
+    ],
+    "workflow-builder": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "Checking the templates first.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_038",
+            "name": "list_kit",
+            "input": {
+              "kind": "template",
+              "query": "workflow"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_039",
+            "name": "get_template",
+            "input": {
+              "id": "workflow-builder"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_040",
+            "name": "scaffold_page",
+            "input": {
+              "template": "workflow-builder",
+              "route": "/workflows"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_041",
+            "name": "validate_page",
+            "input": {
+              "code": "import { WorkflowBuilderPage } from '@gntik-ai/templates';\n\n/** Flow builder — Full-screen editor: CanvasLayout top bar (breadcrumb, title, status, Save and Publish) around the FlowBuilder block (palette, React Flow canvas, inspector, run console). */\nexport default function WorkflowBuilderRoute() {\n  return <WorkflowBuilderPage />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "The page uses the template; submitting.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_042",
+            "name": "submit_page",
+            "input": {
+              "filename": "WorkflowBuilderRoute.tsx",
+              "code": "import { WorkflowBuilderPage } from '@gntik-ai/templates';\n\n/** Flow builder — Full-screen editor: CanvasLayout top bar (breadcrumb, title, status, Save and Publish) around the FlowBuilder block (palette, React Flow canvas, inspector, run console). */\nexport default function WorkflowBuilderRoute() {\n  return <WorkflowBuilderPage />;\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 900,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 8800
+        }
+      }
+    ],
+    "billing": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_043",
+            "name": "list_kit",
+            "input": {
+              "group": "billing"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_044",
+            "name": "scaffold_page",
+            "input": {
+              "blocks": [
+                "page-header",
+                "plan-card",
+                "quota-meters",
+                "invoice-table"
+              ],
+              "layout": "console",
+              "route": "/billing",
+              "name": "BillingPage"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_045",
+            "name": "submit_page",
+            "input": {
+              "filename": "BillingPage.tsx",
+              "code": "import { InvoiceTable, PageHeader, PlanCard, QuotaMeters } from '@gntik-ai/blocks';\nimport { ConsoleShell } from '@gntik-ai/templates';\nimport { Page, Stack } from '@gntik-ai/ui';\n\n/** Console page: Page header · Plan card · Quota meters · Invoice table. Blocks render their fixtures until you pass data. */\nexport default function BillingPage() {\n  return (\n    <ConsoleShell currentHref=\"/billing\">\n      <Page width=\"wide\" header={<PageHeader />}>\n        <Stack gap={6}>\n          <PlanCard />\n          <QuotaMeters />\n          <InvoiceTable />\n        </Stack>\n      </Page>\n    </ConsoleShell>\n  );\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 900,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      }
+    ],
+    "incident-kanban": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "No kanban item in the kit, so I will compose one.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_046",
+            "name": "list_kit",
+            "input": {
+              "query": "kanban"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_047",
+            "name": "list_kit",
+            "input": {
+              "kind": "component",
+              "query": "status"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_048",
+            "name": "get_component",
+            "input": {
+              "id": "card"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_049",
+            "name": "get_component",
+            "input": {
+              "id": "status-tag"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_050",
+            "name": "get_block",
+            "input": {
+              "id": "page-header"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_051",
+            "name": "submit_page",
+            "input": {
+              "filename": "IncidentBoard.tsx",
+              "code": "import { PageHeader } from '@gntik-ai/blocks';\nimport { ConsoleShell } from '@gntik-ai/templates';\nimport { Card, CardBody, CardHeader, CardTitle, Grid, Page, Stack, StatusTag, type StatusDefinition } from '@gntik-ai/ui';\n\ninterface Incident {\n  id: string;\n  title: string;\n  severity: 'sev1' | 'sev2' | 'sev3';\n  status: 'open' | 'investigating' | 'resolved';\n}\n\nconst SEVERITIES: Record<string, StatusDefinition> = {\n  sev1: { label: 'SEV 1', tone: 'destructive' },\n  sev2: { label: 'SEV 2', tone: 'warning' },\n  sev3: { label: 'SEV 3', tone: 'info' },\n};\n\nconst COLUMNS: Array<{ id: Incident['status']; label: string }> = [\n  { id: 'open', label: 'Open' },\n  { id: 'investigating', label: 'Investigating' },\n  { id: 'resolved', label: 'Resolved' },\n];\n\nconst INCIDENTS: Incident[] = [\n  { id: 'INC-101', title: 'Elevated error rate on the API gateway', severity: 'sev1', status: 'open' },\n  { id: 'INC-102', title: 'Slow dashboard queries', severity: 'sev3', status: 'investigating' },\n  { id: 'INC-103', title: 'Webhook deliveries delayed', severity: 'sev2', status: 'resolved' },\n];\n\nexport default function IncidentBoard() {\n  return (\n    <ConsoleShell currentHref=\"/incidents\">\n      <Page width=\"wide\" header={<PageHeader title=\"Incidents\" description=\"Every open incident, by status.\" />}>\n        <Grid cols={{ base: 1, md: 3 }} gap={4}>\n          {COLUMNS.map((column) => (\n            <Stack key={column.id} gap={3}>\n              <h2 className=\"text-sm font-semibold text-foreground\">{column.label}</h2>\n              {INCIDENTS.filter((i) => i.status === column.id).map((incident) => (\n                <Card key={incident.id}>\n                  <CardHeader>\n                    <CardTitle>{incident.title}</CardTitle>\n                  </CardHeader>\n                  <CardBody>\n                    <StatusTag status={incident.severity} statuses={SEVERITIES} size=\"sm\" />\n                  </CardBody>\n                </Card>\n              ))}\n            </Stack>\n          ))}\n        </Grid>\n      </Page>\n    </ConsoleShell>\n  );\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 2400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      }
+    ],
+    "docs-article": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_052",
+            "name": "get_component",
+            "input": {
+              "id": "docs-page"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 5200,
+          "cache_read_input_tokens": 0
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "text",
+            "text": "No docs-page; the layout is docs-layout.",
+            "citations": null
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_053",
+            "name": "get_component",
+            "input": {
+              "id": "docs-layout"
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_054",
+            "name": "get_component",
+            "input": {
+              "id": "markdown"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 400,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 5200
+        }
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "dry-run-signature"
+          },
+          {
+            "type": "tool_use",
+            "id": "toolu_dry_055",
+            "name": "submit_page",
+            "input": {
+              "filename": "DocsArticle.tsx",
+              "code": "import { Markdown } from '@gntik-ai/chat';\nimport { Breadcrumbs, DocsLayout } from '@gntik-ai/ui';\n\nconst TOC = [\n  { id: 'prerequisites', label: 'Prerequisites' },\n  { id: 'configure', label: 'Configure the project' },\n  { id: 'ship', label: 'Ship it' },\n];\n\nconst ARTICLE = `# Deploy a project\n\n## Prerequisites\n\nA repository and an account with deploy access.\n\n## Configure the project\n\nPick a region and set the environment variables.\n\n## Ship it\n\nPush to the default branch.`;\n\nexport default function DocsArticle() {\n  return (\n    <DocsLayout toc={TOC}>\n      <Breadcrumbs items={[{ label: 'Docs', href: '/docs' }, { label: 'Deploy a project' }]} />\n      <Markdown>{ARTICLE}</Markdown>\n    </DocsLayout>\n  );\n}\n"
+            }
+          }
+        ],
+        "usage": {
+          "input_tokens": 40,
+          "output_tokens": 1800,
+          "cache_creation_input_tokens": 1800,
+          "cache_read_input_tokens": 7000
+        }
+      }
+    ]
+  }
+}

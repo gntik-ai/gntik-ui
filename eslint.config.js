@@ -24,7 +24,7 @@ export default tseslint.config(
   { ignores: ['**/node_modules/**', '**/dist/**', '**/.next/**', '**/next-env.d.ts', 'apps/docs/public/**', 'apps/docs/legacy-index.html', '**/test/fixtures/**', 'registry.json'] },
   js.configs.recommended,
   {
-    files: ['packages/mcp/src/**/*.ts', 'packages/mcp/scripts/**/*.ts', 'packages/cli/src/**/*.ts', 'packages/cli/test/**/*.ts', 'packages/codemods/src/**/*.ts', 'packages/codemods/test/**/*.ts'],
+    files: ['packages/mcp/src/**/*.ts', 'packages/mcp/scripts/**/*.ts', 'packages/cli/src/**/*.ts', 'packages/cli/test/**/*.ts', 'packages/codemods/src/**/*.ts', 'packages/codemods/test/**/*.ts', 'packages/evals/src/**/*.ts', 'packages/evals/test/**/*.ts'],
     extends: [tseslint.configs.recommended],
     languageOptions: { globals: globals.node },
   },
