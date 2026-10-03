@@ -31,6 +31,8 @@ export interface PageHeaderTab {
 }
 
 export interface PageHeaderProps {
+  /** Root element. Use 'div' where the layout already has a banner (e.g. StackedLayout's pageHeader slot). */
+  as?: 'header' | 'div';
   /** Location trail above the title; `null` hides it. */
   breadcrumbs?: BreadcrumbItem[] | null;
   title?: ReactNode;
@@ -55,6 +57,7 @@ export interface PageHeaderProps {
 
 /** Screen header: breadcrumb, title + status, description, meta row, actions and optional tabs. */
 export function PageHeader({
+  as: Root = 'header',
   breadcrumbs = pageHeaderBreadcrumbs,
   title = 'Deployments',
   description = 'Every build and release of this project across its environments.',
@@ -86,7 +89,7 @@ export function PageHeader({
   );
 
   return (
-    <header className={cn('min-w-0', className)}>
+    <Root className={cn('min-w-0', className)}>
       {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} maxItems={4} className="mb-2.5" />}
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0 flex-1">
@@ -133,6 +136,6 @@ export function PageHeader({
           </TabsList>
         </Tabs>
       )}
-    </header>
+    </Root>
   );
 }
