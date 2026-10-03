@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import { currentTheme, observeTheme, tokenColor, type Theme } from '@gntik-ai/tokens/runtime';
 
 /** Series colour name → brand token. Green primary is the hero; the rest are categorical accents. */
@@ -18,7 +18,7 @@ export type ChartColor = keyof typeof SERIES_TOKENS;
 export const CHART_COLORS: readonly ChartColor[] = ['primary', 'violet', 'cyan', 'amber', 'rose'];
 
 export interface ChartTheme {
-  /** Active theme ("dark" | "light" | "high_contrast"). */
+  /** Active theme ("dark" | "light" | "high_contrast"); "dark" on the server and during hydration. */
   theme: Theme;
   grid: string;
   axis: string;
@@ -29,32 +29,75 @@ export interface ChartTheme {
   barCursor: string;
   /** Card surface (donut slice separators). */
   surface: string;
-  /** Resolved colour for a series name, with optional alpha (0–1). */
+  /** Colour for a series name, with optional alpha (0–1). */
   color: (name: ChartColor, alpha?: number) => string;
 }
 
-function readTheme(theme: Theme): ChartTheme {
+type ColorFn = (token: string, alpha?: number) => string;
+
+/** `hsl(var(--token))`: resolved by the browser (SVG fill/stroke and inline styles), so it is SSR-safe and follows theme switches. */
+const cssVarColor: ColorFn = (token, alpha) => (alpha == null ? `hsl(var(${token}))` : `hsl(var(${token}) / ${alpha})`);
+
+function buildTheme(theme: Theme, c: ColorFn): ChartTheme {
   return {
     theme,
-    grid: tokenColor('--border'),
-    axis: tokenColor('--muted-foreground', 0.5),
-    text: tokenColor('--muted-foreground'),
-    cursor: tokenColor('--muted-foreground', 0.32),
-    barCursor: tokenColor('--secondary', 0.55),
-    surface: tokenColor('--card'),
-    color: (name, alpha) => tokenColor(SERIES_TOKENS[name] ?? SERIES_TOKENS.primary, alpha),
+    grid: c('--border'),
+    axis: c('--muted-foreground', 0.5),
+    text: c('--muted-foreground'),
+    cursor: c('--muted-foreground', 0.32),
+    barCursor: c('--secondary', 0.55),
+    surface: c('--card'),
+    color: (name, alpha) => c(SERIES_TOKENS[name] ?? SERIES_TOKENS.primary, alpha),
   };
 }
 
+// Snapshots are cached so useSyncExternalStore gets a stable object between theme changes.
+const varThemes = new Map<Theme, ChartTheme>();
+let resolvedSnapshot: ChartTheme | null = null;
+
+function varTheme(theme: Theme): ChartTheme {
+  let t = varThemes.get(theme);
+  if (!t) {
+    t = buildTheme(theme, cssVarColor);
+    varThemes.set(theme, t);
+  }
+  return t;
+}
+
+function subscribe(onChange: () => void) {
+  // Invalidate the resolved snapshot on every class change, even when the theme name stays the same.
+  return observeTheme(() => {
+    resolvedSnapshot = null;
+    onChange();
+  });
+}
+
+const SERVER_THEME = varTheme('dark');
+const getServerSnapshot = () => SERVER_THEME;
+const getVarSnapshot = () => varTheme(currentTheme());
+function getResolvedSnapshot() {
+  const theme = currentTheme();
+  if (!resolvedSnapshot || resolvedSnapshot.theme !== theme) resolvedSnapshot = buildTheme(theme, (token, alpha) => tokenColor(token, alpha));
+  return resolvedSnapshot;
+}
+
+export interface UseChartThemeOptions {
+  /**
+   * Resolve the tokens to concrete `hsl(h s% l%)` strings (read from the DOM after hydration),
+   * for consumers that cannot use `var()` (canvas, colour maths). Default: `hsl(var(--token))`.
+   */
+  resolved?: boolean;
+}
+
 /**
- * Resolves the brand tokens to concrete colours for Recharts (SVG attributes cannot use
- * `var()`), via `@gntik-ai/tokens/runtime`. Re-reads them whenever the theme class changes.
+ * Brand colours for Recharts. By default every colour is a `hsl(var(--token))` string: SVG
+ * fill/stroke attributes and inline styles resolve it, so server and client render the same
+ * markup and a theme switch re-skins the chart without re-rendering. `theme` follows the
+ * <html> class after mount. With `{ resolved: true }` colours are read from the live CSS
+ * variables once mounted (the server and hydration render use the `var()` strings).
  */
-export function useChartTheme(): ChartTheme {
-  const [snapshot, setSnapshot] = useState<ChartTheme>(() => readTheme(currentTheme()));
-  // Re-read on every class change, even when the theme name stays the same.
-  useEffect(() => observeTheme((next) => setSnapshot(readTheme(next))), []);
-  return snapshot;
+export function useChartTheme({ resolved = false }: UseChartThemeOptions = {}): ChartTheme {
+  return useSyncExternalStore(subscribe, resolved ? getResolvedSnapshot : getVarSnapshot, getServerSnapshot);
 }
 
 /** Colour for the i-th series, cycling through `colors`. */

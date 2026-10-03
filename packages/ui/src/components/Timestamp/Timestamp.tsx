@@ -27,6 +27,12 @@ export interface TimestampProps extends Omit<HTMLAttributes<HTMLTimeElement>, 'c
   tooltip?: boolean;
   /** Shown when `value` cannot be parsed. */
   fallback?: string;
+  /**
+   * Reference time (epoch ms) for the first render, e.g. the server's request time, so the
+   * server HTML and the hydration render match. A live label switches to the real clock right
+   * after mount. Defaults to `Date.now()`.
+   */
+  now?: number;
 }
 
 const ABSOLUTE: Intl.DateTimeFormatOptions = { dateStyle: 'medium', timeStyle: 'short' };
@@ -47,15 +53,24 @@ export function Timestamp({
   updateInterval,
   tooltip = true,
   fallback = '—',
+  now: initialNow,
   tone,
   className,
   ...props
 }: TimestampProps) {
   const date = toDate(value);
-  const [now, setNow] = useState(() => Date.now());
+  const [now, setNow] = useState(() => initialNow ?? Date.now());
   const time = date?.getTime();
   const isLive = live && format === 'relative' && time !== undefined;
   const interval = time !== undefined ? (updateInterval ?? refreshInterval(new Date(time), now)) : 0;
+
+  // A server-provided reference time only seeds hydration; catch up with the clock once mounted.
+  const seeded = initialNow !== undefined;
+  useEffect(() => {
+    if (!isLive || !seeded) return;
+    const id = window.setTimeout(() => setNow(Date.now()), 0);
+    return () => window.clearTimeout(id);
+  }, [isLive, seeded]);
 
   useEffect(() => {
     if (!isLive) return;
@@ -71,14 +86,20 @@ export function Timestamp({
   const full = new Intl.DateTimeFormat(locale, tooltipOptions).format(date);
   const showTooltip = tooltip && full !== label;
   const element = (
+    // Relative labels and locale/time-zone formatting can legitimately differ between server and client.
     <time
+      suppressHydrationWarning
       dateTime={date.toISOString()}
       tabIndex={showTooltip ? 0 : undefined}
       className={cn(timestampVariants({ tone, interactive: showTooltip }), className)}
       {...props}
     >
       {label}
-      {showTooltip && <span className="sr-only"> ({full})</span>}
+      {showTooltip && (
+        <span suppressHydrationWarning className="sr-only">
+          {' '}({full})
+        </span>
+      )}
     </time>
   );
   if (!showTooltip) return element;

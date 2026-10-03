@@ -23,6 +23,21 @@ describe('HomeDashboardPage', () => {
     expect(onQuickAction).toHaveBeenCalledWith('invite');
   });
 
+  it('renders product charts from props', { timeout: 15000 }, () => {
+    const signups = { '7d': [{ week: 'W1', Signups: 10, Trials: 4 }, { week: 'W2', Signups: 14, Trials: 6 }] };
+    render(
+      <HomeDashboardPage
+        primaryChart={{ title: 'Signups', description: 'New accounts', ranges: [{ value: '7d', label: '7d' }], dataByRange: signups, index: 'week', categories: ['Signups', 'Trials'] }}
+        secondaryChart={{ title: 'Agent runs', categories: ['Requests'] }}
+      />,
+    );
+    expect(screen.getByRole('heading', { name: 'Signups' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Infrastructure cost' })).toBeNull();
+    expect(screen.getByRole('button', { name: 'Trials' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Agent runs' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Errors' })).toBeNull();
+  });
+
   it('declares its meta', () => {
     expect(meta.priority).toBe('P1');
     expect(meta.blocks).toContain('kpi-row');

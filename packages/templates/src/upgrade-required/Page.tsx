@@ -1,7 +1,7 @@
 import { InlineCallout, PageHeader, PricingTable, type PricingCycle, type PricingTier } from '@gntik-ai/blocks';
 import { MessageSquare } from '@gntik-ai/icons';
 import { Page, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
-import { ConsoleShell } from '../shared/ConsoleShell';
+import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import { upgradeBreadcrumbs, upgradeContent, upgradeTiers } from './data';
 
 export interface UpgradeRequiredProps {
@@ -19,6 +19,8 @@ export interface UpgradeRequiredProps {
   onContactSales: () => void;
   breadcrumbs: BreadcrumbItem[];
   currentHref: string;
+  /** ConsoleShell props (app nav, user, workspaces, sidebar footer, topbar…). */
+  shell: Omit<ConsoleShellProps, 'children'>;
 }
 
 /** Plan gate: ConsoleShell + Page with PageHeader, a current-plan callout and a PricingTable. */
@@ -34,9 +36,10 @@ export default function UpgradeRequiredPage(props: Partial<UpgradeRequiredProps>
     onContactSales,
     breadcrumbs = upgradeBreadcrumbs,
     currentHref = '/settings',
+    shell,
   } = props;
   return (
-    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref}>
+    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref} {...shell}>
       <Page
         width="wide"
         header={

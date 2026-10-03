@@ -1,5 +1,8 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { hydrateRoot } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
+import { TooltipProvider } from '../Tooltip';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { Timestamp } from './Timestamp';
 import { formatRelative, toDate } from './format';
@@ -44,6 +47,29 @@ describe('Timestamp', () => {
     expect(screen.getByText('1 minute ago')).toBeInTheDocument();
     unmount();
     expect(clear).toHaveBeenCalled();
+  });
+
+  it('uses `now` for the first render, then catches up with the clock', () => {
+    vi.useFakeTimers({ now: NOW + 10 * 60_000 });
+    render(<Timestamp value={NOW - 5 * 60_000} now={NOW} locale="en" tooltip={false} />);
+    expect(screen.getByText('5 minutes ago')).toBeInTheDocument();
+    act(() => vi.advanceTimersByTime(1));
+    expect(screen.getByText('15 minutes ago')).toBeInTheDocument();
+  });
+
+  it('hydrates server HTML rendered with a server `now` without warnings', async () => {
+    const ui = <Timestamp value={NOW - 5 * 60_000} now={NOW} locale="en-US" />;
+    const container = document.createElement('div');
+    container.innerHTML = renderToString(<TooltipProvider>{ui}</TooltipProvider>);
+    document.body.appendChild(container);
+    expect(container).toHaveTextContent(/^5 minutes ago/);
+    const errors = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const root = await act(async () => hydrateRoot(container, <TooltipProvider>{ui}</TooltipProvider>));
+    expect(errors).not.toHaveBeenCalled();
+    errors.mockRestore();
+    expect(container.querySelector('time')).toHaveAttribute('dateTime', '2026-10-03T11:55:00.000Z');
+    act(() => root.unmount());
+    container.remove();
   });
 
   it('shows an invalid date as the fallback', () => {

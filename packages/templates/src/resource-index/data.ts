@@ -19,16 +19,40 @@ export const resourceSavedViews: SavedView[] = [
   { value: 'eu', label: 'EU regions', filters: [{ field: 'region', value: 'eu-west-1' }, { field: 'region', value: 'eu-central-1' }] },
 ];
 
-/** Search by name or id; filters on one field are OR, across fields AND. Status matches case-insensitively. */
-export function filterResources(rows: readonly ResourceRow[], query: string, filters: readonly ActiveFilter[]): ResourceRow[] {
+type Column<T> = { id: string; accessor?: (row: T) => unknown };
+
+const fieldValue = <T extends object>(row: T, field: string, columns?: ReadonlyArray<Column<T>>): unknown => {
+  const accessor = columns?.find((c) => c.id === field)?.accessor;
+  return accessor ? accessor(row) : (row as Record<string, unknown>)[field];
+};
+
+const text = (v: unknown) => (typeof v === 'string' || typeof v === 'number' ? String(v).toLowerCase() : undefined);
+
+/**
+ * Search by name or id (or, without them, every column value); filters on one field are OR, across fields AND, matched case-insensitively.
+ * A filter field reads the column with the same id (its `accessor`), else the row property of that
+ * name, so statuses come from the columns.
+ */
+export function filterResources<T extends object = ResourceRow>(
+  rows: readonly T[],
+  query: string,
+  filters: readonly ActiveFilter[],
+  columns?: ReadonlyArray<Column<T>>,
+): T[] {
   const q = query.trim().toLowerCase();
   const byField = new Map<string, string[]>();
   for (const f of filters) byField.set(f.field, [...(byField.get(f.field) ?? []), f.value.toLowerCase()]);
   return rows.filter((row) => {
-    if (q && !row.name.toLowerCase().includes(q) && !row.id.toLowerCase().includes(q)) return false;
+    if (q) {
+      const r = row as Record<string, unknown>;
+      let haystack = [r.name, r.id].map(text).filter((v) => v !== undefined);
+      // Rows without a name/id: search every column value instead.
+      if (haystack.length === 0 && columns) haystack = columns.map((c) => text(c.accessor?.(row))).filter((v) => v !== undefined);
+      if (!haystack.some((v) => v.includes(q))) return false;
+    }
     for (const [field, values] of byField) {
-      const value = field === 'status' ? row.status : field === 'region' ? row.region : undefined;
-      if (value !== undefined && !values.includes(value.toLowerCase())) return false;
+      const value = text(fieldValue(row, field, columns));
+      if (value !== undefined && !values.includes(value)) return false;
     }
     return true;
   });

@@ -10,9 +10,9 @@ const ids = registry.registry.map((item) => item.id);
 const THEME_SAMPLE = ['overview', 'foundations', 'app-shell', 'buttons', 'tables', 'form-layouts', 'alerts', 'area-charts'];
 // Monaco and the flow canvas draw asynchronously; give them extra time.
 const SLOW = { monaco: 4000, reactflow: 1500 };
-// Too tall for one full-page image (200+ live examples): snapshot the first viewport;
-// the whole page is covered by the axe gate (library.a11y.spec.js).
-const VIEWPORT_ONLY = new Set(['ui-components']);
+// Too tall for one full-page image (live examples, iframe galleries): snapshot the first viewport;
+// the content is covered by the axe gates (library.a11y + compositions.a11y).
+const VIEWPORT_ONLY = new Set(['ui-components', 'layouts', 'blocks', 'templates']);
 
 const cases = [
   ...ids.map((id) => ({ id, theme: 'dark' })),

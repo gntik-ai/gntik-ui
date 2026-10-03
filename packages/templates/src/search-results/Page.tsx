@@ -2,7 +2,7 @@ import { NoResultsEmpty, PageHeader, SectionHeader } from '@gntik-ai/blocks';
 import { Search } from '@gntik-ai/icons';
 import { Checkbox, CheckboxGroup, Grid, GridItem, Input, Kbd, Link, Page, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
 import { useId, useRef, useState, type KeyboardEvent } from 'react';
-import { ConsoleShell } from '../shared/ConsoleShell';
+import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import {
   searchBreadcrumbs,
   searchDefaultQuery,
@@ -25,6 +25,8 @@ export interface SearchResultsProps {
   onSelectionChange: (selection: SearchSelection) => void;
   breadcrumbs: BreadcrumbItem[];
   currentHref: string;
+  /** ConsoleShell props (app nav, user, workspaces, sidebar footer, topbar…). */
+  shell: Omit<ConsoleShellProps, 'children'>;
 }
 
 const EMPTY_SELECTION: SearchSelection = { type: [], owner: [] };
@@ -47,6 +49,7 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
     onSelectionChange,
     breadcrumbs = searchBreadcrumbs,
     currentHref = '/search',
+    shell,
   } = props;
   const id = useId();
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -86,7 +89,7 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
   };
 
   return (
-    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref}>
+    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref} {...shell}>
       <Page
         width="wide"
         header={

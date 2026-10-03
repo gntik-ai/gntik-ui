@@ -45,8 +45,19 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
 - `packages/icons` (lucide + `Icon`), `charts` (Recharts 3), `flow` (@xyflow/react 12),
   `editor` (Monaco 0.57): leen tokens solo vía `@gntik-ai/tokens/runtime`.
 - `packages/tokens/src/pairing.css` — alias de contraste (`text-primary-text`, `-success-`,
-  `-warning-`, `-destructive-text`, `outline-focus-ring`) que apuntan a tokens existentes;
-  un test exige AA en los 3 temas.
+  `-warning-`, `-destructive-text`, `outline-focus-ring`) y, sobre fondos teñidos (chips,
+  badges), `text-<tono>-chip-text`; todos apuntan a tokens existentes y un test exige AA en los
+  3 temas (también sobre el tinte). Los enlaces en texto van subrayados.
+- `packages/chat` (pack de chat IA), `packages/blocks` (69 bloques: `src/<familia>/<Nombre>/`
+  con `block.meta.ts`), `packages/templates` (40 páginas: `src/<id>/Page.tsx` +
+  `template.meta.ts`; las de consola usan `shared/ConsoleShell`), `packages/cli`
+  (`gntik-ui init|add|eject|list|search|docs`, `--json`). Layouts en `packages/ui/src/layouts/`
+  (`embedded` cuando van dentro de un shell que ya tiene `<main>`).
+- `kit-registry.json` (raíz, generado por `pnpm registry`): todo lo instalable, lo leen CLI y MCP.
+  Los ids son únicos entre componentes, layouts, bloques y plantillas.
+- `apps/musematic` (puerta de la Fase 3: solo kit, verificado por `scripts/check-kit-only.mjs`),
+  `apps/example-vite`, `apps/example-next`. `apps/docs/preview.html` = un bloque/layout/plantilla
+  por iframe (galerías Layouts · Blocks · Templates).
 - `packages/mcp` — MCP server (privado, imagen Docker); sirve `registry.json` (raíz), generado
   con `pnpm registry`.
 - Releases: Changesets (`pnpm changeset`) → workflow Release → GitHub Packages.
@@ -62,7 +73,7 @@ Componente de paquete: seguir `packages/ui/CONTRIBUTING.md`, exportarlo en `src/
 añadir un changeset. ESLint aplica las reglas de marca (sin paleta Tailwind, sin `dark:`, sin
 degradados, sin hex).
 Antes de dar algo por hecho: `pnpm lint && pnpm typecheck && pnpm test && pnpm registry:check`
-(+ `pnpm a11y` si se toca `packages/ui`).
+(+ `pnpm a11y` si se tocan ui/blocks/templates: axe en navegador sobre cada composición).
 
 ## Reglas (duras)
 - Sobrio: sin degradados, sin glow; sombras planas brand-tinted. Mono-brand verde (hue 145)

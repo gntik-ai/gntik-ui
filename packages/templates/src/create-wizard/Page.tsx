@@ -21,10 +21,12 @@ import {
 import { useId, useState, type ReactNode } from 'react';
 import {
   PROJECT_NAME_RE,
+  wizardCopy,
   wizardInitialValues,
   wizardRegions,
   wizardSources,
   wizardSteps,
+  type CreateWizardCopy,
   type SourceOption,
   type WizardRegion,
   type WizardValues,
@@ -42,6 +44,8 @@ export interface CreateWizardProps {
   /** Called after the exit is confirmed. */
   onExit: () => void;
   onStepChange: (index: number) => void;
+  /** Step titles, field labels, submit label…; unset keys keep the default (project) wording. */
+  copy: Partial<CreateWizardCopy>;
 }
 
 function StepIntro({ id, title, children }: { id: string; title: string; children?: ReactNode }) {
@@ -65,7 +69,9 @@ export default function CreateWizardPage({
   onFinish,
   onExit,
   onStepChange,
+  copy: copyOverrides,
 }: Partial<CreateWizardProps>) {
+  const copy: CreateWizardCopy = { ...wizardCopy, ...copyOverrides };
   const id = useId();
   const [step, setStep] = useState(0);
   const [values, setValues] = useState(initialValues);
@@ -75,7 +81,7 @@ export default function CreateWizardPage({
   const set = <K extends keyof WizardValues>(key: K, value: WizardValues[K]) => setValues((v) => ({ ...v, [key]: value }));
 
   const nameValid = PROJECT_NAME_RE.test(values.name);
-  const nameError = touched && !nameValid ? (values.name ? 'Use lowercase letters, numbers and dashes.' : 'Enter a project name.') : undefined;
+  const nameError = touched && !nameValid ? (values.name ? copy.nameInvalid : copy.nameRequired) : undefined;
   const go = (index: number) => {
     setStep(index);
     onStepChange?.(index);
@@ -87,7 +93,7 @@ export default function CreateWizardPage({
     setFinishing(true);
     try {
       await onFinish?.(values);
-      setStatus(`Project “${values.name}” created`);
+      setStatus(copy.created(values.name));
     } finally {
       setFinishing(false);
     }
@@ -103,27 +109,27 @@ export default function CreateWizardPage({
       onStepChange={go}
       nextDisabled={step === 0 && !nameValid}
       nextLoading={finishing}
-      finishLabel="Create project"
+      finishLabel={copy.submitLabel}
       onFinish={() => void finish()}
       onExit={onExit}
-      exitTitle="Leave project setup?"
-      exitDescription="The project has not been created yet. Your answers will be discarded."
+      exitTitle={copy.exitTitle}
+      exitDescription={copy.exitDescription}
       footerStart={<span aria-live="polite">{status}</span>}
     >
       {step === 0 && (
         <section aria-labelledby={`${id}-details`}>
           <Stack gap={6}>
-            <StepIntro id={`${id}-details`} title="Project details">
-              Name the project; you can change the description later.
+            <StepIntro id={`${id}-details`} title={copy.detailsTitle}>
+              {copy.detailsIntro}
             </StepIntro>
             <Field invalid={nameError != null}>
-              <FieldLabel required>Project name</FieldLabel>
-              <Input required value={values.name} onValueChange={(v) => set('name', v)} onBlur={() => setTouched(true)} placeholder="billing-dashboard" />
-              <FieldDescription>Lowercase letters, numbers and dashes.</FieldDescription>
+              <FieldLabel required>{copy.nameLabel}</FieldLabel>
+              <Input required value={values.name} onValueChange={(v) => set('name', v)} onBlur={() => setTouched(true)} placeholder={copy.namePlaceholder} />
+              <FieldDescription>{copy.nameHint}</FieldDescription>
               <FieldError match={nameError != null}>{nameError}</FieldError>
             </Field>
             <Field>
-              <FieldLabel>Description</FieldLabel>
+              <FieldLabel>{copy.descriptionLabel}</FieldLabel>
               <Textarea rows={3} value={values.description} onValueChange={(v) => set('description', v)} />
             </Field>
           </Stack>
@@ -132,8 +138,8 @@ export default function CreateWizardPage({
       {step === 1 && (
         <section aria-labelledby={`${id}-source`}>
           <Stack gap={6}>
-            <StepIntro id={`${id}-source`} title="Choose a source">
-              Where the project’s code comes from.
+            <StepIntro id={`${id}-source`} title={copy.sourceTitle}>
+              {copy.sourceIntro}
             </StepIntro>
             <SelectableCardGroup aria-labelledby={`${id}-source`} value={values.source} onValueChange={(v) => set('source', v)} columns={1}>
               {sources.map((s) => {
@@ -147,19 +153,19 @@ export default function CreateWizardPage({
       {step === 2 && (
         <section aria-labelledby={`${id}-configure`}>
           <Stack gap={6}>
-            <StepIntro id={`${id}-configure`} title="Configure">
-              Region and deployment defaults.
+            <StepIntro id={`${id}-configure`} title={copy.configureTitle}>
+              {copy.configureIntro}
             </StepIntro>
             <SimpleSelect
-              label="Region"
+              label={copy.regionLabel}
               items={regions}
               value={values.region}
               onValueChange={(v) => v && set('region', v)}
               className="w-full"
             />
             <Checkbox
-              label="Preview deployments"
-              description="Deploy every pull request to its own URL."
+              label={copy.previewsLabel}
+              description={copy.previewsDescription}
               checked={values.previews}
               onCheckedChange={(checked) => set('previews', checked)}
             />
@@ -169,30 +175,30 @@ export default function CreateWizardPage({
       {step === 3 && (
         <section aria-labelledby={`${id}-review`}>
           <Stack gap={6}>
-            <StepIntro id={`${id}-review`} title="Review and create">
-              Check your answers; edit any section before creating the project.
+            <StepIntro id={`${id}-review`} title={copy.reviewTitle}>
+              {copy.reviewIntro}
             </StepIntro>
-            <VisuallyHidden render={<h2 />}>Summary</VisuallyHidden>
+            <VisuallyHidden render={<h2 />}>{copy.summaryHeading}</VisuallyHidden>
             <DescriptionListCard
-              title="Details"
-              description="Name and description."
+              title={copy.reviewDetailsTitle}
+              description={copy.reviewDetailsDescription}
               items={[
-                { id: 'name', label: 'Project name', value: values.name, mono: true },
-                { id: 'description', label: 'Description', value: values.description || '—' },
+                { id: 'name', label: copy.nameLabel, value: values.name, mono: true },
+                { id: 'description', label: copy.descriptionLabel, value: values.description || '—' },
               ]}
               onEdit={() => go(0)}
-              editLabel="Edit details"
+              editLabel={copy.editDetailsLabel}
             />
             <DescriptionListCard
-              title="Source and configuration"
-              description="Where the code comes from and where it runs."
+              title={copy.reviewSourceTitle}
+              description={copy.reviewSourceDescription}
               items={[
-                { id: 'source', label: 'Source', value: sourceLabel },
-                { id: 'region', label: 'Region', value: regionLabel },
-                { id: 'previews', label: 'Preview deployments', value: values.previews ? 'On' : 'Off' },
+                { id: 'source', label: copy.sourceLabel, value: sourceLabel },
+                { id: 'region', label: copy.regionLabel, value: regionLabel },
+                { id: 'previews', label: copy.previewsLabel, value: values.previews ? copy.on : copy.off },
               ]}
               onEdit={() => go(1)}
-              editLabel="Edit source"
+              editLabel={copy.editSourceLabel}
             />
           </Stack>
         </section>

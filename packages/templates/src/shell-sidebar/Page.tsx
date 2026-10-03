@@ -1,7 +1,7 @@
 import { FirstRunEmpty, PageHeader } from '@gntik-ai/blocks';
 import { Page, type BreadcrumbItem, type NavGroup, type UserMenuUser, type Workspace } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
-import { ConsoleShell } from '../shared/ConsoleShell';
+import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import { shellSidebarBreadcrumbs, shellSidebarCopy, shellSidebarNav, shellSidebarUser, shellSidebarWorkspaces } from './data';
 
 export interface ShellSidebarPageProps {
@@ -20,6 +20,8 @@ export interface ShellSidebarPageProps {
   onCreate: () => void;
   /** Replaces the empty state with real page content. */
   children: ReactNode;
+  /** Other ConsoleShell props (sidebar footer, workspace callbacks, topbar…). */
+  shell: Omit<ConsoleShellProps, 'children'>;
 }
 
 /** Console starter: ConsoleShell around an empty Page (title, description, first-run state). */
@@ -37,9 +39,10 @@ export default function ShellSidebarPage({
   emptySteps = shellSidebarCopy.emptySteps,
   onCreate,
   children,
+  shell,
 }: Partial<ShellSidebarPageProps>) {
   return (
-    <ConsoleShell nav={nav} currentHref={currentHref} breadcrumbs={breadcrumbs} workspaces={workspaces} user={user}>
+    <ConsoleShell nav={nav} currentHref={currentHref} breadcrumbs={breadcrumbs} workspaces={workspaces} user={user} {...shell}>
       <Page header={<PageHeader breadcrumbs={null} title={title} description={description} status="" meta={[]} actions={[]} tabs={null} />}>
         {children ?? (
           <FirstRunEmpty

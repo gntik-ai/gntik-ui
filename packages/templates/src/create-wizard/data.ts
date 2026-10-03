@@ -50,3 +50,74 @@ export const wizardInitialValues: WizardValues = {
 };
 
 export const PROJECT_NAME_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+/** Every visible string of the wizard; products override any subset through the `copy` prop. */
+export interface CreateWizardCopy {
+  detailsTitle: string;
+  detailsIntro: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  nameHint: string;
+  nameRequired: string;
+  nameInvalid: string;
+  descriptionLabel: string;
+  sourceTitle: string;
+  sourceIntro: string;
+  configureTitle: string;
+  configureIntro: string;
+  regionLabel: string;
+  previewsLabel: string;
+  previewsDescription: string;
+  reviewTitle: string;
+  reviewIntro: string;
+  summaryHeading: string;
+  reviewDetailsTitle: string;
+  reviewDetailsDescription: string;
+  editDetailsLabel: string;
+  reviewSourceTitle: string;
+  reviewSourceDescription: string;
+  editSourceLabel: string;
+  sourceLabel: string;
+  on: string;
+  off: string;
+  /** Submit button on the review step. */
+  submitLabel: string;
+  exitTitle: string;
+  exitDescription: string;
+  /** Live status after a successful finish. */
+  created: (name: string) => string;
+}
+
+export const wizardCopy: CreateWizardCopy = {
+  detailsTitle: 'Project details',
+  detailsIntro: 'Name the project; you can change the description later.',
+  nameLabel: 'Project name',
+  namePlaceholder: 'billing-dashboard',
+  nameHint: 'Lowercase letters, numbers and dashes.',
+  nameRequired: 'Enter a project name.',
+  nameInvalid: 'Use lowercase letters, numbers and dashes.',
+  descriptionLabel: 'Description',
+  sourceTitle: 'Choose a source',
+  sourceIntro: 'Where the project’s code comes from.',
+  configureTitle: 'Configure',
+  configureIntro: 'Region and deployment defaults.',
+  regionLabel: 'Region',
+  previewsLabel: 'Preview deployments',
+  previewsDescription: 'Deploy every pull request to its own URL.',
+  reviewTitle: 'Review and create',
+  reviewIntro: 'Check your answers; edit any section before creating the project.',
+  summaryHeading: 'Summary',
+  reviewDetailsTitle: 'Details',
+  reviewDetailsDescription: 'Name and description.',
+  editDetailsLabel: 'Edit details',
+  reviewSourceTitle: 'Source and configuration',
+  reviewSourceDescription: 'Where the code comes from and where it runs.',
+  editSourceLabel: 'Edit source',
+  sourceLabel: 'Source',
+  on: 'On',
+  off: 'Off',
+  submitLabel: 'Create project',
+  exitTitle: 'Leave project setup?',
+  exitDescription: 'The project has not been created yet. Your answers will be discarded.',
+  created: (name) => `Project “${name}” created`,
+};

@@ -1,4 +1,15 @@
-import { ActivityFeed, ChartCard, KpiRow, PageHeader, type ActivityItem, type ChartCardRange, type KpiItem, type PageChromeAction } from '@gntik-ai/blocks';
+import {
+  ActivityFeed,
+  ChartCard,
+  KpiRow,
+  PageHeader,
+  type ActivityItem,
+  type ChartCardProps,
+  type ChartCardRange,
+  type CostPoint,
+  type KpiItem,
+  type PageChromeAction,
+} from '@gntik-ai/blocks';
 import { chartFmt } from '@gntik-ai/charts';
 import { Plus, UserPlus } from '@gntik-ai/icons';
 import { Button, ClickableCard, Grid, GridItem, Page, Section, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
@@ -14,15 +25,30 @@ import {
   type RequestPoint,
 } from './data';
 
-export interface HomeDashboardProps {
+/** Second-chart settings (everything but its data and ranges, which have their own props). */
+export type HomeSecondaryChart<S extends object> = Omit<ChartCardProps<S>, 'dataByRange' | 'ranges'>;
+
+/**
+ * `P` is the row type of the first chart (default: the infrastructure-cost fixture), `S` the row
+ * type of the second one (default: requests and errors per day).
+ */
+export interface HomeDashboardProps<P extends object = CostPoint, S extends object = RequestPoint> {
   title: string;
   description: string;
   breadcrumbs: BreadcrumbItem[];
   /** Header actions (the last one is the primary). */
   actions: PageChromeAction[];
   kpis: readonly KpiItem[];
-  requestsByRange: Readonly<Record<string, readonly RequestPoint[]>>;
+  /**
+   * First chart: any ChartCard props (title, description, ranges, dataByRange, index, categories,
+   * colors, kind, valueFormatter…). Unset fields keep the infrastructure-cost fixture.
+   */
+  primaryChart: ChartCardProps<P>;
+  /** Data of the second chart, per range key. */
+  requestsByRange: Readonly<Record<string, readonly S[]>>;
   requestRanges: readonly ChartCardRange[];
+  /** Second chart: title, description, index, categories, colors, kind… (merged over the requests defaults). */
+  secondaryChart: HomeSecondaryChart<S>;
   activity: readonly ActivityItem[];
   quickActions: readonly QuickAction[];
   /** Called with the id of a quick action card (cards with `href` also navigate). */
@@ -32,8 +58,19 @@ export interface HomeDashboardProps {
   shell: Omit<ConsoleShellProps, 'children'>;
 }
 
+const REQUESTS_CHART: HomeSecondaryChart<RequestPoint> = {
+  title: 'Requests',
+  description: 'Requests and errors per day',
+  index: 'day',
+  categories: ['Requests', 'Errors'],
+  colors: ['primary', 'rose'],
+  kind: 'line',
+  stacked: false,
+  valueFormatter: chartFmt.num,
+};
+
 /** Home dashboard: header, KPI row, two charts, recent activity and quick actions in the console shell. */
-export default function HomeDashboardPage({
+export default function HomeDashboardPage<P extends object = CostPoint, S extends object = RequestPoint>({
   title = 'Overview',
   description = 'How your workspace is doing across projects, traffic and spend.',
   breadcrumbs = homeBreadcrumbs,
@@ -42,14 +79,17 @@ export default function HomeDashboardPage({
     { label: 'New project', icon: Plus, variant: 'primary' },
   ],
   kpis = homeKpis,
-  requestsByRange = homeRequestsByRange,
+  primaryChart,
+  requestsByRange = homeRequestsByRange as unknown as Readonly<Record<string, readonly S[]>>,
   requestRanges = homeRequestRanges,
+  secondaryChart,
   activity = homeActivity,
   quickActions = homeQuickActions,
   onQuickAction,
   onViewAllActivity,
   shell,
-}: Partial<HomeDashboardProps>) {
+}: Partial<HomeDashboardProps<P, S>>) {
+  const secondary = { ...(REQUESTS_CHART as unknown as HomeSecondaryChart<S>), ...secondaryChart };
   return (
     <ConsoleShell currentHref="/overview" breadcrumbs={breadcrumbs} {...shell}>
       <Page
@@ -60,19 +100,8 @@ export default function HomeDashboardPage({
           <KpiRow items={kpis} />
           <Section title="Trends" description="Spend and traffic over the selected range.">
             <Grid cols={{ base: 1, lg: 2 }} gap={6}>
-              <ChartCard />
-              <ChartCard<RequestPoint>
-                title="Requests"
-                description="Requests and errors per day"
-                ranges={requestRanges}
-                dataByRange={requestsByRange}
-                index="day"
-                categories={['Requests', 'Errors']}
-                colors={['primary', 'rose']}
-                kind="line"
-                stacked={false}
-                valueFormatter={chartFmt.num}
-              />
+              <ChartCard<P> {...primaryChart} />
+              <ChartCard<S> {...secondary} ranges={requestRanges} dataByRange={requestsByRange} />
             </Grid>
           </Section>
           <Grid cols={{ base: 1, lg: 3 }} gap={6} align="start">

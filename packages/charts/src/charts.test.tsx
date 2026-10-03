@@ -1,3 +1,5 @@
+import { hydrateRoot } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
 import { act, fireEvent, render, renderHook, screen, waitFor } from '@testing-library/react';
 import {
   AreaChart,
@@ -86,7 +88,7 @@ describe('DonutChart', () => {
     const total = () => screen.getByText('jobs').previousElementSibling;
     expect(total()).toHaveTextContent('100');
     const sector = container.querySelector('.recharts-pie-sector path');
-    expect(sector?.getAttribute('fill')).toBe('hsl(145 61% 50%)');
+    expect(sector?.getAttribute('fill')).toBe('hsl(var(--primary))');
     fireEvent.click(screen.getByRole('button', { name: /Ingest/ }));
     expect(total()).toHaveTextContent('60');
   });
@@ -114,21 +116,47 @@ describe('ChartTooltip', () => {
 });
 
 describe('useChartTheme (token adapter wiring)', () => {
-  it('reads colours from the live CSS variables', () => {
+  it('returns SSR-safe CSS-variable colours by default', () => {
     const { result } = renderHook(() => useChartTheme());
-    expect(result.current.color('primary')).toBe('hsl(145 61% 50%)');
-    expect(result.current.color('violet', 0.5)).toBe('hsl(262 62% 55% / 0.5)');
+    expect(result.current.color('primary')).toBe('hsl(var(--primary))');
+    expect(result.current.color('violet', 0.5)).toBe('hsl(var(--category-violet) / 0.5)');
+    expect(result.current.grid).toBe('hsl(var(--border))');
     expect(result.current.theme).toBe('light');
   });
 
+  it('resolves colours from the live CSS variables on request', () => {
+    const { result } = renderHook(() => useChartTheme({ resolved: true }));
+    expect(result.current.color('primary')).toBe('hsl(145 61% 50%)');
+    expect(result.current.color('violet', 0.5)).toBe('hsl(262 62% 55% / 0.5)');
+  });
+
   it('re-reads tokens when the theme class changes', async () => {
-    const { result } = renderHook(() => useChartTheme());
+    const { result } = renderHook(() => useChartTheme({ resolved: true }));
     act(() => {
       setTokens({ '--primary': '145 61% 40%' });
       document.documentElement.classList.add('dark');
     });
     await waitFor(() => expect(result.current.theme).toBe('dark'));
     expect(result.current.color('primary')).toBe('hsl(145 61% 40%)');
+  });
+
+  it('server-renders coloured legend swatches and hydrates without a mismatch', async () => {
+    document.documentElement.classList.add('dark');
+    const ui = <AreaChart aria-label="Requests" data={data} index="month" categories={['requests', 'errors']} />;
+    const html = renderToString(ui);
+    expect(html).toContain('background:hsl(var(--primary))');
+    expect(html).toContain('background:hsl(var(--category-violet))');
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
+    const errors = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const root = await act(async () => hydrateRoot(container, ui));
+    expect(errors).not.toHaveBeenCalled();
+    errors.mockRestore();
+    const swatch = container.querySelector('button[aria-pressed] span[aria-hidden]');
+    expect(swatch).toHaveStyle({ background: 'hsl(var(--primary))' });
+    act(() => root.unmount());
+    container.remove();
   });
 });
 

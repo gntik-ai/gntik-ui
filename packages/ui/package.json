@@ -4,17 +4,35 @@
   "description": "gntik-ui React components and layouts on Base UI, styled with the brand tokens.",
   "license": "MIT",
   "type": "module",
-  "sideEffects": ["*.css"],
-  "files": ["dist", "src/styles.css"],
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "src/styles.css"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./theme-script": {
+      "types": "./dist/theme-script.d.ts",
+      "default": "./dist/theme-script.js"
+    },
     "./styles.css": "./src/styles.css",
     "./package.json": "./package.json"
   },
-  "publishConfig": { "registry": "https://npm.pkg.github.com" },
-  "repository": { "type": "git", "url": "https://github.com/gntik-ai/gntik-ui.git", "directory": "packages/ui" },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gntik-ai/gntik-ui.git",
+    "directory": "packages/ui"
+  },
   "scripts": {
     "build": "tsdown",
     "typecheck": "tsc -p tsconfig.json --noEmit",

@@ -4,6 +4,7 @@ import {
   Badge,
   Button,
   EmptyState,
+  Link,
   Page,
   SplitLayout,
   StatusDot,
@@ -14,7 +15,7 @@ import {
   type BreadcrumbItem,
 } from '@gntik-ai/ui';
 import { useId, useState } from 'react';
-import { ConsoleShell } from '../shared/ConsoleShell';
+import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import { inboxBreadcrumbs, inboxCategoryLabels, inboxNotifications, type InboxNotification } from './data';
 
 export type InboxFilter = 'all' | 'unread' | 'mention';
@@ -30,6 +31,8 @@ export interface NotificationInboxProps {
   onMarkAllRead: () => void;
   breadcrumbs: BreadcrumbItem[];
   currentHref: string;
+  /** ConsoleShell props (app nav, user, workspaces, sidebar footer, topbar…). */
+  shell: Omit<ConsoleShellProps, 'children'>;
 }
 
 const FILTERS: Array<{ value: InboxFilter; label: string }> = [
@@ -52,6 +55,7 @@ export default function NotificationInboxPage(props: Partial<NotificationInboxPr
     onMarkAllRead,
     breadcrumbs = inboxBreadcrumbs,
     currentHref = '/notifications',
+    shell,
   } = props;
   const [items, setItems] = useState(initial);
   const [filter, setFilter] = useState<InboxFilter>(defaultFilter);
@@ -140,7 +144,7 @@ export default function NotificationInboxPage(props: Partial<NotificationInboxPr
       </div>
       <div className="flex flex-wrap items-center gap-2">
         {selected.href && (
-          <Button trailingIcon={ExternalLink} render={<a href={selected.href} />} nativeButton={false}>
+          <Button trailingIcon={ExternalLink} render={<Link href={selected.href} tone="inherit" underline="none" />} nativeButton={false}>
             Open
           </Button>
         )}
@@ -157,7 +161,7 @@ export default function NotificationInboxPage(props: Partial<NotificationInboxPr
   );
 
   return (
-    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref}>
+    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref} {...shell}>
       <Page
         width="full"
         header={

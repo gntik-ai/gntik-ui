@@ -6,6 +6,6 @@ export { DonutChart, type DonutChartProps } from './DonutChart';
 export { BarList, type BarListProps } from './BarList';
 export { ChartTooltip, tooltipContent, type ChartTooltipProps, type ChartTooltipEntry } from './ChartTooltip';
 export { ChartLegend, useHiddenSeries, type ChartLegendProps, type ChartLegendItem } from './ChartLegend';
-export { useChartTheme, CHART_COLORS, SERIES_TOKENS, type ChartColor, type ChartTheme } from './theme';
+export { useChartTheme, CHART_COLORS, SERIES_TOKENS, type ChartColor, type ChartTheme, type UseChartThemeOptions } from './theme';
 export { chartFmt, type ValueFormatter } from './format';
 export type { BaseChartProps } from './shared';

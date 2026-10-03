@@ -103,7 +103,6 @@ export function AppSidebarFooter({
       )}
       {helpHref && (
         <Link
-          underline="hover"
           href={helpHref}
           tone="muted"
           underline="none"

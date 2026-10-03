@@ -2819,7 +2819,7 @@
       "package": "@gntik-ai/ui",
       "group": "Navigation",
       "status": "stable",
-      "description": "Styled anchor in brand green with an underline on hover. `external` adds the external icon, a hidden \"opens in a new tab\" hint and safe rel/target. LinkProvider supplies the app router link so internal links navigate client-side; `render` swaps the element per link.",
+      "description": "Styled anchor in brand green, underlined by default so inline links do not rely on colour (WCAG 1.4.1); standalone links (nav, cards, actions) pass underline=\"hover\" or \"none\". `external` adds the external icon, a hidden \"opens in a new tab\" hint and safe rel/target. LinkProvider supplies the app router link so internal links navigate client-side; `render` swaps the element per link.",
       "files": [
         {
           "path": "packages/ui/src/components/Link/Link.tsx",
@@ -3903,6 +3903,10 @@
         {
           "path": "packages/ui/src/theme/presets.tsx",
           "target": "components/theme/presets.tsx"
+        },
+        {
+          "path": "packages/ui/src/theme/theme-script.ts",
+          "target": "components/theme/theme-script.ts"
         }
       ],
       "dependencies": [],

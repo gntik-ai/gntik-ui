@@ -17,7 +17,7 @@ import {
 import { SquarePen } from '@gntik-ai/icons';
 import { Page, TooltipProvider, type BreadcrumbItem } from '@gntik-ai/ui';
 import { useEffect, useRef, useState } from 'react';
-import { ConsoleShell } from '../shared/ConsoleShell';
+import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import {
   assistantBreadcrumbs,
   assistantReply,
@@ -57,6 +57,8 @@ export interface AssistantChatProps {
   onFeedback: (feedback: ChatFeedback) => void;
   breadcrumbs: BreadcrumbItem[];
   currentHref: string;
+  /** ConsoleShell props (app nav, user, workspaces, sidebar footer, topbar…). */
+  shell: Omit<ConsoleShellProps, 'children'>;
 }
 
 /** Assistant chat: ConsoleShell + Page + ChatLayout with a mock-streamed reply (timers cleared on Stop and unmount). */
@@ -73,6 +75,7 @@ export default function AssistantChatPage(props: Partial<AssistantChatProps>) {
     onFeedback,
     breadcrumbs = assistantBreadcrumbs,
     currentHref = '/assistant',
+    shell,
   } = props;
   const [turns, setTurns] = useState<Turn[]>([]);
   const [streaming, setStreaming] = useState(false);
@@ -156,7 +159,7 @@ export default function AssistantChatPage(props: Partial<AssistantChatProps>) {
   const lastReply = [...turns].reverse().find((t) => t.role === 'assistant' && !t.streaming)?.text;
 
   return (
-    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref}>
+    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref} {...shell}>
       <Page
         width="full"
         header={

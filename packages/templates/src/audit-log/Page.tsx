@@ -26,7 +26,7 @@ import {
   type DateRange,
 } from '@gntik-ai/ui';
 import { useState } from 'react';
-import { ConsoleShell } from '../shared/ConsoleShell';
+import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import { auditBreadcrumbs, auditEvents, auditFilterFields, auditResultStatuses, type AuditEvent } from './data';
 
 export interface AuditLogProps {
@@ -40,6 +40,8 @@ export interface AuditLogProps {
   onExport: (events: AuditEvent[]) => void;
   breadcrumbs: BreadcrumbItem[];
   currentHref: string;
+  /** ConsoleShell props (app nav, user, workspaces, sidebar footer, topbar…). */
+  shell: Omit<ConsoleShellProps, 'children'>;
 }
 
 const DAY = 86_400_000;
@@ -91,6 +93,7 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
     onExport = downloadCsv,
     breadcrumbs = auditBreadcrumbs,
     currentHref = '/activity',
+    shell,
   } = props;
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<ActiveFilter[]>([]);
@@ -154,7 +157,7 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
   ];
 
   return (
-    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref}>
+    <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref} {...shell}>
       <Page
         width="wide"
         header={
