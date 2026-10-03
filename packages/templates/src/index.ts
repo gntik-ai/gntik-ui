@@ -148,3 +148,28 @@ export type { TrafficPoint, UsageRow } from './usage-analytics/data';
 export { default as VerifyEmailPage } from './verify-email/Page';
 export { meta as verifyEmailTemplateMeta } from './verify-email/template.meta';
 export type { VerifyEmailPageProps } from './verify-email/Page';
+
+// P3 — AI and builders
+export { default as RunTracePage } from './run-trace/Page';
+export { meta as runTraceTemplateMeta } from './run-trace/template.meta';
+export type { RunTraceProps } from './run-trace/Page';
+export type { SpanDetail, TraceRun } from './run-trace/data';
+export { default as PromptPlaygroundPage } from './prompt-playground/Page';
+export { meta as promptPlaygroundTemplateMeta } from './prompt-playground/template.meta';
+export type { PromptPlaygroundProps } from './prompt-playground/Page';
+export type { PlaygroundModel, PlaygroundOutput } from './prompt-playground/data';
+export { default as EvaluationsPage } from './evaluations/Page';
+export { meta as evaluationsTemplateMeta } from './evaluations/template.meta';
+export type { EvaluationsProps } from './evaluations/Page';
+export { findRegressions, type EvalRegression, type EvalSample } from './evaluations/data';
+export { default as ModelProvidersPage } from './model-providers/Page';
+export { meta as modelProvidersTemplateMeta } from './model-providers/template.meta';
+export type { ModelProvidersProps } from './model-providers/Page';
+export { modelProvidersNavItem, type NewModelKeyInput, type ProviderUsageLimit } from './model-providers/data';
+export { default as CodeEditorPage } from './code-editor/Page';
+export { meta as codeEditorTemplateMeta } from './code-editor/template.meta';
+export type { CodeEditorPageProps } from './code-editor/Page';
+export { default as DataExplorerPage } from './data-explorer/Page';
+export { meta as dataExplorerTemplateMeta } from './data-explorer/template.meta';
+export type { DataExplorerProps } from './data-explorer/Page';
+export { generateExplorerRows, type ExplorerField, type ExplorerRow } from './data-explorer/data';
