@@ -15,7 +15,8 @@
       "@gntik-ai/chat",
       "@gntik-ai/blocks",
       "@gntik-ai/templates",
-      "@gntik-ai/cli"
+      "@gntik-ai/cli",
+      "@gntik-ai/codemods"
     ]
   ],
   "updateInternalDependencies": "patch",

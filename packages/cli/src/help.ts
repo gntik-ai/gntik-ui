@@ -9,7 +9,7 @@ const GLOBAL = `Global options:
   -h, --help          Help for a command
   -v, --version       Print the version
 
-Exit codes: 0 ok · 1 error (registry, install) · 2 usage · 3 unknown item · 4 file conflicts`;
+Exit codes: 0 ok · 1 error (registry, install, codemods) · 2 usage · 3 unknown item · 4 file conflicts`;
 
 export const HELP: Record<'main' | CommandName, string> = {
   main: `gntik-ui — add the gntik-ui design system to a product.
@@ -23,6 +23,7 @@ Commands:
   list               List registry items (--kind, --group)
   search <query>     Fuzzy search on id, name, description and group
   docs <id>          Show an item's description, files, dependencies and keyboard contract
+  upgrade [paths...] Run the codemods for @gntik-ai/* breaking changes (dry run unless --apply)
 
 ${GLOBAL}`,
   init: `Usage: gntik-ui init [--brand gntik|musematic|falcone] [--dry-run] [--no-install] [--overwrite]
@@ -63,6 +64,27 @@ ${GLOBAL}`,
 
 Prints description, status, package, files, dependencies and the keyboard table from the
 item's *.doc.ts file.
+
+${GLOBAL}`,
+  upgrade: `Usage: gntik-ui upgrade [paths...] [--from <v>] [--to <v>] [--codemod <id>...] [--skip-codemod <id>...]
+                         [--list] [--apply]
+
+Migrates the project's code across @gntik-ai/* breaking changes with the transforms in
+@gntik-ai/codemods, loaded from the project (install it with: pnpm add -D @gntik-ai/codemods).
+
+  --from <v>           Version upgrading from (default: the @gntik-ai/* versions in package.json;
+                       every codemod when none are declared)
+  --to <v>             Version upgrading to (default: latest)
+  --codemod <id>       Run only these codemods, whatever the versions (repeatable or comma-separated)
+  --skip-codemod <id>  Leave these out (repeatable or comma-separated)
+  --list               List the codemods and which ones this upgrade selects; changes nothing
+  --apply              Write the changes. Without it the run is dry: it reports the files it would
+                       change and the warnings (report-only codemods never write)
+  paths...             Files or directories to process (default: the project, without node_modules,
+                       dist, build, .next, …)
+
+Exit code 1 when @gntik-ai/codemods is missing (the install command is printed) or a file fails
+to parse.
 
 ${GLOBAL}`,
 };
