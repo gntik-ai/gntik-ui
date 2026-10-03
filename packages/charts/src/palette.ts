@@ -1,12 +1,12 @@
-import { SERIES_TOKENS, type ChartColor } from './theme';
+import { CHART_COLORS, SERIES_TOKENS, type ChartColor } from './theme';
 
 /**
  * Data-viz palette built ONLY from the frozen brand tokens.
  *
  * Categorical: `SAFE_CHART_COLORS` orders the five accents so that every adjacent pair differs
  * in relative luminance by at least 1.5:1 in dark, light and high_contrast (asserted by
- * `palette.test.ts` against `@gntik-ai/tokens/brand.css`). The legacy `CHART_COLORS` order keeps
- * cyan next to amber, which are near-identical in luminance in dark/high_contrast.
+ * `palette.test.ts` against `@gntik-ai/tokens/brand.css`). It is the default `CHART_COLORS`
+ * order of every chart; this name is kept as an alias.
  *
  * Colour-blind safety: hue alone is never the only channel. Charts pair colour with position,
  * labels or the legend text; use at most five categorical series, prefer a sequential ramp
@@ -14,7 +14,7 @@ import { SERIES_TOKENS, type ChartColor } from './theme';
  * primary, i.e. red ↔ green, which deutan/protan viewers confuse) only together with value
  * labels, a signed legend or the `dataTable` fallback — lightness still separates the ends.
  */
-export const SAFE_CHART_COLORS: readonly ChartColor[] = ['primary', 'violet', 'cyan', 'rose', 'amber'];
+export const SAFE_CHART_COLORS: readonly ChartColor[] = CHART_COLORS;
 
 /** A CSS custom property name of a brand token (`--primary`, `--destructive`…). */
 export type TokenName = `--${string}`;

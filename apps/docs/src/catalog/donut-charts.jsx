@@ -91,7 +91,7 @@ function ExpensesBreakdown() {
             data={active.data}
             index="name"
             category="amount"
-            colors={["primary", "violet", "cyan", "amber", "rose"]}
+            colors={["primary", "violet", "cyan", "rose", "amber"]}
             showLegend={false}
             centerLabel="Spend / month"
             valueFormatter={(v) => \`$\${v.toLocaleString()}\`}
@@ -137,7 +137,7 @@ function DonutChartsSection() {
       <ChartVariant title="Donut / Pie" desc="Spend by team this month. The total lives in the centre of the donut; the segmented control switches to pie." code={C_DONUT}>
         <ChartCard title="Spend by team · June"
           action={<ChartSegmented value={variant} onChange={setVariant} options={[{ value: 'donut', label: 'Donut' }, { value: 'pie', label: 'Pie' }]} />}>
-          <DonutChart data={SPEND} index="team" category="spend" colors={['primary', 'violet', 'cyan', 'amber', 'rose']}
+          <DonutChart data={SPEND} index="team" category="spend" colors={['primary', 'violet', 'cyan', 'rose', 'amber']}
             variant={variant} centerLabel="Spend / month" valueFormatter={chartFmt.usd} />
         </ChartCard>
       </ChartVariant>
@@ -166,7 +166,7 @@ function DonutChartsSection() {
           </div>
           <div className="px-6 pb-6">
             <div className="mt-6 flex justify-center">
-              <DonutChart data={active.data} index="name" category="amount" colors={['primary', 'violet', 'cyan', 'amber', 'rose']}
+              <DonutChart data={active.data} index="name" category="amount" colors={['primary', 'violet', 'cyan', 'rose', 'amber']}
                 variant="donut" showLegend={false} centerLabel="Spend / month" valueFormatter={chartFmt.usd} height={232} />
             </div>
             <p className="mt-8 flex items-center justify-between text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
