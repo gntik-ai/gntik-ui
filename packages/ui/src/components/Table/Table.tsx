@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
 import { createContext, useCallback, useContext, useState, type HTMLAttributes, type Ref, type TdHTMLAttributes, type ThHTMLAttributes } from 'react';
 import { useI18n } from '../../i18n/I18nProvider';
+import { useDensity } from '../../density/density-context';
 import { cn } from '../../utils/cn';
 import { nextSortDirection, tableVariants, type SortDirection, type TableDensity } from './table.variants';
 
@@ -10,7 +11,7 @@ const s = tableVariants();
 export interface TableProps extends Omit<HTMLAttributes<HTMLTableElement>, 'className'> {
   className?: string;
   ref?: Ref<HTMLTableElement>;
-  /** Row height: `compact` for dense data, `comfortable` (default) for scanning. */
+  /** Row height: `compact` for dense data, `comfortable` for scanning. Defaults to the DensityProvider's density (comfortable outside one). */
   density?: TableDensity;
   /** Pins the header row while the container scrolls. Give the container a max height. */
   stickyHeader?: boolean;
@@ -21,8 +22,10 @@ export interface TableProps extends Omit<HTMLAttributes<HTMLTableElement>, 'clas
 }
 
 /** Semantic data table in a horizontally scrollable container. */
-export function Table({ density = 'comfortable', stickyHeader = false, containerClassName, containerLabel, className, ...props }: TableProps) {
+export function Table({ density: densityProp, stickyHeader = false, containerClassName, containerLabel, className, ...props }: TableProps) {
   const { t } = useI18n();
+  const contextDensity = useDensity();
+  const density = densityProp ?? contextDensity;
   // A container that actually scrolls must be reachable from the keyboard (WCAG 2.1.1).
   const [overflows, setOverflows] = useState(false);
   const measure = useCallback((el: HTMLDivElement | null) => {

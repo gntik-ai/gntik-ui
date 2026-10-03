@@ -38,8 +38,8 @@ test('cobertura: la gran mayoría de componentes tienen snippets', () => {
   const noCode = index.registry
     .filter((r) => r.status === 'done' && (index.components[r.id]?.snippets.length ?? 0) === 0)
     .map((r) => r.id)
-    // overview y foundations son secciones informativas, sin código propio
-    .filter((id) => !['overview', 'foundations'].includes(id));
+    // Informational sections, galleries and tools: no snippets of their own
+    .filter((id) => !['overview', 'foundations', 'install', 'theme-builder', 'ui-components', 'layouts', 'blocks', 'templates'].includes(id));
   assert.ok(noCode.length <= 5, `componentes done sin snippets: ${noCode.join(', ')}`);
 });
 

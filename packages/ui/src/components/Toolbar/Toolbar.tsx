@@ -46,6 +46,7 @@ export interface ToolbarButtonProps extends Omit<BaseToolbar.Button.Props, 'clas
   ref?: Ref<HTMLButtonElement>;
   /** Kit button variant. */
   variant?: ButtonVariant;
+  /** Fixed button size. Omitted, the button is small and follows the density (h-control-sm). */
   size?: 'sm' | 'md';
   /** Leading icon. Without children the button is icon-only: pass `aria-label`. */
   icon?: IconComponent;
@@ -53,11 +54,13 @@ export interface ToolbarButtonProps extends Omit<BaseToolbar.Button.Props, 'clas
 }
 
 /** A toolbar item styled as a kit Button (ghost, small by default). Stays focusable when disabled. */
-export function ToolbarButton({ variant = 'ghost', size = 'sm', icon: IconCmp, className, children, ...props }: ToolbarButtonProps) {
+export function ToolbarButton({ variant = 'ghost', size, icon: IconCmp, className, children, ...props }: ToolbarButtonProps) {
   const iconOnly = children == null;
+  // No size: the small button with density-driven height/padding (comfortable = sm exactly).
+  const auto = size == null && (iconOnly ? 'size-control-sm' : 'h-control-sm px-control-sm');
   return (
-    <BaseToolbar.Button className={cn(buttonVariants({ variant, size, iconOnly }), className)} {...props}>
-      {IconCmp && <IconCmp size={BUTTON_ICON_SIZE[size]} aria-hidden />}
+    <BaseToolbar.Button className={cn(buttonVariants({ variant, size: size ?? 'sm', iconOnly }), auto, className)} {...props}>
+      {IconCmp && <IconCmp size={BUTTON_ICON_SIZE[size ?? 'sm']} aria-hidden />}
       {children}
     </BaseToolbar.Button>
   );

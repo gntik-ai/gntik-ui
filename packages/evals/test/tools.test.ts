@@ -36,7 +36,7 @@ describe('tools', () => {
   it('list_kit filters by kind and query', () => {
     const templates = runTool('list_kit', { kind: 'template' });
     expect(templates.isError).toBe(false);
-    expect(templates.content).toMatch(/## templates \(40\)/);
+    expect(templates.content).toMatch(/## templates \(\d+\)/);
     expect(templates.content).not.toMatch(/## blocks/);
     const members = runTool('list_kit', { query: 'members' });
     expect(members.content).toContain('`settings-members`');

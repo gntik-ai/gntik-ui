@@ -1840,9 +1840,30 @@
         {
           "path": "packages/ui/src/components/Alert/index.ts",
           "target": "components/ui/alert/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -1870,6 +1891,26 @@
         {
           "path": "packages/ui/src/components/AlertDialog/index.ts",
           "target": "components/ui/alert-dialog/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -1933,6 +1974,26 @@
         {
           "path": "packages/ui/src/components/Avatar/index.ts",
           "target": "components/ui/avatar/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -1963,6 +2024,57 @@
         {
           "path": "packages/ui/src/components/Badge/index.ts",
           "target": "components/ui/badge/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Badge/Badge.doc.ts"
+    },
+    {
+      "id": "blockquote",
+      "kind": "component",
+      "name": "Blockquote",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "beta",
+      "description": "Quoted content with its citation: a figure with the blockquote and a figcaption whose cite names the source (linked when `cite` is a URL). Variants: an inline-start rule for prose, a card for testimonials, a centred pull quote.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Blockquote/Blockquote.tsx",
+          "target": "components/ui/blockquote/Blockquote.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Blockquote/blockquote.variants.ts",
+          "target": "components/ui/blockquote/blockquote.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Blockquote/index.ts",
+          "target": "components/ui/blockquote/index.ts"
         }
       ],
       "dependencies": [
@@ -1971,7 +2083,38 @@
       "registryDependencies": [
         "ui-utils"
       ],
-      "docs": "packages/ui/src/components/Badge/Badge.doc.ts"
+      "docs": "packages/ui/src/components/Blockquote/Blockquote.doc.ts"
+    },
+    {
+      "id": "bottom-sheet",
+      "kind": "component",
+      "name": "BottomSheet",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "beta",
+      "description": "Mobile sheet that rests at snap points (a peek height and expanded by default): drag or swipe it between heights or down to close, or use the handle from the keyboard. Modal like a dialog: focus is trapped, Escape closes and focus returns to the trigger.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/BottomSheet/BottomSheet.tsx",
+          "target": "components/ui/bottom-sheet/BottomSheet.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/BottomSheet/bottom-sheet.variants.ts",
+          "target": "components/ui/bottom-sheet/bottom-sheet.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/BottomSheet/index.ts",
+          "target": "components/ui/bottom-sheet/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/BottomSheet/BottomSheet.doc.ts"
     },
     {
       "id": "breadcrumbs",
@@ -1993,9 +2136,30 @@
         {
           "path": "packages/ui/src/components/Breadcrumbs/index.ts",
           "target": "components/ui/breadcrumbs/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -2024,6 +2188,10 @@
         {
           "path": "packages/ui/src/components/Button/index.ts",
           "target": "components/ui/button/index.ts"
+        },
+        {
+          "path": "packages/ui/src/density/density-context.ts",
+          "target": "components/density/density-context.ts"
         }
       ],
       "dependencies": [
@@ -2059,9 +2227,30 @@
         {
           "path": "packages/ui/src/components/Calendar/index.ts",
           "target": "components/ui/calendar/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -2096,6 +2285,36 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Card/Card.doc.ts"
+    },
+    {
+      "id": "carousel",
+      "kind": "component",
+      "name": "Carousel",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "beta",
+      "description": "Scroll-snap media strip: one, two, three or auto-width slides per view, previous/next buttons, optional picker dots, arrow keys on the focused strip. No autoplay by default; `autoplay` adds a pause control, pauses on hover and focus, and starts paused under reduced motion.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Carousel/Carousel.tsx",
+          "target": "components/ui/carousel/Carousel.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Carousel/carousel.variants.ts",
+          "target": "components/ui/carousel/carousel.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Carousel/index.ts",
+          "target": "components/ui/carousel/index.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Carousel/Carousel.doc.ts"
     },
     {
       "id": "chat-composer",
@@ -2379,9 +2598,30 @@
         {
           "path": "packages/ui/src/components/CodeBlock/tokenize.ts",
           "target": "components/ui/code-block/tokenize.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -2440,6 +2680,26 @@
         {
           "path": "packages/ui/src/components/Combobox/index.ts",
           "target": "components/ui/combobox/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -2480,6 +2740,26 @@
         {
           "path": "packages/ui/src/components/CommandPalette/useCommandPaletteShortcut.ts",
           "target": "components/ui/command-palette/useCommandPaletteShortcut.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -2491,6 +2771,37 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/CommandPalette/CommandPalette.doc.ts"
+    },
+    {
+      "id": "context-menu",
+      "kind": "component",
+      "name": "ContextMenu",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "beta",
+      "description": "Menu that opens at the pointer on right click or long press, and from the keyboard with Shift+F10 or the ContextMenu key on the focused area. Uses the Menu item parts (icons, shortcuts, destructive tone, checkbox/radio items, groups, submenus).",
+      "files": [
+        {
+          "path": "packages/ui/src/components/ContextMenu/ContextMenu.tsx",
+          "target": "components/ui/context-menu/ContextMenu.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/ContextMenu/context-menu.variants.ts",
+          "target": "components/ui/context-menu/context-menu.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ContextMenu/index.ts",
+          "target": "components/ui/context-menu/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "menu",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/ContextMenu/ContextMenu.doc.ts"
     },
     {
       "id": "date-picker",
@@ -2524,6 +2835,26 @@
         {
           "path": "packages/ui/src/components/DatePicker/index.ts",
           "target": "components/ui/date-picker/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -2557,6 +2888,26 @@
         {
           "path": "packages/ui/src/components/Dialog/index.ts",
           "target": "components/ui/dialog/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -2575,7 +2926,7 @@
       "package": "@gntik-ai/ui",
       "group": "Overlays",
       "status": "stable",
-      "description": "Panel that slides in from the right, left or bottom edge for details, edit forms and navigation. Fixed header and footer, scrollable body, swipe to dismiss. Parts: Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose.",
+      "description": "Panel that slides in from the right, left or bottom edge for details, edit forms and navigation. Fixed header and footer, scrollable body, swipe to dismiss. Under RTL (I18nProvider) `right` and `left` mirror to the inline end and start. Parts: Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose.",
       "files": [
         {
           "path": "packages/ui/src/components/Drawer/Drawer.tsx",
@@ -2588,6 +2939,26 @@
         {
           "path": "packages/ui/src/components/Drawer/index.ts",
           "target": "components/ui/drawer/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -2711,6 +3082,26 @@
         {
           "path": "packages/ui/src/components/HoverCard/index.ts",
           "target": "components/ui/hover-card/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -2742,6 +3133,26 @@
         {
           "path": "packages/ui/src/components/InfoTip/info-tip.variants.ts",
           "target": "components/ui/info-tip/info-tip.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -2785,6 +3196,41 @@
       "docs": "packages/ui/src/components/Input/Input.doc.ts"
     },
     {
+      "id": "json-viewer",
+      "kind": "component",
+      "name": "JsonViewer",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "beta",
+      "description": "Collapsible JSON inspector built on TreeList: objects and arrays expand, values are coloured by type with contrast-safe text tokens (keys primary-text, strings warning-text, numbers destructive-text, booleans foreground, null muted), `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/JsonViewer/JsonViewer.tsx",
+          "target": "components/ui/json-viewer/JsonViewer.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/JsonViewer/index.ts",
+          "target": "components/ui/json-viewer/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/JsonViewer/json-model.ts",
+          "target": "components/ui/json-viewer/json-model.ts"
+        },
+        {
+          "path": "packages/ui/src/components/JsonViewer/json-viewer.variants.ts",
+          "target": "components/ui/json-viewer/json-viewer.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "tree-list",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/JsonViewer/JsonViewer.doc.ts"
+    },
+    {
       "id": "kbd",
       "kind": "component",
       "name": "Kbd",
@@ -2804,13 +3250,66 @@
         {
           "path": "packages/ui/src/components/Kbd/kbd.variants.ts",
           "target": "components/ui/kbd/kbd.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Kbd/Kbd.doc.ts"
+    },
+    {
+      "id": "lightbox",
+      "kind": "component",
+      "name": "Lightbox",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "beta",
+      "description": "Full-screen image and video viewer: previous / next, zoom (buttons, keys or double click) with a scrollable stage, captions, a thumbnail strip and an announced position. Modal: focus is trapped, Escape closes and focus returns to the opener.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Lightbox/Lightbox.tsx",
+          "target": "components/ui/lightbox/Lightbox.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Lightbox/index.ts",
+          "target": "components/ui/lightbox/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Lightbox/lightbox.variants.ts",
+          "target": "components/ui/lightbox/lightbox.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Lightbox/Lightbox.doc.ts"
     },
     {
       "id": "link",
@@ -2832,6 +3331,26 @@
         {
           "path": "packages/ui/src/components/Link/link.variants.ts",
           "target": "components/ui/link/link.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -2842,6 +3361,42 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Link/Link.doc.ts"
+    },
+    {
+      "id": "list-input",
+      "kind": "component",
+      "name": "ListInput",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "beta",
+      "description": "Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/ListInput/ListInput.tsx",
+          "target": "components/ui/list-input/ListInput.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/ListInput/index.ts",
+          "target": "components/ui/list-input/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ListInput/list-input-parse.ts",
+          "target": "components/ui/list-input/list-input-parse.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ListInput/list-input.variants.ts",
+          "target": "components/ui/list-input/list-input.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/ListInput/ListInput.doc.ts"
     },
     {
       "id": "markdown",
@@ -2887,6 +3442,39 @@
       "docs": "packages/chat/src/Markdown/Markdown.doc.ts"
     },
     {
+      "id": "mega-menu",
+      "kind": "component",
+      "name": "MegaMenu",
+      "package": "@gntik-ai/ui",
+      "group": "Navigation",
+      "status": "beta",
+      "description": "Top navigation with wide panels: items with sections open a panel of link columns with descriptions and optional featured content; plain items are links. Hover or click opens, the panel resizes between items, router links come from LinkProvider and the current page is marked. Use it as the StackedLayout sub-nav row; `megaMenuNavItems` feeds MobileNav.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/MegaMenu/MegaMenu.tsx",
+          "target": "components/ui/mega-menu/MegaMenu.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/MegaMenu/index.ts",
+          "target": "components/ui/mega-menu/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/MegaMenu/mega-menu.variants.ts",
+          "target": "components/ui/mega-menu/mega-menu.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "link",
+        "nav-list",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/MegaMenu/MegaMenu.doc.ts"
+    },
+    {
       "id": "menu",
       "kind": "component",
       "name": "Menu",
@@ -2910,6 +3498,26 @@
         {
           "path": "packages/ui/src/components/Menu/menu.variants.ts",
           "target": "components/ui/menu/menu.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -2972,9 +3580,30 @@
         {
           "path": "packages/ui/src/components/MobileNav/mobile-nav.variants.ts",
           "target": "components/ui/mobile-nav/mobile-nav.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -3005,6 +3634,26 @@
         {
           "path": "packages/ui/src/components/MultiSelect/multi-select.variants.ts",
           "target": "components/ui/multi-select/multi-select.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -3045,6 +3694,26 @@
         {
           "path": "packages/ui/src/components/NavList/nav-list.variants.ts",
           "target": "components/ui/nav-list/nav-list.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -3083,9 +3752,30 @@
         {
           "path": "packages/ui/src/components/NotificationsPopover/relative-time.ts",
           "target": "components/ui/notifications-popover/relative-time.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -3115,6 +3805,26 @@
         {
           "path": "packages/ui/src/components/NumberInput/number-input.variants.ts",
           "target": "components/ui/number-input/number-input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -3146,6 +3856,26 @@
         {
           "path": "packages/ui/src/components/OtpInput/otp-input.variants.ts",
           "target": "components/ui/otp-input/otp-input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -3155,6 +3885,39 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/OtpInput/OtpInput.doc.ts"
+    },
+    {
+      "id": "overflow-list",
+      "kind": "component",
+      "name": "OverflowList",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "beta",
+      "description": "Row of chips or avatars that renders items up to `max` (or to the available width with `responsive`, measured by ResizeObserver) and a \"+N more\" button that opens a Popover listing the rest.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/OverflowList/OverflowList.tsx",
+          "target": "components/ui/overflow-list/OverflowList.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/OverflowList/index.ts",
+          "target": "components/ui/overflow-list/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/OverflowList/overflow-list.variants.ts",
+          "target": "components/ui/overflow-list/overflow-list.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/OverflowList/useFitCount.ts",
+          "target": "components/ui/overflow-list/useFitCount.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "popover",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/OverflowList/OverflowList.doc.ts"
     },
     {
       "id": "pagination",
@@ -3180,9 +3943,30 @@
         {
           "path": "packages/ui/src/components/Pagination/pagination.variants.ts",
           "target": "components/ui/pagination/pagination.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -3214,9 +3998,30 @@
         {
           "path": "packages/ui/src/components/PasswordInput/password-strength.ts",
           "target": "components/ui/password-input/password-strength.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -3246,6 +4051,26 @@
         {
           "path": "packages/ui/src/components/Popover/popover.variants.ts",
           "target": "components/ui/popover/popover.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -3256,6 +4081,46 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Popover/Popover.doc.ts"
+    },
+    {
+      "id": "power-search",
+      "kind": "component",
+      "name": "PowerSearch",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "experimental",
+      "description": "Structured filter input: pick a field, an operator and a value from suggestions (or type `status=failed`, `cost>100`), add free text, and edit committed terms from the keyboard. Emits a typed query AST (`{ type: \"and\", terms }`) with parse / format / match helpers; fields, operators and values are props.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/PowerSearch/PowerSearch.tsx",
+          "target": "components/ui/power-search/PowerSearch.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/PowerSearch/PowerSearchChip.tsx",
+          "target": "components/ui/power-search/PowerSearchChip.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/PowerSearch/index.ts",
+          "target": "components/ui/power-search/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PowerSearch/power-search-query.ts",
+          "target": "components/ui/power-search/power-search-query.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PowerSearch/power-search.variants.ts",
+          "target": "components/ui/power-search/power-search.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "select",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/PowerSearch/PowerSearch.doc.ts"
     },
     {
       "id": "progress",
@@ -3341,9 +4206,30 @@
         {
           "path": "packages/ui/src/components/Resizable/resizable.variants.ts",
           "target": "components/ui/resizable/resizable.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -3429,6 +4315,26 @@
         {
           "path": "packages/ui/src/components/Select/select.variants.ts",
           "target": "components/ui/select/select.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -3548,9 +4454,31 @@
         {
           "path": "packages/ui/src/components/Sparkline/sparkline.variants.ts",
           "target": "components/ui/sparkline/sparkline.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "ui-utils"
       ],
@@ -3687,9 +4615,30 @@
         {
           "path": "packages/ui/src/components/Stepper/stepper.variants.ts",
           "target": "components/ui/stepper/stepper.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -3779,9 +4728,34 @@
         {
           "path": "packages/ui/src/components/Table/table.variants.ts",
           "target": "components/ui/table/table.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/density/density-context.ts",
+          "target": "components/density/density-context.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -3809,6 +4783,26 @@
         {
           "path": "packages/ui/src/components/Tabs/tabs.variants.ts",
           "target": "components/ui/tabs/tabs.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -3934,9 +4928,30 @@
         {
           "path": "packages/ui/src/components/ThemeSwitcher/theme-switcher.variants.ts",
           "target": "components/ui/theme-switcher/theme-switcher.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -3946,6 +4961,72 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/ThemeSwitcher/ThemeSwitcher.doc.ts"
+    },
+    {
+      "id": "thumbnail",
+      "kind": "component",
+      "name": "Thumbnail",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "beta",
+      "description": "File or image preview tile: image or file-type icon with extension tag, name and size caption, upload progress (progressbar + shimmer that holds still under reduced motion), error state with retry, and a remove button. ThumbnailList lays tiles out as a wrapping list.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Thumbnail/Thumbnail.tsx",
+          "target": "components/ui/thumbnail/Thumbnail.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Thumbnail/file-kind.ts",
+          "target": "components/ui/thumbnail/file-kind.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Thumbnail/index.ts",
+          "target": "components/ui/thumbnail/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Thumbnail/thumbnail.variants.ts",
+          "target": "components/ui/thumbnail/thumbnail.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Thumbnail/Thumbnail.doc.ts"
+    },
+    {
+      "id": "timer",
+      "kind": "component",
+      "name": "Timer",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "beta",
+      "description": "Elapsed time since a start, live while running (\"1:02:05\" or compact \"2m 14s\"), with paused and stopped states. Renders role=\"timer\" around a <time dateTime=\"PT…\"> duration; silent by default, `announce` speaks it politely once a minute.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Timer/Timer.tsx",
+          "target": "components/ui/timer/Timer.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Timer/format.ts",
+          "target": "components/ui/timer/format.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Timer/index.ts",
+          "target": "components/ui/timer/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Timer/timer.variants.ts",
+          "target": "components/ui/timer/timer.variants.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Timer/Timer.doc.ts"
     },
     {
       "id": "timestamp",
@@ -3971,9 +5052,31 @@
         {
           "path": "packages/ui/src/components/Timestamp/timestamp.variants.ts",
           "target": "components/ui/timestamp/timestamp.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "tooltip",
         "ui-utils"
@@ -4000,6 +5103,26 @@
         {
           "path": "packages/ui/src/components/Toast/toast.variants.ts",
           "target": "components/ui/toast/toast.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -4061,9 +5184,30 @@
         {
           "path": "packages/ui/src/components/Token/token.variants.ts",
           "target": "components/ui/token/token.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -4095,6 +5239,26 @@
         {
           "path": "packages/ui/src/components/TokenInput/token-input.variants.ts",
           "target": "components/ui/token-input/token-input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -4194,6 +5358,26 @@
         {
           "path": "packages/ui/src/components/Tooltip/tooltip.variants.ts",
           "target": "components/ui/tooltip/tooltip.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -4203,6 +5387,114 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Tooltip/Tooltip.doc.ts"
+    },
+    {
+      "id": "tour",
+      "kind": "component",
+      "name": "Tour",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "beta",
+      "description": "Onboarding steps anchored to elements (selector, ref or getter): a non-modal popover with a step counter and Back / Next / Skip, positioned at each target and outlined with the focus ring (no overlay, no glow). Focus moves into the step and returns when the tour ends; missing targets centre the step.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Tour/Tour.tsx",
+          "target": "components/ui/tour/Tour.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Tour/index.ts",
+          "target": "components/ui/tour/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Tour/tour.variants.ts",
+          "target": "components/ui/tour/tour.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "popover",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Tour/Tour.doc.ts"
+    },
+    {
+      "id": "transfer-list",
+      "kind": "component",
+      "name": "TransferList",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "beta",
+      "description": "Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/TransferList/TransferList.tsx",
+          "target": "components/ui/transfer-list/TransferList.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/TransferList/TransferListPane.tsx",
+          "target": "components/ui/transfer-list/TransferListPane.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/TransferList/index.ts",
+          "target": "components/ui/transfer-list/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TransferList/transfer-list.variants.ts",
+          "target": "components/ui/transfer-list/transfer-list.variants.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/TransferList/TransferList.doc.ts"
+    },
+    {
+      "id": "tree-list",
+      "kind": "component",
+      "name": "TreeList",
+      "package": "@gntik-ai/ui",
+      "group": "Navigation",
+      "status": "beta",
+      "description": "Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/TreeList/TreeList.tsx",
+          "target": "components/ui/tree-list/TreeList.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/TreeList/index.ts",
+          "target": "components/ui/tree-list/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TreeList/tree-list.variants.ts",
+          "target": "components/ui/tree-list/tree-list.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TreeList/tree-model.ts",
+          "target": "components/ui/tree-list/tree-model.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TreeList/useTreeList.ts",
+          "target": "components/ui/tree-list/useTreeList.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "spinner",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/TreeList/TreeList.doc.ts"
     },
     {
       "id": "ui-utils",
@@ -4216,6 +5508,14 @@
         {
           "path": "packages/ui/src/utils/cn.ts",
           "target": "components/utils/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/density-merge.ts",
+          "target": "components/utils/density-merge.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/rtl.ts",
+          "target": "components/utils/rtl.ts"
         },
         {
           "path": "packages/ui/src/utils/tv.ts",
@@ -4249,6 +5549,26 @@
         {
           "path": "packages/ui/src/components/UserMenu/user-menu.variants.ts",
           "target": "components/ui/user-menu/user-menu.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -4264,6 +5584,38 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/UserMenu/UserMenu.doc.ts"
+    },
+    {
+      "id": "virtual-list",
+      "kind": "component",
+      "name": "VirtualList",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "beta",
+      "description": "Windowed list for thousands of rows: only the visible rows plus `overscan` are mounted, with a fixed `itemHeight` or measured rows from an estimate. One roving tab stop, aria-setsize/posinset on every row, `scrollToIndex` through a ref, and a single-select `listbox` mode. No dependencies.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/VirtualList/VirtualList.tsx",
+          "target": "components/ui/virtual-list/VirtualList.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/VirtualList/index.ts",
+          "target": "components/ui/virtual-list/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/VirtualList/use-virtual-window.ts",
+          "target": "components/ui/virtual-list/use-virtual-window.ts"
+        },
+        {
+          "path": "packages/ui/src/components/VirtualList/virtual-list.variants.ts",
+          "target": "components/ui/virtual-list/virtual-list.variants.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/VirtualList/VirtualList.doc.ts"
     },
     {
       "id": "visually-hidden",
@@ -4285,6 +5637,26 @@
         {
           "path": "packages/ui/src/components/VisuallyHidden/visually-hidden.variants.ts",
           "target": "components/ui/visually-hidden/visually-hidden.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -4323,6 +5695,26 @@
         {
           "path": "packages/ui/src/components/WorkspaceSwitcher/workspace-switcher.variants.ts",
           "target": "components/ui/workspace-switcher/workspace-switcher.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -4347,6 +5739,26 @@
       "description": "Sign-in, sign-up and reset shell in three variants: `split` (brand panel on the chrome surface + form; the panel hides below `lg` and the logo moves above the form), `card` (form centred in a card) and `full-bleed` (form straight on the chrome surface). The logo defaults to the ThemeProvider brand preset (Logo with wordmark). The form is first in the DOM, so it is first in tab order on every screen size. Fills its container; `fullScreen` switches to `h-dvh`.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/AuthLayout/AuthLayout.tsx",
           "target": "components/layouts/auth-layout/AuthLayout.tsx"
         },
@@ -4359,7 +5771,9 @@
           "target": "components/layouts/auth-layout/index.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "theme",
         "ui-utils",
@@ -4377,6 +5791,26 @@
       "description": "Editor shell for a full-bleed canvas (flow editor, code editor, map): top bar · left palette · canvas with a floating toolbar · right inspector · collapsible bottom console. Palette and inspector toggle from the top bar; each panel is controllable (`paletteOpen`, `inspectorOpen`, `consoleOpen`). Below `lg` the side panels and toggles hide and a read-only notice (\"Open on a larger screen to edit\") shows over the canvas. Fills its container; `fullScreen` switches to `h-dvh`.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/CanvasLayout/CanvasLayout.tsx",
           "target": "components/layouts/canvas-layout/CanvasLayout.tsx"
         },
@@ -4390,6 +5824,7 @@
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -4409,6 +5844,26 @@
       "description": "Documentation shell: top bar · left nav (a NavList) · article · right table of contents. The `Outline` sub-component is the table of contents: scroll-spy with IntersectionObserver (rooted in the article column, guarded where it is missing) marks the heading in view with aria-current=\"location\", and activating a link moves focus to the heading. Below `lg` the nav hides and the table of contents moves into a Collapsible above the article. Fills its container; `fullScreen` switches to `h-dvh`.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/DocsLayout/DocsLayout.tsx",
           "target": "components/layouts/docs-layout/DocsLayout.tsx"
         },
@@ -4425,7 +5880,9 @@
           "target": "components/layouts/docs-layout/index.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "collapsible",
         "ui-utils",
@@ -4442,6 +5899,26 @@
       "status": "beta",
       "description": "Main area with a pinnable right panel (properties, details, comments). Pinned, the panel docks beside the content; unpinned, it overlays it (flat shadow) and Escape closes it. Open and pinned states are controllable; an InspectorToggle placed in the main area opens and closes it. Below lg the panel opens as a bottom Drawer. Fills its container.",
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/InspectorLayout/InspectorLayout.tsx",
           "target": "components/layouts/inspector-layout/InspectorLayout.tsx"
@@ -4460,6 +5937,7 @@
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -4479,6 +5957,26 @@
       "description": "The page inside any shell: a header (a custom slot such as the blocks PageHeader, or a simple h1 + description + actions), the body, and an optional sticky action bar (a labelled region) pinned to the bottom of the scroll container. Widths: narrow 640 · default 1120 · wide 1440 · full. It renders no <main>; the shell owns it.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/Page/Page.tsx",
           "target": "components/layouts/page/Page.tsx"
         },
@@ -4491,7 +5989,9 @@
           "target": "components/layouts/page/page.variants.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "ui-utils"
       ],
@@ -4507,6 +6007,26 @@
       "description": "Printable document frame for invoices, reports and receipts: an A4 or Letter page (`size`) with margins (`margin`), header and footer slots and a `PageBreak` helper. On screen it is a paper sheet (bg-card / text-card-foreground, border, shadow-sm) on a muted backdrop in the current theme; `print:` variants drop the chrome (no backdrop, border, shadow or outer padding) and an `@page` rule sets paper size and margins (`pageRule`). The header and footer print once, at the top and end of the document. The consuming app should print with the light theme (ThemeProvider `defaultMode=\"light\"`, or `setMode('light')` before `window.print()`); no print-only colours are defined.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/PrintLayout/PrintLayout.tsx",
           "target": "components/layouts/print-layout/PrintLayout.tsx"
         },
@@ -4519,7 +6039,9 @@
           "target": "components/layouts/print-layout/print-layout.variants.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "ui-utils",
         "visually-hidden"
@@ -4536,6 +6058,26 @@
       "description": "Settings shell: section nav (NavList groups) on the left · a content column with the page title and form sections · a sticky save bar slot (Discard · Save changes). The current section is controllable with `value` / `onValueChange`; `href` items navigate as links and still report the change. Below `lg` the nav becomes a Select at the top of the page. Fills its container; `fullScreen` switches to `h-dvh`.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/SettingsLayout/SettingsLayout.tsx",
           "target": "components/layouts/settings-layout/SettingsLayout.tsx"
         },
@@ -4548,7 +6090,9 @@
           "target": "components/layouts/settings-layout/settings-layout.variants.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "nav-list",
         "select",
@@ -4567,6 +6111,26 @@
       "description": "Application shell: a collapsible sidebar (expanded, 64px icon rail or off-canvas) with header, body and footer slots, a topbar (workspace switcher, breadcrumb, ⌘K, notifications, theme, user menu) and the main region. Below lg the sidebar moves into a left Drawer opened from the topbar menu button. The collapsed state is controllable and can persist in localStorage (storageKey). Fills its container; fullScreen switches to h-dvh.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/SidebarLayout/SidebarLayout.tsx",
           "target": "components/layouts/sidebar-layout/SidebarLayout.tsx"
         },
@@ -4584,6 +6148,7 @@
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -4604,6 +6169,26 @@
       "description": "Master–detail layout: a resizable list pane beside a detail pane, built on ResizablePanelGroup (sizes can persist with autoSaveId). Below lg only one pane shows: the list, or the detail with a Back button; `showDetail` is controllable so selecting an item can switch panes. Both panes are labelled regions. Fills its container.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/SplitLayout/SplitLayout.tsx",
           "target": "components/layouts/split-layout/SplitLayout.tsx"
         },
@@ -4617,6 +6202,7 @@
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -4636,6 +6222,26 @@
       "description": "Top-navigation shell: a chrome navbar (brand · primary links · actions), an optional tab sub-nav row, an optional page-header band and centered content (narrow 640 · default 1120 · wide 1440 · full) with an optional footer. Below lg the links collapse into a MobileNav drawer. Fills its container; fullScreen switches to h-dvh.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/StackedLayout/StackedLayout.tsx",
           "target": "components/layouts/stacked-layout/StackedLayout.tsx"
         },
@@ -4648,7 +6254,9 @@
           "target": "components/layouts/stacked-layout/stacked-layout.variants.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "link",
         "mobile-nav",
@@ -4668,6 +6276,26 @@
       "description": "Full-page status for 404, 403, 500 and maintenance: a centred message (`code`, `title` as the page h1, `description`) with an illustration or icon halo, a primary and a secondary action, and minimal chrome (optional header with the Logo and a footer line). `tone` colours the code and halo with the severity tokens; brand green is only for positive states. Fills its container; `fullScreen` switches to `h-dvh`.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/StatusLayout/StatusLayout.tsx",
           "target": "components/layouts/status-layout/StatusLayout.tsx"
         },
@@ -4681,6 +6309,7 @@
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -4699,6 +6328,26 @@
       "description": "Focus-mode shell for multi-step flows (onboarding, create project, import): no sidebar · top bar with the flow title and Exit · Stepper header · step body · Back / Next footer (Finish on the last step). Exit, or Escape anywhere inside the layout, asks for confirmation in an AlertDialog (`confirmExit`). Completed steps are clickable to go back. Below `lg` the Stepper collapses to \"Step 2 of 5\". Fills its container; `fullScreen` switches to `h-dvh`.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/WizardLayout/WizardLayout.tsx",
           "target": "components/layouts/wizard-layout/WizardLayout.tsx"
         },
@@ -4712,6 +6361,7 @@
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -4810,6 +6460,131 @@
       "docs": "packages/templates/src/audit-log/template.meta.ts"
     },
     {
+      "id": "board",
+      "kind": "template",
+      "name": "Board",
+      "package": "@gntik-ai/templates",
+      "group": "Resources",
+      "status": "experimental",
+      "description": "Kanban board in the console: columns with counts, cards with priority, labels, due date and assignee; pointer drag-and-drop between and within columns, keyboard moves (Space to pick up, arrows to move, Space to drop, Escape to cancel) with live announcements, and a card detail Drawer whose status select also moves the card.",
+      "files": [
+        {
+          "path": "packages/templates/src/board/Lane.tsx",
+          "target": "app/templates/board/Lane.tsx"
+        },
+        {
+          "path": "packages/templates/src/board/Page.tsx",
+          "target": "app/templates/board/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/board/data.ts",
+          "target": "app/templates/board/data.ts"
+        },
+        {
+          "path": "packages/templates/src/board/useBoard.ts",
+          "target": "app/templates/board/useBoard.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/board/template.meta.ts"
+    },
+    {
+      "id": "changelog",
+      "kind": "template",
+      "name": "Changelog",
+      "package": "@gntik-ai/templates",
+      "group": "Help",
+      "status": "experimental",
+      "description": "Release notes in the console: dated entries with version, tag badges and a “New” badge, a multi-select tag filter (ToggleGroup) with a live count, and a Subscribe action.",
+      "files": [
+        {
+          "path": "packages/templates/src/changelog/Page.tsx",
+          "target": "app/templates/changelog/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/changelog/data.ts",
+          "target": "app/templates/changelog/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/changelog/template.meta.ts"
+    },
+    {
+      "id": "code-editor",
+      "kind": "template",
+      "name": "Code editor",
+      "package": "@gntik-ai/templates",
+      "group": "Builders",
+      "status": "experimental",
+      "description": "Full-screen code editor: CanvasLayout top bar (breadcrumb, title, status, branch, Save), a file TreeList with a context menu (open, copy path, close tab, delete) in the palette, and the CodePanel block (file tabs, Monaco editor or diff, problems list) as the canvas.",
+      "files": [
+        {
+          "path": "packages/templates/src/code-editor/Page.tsx",
+          "target": "app/templates/code-editor/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/code-editor/data.ts",
+          "target": "app/templates/code-editor/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/editor",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/code-editor/template.meta.ts"
+    },
+    {
+      "id": "contact",
+      "kind": "template",
+      "name": "Contact",
+      "package": "@gntik-ai/templates",
+      "group": "Overview",
+      "status": "experimental",
+      "description": "Public contact page: StackedLayout with a MegaMenu (MobileNav below lg), a validated contact form (Field, Input, Select, Textarea, ValidationSummary) with a focused success state, and office cards with address, email, phone and hours.",
+      "files": [
+        {
+          "path": "packages/templates/src/contact/Page.tsx",
+          "target": "app/templates/contact/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/contact/PublicFrame.tsx",
+          "target": "app/templates/contact/PublicFrame.tsx"
+        },
+        {
+          "path": "packages/templates/src/contact/data.ts",
+          "target": "app/templates/contact/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/contact/template.meta.ts"
+    },
+    {
       "id": "create-wizard",
       "kind": "template",
       "name": "Create wizard",
@@ -4860,6 +6635,98 @@
       ],
       "registryDependencies": [],
       "docs": "packages/templates/src/create-workspace/template.meta.ts"
+    },
+    {
+      "id": "data-explorer",
+      "kind": "template",
+      "name": "Data explorer",
+      "package": "@gntik-ai/templates",
+      "group": "Builders",
+      "status": "experimental",
+      "description": "Explore a large dataset inside the console: a PowerSearch (field filters, comparisons, free text) over a 10k-row DataTable with client sorting and pagination, a column chooser (TransferList in a Dialog: show, hide, reorder) and a row inspector (Drawer + JsonViewer).",
+      "files": [
+        {
+          "path": "packages/templates/src/data-explorer/Page.tsx",
+          "target": "app/templates/data-explorer/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/data-explorer/data.ts",
+          "target": "app/templates/data-explorer/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/data-explorer/template.meta.ts"
+    },
+    {
+      "id": "docs-article",
+      "kind": "template",
+      "name": "Docs article",
+      "package": "@gntik-ai/templates",
+      "group": "Help",
+      "status": "experimental",
+      "description": "Documentation article on DocsLayout: left NavList, scroll-spy Outline (Collapsible below lg), CodeBlock, Blockquote, a tip callout, “Was this helpful?” feedback with an optional comment, and previous / next links.",
+      "files": [
+        {
+          "path": "packages/templates/src/docs-article/ArticleFeedback.tsx",
+          "target": "app/templates/docs-article/ArticleFeedback.tsx"
+        },
+        {
+          "path": "packages/templates/src/docs-article/Page.tsx",
+          "target": "app/templates/docs-article/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/docs-article/data.ts",
+          "target": "app/templates/docs-article/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui",
+        "node:crypto"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/docs-article/template.meta.ts"
+    },
+    {
+      "id": "evaluations",
+      "kind": "template",
+      "name": "Evaluations",
+      "package": "@gntik-ai/templates",
+      "group": "AI",
+      "status": "experimental",
+      "description": "Evaluation run review: EvaluationScorecard with one row per dataset, a diverging Heatmap of the score change vs baseline (metric × dataset), a regressions DataTable and a sample viewer (Drawer + JsonViewer, failures first) per dataset.",
+      "files": [
+        {
+          "path": "packages/templates/src/evaluations/Page.tsx",
+          "target": "app/templates/evaluations/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/evaluations/data.ts",
+          "target": "app/templates/evaluations/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/charts",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/evaluations/template.meta.ts"
     },
     {
       "id": "forgot-password",
@@ -4917,6 +6784,31 @@
       "docs": "packages/templates/src/getting-started/template.meta.ts"
     },
     {
+      "id": "help-home",
+      "kind": "template",
+      "name": "Help home",
+      "package": "@gntik-ai/templates",
+      "group": "Help",
+      "status": "experimental",
+      "description": "Help center home on DocsLayout: search with a live result count, category ClickableCards with article counts, popular articles with reading time, and a contact-support footer.",
+      "files": [
+        {
+          "path": "packages/templates/src/help-home/Page.tsx",
+          "target": "app/templates/help-home/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/help-home/data.ts",
+          "target": "app/templates/help-home/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/help-home/template.meta.ts"
+    },
+    {
       "id": "home-dashboard",
       "kind": "template",
       "name": "Home dashboard",
@@ -4948,6 +6840,70 @@
       "docs": "packages/templates/src/home-dashboard/template.meta.ts"
     },
     {
+      "id": "incident-console",
+      "kind": "template",
+      "name": "Incident console",
+      "package": "@gntik-ai/templates",
+      "group": "Overview",
+      "status": "experimental",
+      "description": "Incident triage in the console: a SplitLayout alert rail filtered with PowerSearch (severity, status, service, assignee; default “not resolved”), sorted by severity, with a detail pane showing the elapsed Timer, Acknowledge / Resolve actions and the StatusTimeline of events.",
+      "files": [
+        {
+          "path": "packages/templates/src/incident-console/Page.tsx",
+          "target": "app/templates/incident-console/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/incident-console/data.ts",
+          "target": "app/templates/incident-console/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/incident-console/template.meta.ts"
+    },
+    {
+      "id": "keyboard-shortcuts",
+      "kind": "template",
+      "name": "Keyboard shortcuts",
+      "package": "@gntik-ai/templates",
+      "group": "Help",
+      "status": "experimental",
+      "description": "Searchable shortcut sheet grouped by area (KbdCombo, “G then P” sequences), as a console page and as a Dialog variant (KeyboardShortcutsDialog) for the ? shortcut.",
+      "files": [
+        {
+          "path": "packages/templates/src/keyboard-shortcuts/Page.tsx",
+          "target": "app/templates/keyboard-shortcuts/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/keyboard-shortcuts/ShortcutSheet.tsx",
+          "target": "app/templates/keyboard-shortcuts/ShortcutSheet.tsx"
+        },
+        {
+          "path": "packages/templates/src/keyboard-shortcuts/data.ts",
+          "target": "app/templates/keyboard-shortcuts/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/keyboard-shortcuts/template.meta.ts"
+    },
+    {
       "id": "landing",
       "kind": "template",
       "name": "Landing",
@@ -4973,6 +6929,37 @@
       "docs": "packages/templates/src/landing/template.meta.ts"
     },
     {
+      "id": "messaging",
+      "kind": "template",
+      "name": "Messaging",
+      "package": "@gntik-ai/templates",
+      "group": "Work",
+      "status": "experimental",
+      "description": "Team messaging in the console: SplitLayout conversation list (unread counts, last message) → thread of ChatMessages with Thumbnail attachments, participants AvatarGroup, and a ChatComposer with file attachments; Back on small screens.",
+      "files": [
+        {
+          "path": "packages/templates/src/messaging/Page.tsx",
+          "target": "app/templates/messaging/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/messaging/data.ts",
+          "target": "app/templates/messaging/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/chat",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/messaging/template.meta.ts"
+    },
+    {
       "id": "mfa",
       "kind": "template",
       "name": "Two-step verification",
@@ -4996,6 +6983,34 @@
       ],
       "registryDependencies": [],
       "docs": "packages/templates/src/mfa/template.meta.ts"
+    },
+    {
+      "id": "model-providers",
+      "kind": "template",
+      "name": "Model providers settings",
+      "package": "@gntik-ai/templates",
+      "group": "AI",
+      "status": "experimental",
+      "description": "Settings page (shared settings nav plus a \"Model providers\" item) with the ModelKeysList — masked keys, test connection, confirmed revoke — an add-key dialog (provider, endpoint for compatible / self-hosted, secret) and workspace usage limits as Meters.",
+      "files": [
+        {
+          "path": "packages/templates/src/model-providers/Page.tsx",
+          "target": "app/templates/model-providers/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/model-providers/data.ts",
+          "target": "app/templates/model-providers/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "settings-profile"
+      ],
+      "docs": "packages/templates/src/model-providers/template.meta.ts"
     },
     {
       "id": "notification-inbox",
@@ -5026,6 +7041,71 @@
       ],
       "registryDependencies": [],
       "docs": "packages/templates/src/notification-inbox/template.meta.ts"
+    },
+    {
+      "id": "pricing",
+      "kind": "template",
+      "name": "Pricing",
+      "package": "@gntik-ai/templates",
+      "group": "Overview",
+      "status": "experimental",
+      "description": "Public pricing page: StackedLayout with a MegaMenu (MobileNav below lg), PricingTable with the monthly / annual toggle, FeatureGrid highlights, a plan comparison table grouped by section, and Faq.",
+      "files": [
+        {
+          "path": "packages/templates/src/pricing/ComparisonTable.tsx",
+          "target": "app/templates/pricing/ComparisonTable.tsx"
+        },
+        {
+          "path": "packages/templates/src/pricing/Page.tsx",
+          "target": "app/templates/pricing/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/pricing/PublicFrame.tsx",
+          "target": "app/templates/pricing/PublicFrame.tsx"
+        },
+        {
+          "path": "packages/templates/src/pricing/data.ts",
+          "target": "app/templates/pricing/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/pricing/template.meta.ts"
+    },
+    {
+      "id": "prompt-playground",
+      "kind": "template",
+      "name": "Prompt playground",
+      "package": "@gntik-ai/templates",
+      "group": "AI",
+      "status": "experimental",
+      "description": "Prompt playground inside the console (CanvasLayout embedded in ConsoleShell, so the app nav stays): shared variables in a ListInput palette, the PromptEditor, and 2–3 model columns side by side with a Diff switch that compares each column against the first in a DiffEditor.",
+      "files": [
+        {
+          "path": "packages/templates/src/prompt-playground/Page.tsx",
+          "target": "app/templates/prompt-playground/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/prompt-playground/data.ts",
+          "target": "app/templates/prompt-playground/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/editor",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/prompt-playground/template.meta.ts"
     },
     {
       "id": "reset-password",
@@ -5170,6 +7250,101 @@
       ],
       "registryDependencies": [],
       "docs": "packages/templates/src/resource-index/template.meta.ts"
+    },
+    {
+      "id": "resource-tree",
+      "kind": "template",
+      "name": "Resource tree",
+      "package": "@gntik-ai/templates",
+      "group": "Resources",
+      "status": "experimental",
+      "description": "Resource index with a team → project TreeList (counts, single selection) beside grouped DataTables (group by kind, region or team; one SectionHeader + table per group), StatusTag status and OverflowList tags.",
+      "files": [
+        {
+          "path": "packages/templates/src/resource-tree/Page.tsx",
+          "target": "app/templates/resource-tree/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/resource-tree/data.ts",
+          "target": "app/templates/resource-tree/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/resource-tree/template.meta.ts"
+    },
+    {
+      "id": "run-trace",
+      "kind": "template",
+      "name": "Run trace",
+      "package": "@gntik-ai/templates",
+      "group": "AI",
+      "status": "experimental",
+      "description": "Trace of one AI run inside the console: run header with a live elapsed Timer, TraceWaterfall of spans, token cost and the run log; a pinnable inspector shows the selected span with a live Timer while it runs and its input / output in JsonViewers.",
+      "files": [
+        {
+          "path": "packages/templates/src/run-trace/Page.tsx",
+          "target": "app/templates/run-trace/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/run-trace/data.ts",
+          "target": "app/templates/run-trace/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/run-trace/template.meta.ts"
+    },
+    {
+      "id": "scorecard",
+      "kind": "template",
+      "name": "Scorecard",
+      "package": "@gntik-ai/templates",
+      "group": "Overview",
+      "status": "experimental",
+      "description": "Period-over-period scorecard: period select, KpiRow with deltas vs. the previous period, a targets table (change, target, attainment Meter, MiniBar trend), a RadarChart of dimension scores and a commentary rail (CommentThread).",
+      "files": [
+        {
+          "path": "packages/templates/src/scorecard/Page.tsx",
+          "target": "app/templates/scorecard/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/scorecard/TargetsTable.tsx",
+          "target": "app/templates/scorecard/TargetsTable.tsx"
+        },
+        {
+          "path": "packages/templates/src/scorecard/data.ts",
+          "target": "app/templates/scorecard/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/charts",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/scorecard/template.meta.ts"
     },
     {
       "id": "search-results",

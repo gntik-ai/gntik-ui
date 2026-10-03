@@ -45,7 +45,7 @@ export function PasswordInput({
   strengthPrefix: strengthPrefixProp,
   showLabel: showLabelProp,
   hideLabel: hideLabelProp,
-  size = 'md',
+  size = 'auto',
   wrapperClassName,
   className,
   disabled,

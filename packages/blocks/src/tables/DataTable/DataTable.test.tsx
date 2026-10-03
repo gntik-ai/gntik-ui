@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { DensityProvider } from '@gntik-ai/ui';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { DataTable } from './DataTable';
 import { compareValues, paginate, selectionState, sortRows, toggleAll, type DataTableColumn } from './data-table-utils';
@@ -88,6 +89,22 @@ describe('DataTable', () => {
     expect(screen.getByRole('table')).toHaveAttribute('data-density', 'compact');
     await user.click(screen.getByRole('button', { name: 'Page 3' }));
     expect(bodyRows()).toHaveLength(4);
+  });
+
+  it('follows the surrounding density and drives its own for the table', async () => {
+    const user = userEvent.setup();
+    render(
+      <DensityProvider density="compact">
+        <DataTable paginated={false} />
+      </DensityProvider>,
+    );
+    const table = screen.getByRole('table');
+    expect(table).toHaveAttribute('data-density', 'compact');
+    expect(screen.getAllByRole('cell')[0]).toHaveClass('py-2');
+    await user.click(screen.getByRole('button', { name: 'Comfortable rows' }));
+    expect(table).toHaveAttribute('data-density', 'comfortable');
+    expect(table.parentElement?.closest('[data-density]')).toHaveAttribute('data-density', 'comfortable');
+    expect(screen.getAllByRole('cell')[0]).toHaveClass('py-3');
   });
 
   it('shows loading and empty states', async () => {

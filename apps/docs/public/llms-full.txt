@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 79 components, 12 layouts, 69 blocks, 40 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 95 components, 12 layouts, 69 blocks, 57 templates.
 
 Packages are published as `@gntik-ai/*` on GitHub Packages: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -364,6 +364,86 @@ export default function BadgeRemovable() {
 }
 ```
 
+### Blockquote (`blockquote`)
+
+Quoted content with its citation: a figure with the blockquote and a figcaption whose cite names the source (linked when `cite` is a URL). Variants: an inline-start rule for prose, a card for testimonials, a centred pull quote.
+
+- Package: `@gntik-ai/ui` · export `Blockquote` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Blockquote/Blockquote.doc.ts
+- ARIA pattern: figure + blockquote + figcaption/cite
+- Registry dependencies: ui-utils
+- Install: `gntik-ui add blockquote`; own the source with `gntik-ui eject blockquote`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves to the source link when `cite` is set |
+
+Tokens: primary, primary-text, card, border, foreground, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { Blockquote } from '@gntik-ai/ui';
+
+export default function BlockquoteProse() {
+  return (
+    <div className="max-w-xl space-y-3 text-[13.5px] leading-6 text-muted-foreground">
+      <p>The postmortem closed with one recommendation for every team that runs scheduled deployments:</p>
+      <Blockquote source="Incident review" sourceDetail="Platform reliability, Q3" cite="https://example.com/reviews/q3">
+        Treat the rollback path as a feature. If it has never run in production, it does not exist.
+      </Blockquote>
+    </div>
+  );
+}
+```
+
+### Carousel (`carousel`)
+
+Scroll-snap media strip: one, two, three or auto-width slides per view, previous/next buttons, optional picker dots, arrow keys on the focused strip. No autoplay by default; `autoplay` adds a pause control, pauses on hover and focus, and starts paused under reduced motion.
+
+- Package: `@gntik-ai/ui` · export `Carousel` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Carousel/Carousel.doc.ts
+- ARIA pattern: APG carousel (region with aria-roledescription="carousel", slides as labelled groups)
+- Registry dependencies: ui-utils
+- Install: `gntik-ui add carousel`; own the source with `gntik-ui eject carousel`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves through the controls, then the strip, then the slide content |
+| ArrowRight / ArrowLeft | On the focused strip: next / previous slide (mirrored in RTL) |
+| Home / End | On the focused strip: first / last slide |
+| Enter / Space | Activates previous, next, a picker dot or the pause control |
+
+Tokens: card, border, foreground, muted-foreground, primary, secondary, focus-ring
+
+Usage:
+
+```tsx
+import { Carousel } from '@gntik-ai/ui';
+
+const tips = [
+  'Pin the dashboards you open every morning to the sidebar.',
+  'Press ⌘K anywhere to jump to a project, member or invoice.',
+  'Deployments can be rolled back from their detail page in one click.',
+];
+
+export default function CarouselAutoplay() {
+  return (
+    <Carousel label="Tips" title="Tips" autoplay={6000} className="max-w-md">
+      {tips.map((tip) => (
+        <div key={tip} className="flex h-28 items-center rounded-xl border border-border bg-secondary/40 px-5 text-[13.5px] leading-6 text-foreground">
+          {tip}
+        </div>
+      ))}
+    </Carousel>
+  );
+}
+```
+
 ### ChatMessage (`chat-message`)
 
 One conversation turn for the roles user, assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows typing dots until text arrives; ChatAnnouncer announces start and end once instead of every token.
@@ -565,6 +645,44 @@ export default function CollapsibleAdvanced() {
 }
 ```
 
+### JsonViewer (`json-viewer`)
+
+Collapsible JSON inspector built on TreeList: objects and arrays expand, values are coloured by type with contrast-safe text tokens (keys primary-text, strings warning-text, numbers destructive-text, booleans foreground, null muted), `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value.
+
+- Package: `@gntik-ai/ui` · export `JsonViewer` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/JsonViewer/JsonViewer.doc.ts
+- ARIA pattern: tree view
+- Registry dependencies: tree-list, ui-utils
+- Install: `gntik-ui add json-viewer`; own the source with `gntik-ui eject json-viewer`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves between the toolbar buttons and the tree |
+| ArrowDown / ArrowUp | Next / previous visible key |
+| ArrowRight / ArrowLeft | Expands / collapses an object or array (or moves to child / parent) |
+| Home / End | First / last visible key |
+| Enter / Space | Selects the key (its path shows in the toolbar) |
+| Type a character | Moves to the next key starting with it |
+
+Tokens: card, border, secondary, foreground, muted-foreground, primary-text, warning-text, destructive-text, warning, warning-chip-text, focus-ring
+
+Usage:
+
+```tsx
+import { JsonViewer } from '@gntik-ai/ui';
+
+const EVENT = {
+  type: 'invoice.paid',
+  data: { invoice: { id: 'inv_2041', total: 1290, lines: [{ sku: 'seat', qty: 12 }], customer: { id: 'cus_77', address: { country: 'ES' } } } },
+};
+
+export default function JsonViewerDepth() {
+  return <JsonViewer label="Webhook event" data={EVENT} defaultExpandDepth={3} maxDepth={3} toolbar={false} className="w-full max-w-lg" />;
+}
+```
+
 ### Kbd (`kbd`)
 
 Keyboard key chip (<kbd>) for shortcuts and hints, in three sizes. KbdCombo renders a key combination such as ⌘ K. Symbol keys are announced by name (Command, Shift, Enter…).
@@ -651,6 +769,53 @@ export default function MarkdownReply() {
   return (
     <div className="max-w-2xl">
       <Markdown>{REPLY}</Markdown>
+    </div>
+  );
+}
+```
+
+### OverflowList (`overflow-list`)
+
+Row of chips or avatars that renders items up to `max` (or to the available width with `responsive`, measured by ResizeObserver) and a "+N more" button that opens a Popover listing the rest.
+
+- Package: `@gntik-ai/ui` · export `OverflowList` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/OverflowList/OverflowList.doc.ts
+- Primitive: `@base-ui/react/popover`
+- ARIA pattern: list + disclosure popover
+- Registry dependencies: popover, ui-utils
+- Install: `gntik-ui add overflow-list`; own the source with `gntik-ui eject overflow-list`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves to the "+N more" button (and any interactive items) |
+| Enter / Space | On the "+N more" button: opens the popover with the hidden items |
+| Escape | Closes the popover and returns focus to the button |
+
+Tokens: card, border, secondary, muted-foreground, foreground, popover, focus-ring
+
+Usage:
+
+```tsx
+import { Badge } from '@gntik-ai/ui';
+import { OverflowList } from '@gntik-ai/ui';
+
+const LABELS = ['backend', 'billing', 'eu-west-1', 'production', 'pci', 'on-call', 'v2-migration'];
+
+export default function OverflowListLabels() {
+  return (
+    <div className="grid w-full max-w-md gap-6">
+      <OverflowList label="Project labels" items={LABELS} max={3} renderItem={(l) => <Badge variant="outline">{l}</Badge>} renderOverflowItem={(l) => l} />
+      <div className="w-full resize-x overflow-hidden rounded-lg border border-dashed border-border p-3">
+        <OverflowList
+          label="Responsive labels"
+          responsive
+          items={LABELS}
+          renderItem={(l) => <Badge variant="soft">{l}</Badge>}
+          renderOverflowItem={(l) => l}
+        />
+      </div>
     </div>
   );
 }
@@ -892,6 +1057,135 @@ export default function TextRoles() {
 }
 ```
 
+### Thumbnail (`thumbnail`)
+
+File or image preview tile: image or file-type icon with extension tag, name and size caption, upload progress (progressbar + shimmer that holds still under reduced motion), error state with retry, and a remove button. ThumbnailList lays tiles out as a wrapping list.
+
+- Package: `@gntik-ai/ui` · export `Thumbnail` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Thumbnail/Thumbnail.doc.ts
+- ARIA pattern: figure
+- Registry dependencies: ui-utils
+- Install: `gntik-ui add thumbnail`; own the source with `gntik-ui eject thumbnail`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves to the remove button (and retry, in the error state) of each tile |
+| Enter / Space | Activates remove or retry |
+
+Tokens: card, border, secondary, muted-foreground, foreground, primary, destructive, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { useEffect, useState } from 'react';
+import { Thumbnail, ThumbnailList } from '@gntik-ai/ui';
+
+// Neutral illustration: shapes in the default fill at low opacity, so it reads on every theme.
+const PREVIEW =
+  'data:image/svg+xml;utf8,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120"><rect width="160" height="120" fill-opacity="0.08"/><circle cx="118" cy="34" r="14" fill-opacity="0.22"/><path d="M0 120 L52 58 L92 100 L118 76 L160 120 Z" fill-opacity="0.3"/></svg>',
+  );
+
+interface Item {
+  id: string;
+  name: string;
+  size: number;
+  type?: string;
+  src?: string;
+  progress?: number;
+  error?: string;
+}
+
+const INITIAL: Item[] = [
+  { id: 'a', name: 'architecture-diagram.png', size: 482_000, type: 'image/png', src: PREVIEW },
+  { id: 'b', name: 'q3-invoices.csv', size: 1_840_000, progress: 35 },
+  { id: 'c', name: 'deployment-runbook.pdf', size: 236_000 },
+  { id: 'd', name: 'backup-2026-05.tar.gz', size: 31_400_000, error: 'Exceeds 25 MB' },
+];
+
+export default function ThumbnailUploads() {
+  const [items, setItems] = useState(INITIAL);
+  const uploading = items.some((i) => i.progress !== undefined && i.progress < 100);
+
+  useEffect(() => {
+    if (!uploading) return;
+    const id = window.setInterval(() => {
+      setItems((list) => list.map((i) => (i.progress !== undefined && i.progress < 100 ? { ...i, progress: Math.min(100, i.progress + 13) } : i)));
+    }, 400);
+    return () => window.clearInterval(id);
+  }, [uploading]);
+
+  const remove = (id: string) => setItems((list) => list.filter((i) => i.id !== id));
+  const retry = (id: string) => setItems((list) => list.map((i) => (i.id === id ? { ...i, error: undefined, size: 18_200_000, progress: 0 } : i)));
+
+  return (
+    <ThumbnailList aria-label="Attachments">
+      {items.map((item) => (
+        <Thumbnail
+          key={item.id}
+          name={item.name}
+          size={item.size}
+          type={item.type}
+          src={item.src}
+          progress={item.progress}
+          error={item.error}
+          onRemove={() => remove(item.id)}
+          onRetry={item.error ? () => retry(item.id) : undefined}
+        />
+      ))}
+    </ThumbnailList>
+  );
+}
+```
+
+### Timer (`timer`)
+
+Elapsed time since a start, live while running ("1:02:05" or compact "2m 14s"), with paused and stopped states. Renders role="timer" around a <time dateTime="PT…"> duration; silent by default, `announce` speaks it politely once a minute.
+
+- Package: `@gntik-ai/ui` · export `Timer` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Timer/Timer.doc.ts
+- ARIA pattern: timer
+- Registry dependencies: ui-utils
+- Install: `gntik-ui add timer`; own the source with `gntik-ui eject timer`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| — | Not interactive; never takes focus |
+
+Tokens: foreground, muted-foreground, success, warning
+
+Usage:
+
+```tsx
+import { Timer } from '@gntik-ai/ui';
+
+const T0 = Date.now();
+
+const JOBS = [
+  { name: 'Build 482', status: 'running', start: T0 - 134_000 },
+  { name: 'Data import', status: 'paused', start: T0 - 3_725_000, end: T0 - 600_000 },
+  { name: 'Nightly backup', status: 'stopped', start: T0 - 7_200_000, end: T0 - 5_400_000 },
+] as const;
+
+export default function TimerStates() {
+  return (
+    <ul className="grid w-full max-w-sm gap-2">
+      {JOBS.map((job) => (
+        <li key={job.name} className="flex items-center justify-between gap-4 rounded-lg border border-border bg-card px-3.5 py-2.5">
+          <span className="text-[13px] font-medium text-foreground">{job.name}</span>
+          <Timer start={job.start} status={job.status} end={'end' in job ? job.end : undefined} format="compact" />
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
 ### Timestamp (`timestamp`)
 
 A date in a <time dateTime> element: relative ("3 minutes ago", Intl.RelativeTimeFormat) or absolute (Intl.DateTimeFormat), localised with `locale`. Accepts a Date, ISO string or epoch ms. Relative labels refresh on an adaptive interval that is cleared on unmount. The full date shows in a tooltip on hover or focus and is also part of the accessible text.
@@ -1045,6 +1339,79 @@ export default function ToolCallCardStates() {
         durationMs={2310}
         args={{ email: 'alex@example.com', role: 'admin' }}
         error="Seat limit reached: the plan allows 20 members."
+      />
+    </div>
+  );
+}
+```
+
+### VirtualList (`virtual-list`)
+
+Windowed list for thousands of rows: only the visible rows plus `overscan` are mounted, with a fixed `itemHeight` or measured rows from an estimate. One roving tab stop, aria-setsize/posinset on every row, `scrollToIndex` through a ref, and a single-select `listbox` mode. No dependencies.
+
+- Package: `@gntik-ai/ui` · export `VirtualList` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/VirtualList/VirtualList.doc.ts
+- ARIA pattern: list / listbox with roving tabindex
+- Registry dependencies: ui-utils
+- Install: `gntik-ui add virtual-list`; own the source with `gntik-ui eject virtual-list`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves focus to the active row (one tab stop) |
+| ArrowDown / ArrowUp | Moves to the next / previous row, scrolling it into view |
+| PageDown / PageUp | Moves one viewport down / up |
+| Home / End | Moves to the first / last row |
+| Enter | Activates the row (selects it in listbox mode) |
+| Space | Listbox mode: selects the focused option |
+
+Tokens: card, border, secondary, primary, foreground, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { useRef } from 'react';
+import { Button } from '@gntik-ai/ui';
+import { VirtualList, type VirtualListHandle } from '@gntik-ai/ui';
+
+const levels = ['info', 'info', 'info', 'warn', 'info', 'error'] as const;
+const logs = Array.from({ length: 5000 }, (_, i) => ({
+  id: `log-${i}`,
+  time: `12:${String(Math.floor(i / 60) % 60).padStart(2, '0')}:${String(i % 60).padStart(2, '0')}`,
+  level: levels[i % levels.length] ?? 'info',
+  message: `deploy-gate: checked deployment #${4100 + i} for open incidents`,
+}));
+
+const levelClass = { info: 'text-muted-foreground', warn: 'text-warning-text', error: 'text-destructive-text' } as const;
+
+export default function VirtualListLogs() {
+  const list = useRef<VirtualListHandle>(null);
+  return (
+    <div className="flex max-w-2xl flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <h3 id="logs-title" className="flex-1 text-[13px] font-semibold text-foreground">
+          Deployment log <span className="font-normal text-muted-foreground">· {logs.length.toLocaleString('en-US')} lines</span>
+        </h3>
+        <Button size="sm" variant="secondary" onClick={() => list.current?.scrollToIndex(logs.length - 1, { focus: true })}>
+          Jump to latest
+        </Button>
+      </div>
+      <VirtualList
+        ref={list}
+        aria-labelledby="logs-title"
+        items={logs}
+        getKey={(l) => l.id}
+        itemHeight={30}
+        height={280}
+        rowClassName="gap-3 px-3 font-mono text-[12px]"
+        renderItem={(l) => (
+          <>
+            <span className="shrink-0 text-muted-foreground tabular-nums">{l.time}</span>
+            <span className={`w-10 shrink-0 font-semibold uppercase ${levelClass[l.level]}`}>{l.level}</span>
+            <span className="min-w-0 truncate text-foreground">{l.message}</span>
+          </>
+        )}
       />
     </div>
   );
@@ -1807,6 +2174,58 @@ export default function InputAddons() {
 }
 ```
 
+### ListInput (`list-input`)
+
+Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced.
+
+- Package: `@gntik-ai/ui` · export `ListInput` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/ListInput/ListInput.doc.ts
+- ARIA pattern: list of labelled text field pairs
+- Registry dependencies: button, input, ui-utils
+- Install: `gntik-ui add list-input`; own the source with `gntik-ui eject list-input`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves through key, value, reveal, move and remove controls row by row |
+| Enter (key field) | Moves to the row value |
+| Enter (last value) | Adds a row and focuses its key |
+| Alt+ArrowUp / Alt+ArrowDown | Moves the row up / down, keeping focus in the same field |
+| Paste | Multi-line or KEY=value text is split into rows |
+| Enter / Space on a remove button | Removes the row and focuses the next one |
+
+Tokens: background, border, foreground, muted-foreground, destructive, destructive-text, secondary, focus-ring
+
+Usage:
+
+```tsx
+import { ListInput } from '@gntik-ai/ui';
+
+const SECRET = /(SECRET|TOKEN|PASSWORD|KEY)$/;
+
+export default function ListInputEnvVars() {
+  return (
+    <div className="flex max-w-2xl flex-col gap-2">
+      <h3 className="text-[13px] font-semibold text-foreground">Environment variables</h3>
+      <ListInput
+        label="Environment variables"
+        defaultValue={[
+          { key: 'NODE_ENV', value: 'production' },
+          { key: 'DATABASE_URL', value: 'postgres://db.internal:5432/app' },
+          { key: 'STRIPE_SECRET', value: 'sk_live_51H8x' },
+        ]}
+        secret={(row) => SECRET.test(row.key)}
+        validate={(row) => ({
+          key: /^[A-Z_][A-Z0-9_]*$/.test(row.key) ? null : 'Use UPPER_SNAKE_CASE.',
+          value: row.value ? null : 'A value is required.',
+        })}
+      />
+    </div>
+  );
+}
+```
+
 ### MultiSelect (`multi-select`)
 
 Searchable multi-select: selected options as removable chips (extra ones collapse into "+N"), a "Select all" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field.
@@ -2005,6 +2424,64 @@ export default function PasswordInputBasic() {
         <FieldLabel>API secret</FieldLabel>
         <PasswordInput size="sm" defaultValue="sk-live-example-secret" inputClassName="font-mono text-[12px]" />
       </Field>
+    </div>
+  );
+}
+```
+
+### PowerSearch (`power-search`)
+
+Structured filter input: pick a field, an operator and a value from suggestions (or type `status=failed`, `cost>100`), add free text, and edit committed terms from the keyboard. Emits a typed query AST (`{ type: "and", terms }`) with parse / format / match helpers; fields, operators and values are props.
+
+- Package: `@gntik-ai/ui` · export `PowerSearch` · group Forms · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/PowerSearch/PowerSearch.doc.ts
+- Primitive: `@base-ui/react/combobox`
+- ARIA pattern: combobox + list of editable filter terms
+- Registry dependencies: select, ui-utils
+- Install: `gntik-ui add power-search`; own the source with `gntik-ui eject power-search`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| ArrowDown / ArrowUp | Opens the suggestions and moves the highlight |
+| Enter | Picks the highlighted suggestion; otherwise commits the typed value or free text (empty input: submit) |
+| field=value / field:value | Typed shortcut: jumps straight to the value step |
+| Backspace (empty input) | Steps back: operator → field → edits the last term |
+| ArrowLeft (input start) | Moves focus to the last term |
+| ArrowLeft / ArrowRight / Home / End (on a term) | Moves between terms; past the last returns to the input |
+| Enter / Space (on a term) | Pulls the term back into the input to edit it |
+| Delete / Backspace (on a term) | Removes the term |
+| Escape | Closes the suggestions; again clears the term being built |
+
+Tokens: background, border, foreground, muted-foreground, primary, primary-text, secondary, popover, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { PowerSearch } from '@gntik-ai/ui';
+import { formatPowerSearch, matchPowerSearch, parsePowerSearch, type PowerSearchQuery } from '@gntik-ai/ui';
+import { deploymentFields, deployments, type DeploymentField } from '@gntik-ai/ui';
+
+export default function PowerSearchDeployments() {
+  const [query, setQuery] = useState<PowerSearchQuery<DeploymentField>>(() => parsePowerSearch('status=failed', deploymentFields));
+  const rows = deployments.filter((d) => matchPowerSearch(query, d));
+  return (
+    <div className="flex max-w-2xl flex-col gap-3">
+      <PowerSearch aria-label="Filter deployments" fields={deploymentFields} value={query} onValueChange={setQuery} />
+      <p className="font-mono text-[11.5px] text-muted-foreground">{formatPowerSearch(query) || 'No filters'}</p>
+      <ul aria-label="Matching deployments" className="divide-y divide-border rounded-lg border border-border bg-card text-[12.5px]">
+        {rows.map((d) => (
+          <li key={d.id} className="flex items-center gap-3 px-3 py-2">
+            <span className="font-mono text-muted-foreground">{d.id}</span>
+            <span className="min-w-0 flex-1 truncate text-foreground">{d.project}</span>
+            <span className="text-muted-foreground">{d.region}</span>
+            <span className="w-20 text-end">{d.status}</span>
+          </li>
+        ))}
+        {rows.length === 0 && <li className="px-3 py-4 text-center text-muted-foreground">No deployments match.</li>}
+      </ul>
     </div>
   );
 }
@@ -2312,6 +2789,58 @@ export default function TokenInputEmails() {
           {invalid > 0 ? `Fix ${invalid} invalid address${invalid > 1 ? 'es' : ''} before sending.` : 'Press Enter or comma to add. Paste a list to add several.'}
         </FieldDescription>
       </Field>
+    </div>
+  );
+}
+```
+
+### TransferList (`transfer-list`)
+
+Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced.
+
+- Package: `@gntik-ai/ui` · export `TransferList` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/TransferList/TransferList.doc.ts
+- ARIA pattern: two multi-select listboxes (aria-activedescendant) + action buttons
+- Registry dependencies: button, input, ui-utils
+- Install: `gntik-ui add transfer-list`; own the source with `gntik-ui eject transfer-list`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves between search fields, the two lists and the action buttons |
+| ArrowDown / ArrowUp, Home / End | Moves the active option in the focused list |
+| Space | Checks or unchecks the active option |
+| Shift+ArrowDown / Shift+ArrowUp | Moves and checks, extending the selection |
+| Ctrl/Cmd+A | Checks (or unchecks) every visible option |
+| Enter | Moves the checked options (or the active one) to the other list |
+| Alt+ArrowUp / Alt+ArrowDown | Selected list: moves the checked options (or the active one) up / down |
+
+Tokens: card, border, background, foreground, muted-foreground, primary, primary-foreground, secondary, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { TransferList } from '@gntik-ai/ui';
+
+const columns = [
+  { value: 'name', label: 'Name', description: 'Project name' },
+  { value: 'owner', label: 'Owner', description: 'Member who created it' },
+  { value: 'status', label: 'Status', description: 'Last deployment result' },
+  { value: 'region', label: 'Region' },
+  { value: 'created', label: 'Created', description: 'Creation date' },
+  { value: 'updated', label: 'Last updated' },
+  { value: 'cost', label: 'Monthly cost', description: 'From the latest invoice' },
+  { value: 'id', label: 'Project ID', disabled: true },
+];
+
+export default function TransferListColumns() {
+  const [visible, setVisible] = useState(['name', 'status', 'updated']);
+  return (
+    <div className="flex max-w-3xl flex-col gap-3">
+      <TransferList items={columns} value={visible} onValueChange={setVisible} titles={{ available: 'Hidden columns', selected: 'Visible columns' }} />
+      <p className="text-[12px] text-muted-foreground">Table order: {visible.join(' · ')}</p>
     </div>
   );
 }
@@ -2855,6 +3384,55 @@ export default function LinkRouter() {
 }
 ```
 
+### MegaMenu (`mega-menu`)
+
+Top navigation with wide panels: items with sections open a panel of link columns with descriptions and optional featured content; plain items are links. Hover or click opens, the panel resizes between items, router links come from LinkProvider and the current page is marked. Use it as the StackedLayout sub-nav row; `megaMenuNavItems` feeds MobileNav.
+
+- Package: `@gntik-ai/ui` · export `MegaMenu` · group Navigation · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/MegaMenu/MegaMenu.doc.ts
+- Primitive: `@base-ui/react/navigation-menu`
+- ARIA pattern: disclosure navigation (nav landmark, triggers with aria-expanded)
+- Registry dependencies: link, nav-list, ui-utils
+- Install: `gntik-ui add mega-menu`; own the source with `gntik-ui eject mega-menu`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves between top-level items, then into an open panel |
+| Enter / Space / ArrowDown | Opens the panel of the focused trigger |
+| ArrowRight / ArrowLeft | Moves between top-level items |
+| Escape | Closes the panel and returns focus to its trigger |
+
+Tokens: popover, popover-foreground, border, accent, accent-foreground, secondary, primary, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { MegaMenu } from '@gntik-ai/ui';
+import { megaMenuItems } from '@gntik-ai/ui';
+
+export default function MegaMenuBasic() {
+  const [href, setHref] = useState('#deployments');
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="rounded-xl border border-border bg-chrome px-2 py-1.5">
+        <MegaMenu
+          label="Product"
+          items={megaMenuItems}
+          currentHref={href}
+          onNavigate={(link) => {
+            if (link.href) setHref(link.href);
+          }}
+        />
+      </div>
+      <p className="text-[12px] text-muted-foreground">Current page: {href}</p>
+    </div>
+  );
+}
+```
+
 ### MobileNav (`mobile-nav`)
 
 Small-screen navigation: a menu icon button opens a Drawer sheet (chrome surface) with the NavList groups and an optional footer slot. Activating an item closes the sheet; focus is trapped while open and returns to the button.
@@ -3115,6 +3693,100 @@ export default function TabsPills() {
 }
 ```
 
+### TreeList (`tree-list`)
+
+Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states.
+
+- Package: `@gntik-ai/ui` · export `TreeList` · group Navigation · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/TreeList/TreeList.doc.ts
+- ARIA pattern: tree view
+- Registry dependencies: spinner, ui-utils
+- Install: `gntik-ui add tree-list`; own the source with `gntik-ui eject tree-list`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves focus into the tree (selected or first node) and out of it |
+| ArrowDown / ArrowUp | Next / previous visible node |
+| ArrowRight | Closed node: expands it (loading children if needed). Open node: moves to its first child |
+| ArrowLeft | Open node: collapses it. Otherwise: moves to the parent |
+| Home / End | First / last visible node |
+| Enter | Selects the node and runs onAction |
+| Space | Selects the node (toggles in multiple mode) |
+| Ctrl/⌘ + A | Multiple mode: selects every node |
+| Type a character | Moves to the next node whose label starts with the typed text |
+
+Tokens: foreground, muted-foreground, secondary, primary, primary-chip-text, primary-foreground, border, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { Cloud, FileCode, FileText, Folder, FolderOpen } from '@gntik-ai/icons';
+import { useState } from 'react';
+import { TreeList } from '@gntik-ai/ui';
+import type { TreeNode } from '@gntik-ai/ui';
+
+const folder = { icon: Folder, openIcon: FolderOpen };
+
+const NODES: TreeNode[] = [
+  {
+    id: 'src',
+    label: 'src',
+    ...folder,
+    children: [
+      {
+        id: 'components',
+        label: 'components',
+        ...folder,
+        children: [
+          { id: 'button', label: 'Button.tsx', icon: FileCode, meta: '2 KB' },
+          { id: 'dialog', label: 'Dialog.tsx', icon: FileCode, meta: '5 KB' },
+        ],
+      },
+      { id: 'index', label: 'index.ts', icon: FileCode, meta: '1 KB' },
+    ],
+  },
+  { id: 'remote', label: 'remote-assets', icon: Cloud, hasChildren: true },
+  { id: 'docs', label: 'docs', ...folder, children: [{ id: 'guide', label: 'getting-started.md', icon: FileText }] },
+  { id: 'readme', label: 'README.md', icon: FileText, meta: '3 KB' },
+];
+
+/** Simulated fetch for a lazily loaded folder. */
+function loadRemote(): Promise<TreeNode[]> {
+  return new Promise((resolve) =>
+    setTimeout(
+      () =>
+        resolve([
+          { id: 'logo', label: 'logo.svg', icon: FileText },
+          { id: 'fonts', label: 'fonts.css', icon: FileCode },
+        ]),
+      600,
+    ),
+  );
+}
+
+export default function TreeListFiles() {
+  const [opened, setOpened] = useState('');
+  return (
+    <div className="grid w-full max-w-xs gap-3">
+      <TreeList
+        aria-label="Repository files"
+        nodes={NODES}
+        defaultExpanded={['src']}
+        defaultSelected={['index']}
+        loadChildren={loadRemote}
+        onAction={(node) => setOpened(node.label)}
+        className="rounded-lg border border-border bg-card p-1.5"
+      />
+      <p aria-live="polite" className="h-4 font-mono text-[11px] text-muted-foreground">
+        {opened && `Opened ${opened}`}
+      </p>
+    </div>
+  );
+}
+```
+
 ### UserMenu (`user-menu`)
 
 Account menu for the topbar: avatar trigger (optionally with the name) opening a name/email header, data-driven items (buttons or router links), a Theme submenu bound to useTheme(), and a destructive Sign out.
@@ -3296,6 +3968,64 @@ export default function AlertDialogDelete() {
 }
 ```
 
+### BottomSheet (`bottom-sheet`)
+
+Mobile sheet that rests at snap points (a peek height and expanded by default): drag or swipe it between heights or down to close, or use the handle from the keyboard. Modal like a dialog: focus is trapped, Escape closes and focus returns to the trigger.
+
+- Package: `@gntik-ai/ui` · export `BottomSheet` · group Overlays · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/BottomSheet/BottomSheet.doc.ts
+- Primitive: `@base-ui/react/drawer (snapPoints)`
+- ARIA pattern: modal dialog with a resize handle button
+- Registry dependencies: ui-utils
+- Install: `gntik-ui add bottom-sheet`; own the source with `gntik-ui eject bottom-sheet`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Enter / Space (trigger) | Opens the sheet at its first snap point and moves focus inside |
+| ArrowUp / ArrowDown (handle) | Next taller / shorter snap point |
+| Home / End (handle) | Smallest / tallest snap point |
+| Enter / Space (handle) | Cycles through the snap points |
+| Tab / Shift+Tab | Moves focus within the sheet (trapped) |
+| Escape | Closes the sheet and returns focus to the trigger |
+
+Tokens: popover, popover-foreground, background, border, muted-foreground, secondary, focus-ring
+
+Usage:
+
+```tsx
+import { Button } from '@gntik-ai/ui';
+import { BottomSheet, BottomSheetContent, BottomSheetTrigger } from '@gntik-ai/ui';
+
+const rows = [
+  ['Invoice', 'INV-2041'],
+  ['Period', 'Sep 1 – Sep 30'],
+  ['Projects', '12'],
+  ['Compute', '$1,284.00'],
+  ['Storage', '$212.40'],
+  ['Total', '$1,496.40'],
+];
+
+export default function BottomSheetDetails() {
+  return (
+    <BottomSheet snapPoints={[0.35, 0.7, 1]}>
+      <BottomSheetTrigger render={<Button variant="secondary" />}>Invoice details</BottomSheetTrigger>
+      <BottomSheetContent title="INV-2041" description="Northwind workspace · paid">
+        <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2.5 text-[13px]">
+          {rows.map(([k, v]) => (
+            <div key={k} className="contents">
+              <dt className="text-muted-foreground">{k}</dt>
+              <dd className="text-end font-mono text-foreground tabular-nums">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </BottomSheetContent>
+    </BottomSheet>
+  );
+}
+```
+
 ### CommandPalette (`command-palette`)
 
 ⌘K / Ctrl+K command palette: a modal dialog with a search input over grouped commands (icon, label, description, shortcut keys). Commands are data with an onSelect. Fuzzy-ish ranking (prefix, word start, substring, subsequence; keywords and descriptions count), recent items while the query is empty, an empty state and footer hints. useCommandPaletteShortcut() exposes the shortcut on its own.
@@ -3369,6 +4099,81 @@ export default function CommandPaletteBasic() {
         ) : (
           'Press ⌘K (Ctrl+K) or the button to open'
         )}
+      </p>
+    </div>
+  );
+}
+```
+
+### ContextMenu (`context-menu`)
+
+Menu that opens at the pointer on right click or long press, and from the keyboard with Shift+F10 or the ContextMenu key on the focused area. Uses the Menu item parts (icons, shortcuts, destructive tone, checkbox/radio items, groups, submenus).
+
+- Package: `@gntik-ai/ui` · export `ContextMenu` · group Overlays · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/ContextMenu/ContextMenu.doc.ts
+- Primitive: `@base-ui/react/context-menu`
+- ARIA pattern: menu
+- Registry dependencies: menu, ui-utils
+- Install: `gntik-ui add context-menu`; own the source with `gntik-ui eject context-menu`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Shift+F10 / ContextMenu | On the focused area: opens the menu |
+| ArrowDown / ArrowUp | Moves between items (wraps) |
+| Enter | Activates the highlighted item and closes the menu |
+| ArrowRight | Opens the submenu of a submenu trigger; ArrowLeft closes it |
+| Escape | Closes the menu |
+
+Tokens: popover, popover-foreground, border, secondary, muted-foreground, destructive, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { Copy, ExternalLink, FolderInput, Pencil, Trash2 } from '@gntik-ai/icons';
+import { useState } from 'react';
+import { MenuItem, MenuSeparator, MenuSub, MenuSubContent, MenuSubTrigger } from '@gntik-ai/ui';
+import { ContextMenu, ContextMenuContent, ContextMenuTrigger } from '@gntik-ai/ui';
+
+export default function ContextMenuCard() {
+  const [last, setLast] = useState('');
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <ContextMenu>
+        <ContextMenuTrigger
+          role="group"
+          aria-label="Project billing-api"
+          className="grid h-36 w-full max-w-72 place-items-center border border-dashed border-border bg-card p-4 text-center"
+        >
+          <span className="text-[13px] font-medium text-foreground">billing-api</span>
+          <span className="font-mono text-[11px] text-muted-foreground">Right click or long press</span>
+        </ContextMenuTrigger>
+        <ContextMenuContent className="w-56">
+          <MenuItem icon={ExternalLink} onClick={() => setLast('Opened billing-api')}>
+            Open
+          </MenuItem>
+          <MenuItem icon={Pencil} shortcut="F2" onClick={() => setLast('Renaming billing-api')}>
+            Rename
+          </MenuItem>
+          <MenuItem icon={Copy} shortcut="⌘D" onClick={() => setLast('Duplicated billing-api')}>
+            Duplicate
+          </MenuItem>
+          <MenuSub>
+            <MenuSubTrigger icon={FolderInput}>Move to</MenuSubTrigger>
+            <MenuSubContent>
+              <MenuItem onClick={() => setLast('Moved to Platform')}>Platform</MenuItem>
+              <MenuItem onClick={() => setLast('Moved to Archive')}>Archive</MenuItem>
+            </MenuSubContent>
+          </MenuSub>
+          <MenuSeparator />
+          <MenuItem icon={Trash2} destructive onClick={() => setLast('Deleted billing-api')}>
+            Delete project
+          </MenuItem>
+        </ContextMenuContent>
+      </ContextMenu>
+      <p aria-live="polite" className="h-4 font-mono text-[11px] text-muted-foreground">
+        {last}
       </p>
     </div>
   );
@@ -3453,7 +4258,7 @@ export default function DialogForm() {
 
 ### Drawer (`drawer`)
 
-Panel that slides in from the right, left or bottom edge for details, edit forms and navigation. Fixed header and footer, scrollable body, swipe to dismiss. Parts: Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose.
+Panel that slides in from the right, left or bottom edge for details, edit forms and navigation. Fixed header and footer, scrollable body, swipe to dismiss. Under RTL (I18nProvider) `right` and `left` mirror to the inline end and start. Parts: Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose.
 
 - Package: `@gntik-ai/ui` · export `Drawer` · group Overlays · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Drawer/Drawer.doc.ts
@@ -3618,6 +4423,67 @@ export default function InfoTipLabel() {
         <option value="30">30 days</option>
         <option value="90">90 days</option>
       </select>
+    </div>
+  );
+}
+```
+
+### Lightbox (`lightbox`)
+
+Full-screen image and video viewer: previous / next, zoom (buttons, keys or double click) with a scrollable stage, captions, a thumbnail strip and an announced position. Modal: focus is trapped, Escape closes and focus returns to the opener.
+
+- Package: `@gntik-ai/ui` · export `Lightbox` · group Overlays · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Lightbox/Lightbox.doc.ts
+- Primitive: `@base-ui/react/dialog`
+- ARIA pattern: modal dialog with a labelled thumbnail group
+- Registry dependencies: ui-utils
+- Install: `gntik-ui add lightbox`; own the source with `gntik-ui eject lightbox`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| ArrowRight / ArrowLeft | Next / previous item (mirrored in RTL) |
+| Home / End | First / last item |
+| + / - | Zoom in / out (images) |
+| 0 | Reset zoom |
+| Tab / Shift+Tab | Moves through zoom, close, previous / next and the thumbnails (trapped) |
+| Enter / Space on a thumbnail | Shows that item |
+| Escape | Closes the viewer and returns focus |
+
+Tokens: background, chrome, card, border, foreground, muted-foreground, primary, secondary, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Lightbox } from '@gntik-ai/ui';
+import { media } from '@gntik-ai/ui';
+
+export default function LightboxGallery() {
+  const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+  return (
+    <div className="flex max-w-xl flex-col gap-2">
+      <h3 className="text-[13px] font-semibold text-foreground">Release screenshots</h3>
+      <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {media.map((m, i) => (
+          <li key={m.src}>
+            <button
+              type="button"
+              aria-label={`Open ${m.alt}`}
+              className="block w-full overflow-hidden rounded-lg border border-border bg-card text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+              onClick={() => {
+                setIndex(i);
+                setOpen(true);
+              }}
+            >
+              <img src={m.src} alt="" className="aspect-[16/10] w-full object-cover" />
+            </button>
+          </li>
+        ))}
+      </ul>
+      <Lightbox items={media} open={open} onOpenChange={setOpen} index={index} onIndexChange={setIndex} />
     </div>
   );
 }
@@ -3811,6 +4677,85 @@ export default function TooltipRich() {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
+  );
+}
+```
+
+### Tour (`tour`)
+
+Onboarding steps anchored to elements (selector, ref or getter): a non-modal popover with a step counter and Back / Next / Skip, positioned at each target and outlined with the focus ring (no overlay, no glow). Focus moves into the step and returns when the tour ends; missing targets centre the step.
+
+- Package: `@gntik-ai/ui` · export `Tour` · group Overlays · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Tour/Tour.doc.ts
+- Primitive: `@base-ui/react/popover`
+- ARIA pattern: non-modal dialog (popover) per step
+- Registry dependencies: button, popover, ui-utils
+- Install: `gntik-ui add tour`; own the source with `gntik-ui eject tour`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Cycles through the close button, Skip, Back and Next (focus stays in the step) |
+| Enter / Space | Activates the focused button (Next moves focus to the next step) |
+| ArrowRight / ArrowLeft | Next / previous step (mirrored in RTL) |
+| Escape | Ends the tour and returns focus |
+
+Tokens: popover, popover-foreground, border, primary, primary-text, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { Bell, Plus, Search } from '@gntik-ai/icons';
+import { useRef, useState } from 'react';
+import { Button, IconButton } from '@gntik-ai/ui';
+import { Tour, type TourStep } from '@gntik-ai/ui';
+
+export default function TourOnboarding() {
+  const [open, setOpen] = useState(false);
+  const [step, setStep] = useState(0);
+  const [done, setDone] = useState<string | null>(null);
+  const newProject = useRef<HTMLButtonElement>(null);
+
+  const steps: TourStep[] = [
+    { target: '#tour-search', title: 'Find anything', content: 'Search projects, members and invoices from one place. ⌘K opens it anywhere.' },
+    { target: newProject, title: 'Create a project', content: 'Projects group deployments, members and billing. Start with one per product.', side: 'bottom', align: 'end' },
+    { target: '#tour-alerts', title: 'Stay informed', content: 'Failed deployments and invoice reminders land here.', side: 'left' },
+  ];
+
+  return (
+    <div className="flex max-w-xl flex-col gap-4">
+      <div className="flex items-center gap-2 rounded-xl border border-border bg-card p-2 shadow-sm">
+        <Button id="tour-search" variant="ghost" size="sm" icon={Search}>
+          Search
+        </Button>
+        <span className="flex-1" />
+        <IconButton id="tour-alerts" size="sm" icon={Bell} label="Notifications" />
+        <Button ref={newProject} size="sm" icon={Plus}>
+          New project
+        </Button>
+      </div>
+      <div className="flex items-center gap-3">
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setStep(0);
+            setOpen(true);
+          }}
+        >
+          Start tour
+        </Button>
+        {done && <span className="text-[12.5px] text-muted-foreground">{done}</span>}
+      </div>
+      <Tour
+        steps={steps}
+        open={open}
+        onOpenChange={setOpen}
+        step={step}
+        onStepChange={setStep}
+        onFinish={(completed) => setDone(completed ? 'Tour completed.' : 'Tour skipped.')}
+      />
+    </div>
   );
 }
 ```
@@ -6339,6 +7284,99 @@ export default function Route() {
 }
 ```
 
+### Evaluations (`evaluations`)
+
+Evaluation run review: EvaluationScorecard with one row per dataset, a diverging Heatmap of the score change vs baseline (metric × dataset), a regressions DataTable and a sample viewer (Drawer + JsonViewer, failures first) per dataset.
+
+- Package: `@gntik-ai/templates` · export `EvaluationsPage` · group AI · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/evaluations/template.meta.ts
+- Layout: SidebarLayout
+- Blocks: app-sidebar, app-topbar, page-header, evaluation-scorecard, data-table
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=evaluations
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add evaluations`
+
+Usage:
+
+```tsx
+import { EvaluationsPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <EvaluationsPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
+### Model providers settings (`model-providers`)
+
+Settings page (shared settings nav plus a "Model providers" item) with the ModelKeysList — masked keys, test connection, confirmed revoke — an add-key dialog (provider, endpoint for compatible / self-hosted, secret) and workspace usage limits as Meters.
+
+- Package: `@gntik-ai/templates` · export `ModelProvidersPage` · group AI · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/model-providers/template.meta.ts
+- Layout: SettingsLayout
+- Blocks: app-sidebar, app-topbar, page-header, model-keys-list
+- Console shell: no
+- Registry dependencies: settings-profile
+- Preview: /preview.html?kind=template&id=model-providers
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add model-providers`
+
+Usage:
+
+```tsx
+import { ModelProvidersPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <ModelProvidersPage />;
+}
+```
+
+### Prompt playground (`prompt-playground`)
+
+Prompt playground inside the console (CanvasLayout embedded in ConsoleShell, so the app nav stays): shared variables in a ListInput palette, the PromptEditor, and 2–3 model columns side by side with a Diff switch that compares each column against the first in a DiffEditor.
+
+- Package: `@gntik-ai/templates` · export `PromptPlaygroundPage` · group AI · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/prompt-playground/template.meta.ts
+- Layout: CanvasLayout
+- Blocks: app-sidebar, app-topbar, prompt-editor
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=prompt-playground
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add prompt-playground`
+
+Usage:
+
+```tsx
+import { PromptPlaygroundPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <PromptPlaygroundPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
+### Run trace (`run-trace`)
+
+Trace of one AI run inside the console: run header with a live elapsed Timer, TraceWaterfall of spans, token cost and the run log; a pinnable inspector shows the selected span with a live Timer while it runs and its input / output in JsonViewers.
+
+- Package: `@gntik-ai/templates` · export `RunTracePage` · group AI · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/run-trace/template.meta.ts
+- Layout: InspectorLayout
+- Blocks: app-sidebar, app-topbar, page-header, trace-waterfall, token-cost-card, log-viewer
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=run-trace
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add run-trace`
+
+Usage:
+
+```tsx
+import { RunTracePage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <RunTracePage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
 ### Accept invitation (`accept-invitation`)
 
 Centred card invitation: inviter, workspace, role and member count, the invited email with a switch-account link, and Join / Decline with result states.
@@ -6544,6 +7582,52 @@ export default function Route() {
 }
 ```
 
+### Code editor (`code-editor`)
+
+Full-screen code editor: CanvasLayout top bar (breadcrumb, title, status, branch, Save), a file TreeList with a context menu (open, copy path, close tab, delete) in the palette, and the CodePanel block (file tabs, Monaco editor or diff, problems list) as the canvas.
+
+- Package: `@gntik-ai/templates` · export `CodeEditorPage` · group Builders · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/code-editor/template.meta.ts
+- Layout: CanvasLayout
+- Blocks: code-panel
+- Console shell: no
+- Preview: /preview.html?kind=template&id=code-editor
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add code-editor`
+
+Usage:
+
+```tsx
+import { CodeEditorPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <CodeEditorPage />;
+}
+```
+
+### Data explorer (`data-explorer`)
+
+Explore a large dataset inside the console: a PowerSearch (field filters, comparisons, free text) over a 10k-row DataTable with client sorting and pagination, a column chooser (TransferList in a Dialog: show, hide, reorder) and a row inspector (Drawer + JsonViewer).
+
+- Package: `@gntik-ai/templates` · export `DataExplorerPage` · group Builders · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/data-explorer/template.meta.ts
+- Layout: SidebarLayout
+- Blocks: app-sidebar, app-topbar, page-header, data-table, empty-states
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=data-explorer
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add data-explorer`
+
+Usage:
+
+```tsx
+import { DataExplorerPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <DataExplorerPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
 ### Flow builder (`workflow-builder`)
 
 Full-screen editor: CanvasLayout top bar (breadcrumb, title, status, Save and Publish) around the FlowBuilder block (palette, React Flow canvas, inspector, run console). The app must import '@gntik-ai/flow/styles.css' once for the canvas styles.
@@ -6564,6 +7648,97 @@ import { WorkflowBuilderPage } from '@gntik-ai/templates';
 // Every prop is optional: unset ones fall back to the template fixtures.
 export default function Route() {
   return <WorkflowBuilderPage />;
+}
+```
+
+### Changelog (`changelog`)
+
+Release notes in the console: dated entries with version, tag badges and a “New” badge, a multi-select tag filter (ToggleGroup) with a live count, and a Subscribe action.
+
+- Package: `@gntik-ai/templates` · export `ChangelogPage` · group Help · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/changelog/template.meta.ts
+- Layout: SidebarLayout · Page
+- Blocks: app-sidebar, app-topbar, page-header
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=changelog
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add changelog`
+
+Usage:
+
+```tsx
+import { ChangelogPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <ChangelogPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
+### Docs article (`docs-article`)
+
+Documentation article on DocsLayout: left NavList, scroll-spy Outline (Collapsible below lg), CodeBlock, Blockquote, a tip callout, “Was this helpful?” feedback with an optional comment, and previous / next links.
+
+- Package: `@gntik-ai/templates` · export `DocsArticlePage` · group Help · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/docs-article/template.meta.ts
+- Layout: DocsLayout
+- Blocks: inline-callout
+- Console shell: no
+- Preview: /preview.html?kind=template&id=docs-article
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add docs-article`
+
+Usage:
+
+```tsx
+import { DocsArticlePage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <DocsArticlePage />;
+}
+```
+
+### Help home (`help-home`)
+
+Help center home on DocsLayout: search with a live result count, category ClickableCards with article counts, popular articles with reading time, and a contact-support footer.
+
+- Package: `@gntik-ai/templates` · export `HelpHomePage` · group Help · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/help-home/template.meta.ts
+- Layout: DocsLayout
+- Console shell: no
+- Preview: /preview.html?kind=template&id=help-home
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add help-home`
+
+Usage:
+
+```tsx
+import { HelpHomePage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <HelpHomePage />;
+}
+```
+
+### Keyboard shortcuts (`keyboard-shortcuts`)
+
+Searchable shortcut sheet grouped by area (KbdCombo, “G then P” sequences), as a console page and as a Dialog variant (KeyboardShortcutsDialog) for the ? shortcut.
+
+- Package: `@gntik-ai/templates` · export `KeyboardShortcutsPage` · group Help · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/keyboard-shortcuts/template.meta.ts
+- Layout: SidebarLayout · Page
+- Blocks: app-sidebar, app-topbar, page-header
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=keyboard-shortcuts
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add keyboard-shortcuts`
+
+Usage:
+
+```tsx
+import { KeyboardShortcutsPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <KeyboardShortcutsPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
 }
 ```
 
@@ -6612,6 +7787,29 @@ export default function Route() {
 }
 ```
 
+### Contact (`contact`)
+
+Public contact page: StackedLayout with a MegaMenu (MobileNav below lg), a validated contact form (Field, Input, Select, Textarea, ValidationSummary) with a focused success state, and office cards with address, email, phone and hours.
+
+- Package: `@gntik-ai/templates` · export `ContactPage` · group Overview · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/contact/template.meta.ts
+- Layout: StackedLayout
+- Blocks: validation-summary
+- Console shell: no
+- Preview: /preview.html?kind=template&id=contact
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add contact`
+
+Usage:
+
+```tsx
+import { ContactPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <ContactPage />;
+}
+```
+
 ### Home dashboard (`home-dashboard`)
 
 Workspace home in the console shell: page header, KPI row, cost and traffic charts, recent activity and quick-action cards.
@@ -6632,6 +7830,29 @@ import { HomeDashboardPage } from '@gntik-ai/templates';
 // Every prop is optional: unset ones fall back to the template fixtures.
 export default function Route() {
   return <HomeDashboardPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
+### Incident console (`incident-console`)
+
+Incident triage in the console: a SplitLayout alert rail filtered with PowerSearch (severity, status, service, assignee; default “not resolved”), sorted by severity, with a detail pane showing the elapsed Timer, Acknowledge / Resolve actions and the StatusTimeline of events.
+
+- Package: `@gntik-ai/templates` · export `IncidentConsolePage` · group Overview · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/incident-console/template.meta.ts
+- Layout: SidebarLayout · Page · SplitLayout
+- Blocks: app-sidebar, app-topbar, page-header, status-timeline
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=incident-console
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add incident-console`
+
+Usage:
+
+```tsx
+import { IncidentConsolePage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <IncidentConsolePage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
 }
 ```
 
@@ -6658,6 +7879,52 @@ export default function Route() {
 }
 ```
 
+### Pricing (`pricing`)
+
+Public pricing page: StackedLayout with a MegaMenu (MobileNav below lg), PricingTable with the monthly / annual toggle, FeatureGrid highlights, a plan comparison table grouped by section, and Faq.
+
+- Package: `@gntik-ai/templates` · export `PricingPage` · group Overview · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/pricing/template.meta.ts
+- Layout: StackedLayout
+- Blocks: pricing-table, feature-grid, faq
+- Console shell: no
+- Preview: /preview.html?kind=template&id=pricing
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add pricing`
+
+Usage:
+
+```tsx
+import { PricingPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <PricingPage />;
+}
+```
+
+### Scorecard (`scorecard`)
+
+Period-over-period scorecard: period select, KpiRow with deltas vs. the previous period, a targets table (change, target, attainment Meter, MiniBar trend), a RadarChart of dimension scores and a commentary rail (CommentThread).
+
+- Package: `@gntik-ai/templates` · export `ScorecardPage` · group Overview · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/scorecard/template.meta.ts
+- Layout: SidebarLayout · Page
+- Blocks: app-sidebar, app-topbar, page-header, kpi-row, comment-thread
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=scorecard
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add scorecard`
+
+Usage:
+
+```tsx
+import { ScorecardPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <ScorecardPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
 ### Usage analytics (`usage-analytics`)
 
 Analytics page: date range and filter bar, spend and traffic charts, a sortable breakdown table and a CSV export action.
@@ -6678,6 +7945,29 @@ import { UsageAnalyticsPage } from '@gntik-ai/templates';
 // Every prop is optional: unset ones fall back to the template fixtures.
 export default function Route() {
   return <UsageAnalyticsPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
+### Board (`board`)
+
+Kanban board in the console: columns with counts, cards with priority, labels, due date and assignee; pointer drag-and-drop between and within columns, keyboard moves (Space to pick up, arrows to move, Space to drop, Escape to cancel) with live announcements, and a card detail Drawer whose status select also moves the card.
+
+- Package: `@gntik-ai/templates` · export `BoardPage` · group Resources · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/board/template.meta.ts
+- Layout: SidebarLayout · Page
+- Blocks: app-sidebar, app-topbar, page-header
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=board
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add board`
+
+Usage:
+
+```tsx
+import { BoardPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <BoardPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
 }
 ```
 
@@ -6793,6 +8083,29 @@ import { ResourceIndexPage } from '@gntik-ai/templates';
 // Every prop is optional: unset ones fall back to the template fixtures.
 export default function Route() {
   return <ResourceIndexPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
+### Resource tree (`resource-tree`)
+
+Resource index with a team → project TreeList (counts, single selection) beside grouped DataTables (group by kind, region or team; one SectionHeader + table per group), StatusTag status and OverflowList tags.
+
+- Package: `@gntik-ai/templates` · export `ResourceTreePage` · group Resources · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/resource-tree/template.meta.ts
+- Layout: SidebarLayout · Page
+- Blocks: app-sidebar, app-topbar, page-header, section-header, data-table
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=resource-tree
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add resource-tree`
+
+Usage:
+
+```tsx
+import { ResourceTreePage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <ResourceTreePage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
 }
 ```
 
@@ -7190,6 +8503,29 @@ import { AuditLogPage } from '@gntik-ai/templates';
 // Every prop is optional: unset ones fall back to the template fixtures.
 export default function Route() {
   return <AuditLogPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
+}
+```
+
+### Messaging (`messaging`)
+
+Team messaging in the console: SplitLayout conversation list (unread counts, last message) → thread of ChatMessages with Thumbnail attachments, participants AvatarGroup, and a ChatComposer with file attachments; Back on small screens.
+
+- Package: `@gntik-ai/templates` · export `MessagingPage` · group Work · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/messaging/template.meta.ts
+- Layout: SidebarLayout · Page · SplitLayout
+- Blocks: app-sidebar, app-topbar, page-header
+- Console shell: yes (pass the product frame through the `shell` prop)
+- Preview: /preview.html?kind=template&id=messaging
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add messaging`
+
+Usage:
+
+```tsx
+import { MessagingPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <MessagingPage shell={{ currentHref: '/', nav: undefined /* your NavGroup[] */ }} />;
 }
 ```
 

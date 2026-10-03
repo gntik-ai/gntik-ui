@@ -49,7 +49,7 @@ function onPageKey(event: KeyboardEvent<HTMLInputElement>) {
  * label, min/max/step clamping and locale formatting (`format`). Works inside Field.
  */
 export function NumberInput({
-  size = 'md',
+  size = 'auto',
   align,
   className,
   inputClassName,

@@ -36,11 +36,13 @@ export const comboboxVariants = tv({
   },
   variants: {
     size: {
+      /** Follows `data-density` (comfortable = md). */
+      auto: { input: 'h-control text-[13px]' },
       sm: { input: 'h-8 text-[12.5px]' },
       md: { input: 'h-9 text-[13px]' },
     },
   },
-  defaultVariants: { size: 'md' },
+  defaultVariants: { size: 'auto' },
 });
 
 export type ComboboxVariantProps = VariantProps<typeof comboboxVariants>;

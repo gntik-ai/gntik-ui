@@ -22,14 +22,16 @@ export const inputVariants = tv({
   },
   variants: {
     size: {
+      /** Follows `data-density` (comfortable = md). */
+      auto: { root: 'h-control gap-tight px-field text-[13px]', input: 'text-[13px]' },
       sm: { root: 'h-8 gap-2 px-2.5 text-[12px]', input: 'text-[12px]' },
       md: { root: 'h-9 gap-2.5 px-3 text-[13px]', input: 'text-[13px]' },
     },
   },
-  defaultVariants: { size: 'md' },
+  defaultVariants: { size: 'auto' },
 });
 
 export type InputVariantProps = VariantProps<typeof inputVariants>;
 
 /** Icon size (px) per input size. */
-export const INPUT_ICON_SIZE = { sm: 14, md: 15 } as const;
+export const INPUT_ICON_SIZE = { auto: 15, sm: 14, md: 15 } as const;

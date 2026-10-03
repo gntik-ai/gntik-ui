@@ -24,6 +24,8 @@ export const tokenVariants = tv({
       destructive: { root: 'border-destructive/35 bg-destructive/10 text-destructive-chip-text', leading: 'text-destructive-text' },
     },
     size: {
+      /** Follows `data-density` (comfortable = md). */
+      auto: { root: 'h-token ps-2.5 text-[12px]', remove: 'size-5', label: 'max-w-[160px]' },
       sm: { root: 'h-6 ps-2 text-[11.5px]', remove: 'size-4', label: 'max-w-[120px]' },
       md: { root: 'h-7 ps-2.5 text-[12px]', remove: 'size-5', label: 'max-w-[160px]' },
     },
@@ -33,10 +35,11 @@ export const tokenVariants = tv({
     },
   },
   compoundVariants: [
+    { removable: false, size: 'auto', class: { root: 'pe-2.5' } },
     { removable: false, size: 'sm', class: { root: 'pe-2' } },
     { removable: false, size: 'md', class: { root: 'pe-2.5' } },
   ],
-  defaultVariants: { tone: 'neutral', size: 'md', removable: false },
+  defaultVariants: { tone: 'neutral', size: 'auto', removable: false },
 });
 
 export type TokenVariantProps = VariantProps<typeof tokenVariants>;

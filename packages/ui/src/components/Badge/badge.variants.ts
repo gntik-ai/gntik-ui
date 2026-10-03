@@ -34,6 +34,8 @@ export const badgeVariants = tv({
       solid: { dot: 'bg-current' },
     },
     size: {
+      /** Follows `data-density` (comfortable = md). */
+      auto: { root: 'h-chip px-2.5 font-mono text-[10.5px]' },
       sm: { root: 'h-5 px-2 font-mono text-[10px]' },
       md: { root: 'h-[22px] px-2.5 font-mono text-[10.5px]' },
       lg: { root: 'h-6 px-2.5 text-[11.5px]' },
@@ -79,7 +81,7 @@ export const badgeVariants = tv({
     { variant: 'solid', tone: 'amber', class: { root: 'bg-category-amber/32 text-foreground', dot: 'bg-category-amber' } },
     { variant: 'solid', tone: 'rose', class: { root: 'bg-category-rose/30 text-foreground', dot: 'bg-category-rose' } },
   ],
-  defaultVariants: { tone: 'neutral', variant: 'soft', size: 'md', shape: 'rounded' },
+  defaultVariants: { tone: 'neutral', variant: 'soft', size: 'auto', shape: 'rounded' },
 });
 
 export type BadgeVariantProps = VariantProps<typeof badgeVariants>;

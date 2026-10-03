@@ -1,0 +1,61 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "timer",
+  "type": "registry:ui",
+  "title": "Timer",
+  "description": "Elapsed time since a start, live while running (\"1:02:05\" or compact \"2m 14s\"), with paused and stopped states. Renders role=\"timer\" around a <time dateTime=\"PT…\"> duration; silent by default, `announce` speaks it politely once a minute.",
+  "author": "gntik-ai",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Timer/Timer.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/timer/Timer.tsx",
+      "content": "import { useEffect, useState, type HTMLAttributes, type Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { formatClock, formatCompact, toIsoDuration, toMs, type DateInput, type DurationUnits } from './format';\nimport { timerVariants, type TimerVariantProps } from './timer.variants';\n\nexport type TimerStatus = 'running' | 'paused' | 'stopped';\n\nexport interface TimerLabels {\n  /** Status text shown (and announced) when paused. */\n  paused: string;\n  /** Status text shown (and announced) when stopped. */\n  stopped: string;\n  /** Unit suffixes of the compact format. */\n  units: DurationUnits;\n}\n\nconst DEFAULT_LABELS: TimerLabels = { paused: 'Paused', stopped: 'Stopped', units: { h: 'h', m: 'm', s: 's' } };\n\nexport interface TimerProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'className' | 'children'>, Pick<TimerVariantProps, 'size'> {\n  className?: string;\n  ref?: Ref<HTMLSpanElement>;\n  /** When the current run started: a Date, an ISO string or epoch ms. */\n  start: DateInput;\n  /** Time already accumulated before `start` (ms), e.g. earlier runs of a paused-and-resumed task. */\n  offset?: number;\n  /** `running` ticks; `paused` and `stopped` freeze the value (at `end` when given). */\n  status?: TimerStatus;\n  /** When the timer was paused or stopped; makes the frozen value exact. */\n  end?: DateInput;\n  /** `clock` (\"1:02:05\", default) or `compact` (\"2m 14s\"). */\n  format?: 'clock' | 'compact';\n  /** Shows the status dot (and the paused/stopped text). */\n  showStatus?: boolean;\n  /**\n   * Make changes audible: a polite live region that speaks the compact value every\n   * `announceEvery` ms. Off by default (role=\"timer\" is silent).\n   */\n  announce?: boolean;\n  /** Announcement interval in ms (default one minute). */\n  announceEvery?: number;\n  /** Reference time (epoch ms) for the first render, e.g. the server's, so hydration matches. */\n  now?: number;\n  /** Visible and announced strings (English defaults). */\n  labels?: Partial<TimerLabels>;\n}\n\n/**\n * Elapsed time since `start`, live while running, in a `<time dateTime=\"PT…\">` element with\n * role=\"timer\". Paused and stopped states freeze the value and show a status dot.\n */\nexport function Timer({\n  start,\n  offset = 0,\n  status = 'running',\n  end,\n  format = 'clock',\n  showStatus = true,\n  announce = false,\n  announceEvery = 60_000,\n  now: initialNow,\n  labels: labelsProp,\n  size,\n  className,\n  ...props\n}: TimerProps) {\n  const labels = { ...DEFAULT_LABELS, ...labelsProp };\n  const [now, setNow] = useState(() => initialNow ?? Date.now());\n  const running = status === 'running';\n\n  useEffect(() => {\n    if (!running) return;\n    const tick = () => setNow(Date.now());\n    const first = window.setTimeout(tick, 0);\n    const id = window.setInterval(tick, 1000);\n    return () => {\n      window.clearTimeout(first);\n      window.clearInterval(id);\n    };\n  }, [running]);\n\n  const startMs = toMs(start) ?? now;\n  const until = (!running ? toMs(end) : undefined) ?? now;\n  const elapsed = Math.max(0, offset + until - startMs);\n  const text = format === 'compact' ? formatCompact(elapsed, labels.units) : formatClock(elapsed);\n  const statusText = status === 'paused' ? labels.paused : status === 'stopped' ? labels.stopped : undefined;\n  const spokenStep = Math.max(1000, announceEvery);\n  const spoken = formatCompact(Math.floor(elapsed / spokenStep) * spokenStep, labels.units);\n  const s = timerVariants({ size, status });\n\n  return (\n    <span role=\"timer\" aria-live={announce ? 'polite' : 'off'} aria-atomic className={cn(s.root(), className)} data-status={status} {...props}>\n      {showStatus && <span aria-hidden className={s.dot()} />}\n      <time dateTime={toIsoDuration(elapsed)} aria-hidden={announce || undefined}>\n        {text}\n      </time>\n      {announce && <span className=\"sr-only\">{statusText ? `${spoken}, ${statusText}` : spoken}</span>}\n      {showStatus && statusText && (\n        <span className={s.status()} aria-hidden={announce || undefined}>\n          {statusText}\n        </span>\n      )}\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Timer/format.ts",
+      "type": "registry:ui",
+      "target": "components/ui/timer/format.ts",
+      "content": "export type DateInput = Date | string | number;\n\n/** Epoch ms of a Date, ISO string or epoch number; `undefined` when it cannot be parsed. */\nexport function toMs(value: DateInput | undefined): number | undefined {\n  if (value === undefined) return undefined;\n  const ms = value instanceof Date ? value.getTime() : typeof value === 'number' ? value : Date.parse(value);\n  return Number.isFinite(ms) ? ms : undefined;\n}\n\nexport interface DurationUnits {\n  h: string;\n  m: string;\n  s: string;\n}\n\nfunction parts(ms: number) {\n  const total = Math.max(0, Math.floor(ms / 1000));\n  return { h: Math.floor(total / 3600), m: Math.floor((total % 3600) / 60), s: total % 60 };\n}\n\nconst pad = (n: number) => String(n).padStart(2, '0');\n\n/** \"1:02:05\" or \"2:14\" (minutes and seconds only under an hour). */\nexport function formatClock(ms: number) {\n  const { h, m, s } = parts(ms);\n  return h > 0 ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;\n}\n\n/** \"1h 2m\", \"2m 14s\" or \"14s\": the two most significant units. */\nexport function formatCompact(ms: number, units: DurationUnits = { h: 'h', m: 'm', s: 's' }) {\n  const { h, m, s } = parts(ms);\n  if (h > 0) return `${h}${units.h} ${m}${units.m}`;\n  if (m > 0) return `${m}${units.m} ${s}${units.s}`;\n  return `${s}${units.s}`;\n}\n\n/** ISO 8601 duration for `<time dateTime>`, e.g. \"PT2M14S\". */\nexport function toIsoDuration(ms: number) {\n  const { h, m, s } = parts(ms);\n  return `PT${h ? `${h}H` : ''}${m ? `${m}M` : ''}${s || (!h && !m) ? `${s}S` : ''}`;\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Timer/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/timer/index.ts",
+      "content": "export { Timer, type TimerProps, type TimerStatus, type TimerLabels } from './Timer';\nexport { formatClock, formatCompact, toIsoDuration } from './format';\nexport { timerVariants, type TimerVariantProps } from './timer.variants';\nexport { doc as timerDoc } from './Timer.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Timer/timer.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/timer/timer.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const timerVariants = tv({\n  slots: {\n    root: 'inline-flex items-center gap-1.5 font-mono tabular-nums text-foreground',\n    dot: 'size-1.5 shrink-0 rounded-full',\n    status: 'font-sans text-muted-foreground',\n  },\n  variants: {\n    size: {\n      sm: { root: 'text-[11.5px]', status: 'text-[11px]' },\n      md: { root: 'text-[13px]', status: 'text-[12px]' },\n      lg: { root: 'text-[20px] font-semibold tracking-tight', dot: 'size-2', status: 'text-[13px] font-normal' },\n    },\n    status: {\n      running: { dot: 'animate-pulse bg-success motion-reduce:animate-none' },\n      paused: { root: 'text-muted-foreground', dot: 'bg-warning' },\n      stopped: { root: 'text-muted-foreground', dot: 'bg-muted-foreground' },\n    },\n  },\n  defaultVariants: { size: 'md', status: 'running' },\n});\n\nexport type TimerVariantProps = VariantProps<typeof timerVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Timer/Timer.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/timer/Timer.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Timer',\n  group: 'Display',\n  status: 'beta',\n  description:\n    'Elapsed time since a start, live while running (\"1:02:05\" or compact \"2m 14s\"), with paused and stopped states. Renders role=\"timer\" around a <time dateTime=\"PT…\"> duration; silent by default, `announce` speaks it politely once a minute.',\n  pattern: 'timer',\n  keyboard: [['—', 'Not interactive; never takes focus']],\n  tokens: ['foreground', 'muted-foreground', 'success', 'warning'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Display"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/components/Timer/Timer.doc.ts"
+  }
+}

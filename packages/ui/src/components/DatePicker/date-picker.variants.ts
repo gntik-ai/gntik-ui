@@ -26,11 +26,13 @@ export const datePickerVariants = tv({
   },
   variants: {
     size: {
+      /** Follows `data-density` (comfortable = md). */
+      auto: { input: 'h-control pe-9 ps-9 text-[13px]', icon: 'start-3', chevron: 'end-3' },
       sm: { input: 'h-8 pe-8 ps-8 text-[12px]', icon: 'start-2.5', chevron: 'end-2.5' },
       md: { input: 'h-9 pe-9 ps-9 text-[13px]', icon: 'start-3', chevron: 'end-3' },
     },
   },
-  defaultVariants: { size: 'md' },
+  defaultVariants: { size: 'auto' },
 });
 
 export type DatePickerVariantProps = VariantProps<typeof datePickerVariants>;

@@ -1,7 +1,7 @@
 import { tv, type VariantProps } from '../../utils/tv';
 
 const itemBase = [
-  'relative flex h-[34px] w-full cursor-default items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none',
+  'relative flex h-item w-full cursor-default items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none',
   'text-foreground transition-colors data-highlighted:bg-secondary/70',
   'data-disabled:pointer-events-none data-disabled:opacity-50',
 ];

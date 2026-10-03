@@ -20,7 +20,7 @@ export const navListVariants = tv({
       'data-starting-style:h-0 data-ending-style:h-0',
     ],
     item: [
-      'relative flex h-9 cursor-pointer items-center rounded-lg text-[13px] no-underline transition-colors motion-reduce:transition-none',
+      'relative flex h-control cursor-pointer items-center rounded-lg text-[13px] no-underline transition-colors motion-reduce:transition-none',
       'font-medium text-muted-foreground hover:bg-accent/45 hover:text-foreground',
       'aria-[current=page]:bg-accent aria-[current=page]:font-semibold aria-[current=page]:text-accent-foreground',
       'aria-disabled:pointer-events-none aria-disabled:opacity-50',
@@ -35,7 +35,7 @@ export const navListVariants = tv({
     parentChevron: 'shrink-0 text-muted-foreground transition-transform duration-200 group-data-panel-closed:-rotate-90 motion-reduce:transition-none',
     subList: 'm-0 mt-0.5 ms-[18px] flex list-none flex-col gap-0.5 border-s border-border p-0 ps-3',
     subItem: [
-      'flex h-8 cursor-pointer items-center gap-2 rounded-md px-2.5 text-[12.5px] no-underline transition-colors motion-reduce:transition-none',
+      'flex h-control-sm cursor-pointer items-center gap-2 rounded-md px-2.5 text-[12.5px] no-underline transition-colors motion-reduce:transition-none',
       'font-medium text-muted-foreground hover:bg-accent/40 hover:text-foreground',
       'aria-[current=page]:bg-accent aria-[current=page]:font-semibold aria-[current=page]:text-accent-foreground',
       focus,
@@ -43,7 +43,7 @@ export const navListVariants = tv({
   },
   variants: {
     collapsed: {
-      true: { item: 'mx-auto w-9 justify-center' },
+      true: { item: 'mx-auto w-control justify-center' },
       false: { item: 'w-full gap-2.5 px-2.5' },
     },
     current: {

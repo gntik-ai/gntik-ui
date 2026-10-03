@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blockquote",
+  "type": "registry:ui",
+  "title": "Blockquote",
+  "description": "Quoted content with its citation: a figure with the blockquote and a figcaption whose cite names the source (linked when `cite` is a URL). Variants: an inline-start rule for prose, a card for testimonials, a centred pull quote.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Blockquote/Blockquote.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/blockquote/Blockquote.tsx",
+      "content": "import { Quote } from 'lucide-react';\nimport type { HTMLAttributes, ReactNode } from 'react';\nimport { cn } from '../../utils/cn';\nimport { blockquoteVariants, type BlockquoteVariantProps } from './blockquote.variants';\n\nexport interface BlockquoteProps extends Omit<HTMLAttributes<HTMLElement>, 'className'>, BlockquoteVariantProps {\n  className?: string;\n  /** The quoted content. */\n  children: ReactNode;\n  /** Who said or wrote it (rendered in a `<cite>`). */\n  source?: ReactNode;\n  /** Role, company or publication shown after the source. */\n  sourceDetail?: ReactNode;\n  /** URL of the original; sets the blockquote `cite` attribute and links the source. */\n  cite?: string;\n  /** Leading media in the caption, e.g. an Avatar. */\n  avatar?: ReactNode;\n  /** Show a decorative quote mark (default on for the card and pull variants). */\n  showMark?: boolean;\n}\n\n/**\n * Quoted content with its attribution: a `<figure>` holding the `<blockquote>` and a\n * `<figcaption>` whose `<cite>` names the source (linked when `cite` is a URL).\n */\nexport function Blockquote({ variant = 'default', className, children, source, sourceDetail, cite, avatar, showMark, ...props }: BlockquoteProps) {\n  const s = blockquoteVariants({ variant });\n  const mark = showMark ?? variant !== 'default';\n  const hasCaption = source != null || sourceDetail != null;\n  return (\n    <figure className={cn(s.root(), className)} {...props}>\n      {mark && <Quote size={variant === 'pull' ? 22 : 18} aria-hidden className={cn(s.mark(), variant === 'pull' ? 'mx-auto mb-3' : 'mb-2.5')} />}\n      <blockquote cite={cite} className={s.quote()}>\n        {children}\n      </blockquote>\n      {hasCaption && (\n        <figcaption className={s.caption()}>\n          {avatar && <span className={s.avatar()}>{avatar}</span>}\n          <span className={s.source()}>\n            {source != null && (\n              <cite className={s.name()}>\n                {cite ? (\n                  <a href={cite} className={s.link()}>\n                    {source}\n                  </a>\n                ) : (\n                  source\n                )}\n              </cite>\n            )}\n            {sourceDetail != null && <span className={s.detail()}>{sourceDetail}</span>}\n          </span>\n        </figcaption>\n      )}\n    </figure>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Blockquote/blockquote.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/blockquote/blockquote.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const blockquoteVariants = tv({\n  slots: {\n    root: 'm-0 min-w-0',\n    quote: 'm-0 text-foreground text-pretty',\n    mark: 'shrink-0 text-primary-text',\n    caption: 'mt-3 flex min-w-0 items-center gap-2.5 text-[12.5px] text-muted-foreground',\n    avatar: 'shrink-0',\n    source: 'flex min-w-0 flex-col',\n    name: 'truncate font-semibold text-foreground not-italic',\n    detail: 'truncate',\n    link: 'underline underline-offset-2 hover:text-foreground focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n  },\n  variants: {\n    variant: {\n      /** Inline-start rule, for quotes inside prose. */\n      default: { root: 'border-s-2 border-primary/70 ps-4', quote: 'text-[14px] leading-6' },\n      /** A card for testimonials and feedback. */\n      card: { root: 'rounded-xl border border-border bg-card p-5 shadow-sm', quote: 'text-[14px] leading-6' },\n      /** Large, centred pull quote for editorial pages. */\n      pull: { root: 'mx-auto max-w-2xl text-center', quote: 'text-[19px] leading-8 font-medium tracking-tight', caption: 'justify-center' },\n    },\n  },\n  defaultVariants: { variant: 'default' },\n});\n\nexport type BlockquoteVariantProps = VariantProps<typeof blockquoteVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Blockquote/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/blockquote/index.ts",
+      "content": "export { Blockquote, type BlockquoteProps } from './Blockquote';\nexport { blockquoteVariants, type BlockquoteVariantProps } from './blockquote.variants';\nexport { doc as blockquoteDoc } from './Blockquote.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Blockquote/Blockquote.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/blockquote/Blockquote.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Blockquote',\n  group: 'Display',\n  status: 'beta',\n  description:\n    'Quoted content with its citation: a figure with the blockquote and a figcaption whose cite names the source (linked when `cite` is a URL). Variants: an inline-start rule for prose, a card for testimonials, a centred pull quote.',\n  pattern: 'figure + blockquote + figcaption/cite',\n  keyboard: [['Tab', 'Moves to the source link when `cite` is set']],\n  tokens: ['primary', 'primary-text', 'card', 'border', 'foreground', 'muted-foreground', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Display"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/components/Blockquote/Blockquote.doc.ts"
+  }
+}

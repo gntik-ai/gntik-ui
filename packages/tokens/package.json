@@ -17,6 +17,7 @@
       "default": "./src/runtime.js"
     },
     "./motion.css": "./src/motion.css",
+    "./density.css": "./src/density.css",
     "./tokens.json": "./dist/tokens.json",
     "./figma-variables.json": "./dist/figma-variables.json",
     "./tokens": {

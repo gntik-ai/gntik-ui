@@ -42,14 +42,14 @@ describe('Button', () => {
 
   it('IconButton uses its label as the accessible name', () => {
     render(<IconButton icon={Plus} label="Add item" />);
-    expect(screen.getByRole('button', { name: 'Add item' })).toHaveClass('size-9');
+    expect(screen.getByRole('button', { name: 'Add item' })).toHaveClass('size-control');
   });
 
   it('applies variant classes and merges className', () => {
     render(<Button variant="soft" className="px-8">Soft</Button>);
     const btn = screen.getByRole('button', { name: 'Soft' });
     expect(btn).toHaveClass('text-primary-chip-text', 'px-8');
-    expect(btn).not.toHaveClass('px-3.5');
+    expect(btn).not.toHaveClass('px-control');
   });
 
   it('examples have no axe violations', async () => {

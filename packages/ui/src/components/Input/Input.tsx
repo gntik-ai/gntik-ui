@@ -28,7 +28,7 @@ export interface InputProps extends Omit<BaseInput.Props, 'className' | 'size'>,
  * carries the border, focus outline and invalid/disabled styling; icons and addons sit inside it.
  */
 export function Input({
-  size = 'md',
+  size = 'auto',
   className,
   inputClassName,
   leadingIcon: LeadingIcon,

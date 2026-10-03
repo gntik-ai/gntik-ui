@@ -264,19 +264,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Alert/Alert.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/alert/Alert.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -284,14 +274,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Alert/Alert.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/alert/Alert.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -343,19 +343,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/AlertDialog/AlertDialog.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/alert-dialog/AlertDialog.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -363,14 +353,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/AlertDialog/AlertDialog.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/alert-dialog/AlertDialog.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -644,7 +644,9 @@
       "title": "AuthLayout",
       "description": "Sign-in, sign-up and reset shell in three variants: `split` (brand panel on the chrome surface + form; the panel hides below `lg` and the logo moves above the form), `card` (form centred in a card) and `full-bleed` (form straight on the chrome surface). The logo defaults to the ThemeProvider brand preset (Logo with wordmark). The form is first in the DOM, so it is first in tab order on every screen size. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
       "registryDependencies": [
         "https://gntik-ui.invalid/r/gntik-tokens.json",
         "https://gntik-ui.invalid/r/theme.json",
@@ -662,6 +664,31 @@
         "source": "packages/ui/src/layouts/AuthLayout/AuthLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/AuthLayout/AuthLayout.tsx",
           "type": "registry:component",
@@ -729,19 +756,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Avatar/Avatar.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/avatar/Avatar.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -749,14 +766,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Avatar/Avatar.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/avatar/Avatar.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -806,19 +833,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Badge/Badge.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/badge/Badge.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -826,14 +843,183 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Badge/Badge.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/badge/Badge.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "blockquote",
+      "type": "registry:ui",
+      "title": "Blockquote",
+      "description": "Quoted content with its citation: a figure with the blockquote and a figcaption whose cite names the source (linked when `cite` is a URL). Variants: an inline-start rule for prose, a card for testimonials, a centred pull quote.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Display"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/Blockquote/Blockquote.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/Blockquote/Blockquote.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/blockquote/Blockquote.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Blockquote/blockquote.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/blockquote/blockquote.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Blockquote/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/blockquote/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Blockquote/Blockquote.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/blockquote/Blockquote.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "board",
+      "type": "registry:block",
+      "title": "Board",
+      "description": "Kanban board in the console: columns with counts, cards with priority, labels, due date and assignee; pointer drag-and-drop between and within columns, keyboard moves (Space to pick up, arrows to move, Space to drop, Escape to cancel) with live announcements, and a card detail Drawer whose status select also moves the card.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Resources"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/board/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/board/Lane.tsx",
+          "type": "registry:component",
+          "target": "app/templates/board/Lane.tsx"
+        },
+        {
+          "path": "packages/templates/src/board/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/board/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/board/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/board/data.ts"
+        },
+        {
+          "path": "packages/templates/src/board/useBoard.ts",
+          "type": "registry:lib",
+          "target": "app/templates/board/useBoard.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ]
+    },
+    {
+      "name": "bottom-sheet",
+      "type": "registry:ui",
+      "title": "BottomSheet",
+      "description": "Mobile sheet that rests at snap points (a peek height and expanded by default): drag or swipe it between heights or down to close, or use the handle from the keyboard. Modal like a dialog: focus is trapped, Escape closes and focus returns to the trigger.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Overlays"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/BottomSheet/BottomSheet.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/BottomSheet/BottomSheet.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/bottom-sheet/BottomSheet.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/BottomSheet/bottom-sheet.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/bottom-sheet/bottom-sheet.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/BottomSheet/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/bottom-sheet/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/BottomSheet/BottomSheet.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/bottom-sheet/BottomSheet.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -884,24 +1070,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/utils/rtl.ts",
-          "type": "registry:ui",
-          "target": "components/utils/rtl.ts"
-        },
-        {
-          "path": "packages/ui/src/components/Breadcrumbs/Breadcrumbs.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/breadcrumbs/Breadcrumbs.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -909,14 +1080,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Breadcrumbs/Breadcrumbs.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/breadcrumbs/Breadcrumbs.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -1000,9 +1181,9 @@
           "target": "components/ui/button/index.ts"
         },
         {
-          "path": "packages/ui/src/utils/rtl.ts",
+          "path": "packages/ui/src/density/density-context.ts",
           "type": "registry:ui",
-          "target": "components/utils/rtl.ts"
+          "target": "components/density/density-context.ts"
         },
         {
           "path": "packages/ui/src/components/Button/Button.doc.ts",
@@ -1067,24 +1248,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/utils/rtl.ts",
-          "type": "registry:ui",
-          "target": "components/utils/rtl.ts"
-        },
-        {
-          "path": "packages/ui/src/components/Calendar/Calendar.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/calendar/Calendar.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -1092,14 +1258,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Calendar/Calendar.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/calendar/Calendar.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -1110,6 +1286,7 @@
       "description": "Editor shell for a full-bleed canvas (flow editor, code editor, map): top bar · left palette · canvas with a floating toolbar · right inspector · collapsible bottom console. Palette and inspector toggle from the top bar; each panel is controllable (`paletteOpen`, `inspectorOpen`, `consoleOpen`). Below `lg` the side panels and toggles hide and a read-only notice (\"Open on a larger screen to edit\") shows over the canvas. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
       "dependencies": [
+        "@base-ui/react@^1.8.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -1129,6 +1306,31 @@
         "source": "packages/ui/src/layouts/CanvasLayout/CanvasLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/CanvasLayout/CanvasLayout.tsx",
           "type": "registry:component",
@@ -1197,6 +1399,103 @@
           "path": "packages/ui/src/doc.ts",
           "type": "registry:ui",
           "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "Scroll-snap media strip: one, two, three or auto-width slides per view, previous/next buttons, optional picker dots, arrow keys on the focused strip. No autoplay by default; `autoplay` adds a pause control, pauses on hover and focus, and starts paused under reduced motion.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Display"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/Carousel/Carousel.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/Carousel/Carousel.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/carousel/Carousel.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Carousel/carousel.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/carousel/carousel.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Carousel/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/carousel/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Carousel/Carousel.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/carousel/Carousel.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "changelog",
+      "type": "registry:block",
+      "title": "Changelog",
+      "description": "Release notes in the console: dated entries with version, tag badges and a “New” badge, a multi-select tag filter (ToggleGroup) with a live count, and a Subscribe action.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Help"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/changelog/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/changelog/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/changelog/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/changelog/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/changelog/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
         }
       ]
     },
@@ -1706,19 +2005,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/CodeBlock/CodeBlock.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/code-block/CodeBlock.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -1726,14 +2015,67 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CodeBlock/CodeBlock.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/code-block/CodeBlock.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "code-editor",
+      "type": "registry:block",
+      "title": "Code editor",
+      "description": "Full-screen code editor: CanvasLayout top bar (breadcrumb, title, status, branch, Save), a file TreeList with a context menu (open, copy path, close tab, delete) in the palette, and the CodePanel block (file tabs, Monaco editor or diff, problems list) as the canvas.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/editor",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {},
+        "@import \"@gntik-ai/editor/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Builders"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/code-editor/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/code-editor/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/code-editor/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/code-editor/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/code-editor/data.ts"
         }
       ]
     },
@@ -1877,19 +2219,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Combobox/Combobox.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/combobox/Combobox.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -1897,14 +2229,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Combobox/Combobox.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/combobox/Combobox.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -1965,24 +2307,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/utils/rtl.ts",
-          "type": "registry:ui",
-          "target": "components/utils/rtl.ts"
-        },
-        {
-          "path": "packages/ui/src/components/CommandPalette/CommandPalette.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/command-palette/CommandPalette.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -1990,14 +2317,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CommandPalette/CommandPalette.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/command-palette/CommandPalette.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -2070,6 +2407,99 @@
           "path": "packages/blocks/src/feedback/ConfirmDestructive/ConfirmDestructive.tsx",
           "type": "registry:component",
           "target": "components/blocks/feedback/confirm-destructive/ConfirmDestructive.tsx"
+        }
+      ]
+    },
+    {
+      "name": "contact",
+      "type": "registry:block",
+      "title": "Contact",
+      "description": "Public contact page: StackedLayout with a MegaMenu (MobileNav below lg), a validated contact form (Field, Input, Select, Textarea, ValidationSummary) with a focused success state, and office cards with address, email, phone and hours.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Overview"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/contact/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/contact/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/contact/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/contact/PublicFrame.tsx",
+          "type": "registry:component",
+          "target": "app/templates/contact/PublicFrame.tsx"
+        },
+        {
+          "path": "packages/templates/src/contact/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/contact/data.ts"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "ContextMenu",
+      "description": "Menu that opens at the pointer on right click or long press, and from the keyboard with Shift+F10 or the ContextMenu key on the focused area. Uses the Menu item parts (icons, shortcuts, destructive tone, checkbox/radio items, groups, submenus).",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/menu.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Overlays"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/ContextMenu/ContextMenu.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/ContextMenu/ContextMenu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/context-menu/ContextMenu.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/ContextMenu/context-menu.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/context-menu/context-menu.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ContextMenu/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/context-menu/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ContextMenu/ContextMenu.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/context-menu/ContextMenu.doc.ts"
         }
       ]
     },
@@ -2283,6 +2713,52 @@
       ]
     },
     {
+      "name": "data-explorer",
+      "type": "registry:block",
+      "title": "Data explorer",
+      "description": "Explore a large dataset inside the console: a PowerSearch (field filters, comparisons, free text) over a 10k-row DataTable with client sorting and pagination, a column chooser (TransferList in a Dialog: show, hide, reorder) and a row inspector (Drawer + JsonViewer).",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Builders"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/data-explorer/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/data-explorer/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/data-explorer/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/data-explorer/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/data-explorer/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ]
+    },
+    {
       "name": "data-table",
       "type": "registry:block",
       "title": "Data table",
@@ -2398,6 +2874,31 @@
           "path": "packages/ui/src/components/DatePicker/index.ts",
           "type": "registry:ui",
           "target": "components/ui/date-picker/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/components/DatePicker/DatePicker.doc.ts",
@@ -2525,19 +3026,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Dialog/Dialog.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/dialog/Dialog.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -2545,14 +3036,71 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Dialog/Dialog.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/dialog/Dialog.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "docs-article",
+      "type": "registry:block",
+      "title": "Docs article",
+      "description": "Documentation article on DocsLayout: left NavList, scroll-spy Outline (Collapsible below lg), CodeBlock, Blockquote, a tip callout, “Was this helpful?” feedback with an optional comment, and previous / next links.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui",
+        "node:crypto"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Help"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/docs-article/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/docs-article/ArticleFeedback.tsx",
+          "type": "registry:component",
+          "target": "app/templates/docs-article/ArticleFeedback.tsx"
+        },
+        {
+          "path": "packages/templates/src/docs-article/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/docs-article/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/docs-article/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/docs-article/data.ts"
         }
       ]
     },
@@ -2562,7 +3110,9 @@
       "title": "DocsLayout",
       "description": "Documentation shell: top bar · left nav (a NavList) · article · right table of contents. The `Outline` sub-component is the table of contents: scroll-spy with IntersectionObserver (rooted in the article column, guarded where it is missing) marks the heading in view with aria-current=\"location\", and activating a link moves focus to the heading. Below `lg` the nav hides and the table of contents moves into a Collapsible above the article. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
       "registryDependencies": [
         "https://gntik-ui.invalid/r/gntik-tokens.json",
         "https://gntik-ui.invalid/r/collapsible.json",
@@ -2580,6 +3130,31 @@
         "source": "packages/ui/src/layouts/DocsLayout/DocsLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/DocsLayout/DocsLayout.tsx",
           "type": "registry:component",
@@ -2611,7 +3186,7 @@
       "name": "drawer",
       "type": "registry:ui",
       "title": "Drawer",
-      "description": "Panel that slides in from the right, left or bottom edge for details, edit forms and navigation. Fixed header and footer, scrollable body, swipe to dismiss. Parts: Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose.",
+      "description": "Panel that slides in from the right, left or bottom edge for details, edit forms and navigation. Fixed header and footer, scrollable body, swipe to dismiss. Under RTL (I18nProvider) `right` and `left` mirror to the inline end and start. Parts: Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -2653,19 +3228,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Drawer/Drawer.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/drawer/Drawer.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -2673,14 +3238,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Drawer/Drawer.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/drawer/Drawer.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -2882,6 +3457,54 @@
           "path": "packages/blocks/src/ai/EvaluationScorecard/fixtures.ts",
           "type": "registry:lib",
           "target": "components/blocks/ai/evaluation-scorecard/fixtures.ts"
+        }
+      ]
+    },
+    {
+      "name": "evaluations",
+      "type": "registry:block",
+      "title": "Evaluations",
+      "description": "Evaluation run review: EvaluationScorecard with one row per dataset, a diverging Heatmap of the score change vs baseline (metric × dataset), a regressions DataTable and a sample viewer (Drawer + JsonViewer, failures first) per dataset.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/charts",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {},
+        "@import \"@gntik-ai/charts/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "AI"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/evaluations/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/evaluations/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/evaluations/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/evaluations/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/evaluations/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
         }
       ]
     },
@@ -3388,6 +4011,45 @@
       ]
     },
     {
+      "name": "help-home",
+      "type": "registry:block",
+      "title": "Help home",
+      "description": "Help center home on DocsLayout: search with a live result count, category ClickableCards with article counts, popular articles with reading time, and a contact-support footer.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Help"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/help-home/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/help-home/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/help-home/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/help-home/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/help-home/data.ts"
+        }
+      ]
+    },
+    {
       "name": "hero",
       "type": "registry:block",
       "title": "Hero",
@@ -3520,19 +4182,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/HoverCard/HoverCard.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/hover-card/HoverCard.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -3540,14 +4192,70 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/HoverCard/HoverCard.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/hover-card/HoverCard.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "incident-console",
+      "type": "registry:block",
+      "title": "Incident console",
+      "description": "Incident triage in the console: a SplitLayout alert rail filtered with PowerSearch (severity, status, service, assignee; default “not resolved”), sorted by severity, with a detail pane showing the elapsed Timer, Acknowledge / Resolve actions and the StatusTimeline of events.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Overview"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/incident-console/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/incident-console/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/incident-console/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/incident-console/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/incident-console/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
         }
       ]
     },
@@ -3598,19 +4306,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/InfoTip/InfoTip.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/info-tip/InfoTip.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -3618,14 +4316,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/InfoTip/InfoTip.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/info-tip/InfoTip.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -3765,6 +4473,7 @@
       "description": "Main area with a pinnable right panel (properties, details, comments). Pinned, the panel docks beside the content; unpinned, it overlays it (flat shadow) and Escape closes it. Open and pinned states are controllable; an InspectorToggle placed in the main area opens and closes it. Below lg the panel opens as a bottom Drawer. Fills its container.",
       "author": "gntik-ai",
       "dependencies": [
+        "@base-ui/react@^1.8.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -3784,6 +4493,31 @@
         "source": "packages/ui/src/layouts/InspectorLayout/InspectorLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/InspectorLayout/InspectorLayout.tsx",
           "type": "registry:component",
@@ -3895,6 +4629,63 @@
       ]
     },
     {
+      "name": "json-viewer",
+      "type": "registry:ui",
+      "title": "JsonViewer",
+      "description": "Collapsible JSON inspector built on TreeList: objects and arrays expand, values are coloured by type with contrast-safe text tokens (keys primary-text, strings warning-text, numbers destructive-text, booleans foreground, null muted), `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/tree-list.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Display"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/JsonViewer/JsonViewer.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/JsonViewer/JsonViewer.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/json-viewer/JsonViewer.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/JsonViewer/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/json-viewer/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/JsonViewer/json-model.ts",
+          "type": "registry:ui",
+          "target": "components/ui/json-viewer/json-model.ts"
+        },
+        {
+          "path": "packages/ui/src/components/JsonViewer/json-viewer.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/json-viewer/json-viewer.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/JsonViewer/JsonViewer.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/json-viewer/JsonViewer.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
       "name": "kbd",
       "type": "registry:ui",
       "title": "Kbd",
@@ -3939,19 +4730,19 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/components/Kbd/Kbd.doc.ts",
+          "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
-          "target": "components/ui/kbd/Kbd.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/format.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/format.ts"
+          "target": "components/i18n/messages/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -3959,14 +4750,65 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/components/Kbd/Kbd.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/kbd/Kbd.doc.ts"
+        },
+        {
           "path": "packages/ui/src/doc.ts",
           "type": "registry:ui",
           "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "keyboard-shortcuts",
+      "type": "registry:block",
+      "title": "Keyboard shortcuts",
+      "description": "Searchable shortcut sheet grouped by area (KbdCombo, “G then P” sequences), as a console page and as a Dialog variant (KeyboardShortcutsDialog) for the ? shortcut.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Help"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/keyboard-shortcuts/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/keyboard-shortcuts/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/keyboard-shortcuts/Page.tsx"
         },
         {
-          "path": "packages/ui/src/i18n/messages/es.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/es.ts"
+          "path": "packages/templates/src/keyboard-shortcuts/ShortcutSheet.tsx",
+          "type": "registry:component",
+          "target": "app/templates/keyboard-shortcuts/ShortcutSheet.tsx"
+        },
+        {
+          "path": "packages/templates/src/keyboard-shortcuts/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/keyboard-shortcuts/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
         }
       ]
     },
@@ -4054,6 +4896,58 @@
       ]
     },
     {
+      "name": "lightbox",
+      "type": "registry:ui",
+      "title": "Lightbox",
+      "description": "Full-screen image and video viewer: previous / next, zoom (buttons, keys or double click) with a scrollable stage, captions, a thumbnail strip and an announced position. Modal: focus is trapped, Escape closes and focus returns to the opener.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Overlays"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/Lightbox/Lightbox.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/Lightbox/Lightbox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/lightbox/Lightbox.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Lightbox/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/lightbox/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Lightbox/lightbox.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/lightbox/lightbox.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Lightbox/Lightbox.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/lightbox/Lightbox.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
       "name": "link",
       "type": "registry:ui",
       "title": "Link",
@@ -4099,19 +4993,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Link/Link.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/link/Link.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4119,14 +5003,77 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Link/Link.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/link/Link.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "list-input",
+      "type": "registry:ui",
+      "title": "ListInput",
+      "description": "Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/button.json",
+        "https://gntik-ui.invalid/r/input.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/ListInput/ListInput.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/ListInput/ListInput.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/list-input/ListInput.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/ListInput/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/list-input/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ListInput/list-input-parse.ts",
+          "type": "registry:ui",
+          "target": "components/ui/list-input/list-input-parse.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ListInput/list-input.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/list-input/list-input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ListInput/ListInput.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/list-input/ListInput.doc.ts"
         }
       ]
     },
@@ -4236,6 +5183,55 @@
       ]
     },
     {
+      "name": "mega-menu",
+      "type": "registry:ui",
+      "title": "MegaMenu",
+      "description": "Top navigation with wide panels: items with sections open a panel of link columns with descriptions and optional featured content; plain items are links. Hover or click opens, the panel resizes between items, router links come from LinkProvider and the current page is marked. Use it as the StackedLayout sub-nav row; `megaMenuNavItems` feeds MobileNav.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/link.json",
+        "https://gntik-ui.invalid/r/nav-list.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Navigation"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/MegaMenu/MegaMenu.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/MegaMenu/MegaMenu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/mega-menu/MegaMenu.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/MegaMenu/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/mega-menu/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/MegaMenu/mega-menu.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/mega-menu/mega-menu.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/MegaMenu/MegaMenu.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/mega-menu/MegaMenu.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "members-table",
       "type": "registry:block",
       "title": "Members table",
@@ -4327,19 +5323,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Menu/Menu.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/menu/Menu.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4350,6 +5336,64 @@
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Menu/Menu.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/menu/Menu.doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "messaging",
+      "type": "registry:block",
+      "title": "Messaging",
+      "description": "Team messaging in the console: SplitLayout conversation list (unread counts, last message) → thread of ChatMessages with Thumbnail attachments, participants AvatarGroup, and a ChatComposer with file attachments; Back on small screens.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/chat",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {},
+        "@import \"@gntik-ai/chat/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Work"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/messaging/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/messaging/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/messaging/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/messaging/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/messaging/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
         }
       ]
     },
@@ -4489,6 +5533,7 @@
       "description": "Small-screen navigation: a menu icon button opens a Drawer sheet (chrome surface) with the NavList groups and an optional footer slot. Activating an item closes the sheet; focus is trapped while open and returns to the button.",
       "author": "gntik-ai",
       "dependencies": [
+        "@base-ui/react@^1.8.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -4523,6 +5568,31 @@
           "path": "packages/ui/src/components/MobileNav/mobile-nav.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/mobile-nav/mobile-nav.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/components/MobileNav/MobileNav.doc.ts",
@@ -4567,6 +5637,48 @@
           "path": "packages/blocks/src/ai/ModelKeysList/fixtures.ts",
           "type": "registry:lib",
           "target": "components/blocks/ai/model-keys-list/fixtures.ts"
+        }
+      ]
+    },
+    {
+      "name": "model-providers",
+      "type": "registry:block",
+      "title": "Model providers settings",
+      "description": "Settings page (shared settings nav plus a \"Model providers\" item) with the ModelKeysList — masked keys, test connection, confirmed revoke — an add-key dialog (provider, endpoint for compatible / self-hosted, secret) and workspace usage limits as Meters.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/settings-profile.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "AI"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/model-providers/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/model-providers/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/model-providers/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/model-providers/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/model-providers/data.ts"
         }
       ]
     },
@@ -4666,6 +5778,31 @@
           "target": "components/ui/multi-select/multi-select.variants.ts"
         },
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/components/MultiSelect/MultiSelect.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/multi-select/MultiSelect.doc.ts"
@@ -4724,6 +5861,31 @@
           "path": "packages/ui/src/components/NavList/nav-list.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/nav-list/nav-list.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/components/NavList/NavList.doc.ts",
@@ -4869,19 +6031,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/NotificationsPopover/NotificationsPopover.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/notifications-popover/NotificationsPopover.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4892,6 +6044,16 @@
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/NotificationsPopover/NotificationsPopover.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/notifications-popover/NotificationsPopover.doc.ts"
         }
       ]
     },
@@ -4941,19 +6103,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/NumberInput/NumberInput.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/number-input/NumberInput.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4961,14 +6113,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/NumberInput/NumberInput.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/number-input/NumberInput.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -5017,19 +6179,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/OtpInput/OtpInput.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/otp-input/OtpInput.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5037,14 +6189,79 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/OtpInput/OtpInput.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/otp-input/OtpInput.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "overflow-list",
+      "type": "registry:ui",
+      "title": "OverflowList",
+      "description": "Row of chips or avatars that renders items up to `max` (or to the available width with `responsive`, measured by ResizeObserver) and a \"+N more\" button that opens a Popover listing the rest.",
+      "author": "gntik-ai",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/popover.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Display"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/OverflowList/OverflowList.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/OverflowList/OverflowList.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/overflow-list/OverflowList.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/OverflowList/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/overflow-list/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/OverflowList/overflow-list.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/overflow-list/overflow-list.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/OverflowList/useFitCount.ts",
+          "type": "registry:ui",
+          "target": "components/ui/overflow-list/useFitCount.ts"
+        },
+        {
+          "path": "packages/ui/src/components/OverflowList/OverflowList.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/overflow-list/OverflowList.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -5073,6 +6290,31 @@
       },
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/Page/Page.tsx",
           "type": "registry:component",
           "target": "components/layouts/page/Page.tsx"
@@ -5088,39 +6330,14 @@
           "target": "components/layouts/page/page.variants.ts"
         },
         {
-          "path": "packages/ui/src/i18n/I18nProvider.tsx",
-          "type": "registry:component",
-          "target": "components/i18n/I18nProvider.tsx"
-        },
-        {
           "path": "packages/ui/src/layouts/Page/Page.doc.ts",
           "type": "registry:lib",
           "target": "components/layouts/page/Page.doc.ts"
         },
         {
-          "path": "packages/ui/src/i18n/format.ts",
-          "type": "registry:lib",
-          "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:lib",
-          "target": "components/i18n/messages/index.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/en.ts",
-          "type": "registry:lib",
-          "target": "components/i18n/messages/en.ts"
-        },
-        {
           "path": "packages/ui/src/doc.ts",
           "type": "registry:lib",
           "target": "components/doc.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/es.ts",
-          "type": "registry:lib",
-          "target": "components/i18n/messages/es.ts"
         }
       ]
     },
@@ -5263,24 +6480,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/utils/rtl.ts",
-          "type": "registry:ui",
-          "target": "components/utils/rtl.ts"
-        },
-        {
-          "path": "packages/ui/src/components/Pagination/Pagination.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/pagination/Pagination.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5288,14 +6490,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Pagination/Pagination.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/pagination/Pagination.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -5385,19 +6597,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/PasswordInput/PasswordInput.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/password-input/PasswordInput.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5408,6 +6610,16 @@
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PasswordInput/PasswordInput.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/password-input/PasswordInput.doc.ts"
         }
       ]
     },
@@ -5579,19 +6791,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Popover/Popover.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/popover/Popover.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5599,14 +6801,138 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Popover/Popover.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/popover/Popover.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "power-search",
+      "type": "registry:ui",
+      "title": "PowerSearch",
+      "description": "Structured filter input: pick a field, an operator and a value from suggestions (or type `status=failed`, `cost>100`), add free text, and edit committed terms from the keyboard. Emits a typed query AST (`{ type: \"and\", terms }`) with parse / format / match helpers; fields, operators and values are props.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/select.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "experimental",
+        "source": "packages/ui/src/components/PowerSearch/PowerSearch.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/PowerSearch/PowerSearch.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/power-search/PowerSearch.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/PowerSearch/PowerSearchChip.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/power-search/PowerSearchChip.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/PowerSearch/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/power-search/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PowerSearch/power-search-query.ts",
+          "type": "registry:ui",
+          "target": "components/ui/power-search/power-search-query.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PowerSearch/power-search.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/power-search/power-search.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PowerSearch/PowerSearch.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/power-search/PowerSearch.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "pricing",
+      "type": "registry:block",
+      "title": "Pricing",
+      "description": "Public pricing page: StackedLayout with a MegaMenu (MobileNav below lg), PricingTable with the monthly / annual toggle, FeatureGrid highlights, a plan comparison table grouped by section, and Faq.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Overview"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/pricing/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/pricing/ComparisonTable.tsx",
+          "type": "registry:component",
+          "target": "app/templates/pricing/ComparisonTable.tsx"
+        },
+        {
+          "path": "packages/templates/src/pricing/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/pricing/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/pricing/PublicFrame.tsx",
+          "type": "registry:component",
+          "target": "app/templates/pricing/PublicFrame.tsx"
+        },
+        {
+          "path": "packages/templates/src/pricing/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/pricing/data.ts"
         }
       ]
     },
@@ -5655,7 +6981,9 @@
       "title": "PrintLayout",
       "description": "Printable document frame for invoices, reports and receipts: an A4 or Letter page (`size`) with margins (`margin`), header and footer slots and a `PageBreak` helper. On screen it is a paper sheet (bg-card / text-card-foreground, border, shadow-sm) on a muted backdrop in the current theme; `print:` variants drop the chrome (no backdrop, border, shadow or outer padding) and an `@page` rule sets paper size and margins (`pageRule`). The header and footer print once, at the top and end of the document. The consuming app should print with the light theme (ThemeProvider `defaultMode=\"light\"`, or `setMode('light')` before `window.print()`); no print-only colours are defined.",
       "author": "gntik-ai",
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
       "registryDependencies": [
         "https://gntik-ui.invalid/r/gntik-tokens.json",
         "https://gntik-ui.invalid/r/ui-utils.json",
@@ -5672,6 +7000,31 @@
         "source": "packages/ui/src/layouts/PrintLayout/PrintLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/PrintLayout/PrintLayout.tsx",
           "type": "registry:component",
@@ -5820,6 +7173,54 @@
           "path": "packages/blocks/src/ai/PromptEditor/fixtures.ts",
           "type": "registry:lib",
           "target": "components/blocks/ai/prompt-editor/fixtures.ts"
+        }
+      ]
+    },
+    {
+      "name": "prompt-playground",
+      "type": "registry:block",
+      "title": "Prompt playground",
+      "description": "Prompt playground inside the console (CanvasLayout embedded in ConsoleShell, so the app nav stays): shared variables in a ListInput palette, the PromptEditor, and 2–3 model columns side by side with a Diff switch that compares each column against the first in a DiffEditor.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/editor",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {},
+        "@import \"@gntik-ai/editor/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "AI"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/prompt-playground/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/prompt-playground/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/prompt-playground/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/prompt-playground/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/prompt-playground/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
         }
       ]
     },
@@ -6047,19 +7448,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Resizable/Resizable.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/resizable/Resizable.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6067,14 +7458,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Resizable/Resizable.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/resizable/Resizable.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -6292,6 +7693,151 @@
           "path": "packages/templates/src/resource-index/data.ts",
           "type": "registry:lib",
           "target": "app/templates/resource-index/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ]
+    },
+    {
+      "name": "resource-tree",
+      "type": "registry:block",
+      "title": "Resource tree",
+      "description": "Resource index with a team → project TreeList (counts, single selection) beside grouped DataTables (group by kind, region or team; one SectionHeader + table per group), StatusTag status and OverflowList tags.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Resources"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/resource-tree/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/resource-tree/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/resource-tree/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/resource-tree/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/resource-tree/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ]
+    },
+    {
+      "name": "run-trace",
+      "type": "registry:block",
+      "title": "Run trace",
+      "description": "Trace of one AI run inside the console: run header with a live elapsed Timer, TraceWaterfall of spans, token cost and the run log; a pinnable inspector shows the selected span with a live Timer while it runs and its input / output in JsonViewers.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "AI"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/run-trace/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/run-trace/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/run-trace/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/run-trace/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/run-trace/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "type": "registry:component",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scorecard",
+      "type": "registry:block",
+      "title": "Scorecard",
+      "description": "Period-over-period scorecard: period select, KpiRow with deltas vs. the previous period, a targets table (change, target, attainment Meter, MiniBar trend), a RadarChart of dimension scores and a commentary rail (CommentThread).",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/charts",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {},
+        "@import \"@gntik-ai/charts/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Overview"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "experimental",
+        "source": "packages/templates/src/scorecard/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/scorecard/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/scorecard/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/scorecard/TargetsTable.tsx",
+          "type": "registry:component",
+          "target": "app/templates/scorecard/TargetsTable.tsx"
+        },
+        {
+          "path": "packages/templates/src/scorecard/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/scorecard/data.ts"
         },
         {
           "path": "packages/templates/src/shared/ConsoleShell.tsx",
@@ -6531,19 +8077,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Select/Select.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/select/Select.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6551,14 +8087,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Select/Select.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/select/Select.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -6824,7 +8370,9 @@
       "title": "SettingsLayout",
       "description": "Settings shell: section nav (NavList groups) on the left · a content column with the page title and form sections · a sticky save bar slot (Discard · Save changes). The current section is controllable with `value` / `onValueChange`; `href` items navigate as links and still report the change. Below `lg` the nav becomes a Select at the top of the page. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
       "registryDependencies": [
         "https://gntik-ui.invalid/r/gntik-tokens.json",
         "https://gntik-ui.invalid/r/nav-list.json",
@@ -6843,6 +8391,31 @@
         "source": "packages/ui/src/layouts/SettingsLayout/SettingsLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/SettingsLayout/SettingsLayout.tsx",
           "type": "registry:component",
@@ -7217,6 +8790,7 @@
       "description": "Application shell: a collapsible sidebar (expanded, 64px icon rail or off-canvas) with header, body and footer slots, a topbar (workspace switcher, breadcrumb, ⌘K, notifications, theme, user menu) and the main region. Below lg the sidebar moves into a left Drawer opened from the topbar menu button. The collapsed state is controllable and can persist in localStorage (storageKey). Fills its container; fullScreen switches to h-dvh.",
       "author": "gntik-ai",
       "dependencies": [
+        "@base-ui/react@^1.8.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -7237,6 +8811,31 @@
         "source": "packages/ui/src/layouts/SidebarLayout/SidebarLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/SidebarLayout/SidebarLayout.tsx",
           "type": "registry:component",
@@ -7644,14 +9243,14 @@
           "target": "components/ui/sparkline/sparkline.variants.ts"
         },
         {
-          "path": "packages/ui/src/i18n/format.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/format.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "type": "registry:ui",
           "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7659,9 +9258,9 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/components/Sparkline/Sparkline.doc.ts",
+          "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
-          "target": "components/ui/sparkline/Sparkline.doc.ts"
+          "target": "components/i18n/messages/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -7669,14 +9268,14 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/components/Sparkline/Sparkline.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/sparkline/Sparkline.doc.ts"
+        },
+        {
           "path": "packages/ui/src/doc.ts",
           "type": "registry:ui",
           "target": "components/doc.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/es.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/es.ts"
         }
       ]
     },
@@ -7776,6 +9375,7 @@
       "description": "Master–detail layout: a resizable list pane beside a detail pane, built on ResizablePanelGroup (sizes can persist with autoSaveId). Below lg only one pane shows: the list, or the detail with a Back button; `showDetail` is controllable so selecting an item can switch panes. Both panes are labelled regions. Fills its container.",
       "author": "gntik-ai",
       "dependencies": [
+        "@base-ui/react@^1.8.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -7795,6 +9395,31 @@
         "source": "packages/ui/src/layouts/SplitLayout/SplitLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/SplitLayout/SplitLayout.tsx",
           "type": "registry:component",
@@ -7954,7 +9579,9 @@
       "title": "StackedLayout",
       "description": "Top-navigation shell: a chrome navbar (brand · primary links · actions), an optional tab sub-nav row, an optional page-header band and centered content (narrow 640 · default 1120 · wide 1440 · full) with an optional footer. Below lg the links collapse into a MobileNav drawer. Fills its container; fullScreen switches to h-dvh.",
       "author": "gntik-ai",
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
       "registryDependencies": [
         "https://gntik-ui.invalid/r/gntik-tokens.json",
         "https://gntik-ui.invalid/r/link.json",
@@ -7974,6 +9601,31 @@
         "source": "packages/ui/src/layouts/StackedLayout/StackedLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/StackedLayout/StackedLayout.tsx",
           "type": "registry:component",
@@ -8217,6 +9869,7 @@
       "description": "Full-page status for 404, 403, 500 and maintenance: a centred message (`code`, `title` as the page h1, `description`) with an illustration or icon halo, a primary and a secondary action, and minimal chrome (optional header with the Logo and a footer line). `tone` colours the code and halo with the severity tokens; brand green is only for positive states. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
       "dependencies": [
+        "@base-ui/react@^1.8.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -8235,6 +9888,31 @@
         "source": "packages/ui/src/layouts/StatusLayout/StatusLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/StatusLayout/StatusLayout.tsx",
           "type": "registry:component",
@@ -8427,19 +10105,19 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/components/Stepper/Stepper.doc.ts",
+          "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
-          "target": "components/ui/stepper/Stepper.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/format.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/format.ts"
+          "target": "components/i18n/messages/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8447,14 +10125,14 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/components/Stepper/Stepper.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/stepper/Stepper.doc.ts"
+        },
+        {
           "path": "packages/ui/src/doc.ts",
           "type": "registry:ui",
           "target": "components/doc.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/es.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/es.ts"
         }
       ]
     },
@@ -8675,14 +10353,14 @@
           "target": "components/ui/table/table.variants.ts"
         },
         {
+          "path": "packages/ui/src/density/density-context.ts",
+          "type": "registry:ui",
+          "target": "components/density/density-context.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "type": "registry:ui",
           "target": "components/i18n/I18nProvider.tsx"
-        },
-        {
-          "path": "packages/ui/src/components/Table/Table.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/table/Table.doc.ts"
         },
         {
           "path": "packages/ui/src/i18n/format.ts",
@@ -8690,24 +10368,29 @@
           "target": "components/i18n/format.ts"
         },
         {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Table/Table.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/table/Table.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -8756,19 +10439,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Tabs/Tabs.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/tabs/Tabs.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8776,14 +10449,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Tabs/Tabs.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/tabs/Tabs.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -8986,19 +10669,19 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/components/ThemeSwitcher/ThemeSwitcher.doc.ts",
+          "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
-          "target": "components/ui/theme-switcher/ThemeSwitcher.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/format.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/format.ts"
+          "target": "components/i18n/messages/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -9006,9 +10689,65 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
-          "path": "packages/ui/src/i18n/messages/es.ts",
+          "path": "packages/ui/src/components/ThemeSwitcher/ThemeSwitcher.doc.ts",
           "type": "registry:ui",
-          "target": "components/i18n/messages/es.ts"
+          "target": "components/ui/theme-switcher/ThemeSwitcher.doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "thumbnail",
+      "type": "registry:ui",
+      "title": "Thumbnail",
+      "description": "File or image preview tile: image or file-type icon with extension tag, name and size caption, upload progress (progressbar + shimmer that holds still under reduced motion), error state with retry, and a remove button. ThumbnailList lays tiles out as a wrapping list.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Display"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/Thumbnail/Thumbnail.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/Thumbnail/Thumbnail.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/thumbnail/Thumbnail.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Thumbnail/file-kind.ts",
+          "type": "registry:ui",
+          "target": "components/ui/thumbnail/file-kind.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Thumbnail/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/thumbnail/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Thumbnail/thumbnail.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/thumbnail/thumbnail.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Thumbnail/Thumbnail.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/thumbnail/Thumbnail.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -9047,6 +10786,60 @@
           "path": "packages/blocks/src/scheduling/TimeSlotPicker/fixtures.ts",
           "type": "registry:lib",
           "target": "components/blocks/scheduling/time-slot-picker/fixtures.ts"
+        }
+      ]
+    },
+    {
+      "name": "timer",
+      "type": "registry:ui",
+      "title": "Timer",
+      "description": "Elapsed time since a start, live while running (\"1:02:05\" or compact \"2m 14s\"), with paused and stopped states. Renders role=\"timer\" around a <time dateTime=\"PT…\"> duration; silent by default, `announce` speaks it politely once a minute.",
+      "author": "gntik-ai",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Display"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/Timer/Timer.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/Timer/Timer.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/timer/Timer.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Timer/format.ts",
+          "type": "registry:ui",
+          "target": "components/ui/timer/format.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Timer/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/timer/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Timer/timer.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/timer/timer.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Timer/Timer.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/timer/Timer.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -9101,19 +10894,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Timestamp/Timestamp.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/timestamp/Timestamp.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9121,14 +10904,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Timestamp/Timestamp.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/timestamp/Timestamp.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -9178,19 +10971,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Toast/Toast.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/toast/Toast.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9198,14 +10981,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Toast/Toast.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/toast/Toast.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -9306,19 +11099,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Token/Token.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/token/Token.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9326,14 +11109,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Token/Token.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/token/Token.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -9426,19 +11219,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/TokenInput/TokenInput.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/token-input/TokenInput.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9446,14 +11229,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TokenInput/TokenInput.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/token-input/TokenInput.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -9608,19 +11401,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/Tooltip/Tooltip.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/tooltip/Tooltip.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9628,14 +11411,73 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Tooltip/Tooltip.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/tooltip/Tooltip.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "tour",
+      "type": "registry:ui",
+      "title": "Tour",
+      "description": "Onboarding steps anchored to elements (selector, ref or getter): a non-modal popover with a step counter and Back / Next / Skip, positioned at each target and outlined with the focus ring (no overlay, no glow). Focus moves into the step and returns when the tour ends; missing targets centre the step.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/button.json",
+        "https://gntik-ui.invalid/r/popover.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Overlays"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/Tour/Tour.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/Tour/Tour.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tour/Tour.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Tour/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/tour/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Tour/tour.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/tour/tour.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Tour/Tour.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/tour/Tour.doc.ts"
         }
       ]
     },
@@ -9679,6 +11521,116 @@
       ]
     },
     {
+      "name": "transfer-list",
+      "type": "registry:ui",
+      "title": "TransferList",
+      "description": "Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/button.json",
+        "https://gntik-ui.invalid/r/input.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/TransferList/TransferList.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/TransferList/TransferList.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/transfer-list/TransferList.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/TransferList/TransferListPane.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/transfer-list/TransferListPane.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/TransferList/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/transfer-list/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TransferList/transfer-list.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/transfer-list/transfer-list.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TransferList/TransferList.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/transfer-list/TransferList.doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "tree-list",
+      "type": "registry:ui",
+      "title": "TreeList",
+      "description": "Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/spinner.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Navigation"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/TreeList/TreeList.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/TreeList/TreeList.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tree-list/TreeList.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/TreeList/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/tree-list/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TreeList/tree-list.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/tree-list/tree-list.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TreeList/tree-model.ts",
+          "type": "registry:ui",
+          "target": "components/ui/tree-list/tree-model.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TreeList/useTreeList.ts",
+          "type": "registry:ui",
+          "target": "components/ui/tree-list/useTreeList.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TreeList/TreeList.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/tree-list/TreeList.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "ui-utils",
       "type": "registry:ui",
       "title": "UI utilities",
@@ -9706,6 +11658,16 @@
           "path": "packages/ui/src/utils/cn.ts",
           "type": "registry:ui",
           "target": "components/utils/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/density-merge.ts",
+          "type": "registry:ui",
+          "target": "components/utils/density-merge.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/rtl.ts",
+          "type": "registry:ui",
+          "target": "components/utils/rtl.ts"
         },
         {
           "path": "packages/ui/src/utils/tv.ts",
@@ -9854,6 +11816,31 @@
           "target": "components/ui/user-menu/user-menu.variants.ts"
         },
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
           "path": "packages/ui/src/components/UserMenu/UserMenu.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/user-menu/UserMenu.doc.ts"
@@ -9939,6 +11926,60 @@
       ]
     },
     {
+      "name": "virtual-list",
+      "type": "registry:ui",
+      "title": "VirtualList",
+      "description": "Windowed list for thousands of rows: only the visible rows plus `overscan` are mounted, with a fixed `itemHeight` or measured rows from an estimate. One roving tab stop, aria-setsize/posinset on every row, `scrollToIndex` through a ref, and a single-select `listbox` mode. No dependencies.",
+      "author": "gntik-ai",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://gntik-ui.invalid/r/gntik-tokens.json",
+        "https://gntik-ui.invalid/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Display"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/VirtualList/VirtualList.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/VirtualList/VirtualList.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/virtual-list/VirtualList.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/VirtualList/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/virtual-list/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/VirtualList/use-virtual-window.ts",
+          "type": "registry:ui",
+          "target": "components/ui/virtual-list/use-virtual-window.ts"
+        },
+        {
+          "path": "packages/ui/src/components/VirtualList/virtual-list.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/virtual-list/virtual-list.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/VirtualList/VirtualList.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/virtual-list/VirtualList.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
       "name": "visually-hidden",
       "type": "registry:ui",
       "title": "VisuallyHidden",
@@ -9983,19 +12024,9 @@
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
-          "path": "packages/ui/src/components/VisuallyHidden/VisuallyHidden.doc.ts",
-          "type": "registry:ui",
-          "target": "components/ui/visually-hidden/VisuallyHidden.doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
-        },
-        {
-          "path": "packages/ui/src/i18n/messages/index.ts",
-          "type": "registry:ui",
-          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -10003,14 +12034,24 @@
           "target": "components/i18n/messages/en.ts"
         },
         {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/VisuallyHidden/VisuallyHidden.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/visually-hidden/VisuallyHidden.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
         }
       ]
     },
@@ -10075,6 +12116,7 @@
       "description": "Focus-mode shell for multi-step flows (onboarding, create project, import): no sidebar · top bar with the flow title and Exit · Stepper header · step body · Back / Next footer (Finish on the last step). Exit, or Escape anywhere inside the layout, asks for confirmation in an AlertDialog (`confirmExit`). Completed steps are clickable to go back. Below `lg` the Stepper collapses to \"Step 2 of 5\". Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
       "dependencies": [
+        "@base-ui/react@^1.8.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -10096,6 +12138,31 @@
         "source": "packages/ui/src/layouts/WizardLayout/WizardLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:component",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/index.ts"
+        },
         {
           "path": "packages/ui/src/layouts/WizardLayout/WizardLayout.tsx",
           "type": "registry:component",
@@ -10211,6 +12278,31 @@
           "path": "packages/ui/src/components/WorkspaceSwitcher/workspace-switcher.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/workspace-switcher/workspace-switcher.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/components/WorkspaceSwitcher/WorkspaceSwitcher.doc.ts",

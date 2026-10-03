@@ -110,7 +110,8 @@ test('file contents are inlined and relative imports resolve to copied targets',
       for (const m of f.content.matchAll(SPEC)) {
         const to = path.posix.normalize(path.posix.join(path.posix.dirname(f.target), m[2].replace(/\.(tsx?|jsx?)$/, '')));
         // Imports inside code-sample strings (fixtures) are not modules; they never resolve on disk either.
-        if (/^\s*\/\/|`/.test(f.content.slice(f.content.lastIndexOf('\n', m.index) + 1, m.index))) continue;
+        const src = path.posix.join(path.posix.dirname(f.path), m[2].replace(/\.(tsx?|jsx?)$/, ''));
+        if (!available.has(to) && !['', '.ts', '.tsx', '.css', '/index.ts', '/index.tsx'].some((e) => fs.existsSync(path.join(ROOT, src + e)))) continue;
         assert.ok(available.has(to), `${item.name}: ${f.target} imports '${m[2]}' → ${to}, not copied`);
       }
     }

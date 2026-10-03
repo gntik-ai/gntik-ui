@@ -22,12 +22,12 @@ export const tabsVariants = tv({
     variant: {
       underline: {
         list: 'flex items-center gap-6 border-b border-border',
-        tab: 'h-10 -mb-px border-b-2 border-transparent text-[13px] rounded-t-sm',
+        tab: 'h-tab -mb-px border-b-2 border-transparent text-[13px] rounded-t-sm',
         indicator: 'top-auto -bottom-px h-0.5 w-(--active-tab-width) translate-x-(--active-tab-left) bg-primary',
       },
       pills: {
         list: 'inline-flex items-center gap-1 rounded-lg border border-border bg-secondary/40 p-1',
-        tab: 'h-8 rounded-md px-3.5 text-[12.5px]',
+        tab: 'h-control-sm rounded-md px-control text-[12.5px]',
         indicator:
           'z-0 h-(--active-tab-height) w-(--active-tab-width) translate-x-(--active-tab-left) translate-y-(--active-tab-top) rounded-md bg-card shadow-sm',
       },
@@ -39,7 +39,7 @@ export const tabsVariants = tv({
   compoundVariants: [
     { variant: 'underline', indicator: false, class: { tab: 'data-active:border-primary' } },
     { variant: 'pills', indicator: false, class: { tab: 'data-active:bg-card data-active:shadow-sm' } },
-    { variant: 'pills', fullWidth: true, class: { tab: 'h-9' } },
+    { variant: 'pills', fullWidth: true, class: { tab: 'h-control' } },
   ],
   defaultVariants: { variant: 'underline', indicator: true, fullWidth: false },
 });

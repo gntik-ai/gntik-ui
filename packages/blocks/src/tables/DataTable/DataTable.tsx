@@ -1,4 +1,4 @@
-import { Checkbox, cn, Table, TableCaption, TableHead, TableHeader, TableRow, type MoreMenuAction, type TableDensity, useI18n } from '@gntik-ai/ui';
+import { Checkbox, cn, DensityProvider, Table, TableCaption, TableHead, TableHeader, TableRow, type MoreMenuAction, type TableDensity, useDensity, useI18n } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
 import { PaginationFooter } from '../PaginationFooter/PaginationFooter';
 import { ColumnVisibilityMenu } from './column-menu';
@@ -45,7 +45,9 @@ export interface DataTableProps<T> {
   defaultPageSize?: number;
   pageSizeOptions?: readonly number[];
 
+  /** Controlled row density. */
   density?: TableDensity;
+  /** Initial density; omitted, the table follows the surrounding DensityProvider (comfortable outside one). */
   defaultDensity?: TableDensity;
   onDensityChange?: (density: TableDensity) => void;
   showDensityToggle?: boolean;
@@ -91,7 +93,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   defaultPageSize = 10,
   pageSizeOptions = [10, 25, 50],
   density: densityProp,
-  defaultDensity = 'comfortable',
+  defaultDensity,
   onDensityChange,
   showDensityToggle = true,
   showColumnMenu = true,
@@ -104,14 +106,15 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const { t } = useI18n();
   const [innerSort, setInnerSort] = useState<SortState | null>(defaultSort);
   const [innerSelected, setInnerSelected] = useState<ReadonlySet<string>>(() => new Set(defaultSelectedIds));
-  const [innerDensity, setInnerDensity] = useState<TableDensity>(defaultDensity);
+  const [innerDensity, setInnerDensity] = useState<TableDensity | null>(defaultDensity ?? null);
+  const contextDensity = useDensity();
   const [hidden, setHidden] = useState<ReadonlySet<string>>(() => new Set(columns.filter((c) => c.defaultHidden).map((c) => c.id)));
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(defaultPageSize);
 
   const sort = sortProp === undefined ? innerSort : sortProp;
   const selected: ReadonlySet<string> = selectedIds ? new Set(selectedIds) : innerSelected;
-  const density = densityProp ?? innerDensity;
+  const density = densityProp ?? innerDensity ?? contextDensity;
   const visibleColumns = columns.filter((c) => !hidden.has(c.id));
   const labelOf =
     getRowLabel ??
@@ -182,54 +185,57 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           </div>
         </div>
       )}
-      <Table density={density} aria-busy={loading || undefined}>
-        <TableCaption srOnly={!showCaption}>{caption}</TableCaption>
-        <TableHeader>
-          <TableRow className="hover:bg-transparent">
-            {selectable && (
-              <TableHead className="w-10 pe-0">
-                <Checkbox
-                  aria-label={t('table.selectAllPage')}
-                  checked={header.checked}
-                  indeterminate={header.indeterminate}
-                  disabled={loading || pageIds.length === 0}
-                  onCheckedChange={() => setSelected(toggleAll(pageIds, selected))}
-                />
-              </TableHead>
-            )}
-            {visibleColumns.map((c) => (
-              <TableHead
-                key={c.id}
-                align={columnAlign(c)}
-                className={c.headClassName}
-                sortable={c.sortable}
-                sortDirection={sort?.columnId === c.id ? sort.direction : 'none'}
-                onSortChange={(dir) => changeSort(c.id, dir)}
-              >
-                {c.header}
-              </TableHead>
-            ))}
-            {rowActions && (
-              <TableHead className="w-12">
-                <span className="sr-only">{t('table.actions')}</span>
-              </TableHead>
-            )}
-          </TableRow>
-        </TableHeader>
-        <DataTableBody
-          rows={pageRows}
-          columns={visibleColumns}
-          getRowId={getRowId}
-          getRowLabel={labelOf}
-          selectable={selectable}
-          selected={selected}
-          onToggleRow={(id) => setSelected(toggleOne(id, selected))}
-          rowActions={rowActions}
-          loading={loading}
-          loadingRows={loadingRows}
-          emptyState={emptyState}
-        />
-      </Table>
+      {/* The toggle drives a density context for the table: its rows and the controls inside them. */}
+      <DensityProvider density={density}>
+        <Table aria-busy={loading || undefined}>
+          <TableCaption srOnly={!showCaption}>{caption}</TableCaption>
+          <TableHeader>
+            <TableRow className="hover:bg-transparent">
+              {selectable && (
+                <TableHead className="w-10 pe-0">
+                  <Checkbox
+                    aria-label={t('table.selectAllPage')}
+                    checked={header.checked}
+                    indeterminate={header.indeterminate}
+                    disabled={loading || pageIds.length === 0}
+                    onCheckedChange={() => setSelected(toggleAll(pageIds, selected))}
+                  />
+                </TableHead>
+              )}
+              {visibleColumns.map((c) => (
+                <TableHead
+                  key={c.id}
+                  align={columnAlign(c)}
+                  className={c.headClassName}
+                  sortable={c.sortable}
+                  sortDirection={sort?.columnId === c.id ? sort.direction : 'none'}
+                  onSortChange={(dir) => changeSort(c.id, dir)}
+                >
+                  {c.header}
+                </TableHead>
+              ))}
+              {rowActions && (
+                <TableHead className="w-12">
+                  <span className="sr-only">{t('table.actions')}</span>
+                </TableHead>
+              )}
+            </TableRow>
+          </TableHeader>
+          <DataTableBody
+            rows={pageRows}
+            columns={visibleColumns}
+            getRowId={getRowId}
+            getRowLabel={labelOf}
+            selectable={selectable}
+            selected={selected}
+            onToggleRow={(id) => setSelected(toggleOne(id, selected))}
+            rowActions={rowActions}
+            loading={loading}
+            loadingRows={loadingRows}
+            emptyState={emptyState}
+          />
+        </Table>
+      </DensityProvider>
       {loading && (
         <p role="status" className="sr-only">
           Loading {caption.toLowerCase()}…

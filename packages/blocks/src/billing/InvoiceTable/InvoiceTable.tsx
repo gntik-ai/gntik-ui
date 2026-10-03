@@ -27,7 +27,7 @@ export interface InvoiceTableProps {
   currency?: string;
   /** Called when a download control is activated. */
   onDownload?: (invoice: Invoice) => void;
-  /** Row density. */
+  /** Row density; omitted, it follows the surrounding DensityProvider. */
   density?: 'compact' | 'comfortable';
   className?: string;
 }
@@ -47,7 +47,7 @@ export function InvoiceTable({
   showCaption = false,
   currency = 'USD',
   onDownload,
-  density = 'comfortable',
+  density,
   className,
 }: InvoiceTableProps) {
   return (
