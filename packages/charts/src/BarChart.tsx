@@ -4,9 +4,10 @@ import { tooltipContent } from './ChartTooltip';
 import { formatAny, identity } from './format';
 import { accessibleName, cartesianTable, axisProps, CHART_MARGIN, ChartFrame, type BaseChartProps, type DataKey } from './shared';
 import { resolveState } from './states';
+import { useCartesianExtras, type CartesianExtrasProps } from './cartesian-extras';
 import { CHART_COLORS, seriesColor, useChartTheme } from './theme';
 
-export interface BarChartProps<T extends object> extends BaseChartProps<T> {
+export interface BarChartProps<T extends object> extends CartesianExtrasProps, BaseChartProps<T> {
   categories: ReadonlyArray<DataKey<T>>;
   stacked?: boolean;
   /** "horizontal" = vertical bars (categories on X); "vertical" = horizontal bars (categories on Y). */
@@ -38,12 +39,20 @@ export function BarChart<T extends object>({
   errorMessage,
   onRetry,
   dataTable = false,
+  thresholds,
+  annotations,
+  brush,
+  range,
+  defaultRange,
+  onRangeChange,
+  animate,
 }: BarChartProps<T>) {
   const t = useChartTheme();
   const [hidden, toggle] = useHiddenSeries();
   const col = (i: number) => seriesColor(t, colors, i);
   const legend = categories.map((c, i) => ({ key: c, label: c, color: col(i) }));
   const vertical = layout === 'vertical';
+  const x = useCartesianExtras(data, index, { thresholds, annotations, brush, range, defaultRange, onRangeChange, animate }, { valueFormatter, previewKey: categories[0], vertical });
   const radius: Radius = stacked ? 0 : vertical ? [0, 3, 3, 0] : [3, 3, 0, 0];
   const name = accessibleName('Bar chart', ariaLabel, title, categories);
   return (
@@ -53,16 +62,17 @@ export function BarChart<T extends object>({
       emptyMessage={emptyMessage}
       errorMessage={errorMessage}
       onRetry={onRetry}
-      table={dataTable && cartesianTable(name, data, index, categories, (v) => formatAny(v, valueFormatter))}
+      table={dataTable && cartesianTable(name, x.view, index, categories, (v) => formatAny(v, valueFormatter))}
       height={height}
       className={className}
+      footer={x.footer}
       legend={
         showLegend &&
         categories.length > 1 && <ChartLegend className="mb-3 px-1" items={legend} hidden={hidden} onToggle={toggle} />
       }
     >
       <RBarChart
-        data={data}
+        data={x.view}
         layout={layout}
         margin={CHART_MARGIN}
         barCategoryGap={vertical ? '22%' : '28%'}
@@ -82,6 +92,7 @@ export function BarChart<T extends object>({
             {showYAxis && <YAxis {...axisProps(t)} width={50} tickFormatter={valueFormatter} />}
           </>
         )}
+        {x.references}
         <Tooltip
           isAnimationActive={false}
           cursor={{ fill: t.barCursor }}
@@ -97,7 +108,7 @@ export function BarChart<T extends object>({
             fill={col(i)}
             radius={radius}
             maxBarSize={vertical ? 22 : 46}
-            isAnimationActive={false}
+            {...x.animation}
           />
         ))}
       </RBarChart>

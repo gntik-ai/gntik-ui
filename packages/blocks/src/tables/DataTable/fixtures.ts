@@ -17,16 +17,27 @@ const REGIONS = ['eu-west-1', 'us-east-1', 'ap-south-1', 'eu-central-1'];
 const STATUSES: DeploymentRow['status'][] = ['running', 'running', 'running', 'queued', 'paused', 'degraded', 'running', 'failed'];
 const BASE = Date.UTC(2026, 8, 30, 12, 0, 0);
 
+const SUFFIXES = ['', '-staging', '-canary', '-preview'];
+
+/** Deterministic deployments (the first 24 are DEPLOYMENT_ROWS); large counts exercise virtualization. */
+export function generateDeployments(count: number): DeploymentRow[] {
+  return Array.from({ length: count }, (_, i) => {
+    const round = Math.floor(i / NAMES.length);
+    const suffix = round < SUFFIXES.length ? SUFFIXES[round] : `-${round}`;
+    return {
+      id: `dep_${(1000 + i * 37).toString(36)}`,
+      name: `${NAMES[i % NAMES.length]}${suffix}`,
+      region: REGIONS[(i * 3) % REGIONS.length] ?? 'eu-west-1',
+      status: STATUSES[(i * 5) % STATUSES.length] ?? 'running',
+      requests: ((i * 7919) % 90_000) + 1_200,
+      cost: Math.round((((i * 3571) % 900) + 40) * 100) / 100,
+      updatedAt: new Date(BASE - i * 3_700_000 * 5),
+    };
+  });
+}
+
 /** 24 deployments: enough for two pages at the default page size. */
-export const DEPLOYMENT_ROWS: DeploymentRow[] = Array.from({ length: 24 }, (_, i) => ({
-  id: `dep_${(1000 + i * 37).toString(36)}`,
-  name: `${NAMES[i % NAMES.length]}${i >= NAMES.length ? '-staging' : ''}`,
-  region: REGIONS[(i * 3) % REGIONS.length] ?? 'eu-west-1',
-  status: STATUSES[(i * 5) % STATUSES.length] ?? 'running',
-  requests: ((i * 7919) % 90_000) + 1_200,
-  cost: Math.round((((i * 3571) % 900) + 40) * 100) / 100,
-  updatedAt: new Date(BASE - i * 3_700_000 * 5),
-}));
+export const DEPLOYMENT_ROWS: DeploymentRow[] = generateDeployments(24);
 
 const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 const count = new Intl.NumberFormat('en-US');

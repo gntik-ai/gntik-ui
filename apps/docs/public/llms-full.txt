@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 97 components, 12 layouts, 70 blocks, 58 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 112 components, 12 layouts, 70 blocks, 58 templates.
 
 Packages are published as `@gntik-ai/*` on GitHub Packages: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -50,6 +50,158 @@ export default function ButtonStates() {
       <Button loading>Saving</Button>
       <Button disabled>Disabled</Button>
       <IconButton icon={MoreHorizontal} label="More actions" />
+    </div>
+  );
+}
+```
+
+### CopyButton (`copy-button`)
+
+Copies a string, or the result of a (possibly async) getter, to the clipboard. Icon form (with tooltip) or labelled form, a "Copied" success state that resets after 2 s, a polite announcement (through LiveAnnouncer when present) and a fallback to execCommand when the Clipboard API is missing. `copyToClipboard` is exported too.
+
+- Package: `@gntik-ai/ui` · export `CopyButton` · group Actions · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/CopyButton/CopyButton.doc.ts
+- Primitive: `@base-ui/react/button`
+- ARIA pattern: button + status
+- Registry dependencies: button, live-announcer, tooltip, ui-utils
+- Install: `gntik-ui add copy-button`; own the source with `gntik-ui eject copy-button`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Enter | Copies the value and announces "Copied to clipboard" |
+| Space | Copies the value and announces "Copied to clipboard" |
+| Tab | Moves focus to and from the button |
+
+Tokens: muted-foreground, secondary, primary-text, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { CopyButton } from '@gntik-ai/ui';
+
+export default function CopyButtonBasic() {
+  const command = 'pnpm add @gntik-ai/ui';
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <div className="inline-flex items-center gap-1 rounded-md border border-border bg-background ps-3 font-mono text-[12.5px] text-foreground">
+        <code>{command}</code>
+        <CopyButton value={command} label="Copy command" size="sm" />
+      </div>
+      <CopyButton value="ws_8f2a91c4" display="label" variant="secondary" label="Copy workspace ID" />
+    </div>
+  );
+}
+```
+
+### MessageFeedback (`message-feedback`)
+
+Actions for an assistant reply: copy, regenerate and thumbs up / down toggles (aria-pressed). Thumbs down opens a popover with a reason picker and an optional comment. Controlled with `value` + `onFeedback`; pressing the active thumb clears it. A polite status confirms the feedback.
+
+- Package: `@gntik-ai/chat` · export `MessageFeedback` · group Actions · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/MessageFeedback/MessageFeedback.doc.ts
+- Primitive: `Popover`
+- ARIA pattern: toggle button + dialog
+- Install: `gntik-ui add message-feedback`; own the source with `gntik-ui eject message-feedback`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves through copy, regenerate, good and bad |
+| Enter / Space | Toggles the focused thumb (aria-pressed); a second press clears it |
+| Enter / Space (on bad) | Also opens the details popover; focus moves into it |
+| Arrow keys | Inside the popover: move between reasons |
+| Escape | Closes the popover (the rating stays) and returns focus to the thumb |
+
+Tokens: muted-foreground, primary-text, destructive-text, popover, border, focus-ring
+
+Usage:
+
+```tsx
+import { TooltipProvider } from '@gntik-ai/ui';
+import { useState } from 'react';
+import { MessageFeedback, type FeedbackValue } from '@gntik-ai/chat';
+
+export default function MessageFeedbackReply() {
+  const [feedback, setFeedback] = useState<FeedbackValue>({ rating: null });
+  const [regenerated, setRegenerated] = useState(0);
+  return (
+    <TooltipProvider>
+      <div className="flex max-w-xl flex-col gap-2">
+        <p className="text-[14px] leading-[1.7] text-foreground">
+          Eleven of the twelve deployments succeeded this week; one was rolled back after a failed health check.
+        </p>
+        <MessageFeedback
+          value={feedback}
+          onFeedback={setFeedback}
+          copyText="Eleven of the twelve deployments succeeded this week; one was rolled back after a failed health check."
+          onRegenerate={() => setRegenerated((n) => n + 1)}
+        />
+        <p className="font-mono text-[11px] text-muted-foreground">
+          rating: {feedback.rating ?? 'none'}
+          {feedback.reason ? ` · reason: ${feedback.reason}` : ''}
+          {feedback.comment ? ` · comment: ${feedback.comment}` : ''}
+          {regenerated ? ` · regenerated ${regenerated}×` : ''}
+        </p>
+      </div>
+    </TooltipProvider>
+  );
+}
+```
+
+### SplitButton (`split-button`)
+
+A primary action joined to a menu of secondary actions. Two real buttons in a role="group": the action, and a chevron menu button (aria-haspopup="menu", aria-expanded) that opens the kit Menu. Takes Button's variants and sizes (`auto` follows the density), `actions` for a simple list or `menu` for custom MenuItems.
+
+- Package: `@gntik-ai/ui` · export `SplitButton` · group Actions · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/SplitButton/SplitButton.doc.ts
+- Primitive: `@base-ui/react/menu`
+- ARIA pattern: button + menu button
+- Registry dependencies: button, menu, ui-utils
+- Install: `gntik-ui add split-button`; own the source with `gntik-ui eject split-button`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves from the primary action to the menu button |
+| Enter / Space | On the action: runs it. On the menu button: opens the menu with the first item highlighted |
+| ArrowDown | On the menu button: opens the menu |
+| ArrowDown / ArrowUp | Moves between menu items (wraps) |
+| Enter | In the menu: runs the highlighted action and closes the menu |
+| Escape | Closes the menu and returns focus to the menu button |
+
+Tokens: primary, primary-foreground, card, border, secondary, destructive, destructive-foreground, popover, focus-ring
+
+Usage:
+
+```tsx
+import { CalendarClock, FileDown, Rocket, Trash2 } from '@gntik-ai/icons';
+import { useState } from 'react';
+import { SplitButton } from '@gntik-ai/ui';
+
+export default function SplitButtonBasic() {
+  const [last, setLast] = useState('Nothing yet');
+  return (
+    <div className="flex flex-col items-start gap-3">
+      <SplitButton
+        aria-label="Deploy"
+        icon={Rocket}
+        onClick={() => setLast('Deployed now')}
+        menuLabel="More deploy options"
+        actions={[
+          { label: 'Schedule deploy', icon: CalendarClock, onSelect: () => setLast('Deploy scheduled') },
+          { label: 'Export manifest', icon: FileDown, onSelect: () => setLast('Manifest exported') },
+          { label: 'Discard draft', icon: Trash2, destructive: true, separator: true, onSelect: () => setLast('Draft discarded') },
+        ]}
+      >
+        Deploy
+      </SplitButton>
+      <p className="text-[12.5px] text-muted-foreground">
+        Last action: <span className="text-foreground">{last}</span>
+      </p>
     </div>
   );
 }
@@ -258,6 +410,61 @@ export default function AccordionMultiple() {
 }
 ```
 
+### AttachmentList (`attachment`)
+
+Files attached to a message or waiting in the composer. Each AttachmentChip shows an image thumbnail or a file-type icon, the name, the size, upload progress (a labelled progressbar; indeterminate holds still under reduced motion), an error with Retry, and a Remove button. `variant="tile"` gives larger image previews inside a message. `validateFiles` / `matchesAccept` back the composer’s accept and max-size checks.
+
+- Package: `@gntik-ai/chat` · export `AttachmentList` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/Attachment/Attachment.doc.ts
+- ARIA pattern: list
+- Install: `gntik-ui add attachment`; own the source with `gntik-ui eject attachment`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves through each chip’s Retry (on error) and Remove buttons |
+| Enter / Space | Activates the focused Retry or Remove button |
+
+Tokens: secondary, card, border, muted-foreground, primary, destructive, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { AttachmentList } from '@gntik-ai/chat';
+import type { ChatAttachment } from '@gntik-ai/chat';
+import { PREVIEW_IMAGE as PREVIEW } from '@gntik-ai/chat';
+
+const INITIAL: ChatAttachment[] = [
+  { id: 'a', name: 'architecture-diagram.png', size: 284_311, type: 'image/png', previewUrl: PREVIEW },
+  { id: 'b', name: 'invoices-september.csv', size: 48_213, type: 'text/csv', progress: 62 },
+  { id: 'c', name: 'contract-draft.pdf', size: 1_904_118, type: 'application/pdf', progress: null },
+  { id: 'd', name: 'release-notes.md', size: 9_042, error: 'Network error' },
+];
+
+export default function AttachmentStates() {
+  const [files, setFiles] = useState(INITIAL);
+  return (
+    <div className="flex max-w-2xl flex-col gap-5">
+      <AttachmentList
+        attachments={files}
+        onRemove={(id) => setFiles((f) => f.filter((x) => x.id !== id))}
+        onRetry={(id) => setFiles((f) => f.map((x) => (x.id === id ? { ...x, error: undefined, progress: 100 } : x)))}
+      />
+      <AttachmentList
+        label="Files in this message"
+        variant="tile"
+        attachments={[
+          { id: 't1', name: 'screenshot.png', size: 120_400, type: 'image/png', previewUrl: PREVIEW },
+          { id: 't2', name: 'logs.zip', size: 2_400_000 },
+        ]}
+      />
+    </div>
+  );
+}
+```
+
 ### Avatar (`avatar`)
 
 Person or entity avatar: image with an initials (or icon) fallback, five sizes (xs–xl), round or rounded, tinted tones and an optional presence dot. AvatarGroup stacks avatars with a "+N more" overflow.
@@ -446,11 +653,12 @@ export default function CarouselAutoplay() {
 
 ### ChatMessage (`chat-message`)
 
-One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows typing dots until text arrives; ChatAnnouncer announces start and end once instead of every token.
+One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows a TypingIndicator ("Assistant is typing") until text arrives and a caret after streamed plain text; ChatAnnouncer announces start and end once instead of every token.
 
 - Package: `@gntik-ai/chat` · export `ChatMessage` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ChatMessage/ChatMessage.doc.ts
 - ARIA pattern: article
+- Registry dependencies: typing-indicator
 - Install: `gntik-ui add chat-message`; own the source with `gntik-ui eject chat-message`
 
 Keyboard:
@@ -642,6 +850,43 @@ export default function CollapsibleAdvanced() {
       </CollapsiblePanel>
     </Collapsible>
   );
+}
+```
+
+### DiffViewer (`diff-viewer`)
+
+Compares two texts, or two JSON values pretty-printed with sorted keys, line by line (Myers diff, no dependencies). Split or unified layout with a switch, line numbers, added/removed tints plus +/− markers and screen-reader text (never colour alone), word-level highlights inside paired lines, long unchanged runs collapsed behind "Expand N lines", +/− stats and optional file or version labels. The pure `diffLines`, `diffWords`, `diffJson` and `stableStringify` are exported.
+
+- Package: `@gntik-ai/ui` · export `DiffViewer` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/DiffViewer/DiffViewer.doc.ts
+- Primitive: `@base-ui/react/toggle-group`
+- ARIA pattern: region + toggle group
+- Registry dependencies: button, toggle-group, ui-utils
+- Install: `gntik-ui add diff-viewer`; own the source with `gntik-ui eject diff-viewer`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves to the view switch, the scrollable diff region and each "Expand N lines" button |
+| ArrowLeft / ArrowRight | In the view switch: moves between Unified and Split |
+| Enter / Space | In the view switch: selects the layout |
+| Enter / Space | On "Expand N lines": reveals the hidden lines and focuses the diff region |
+| ArrowUp / ArrowDown | In the focused region: scrolls the diff |
+
+Tokens: card, border, foreground, muted-foreground, secondary, success, success-text, destructive, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { DiffViewer } from '@gntik-ai/ui';
+
+const previous = { name: 'ingest-worker', replicas: 2, env: { LOG_LEVEL: 'info', REGION: 'eu-west' }, ports: [8080] };
+// Same keys in a different order: only real changes show up.
+const next = { ports: [8080, 9090], env: { REGION: 'eu-west', LOG_LEVEL: 'debug' }, replicas: 3, name: 'ingest-worker' };
+
+export default function DiffViewerJson() {
+  return <DiffViewer format="json" oldValue={previous} newValue={next} defaultMode="split" oldLabel="Revision 41" newLabel="Revision 42" aria-label="Revision changes" />;
 }
 ```
 
@@ -1085,6 +1330,101 @@ export default function TableSelectable() {
           ))}
         </TableBody>
       </Table>
+    </div>
+  );
+}
+```
+
+### Terminal (`terminal`)
+
+Streamed command output (build, deploy, job logs). ANSI SGR colours map to contrast-safe tokens (`parseAnsi` is exported), `\r` progress lines rewrite in place, and a line cap drops the oldest output. It follows the tail until the user scrolls up, then offers “Jump to latest” with the count of new lines. Optional line numbers and timestamps, a wrap toggle, copy all and search with highlighted matches. The output is a `role="log"` with aria-live off unless `live` opts in. Stream through the `ref` handle (`write`, `writeln`, `clear`) or pass `lines`.
+
+- Package: `@gntik-ai/ui` · export `Terminal` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Terminal/Terminal.doc.ts
+- ARIA pattern: log · button · searchbox
+- Registry dependencies: ui-utils
+- Install: `gntik-ui add terminal`; own the source with `gntik-ui eject terminal`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves through the search box, match arrows, wrap toggle, copy button and the output log |
+| End | In the log: jumps to the newest line and resumes following the tail |
+| Home | In the log: jumps to the first line and stops following |
+| Arrow keys / Page Up / Page Down | Scroll the focused log |
+| Ctrl+F / ⌘F | Inside the terminal: focuses the search box |
+| Enter / Shift+Enter | In the search box: next / previous match (scrolled into view) |
+| Escape | In the search box: clears the search |
+
+Tokens: card, background, border, popover, secondary, foreground, muted-foreground, destructive-text, success-text, warning-text, info, category-violet, warning, primary, primary-text, focus-ring
+
+Usage:
+
+```tsx
+import { Play, RotateCcw } from '@gntik-ai/icons';
+import { useEffect, useRef, useState } from 'react';
+import { Button } from '@gntik-ai/ui';
+import { Terminal, type TerminalHandle } from '@gntik-ai/ui';
+
+const E = '\u001b[';
+/** A fake build: ANSI-coloured lines, one progress line rewritten with `\r`, then a summary. */
+const SCRIPT: string[] = [
+  `${E}2m$ ${E}0mpnpm build\n`,
+  `${E}36minfo${E}0m  resolving 412 packages\n`,
+  `${E}36minfo${E}0m  compiling ${E}1m@acme/web${E}0m\n`,
+  'progress  25%',
+  '\rprogress  50%',
+  '\rprogress  75%',
+  '\rprogress 100%\n',
+  `${E}33mwarn${E}0m  bundle "vendor" is 612 kB (limit 500 kB)\n`,
+  `${E}32m✓${E}0m built in 4.2s · ${E}1m3 entries${E}0m\n`,
+  `${E}31merror${E}0m  test "checkout › applies coupon" failed\n`,
+  `${E}90m  at checkout.test.ts:42:7${E}0m\n`,
+  `${E}1;31m✗ 1 failed${E}0m, ${E}32m128 passed${E}0m\n`,
+];
+
+export default function TerminalBuildLog() {
+  const term = useRef<TerminalHandle>(null);
+  const [running, setRunning] = useState(false);
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (!running) return;
+    const id = window.setInterval(() => {
+      setStep((n) => {
+        const chunk = SCRIPT[n];
+        if (chunk === undefined) {
+          setRunning(false);
+          return n;
+        }
+        term.current?.write(chunk);
+        return n + 1;
+      });
+    }, 350);
+    return () => window.clearInterval(id);
+  }, [running]);
+
+  return (
+    <div className="grid w-full max-w-2xl gap-3">
+      <div className="flex gap-2">
+        <Button size="sm" icon={Play} disabled={running || step >= SCRIPT.length} onClick={() => setRunning(true)}>
+          Run build
+        </Button>
+        <Button
+          size="sm"
+          variant="secondary"
+          icon={RotateCcw}
+          onClick={() => {
+            setRunning(false);
+            setStep(0);
+            term.current?.clear();
+          }}
+        >
+          Reset
+        </Button>
+      </div>
+      <Terminal ref={term} title="build · main" showLineNumbers emptyText="Press “Run build” to stream output." className="h-72" />
     </div>
   );
 }
@@ -1748,13 +2088,13 @@ import { Spinner } from '@gntik-ai/ui';
 
 ### Toast (`toast`)
 
-Short-lived notification stacked bottom-right. Five tones (neutral, success, info, warning, destructive), title, description, one inline action and a close button; auto-dismiss pauses on hover and focus. Mount ToastProvider + Toaster once and queue with the useToast() hook.
+Short-lived notification stacked bottom-right. Five tones (neutral, success, info, warning, destructive) plus loading, title, description, a primary action and a dismiss action next to the close button; auto-dismiss pauses while the stack is hovered or focused. `toast.promise(task, { loading, success, error })` updates one toast in place (errors are announced assertively). Mount ToastProvider + Toaster once and queue with the useToast() hook.
 
 - Package: `@gntik-ai/ui` · export `Toast` · group Feedback · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Toast/Toast.doc.ts
 - Primitive: `@base-ui/react/toast`
 - ARIA pattern: region + live announcements (status)
-- Registry dependencies: ui-utils
+- Registry dependencies: spinner, ui-utils
 - Install: `gntik-ui add toast`; own the source with `gntik-ui eject toast`
 
 Keyboard:
@@ -1762,45 +2102,75 @@ Keyboard:
 | Key | Behaviour |
 | --- | --- |
 | F6 | Moves focus into the notifications region (pauses auto-dismiss) |
-| Tab / Shift+Tab | Reaches each toast’s action and close button |
-| Enter / Space | On the close button: dismisses the toast |
+| Tab / Shift+Tab | Reaches each toast’s primary action, dismiss action and close button |
+| Enter / Space | On the close button or dismiss action: dismisses the toast (an action also runs its handler) |
 
 Tokens: popover, popover-foreground, border, foreground, muted-foreground, success-text, info, warning-text, destructive-text, focus-ring
 
 Usage:
 
 ```tsx
+import { useState } from 'react';
 import { Button } from '@gntik-ai/ui';
 import { ToastProvider, Toaster, useToast } from '@gntik-ai/ui';
-import type { ToastOptions } from '@gntik-ai/ui';
 
-const SAMPLES: Array<{ label: string; toast: ToastOptions }> = [
-  { label: 'Success', toast: { tone: 'success', title: 'Deployment complete', description: 'support-triage is serving traffic in eu-west-1.' } },
-  { label: 'Info', toast: { tone: 'info', title: 'New version available', description: 'Projects update tonight during the maintenance window.' } },
-  { label: 'Warning', toast: { tone: 'warning', title: 'Budget at 92%', description: '$9.2k of $10k used this month.' } },
-  { label: 'Error', toast: { tone: 'destructive', title: 'Deployment failed', description: 'us-east-1 has not responded for 4 minutes.' } },
-  { label: 'Neutral', toast: { title: 'Settings saved' } },
-];
-
-function Buttons() {
+function InviteButton() {
   const toast = useToast();
+  const [status, setStatus] = useState('No reply yet');
   return (
-    <div className="flex flex-wrap justify-center gap-2">
-      {SAMPLES.map(({ label, toast: options }) => (
-        <Button key={label} variant="secondary" size="sm" onClick={() => toast.add(options)}>
-          {label}
-        </Button>
-      ))}
+    <div className="flex flex-col items-center gap-3">
+      <Button
+        variant="secondary"
+        onClick={() =>
+          toast.add({
+            tone: 'info',
+            title: 'You were invited to “Platform”',
+            description: 'Join the workspace to see its projects.',
+            timeout: 10000,
+            action: { label: 'Accept', onClick: () => setStatus('Accepted') },
+            dismissAction: { label: 'Not now', onClick: () => setStatus('Postponed') },
+          })
+        }
+      >
+        Show invitation
+      </Button>
+      <p className="h-4 text-[12px] text-muted-foreground">{status}</p>
     </div>
   );
 }
 
-export default function ToastTones() {
+export default function ToastActions() {
   return (
     <ToastProvider>
-      <Buttons />
+      <InviteButton />
       <Toaster />
     </ToastProvider>
+  );
+}
+```
+
+### TypingIndicator (`typing-indicator`)
+
+Three pulsing dots shown while a reply is being written, with the text "Assistant is typing" for screen readers (or visible with `showLabel`). The dots are decorative and hold still under reduced motion. ChatMessage renders it while a streaming turn is still empty.
+
+- Package: `@gntik-ai/chat` · export `TypingIndicator` · group Feedback · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/TypingIndicator/TypingIndicator.doc.ts
+- Install: `gntik-ui add typing-indicator`; own the source with `gntik-ui eject typing-indicator`
+
+Tokens: muted-foreground
+
+Usage:
+
+```tsx
+import { TypingIndicator } from '@gntik-ai/chat';
+
+export default function TypingIndicatorStates() {
+  return (
+    <div className="flex flex-col items-start gap-4">
+      <TypingIndicator />
+      <TypingIndicator showLabel />
+      <TypingIndicator size="sm" author="Reviewer" showLabel />
+    </div>
   );
 }
 ```
@@ -1861,10 +2231,11 @@ export default function CalendarRange() {
 
 ### ChatComposer (`chat-composer`)
 
-Chat input: autosizing textarea, Enter sends and Shift+Enter adds a line, removable attachment chips, a model-picker slot, a character counter near the limit, a disabled state, and a Stop button while a reply streams.
+Chat input: autosizing textarea, Enter sends and Shift+Enter adds a line, attachments (pick, paste or drag-and-drop files; `accept`, `maxSize` and `maxFiles` validation with messages in an alert; chips with image thumbnails, file-type icons, size, upload progress, error + Retry and Remove), a model-picker slot (e.g. a compact ModelPicker), a character counter near the limit, a disabled state, and a Stop button while a reply streams.
 
 - Package: `@gntik-ai/chat` · export `ChatComposer` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ChatComposer/ChatComposer.doc.ts
+- Registry dependencies: attachment
 - Install: `gntik-ui add chat-composer`; own the source with `gntik-ui eject chat-composer`
 
 Keyboard:
@@ -1874,35 +2245,79 @@ Keyboard:
 | Enter | Sends the message (ignored while streaming or during IME composition) |
 | Shift+Enter | Inserts a new line |
 | Escape | While a reply streams: stops it |
-| Tab | Moves from the text box to attachment remove buttons, tools, the model picker and Send/Stop |
+| Tab | Moves through attachment Retry/Remove buttons, the text box, attach, tools, the model picker and Send/Stop |
+| Ctrl/⌘+V | In the text box: pasted files are attached (validated) instead of inserted |
 
-Tokens: card, border, primary, ring, secondary, muted-foreground, destructive-text, focus-ring
+Tokens: card, destructive-chip-text, primary-text, border, primary, ring, secondary, muted-foreground, destructive-text, focus-ring
 
 Usage:
 
 ```tsx
-import { SimpleSelect } from '@gntik-ai/ui';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { ModelPicker, DEMO_MODELS } from '@gntik-ai/chat';
 import { ChatComposer, type ComposerAttachment } from '@gntik-ai/chat';
 
-const MODELS = [
-  { value: 'fast', label: 'Fast' },
-  { value: 'balanced', label: 'Balanced' },
-  { value: 'deep', label: 'Deep reasoning' },
-];
+let seq = 0;
 
 export default function ChatComposerFull() {
   const [model, setModel] = useState<string | null>('balanced');
-  const [files, setFiles] = useState<ComposerAttachment[]>([{ id: 'f1', name: 'invoices-september.csv', size: 48_213 }]);
+  const [files, setFiles] = useState<ComposerAttachment[]>([
+    { id: 'f1', name: 'invoices-september.csv', size: 48_213, type: 'text/csv' },
+    { id: 'f2', name: 'release-notes.md', size: 9_042, error: 'Network error' },
+  ]);
   const [sent, setSent] = useState<string[]>([]);
+  const timers = useRef<Array<ReturnType<typeof setInterval>>>([]);
+  const urls = useRef<string[]>([]);
+
+  useEffect(
+    () => () => {
+      timers.current.forEach(clearInterval);
+      urls.current.forEach((u) => URL.revokeObjectURL?.(u));
+    },
+    [],
+  );
+
+  // Mock upload: progress ticks to 100.
+  const upload = (id: string) => {
+    const timer = setInterval(() => {
+      setFiles((all) =>
+        all.map((f) => {
+          if (f.id !== id) return f;
+          const progress = Math.min(100, (f.progress ?? 0) + 20);
+          if (progress >= 100) clearInterval(timer);
+          return { ...f, progress };
+        }),
+      );
+    }, 300);
+    timers.current.push(timer);
+  };
+
+  const attach = (picked: File[]) => {
+    const added = picked.map((p) => {
+      const id = `file-${++seq}`;
+      const previewUrl = p.type.startsWith('image/') && typeof URL.createObjectURL === 'function' ? URL.createObjectURL(p) : undefined;
+      if (previewUrl) urls.current.push(previewUrl);
+      return { id, name: p.name, size: p.size, type: p.type, previewUrl, progress: 0 };
+    });
+    setFiles((f) => [...f, ...added]);
+    added.forEach((a) => upload(a.id));
+  };
+
   return (
     <div className="max-w-2xl">
       <ChatComposer
         maxLength={2000}
         attachments={files}
-        onAttach={(picked) => setFiles((f) => [...f, ...picked.map((p, i) => ({ id: `${p.name}-${Date.now()}-${i}`, name: p.name, size: p.size }))])}
+        accept=".pdf,.csv,.md,.txt,image/*"
+        maxSize={10 * 1024 * 1024}
+        maxFiles={5}
+        onAttach={attach}
         onRemoveAttachment={(id) => setFiles((f) => f.filter((x) => x.id !== id))}
-        modelPicker={<SimpleSelect aria-label="Model" size="sm" items={MODELS} value={model} onValueChange={setModel} />}
+        onRetryAttachment={(id) => {
+          setFiles((f) => f.map((x) => (x.id === id ? { ...x, error: undefined, progress: 0 } : x)));
+          upload(id);
+        }}
+        modelPicker={<ModelPicker compact models={DEMO_MODELS} value={model} onValueChange={setModel} />}
         onSubmit={(text) => {
           setSent((s) => [text, ...s].slice(0, 3));
           setFiles([]);
@@ -2033,13 +2448,13 @@ export default function ClickableCardList() {
 
 ### Combobox (`combobox`)
 
-Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children.
+Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row).
 
 - Package: `@gntik-ai/ui` · export `Combobox` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Combobox/Combobox.doc.ts
 - Primitive: `@base-ui/react/combobox`
 - ARIA pattern: combobox (list autocomplete) + listbox
-- Registry dependencies: select, ui-utils
+- Registry dependencies: select, spinner, ui-utils
 - Install: `gntik-ui add combobox`; own the source with `gntik-ui eject combobox`
 
 Keyboard:
@@ -2051,47 +2466,62 @@ Keyboard:
 | Enter | Selects the highlighted option (adds a chip in multi-select) |
 | Escape | Closes the popup, keeping focus in the input |
 | Backspace | Multi-select, empty input: removes the last chip |
+| Enter on “Create …” / “Retry” | Creates an item from the typed text (onCreate) / loads the options again after an error |
 
 Tokens: background, border, popover, popover-foreground, primary, primary-text, secondary, muted-foreground, focus-ring
 
 Usage:
 
 ```tsx
-import { useState } from 'react';
 import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from '@gntik-ai/ui';
 
-interface Runtime {
+interface Member {
   value: string;
   label: string;
-  note: string;
+  email: string;
 }
 
-const runtimes: Runtime[] = [
-  { value: 'node-24', label: 'node-24', note: 'JavaScript' },
-  { value: 'node-22', label: 'node-22', note: 'JavaScript' },
-  { value: 'python-3.13', label: 'python-3.13', note: 'Python' },
-  { value: 'python-3.12', label: 'python-3.12', note: 'Python' },
-  { value: 'go-1.24', label: 'go-1.24', note: 'Go' },
-  { value: 'java-21', label: 'java-21', note: 'Java' },
-  { value: 'ruby-3.4', label: 'ruby-3.4', note: 'Ruby' },
+const DIRECTORY: Member[] = [
+  { value: 'emma', label: 'Emma Crown', email: 'emma@example.com' },
+  { value: 'leo', label: 'Leo Park', email: 'leo@example.com' },
+  { value: 'mara', label: 'Mara Vidal', email: 'mara@example.com' },
+  { value: 'noah', label: 'Noah Frey', email: 'noah@example.com' },
+  { value: 'ines', label: 'Ines Roca', email: 'ines@example.com' },
+  { value: 'omar', label: 'Omar Haddad', email: 'omar@example.com' },
+  { value: 'yuki', label: 'Yuki Sato', email: 'yuki@example.com' },
 ];
 
-export default function ComboboxBasic() {
-  const [runtime, setRuntime] = useState<Runtime | null>(runtimes[0] ?? null);
+/** Stands in for `fetch('/api/members?q=…', { signal })`: resolves after a short delay, honours abort. */
+function searchMembers(query: string, { signal }: { signal: AbortSignal }): Promise<Member[]> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      const q = query.toLowerCase();
+      resolve(DIRECTORY.filter((m) => `${m.label} ${m.email}`.toLowerCase().includes(q)));
+    }, 300);
+    signal.addEventListener('abort', () => {
+      clearTimeout(timer);
+      reject(new DOMException('Aborted', 'AbortError'));
+    });
+  });
+}
+
+export default function ComboboxAsync() {
   return (
     <div className="w-full max-w-sm">
-      <Combobox items={runtimes} value={runtime} onValueChange={setRuntime}>
-        <ComboboxInput label="Function runtime" placeholder="Search runtimes…" showClear />
-        <ComboboxContent emptyText="No runtimes match.">
-          {(item: Runtime) => (
-            <ComboboxItem key={item.value} value={item}>
-              <span className="truncate font-medium">{item.label}</span>
-              <span className="ms-auto font-mono text-[11px] text-muted-foreground">{item.note}</span>
+      <Combobox<Member> loadOptions={searchMembers} debounceMs={250}>
+        <ComboboxInput label="Assignee" placeholder="Search the directory…" showClear />
+        <ComboboxContent emptyText="No members match.">
+          {(m: Member) => (
+            <ComboboxItem key={m.value} value={m}>
+              <span className="flex min-w-0 flex-col leading-tight">
+                <span className="truncate font-medium">{m.label}</span>
+                <span className="truncate font-mono text-[11px] text-muted-foreground">{m.email}</span>
+              </span>
             </ComboboxItem>
           )}
         </ComboboxContent>
       </Combobox>
-      <p className="mt-2 text-[12px] text-muted-foreground">Type to filter; Enter picks the highlighted runtime.</p>
+      <p className="mt-2 text-[12px] text-muted-foreground">Results load as you type; stale requests are cancelled.</p>
     </div>
   );
 }
@@ -2099,13 +2529,13 @@ export default function ComboboxBasic() {
 
 ### DatePicker (`date-picker`)
 
-Date field: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field.
+Date field: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done.
 
 - Package: `@gntik-ai/ui` · export `DatePicker` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/DatePicker/DatePicker.doc.ts
-- Primitive: `@base-ui/react/popover + Calendar`
+- Primitive: `@base-ui/react/popover + Calendar (+ TimePicker with `withTime`)`
 - ARIA pattern: combobox with a dialog popup (date picker dialog)
-- Registry dependencies: calendar, popover, ui-utils
+- Registry dependencies: button, calendar, popover, time-picker, ui-utils
 - Install: `gntik-ui add date-picker`; own the source with `gntik-ui eject date-picker`
 
 Keyboard:
@@ -2114,8 +2544,9 @@ Keyboard:
 | --- | --- |
 | Enter / Space | On the field: opens the calendar with focus on the selected day (or today) |
 | Arrow keys / PageUp / PageDown / Home / End | Move through the calendar (see Calendar) |
-| Enter | In the calendar: picks the day (range: start, then end) and closes |
+| Enter | In the calendar: picks the day (range: start, then end) and closes (`withTime`: stays open) |
 | Escape | Closes the popup and returns focus to the field |
+| Tab | `withTime`: from the calendar to the time segments and Done (see TimePicker for their keys) |
 
 Tokens: background, border, foreground, muted-foreground, popover, primary, primary-text, secondary, destructive, focus-ring
 
@@ -2148,6 +2579,64 @@ export default function DatePickerBasic() {
         <DatePicker defaultValue={new Date(2026, 0, 1)} locale="en-US" disabled />
       </Field>
       <DatePicker aria-label="Report date" size="sm" locale="en-US" today={today} placeholder="Any day" />
+    </div>
+  );
+}
+```
+
+### DateTimeRangePicker (`date-time-range-picker`)
+
+Time range field for logs and metrics: quick presets (last 15 minutes, 1 hour, 24 hours, 7 days, 30 days, custom), a relative "Last N minutes/hours/days" mode and an absolute mode with a range Calendar plus start and end TimePickers, validated so the end is after the start. The value is serialisable: `{ mode: "relative", amount, unit }` or `{ mode: "absolute", start, end }`; `resolveTimeRange` turns it into instants.
+
+- Package: `@gntik-ai/ui` · export `DateTimeRangePicker` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/DateTimeRangePicker/DateTimeRangePicker.doc.ts
+- Primitive: `@base-ui/react/popover + Calendar, TimePicker, NumberInput, Select, ToggleGroup`
+- ARIA pattern: combobox with a dialog popup
+- Registry dependencies: button, calendar, date-picker, number-input, popover, select, time-picker, toggle-group, ui-utils
+- Install: `gntik-ui add date-time-range-picker`; own the source with `gntik-ui eject date-time-range-picker`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Enter / Space | On the field: opens the popup with focus on the active preset |
+| Tab / Shift+Tab | Moves through presets, the mode switch, the editors and Apply |
+| Enter / Space | On a preset: applies it and closes; on Custom range: switches to absolute mode and focuses the calendar |
+| ArrowLeft / ArrowRight | In the mode switch: moves between Relative and Absolute |
+| Arrow keys / PageUp / PageDown | In the calendar: move between days (see Calendar); in the time fields: spin (see TimePicker) |
+| Escape | Closes the popup without applying and returns focus to the field |
+
+Tokens: background, border, foreground, muted-foreground, popover, primary, primary-chip-text, secondary, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Field, FieldDescription, FieldLabel } from '@gntik-ai/ui';
+import { DateTimeRangePicker } from '@gntik-ai/ui';
+import type { TimeRangeValue } from '@gntik-ai/ui';
+
+const now = new Date(2026, 5, 15, 12, 0);
+
+export default function DateTimeRangePickerBasic() {
+  const [range, setRange] = useState<TimeRangeValue | null>({ mode: 'relative', amount: 24, unit: 'hour' });
+  return (
+    <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+      <Field>
+        <FieldLabel>Log window</FieldLabel>
+        <DateTimeRangePicker value={range} onValueChange={setRange} locale="en-US" hourCycle={24} now={now} name="window" />
+        <FieldDescription>Relative ranges end now; custom ranges are absolute.</FieldDescription>
+      </Field>
+      <Field>
+        <FieldLabel>Incident period</FieldLabel>
+        <DateTimeRangePicker
+          defaultValue={{ mode: 'absolute', start: new Date(2026, 5, 12, 8, 30), end: new Date(2026, 5, 12, 11, 0) }}
+          locale="en-US"
+          hourCycle={24}
+          now={now}
+          max={now}
+        />
+      </Field>
     </div>
   );
 }
@@ -2276,6 +2765,57 @@ export default function InputAddons() {
 }
 ```
 
+### KeyValueEditor (`key-value-editor`)
+
+Editable list of key/value rows (environment variables, headers, labels): add and remove rows (no reordering), per-row validation (required key, key pattern, duplicate keys, optional required value and a custom `validate`), secret rows whose values are masked with a reveal toggle, bulk paste of `.env` text (comments ignored, existing keys updated) and "Copy as .env". Controlled (`value` + `onChange`) or uncontrolled. `parseEnv`, `serializeEnv`, `validateKeyValueRows` and `createKeyValueRow` are exported.
+
+- Package: `@gntik-ai/ui` · export `KeyValueEditor` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/KeyValueEditor/KeyValueEditor.doc.ts
+- Primitive: `@base-ui/react/input`
+- ARIA pattern: group of textboxes + toggle buttons
+- Registry dependencies: button, copy-button, input, live-announcer, password-input, textarea, ui-utils
+- Install: `gntik-ui add key-value-editor`; own the source with `gntik-ui eject key-value-editor`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves through each row: key, value, secret toggle, remove; then Add, Paste .env and Copy as .env |
+| Enter / Space | On Add variable: appends a row and focuses its key |
+| Enter / Space | On Remove: deletes the row, announces it and focuses the next row (or Add) |
+| Enter / Space | On the secret toggle: masks or unmasks the value (aria-pressed) |
+| Ctrl / ⌘ + V | In a key field, multi-line KEY=value text is imported as rows |
+
+Tokens: background, border, card, foreground, muted-foreground, secondary, destructive, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { createKeyValueRow, type KeyValueRow } from '@gntik-ai/ui';
+import { KeyValueEditor } from '@gntik-ai/ui';
+
+const initial: KeyValueRow[] = [
+  createKeyValueRow('API_URL', 'https://api.example.com'),
+  createKeyValueRow('LOG_LEVEL', 'info'),
+  createKeyValueRow('DATABASE_PASSWORD', 'change-me-in-production', true),
+];
+
+/** Controlled: the parent keeps the rows and the validity (e.g. to disable Save). */
+export default function KeyValueEditorEnv() {
+  const [rows, setRows] = useState(initial);
+  const [valid, setValid] = useState(true);
+  return (
+    <div className="flex max-w-2xl flex-col gap-3">
+      <KeyValueEditor aria-label="Environment variables" value={rows} onChange={setRows} onValidityChange={(ok) => setValid(ok)} />
+      <p className="text-[12.5px] text-muted-foreground">
+        {rows.filter((r) => r.key).length} variables · {valid ? 'ready to save' : 'fix the highlighted rows to save'}
+      </p>
+    </div>
+  );
+}
+```
+
 ### ListInput (`list-input`)
 
 Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced.
@@ -2328,15 +2868,59 @@ export default function ListInputEnvVars() {
 }
 ```
 
+### ModelPicker (`model-picker`)
+
+Choose the model (and provider) for a conversation: options grouped by provider with a description, capability badges (vision, tools, reasoning, files, web, audio) and the context size; unavailable models stay listed, disabled, with the reason. `compact` gives a small borderless trigger for the ChatComposer toolbar. Controlled (`value` + `onValueChange`).
+
+- Package: `@gntik-ai/chat` · export `ModelPicker` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ModelPicker/ModelPicker.doc.ts
+- Primitive: `Select`
+- ARIA pattern: select-only combobox
+- Install: `gntik-ui add model-picker`; own the source with `gntik-ui eject model-picker`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Enter / Space / ArrowDown | On the trigger: opens the list |
+| ArrowDown / ArrowUp | Moves between models; a disabled one can be highlighted (its reason is read) but not selected |
+| Type a character | Jumps to the model whose name starts with it |
+| Enter | Selects the highlighted model and closes |
+| Escape | Closes without changing; focus returns to the trigger |
+
+Tokens: background, popover, border, secondary, primary, primary-text, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { ModelPicker } from '@gntik-ai/chat';
+import { DEMO_MODELS } from '@gntik-ai/chat';
+
+export default function ModelPickerProviders() {
+  const [model, setModel] = useState<string | null>('balanced');
+  const [compactModel, setCompactModel] = useState<string | null>('swift');
+  return (
+    <div className="flex flex-col items-start gap-4">
+      <ModelPicker models={DEMO_MODELS} value={model} onValueChange={setModel} />
+      <div className="flex items-center gap-2 rounded-lg border border-border bg-card p-1.5">
+        <span className="ps-1.5 text-[12px] text-muted-foreground">Composer toolbar</span>
+        <ModelPicker compact models={DEMO_MODELS} value={compactModel} onValueChange={setCompactModel} />
+      </div>
+    </div>
+  );
+}
+```
+
 ### MultiSelect (`multi-select`)
 
-Searchable multi-select: selected options as removable chips (extra ones collapse into "+N"), a "Select all" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field.
+Searchable multi-select: selected options as removable chips (extra ones collapse into "+N"), a "Select all" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`).
 
 - Package: `@gntik-ai/ui` · export `MultiSelect` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/MultiSelect/MultiSelect.doc.ts
 - Primitive: `@base-ui/react/combobox`
 - ARIA pattern: combobox (multi-select listbox)
-- Registry dependencies: combobox, ui-utils
+- Registry dependencies: combobox, spinner, ui-utils
 - Install: `gntik-ui add multi-select`; own the source with `gntik-ui eject multi-select`
 
 Keyboard:
@@ -2348,6 +2932,7 @@ Keyboard:
 | Enter | Toggles the highlighted option (on "Select all": selects or clears every option) |
 | Escape | Closes the popup, keeping focus in the input |
 | Backspace | On an empty input, removes the last chip |
+| Enter on “Create …” / “Retry” | Creates and selects an option from the typed text / loads the options again after an error |
 
 Tokens: background, border, popover, popover-foreground, primary, primary-text, secondary, muted-foreground, destructive, focus-ring
 
@@ -2357,23 +2942,42 @@ Usage:
 import { useState } from 'react';
 import { MultiSelect, type MultiSelectOption } from '@gntik-ai/ui';
 
-const regions: MultiSelectOption[] = [
-  { value: 'us-east', label: 'US East', description: 'Virginia' },
-  { value: 'us-west', label: 'US West', description: 'Oregon' },
-  { value: 'eu-west', label: 'EU West', description: 'Ireland' },
-  { value: 'eu-central', label: 'EU Central', description: 'Frankfurt' },
-  { value: 'ap-south', label: 'Asia Pacific', description: 'Mumbai' },
-  { value: 'sa-east', label: 'South America', description: 'São Paulo', disabled: true },
+const TOPICS: MultiSelectOption[] = [
+  { value: 'billing', label: 'billing', description: '128 issues' },
+  { value: 'onboarding', label: 'onboarding', description: '42 issues' },
+  { value: 'performance', label: 'performance', description: '77 issues' },
+  { value: 'search', label: 'search', description: '19 issues' },
+  { value: 'security', label: 'security', description: '35 issues' },
 ];
 
-export default function MultiSelectBasic() {
-  const [value, setValue] = useState(['us-east', 'eu-west', 'eu-central', 'ap-south']);
+/** Stands in for `fetch('/api/topics?q=…', { signal })`. */
+function searchTopics(query: string, { signal }: { signal: AbortSignal }): Promise<MultiSelectOption[]> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => resolve(TOPICS.filter((t) => t.label.includes(query.toLowerCase()))), 250);
+    signal.addEventListener('abort', () => {
+      clearTimeout(timer);
+      reject(new DOMException('Aborted', 'AbortError'));
+    });
+  });
+}
+
+export default function MultiSelectAsync() {
+  const [value, setValue] = useState<string[]>([]);
   return (
     <div className="w-full max-w-sm">
-      <MultiSelect label="Deployment regions" options={regions} value={value} onValueChange={setValue} maxVisibleChips={2} placeholder="Search regions…" />
-      <p className="mt-2 text-[12px] text-muted-foreground">
-        {value.length} of {regions.length} regions selected. South America is not available on this plan.
-      </p>
+      <MultiSelect
+        label="Topics"
+        placeholder="Search or create topics…"
+        options={[]}
+        value={value}
+        onValueChange={setValue}
+        loadOptions={searchTopics}
+        onCreate={(input) => {
+          const created = { value: input.toLowerCase(), label: input.toLowerCase(), description: 'New topic' };
+          TOPICS.push(created);
+          return created;
+        }}
+      />
     </div>
   );
 }
@@ -2531,6 +3135,89 @@ export default function PasswordInputBasic() {
 }
 ```
 
+### PermissionMatrix (`permission-matrix`)
+
+Roles (columns) × permissions (rows grouped in sections) editor. Cells are tri-state — allowed, denied, inherited — shown with an icon and a word, never colour alone; inherited cells are dashed and can say what they resolve to. Read-only columns (e.g. owner) and per-cell disabled reasons in a tooltip; controlled `value` + `onChange`; one tab stop with grid arrow-key navigation.
+
+- Package: `@gntik-ai/ui` · export `PermissionMatrix` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/PermissionMatrix/PermissionMatrix.doc.ts
+- Primitive: `native table (role="grid") + @base-ui/react/tooltip`
+- ARIA pattern: data grid (roving tabindex)
+- Registry dependencies: tooltip, ui-utils
+- Install: `gntik-ui add permission-matrix`; own the source with `gntik-ui eject permission-matrix`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Enters and leaves the grid (one tab stop, on the last focused cell) |
+| ArrowLeft / ArrowRight / ArrowUp / ArrowDown | Moves between cells (left/right mirror in RTL); section headings are skipped |
+| Home / End | First / last cell of the row |
+| Ctrl+Home / Ctrl+End | First / last cell of the grid |
+| PageUp / PageDown | First / last cell of the column |
+| Enter / Space | Cycles the cell: allowed → denied → inherited |
+| A / D / I | Sets the cell to allowed / denied / inherited |
+
+Tokens: card, border, secondary, foreground, muted-foreground, success, success-chip-text, destructive, destructive-chip-text, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { PermissionMatrix, type PermissionMatrixValue, type PermissionRole, type PermissionSection } from '@gntik-ai/ui';
+
+const roles: PermissionRole[] = [
+  { id: 'owner', label: 'Owner', readOnly: true, readOnlyReason: 'Owners always have every permission.' },
+  { id: 'admin', label: 'Admin' },
+  { id: 'member', label: 'Member' },
+  { id: 'viewer', label: 'Viewer', description: 'Inherits from Member' },
+];
+
+const sections: PermissionSection[] = [
+  {
+    id: 'projects',
+    label: 'Projects',
+    permissions: [
+      { id: 'projects.read', label: 'View projects' },
+      { id: 'projects.write', label: 'Edit projects', description: 'Rename, archive and change settings' },
+      { id: 'projects.delete', label: 'Delete projects' },
+    ],
+  },
+  {
+    id: 'billing',
+    label: 'Billing',
+    permissions: [
+      { id: 'billing.read', label: 'View invoices' },
+      { id: 'billing.manage', label: 'Manage payment methods' },
+    ],
+  },
+];
+
+const all = (state: 'allowed' | 'denied') => Object.fromEntries(sections.flatMap((s) => s.permissions.map((p) => [p.id, state])));
+
+const initial: PermissionMatrixValue = {
+  owner: all('allowed'),
+  admin: { 'projects.read': 'allowed', 'projects.write': 'allowed', 'projects.delete': 'allowed', 'billing.read': 'allowed', 'billing.manage': 'denied' },
+  member: { 'projects.read': 'allowed', 'projects.write': 'allowed', 'projects.delete': 'denied', 'billing.read': 'denied', 'billing.manage': 'denied' },
+  viewer: { 'projects.write': 'denied' },
+};
+
+export default function PermissionMatrixBasic() {
+  const [value, setValue] = useState(initial);
+  return (
+    <PermissionMatrix
+      caption="Workspace roles"
+      roles={roles}
+      sections={sections}
+      value={value}
+      onChange={setValue}
+      resolveInherited={(roleId, permissionId) => (roleId === 'viewer' ? (value.member?.[permissionId] === 'denied' ? 'denied' : 'allowed') : undefined)}
+      getDisabledReason={(roleId, permissionId) => (roleId === 'member' && permissionId === 'billing.manage' ? 'Only admins can manage payment methods.' : undefined)}
+    />
+  );
+}
+```
+
 ### PowerSearch (`power-search`)
 
 Structured filter input: pick a field, an operator and a value from suggestions (or type `status=failed`, `cost>100`), add free text, and edit committed terms from the keyboard. Emits a typed query AST (`{ type: "and", terms }`) with parse / format / match helpers; fields, operators and values are props.
@@ -2589,6 +3276,41 @@ export default function PowerSearchDeployments() {
 }
 ```
 
+### QueryBuilder (`query-builder`)
+
+Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for "between"); add and remove conditions and groups up to `maxDepth`. The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record.
+
+- Package: `@gntik-ai/ui` · export `QueryBuilder` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/QueryBuilder/QueryBuilder.doc.ts
+- Primitive: `Select, MultiSelect, Input, NumberInput, DatePicker, ToggleGroup, Button`
+- ARIA pattern: nested groups of form controls
+- Registry dependencies: button, calendar, date-picker, input, multi-select, number-input, select, toggle-group, ui-utils
+- Install: `gntik-ui add query-builder`; own the source with `gntik-ui eject query-builder`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Moves through each condition's field, operator, value and remove button, then the group's buttons |
+| Enter / Space | On Add condition / Add group: adds it and focuses its first field; on a remove button: removes it and focuses Add condition |
+| ArrowLeft / ArrowRight | In a group's AND / OR switch: moves between the options (Enter / Space picks) |
+| Enter / Space / ArrowDown | On a field, operator or enum value: opens its list (see Select) |
+
+Tokens: card, secondary, border, foreground, muted-foreground, primary, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { QueryBuilder } from '@gntik-ai/ui';
+import { deploymentFields, deploymentQuery } from '@gntik-ai/ui';
+
+export default function QueryBuilderBasic() {
+  const [query, setQuery] = useState(deploymentQuery);
+  return <QueryBuilder aria-label="Deployment filter" fields={deploymentFields} value={query} onChange={setQuery} locale="en-US" showPreview className="max-w-4xl" />;
+}
+```
+
 ### RadioGroup (`radio-group`)
 
 Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants.
@@ -2635,15 +3357,106 @@ export default function RadioGroupCards() {
 }
 ```
 
+### ScheduleInput (`schedule-input`)
+
+Cron schedule editor: presets (hourly at minute, daily at, weekly on days at, monthly on day at) that write a 5-field cron expression, plus a raw cron field (*, lists, ranges, steps, names, macros) with validation and an error message, a plain-language summary ("Every weekday at 09:00") and the next runs in a time zone. Pure helpers: parseCron, describeCron, nextRuns.
+
+- Package: `@gntik-ai/ui` · export `ScheduleInput` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/ScheduleInput/ScheduleInput.doc.ts
+- Primitive: `@base-ui/react/toggle-group + Field, Input, NumberInput, TimePicker`
+- ARIA pattern: group of form controls (segmented control, textbox, spinbuttons)
+- Registry dependencies: calendar, field, input, number-input, time-picker, toggle-group, ui-utils
+- Install: `gntik-ui add schedule-input`; own the source with `gntik-ui eject schedule-input`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Moves between the frequency tabs, the preset fields and the cron field |
+| ArrowLeft / ArrowRight | In the frequency or weekday group: moves between options |
+| Enter / Space | Picks the focused frequency, or toggles the focused weekday |
+| ArrowUp / ArrowDown | In the minute, day or time fields: steps the value |
+| Type in the cron field | Re-validates, updates the summary and the next runs, and selects the preset that fits |
+
+Tokens: background, border, card, foreground, muted-foreground, primary, secondary, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { ScheduleInput } from '@gntik-ai/ui';
+
+const now = new Date(Date.UTC(2026, 5, 15, 7, 30));
+
+export default function ScheduleInputBasic() {
+  const [cron, setCron] = useState('0 9 * * 1-5');
+  return (
+    <div className="flex max-w-xl flex-col gap-6">
+      <ScheduleInput aria-label="Report schedule" value={cron} onValueChange={setCron} timeZone="Europe/Madrid" locale="en-US" now={now} name="schedule" />
+    </div>
+  );
+}
+```
+
+### SecretField (`secret-field`)
+
+A secret value (API key, token, connection string) on Input: masked by default (fixed-length mask, optional visible prefix/suffix), a reveal toggle (aria-pressed), a CopyButton that copies the real value and announces it, an optional Rotate action behind an AlertDialog confirmation, and optional created / last-used meta. Read-only by default (`editable` turns it into a password field). While masked and read-only the secret is not in the DOM, and it is never put in a title or tooltip. `maskSecret` is exported too.
+
+- Package: `@gntik-ai/ui` · export `SecretField` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/SecretField/SecretField.doc.ts
+- Primitive: `@base-ui/react/input`
+- ARIA pattern: read-only textbox + toggle button + button
+- Registry dependencies: alert-dialog, button, copy-button, input, live-announcer, timestamp, ui-utils
+- Install: `gntik-ui add secret-field`; own the source with `gntik-ui eject secret-field`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves through the field, the reveal toggle, Copy and Rotate |
+| Enter / Space | On the reveal toggle: shows or hides the value (aria-pressed) |
+| Enter / Space | On Copy: copies the secret and announces "Secret copied to clipboard" |
+| Enter / Space | On Rotate: opens the confirmation (focus moves into it) |
+| Escape | Closes the confirmation without rotating; focus returns to Rotate |
+
+Tokens: background, border, secondary, foreground, muted-foreground, primary-text, warning, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Field, FieldDescription, FieldLabel } from '@gntik-ai/ui';
+import { SecretField } from '@gntik-ai/ui';
+
+const DAY = 24 * 3600 * 1000;
+
+export default function SecretFieldBasic() {
+  const [now] = useState(() => Date.now());
+  return (
+    <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+      <Field>
+        <FieldLabel>API key</FieldLabel>
+        <SecretField value="sk_live_51Hc8xQ2eZvKYlo2C9a7d" visiblePrefix={8} visibleSuffix={4} createdAt={now - 12 * DAY} lastUsedAt={now - 2 * 3600 * 1000} />
+      </Field>
+      <Field>
+        <FieldLabel>Webhook signing secret</FieldLabel>
+        <SecretField value="whsec_3f9a0c1b7e2d4f6a8b0c" size="sm" lastUsedAt={null} />
+        <FieldDescription>Verify the signature header with this value.</FieldDescription>
+      </Field>
+    </div>
+  );
+}
+```
+
 ### Select (`select`)
 
-Pick one value from a short list in a popup. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children.
+Pick one value from a short list in a popup. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input).
 
 - Package: `@gntik-ai/ui` · export `Select` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Select/Select.doc.ts
 - Primitive: `@base-ui/react/select`
 - ARIA pattern: select-only combobox + listbox
-- Registry dependencies: ui-utils
+- Registry dependencies: combobox, spinner, ui-utils
 - Install: `gntik-ui add select`; own the source with `gntik-ui eject select`
 
 Keyboard:
@@ -2655,6 +3468,7 @@ Keyboard:
 | Enter | Selects the highlighted option and closes the popup |
 | Escape | Closes the popup and returns focus to the trigger |
 | Type a character | Typeahead: highlights the next option starting with it |
+| Escape, then Enter / ArrowDown | After a failed async load: closing and reopening the popup retries |
 
 Tokens: background, border, popover, popover-foreground, primary, primary-text, secondary, muted-foreground, ring, focus-ring
 
@@ -2662,29 +3476,39 @@ Usage:
 
 ```tsx
 import { useState } from 'react';
-import { SimpleSelect } from '@gntik-ai/ui';
+import { SimpleSelect, type SimpleSelectItem } from '@gntik-ai/ui';
 
-const regions = [
-  { value: 'eu-west', label: 'EU West · Frankfurt' },
-  { value: 'us-east', label: 'US East · Virginia' },
-  { value: 'us-west', label: 'US West · Oregon' },
-  { value: 'ap-south', label: 'AP South · Singapore (soon)', disabled: true },
-];
+/** Stands in for `fetch('/api/clusters', { signal })`: the list loads the first time the popup opens. */
+function loadClusters(_query: string, { signal }: { signal: AbortSignal }): Promise<SimpleSelectItem[]> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(
+      () =>
+        resolve([
+          { value: 'prod-eu', label: 'prod-eu · 12 nodes' },
+          { value: 'prod-us', label: 'prod-us · 9 nodes' },
+          { value: 'staging', label: 'staging · 3 nodes' },
+        ]),
+      400,
+    );
+    signal.addEventListener('abort', () => {
+      clearTimeout(timer);
+      reject(new DOMException('Aborted', 'AbortError'));
+    });
+  });
+}
 
-export default function SelectBasic() {
-  const [region, setRegion] = useState<string | null>('eu-west');
+export default function SelectAsync() {
+  const [cluster, setCluster] = useState<string | null>('prod-eu');
   return (
-    <div className="grid w-full max-w-sm gap-6">
-      <div>
-        <SimpleSelect label="Deployment region" items={regions} value={region} onValueChange={setRegion} />
-      </div>
-      <div>
-        <SimpleSelect label="Billing plan" placeholder="Choose a plan…" size="sm" items={[
-          { value: 'free', label: 'Free' },
-          { value: 'team', label: 'Team' },
-          { value: 'enterprise', label: 'Enterprise' },
-        ]} />
-      </div>
+    <div className="w-full max-w-sm">
+      <SimpleSelect
+        label="Target cluster"
+        // The selected value's label is known up front; the rest loads on open.
+        items={[{ value: 'prod-eu', label: 'prod-eu · 12 nodes' }]}
+        loadOptions={loadClusters}
+        value={cluster}
+        onValueChange={setCluster}
+      />
     </div>
   );
 }
@@ -2832,6 +3656,64 @@ export default function TextareaAutosize() {
             Versioned on every save; you can revert from the history.
           </FieldDescription>
         </div>
+      </Field>
+    </div>
+  );
+}
+```
+
+### TimePicker (`time-picker`)
+
+Accessible time field: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`"HH:mm"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it.
+
+- Package: `@gntik-ai/ui` · export `TimePicker` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/TimePicker/TimePicker.doc.ts
+- Primitive: `@base-ui/react/field (control) + spinbutton segments`
+- ARIA pattern: group of spinbuttons (time field)
+- Registry dependencies: ui-utils
+- Install: `gntik-ui add time-picker`; own the source with `gntik-ui eject time-picker`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Moves between segments, then out of the field |
+| ArrowUp / ArrowDown | Increments / decrements the focused segment (minutes by `step`), wrapping around |
+| Home / End | Sets the segment to its minimum / maximum |
+| 0–9 | Types into the segment; moves to the next one when it is full |
+| A / P | On the AM/PM segment: picks AM or PM |
+| ArrowLeft / ArrowRight | Moves to the previous / next segment |
+| Backspace / Delete | Clears the segment (the value becomes null) |
+
+Tokens: background, border, foreground, muted-foreground, primary, primary-chip-text, secondary, destructive, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Field, FieldDescription, FieldLabel } from '@gntik-ai/ui';
+import { TimePicker } from '@gntik-ai/ui';
+
+export default function TimePickerBasic() {
+  const [start, setStart] = useState<string | null>('09:00');
+  return (
+    <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+      <Field>
+        <FieldLabel>Maintenance window starts</FieldLabel>
+        <TimePicker value={start} onValueChange={setStart} hourCycle={24} step={15} name="window-start" />
+        <FieldDescription>Arrow keys move in 15-minute steps.</FieldDescription>
+      </Field>
+      <Field>
+        <FieldLabel>Reminder</FieldLabel>
+        <TimePicker defaultValue="17:30" hourCycle={12} locale="en-US" />
+      </Field>
+      <Field>
+        <FieldLabel>Timeout at</FieldLabel>
+        <TimePicker defaultValue="00:05:30" withSeconds hourCycle={24} />
+      </Field>
+      <Field disabled>
+        <FieldLabel>Locked time</FieldLabel>
+        <TimePicker defaultValue="12:00" hourCycle={24} disabled />
       </Field>
     </div>
   );
@@ -3037,11 +3919,11 @@ export default function CardVariants() {
 
 ### ChatDemo (`chat-demo`)
 
-Reference composition of the chat pack: suggestions in the empty state, a tool call, a streamed markdown reply with sources, Stop, Retry and feedback, and a resizable details panel. Streaming is mocked with timers that are cleaned up.
+Reference composition of the chat pack: suggestions in the empty state, attachments (pick, paste or drop), a compact ModelPicker in the composer, a tool call, a streamed markdown reply with sources (TypingIndicator, caret), Stop, MessageFeedback (copy, regenerate, thumbs with reasons), and a resizable details panel. Streaming is mocked with timers that are cleaned up.
 
 - Package: `@gntik-ai/chat` · export `ChatDemo` · group Layout · status experimental
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ChatDemo/ChatDemo.doc.ts
-- Registry dependencies: chat-composer, chat-layout, chat-message, citation, markdown, suggestion-chips, tool-call-card
+- Registry dependencies: attachment, chat-composer, chat-layout, chat-message, citation, markdown, message-feedback, model-picker, suggestion-chips, tool-call-card
 - Install: `gntik-ui add chat-demo`; own the source with `gntik-ui eject chat-demo`
 
 Keyboard:
@@ -7224,11 +8106,11 @@ import { GlobalSearch } from '@gntik-ai/blocks';
 
 ### Data table (`data-table`)
 
-Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination, and optional row groups (groupBy) with rowgroup header rows, counts, keyboard-accessible collapse buttons and group selection.
+Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination, optional row groups (groupBy) with rowgroup header rows, counts, keyboard-accessible collapse buttons and group selection; column resize (pointer drag or a focusable role="separator" handle with arrow keys, min/max widths, controlled columnWidths), column pinning to either edge with sticky cells (column menu or pinnedColumns), row virtualization for large datasets (aria-rowcount/aria-rowindex, works with selection and grouping), inline cell editing (text, number and select editors; Enter/F2 to edit, Enter/Tab to commit, Escape to cancel, onCellEdit can reject with an inline error) and saved views (filters, sort, visible columns, widths, pinning and grouping) with a view switcher to save as, rename, delete and reset.
 
 - Package: `@gntik-ai/blocks` · export `DataTable` · group tables · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/tables/DataTable/block.meta.ts
-- Composes: Table, Checkbox, Menu, MoreMenu, ToggleGroup, Button, Skeleton, EmptyState, Pagination, SimpleSelect, StatusTag
+- Composes: Table, Checkbox, Menu, MoreMenu, ToggleGroup, Button, Skeleton, EmptyState, Pagination, SimpleSelect, StatusTag, Input, Dialog
 - Registry dependencies: pagination-footer
 - Preview: /preview.html?kind=block&id=data-table
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add data-table`

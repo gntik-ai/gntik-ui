@@ -1,0 +1,59 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typing-indicator",
+  "type": "registry:ui",
+  "title": "TypingIndicator",
+  "description": "Three pulsing dots shown while a reply is being written, with the text \"Assistant is typing\" for screen readers (or visible with `showLabel`). The dots are decorative and hold still under reduced motion. ChatMessage renders it while a streaming turn is still empty.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/chat/src/TypingIndicator/TypingIndicator.tsx",
+      "type": "registry:ui",
+      "target": "components/chat/typing-indicator/TypingIndicator.tsx",
+      "content": "import { cn } from '@gntik-ai/ui';\nimport type { Ref } from 'react';\nimport { useChatI18n } from '../utils/i18n';\nimport { typingIndicatorStyles as s } from './typingIndicator.variants';\n\nexport interface TypingIndicatorProps {\n  /** Who is typing; used in the accessible text (\"Assistant is typing\"). */\n  author?: string;\n  /** Show the text next to the dots instead of keeping it screen-reader only. */\n  showLabel?: boolean;\n  /** Overrides the text entirely. */\n  label?: string;\n  size?: 'sm' | 'md';\n  /**\n   * Announce the text through its own polite status region. Off by default: in a thread,\n   * ChatAnnouncer already announces \"is responding\" once.\n   */\n  announce?: boolean;\n  className?: string;\n  ref?: Ref<HTMLSpanElement>;\n}\n\n/**\n * Three dots that pulse while a reply is being written. The dots are decorative; the text\n * (\"Assistant is typing\") is always in the accessibility tree. Under reduced motion the dots\n * hold still.\n */\nexport function TypingIndicator({ author, showLabel = false, label, size = 'md', announce = false, className, ref }: TypingIndicatorProps) {\n  const { t, tc } = useChatI18n();\n  const text = label ?? tc('chat.typing', { author: author ?? t('chat.assistant') });\n  const sz = s.size[size];\n  return (\n    <span\n      ref={ref}\n      data-slot=\"typing-indicator\"\n      role={announce ? 'status' : undefined}\n      className={cn(s.root, className)}\n    >\n      <span aria-hidden className={cn(s.dots, sz.dots)}>\n        <span className={cn(s.dot, sz.dot)} />\n        <span className={cn(s.dot, sz.dot, '[animation-delay:150ms]')} />\n        <span className={cn(s.dot, sz.dot, '[animation-delay:300ms]')} />\n      </span>\n      <span className={showLabel ? s.label : 'sr-only'}>{text}</span>\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "packages/chat/src/TypingIndicator/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/typing-indicator/index.ts",
+      "content": "export { TypingIndicator, type TypingIndicatorProps } from './TypingIndicator';\nexport { typingIndicatorStyles, streamingCaret } from './typingIndicator.variants';\nexport { doc as typingIndicatorDoc } from './TypingIndicator.doc';\n"
+    },
+    {
+      "path": "packages/chat/src/TypingIndicator/typingIndicator.variants.ts",
+      "type": "registry:ui",
+      "target": "components/chat/typing-indicator/typingIndicator.variants.ts",
+      "content": "/** Slot classes for TypingIndicator. Dots pulse in sequence; static under reduced motion. */\nexport const typingIndicatorStyles = {\n  root: 'inline-flex items-center gap-2 text-muted-foreground',\n  dots: 'inline-flex h-6 items-center gap-1',\n  dot: 'size-1.5 rounded-full bg-muted-foreground animate-pulse motion-reduce:animate-none',\n  label: 'text-[12.5px]',\n  size: {\n    sm: { dots: 'h-4 gap-0.5', dot: 'size-1' },\n    md: { dots: '', dot: '' },\n  },\n} as const;\n\n/** Thin blinking caret after streamed plain text (static under reduced motion). */\nexport const streamingCaret =\n  'ms-0.5 inline-block h-[1.05em] w-[2px] translate-y-[2px] bg-primary animate-pulse motion-reduce:animate-none';\n"
+    },
+    {
+      "path": "packages/chat/src/utils/i18n.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/i18n.ts",
+      "content": "import { interpolate, useI18n, type MessageKey, type MessageVars } from '@gntik-ai/ui';\n\n/**\n * English fallbacks for the chat keys added after the first `@gntik-ai/ui` release. The\n * strings live in the ui catalogs (en + es); these keep the pack readable when it runs\n * against an older `@gntik-ai/ui` whose catalog does not have them yet.\n */\nconst FALLBACK = {\n  'chat.typing': '{author} is typing',\n  'chat.feedback': 'Response feedback',\n  'chat.feedbackTitle': 'What went wrong?',\n  'chat.feedbackReason': 'Reason',\n  'chat.feedbackComment': 'Comment (optional)',\n  'chat.feedbackPlaceholder': 'Tell us more…',\n  'chat.feedbackSubmit': 'Send feedback',\n  'chat.feedbackThanks': 'Thanks for your feedback',\n  'chat.feedbackCleared': 'Feedback removed',\n  'chat.reasonInaccurate': 'Inaccurate',\n  'chat.reasonUnhelpful': 'Not helpful',\n  'chat.reasonIncomplete': 'Incomplete',\n  'chat.reasonUnsafe': 'Harmful or unsafe',\n  'chat.reasonOther': 'Other',\n  'chat.regenerate': 'Regenerate',\n  'chat.uploading': 'Uploading {name}',\n  'chat.uploadFailed': 'Upload failed',\n  'chat.retryUpload': 'Retry uploading {name}',\n  'chat.dropFiles': 'Drop files to attach',\n  'chat.fileTooLarge': '{name} is larger than {max}',\n  'chat.fileTypeNotAllowed': '{name} is not an allowed file type',\n  'chat.tooManyFiles': 'You can attach up to {max} files',\n  'chat.model': 'Model',\n  'chat.selectModel': 'Select a model',\n  'chat.capabilityVision': 'Vision',\n  'chat.capabilityTools': 'Tools',\n  'chat.capabilityReasoning': 'Reasoning',\n  'chat.capabilityFiles': 'Files',\n  'chat.capabilityWeb': 'Web search',\n  'chat.capabilityAudio': 'Audio',\n  'chat.contextWindow': '{size} context',\n  'chat.unavailable': 'Unavailable',\n} as const;\n\nexport type ChatMessageKey = keyof typeof FALLBACK;\n\n/** `useI18n()` plus `tc()`, a translator for the newer chat keys with English fallbacks. */\nexport function useChatI18n() {\n  const i18n = useI18n();\n  const tc = (key: ChatMessageKey, vars?: MessageVars) => {\n    const out = i18n.t(key as MessageKey, vars);\n    return out === key ? interpolate(FALLBACK[key], vars, i18n.locale) : out;\n  };\n  return { ...i18n, tc };\n}\n"
+    },
+    {
+      "path": "packages/chat/src/TypingIndicator/TypingIndicator.doc.ts",
+      "type": "registry:ui",
+      "target": "components/chat/typing-indicator/TypingIndicator.doc.ts",
+      "content": "import type { ComponentDoc } from '@gntik-ai/ui';\n\nexport const doc: ComponentDoc = {\n  name: 'TypingIndicator',\n  group: 'Feedback',\n  status: 'beta',\n  description:\n    'Three pulsing dots shown while a reply is being written, with the text \"Assistant is typing\" for screen readers (or visible with `showLabel`). The dots are decorative and hold still under reduced motion. ChatMessage renders it while a streaming turn is still empty.',\n  keyboard: [],\n  tokens: ['muted-foreground'],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "component",
+    "Feedback"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/chat",
+    "status": "beta",
+    "source": "packages/chat/src/TypingIndicator/TypingIndicator.doc.ts"
+  }
+}

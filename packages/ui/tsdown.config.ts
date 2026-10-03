@@ -2,7 +2,8 @@ import { defineConfig } from 'tsdown';
 
 export default defineConfig({
   // `theme-script` is a server-safe entry (no React): `@gntik-ai/ui/theme-script`.
-  entry: { index: 'src/index.ts', 'theme-script': 'src/theme/theme-script.ts' },
+  // `forms` (`@gntik-ai/ui/forms`) is the only entry that imports react-hook-form (optional peer).
+  entry: { index: 'src/index.ts', 'theme-script': 'src/theme/theme-script.ts', forms: 'src/forms/index.ts' },
   format: ['esm'],
   platform: 'neutral',
   dts: true,

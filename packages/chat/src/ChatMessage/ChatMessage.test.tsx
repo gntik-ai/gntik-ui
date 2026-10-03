@@ -77,7 +77,18 @@ describe('ChatMessage', () => {
     const article = screen.getByRole('article', { name: 'Assistant' });
     expect(article).toHaveAttribute('aria-busy', 'true');
     expect(screen.queryByRole('group')).toBeNull();
-    expect(screen.getByText('Assistant is thinking')).toBeInTheDocument();
+    expect(screen.getByText('Assistant is typing')).toBeInTheDocument();
+  });
+
+  it('streaming plain text ends with a decorative caret that goes away when done', () => {
+    const { container, rerender } = render(<ChatMessage role="user" streaming>Partial answ</ChatMessage>);
+    const caret = container.querySelector('[data-slot="streaming-caret"]');
+    expect(caret).toHaveAttribute('aria-hidden', 'true');
+    expect(caret?.className).toContain('motion-reduce:animate-none');
+    expect(screen.queryByText('Assistant is typing')).toBeNull();
+    rerender(<ChatMessage role="user">Partial answer</ChatMessage>);
+    expect(container.querySelector('[data-slot="streaming-caret"]')).toBeNull();
+    expect(screen.getByRole('article')).not.toHaveAttribute('aria-busy');
   });
 
   it('system notes have no avatar and no actions', () => {

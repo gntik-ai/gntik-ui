@@ -1,0 +1,5 @@
+---
+"@gntik-ai/chat": minor
+---
+
+Chat extras: `TypingIndicator` (three dots, static under reduced motion, "Assistant is typing" for screen readers) and a caret after streamed plain text in `ChatMessage`; `MessageFeedback` (copy, regenerate, thumbs up/down toggles with a reason + comment popover on thumbs down, controlled `value` + `onFeedback`); `AttachmentList` / `AttachmentChip` (image thumbnails, file-type icons, size, upload progress, error with retry, remove) plus `validateFiles` / `matchesAccept`; `ChatComposer` now accepts pasted and dropped files and validates `accept`, `maxSize` and `maxFiles` with messages (`onReject`, `onRetryAttachment`); `ModelPicker` (models grouped by provider, capability and context-size badges, disabled models with a reason, compact trigger for the composer toolbar). New strings live in the `@gntik-ai/ui` en/es catalogs, with English fallbacks for older catalogs. Existing APIs are unchanged; `ComposerAttachment` gains optional `type`, `previewUrl`, `progress` and `error`.

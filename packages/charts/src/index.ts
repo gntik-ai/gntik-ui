@@ -36,3 +36,20 @@ export {
   type ChartErrorProps,
   type ChartDataTableProps,
 } from './states';
+export { type CartesianExtrasProps } from './cartesian-extras';
+export {
+  ChartMarkers,
+  TONE_TOKENS,
+  type ChartTone,
+  type ChartThreshold,
+  type ChartAnnotation,
+  type ChartMarkersProps,
+} from './overlays';
+export { ChartBrush, clampRange, useChartRange, type ChartBrushProps, type ChartRange, type UseChartRangeOptions } from './ChartBrush';
+export {
+  useLiveSeries,
+  usePrefersReducedMotion,
+  type LiveSeries,
+  type LiveSeriesPauseProps,
+  type UseLiveSeriesOptions,
+} from './live';

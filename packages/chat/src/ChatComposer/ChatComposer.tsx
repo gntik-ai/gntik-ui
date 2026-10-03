@@ -1,15 +1,24 @@
-import { Button, IconButton, cn, useI18n } from '@gntik-ai/ui';
-import { ArrowUp, FileText, Paperclip, Square, X } from 'lucide-react';
-import { useId, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type ReactNode, type Ref } from 'react';
+import { Button, IconButton, cn } from '@gntik-ai/ui';
+import { ArrowUp, Paperclip, Square, Upload, X } from 'lucide-react';
+import {
+  useId,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type ClipboardEvent,
+  type DragEvent,
+  type FormEvent,
+  type KeyboardEvent,
+  type ReactNode,
+  type Ref,
+} from 'react';
+import { AttachmentList, validateFiles, type AttachmentRejection, type ChatAttachment } from '../Attachment';
 import { formatBytes } from '../utils/format';
+import { useChatI18n } from '../utils/i18n';
 import { chatComposerStyles as s } from './chatComposer.variants';
 
-export interface ComposerAttachment {
-  id: string;
-  name: string;
-  /** Size in bytes. */
-  size?: number;
-}
+/** A file in the composer: name and size, plus optional type, preview, progress and error. */
+export type ComposerAttachment = ChatAttachment;
 
 export interface ChatComposerProps {
   /** Controlled text. Pair with `onValueChange`. */
@@ -27,13 +36,24 @@ export interface ChatComposerProps {
   label?: string;
   /** Soft limit: shows a counter near the limit and blocks sending above it. */
   maxLength?: number;
-  /** Attached files shown as removable chips. */
+  /** Attached files shown as removable chips (thumbnail, progress, error + retry). */
   attachments?: ComposerAttachment[];
-  /** Shows the attach button; called with the files the user picked. */
+  /**
+   * Shows the attach button and enables paste and drag-and-drop of files; called with the
+   * files that pass `accept`, `maxSize` and `maxFiles`.
+   */
   onAttach?: (files: File[]) => void;
   onRemoveAttachment?: (id: string) => void;
-  /** `accept` for the file picker (e.g. ".pdf,.csv,image/*"). */
+  /** Shows Retry on attachments in the error state. */
+  onRetryAttachment?: (id: string) => void;
+  /** Allowed types, `<input accept>` syntax (e.g. ".pdf,.csv,image/*"). Also checked on paste and drop. */
   accept?: string;
+  /** Largest allowed file, in bytes. */
+  maxSize?: number;
+  /** Most files attached at once. */
+  maxFiles?: number;
+  /** Called with the files that failed validation (their messages are also shown under the box). */
+  onReject?: (rejections: AttachmentRejection[]) => void;
   /** Slot left of the send button, e.g. a model Select. */
   modelPicker?: ReactNode;
   /** Extra tools after the attach button. */
@@ -46,7 +66,8 @@ export interface ChatComposerProps {
 
 /**
  * Message box for a chat: grows with its content, Enter sends and Shift+Enter adds a line,
- * files show as removable chips, a model picker can sit in the toolbar, and while a reply
+ * files (picked, pasted or dropped, validated against accept / maxSize / maxFiles) show as
+ * removable chips with previews and upload progress, a model picker can sit in the toolbar, and while a reply
  * streams the send button becomes Stop (Escape also stops).
  */
 export function ChatComposer({
@@ -63,20 +84,28 @@ export function ChatComposer({
   attachments = [],
   onAttach,
   onRemoveAttachment,
+  onRetryAttachment,
   accept,
+  maxSize,
+  maxFiles,
+  onReject,
   modelPicker,
   tools,
   hint,
   className,
   ref,
 }: ChatComposerProps) {
-  const { t } = useI18n();
+  const { t, tc } = useChatI18n();
   const placeholder = placeholderProp ?? t('chat.placeholder');
   const label = labelProp ?? t('chat.messageLabel');
   const id = useId();
   const [inner, setInner] = useState(defaultValue);
   const text = value ?? inner;
   const fileInput = useRef<HTMLInputElement>(null);
+  const dragDepth = useRef(0);
+  const [dragging, setDragging] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
+  const canAttach = onAttach !== undefined && !disabled;
 
   const setText = (next: string) => {
     if (value === undefined) setInner(next);
@@ -104,11 +133,63 @@ export function ChatComposer({
     }
   };
 
+  const addFiles = (files: File[]) => {
+    if (!onAttach || files.length === 0) return;
+    const { accepted, rejected } = validateFiles(files, { accept, maxSize, maxFiles, current: attachments.length });
+    const rejections: AttachmentRejection[] = rejected.map(({ file, reason }) => ({
+      file,
+      reason,
+      message:
+        reason === 'type'
+          ? tc('chat.fileTypeNotAllowed', { name: file.name })
+          : reason === 'size'
+            ? tc('chat.fileTooLarge', { name: file.name, max: formatBytes(maxSize ?? 0) })
+            : tc('chat.tooManyFiles', { max: maxFiles ?? 0 }),
+    }));
+    // One "too many files" line is enough.
+    setErrors([...new Set(rejections.map((r) => r.message))]);
+    if (rejections.length) onReject?.(rejections);
+    if (accepted.length) onAttach(accepted);
+  };
+
   const onFiles = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files ?? []);
-    if (files.length) onAttach?.(files);
+    addFiles(Array.from(e.target.files ?? []));
     e.target.value = '';
   };
+
+  const onPaste = (e: ClipboardEvent<HTMLTextAreaElement>) => {
+    const files = Array.from(e.clipboardData?.files ?? []);
+    if (!canAttach || files.length === 0) return;
+    e.preventDefault();
+    addFiles(files);
+  };
+
+  const hasFiles = (e: DragEvent) => Array.from(e.dataTransfer?.types ?? []).includes('Files');
+  const dropHandlers = canAttach
+    ? {
+        onDragEnter: (e: DragEvent<HTMLFormElement>) => {
+          if (!hasFiles(e)) return;
+          e.preventDefault();
+          dragDepth.current += 1;
+          setDragging(true);
+        },
+        onDragOver: (e: DragEvent<HTMLFormElement>) => {
+          if (!hasFiles(e)) return;
+          e.preventDefault();
+          if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
+        },
+        onDragLeave: () => {
+          dragDepth.current = Math.max(0, dragDepth.current - 1);
+          if (dragDepth.current === 0) setDragging(false);
+        },
+        onDrop: (e: DragEvent<HTMLFormElement>) => {
+          e.preventDefault();
+          dragDepth.current = 0;
+          setDragging(false);
+          addFiles(Array.from(e.dataTransfer?.files ?? []));
+        },
+      }
+    : {};
 
   const hintNode =
     hint === undefined ? (
@@ -124,35 +205,40 @@ export function ChatComposer({
       <form
         className={s.root}
         data-disabled={disabled || undefined}
+        data-dragging={dragging || undefined}
+        {...dropHandlers}
         onSubmit={(e: FormEvent) => {
           e.preventDefault();
           send();
         }}
       >
-        {attachments.length > 0 && (
-          <ul aria-label={t('chat.attachments')} className={s.attachments}>
-            {attachments.map((a) => (
-              <li key={a.id} className={s.chip}>
-                <FileText size={13} aria-hidden className="shrink-0 text-muted-foreground" />
-                <span className={s.chipName} title={a.name}>
-                  {a.name}
-                </span>
-                {a.size !== undefined && <span className={s.chipSize}>{formatBytes(a.size)}</span>}
-                {onRemoveAttachment && (
-                  <button
-                    type="button"
-                    className={s.chipRemove}
-                    aria-label={t('common.removeItem', { label: a.name })}
-                    disabled={disabled}
-                    onClick={() => onRemoveAttachment(a.id)}
-                  >
-                    <X size={12} aria-hidden />
-                  </button>
-                )}
-              </li>
-            ))}
-          </ul>
+        {dragging && (
+          <div aria-hidden className={s.dropOverlay}>
+            <Upload size={16} />
+            {tc('chat.dropFiles')}
+          </div>
         )}
+        <AttachmentList
+          attachments={attachments}
+          onRemove={onRemoveAttachment}
+          onRetry={onRetryAttachment}
+          disabled={disabled}
+          className={s.attachments}
+        />
+        <div role="alert" className={cn(errors.length > 0 && s.errors)}>
+          {errors.length > 0 && (
+            <>
+              <ul className={s.errorList}>
+                {errors.map((m) => (
+                  <li key={m}>{m}</li>
+                ))}
+              </ul>
+              <button type="button" className={s.errorDismiss} aria-label={t('common.dismiss')} onClick={() => setErrors([])}>
+                <X size={12} aria-hidden />
+              </button>
+            </>
+          )}
+        </div>
         <textarea
           ref={ref}
           id={`${id}-input`}
@@ -160,6 +246,7 @@ export function ChatComposer({
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={onKeyDown}
+          onPaste={onPaste}
           disabled={disabled}
           placeholder={placeholder}
           aria-label={label}

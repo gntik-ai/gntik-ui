@@ -1,4 +1,4 @@
-import type { ReactElement, ReactNode } from 'react';
+import type { HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { ResponsiveContainer } from 'recharts';
 import type { ChartColor, ChartTheme } from './theme';
 import { cx, type ValueFormatter } from './format';
@@ -62,14 +62,18 @@ export interface ChartFrameProps extends Pick<ChartStateProps, 'emptyMessage' | 
   state?: ChartState;
   /** Data table fallback, rendered only when the chart is ready. */
   table?: ReactNode;
+  /** Rendered under the plot when the chart is ready (marker list, brush). */
+  footer?: ReactNode;
+  /** Extra props for the figure (e.g. `useLiveSeries().pauseProps`). */
+  figureProps?: HTMLAttributes<HTMLDivElement>;
   children: ReactElement;
 }
 
 /** Figure wrapper: accessible name, optional legend above, responsive plot area, state placeholders. */
-export function ChartFrame({ label, height, legend, className, state = 'ready', table, emptyMessage, errorMessage, onRetry, children }: ChartFrameProps) {
+export function ChartFrame({ label, height, legend, className, state = 'ready', table, footer, figureProps, emptyMessage, errorMessage, onRetry, children }: ChartFrameProps) {
   const placeholder = chartStateView(state, { height, emptyMessage, errorMessage, onRetry });
   return (
-    <div role="figure" aria-label={label} aria-busy={state === 'loading' || undefined} className={cx('w-full font-sans', className)}>
+    <div {...figureProps} role="figure" aria-label={label} aria-busy={state === 'loading' || undefined} className={cx('w-full font-sans', className)}>
       {placeholder ?? (
         <>
           {legend}
@@ -78,6 +82,7 @@ export function ChartFrame({ label, height, legend, className, state = 'ready', 
               {children}
             </ResponsiveContainer>
           </div>
+          {footer}
           {table}
         </>
       )}

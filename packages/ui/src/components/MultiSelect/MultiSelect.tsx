@@ -3,7 +3,11 @@ import { Check, ChevronDown, X } from 'lucide-react';
 import { useId, useRef, useState, type ReactNode, type Ref } from 'react';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { ComboboxSpecialItem } from '../Combobox/Combobox';
 import { comboboxVariants } from '../Combobox/combobox.variants';
+import { createItem, hasExactLabel, isSpecialItem, retryItem, type SpecialItem } from '../Combobox/specialItems';
+import { useAsyncOptions, type LoadOptions } from '../Combobox/useAsyncOptions';
+import { Spinner } from '../Spinner';
 import { multiSelectVariants, type MultiSelectVariantProps } from './multi-select.variants';
 
 const cb = comboboxVariants();
@@ -46,6 +50,21 @@ export interface MultiSelectProps extends MultiSelectVariantProps {
   ref?: Ref<HTMLInputElement>;
   'aria-label'?: string;
   'aria-describedby'?: string;
+  /**
+   * Async options, loaded (debounced) for the typed query with an `AbortSignal` for stale requests.
+   * Loaded options replace `options` in the list; selected ones keep their labels. No "Select all".
+   */
+  loadOptions?: LoadOptions<MultiSelectOption>;
+  /** Debounce for `loadOptions`, in ms. Default 250. */
+  debounceMs?: number;
+  /** Creatable: adds a "Create “…”" row; return the new option (or a promise of it) to select it. */
+  onCreate?: (input: string) => MultiSelectOption | void | Promise<MultiSelectOption | void>;
+  /** Text of the create row. Default: "Create “{input}”". */
+  createLabel?: (input: string) => ReactNode;
+  /** Shown while options load. Default: "Loading…". */
+  loadingText?: ReactNode;
+  /** Shown when `loadOptions` rejects. Default: "Couldn’t load options." */
+  errorText?: ReactNode;
 }
 
 const SELECT_ALL: MultiSelectOption = { value: '\u0000select-all', label: '' };
@@ -81,6 +100,12 @@ export function MultiSelect({
   ref,
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
+  loadOptions,
+  debounceMs,
+  onCreate,
+  createLabel,
+  loadingText,
+  errorText,
 }: MultiSelectProps) {
   const { t } = useI18n();
   const placeholder = placeholderProp ?? t('common.searchPlaceholder');
@@ -103,10 +128,24 @@ export function MultiSelect({
     if (typeof ref === 'function') ref(node);
     else if (ref) ref.current = node;
   };
-  const selected = values.map((v) => options.find((o) => o.value === v)).filter((o): o is MultiSelectOption => !!o);
-  const enabled = options.filter((o) => !o.disabled);
+  // Async / creatable: options seen in results or created keep resolving after the list changes.
+  const [known, setKnown] = useState<MultiSelectOption[]>([]);
+  const remember = (more: readonly MultiSelectOption[]) =>
+    setKnown((prev) => [...prev.filter((p) => !more.some((m) => m.value === p.value)), ...more]);
+  const [input, setInput] = useState('');
+  const [open, setOpen] = useState(false);
+  const query = input.trim();
+  const remote = useAsyncOptions(loadOptions, query, { debounceMs, enabled: open, onResult: remember });
+  const listed: MultiSelectOption[] = loadOptions ? (remote.error ? [] : [...remote.items]) : options;
+  const pool = [...listed, ...known, ...options];
+  const selected = values.map((v) => pool.find((o) => o.value === v)).filter((o): o is MultiSelectOption => !!o);
+  const enabled = listed.filter((o) => !o.disabled);
   const allSelected = enabled.length > 0 && enabled.every((o) => values.includes(o.value));
-  const items = showSelectAll ? [SELECT_ALL, ...options] : options;
+  const specials: SpecialItem[] = [];
+  if (onCreate && query !== '' && !hasExactLabel(listed, query, (o) => o.label)) specials.push(createItem(query));
+  if (loadOptions && remote.error && !remote.loading) specials.push(retryItem(input));
+  const items: Array<MultiSelectOption | SpecialItem> = [...(showSelectAll && !loadOptions ? [SELECT_ALL] : []), ...listed, ...specials];
+  const busy = !!loadOptions && (remote.loading || !!remote.error);
   const s = multiSelectVariants({ size });
   const v = comboboxVariants({ size });
 
@@ -115,7 +154,20 @@ export function MultiSelect({
     onValueChange?.(next);
   };
 
-  const handleChange = (next: MultiSelectOption[]) => {
+  const create = async (text: string) => {
+    const created = await onCreate?.(text);
+    if (!created) return;
+    remember([created]);
+    commit([...values.filter((x) => x !== created.value), created.value]);
+  };
+
+  const handleChange = (next: Array<MultiSelectOption | SpecialItem>) => {
+    const special = next.find(isSpecialItem);
+    if (special) {
+      if (special.__gntikSpecial === 'retry') remote.reload();
+      else void create(special.value);
+      return;
+    }
     if (next.includes(SELECT_ALL)) {
       const enabledValues = enabled.map((o) => o.value);
       commit(allSelected ? values.filter((x) => !enabledValues.includes(x)) : [...values, ...enabledValues.filter((x) => !values.includes(x))]);
@@ -133,14 +185,18 @@ export function MultiSelect({
       multiple
       value={selected}
       onValueChange={handleChange}
-      filter={matches}
-      isItemEqualToValue={(a: MultiSelectOption, b: MultiSelectOption) => a.value === b.value}
-      itemToStringLabel={(o: MultiSelectOption) => o.label}
-      itemToStringValue={(o: MultiSelectOption) => o.value}
+      filter={(o: MultiSelectOption | SpecialItem, q: string) => isSpecialItem(o) || !!loadOptions || matches(o, q)}
+      isItemEqualToValue={(a: MultiSelectOption | SpecialItem, b: MultiSelectOption | SpecialItem) =>
+        isSpecialItem(a) || isSpecialItem(b) ? a === b : a.value === b.value
+      }
+      itemToStringLabel={(o: MultiSelectOption | SpecialItem) => o.label}
+      itemToStringValue={(o: MultiSelectOption | SpecialItem) => o.value}
       name={name}
       disabled={disabled}
-      onOpenChange={(open) => {
-        if (open && !label) setFieldLabelId(inputRef.current?.labels?.[0]?.id || undefined);
+      onInputValueChange={setInput}
+      onOpenChange={(next) => {
+        setOpen(next);
+        if (next && !label) setFieldLabelId(inputRef.current?.labels?.[0]?.id || undefined);
       }}
     >
       {label && (
@@ -187,10 +243,24 @@ export function MultiSelect({
       <BaseCombobox.Portal>
         <BaseCombobox.Positioner dir={dir} className={cb.positioner()} side="bottom" align="start" sideOffset={6}>
           <BaseCombobox.Popup className={cb.popup()}>
-            <BaseCombobox.Empty className={cb.empty()}>{emptyText}</BaseCombobox.Empty>
-            <BaseCombobox.List className={cb.list()}>
-              {(o: MultiSelectOption) =>
-                o === SELECT_ALL ? (
+            {(loadOptions || onCreate) && (
+              <BaseCombobox.Status className={cn(cb.status(), !!remote.error && !remote.loading && cb.statusError())}>
+                {remote.loading ? (
+                  <>
+                    <Spinner size={13} />
+                    {loadingText ?? t('common.loading')}
+                  </>
+                ) : remote.error ? (
+                  (errorText ?? t('combobox.loadFailed'))
+                ) : null}
+              </BaseCombobox.Status>
+            )}
+            <BaseCombobox.Empty className={cb.empty()}>{busy ? null : emptyText}</BaseCombobox.Empty>
+            <BaseCombobox.List className={cb.list()} aria-busy={remote.loading || undefined}>
+              {(o: MultiSelectOption | SpecialItem) =>
+                isSpecialItem(o) ? (
+                  <ComboboxSpecialItem key={`${o.__gntikSpecial}:${o.value}`} item={o} createLabel={createLabel} />
+                ) : o === SELECT_ALL ? (
                   <BaseCombobox.Item key={o.value} value={o} className={cn(cb.item(), s.selectAll())}>
                     <span className={cb.itemContent()}>{allSelected ? deselectAllLabel : selectAllLabel}</span>
                     <span className={s.check()}>{allSelected && <Check size={15} strokeWidth={2.4} aria-hidden />}</span>

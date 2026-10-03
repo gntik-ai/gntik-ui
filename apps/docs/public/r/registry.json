@@ -593,6 +593,80 @@
       ]
     },
     {
+      "name": "attachment",
+      "type": "registry:ui",
+      "title": "AttachmentList",
+      "description": "Files attached to a message or waiting in the composer. Each AttachmentChip shows an image thumbnail or a file-type icon, the name, the size, upload progress (a labelled progressbar; indeterminate holds still under reduced motion), an error with Retry, and a Remove button. `variant=\"tile\"` gives larger image previews inside a message. `validateFiles` / `matchesAccept` back the composer’s accept and max-size checks.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "component",
+        "Display"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/chat",
+        "status": "beta",
+        "source": "packages/chat/src/Attachment/Attachment.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/chat/src/Attachment/AttachmentChip.tsx",
+          "type": "registry:ui",
+          "target": "components/chat/attachment/AttachmentChip.tsx"
+        },
+        {
+          "path": "packages/chat/src/Attachment/AttachmentList.tsx",
+          "type": "registry:ui",
+          "target": "components/chat/attachment/AttachmentList.tsx"
+        },
+        {
+          "path": "packages/chat/src/Attachment/attachment.variants.ts",
+          "type": "registry:ui",
+          "target": "components/chat/attachment/attachment.variants.ts"
+        },
+        {
+          "path": "packages/chat/src/Attachment/index.ts",
+          "type": "registry:ui",
+          "target": "components/chat/attachment/index.ts"
+        },
+        {
+          "path": "packages/chat/src/Attachment/validateFiles.ts",
+          "type": "registry:ui",
+          "target": "components/chat/attachment/validateFiles.ts"
+        },
+        {
+          "path": "packages/chat/src/utils/focus.ts",
+          "type": "registry:ui",
+          "target": "components/chat/utils/focus.ts"
+        },
+        {
+          "path": "packages/chat/src/utils/format.ts",
+          "type": "registry:ui",
+          "target": "components/chat/utils/format.ts"
+        },
+        {
+          "path": "packages/chat/src/utils/i18n.ts",
+          "type": "registry:ui",
+          "target": "components/chat/utils/i18n.ts"
+        },
+        {
+          "path": "packages/chat/src/Attachment/Attachment.doc.ts",
+          "type": "registry:ui",
+          "target": "components/chat/attachment/Attachment.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "audit-log",
       "type": "registry:block",
       "title": "Audit log",
@@ -1548,14 +1622,15 @@
       "name": "chat-composer",
       "type": "registry:ui",
       "title": "ChatComposer",
-      "description": "Chat input: autosizing textarea, Enter sends and Shift+Enter adds a line, removable attachment chips, a model-picker slot, a character counter near the limit, a disabled state, and a Stop button while a reply streams.",
+      "description": "Chat input: autosizing textarea, Enter sends and Shift+Enter adds a line, attachments (pick, paste or drag-and-drop files; `accept`, `maxSize` and `maxFiles` validation with messages in an alert; chips with image thumbnails, file-type icons, size, upload progress, error + Retry and Remove), a model-picker slot (e.g. a compact ModelPicker), a character counter near the limit, a disabled state, and a Stop button while a reply streams.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
-        "https://ui.gntik.ai/r/gntik-tokens.json"
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/attachment.json"
       ],
       "css": {
         "@import \"@gntik-ai/ui/styles.css\"": {}
@@ -1597,6 +1672,11 @@
           "target": "components/chat/utils/format.ts"
         },
         {
+          "path": "packages/chat/src/utils/i18n.ts",
+          "type": "registry:ui",
+          "target": "components/chat/utils/i18n.ts"
+        },
+        {
           "path": "packages/chat/src/ChatComposer/ChatComposer.doc.ts",
           "type": "registry:ui",
           "target": "components/chat/chat-composer/ChatComposer.doc.ts"
@@ -1607,18 +1687,21 @@
       "name": "chat-demo",
       "type": "registry:ui",
       "title": "ChatDemo",
-      "description": "Reference composition of the chat pack: suggestions in the empty state, a tool call, a streamed markdown reply with sources, Stop, Retry and feedback, and a resizable details panel. Streaming is mocked with timers that are cleaned up.",
+      "description": "Reference composition of the chat pack: suggestions in the empty state, attachments (pick, paste or drop), a compact ModelPicker in the composer, a tool call, a streamed markdown reply with sources (TypingIndicator, caret), Stop, MessageFeedback (copy, regenerate, thumbs with reasons), and a resizable details panel. Streaming is mocked with timers that are cleaned up.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/attachment.json",
         "https://ui.gntik.ai/r/chat-composer.json",
         "https://ui.gntik.ai/r/chat-layout.json",
         "https://ui.gntik.ai/r/chat-message.json",
         "https://ui.gntik.ai/r/citation.json",
         "https://ui.gntik.ai/r/markdown.json",
+        "https://ui.gntik.ai/r/message-feedback.json",
+        "https://ui.gntik.ai/r/model-picker.json",
         "https://ui.gntik.ai/r/suggestion-chips.json",
         "https://ui.gntik.ai/r/tool-call-card.json"
       ],
@@ -1726,14 +1809,15 @@
       "name": "chat-message",
       "type": "registry:ui",
       "title": "ChatMessage",
-      "description": "One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows typing dots until text arrives; ChatAnnouncer announces start and end once instead of every token.",
+      "description": "One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows a TypingIndicator (\"Assistant is typing\") until text arrives and a caret after streamed plain text; ChatAnnouncer announces start and end once instead of every token.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
-        "https://ui.gntik.ai/r/gntik-tokens.json"
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/typing-indicator.json"
       ],
       "css": {
         "@import \"@gntik-ai/ui/styles.css\"": {}
@@ -2176,7 +2260,7 @@
       "name": "combobox",
       "type": "registry:ui",
       "title": "Combobox",
-      "description": "Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children.",
+      "description": "Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row).",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -2185,6 +2269,7 @@
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/select.json",
+        "https://ui.gntik.ai/r/spinner.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -2204,6 +2289,11 @@
           "target": "components/ui/combobox/Combobox.tsx"
         },
         {
+          "path": "packages/ui/src/components/Combobox/ComboboxRoot.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/combobox/ComboboxRoot.tsx"
+        },
+        {
           "path": "packages/ui/src/components/Combobox/combobox.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/combobox/combobox.variants.ts"
@@ -2212,6 +2302,16 @@
           "path": "packages/ui/src/components/Combobox/index.ts",
           "type": "registry:ui",
           "target": "components/ui/combobox/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Combobox/specialItems.ts",
+          "type": "registry:ui",
+          "target": "components/ui/combobox/specialItems.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Combobox/useAsyncOptions.ts",
+          "type": "registry:ui",
+          "target": "components/ui/combobox/useAsyncOptions.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -2548,6 +2648,86 @@
       ]
     },
     {
+      "name": "copy-button",
+      "type": "registry:ui",
+      "title": "CopyButton",
+      "description": "Copies a string, or the result of a (possibly async) getter, to the clipboard. Icon form (with tooltip) or labelled form, a \"Copied\" success state that resets after 2 s, a polite announcement (through LiveAnnouncer when present) and a fallback to execCommand when the Clipboard API is missing. `copyToClipboard` is exported too.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/live-announcer.json",
+        "https://ui.gntik.ai/r/tooltip.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Actions"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/CopyButton/CopyButton.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/CopyButton/CopyButton.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/copy-button/CopyButton.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/CopyButton/clipboard.ts",
+          "type": "registry:ui",
+          "target": "components/ui/copy-button/clipboard.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CopyButton/copy-button.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/copy-button/copy-button.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CopyButton/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/copy-button/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CopyButton/CopyButton.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/copy-button/CopyButton.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "cost-breakdown",
       "type": "registry:block",
       "title": "Cost breakdown",
@@ -2806,7 +2986,7 @@
       "name": "data-table",
       "type": "registry:block",
       "title": "Data table",
-      "description": "Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination, and optional row groups (groupBy) with rowgroup header rows, counts, keyboard-accessible collapse buttons and group selection.",
+      "description": "Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination, optional row groups (groupBy) with rowgroup header rows, counts, keyboard-accessible collapse buttons and group selection; column resize (pointer drag or a focusable role=\"separator\" handle with arrow keys, min/max widths, controlled columnWidths), column pinning to either edge with sticky cells (column menu or pinnedColumns), row virtualization for large datasets (aria-rowcount/aria-rowindex, works with selection and grouping), inline cell editing (text, number and select editors; Enter/F2 to edit, Enter/Tab to commit, Escape to cancel, onCellEdit can reject with an inline error) and saved views (filters, sort, visible columns, widths, pinning and grouping) with a view switcher to save as, rename, delete and reset.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -2841,9 +3021,24 @@
           "target": "components/blocks/tables/data-table/column-menu.tsx"
         },
         {
+          "path": "packages/blocks/src/tables/DataTable/column-sizing.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/tables/data-table/column-sizing.ts"
+        },
+        {
           "path": "packages/blocks/src/tables/DataTable/data-table-body.tsx",
           "type": "registry:component",
           "target": "components/blocks/tables/data-table/data-table-body.tsx"
+        },
+        {
+          "path": "packages/blocks/src/tables/DataTable/data-table-props.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/tables/data-table/data-table-props.ts"
+        },
+        {
+          "path": "packages/blocks/src/tables/DataTable/data-table-row.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/tables/data-table/data-table-row.tsx"
         },
         {
           "path": "packages/blocks/src/tables/DataTable/data-table-utils.ts",
@@ -2856,9 +3051,39 @@
           "target": "components/blocks/tables/data-table/density-toggle.tsx"
         },
         {
+          "path": "packages/blocks/src/tables/DataTable/editable-cell.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/tables/data-table/editable-cell.tsx"
+        },
+        {
           "path": "packages/blocks/src/tables/DataTable/fixtures.ts",
           "type": "registry:lib",
           "target": "components/blocks/tables/data-table/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/tables/DataTable/header-cell.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/tables/data-table/header-cell.tsx"
+        },
+        {
+          "path": "packages/blocks/src/tables/DataTable/resize-handle.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/tables/data-table/resize-handle.tsx"
+        },
+        {
+          "path": "packages/blocks/src/tables/DataTable/use-table-views.ts",
+          "type": "registry:hook",
+          "target": "components/blocks/tables/data-table/use-table-views.ts"
+        },
+        {
+          "path": "packages/blocks/src/tables/DataTable/use-virtual-rows.ts",
+          "type": "registry:hook",
+          "target": "components/blocks/tables/data-table/use-virtual-rows.ts"
+        },
+        {
+          "path": "packages/blocks/src/tables/DataTable/views.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/tables/data-table/views.tsx"
         }
       ]
     },
@@ -2866,7 +3091,7 @@
       "name": "date-picker",
       "type": "registry:ui",
       "title": "DatePicker",
-      "description": "Date field: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field.",
+      "description": "Date field: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -2874,8 +3099,10 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
         "https://ui.gntik.ai/r/calendar.json",
         "https://ui.gntik.ai/r/popover.json",
+        "https://ui.gntik.ai/r/time-picker.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -2982,6 +3209,90 @@
           "path": "packages/blocks/src/forms/DateRangeFilter/DateRangeFilter.tsx",
           "type": "registry:component",
           "target": "components/blocks/forms/date-range-filter/DateRangeFilter.tsx"
+        }
+      ]
+    },
+    {
+      "name": "date-time-range-picker",
+      "type": "registry:ui",
+      "title": "DateTimeRangePicker",
+      "description": "Time range field for logs and metrics: quick presets (last 15 minutes, 1 hour, 24 hours, 7 days, 30 days, custom), a relative \"Last N minutes/hours/days\" mode and an absolute mode with a range Calendar plus start and end TimePickers, validated so the end is after the start. The value is serialisable: `{ mode: \"relative\", amount, unit }` or `{ mode: \"absolute\", start, end }`; `resolveTimeRange` turns it into instants.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/calendar.json",
+        "https://ui.gntik.ai/r/date-picker.json",
+        "https://ui.gntik.ai/r/number-input.json",
+        "https://ui.gntik.ai/r/popover.json",
+        "https://ui.gntik.ai/r/select.json",
+        "https://ui.gntik.ai/r/time-picker.json",
+        "https://ui.gntik.ai/r/toggle-group.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/DateTimeRangePicker/DateTimeRangePicker.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/DateTimeRangePicker/DateTimeRangePicker.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/date-time-range-picker/DateTimeRangePicker.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/DateTimeRangePicker/date-time-range-picker.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/date-time-range-picker/date-time-range-picker.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DateTimeRangePicker/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/date-time-range-picker/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DateTimeRangePicker/time-range.ts",
+          "type": "registry:ui",
+          "target": "components/ui/date-time-range-picker/time-range.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DateTimeRangePicker/DateTimeRangePicker.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/date-time-range-picker/DateTimeRangePicker.doc.ts"
         }
       ]
     },
@@ -3098,6 +3409,90 @@
           "path": "packages/ui/src/doc.ts",
           "type": "registry:ui",
           "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "diff-viewer",
+      "type": "registry:ui",
+      "title": "DiffViewer",
+      "description": "Compares two texts, or two JSON values pretty-printed with sorted keys, line by line (Myers diff, no dependencies). Split or unified layout with a switch, line numbers, added/removed tints plus +/− markers and screen-reader text (never colour alone), word-level highlights inside paired lines, long unchanged runs collapsed behind \"Expand N lines\", +/− stats and optional file or version labels. The pure `diffLines`, `diffWords`, `diffJson` and `stableStringify` are exported.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/toggle-group.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Display"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/DiffViewer/DiffViewer.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/DiffViewer/DiffViewer.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/diff-viewer/DiffViewer.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/DiffViewer/diff-view.ts",
+          "type": "registry:ui",
+          "target": "components/ui/diff-viewer/diff-view.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DiffViewer/diff-viewer.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/diff-viewer/diff-viewer.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DiffViewer/diff.ts",
+          "type": "registry:ui",
+          "target": "components/ui/diff-viewer/diff.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DiffViewer/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/diff-viewer/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DiffViewer/DiffViewer.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/diff-viewer/DiffViewer.doc.ts"
         }
       ]
     },
@@ -4934,6 +5329,94 @@
       ]
     },
     {
+      "name": "key-value-editor",
+      "type": "registry:ui",
+      "title": "KeyValueEditor",
+      "description": "Editable list of key/value rows (environment variables, headers, labels): add and remove rows (no reordering), per-row validation (required key, key pattern, duplicate keys, optional required value and a custom `validate`), secret rows whose values are masked with a reveal toggle, bulk paste of `.env` text (comments ignored, existing keys updated) and \"Copy as .env\". Controlled (`value` + `onChange`) or uncontrolled. `parseEnv`, `serializeEnv`, `validateKeyValueRows` and `createKeyValueRow` are exported.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/copy-button.json",
+        "https://ui.gntik.ai/r/input.json",
+        "https://ui.gntik.ai/r/live-announcer.json",
+        "https://ui.gntik.ai/r/password-input.json",
+        "https://ui.gntik.ai/r/textarea.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/KeyValueEditor/KeyValueEditor.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/KeyValueEditor/KeyValueEditor.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/key-value-editor/KeyValueEditor.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/KeyValueEditor/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/key-value-editor/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/KeyValueEditor/key-value-editor.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/key-value-editor/key-value-editor.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/KeyValueEditor/key-value.ts",
+          "type": "registry:ui",
+          "target": "components/ui/key-value-editor/key-value.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/KeyValueEditor/KeyValueEditor.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/key-value-editor/KeyValueEditor.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "keyboard-shortcuts",
       "type": "registry:block",
       "title": "Keyboard shortcuts",
@@ -5571,6 +6054,65 @@
       ]
     },
     {
+      "name": "message-feedback",
+      "type": "registry:ui",
+      "title": "MessageFeedback",
+      "description": "Actions for an assistant reply: copy, regenerate and thumbs up / down toggles (aria-pressed). Thumbs down opens a popover with a reason picker and an optional comment. Controlled with `value` + `onFeedback`; pressing the active thumb clears it. A polite status confirms the feedback.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "component",
+        "Actions"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/chat",
+        "status": "beta",
+        "source": "packages/chat/src/MessageFeedback/MessageFeedback.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/chat/src/MessageFeedback/MessageFeedback.tsx",
+          "type": "registry:ui",
+          "target": "components/chat/message-feedback/MessageFeedback.tsx"
+        },
+        {
+          "path": "packages/chat/src/MessageFeedback/index.ts",
+          "type": "registry:ui",
+          "target": "components/chat/message-feedback/index.ts"
+        },
+        {
+          "path": "packages/chat/src/MessageFeedback/messageFeedback.variants.ts",
+          "type": "registry:ui",
+          "target": "components/chat/message-feedback/messageFeedback.variants.ts"
+        },
+        {
+          "path": "packages/chat/src/utils/i18n.ts",
+          "type": "registry:ui",
+          "target": "components/chat/utils/i18n.ts"
+        },
+        {
+          "path": "packages/chat/src/utils/useCopy.ts",
+          "type": "registry:ui",
+          "target": "components/chat/utils/useCopy.ts"
+        },
+        {
+          "path": "packages/chat/src/MessageFeedback/MessageFeedback.doc.ts",
+          "type": "registry:ui",
+          "target": "components/chat/message-feedback/MessageFeedback.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "messaging",
       "type": "registry:block",
       "title": "Messaging",
@@ -5862,6 +6404,65 @@
       ]
     },
     {
+      "name": "model-picker",
+      "type": "registry:ui",
+      "title": "ModelPicker",
+      "description": "Choose the model (and provider) for a conversation: options grouped by provider with a description, capability badges (vision, tools, reasoning, files, web, audio) and the context size; unavailable models stay listed, disabled, with the reason. `compact` gives a small borderless trigger for the ChatComposer toolbar. Controlled (`value` + `onValueChange`).",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/chat",
+        "status": "beta",
+        "source": "packages/chat/src/ModelPicker/ModelPicker.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/chat/src/ModelPicker/ModelPicker.tsx",
+          "type": "registry:ui",
+          "target": "components/chat/model-picker/ModelPicker.tsx"
+        },
+        {
+          "path": "packages/chat/src/ModelPicker/fixtures.ts",
+          "type": "registry:ui",
+          "target": "components/chat/model-picker/fixtures.ts"
+        },
+        {
+          "path": "packages/chat/src/ModelPicker/index.ts",
+          "type": "registry:ui",
+          "target": "components/chat/model-picker/index.ts"
+        },
+        {
+          "path": "packages/chat/src/ModelPicker/modelPicker.variants.ts",
+          "type": "registry:ui",
+          "target": "components/chat/model-picker/modelPicker.variants.ts"
+        },
+        {
+          "path": "packages/chat/src/utils/i18n.ts",
+          "type": "registry:ui",
+          "target": "components/chat/utils/i18n.ts"
+        },
+        {
+          "path": "packages/chat/src/ModelPicker/ModelPicker.doc.ts",
+          "type": "registry:ui",
+          "target": "components/chat/model-picker/ModelPicker.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "model-providers",
       "type": "registry:block",
       "title": "Model providers settings",
@@ -5961,7 +6562,7 @@
       "name": "multi-select",
       "type": "registry:ui",
       "title": "MultiSelect",
-      "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field.",
+      "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`).",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -5970,6 +6571,7 @@
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/combobox.json",
+        "https://ui.gntik.ai/r/spinner.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -6923,6 +7525,84 @@
       ]
     },
     {
+      "name": "permission-matrix",
+      "type": "registry:ui",
+      "title": "PermissionMatrix",
+      "description": "Roles (columns) × permissions (rows grouped in sections) editor. Cells are tri-state — allowed, denied, inherited — shown with an icon and a word, never colour alone; inherited cells are dashed and can say what they resolve to. Read-only columns (e.g. owner) and per-cell disabled reasons in a tooltip; controlled `value` + `onChange`; one tab stop with grid arrow-key navigation.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/tooltip.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/PermissionMatrix/PermissionMatrix.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/PermissionMatrix/PermissionMatrix.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/permission-matrix/PermissionMatrix.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/PermissionMatrix/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/permission-matrix/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PermissionMatrix/permission-matrix.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/permission-matrix/permission-matrix.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PermissionMatrix/PermissionMatrix.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/permission-matrix/PermissionMatrix.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
       "name": "plan-card",
       "type": "registry:block",
       "title": "Plan card",
@@ -7098,11 +7778,6 @@
           "path": "packages/ui/src/components/PowerSearch/PowerSearch.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/power-search/PowerSearch.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
         }
       ]
     },
@@ -7442,6 +8117,96 @@
           "path": "packages/templates/src/shared/ConsoleShell.tsx",
           "type": "registry:component",
           "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ]
+    },
+    {
+      "name": "query-builder",
+      "type": "registry:ui",
+      "title": "QueryBuilder",
+      "description": "Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for \"between\"); add and remove conditions and groups up to `maxDepth`. The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/calendar.json",
+        "https://ui.gntik.ai/r/date-picker.json",
+        "https://ui.gntik.ai/r/input.json",
+        "https://ui.gntik.ai/r/multi-select.json",
+        "https://ui.gntik.ai/r/number-input.json",
+        "https://ui.gntik.ai/r/select.json",
+        "https://ui.gntik.ai/r/toggle-group.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/QueryBuilder/QueryBuilder.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/QueryBuilder/QueryBuilder.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/query-builder/QueryBuilder.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/QueryBuilder/QueryValueEditor.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/query-builder/QueryValueEditor.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/QueryBuilder/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/query-builder/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/QueryBuilder/query-builder.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/query-builder/query-builder.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/QueryBuilder/query.ts",
+          "type": "registry:ui",
+          "target": "components/ui/query-builder/query.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/QueryBuilder/QueryBuilder.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/query-builder/QueryBuilder.doc.ts"
         }
       ]
     },
@@ -8015,6 +8780,94 @@
       ]
     },
     {
+      "name": "schedule-input",
+      "type": "registry:ui",
+      "title": "ScheduleInput",
+      "description": "Cron schedule editor: presets (hourly at minute, daily at, weekly on days at, monthly on day at) that write a 5-field cron expression, plus a raw cron field (*, lists, ranges, steps, names, macros) with validation and an error message, a plain-language summary (\"Every weekday at 09:00\") and the next runs in a time zone. Pure helpers: parseCron, describeCron, nextRuns.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/calendar.json",
+        "https://ui.gntik.ai/r/field.json",
+        "https://ui.gntik.ai/r/input.json",
+        "https://ui.gntik.ai/r/number-input.json",
+        "https://ui.gntik.ai/r/time-picker.json",
+        "https://ui.gntik.ai/r/toggle-group.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/ScheduleInput/ScheduleInput.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/ScheduleInput/ScheduleInput.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/schedule-input/ScheduleInput.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/ScheduleInput/cron.ts",
+          "type": "registry:ui",
+          "target": "components/ui/schedule-input/cron.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ScheduleInput/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/schedule-input/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ScheduleInput/schedule-input.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/schedule-input/schedule-input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ScheduleInput/schedule-presets.ts",
+          "type": "registry:ui",
+          "target": "components/ui/schedule-input/schedule-presets.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/ScheduleInput/ScheduleInput.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/schedule-input/ScheduleInput.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "scorecard",
       "type": "registry:block",
       "title": "Scorecard",
@@ -8165,6 +9018,89 @@
       ]
     },
     {
+      "name": "secret-field",
+      "type": "registry:ui",
+      "title": "SecretField",
+      "description": "A secret value (API key, token, connection string) on Input: masked by default (fixed-length mask, optional visible prefix/suffix), a reveal toggle (aria-pressed), a CopyButton that copies the real value and announces it, an optional Rotate action behind an AlertDialog confirmation, and optional created / last-used meta. Read-only by default (`editable` turns it into a password field). While masked and read-only the secret is not in the DOM, and it is never put in a title or tooltip. `maskSecret` is exported too.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/alert-dialog.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/copy-button.json",
+        "https://ui.gntik.ai/r/input.json",
+        "https://ui.gntik.ai/r/live-announcer.json",
+        "https://ui.gntik.ai/r/timestamp.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/SecretField/SecretField.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/SecretField/SecretField.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/secret-field/SecretField.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/SecretField/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/secret-field/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/SecretField/secret-field.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/secret-field/secret-field.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/SecretField/secret-mask.ts",
+          "type": "registry:ui",
+          "target": "components/ui/secret-field/secret-mask.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/SecretField/SecretField.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/secret-field/SecretField.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "section",
       "type": "registry:ui",
       "title": "Section",
@@ -8256,7 +9192,7 @@
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
-      "description": "Pick one value from a short list in a popup. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children.",
+      "description": "Pick one value from a short list in a popup. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input).",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -8264,6 +9200,8 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/combobox.json",
+        "https://ui.gntik.ai/r/spinner.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -8321,11 +9259,6 @@
           "path": "packages/ui/src/components/Select/Select.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/select/Select.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
         }
       ]
     },
@@ -9590,6 +10523,80 @@
       ]
     },
     {
+      "name": "split-button",
+      "type": "registry:ui",
+      "title": "SplitButton",
+      "description": "A primary action joined to a menu of secondary actions. Two real buttons in a role=\"group\": the action, and a chevron menu button (aria-haspopup=\"menu\", aria-expanded) that opens the kit Menu. Takes Button's variants and sizes (`auto` follows the density), `actions` for a simple list or `menu` for custom MenuItems.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/menu.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Actions"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/SplitButton/SplitButton.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/SplitButton/SplitButton.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/split-button/SplitButton.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/SplitButton/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/split-button/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/SplitButton/split-button.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/split-button/split-button.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/SplitButton/SplitButton.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/split-button/SplitButton.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "split-layout",
       "type": "registry:block",
       "title": "SplitLayout",
@@ -10692,6 +11699,93 @@
       ]
     },
     {
+      "name": "terminal",
+      "type": "registry:ui",
+      "title": "Terminal",
+      "description": "Streamed command output (build, deploy, job logs). ANSI SGR colours map to contrast-safe tokens (`parseAnsi` is exported), `\\r` progress lines rewrite in place, and a line cap drops the oldest output. It follows the tail until the user scrolls up, then offers “Jump to latest” with the count of new lines. Optional line numbers and timestamps, a wrap toggle, copy all and search with highlighted matches. The output is a `role=\"log\"` with aria-live off unless `live` opts in. Stream through the `ref` handle (`write`, `writeln`, `clear`) or pass `lines`.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Display"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/Terminal/Terminal.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/Terminal/Terminal.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/terminal/Terminal.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Terminal/ansi.ts",
+          "type": "registry:ui",
+          "target": "components/ui/terminal/ansi.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Terminal/buffer.ts",
+          "type": "registry:ui",
+          "target": "components/ui/terminal/buffer.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Terminal/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/terminal/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Terminal/terminal.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/terminal/terminal.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Terminal/Terminal.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/terminal/Terminal.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
       "name": "text",
       "type": "registry:ui",
       "title": "Text",
@@ -10973,6 +12067,88 @@
       ]
     },
     {
+      "name": "time-picker",
+      "type": "registry:ui",
+      "title": "TimePicker",
+      "description": "Accessible time field: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`\"HH:mm\"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/TimePicker/TimePicker.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/TimePicker/TimePicker.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/time-picker/TimePicker.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/TimePicker/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/time-picker/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TimePicker/time-picker.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/time-picker/time-picker.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TimePicker/time-utils.ts",
+          "type": "registry:ui",
+          "target": "components/ui/time-picker/time-utils.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TimePicker/TimePicker.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/time-picker/TimePicker.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
       "name": "time-slot-picker",
       "type": "registry:block",
       "title": "Time slot picker",
@@ -11150,7 +12326,7 @@
       "name": "toast",
       "type": "registry:ui",
       "title": "Toast",
-      "description": "Short-lived notification stacked bottom-right. Five tones (neutral, success, info, warning, destructive), title, description, one inline action and a close button; auto-dismiss pauses on hover and focus. Mount ToastProvider + Toaster once and queue with the useToast() hook.",
+      "description": "Short-lived notification stacked bottom-right. Five tones (neutral, success, info, warning, destructive) plus loading, title, description, a primary action and a dismiss action next to the close button; auto-dismiss pauses while the stack is hovered or focused. `toast.promise(task, { loading, success, error })` updates one toast in place (errors are announced assertively). Mount ToastProvider + Toaster once and queue with the useToast() hook.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -11158,6 +12334,7 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/spinner.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -11215,11 +12392,6 @@
           "path": "packages/ui/src/components/Toast/Toast.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/toast/Toast.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
         }
       ]
     },
@@ -11853,6 +13025,59 @@
           "path": "packages/ui/src/components/TreeList/TreeList.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/tree-list/TreeList.doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "typing-indicator",
+      "type": "registry:ui",
+      "title": "TypingIndicator",
+      "description": "Three pulsing dots shown while a reply is being written, with the text \"Assistant is typing\" for screen readers (or visible with `showLabel`). The dots are decorative and hold still under reduced motion. ChatMessage renders it while a streaming turn is still empty.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "component",
+        "Feedback"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/chat",
+        "status": "beta",
+        "source": "packages/chat/src/TypingIndicator/TypingIndicator.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/chat/src/TypingIndicator/TypingIndicator.tsx",
+          "type": "registry:ui",
+          "target": "components/chat/typing-indicator/TypingIndicator.tsx"
+        },
+        {
+          "path": "packages/chat/src/TypingIndicator/index.ts",
+          "type": "registry:ui",
+          "target": "components/chat/typing-indicator/index.ts"
+        },
+        {
+          "path": "packages/chat/src/TypingIndicator/typingIndicator.variants.ts",
+          "type": "registry:ui",
+          "target": "components/chat/typing-indicator/typingIndicator.variants.ts"
+        },
+        {
+          "path": "packages/chat/src/utils/i18n.ts",
+          "type": "registry:ui",
+          "target": "components/chat/utils/i18n.ts"
+        },
+        {
+          "path": "packages/chat/src/TypingIndicator/TypingIndicator.doc.ts",
+          "type": "registry:ui",
+          "target": "components/chat/typing-indicator/TypingIndicator.doc.ts"
         }
       ]
     },

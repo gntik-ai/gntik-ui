@@ -2,11 +2,14 @@
    Gntik UI · library.jsx — @gntik-ai/ui package components, rendered live.
    Reads every component folder in packages/ui: its *.doc.ts (name, group,
    keyboard contract, tokens) and its examples/*.tsx, which are both the
-   preview and the copyable code (one file, no drift).
+   preview and the copyable code (one file, no drift). Below the examples, the
+   generated API reference (props, keyboard, accessibility: api-reference.jsx).
+   Previews follow the topbar density and direction (PreviewScope).
    ============================================================================ */
 import { useMemo, useState } from 'react';
+import { PreviewScope } from '../preview-settings.jsx';
 
-const { SectionHead, CodeBlock } = window;
+const { SectionHead, CodeBlock, ApiReference } = window;
 
 const docs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', { eager: true, import: 'doc' });
 // Whole modules: helper files in examples/ (fixtures, demo routers) have no default export.
@@ -31,27 +34,6 @@ const COMPONENTS = Object.entries(docs)
   })
   .sort((a, b) => GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group) || a.name.localeCompare(b.name));
 
-function KeyboardTable({ rows }) {
-  return (
-    <table className="mt-3 w-full text-left text-[12.5px]">
-      <thead>
-        <tr className="border-b border-border text-muted-foreground">
-          <th className="py-1.5 pr-4 font-medium">Key</th>
-          <th className="py-1.5 font-medium">Behaviour</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map(([key, what]) => (
-          <tr key={key} className="border-b border-border/60 last:border-0">
-            <td className="py-1.5 pr-4 align-top"><kbd className="rounded border border-border bg-secondary px-1.5 py-0.5 font-mono text-[11px] text-foreground">{key}</kbd></td>
-            <td className="py-1.5 text-foreground">{what}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-}
-
 function ComponentEntry({ c }) {
   return (
     <section id={'ui-' + c.folder} className="mb-14 scroll-mt-6">
@@ -65,11 +47,11 @@ function ComponentEntry({ c }) {
       {c.examples.map(({ title, Comp, code }) => (
         <div key={title} className="mb-6">
           <div className="mb-2 text-[12.5px] font-medium text-foreground">{title}</div>
-          <div className="rounded-lg border border-border bg-card p-6 sm:p-8"><Comp /></div>
+          <div className="rounded-lg border border-border bg-card p-6 sm:p-8"><PreviewScope><Comp /></PreviewScope></div>
           <CodeBlock code={code} />
         </div>
       ))}
-      {c.keyboard && c.keyboard.length > 0 && <KeyboardTable rows={c.keyboard} />}
+      <ApiReference folder={c.folder} kind="component" level={3} />
     </section>
   );
 }

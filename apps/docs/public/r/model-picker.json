@@ -1,0 +1,66 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "model-picker",
+  "type": "registry:ui",
+  "title": "ModelPicker",
+  "description": "Choose the model (and provider) for a conversation: options grouped by provider with a description, capability badges (vision, tools, reasoning, files, web, audio) and the context size; unavailable models stay listed, disabled, with the reason. `compact` gives a small borderless trigger for the ChatComposer toolbar. Controlled (`value` + `onValueChange`).",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui",
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/chat/src/ModelPicker/ModelPicker.tsx",
+      "type": "registry:ui",
+      "target": "components/chat/model-picker/ModelPicker.tsx",
+      "content": "import { Badge, Select, SelectContent, SelectGroup, SelectGroupLabel, SelectItem, SelectTrigger, cn } from '@gntik-ai/ui';\nimport { Sparkles } from 'lucide-react';\nimport type { Ref } from 'react';\nimport { useChatI18n, type ChatMessageKey } from '../utils/i18n';\nimport { modelPickerStyles as s } from './modelPicker.variants';\n\nexport type ModelCapability = 'vision' | 'tools' | 'reasoning' | 'files' | 'web' | 'audio';\n\nexport interface ChatModel {\n  /** Value reported by `onValueChange`. */\n  id: string;\n  name: string;\n  /** Group heading, e.g. the provider or the deployment. Models are grouped in first-seen order. */\n  provider: string;\n  description?: string;\n  capabilities?: ModelCapability[];\n  /** Context window in tokens; shown as \"128K context\". */\n  contextWindow?: number;\n  disabled?: boolean;\n  /** Why it is disabled (\"Needs an upgraded plan\"); shown under the name. */\n  disabledReason?: string;\n}\n\nexport interface ModelPickerProps {\n  models: ChatModel[];\n  /** Selected model id (controlled). */\n  value: string | null;\n  onValueChange: (id: string) => void;\n  /** Small borderless trigger with only the model name, for the composer toolbar. */\n  compact?: boolean;\n  /** Accessible name of the trigger. Default \"Model\". */\n  label?: string;\n  placeholder?: string;\n  disabled?: boolean;\n  /** Hide the provider next to the name in the full trigger. */\n  hideProvider?: boolean;\n  className?: string;\n  ref?: Ref<HTMLButtonElement>;\n}\n\nconst CAPABILITY_KEY: Record<ModelCapability, ChatMessageKey> = {\n  vision: 'chat.capabilityVision',\n  tools: 'chat.capabilityTools',\n  reasoning: 'chat.capabilityReasoning',\n  files: 'chat.capabilityFiles',\n  web: 'chat.capabilityWeb',\n  audio: 'chat.capabilityAudio',\n};\n\n/** Models grouped by provider, keeping first-seen order. */\nexport function groupModels(models: ChatModel[]) {\n  const groups = new Map<string, ChatModel[]>();\n  for (const m of models) {\n    const list = groups.get(m.provider);\n    if (list) list.push(m);\n    else groups.set(m.provider, [m]);\n  }\n  return [...groups.entries()].map(([provider, items]) => ({ provider, items }));\n}\n\n/**\n * Model / provider select for a chat: options grouped by provider with capability badges\n * (vision, tools, context size…) and disabled models that say why. `compact` renders a small\n * borderless trigger for the composer toolbar. Built on Select (Base UI).\n */\nexport function ModelPicker({\n  models,\n  value,\n  onValueChange,\n  compact = false,\n  label,\n  placeholder,\n  disabled,\n  hideProvider = false,\n  className,\n  ref,\n}: ModelPickerProps) {\n  const { tc, formatNumber } = useChatI18n();\n  const byId = new Map(models.map((m) => [m.id, m]));\n  const items = models.map((m) => ({ value: m.id, label: m.name }));\n\n  return (\n    <Select<string>\n      items={items}\n      value={value}\n      disabled={disabled}\n      onValueChange={(next) => {\n        if (next !== null) onValueChange(next);\n      }}\n    >\n      <SelectTrigger\n        ref={ref}\n        size=\"sm\"\n        aria-label={label ?? tc('chat.model')}\n        placeholder={placeholder ?? tc('chat.selectModel')}\n        className={cn(compact ? s.compactTrigger : s.trigger, className)}\n      >\n        {(id: string | null) => {\n          const m = id === null ? undefined : byId.get(id);\n          if (!m) return placeholder ?? tc('chat.selectModel');\n          return (\n            <span className={s.triggerValue}>\n              <Sparkles size={13} aria-hidden className={s.triggerIcon} />\n              <span className={s.triggerName}>{m.name}</span>\n              {!compact && !hideProvider && <span className={s.triggerProvider}>· {m.provider}</span>}\n            </span>\n          );\n        }}\n      </SelectTrigger>\n      <SelectContent className={s.popup} align={compact ? 'end' : 'start'}>\n        {groupModels(models).map((g) => (\n          <SelectGroup key={g.provider}>\n            <SelectGroupLabel>{g.provider}</SelectGroupLabel>\n            {g.items.map((m) => (\n              <SelectItem key={m.id} value={m.id} disabled={m.disabled} label={m.name} className={s.item}>\n                <span className={s.itemBody}>\n                  <span className={s.itemName}>{m.name}</span>\n                  {m.description && <span className={s.itemDescription}>{m.description}</span>}\n                  {(m.capabilities?.length || m.contextWindow) && (\n                    <span className={s.badges}>\n                      {m.capabilities?.map((c) => (\n                        <Badge key={c} size=\"sm\" tone=\"neutral\">\n                          {tc(CAPABILITY_KEY[c])}\n                        </Badge>\n                      ))}\n                      {m.contextWindow !== undefined && (\n                        <Badge size=\"sm\" tone=\"neutral\" variant=\"outline\">\n                          {tc('chat.contextWindow', { size: formatNumber(m.contextWindow, { notation: 'compact', maximumFractionDigits: 1 }) })}\n                        </Badge>\n                      )}\n                    </span>\n                  )}\n                  {m.disabled && <span className={s.reason}>{m.disabledReason ?? tc('chat.unavailable')}</span>}\n                </span>\n              </SelectItem>\n            ))}\n          </SelectGroup>\n        ))}\n      </SelectContent>\n    </Select>\n  );\n}\n"
+    },
+    {
+      "path": "packages/chat/src/ModelPicker/fixtures.ts",
+      "type": "registry:ui",
+      "target": "components/chat/model-picker/fixtures.ts",
+      "content": "import type { ChatModel } from './ModelPicker';\n\n/** Generic, product-agnostic models for examples and the demo. */\nexport const DEMO_MODELS: ChatModel[] = [\n  { id: 'swift', name: 'Swift', provider: 'Hosted', description: 'Fast answers for everyday questions.', capabilities: ['tools'], contextWindow: 128_000 },\n  {\n    id: 'balanced',\n    name: 'Balanced',\n    provider: 'Hosted',\n    description: 'Good default for analysis and writing.',\n    capabilities: ['vision', 'tools', 'files'],\n    contextWindow: 200_000,\n  },\n  {\n    id: 'deep',\n    name: 'Deep reasoning',\n    provider: 'Hosted',\n    description: 'Plans multi-step work; slower.',\n    capabilities: ['vision', 'tools', 'reasoning'],\n    contextWindow: 1_000_000,\n    disabled: true,\n    disabledReason: 'Needs an upgraded plan',\n  },\n  { id: 'local-small', name: 'Local small', provider: 'Self-hosted', description: 'Runs in your own cluster.', contextWindow: 32_000 },\n  { id: 'local-vision', name: 'Local vision', provider: 'Self-hosted', capabilities: ['vision'], contextWindow: 64_000 },\n];\n"
+    },
+    {
+      "path": "packages/chat/src/ModelPicker/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/model-picker/index.ts",
+      "content": "export { ModelPicker, groupModels, type ModelPickerProps, type ChatModel, type ModelCapability } from './ModelPicker';\nexport { modelPickerStyles } from './modelPicker.variants';\nexport { DEMO_MODELS } from './fixtures';\nexport { doc as modelPickerDoc } from './ModelPicker.doc';\n"
+    },
+    {
+      "path": "packages/chat/src/ModelPicker/modelPicker.variants.ts",
+      "type": "registry:ui",
+      "target": "components/chat/model-picker/modelPicker.variants.ts",
+      "content": "/** Slot classes for ModelPicker. */\nexport const modelPickerStyles = {\n  trigger: 'w-auto max-w-full min-w-0',\n  compactTrigger: 'h-7 w-auto max-w-56 min-w-0 gap-1 border-transparent bg-transparent ps-2 pe-1.5 shadow-none hover:bg-secondary/70 hover:border-transparent',\n  triggerValue: 'flex min-w-0 items-center gap-1.5',\n  triggerIcon: 'shrink-0 text-muted-foreground',\n  triggerName: 'truncate font-medium',\n  triggerProvider: 'truncate text-muted-foreground',\n  popup: 'w-80 max-w-[calc(100vw-2rem)]',\n  item: 'items-start',\n  itemBody: 'flex min-w-0 flex-col gap-1 py-0.5 whitespace-normal',\n  itemName: 'font-medium text-foreground',\n  itemDescription: 'text-[11.5px] leading-4 text-muted-foreground',\n  badges: 'flex flex-wrap gap-1',\n  reason: 'text-[11.5px] leading-4 text-muted-foreground italic',\n} as const;\n"
+    },
+    {
+      "path": "packages/chat/src/utils/i18n.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/i18n.ts",
+      "content": "import { interpolate, useI18n, type MessageKey, type MessageVars } from '@gntik-ai/ui';\n\n/**\n * English fallbacks for the chat keys added after the first `@gntik-ai/ui` release. The\n * strings live in the ui catalogs (en + es); these keep the pack readable when it runs\n * against an older `@gntik-ai/ui` whose catalog does not have them yet.\n */\nconst FALLBACK = {\n  'chat.typing': '{author} is typing',\n  'chat.feedback': 'Response feedback',\n  'chat.feedbackTitle': 'What went wrong?',\n  'chat.feedbackReason': 'Reason',\n  'chat.feedbackComment': 'Comment (optional)',\n  'chat.feedbackPlaceholder': 'Tell us more…',\n  'chat.feedbackSubmit': 'Send feedback',\n  'chat.feedbackThanks': 'Thanks for your feedback',\n  'chat.feedbackCleared': 'Feedback removed',\n  'chat.reasonInaccurate': 'Inaccurate',\n  'chat.reasonUnhelpful': 'Not helpful',\n  'chat.reasonIncomplete': 'Incomplete',\n  'chat.reasonUnsafe': 'Harmful or unsafe',\n  'chat.reasonOther': 'Other',\n  'chat.regenerate': 'Regenerate',\n  'chat.uploading': 'Uploading {name}',\n  'chat.uploadFailed': 'Upload failed',\n  'chat.retryUpload': 'Retry uploading {name}',\n  'chat.dropFiles': 'Drop files to attach',\n  'chat.fileTooLarge': '{name} is larger than {max}',\n  'chat.fileTypeNotAllowed': '{name} is not an allowed file type',\n  'chat.tooManyFiles': 'You can attach up to {max} files',\n  'chat.model': 'Model',\n  'chat.selectModel': 'Select a model',\n  'chat.capabilityVision': 'Vision',\n  'chat.capabilityTools': 'Tools',\n  'chat.capabilityReasoning': 'Reasoning',\n  'chat.capabilityFiles': 'Files',\n  'chat.capabilityWeb': 'Web search',\n  'chat.capabilityAudio': 'Audio',\n  'chat.contextWindow': '{size} context',\n  'chat.unavailable': 'Unavailable',\n} as const;\n\nexport type ChatMessageKey = keyof typeof FALLBACK;\n\n/** `useI18n()` plus `tc()`, a translator for the newer chat keys with English fallbacks. */\nexport function useChatI18n() {\n  const i18n = useI18n();\n  const tc = (key: ChatMessageKey, vars?: MessageVars) => {\n    const out = i18n.t(key as MessageKey, vars);\n    return out === key ? interpolate(FALLBACK[key], vars, i18n.locale) : out;\n  };\n  return { ...i18n, tc };\n}\n"
+    },
+    {
+      "path": "packages/chat/src/ModelPicker/ModelPicker.doc.ts",
+      "type": "registry:ui",
+      "target": "components/chat/model-picker/ModelPicker.doc.ts",
+      "content": "import type { ComponentDoc } from '@gntik-ai/ui';\n\nexport const doc: ComponentDoc = {\n  name: 'ModelPicker',\n  group: 'Forms',\n  status: 'beta',\n  description:\n    'Choose the model (and provider) for a conversation: options grouped by provider with a description, capability badges (vision, tools, reasoning, files, web, audio) and the context size; unavailable models stay listed, disabled, with the reason. `compact` gives a small borderless trigger for the ChatComposer toolbar. Controlled (`value` + `onValueChange`).',\n  primitive: 'Select',\n  pattern: 'select-only combobox',\n  keyboard: [\n    ['Enter / Space / ArrowDown', 'On the trigger: opens the list'],\n    ['ArrowDown / ArrowUp', 'Moves between models; a disabled one can be highlighted (its reason is read) but not selected'],\n    ['Type a character', 'Jumps to the model whose name starts with it'],\n    ['Enter', 'Selects the highlighted model and closes'],\n    ['Escape', 'Closes without changing; focus returns to the trigger'],\n  ],\n  tokens: ['background', 'popover', 'border', 'secondary', 'primary', 'primary-text', 'muted-foreground', 'focus-ring'],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "component",
+    "Forms"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/chat",
+    "status": "beta",
+    "source": "packages/chat/src/ModelPicker/ModelPicker.doc.ts"
+  }
+}

@@ -2,12 +2,15 @@
    Gntik UI · viewers.jsx — Blocks, Layouts and Templates galleries.
    Every item renders in an iframe (/preview.html) so breakpoints follow the
    chosen device width and each frame carries its own theme. The code tab shows
-   the real source file from the package.
+   the real source file from the package. Frames follow the topbar density and
+   direction (query params preview.html honours); each layout gets its generated
+   API reference.
    ============================================================================ */
 import { useEffect, useMemo, useState } from 'react';
 import { CATALOG, loadSource } from '../preview-registry.js';
+import { previewQuery, usePreviewSettings } from '../preview-settings.jsx';
 
-const { SectionHead, CodeBlock } = window;
+const { SectionHead, CodeBlock, ApiReference } = window;
 
 const DEVICES = [['Desktop', '100%'], ['Tablet', '768px'], ['Mobile', '390px']];
 const THEMES = [['dark', 'Dark'], ['light', 'Light'], ['high_contrast', 'HC']];
@@ -34,7 +37,8 @@ function Viewer({ kind, id, title, file, height }) {
   const [tab, setTab] = useState('preview');
   const [code, setCode] = useState('');
   const [auto, setAuto] = useState(null);
-  const src = `/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}`;
+  const settings = usePreviewSettings();
+  const src = `/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}${previewQuery(settings)}`;
 
   useEffect(() => {
     if (kind !== 'block') return undefined;
@@ -72,7 +76,7 @@ function Viewer({ kind, id, title, file, height }) {
   );
 }
 
-function Gallery({ kicker, title, intro, groups, kind, height }) {
+function Gallery({ kicker, title, intro, groups, kind, height, api }) {
   const names = groups.map(([g]) => g);
   const [group, setGroup] = useState('All');
   const shown = group === 'All' ? groups : groups.filter(([g]) => g === group);
@@ -102,6 +106,7 @@ function Gallery({ kicker, title, intro, groups, kind, height }) {
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
             </article>
           ))}
+          {api?.(g, items)}
         </section>
       ))}
     </div>
@@ -126,7 +131,12 @@ function LayoutsSection() {
   const groups = useMemo(() => groupBy(CATALOG.layouts.map((l) => ({
     id: l.id, title: `${l.doc.name} · ${titleCase(l.example.replace(/([a-z])([A-Z])/g, '$1 $2'))}`, description: l.doc.description, file: l.file, layout: l.doc.name,
   })), (l) => l.layout), []);
-  return <Gallery kicker="Compositions" title="Layouts" kind="layout" height={620} groups={groups}
+  // One generated API reference per layout folder, after its examples.
+  const api = (g, items) => {
+    const folder = CATALOG.layouts.find((l) => l.id === items[0]?.id)?.layout;
+    return folder ? <ApiReference folder={folder} kind="layout" level={3} /> : null;
+  };
+  return <Gallery kicker="Compositions" title="Layouts" kind="layout" height={620} groups={groups} api={api}
     intro={`${new Set(CATALOG.layouts.map((l) => l.layout)).size} page layouts from @gntik-ai/ui — shells, split and inspector views, settings, auth, wizard, docs, status and print. Resize the frame to see each one adapt.`} />;
 }
 

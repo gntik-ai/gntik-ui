@@ -4,6 +4,8 @@
    ScaleFrame · useClickOutside. Everything is painted with Tailwind classes that
    resolve to the tokens in tokens/brand.css → the theme switch reskins it all live.
    ============================================================================ */
+import { usePreviewSettings } from '../preview-settings.jsx';
+
 const { useState, useEffect, useRef, useCallback } = React;
 
 /* ── Icons · stroke currentColor, viewBox 24 ───────────────────────────────── */
@@ -146,6 +148,8 @@ function CodeBlock({ code, lang = 'tsx', open: openInit = false }) {
 function Card({ name, blurb, code, lang = 'tsx', children, align = 'center', pad = 'p-10', surface = true, span = 1 }) {
   const justify = align === 'start' ? 'justify-start' : align === 'stretch' ? '' : 'justify-center';
   const colSpan = span === 2 ? 'lg:col-span-2' : '';
+  // Topbar preview settings: attributes only when they differ from the default (LTR, comfortable).
+  const { dir, density } = usePreviewSettings();
   return (
     <section className={"min-w-0 " + colSpan}>
       {name &&
@@ -154,7 +158,8 @@ function Card({ name, blurb, code, lang = 'tsx', children, align = 'center', pad
           {blurb && <p className="font-sans text-[13px] text-muted-foreground mt-0.5 leading-snug" style={{ textWrap: 'pretty' }}>{blurb}</p>}
         </div>}
       <div className={(surface ? 'preview-surface ' : 'bg-card ') + "rounded-lg border border-border overflow-hidden"}>
-        <div className={"flex flex-wrap items-center gap-4 " + justify + ' ' + pad}>{children}</div>
+        <div dir={dir === 'rtl' ? 'rtl' : undefined} data-density={density === 'compact' ? 'compact' : undefined}
+          className={"flex flex-wrap items-center gap-4 " + justify + ' ' + pad}>{children}</div>
       </div>
       {code && <CodeBlock code={code} lang={lang} />}
     </section>);

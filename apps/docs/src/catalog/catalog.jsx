@@ -2,8 +2,13 @@
    Gntik UI · catalog.jsx — catalog frame.
    Sidebar (nav from REGISTRY with status) + topbar (theme switch) + router
    (hash + localStorage). Exposes window.__goto and window.__setTheme.
+   Density (comfortable/compact) and direction (LTR/RTL) toggles drive every
+   live preview through PreviewSettingsContext (see preview-settings.jsx).
    Pending sections show a placeholder with their planned scope.
    ============================================================================ */
+import { DensityProvider } from '@gntik-ai/ui';
+import { DENSITIES, DIRECTIONS, PreviewSettingsContext, readSetting, writeSetting } from '../preview-settings.jsx';
+
 const { Icon, LogoMark, StatusTag, REGISTRY, regFlat, regFind, regCounts, useState, useEffect, useRef } = window;
 
 const DOT = { done: 'bg-primary', wip: 'bg-warning', todo: 'bg-muted-foreground/40' };
@@ -19,6 +24,22 @@ function ThemeSwitch({ theme, setTheme }) {
             className={"flex items-center gap-1.5 h-7 px-2.5 rounded-[5px] font-sans text-[12.5px] font-medium transition-colors " +
               (on ? 'bg-secondary text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground')}>
             <Icon name={icon} size={14} /><span className="hidden xl:inline">{label}</span>
+          </button>);
+      })}
+    </div>);
+}
+
+// Preview settings: a labelled group of toggle buttons (aria-pressed), styled like ThemeSwitch.
+function PreviewToggle({ label, options, value, onChange }) {
+  return (
+    <div role="group" aria-label={label} title={label} className="flex items-center gap-0.5 p-0.5 rounded-md border border-border bg-card">
+      {options.map(([val, text]) => {
+        const on = value === val;
+        return (
+          <button key={val} type="button" aria-pressed={on} onClick={() => onChange(val)}
+            className={"h-7 px-2.5 rounded-[5px] font-sans text-[12.5px] font-medium transition-colors motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring " +
+              (on ? 'bg-secondary text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground')}>
+            {text}
           </button>);
       })}
     </div>);
@@ -64,10 +85,15 @@ function CatalogShell() {
   const initial = (location.hash || '').replace('#', '') || localStorage.getItem('gntik-section') || 'overview';
   const [active, setActive] = useState(ids.includes(initial) ? initial : 'overview');
   const [theme, setTheme] = useState(localStorage.getItem('gntik-theme') ?? 'dark');
+  const [density, setDensity] = useState(() => readSetting('gntik-density', DENSITIES));
+  const [dir, setDir] = useState(() => readSetting('gntik-dir', DIRECTIONS));
+  const previewSettings = { density, dir };
   const mainRef = useRef(null);
   const c = regCounts();
 
   useEffect(() => { document.documentElement.className = theme; localStorage.setItem('gntik-theme', theme); }, [theme]);
+  useEffect(() => { writeSetting('gntik-density', density); }, [density]);
+  useEffect(() => { writeSetting('gntik-dir', dir); }, [dir]);
   useEffect(() => {
     localStorage.setItem('gntik-section', active);
     if (location.hash.replace('#', '') !== active) history.replaceState(null, '', '#' + active);
@@ -85,6 +111,9 @@ function CatalogShell() {
   const item = regFind(active);
 
   return (
+    <PreviewSettingsContext value={previewSettings}>
+    {/* Document-level density so portalled popups (menus, selects) in previews follow it too. */}
+    <DensityProvider density={density} applyTo="document">
     <div className="h-screen w-full flex overflow-hidden bg-background text-foreground font-sans">
       {/* Sidebar */}
       <aside className="w-[270px] shrink-0 flex flex-col bg-chrome border-r border-border/60">
@@ -126,7 +155,11 @@ function CatalogShell() {
             <Icon name="chevronRight" size={13} className="text-muted-foreground/60" />
             <span className="font-sans font-semibold text-[14px] text-foreground truncate">{item?.label}</span>
           </div>
-          <ThemeSwitch theme={theme} setTheme={setTheme} />
+          <div className="flex items-center gap-2 shrink-0">
+            <PreviewToggle label="Preview density" options={DENSITIES} value={density} onChange={setDensity} />
+            <PreviewToggle label="Preview direction" options={DIRECTIONS} value={dir} onChange={setDir} />
+            <ThemeSwitch theme={theme} setTheme={setTheme} />
+          </div>
         </header>
         <main ref={mainRef} className="flex-1 overflow-y-auto">
           <div className="max-w-[1120px] mx-auto px-6 sm:px-10 py-12">
@@ -134,7 +167,9 @@ function CatalogShell() {
           </div>
         </main>
       </div>
-    </div>);
+    </div>
+    </DensityProvider>
+    </PreviewSettingsContext>);
 }
 
 window.CatalogShell = CatalogShell;

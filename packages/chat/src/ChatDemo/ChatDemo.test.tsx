@@ -21,8 +21,30 @@ describe('ChatDemo', () => {
     expect(screen.getByRole('button', { name: /list_deployments/ })).toHaveTextContent('Succeeded');
     expect(screen.getByRole('table')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Copy message' })).toBeInTheDocument();
-    expect(screen.getByRole('status')).toHaveTextContent('Here is the summary');
+    // The thread announcer is the last status region (each reply's feedback has its own).
+    expect(screen.getAllByRole('status').at(-1)).toHaveTextContent('Here is the summary');
+    expect(screen.getByRole('group', { name: 'Response feedback' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Regenerate' })).toBeInTheDocument();
     expect(screen.getAllByRole('region', { name: 'Sources' }).length).toBeGreaterThan(0);
+  });
+
+  it('sends attachments with the message and rates the reply', () => {
+    const { container } = render(<ChatDemo />);
+    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+    const file = new File(['a,b'], 'data.csv', { type: 'text/csv' });
+    fireEvent.change(input, { target: { files: [file] } });
+    expect(screen.getByRole('list', { name: 'Attachments' })).toHaveTextContent('data.csv');
+    expect(screen.getByRole('combobox', { name: 'Model' })).toHaveTextContent('Balanced');
+    const box = screen.getByRole('textbox', { name: 'Message' });
+    fireEvent.change(box, { target: { value: 'Summarise this file' } });
+    fireEvent.keyDown(box, { key: 'Enter' });
+    const userTurn = screen.getByRole('article', { name: 'You' });
+    expect(userTurn).toHaveTextContent('Summarise this file');
+    expect(userTurn).toHaveTextContent('data.csv');
+    act(() => vi.advanceTimersByTime(total));
+    const good = screen.getByRole('button', { name: 'Good response' });
+    fireEvent.click(good);
+    expect(good).toHaveAttribute('aria-pressed', 'true');
   });
 
   it('Escape in the composer stops the stream and clears the timers', () => {

@@ -1,31 +1,14 @@
-import { ChevronRight, Inbox } from '@gntik-ai/icons';
-import { Checkbox, cn, EmptyState, MoreMenu, Skeleton, TableBody, TableCell, TableHead, TableRow, type MoreMenuAction, useI18n } from '@gntik-ai/ui';
+import { Inbox } from '@gntik-ai/icons';
+import { cn, EmptyState, Skeleton, TableBody, TableCell, TableRow, useI18n } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
-import { COLUMN_VARIANT_CLASSES, columnAlign, formatCell, selectionState, type DataTableColumn } from './data-table-utils';
+import { columnAlign } from './data-table-utils';
+import { DataTableRow, GroupHeaderRow, type DataTableBodyGroup, type RowContext } from './data-table-row';
+import type { VirtualWindow } from './use-virtual-rows';
 
-/** A group as the body renders it: its rows on the current page plus header data. */
-export interface DataTableBodyGroup<T> {
-  key: string;
-  /** Visible group name (header text). */
-  label: ReactNode;
-  /** Plain-text name for button and checkbox labels. */
-  name: string;
-  /** Rows of the group on the current page. */
-  rows: readonly T[];
-  /** Ids of every row in the group (all pages): the count and the group checkbox use them. */
-  ids: readonly string[];
-}
+export type { DataTableBodyGroup } from './data-table-row';
 
-export interface DataTableBodyProps<T> {
+export interface DataTableBodyProps<T> extends RowContext<T> {
   rows: readonly T[];
-  columns: ReadonlyArray<DataTableColumn<T>>;
-  getRowId: (row: T) => string;
-  /** Label of a row for its checkbox and actions ("orders-api"). */
-  getRowLabel: (row: T) => string;
-  selectable: boolean;
-  selected: ReadonlySet<string>;
-  onToggleRow: (id: string) => void;
-  rowActions?: (row: T) => Array<MoreMenuAction | 'separator'>;
   loading: boolean;
   loadingRows: number;
   emptyState?: ReactNode;
@@ -38,29 +21,39 @@ export interface DataTableBodyProps<T> {
   onToggleGroup?: (key: string) => void;
   /** Selects or clears every row of a group. */
   onToggleGroupRows?: (ids: readonly string[]) => void;
+  /** Renders only the items of this window (virtualized rows), with spacers for the rest. */
+  virtual?: VirtualWindow;
 }
 
-const groupHeadClass = 'h-9 bg-secondary/50 text-[12.5px] font-semibold tracking-normal normal-case text-foreground';
+/** One rendered line of the body: a group header or a data row. */
+export type DataTableBodyItem<T> = { kind: 'group'; group: DataTableBodyGroup<T>; open: boolean } | { kind: 'row'; row: T; groupKey?: string };
+
+/** Flattens rows (or groups and their open rows) into the lines the body renders. */
+export function flattenBody<T>(rows: readonly T[], groups: ReadonlyArray<DataTableBodyGroup<T>> | undefined, collapsed: ReadonlySet<string> | undefined): Array<DataTableBodyItem<T>> {
+  if (!groups) return rows.map((row) => ({ kind: 'row', row }));
+  const items: Array<DataTableBodyItem<T>> = [];
+  for (const group of groups) {
+    const open = !collapsed?.has(group.key);
+    items.push({ kind: 'group', group, open });
+    if (open) for (const row of group.rows) items.push({ kind: 'row', row, groupKey: group.key });
+  }
+  return items;
+}
+
+function Spacer({ height, span }: { height: number; span: number }) {
+  if (height <= 0) return null;
+  return (
+    <tbody aria-hidden data-virtual-spacer="">
+      <tr role="presentation">
+        <td colSpan={span} style={{ height, padding: 0, border: 0 }} />
+      </tr>
+    </tbody>
+  );
+}
 
 /** Body rows, plus the loading (skeleton rows) and empty (EmptyState) states. */
-export function DataTableBody<T>({
-  rows,
-  columns,
-  getRowId,
-  getRowLabel,
-  selectable,
-  selected,
-  onToggleRow,
-  rowActions,
-  loading,
-  loadingRows,
-  emptyState,
-  groups,
-  collapsedGroups,
-  collapsibleGroups = true,
-  onToggleGroup,
-  onToggleGroupRows,
-}: DataTableBodyProps<T>) {
+export function DataTableBody<T>(props: DataTableBodyProps<T>) {
+  const { rows, columns, selectable, selected, rowActions, loading, loadingRows, emptyState, groups, collapsedGroups, collapsibleGroups = true, onToggleGroup, onToggleGroupRows, virtual } = props;
   const { t } = useI18n();
   const span = columns.length + (selectable ? 1 : 0) + (rowActions ? 1 : 0);
   if (loading) {
@@ -95,46 +88,59 @@ export function DataTableBody<T>({
       </TableBody>
     );
   }
-  const renderRow = (row: T) => {
-    const id = getRowId(row);
-    const isSelected = selected.has(id);
-    const label = getRowLabel(row);
+  const row = (r: T, extra?: { ariaRowIndex?: number; height?: number }) => (
+    <DataTableRow key={props.getRowId(r)} {...props} row={r} ariaRowIndex={extra?.ariaRowIndex} style={extra?.height ? { height: extra.height } : undefined} />
+  );
+  const header = (group: DataTableBodyGroup<T>, open: boolean, extra?: { ariaRowIndex?: number; height?: number }) => (
+    <GroupHeaderRow
+      key={`group-${group.key}`}
+      group={group}
+      open={open}
+      selectable={selectable}
+      selected={selected}
+      span={span - (selectable ? 1 : 0)}
+      collapsible={collapsibleGroups}
+      onToggle={onToggleGroup}
+      onToggleRows={onToggleGroupRows}
+      ariaRowIndex={extra?.ariaRowIndex}
+      style={extra?.height ? { height: extra.height } : undefined}
+    />
+  );
+
+  if (virtual) {
+    const items = flattenBody(rows, groups, collapsedGroups);
+    const { start, end, rowHeight } = virtual;
+    // Consecutive items of the same group share a <tbody> (a rowgroup), as in the full render.
+    const chunks: Array<{ key: string; group?: string; items: Array<{ item: DataTableBodyItem<T>; index: number }> }> = [];
+    for (let i = start; i < Math.min(end, items.length); i++) {
+      const item = items[i]!;
+      const g = item.kind === 'group' ? item.group.key : item.groupKey;
+      const lastChunk = chunks[chunks.length - 1];
+      if (lastChunk && lastChunk.group === g) lastChunk.items.push({ item, index: i });
+      else chunks.push({ key: `${g ?? 'rows'}-${i}`, group: g, items: [{ item, index: i }] });
+    }
     return (
-      <TableRow key={id} selected={selectable && isSelected}>
-        {selectable && (
-          <TableCell className="w-10 pe-0">
-            <Checkbox aria-label={t('table.selectRow', { label })} checked={isSelected} onCheckedChange={() => onToggleRow(id)} />
-          </TableCell>
-        )}
-        {columns.map((c) => (
-          <TableCell key={c.id} align={columnAlign(c)} className={cn('whitespace-nowrap', COLUMN_VARIANT_CLASSES[c.variant ?? 'default'], c.className)}>
-            {c.cell ? c.cell(row) : formatCell(c.accessor?.(row))}
-          </TableCell>
+      <>
+        <Spacer height={start * rowHeight} span={span} />
+        {chunks.map((chunk) => (
+          <TableBody key={chunk.key} data-group={chunk.group}>
+            {chunk.items.map(({ item, index }) =>
+              item.kind === 'group'
+                ? header(item.group, item.open, { ariaRowIndex: index + 2, height: rowHeight })
+                : row(item.row, { ariaRowIndex: index + 2, height: rowHeight }),
+            )}
+          </TableBody>
         ))}
-        {rowActions && (
-          <TableCell align="right" className="w-12 py-0">
-            <MoreMenu items={rowActions(row)} label={t('table.rowActions', { label })} variant="ghost" size="sm" />
-          </TableCell>
-        )}
-      </TableRow>
+        <Spacer height={Math.max(0, items.length - end) * rowHeight} span={span} />
+      </>
     );
-  };
-  if (!groups) return <TableBody>{rows.map(renderRow)}</TableBody>;
+  }
+
+  if (!groups) return <TableBody>{rows.map((r) => row(r))}</TableBody>;
   return (
     <>
       {groups.map((group, gi) => {
         const open = !collapsedGroups?.has(group.key);
-        const state = selectionState(group.ids, selected);
-        const count = group.ids.length;
-        const heading = (
-          <>
-            <span className="truncate">{group.label}</span>{' '}
-            <span className="rounded-full bg-secondary px-1.5 font-mono text-[11px] font-medium text-muted-foreground tabular-nums">
-              {count}
-            </span>{' '}
-            <span className="sr-only">{count === 1 ? 'row' : 'rows'}</span>
-          </>
-        );
         return (
           <TableBody
             key={group.key}
@@ -142,35 +148,8 @@ export function DataTableBody<T>({
             // Every group but the last keeps the bottom rule of its last row.
             className={gi < groups.length - 1 ? '[&>tr:last-child>td]:border-b' : undefined}
           >
-            <TableRow className="hover:bg-transparent">
-              {selectable && (
-                <TableCell className={cn('w-10 pe-0', groupHeadClass)}>
-                  <Checkbox
-                    aria-label={t('table.selectRow', { label: `all in ${group.name}` })}
-                    checked={state.checked}
-                    indeterminate={state.indeterminate}
-                    disabled={count === 0}
-                    onCheckedChange={() => onToggleGroupRows?.(group.ids)}
-                  />
-                </TableCell>
-              )}
-              <TableHead scope="rowgroup" colSpan={span - (selectable ? 1 : 0)} className={cn(groupHeadClass, collapsibleGroups && 'ps-2')}>
-                {collapsibleGroups ? (
-                  <button
-                    type="button"
-                    aria-expanded={open}
-                    onClick={() => onToggleGroup?.(group.key)}
-                    className="inline-flex max-w-full items-center gap-1.5 rounded-sm px-1 py-0.5 hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
-                  >
-                    <ChevronRight size={14} aria-hidden className={cn('shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none', open ? 'rotate-90' : 'rtl:-scale-x-100')} />
-                    {heading}
-                  </button>
-                ) : (
-                  <span className="inline-flex max-w-full items-center gap-1.5">{heading}</span>
-                )}
-              </TableHead>
-            </TableRow>
-            {open && group.rows.map(renderRow)}
+            {header(group, open)}
+            {open && group.rows.map((r) => row(r))}
           </TableBody>
         );
       })}
