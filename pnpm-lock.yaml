@@ -195,6 +195,64 @@ importers:
         specifier: ^8.3.0
         version: 8.3.1(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
 
+  apps/falcone:
+    dependencies:
+      '@fontsource/geist':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/geist-mono':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@gntik-ai/blocks':
+        specifier: workspace:*
+        version: link:../../packages/blocks
+      '@gntik-ai/charts':
+        specifier: workspace:*
+        version: link:../../packages/charts
+      '@gntik-ai/chat':
+        specifier: workspace:*
+        version: link:../../packages/chat
+      '@gntik-ai/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
+      '@gntik-ai/templates':
+        specifier: workspace:*
+        version: link:../../packages/templates
+      '@gntik-ai/tokens':
+        specifier: workspace:*
+        version: link:../../packages/tokens
+      '@gntik-ai/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      react-dom:
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
+    devDependencies:
+      '@tailwindcss/vite':
+        specifier: ^4.3.3
+        version: 4.3.3(vite@8.3.1(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
+      '@types/react':
+        specifier: ^19.3.0
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.3.0)
+      '@vitejs/plugin-react':
+        specifier: ^6.1.0
+        version: 6.1.1(vite@8.3.1(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
+      tailwindcss:
+        specifier: ^4.3.3
+        version: 4.3.3
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      vite:
+        specifier: ^8.3.0
+        version: 8.3.1(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
+
   apps/musematic:
     dependencies:
       '@fontsource/geist':

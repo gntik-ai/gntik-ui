@@ -36,8 +36,8 @@ jobs:
         run: pnpm test
       - name: registry.json and kit-registry.json are up to date
         run: pnpm registry:check
-      - name: Gate — musematic is built only from the kit
-        run: node apps/musematic/scripts/check-kit-only.mjs
+      - name: Gate — musematic and Falcone are built only from the kit
+        run: node apps/musematic/scripts/check-kit-only.mjs && node apps/falcone/scripts/check-kit-only.mjs
 
   a11y:
     needs: checks
