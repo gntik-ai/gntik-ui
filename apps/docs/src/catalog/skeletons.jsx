@@ -239,3 +239,6 @@ function SkeletonsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['skeletons'] = SkeletonsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

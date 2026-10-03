@@ -169,3 +169,6 @@ function FoundationsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS.foundations = FoundationsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

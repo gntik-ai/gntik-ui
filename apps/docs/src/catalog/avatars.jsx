@@ -198,3 +198,6 @@ function AvatarsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['avatars'] = AvatarsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

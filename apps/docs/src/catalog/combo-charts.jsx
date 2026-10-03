@@ -70,3 +70,6 @@ function ComboChartsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['combo-charts'] = ComboChartsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

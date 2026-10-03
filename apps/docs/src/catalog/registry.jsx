@@ -12,6 +12,7 @@ const REGISTRY = [
   ]},
   { group: 'Foundations', icon: 'palette', items: [
     { id: 'foundations', label: 'Foundations', icon: 'palette', status: 'done', blurb: 'Tokens: color, typography, spacing, radii, shadows and icons.' },
+    { id: 'theme-builder', label: 'Theme builder', icon: 'palette', status: 'done', blurb: 'Product name + SVG mark → BrandPreset: previews in 3 themes and a console, contrast checks, export.' },
   ]},
   { group: 'Library', icon: 'bricks', items: [
     { id: 'ui-components', label: '@gntik-ai/ui', icon: 'bricks', status: 'done', blurb: 'Package components on Base UI: live examples, keyboard contract and source.' },
@@ -122,3 +123,6 @@ function regCounts() {
 
 window.SECTIONS = window.SECTIONS || {};
 Object.assign(window, { REGISTRY, regFlat, regFind, regCounts });
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

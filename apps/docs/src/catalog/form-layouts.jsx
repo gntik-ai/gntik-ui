@@ -601,3 +601,6 @@ function FormLayoutsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['form-layouts'] = FormLayoutsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

@@ -276,3 +276,6 @@ window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['app-shell'] = AppShellSection;
 window.AppShellDemo = AppShellDemo;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

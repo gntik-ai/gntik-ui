@@ -331,3 +331,6 @@ Object.assign(window, {
   useChartTheme, ChartTooltip, ChartLegend, chartFmt, CHART_COLORS,
 });
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

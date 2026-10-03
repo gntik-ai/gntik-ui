@@ -142,3 +142,6 @@ window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['blocks'] = BlocksSection;
 window.SECTIONS['layouts'] = LayoutsSection;
 window.SECTIONS['templates'] = TemplatesSection;
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

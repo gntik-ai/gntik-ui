@@ -401,3 +401,6 @@ function DateTimePickerSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['date-time-picker'] = DateTimePickerSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

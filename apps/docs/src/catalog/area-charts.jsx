@@ -59,3 +59,6 @@ function AreaChartsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['area-charts'] = AreaChartsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

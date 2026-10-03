@@ -169,3 +169,6 @@ function PaginationSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['pagination'] = PaginationSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

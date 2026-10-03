@@ -93,3 +93,6 @@ function SectionHeadingsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['section-headings'] = SectionHeadingsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

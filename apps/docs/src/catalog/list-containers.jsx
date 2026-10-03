@@ -157,3 +157,6 @@ function ListContainersSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['list-containers'] = ListContainersSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

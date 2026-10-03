@@ -153,3 +153,6 @@ function SidebarNavSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['sidebar-nav'] = SidebarNavSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

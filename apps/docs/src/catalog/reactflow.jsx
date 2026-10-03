@@ -479,3 +479,6 @@ function ReactFlowSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['reactflow'] = ReactFlowSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

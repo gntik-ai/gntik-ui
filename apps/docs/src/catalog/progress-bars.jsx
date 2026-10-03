@@ -189,3 +189,6 @@ function ProgressBarsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['progress-bars'] = ProgressBarsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

@@ -66,6 +66,7 @@ import './catalog/cards.jsx';
 import './catalog/filters.jsx';
 import './catalog/reactflow.jsx';
 import './catalog/monaco.jsx';
+import './catalog/theme-builder.jsx';
 import './catalog/catalog.jsx';
 import { createRoot } from 'react-dom/client';
 

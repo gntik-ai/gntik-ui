@@ -242,3 +242,6 @@ function DropdownsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['dropdowns'] = DropdownsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

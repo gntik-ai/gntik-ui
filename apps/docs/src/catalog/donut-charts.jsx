@@ -196,3 +196,6 @@ function DonutChartsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['donut-charts'] = DonutChartsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

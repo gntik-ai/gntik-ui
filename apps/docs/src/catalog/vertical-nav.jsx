@@ -153,3 +153,6 @@ function VerticalNavSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['vertical-nav'] = VerticalNavSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

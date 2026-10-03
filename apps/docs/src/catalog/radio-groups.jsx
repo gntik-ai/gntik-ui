@@ -211,3 +211,6 @@ function RadioGroupsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['radio-groups'] = RadioGroupsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};
