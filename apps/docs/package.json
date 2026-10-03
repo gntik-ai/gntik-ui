@@ -10,7 +10,7 @@
     "build": "vite build",
     "preview": "vite preview --port 4173 --strictPort",
     "visual": "playwright test catalog.visual",
-    "visual:update": "playwright test catalog.visual --update-snapshots",
+    "visual:update": "playwright test catalog.visual --update-snapshots=changed",
     "a11y": "playwright test a11y"
   },
   "dependencies": {

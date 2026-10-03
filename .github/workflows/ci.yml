@@ -110,8 +110,10 @@ jobs:
       - if: steps.ask.outputs.run == 'true'
         run: pnpm --filter @gntik-ai/docs exec playwright install --with-deps chromium
       - if: steps.ask.outputs.run == 'true'
-        name: Re-record baselines
-        run: rm -rf apps/docs/e2e/__screenshots__ && pnpm visual:update
+        # Only screenshots that fail the comparison (or are missing) are rewritten, so
+        # anti-aliasing noise never produces a baseline commit.
+        name: Re-record changed baselines
+        run: pnpm --filter @gntik-ai/docs exec playwright test catalog.visual --update-snapshots=changed
       - if: steps.ask.outputs.run == 'true'
         name: Commit baselines to the PR branch
         run: |
