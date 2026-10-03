@@ -47,6 +47,11 @@ export interface CanvasLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 
   onConsoleOpenChange?: (open: boolean) => void;
   /** Shown over the canvas below `lg`, where palette and inspector are hidden. Pass `null` to hide. */
   smallScreenNotice?: ReactNode;
+  /**
+   * Inside an app shell that already owns <main> and the skip link (SidebarLayout, StackedLayout):
+   * render the content region as a plain <div> and drop this layout's skip link.
+   */
+  embedded?: boolean;
   /** `id` of the `<main>` landmark (skip-link target). */
   mainId?: string;
   /** Accessible name of the canvas region. */
@@ -82,6 +87,7 @@ export function CanvasLayout({
   defaultConsoleOpen = true,
   onConsoleOpenChange,
   smallScreenNotice = 'Open on a larger screen to edit. The canvas is read-only here.',
+  embedded = false,
   mainId = 'main',
   mainLabel = 'Canvas',
   skipLinkLabel = 'Skip to canvas',
@@ -89,6 +95,7 @@ export function CanvasLayout({
   className,
   ...props
 }: CanvasLayoutProps) {
+  const MainTag = embedded ? 'div' : 'main';
   const [paletteOpen, setPaletteOpen] = usePanelState(paletteOpenProp, defaultPaletteOpen, onPaletteOpenChange);
   const [inspectorOpen, setInspectorOpen] = usePanelState(inspectorOpenProp, defaultInspectorOpen, onInspectorOpenChange);
   const [consoleOpen, setConsoleOpen] = usePanelState(consoleOpenProp, defaultConsoleOpen, onConsoleOpenChange);
@@ -100,9 +107,11 @@ export function CanvasLayout({
 
   return (
     <div className={cn(s.root(), className)} {...props}>
-      <SkipLink targetId={mainId} className={s.skipLink()}>
-        {skipLinkLabel}
-      </SkipLink>
+      {!embedded && (
+        <SkipLink targetId={mainId} className={s.skipLink()}>
+          {skipLinkLabel}
+        </SkipLink>
+      )}
       <header className={s.header()}>
         <div className={s.headerContent()}>{header}</div>
         {(palette != null || inspector != null) && (
@@ -140,7 +149,7 @@ export function CanvasLayout({
           </aside>
         )}
         <div className={s.center()}>
-          <main id={mainId} tabIndex={-1} aria-label={mainLabel} className={s.main()}>
+          <MainTag id={mainId} tabIndex={-1} role={embedded ? 'region' : undefined} aria-label={mainLabel} className={s.main()}>
             {smallScreenNotice != null && (
               <p className={s.notice()}>
                 <Monitor size={14} aria-hidden className="shrink-0" />
@@ -149,7 +158,7 @@ export function CanvasLayout({
             )}
             {toolbar != null && <div className={s.toolbar()}>{toolbar}</div>}
             {children}
-          </main>
+          </MainTag>
           {consoleContent != null && (
             <section aria-label={consoleLabel} className={s.console()}>
               <div className={s.consoleBar()}>

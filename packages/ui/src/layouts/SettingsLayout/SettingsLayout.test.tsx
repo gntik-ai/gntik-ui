@@ -64,3 +64,19 @@ describe('SettingsLayout', () => {
     await expectNoAxeViolations();
   });
 });
+
+describe('SettingsLayout embedded', () => {
+  it('renders no <main> and no skip link inside an app shell', async () => {
+    const { container } = render(
+      <main>
+        <SettingsLayout embedded mainId="settings-content" groups={[{ label: 'Account', items: [{ id: 'profile', label: 'Profile' }] }]} title="Settings">
+          <p>Content</p>
+        </SettingsLayout>
+      </main>,
+    );
+    expect(container.querySelectorAll('main')).toHaveLength(1);
+    expect(screen.queryByRole('link', { name: /skip/i })).not.toBeInTheDocument();
+    expect(container.querySelector('#settings-content')).toHaveTextContent('Content');
+    await expectNoAxeViolations(container);
+  });
+});

@@ -20,6 +20,11 @@ export interface DocsLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'c
   tocLabel?: string;
   /** Replaces the right column (when not using `toc`). */
   aside?: ReactNode;
+  /**
+   * Inside an app shell that already owns <main> and the skip link (SidebarLayout, StackedLayout):
+   * render the content region as a plain <div> and drop this layout's skip link.
+   */
+  embedded?: boolean;
   /** After the article (previous / next links, feedback, last updated). */
   footer?: ReactNode;
   mainId?: string;
@@ -40,24 +45,28 @@ export function DocsLayout({
   tocLabel = 'On this page',
   aside,
   footer,
+  embedded = false,
   mainId = 'main',
   skipLinkLabel = 'Skip to content',
   fullScreen = false,
   className,
   ...props
 }: DocsLayoutProps) {
-  const mainRef = useRef<HTMLElement>(null);
+  const MainTag = embedded ? 'div' : 'main';
+  const mainRef = useRef<HTMLDivElement>(null);
   const s = docsLayoutVariants({ fullScreen });
   const hasToc = toc != null && toc.length > 0;
   return (
     <div className={cn(s.root(), className)} {...props}>
-      <SkipLink targetId={mainId} className={s.skipLink()}>
-        {skipLinkLabel}
-      </SkipLink>
+      {!embedded && (
+        <SkipLink targetId={mainId} className={s.skipLink()}>
+          {skipLinkLabel}
+        </SkipLink>
+      )}
       {header != null && <header className={s.header()}>{header}</header>}
       <div className={s.body()}>
         {nav != null && <div className={s.nav()}>{nav}</div>}
-        <main ref={mainRef} id={mainId} tabIndex={-1} className={s.main()}>
+        <MainTag ref={mainRef} id={mainId} tabIndex={-1} className={s.main()}>
           <div className={s.column()}>
             {hasToc && (
               <Collapsible variant="row" className={s.mobileToc()}>
@@ -70,7 +79,7 @@ export function DocsLayout({
             <article className={s.article()}>{children}</article>
             {footer != null && <div className={s.footer()}>{footer}</div>}
           </div>
-        </main>
+        </MainTag>
         {(hasToc || aside != null) && (
           <div className={s.toc()}>{aside ?? (hasToc && <Outline items={toc} label={tocLabel} scrollRootRef={mainRef} />)}</div>
         )}

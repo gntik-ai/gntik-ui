@@ -41,6 +41,11 @@ export interface SettingsLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>
   saveBar?: ReactNode;
   /** Max width of the content column. */
   width?: SettingsLayoutVariantProps['width'];
+  /**
+   * Inside an app shell that already owns <main> and the skip link (SidebarLayout, StackedLayout):
+   * render the content region as a plain <div> and drop this layout's skip link.
+   */
+  embedded?: boolean;
   /** Label of the small-screen section Select. */
   selectLabel?: string;
   mainId?: string;
@@ -66,12 +71,14 @@ export function SettingsLayout({
   saveBar,
   width,
   selectLabel = 'Settings section',
+  embedded = false,
   mainId = 'main',
   skipLinkLabel = 'Skip to content',
   fullScreen = false,
   className,
   ...props
 }: SettingsLayoutProps) {
+  const MainTag = embedded ? 'div' : 'main';
   const leaves = groups.flatMap((g) => flattenLeaves(g.items));
   const firstKey = leaves[0] ? navItemKey(leaves[0]) : undefined;
   const [inner, setInner] = useState(defaultValue ?? firstKey);
@@ -87,9 +94,11 @@ export function SettingsLayout({
 
   return (
     <div className={cn(s.root(), className)} {...props}>
-      <SkipLink targetId={mainId} className={s.skipLink()}>
-        {skipLinkLabel}
-      </SkipLink>
+      {!embedded && (
+        <SkipLink targetId={mainId} className={s.skipLink()}>
+          {skipLinkLabel}
+        </SkipLink>
+      )}
       <div className={s.sidebar()}>
         <p className={s.sidebarHeading()} aria-hidden>
           {navLabel}
@@ -108,7 +117,7 @@ export function SettingsLayout({
           className="w-full"
         />
       </div>
-      <main id={mainId} tabIndex={-1} className={s.main()}>
+      <MainTag id={mainId} tabIndex={-1} className={s.main()}>
         <div className={s.content()}>
           {header ??
             (title != null && (
@@ -120,7 +129,7 @@ export function SettingsLayout({
           {children}
         </div>
         {saveBar != null && <div className={s.saveBar()}>{saveBar}</div>}
-      </main>
+      </MainTag>
     </div>
   );
 }
