@@ -9,6 +9,7 @@ export const stackedLayoutVariants = tv({
     brand: 'flex shrink-0 items-center px-1 lg:px-2',
     divider: 'mx-2 hidden h-6 w-px shrink-0 bg-border/70 lg:block',
     nav: 'hidden min-w-0 items-center gap-0.5 overflow-hidden lg:flex',
+    navSlot: 'hidden min-w-0 items-center lg:flex',
     link: [
       'inline-flex h-9 shrink-0 items-center gap-2 rounded-lg px-3 text-[13px] font-medium text-muted-foreground transition-colors',
       'hover:bg-accent/45 hover:text-foreground motion-reduce:transition-none',

@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 95 components, 12 layouts, 69 blocks, 57 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 97 components, 12 layouts, 70 blocks, 57 templates.
 
 Packages are published as `@gntik-ai/*` on GitHub Packages: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -446,7 +446,7 @@ export default function CarouselAutoplay() {
 
 ### ChatMessage (`chat-message`)
 
-One conversation turn for the roles user, assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows typing dots until text arrives; ChatAnnouncer announces start and end once instead of every token.
+One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows typing dots until text arrives; ChatAnnouncer announces start and end once instead of every token.
 
 - Package: `@gntik-ai/chat` · export `ChatMessage` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ChatMessage/ChatMessage.doc.ts
@@ -680,6 +680,79 @@ const EVENT = {
 
 export default function JsonViewerDepth() {
   return <JsonViewer label="Webhook event" data={EVENT} defaultExpandDepth={3} maxDepth={3} toolbar={false} className="w-full max-w-lg" />;
+}
+```
+
+### KanbanBoard (`kanban-board`)
+
+Columns of cards you reorder within a column and move across columns by pointer drag or keyboard. Controlled (`columns` + `onMove`, with `moveKanbanCard` to apply a move); every pick-up, move, drop and cancel is announced through a LiveAnnouncer. Built on the dependency-free `useSortable` hook (pointer + keyboard, press-and-hold on touch). Cards lift with a border and shadow only; nothing animates under reduced motion. Density-aware card padding (`size: "auto"`).
+
+- Package: `@gntik-ai/ui` · export `KanbanBoard` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/KanbanBoard/KanbanBoard.doc.ts
+- ARIA pattern: Sortable lists (cards as buttons with aria-roledescription, aria-pressed while moving, aria-describedby instructions) + aria-live announcements
+- Registry dependencies: live-announcer, ui-utils
+- Install: `gntik-ui add kanban-board`; own the source with `gntik-ui eject kanban-board`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves between cards (column by column) |
+| Space | Picks up the focused card; on a picked-up card, drops it |
+| ArrowUp / ArrowDown | While moving: one position up / down in the column |
+| ArrowLeft / ArrowRight | While moving: to the previous / next column (mirrored in RTL) |
+| Home / End | While moving: to the top / bottom of the column |
+| Enter | While moving: drops the card; otherwise opens it (`onCardOpen`) |
+| Escape | While moving: cancels and returns the card to where it started |
+
+Tokens: secondary, card, border, primary, accent, foreground, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Badge } from '@gntik-ai/ui';
+import { KanbanBoard, moveKanbanCard, type KanbanCard, type KanbanColumn } from '@gntik-ai/ui';
+
+interface Ticket extends KanbanCard {
+  priority: 'High' | 'Normal';
+  owner: string;
+}
+
+const initial: KanbanColumn<Ticket>[] = [
+  {
+    id: 'triage',
+    title: 'Triage',
+    cards: [
+      { id: 't1', title: 'Webhook retries stall', priority: 'High', owner: 'Ana' },
+      { id: 't2', title: 'Typo on the billing page', priority: 'Normal', owner: 'Luis' },
+    ],
+  },
+  { id: 'fixing', title: 'Fixing', cards: [{ id: 't3', title: 'Slow search on large teams', priority: 'High', owner: 'Mei' }] },
+  { id: 'shipped', title: 'Shipped', cards: [] },
+];
+
+export default function KanbanBoardCustomCard() {
+  const [columns, setColumns] = useState(initial);
+  return (
+    <KanbanBoard<Ticket>
+      label="Support tickets"
+      size="sm"
+      headingLevel={4}
+      emptyText="Drop a fixed ticket here"
+      columns={columns}
+      onMove={(move) => setColumns((cols) => moveKanbanCard(cols, move))}
+      renderCard={(ticket) => (
+        <span className="grid gap-2">
+          <span className="text-[13px] font-medium leading-5">{ticket.title}</span>
+          <span className="flex items-center justify-between gap-2">
+            <Badge tone={ticket.priority === 'High' ? 'warning' : 'neutral'}>{ticket.priority}</Badge>
+            <span className="font-mono text-[11px] text-muted-foreground">{ticket.owner}</span>
+          </span>
+        </span>
+      )}
+    />
+  );
 }
 ```
 
@@ -1503,9 +1576,54 @@ export default function EmptyStateProjects() {
 }
 ```
 
+### LiveAnnouncer (`live-announcer`)
+
+Screen-reader announcements for changes with no visible text: a polite (role="status") and an assertive aria-live region, plus `useAnnounce()` for any component below it. Used by KanbanBoard for pick-up / move / drop / cancel. Outside a LiveAnnouncer, `useAnnounce()` is a no-op.
+
+- Package: `@gntik-ai/ui` · export `LiveAnnouncer` · group Feedback · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/LiveAnnouncer/LiveAnnouncer.doc.ts
+- ARIA pattern: aria-live region (status)
+- Registry dependencies: ui-utils
+- Install: `gntik-ui add live-announcer`; own the source with `gntik-ui eject live-announcer`
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Button } from '@gntik-ai/ui';
+import { LiveAnnouncer, useAnnounce } from '@gntik-ai/ui';
+
+function SaveDraft() {
+  const announce = useAnnounce();
+  const [saves, setSaves] = useState(0);
+  return (
+    <div className="flex items-center gap-3">
+      <Button
+        variant="secondary"
+        onClick={() => {
+          setSaves((n) => n + 1);
+          announce('Draft saved.');
+        }}
+      >
+        Save draft
+      </Button>
+      <span className="font-mono text-[11.5px] text-muted-foreground">Saved {saves} times</span>
+    </div>
+  );
+}
+
+export default function LiveAnnouncerSave() {
+  return (
+    <LiveAnnouncer>
+      <SaveDraft />
+    </LiveAnnouncer>
+  );
+}
+```
+
 ### Meter (`meter`)
 
-Usage meter for quotas and limits: label, value text, and a level set by thresholds (healthy → warning near the cap → destructive at or over it), with an optional note under the bar.
+Usage meter for quotas and limits: label, value text, and a level set by thresholds (healthy → warning near the cap → destructive at or over it), with an optional note under the bar. `higherIsBetter` inverts the thresholds for scores and health (low = warning / destructive).
 
 - Package: `@gntik-ai/ui` · export `Meter` · group Feedback · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Meter/Meter.doc.ts
@@ -1521,29 +1639,13 @@ Usage:
 ```tsx
 import { Meter } from '@gntik-ai/ui';
 
-const USAGE = [
-  { label: 'API requests', used: 6200, total: 10000, unit: 'requests' },
-  { label: 'Storage', used: 43, total: 50, unit: 'GB' },
-  { label: 'Build minutes', used: 3240, total: 3000, unit: 'min', note: 'Over by 240 min, billed at $0.008 / min' },
-];
-
-const fmt = (n: number) => n.toLocaleString('en-US');
-
-export default function MeterUsage() {
+/** Scores and budgets where low is bad: `higherIsBetter` inverts the thresholds. */
+export default function MeterHealth() {
   return (
     <div className="grid max-w-md gap-5">
-      {USAGE.map((m) => (
-        <Meter
-          key={m.label}
-          label={m.label}
-          value={m.used}
-          max={m.total}
-          valueLabel={`${fmt(m.used)} / ${fmt(m.total)} ${m.unit}`}
-          aria-valuetext={`${fmt(m.used)} of ${fmt(m.total)} ${m.unit}`}
-          note={m.note}
-        />
-      ))}
-      <Meter label="Seats" value={18} max={20} thresholds={{ warning: 90 }} size="sm" />
+      <Meter label="Uptime score" value={92} higherIsBetter valueLabel="92 / 100" aria-valuetext="92 of 100" />
+      <Meter label="Test coverage" value={46} higherIsBetter valueLabel="46%" note="Target is 70%" thresholds={{ warning: 70, destructive: 30 }} />
+      <Meter label="Error budget left" value={12} higherIsBetter valueLabel="12% left" aria-valuetext="12 percent left" note="Freeze risky deploys" />
     </div>
   );
 }
@@ -5727,7 +5829,7 @@ export default function SplitLayoutInvoices() {
 
 ### StackedLayout (`stacked-layout`)
 
-Top-navigation shell: a chrome navbar (brand · primary links · actions), an optional tab sub-nav row, an optional page-header band and centered content (narrow 640 · default 1120 · wide 1440 · full) with an optional footer. Below lg the links collapse into a MobileNav drawer. Fills its container; fullScreen switches to h-dvh.
+Top-navigation shell: a chrome navbar (brand · primary links or a custom `nav` slot such as a MegaMenu · actions), an optional tab sub-nav row, an optional page-header band and centered content (narrow 640 · default 1120 · wide 1440 · full) with an optional footer. Below lg the links collapse into a MobileNav drawer. Fills its container; fullScreen switches to h-dvh.
 
 - Package: `@gntik-ai/ui` · export `StackedLayout` · group Layout · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/layouts/StackedLayout/StackedLayout.doc.ts
@@ -5742,6 +5844,7 @@ Keyboard:
 | --- | --- |
 | Tab (first stop) | Reveals the skip link; Enter moves focus to <main> |
 | Tab | Moves through the navbar links (the current one has aria-current="page") and actions |
+| Enter (nav slot) | In the `nav` slot: follows the slot component's own contract (e.g. MegaMenu opens a panel) |
 | Enter / Space | On the menu button (small screens): opens the navigation drawer |
 | Escape | Closes the navigation drawer and returns focus to the menu button |
 
@@ -5750,34 +5853,48 @@ Tokens: chrome, background, card, accent, accent-foreground, border, muted-foreg
 Usage:
 
 ```tsx
+import { useState } from 'react';
+import { MegaMenu, megaMenuNavItems, type MegaMenuItem } from '@gntik-ai/ui';
 import { Logo } from '@gntik-ai/ui';
 import { ThemeProvider } from '@gntik-ai/ui';
 import { ThemeCycleButton } from '@gntik-ai/ui';
 import { StackedLayout } from '@gntik-ai/ui';
 
-export default function StackedLayoutNarrow() {
+const items: MegaMenuItem[] = [
+  { label: 'Overview', href: '#overview' },
+  {
+    label: 'Workspace',
+    sections: [
+      {
+        title: 'Build',
+        links: [
+          { label: 'Projects', href: '#projects', description: 'Every project, its environments and owners.' },
+          { label: 'Deployments', href: '#deployments', description: 'Releases, rollbacks and deploy gates.' },
+        ],
+      },
+    ],
+  },
+  { label: 'Docs', href: '#docs' },
+];
+
+export default function StackedLayoutMegaMenu() {
+  const [href, setHref] = useState('#projects');
   return (
     <ThemeProvider storageKey={null}>
       <div className="h-[420px] overflow-hidden rounded-lg border border-border">
         <StackedLayout
-          mainId="stacked-narrow-main"
-          width="narrow"
+          mainId="stacked-mega-main"
           brand={<Logo size={24} wordmark />}
+          nav={<MegaMenu items={items} currentHref={href} onNavigate={(link) => link.href && setHref(link.href)} />}
+          links={megaMenuNavItems(items)}
+          currentHref={href}
+          onNavigate={(item) => item.href && setHref(item.href)}
           actions={<ThemeCycleButton />}
-          pageHeader={
-            <>
-              <h1 className="text-xl font-bold tracking-tight">Edit project</h1>
-              <p className="mt-1 text-[13px] text-muted-foreground">A narrow, centered column for forms and reading.</p>
-            </>
-          }
         >
-          <div className="space-y-3">
-            {['Name', 'Region', 'Default branch'].map((label) => (
-              <div key={label} className="rounded-[10px] border border-border bg-card px-4 py-3 text-[13px]">
-                {label}
-              </div>
-            ))}
-          </div>
+          <h1 className="text-xl font-bold tracking-tight">Projects</h1>
+          <p className="mt-1 text-[13px] text-muted-foreground">
+            The `nav` slot puts a MegaMenu in the top bar on large screens; the same items feed the drawer on small ones.
+          </p>
         </StackedLayout>
       </div>
     </ThemeProvider>
@@ -6003,7 +6120,7 @@ import { ModelKeysList } from '@gntik-ai/blocks';
 
 ### Prompt editor (`prompt-editor`)
 
-System and user prompt editors that detect {{variables}} as chips with value inputs, plus temperature and max-token parameters and a Run action.
+System and user prompt editors that detect {{variables}} as chips with value inputs, plus temperature and max-token parameters and a Run action. Variable values can be controlled (variables, onVariablesChange).
 
 - Package: `@gntik-ai/blocks` · export `PromptEditor` · group ai · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/ai/PromptEditor/block.meta.ts
@@ -6041,7 +6158,7 @@ import { TokenCostCard } from '@gntik-ai/blocks';
 
 ### Trace waterfall (`trace-waterfall`)
 
-Span tree of a trace with indentation and duration bars positioned on a shared time axis; spans expand and collapse, and the selected span shows its details.
+Span tree of a trace with indentation and duration bars positioned on a shared time axis; spans expand and collapse; the list is one tab stop with arrow-key navigation (←/→ collapse and expand), selection is controlled or uncontrolled, the details pane is optional or custom, and running spans show an in-progress bar (pulse stops under reduced motion) with a visible "running" label.
 
 - Package: `@gntik-ai/blocks` · export `TraceWaterfall` · group ai · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/ai/TraceWaterfall/block.meta.ts
@@ -6290,7 +6407,7 @@ import { SpendVsBudget } from '@gntik-ai/blocks';
 
 ### Code panel (`code-panel`)
 
-Multi-file code panel: file tabs, a lazily loaded Monaco editor or diff against the previous version, and a problems list that jumps to the reported line.
+Multi-file code panel: file tabs, a lazily loaded Monaco editor or diff against the previous version, and a problems list that jumps to the reported line. The open file can be controlled (activeFile, onActiveFileChange) and the heading level set (headingLevel).
 
 - Package: `@gntik-ai/blocks` · export `CodePanel` · group builders · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/builders/CodePanel/block.meta.ts
@@ -6366,11 +6483,11 @@ import { ActivityFeed } from '@gntik-ai/blocks';
 
 ### Chart card (`chart-card`)
 
-A Card with title, optional headline and delta, a 7d/30d/90d range toggle and an area, line or bar chart with an interactive legend.
+A Card with title, optional headline and delta, a 7d/30d/90d range toggle and an area, line, bar or heatmap chart with its legend (the heatmap colour scale), sized to the card and with loading, empty and error states.
 
 - Package: `@gntik-ai/blocks` · export `ChartCard` · group data-display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/data-display/ChartCard/block.meta.ts
-- Composes: Card, ToggleGroup, AreaChart, LineChart, BarChart, ChartLegend
+- Composes: Card, ToggleGroup, AreaChart, LineChart, BarChart, Heatmap, ChartLegend
 - Preview: /preview.html?kind=block&id=chart-card
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add chart-card`
 
@@ -6763,6 +6880,25 @@ import { ValidationSummary } from '@gntik-ai/blocks';
 <ValidationSummary />
 ```
 
+### Comparison table (`comparison-table`)
+
+Plans or options as columns and feature rows grouped by section (one tbody per section with a rowgroup header). Values are booleans (check or dash with screen-reader text), text or numbers; an optional recommended column is marked with a text badge, a primary top rule and a tint. Scrolls sideways on narrow screens with a sticky feature column.
+
+- Package: `@gntik-ai/blocks` · export `ComparisonTable` · group marketing · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/marketing/ComparisonTable/block.meta.ts
+- Composes: Table, Badge, Button
+- Preview: /preview.html?kind=block&id=comparison-table
+- Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add comparison-table`
+
+Usage:
+
+```tsx
+import { ComparisonTable } from '@gntik-ai/blocks';
+
+// Props default to the block fixtures; pass your data.
+<ComparisonTable />
+```
+
 ### FAQ (`faq`)
 
 Frequently asked questions in an accordion with a heading block, stacked or split layout, single or multiple open items.
@@ -7088,7 +7224,7 @@ import { GlobalSearch } from '@gntik-ai/blocks';
 
 ### Data table (`data-table`)
 
-Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination.
+Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination, and optional row groups (groupBy) with rowgroup header rows, counts, keyboard-accessible collapse buttons and group selection.
 
 - Package: `@gntik-ai/blocks` · export `DataTable` · group tables · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/tables/DataTable/block.meta.ts

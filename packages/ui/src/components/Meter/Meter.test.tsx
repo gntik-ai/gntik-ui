@@ -3,6 +3,7 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { getMeterLevel } from './meter.variants';
 import { Meter } from './Meter';
 import MeterUsage from './examples/MeterUsage';
+import MeterHealth from './examples/MeterHealth';
 
 describe('Meter', () => {
   it('maps percentages to levels with default and custom thresholds', () => {
@@ -11,6 +12,17 @@ describe('Meter', () => {
     expect(getMeterLevel(100)).toBe('critical');
     expect(getMeterLevel(85, { warning: 90 })).toBe('ok');
     expect(getMeterLevel(70, { warning: 50, destructive: 70 })).toBe('critical');
+  });
+
+  it('inverts the thresholds with higherIsBetter (low = bad)', () => {
+    expect(getMeterLevel(90, {}, true)).toBe('ok');
+    expect(getMeterLevel(50, {}, true)).toBe('warning');
+    expect(getMeterLevel(15, {}, true)).toBe('critical');
+    expect(getMeterLevel(65, { warning: 70, destructive: 40 }, true)).toBe('warning');
+    render(<MeterHealth />);
+    expect(screen.getByRole('meter', { name: 'Uptime score' })).toHaveAttribute('data-level', 'ok');
+    expect(screen.getByRole('meter', { name: 'Test coverage' })).toHaveAttribute('data-level', 'warning');
+    expect(screen.getByRole('meter', { name: 'Error budget left' })).toHaveAttribute('data-level', 'critical');
   });
 
   it('exposes a labelled meter with value attributes and the default value text', () => {
@@ -34,8 +46,11 @@ describe('Meter', () => {
     expect(screen.getByText(/Over by 240 min/)).toHaveClass('text-destructive-text');
   });
 
-  it('example has no axe violations', async () => {
-    render(<MeterUsage />);
+  it('examples have no axe violations', async () => {
+    const { unmount } = render(<MeterUsage />);
+    await expectNoAxeViolations();
+    unmount();
+    render(<MeterHealth />);
     await expectNoAxeViolations();
   });
 });

@@ -12,7 +12,7 @@ export type { BaseChartProps } from './shared';
 export { FunnelChart, funnelStages, type FunnelChartProps, type FunnelStage } from './FunnelChart';
 export { SankeyChart, resolveSankeyLinks, type SankeyChartProps, type SankeyNodeDatum, type SankeyLinkDatum } from './SankeyChart';
 export { RadarChart, type RadarChartProps } from './RadarChart';
-export { Heatmap, type HeatmapProps } from './Heatmap';
+export { Heatmap, cellHeightFor, type HeatmapProps } from './Heatmap';
 export { MiniBar, describeBars, type MiniBarProps, type MiniBarTone } from './MiniBar';
 export {
   SAFE_CHART_COLORS,

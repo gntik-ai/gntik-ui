@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "live-announcer",
+  "type": "registry:ui",
+  "title": "LiveAnnouncer",
+  "description": "Screen-reader announcements for changes with no visible text: a polite (role=\"status\") and an assertive aria-live region, plus `useAnnounce()` for any component below it. Used by KanbanBoard for pick-up / move / drop / cancel. Outside a LiveAnnouncer, `useAnnounce()` is a no-op.",
+  "author": "gntik-ai",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/LiveAnnouncer/LiveAnnouncer.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/live-announcer/LiveAnnouncer.tsx",
+      "content": "import { createContext, useCallback, useContext, useState, type ReactNode } from 'react';\nimport { cn } from '../../utils/cn';\nimport { liveAnnouncerVariants } from './live-announcer.variants';\n\nexport type AnnouncePoliteness = 'polite' | 'assertive';\n/** Sends a message to the nearest LiveAnnouncer region. */\nexport type Announce = (message: string, politeness?: AnnouncePoliteness) => void;\n\nconst AnnounceContext = createContext<Announce | null>(null);\nconst noop: Announce = () => {};\n\nexport interface LiveAnnouncerProps {\n  children?: ReactNode;\n  /** Classes for the (screen-reader only) region. */\n  className?: string;\n}\n\n/**\n * Screen-reader announcements for interactions that have no visible text change (drag and drop,\n * reorder, background saves). Renders polite and assertive `aria-live` regions and gives its\n * subtree `useAnnounce()`. Repeating the same message re-announces it.\n */\nexport function LiveAnnouncer({ children, className }: LiveAnnouncerProps) {\n  const [polite, setPolite] = useState('');\n  const [assertive, setAssertive] = useState('');\n  const announce = useCallback<Announce>((message, politeness = 'polite') => {\n    // A trailing no-break space makes an identical message a DOM change, so it is read again.\n    const next = (prev: string) => (prev === message ? `${message}\\u00A0` : message);\n    if (politeness === 'assertive') setAssertive(next);\n    else setPolite(next);\n  }, []);\n  const region = cn(liveAnnouncerVariants(), className);\n  return (\n    <AnnounceContext.Provider value={announce}>\n      {children}\n      <div role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" className={region} data-live-announcer=\"polite\">\n        {polite}\n      </div>\n      <div aria-live=\"assertive\" aria-atomic=\"true\" className={region} data-live-announcer=\"assertive\">\n        {assertive}\n      </div>\n    </AnnounceContext.Provider>\n  );\n}\n\n/**\n * The `announce(message, politeness?)` function of the nearest LiveAnnouncer. Outside one it is\n * a no-op, so components can call it unconditionally.\n */\nexport function useAnnounce(): Announce {\n  return useContext(AnnounceContext) ?? noop;\n}\n\n/** True when a LiveAnnouncer is already above this component (so it need not render its own). */\nexport function useHasLiveAnnouncer(): boolean {\n  return useContext(AnnounceContext) !== null;\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/LiveAnnouncer/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/live-announcer/index.ts",
+      "content": "export { LiveAnnouncer, useAnnounce, useHasLiveAnnouncer, type LiveAnnouncerProps, type Announce, type AnnouncePoliteness } from './LiveAnnouncer';\nexport { liveAnnouncerVariants, type LiveAnnouncerVariantProps } from './live-announcer.variants';\nexport { doc as liveAnnouncerDoc } from './LiveAnnouncer.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/LiveAnnouncer/live-announcer.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/live-announcer/live-announcer.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\n/** The announcer region is screen-reader only; it never takes space or colour. */\nexport const liveAnnouncerVariants = tv({\n  base: 'sr-only',\n});\n\nexport type LiveAnnouncerVariantProps = VariantProps<typeof liveAnnouncerVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/LiveAnnouncer/LiveAnnouncer.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/live-announcer/LiveAnnouncer.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'LiveAnnouncer',\n  group: 'Feedback',\n  status: 'beta',\n  description:\n    'Screen-reader announcements for changes with no visible text: a polite (role=\"status\") and an assertive aria-live region, plus `useAnnounce()` for any component below it. Used by KanbanBoard for pick-up / move / drop / cancel. Outside a LiveAnnouncer, `useAnnounce()` is a no-op.',\n  pattern: 'aria-live region (status)',\n  tokens: [],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Feedback"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/components/LiveAnnouncer/LiveAnnouncer.doc.ts"
+  }
+}

@@ -25,8 +25,13 @@ export interface HeatmapProps<T extends object> extends ChartStateProps {
   showValues?: boolean;
   /** Show the colour scale under the grid. Default `true`. */
   showScale?: boolean;
-  /** Cell height in px. */
+  /** Cell height in px (default 28). Ignored when `height` is set. */
   cellHeight?: number;
+  /**
+   * Height of the grid in px (column labels included): cells shrink or grow to fill it (16–48 px
+   * each). Use it to match sibling charts, e.g. inside a ChartCard.
+   */
+  height?: number;
   /** Row header column label (table fallback). Default: `index`. */
   rowHeader?: string;
   'aria-label'?: string;
@@ -37,6 +42,17 @@ export interface HeatmapProps<T extends object> extends ChartStateProps {
 function extent(values: readonly number[]): [number, number] {
   if (!values.length) return [0, 1];
   return [Math.min(...values), Math.max(...values)];
+}
+
+/** Column-label row height + inter-row gap, used to fit rows into a fixed `height`. */
+const LABEL_ROW = 20;
+const GAP = 3;
+
+/** Cell height that fits `rows` rows in `height` px (clamped to 16–48), or undefined without a height. */
+export function cellHeightFor(height: number | undefined, rows: number): number | undefined {
+  if (height === undefined) return undefined;
+  const n = Math.max(rows, 1);
+  return Math.min(48, Math.max(16, Math.floor((height - LABEL_ROW - GAP * n) / n)));
 }
 
 const cellFocus = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';
@@ -57,7 +73,8 @@ export function Heatmap<T extends object>({
   valueFormatter = identity,
   showValues = false,
   showScale = true,
-  cellHeight = 28,
+  cellHeight: cellHeightProp = 28,
+  height,
   rowHeader,
   title,
   className,
@@ -69,6 +86,7 @@ export function Heatmap<T extends object>({
   dataTable = true,
 }: HeatmapProps<T>) {
   const id = useId();
+  const cellHeight = cellHeightFor(height, data.length) ?? cellHeightProp;
   const [active, setActive] = useState<readonly [number, number] | null>(null);
   const name = accessibleName('Heatmap', ariaLabel, title, []);
   const diverging = scale === 'diverging';
@@ -87,7 +105,7 @@ export function Heatmap<T extends object>({
     domain ?? (diverging ? [Math.min(lo, 0), 0, Math.max(hi, 0)] : [lo, hi]);
   const effective = resolveState(state, all.length);
   const placeholder = chartStateView(effective, {
-    height: Math.max(data.length, 4) * (cellHeight + 3),
+    height: height ?? Math.max(data.length, 4) * (cellHeight + 3),
     emptyMessage,
     errorMessage,
     onRetry,
@@ -148,8 +166,9 @@ export function Heatmap<T extends object>({
         onFocus={() => setActive((a) => a ?? [0, 0])}
         onBlur={() => setActive(null)}
         onMouseLeave={() => setActive(null)}
-        className={cx('rounded-md', cellFocus)}
+        className={cx('overflow-x-auto rounded-md', cellFocus)}
       >
+        {/* Narrow containers (cards, phones) scroll the grid sideways instead of squeezing cells. */}
         <div aria-hidden className="grid gap-[3px]" style={{ gridTemplateColumns: columns }}>
           <div />
           {categories.map((c) => (

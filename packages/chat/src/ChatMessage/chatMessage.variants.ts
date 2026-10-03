@@ -22,6 +22,12 @@ export const chatMessageStyles = {
       content: 'max-w-[85%] rounded-2xl rounded-se-md bg-secondary px-4 py-2.5 whitespace-pre-wrap [overflow-wrap:anywhere]',
     },
     assistant: { root: '', body: '', meta: '', content: '' },
+    participant: {
+      root: '',
+      body: 'items-start',
+      meta: '',
+      content: 'max-w-[85%] rounded-2xl rounded-ss-md border border-border bg-card px-4 py-2.5 whitespace-pre-wrap [overflow-wrap:anywhere]',
+    },
     system: {
       root: 'justify-center',
       body: 'items-center',

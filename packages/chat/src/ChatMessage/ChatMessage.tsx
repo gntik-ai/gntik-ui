@@ -5,15 +5,21 @@ import { formatTime } from '../utils/format';
 import { useCopy } from '../utils/useCopy';
 import { chatMessageStyles as s } from './chatMessage.variants';
 
-export type ChatRole = 'user' | 'assistant' | 'system' | 'tool';
+/**
+ * Who wrote a turn. `participant` is another person in the conversation (a teammate, an agent
+ * handing over): not the current user and not the assistant.
+ */
+export type ChatRole = 'user' | 'assistant' | 'participant' | 'system' | 'tool';
 export type ChatFeedback = 'up' | 'down' | null;
 
 export interface ChatMessageProps {
   role: ChatRole;
-  /** Display name; defaults per role ("You", "Assistant", "System", "Tool"). */
+  /** Display name; defaults per role ("You", "Assistant", "Participant", "System", "Tool"). Pass it for `participant`. */
   author?: string;
   /** Replaces the default avatar. Pass `null` to hide it. */
   avatar?: ReactNode;
+  /** Image URL for the default avatar of `user` and `participant` turns (initials show while it loads or if it fails). */
+  avatarSrc?: string;
   /** When the message was sent. A Date renders as a local short time. */
   timestamp?: Date | string;
   /** The body: a string, a <Markdown>, a ToolCallCard… */
@@ -36,24 +42,31 @@ export interface ChatMessageProps {
   ref?: Ref<HTMLElement>;
 }
 
-const DEFAULT_AUTHOR: Record<ChatRole, MessageKey> = { user: 'chat.you', assistant: 'chat.assistant', system: 'chat.system', tool: 'chat.tool' };
+const DEFAULT_AUTHOR: Record<ChatRole, MessageKey> = {
+  user: 'chat.you',
+  assistant: 'chat.assistant',
+  participant: 'chat.participant',
+  system: 'chat.system',
+  tool: 'chat.tool',
+};
 
-function DefaultAvatar({ role, author }: { role: ChatRole; author: string }) {
+function DefaultAvatar({ role, author, src }: { role: ChatRole; author: string; src?: string }) {
   if (role === 'assistant') return <Avatar size="sm" tone="primary" fallback={<Sparkles size={15} aria-hidden />} />;
   if (role === 'tool') return <Avatar size="sm" tone="secondary" fallback={<Wrench size={14} aria-hidden />} />;
   // Decorative: the author name is already shown next to it.
-  return <Avatar size="sm" tone="secondary" initials={getInitials(author)} />;
+  return <Avatar size="sm" tone={role === 'participant' ? 'accent' : 'secondary'} src={src} initials={getInitials(author)} />;
 }
 
 /**
- * One turn in a conversation. User turns are right-aligned bubbles, assistant turns are
- * full-width prose, system notes are centred pills and tool turns hold a ToolCallCard. Copy,
+ * One turn in a conversation. User turns are right-aligned bubbles, participant turns (another
+ * person) are start-aligned outlined bubbles, assistant turns are full-width prose, system notes are centred pills and tool turns hold a ToolCallCard. Copy,
  * retry and feedback actions appear on hover or keyboard focus and are reachable with Tab.
  */
 export function ChatMessage({
   role,
   author,
   avatar,
+  avatarSrc,
   timestamp,
   children,
   streaming = false,
@@ -92,7 +105,7 @@ export function ChatMessage({
       data-streaming={streaming || undefined}
       className={cn(s.root, v.root, className)}
     >
-      {showAvatar && <div className={s.avatar}>{avatar ?? <DefaultAvatar role={role} author={name} />}</div>}
+      {showAvatar && <div className={s.avatar}>{avatar ?? <DefaultAvatar role={role} author={name} src={avatarSrc} />}</div>}
       <div className={cn(s.body, v.body)}>
         <div className={cn(s.meta, v.meta)}>
           <span id={`${id}-author`} className={s.author}>

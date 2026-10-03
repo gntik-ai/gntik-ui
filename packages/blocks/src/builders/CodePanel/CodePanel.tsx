@@ -18,8 +18,14 @@ const SEVERITY: Record<ProblemSeverity, { label: string; icon: typeof CircleX; c
 export interface CodePanelProps {
   files?: CodeFile[];
   problems?: CodeProblem[];
-  /** Path of the file opened first (defaults to the first file). */
+  /** Path of the file opened first (uncontrolled; defaults to the first file). */
   defaultFile?: string;
+  /** Path of the open file (controlled). Pair with `onActiveFileChange`. */
+  activeFile?: string;
+  /** Called with the path of the file to open (tab click, arrow keys, or a problem in another file). */
+  onActiveFileChange?: (path: string) => void;
+  /** Heading level of the "Problems" heading, to fit the page outline (default 3). */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
   defaultView?: View;
   /** Editor height (px or CSS length). */
   height?: number | string;
@@ -44,6 +50,9 @@ export function CodePanel({
   files = codeFiles,
   problems = codeProblems,
   defaultFile,
+  activeFile: activeProp,
+  onActiveFileChange,
+  headingLevel = 3,
   defaultView = 'code',
   height = 360,
   onChange,
@@ -51,14 +60,21 @@ export function CodePanel({
   loader,
   className,
 }: CodePanelProps) {
-  const [active, setActive] = useState(defaultFile ?? files[0]?.path ?? '');
+  const [innerActive, setInnerActive] = useState(defaultFile ?? files[0]?.path ?? '');
+  const active = activeProp ?? innerActive;
+  const setActive = (path: string) => {
+    if (path === active) return;
+    setInnerActive(path);
+    onActiveFileChange?.(path);
+  };
+  const ProblemsHeading = `h${headingLevel}` as const;
   const [view, setView] = useState<View>(defaultView);
   const [values, setValues] = useState<Record<string, string>>({});
   const editors = useRef(new Map<string, CodeEditorInstance>());
   const pending = useRef<CodeProblem | null>(null);
 
-  const activeFile = files.find((f) => f.path === active);
-  const canDiff = activeFile?.original !== undefined;
+  const currentFile = files.find((f) => f.path === active);
+  const canDiff = currentFile?.original !== undefined;
   const effectiveView: View = canDiff ? view : 'code';
   const errors = problems.filter((p) => p.severity === 'error').length;
   const warnings = problems.filter((p) => p.severity === 'warning').length;
@@ -153,7 +169,7 @@ export function CodePanel({
       </Tabs>
       <div className="border-t border-border">
         <div className="flex items-center gap-3 bg-secondary/35 px-3 py-2">
-          <h3 className="text-[12px] font-semibold tracking-wide text-foreground uppercase">Problems</h3>
+          <ProblemsHeading className="text-[12px] font-semibold tracking-wide text-foreground uppercase">Problems</ProblemsHeading>
           <span className="font-mono text-[11px] text-muted-foreground">
             {errors} {errors === 1 ? 'error' : 'errors'} · {warnings} {warnings === 1 ? 'warning' : 'warnings'}
           </span>

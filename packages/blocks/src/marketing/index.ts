@@ -10,3 +10,6 @@ export * from './Faq/Faq';
 export { meta as faqMeta } from './Faq/block.meta';
 export { sampleFaqs } from './Faq/fixtures';
 export type { MarketingAction } from './actions';
+export * from './ComparisonTable/ComparisonTable';
+export { meta as comparisonTableMeta } from './ComparisonTable/block.meta';
+export { sampleComparisonPlans, sampleComparisonSections } from './ComparisonTable/fixtures';

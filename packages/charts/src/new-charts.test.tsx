@@ -6,6 +6,7 @@ import {
   DonutChart,
   FunnelChart,
   Heatmap,
+  cellHeightFor,
   MiniBar,
   RadarChart,
   SankeyChart,
@@ -103,6 +104,24 @@ describe('SankeyChart', () => {
 });
 
 describe('Heatmap', () => {
+  it('fits its rows into a fixed height and scrolls sideways when narrow', () => {
+    const { container } = render(
+      <Heatmap aria-label="Retention" height={200} data={cohorts} index="cohort" categories={['w1', 'w2', 'w3']} />,
+    );
+    const expected = cellHeightFor(200, cohorts.length);
+    expect(expected).toBe(Math.min(48, Math.floor((200 - 20 - 3 * cohorts.length) / cohorts.length)));
+    expect((container.querySelector('[data-cell="0-0"]') as HTMLElement).style.height).toBe(`${expected}px`);
+    expect(screen.getByRole('group', { name: /Retention: colour grid/ })).toHaveClass('overflow-x-auto');
+    expect(cellHeightFor(undefined, 3)).toBeUndefined();
+    expect(cellHeightFor(40, 10)).toBe(16);
+    expect(cellHeightFor(4000, 2)).toBe(48);
+  });
+
+  it('sizes its state placeholders to the fixed height', () => {
+    const { container } = render(<Heatmap aria-label="X" height={180} state="loading" data={cohorts} index="cohort" categories={['w1']} />);
+    expect((container.querySelector('[data-chart-state="loading"]') as HTMLElement).style.height).toBe('180px');
+  });
+
   it('colours cells from the sequential ramp and exposes a table by default', () => {
     const { container } = render(
       <Heatmap aria-label="Retention" data={cohorts} index="cohort" categories={['w1', 'w2', 'w3']} />,

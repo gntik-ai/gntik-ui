@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import StackedLayoutNarrow from './examples/StackedLayoutNarrow';
 import StackedLayoutTabs from './examples/StackedLayoutTabs';
+import StackedLayoutMegaMenu from './examples/StackedLayoutMegaMenu';
 
 describe('StackedLayout', () => {
   it('renders the navbar links with the current page and the landmarks', () => {
@@ -52,11 +53,30 @@ describe('StackedLayout', () => {
     expect(menu).toHaveFocus();
   });
 
+  it('renders the nav slot in the top bar instead of the desktop links; Enter opens a MegaMenu panel', async () => {
+    const user = userEvent.setup();
+    render(<StackedLayoutMegaMenu />);
+    const banner = screen.getByRole('banner');
+    const nav = within(banner).getByRole('navigation', { name: 'Main' });
+    expect(within(nav).getByRole('link', { name: 'Overview' })).toHaveAttribute('href', '#overview');
+    expect(within(banner).getAllByRole('navigation')).toHaveLength(1);
+    const trigger = within(nav).getByRole('button', { name: 'Workspace' });
+    trigger.focus();
+    await user.keyboard('{Enter}');
+    await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'true'));
+    expect(screen.getByRole('button', { name: 'Open navigation' })).toBeInTheDocument();
+  });
+
   it('examples have no axe violations', async () => {
     const { unmount } = render(<StackedLayoutTabs />);
     await expectNoAxeViolations();
     unmount();
     render(<StackedLayoutNarrow />);
+    await expectNoAxeViolations();
+  });
+
+  it('nav slot example has no axe violations', async () => {
+    render(<StackedLayoutMegaMenu />);
     await expectNoAxeViolations();
   });
 });

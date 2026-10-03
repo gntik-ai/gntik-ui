@@ -16,7 +16,12 @@ export interface PromptEditorProps {
   title?: string;
   defaultSystem?: string;
   defaultUser?: string;
+  /** Initial variable values (uncontrolled). */
   defaultVariables?: Record<string, string>;
+  /** Variable values (controlled). Pair with `onVariablesChange`. */
+  variables?: Readonly<Record<string, string>>;
+  /** Called with every variable value (all keys kept) when one changes. */
+  onVariablesChange?: (variables: Record<string, string>) => void;
   defaultTemperature?: number;
   defaultMaxTokens?: number;
   /** Upper bound of the max-tokens input. */
@@ -45,6 +50,8 @@ export function PromptEditor({
   defaultSystem = promptDefaults.system,
   defaultUser = promptDefaults.user,
   defaultVariables = promptDefaults.variables,
+  variables: variablesProp,
+  onVariablesChange,
   defaultTemperature = promptDefaults.temperature,
   defaultMaxTokens = promptDefaults.maxTokens,
   maxTokensLimit = 8192,
@@ -56,7 +63,13 @@ export function PromptEditor({
   const titleId = useId();
   const [system, setSystem] = useState(defaultSystem);
   const [user, setUser] = useState(defaultUser);
-  const [values, setValues] = useState<Record<string, string>>(defaultVariables);
+  const [innerValues, setInnerValues] = useState<Record<string, string>>(defaultVariables);
+  const values: Readonly<Record<string, string>> = variablesProp ?? innerValues;
+  const setValue = (name: string, value: string) => {
+    const next = { ...values, [name]: value };
+    setInnerValues(next);
+    onVariablesChange?.(next);
+  };
   const [temperature, setTemperature] = useState(defaultTemperature);
   const [maxTokens, setMaxTokens] = useState(String(defaultMaxTokens));
   const [running, setRunning] = useState(false);
@@ -133,7 +146,7 @@ export function PromptEditor({
                   {variables.map((v) => (
                     <Field key={v}>
                       <FieldLabel className="font-mono text-[12px]">{v}</FieldLabel>
-                      <Input size="sm" value={values[v] ?? ''} onValueChange={(next) => setValues((prev) => ({ ...prev, [v]: String(next) }))} />
+                      <Input size="sm" value={values[v] ?? ''} onValueChange={(next) => setValue(v, String(next))} />
                     </Field>
                   ))}
                 </div>

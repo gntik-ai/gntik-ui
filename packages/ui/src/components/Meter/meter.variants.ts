@@ -33,14 +33,30 @@ export type MeterVariantProps = VariantProps<typeof meterVariants>;
 export type MeterLevel = NonNullable<MeterVariantProps['level']>;
 
 export interface MeterThresholds {
-  /** Percent of max at which the meter turns amber. Default 80. */
+  /**
+   * Percent of max at which the meter turns amber. Default 80 (at or above). With
+   * `higherIsBetter`, the meter turns amber at or below it; default 50.
+   */
   warning?: number;
-  /** Percent of max at which the meter turns red. Default 100. */
+  /**
+   * Percent of max at which the meter turns red. Default 100 (at or above). With
+   * `higherIsBetter`, the meter turns red at or below it; default 20.
+   */
   destructive?: number;
 }
 
-/** Maps a percentage of max to a level using the thresholds. */
-export function getMeterLevel(percent: number, { warning = 80, destructive = 100 }: MeterThresholds = {}): MeterLevel {
+/**
+ * Maps a percentage of max to a level using the thresholds. By default high is bad (quotas);
+ * pass `higherIsBetter` for scores, health or remaining budget, where low is bad.
+ */
+export function getMeterLevel(percent: number, thresholds: MeterThresholds = {}, higherIsBetter = false): MeterLevel {
+  if (higherIsBetter) {
+    const { warning = 50, destructive = 20 } = thresholds;
+    if (percent <= destructive) return 'critical';
+    if (percent <= warning) return 'warning';
+    return 'ok';
+  }
+  const { warning = 80, destructive = 100 } = thresholds;
   if (percent >= destructive) return 'critical';
   if (percent >= warning) return 'warning';
   return 'ok';

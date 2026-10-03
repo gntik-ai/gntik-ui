@@ -2,8 +2,20 @@ import { Checkbox, cn, DensityProvider, Table, TableCaption, TableHead, TableHea
 import { useState, type ReactNode } from 'react';
 import { PaginationFooter } from '../PaginationFooter/PaginationFooter';
 import { ColumnVisibilityMenu } from './column-menu';
-import { DataTableBody } from './data-table-body';
-import { columnAlign, paginate, selectionState, sortRows, toggleAll, toggleOne, type DataTableColumn, type SortState } from './data-table-utils';
+import { DataTableBody, type DataTableBodyGroup } from './data-table-body';
+import {
+  columnAlign,
+  groupKeyOf,
+  groupRows,
+  paginate,
+  selectionState,
+  sortRows,
+  toggleAll,
+  toggleOne,
+  type DataTableColumn,
+  type DataTableGroupBy,
+  type SortState,
+} from './data-table-utils';
 import { DensityToggle } from './density-toggle';
 import { DEPLOYMENT_COLUMNS, DEPLOYMENT_ROWS } from './fixtures';
 
@@ -56,6 +68,22 @@ export interface DataTableProps<T> {
   loading?: boolean;
   loadingRows?: number;
   emptyState?: ReactNode;
+  /**
+   * Groups rows under header rows (a field key or a function returning the group key). Groups keep
+   * the order in which their keys first appear in `rows`; sorting applies inside each group, and
+   * pagination pages through the grouped rows (each header shows the group's full count).
+   */
+  groupBy?: DataTableGroupBy<T>;
+  /** Header text of a group (default: the key, or "No group" for rows without a value). */
+  groupLabel?: (key: string, rows: readonly T[]) => ReactNode;
+  /** Group headers render a keyboard-accessible collapse button (default true). */
+  collapsibleGroups?: boolean;
+  /** Controlled collapsed group keys. */
+  collapsedGroups?: readonly string[];
+  /** Group keys collapsed initially. */
+  defaultCollapsedGroups?: readonly string[];
+  onCollapsedGroupsChange?: (keys: string[]) => void;
+
   /** Left side of the toolbar (title, search, FilterBar…). */
   toolbar?: ReactNode;
   className?: string;
@@ -69,7 +97,7 @@ const defaultRowId = (row: unknown): string => {
 /**
  * Generic data table on the kit Table: typed columns, sortable headers (aria-sort), row selection
  * with select-all / indeterminate, column visibility menu, density toggle, row actions, loading
- * and empty states, and client-side sort + pagination.
+ * and empty states, client-side sort + pagination, and optional collapsible row groups (`groupBy`).
  */
 export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   rows = DEPLOYMENT_ROWS as unknown as readonly T[],
@@ -100,6 +128,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   loading = false,
   loadingRows = 5,
   emptyState,
+  groupBy,
+  groupLabel,
+  collapsibleGroups = true,
+  collapsedGroups: collapsedProp,
+  defaultCollapsedGroups = [],
+  onCollapsedGroupsChange,
   toolbar,
   className,
 }: DataTableProps<T>) {
@@ -124,9 +158,15 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       return value == null ? getRowId(row) : String(value);
     });
 
-  const sorted = manualSorting ? [...rows] : sortRows(rows, columns, sort);
+  const [innerCollapsed, setInnerCollapsed] = useState<ReadonlySet<string>>(() => new Set(defaultCollapsedGroups));
+  const collapsed: ReadonlySet<string> = collapsedProp ? new Set(collapsedProp) : innerCollapsed;
+
+  const sortedRows = manualSorting ? [...rows] : sortRows(rows, columns, sort);
+  const allGroups = groupBy ? groupRows(sortedRows, groupBy, rows) : null;
+  const sorted = allGroups ? allGroups.flatMap((g) => g.rows) : sortedRows;
   const pageRows = paginated ? paginate(sorted, page, pageSize) : sorted;
-  const pageIds = pageRows.map(getRowId);
+  // Rows in collapsed groups are hidden, so select-all leaves them alone.
+  const pageIds = (groupBy ? pageRows.filter((row) => !collapsed.has(groupKeyOf(row, groupBy))) : pageRows).map(getRowId);
   const header = selectionState(pageIds, selected);
   const selectedList = rows.map(getRowId).filter((id) => selected.has(id));
 
@@ -140,6 +180,27 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     onSortChange?.(next);
     setPage(1);
   };
+  const toggleGroup = (key: string) => {
+    const next = new Set(collapsed);
+    if (next.has(key)) next.delete(key);
+    else next.add(key);
+    setInnerCollapsed(next);
+    onCollapsedGroupsChange?.([...next]);
+  };
+  const nameOf = (key: string) => key || 'No group';
+  const bodyGroups: Array<DataTableBodyGroup<T>> | undefined =
+    groupBy && allGroups
+      ? allGroups
+          .map((g) => ({
+            key: g.key,
+            label: groupLabel ? groupLabel(g.key, g.rows) : nameOf(g.key),
+            name: nameOf(g.key),
+            rows: pageRows.filter((row) => groupKeyOf(row, groupBy) === g.key),
+            ids: g.rows.map(getRowId),
+          }))
+          .filter((g) => g.rows.length > 0)
+      : undefined;
+
   const changeDensity = (next: TableDensity) => {
     setInnerDensity(next);
     onDensityChange?.(next);
@@ -233,6 +294,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             loading={loading}
             loadingRows={loadingRows}
             emptyState={emptyState}
+            groups={bodyGroups && bodyGroups.length > 0 ? bodyGroups : undefined}
+            collapsedGroups={collapsed}
+            collapsibleGroups={collapsibleGroups}
+            onToggleGroup={toggleGroup}
+            onToggleGroupRows={(ids) => setSelected(toggleAll(ids, selected))}
           />
         </Table>
       </DensityProvider>

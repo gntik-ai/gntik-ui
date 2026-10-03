@@ -172,7 +172,7 @@
       "package": "@gntik-ai/blocks",
       "group": "data-display",
       "status": "beta",
-      "description": "A Card with title, optional headline and delta, a 7d/30d/90d range toggle and an area, line or bar chart with an interactive legend.",
+      "description": "A Card with title, optional headline and delta, a 7d/30d/90d range toggle and an area, line, bar or heatmap chart with its legend (the heatmap colour scale), sized to the card and with loading, empty and error states.",
       "files": [
         {
           "path": "packages/blocks/src/data-display/ChartCard/ChartCard.tsx",
@@ -201,7 +201,7 @@
       "package": "@gntik-ai/blocks",
       "group": "builders",
       "status": "beta",
-      "description": "Multi-file code panel: file tabs, a lazily loaded Monaco editor or diff against the previous version, and a problems list that jumps to the reported line.",
+      "description": "Multi-file code panel: file tabs, a lazily loaded Monaco editor or diff against the previous version, and a problems list that jumps to the reported line. The open file can be controlled (activeFile, onActiveFileChange) and the heading level set (headingLevel).",
       "files": [
         {
           "path": "packages/blocks/src/builders/CodePanel/CodePanel.tsx",
@@ -243,6 +243,35 @@
       ],
       "registryDependencies": [],
       "docs": "packages/blocks/src/data-display/CommentThread/block.meta.ts"
+    },
+    {
+      "id": "comparison-table",
+      "kind": "block",
+      "name": "Comparison table",
+      "package": "@gntik-ai/blocks",
+      "group": "marketing",
+      "status": "beta",
+      "description": "Plans or options as columns and feature rows grouped by section (one tbody per section with a rowgroup header). Values are booleans (check or dash with screen-reader text), text or numbers; an optional recommended column is marked with a text badge, a primary top rule and a tint. Scrolls sideways on narrow screens with a sticky feature column.",
+      "files": [
+        {
+          "path": "packages/blocks/src/marketing/ComparisonTable/ComparisonTable.tsx",
+          "target": "components/blocks/marketing/comparison-table/ComparisonTable.tsx"
+        },
+        {
+          "path": "packages/blocks/src/marketing/ComparisonTable/fixtures.ts",
+          "target": "components/blocks/marketing/comparison-table/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/marketing/actions.tsx",
+          "target": "components/blocks/marketing/actions.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/blocks/src/marketing/ComparisonTable/block.meta.ts"
     },
     {
       "id": "confirm-destructive",
@@ -354,7 +383,7 @@
       "package": "@gntik-ai/blocks",
       "group": "tables",
       "status": "beta",
-      "description": "Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination.",
+      "description": "Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination, and optional row groups (groupBy) with rowgroup header rows, counts, keyboard-accessible collapse buttons and group selection.",
       "files": [
         {
           "path": "packages/blocks/src/tables/DataTable/DataTable.tsx",
@@ -1263,7 +1292,7 @@
       "package": "@gntik-ai/blocks",
       "group": "ai",
       "status": "beta",
-      "description": "System and user prompt editors that detect {{variables}} as chips with value inputs, plus temperature and max-token parameters and a Run action.",
+      "description": "System and user prompt editors that detect {{variables}} as chips with value inputs, plus temperature and max-token parameters and a Run action. Variable values can be controlled (variables, onVariablesChange).",
       "files": [
         {
           "path": "packages/blocks/src/ai/PromptEditor/PromptEditor.tsx",
@@ -1710,7 +1739,7 @@
       "package": "@gntik-ai/blocks",
       "group": "ai",
       "status": "beta",
-      "description": "Span tree of a trace with indentation and duration bars positioned on a shared time axis; spans expand and collapse, and the selected span shows its details.",
+      "description": "Span tree of a trace with indentation and duration bars positioned on a shared time axis; spans expand and collapse; the list is one tab stop with arrow-key navigation (←/→ collapse and expand), selection is controlled or uncontrolled, the details pane is optional or custom, and running spans show an in-progress bar (pulse stops under reduced motion) with a visible \"running\" label.",
       "files": [
         {
           "path": "packages/blocks/src/ai/TraceWaterfall/TraceWaterfall.tsx",
@@ -1719,6 +1748,10 @@
         {
           "path": "packages/blocks/src/ai/TraceWaterfall/fixtures.ts",
           "target": "components/blocks/ai/trace-waterfall/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/ai/TraceWaterfall/span-details.tsx",
+          "target": "components/blocks/ai/trace-waterfall/span-details.tsx"
         }
       ],
       "dependencies": [
@@ -2437,7 +2470,7 @@
       "package": "@gntik-ai/chat",
       "group": "Display",
       "status": "beta",
-      "description": "One conversation turn for the roles user, assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows typing dots until text arrives; ChatAnnouncer announces start and end once instead of every token.",
+      "description": "One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows typing dots until text arrives; ChatAnnouncer announces start and end once instead of every token.",
       "files": [
         {
           "path": "packages/chat/src/ChatMessage/ChatAnnouncer.tsx",
@@ -3231,6 +3264,61 @@
       "docs": "packages/ui/src/components/JsonViewer/JsonViewer.doc.ts"
     },
     {
+      "id": "kanban-board",
+      "kind": "component",
+      "name": "KanbanBoard",
+      "package": "@gntik-ai/ui",
+      "group": "Display",
+      "status": "beta",
+      "description": "Columns of cards you reorder within a column and move across columns by pointer drag or keyboard. Controlled (`columns` + `onMove`, with `moveKanbanCard` to apply a move); every pick-up, move, drop and cancel is announced through a LiveAnnouncer. Built on the dependency-free `useSortable` hook (pointer + keyboard, press-and-hold on touch). Cards lift with a border and shadow only; nothing animates under reduced motion. Density-aware card padding (`size: \"auto\"`).",
+      "files": [
+        {
+          "path": "packages/ui/src/components/KanbanBoard/KanbanBoard.tsx",
+          "target": "components/ui/kanban-board/KanbanBoard.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/KanbanBoard/index.ts",
+          "target": "components/ui/kanban-board/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/KanbanBoard/kanban-board.variants.ts",
+          "target": "components/ui/kanban-board/kanban-board.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/KanbanBoard/useSortable.ts",
+          "target": "components/ui/kanban-board/useSortable.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "live-announcer",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/KanbanBoard/KanbanBoard.doc.ts"
+    },
+    {
       "id": "kbd",
       "kind": "component",
       "name": "Kbd",
@@ -3399,6 +3487,34 @@
       "docs": "packages/ui/src/components/ListInput/ListInput.doc.ts"
     },
     {
+      "id": "live-announcer",
+      "kind": "component",
+      "name": "LiveAnnouncer",
+      "package": "@gntik-ai/ui",
+      "group": "Feedback",
+      "status": "beta",
+      "description": "Screen-reader announcements for changes with no visible text: a polite (role=\"status\") and an assertive aria-live region, plus `useAnnounce()` for any component below it. Used by KanbanBoard for pick-up / move / drop / cancel. Outside a LiveAnnouncer, `useAnnounce()` is a no-op.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/LiveAnnouncer/LiveAnnouncer.tsx",
+          "target": "components/ui/live-announcer/LiveAnnouncer.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/LiveAnnouncer/index.ts",
+          "target": "components/ui/live-announcer/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/LiveAnnouncer/live-announcer.variants.ts",
+          "target": "components/ui/live-announcer/live-announcer.variants.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/LiveAnnouncer/LiveAnnouncer.doc.ts"
+    },
+    {
       "id": "markdown",
       "kind": "component",
       "name": "Markdown",
@@ -3537,7 +3653,7 @@
       "package": "@gntik-ai/ui",
       "group": "Feedback",
       "status": "stable",
-      "description": "Usage meter for quotas and limits: label, value text, and a level set by thresholds (healthy → warning near the cap → destructive at or over it), with an optional note under the bar.",
+      "description": "Usage meter for quotas and limits: label, value text, and a level set by thresholds (healthy → warning near the cap → destructive at or over it), with an optional note under the bar. `higherIsBetter` inverts the thresholds for scores and health (low = warning / destructive).",
       "files": [
         {
           "path": "packages/ui/src/components/Meter/Meter.tsx",
@@ -6219,7 +6335,7 @@
       "package": "@gntik-ai/ui",
       "group": "Layout",
       "status": "beta",
-      "description": "Top-navigation shell: a chrome navbar (brand · primary links · actions), an optional tab sub-nav row, an optional page-header band and centered content (narrow 640 · default 1120 · wide 1440 · full) with an optional footer. Below lg the links collapse into a MobileNav drawer. Fills its container; fullScreen switches to h-dvh.",
+      "description": "Top-navigation shell: a chrome navbar (brand · primary links or a custom `nav` slot such as a MegaMenu · actions), an optional tab sub-nav row, an optional page-header band and centered content (narrow 640 · default 1120 · wide 1440 · full) with an optional footer. Below lg the links collapse into a MobileNav drawer. Fills its container; fullScreen switches to h-dvh.",
       "files": [
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",

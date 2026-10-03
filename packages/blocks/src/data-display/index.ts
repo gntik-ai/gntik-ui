@@ -8,7 +8,7 @@ export { meta as statCardMeta } from './StatCard/block.meta';
 export { STAT_RANGES } from './StatCard/fixtures';
 export * from './ChartCard/ChartCard';
 export { meta as chartCardMeta } from './ChartCard/block.meta';
-export { COST_BY_RANGE, COST_RANGES, type CostPoint } from './ChartCard/fixtures';
+export { COST_BY_RANGE, COST_RANGES, TRAFFIC_BUCKETS, TRAFFIC_BY_RANGE, TRAFFIC_RANGES, type CostPoint, type TrafficRow } from './ChartCard/fixtures';
 export * from './DescriptionListCard/DescriptionListCard';
 export { meta as descriptionListCardMeta } from './DescriptionListCard/block.meta';
 export { DEPLOYMENT_DETAILS } from './DescriptionListCard/fixtures';
