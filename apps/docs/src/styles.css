@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "@gntik-ai/tokens/tailwind.css";
+@import "@fontsource/geist/400.css";
+@import "@fontsource/geist/500.css";
+@import "@fontsource/geist/600.css";
+@import "@fontsource/geist/700.css";
+@import "@fontsource/geist/800.css";
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/500.css";
+@import "@fontsource/geist-mono/600.css";
+@import "@xyflow/react/dist/style.css";
+@import "../../../packages/flow/src/styles.css";
+
+@source "./catalog";
+@source "../../../packages/ui/src";
+@source "../../../packages/blocks/src";
+@source "../../../packages/templates/src";
+@source "../../../packages/chat/src";
+@source "../../../packages/charts/src";
+@source "../../../packages/flow/src";
+@source "../../../packages/editor/src";
+
+/* Tailwind v3 defaults the catalog was written against (v4 changed them). */
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+  input::placeholder, textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+html, body { margin: 0; padding: 0; height: 100%; }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; background: hsl(var(--background)); color: hsl(var(--foreground)); }
+svg { display: block; }
+::selection { background: hsl(var(--primary) / 0.28); }
+
+/* Sober scrollbars per theme */
+*::-webkit-scrollbar { width: 11px; height: 11px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 6px; border: 3px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.5); background-clip: content-box; }
+
+/* Preview surface: subtle dot grid */
+.preview-surface {
+  background-color: hsl(var(--background));
+  background-image: radial-gradient(hsl(var(--border) / 0.7) 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-position: -9px -9px;
+}
+
+pre, code, .mono { font-family: var(--font-mono); font-variant-ligatures: none; }
+pre { tab-size: 2; }

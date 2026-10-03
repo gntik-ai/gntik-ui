@@ -1,0 +1,2 @@
+/** Focus ring shared by every interactive element in the pack (brand rule). */
+export const focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';

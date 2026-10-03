@@ -1,0 +1,11 @@
+/* @gntik-ai/templates — everything a product built on the templates needs, in one import:
+     @import "tailwindcss";
+     @import "@gntik-ai/templates/styles.css";
+   Tokens + the Tailwind bridge (via ui), and the sources of every kit package the templates use. */
+@import "@gntik-ai/ui/styles.css";
+@import "@gntik-ai/blocks/styles.css";
+@import "@gntik-ai/charts/styles.css";
+@import "@gntik-ai/chat/styles.css";
+@import "@gntik-ai/flow/styles.css";
+@import "@gntik-ai/editor/styles.css";
+@source "../dist";

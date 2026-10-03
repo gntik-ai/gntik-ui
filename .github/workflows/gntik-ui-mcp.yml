@@ -12,28 +12,26 @@ on:
     tags: ['mcp-v*']
   pull_request:
     paths:
-      - 'mcp/**'
+      - 'packages/mcp/**'
+      - 'registry.json'
       - '.github/workflows/gntik-ui-mcp.yml'
   workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: mcp
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - run: corepack enable
+      - uses: actions/setup-node@v7
         with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: mcp/package-lock.json
-      - run: npm ci --no-audit --no-fund
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - name: Unit tests (indexer · validate · analyze contra el catálogo real)
-        run: npm test
+        run: pnpm --filter @gntik-ai/gntik-ui-mcp test
       - name: Smoke E2E (cliente MCP por stdio)
-        run: npm run smoke
+        run: pnpm --filter @gntik-ai/gntik-ui-mcp smoke
 
   image:
     needs: test
@@ -43,26 +41,26 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-qemu-action@v3
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
+      - uses: actions/checkout@v7
+      - uses: docker/setup-qemu-action@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/${{ github.repository_owner }}/gntik-ui-mcp
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha
             type=match,pattern=mcp-v(.*),group=1
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: .
-          file: mcp/Dockerfile
+          file: packages/mcp/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}

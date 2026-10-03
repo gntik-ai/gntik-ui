@@ -1,0 +1,7 @@
+# ignore file específico de packages/mcp/Dockerfile (BuildKit)
+.git
+**/node_modules
+**/dist
+apps
+packages/mcp/k8s
+**/*.log

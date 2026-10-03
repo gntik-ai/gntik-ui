@@ -1,0 +1,207 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "ui-utils",
+      "kind": "component",
+      "name": "UI utilities",
+      "package": "@gntik-ai/ui",
+      "group": "Utilities",
+      "status": "stable",
+      "description": "cn() class merging and tv() variants helpers used by every component.",
+      "files": [
+        {
+          "path": "packages/ui/src/utils/cn.ts",
+          "target": "components/utils/cn.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/tv.ts",
+          "target": "components/utils/tv.ts"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "tailwind-variants"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "id": "spinner",
+      "kind": "component",
+      "name": "Spinner",
+      "package": "@gntik-ai/ui",
+      "group": "Feedback",
+      "status": "stable",
+      "description": "Indeterminate loading indicator; decorative unless labelled.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Spinner/Spinner.tsx",
+          "target": "components/ui/spinner/Spinner.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Spinner/index.ts",
+          "target": "components/ui/spinner/index.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Spinner/Spinner.doc.ts"
+    },
+    {
+      "id": "button",
+      "kind": "component",
+      "name": "Button",
+      "package": "@gntik-ai/ui",
+      "group": "Actions",
+      "status": "stable",
+      "description": "Triggers an action. Five variants (primary, secondary, soft, ghost, destructive), three sizes, icons and a loading state. IconButton is the square, icon-only form.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Button/Button.tsx",
+          "target": "components/ui/button/Button.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Button/button.variants.ts",
+          "target": "components/ui/button/button.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Button/index.ts",
+          "target": "components/ui/button/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "spinner",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Button/Button.doc.ts"
+    },
+    {
+      "id": "dialog",
+      "kind": "component",
+      "name": "Dialog",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "stable",
+      "description": "Modal window for focused tasks: forms, details, confirmations.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/Dialog/Dialog.tsx",
+          "target": "components/ui/dialog/Dialog.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Dialog/index.ts",
+          "target": "components/ui/dialog/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/Dialog/Dialog.doc.ts"
+    },
+    {
+      "id": "app-shell",
+      "kind": "layout",
+      "name": "AppShell",
+      "package": "@gntik-ai/ui",
+      "group": "Layouts",
+      "status": "beta",
+      "description": "Application frame: chrome sidebar and a scrolling main area.",
+      "files": [
+        {
+          "path": "packages/ui/src/layouts/AppShell/AppShell.tsx",
+          "target": "components/layouts/app-shell/AppShell.tsx"
+        },
+        {
+          "path": "packages/ui/src/layouts/AppShell/index.ts",
+          "target": "components/layouts/app-shell/index.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "ui-utils"
+      ]
+    },
+    {
+      "id": "stat-card",
+      "kind": "block",
+      "name": "StatCard",
+      "package": "@gntik-ai/blocks",
+      "group": "Data display",
+      "status": "beta",
+      "description": "A single KPI tile: label, value and trend icon.",
+      "files": [
+        {
+          "path": "packages/blocks/src/blocks/StatCard/StatCard.tsx",
+          "target": "blocks/stat-card/StatCard.tsx"
+        },
+        {
+          "path": "packages/blocks/src/blocks/StatCard/index.ts",
+          "target": "blocks/stat-card/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/ui",
+        "lucide-react"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "id": "stats-row",
+      "kind": "block",
+      "name": "StatsRow",
+      "package": "@gntik-ai/blocks",
+      "group": "Data display",
+      "status": "beta",
+      "description": "Row of KPI stat cards with a view-all action.",
+      "files": [
+        {
+          "path": "packages/blocks/src/blocks/StatsRow/StatsRow.tsx",
+          "target": "blocks/stats-row/StatsRow.tsx"
+        },
+        {
+          "path": "packages/blocks/src/blocks/StatsRow/index.ts",
+          "target": "blocks/stats-row/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "stat-card",
+        "button"
+      ]
+    },
+    {
+      "id": "dashboard",
+      "kind": "template",
+      "name": "Dashboard",
+      "package": "@gntik-ai/templates",
+      "group": "Pages",
+      "status": "experimental",
+      "description": "Dashboard page template: app shell with a stats row.",
+      "files": [
+        {
+          "path": "packages/templates/src/templates/Dashboard/Dashboard.tsx",
+          "target": "templates/dashboard/DashboardPage.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "stats-row",
+        "app-shell"
+      ]
+    }
+  ]
+}

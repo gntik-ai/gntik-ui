@@ -1,0 +1,23 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+.turbo/
+.vercel/
+
+# Logs and env
+*.log
+.env
+.env.*
+!.env.example
+
+# Editors and OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Scratch material
+uploads/
+tsconfig.tsbuildinfo

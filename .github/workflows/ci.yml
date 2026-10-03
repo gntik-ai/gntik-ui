@@ -1,0 +1,123 @@
+# ============================================================================
+# CI — lint, types, unit tests, registry freshness, docs build, visual baselines
+# ============================================================================
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: corepack enable
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Packages consume each other's built dist (chat/blocks/templates → ui), so build first
+      # (pnpm -r build runs in dependency order).
+      - name: Build
+        run: pnpm build
+      - name: Lint
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Unit tests (all packages, keyboard + axe contracts)
+        run: pnpm test
+      - name: registry.json and kit-registry.json are up to date
+        run: pnpm registry:check
+      - name: Gate — musematic and Falcone are built only from the kit
+        run: node apps/musematic/scripts/check-kit-only.mjs && node apps/falcone/scripts/check-kit-only.mjs
+
+  a11y:
+    needs: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: corepack enable
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @gntik-ai/docs build
+      - run: pnpm --filter @gntik-ai/docs exec playwright install --with-deps chromium
+      - name: axe on @gntik-ai/ui in dark, light and high contrast (against a11y-baseline.json)
+        run: pnpm a11y
+
+  visual:
+    needs: checks
+    runs-on: ubuntu-latest
+    # Baselines are recorded on this runner image (see visual-update below): fonts and
+    # antialiasing differ between machines, so CI is the reference renderer.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - run: corepack enable
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @gntik-ai/docs build
+      - run: pnpm --filter @gntik-ai/docs exec playwright install --with-deps chromium
+      - name: Visual baselines (63 entries dark + 8 in light and high contrast)
+        run: pnpm visual
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-report
+          path: |
+            apps/docs/playwright-report
+            apps/docs/test-results
+
+  # Re-records the visual baselines on the CI runner and commits them to the PR branch.
+  # Opt in per push: put [visual-update] in the head commit message of a same-repo PR.
+  visual-update:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref }}
+      - id: ask
+        run: |
+          if git log -1 --format=%B | grep -q '\[visual-update\]'; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.ask.outputs.run == 'true'
+        run: corepack enable
+      - if: steps.ask.outputs.run == 'true'
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - if: steps.ask.outputs.run == 'true'
+        run: pnpm install --frozen-lockfile
+      - if: steps.ask.outputs.run == 'true'
+        run: pnpm --filter @gntik-ai/docs build
+      - if: steps.ask.outputs.run == 'true'
+        run: pnpm --filter @gntik-ai/docs exec playwright install --with-deps chromium
+      - if: steps.ask.outputs.run == 'true'
+        # Only screenshots that fail the comparison (or are missing) are rewritten, so
+        # anti-aliasing noise never produces a baseline commit.
+        name: Re-record changed baselines
+        run: pnpm --filter @gntik-ai/docs exec playwright test catalog.visual --update-snapshots=changed
+      - if: steps.ask.outputs.run == 'true'
+        name: Commit baselines to the PR branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/docs/e2e/__screenshots__
+          git diff --cached --quiet || { git commit -m "Visual baselines recorded on the CI runner"; git push; }

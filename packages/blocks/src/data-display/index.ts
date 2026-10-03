@@ -1,0 +1,26 @@
+// @gntik-ai/blocks — data-display family.
+export * from './shared/TrendDelta';
+export * from './KpiRow/KpiRow';
+export { meta as kpiRowMeta } from './KpiRow/block.meta';
+export { KPI_ITEMS } from './KpiRow/fixtures';
+export * from './StatCard/StatCard';
+export { meta as statCardMeta } from './StatCard/block.meta';
+export { STAT_RANGES } from './StatCard/fixtures';
+export * from './ChartCard/ChartCard';
+export { meta as chartCardMeta } from './ChartCard/block.meta';
+export { COST_BY_RANGE, COST_RANGES, type CostPoint } from './ChartCard/fixtures';
+export * from './DescriptionListCard/DescriptionListCard';
+export { meta as descriptionListCardMeta } from './DescriptionListCard/block.meta';
+export { DEPLOYMENT_DETAILS } from './DescriptionListCard/fixtures';
+export * from './ResourceCardGrid/ResourceCardGrid';
+export { meta as resourceCardGridMeta } from './ResourceCardGrid/block.meta';
+export { RESOURCE_CARDS } from './ResourceCardGrid/fixtures';
+export * from './StatusTimeline/StatusTimeline';
+export { meta as statusTimelineMeta } from './StatusTimeline/block.meta';
+export { DEPLOYMENT_EVENTS } from './StatusTimeline/fixtures';
+export * from './ActivityFeed/ActivityFeed';
+export { meta as activityFeedMeta } from './ActivityFeed/block.meta';
+export { PROJECT_ACTIVITY } from './ActivityFeed/fixtures';
+export * from './CommentThread/CommentThread';
+export { meta as commentThreadMeta } from './CommentThread/block.meta';
+export { COMMENT_AUTHOR, REVIEW_COMMENTS } from './CommentThread/fixtures';

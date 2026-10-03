@@ -1,0 +1,46 @@
+/* ============================================================================
+   @gntik-ai/tokens · pairing.css — contrast-safe text and focus aliases
+   ----------------------------------------------------------------------------
+   brand.css values are frozen. Where a brand colour is too light to read as
+   text on the light theme (green 2.07:1, amber 2.14:1 on white) these aliases
+   point at an EXISTING darker token instead. No new colour is introduced:
+   every alias is var(--existing-token), as HSL channels.
+   Use the `text-primary-text`, `text-success-text`, `text-warning-text`,
+   `text-destructive-text` and `ring-focus-ring` utilities for text and focus.
+   On a TINTED chip (bg-<tone>/10–20: badges, status pills, level tags) use the
+   `text-<tone>-chip-text` aliases instead: the tint lightens a dark surface, so
+   a brand colour that passes on the plain surface can fail on its own tint.
+   ============================================================================ */
+:root {
+  --primary-text: var(--accent-foreground);
+  --success-text: var(--accent-foreground);
+  --warning-text: var(--foreground);
+  --destructive-text: var(--destructive);
+  --focus-ring: var(--brand-secondary);
+  --primary-chip-text: var(--accent-foreground);
+  --success-chip-text: var(--accent-foreground);
+  --warning-chip-text: var(--foreground);
+  --destructive-chip-text: var(--foreground);
+}
+.dark {
+  --primary-text: var(--primary);
+  --success-text: var(--success);
+  --warning-text: var(--warning);
+  --destructive-text: var(--category-rose);
+  --focus-ring: var(--ring);
+  --primary-chip-text: var(--primary);
+  --success-chip-text: var(--success);
+  --warning-chip-text: var(--warning);
+  --destructive-chip-text: var(--foreground);
+}
+.high_contrast {
+  --primary-text: var(--primary);
+  --success-text: var(--success);
+  --warning-text: var(--warning);
+  --destructive-text: var(--destructive);
+  --focus-ring: var(--ring);
+  --primary-chip-text: var(--primary);
+  --success-chip-text: var(--success);
+  --warning-chip-text: var(--warning);
+  --destructive-chip-text: var(--foreground);
+}

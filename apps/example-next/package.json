@@ -1,0 +1,35 @@
+{
+  "name": "@gntik-ai/example-next",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "gntik-ui on Next.js 16 (App Router): ThemeProvider without flash, kit templates as routes.",
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start --port 3001",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource/geist": "^5.3.0",
+    "@fontsource/geist-mono": "^5.3.0",
+    "@gntik-ai/blocks": "workspace:*",
+    "@gntik-ai/charts": "workspace:*",
+    "@gntik-ai/chat": "workspace:*",
+    "@gntik-ai/icons": "workspace:*",
+    "@gntik-ai/templates": "workspace:*",
+    "@gntik-ai/tokens": "workspace:*",
+    "@gntik-ai/ui": "workspace:*",
+    "next": "^16.3.6",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.3"
+  }
+}

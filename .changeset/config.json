@@ -1,0 +1,32 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@4.0.1/schema.json",
+  "baseBranch": "main",
+  "access": "restricted",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [
+    [
+      "@gntik-ai/ui",
+      "@gntik-ai/icons",
+      "@gntik-ai/charts",
+      "@gntik-ai/flow",
+      "@gntik-ai/editor",
+      "@gntik-ai/chat",
+      "@gntik-ai/blocks",
+      "@gntik-ai/templates",
+      "@gntik-ai/cli"
+    ]
+  ],
+  "updateInternalDependencies": "patch",
+  "privatePackages": {
+    "version": false,
+    "tag": false
+  },
+  "ignore": [
+    "@gntik-ai/docs",
+    "@gntik-ai/example-vite",
+    "@gntik-ai/example-next",
+    "@gntik-ai/musematic"
+  ]
+}
