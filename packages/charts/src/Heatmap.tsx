@@ -93,21 +93,9 @@ export function Heatmap<T extends object>({
     onRetry,
   });
 
-  const cellStyle = (v: number) => {
-    const i = rampIndex(v, dom, count);
-    // Strength 0–1 of the step: distance from the light end (sequential) or from the centre (diverging).
-    const strength = diverging ? Math.abs(i - (count - 1) / 2) / ((count - 1) / 2 || 1) : (i + 1) / count;
-    const negative = diverging && i < (count - 1) / 2;
-    const text =
-      strength < 0.5
-        ? 'text-foreground'
-        : negative
-          ? 'text-destructive-foreground'
-          : color === 'primary'
-            ? 'text-primary-foreground'
-            : 'text-foreground';
-    return { fill: ramp[i] ?? ramp[0], text };
-  };
+  // Value labels sit on a card-coloured chip: foreground on card is AA in every theme,
+  // whatever ramp step is underneath (mid steps fail with any single on-colour text).
+  const cellStyle = (v: number) => ({ fill: ramp[rampIndex(v, dom, count)] ?? ramp[0] });
 
   const rowLabel = (r: number) => {
     const row = data[r];
@@ -189,12 +177,14 @@ export function Heatmap<T extends object>({
                   onMouseEnter={() => setActive([r, ci])}
                   className={cx(
                     'flex items-center justify-center rounded-[3px] font-mono text-[10.5px] tabular-nums',
-                    s ? s.text : 'border border-dashed border-border',
+                    !s && 'border border-dashed border-border',
                     on && 'outline-2 outline-offset-1 outline-foreground',
                   )}
                   style={{ height: cellHeight, background: s?.fill }}
                 >
-                  {showValues && v !== null ? valueFormatter(v) : null}
+                  {showValues && v !== null ? (
+                    <span className="rounded-[2px] bg-card px-1 leading-4 text-foreground">{valueFormatter(v)}</span>
+                  ) : null}
                 </div>
               );
             }),
