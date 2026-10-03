@@ -34,6 +34,12 @@ export const selectVariants = tv({
     indicator: 'flex shrink-0 text-primary-text',
     groupLabel: 'px-2.5 pt-2 pb-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase',
     separator: '-mx-1 my-1 h-px bg-border',
+    status: 'flex items-center justify-center gap-2 px-2.5 py-2 text-[12.5px] text-muted-foreground',
+    statusError: 'flex-wrap text-destructive-text',
+    retry: [
+      'inline-flex items-center gap-1 rounded-sm px-1.5 py-0.5 text-[12px] font-medium text-foreground underline underline-offset-2 hover:bg-secondary',
+      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+    ],
   },
   variants: {
     size: {

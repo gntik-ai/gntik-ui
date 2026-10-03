@@ -1,8 +1,10 @@
 import { Select as BaseSelect } from '@base-ui/react/select';
-import { Check, ChevronDown } from 'lucide-react';
-import type { ReactNode, Ref } from 'react';
+import { Check, ChevronDown, RotateCw } from 'lucide-react';
+import { useState, type ReactNode, type Ref } from 'react';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { useAsyncOptions, type LoadOptions } from '../Combobox/useAsyncOptions';
+import { Spinner } from '../Spinner';
 import { selectVariants, type SelectVariantProps } from './select.variants';
 
 const s = selectVariants();
@@ -48,6 +50,8 @@ export interface SelectContentProps extends Omit<BaseSelect.Popup.Props, 'classN
   sideOffset?: number;
   /** Portal container; defaults to document.body. */
   container?: BaseSelect.Portal.Props['container'];
+  /** Rendered above the list, e.g. a loading or error message (SimpleSelect uses it for `loadOptions`). */
+  status?: ReactNode;
   children?: ReactNode;
 }
 
@@ -59,6 +63,7 @@ export function SelectContent({
   align = 'start',
   sideOffset = 6,
   container,
+  status,
   children,
   ...props
 }: SelectContentProps) {
@@ -73,6 +78,7 @@ export function SelectContent({
         sideOffset={sideOffset}
       >
         <BaseSelect.Popup className={cn(s.popup(), className)} {...props}>
+          {status}
           <BaseSelect.List className={s.list()}>{children}</BaseSelect.List>
         </BaseSelect.Popup>
       </BaseSelect.Positioner>
@@ -115,32 +121,92 @@ export interface SimpleSelectItem<V extends string = string> {
 export interface SimpleSelectProps<V extends string = string>
   extends Omit<BaseSelect.Root.Props<V, false>, 'items' | 'multiple' | 'children'>,
     SelectVariantProps {
-  items: ReadonlyArray<SimpleSelectItem<V>>;
+  /** The options. With `loadOptions`, the ones known up front (e.g. the selected value's label). */
+  items?: ReadonlyArray<SimpleSelectItem<V>>;
+  /**
+   * Async options, loaded the first time the popup opens (`query` is always `''`; the signal
+   * aborts if the popup closes or the select unmounts). After an error, reopening retries.
+   */
+  loadOptions?: LoadOptions<SimpleSelectItem<V>>;
+  /** Shown (and announced) while `loadOptions` runs. Default: "Loading…". */
+  loadingText?: ReactNode;
+  /** Shown (and announced) when `loadOptions` rejects. Default: "Couldn’t load options." */
+  errorText?: ReactNode;
+  /** Shown when there are no options. Default: "No results". */
+  emptyText?: ReactNode;
   /** Visible label. Without it, pass `aria-label`. */
   label?: ReactNode;
   'aria-label'?: string;
   placeholder?: ReactNode;
   /** Class for the trigger. */
   className?: string;
+  /** Ref to the trigger button (e.g. so a form library can focus it). */
+  triggerRef?: Ref<HTMLButtonElement>;
 }
 
-/** One-line select from a flat `{ value, label }` list. */
+/** One-line select from a flat `{ value, label }` list, or from `loadOptions`. */
 export function SimpleSelect<V extends string = string>({
-  items,
+  items: itemsProp,
+  loadOptions,
+  loadingText,
+  errorText,
+  emptyText,
   label,
   placeholder: placeholderProp,
   size,
   className,
   'aria-label': ariaLabel,
+  onOpenChange,
+  triggerRef,
   ...props
 }: SimpleSelectProps<V>) {
   const { t } = useI18n();
   const placeholder = placeholderProp ?? t('common.selectPlaceholder');
+  const [open, setOpen] = useState(props.defaultOpen ?? false);
+  const remote = useAsyncOptions(loadOptions, '', { enabled: props.open ?? open, debounceMs: 0 });
+  const known = itemsProp ?? [];
+  const items = loadOptions ? [...known.filter((k) => !remote.items.some((r) => r.value === k.value)), ...remote.items] : known;
+  const sv = selectVariants();
+
+  let status: ReactNode = null;
+  if (loadOptions && remote.loading) {
+    status = (
+      <div role="status" className={sv.status()}>
+        <Spinner size={13} />
+        {loadingText ?? t('common.loading')}
+      </div>
+    );
+  } else if (loadOptions && remote.error) {
+    status = (
+      <div className={cn(sv.status(), sv.statusError())}>
+        <span role="alert">{errorText ?? t('combobox.loadFailed')}</span>
+        <button type="button" className={sv.retry()} onClick={remote.reload}>
+          <RotateCw size={12} aria-hidden />
+          {t('common.retry')}
+        </button>
+      </div>
+    );
+  } else if (loadOptions && items.length === 0) {
+    status = (
+      <div role="status" className={sv.status()}>
+        {emptyText ?? t('common.noResults')}
+      </div>
+    );
+  }
+
   return (
-    <Select<V> items={items.map(({ value, label: l }) => ({ value, label: l }))} {...props}>
+    <Select<V>
+      items={items.map(({ value, label: l }) => ({ value, label: l }))}
+      onOpenChange={(next, details) => {
+        setOpen(next);
+        if (next && remote.error) remote.reload();
+        onOpenChange?.(next, details);
+      }}
+      {...props}
+    >
       {label && <SelectLabel>{label}</SelectLabel>}
-      <SelectTrigger size={size} className={className} placeholder={placeholder} aria-label={ariaLabel} />
-      <SelectContent>
+      <SelectTrigger ref={triggerRef} size={size} className={className} placeholder={placeholder} aria-label={ariaLabel} />
+      <SelectContent status={status} aria-busy={(loadOptions && remote.loading) || undefined}>
         {items.map((item) => (
           <SelectItem key={item.value} value={item.value} disabled={item.disabled}>
             {item.label}

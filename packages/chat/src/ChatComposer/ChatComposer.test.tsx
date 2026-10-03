@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { expectNoAxeViolations } from '../test/a11y';
@@ -107,6 +107,72 @@ describe('ChatComposer', () => {
     render(<ChatComposer disabled onSubmit={() => {}} />);
     expect(screen.getByRole('textbox')).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Send message' })).toBeDisabled();
+  });
+
+  it('Ctrl/⌘+V: pasted files are attached instead of inserted', async () => {
+    const onAttach = vi.fn();
+    const user = userEvent.setup();
+    render(<ChatComposer onSubmit={() => {}} onAttach={onAttach} accept="image/*" />);
+    const box = screen.getByRole('textbox');
+    await user.click(box);
+    const img = new File(['png'], 'shot.png', { type: 'image/png' });
+    await user.paste({ files: [img], items: [], types: ['Files'], getData: () => '' } as unknown as DataTransfer);
+    expect(onAttach).toHaveBeenCalledWith([img]);
+    expect(box).toHaveValue('');
+  });
+
+  it('dropping files validates accept / maxSize / maxFiles and shows the messages in an alert', async () => {
+    const onAttach = vi.fn();
+    const onReject = vi.fn();
+    const user = userEvent.setup();
+    const { container } = render(
+      <ChatComposer
+        onSubmit={() => {}}
+        onAttach={onAttach}
+        onReject={onReject}
+        accept=".pdf,image/*"
+        maxSize={1024}
+        maxFiles={2}
+        attachments={[{ id: 'a', name: 'one.pdf' }]}
+      />,
+    );
+    const form = container.querySelector('form')!;
+    const ok = new File(['x'], 'ok.pdf', { type: 'application/pdf' });
+    const big = new File(['x'.repeat(4096)], 'big.png', { type: 'image/png' });
+    const exe = new File(['x'], 'tool.exe', { type: 'application/octet-stream' });
+    const extra = new File(['x'], 'extra.pdf', { type: 'application/pdf' });
+    const dataTransfer = { files: [ok, big, exe, extra], types: ['Files'], dropEffect: 'none' };
+    fireEvent.dragEnter(form, { dataTransfer });
+    expect(form).toHaveAttribute('data-dragging');
+    expect(screen.getByText('Drop files to attach')).toBeInTheDocument();
+    fireEvent.drop(form, { dataTransfer });
+    expect(form).not.toHaveAttribute('data-dragging');
+    expect(onAttach).toHaveBeenCalledWith([ok]);
+    expect(onReject.mock.calls[0]?.[0].map((r: { reason: string }) => r.reason)).toEqual(['size', 'type', 'count']);
+    const alert = screen.getByRole('alert');
+    expect(alert).toHaveTextContent('big.png is larger than 1 KB');
+    expect(alert).toHaveTextContent('tool.exe is not an allowed file type');
+    expect(alert).toHaveTextContent('You can attach up to 2 files');
+    await user.click(within(alert).getByRole('button', { name: 'Dismiss' }));
+    expect(screen.getByRole('alert')).toBeEmptyDOMElement();
+  });
+
+  it('attachments show progress and errors; Retry calls onRetryAttachment', async () => {
+    const onRetry = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <ChatComposer
+        onSubmit={() => {}}
+        onRetryAttachment={onRetry}
+        attachments={[
+          { id: 'u', name: 'big.csv', progress: 30 },
+          { id: 'e', name: 'notes.md', error: true },
+        ]}
+      />,
+    );
+    expect(screen.getByRole('progressbar', { name: 'Uploading big.csv' })).toHaveAttribute('aria-valuenow', '30');
+    await user.click(screen.getByRole('button', { name: 'Retry uploading notes.md' }));
+    expect(onRetry).toHaveBeenCalledWith('e');
   });
 
   it('examples have no axe violations', async () => {

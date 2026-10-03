@@ -4,9 +4,10 @@ import { tooltipContent } from './ChartTooltip';
 import { formatAny, identity } from './format';
 import { accessibleName, cartesianTable, axisProps, CHART_MARGIN, ChartFrame, type BaseChartProps, type DataKey } from './shared';
 import { resolveState } from './states';
+import { useCartesianExtras, type CartesianExtrasProps } from './cartesian-extras';
 import { CHART_COLORS, seriesColor, useChartTheme } from './theme';
 
-export interface AreaChartProps<T extends object> extends BaseChartProps<T> {
+export interface AreaChartProps<T extends object> extends CartesianExtrasProps, BaseChartProps<T> {
   categories: ReadonlyArray<DataKey<T>>;
   stacked?: boolean;
   showYAxis?: boolean;
@@ -35,9 +36,17 @@ export function AreaChart<T extends object>({
   errorMessage,
   onRetry,
   dataTable = false,
+  thresholds,
+  annotations,
+  brush,
+  range,
+  defaultRange,
+  onRangeChange,
+  animate,
 }: AreaChartProps<T>) {
   const t = useChartTheme();
   const [hidden, toggle] = useHiddenSeries();
+  const x = useCartesianExtras(data, index, { thresholds, annotations, brush, range, defaultRange, onRangeChange, animate }, { valueFormatter, previewKey: categories[0] });
   const col = (i: number) => seriesColor(t, colors, i);
   const legend = categories.map((c, i) => ({ key: c, label: c, color: col(i) }));
   const name = accessibleName('Area chart', ariaLabel, title, categories);
@@ -48,15 +57,17 @@ export function AreaChart<T extends object>({
       emptyMessage={emptyMessage}
       errorMessage={errorMessage}
       onRetry={onRetry}
-      table={dataTable && cartesianTable(name, data, index, categories, (v) => formatAny(v, valueFormatter))}
+      table={dataTable && cartesianTable(name, x.view, index, categories, (v) => formatAny(v, valueFormatter))}
       height={height}
       className={className}
+      footer={x.footer}
       legend={showLegend && <ChartLegend className="mb-3 px-1" items={legend} hidden={hidden} onToggle={toggle} />}
     >
-      <RAreaChart data={data} margin={CHART_MARGIN} accessibilityLayer title={title} desc={description}>
+      <RAreaChart data={x.view} margin={CHART_MARGIN} accessibilityLayer title={title} desc={description}>
         {showGrid && <CartesianGrid strokeDasharray="3 3" stroke={t.grid} vertical={false} />}
         <XAxis dataKey={index} {...axisProps(t)} dy={8} minTickGap={20} />
         {showYAxis && <YAxis {...axisProps(t)} width={50} tickFormatter={valueFormatter} />}
+        {x.references}
         <Tooltip
           isAnimationActive={false}
           cursor={{ stroke: t.cursor, strokeWidth: 1 }}
@@ -76,7 +87,7 @@ export function AreaChart<T extends object>({
             fillOpacity={stacked ? 0.82 : 0.14}
             dot={false}
             activeDot={{ r: 3.5, strokeWidth: 0 }}
-            isAnimationActive={false}
+            {...x.animation}
           />
         ))}
       </RAreaChart>

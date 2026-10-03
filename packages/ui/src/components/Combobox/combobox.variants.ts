@@ -33,6 +33,10 @@ export const comboboxVariants = tv({
     itemContent: 'flex min-w-0 flex-1 items-center gap-2',
     indicator: 'flex shrink-0 text-primary-text',
     empty: 'px-2.5 py-3 text-center text-[12.5px] text-muted-foreground empty:hidden',
+    status: 'flex items-center justify-center gap-2 px-2.5 py-2 text-[12.5px] text-muted-foreground empty:hidden',
+    statusError: 'text-destructive-text',
+    specialItem: 'font-medium',
+    specialIcon: 'shrink-0 text-primary-text',
   },
   variants: {
     size: {

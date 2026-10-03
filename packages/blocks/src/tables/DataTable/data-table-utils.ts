@@ -43,7 +43,31 @@ export interface DataTableColumn<T> {
   className?: string;
   /** Classes for the header cell (e.g. a width). */
   headClassName?: string;
+
+  /** Initial width in px (resizable or pinned tables; default 160). */
+  width?: number;
+  /** Smallest width a resize can reach (default 60). */
+  minWidth?: number;
+  /** Largest width a resize can reach (default 640). */
+  maxWidth?: number;
+  /** Shows a resize handle when the table is `resizable` (default true). */
+  resizable?: boolean;
+  /** Can be pinned from the column menu (default true). */
+  pinnable?: boolean;
+
+  /** Inline editing: Enter or F2 on the cell edits it (needs `onCellEdit` on the table). */
+  editable?: boolean | ((row: T) => boolean);
+  /** Editor of an editable cell (default a text input). */
+  editor?: DataTableCellEditor;
+  /** Value the editor starts from (default the accessor's value). */
+  editValue?: (row: T) => string | number | null | undefined;
 }
+
+/** Editor of an editable column. */
+export type DataTableCellEditor =
+  | { type: 'text'; placeholder?: string }
+  | { type: 'number'; min?: number; max?: number; step?: number }
+  | { type: 'select'; options: ReadonlyArray<{ value: string; label: string }> };
 
 export interface SortState {
   columnId: string;

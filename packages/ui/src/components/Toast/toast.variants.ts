@@ -19,8 +19,13 @@ export const toastVariants = tv({
     text: 'min-w-0 flex-1',
     title: 'text-[13px] font-semibold tracking-tight text-foreground',
     description: 'mt-0.5 text-[12.5px] leading-5 text-muted-foreground text-pretty',
+    actions: 'mt-2 flex flex-wrap items-center gap-x-4 gap-y-1',
     action: [
-      'mt-2 rounded-sm text-[12px] font-semibold transition-opacity hover:opacity-70',
+      'rounded-sm text-[12px] font-semibold transition-opacity hover:opacity-70',
+      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+    ],
+    dismissAction: [
+      'rounded-sm text-[12px] font-medium text-muted-foreground transition-colors hover:text-foreground',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
     close: [
@@ -31,6 +36,7 @@ export const toastVariants = tv({
   variants: {
     tone: {
       neutral: { icon: 'text-foreground', action: 'text-foreground' },
+      loading: { icon: 'text-muted-foreground', action: 'text-foreground' },
       success: { icon: 'text-success-text', action: 'text-success-text' },
       info: { icon: 'text-info', action: 'text-foreground' },
       warning: { icon: 'text-warning-text', action: 'text-warning-text' },

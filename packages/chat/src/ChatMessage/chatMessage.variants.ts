@@ -12,7 +12,9 @@ export const chatMessageStyles = {
     'opacity-0 group-hover/message:opacity-100 group-focus-within/message:opacity-100 [@media(hover:none)]:opacity-100',
   ].join(' '),
   actionsVisible: 'opacity-100',
+  /** @deprecated The empty streaming state renders TypingIndicator (see typingIndicatorStyles). */
   typing: 'inline-flex h-6 items-center gap-1',
+  /** @deprecated See typingIndicatorStyles.dot. */
   typingDot: 'size-1.5 rounded-full bg-muted-foreground animate-pulse motion-reduce:animate-none',
   role: {
     user: {

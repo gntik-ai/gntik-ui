@@ -1,6 +1,7 @@
 import { Avatar, IconButton, SimpleTooltip, cn, getInitials, useI18n, type MessageKey } from '@gntik-ai/ui';
 import { Check, Copy, RotateCcw, Sparkles, ThumbsDown, ThumbsUp, Wrench } from 'lucide-react';
 import { useId, type ReactNode, type Ref } from 'react';
+import { TypingIndicator, streamingCaret } from '../TypingIndicator';
 import { formatTime } from '../utils/format';
 import { useCopy } from '../utils/useCopy';
 import { chatMessageStyles as s } from './chatMessage.variants';
@@ -24,8 +25,14 @@ export interface ChatMessageProps {
   timestamp?: Date | string;
   /** The body: a string, a <Markdown>, a ToolCallCard… */
   children?: ReactNode;
-  /** Text is still arriving: hides the actions, marks the message busy, shows typing dots while empty. */
+  /**
+   * Text is still arriving: marks the message aria-busy, hides the actions, shows a
+   * TypingIndicator while empty and a caret after plain-text children (a streaming
+   * <Markdown> draws its own caret).
+   */
   streaming?: boolean;
+  /** Draw the caret after streamed plain-text children. Default true. */
+  showCaret?: boolean;
   /** Plain text to copy; shows the Copy action. */
   copyText?: string;
   /** Shows the Retry action (assistant replies). */
@@ -70,6 +77,7 @@ export function ChatMessage({
   timestamp,
   children,
   streaming = false,
+  showCaret = true,
   copyText,
   onRetry,
   feedback = null,
@@ -115,12 +123,12 @@ export function ChatMessage({
         </div>
         <div className={cn(s.content, v.content)}>
           {streaming && isEmpty ? (
-            <span className={s.typing}>
-              <span className={s.typingDot} />
-              <span className={cn(s.typingDot, '[animation-delay:150ms]')} />
-              <span className={cn(s.typingDot, '[animation-delay:300ms]')} />
-              <span className="sr-only">{name} is thinking</span>
-            </span>
+            <TypingIndicator author={name} />
+          ) : streaming && showCaret && (typeof children === 'string' || typeof children === 'number') ? (
+            <>
+              {children}
+              <span aria-hidden data-slot="streaming-caret" className={streamingCaret} />
+            </>
           ) : (
             children
           )}

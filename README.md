@@ -99,9 +99,9 @@ components, blocks or page templates (`gntik-ui list --json` shows everything). 
 
 ## Status
 
-Phase 4 of the design-system proposal is in. `@gntik-ai/ui` has 95 components and 12 layouts,
+Phase 4 of the design-system proposal is in. `@gntik-ai/ui` has 110 components and 12 layouts,
 with i18n (`I18nProvider`, English and Spanish, logical RTL utilities) and density modes
-(`DensityProvider`: comfortable or compact). On top: 69 blocks, 57 page templates (P1–P3), the
+(`DensityProvider`: comfortable or compact). On top: 70 blocks, 58 page templates (P1–P3), the
 chat pack, charts (funnel, sankey, radar, heatmap, colour-safe palette), the CLI with
 `upgrade` codemods, a shadcn-compatible registry, `llms.txt`, MCP tools that scaffold pages
 and presets, agent skills, a sandbox, a theme builder and agent evals. Tokens export to DTCG

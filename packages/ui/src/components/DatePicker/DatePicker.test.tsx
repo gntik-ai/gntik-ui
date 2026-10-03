@@ -6,6 +6,7 @@ import { DatePicker } from './DatePicker';
 import { DateRangePicker } from './DateRangePicker';
 import DatePickerBasic from './examples/DatePickerBasic';
 import DateRangePickerPresets from './examples/DateRangePickerPresets';
+import DatePickerWithTime from './examples/DatePickerWithTime';
 
 const today = new Date(2026, 2, 11);
 
@@ -79,7 +80,33 @@ describe('DatePicker', () => {
     expect(onValueChange).toHaveBeenLastCalledWith({ start: new Date(2026, 1, 2), end: new Date(2026, 1, 10) });
   });
 
+  it('withTime: picking a day keeps the time and stays open; Tab reaches the time; Done closes', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    const { container } = render(
+      <DatePicker withTime aria-label="Publish at" locale="en-US" hourCycle={24} today={today} defaultValue={new Date(2026, 2, 20, 14, 30)} onValueChange={onValueChange} name="at" />,
+    );
+    const field = screen.getByRole('combobox', { name: 'Publish at' });
+    expect(field).toHaveValue('Mar 20, 2026, 14:30');
+    expect(container.querySelector('input[name="at"]')).toHaveValue('2026-03-20T14:30');
+    await user.click(field);
+    const dialog = await screen.findByRole('dialog');
+    await waitFor(() => expect(within(dialog).getByRole('button', { name: 'Friday, March 20, 2026' })).toHaveFocus());
+    await user.keyboard('{ArrowRight}{Enter}');
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 2, 21, 14, 30));
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    await user.tab();
+    const hours = within(dialog).getByRole('spinbutton', { name: 'Hours' });
+    expect(hours).toHaveFocus();
+    await user.keyboard('{ArrowUp}');
+    expect(onValueChange).toHaveBeenLastCalledWith(new Date(2026, 2, 21, 15, 30));
+    await user.click(within(dialog).getByRole('button', { name: 'Done' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(field).toHaveValue('Mar 21, 2026, 15:30');
+  });
+
   it.each([
+    ['DatePickerWithTime', DatePickerWithTime, 'Publish at'],
     ['DatePickerBasic', DatePickerBasic, 'Release date'],
     ['DateRangePickerPresets', DateRangePickerPresets, 'Usage period'],
   ] as const)('%s has no axe violations, closed and open', async (_n, Example, name) => {

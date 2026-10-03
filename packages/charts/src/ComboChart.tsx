@@ -4,10 +4,11 @@ import { tooltipContent } from './ChartTooltip';
 import { formatAny, identity, type ValueFormatter } from './format';
 import { accessibleName, cartesianTable, axisProps, ChartFrame, type BaseChartProps, type DataKey } from './shared';
 import { resolveState } from './states';
+import { useCartesianExtras, type CartesianExtrasProps } from './cartesian-extras';
 import { useChartTheme, type ChartColor } from './theme';
 
 export interface ComboChartProps<T extends object>
-  extends Omit<BaseChartProps<T>, 'colors' | 'valueFormatter'> {
+  extends CartesianExtrasProps, Omit<BaseChartProps<T>, 'colors' | 'valueFormatter'> {
   /** Series drawn as bars on the left axis. */
   barSeries: DataKey<T>;
   /** Series drawn as a line on the right axis. */
@@ -40,9 +41,17 @@ export function ComboChart<T extends object>({
   errorMessage,
   onRetry,
   dataTable = false,
+  thresholds,
+  annotations,
+  brush,
+  range,
+  defaultRange,
+  onRangeChange,
+  animate,
 }: ComboChartProps<T>) {
   const t = useChartTheme();
   const [hidden, toggle] = useHiddenSeries();
+  const x = useCartesianExtras(data, index, { thresholds, annotations, brush, range, defaultRange, onRangeChange, animate }, { valueFormatter: barFormatter, previewKey: barSeries, yAxisIdOf: (axis) => axis });
   const bc = t.color(barColor);
   const lc = t.color(lineColor);
   const legend = [
@@ -58,13 +67,14 @@ export function ComboChart<T extends object>({
       emptyMessage={emptyMessage}
       errorMessage={errorMessage}
       onRetry={onRetry}
-      table={dataTable && cartesianTable(name, data, index, [barSeries, lineSeries], fmtSeries)}
+      table={dataTable && cartesianTable(name, x.view, index, [barSeries, lineSeries], fmtSeries)}
       height={height}
       className={className}
+      footer={x.footer}
       legend={showLegend && <ChartLegend className="mb-3 px-1" items={legend} hidden={hidden} onToggle={toggle} />}
     >
       <ComposedChart
-        data={data}
+        data={x.view}
         margin={{ top: 6, right: 6, left: 0, bottom: 0 }}
         barCategoryGap="30%"
         accessibilityLayer
@@ -75,6 +85,7 @@ export function ComboChart<T extends object>({
         <XAxis dataKey={index} {...axisProps(t)} dy={8} minTickGap={16} />
         <YAxis yAxisId="left" {...axisProps(t)} width={48} tickFormatter={barFormatter} />
         <YAxis yAxisId="right" orientation="right" {...axisProps(t)} width={48} tickFormatter={lineFormatter} />
+        {x.references}
         <Tooltip
           isAnimationActive={false}
           cursor={{ fill: t.barCursor }}
@@ -88,7 +99,7 @@ export function ComboChart<T extends object>({
           fill={bc}
           radius={[3, 3, 0, 0]}
           maxBarSize={42}
-          isAnimationActive={false}
+          {...x.animation}
         />
         <Line
           yAxisId="right"
@@ -100,7 +111,7 @@ export function ComboChart<T extends object>({
           strokeWidth={2}
           dot={false}
           activeDot={{ r: 3.5, strokeWidth: 0 }}
-          isAnimationActive={false}
+          {...x.animation}
         />
       </ComposedChart>
     </ChartFrame>

@@ -1,17 +1,16 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
-import { Check, ChevronDown, Search, X } from 'lucide-react';
+import { Check, ChevronDown, Plus, RotateCw, Search, X } from 'lucide-react';
 import { useId, type ReactNode, type Ref } from 'react';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { Spinner } from '../Spinner';
 import { comboboxVariants, type ComboboxVariantProps } from './combobox.variants';
+import { useComboboxEnhancement } from './ComboboxRoot';
+import { isSpecialItem, type SpecialItem } from './specialItems';
+
+export { Combobox, type ComboboxProps, type ComboboxAsyncProps } from './ComboboxRoot';
 
 const s = comboboxVariants();
-
-/**
- * Combobox state container: `items` (filtered by the input), `value` / `defaultValue` /
- * `onValueChange`, `multiple`. Items shaped `{ value, label }` need no extra config.
- */
-export const Combobox = BaseCombobox.Root;
 
 // Inputs also use aria-labelledby: while the popup is open Base UI aria-hides outside nodes
 // (including the <label>), and aria-labelledby still resolves through hidden elements.
@@ -145,7 +144,7 @@ export interface ComboboxContentProps extends Omit<BaseCombobox.Popup.Props, 'cl
   children?: BaseCombobox.List.Props['children'];
 }
 
-/** The popup: portal, positioner, popup surface, empty state and listbox. */
+/** The popup: portal, positioner, popup surface, async status, empty state and listbox. */
 export function ComboboxContent({
   className,
   emptyText: emptyTextProp,
@@ -159,15 +158,63 @@ export function ComboboxContent({
   const { t } = useI18n();
   const emptyText = emptyTextProp ?? t('common.noMatches');
   const dir = usePortalDir();
+  const enh = useComboboxEnhancement();
+  let list = children;
+  if (enh && typeof children === 'function') {
+    list = (item: unknown, index: number) => (isSpecialItem(item) ? <ComboboxSpecialItem key={`${item.__gntikSpecial}:${item.value}`} item={item} /> : children(item, index));
+  } else if (enh) {
+    list = (
+      <>
+        {children}
+        {enh.specials.map((item) => (
+          <ComboboxSpecialItem key={item.__gntikSpecial} item={item} />
+        ))}
+      </>
+    );
+  }
+  const busy = !!enh && (enh.loading || !!enh.error);
+  const errorText = typeof enh?.errorText === 'function' ? enh.errorText(enh.error) : (enh?.errorText ?? t('combobox.loadFailed'));
   return (
     <BaseCombobox.Portal container={container}>
       <BaseCombobox.Positioner dir={dir} className={s.positioner()} side={side} align={align} sideOffset={sideOffset}>
         <BaseCombobox.Popup className={cn(s.popup(), className)} {...props}>
-          <BaseCombobox.Empty className={s.empty()}>{emptyText}</BaseCombobox.Empty>
-          <BaseCombobox.List className={s.list()}>{children}</BaseCombobox.List>
+          {enh && (
+            <BaseCombobox.Status className={cn(s.status(), !!enh.error && !enh.loading && s.statusError())}>
+              {enh.loading ? (
+                <>
+                  <Spinner size={13} />
+                  {enh.loadingText ?? t('common.loading')}
+                </>
+              ) : enh.error ? (
+                errorText
+              ) : null}
+            </BaseCombobox.Status>
+          )}
+          <BaseCombobox.Empty className={s.empty()}>{busy ? null : emptyText}</BaseCombobox.Empty>
+          <BaseCombobox.List className={s.list()} aria-busy={enh?.loading || undefined}>
+            {list}
+          </BaseCombobox.List>
         </BaseCombobox.Popup>
       </BaseCombobox.Positioner>
     </BaseCombobox.Portal>
+  );
+}
+
+/** The built-in "Create “…”" and "Retry" rows (internal; MultiSelect reuses it). */
+export function ComboboxSpecialItem({ item, createLabel }: { item: SpecialItem; createLabel?: (input: string) => ReactNode }) {
+  const { t } = useI18n();
+  const enh = useComboboxEnhancement();
+  const label = createLabel ?? enh?.createLabel;
+  const create = item.__gntikSpecial === 'create';
+  return (
+    <BaseCombobox.Item value={item} className={cn(s.item(), s.specialItem())}>
+      <span className={s.itemContent()}>
+        {create ? <Plus size={14} aria-hidden className={s.specialIcon()} /> : <RotateCw size={14} aria-hidden className={s.specialIcon()} />}
+        <span className="truncate">
+          {create ? (label?.(item.value) ?? t('combobox.create', { label: item.value })) : t('common.retry')}
+        </span>
+      </span>
+    </BaseCombobox.Item>
   );
 }
 

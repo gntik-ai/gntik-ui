@@ -48,8 +48,8 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
   `-warning-`, `-destructive-text`, `outline-focus-ring`) y, sobre fondos teñidos (chips,
   badges), `text-<tono>-chip-text`; todos apuntan a tokens existentes y un test exige AA en los
   3 temas (también sobre el tinte). Los enlaces en texto van subrayados.
-- `packages/chat` (pack de chat IA), `packages/blocks` (69 bloques: `src/<familia>/<Nombre>/`
-  con `block.meta.ts`), `packages/templates` (57 páginas: `src/<id>/Page.tsx` +
+- `packages/chat` (pack de chat IA), `packages/blocks` (70 bloques: `src/<familia>/<Nombre>/`
+  con `block.meta.ts`), `packages/templates` (58 páginas: `src/<id>/Page.tsx` +
   `template.meta.ts`; las de consola usan `shared/ConsoleShell`), `packages/cli`
   (`gntik-ui init|add|eject|list|search|docs`, `--json`). Layouts en `packages/ui/src/layouts/`
   (`embedded` cuando van dentro de un shell que ya tiene `<main>`).
