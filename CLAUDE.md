@@ -66,7 +66,7 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
   densidad (`DensityProvider`, `tokens/src/density.css`, `size:'auto'` → `h-control`, `h-row`…);
   `motion.css`; export DTCG/Figma (`packages/tokens` build); `packages/codemods` +
   `gntik-ui upgrade`; registro shadcn en `apps/docs/public/r/` y `llms*.txt` (ambos de
-  `pnpm registry`; URL base vía `GNTIK_REGISTRY_BASE_URL`); `apps/sandbox`; `AGENTS.md` +
+  `pnpm registry`; publicados en https://ui.gntik.ai (Vercel); `GNTIK_REGISTRY_BASE_URL` solo para otra base); `apps/sandbox`; `AGENTS.md` +
   `.claude/skills/`; gobernanza en `docs/governance/`; workflow canary.
 - `packages/evals`: evals de agente contra la API de Claude. **Cuestan dinero**: no correrlas
   sin permiso explícito del usuario (`--confirm-spend`).

@@ -12,7 +12,7 @@
     "remark-gfm@^4.0.1"
   ],
   "registryDependencies": [
-    "https://gntik-ui.invalid/r/gntik-tokens.json"
+    "https://ui.gntik.ai/r/gntik-tokens.json"
   ],
   "files": [
     {

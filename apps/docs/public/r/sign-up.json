@@ -10,8 +10,8 @@
     "@gntik-ai/ui"
   ],
   "registryDependencies": [
-    "https://gntik-ui.invalid/r/gntik-tokens.json",
-    "https://gntik-ui.invalid/r/sign-in.json"
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/sign-in.json"
   ],
   "files": [
     {

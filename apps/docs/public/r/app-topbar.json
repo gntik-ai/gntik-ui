@@ -9,10 +9,10 @@
     "@gntik-ai/ui"
   ],
   "registryDependencies": [
-    "https://gntik-ui.invalid/r/gntik-tokens.json",
-    "https://gntik-ui.invalid/r/app-sidebar.json",
-    "https://gntik-ui.invalid/r/environment-badge.json",
-    "https://gntik-ui.invalid/r/global-search.json"
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/app-sidebar.json",
+    "https://ui.gntik.ai/r/environment-badge.json",
+    "https://ui.gntik.ai/r/global-search.json"
   ],
   "files": [
     {

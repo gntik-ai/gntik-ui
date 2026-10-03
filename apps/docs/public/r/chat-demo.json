@@ -9,14 +9,14 @@
     "@gntik-ai/ui"
   ],
   "registryDependencies": [
-    "https://gntik-ui.invalid/r/gntik-tokens.json",
-    "https://gntik-ui.invalid/r/chat-composer.json",
-    "https://gntik-ui.invalid/r/chat-layout.json",
-    "https://gntik-ui.invalid/r/chat-message.json",
-    "https://gntik-ui.invalid/r/citation.json",
-    "https://gntik-ui.invalid/r/markdown.json",
-    "https://gntik-ui.invalid/r/suggestion-chips.json",
-    "https://gntik-ui.invalid/r/tool-call-card.json"
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/chat-composer.json",
+    "https://ui.gntik.ai/r/chat-layout.json",
+    "https://ui.gntik.ai/r/chat-message.json",
+    "https://ui.gntik.ai/r/citation.json",
+    "https://ui.gntik.ai/r/markdown.json",
+    "https://ui.gntik.ai/r/suggestion-chips.json",
+    "https://ui.gntik.ai/r/tool-call-card.json"
   ],
   "files": [
     {
