@@ -23,8 +23,8 @@
     "start:http": "node dist/index.js --http",
     "test": "npm run build && node --test test/*.test.mjs",
     "smoke": "npm run build && node scripts/smoke.mjs",
-    "registry": "tsx scripts/build-kit-registry.ts && tsx scripts/build-inventory.ts && tsc -p tsconfig.json && node dist/build-registry.js",
-    "registry:check": "tsx scripts/build-kit-registry.ts --check && tsx scripts/build-inventory.ts --check && tsc -p tsconfig.json && node dist/build-registry.js --check",
+    "registry": "tsx scripts/build-kit-registry.ts && tsx scripts/build-inventory.ts && tsx scripts/build-llms.ts && tsc -p tsconfig.json && node dist/build-registry.js",
+    "registry:check": "tsx scripts/build-kit-registry.ts --check && tsx scripts/build-inventory.ts --check && tsx scripts/build-llms.ts --check && tsc -p tsconfig.json && node dist/build-registry.js --check",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

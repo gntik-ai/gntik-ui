@@ -1,111 +1,120 @@
-# gntik-ui-mcp — remaquetación asistida con el design system
+# gntik-ui-mcp — the design system as MCP tools
 
-MCP server que expone el catálogo **gntik-ui** (inventario, código canónico de
-los 57+ componentes, tokens de marca, app-shell y reglas duras) como tools para
-**Claude Code**. Con él, remaquetar una página legacy es: analizar → traer los
-componentes de marca → reescribir → validar hasta 0 errores.
-
-Funciona con cualquier app (React, Angular, Vue, HTML…): el código de
-referencia es React+Tailwind, pero las clases de token se trasladan tal cual a
-cualquier template.
+MCP server that exposes **gntik-ui** to coding agents (Claude Code and any MCP client): the
+installable kit (components, layouts, blocks, page templates from `kit-registry.json`), page and
+brand-preset scaffolding, the brand tokens, the hard rules and a validator. It also serves the
+copy-paste catalog (`registry.json`) for rebuilding legacy pages in any framework.
 
 ```
-Claude Code ──stdio──► gntik-ui-mcp ──lee──► catálogo gntik-ui (../)
-Claude Code ──http───► gntik-ui-mcp (k8s) ─► catálogo empaquetado en la imagen
+Claude Code ──stdio──► gntik-ui-mcp ──reads──► gntik-ui checkout (../)
+Claude Code ──http───► gntik-ui-mcp (k8s) ───► snapshot packed in the image
 ```
 
 ## Tools
 
-| Tool | Qué hace |
+**Kit (`kit-registry.json`)**
+
+| Tool | What it does |
 |---|---|
-| `overview` | Marca, inventario, reglas y flujo recomendado. Llamada inicial. |
-| `list_components` / `search_components` | Inventario navegable / búsqueda por palabras clave. |
-| `get_component` | Doc + TODO el código canónico de un componente (`buttons`, `tables`, …). |
-| `get_app_shell` | El chrome compartido (sidebar+topbar+header), opcionalmente con `blocks/Shell.html`. |
-| `get_tokens` | `tokens/brand.css` por tema, en css o json. |
-| `get_adoption_guide` | Cómo enganchar un producto: import de tokens, `tailwind.config`, temas, Geist. |
-| `get_rules` | Reglas duras + qué comprueba exactamente el validador. |
-| `analyze_page` | Página legacy → componentes gntik-ui sugeridos + frameworks detectados + violaciones. |
-| `validate_page` | Valida la página remaquetada (hex, paleta Tailwind, degradados, glow, `dark:`, fuentes). |
-| `sync_design_system` | Re-indexa el catálogo (git pull si el server lo clonó él mismo). |
+| `list_kit` | Components, layouts, blocks and templates; filter by `kind`, `group` and a `query` (all terms must match). |
+| `get_component` | A kit component/layout: metadata, keyboard table, tokens, deps, a usage example (imports rewritten to packages) and the full source. Catalog-only ids (`buttons`, `tables`…) return the catalog entry. |
+| `get_block` | A block: metadata, components it composes, deps, usage and source. |
+| `get_template` | A page template: layout, blocks, whether it renders in `ConsoleShell`, deps, usage and source. |
+| `scaffold_page` | A ready-to-paste TSX page: `template=<id>` (with the `shell` prop wired for console templates) or `blocks=[…]` + `layout` (`console` · `page` · `auth-layout` · `stacked-layout` · `docs-layout` · `canvas-layout` · `print-layout`). |
+| `scaffold_preset` | A `BrandPreset` module (name + logo mark) like `packages/ui/src/theme/presets.tsx`; optional SVG converted to JSX with its colours mapped to token classes. Colours never change. |
 
-**Prompts** (slash commands en Claude Code): `/mcp__gntik-ui__remaquetar` (flujo
-completo por página) y `/mcp__gntik-ui__preparar_producto` (wiring inicial de un
-producto nuevo). **Resources**: `gntik-ui://tokens`, `gntik-ui://reglas`,
-`gntik-ui://inventario`, `gntik-ui://componente/{id}`.
+**Design system and rebuilds**
 
-## Uso local con Claude Code (stdio)
+| Tool | What it does |
+|---|---|
+| `overview` | Brand, inventory, rules and the recommended flows. Call it first. |
+| `list_components` / `search_components` | Catalog inventory / keyword search. |
+| `get_app_shell` | The catalog chrome (sidebar + topbar + header), optionally with `blocks/Shell.html`. |
+| `get_tokens` | `brand.css` per theme, as css or json. |
+| `get_adoption_guide` | Wiring a product: tokens, Tailwind v4 bridge, themes, Geist. |
+| `get_rules` | Hard rules + exactly what the validator checks. |
+| `analyze_page` | Legacy page → suggested entries + detected frameworks + violations. |
+| `validate_page` | Checks a page (hex, Tailwind palette, gradients, glow, `dark:`, fonts). |
+| `sync_design_system` | Re-indexes (git pull when the server cloned the repo itself). |
+
+**Prompts:** `/mcp__gntik-ui__remaquetar` (rebuild one page) and
+`/mcp__gntik-ui__preparar_producto` (initial product wiring) — names kept for compatibility.
+**Resources:** `gntik-ui://tokens`, `gntik-ui://reglas`, `gntik-ui://inventario`,
+`gntik-ui://componente/{id}`.
+
+## Local use with Claude Code (stdio)
 
 ```bash
 cd gntik-ui
 pnpm install && pnpm --filter @gntik-ai/gntik-ui-mcp build
 
-# en el repo de la app a remaquetar:
-claude mcp add gntik-ui -- node /ruta/a/gntik-ui/packages/mcp/dist/index.js --stdio
-# o por proyecto: copia .mcp.json.example como .mcp.json y ajusta la ruta
+# in the product repo:
+claude mcp add gntik-ui -- node /path/to/gntik-ui/packages/mcp/dist/index.js --stdio
 ```
 
-Remaquetar una página desde Claude Code:
-
-```
-> /mcp__gntik-ui__remaquetar pagina=src/pages/voices.component.html
-```
-
-o en lenguaje natural: *"remaqueta src/pages/Fleet.tsx con el design system"* —
-Claude usará `analyze_page` → `get_component` → `validate_page`.
+Then ask in natural language — *"build the members settings page with gntik-ui"* (→ `list_kit` →
+`scaffold_page` → `validate_page`) or *"rebuild src/pages/Fleet.tsx on the design system"*
+(→ `analyze_page` → `get_component` → `validate_page`). In this repo, the skills in
+`.claude/skills/` (`build-page`, `add-component`, `brand-review`) drive the same tools.
 
 ## Kubernetes / OpenShift (Streamable HTTP)
 
-La imagen se publica en `ghcr.io/gntik-ai/gntik-ui-mcp` (workflow
-`.github/workflows/gntik-ui-mcp.yml`: tests + smoke E2E → build multi-arch).
+The image is published as `ghcr.io/gntik-ai/gntik-ui-mcp` (workflow
+`.github/workflows/gntik-ui-mcp.yml`: tests + E2E smoke → multi-arch build).
 
 ```bash
-kubectl apply -k packages/mcp/k8s        # Deployment + Service (Ingress/Route aparte)
-# endpoint MCP:  POST /mcp   · probes: GET /healthz · GET /readyz
-
-# conectar Claude Code al server del clúster:
-claude mcp add --transport http gntik-ui https://gntik-ui-mcp.tu-dominio.com/mcp
+kubectl apply -k packages/mcp/k8s        # Deployment + Service (Ingress/Route separately)
+# MCP endpoint: POST /mcp · probes: GET /healthz · GET /readyz
+claude mcp add --transport http gntik-ui https://gntik-ui-mcp.your-domain.com/mcp
 ```
 
-Es **stateless** (sin sesiones): escala horizontal sin sticky sessions. La
-imagen lleva un snapshot del catálogo; para seguir una rama en vivo define
-`GNTIK_UI_REPO` (+ `GNTIK_UI_SYNC_MINUTES`, y `GITHUB_TOKEN` si es privado) —
-ver comentarios en `k8s/deployment.yaml`.
-
-También puedes correr la imagen en local:
+It is **stateless** (no sessions): it scales horizontally without sticky sessions. The image carries
+a snapshot of the design system; to follow a branch live set `GNTIK_UI_REPO`
+(+ `GNTIK_UI_SYNC_MINUTES`, and `GITHUB_TOKEN` for a private repo) — see `k8s/deployment.yaml`.
+The kit tools read `kit-registry.json` and the package sources from that snapshot; when a source
+file is not shipped, they link to it on GitHub instead.
 
 ```bash
-docker build -f packages/mcp/Dockerfile -t gntik-ui-mcp .   # contexto = raíz del repo
+docker build -f packages/mcp/Dockerfile -t gntik-ui-mcp .   # context = repo root
 docker run --rm -p 8080:8080 gntik-ui-mcp
 ```
 
-## Configuración
+## Configuration
 
-| Variable | Defecto | Descripción |
+| Variable | Default | Description |
 |---|---|---|
-| `MCP_TRANSPORT` | `stdio` | `stdio` \| `http` (flags `--stdio` / `--http` mandan) |
-| `PORT` | `8080` | Puerto HTTP |
-| `GNTIK_UI_DIR` | autodetección `../` | Checkout local del catálogo |
-| `GNTIK_UI_REPO` | — | URL git del catálogo (si no hay checkout) |
-| `GNTIK_UI_REF` | `main` | Rama/tag a seguir |
-| `GNTIK_UI_TOKEN` / `GITHUB_TOKEN` | — | Token para repo privado |
-| `GNTIK_UI_CACHE` | `$TMPDIR/gntik-ui-mcp` | Directorio del clon propio |
-| `GNTIK_UI_SYNC_MINUTES` | `0` (off) | Auto-sync del clon propio |
+| `MCP_TRANSPORT` | `stdio` | `stdio` \| `http` (flags `--stdio` / `--http` win) |
+| `PORT` | `8080` | HTTP port |
+| `GNTIK_UI_DIR` | autodetect `../` | Local gntik-ui checkout |
+| `GNTIK_UI_REPO` | — | Git URL of the repo (when there is no checkout) |
+| `GNTIK_UI_REF` | `main` | Branch/tag to follow |
+| `GNTIK_UI_TOKEN` / `GITHUB_TOKEN` | — | Token for a private repo |
+| `GNTIK_UI_CACHE` | `$TMPDIR/gntik-ui-mcp` | Directory of the server's own clone |
+| `GNTIK_UI_SYNC_MINUTES` | `0` (off) | Auto-sync of the server's own clone |
 
-El server **nunca** hace `git pull` sobre un checkout local del usuario; solo
-sobre el clon que gestiona él mismo.
+The server **never** runs `git pull` on a user's local checkout, only on the clone it manages.
+
+## Generated files
+
+`pnpm registry` (root) regenerates, from the scripts in `packages/mcp/scripts/` and `src/`:
+`kit-registry.json`, `INVENTORY.md`, `registry.json` and `apps/docs/public/llms.txt` +
+`llms-full.txt` ([llmstxt.org](https://llmstxt.org) format, `scripts/build-llms.ts`).
+`pnpm registry:check` fails in CI when any of them is stale.
 
 ## Releases
 
-- Push a `main` → `ghcr.io/gntik-ai/gntik-ui-mcp:latest` (+`sha-…`). El
-  snapshot del catálogo va dentro, así que cambios de componentes también
-  publican imagen.
-- Tag `mcp-vX.Y.Z` → imagen `X.Y.Z`.
+- Push to `main` → `ghcr.io/gntik-ai/gntik-ui-mcp:latest` (+`sha-…`). The design-system snapshot is
+  inside, so component changes also publish an image.
+- Tag `mcp-vX.Y.Z` → image `X.Y.Z`.
 
-## Desarrollo
+## Development
 
 ```bash
-pnpm --filter @gntik-ai/gntik-ui-mcp test    # build + unit tests contra el catálogo real
-pnpm --filter @gntik-ai/gntik-ui-mcp smoke   # E2E: cliente MCP oficial por stdio ejercitando todas las tools
-pnpm --filter @gntik-ai/gntik-ui-mcp dev     # tsx --stdio · npm run dev:http para HTTP
+pnpm --filter @gntik-ai/gntik-ui-mcp test    # build + unit tests (node --test) against the real repo
+pnpm --filter @gntik-ai/gntik-ui-mcp smoke   # E2E: the official MCP client over stdio
+pnpm --filter @gntik-ai/gntik-ui-mcp dev     # tsx --stdio · dev:http for HTTP
 ```
+
+Source map: `src/kit.ts` (kit-registry loader, doc parsing, export names, usage),
+`src/kit-tools.ts` (kit tools), `src/scaffold.ts` (page + preset scaffolding), `src/server.ts`
+(catalog tools, prompts, resources), `src/indexer.ts`, `src/analyze.ts`, `src/validate.ts`.
