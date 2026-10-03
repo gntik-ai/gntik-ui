@@ -1,7 +1,7 @@
 import { tv, type VariantProps } from '../../utils/tv';
 
 const SURFACE = [
-  'relative flex items-start gap-3.5 rounded-md border border-border bg-background px-4 py-3.5 text-left transition-colors motion-reduce:transition-none',
+  'relative flex items-start gap-3.5 rounded-md border border-border bg-background px-4 py-3.5 text-start transition-colors motion-reduce:transition-none',
   'has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus-ring',
 ];
 
@@ -20,10 +20,10 @@ export const clickableCardVariants = tv({
     ...TEXT,
     /** The link/button; its ::after covers the card so the whole surface is clickable. */
     action: [
-      'cursor-pointer text-left outline-none after:absolute after:inset-0 after:rounded-[inherit] after:content-[""]',
+      'cursor-pointer text-start outline-none after:absolute after:inset-0 after:rounded-[inherit] after:content-[""]',
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed',
     ],
-    chevron: 'mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none group-hover/card:translate-x-0.5',
+    chevron: 'mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none group-hover/card:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover/card:-translate-x-0.5',
   },
 });
 

@@ -24,17 +24,17 @@ export const tokenVariants = tv({
       destructive: { root: 'border-destructive/35 bg-destructive/10 text-destructive-chip-text', leading: 'text-destructive-text' },
     },
     size: {
-      sm: { root: 'h-6 pl-2 text-[11.5px]', remove: 'size-4', label: 'max-w-[120px]' },
-      md: { root: 'h-7 pl-2.5 text-[12px]', remove: 'size-5', label: 'max-w-[160px]' },
+      sm: { root: 'h-6 ps-2 text-[11.5px]', remove: 'size-4', label: 'max-w-[120px]' },
+      md: { root: 'h-7 ps-2.5 text-[12px]', remove: 'size-5', label: 'max-w-[160px]' },
     },
     removable: {
-      true: { root: 'pr-1' },
+      true: { root: 'pe-1' },
       false: {},
     },
   },
   compoundVariants: [
-    { removable: false, size: 'sm', class: { root: 'pr-2' } },
-    { removable: false, size: 'md', class: { root: 'pr-2.5' } },
+    { removable: false, size: 'sm', class: { root: 'pe-2' } },
+    { removable: false, size: 'md', class: { root: 'pe-2.5' } },
   ],
   defaultVariants: { tone: 'neutral', size: 'md', removable: false },
 });

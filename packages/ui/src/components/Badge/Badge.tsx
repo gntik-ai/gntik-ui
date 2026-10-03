@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import type { HTMLAttributes, ReactNode, Ref } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { badgeVariants, type BadgeVariantProps } from './badge.variants';
 
@@ -28,10 +29,11 @@ export function Badge({
   children,
   ...props
 }: BadgeProps) {
+  const { t } = useI18n();
   const s = badgeVariants({ tone, variant, size, shape });
-  const label = removeLabel ?? (typeof children === 'string' ? `Remove ${children}` : 'Remove');
+  const label = removeLabel ?? (typeof children === 'string' ? t('common.removeItem', { label: children }) : t('common.remove'));
   return (
-    <span className={cn(s.root(), onRemove && 'pr-1.5', className)} {...props}>
+    <span className={cn(s.root(), onRemove && 'pe-1.5', className)} {...props}>
       {dot && <span aria-hidden className={s.dot()} />}
       {children}
       {onRemove && (

@@ -4,7 +4,7 @@ export const doc: ComponentDoc = {
   name: 'Drawer',
   group: 'Overlays',
   status: 'stable',
-  description: 'Panel that slides in from the right, left or bottom edge for details, edit forms and navigation. Fixed header and footer, scrollable body, swipe to dismiss. Parts: Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose.',
+  description: 'Panel that slides in from the right, left or bottom edge for details, edit forms and navigation. Fixed header and footer, scrollable body, swipe to dismiss. Under RTL (I18nProvider) `right` and `left` mirror to the inline end and start. Parts: Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose.',
   primitive: '@base-ui/react/drawer',
   pattern: 'dialog (modal)',
   keyboard: [

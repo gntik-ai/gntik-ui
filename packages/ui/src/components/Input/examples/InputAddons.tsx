@@ -12,7 +12,7 @@ export default function InputAddons() {
       <Input leadingAddon="app.example.com/" defaultValue="billing" aria-label="Workspace URL" />
       <Input trailingAddon="req/s" defaultValue="2000" inputMode="numeric" aria-label="Rate limit" />
       <Input
-        className="pr-1.5 sm:col-span-2"
+        className="pe-1.5 sm:col-span-2"
         leadingIcon={Lock}
         type={show ? 'text' : 'password'}
         defaultValue="sk-live-example-token"

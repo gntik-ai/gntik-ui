@@ -14,7 +14,7 @@ export const radioGroupVariants = tv({
     item: 'grid grid-cols-[auto_1fr_auto] items-start gap-x-3 gap-y-0.5',
     label: 'col-span-2 grid cursor-pointer grid-cols-subgrid items-start has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-70',
     labelText: 'min-w-0 text-[13px] leading-5 font-medium text-foreground select-none',
-    trailing: 'col-start-3 row-start-1 text-right text-[13px] leading-5 font-semibold text-foreground',
+    trailing: 'col-start-3 row-start-1 text-end text-[13px] leading-5 font-semibold text-foreground',
     description: 'col-start-2 col-end-4 text-[12.5px] leading-5 text-muted-foreground text-pretty',
   },
   variants: {

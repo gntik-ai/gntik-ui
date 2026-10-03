@@ -10,7 +10,7 @@ export default function CheckboxSelectAll() {
     <CheckboxGroup aria-labelledby={id} value={value} onValueChange={setValue} allValues={PROJECTS} className="max-w-lg">
       <div className="flex items-center gap-3 border-b border-border pb-3">
         <Checkbox parent label={<span id={id}>Include all projects</span>} />
-        <span className="ml-auto font-mono text-[11px] text-muted-foreground">
+        <span className="ms-auto font-mono text-[11px] text-muted-foreground">
           {value.length}/{PROJECTS.length}
         </span>
       </div>

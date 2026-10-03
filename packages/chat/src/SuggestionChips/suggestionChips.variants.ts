@@ -7,7 +7,7 @@ export const suggestionChipsStyles = {
   grid: 'grid gap-2 sm:grid-cols-2',
   row: 'flex flex-wrap gap-2',
   card: [
-    'group flex w-full cursor-pointer items-start gap-2.5 rounded-lg border border-border bg-card px-3.5 py-3 text-left shadow-sm',
+    'group flex w-full cursor-pointer items-start gap-2.5 rounded-lg border border-border bg-card px-3.5 py-3 text-start shadow-sm',
     'transition-colors hover:border-primary/40 hover:bg-secondary/40 motion-reduce:transition-none',
     'disabled:pointer-events-none disabled:opacity-50',
     focusRing,

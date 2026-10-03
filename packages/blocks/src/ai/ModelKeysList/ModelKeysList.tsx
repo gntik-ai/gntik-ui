@@ -139,7 +139,7 @@ export function ModelKeysList({
                   <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[11.5px] text-foreground">{key.maskedKey}</code>
                   {key.lastUsed && <span className="hidden text-[11.5px] text-muted-foreground md:inline">Used {key.lastUsed}</span>}
                   {!revoked && (
-                    <div className="ml-auto flex items-center gap-1.5 sm:ml-0">
+                    <div className="ms-auto flex items-center gap-1.5 sm:ms-0">
                       <Button
                         variant="secondary"
                         size="sm"

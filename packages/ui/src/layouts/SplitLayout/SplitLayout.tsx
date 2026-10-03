@@ -3,6 +3,7 @@ import { useId, useRef, useState, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
 import { Button } from '../../components/Button';
 import { ResizablePanel, ResizablePanelGroup, ResizeHandle } from '../../components/Resizable';
+import { useI18n } from '../../i18n/I18nProvider';
 import { splitLayoutVariants } from './split-layout.variants';
 
 export interface SplitLayoutProps {
@@ -45,15 +46,19 @@ export function SplitLayout({
   showDetail: showDetailProp,
   defaultShowDetail = false,
   onShowDetailChange,
-  listLabel = 'List',
-  detailLabel = 'Details',
-  backLabel = 'Back',
+  listLabel: listLabelProp,
+  detailLabel: detailLabelProp,
+  backLabel: backLabelProp,
   defaultListSize = 35,
   minListSize = 20,
   maxListSize = 60,
   autoSaveId,
   fullScreen = false,
 }: SplitLayoutProps) {
+  const { t } = useI18n();
+  const listLabel = listLabelProp ?? t('split.list');
+  const detailLabel = detailLabelProp ?? t('split.details');
+  const backLabel = backLabelProp ?? t('common.back');
   const id = useId();
   const listRef = useRef<HTMLElement>(null);
   const [showDetailState, setShowDetailState] = useState(defaultShowDetail);

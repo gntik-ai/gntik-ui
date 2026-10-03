@@ -1,5 +1,5 @@
 import { Inbox } from '@gntik-ai/icons';
-import { Checkbox, cn, EmptyState, MoreMenu, Skeleton, TableBody, TableCell, TableRow, type MoreMenuAction } from '@gntik-ai/ui';
+import { Checkbox, cn, EmptyState, MoreMenu, Skeleton, TableBody, TableCell, TableRow, type MoreMenuAction, useI18n } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import { COLUMN_VARIANT_CLASSES, columnAlign, formatCell, type DataTableColumn } from './data-table-utils';
 
@@ -32,6 +32,7 @@ export function DataTableBody<T>({
   loadingRows,
   emptyState,
 }: DataTableBodyProps<T>) {
+  const { t } = useI18n();
   const span = columns.length + (selectable ? 1 : 0) + (rowActions ? 1 : 0);
   if (loading) {
     return (
@@ -45,7 +46,7 @@ export function DataTableBody<T>({
             )}
             {columns.map((c) => (
               <TableCell key={c.id} align={columnAlign(c)}>
-                <Skeleton className={cn('h-3.5', columnAlign(c) === 'right' ? 'ml-auto w-16' : 'w-24')} />
+                <Skeleton className={cn('h-3.5', columnAlign(c) === 'right' ? 'ms-auto w-16' : 'w-24')} />
               </TableCell>
             ))}
             {rowActions && <TableCell className="w-12" />}
@@ -59,7 +60,7 @@ export function DataTableBody<T>({
       <TableBody>
         <TableRow className="hover:bg-transparent">
           <TableCell colSpan={span} className="py-10">
-            {emptyState ?? <EmptyState icon={Inbox} size="sm" title="No results" description="Nothing matches the current filters." />}
+            {emptyState ?? <EmptyState icon={Inbox} size="sm" title={t('common.noResults')} description={t('table.emptyDescription')} />}
           </TableCell>
         </TableRow>
       </TableBody>
@@ -74,8 +75,8 @@ export function DataTableBody<T>({
         return (
           <TableRow key={id} selected={selectable && isSelected}>
             {selectable && (
-              <TableCell className="w-10 pr-0">
-                <Checkbox aria-label={`Select ${label}`} checked={isSelected} onCheckedChange={() => onToggleRow(id)} />
+              <TableCell className="w-10 pe-0">
+                <Checkbox aria-label={t('table.selectRow', { label })} checked={isSelected} onCheckedChange={() => onToggleRow(id)} />
               </TableCell>
             )}
             {columns.map((c) => (
@@ -85,7 +86,7 @@ export function DataTableBody<T>({
             ))}
             {rowActions && (
               <TableCell align="right" className="w-12 py-0">
-                <MoreMenu items={rowActions(row)} label={`Actions for ${label}`} variant="ghost" size="sm" />
+                <MoreMenu items={rowActions(row)} label={t('table.rowActions', { label })} variant="ghost" size="sm" />
               </TableCell>
             )}
           </TableRow>

@@ -1,6 +1,7 @@
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X, type LucideIcon } from 'lucide-react';
 import { useMemo, type ReactNode } from 'react';
+import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { toastVariants, type ToastTone } from './toast.variants';
 
@@ -86,12 +87,15 @@ export interface ToasterProps {
  * The bottom-right stack (a `region` landmark named "Notifications"). F6 moves focus into it;
  * hovering or focusing it pauses auto-dismiss.
  */
-export function Toaster({ className, closeLabel = 'Dismiss notification', container }: ToasterProps) {
+export function Toaster({ className, closeLabel: closeLabelProp, container }: ToasterProps) {
+  const { t } = useI18n();
+  const closeLabel = closeLabelProp ?? t('toast.dismiss');
+  const dir = usePortalDir();
   const { toasts } = BaseToast.useToastManager();
   const s = toastVariants();
   return (
     <BaseToast.Portal container={container}>
-      <BaseToast.Viewport className={cn(s.viewport(), className)}>
+      <BaseToast.Viewport dir={dir} className={cn(s.viewport(), className)}>
         {toasts.map((t) => {
           const tone = t.type && TONES.has(t.type) ? (t.type as ToastTone) : 'neutral';
           const v = toastVariants({ tone });

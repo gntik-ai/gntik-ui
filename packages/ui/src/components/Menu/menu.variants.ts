@@ -1,7 +1,7 @@
 import { tv, type VariantProps } from '../../utils/tv';
 
 const itemBase = [
-  'relative flex h-[34px] w-full cursor-default items-center gap-2.5 rounded-[7px] px-2.5 text-left text-[13px] outline-none select-none',
+  'relative flex h-[34px] w-full cursor-default items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none',
   'text-foreground transition-colors data-highlighted:bg-secondary/70',
   'data-disabled:pointer-events-none data-disabled:opacity-50',
 ];
@@ -19,14 +19,14 @@ export const menuVariants = tv({
     item: itemBase,
     itemIcon: 'shrink-0 text-muted-foreground',
     itemLabel: 'min-w-0 flex-1 truncate',
-    shortcut: 'ml-auto pl-3 font-mono text-[10.5px] tracking-wide text-muted-foreground',
+    shortcut: 'ms-auto ps-3 font-mono text-[10.5px] tracking-wide text-muted-foreground',
     checkbox: [
       'grid size-[18px] shrink-0 place-items-center rounded-[5px] border border-border text-primary-foreground transition-colors',
       'group-data-checked:border-primary group-data-checked:bg-primary',
     ],
-    radioIndicator: 'ml-auto shrink-0 text-primary-text',
+    radioIndicator: 'ms-auto shrink-0 text-primary-text',
     subTrigger: [...itemBase, 'data-popup-open:bg-secondary/70'],
-    subChevron: 'ml-auto shrink-0 text-muted-foreground',
+    subChevron: 'ms-auto shrink-0 text-muted-foreground rtl:-scale-x-100',
     groupLabel: 'px-2.5 pt-2 pb-1 font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase',
     separator: '-mx-1.5 my-1.5 h-px bg-border',
   },

@@ -1,6 +1,6 @@
 import { Plus, Search, SlidersHorizontal } from '@gntik-ai/icons';
 import type { LucideIcon } from '@gntik-ai/icons';
-import { Toggle, ToggleGroup, Toolbar, ToolbarButton, ToolbarEnd, ToolbarInput, ToolbarSeparator, ToolbarStart, cn } from '@gntik-ai/ui';
+import { Toggle, ToggleGroup, Toolbar, ToolbarButton, ToolbarEnd, ToolbarInput, ToolbarSeparator, ToolbarStart, cn, useI18n } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
 import type { PageChromeAction } from '../types';
 import { pageToolbarViews } from './fixtures';
@@ -42,7 +42,7 @@ export function PageToolbar({
   search,
   defaultSearch = '',
   onSearchChange,
-  searchLabel = 'Search',
+  searchLabel: searchLabelProp,
   searchPlaceholder = 'Search projects…',
   filters,
   views = pageToolbarViews,
@@ -50,9 +50,12 @@ export function PageToolbar({
   defaultView,
   onViewChange,
   primaryAction = pageToolbarDefaultAction,
-  'aria-label': ariaLabel = 'Page toolbar',
+  'aria-label': ariaLabelProp,
   className,
 }: PageToolbarProps) {
+  const { t } = useI18n();
+  const searchLabel = searchLabelProp ?? t('common.search');
+  const ariaLabel = ariaLabelProp ?? t('toolbar.label');
   const [innerSearch, setInnerSearch] = useState(defaultSearch);
   const [innerView, setInnerView] = useState(defaultView ?? views?.[0]?.value ?? '');
   const currentSearch = search ?? innerSearch;
@@ -83,7 +86,7 @@ export function PageToolbar({
         {views && views.length > 0 && (
           <>
             <ToggleGroup
-              aria-label="View"
+              aria-label={t('toolbar.view')}
               size="sm"
               value={[currentView]}
               onValueChange={(next) => {

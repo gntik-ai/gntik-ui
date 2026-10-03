@@ -12,6 +12,7 @@ import {
   MenuTrigger,
   SimpleSelect,
   Token,
+  useI18n,
 } from '@gntik-ai/ui';
 import { Fragment, useState } from 'react';
 import { DEPLOYMENT_DEFAULT_FILTERS, DEPLOYMENT_FILTER_FIELDS, DEPLOYMENT_SAVED_VIEWS } from './fixtures';
@@ -72,11 +73,13 @@ export function FilterBar({
   views = DEPLOYMENT_SAVED_VIEWS,
   defaultView = null,
   onViewChange,
-  searchLabel = 'Search',
+  searchLabel: searchLabelProp,
   placeholder = 'Search by name…',
   resultCount,
   className,
 }: FilterBarProps) {
+  const { t } = useI18n();
+  const searchLabel = searchLabelProp ?? t('common.search');
   const [innerQuery, setInnerQuery] = useState(defaultQuery);
   const [innerFilters, setInnerFilters] = useState<readonly ActiveFilter[]>(defaultFilters);
   const [view, setView] = useState<string | null>(defaultView);
@@ -110,7 +113,7 @@ export function FilterBar({
   const hasAny = filters.length > 0 || query !== '';
 
   return (
-    <div role="search" aria-label="Filters" className={cn('flex flex-col gap-3', className)}>
+    <div role="search" aria-label={t('filters.label')} className={cn('flex flex-col gap-3', className)}>
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <Input
           aria-label={searchLabel}
@@ -125,9 +128,9 @@ export function FilterBar({
         <div className="flex flex-wrap items-center gap-2">
           {views.length > 0 && (
             <SimpleSelect
-              aria-label="Saved view"
+              aria-label={t('filters.savedView')}
               size="sm"
-              placeholder="Saved views"
+              placeholder={t('filters.savedViews')}
               value={view}
               onValueChange={applyView}
               items={views.map((v) => ({ value: v.value, label: v.label }))}
@@ -135,7 +138,7 @@ export function FilterBar({
             />
           )}
           <Menu>
-            <MenuTrigger render={<Button variant="secondary" size="sm" icon={Plus} />}>Add filter</MenuTrigger>
+            <MenuTrigger render={<Button variant="secondary" size="sm" icon={Plus} />}>{t('filters.add')}</MenuTrigger>
             <MenuContent className="max-h-80 min-w-[220px] overflow-y-auto">
               {fields.map((field, i) => (
                 <Fragment key={field.id}>
@@ -157,7 +160,7 @@ export function FilterBar({
           </Menu>
         </div>
         {resultCount !== undefined && (
-          <p className="text-[12.5px] text-muted-foreground sm:ml-auto" aria-live="polite">
+          <p className="text-[12.5px] text-muted-foreground sm:ms-auto" aria-live="polite">
             <span className="font-mono text-foreground tabular-nums">{resultCount.toLocaleString('en-US')}</span> {resultCount === 1 ? 'result' : 'results'}
           </p>
         )}
@@ -168,14 +171,14 @@ export function FilterBar({
             <ListFilter size={12} aria-hidden />
             Filters
           </span>
-          <ul aria-label="Active filters" className="flex flex-wrap items-center gap-2">
+          <ul aria-label={t('filters.active')} className="flex flex-wrap items-center gap-2">
             {filters.map((f) => (
               <li key={`${f.field}:${f.value}`} className="flex">
                 <Token
                   size="sm"
                   prefix={`${labelOf(f.field)}:`}
                   label={f.value}
-                  removeLabel={`Remove filter ${labelOf(f.field)}: ${f.value}`}
+                  removeLabel={t('filters.remove', { field: labelOf(f.field), value: f.value })}
                   onRemove={() => toggle(f, false)}
                 />
               </li>

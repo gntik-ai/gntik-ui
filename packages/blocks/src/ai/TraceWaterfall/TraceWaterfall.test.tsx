@@ -14,7 +14,7 @@ describe('TraceWaterfall', () => {
     const details = screen.getByRole('complementary', { name: 'Span details' });
     expect(within(details).getByRole('heading', { name: 'POST /v1/answer' })).toBeInTheDocument();
     const bar = screen.getByRole('button', { name: /^generate answer/ }).querySelector('[style*="width"]') as HTMLElement;
-    expect(bar.style.left).toBe(`${(440 / 2450) * 100}%`);
+    expect(bar.style.insetInlineStart).toBe(`${(440 / 2450) * 100}%`);
     await expectNoAxeViolations();
   });
 

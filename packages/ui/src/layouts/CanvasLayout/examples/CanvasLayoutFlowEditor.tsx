@@ -36,7 +36,7 @@ export default function CanvasLayoutFlowEditor() {
           <>
             <span className="truncate text-[13px] font-semibold">billing-sync</span>
             <Badge tone="neutral" size="sm">Draft</Badge>
-            <div className="ml-auto flex items-center gap-1.5">
+            <div className="ms-auto flex items-center gap-1.5">
               <Button size="sm" variant="secondary" icon={Save}>Save</Button>
               <Button size="sm" icon={Play}>Run</Button>
             </div>
@@ -57,7 +57,7 @@ export default function CanvasLayoutFlowEditor() {
               <li key={label}>
                 <button
                   type="button"
-                  className="flex w-full items-center gap-2.5 rounded-md border border-border bg-background px-2.5 py-2 text-left text-[12.5px] transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transition-none"
+                  className="flex w-full items-center gap-2.5 rounded-md border border-border bg-background px-2.5 py-2 text-start text-[12.5px] transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transition-none"
                 >
                   <Icon size={15} aria-hidden className="text-muted-foreground" />
                   {label}
@@ -108,7 +108,7 @@ export default function CanvasLayoutFlowEditor() {
               aria-pressed={selected === n.id}
               onClick={() => setSelected(n.id)}
               style={{ left: n.x, top: n.y }}
-              className="absolute w-40 rounded-lg border border-border bg-card px-3 py-2 text-left shadow-sm transition-colors aria-pressed:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transition-none"
+              className="absolute w-40 rounded-lg border border-border bg-card px-3 py-2 text-start shadow-sm transition-colors aria-pressed:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transition-none"
             >
               <span className="block font-mono text-[10px] tracking-wide text-muted-foreground uppercase">{n.kind}</span>
               <span className="block text-[12.5px] font-medium">{n.label}</span>

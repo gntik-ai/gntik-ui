@@ -15,10 +15,10 @@ export const drawerVariants = tv({
     content: 'flex min-h-0 flex-1 flex-col',
     handle: 'mx-auto mt-2.5 h-1 w-10 shrink-0 rounded-full bg-border',
     close: [
-      'absolute top-3.5 right-3.5 grid size-8 place-items-center rounded-lg text-muted-foreground transition-colors',
+      'absolute top-3.5 end-3.5 grid size-8 place-items-center rounded-lg text-muted-foreground transition-colors',
       'hover:bg-secondary/60 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
-    header: 'flex shrink-0 flex-col gap-0.5 border-b border-border px-5 py-4 pr-14',
+    header: 'flex shrink-0 flex-col gap-0.5 border-b border-border px-5 py-4 pe-14',
     title: 'text-[15px] font-semibold tracking-tight text-foreground',
     description: 'text-[12px] text-muted-foreground text-pretty',
     body: 'min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5',
@@ -29,17 +29,19 @@ export const drawerVariants = tv({
       right: {
         viewport: 'items-stretch justify-end',
         popup: [
-          'h-full max-w-[88vw] border-l',
+          'h-full max-w-[88vw] border-s',
           '[transform:translateX(var(--drawer-swipe-movement-x,0px))]',
           'data-starting-style:[transform:translateX(100%)] data-ending-style:[transform:translateX(100%)]',
+          'rtl:data-starting-style:[transform:translateX(-100%)] rtl:data-ending-style:[transform:translateX(-100%)]',
         ],
       },
       left: {
         viewport: 'items-stretch justify-start',
         popup: [
-          'h-full max-w-[88vw] border-r',
+          'h-full max-w-[88vw] border-e',
           '[transform:translateX(var(--drawer-swipe-movement-x,0px))]',
           'data-starting-style:[transform:translateX(-100%)] data-ending-style:[transform:translateX(-100%)]',
+          'rtl:data-starting-style:[transform:translateX(100%)] rtl:data-ending-style:[transform:translateX(100%)]',
         ],
       },
       bottom: {

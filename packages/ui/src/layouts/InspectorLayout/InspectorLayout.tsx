@@ -4,6 +4,7 @@ import { cn } from '../../utils/cn';
 import { IconButton, type IconButtonProps } from '../../components/Button';
 import { Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerTitle } from '../../components/Drawer';
 import { inspectorLayoutVariants } from './inspector-layout.variants';
+import { useI18n } from '../../i18n/I18nProvider';
 import { useMediaQuery } from './use-media-query';
 
 export interface InspectorLayoutContextValue {
@@ -65,11 +66,14 @@ export function InspectorLayout({
   defaultPinned = true,
   onPinnedChange,
   panelWidth = 320,
-  pinLabel = 'Pin panel',
-  closeLabel = 'Close panel',
+  pinLabel: pinLabelProp,
+  closeLabel: closeLabelProp,
   dockedQuery = '(min-width: 1024px)',
   fullScreen = false,
 }: InspectorLayoutProps) {
+  const { t } = useI18n();
+  const pinLabel = pinLabelProp ?? t('inspector.pin');
+  const closeLabel = closeLabelProp ?? t('inspector.close');
   const panelId = useId();
   const titleId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -151,7 +155,9 @@ export interface InspectorToggleProps extends Omit<IconButtonProps, 'icon' | 'la
 }
 
 /** Opens / closes the inspector panel (aria-expanded, aria-controls). Place it in the main area. */
-export function InspectorToggle({ label = 'Toggle panel', icon = PanelRight, className, ...props }: InspectorToggleProps) {
+export function InspectorToggle({ label: labelProp, icon = PanelRight, className, ...props }: InspectorToggleProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('inspector.toggle');
   const { open, pinned, docked, panelId, setOpen } = useInspectorLayout();
   return (
     <IconButton

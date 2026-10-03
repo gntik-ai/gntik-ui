@@ -26,7 +26,7 @@ export default function ComboboxMultiple() {
           {(p: Permission) => (
             <ComboboxItem key={p.value} value={p}>
               <span className="truncate">{p.label}</span>
-              <span className="ml-auto font-mono text-[11px] text-muted-foreground">{p.note}</span>
+              <span className="ms-auto font-mono text-[11px] text-muted-foreground">{p.note}</span>
             </ComboboxItem>
           )}
         </ComboboxContent>

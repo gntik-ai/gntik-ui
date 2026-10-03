@@ -1,5 +1,6 @@
 import { PreviewCard as BasePreviewCard } from '@base-ui/react/preview-card';
 import type { ReactNode } from 'react';
+import { usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { hoverCardVariants } from './hover-card.variants';
 
@@ -47,9 +48,10 @@ export function HoverCardContent({
   children,
   ...props
 }: HoverCardContentProps) {
+  const dir = usePortalDir();
   return (
     <BasePreviewCard.Portal container={container}>
-      <BasePreviewCard.Positioner className={s.positioner()} side={side} align={align} sideOffset={sideOffset}>
+      <BasePreviewCard.Positioner dir={dir} className={s.positioner()} side={side} align={align} sideOffset={sideOffset}>
         <BasePreviewCard.Popup className={cn(s.popup(), className)} {...props}>
           {arrow && <BasePreviewCard.Arrow className={s.arrow()} />}
           {children}

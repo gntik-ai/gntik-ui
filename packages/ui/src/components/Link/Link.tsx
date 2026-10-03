@@ -3,6 +3,7 @@ import { useRender } from '@base-ui/react/use-render';
 import { ExternalLink } from 'lucide-react';
 import { createContext, createElement, useContext, type ComponentType, type ComponentPropsWithRef, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
+import { useI18n } from '../../i18n/I18nProvider';
 import { linkVariants, type LinkVariantProps } from './link.variants';
 
 /** A router link component that accepts anchor props (at least `href`), e.g. an adapter around a router's Link. */
@@ -52,13 +53,15 @@ export function Link({
   tone,
   underline,
   external = false,
-  externalLabel = '(opens in a new tab)',
+  externalLabel: externalLabelProp,
   className,
   render,
   ref,
   children,
   ...props
 }: LinkProps) {
+  const { t } = useI18n();
+  const externalLabel = externalLabelProp ?? t('link.external');
   const RouterLink = useContext(LinkContext);
   const s = linkVariants({ tone, underline });
   const resolvedRender = render ?? (RouterLink && !external ? createElement(RouterLink) : undefined);

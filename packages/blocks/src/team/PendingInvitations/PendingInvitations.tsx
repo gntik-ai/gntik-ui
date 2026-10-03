@@ -77,7 +77,7 @@ export function PendingInvitations({
                     </div>
                   </div>
                 </div>
-                <div className="flex shrink-0 items-center gap-1.5 pl-12 sm:pl-0">
+                <div className="flex shrink-0 items-center gap-1.5 ps-12 sm:ps-0">
                   <Button
                     variant="secondary"
                     size="sm"

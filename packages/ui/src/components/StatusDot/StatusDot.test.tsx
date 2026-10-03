@@ -6,10 +6,10 @@ import StatusDotTones from './examples/StatusDotTones';
 
 describe('StatusDot', () => {
   it('renders the label next to a decorative dot with tone classes', () => {
-    const { container } = render(<StatusDot tone="success" label="Operational" className="ml-1" />);
+    const { container } = render(<StatusDot tone="success" label="Operational" className="ms-1" />);
     expect(screen.getByText('Operational')).toBeInTheDocument();
     const root = container.firstElementChild as HTMLElement;
-    expect(root).toHaveClass('ml-1');
+    expect(root).toHaveClass('ms-1');
     expect(root.querySelector('.bg-success')).toHaveAttribute('aria-hidden', 'true');
   });
 

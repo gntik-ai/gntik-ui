@@ -1,4 +1,4 @@
-import { Skeleton, cn } from '@gntik-ai/ui';
+import { Skeleton, cn, useI18n } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 
 /** Varying bar widths so placeholder rows don't look stamped. */
@@ -31,7 +31,7 @@ function TableSkeletonBody({ rows, columns }: { rows: number; columns: number })
         {Array.from({ length: middle }, (_, c) => (
           <Skeleton key={c} className="hidden h-2.5 w-14 sm:block" />
         ))}
-        <Skeleton className="ml-auto h-2.5 w-10" />
+        <Skeleton className="ms-auto h-2.5 w-10" />
       </div>
       <div aria-hidden className="divide-y divide-border">
         {Array.from({ length: rows }, (_, r) => (
@@ -47,7 +47,7 @@ function TableSkeletonBody({ rows, columns }: { rows: number; columns: number })
                 <Skeleton key={c} className="hidden h-3 w-14 sm:block" />
               ),
             )}
-            <Skeleton className="ml-auto h-3 w-10" />
+            <Skeleton className="ms-auto h-3 w-10" />
           </div>
         ))}
       </div>
@@ -58,7 +58,9 @@ function TableSkeletonBody({ rows, columns }: { rows: number; columns: number })
 const tableFrame = 'overflow-hidden rounded-lg border border-border bg-card';
 
 /** Table placeholder: header strip plus rows with an avatar cell, text cells and a status pill. */
-export function TableSkeleton({ rows = 5, columns = 5, label = 'Loading table', className }: TableSkeletonProps) {
+export function TableSkeleton({ rows = 5, columns = 5, label: labelProp, className }: TableSkeletonProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('loading.table');
   return (
     <LoadingRegion label={label} className={cn(tableFrame, className)}>
       <TableSkeletonBody rows={rows} columns={columns} />
@@ -73,7 +75,9 @@ export interface ListSkeletonProps {
 }
 
 /** List placeholder: avatar, two text lines, a pill and a row action. */
-export function ListSkeleton({ rows = 4, label = 'Loading list', className }: ListSkeletonProps) {
+export function ListSkeleton({ rows = 4, label: labelProp, className }: ListSkeletonProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('loading.list');
   return (
     <LoadingRegion label={label} className={cn('overflow-hidden rounded-lg border border-border bg-card', className)}>
       <ul aria-hidden className="divide-y divide-border">
@@ -103,7 +107,9 @@ export interface PageSkeletonProps {
 }
 
 /** Whole-page placeholder: header (title, meta, actions), a stat row and a table. */
-export function PageSkeleton({ stats = 4, rows = 5, label = 'Loading page', className }: PageSkeletonProps) {
+export function PageSkeleton({ stats = 4, rows = 5, label: labelProp, className }: PageSkeletonProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('loading.page');
   return (
     <LoadingRegion label={label} className={cn('space-y-6', className)}>
       <div aria-hidden className="flex flex-wrap items-end justify-between gap-4">

@@ -1,6 +1,7 @@
 import { AlertDialog as BaseAlertDialog } from '@base-ui/react/alert-dialog';
 import { Info, TriangleAlert } from 'lucide-react';
 import type { HTMLAttributes, ReactNode } from 'react';
+import { usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { Button, type ButtonProps } from '../Button';
 import { dialogVariants, type DialogVariantProps } from '../Dialog/dialog.variants';
@@ -31,11 +32,12 @@ export interface AlertDialogContentProps extends Omit<BaseAlertDialog.Popup.Prop
  * focus returns to the trigger. Unlike Dialog, an outside press does not dismiss it.
  */
 export function AlertDialogContent({ size = 'sm', className, container, children, ...props }: AlertDialogContentProps) {
+  const dir = usePortalDir();
   const v = dialogVariants({ size });
   return (
     <BaseAlertDialog.Portal container={container}>
       <BaseAlertDialog.Backdrop className={v.backdrop()} />
-      <BaseAlertDialog.Viewport className={v.viewport()}>
+      <BaseAlertDialog.Viewport dir={dir} className={v.viewport()}>
         <BaseAlertDialog.Popup className={cn(v.popup(), s.popup(), className)} {...props}>
           {children}
         </BaseAlertDialog.Popup>

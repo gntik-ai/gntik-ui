@@ -6,6 +6,7 @@ import { Popover, PopoverContent } from '../Popover';
 import { focusCalendarDay } from './DatePicker';
 import { DateTrigger } from './DateTrigger';
 import { DEFAULT_DATE_RANGE_PRESETS, matchPreset, type DateRangePreset } from './date-range-presets';
+import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
 
 type CalendarPassThrough = Pick<CalendarRangeProps, 'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'numberOfMonths'>;
@@ -48,7 +49,7 @@ export function DateRangePicker({
   presets = DEFAULT_DATE_RANGE_PRESETS,
   today: todayProp,
   formatOptions,
-  placeholder = 'Pick a date range',
+  placeholder: placeholderProp,
   open: openProp,
   defaultOpen = false,
   onOpenChange,
@@ -58,7 +59,7 @@ export function DateRangePicker({
   invalid,
   size,
   className,
-  locale,
+  locale: localeProp,
   weekStartsOn,
   min,
   max,
@@ -67,6 +68,10 @@ export function DateRangePicker({
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
 }: DateRangePickerProps) {
+  const { t } = useI18n();
+  const providerLocale = useOptionalI18n()?.locale;
+  const locale = localeProp ?? providerLocale;
+  const placeholder = placeholderProp ?? t('datePicker.rangePlaceholder');
   const [inner, setInner] = useState<DateRange>(defaultValue ?? EMPTY);
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [draft, setDraft] = useState<DateRange>(value ?? inner);
@@ -123,10 +128,10 @@ export function DateRangePicker({
           <input type="hidden" name={`${name}-end`} value={range.end ? toISODate(range.end) : ''} />
         </>
       )}
-      <PopoverContent aria-label="Choose date range" align="start" sideOffset={6} padding="none" initialFocus={() => focusCalendarDay(calendarRef.current)}>
+      <PopoverContent aria-label={t('datePicker.chooseRange')} align="start" sideOffset={6} padding="none" initialFocus={() => focusCalendarDay(calendarRef.current)}>
         <div className={s.panel()}>
           {presets.length > 0 && (
-            <div role="group" aria-label="Presets" className={s.presets()}>
+            <div role="group" aria-label={t('datePicker.presets')} className={s.presets()}>
               {presets.map((p) => (
                 <button key={p.id} type="button" aria-pressed={active?.id === p.id} className={cn(s.preset())} onClick={() => pickPreset(p)}>
                   {p.label}
@@ -137,7 +142,7 @@ export function DateRangePicker({
           <Calendar
             ref={calendarRef}
             mode="range"
-            aria-label="Choose date range"
+            aria-label={t('datePicker.chooseRange')}
             value={draft}
             onValueChange={(r) => {
               setDraft(r);

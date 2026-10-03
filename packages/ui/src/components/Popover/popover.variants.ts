@@ -2,10 +2,10 @@ import { tv, type VariantProps } from '../../utils/tv';
 
 /** Arrow placement per side: a rotated square showing the two border edges that face out. */
 export const POPOVER_ARROW_SIDES = [
-  'data-[side=bottom]:-top-[5px] data-[side=bottom]:border-t data-[side=bottom]:border-l',
-  'data-[side=top]:-bottom-[5px] data-[side=top]:border-r data-[side=top]:border-b',
-  'data-[side=left]:-right-[5px] data-[side=left]:border-t data-[side=left]:border-r',
-  'data-[side=right]:-left-[5px] data-[side=right]:border-b data-[side=right]:border-l',
+  'data-[side=bottom]:-top-[5px] data-[side=bottom]:border-t data-[side=bottom]:border-s',
+  'data-[side=top]:-bottom-[5px] data-[side=top]:border-e data-[side=top]:border-b',
+  'data-[side=left]:-end-[5px] data-[side=left]:border-t data-[side=left]:border-e',
+  'data-[side=right]:-start-[5px] data-[side=right]:border-b data-[side=right]:border-s',
 ];
 
 export const popoverVariants = tv({
@@ -20,7 +20,7 @@ export const popoverVariants = tv({
     title: 'text-[13px] font-semibold tracking-tight text-foreground',
     description: 'mt-1 text-[12.5px] leading-5 text-muted-foreground text-pretty',
     close: [
-      'absolute top-2 right-2 grid size-7 place-items-center rounded-md text-muted-foreground transition-colors',
+      'absolute top-2 end-2 grid size-7 place-items-center rounded-md text-muted-foreground transition-colors',
       'hover:bg-secondary/60 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
   },

@@ -39,7 +39,7 @@ export default function SplitLayoutInvoices() {
                     setSelected(inv.id);
                     setShowDetail(true);
                   }}
-                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left hover:bg-accent/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring aria-[current=true]:bg-accent"
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start hover:bg-accent/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring aria-[current=true]:bg-accent"
                 >
                   <span className="min-w-0 flex-1">
                     <span className="block font-mono text-[12.5px] font-semibold">{inv.id}</span>

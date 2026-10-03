@@ -7,7 +7,7 @@ export const linkVariants = tv({
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
       'aria-disabled:pointer-events-none aria-disabled:opacity-50',
     ],
-    externalIcon: 'ml-1 inline-block shrink-0 align-[-0.125em]',
+    externalIcon: 'ms-1 inline-block shrink-0 align-[-0.125em]',
   },
   variants: {
     tone: {

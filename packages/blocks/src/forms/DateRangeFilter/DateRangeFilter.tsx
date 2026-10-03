@@ -1,4 +1,4 @@
-import { DEFAULT_DATE_RANGE_PRESETS, DateRangePicker, IconButton, cn, type DateRange, type DateRangePreset } from '@gntik-ai/ui';
+import { DEFAULT_DATE_RANGE_PRESETS, DateRangePicker, IconButton, cn, type DateRange, type DateRangePreset, useI18n } from '@gntik-ai/ui';
 import { X } from '@gntik-ai/icons';
 import { useState } from 'react';
 
@@ -30,12 +30,15 @@ export function DateRangeFilter({
   onValueChange,
   presets = DEFAULT_DATE_RANGE_PRESETS,
   today,
-  label = 'Date range',
-  placeholder = 'Any date',
+  label: labelProp,
+  placeholder: placeholderProp,
   clearable = true,
   disabled,
   className,
 }: DateRangeFilterProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('dateRange.label');
+  const placeholder = placeholderProp ?? t('dateRange.any');
   const [inner, setInner] = useState<DateRange>(() => defaultValue ?? presets.find((p) => p.id === 'last-7')?.range?.(today ?? new Date()) ?? EMPTY);
   const range = value ?? inner;
   const set = (next: DateRange) => {
@@ -57,7 +60,7 @@ export function DateRangeFilter({
         className="w-[13.5rem]"
       />
       {clearable && range.start && (
-        <IconButton icon={X} size="sm" label={`Clear ${label.toLowerCase()}`} disabled={disabled} onClick={() => set(EMPTY)} />
+        <IconButton icon={X} size="sm" label={t('common.clearItem', { label: label.toLowerCase() })} disabled={disabled} onClick={() => set(EMPTY)} />
       )}
     </div>
   );

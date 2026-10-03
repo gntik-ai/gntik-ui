@@ -1,6 +1,7 @@
 import { Combobox } from '@base-ui/react/combobox';
 import { Check, Plus, Search } from 'lucide-react';
 import { useMemo } from 'react';
+import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { workspaceSwitcherVariants } from './workspace-switcher.variants';
 import { triggerLabel, WorkspaceOptionBody, WorkspaceTriggerContent, type Workspace } from './parts';
@@ -24,9 +25,13 @@ export function WorkspaceSearch({
   onCreate,
   createLabel,
   label,
-  searchPlaceholder = 'Find a workspace…',
-  emptyText = 'No workspaces match.',
+  searchPlaceholder: searchPlaceholderProp,
+  emptyText: emptyTextProp,
 }: WorkspaceSearchProps) {
+  const { t } = useI18n();
+  const searchPlaceholder = searchPlaceholderProp ?? t('workspace.search');
+  const emptyText = emptyTextProp ?? t('workspace.empty');
+  const dir = usePortalDir();
   const createEntry = useMemo<Workspace>(() => ({ id: CREATE_ID, name: createLabel }), [createLabel]);
   const items = useMemo(() => (onCreate ? [...workspaces, createEntry] : workspaces), [workspaces, onCreate, createEntry]);
   return (
@@ -47,7 +52,7 @@ export function WorkspaceSearch({
         <WorkspaceTriggerContent workspace={current} />
       </Combobox.Trigger>
       <Combobox.Portal>
-        <Combobox.Positioner className="z-50 outline-none" align="start" sideOffset={8}>
+        <Combobox.Positioner dir={dir} className="z-50 outline-none" align="start" sideOffset={8}>
           <Combobox.Popup className={s.searchPopup()} aria-label={label}>
             <div className={s.searchField()}>
               <Search size={15} aria-hidden className={s.searchIcon()} />

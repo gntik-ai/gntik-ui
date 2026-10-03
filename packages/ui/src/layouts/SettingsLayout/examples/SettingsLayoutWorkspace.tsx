@@ -53,7 +53,7 @@ export default function SettingsLayoutWorkspace() {
         description={description}
         saveBar={
           <>
-            <p aria-live="polite" className="mr-auto text-[12.5px] text-muted-foreground">
+            <p aria-live="polite" className="me-auto text-[12.5px] text-muted-foreground">
               {dirty ? 'You have unsaved changes' : saved ? 'All changes saved' : ''}
             </p>
             <Button variant="ghost" size="sm" disabled={!dirty} onClick={() => setDirty(false)}>

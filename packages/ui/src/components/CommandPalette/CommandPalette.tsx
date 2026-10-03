@@ -2,7 +2,9 @@ import { Autocomplete } from '@base-ui/react/autocomplete';
 import { Dialog } from '@base-ui/react/dialog';
 import { ArrowRight, Search } from 'lucide-react';
 import { useId, useState, type ReactNode } from 'react';
+import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { RTL_FLIP } from '../../utils/rtl';
 import { Kbd, KbdCombo } from '../Kbd';
 import { commandPaletteVariants } from './command-palette.variants';
 import { filterCommandGroups, type CommandEntry, type CommandEntryGroup, type CommandGroup, type CommandItem } from './command-filter';
@@ -46,29 +48,30 @@ function CommandRow({ entry, onRun }: { entry: CommandEntry; onRun: (item: Comma
         <span className={v.itemLabel()}>{item.label}</span>
         {item.description && <span className={v.itemDescription()}>{item.description}</span>}
       </span>
-      {item.shortcut?.length ? <KbdCombo size="sm" keys={item.shortcut} /> : <ArrowRight size={14} aria-hidden className={v.itemArrow()} />}
+      {item.shortcut?.length ? <KbdCombo size="sm" keys={item.shortcut} /> : <ArrowRight size={14} aria-hidden className={cn(v.itemArrow(), RTL_FLIP)} />}
     </Autocomplete.Item>
   );
 }
 
 function DefaultFooter({ count, id }: { count: number; id: string }) {
+  const { t } = useI18n();
   return (
     <div className={s.footer()}>
       <span id={id} className={s.hint()}>
         <Kbd size="sm">↑↓</Kbd>
-        navigate
+        {t('commandPalette.navigate')}
         <span className="sr-only">,</span>
       </span>
       <span className={s.hint()}>
         <Kbd size="sm">↵</Kbd>
-        run
+        {t('commandPalette.run')}
       </span>
       <span className={s.hint()}>
         <Kbd size="sm">esc</Kbd>
-        close
+        {t('commandPalette.close')}
       </span>
       <span className={s.count()} aria-live="polite">
-        {count} {count === 1 ? 'result' : 'results'}
+        {t('common.results', { count })}
       </span>
     </div>
   );
@@ -82,14 +85,14 @@ function DefaultFooter({ count, id }: { count: number; id: string }) {
 export function CommandPalette({
   groups,
   recent,
-  recentLabel = 'Recent',
+  recentLabel: recentLabelProp,
   onSelect,
   open: openProp,
   defaultOpen = false,
   onOpenChange,
   shortcut = true,
-  label = 'Command palette',
-  placeholder = 'Type a command or search…',
+  label: labelProp,
+  placeholder: placeholderProp,
   emptyText = (q) => (
     <>
       No results for “<span className="text-foreground">{q}</span>”
@@ -99,6 +102,11 @@ export function CommandPalette({
   className,
   children,
 }: CommandPaletteProps) {
+  const { t } = useI18n();
+  const recentLabel = recentLabelProp ?? t('commandPalette.recent');
+  const label = labelProp ?? t('commandPalette.label');
+  const placeholder = placeholderProp ?? t('commandPalette.placeholder');
+  const dir = usePortalDir();
   const [openState, setOpenState] = useState(defaultOpen);
   const [query, setQuery] = useState('');
   const hintsId = useId();
@@ -126,7 +134,7 @@ export function CommandPalette({
       {children}
       <Dialog.Portal>
         <Dialog.Backdrop className={s.backdrop()} />
-        <Dialog.Viewport className={s.viewport()}>
+        <Dialog.Viewport dir={dir} className={s.viewport()}>
           <Dialog.Popup aria-label={label} className={cn(s.popup(), className)}>
             <Autocomplete.Root
               open
@@ -177,7 +185,9 @@ export interface CommandPaletteTriggerProps extends Omit<Dialog.Trigger.Props, '
 }
 
 /** Search-style button that opens the palette; place it inside <CommandPalette>. */
-export function CommandPaletteTrigger({ className, keys = ['⌘', 'K'], children = 'Search or run a command', ...props }: CommandPaletteTriggerProps) {
+export function CommandPaletteTrigger({ className, keys = ['⌘', 'K'], children: childrenProp, ...props }: CommandPaletteTriggerProps) {
+  const { t } = useI18n();
+  const children = childrenProp ?? t('commandPalette.trigger');
   return (
     <Dialog.Trigger className={cn(s.trigger(), className)} {...props}>
       <Search size={16} aria-hidden />

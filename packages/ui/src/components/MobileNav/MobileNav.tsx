@@ -4,6 +4,7 @@ import { cn } from '../../utils/cn';
 import { IconButton } from '../Button';
 import { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger, type DrawerSide } from '../Drawer';
 import { NavList, type NavGroup, type NavItem } from '../NavList';
+import { useI18n } from '../../i18n/I18nProvider';
 import { mobileNavVariants } from './mobile-nav.variants';
 
 export interface MobileNavProps {
@@ -39,8 +40,8 @@ export function MobileNav({
   groups,
   currentHref,
   title,
-  label = 'Navigation',
-  triggerLabel = 'Open navigation',
+  label: labelProp,
+  triggerLabel: triggerLabelProp,
   footer,
   side = 'left',
   open: openProp,
@@ -48,6 +49,9 @@ export function MobileNav({
   onOpenChange,
   onNavigate,
 }: MobileNavProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('nav.navigation');
+  const triggerLabel = triggerLabelProp ?? t('nav.openNavigation');
   const [openState, setOpenState] = useState(defaultOpen);
   const open = openProp ?? openState;
   const setOpen = (next: boolean) => {
@@ -58,7 +62,7 @@ export function MobileNav({
   return (
     <Drawer side={side} open={open} onOpenChange={(next) => setOpen(next)}>
       <DrawerTrigger render={<IconButton icon={MenuIcon} label={triggerLabel} className={className} />} />
-      <DrawerContent size="sm" className={cn(s.popup(), contentClassName)} closeLabel="Close navigation">
+      <DrawerContent size="sm" className={cn(s.popup(), contentClassName)} closeLabel={t('nav.closeNavigation')}>
         <DrawerHeader className={s.header()}>
           <DrawerTitle className={s.title()}>{title ?? label}</DrawerTitle>
         </DrawerHeader>

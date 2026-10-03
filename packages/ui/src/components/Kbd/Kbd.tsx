@@ -1,6 +1,26 @@
 import { Fragment, type HTMLAttributes, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
-import { KEY_NAMES, kbdVariants, type KbdVariantProps } from './kbd.variants';
+import { useI18n } from '../../i18n/I18nProvider';
+import type { MessageKey } from '../../i18n/messages/en';
+import { kbdVariants, type KbdVariantProps } from './kbd.variants';
+
+/** Catalog keys for the spoken names of symbol keys (KEY_NAMES holds the English ones). */
+const KEY_MESSAGES: Record<string, MessageKey> = {
+  '⌘': 'kbd.command',
+  '⌥': 'kbd.option',
+  '⇧': 'kbd.shift',
+  '⌃': 'kbd.control',
+  '↵': 'kbd.enter',
+  '⏎': 'kbd.enter',
+  '⌫': 'kbd.backspace',
+  '⇥': 'kbd.tab',
+  '⎋': 'kbd.escape',
+  '↑': 'kbd.up',
+  '↓': 'kbd.down',
+  '←': 'kbd.left',
+  '→': 'kbd.right',
+  '↑↓': 'kbd.upDown',
+};
 
 export interface KbdProps extends Omit<HTMLAttributes<HTMLElement>, 'className'>, KbdVariantProps {
   className?: string;
@@ -12,7 +32,9 @@ export interface KbdProps extends Omit<HTMLAttributes<HTMLElement>, 'className'>
 
 /** One keyboard key. Symbol glyphs are hidden from screen readers and replaced by their name. */
 export function Kbd({ size, label, className, children, ...props }: KbdProps) {
-  const spoken = label ?? (typeof children === 'string' ? KEY_NAMES[children] : undefined);
+  const { t } = useI18n();
+  const key = typeof children === 'string' ? KEY_MESSAGES[children] : undefined;
+  const spoken = label ?? (key ? t(key) : undefined);
   return (
     <kbd className={cn(kbdVariants({ size }).key(), className)} {...props}>
       {spoken ? (

@@ -4,6 +4,7 @@ import { cn } from '../../utils/cn';
 import { Menu, MenuContent, MenuGroupLabel, MenuItem, MenuRadioGroup, MenuRadioItem, MenuSeparator, MenuTrigger } from '../Menu';
 import { workspaceSwitcherVariants } from './workspace-switcher.variants';
 import { triggerLabel, WorkspaceOptionBody, WorkspaceTriggerContent, type Workspace } from './parts';
+import { useI18n } from '../../i18n/I18nProvider';
 import { WorkspaceSearch } from './WorkspaceSearch';
 
 export type { Workspace } from './parts';
@@ -40,11 +41,14 @@ export function WorkspaceSwitcher(props: WorkspaceSwitcherProps) {
     currentId,
     onSelect,
     onCreate,
-    createLabel = 'Create workspace',
-    label = 'Switch workspace',
+    createLabel: createLabelProp,
+    label: labelProp,
     searchable,
     searchThreshold = 6,
   } = props;
+  const { t } = useI18n();
+  const createLabel = createLabelProp ?? t('workspace.create');
+  const label = labelProp ?? t('workspace.switch');
   const current = workspaces.find((w) => w.id === currentId);
   if (searchable ?? workspaces.length > searchThreshold) {
     return <WorkspaceSearch {...props} current={current} createLabel={createLabel} label={label} />;

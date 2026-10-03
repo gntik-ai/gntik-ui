@@ -89,7 +89,7 @@ describe('Table', () => {
         </TableBody>
       </Table>,
     );
-    expect(screen.getByRole('cell')).toHaveClass('text-right', 'py-3');
+    expect(screen.getByRole('cell')).toHaveClass('text-end', 'py-3');
   });
 
   it('examples have no axe violations', async () => {

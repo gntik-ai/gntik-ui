@@ -3,7 +3,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const commandPaletteVariants = tv({
   slots: {
     trigger: [
-      'inline-flex h-10 cursor-pointer items-center gap-2.5 rounded-lg border border-border bg-card pr-2.5 pl-3.5 text-muted-foreground transition-colors',
+      'inline-flex h-10 cursor-pointer items-center gap-2.5 rounded-lg border border-border bg-card pe-2.5 ps-3.5 text-muted-foreground transition-colors',
       'hover:border-ring/50 hover:text-foreground motion-reduce:transition-none',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
@@ -26,7 +26,7 @@ export const commandPaletteVariants = tv({
     group: 'px-2 pb-1.5',
     groupLabel: 'px-2.5 pt-2 pb-1 font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground uppercase select-none',
     item: [
-      'group flex min-h-9 w-full cursor-pointer items-center gap-3 rounded-lg px-2.5 py-1.5 text-left text-foreground outline-none select-none',
+      'group flex min-h-9 w-full cursor-pointer items-center gap-3 rounded-lg px-2.5 py-1.5 text-start text-foreground outline-none select-none',
       'data-highlighted:bg-accent data-highlighted:text-accent-foreground',
       'data-disabled:cursor-not-allowed data-disabled:opacity-50',
     ],
@@ -38,7 +38,7 @@ export const commandPaletteVariants = tv({
     empty: 'px-4 py-10 text-center text-[13px] text-muted-foreground empty:hidden',
     footer: 'flex h-9 shrink-0 items-center gap-4 border-t border-border px-4 text-muted-foreground',
     hint: 'flex items-center gap-1.5 text-[11px]',
-    count: 'ml-auto font-mono text-[10.5px]',
+    count: 'ms-auto font-mono text-[10.5px]',
   },
   variants: {
     mono: { true: { itemLabel: 'font-mono text-[12.5px]' } },

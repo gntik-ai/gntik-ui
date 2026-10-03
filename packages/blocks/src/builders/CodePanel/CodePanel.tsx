@@ -170,7 +170,7 @@ export function CodePanel({
                   <button
                     type="button"
                     onClick={() => selectProblem(p)}
-                    className="flex w-full items-start gap-2 px-3 py-1.5 text-left text-[12.5px] hover:bg-secondary/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring"
+                    className="flex w-full items-start gap-2 px-3 py-1.5 text-start text-[12.5px] hover:bg-secondary/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring"
                   >
                     <SevIcon size={14} aria-hidden className={cn('mt-0.5 shrink-0', sev.className)} />
                     <span className="sr-only">{sev.label}:</span>

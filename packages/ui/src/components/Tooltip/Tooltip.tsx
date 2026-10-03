@@ -1,5 +1,6 @@
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import type { ReactElement, ReactNode } from 'react';
+import { usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { tooltipVariants, type TooltipVariantProps } from './tooltip.variants';
 
@@ -49,10 +50,11 @@ export function TooltipContent({
   children,
   ...props
 }: TooltipContentProps) {
+  const dir = usePortalDir();
   const v = tooltipVariants({ variant });
   return (
     <BaseTooltip.Portal container={container}>
-      <BaseTooltip.Positioner className={v.positioner()} side={side} align={align} sideOffset={sideOffset}>
+      <BaseTooltip.Positioner dir={dir} className={v.positioner()} side={side} align={align} sideOffset={sideOffset}>
         <BaseTooltip.Popup role="tooltip" className={cn(v.popup(), className)} {...props}>
           {arrow && <BaseTooltip.Arrow className={v.arrow()} />}
           {children}

@@ -1,3 +1,5 @@
+import { useI18n } from '@gntik-ai/ui';
+
 export interface ChatAnnouncerProps {
   /** A reply is being generated. */
   streaming: boolean;
@@ -14,9 +16,10 @@ export interface ChatAnnouncerProps {
  * re-announce every token). This single polite, atomic status says "Assistant is responding…"
  * when a stream starts and reads the finished reply once when it ends.
  */
-export function ChatAnnouncer({ streaming, lastReply, author = 'Assistant', maxLength = 600 }: ChatAnnouncerProps) {
+export function ChatAnnouncer({ streaming, lastReply, author, maxLength = 600 }: ChatAnnouncerProps) {
+  const { t } = useI18n();
   let text = '';
-  if (streaming) text = `${author} is responding…`;
+  if (streaming) text = t('chat.responding', { author: author ?? t('chat.assistant') });
   else if (lastReply) text = lastReply.length > maxLength ? `${lastReply.slice(0, maxLength)}…` : lastReply;
   return (
     <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">

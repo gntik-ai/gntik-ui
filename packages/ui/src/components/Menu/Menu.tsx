@@ -1,6 +1,7 @@
 import { Menu as BaseMenu } from '@base-ui/react/menu';
 import { Check, ChevronRight } from 'lucide-react';
 import type { ComponentType, ReactNode } from 'react';
+import { usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { menuVariants } from './menu.variants';
 
@@ -33,9 +34,10 @@ export interface MenuContentProps extends Omit<BaseMenu.Popup.Props, 'className'
 
 /** The floating list (role `menu`): portal, positioner and popup. */
 export function MenuContent({ side, align = 'start', sideOffset = 8, alignOffset, className, container, children, ...props }: MenuContentProps) {
+  const dir = usePortalDir();
   return (
     <BaseMenu.Portal container={container}>
-      <BaseMenu.Positioner className={s.positioner()} side={side} align={align} sideOffset={sideOffset} alignOffset={alignOffset}>
+      <BaseMenu.Positioner dir={dir} className={s.positioner()} side={side} align={align} sideOffset={sideOffset} alignOffset={alignOffset}>
         <BaseMenu.Popup className={cn(s.popup(), className)} {...props}>
           {children}
         </BaseMenu.Popup>

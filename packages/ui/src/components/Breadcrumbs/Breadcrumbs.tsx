@@ -1,6 +1,8 @@
 import { ChevronRight, MoreHorizontal } from 'lucide-react';
 import { Fragment, useEffect, useRef, useState, type ComponentType, type ReactElement, type ReactNode, type Ref } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { RTL_FLIP } from '../../utils/rtl';
 import { Link } from '../Link';
 import { breadcrumbsVariants, type BreadcrumbsVariantProps } from './breadcrumbs.variants';
 
@@ -39,7 +41,7 @@ export interface BreadcrumbsProps extends BreadcrumbsVariantProps {
 function Separator({ kind, className }: { kind: 'chevron' | 'slash'; className: string }) {
   return (
     <span className={className} aria-hidden>
-      {kind === 'chevron' ? <ChevronRight size={14} /> : '/'}
+      {kind === 'chevron' ? <ChevronRight size={14} className={RTL_FLIP} /> : '/'}
     </span>
   );
 }
@@ -52,11 +54,14 @@ export function Breadcrumbs({
   items,
   separator = 'chevron',
   maxItems,
-  expandLabel = (n) => `Show ${n} more ${n === 1 ? 'level' : 'levels'}`,
+  expandLabel,
   className,
   ref,
-  'aria-label': ariaLabel = 'Breadcrumb',
+  'aria-label': ariaLabelProp,
 }: BreadcrumbsProps) {
+  const { t } = useI18n();
+  const ariaLabel = ariaLabelProp ?? t('breadcrumbs.label');
+  const expandText = expandLabel ?? ((count: number) => t('breadcrumbs.expand', { count }));
   const s = breadcrumbsVariants({ separator });
   const [expanded, setExpanded] = useState(false);
   const firstRevealed = useRef<HTMLLIElement>(null);
@@ -123,7 +128,7 @@ export function Breadcrumbs({
                   <button
                     type="button"
                     className={s.ellipsis()}
-                    aria-label={expandLabel(hiddenCount)}
+                    aria-label={expandText(hiddenCount)}
                     onClick={() => {
                       shouldFocus.current = true;
                       setExpanded(true);

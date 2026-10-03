@@ -1,15 +1,16 @@
 import { Button as BaseButton } from '@base-ui/react/button';
 import type { ComponentType, ReactNode, Ref } from 'react';
 import { cn } from '../../utils/cn';
+import { rtlIconClass } from '../../utils/rtl';
 import { Spinner } from '../Spinner/Spinner';
 import { buttonVariants, BUTTON_ICON_SIZE, type ButtonVariantProps } from './button.variants';
 
-type IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean }>;
+type IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean; className?: string }>;
 
 export interface ButtonProps extends Omit<BaseButton.Props, 'className'>, ButtonVariantProps {
   className?: string;
   ref?: Ref<HTMLButtonElement>;
-  /** Leading icon (a lucide icon component). */
+  /** Leading icon (a lucide icon component). Directional ones (ChevronLeft, ArrowRight…) mirror under RTL. */
   icon?: IconComponent;
   /** Trailing icon. */
   trailingIcon?: IconComponent;
@@ -42,9 +43,9 @@ export function Button({
       className={cn(buttonVariants({ variant, size, iconOnly }), className)}
       {...props}
     >
-      {loading ? <Spinner size={px} /> : LeadingIcon && <LeadingIcon size={px} aria-hidden />}
+      {loading ? <Spinner size={px} /> : LeadingIcon && <LeadingIcon size={px} aria-hidden className={rtlIconClass(LeadingIcon)} />}
       {children}
-      {!loading && TrailingIcon && <TrailingIcon size={px} aria-hidden />}
+      {!loading && TrailingIcon && <TrailingIcon size={px} aria-hidden className={rtlIconClass(TrailingIcon)} />}
     </BaseButton>
   );
 }
@@ -68,7 +69,7 @@ export function IconButton({ icon: IconCmp, label, size = 'md', variant = 'ghost
       className={className}
       {...props}
     >
-      {!loading && <IconCmp size={px} aria-hidden />}
+      {!loading && <IconCmp size={px} aria-hidden className={rtlIconClass(IconCmp)} />}
     </Button>
   );
 }

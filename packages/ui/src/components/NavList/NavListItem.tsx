@@ -70,7 +70,7 @@ function NavLeaf({ item, depth }: { item: NavItem; depth: number }) {
     );
   }
   return rail ? (
-    <SimpleTooltip content={item.label} side="right" arrow={false}>
+    <SimpleTooltip content={item.label} side="inline-end" arrow={false}>
       {element}
     </SimpleTooltip>
   ) : (
@@ -116,7 +116,7 @@ function NavRailFlyout({ item }: { item: NavItem }) {
         {active && <span aria-hidden className={s.indicator()} />}
         {IconCmp && <IconCmp size={ICON_SIZE[0]} aria-hidden className={s.icon()} />}
       </MenuTrigger>
-      <MenuContent side="right" align="start" sideOffset={10}>
+      <MenuContent side="inline-end" align="start" sideOffset={10}>
         <MenuGroup>
           <MenuGroupLabel>{item.label}</MenuGroupLabel>
           {(item.items ?? []).map((child) => {

@@ -51,7 +51,7 @@ export default function NavListSidebar() {
             }
           >
             <div className={'flex h-14 shrink-0 items-center border-b border-border ' + (collapsed ? 'justify-center' : 'justify-between px-3')}>
-              {!collapsed && <span className="pl-1 text-[14px] font-semibold tracking-tight text-foreground">Acme Cloud</span>}
+              {!collapsed && <span className="ps-1 text-[14px] font-semibold tracking-tight text-foreground">Acme Cloud</span>}
               <IconButton
                 size="sm"
                 icon={collapsed ? ChevronRight : ChevronLeft}

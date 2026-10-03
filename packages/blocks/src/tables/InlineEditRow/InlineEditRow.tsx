@@ -1,5 +1,5 @@
 import { Check, Pencil, X } from '@gntik-ai/icons';
-import { cn, IconButton, Input, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@gntik-ai/ui';
+import { cn, IconButton, Input, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, useI18n } from '@gntik-ai/ui';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { EDITABLE_MEMBER_FIELDS, EDITABLE_MEMBERS, type EditableMember } from './fixtures';
 
@@ -37,6 +37,7 @@ const read = <T extends object>(row: T, key: string): Editable => {
  * Enter saves, Escape cancels; focus moves to the first input and back to Edit afterwards.
  */
 export function InlineEditRow<T extends object>({ row, fields, onSave, onCancel, rowLabel, defaultEditing = false }: InlineEditRowProps<T>) {
+  const { t } = useI18n();
   const [editing, setEditing] = useState(defaultEditing);
   const [draft, setDraft] = useState<Record<string, string>>({});
   const editRef = useRef<HTMLButtonElement>(null);
@@ -100,7 +101,7 @@ export function InlineEditRow<T extends object>({ row, fields, onSave, onCancel,
               invalid={invalid(f)}
               value={draft[f.key] ?? ''}
               onValueChange={(v) => setDraft((d) => ({ ...d, [f.key]: String(v) }))}
-              inputClassName={f.align === 'right' ? 'text-right' : undefined}
+              inputClassName={f.align === 'right' ? 'text-end' : undefined}
               className="min-w-24"
             />
           ) : (
@@ -111,11 +112,11 @@ export function InlineEditRow<T extends object>({ row, fields, onSave, onCancel,
       <TableCell align="right" className="w-24 py-1.5 whitespace-nowrap">
         {editing ? (
           <span className="inline-flex gap-1">
-            <IconButton icon={Check} label="Save" size="sm" variant="soft" onClick={save} disabled={fields.some(invalid)} />
-            <IconButton icon={X} label="Cancel" size="sm" variant="ghost" onClick={cancel} />
+            <IconButton icon={Check} label={t('common.save')} size="sm" variant="soft" onClick={save} disabled={fields.some(invalid)} />
+            <IconButton icon={X} label={t('common.cancel')} size="sm" variant="ghost" onClick={cancel} />
           </span>
         ) : (
-          <IconButton ref={editRef} icon={Pencil} label={`Edit ${label}`} size="sm" variant="ghost" onClick={start} />
+          <IconButton ref={editRef} icon={Pencil} label={t('table.editRow', { label })} size="sm" variant="ghost" onClick={start} />
         )}
       </TableCell>
     </TableRow>
@@ -141,6 +142,7 @@ export function InlineEditTable<T extends object = EditableMember>({
   onRowSave,
   className,
 }: InlineEditTableProps<T>) {
+  const { t } = useI18n();
   const [rows, setRows] = useState<readonly T[]>(initialRows);
   return (
     <div className={cn('overflow-hidden rounded-xl border border-border bg-card shadow-sm', className)}>
@@ -154,7 +156,7 @@ export function InlineEditTable<T extends object = EditableMember>({
               </TableHead>
             ))}
             <TableHead align="right">
-              <span className="sr-only">Actions</span>
+              <span className="sr-only">{t('table.actions')}</span>
             </TableHead>
           </TableRow>
         </TableHeader>

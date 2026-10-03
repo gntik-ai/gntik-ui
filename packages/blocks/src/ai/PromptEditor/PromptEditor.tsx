@@ -110,7 +110,7 @@ export function PromptEditor({
             </FieldDescription>
           </Field>
         </div>
-        <div className="flex flex-col gap-5 border-t border-border bg-secondary/20 p-4 md:border-t-0 md:border-l">
+        <div className="flex flex-col gap-5 border-t border-border bg-secondary/20 p-4 md:border-t-0 md:border-s">
           <div>
             <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">Variables</SubTag>
             {variables.length === 0 ? (

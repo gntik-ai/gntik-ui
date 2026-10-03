@@ -1,6 +1,7 @@
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X, type LucideIcon } from 'lucide-react';
 import { useId, type HTMLAttributes, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
+import { useI18n } from '../../i18n/I18nProvider';
 import { alertVariants, type AlertTone, type AlertVariantProps } from './alert.variants';
 
 const TONE_ICON: Record<AlertTone, LucideIcon> = {
@@ -38,12 +39,14 @@ export function Alert({
   actions,
   icon,
   onDismiss,
-  dismissLabel = 'Dismiss',
+  dismissLabel: dismissLabelProp,
   className,
   children,
   role,
   ...props
 }: AlertProps) {
+  const { t } = useI18n();
+  const dismissLabel = dismissLabelProp ?? t('common.dismiss');
   const s = alertVariants({ tone });
   const id = useId();
   const Icon = icon === undefined ? TONE_ICON[tone] : icon;

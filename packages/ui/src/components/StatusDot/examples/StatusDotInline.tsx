@@ -13,7 +13,7 @@ export default function StatusDotInline() {
         <li key={svc.name} className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-foreground">
           <StatusDot tone={svc.tone} size="sm" aria-label={svc.state} pulse={svc.tone === 'destructive'} />
           <span className="font-mono text-[12px]">{svc.name}</span>
-          <span className="ml-auto text-[12px] text-muted-foreground">{svc.state}</span>
+          <span className="ms-auto text-[12px] text-muted-foreground">{svc.state}</span>
         </li>
       ))}
     </ul>

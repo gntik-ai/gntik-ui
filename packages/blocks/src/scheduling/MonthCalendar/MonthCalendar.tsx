@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import { cn } from '@gntik-ai/ui';
+import { cn, useI18n } from '@gntik-ai/ui';
 import { CalendarHeader } from '../shared/CalendarHeader';
-import { addDays, addMonths, dayKey, formatFullDate, formatMonth, formatTime, monthGrid, sameDay, sameMonth, startOfDay, startOfMonth, startOfWeek } from '../shared/dates';
+import { addDays, addMonths, dayKey, formatFullDate, formatMonth, formatTime, formatWeekday, monthGrid, sameDay, sameMonth, startOfDay, startOfMonth, startOfWeek } from '../shared/dates';
 import { defaultEventKinds, groupByDay, kindOf, TONE, type EventKind, type ScheduleEvent } from '../shared/events';
 import { sampleEvents, sampleToday } from '../shared/fixtures';
 
@@ -25,17 +25,8 @@ export interface MonthCalendarProps {
   className?: string;
 }
 
-const WEEKDAYS = [
-  ['Mon', 'Monday'],
-  ['Tue', 'Tuesday'],
-  ['Wed', 'Wednesday'],
-  ['Thu', 'Thursday'],
-  ['Fri', 'Friday'],
-  ['Sat', 'Saturday'],
-  ['Sun', 'Sunday'],
-] as const;
-
-const plural = (n: number) => (n === 1 ? '1 event' : `${n} events`);
+/** Monday-first weekdays (2026-01-05 is a Monday). */
+const WEEK = Array.from({ length: 7 }, (_, i) => new Date(2026, 0, 5 + i));
 
 /**
  * Month view of scheduled work: a Monday-first grid with up to N events per day.
@@ -54,6 +45,7 @@ export function MonthCalendar({
   actions,
   className,
 }: MonthCalendarProps) {
+  const { t, locale, dir } = useI18n();
   const titleId = useId();
   const [selected, setSelected] = useState<Date>(() => startOfDay(defaultSelected ?? today));
   const [focused, setFocused] = useState<Date>(() => startOfDay(defaultSelected ?? defaultMonth ?? today));
@@ -92,8 +84,8 @@ export function MonthCalendar({
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>, date: Date) => {
     const weekStart = startOfWeek(date);
     const map: Record<string, () => Date> = {
-      ArrowLeft: () => addDays(date, -1),
-      ArrowRight: () => addDays(date, 1),
+      ArrowLeft: () => addDays(date, dir === 'rtl' ? 1 : -1),
+      ArrowRight: () => addDays(date, dir === 'rtl' ? -1 : 1),
       ArrowUp: () => addDays(date, -7),
       ArrowDown: () => addDays(date, 7),
       Home: () => weekStart,
@@ -111,9 +103,9 @@ export function MonthCalendar({
     <div className={cn('overflow-hidden rounded-xl border border-border bg-card', className)}>
       <CalendarHeader
         titleId={titleId}
-        title={formatMonth(month)}
-        prevLabel="Previous month"
-        nextLabel="Next month"
+        title={formatMonth(month, locale)}
+        prevLabel={t('calendar.previousMonth')}
+        nextLabel={t('calendar.nextMonth')}
         onPrev={() => showMonth(addMonths(month, -1))}
         onNext={() => showMonth(addMonths(month, 1))}
         onToday={() => {
@@ -124,14 +116,14 @@ export function MonthCalendar({
       />
       <div ref={gridRef} role="grid" aria-labelledby={titleId}>
         <div role="row" className="grid grid-cols-7 border-b border-border bg-secondary/30">
-          {WEEKDAYS.map(([short, long]) => (
+          {WEEK.map((day) => (
             <div
-              key={short}
+              key={day.getDay()}
               role="columnheader"
-              aria-label={long}
+              aria-label={formatWeekday(day, locale, 'long')}
               className="py-2 text-center text-[11px] font-medium tracking-wide text-muted-foreground uppercase"
             >
-              {short}
+              {formatWeekday(day, locale)}
             </div>
           ))}
         </div>
@@ -145,17 +137,17 @@ export function MonthCalendar({
               const isSelected = sameDay(date, selected);
               const extra = list.length - maxEventsPerDay;
               return (
-                <div key={key} role="gridcell" aria-selected={isSelected} className="min-w-0 border-r border-b border-border/70 [&:nth-child(7)]:border-r-0">
+                <div key={key} role="gridcell" aria-selected={isSelected} className="min-w-0 border-e border-b border-border/70 [&:nth-child(7)]:border-e-0">
                   <button
                     type="button"
                     data-date={key}
                     tabIndex={sameDay(date, tabStop) ? 0 : -1}
-                    aria-label={`${formatFullDate(date)}${list.length ? `, ${plural(list.length)}` : ''}`}
+                    aria-label={`${formatFullDate(date, locale)}${list.length ? `, ${t('calendar.events', { count: list.length })}` : ''}`}
                     aria-current={isToday ? 'date' : undefined}
                     onClick={() => select(date)}
                     onKeyDown={(e) => onKeyDown(e, date)}
                     className={cn(
-                      'flex h-full min-h-14 w-full flex-col items-stretch p-1.5 text-left transition-colors motion-reduce:transition-none sm:min-h-[92px] sm:p-2',
+                      'flex h-full min-h-14 w-full flex-col items-stretch p-1.5 text-start transition-colors motion-reduce:transition-none sm:min-h-[92px] sm:p-2',
                       'hover:bg-accent/30 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
                       inMonth ? 'bg-card' : 'bg-secondary/20',
                     )}
@@ -189,10 +181,10 @@ export function MonthCalendar({
                         <span key={e.id} className="flex min-w-0 items-center gap-1.5">
                           <span className={cn('size-1.5 shrink-0 rounded-full', TONE[kindOf(e, kinds).tone].dot)} />
                           <span className="truncate text-[11px] text-foreground/80">{e.title}</span>
-                          <span className="ml-auto hidden shrink-0 font-mono text-[10px] text-muted-foreground xl:block">{formatTime(e.start)}</span>
+                          <span className="ms-auto hidden shrink-0 font-mono text-[10px] text-muted-foreground xl:block">{formatTime(e.start, locale)}</span>
                         </span>
                       ))}
-                      {extra > 0 && <span className="block pl-3 text-[10.5px] text-muted-foreground">+ {extra} more</span>}
+                      {extra > 0 && <span className="block ps-3 text-[10.5px] text-muted-foreground">+ {t('common.more', { count: extra })}</span>}
                     </span>
                   </button>
                 </div>

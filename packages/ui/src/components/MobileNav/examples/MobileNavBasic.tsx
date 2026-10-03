@@ -34,7 +34,7 @@ export default function MobileNavBasic() {
         onNavigate={(item) => item.href && setCurrent(item.href)}
       />
       <span className="text-[14px] font-semibold tracking-tight text-foreground">Acme Cloud</span>
-      <span className="ml-auto font-mono text-[11px] text-muted-foreground">{current.slice(1)}</span>
+      <span className="ms-auto font-mono text-[11px] text-muted-foreground">{current.slice(1)}</span>
     </div>
   );
 }

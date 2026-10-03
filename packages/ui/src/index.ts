@@ -3,6 +3,9 @@ export { cn } from './utils/cn';
 export { tv, type VariantProps } from './utils/tv';
 export type { ComponentDoc } from './doc';
 
+// i18n
+export * from './i18n';
+
 // Theme
 export { ThemeProvider, useTheme, themeScript, type ThemeMode, type ResolvedTheme, type ThemeProviderProps } from './theme/ThemeProvider';
 export { Logo, type LogoProps } from './theme/Logo';

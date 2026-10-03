@@ -1,4 +1,4 @@
-import { CommandPalette, CommandPaletteTrigger, type CommandGroup, type CommandItem } from '@gntik-ai/ui';
+import { CommandPalette, CommandPaletteTrigger, type CommandGroup, type CommandItem, useI18n } from '@gntik-ai/ui';
 import { globalSearchActions, globalSearchPages, globalSearchRecent, globalSearchRecords } from './fixtures';
 
 export type GlobalSearchGroup = 'pages' | 'records' | 'actions' | 'recent';
@@ -25,8 +25,6 @@ export interface GlobalSearchProps {
   className?: string;
 }
 
-const DEFAULT_LABELS: Record<GlobalSearchGroup, string> = { pages: 'Pages', records: 'Records', actions: 'Actions', recent: 'Recent' };
-
 /** ⌘K search: a CommandPalette pre-wired with recent items and Pages / Records / Actions groups. */
 export function GlobalSearch({
   pages = globalSearchPages,
@@ -39,11 +37,19 @@ export function GlobalSearch({
   open,
   defaultOpen,
   onOpenChange,
-  placeholder = 'Search pages, records and actions…',
-  triggerLabel = 'Search',
+  placeholder: placeholderProp,
+  triggerLabel: triggerLabelProp,
   className,
 }: GlobalSearchProps) {
-  const l = { ...DEFAULT_LABELS, ...labels };
+  const { t } = useI18n();
+  const placeholder = placeholderProp ?? t('globalSearch.placeholder');
+  const triggerLabel = triggerLabelProp ?? t('common.search');
+  const l: Record<GlobalSearchGroup, string> = {
+    pages: labels?.pages ?? t('globalSearch.pages'),
+    records: labels?.records ?? t('globalSearch.records'),
+    actions: labels?.actions ?? t('globalSearch.actions'),
+    recent: labels?.recent ?? t('commandPalette.recent'),
+  };
   const origin = new Map<string, GlobalSearchGroup>();
   const tag = (items: CommandItem[], group: GlobalSearchGroup) => {
     for (const item of items) if (!origin.has(item.id)) origin.set(item.id, group);
@@ -65,7 +71,7 @@ export function GlobalSearch({
       defaultOpen={defaultOpen}
       onOpenChange={onOpenChange}
       placeholder={placeholder}
-      label="Global search"
+      label={t('globalSearch.label')}
       onSelect={(item) => onSelect?.(item, origin.get(item.id) ?? 'recent')}
     >
       <CommandPaletteTrigger className={className}>{triggerLabel}</CommandPaletteTrigger>

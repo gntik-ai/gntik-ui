@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogBody, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, Field, FieldDescription, FieldError, FieldLabel, OtpInput } from '@gntik-ai/ui';
+import { Button, Dialog, DialogBody, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, Field, FieldDescription, FieldError, FieldLabel, OtpInput, useI18n } from '@gntik-ai/ui';
 import { useState } from 'react';
 
 export interface MfaSetupDialogProps {
@@ -11,6 +11,7 @@ export interface MfaSetupDialogProps {
 
 /** Authenticator enrolment: manual setup key and a 6-digit OtpInput, verified on completion. */
 export function MfaSetupDialog({ open, onOpenChange, setupKey, onVerify }: MfaSetupDialogProps) {
+  const { t } = useI18n();
   const [code, setCode] = useState('');
   const [invalid, setInvalid] = useState(false);
   const [checking, setChecking] = useState(false);
@@ -65,7 +66,7 @@ export function MfaSetupDialog({ open, onOpenChange, setupKey, onVerify }: MfaSe
             </Field>
           </DialogBody>
           <DialogFooter>
-            <DialogClose render={<Button variant="ghost" />}>Cancel</DialogClose>
+            <DialogClose render={<Button variant="ghost" />}>{t('common.cancel')}</DialogClose>
             <Button type="submit" loading={checking} disabled={code.length < 6}>
               Verify and enable
             </Button>

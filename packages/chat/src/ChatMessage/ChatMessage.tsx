@@ -1,4 +1,4 @@
-import { Avatar, IconButton, SimpleTooltip, cn, getInitials } from '@gntik-ai/ui';
+import { Avatar, IconButton, SimpleTooltip, cn, getInitials, useI18n, type MessageKey } from '@gntik-ai/ui';
 import { Check, Copy, RotateCcw, Sparkles, ThumbsDown, ThumbsUp, Wrench } from 'lucide-react';
 import { useId, type ReactNode, type Ref } from 'react';
 import { formatTime } from '../utils/format';
@@ -36,7 +36,7 @@ export interface ChatMessageProps {
   ref?: Ref<HTMLElement>;
 }
 
-const DEFAULT_AUTHOR: Record<ChatRole, string> = { user: 'You', assistant: 'Assistant', system: 'System', tool: 'Tool' };
+const DEFAULT_AUTHOR: Record<ChatRole, MessageKey> = { user: 'chat.you', assistant: 'chat.assistant', system: 'chat.system', tool: 'chat.tool' };
 
 function DefaultAvatar({ role, author }: { role: ChatRole; author: string }) {
   if (role === 'assistant') return <Avatar size="sm" tone="primary" fallback={<Sparkles size={15} aria-hidden />} />;
@@ -67,7 +67,8 @@ export function ChatMessage({
   ref,
 }: ChatMessageProps) {
   const id = useId();
-  const name = author ?? DEFAULT_AUTHOR[role];
+  const { t } = useI18n();
+  const name = author ?? t(DEFAULT_AUTHOR[role]);
   const v = s.role[role];
   const { copied, copy } = useCopy();
   const isEmpty = children === undefined || children === null || children === '';
@@ -112,34 +113,34 @@ export function ChatMessage({
           )}
         </div>
         {hasActions && (
-          <div role="group" aria-label={`Actions for ${name} message`} className={cn(s.actions, alwaysShowActions && s.actionsVisible)}>
+          <div role="group" aria-label={t('chat.actionsFor', { name })} className={cn(s.actions, alwaysShowActions && s.actionsVisible)}>
             {copyText !== undefined && (
-              <SimpleTooltip content={copied ? 'Copied' : 'Copy'}>
-                <IconButton size="sm" icon={copied ? Check : Copy} label={copied ? 'Copied' : 'Copy message'} onClick={() => void copy(copyText)} />
+              <SimpleTooltip content={copied ? t('common.copied') : t('common.copy')}>
+                <IconButton size="sm" icon={copied ? Check : Copy} label={copied ? t('common.copied') : t('chat.copyMessage')} onClick={() => void copy(copyText)} />
               </SimpleTooltip>
             )}
             {onRetry && (
-              <SimpleTooltip content="Retry">
-                <IconButton size="sm" icon={RotateCcw} label="Retry" onClick={onRetry} />
+              <SimpleTooltip content={t('common.retry')}>
+                <IconButton size="sm" icon={RotateCcw} label={t('common.retry')} onClick={onRetry} />
               </SimpleTooltip>
             )}
             {onFeedback && (
               <>
-                <SimpleTooltip content="Good response">
+                <SimpleTooltip content={t('chat.goodResponse')}>
                   <IconButton
                     size="sm"
                     icon={ThumbsUp}
-                    label="Good response"
+                    label={t('chat.goodResponse')}
                     aria-pressed={feedback === 'up'}
                     className={cn(feedback === 'up' && 'text-primary-text')}
                     onClick={() => onFeedback(feedback === 'up' ? null : 'up')}
                   />
                 </SimpleTooltip>
-                <SimpleTooltip content="Bad response">
+                <SimpleTooltip content={t('chat.badResponse')}>
                   <IconButton
                     size="sm"
                     icon={ThumbsDown}
-                    label="Bad response"
+                    label={t('chat.badResponse')}
                     aria-pressed={feedback === 'down'}
                     className={cn(feedback === 'down' && 'text-destructive-text')}
                     onClick={() => onFeedback(feedback === 'down' ? null : 'down')}

@@ -1,6 +1,7 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, ChevronDown, Search, X } from 'lucide-react';
 import { useId, type ReactNode, type Ref } from 'react';
+import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { comboboxVariants, type ComboboxVariantProps } from './combobox.variants';
 
@@ -35,11 +36,14 @@ export function ComboboxInput({
   label,
   className,
   showClear = false,
-  clearLabel = 'Clear selection',
-  triggerLabel = 'Show options',
+  clearLabel: clearLabelProp,
+  triggerLabel: triggerLabelProp,
   id,
   ...props
 }: ComboboxInputProps) {
+  const { t } = useI18n();
+  const clearLabel = clearLabelProp ?? t('common.clearSelection');
+  const triggerLabel = triggerLabelProp ?? t('common.showOptions');
   const autoId = useId();
   const inputId = id ?? autoId;
   const v = comboboxVariants({ size });
@@ -84,10 +88,12 @@ export function ComboboxChipsInput<Item = unknown>({
   className,
   placeholder,
   getLabel = defaultLabel,
-  removeLabel = (l) => `Remove ${l}`,
+  removeLabel: removeLabelProp,
   id,
   ...props
 }: ComboboxChipsInputProps<Item>) {
+  const { t } = useI18n();
+  const removeLabel = removeLabelProp ?? ((l: string) => t('common.removeItem', { label: l }));
   const autoId = useId();
   const inputId = id ?? autoId;
   return (
@@ -142,7 +148,7 @@ export interface ComboboxContentProps extends Omit<BaseCombobox.Popup.Props, 'cl
 /** The popup: portal, positioner, popup surface, empty state and listbox. */
 export function ComboboxContent({
   className,
-  emptyText = 'No matches.',
+  emptyText: emptyTextProp,
   side = 'bottom',
   align = 'start',
   sideOffset = 6,
@@ -150,9 +156,12 @@ export function ComboboxContent({
   children,
   ...props
 }: ComboboxContentProps) {
+  const { t } = useI18n();
+  const emptyText = emptyTextProp ?? t('common.noMatches');
+  const dir = usePortalDir();
   return (
     <BaseCombobox.Portal container={container}>
-      <BaseCombobox.Positioner className={s.positioner()} side={side} align={align} sideOffset={sideOffset}>
+      <BaseCombobox.Positioner dir={dir} className={s.positioner()} side={side} align={align} sideOffset={sideOffset}>
         <BaseCombobox.Popup className={cn(s.popup(), className)} {...props}>
           <BaseCombobox.Empty className={s.empty()}>{emptyText}</BaseCombobox.Empty>
           <BaseCombobox.List className={s.list()}>{children}</BaseCombobox.List>

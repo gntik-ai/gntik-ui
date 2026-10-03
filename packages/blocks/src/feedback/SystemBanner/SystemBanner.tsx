@@ -64,7 +64,7 @@ export function SystemBanner({
         </p>
       </div>
       {(action || dismissible) && (
-        <div className="flex shrink-0 items-center gap-2 pl-7 sm:pl-0">
+        <div className="flex shrink-0 items-center gap-2 ps-7 sm:ps-0">
           {action &&
             (action.href ? (
               <Link href={action.href} className="text-[12.5px] font-semibold">
@@ -81,7 +81,7 @@ export function SystemBanner({
               label="Dismiss banner"
               size="sm"
               variant="ghost"
-              className="ml-auto"
+              className="ms-auto"
               onClick={() => {
                 setDismissed(true);
                 onDismiss?.();

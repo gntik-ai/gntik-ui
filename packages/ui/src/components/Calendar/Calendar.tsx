@@ -1,6 +1,8 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type Ref } from 'react';
+import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { RTL_FLIP } from '../../utils/rtl';
 import { calendarVariants } from './calendar.variants';
 import {
   addDays,
@@ -30,7 +32,7 @@ const s = calendarVariants();
 interface CalendarCommonProps {
   className?: string;
   ref?: Ref<HTMLDivElement>;
-  /** BCP 47 locale for month/weekday names and day labels. Defaults to the runtime locale. */
+  /** BCP 47 locale for month/weekday names and day labels. Defaults to the I18nProvider's, else the runtime locale. */
   locale?: string;
   /** First column of the week (0 = Sunday). Defaults to the locale's week start. */
   weekStartsOn?: WeekDay;
@@ -85,7 +87,7 @@ export function Calendar(props: CalendarProps) {
   const {
     className,
     ref,
-    locale,
+    locale: localeProp,
     min,
     max,
     isDateDisabled,
@@ -95,9 +97,15 @@ export function Calendar(props: CalendarProps) {
     numberOfMonths = 1,
     showOutsideDays = numberOfMonths === 1,
     today: todayProp,
-    previousMonthLabel = 'Previous month',
-    nextMonthLabel = 'Next month',
+    previousMonthLabel: previousMonthLabelProp,
+    nextMonthLabel: nextMonthLabelProp,
   } = props;
+  const { t } = useI18n();
+  const providerLocale = useOptionalI18n()?.locale;
+  // Inside an I18nProvider its locale applies; outside, the runtime locale.
+  const locale = localeProp ?? providerLocale;
+  const previousMonthLabel = previousMonthLabelProp ?? t('calendar.previousMonth');
+  const nextMonthLabel = nextMonthLabelProp ?? t('calendar.nextMonth');
   const weekStartsOn = props.weekStartsOn ?? localeWeekStart(locale);
   const isRange = props.mode === 'range';
   const baseId = useId();
@@ -202,7 +210,7 @@ export function Calendar(props: CalendarProps) {
   };
 
   return (
-    <div ref={setRefs} role="group" aria-label={props['aria-label'] ?? 'Calendar'} className={cn(s.root(), className)}>
+    <div ref={setRefs} role="group" aria-label={props['aria-label'] ?? t('calendar.label')} className={cn(s.root(), className)}>
       {months.map((m, mi) => {
         const headingId = `${baseId}-m${mi}`;
         return (
@@ -210,7 +218,7 @@ export function Calendar(props: CalendarProps) {
             <div className={s.header()}>
               {mi === 0 ? (
                 <button type="button" aria-label={previousMonthLabel} disabled={prevDisabled} className={s.nav()} onClick={() => setMonth(addMonths(visibleMonth, -1))}>
-                  <ChevronLeft size={16} aria-hidden />
+                  <ChevronLeft size={16} aria-hidden className={RTL_FLIP} />
                 </button>
               ) : (
                 <span className={s.navSpacer()} />
@@ -220,7 +228,7 @@ export function Calendar(props: CalendarProps) {
               </h2>
               {mi === months.length - 1 ? (
                 <button type="button" aria-label={nextMonthLabel} disabled={nextDisabled} className={s.nav()} onClick={() => setMonth(addMonths(visibleMonth, 1))}>
-                  <ChevronRight size={16} aria-hidden />
+                  <ChevronRight size={16} aria-hidden className={RTL_FLIP} />
                 </button>
               ) : (
                 <span className={s.navSpacer()} />

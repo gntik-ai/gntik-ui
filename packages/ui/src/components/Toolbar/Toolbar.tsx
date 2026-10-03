@@ -106,7 +106,7 @@ export function ToolbarInput({ icon: IconCmp, className, wrapperClassName, ...pr
   return (
     <div className={cn(s.inputWrap(), wrapperClassName)}>
       {IconCmp && <IconCmp size={14} className={s.inputIcon()} aria-hidden />}
-      <BaseToolbar.Input className={cn(s.input(), IconCmp && 'pl-8', className)} {...props} />
+      <BaseToolbar.Input className={cn(s.input(), IconCmp && 'ps-8', className)} {...props} />
     </div>
   );
 }

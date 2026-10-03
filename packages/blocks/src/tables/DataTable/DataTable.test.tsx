@@ -72,7 +72,7 @@ describe('DataTable', () => {
     expect(screen.getByText('Paused').closest('td')).toHaveClass('text-muted-foreground');
     const cost = screen.getByText('12').closest('td')!;
     expect(cost).toHaveClass('tabular-nums', 'font-semibold');
-    expect(cost.className).toMatch(/text-right|justify-end/);
+    expect(cost.className).toMatch(/text-end|justify-end/);
   });
 
   it('toggles columns, density and pages', async () => {

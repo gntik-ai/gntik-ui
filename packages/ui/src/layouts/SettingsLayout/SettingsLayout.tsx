@@ -4,6 +4,7 @@ import { NavList, type NavGroup, type NavItem } from '../../components/NavList';
 import { navItemKey } from '../../components/NavList/nav-context';
 import { SimpleSelect } from '../../components/Select';
 import { SkipLink } from '../../components/VisuallyHidden';
+import { useI18n } from '../../i18n/I18nProvider';
 import { settingsLayoutVariants, type SettingsLayoutVariantProps } from './settings-layout.variants';
 
 /** Every selectable (leaf) item, depth-first. */
@@ -63,21 +64,25 @@ export function SettingsLayout({
   value: valueProp,
   defaultValue,
   onValueChange,
-  navLabel = 'Settings',
+  navLabel: navLabelProp,
   title,
   description,
   header,
   children,
   saveBar,
   width,
-  selectLabel = 'Settings section',
+  selectLabel: selectLabelProp,
   embedded = false,
   mainId = 'main',
-  skipLinkLabel = 'Skip to content',
+  skipLinkLabel: skipLinkLabelProp,
   fullScreen = false,
   className,
   ...props
 }: SettingsLayoutProps) {
+  const { t } = useI18n();
+  const navLabel = navLabelProp ?? t('common.settings');
+  const selectLabel = selectLabelProp ?? t('settings.section');
+  const skipLinkLabel = skipLinkLabelProp ?? t('skip.content');
   const MainTag = embedded ? 'div' : 'main';
   const leaves = groups.flatMap((g) => flattenLeaves(g.items));
   const firstKey = leaves[0] ? navItemKey(leaves[0]) : undefined;

@@ -1,6 +1,7 @@
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { X } from 'lucide-react';
 import type { HTMLAttributes, ReactNode } from 'react';
+import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { dialogVariants, type DialogVariantProps } from './dialog.variants';
 
@@ -28,12 +29,15 @@ export interface DialogContentProps extends Omit<BaseDialog.Popup.Props, 'classN
  * The modal surface: portal, backdrop, scrollable viewport and popup. Focus is trapped
  * inside, Escape and an outside press close it, and focus returns to the trigger.
  */
-export function DialogContent({ size, className, showClose = true, closeLabel = 'Close', container, children, ...props }: DialogContentProps) {
+export function DialogContent({ size, className, showClose = true, closeLabel: closeLabelProp, container, children, ...props }: DialogContentProps) {
+  const { t } = useI18n();
+  const closeLabel = closeLabelProp ?? t('common.close');
+  const dir = usePortalDir();
   const v = dialogVariants({ size });
   return (
     <BaseDialog.Portal container={container}>
       <BaseDialog.Backdrop className={v.backdrop()} />
-      <BaseDialog.Viewport className={v.viewport()}>
+      <BaseDialog.Viewport dir={dir} className={v.viewport()}>
         <BaseDialog.Popup className={cn(v.popup(), className)} {...props}>
           {children}
           {showClose && (

@@ -55,7 +55,7 @@ export function FirstRunEmpty({
       }
     >
       {steps.length > 0 && (
-        <ol className="mt-6 grid gap-2 text-left text-[12.5px] text-muted-foreground">
+        <ol className="mt-6 grid gap-2 text-start text-[12.5px] text-muted-foreground">
           {steps.map((step, i) => (
             <li key={step} className="flex items-center gap-2.5">
               <span className="grid size-5 shrink-0 place-items-center rounded-full bg-primary/14 font-mono text-[10.5px] font-semibold text-primary-chip-text">

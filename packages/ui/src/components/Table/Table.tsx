@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
 import { createContext, useCallback, useContext, useState, type HTMLAttributes, type Ref, type TdHTMLAttributes, type ThHTMLAttributes } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { nextSortDirection, tableVariants, type SortDirection, type TableDensity } from './table.variants';
 
@@ -21,6 +22,7 @@ export interface TableProps extends Omit<HTMLAttributes<HTMLTableElement>, 'clas
 
 /** Semantic data table in a horizontally scrollable container. */
 export function Table({ density = 'comfortable', stickyHeader = false, containerClassName, containerLabel, className, ...props }: TableProps) {
+  const { t } = useI18n();
   // A container that actually scrolls must be reachable from the keyboard (WCAG 2.1.1).
   const [overflows, setOverflows] = useState(false);
   const measure = useCallback((el: HTMLDivElement | null) => {
@@ -39,7 +41,7 @@ export function Table({ density = 'comfortable', stickyHeader = false, container
         className={cn(s.container(), containerClassName)}
         tabIndex={focusable ? 0 : undefined}
         role={focusable ? 'region' : undefined}
-        aria-label={focusable ? (containerLabel ?? 'Scrollable table') : undefined}
+        aria-label={focusable ? (containerLabel ?? t('table.scrollable')) : undefined}
       >
         <table data-density={density} className={cn(s.table(), className)} {...props} />
       </div>

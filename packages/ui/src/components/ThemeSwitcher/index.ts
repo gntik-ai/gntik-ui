@@ -2,6 +2,7 @@ export {
   ThemeSwitcher,
   ThemeCycleButton,
   THEME_OPTIONS,
+  useThemeOptions,
   type ThemeSwitcherProps,
   type ThemeCycleButtonProps,
   type ThemeOption,

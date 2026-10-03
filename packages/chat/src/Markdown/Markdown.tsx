@@ -1,4 +1,4 @@
-import { cn } from '@gntik-ai/ui';
+import { cn, useI18n } from '@gntik-ai/ui';
 import { ExternalLink } from 'lucide-react';
 import { Children, isValidElement, memo, type ReactNode } from 'react';
 import ReactMarkdown, { defaultUrlTransform, type Components } from 'react-markdown';
@@ -45,6 +45,31 @@ export function repairStreamingMarkdown(text: string): string {
 const isExternal = (href: string) => /^https?:\/\//i.test(href);
 
 /** Drops react-markdown's `node` (hast) prop before spreading onto a DOM element. */
+/** Screen-reader note on links that open a new tab. */
+function NewTabHint() {
+  const { t } = useI18n();
+  return <span className="sr-only"> {t('link.external')}</span>;
+}
+
+/** Remote images can track readers and break layout mid-stream: show them as links. */
+function ImageLink({ href, alt }: { href: string; alt?: string }) {
+  const { t } = useI18n();
+  const text = t('chat.image', { alt: alt || t('chat.untitled') });
+  return href ? (
+    <a href={href} target="_blank" rel="noopener noreferrer nofollow" className={s.link}>
+      {text}
+      <NewTabHint />
+    </a>
+  ) : (
+    <span className={s.image}>{text}</span>
+  );
+}
+
+function TaskCheckbox({ checked }: { checked: boolean }) {
+  const { t } = useI18n();
+  return <input type="checkbox" checked={checked} readOnly disabled aria-label={checked ? t('chat.taskDone') : t('chat.taskNotDone')} className={s.checkbox} />;
+}
+
 function omitNode<T extends { node?: unknown }>(props: T): Omit<T, 'node'> {
   const { node, ...rest } = props;
   void node;
@@ -61,7 +86,7 @@ const components: Components = {
   h5: (p) => <h4 {...omitNode(p)} className={s.h4} />,
   h6: (p) => <h4 {...omitNode(p)} className={s.h4} />,
   p: (p) => <p {...omitNode(p)} className={s.p} />,
-  ul: (p) => <ul {...omitNode(p)} className={cn(s.ul, p.className === 'contains-task-list' && 'pl-1')} />,
+  ul: (p) => <ul {...omitNode(p)} className={cn(s.ul, p.className === 'contains-task-list' && 'ps-1')} />,
   ol: (p) => <ol {...omitNode(p)} className={s.ol} />,
   li: (p) => <li {...omitNode(p)} className={cn(s.li, p.className)} />,
   blockquote: (p) => <blockquote {...omitNode(p)} className={s.blockquote} />,
@@ -87,26 +112,14 @@ const components: Components = {
       <a href={href} target="_blank" rel="noopener noreferrer nofollow" className={s.link} {...p}>
         {children}
         <ExternalLink size={12} aria-hidden className={s.linkIcon} />
-        <span className="sr-only"> (opens in a new tab)</span>
+        <NewTabHint />
       </a>
     );
   },
-  // Remote images can track readers and break layout mid-stream: show them as links.
-  img: ({ src, alt }) => {
-    const href = typeof src === 'string' ? src : '';
-    const text = `Image: ${alt || 'untitled'}`;
-    return href ? (
-      <a href={href} target="_blank" rel="noopener noreferrer nofollow" className={s.link}>
-        {text}
-        <span className="sr-only"> (opens in a new tab)</span>
-      </a>
-    ) : (
-      <span className={s.image}>{text}</span>
-    );
-  },
+  img: ({ src, alt }) => <ImageLink href={typeof src === 'string' ? src : ''} alt={alt} />,
   input: ({ checked, type }) =>
     type === 'checkbox' ? (
-      <input type="checkbox" checked={!!checked} readOnly disabled aria-label={checked ? 'Done' : 'Not done'} className={s.checkbox} />
+      <TaskCheckbox checked={!!checked} />
     ) : null,
   code: ({ className, children }) => <code className={cn(s.inlineCode, className)}>{children}</code>,
   pre: ({ children }) => {

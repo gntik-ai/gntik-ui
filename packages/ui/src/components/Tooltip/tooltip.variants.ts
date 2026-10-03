@@ -10,9 +10,9 @@ export const tooltipVariants = tv({
     ],
     arrow: [
       'size-2 rotate-45 rounded-[1px]',
-      'data-[side=top]:-bottom-1 data-[side=bottom]:-top-1 data-[side=left]:-right-1 data-[side=right]:-left-1',
+      'data-[side=top]:-bottom-1 data-[side=bottom]:-top-1 data-[side=left]:-end-1 data-[side=right]:-start-1',
     ],
-    kbd: 'ml-1.5 rounded bg-background/20 px-1 py-px font-mono text-[10px] tracking-wide text-background',
+    kbd: 'ms-1.5 rounded bg-background/20 px-1 py-px font-mono text-[10px] tracking-wide text-background',
   },
   variants: {
     variant: {
@@ -23,11 +23,11 @@ export const tooltipVariants = tv({
       },
       /** Multi-line content on the popover surface. */
       rich: {
-        popup: 'w-64 rounded-lg border border-border bg-popover p-3 text-left text-[12.5px] leading-5 text-popover-foreground shadow-lg',
+        popup: 'w-64 rounded-lg border border-border bg-popover p-3 text-start text-[12.5px] leading-5 text-popover-foreground shadow-lg',
         arrow: [
           'border-border bg-popover',
-          'data-[side=top]:border-r data-[side=top]:border-b data-[side=bottom]:border-t data-[side=bottom]:border-l',
-          'data-[side=left]:border-t data-[side=left]:border-r data-[side=right]:border-b data-[side=right]:border-l',
+          'data-[side=top]:border-e data-[side=top]:border-b data-[side=bottom]:border-t data-[side=bottom]:border-s',
+          'data-[side=left]:border-t data-[side=left]:border-e data-[side=right]:border-b data-[side=right]:border-s',
         ],
       },
     },

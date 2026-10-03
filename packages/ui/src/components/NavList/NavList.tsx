@@ -6,6 +6,7 @@ import { NavContext, navItemKey, useNavListContext, type NavGroup, type NavItem 
 import { navListVariants } from './nav-list.variants';
 
 export type { NavItem, NavGroup, NavIcon } from './nav-context';
+import { useI18n } from '../../i18n/I18nProvider';
 import { NavListEntry } from './NavListItem';
 
 export interface NavListProps extends Omit<HTMLAttributes<HTMLElement>, 'className'> {
@@ -74,7 +75,9 @@ function NavGroupSection({ group }: { group: NavGroup }) {
  * nested collapsible sub-items. The current page gets aria-current="page". `collapsed` turns it
  * into an icon rail with tooltips. Links render through LinkProvider, so client routers work.
  */
-export function NavList({ groups, currentHref, collapsed = false, label = 'Main', onNavigate, className, ...props }: NavListProps) {
+export function NavList({ groups, currentHref, collapsed = false, label: labelProp, onNavigate, className, ...props }: NavListProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('common.main');
   const s = navListVariants();
   return (
     <NavContext.Provider value={{ collapsed, currentHref, onNavigate }}>

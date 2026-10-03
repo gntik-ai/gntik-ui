@@ -37,9 +37,9 @@ export const selectVariants = tv({
   },
   variants: {
     size: {
-      sm: { trigger: 'h-8 pr-2 pl-2.5 text-[12.5px]' },
-      md: { trigger: 'h-9 pr-2.5 pl-3 text-[13px]' },
-      lg: { trigger: 'h-11 pr-3 pl-3.5 text-[14.5px] rounded-lg' },
+      sm: { trigger: 'h-8 pe-2 ps-2.5 text-[12.5px]' },
+      md: { trigger: 'h-9 pe-2.5 ps-3 text-[13px]' },
+      lg: { trigger: 'h-11 pe-3 ps-3.5 text-[14.5px] rounded-lg' },
     },
   },
   defaultVariants: { size: 'md' },

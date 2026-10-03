@@ -36,7 +36,7 @@ export function ValidationSummary({ errors = validationIssues, submitCount = 0, 
   const heading = title ?? `There ${errors.length === 1 ? 'is 1 problem' : `are ${errors.length} problems`} with this form`;
   return (
     <Alert ref={ref} tabIndex={-1} role="region" tone="destructive" title={heading} className={cn('focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring', className)}>
-      <ul className="mt-1 list-disc space-y-1 pl-4">
+      <ul className="mt-1 list-disc space-y-1 ps-4">
         {errors.map((e) => (
           <li key={e.fieldId}>
             <Link

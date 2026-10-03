@@ -1,6 +1,7 @@
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { X } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { popoverVariants, type PopoverVariantProps } from './popover.variants';
 
@@ -43,10 +44,11 @@ export function PopoverContent({
   children,
   ...props
 }: PopoverContentProps) {
+  const dir = usePortalDir();
   const v = popoverVariants({ padding });
   return (
     <BasePopover.Portal container={container}>
-      <BasePopover.Positioner className={v.positioner()} side={side} align={align} sideOffset={sideOffset} alignOffset={alignOffset}>
+      <BasePopover.Positioner dir={dir} className={v.positioner()} side={side} align={align} sideOffset={sideOffset} alignOffset={alignOffset}>
         <BasePopover.Popup className={cn(v.popup(), className)} {...props}>
           {arrow && <BasePopover.Arrow className={v.arrow()} />}
           {children}
@@ -74,7 +76,9 @@ export interface PopoverCloseProps extends Omit<BasePopover.Close.Props, 'classN
  * Closes the popover. Without children it renders the top-right X icon button; with children
  * (or `render={<Button />}`) it is a plain close action.
  */
-export function PopoverClose({ className, label = 'Close', children, ...props }: PopoverCloseProps) {
+export function PopoverClose({ className, label: labelProp, children, ...props }: PopoverCloseProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('common.close');
   if (children !== undefined || props.render) {
     return (
       <BasePopover.Close className={className} {...props}>

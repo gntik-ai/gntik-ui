@@ -7,7 +7,7 @@ export const userMenuVariants = tv({
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
       'data-popup-open:ring-2 data-popup-open:ring-ring/40',
     ],
-    triggerName: 'pr-1 text-[13px] font-semibold text-foreground',
+    triggerName: 'pe-1 text-[13px] font-semibold text-foreground',
     popup: 'w-60',
     header: 'flex items-center gap-2.5 px-2.5 py-2',
     headerText: 'min-w-0',
@@ -16,7 +16,7 @@ export const userMenuVariants = tv({
   },
   variants: {
     showName: {
-      true: { trigger: 'h-9 pr-2 pl-0.5 hover:bg-secondary/60' },
+      true: { trigger: 'h-9 pe-2 ps-0.5 hover:bg-secondary/60' },
     },
   },
 });

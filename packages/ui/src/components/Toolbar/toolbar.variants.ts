@@ -9,7 +9,7 @@ export const toolbarVariants = tv({
     lane: 'flex min-w-0 items-center gap-2',
     separator: 'mx-1 h-4 w-px shrink-0 bg-border',
     inputWrap: 'relative min-w-0 flex-1',
-    inputIcon: 'pointer-events-none absolute top-1/2 left-2.5 -translate-y-1/2 text-muted-foreground',
+    inputIcon: 'pointer-events-none absolute top-1/2 start-2.5 -translate-y-1/2 text-muted-foreground',
     input: [
       'h-8 w-full min-w-[150px] rounded-md border border-border bg-background px-2.5 text-[12.5px] text-foreground transition-colors',
       'placeholder:text-muted-foreground hover:border-ring/50',
@@ -28,9 +28,9 @@ export const toolbarVariants = tv({
       plain: {},
     },
     lane: {
-      start: { lane: 'mr-auto' },
+      start: { lane: 'me-auto' },
       center: { lane: 'mx-auto justify-center' },
-      end: { lane: 'ml-auto justify-end' },
+      end: { lane: 'ms-auto justify-end' },
     },
   },
   defaultVariants: { variant: 'bar', lane: 'start' },

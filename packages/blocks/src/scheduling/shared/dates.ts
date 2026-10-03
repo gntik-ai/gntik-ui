@@ -52,34 +52,39 @@ export function hourOf(d: Date): number {
   return d.getHours() + d.getMinutes() / 60;
 }
 
-const fmt = (opts: Intl.DateTimeFormatOptions) => new Intl.DateTimeFormat('en-US', opts);
-const timeFmt = fmt({ hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
-const fullFmt = fmt({ weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-const dayFmt = fmt({ weekday: 'long', month: 'long', day: 'numeric' });
-const monthFmt = fmt({ month: 'long', year: 'numeric' });
-const shortFmt = fmt({ month: 'short', day: 'numeric' });
-const weekdayFmt = fmt({ weekday: 'short' });
+const cache = new Map<string, Intl.DateTimeFormat>();
+/** Cached Intl formatter; `locale` defaults to en-US (pass `useI18n().locale` to localise). */
+const fmt = (locale: string | undefined, opts: Intl.DateTimeFormatOptions) => {
+  const key = `${locale ?? 'en-US'}|${JSON.stringify(opts)}`;
+  let f = cache.get(key);
+  if (!f) {
+    f = new Intl.DateTimeFormat(locale ?? 'en-US', opts);
+    cache.set(key, f);
+  }
+  return f;
+};
 
 /** "09:30". */
-export const formatTime = (d: Date) => timeFmt.format(d);
+export const formatTime = (d: Date, locale?: string) => fmt(locale, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d);
 /** "09:30–10:00". */
-export const formatRange = (start: Date, end: Date) => `${formatTime(start)}–${formatTime(end)}`;
+export const formatRange = (start: Date, end: Date, locale?: string) => `${formatTime(start, locale)}–${formatTime(end, locale)}`;
 /** "Wednesday, April 15, 2026". */
-export const formatFullDate = (d: Date) => fullFmt.format(d);
+export const formatFullDate = (d: Date, locale?: string) => fmt(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).format(d);
 /** "Wednesday, April 15". */
-export const formatDay = (d: Date) => dayFmt.format(d);
+export const formatDay = (d: Date, locale?: string) => fmt(locale, { weekday: 'long', month: 'long', day: 'numeric' }).format(d);
 /** "April 2026". */
-export const formatMonth = (d: Date) => monthFmt.format(d);
+export const formatMonth = (d: Date, locale?: string) => fmt(locale, { month: 'long', year: 'numeric' }).format(d);
 /** "Apr 15". */
-export const formatShort = (d: Date) => shortFmt.format(d);
+export const formatShort = (d: Date, locale?: string) => fmt(locale, { month: 'short', day: 'numeric' }).format(d);
 /** "Wed". */
-export const formatWeekday = (d: Date) => weekdayFmt.format(d);
+export const formatWeekday = (d: Date, locale?: string, weekday: 'short' | 'long' = 'short') => fmt(locale, { weekday }).format(d);
 
 /** "Apr 13 – 19, 2026" (or across months / years). */
-export function formatWeekRange(days: readonly Date[]): string {
+export function formatWeekRange(days: readonly Date[], locale?: string): string {
   const first = days[0];
   const last = days[days.length - 1];
   if (!first || !last) return '';
+  if (locale && !locale.toLowerCase().startsWith('en')) return fmt(locale, { month: 'short', day: 'numeric', year: 'numeric' }).formatRange(first, last);
   if (sameMonth(first, last)) return `${formatShort(first)} – ${last.getDate()}, ${last.getFullYear()}`;
   if (first.getFullYear() === last.getFullYear()) return `${formatShort(first)} – ${formatShort(last)}, ${last.getFullYear()}`;
   return `${formatShort(first)}, ${first.getFullYear()} – ${formatShort(last)}, ${last.getFullYear()}`;

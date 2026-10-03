@@ -4,6 +4,7 @@ import { useLinkComponent } from '../../components/Link';
 import { MobileNav } from '../../components/MobileNav';
 import { isNavItemCurrent, type NavItem } from '../../components/NavList';
 import { SkipLink } from '../../components/VisuallyHidden';
+import { useI18n } from '../../i18n/I18nProvider';
 import { stackedLayoutVariants, type StackedLayoutVariantProps } from './stacked-layout.variants';
 
 export interface StackedLayoutProps {
@@ -75,13 +76,16 @@ export function StackedLayout({
   children,
   footer,
   width = 'default',
-  navLabel = 'Main',
+  navLabel: navLabelProp,
   mobileTitle,
   mobileFooter,
   mainId = 'main',
-  skipLinkLabel = 'Skip to main content',
+  skipLinkLabel: skipLinkLabelProp,
   fullScreen = false,
 }: StackedLayoutProps) {
+  const { t } = useI18n();
+  const navLabel = navLabelProp ?? t('common.main');
+  const skipLinkLabel = skipLinkLabelProp ?? t('skip.main');
   const s = stackedLayoutVariants({ fullScreen, width });
   return (
     <div className={cn(s.root(), className)}>

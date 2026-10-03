@@ -1,4 +1,4 @@
-import { Checkbox, cn, Table, TableCaption, TableHead, TableHeader, TableRow, type MoreMenuAction, type TableDensity } from '@gntik-ai/ui';
+import { Checkbox, cn, Table, TableCaption, TableHead, TableHeader, TableRow, type MoreMenuAction, type TableDensity, useI18n } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
 import { PaginationFooter } from '../PaginationFooter/PaginationFooter';
 import { ColumnVisibilityMenu } from './column-menu';
@@ -101,6 +101,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   toolbar,
   className,
 }: DataTableProps<T>) {
+  const { t } = useI18n();
   const [innerSort, setInnerSort] = useState<SortState | null>(defaultSort);
   const [innerSelected, setInnerSelected] = useState<ReadonlySet<string>>(() => new Set(defaultSelectedIds));
   const [innerDensity, setInnerDensity] = useState<TableDensity>(defaultDensity);
@@ -186,9 +187,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
         <TableHeader>
           <TableRow className="hover:bg-transparent">
             {selectable && (
-              <TableHead className="w-10 pr-0">
+              <TableHead className="w-10 pe-0">
                 <Checkbox
-                  aria-label="Select all rows on this page"
+                  aria-label={t('table.selectAllPage')}
                   checked={header.checked}
                   indeterminate={header.indeterminate}
                   disabled={loading || pageIds.length === 0}
@@ -210,7 +211,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             ))}
             {rowActions && (
               <TableHead className="w-12">
-                <span className="sr-only">Actions</span>
+                <span className="sr-only">{t('table.actions')}</span>
               </TableHead>
             )}
           </TableRow>

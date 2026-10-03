@@ -2,6 +2,7 @@ import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
 import type { AnchorHTMLAttributes, MouseEvent, Ref } from 'react';
 import { cn } from '../../utils/cn';
+import { useI18n } from '../../i18n/I18nProvider';
 import { skipLinkVariants, visuallyHiddenVariants } from './visually-hidden.variants';
 
 export interface VisuallyHiddenProps extends Omit<useRender.ComponentProps<'span'>, 'className'> {
@@ -33,7 +34,9 @@ export interface SkipLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorEleme
  * First focusable element on the page: hidden until Tab reaches it, then pinned top-left.
  * Activating it moves focus (not just scroll) to the target, which gets `tabindex="-1"` if needed.
  */
-export function SkipLink({ targetId, className, children = 'Skip to main content', onClick, ...props }: SkipLinkProps) {
+export function SkipLink({ targetId, className, children: childrenProp, onClick, ...props }: SkipLinkProps) {
+  const { t } = useI18n();
+  const children = childrenProp ?? t('skip.main');
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     onClick?.(event);
     if (event.defaultPrevented) return;

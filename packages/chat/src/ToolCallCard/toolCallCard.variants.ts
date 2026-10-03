@@ -2,7 +2,7 @@
 export const toolCallCardStyles = {
   root: 'w-full overflow-hidden rounded-lg border border-border bg-card text-[13px]',
   trigger: [
-    'flex h-auto w-full min-w-0 justify-start gap-2.5 rounded-none px-3 py-2.5 text-left hover:bg-secondary/50',
+    'flex h-auto w-full min-w-0 justify-start gap-2.5 rounded-none px-3 py-2.5 text-start hover:bg-secondary/50',
     'focus-visible:-outline-offset-2',
   ].join(' '),
   icon: 'grid size-6 shrink-0 place-items-center rounded-md bg-secondary text-muted-foreground',

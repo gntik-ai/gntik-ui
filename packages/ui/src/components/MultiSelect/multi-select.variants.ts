@@ -4,7 +4,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const multiSelectVariants = tv({
   slots: {
     group: [
-      'flex w-full min-w-0 items-center gap-1 pr-1',
+      'flex w-full min-w-0 items-center gap-1 pe-1',
       'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70',
     ],
     more: 'inline-flex h-6 shrink-0 items-center rounded bg-secondary px-1.5 font-mono text-[11.5px] font-medium text-muted-foreground',
@@ -14,8 +14,8 @@ export const multiSelectVariants = tv({
   },
   variants: {
     size: {
-      sm: { group: 'min-h-8 py-0.5 pl-1.5' },
-      md: { group: 'min-h-9 py-1 pl-2' },
+      sm: { group: 'min-h-8 py-0.5 ps-1.5' },
+      md: { group: 'min-h-9 py-1 ps-2' },
     },
   },
   defaultVariants: { size: 'md' },

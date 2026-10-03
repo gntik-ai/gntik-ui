@@ -4,6 +4,7 @@ import { cn } from '../../utils/cn';
 import { Button, buttonVariants } from '../Button';
 import { Popover, PopoverContent, PopoverTitle, PopoverTrigger } from '../Popover';
 import { notificationsPopoverVariants } from './notifications-popover.variants';
+import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { formatRelativeShort, toDate, type TimeInput } from './relative-time';
 
 export interface NotificationItem {
@@ -53,18 +54,30 @@ export function NotificationsPopover({
   open,
   defaultOpen,
   onOpenChange,
-  title = 'Notifications',
-  markAllLabel = 'Mark all as read',
-  emptyTitle = "You're all caught up",
-  emptyDescription = 'New notifications will show up here.',
+  title: titleProp,
+  markAllLabel: markAllLabelProp,
+  emptyTitle: emptyTitleProp,
+  emptyDescription: emptyDescriptionProp,
   footer,
   now,
-  formatTime = formatRelativeShort,
+  formatTime: formatTimeProp,
   getTriggerLabel,
 }: NotificationsPopoverProps) {
+  const { t } = useI18n();
+  const title = titleProp ?? t('common.notifications');
+  const markAllLabel = markAllLabelProp ?? t('notifications.markAllRead');
+  const emptyDescription = emptyDescriptionProp ?? t('notifications.empty');
+  const emptyTitle = emptyTitleProp ?? t('notifications.emptyTitle');
+  const i18n = useOptionalI18n();
+  // English keeps the compact "5m ago"; other provider locales get Intl's narrow relative time.
+  const formatTime =
+    formatTimeProp ??
+    (i18n && !i18n.locale.toLowerCase().startsWith('en')
+      ? (time: TimeInput, ref: Date) => i18n.formatRelativeTime(toDate(time), ref, { numeric: 'auto', style: 'narrow' })
+      : formatRelativeShort);
   const s = notificationsPopoverVariants();
   const unread = notifications.filter((n) => !n.read).length;
-  const triggerLabel = getTriggerLabel ? getTriggerLabel(unread) : unread ? `${title}, ${unread} unread` : title;
+  const triggerLabel = getTriggerLabel ? getTriggerLabel(unread) : unread ? t('notifications.trigger', { title, count: unread }) : title;
   const reference = now ?? new Date();
   return (
     <Popover open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
@@ -80,7 +93,7 @@ export function NotificationsPopover({
         <div className={s.header()}>
           <PopoverTitle className={s.title()}>
             {title}
-            {unread > 0 && <span className={s.unreadPill()}>{unread} new</span>}
+            {unread > 0 && <span className={s.unreadPill()}>{t('notifications.new', { count: unread })}</span>}
           </PopoverTitle>
           {onMarkAllRead && unread > 0 && (
             <Button variant="ghost" size="sm" icon={CheckCheck} onClick={onMarkAllRead}>
@@ -105,7 +118,7 @@ export function NotificationsPopover({
                 <>
                   <span aria-hidden className={v.dot()} />
                   <span className={v.body()}>
-                    {!n.read && <span className="sr-only">Unread: </span>}
+                    {!n.read && <span className="sr-only">{t('common.unread')} </span>}
                     <span className={v.itemTitle()}>{n.title}</span>
                     {n.body && <span className={v.itemBody()}>{n.body}</span>}
                     <time dateTime={Number.isNaN(date.getTime()) ? undefined : date.toISOString()} className={v.time()}>

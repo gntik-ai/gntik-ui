@@ -1,5 +1,6 @@
 import { OTPField } from '@base-ui/react/otp-field';
 import { Fragment, useId, type Ref } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { otpInputVariants, type OtpInputVariantProps } from './otp-input.variants';
 
@@ -37,12 +38,14 @@ export function OtpInput({
   invalid,
   onComplete,
   groupSize,
-  slotLabel = (n, total) => `Character ${n} of ${total}`,
+  slotLabel: slotLabelProp,
   className,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   ...props
 }: OtpInputProps) {
+  const { t } = useI18n();
+  const slotLabel = slotLabelProp ?? ((index: number, total: number) => t('otp.character', { index, total }));
   const s = otpInputVariants({ size });
   const hiddenLabelId = useId();
   // Base UI names the first slot from a <label>/Field.Label or aria-labelledby (never aria-label),

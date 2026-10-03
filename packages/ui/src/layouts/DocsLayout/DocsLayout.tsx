@@ -3,6 +3,7 @@ import { cn } from '../../utils/cn';
 import { Collapsible, CollapsiblePanel, CollapsibleTrigger } from '../../components/Collapsible';
 import { SkipLink } from '../../components/VisuallyHidden';
 import { docsLayoutVariants } from './docs-layout.variants';
+import { useI18n } from '../../i18n/I18nProvider';
 import { Outline, type OutlineItem } from './Outline';
 
 export interface DocsLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'> {
@@ -42,16 +43,19 @@ export function DocsLayout({
   header,
   nav,
   toc,
-  tocLabel = 'On this page',
+  tocLabel: tocLabelProp,
   aside,
   footer,
   embedded = false,
   mainId = 'main',
-  skipLinkLabel = 'Skip to content',
+  skipLinkLabel: skipLinkLabelProp,
   fullScreen = false,
   className,
   ...props
 }: DocsLayoutProps) {
+  const { t } = useI18n();
+  const tocLabel = tocLabelProp ?? t('nav.onThisPage');
+  const skipLinkLabel = skipLinkLabelProp ?? t('skip.content');
   const MainTag = embedded ? 'div' : 'main';
   const mainRef = useRef<HTMLDivElement>(null);
   const s = docsLayoutVariants({ fullScreen });

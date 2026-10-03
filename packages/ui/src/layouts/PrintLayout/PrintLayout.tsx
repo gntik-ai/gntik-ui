@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactNode, Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { SkipLink } from '../../components/VisuallyHidden';
+import { useI18n } from '../../i18n/I18nProvider';
 import { printLayoutVariants, type PrintLayoutVariantProps } from './print-layout.variants';
 
 type PageSize = NonNullable<PrintLayoutVariantProps['size']>;
@@ -46,11 +47,13 @@ export function PrintLayout({
   pageRule = true,
   'aria-label': ariaLabel,
   mainId = 'main',
-  skipLinkLabel = 'Skip to document',
+  skipLinkLabel: skipLinkLabelProp,
   fullScreen = false,
   className,
   ...props
 }: PrintLayoutProps) {
+  const { t } = useI18n();
+  const skipLinkLabel = skipLinkLabelProp ?? t('skip.document');
   const s = printLayoutVariants({ size, margin, fullScreen });
   return (
     <div className={cn(s.root(), className)} {...props}>
@@ -76,7 +79,9 @@ export interface PageBreakProps extends Omit<HTMLAttributes<HTMLDivElement>, 'cl
 }
 
 /** Forces a new printed page; on screen it shows as a dashed divider. */
-export function PageBreak({ className, label = 'Page break', ...props }: PageBreakProps) {
+export function PageBreak({ className, label: labelProp, ...props }: PageBreakProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('print.pageBreak');
   const s = printLayoutVariants();
   return (
     <div aria-hidden className={cn(s.pageBreak(), className)} {...props}>

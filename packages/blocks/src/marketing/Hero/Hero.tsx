@@ -29,7 +29,7 @@ export function HeroScreenshotPlaceholder({ className }: { className?: string })
         <span className="size-2.5 rounded-full bg-muted-foreground/30" />
       </div>
       <div className="flex">
-        <div className="hidden w-36 shrink-0 space-y-2 border-r border-border bg-secondary/30 p-3 sm:block">
+        <div className="hidden w-36 shrink-0 space-y-2 border-e border-border bg-secondary/30 p-3 sm:block">
           {[70, 55, 80, 60, 45].map((w, i) => (
             <div key={i} className={cn('h-2 rounded-full', i === 0 ? 'bg-primary/60' : 'bg-muted-foreground/20')} style={{ width: `${w}%` }} />
           ))}

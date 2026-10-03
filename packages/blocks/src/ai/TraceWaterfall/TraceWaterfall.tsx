@@ -1,6 +1,6 @@
 import { useId, useMemo, useState } from 'react';
 import { ChevronRight } from '@gntik-ai/icons';
-import { Badge, StatusTag, cn } from '@gntik-ai/ui';
+import { Badge, StatusTag, cn, useI18n } from '@gntik-ai/ui';
 import { traceSpans, type SpanKind, type TraceSpan } from './fixtures';
 
 export type { SpanKind, TraceSpan } from './fixtures';
@@ -73,6 +73,7 @@ export function TraceWaterfall({
   titleAs: TitleTag = 'h3',
   className,
 }: TraceWaterfallProps) {
+  const { t } = useI18n();
   const SubTag = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
   const titleId = useId();
   const [collapsed, setCollapsed] = useState(() => new Set(defaultCollapsed));
@@ -120,8 +121,8 @@ export function TraceWaterfall({
             {[0, 0.25, 0.5, 0.75, 1].map((f) => (
               <span
                 key={f}
-                className={cn('absolute top-0', f === 1 ? '-translate-x-full' : f > 0 && '-translate-x-1/2')}
-                style={{ left: `${f * 100}%` }}
+                className={cn('absolute top-0', f === 1 ? '-translate-x-full rtl:translate-x-full' : f > 0 && '-translate-x-1/2 rtl:translate-x-1/2')}
+                style={{ insetInlineStart: `${f * 100}%` }}
               >
                 {formatSpanDuration(total * f)}
               </span>
@@ -139,12 +140,12 @@ export function TraceWaterfall({
                   <button
                     type="button"
                     aria-expanded={open}
-                    aria-label={`${open ? 'Collapse' : 'Expand'} ${span.name}`}
+                    aria-label={t(open ? 'common.collapseItem' : 'common.expandItem', { label: span.name })}
                     onClick={() => toggle(span.id)}
                     className="absolute top-1/2 z-10 grid size-6 -translate-y-1/2 place-items-center rounded text-muted-foreground hover:bg-secondary hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
-                    style={{ left: indent - 4 }}
+                    style={{ insetInlineStart: indent - 4 }}
                   >
-                    <ChevronRight size={13} aria-hidden className={cn('transition-transform motion-reduce:transition-none', open && 'rotate-90')} />
+                    <ChevronRight size={13} aria-hidden className={cn('transition-transform motion-reduce:transition-none', open ? 'rotate-90' : 'rtl:-scale-x-100')} />
                   </button>
                 )}
                 <button
@@ -153,12 +154,12 @@ export function TraceWaterfall({
                   aria-label={`${span.name}, ${formatSpanDuration(span.duration)}${span.status === 'error' ? ', error' : ''}`}
                   onClick={() => select(span)}
                   className={cn(
-                    'grid h-8 w-full grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-center pr-3 text-left hover:bg-secondary/50',
+                    'grid h-8 w-full grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-center pe-3 text-start hover:bg-secondary/50',
                     'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
                     isSelected && 'bg-primary/8 hover:bg-primary/12',
                   )}
                 >
-                  <span className="flex min-w-0 items-center gap-1.5 pr-3" style={{ paddingLeft: indent + 22 }}>
+                  <span className="flex min-w-0 items-center gap-1.5 pe-3" style={{ paddingInlineStart: indent + 22 }}>
                     <span className={cn('size-2 shrink-0 rounded-full', span.status === 'error' ? 'bg-destructive' : KIND_BAR[span.kind])} aria-hidden />
                     <span className={cn('truncate text-[12.5px]', span.status === 'error' ? 'text-destructive-text' : 'text-foreground')}>
                       {span.name}
@@ -168,12 +169,12 @@ export function TraceWaterfall({
                     <span
                       aria-hidden
                       className={cn('absolute top-1/2 h-2.5 min-w-0.5 -translate-y-1/2 rounded-sm', span.status === 'error' ? 'bg-destructive' : KIND_BAR[span.kind])}
-                      style={{ left: `${(span.start / total) * 100}%`, width: `${(span.duration / total) * 100}%` }}
+                      style={{ insetInlineStart: `${(span.start / total) * 100}%`, width: `${(span.duration / total) * 100}%` }}
                     />
                     <span
                       aria-hidden
-                      className="absolute top-1/2 -translate-y-1/2 pl-1.5 font-mono text-[10.5px] text-muted-foreground"
-                      style={span.start + span.duration > total * 0.8 ? { right: `${(1 - span.start / total) * 100}%`, paddingRight: 6 } : { left: `${((span.start + span.duration) / total) * 100}%` }}
+                      className="absolute top-1/2 -translate-y-1/2 ps-1.5 font-mono text-[10.5px] text-muted-foreground"
+                      style={span.start + span.duration > total * 0.8 ? { insetInlineEnd: `${(1 - span.start / total) * 100}%`, paddingInlineEnd: 6 } : { insetInlineStart: `${((span.start + span.duration) / total) * 100}%` }}
                     >
                       {formatSpanDuration(span.duration)}
                     </span>
@@ -184,7 +185,7 @@ export function TraceWaterfall({
           })}
         </ol>
       </div>
-      <aside aria-label="Span details" className="border-t border-border bg-secondary/20 p-4 lg:border-t-0 lg:border-l">
+      <aside aria-label="Span details" className="border-t border-border bg-secondary/20 p-4 lg:border-t-0 lg:border-s">
         {selected ? (
           <div className="flex flex-col gap-3">
             <div>
