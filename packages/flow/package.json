@@ -1,6 +1,6 @@
 {
   "name": "@gntik-ai/flow",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "React Flow (@xyflow/react 12) canvas, nodes and edges themed by the gntik-ui brand tokens.",
   "license": "MIT",
   "type": "module",

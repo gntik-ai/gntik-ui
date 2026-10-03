@@ -1,6 +1,6 @@
 {
   "name": "@gntik-ai/tokens",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "gntik-ui brand tokens: CSS variables for light, dark and high-contrast themes, plus a Tailwind v4 bridge.",
   "license": "MIT",
   "type": "module",

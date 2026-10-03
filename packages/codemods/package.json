@@ -1,6 +1,6 @@
 {
   "name": "@gntik-ai/codemods",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "jscodeshift transforms that migrate products across @gntik-ai/* breaking changes; run through `gntik-ui upgrade`.",
   "license": "MIT",
   "type": "module",
