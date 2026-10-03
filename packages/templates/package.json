@@ -4,7 +4,9 @@
   "description": "gntik-ui page templates: complete product pages (auth, dashboard, resources, settings, system) on the kit layouts and blocks.",
   "license": "MIT",
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "files": [
     "dist",
     "src"
@@ -16,7 +18,8 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./styles.css": "./src/styles.css"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"

@@ -6,6 +6,7 @@
    Scope: anything inside `.gu-flow` (FlowCanvas adds it to its wrapper).
    ============================================================================ */
 @import "@xyflow/react/dist/style.css";
+@source "../dist";
 
 /* ── Variables: light (:root) and dark (.dark) share the mapping; the tokens differ ── */
 .gu-flow,

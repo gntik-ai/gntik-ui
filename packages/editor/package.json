@@ -4,9 +4,12 @@
   "description": "Monaco code editor themed by the gntik-ui brand tokens (dark, light, high contrast).",
   "license": "MIT",
   "type": "module",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "files": [
-    "dist"
+    "dist",
+    "src/styles.css"
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -15,7 +18,8 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./styles.css": "./src/styles.css"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
