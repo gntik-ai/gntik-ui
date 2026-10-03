@@ -25,6 +25,30 @@
       "group": "Library"
     },
     {
+      "id": "layouts",
+      "label": "Layouts",
+      "icon": "layout",
+      "status": "done",
+      "blurb": "Twelve page layouts: shells, split, inspector, canvas, settings, auth, wizard, docs, status, print.",
+      "group": "Compositions"
+    },
+    {
+      "id": "blocks",
+      "label": "Blocks",
+      "icon": "bricks",
+      "status": "done",
+      "blurb": "Page sections composed from the kit, previewed per device and theme.",
+      "group": "Compositions"
+    },
+    {
+      "id": "templates",
+      "label": "Page templates",
+      "icon": "grid",
+      "status": "done",
+      "blurb": "Complete product pages built only from layouts and blocks.",
+      "group": "Compositions"
+    },
+    {
       "id": "app-shell",
       "label": "App shell",
       "icon": "layout",
@@ -515,6 +539,30 @@
       "group": "Library",
       "status": "done",
       "blurb": "Package components on Base UI: live examples, keyboard contract and source.",
+      "snippets": []
+    },
+    "layouts": {
+      "id": "layouts",
+      "label": "Layouts",
+      "group": "Compositions",
+      "status": "done",
+      "blurb": "Twelve page layouts: shells, split, inspector, canvas, settings, auth, wizard, docs, status, print.",
+      "snippets": []
+    },
+    "blocks": {
+      "id": "blocks",
+      "label": "Blocks",
+      "group": "Compositions",
+      "status": "done",
+      "blurb": "Page sections composed from the kit, previewed per device and theme.",
+      "snippets": []
+    },
+    "templates": {
+      "id": "templates",
+      "label": "Page templates",
+      "group": "Compositions",
+      "status": "done",
+      "blurb": "Complete product pages built only from layouts and blocks.",
       "snippets": []
     },
     "app-shell": {
@@ -2653,8 +2701,8 @@
     }
   ],
   "stats": {
-    "groups": 17,
-    "components": 60,
+    "groups": 18,
+    "components": 63,
     "withSnippets": 58,
     "snippets": 189,
     "tokens": 103

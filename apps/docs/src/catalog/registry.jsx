@@ -15,6 +15,11 @@ const REGISTRY = [
   { group: 'Library', icon: 'bricks', items: [
     { id: 'ui-components', label: '@gntik-ai/ui', icon: 'bricks', status: 'done', blurb: 'Package components on Base UI: live examples, keyboard contract and source.' },
   ]},
+  { group: 'Compositions', icon: 'layout', items: [
+    { id: 'layouts', label: 'Layouts', icon: 'layout', status: 'done', blurb: 'Twelve page layouts: shells, split, inspector, canvas, settings, auth, wizard, docs, status, print.' },
+    { id: 'blocks', label: 'Blocks', icon: 'bricks', status: 'done', blurb: 'Page sections composed from the kit, previewed per device and theme.' },
+    { id: 'templates', label: 'Page templates', icon: 'grid', status: 'done', blurb: 'Complete product pages built only from layouts and blocks.' },
+  ]},
   { group: 'App shell', icon: 'layout', items: [
     { id: 'app-shell', label: 'App shell', icon: 'layout', status: 'done', blurb: 'Sidebar + topbar + page header. The shared chrome.' },
   ]},

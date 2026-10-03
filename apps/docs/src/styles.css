@@ -9,9 +9,16 @@
 @import "@fontsource/geist-mono/500.css";
 @import "@fontsource/geist-mono/600.css";
 @import "@xyflow/react/dist/style.css";
+@import "../../../packages/flow/src/styles.css";
 
 @source "./catalog";
 @source "../../../packages/ui/src";
+@source "../../../packages/blocks/src";
+@source "../../../packages/templates/src";
+@source "../../../packages/chat/src";
+@source "../../../packages/charts/src";
+@source "../../../packages/flow/src";
+@source "../../../packages/editor/src";
 
 /* Tailwind v3 defaults the catalog was written against (v4 changed them). */
 @layer base {

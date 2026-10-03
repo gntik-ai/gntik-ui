@@ -6,6 +6,7 @@ import './catalog/registry.jsx';
 import './catalog/foundations.jsx';
 import './catalog/overview.jsx';
 import './catalog/library.jsx';
+import './catalog/viewers.jsx';
 import './catalog/app-shell.jsx';
 import './catalog/page-headings.jsx';
 import './catalog/section-headings.jsx';
