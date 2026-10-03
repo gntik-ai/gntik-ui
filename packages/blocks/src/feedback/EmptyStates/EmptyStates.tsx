@@ -48,7 +48,7 @@ export function FirstRunEmpty({
       primaryAction={<Button onClick={onAction}>{actionLabel}</Button>}
       secondaryAction={
         secondary ? (
-          <Link href={secondary.href} className="inline-flex h-9 items-center px-2 text-[13px] font-semibold">
+          <Link underline="hover" href={secondary.href} className="inline-flex h-9 items-center px-2 text-[13px] font-semibold">
             {secondary.label}
           </Link>
         ) : undefined
@@ -58,7 +58,7 @@ export function FirstRunEmpty({
         <ol className="mt-6 grid gap-2 text-left text-[12.5px] text-muted-foreground">
           {steps.map((step, i) => (
             <li key={step} className="flex items-center gap-2.5">
-              <span className="grid size-5 shrink-0 place-items-center rounded-full bg-primary/14 font-mono text-[10.5px] font-semibold text-primary-text">
+              <span className="grid size-5 shrink-0 place-items-center rounded-full bg-primary/14 font-mono text-[10.5px] font-semibold text-primary-chip-text">
                 {i + 1}
               </span>
               {step}

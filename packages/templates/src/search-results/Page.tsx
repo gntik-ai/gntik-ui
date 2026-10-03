@@ -184,7 +184,7 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
                       <ul aria-labelledby={headingId} className="mt-2 flex flex-col divide-y divide-border">
                         {group.hits.map((hit) => (
                           <li key={hit.id} className="py-3">
-                            <Link data-search-result href={hit.href} className="text-[14px] font-semibold">
+                            <Link underline="hover" data-search-result href={hit.href} className="text-[14px] font-semibold">
                               {hit.title}
                             </Link>
                             <p className="mt-0.5 text-[13px] text-muted-foreground">{hit.snippet}</p>

@@ -45,11 +45,11 @@ export const badgeVariants = tv({
   },
   compoundVariants: [
     // soft
-    { variant: 'soft', tone: 'neutral', class: { root: 'bg-muted-foreground/16 text-muted-foreground' } },
-    { variant: 'soft', tone: 'primary', class: { root: 'bg-primary/14 text-primary-text' } },
-    { variant: 'soft', tone: 'success', class: { root: 'bg-success/15 text-success-text' } },
-    { variant: 'soft', tone: 'warning', class: { root: 'bg-warning/16 text-warning-text' } },
-    { variant: 'soft', tone: 'destructive', class: { root: 'bg-destructive/15 text-destructive-text' } },
+    { variant: 'soft', tone: 'neutral', class: { root: 'bg-muted-foreground/16 text-foreground' } },
+    { variant: 'soft', tone: 'primary', class: { root: 'bg-primary/14 text-primary-chip-text' } },
+    { variant: 'soft', tone: 'success', class: { root: 'bg-success/15 text-success-chip-text' } },
+    { variant: 'soft', tone: 'warning', class: { root: 'bg-warning/16 text-warning-chip-text' } },
+    { variant: 'soft', tone: 'destructive', class: { root: 'bg-destructive/15 text-destructive-chip-text' } },
     { variant: 'soft', tone: 'info', class: { root: 'bg-info/15 text-foreground' } },
     { variant: 'soft', tone: 'violet', class: { root: 'bg-category-violet/18 text-foreground' } },
     { variant: 'soft', tone: 'cyan', class: { root: 'bg-category-cyan/18 text-foreground' } },

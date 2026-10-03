@@ -15,7 +15,7 @@ export default function ResizableWorkspace() {
                   <a
                     href={`#project-${i}`}
                     aria-current={i === 0 ? 'page' : undefined}
-                    className="block truncate rounded-md px-2 py-1.5 text-[13px] text-foreground hover:bg-secondary/70 aria-[current=page]:bg-primary/14 aria-[current=page]:text-primary-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+                    className="block truncate rounded-md px-2 py-1.5 text-[13px] text-foreground hover:bg-secondary/70 aria-[current=page]:bg-primary/14 aria-[current=page]:text-primary-chip-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
                   >
                     {p}
                   </a>

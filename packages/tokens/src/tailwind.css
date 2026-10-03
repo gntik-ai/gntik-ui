@@ -47,6 +47,10 @@
   --color-warning-text: hsl(var(--warning-text));
   --color-destructive-text: hsl(var(--destructive-text));
   --color-focus-ring: hsl(var(--focus-ring));
+  --color-primary-chip-text: hsl(var(--primary-chip-text));
+  --color-success-chip-text: hsl(var(--success-chip-text));
+  --color-warning-chip-text: hsl(var(--warning-chip-text));
+  --color-destructive-chip-text: hsl(var(--destructive-chip-text));
 }
 
 /* Radius, shadow and font scales: brand.css declares --radius-*, --shadow-*

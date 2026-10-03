@@ -167,7 +167,7 @@ function FileRow({ item, onRemove, onRetry }: { item: UploadItem; onRemove: () =
   const done = item.status === 'done';
   return (
     <li className="flex items-center gap-3 rounded-lg border border-border bg-card px-3.5 py-2.5 shadow-sm">
-      <span className={cn('grid size-9 shrink-0 place-items-center rounded-md', err ? 'bg-destructive/12 text-destructive-text' : done ? 'bg-primary/14 text-primary-text' : 'bg-secondary text-muted-foreground')}>
+      <span className={cn('grid size-9 shrink-0 place-items-center rounded-md', err ? 'bg-destructive/12 text-destructive-chip-text' : done ? 'bg-primary/14 text-primary-chip-text' : 'bg-secondary text-muted-foreground')}>
         {err ? <CircleAlert size={17} aria-hidden /> : <FileText size={17} aria-hidden />}
       </span>
       <div className="min-w-0 flex-1">

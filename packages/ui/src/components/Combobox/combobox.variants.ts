@@ -21,7 +21,7 @@ export const comboboxVariants = tv({
     chipsGroup: [...field, 'cursor-text px-2 py-1.5'],
     chips: 'flex w-full flex-wrap items-center gap-1.5',
     chip: [
-      'inline-flex h-6 items-center gap-1 rounded bg-primary/14 pr-1 pl-2 text-[12px] font-medium text-primary-text outline-none',
+      'inline-flex h-6 items-center gap-1 rounded bg-primary/14 pr-1 pl-2 text-[12px] font-medium text-primary-chip-text outline-none',
       'data-highlighted:bg-primary/24 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring',
     ],
     chipRemove: 'grid size-4 place-items-center rounded transition-colors hover:bg-primary/20',

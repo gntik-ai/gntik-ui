@@ -9,7 +9,7 @@ describe('Token', () => {
   it('renders label, prefix and tone classes, merging className', () => {
     render(<Token tone="success" prefix="Status:" label="Paid" className="ml-2" />);
     const root = screen.getByText('Paid').parentElement as HTMLElement;
-    expect(root).toHaveClass('text-success-text', 'ml-2');
+    expect(root).toHaveClass('text-success-chip-text', 'ml-2');
     expect(screen.getByText('Status:')).toHaveClass('text-muted-foreground');
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });

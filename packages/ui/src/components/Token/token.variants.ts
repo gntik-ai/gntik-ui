@@ -18,10 +18,10 @@ export const tokenVariants = tv({
   variants: {
     tone: {
       neutral: { root: 'border-border bg-background text-foreground', leading: 'text-muted-foreground' },
-      primary: { root: 'border-primary/35 bg-primary/10 text-primary-text', leading: 'text-primary-text' },
-      success: { root: 'border-success/35 bg-success/10 text-success-text', leading: 'text-success-text' },
-      warning: { root: 'border-warning/40 bg-warning/12 text-warning-text', leading: 'text-warning-text' },
-      destructive: { root: 'border-destructive/35 bg-destructive/10 text-destructive-text', leading: 'text-destructive-text' },
+      primary: { root: 'border-primary/35 bg-primary/10 text-primary-chip-text', leading: 'text-primary-text' },
+      success: { root: 'border-success/35 bg-success/10 text-success-chip-text', leading: 'text-success-text' },
+      warning: { root: 'border-warning/40 bg-warning/12 text-warning-chip-text', leading: 'text-warning-text' },
+      destructive: { root: 'border-destructive/35 bg-destructive/10 text-destructive-chip-text', leading: 'text-destructive-text' },
     },
     size: {
       sm: { root: 'h-6 pl-2 text-[11.5px]', remove: 'size-4', label: 'max-w-[120px]' },

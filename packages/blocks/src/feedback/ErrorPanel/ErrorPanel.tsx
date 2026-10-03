@@ -72,7 +72,7 @@ export function ErrorPanel({
   return (
     <section aria-labelledby={`${id}-title`} className={cn('rounded-lg border border-destructive/30 bg-card p-5 shadow-sm', className)}>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
-        <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-destructive/10 text-destructive-text">
+        <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-destructive/10 text-destructive-chip-text">
           <Icon size={20} aria-hidden />
         </span>
         <div className="min-w-0 flex-1">
@@ -81,7 +81,7 @@ export function ErrorPanel({
               {title}
             </Heading>
             {code != null && (
-              <span className="rounded bg-destructive/10 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-destructive-text">{code}</span>
+              <span className="rounded bg-destructive/10 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-destructive-chip-text">{code}</span>
             )}
           </div>
           {message != null && <p className="mt-1.5 max-w-xl text-[13px] leading-6 text-muted-foreground">{message}</p>}

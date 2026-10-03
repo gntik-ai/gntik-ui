@@ -42,7 +42,7 @@ export const stepperVariants = tv({
     },
     status: {
       complete: { indicator: 'bg-primary text-primary-foreground', label: 'text-foreground' },
-      current: { indicator: 'bg-primary/14 text-primary-text ring-2 ring-primary', label: 'font-semibold text-foreground' },
+      current: { indicator: 'bg-primary/14 text-primary-chip-text ring-2 ring-primary', label: 'font-semibold text-foreground' },
       upcoming: { indicator: 'bg-secondary text-muted-foreground ring-1 ring-border', label: 'text-muted-foreground' },
       error: { indicator: 'bg-destructive text-destructive-foreground', label: 'text-destructive-text' },
     },

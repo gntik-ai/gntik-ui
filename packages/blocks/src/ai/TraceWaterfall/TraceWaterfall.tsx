@@ -137,8 +137,8 @@ export function TraceWaterfall({
                     aria-expanded={open}
                     aria-label={`${open ? 'Collapse' : 'Expand'} ${span.name}`}
                     onClick={() => toggle(span.id)}
-                    className="absolute top-1/2 z-10 grid size-5 -translate-y-1/2 place-items-center rounded text-muted-foreground hover:bg-secondary hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
-                    style={{ left: indent - 2 }}
+                    className="absolute top-1/2 z-10 grid size-6 -translate-y-1/2 place-items-center rounded text-muted-foreground hover:bg-secondary hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+                    style={{ left: indent - 4 }}
                   >
                     <ChevronRight size={13} aria-hidden className={cn('transition-transform motion-reduce:transition-none', open && 'rotate-90')} />
                   </button>

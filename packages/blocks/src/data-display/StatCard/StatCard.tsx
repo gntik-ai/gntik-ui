@@ -60,7 +60,7 @@ export function StatCard({
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
-            <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary/14 text-primary-text">
+            <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary/14 text-primary-chip-text">
               <IconCmp size={18} aria-hidden />
             </span>
             <h3 className="truncate text-[13px] font-medium text-muted-foreground">{label}</h3>
@@ -107,7 +107,7 @@ export function StatCard({
       {action && (
         <div className="border-t border-border px-5 py-3">
           {action.href ? (
-            <Link href={action.href} className="inline-flex items-center gap-1 text-[12.5px] font-semibold">
+            <Link underline="hover" href={action.href} className="inline-flex items-center gap-1 text-[12.5px] font-semibold">
               {action.label}
               <ArrowRight size={14} aria-hidden />
             </Link>

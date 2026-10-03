@@ -61,7 +61,7 @@ export function ForgotPasswordForm({
   if (sent) {
     return (
       <div className={cn(authFormClass, className)}>
-        <span className="mb-5 grid size-11 place-items-center rounded-xl bg-primary/14 text-primary-text">
+        <span className="mb-5 grid size-11 place-items-center rounded-xl bg-primary/14 text-primary-chip-text">
           <MailCheck size={20} aria-hidden />
         </span>
         <AuthHeader

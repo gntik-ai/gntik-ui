@@ -12,7 +12,7 @@ describe('Link', () => {
     render(<Link ref={ref} href="/docs" className="font-semibold">Docs</Link>);
     const link = screen.getByRole('link', { name: 'Docs' });
     expect(link).toHaveAttribute('href', '/docs');
-    expect(link).toHaveClass('text-primary-text', 'hover:underline', 'font-semibold');
+    expect(link).toHaveClass('text-primary-text', 'underline', 'font-semibold');
     expect(link).not.toHaveClass('font-medium');
     expect(ref.current).toBe(link);
   });

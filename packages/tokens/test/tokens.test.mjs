@@ -66,6 +66,7 @@ test('pairing aliases resolve to existing tokens and meet WCAG AA', () => {
       assert.ok(m, `${theme} ${alias} must be var(--token), got ${value}`);
       assert.ok(tokens[m[1]], `${theme} ${alias} points at unknown token ${m[1]}`);
       if (alias === '--focus-ring') continue; // non-text: 3:1, checked below
+      if (alias.endsWith('-chip-text')) continue; // checked on tints below
       for (const surface of ['--background', '--card', '--popover']) {
         const r = ratio(tokens[m[1]], tokens[surface]);
         assert.ok(r >= 4.5, `${theme} ${alias} on ${surface} is ${r.toFixed(2)}:1`);
@@ -85,5 +86,37 @@ test('runtime tokenHex converts brand HSL like the browser', async () => {
   } finally {
     delete globalThis.document;
     delete globalThis.getComputedStyle;
+  }
+});
+
+// Chip text sits on its tone's tint (bg-<tone>/10 … /20) over the background, card or popover.
+function hslToRgb(ch) {
+  const [h, s, l] = ch.split(/\s+/).map((v) => parseFloat(v));
+  const S = s / 100, L = l / 100, a = S * Math.min(L, 1 - L);
+  const f = (n) => { const k = (n + h / 30) % 12; return L - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)); };
+  return [f(0), f(8), f(4)];
+}
+const lum = ([r, g, b]) => {
+  const lin = (c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+};
+const rgbRatio = (x, y) => { const [p, q] = [lum(x), lum(y)].sort((m, n) => n - m); return (p + 0.05) / (q + 0.05); };
+
+test('chip text aliases meet WCAG AA on their tint in every theme', () => {
+  const brand = parse(css);
+  const aliases = parse(pairing);
+  const TONE = { '--primary-chip-text': '--primary', '--success-chip-text': '--success', '--warning-chip-text': '--warning', '--destructive-chip-text': '--destructive' };
+  for (const theme of [':root', '.dark', '.high_contrast']) {
+    const tokens = { ...brand[':root'], ...brand[theme] };
+    for (const [alias, tone] of Object.entries(TONE)) {
+      const text = hslToRgb(tokens[/var\((--[\w-]+)\)/.exec(aliases[theme][alias])[1]]);
+      for (const surface of ['--background', '--card', '--popover']) {
+        for (const alpha of [0.1, 0.15, 0.2]) {
+          const bg = hslToRgb(tokens[surface]).map((c, i) => c * (1 - alpha) + hslToRgb(tokens[tone])[i] * alpha);
+          const r = rgbRatio(text, bg);
+          assert.ok(r >= 4.5, `${theme} ${alias} on ${tone}/${alpha * 100} over ${surface} is ${r.toFixed(2)}:1`);
+        }
+      }
+    }
   }
 });

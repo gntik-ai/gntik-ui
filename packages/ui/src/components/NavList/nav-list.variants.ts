@@ -47,7 +47,8 @@ export const navListVariants = tv({
       false: { item: 'w-full gap-2.5 px-2.5' },
     },
     current: {
-      true: { badge: 'bg-primary/16 text-primary-text' },
+      // On the selected row (bg-accent) the count reads in the row's own foreground.
+      true: { badge: 'bg-accent-foreground/12 text-accent-foreground' },
     },
   },
   defaultVariants: { collapsed: false, current: false },

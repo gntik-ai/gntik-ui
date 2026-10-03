@@ -21,7 +21,7 @@ export const datePickerVariants = tv({
     preset: [
       'rounded-[6px] px-2.5 py-1.5 text-left text-[12.5px] text-foreground transition-colors motion-reduce:transition-none',
       'hover:bg-secondary/70 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring',
-      'aria-pressed:bg-primary/12 aria-pressed:font-medium aria-pressed:text-primary-text',
+      'aria-pressed:bg-primary/12 aria-pressed:font-medium aria-pressed:text-primary-chip-text',
     ],
   },
   variants: {

@@ -33,7 +33,7 @@ export const menuVariants = tv({
   variants: {
     destructive: {
       true: {
-        item: 'text-destructive-text data-highlighted:bg-destructive/10',
+        item: 'text-destructive-text data-highlighted:bg-destructive/10 data-highlighted:text-destructive-chip-text',
         itemIcon: 'text-destructive-text',
       },
     },

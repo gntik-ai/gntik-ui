@@ -16,8 +16,8 @@ export const alertDialogVariants = tv({
   },
   variants: {
     tone: {
-      destructive: { icon: 'bg-destructive/12 text-destructive-text' },
-      warning: { icon: 'bg-warning/12 text-warning-text' },
+      destructive: { icon: 'bg-destructive/12 text-destructive-chip-text' },
+      warning: { icon: 'bg-warning/12 text-warning-chip-text' },
       info: { icon: 'bg-info/12 text-info' },
     },
   },

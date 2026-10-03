@@ -7,6 +7,9 @@
    every alias is var(--existing-token), as HSL channels.
    Use the `text-primary-text`, `text-success-text`, `text-warning-text`,
    `text-destructive-text` and `ring-focus-ring` utilities for text and focus.
+   On a TINTED chip (bg-<tone>/10–20: badges, status pills, level tags) use the
+   `text-<tone>-chip-text` aliases instead: the tint lightens a dark surface, so
+   a brand colour that passes on the plain surface can fail on its own tint.
    ============================================================================ */
 :root {
   --primary-text: var(--accent-foreground);
@@ -14,6 +17,10 @@
   --warning-text: var(--foreground);
   --destructive-text: var(--destructive);
   --focus-ring: var(--brand-secondary);
+  --primary-chip-text: var(--accent-foreground);
+  --success-chip-text: var(--accent-foreground);
+  --warning-chip-text: var(--foreground);
+  --destructive-chip-text: var(--foreground);
 }
 .dark {
   --primary-text: var(--primary);
@@ -21,6 +28,10 @@
   --warning-text: var(--warning);
   --destructive-text: var(--category-rose);
   --focus-ring: var(--ring);
+  --primary-chip-text: var(--primary);
+  --success-chip-text: var(--success);
+  --warning-chip-text: var(--warning);
+  --destructive-chip-text: var(--foreground);
 }
 .high_contrast {
   --primary-text: var(--primary);
@@ -28,4 +39,8 @@
   --warning-text: var(--warning);
   --destructive-text: var(--destructive);
   --focus-ring: var(--ring);
+  --primary-chip-text: var(--primary);
+  --success-chip-text: var(--success);
+  --warning-chip-text: var(--warning);
+  --destructive-chip-text: var(--foreground);
 }

@@ -19,9 +19,9 @@ export const statusLayoutVariants = tv({
   variants: {
     tone: {
       neutral: { code: 'text-muted-foreground' },
-      primary: { code: 'text-primary-text', iconHalo: 'bg-primary/14 text-primary-text ring-primary/30' },
-      warning: { code: 'text-warning-text', iconHalo: 'bg-warning/14 text-warning-text ring-warning/30' },
-      destructive: { code: 'text-destructive-text', iconHalo: 'bg-destructive/14 text-destructive-text ring-destructive/30' },
+      primary: { code: 'text-primary-text', iconHalo: 'bg-primary/14 text-primary-chip-text ring-primary/30' },
+      warning: { code: 'text-warning-text', iconHalo: 'bg-warning/14 text-warning-chip-text ring-warning/30' },
+      destructive: { code: 'text-destructive-text', iconHalo: 'bg-destructive/14 text-destructive-chip-text ring-destructive/30' },
     },
     fullScreen: {
       true: { root: 'h-dvh' },

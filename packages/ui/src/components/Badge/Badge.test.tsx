@@ -9,7 +9,7 @@ describe('Badge', () => {
   it('renders its label with tone classes and merges className', () => {
     render(<Badge tone="success" className="ml-2">Healthy</Badge>);
     const badge = screen.getByText('Healthy');
-    expect(badge).toHaveClass('bg-success/15', 'text-success-text', 'ml-2');
+    expect(badge).toHaveClass('bg-success/15', 'text-success-chip-text', 'ml-2');
   });
 
   it('uses text-foreground (not the raw tone) for info and category tones', () => {

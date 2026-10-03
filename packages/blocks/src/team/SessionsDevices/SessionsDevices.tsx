@@ -67,7 +67,7 @@ export function SessionsDevices({
           const KindIcon = KIND_ICON[s.kind];
           return (
             <li key={s.id} className="flex items-center gap-3 px-5 py-3.5">
-              <span className={cn('grid size-9 shrink-0 place-items-center rounded-md', s.current ? 'bg-primary/14 text-primary-text' : 'bg-secondary text-muted-foreground')}>
+              <span className={cn('grid size-9 shrink-0 place-items-center rounded-md', s.current ? 'bg-primary/14 text-primary-chip-text' : 'bg-secondary text-muted-foreground')}>
                 <KindIcon size={17} aria-hidden />
               </span>
               <div className="min-w-0 flex-1">

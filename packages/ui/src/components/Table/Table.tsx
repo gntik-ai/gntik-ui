@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
-import { createContext, useContext, type HTMLAttributes, type Ref, type TdHTMLAttributes, type ThHTMLAttributes } from 'react';
+import { createContext, useCallback, useContext, useState, type HTMLAttributes, type Ref, type TdHTMLAttributes, type ThHTMLAttributes } from 'react';
 import { cn } from '../../utils/cn';
 import { nextSortDirection, tableVariants, type SortDirection, type TableDensity } from './table.variants';
 
@@ -15,19 +15,31 @@ export interface TableProps extends Omit<HTMLAttributes<HTMLTableElement>, 'clas
   stickyHeader?: boolean;
   /** Classes for the scroll container (e.g. `max-h-80` with stickyHeader). */
   containerClassName?: string;
-  /** Accessible name of the scroll container when it is focusable (stickyHeader). */
+  /** Accessible name of the scroll container when it is focusable (it scrolls, or stickyHeader). */
   containerLabel?: string;
 }
 
 /** Semantic data table in a horizontally scrollable container. */
 export function Table({ density = 'comfortable', stickyHeader = false, containerClassName, containerLabel, className, ...props }: TableProps) {
+  // A container that actually scrolls must be reachable from the keyboard (WCAG 2.1.1).
+  const [overflows, setOverflows] = useState(false);
+  const measure = useCallback((el: HTMLDivElement | null) => {
+    if (!el || typeof ResizeObserver === 'undefined') return undefined;
+    const check = () => setOverflows(el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1);
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    if (el.firstElementChild) ro.observe(el.firstElementChild);
+    return () => ro.disconnect();
+  }, []);
+  const focusable = stickyHeader || overflows;
   return (
     <TableContext value={{ density, sticky: stickyHeader }}>
       <div
+        ref={measure}
         className={cn(s.container(), containerClassName)}
-        tabIndex={stickyHeader ? 0 : undefined}
-        role={stickyHeader ? 'region' : undefined}
-        aria-label={stickyHeader ? containerLabel : undefined}
+        tabIndex={focusable ? 0 : undefined}
+        role={focusable ? 'region' : undefined}
+        aria-label={focusable ? (containerLabel ?? 'Scrollable table') : undefined}
       >
         <table data-density={density} className={cn(s.table(), className)} {...props} />
       </div>

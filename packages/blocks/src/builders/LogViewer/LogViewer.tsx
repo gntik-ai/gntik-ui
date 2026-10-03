@@ -8,10 +8,10 @@ export type { LogLevel, LogLine } from './fixtures';
 export const LOG_LEVELS: LogLevel[] = ['debug', 'info', 'warn', 'error'];
 
 const LEVEL_STYLE: Record<LogLevel, { label: string; className: string }> = {
-  debug: { label: 'DEBUG', className: 'bg-muted-foreground/16 text-muted-foreground' },
+  debug: { label: 'DEBUG', className: 'bg-muted-foreground/16 text-foreground' },
   info: { label: 'INFO', className: 'bg-info/15 text-foreground' },
-  warn: { label: 'WARN', className: 'bg-warning/16 text-warning-text' },
-  error: { label: 'ERROR', className: 'bg-destructive/15 text-destructive-text' },
+  warn: { label: 'WARN', className: 'bg-warning/16 text-warning-chip-text' },
+  error: { label: 'ERROR', className: 'bg-destructive/15 text-destructive-chip-text' },
 };
 
 export interface LogViewerProps {

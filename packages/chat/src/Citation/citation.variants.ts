@@ -4,7 +4,7 @@ import { focusRing } from '../utils/focus';
 export const citationStyles = {
   trigger: [
     'mx-0.5 inline-flex h-[18px] min-w-[18px] -translate-y-px cursor-pointer items-center justify-center rounded-md px-1',
-    'bg-primary/14 align-baseline font-mono text-[10.5px] font-semibold leading-none text-primary-text',
+    'bg-primary/14 align-baseline font-mono text-[10.5px] font-semibold leading-none text-primary-chip-text',
     `transition-colors hover:bg-primary/24 data-[popup-open]:bg-primary/24 motion-reduce:transition-none ${focusRing}`,
   ].join(' '),
   popup: 'w-80',

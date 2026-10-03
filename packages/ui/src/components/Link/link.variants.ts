@@ -21,7 +21,8 @@ export const linkVariants = tv({
       none: { root: 'no-underline' },
     },
   },
-  defaultVariants: { tone: 'primary', underline: 'hover' },
+  // Inline links are underlined by default (WCAG 1.4.1: not by colour alone); standalone links opt out.
+  defaultVariants: { tone: 'primary', underline: 'always' },
 });
 
 export type LinkVariantProps = VariantProps<typeof linkVariants>;

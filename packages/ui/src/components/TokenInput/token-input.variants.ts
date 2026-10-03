@@ -13,8 +13,8 @@ export const tokenInputVariants = tv({
     input: 'min-w-24 flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed',
     counter: 'ml-auto shrink-0 pr-0.5 font-mono text-[11px] text-muted-foreground tabular-nums',
     chip: [
-      'inline-flex max-w-full items-center gap-1 rounded border border-transparent bg-primary/14 pr-1 pl-2 font-medium text-primary-text',
-      'data-invalid:border-destructive/50 data-invalid:bg-destructive/12 data-invalid:text-destructive-text',
+      'inline-flex max-w-full items-center gap-1 rounded border border-transparent bg-primary/14 pr-1 pl-2 font-medium text-primary-chip-text',
+      'data-invalid:border-destructive/50 data-invalid:bg-destructive/12 data-invalid:text-destructive-chip-text',
       'data-disabled:opacity-60',
     ],
     chipText: 'truncate',

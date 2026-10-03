@@ -31,7 +31,7 @@ export function ResetPasswordForm({ onSubmit, error: errorProp, minPasswordLengt
   if (done) {
     return (
       <div className={cn(authFormClass, className)}>
-        <span className="mb-5 grid size-11 place-items-center rounded-xl bg-success/14 text-success-text">
+        <span className="mb-5 grid size-11 place-items-center rounded-xl bg-success/14 text-success-chip-text">
           <CircleCheck size={20} aria-hidden />
         </span>
         <AuthHeader eyebrow={eyebrow} title="Password updated" description="You can now sign in with your new password. Other sessions were signed out." />

@@ -10,7 +10,7 @@ export const buttonVariants = tv({
     variant: {
       primary: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90',
       secondary: 'border border-border bg-card text-foreground shadow-sm hover:bg-secondary/70',
-      soft: 'bg-primary/14 text-primary-text hover:bg-primary/20',
+      soft: 'bg-primary/14 text-primary-chip-text hover:bg-primary/20',
       ghost: 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground',
       destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
     },

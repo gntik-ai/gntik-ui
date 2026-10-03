@@ -53,7 +53,7 @@ export function FeatureGrid({
           const Glyph = f.icon;
           return (
             <li key={f.title} className="flex flex-col">
-              <span aria-hidden className="inline-flex size-10 items-center justify-center rounded-lg bg-primary/14 text-primary-text">
+              <span aria-hidden className="inline-flex size-10 items-center justify-center rounded-lg bg-primary/14 text-primary-chip-text">
                 <Glyph size={19} />
               </span>
               <ItemHeading className="mt-4 text-[15px] font-semibold tracking-tight text-foreground">{f.title}</ItemHeading>

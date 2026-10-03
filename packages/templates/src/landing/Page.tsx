@@ -69,7 +69,7 @@ export default function LandingPage(props: Partial<LandingProps>) {
             <ul className="flex flex-wrap gap-x-4 gap-y-1">
               {footerLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} tone="muted">
+                  <Link href={l.href} tone="muted" underline="hover">
                     {l.label}
                   </Link>
                 </li>

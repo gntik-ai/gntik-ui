@@ -24,7 +24,7 @@ export default function AuthLayoutSplit() {
             <ul className="mt-9 flex flex-col gap-3.5">
               {FEATURES.map((f) => (
                 <li key={f} className="flex items-center gap-3">
-                  <span className="grid size-[23px] shrink-0 place-items-center rounded-[7px] bg-primary/14 text-primary-text">
+                  <span className="grid size-[23px] shrink-0 place-items-center rounded-[7px] bg-primary/14 text-primary-chip-text">
                     <Check size={14} strokeWidth={2.6} aria-hidden />
                   </span>
                   <span className="text-[14.5px] text-muted-foreground">{f}</span>

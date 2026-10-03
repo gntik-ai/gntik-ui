@@ -48,7 +48,7 @@ describe('Button', () => {
   it('applies variant classes and merges className', () => {
     render(<Button variant="soft" className="px-8">Soft</Button>);
     const btn = screen.getByRole('button', { name: 'Soft' });
-    expect(btn).toHaveClass('text-primary-text', 'px-8');
+    expect(btn).toHaveClass('text-primary-chip-text', 'px-8');
     expect(btn).not.toHaveClass('px-3.5');
   });
 

@@ -10,7 +10,7 @@ export const notificationsPopoverVariants = tv({
     popup: 'w-[340px] max-w-[calc(100vw-2rem)]',
     header: 'flex items-center gap-2 border-b border-border py-2 pr-2 pl-3.5',
     title: 'flex-1 text-[13px]',
-    unreadPill: 'ml-1.5 rounded-full bg-primary/14 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-primary-text',
+    unreadPill: 'ml-1.5 rounded-full bg-primary/14 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-primary-chip-text',
     list: 'm-0 max-h-[360px] list-none overflow-y-auto p-1.5',
     row: [
       'flex w-full gap-2.5 rounded-[7px] px-2.5 py-2 text-left',
