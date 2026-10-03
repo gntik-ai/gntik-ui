@@ -1,3 +1,11 @@
 export type { BlockMeta } from './meta';
+export * from './ai';
+export * from './billing';
+export * from './builders';
+export * from './data-display';
 export * from './feedback';
+export * from './marketing';
 export * from './page-chrome';
+export * from './scheduling';
+export * from './shell';
+export * from './tables';

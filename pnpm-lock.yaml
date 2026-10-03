@@ -84,6 +84,12 @@ importers:
       '@gntik-ai/charts':
         specifier: workspace:*
         version: link:../charts
+      '@gntik-ai/editor':
+        specifier: workspace:*
+        version: link:../editor
+      '@gntik-ai/flow':
+        specifier: workspace:*
+        version: link:../flow
       '@gntik-ai/icons':
         specifier: workspace:*
         version: link:../icons

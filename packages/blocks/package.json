@@ -37,6 +37,8 @@
   },
   "dependencies": {
     "@gntik-ai/charts": "workspace:*",
+    "@gntik-ai/editor": "workspace:*",
+    "@gntik-ai/flow": "workspace:*",
     "@gntik-ai/icons": "workspace:*",
     "@gntik-ai/tokens": "workspace:*",
     "@gntik-ai/ui": "workspace:*",
