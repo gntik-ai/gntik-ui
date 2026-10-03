@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@import "@fontsource/geist";
+@import "@fontsource/geist-mono";
+@import "@gntik-ai/ui/styles.css";
+
+/* Extra Geist weights used by the kit (400 comes from the imports above). */
+@import "@fontsource/geist/500.css";
+@import "@fontsource/geist/600.css";
+@import "@fontsource/geist/700.css";
+@import "@fontsource/geist-mono/500.css";
+
+/* Blocks, charts, chat… and the templates themselves (includes the ui styles above). */
+@import "@gntik-ai/templates/styles.css";
