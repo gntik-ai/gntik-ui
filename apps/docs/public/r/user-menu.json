@@ -10,13 +10,13 @@
     "lucide-react@^1.48.0"
   ],
   "registryDependencies": [
-    "https://gntik-ui.invalid/r/gntik-tokens.json",
-    "https://gntik-ui.invalid/r/avatar.json",
-    "https://gntik-ui.invalid/r/link.json",
-    "https://gntik-ui.invalid/r/menu.json",
-    "https://gntik-ui.invalid/r/theme.json",
-    "https://gntik-ui.invalid/r/theme-switcher.json",
-    "https://gntik-ui.invalid/r/ui-utils.json"
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/avatar.json",
+    "https://ui.gntik.ai/r/link.json",
+    "https://ui.gntik.ai/r/menu.json",
+    "https://ui.gntik.ai/r/theme.json",
+    "https://ui.gntik.ai/r/theme-switcher.json",
+    "https://ui.gntik.ai/r/ui-utils.json"
   ],
   "files": [
     {

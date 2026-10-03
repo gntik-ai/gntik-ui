@@ -37,8 +37,10 @@ function kitPackages(item) {
   return [...pkgs].sort((a, b) => (a === '@gntik-ai/ui' ? -1 : b === '@gntik-ai/ui' ? 1 : a.localeCompare(b)));
 }
 
+// The published registry: its items reference siblings at this origin, so commands always use it
+// (also on preview deployments and localhost).
 function registryBase() {
-  return typeof window !== 'undefined' && window.location?.origin?.startsWith('http') ? window.location.origin : 'https://<docs-host>';
+  return 'https://ui.gntik.ai';
 }
 
 function commandsFor(item) {

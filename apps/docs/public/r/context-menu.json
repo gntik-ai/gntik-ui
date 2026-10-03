@@ -9,9 +9,9 @@
     "@base-ui/react@^1.8.0"
   ],
   "registryDependencies": [
-    "https://gntik-ui.invalid/r/gntik-tokens.json",
-    "https://gntik-ui.invalid/r/menu.json",
-    "https://gntik-ui.invalid/r/ui-utils.json"
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/menu.json",
+    "https://ui.gntik.ai/r/ui-utils.json"
   ],
   "files": [
     {

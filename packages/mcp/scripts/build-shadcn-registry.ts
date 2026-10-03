@@ -23,11 +23,9 @@
  * becomes a package import (as in the CLI) and is reported.
  *
  * registryDependencies are absolute URLs `<base>/r/<dep>.json`. The base comes from
- * GNTIK_REGISTRY_BASE_URL (no trailing slash). Its default, https://gntik-ui.invalid, is a
- * deliberate placeholder: the reserved `.invalid` TLD never resolves, so a registry generated
- * without the variable fails loudly instead of pointing at a host someone else could own.
- * Generate the published copy with the docs' real origin, e.g.
- *   GNTIK_REGISTRY_BASE_URL=https://<docs-host> pnpm registry
+ * GNTIK_REGISTRY_BASE_URL (no trailing slash), defaulting to the published docs origin,
+ * https://ui.gntik.ai (Vercel). Override it only to test a copy served elsewhere, e.g.
+ *   GNTIK_REGISTRY_BASE_URL=https://<preview-host> pnpm registry
  * (`--check` must run with the same value.)
  *
  * Usage: tsx scripts/build-shadcn-registry.ts [--check] [--out <dir>]
@@ -38,7 +36,7 @@ import path from 'node:path';
 const ROOT = path.resolve(import.meta.dirname, '../../..');
 const SCHEMA_ITEM = 'https://ui.shadcn.com/schema/registry-item.json';
 const SCHEMA_INDEX = 'https://ui.shadcn.com/schema/registry.json';
-export const PLACEHOLDER_BASE = 'https://gntik-ui.invalid';
+export const DEFAULT_BASE = 'https://ui.gntik.ai';
 export const TOKENS_ID = 'gntik-tokens';
 
 type Kind = 'component' | 'layout' | 'block' | 'template';
@@ -121,7 +119,7 @@ function packageRoots(items: KitItem[]) {
 export interface BuildResult { files: Map<string, string>; warnings: string[] }
 
 export function build(opts: { baseUrl?: string; kitRegistry?: string } = {}): BuildResult {
-  const base = (opts.baseUrl ?? process.env.GNTIK_REGISTRY_BASE_URL ?? PLACEHOLDER_BASE).replace(/\/+$/, '');
+  const base = (opts.baseUrl ?? process.env.GNTIK_REGISTRY_BASE_URL ?? DEFAULT_BASE).replace(/\/+$/, '');
   if (!/^https?:\/\/[^/]+/.test(base)) throw new Error(`GNTIK_REGISTRY_BASE_URL must be an absolute http(s) URL, got "${base}"`);
   const kit = readJson<{ items: KitItem[] }>(opts.kitRegistry ?? path.join(ROOT, 'kit-registry.json'));
   const { pkgs, ranges } = workspace();

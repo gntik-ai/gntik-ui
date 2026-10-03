@@ -10,7 +10,7 @@
     "lucide-react@^1.48.0"
   ],
   "registryDependencies": [
-    "https://gntik-ui.invalid/r/gntik-tokens.json"
+    "https://ui.gntik.ai/r/gntik-tokens.json"
   ],
   "files": [
     {

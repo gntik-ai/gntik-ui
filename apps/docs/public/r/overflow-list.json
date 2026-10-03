@@ -7,9 +7,9 @@
   "author": "gntik-ai",
   "dependencies": [],
   "registryDependencies": [
-    "https://gntik-ui.invalid/r/gntik-tokens.json",
-    "https://gntik-ui.invalid/r/popover.json",
-    "https://gntik-ui.invalid/r/ui-utils.json"
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/popover.json",
+    "https://ui.gntik.ai/r/ui-utils.json"
   ],
   "files": [
     {

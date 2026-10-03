@@ -10,11 +10,11 @@
     "lucide-react@^1.48.0"
   ],
   "registryDependencies": [
-    "https://gntik-ui.invalid/r/gntik-tokens.json",
-    "https://gntik-ui.invalid/r/button.json",
-    "https://gntik-ui.invalid/r/theme.json",
-    "https://gntik-ui.invalid/r/toggle-group.json",
-    "https://gntik-ui.invalid/r/ui-utils.json"
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/button.json",
+    "https://ui.gntik.ai/r/theme.json",
+    "https://ui.gntik.ai/r/toggle-group.json",
+    "https://ui.gntik.ai/r/ui-utils.json"
   ],
   "files": [
     {

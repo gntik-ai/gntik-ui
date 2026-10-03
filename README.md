@@ -45,7 +45,7 @@ gntik-ui/
 ├─ docs/governance/         lifecycle, release policy, review rubric, spec template
 ├─ AGENTS.md · .claude/     instructions and skills for coding agents (build-page,
 │                           add-component, brand-review)
-├─ apps/docs/public/r/      shadcn-compatible registry (`npx shadcn add <url>`)
+├─ apps/docs/public/r/      shadcn-compatible registry, served at https://ui.gntik.ai/r/
 ├─ apps/docs/public/llms*.txt  the kit as plain text for LLMs
 ├─ blocks/                  static HTML references (Shell · Login · Fleet-filters)
 ├─ registry.json            generated index of the catalog (`pnpm registry`)
@@ -68,6 +68,9 @@ pnpm changeset        # describe a change to a published package
 ```
 
 ## Adopt in a product
+
+Docs and catalog: **https://ui.gntik.ai**. Any item also installs with the shadcn CLI:
+`npx shadcn@latest add https://ui.gntik.ai/r/button.json` (index at `/r/registry.json`).
 
 Fastest path: `npx @gntik-ai/cli init` in a Vite or Next app (writes `.npmrc`, CSS imports,
 `gntik-ui.json` and the theme wiring, installs the packages), then `gntik-ui add <id>` for

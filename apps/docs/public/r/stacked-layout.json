@@ -9,12 +9,12 @@
     "@base-ui/react@^1.8.0"
   ],
   "registryDependencies": [
-    "https://gntik-ui.invalid/r/gntik-tokens.json",
-    "https://gntik-ui.invalid/r/link.json",
-    "https://gntik-ui.invalid/r/mobile-nav.json",
-    "https://gntik-ui.invalid/r/nav-list.json",
-    "https://gntik-ui.invalid/r/ui-utils.json",
-    "https://gntik-ui.invalid/r/visually-hidden.json"
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/link.json",
+    "https://ui.gntik.ai/r/mobile-nav.json",
+    "https://ui.gntik.ai/r/nav-list.json",
+    "https://ui.gntik.ai/r/ui-utils.json",
+    "https://ui.gntik.ai/r/visually-hidden.json"
   ],
   "files": [
     {
