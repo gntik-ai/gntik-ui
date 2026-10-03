@@ -14,7 +14,7 @@ export default function PageSettings() {
         actions={<Button variant="secondary" icon={Plus}>Add domain</Button>}
         actionBar={
           <>
-            <span aria-live="polite" className="mr-auto text-[12px] text-muted-foreground">
+            <span aria-live="polite" className="me-auto text-[12px] text-muted-foreground">
               {saved ? 'Changes saved' : 'Unsaved changes'}
             </span>
             <Button variant="ghost" onClick={() => setSaved(false)}>

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "members-table",
+  "type": "registry:block",
+  "title": "Members table",
+  "description": "Workspace members with avatar, email, an inline role select, last activity and a row menu to remove.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/invite-members-dialog.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/team/MembersTable/MembersTable.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/team/members-table/MembersTable.tsx",
+      "content": "import {\n  Avatar,\n  Badge,\n  MoreMenu,\n  Select,\n  SelectContent,\n  SelectItem,\n  SelectTrigger,\n  Table,\n  TableBody,\n  TableCaption,\n  TableCell,\n  TableHead,\n  TableHeader,\n  TableRow,\n  Timestamp,\n  cn,\n} from '@gntik-ai/ui';\nimport { Mail, UserMinus } from '@gntik-ai/icons';\nimport { useState } from 'react';\nimport { memberRoles, type RoleOption } from '../../forms/invite-members-dialog/fixtures';\nimport { members as defaultMembers, type Member } from './fixtures';\n\nexport type { Member } from './fixtures';\n\nexport interface MembersTableProps {\n  members?: Member[];\n  roles?: RoleOption[];\n  /** Id of the signed-in member: shown with a \"You\" badge, and their role and removal are locked. */\n  currentUserId?: string;\n  onRoleChange?: (memberId: string, role: string) => void;\n  onRemove?: (member: Member) => void;\n  onEmail?: (member: Member) => void;\n  /** Table caption (screen-reader only by default). */\n  caption?: string;\n  className?: string;\n}\n\n/** Workspace members: avatar, name and email, inline role select, last activity and a row menu. */\nexport function MembersTable({\n  members = defaultMembers,\n  roles = memberRoles,\n  currentUserId = 'u1',\n  onRoleChange,\n  onRemove,\n  onEmail,\n  caption = 'Workspace members',\n  className,\n}: MembersTableProps) {\n  const [roleOverrides, setRoleOverrides] = useState<Record<string, string>>({});\n  const [removed, setRemoved] = useState<string[]>([]);\n  const rows = members.filter((m) => !removed.includes(m.id));\n  const items = roles.map(({ value, label }) => ({ value, label }));\n\n  return (\n    <Table className={cn('min-w-[560px]', className)}>\n      <TableCaption srOnly>{caption}</TableCaption>\n      <TableHeader>\n        <TableRow>\n          <TableHead>Member</TableHead>\n          <TableHead className=\"w-44\">Role</TableHead>\n          <TableHead className=\"hidden sm:table-cell\">Last active</TableHead>\n          <TableHead align=\"right\">\n            <span className=\"sr-only\">Actions</span>\n          </TableHead>\n        </TableRow>\n      </TableHeader>\n      <TableBody>\n        {rows.map((m) => {\n          const you = m.id === currentUserId;\n          const role = roleOverrides[m.id] ?? m.role;\n          return (\n            <TableRow key={m.id}>\n              <TableCell>\n                <div className=\"flex min-w-0 items-center gap-3\">\n                  <Avatar size=\"sm\" name={m.name} src={m.avatarUrl} aria-hidden />\n                  <div className=\"min-w-0\">\n                    <div className=\"flex items-center gap-2\">\n                      <span className=\"truncate text-[13px] font-medium text-foreground\">{m.name}</span>\n                      {you && (\n                        <Badge size=\"sm\" tone=\"primary\">\n                          You\n                        </Badge>\n                      )}\n                    </div>\n                    <div className=\"truncate text-[12px] text-muted-foreground\">{m.email}</div>\n                  </div>\n                </div>\n              </TableCell>\n              <TableCell>\n                <Select\n                  value={role}\n                  items={items}\n                  disabled={you}\n                  onValueChange={(v) => {\n                    if (v == null) return;\n                    setRoleOverrides((o) => ({ ...o, [m.id]: v }));\n                    onRoleChange?.(m.id, v);\n                  }}\n                >\n                  <SelectTrigger size=\"sm\" aria-label={`Role for ${m.name}`} className=\"w-full\" />\n                  <SelectContent>\n                    {roles.map((r) => (\n                      <SelectItem key={r.value} value={r.value}>\n                        {r.label}\n                      </SelectItem>\n                    ))}\n                  </SelectContent>\n                </Select>\n              </TableCell>\n              <TableCell className=\"hidden text-[12.5px] text-muted-foreground sm:table-cell\">\n                {m.lastActive ? <Timestamp value={m.lastActive} /> : 'Never'}\n              </TableCell>\n              <TableCell align=\"right\">\n                <MoreMenu\n                  label={`Actions for ${m.name}`}\n                  variant=\"ghost\"\n                  size=\"sm\"\n                  items={[\n                    { label: 'Send email', icon: Mail, onSelect: () => onEmail?.(m) },\n                    'separator',\n                    {\n                      label: 'Remove from workspace',\n                      icon: UserMinus,\n                      destructive: true,\n                      disabled: you,\n                      onSelect: () => {\n                        setRemoved((r) => [...r, m.id]);\n                        onRemove?.(m);\n                      },\n                    },\n                  ]}\n                />\n              </TableCell>\n            </TableRow>\n          );\n        })}\n      </TableBody>\n    </Table>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/team/MembersTable/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/team/members-table/fixtures.ts",
+      "content": "const ago = (minutes: number) => new Date(Date.now() - minutes * 60_000).toISOString();\n\nexport interface Member {\n  id: string;\n  name: string;\n  email: string;\n  avatarUrl?: string;\n  role: string;\n  /** ISO date of the last activity; null when the member never signed in. */\n  lastActive: string | null;\n}\n\nexport const members: Member[] = [\n  { id: 'u1', name: 'Avery Collins', email: 'avery@example.com', role: 'owner', lastActive: ago(2) },\n  { id: 'u2', name: 'Sam Rivera', email: 'sam@example.com', role: 'admin', lastActive: ago(95) },\n  { id: 'u3', name: 'Jordan Lee', email: 'jordan@example.com', role: 'member', lastActive: ago(60 * 26) },\n  { id: 'u4', name: 'Riley Chen', email: 'riley@example.com', role: 'member', lastActive: ago(60 * 24 * 9) },\n  { id: 'u5', name: 'Morgan Patel', email: 'morgan@example.com', role: 'viewer', lastActive: null },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "team"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/team/MembersTable/block.meta.ts"
+  }
+}

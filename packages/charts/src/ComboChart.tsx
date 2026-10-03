@@ -2,7 +2,8 @@ import { Bar, CartesianGrid, ComposedChart, Line, Tooltip, XAxis, YAxis } from '
 import { ChartLegend, useHiddenSeries } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
 import { formatAny, identity, type ValueFormatter } from './format';
-import { accessibleName, axisProps, ChartFrame, type BaseChartProps, type DataKey } from './shared';
+import { accessibleName, cartesianTable, axisProps, ChartFrame, type BaseChartProps, type DataKey } from './shared';
+import { resolveState } from './states';
 import { useChartTheme, type ChartColor } from './theme';
 
 export interface ComboChartProps<T extends object>
@@ -34,6 +35,11 @@ export function ComboChart<T extends object>({
   description,
   className,
   'aria-label': ariaLabel,
+  state,
+  emptyMessage,
+  errorMessage,
+  onRetry,
+  dataTable = false,
 }: ComboChartProps<T>) {
   const t = useChartTheme();
   const [hidden, toggle] = useHiddenSeries();
@@ -48,6 +54,11 @@ export function ComboChart<T extends object>({
   return (
     <ChartFrame
       label={name}
+      state={resolveState(state, data.length)}
+      emptyMessage={emptyMessage}
+      errorMessage={errorMessage}
+      onRetry={onRetry}
+      table={dataTable && cartesianTable(name, data, index, [barSeries, lineSeries], fmtSeries)}
       height={height}
       className={className}
       legend={showLegend && <ChartLegend className="mb-3 px-1" items={legend} hidden={hidden} onToggle={toggle} />}

@@ -10,7 +10,7 @@ export const badgeVariants = tv({
     root: 'inline-flex max-w-full shrink-0 items-center gap-1.5 font-semibold whitespace-nowrap select-none',
     dot: 'size-1.5 shrink-0 rounded-full',
     remove: [
-      '-mr-1 grid size-4 shrink-0 cursor-pointer place-items-center rounded text-current opacity-70 transition-colors motion-reduce:transition-none',
+      '-me-1 grid size-4 shrink-0 cursor-pointer place-items-center rounded text-current opacity-70 transition-colors motion-reduce:transition-none',
       'hover:bg-foreground/10 hover:opacity-100',
       'focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring',
     ],
@@ -34,6 +34,8 @@ export const badgeVariants = tv({
       solid: { dot: 'bg-current' },
     },
     size: {
+      /** Follows `data-density` (comfortable = md). */
+      auto: { root: 'h-chip px-2.5 font-mono text-[10.5px]' },
       sm: { root: 'h-5 px-2 font-mono text-[10px]' },
       md: { root: 'h-[22px] px-2.5 font-mono text-[10.5px]' },
       lg: { root: 'h-6 px-2.5 text-[11.5px]' },
@@ -79,7 +81,7 @@ export const badgeVariants = tv({
     { variant: 'solid', tone: 'amber', class: { root: 'bg-category-amber/32 text-foreground', dot: 'bg-category-amber' } },
     { variant: 'solid', tone: 'rose', class: { root: 'bg-category-rose/30 text-foreground', dot: 'bg-category-rose' } },
   ],
-  defaultVariants: { tone: 'neutral', variant: 'soft', size: 'md', shape: 'rounded' },
+  defaultVariants: { tone: 'neutral', variant: 'soft', size: 'auto', shape: 'rounded' },
 });
 
 export type BadgeVariantProps = VariantProps<typeof badgeVariants>;

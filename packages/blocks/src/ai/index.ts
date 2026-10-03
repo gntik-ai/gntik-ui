@@ -2,6 +2,7 @@ export * from './AssistantCardGrid/AssistantCardGrid';
 export { meta as assistantCardGridMeta } from './AssistantCardGrid/block.meta';
 export * from './TraceWaterfall/TraceWaterfall';
 export { meta as traceWaterfallMeta } from './TraceWaterfall/block.meta';
+export { traceSpans, runningTraceSpans } from './TraceWaterfall/fixtures';
 export * from './TokenCostCard/TokenCostCard';
 export { meta as tokenCostCardMeta } from './TokenCostCard/block.meta';
 export * from './PromptEditor/PromptEditor';

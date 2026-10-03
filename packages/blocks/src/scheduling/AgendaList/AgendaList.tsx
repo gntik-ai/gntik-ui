@@ -1,5 +1,5 @@
 import { useId, useMemo } from 'react';
-import { Badge, EmptyState, cn } from '@gntik-ai/ui';
+import { Badge, EmptyState, cn, useI18n } from '@gntik-ai/ui';
 import { CalendarDays, ChevronRight, Clock } from '@gntik-ai/icons';
 import { EventTile } from '../shared/EventTile';
 import { addDays, dayKey, formatDay, formatRange, sameDay } from '../shared/dates';
@@ -35,13 +35,17 @@ export function AgendaList({
   days = 7,
   onEventClick,
   kinds = defaultEventKinds,
-  title = 'Agenda',
+  title: titleProp,
   maxHeight,
-  emptyTitle = 'Nothing scheduled',
-  emptyDescription = 'There is no scheduled work in this period.',
+  emptyTitle: emptyTitleProp,
+  emptyDescription: emptyDescriptionProp,
   titleAs: TitleTag = 'h3',
   className,
 }: AgendaListProps) {
+  const { t, locale } = useI18n();
+  const title = titleProp ?? t('calendar.agenda');
+  const emptyTitle = emptyTitleProp ?? t('calendar.emptyTitle');
+  const emptyDescription = emptyDescriptionProp ?? t('calendar.emptyDescription');
   const SubTag = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
   const uid = useId();
   const start = from === undefined ? today : from;
@@ -54,9 +58,9 @@ export function AgendaList({
   }, [events, start, days]);
 
   const dayLabel = (d: Date) => {
-    if (sameDay(d, today)) return `Today · ${formatDay(d)}`;
-    if (sameDay(d, addDays(today, 1))) return `Tomorrow · ${formatDay(d)}`;
-    return formatDay(d);
+    if (sameDay(d, today)) return `${t('calendar.today')} · ${formatDay(d, locale)}`;
+    if (sameDay(d, addDays(today, 1))) return `${t('calendar.tomorrow')} · ${formatDay(d, locale)}`;
+    return formatDay(d, locale);
   };
 
   return (
@@ -91,7 +95,7 @@ export function AgendaList({
                 <ul aria-labelledby={headingId} className="divide-y divide-border border-b border-border last:border-b-0">
                   {list.map((event) => {
                     const kind = kindOf(event, kinds);
-                    const range = formatRange(event.start, event.end);
+                    const range = formatRange(event.start, event.end, locale);
                     const content = (
                       <>
                         <EventTile kind={kind} />
@@ -113,7 +117,7 @@ export function AgendaList({
                         </Badge>
                       </>
                     );
-                    const row = 'flex w-full items-center gap-3.5 px-4 py-3 text-left sm:px-5';
+                    const row = 'flex w-full items-center gap-3.5 px-4 py-3 text-start sm:px-5';
                     return (
                       <li key={event.id}>
                         {onEventClick ? (
@@ -126,7 +130,7 @@ export function AgendaList({
                             )}
                           >
                             {content}
-                            <ChevronRight size={16} aria-hidden className="shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+                            <ChevronRight size={16} aria-hidden className="shrink-0 text-muted-foreground transition-colors group-hover:text-foreground rtl:-scale-x-100" />
                           </button>
                         ) : (
                           <div className={row}>{content}</div>

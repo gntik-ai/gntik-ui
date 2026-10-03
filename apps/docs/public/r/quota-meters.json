@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "quota-meters",
+  "type": "registry:block",
+  "title": "Quota meters",
+  "description": "Plan quotas as usage meters with used/limit labels, amber/red thresholds, overage notes and a current/projected toggle.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/billing/QuotaMeters/QuotaMeters.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/billing/quota-meters/QuotaMeters.tsx",
+      "content": "import { useState, type ReactNode } from 'react';\nimport { Meter, Toggle, ToggleGroup, cn, type MeterThresholds } from '@gntik-ai/ui';\nimport { formatQuantity } from '../format';\nimport { sampleQuotas } from './fixtures';\n\nexport interface Quota {\n  id: string;\n  label: string;\n  used: number;\n  limit: number;\n  /** End-of-cycle projection. When any quota has one, a Current/Projected toggle appears. */\n  projected?: number;\n  /** Unit after the numbers, e.g. \"requests\" or \"GB\". */\n  unit?: string;\n  /** Helper line under the bar. Over the limit, a default overage note is shown. */\n  note?: ReactNode;\n}\n\nexport type QuotaScope = 'current' | 'projected';\n\nexport interface QuotaMetersProps {\n  quotas?: Quota[];\n  /** Heading above the meters. */\n  title?: string;\n  /** Percent-of-limit thresholds for amber and red (default 80 / 100). */\n  thresholds?: MeterThresholds;\n  /** Formats used/limit numbers. Default: grouped, compact above a million. */\n  formatValue?: (value: number) => string;\n  defaultScope?: QuotaScope;\n  onScopeChange?: (scope: QuotaScope) => void;\n  /** Heading level of the title, to fit the page outline (default h3). */\n  titleAs?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\n/** Plan quotas as meters: green with headroom, amber near the cap, red over it. */\nexport function QuotaMeters({\n  quotas = sampleQuotas,\n  title = 'Plan usage',\n  thresholds,\n  formatValue = formatQuantity,\n  defaultScope = 'current',\n  onScopeChange,\n  titleAs: TitleTag = 'h3',\n  className,\n}: QuotaMetersProps) {\n  const [scope, setScope] = useState<QuotaScope>(defaultScope);\n  const canProject = quotas.some((q) => q.projected != null);\n  const showProjected = canProject && scope === 'projected';\n\n  const changeScope = (value: string[]) => {\n    const next = value[0];\n    if (next !== 'current' && next !== 'projected') return;\n    setScope(next);\n    onScopeChange?.(next);\n  };\n\n  return (\n    <section aria-label={title} className={cn('grid gap-5', className)}>\n      <div className=\"flex flex-wrap items-center justify-between gap-3\">\n        <TitleTag className=\"text-[13px] font-medium text-muted-foreground\">{title}</TitleTag>\n        {canProject && (\n          <ToggleGroup size=\"sm\" aria-label=\"Usage period\" value={[scope]} onValueChange={changeScope}>\n            <Toggle value=\"current\">Current cycle</Toggle>\n            <Toggle value=\"projected\">Projected</Toggle>\n          </ToggleGroup>\n        )}\n      </div>\n      <div className=\"grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2\">\n        {quotas.map((q) => {\n          const value = showProjected ? (q.projected ?? q.used) : q.used;\n          const unit = q.unit ? ` ${q.unit}` : '';\n          const text = `${formatValue(value)} / ${formatValue(q.limit)}${unit}`;\n          const over = value - q.limit;\n          const note = q.note ?? (over > 0 ? `${formatValue(over)}${unit} over the plan limit` : undefined);\n          return (\n            <Meter\n              key={q.id}\n              label={q.label}\n              value={value}\n              max={q.limit}\n              thresholds={thresholds}\n              valueLabel={text}\n              aria-valuetext={text}\n              note={note}\n            />\n          );\n        })}\n      </div>\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/QuotaMeters/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/quota-meters/fixtures.ts",
+      "content": "import type { Quota } from './QuotaMeters';\n\n/** Sample plan quotas: usage so far this cycle and the end-of-cycle projection. */\nexport const sampleQuotas: Quota[] = [\n  { id: 'requests', label: 'Requests', used: 412_800, limit: 500_000, projected: 521_000, unit: 'requests' },\n  { id: 'tokens', label: 'Tokens', used: 78_400_000, limit: 120_000_000, projected: 99_100_000, unit: 'tokens' },\n  { id: 'storage', label: 'Storage', used: 14.2, limit: 20, projected: 17.1, unit: 'GB' },\n  { id: 'seats', label: 'Seats', used: 38, limit: 50, projected: 38, unit: 'seats' },\n];\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/format.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/format.ts",
+      "content": "/** Shared formatting for the billing blocks (en-US, Intl). */\n\n/** A calendar date: a `Date` or an ISO `YYYY-MM-DD` string (read as a local date, no UTC shift). */\nexport type DateInput = Date | string;\n\nexport function toDate(value: DateInput): Date {\n  if (value instanceof Date) return value;\n  const m = /^(\\d{4})-(\\d{2})-(\\d{2})$/.exec(value);\n  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));\n  return new Date(value);\n}\n\nconst dateFmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });\nconst shortDateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });\n\n/** \"June 1, 2026\". */\nexport function formatDate(value: DateInput): string {\n  return dateFmt.format(toDate(value));\n}\n\n/** \"Jun 1, 2026\". */\nexport function formatShortDate(value: DateInput): string {\n  return shortDateFmt.format(toDate(value));\n}\n\n/** Money with the currency symbol: \"$1,620.00\" (or no decimals with `whole`). */\nexport function formatMoney(amount: number, currency = 'USD', whole = false): string {\n  return new Intl.NumberFormat('en-US', {\n    style: 'currency',\n    currency,\n    minimumFractionDigits: whole ? 0 : 2,\n    maximumFractionDigits: whole ? 0 : 2,\n  }).format(amount);\n}\n\n/** Grouped number, compact above a million: \"412,800\", \"78.4M\". */\nexport function formatQuantity(value: number): string {\n  if (Math.abs(value) >= 1_000_000) {\n    return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value);\n  }\n  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(value);\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "billing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/billing/QuotaMeters/block.meta.ts"
+  }
+}

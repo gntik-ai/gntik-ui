@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "verify-email",
+  "type": "registry:block",
+  "title": "Verify email",
+  "description": "Centred card check-your-inbox step after sign-up: the address the link went to, resend with a countdown, change email and a support link.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/verify-email/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/verify-email/Page.tsx",
+      "content": "import { AuthHeader } from '@gntik-ai/blocks';\nimport { Alert, AuthLayout, Button, Link, Stack } from '@gntik-ai/ui';\nimport { useEffect, useState, type ReactNode } from 'react';\nimport { verifyEmailSample } from './data';\n\nexport interface VerifyEmailPageProps {\n  /** Address the verification link was sent to. */\n  email: string;\n  /** Sends the link again; the button then waits `resendCooldown` seconds. A rejection shows in the alert. */\n  onResend: () => void | Promise<void>;\n  /** \"Use a different email\" (back to sign-up). */\n  onChangeEmail: () => void;\n  resendCooldown: number;\n  /** Seconds left before the first resend. Defaults to `resendCooldown` (a link was just sent). */\n  initialCooldown: number;\n  signInHref: string;\n  supportHref: string;\n  logo: ReactNode;\n}\n\nconst clock = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;\n\n/** Card check-your-inbox step with a resend countdown. */\nexport default function VerifyEmailPage({\n  email = verifyEmailSample.email,\n  onResend,\n  onChangeEmail,\n  resendCooldown = verifyEmailSample.resendCooldown,\n  initialCooldown,\n  signInHref = verifyEmailSample.signInHref,\n  supportHref = verifyEmailSample.supportHref,\n  logo,\n}: Partial<VerifyEmailPageProps>) {\n  // One timestamp for both, so the first render reads exactly the full cooldown.\n  const [startedAt] = useState(() => Date.now());\n  const [now, setNow] = useState(startedAt);\n  const [resendAt, setResendAt] = useState(startedAt + (initialCooldown ?? resendCooldown) * 1000);\n  const [sending, setSending] = useState(false);\n  const [resent, setResent] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n  const remaining = Math.max(0, Math.ceil((resendAt - now) / 1000));\n\n  useEffect(() => {\n    if (remaining <= 0) return;\n    const id = window.setInterval(() => setNow(Date.now()), 1000);\n    return () => window.clearInterval(id);\n  }, [remaining]);\n\n  const resend = async () => {\n    setError(null);\n    setSending(true);\n    try {\n      await onResend?.();\n      const t = Date.now();\n      setNow(t);\n      setResendAt(t + resendCooldown * 1000);\n      setResent(true);\n    } catch (e) {\n      setError(e instanceof Error ? e.message : 'The email could not be sent. Try again.');\n    }\n    setSending(false);\n  };\n\n  return (\n    <AuthLayout\n      fullScreen\n      variant=\"card\"\n      logo={logo}\n      skipLinkLabel=\"Skip to verification\"\n      footer={\n        <>\n          Already verified? <Link href={signInHref}>Sign in</Link>\n        </>\n      }\n    >\n      <AuthHeader\n        eyebrow=\"Verify your email\"\n        title=\"Check your inbox\"\n        description={\n          <>\n            We sent a verification link to <span className=\"font-medium text-foreground\">{email}</span>. Open it on this device to finish setting up your account. The link expires in 24 hours.\n          </>\n        }\n      />\n      <Stack gap={4}>\n        {error && <Alert tone=\"destructive\" description={error} />}\n        <Stack gap={2}>\n          <Button variant=\"secondary\" size=\"lg\" className=\"w-full\" loading={sending} disabled={remaining > 0} onClick={() => void resend()}>\n            {remaining > 0 ? `Resend email in ${clock(remaining)}` : 'Resend email'}\n          </Button>\n          <Button variant=\"ghost\" size=\"lg\" className=\"w-full\" onClick={onChangeEmail}>\n            Use a different email\n          </Button>\n        </Stack>\n        <Alert\n          role=\"note\"\n          tone=\"info\"\n          description={\n            <>\n              Can't find it? Check your spam folder, or <Link href={supportHref}>contact support</Link>.\n            </>\n          }\n        />\n      </Stack>\n      <span role=\"status\" className=\"sr-only\">\n        {resent ? `A new verification email was sent to ${email}.` : ''}\n      </span>\n    </AuthLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/verify-email/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/verify-email/data.ts",
+      "content": "/** Sample address and timing for the email verification step. */\nexport const verifyEmailSample = {\n  email: 'dana@example.com',\n  resendCooldown: 60,\n  signInHref: '#sign-in',\n  supportHref: '#support',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Auth"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/verify-email/template.meta.ts"
+  }
+}

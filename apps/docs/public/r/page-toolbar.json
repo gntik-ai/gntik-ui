@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-toolbar",
+  "type": "registry:block",
+  "title": "Page toolbar",
+  "description": "Toolbar above a list or table: search, a filters slot, a view toggle and the primary action, with roving focus.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/page-chrome/PageToolbar/PageToolbar.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/page-chrome/page-toolbar/PageToolbar.tsx",
+      "content": "import { Plus, Search, SlidersHorizontal } from '@gntik-ai/icons';\nimport type { LucideIcon } from '@gntik-ai/icons';\nimport { Toggle, ToggleGroup, Toolbar, ToolbarButton, ToolbarEnd, ToolbarInput, ToolbarSeparator, ToolbarStart, cn, useI18n } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport type { PageChromeAction } from '../types';\nimport { pageToolbarViews } from './fixtures';\n\nexport interface PageToolbarView {\n  value: string;\n  /** Accessible name of the icon toggle. */\n  label: string;\n  icon: LucideIcon;\n}\n\nexport interface PageToolbarProps {\n  /** Controlled search text. */\n  search?: string;\n  defaultSearch?: string;\n  onSearchChange?: (value: string) => void;\n  searchLabel?: string;\n  searchPlaceholder?: string;\n  /**\n   * Filter controls. Use ToolbarButton (optionally with `render` for a Menu/Popover trigger) so they\n   * join the toolbar's arrow-key navigation. Omitted: a single \"Filters\" button; `null` hides it.\n   */\n  filters?: ReactNode;\n  /** View modes for the segmented toggle; `null` or an empty list hides it. */\n  views?: PageToolbarView[] | null;\n  view?: string;\n  defaultView?: string;\n  onViewChange?: (value: string) => void;\n  /** Main action at the end of the bar; `null` hides it. */\n  primaryAction?: PageChromeAction | null;\n  'aria-label'?: string;\n  className?: string;\n}\n\nconst pageToolbarDefaultAction: PageChromeAction = { label: 'New project', icon: Plus };\n\n/** List/table toolbar: search, filters, view toggle and the primary action, with one Tab stop. */\nexport function PageToolbar({\n  search,\n  defaultSearch = '',\n  onSearchChange,\n  searchLabel: searchLabelProp,\n  searchPlaceholder = 'Search projects…',\n  filters,\n  views = pageToolbarViews,\n  view,\n  defaultView,\n  onViewChange,\n  primaryAction = pageToolbarDefaultAction,\n  'aria-label': ariaLabelProp,\n  className,\n}: PageToolbarProps) {\n  const { t } = useI18n();\n  const searchLabel = searchLabelProp ?? t('common.search');\n  const ariaLabel = ariaLabelProp ?? t('toolbar.label');\n  const [innerSearch, setInnerSearch] = useState(defaultSearch);\n  const [innerView, setInnerView] = useState(defaultView ?? views?.[0]?.value ?? '');\n  const currentSearch = search ?? innerSearch;\n  const currentView = view ?? innerView;\n\n  return (\n    <Toolbar aria-label={ariaLabel} className={cn('flex-wrap gap-y-2', className)}>\n      <ToolbarStart className=\"min-w-0 flex-1 basis-60\">\n        <ToolbarInput\n          type=\"search\"\n          icon={Search}\n          aria-label={searchLabel}\n          placeholder={searchPlaceholder}\n          value={currentSearch}\n          onChange={(e) => {\n            setInnerSearch(e.target.value);\n            onSearchChange?.(e.target.value);\n          }}\n          wrapperClassName=\"max-w-sm\"\n        />\n        {filters !== undefined ? filters : (\n          <ToolbarButton variant=\"secondary\" icon={SlidersHorizontal}>\n            Filters\n          </ToolbarButton>\n        )}\n      </ToolbarStart>\n      <ToolbarEnd>\n        {views && views.length > 0 && (\n          <>\n            <ToggleGroup\n              aria-label={t('toolbar.view')}\n              size=\"sm\"\n              value={[currentView]}\n              onValueChange={(next) => {\n                const picked = next[0];\n                if (!picked) return; // keep one view selected\n                setInnerView(picked);\n                onViewChange?.(picked);\n              }}\n            >\n              {views.map((v) => (\n                <ToolbarButton\n                  key={v.value}\n                  render={<Toggle value={v.value} iconOnly size=\"sm\" />}\n                  aria-label={v.label}\n                  icon={v.icon}\n                  className=\"size-7 rounded-md data-pressed:bg-secondary data-pressed:text-foreground\"\n                />\n              ))}\n            </ToggleGroup>\n            {primaryAction && <ToolbarSeparator />}\n          </>\n        )}\n        {primaryAction && (\n          <ToolbarButton\n            variant={primaryAction.variant ?? 'primary'}\n            icon={primaryAction.icon}\n            disabled={primaryAction.disabled}\n            onClick={primaryAction.onClick}\n          >\n            {primaryAction.label}\n          </ToolbarButton>\n        )}\n      </ToolbarEnd>\n    </Toolbar>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/page-chrome/PageToolbar/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/page-chrome/page-toolbar/fixtures.ts",
+      "content": "import { LayoutGrid, List, Table2 } from '@gntik-ai/icons';\nimport type { PageToolbarView } from './PageToolbar';\n\nexport const pageToolbarViews: PageToolbarView[] = [\n  { value: 'table', label: 'Table view', icon: Table2 },\n  { value: 'list', label: 'List view', icon: List },\n  { value: 'grid', label: 'Grid view', icon: LayoutGrid },\n];\n"
+    },
+    {
+      "path": "packages/blocks/src/page-chrome/types.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/page-chrome/types.ts",
+      "content": "import type { ButtonProps, MoreMenuAction } from '@gntik-ai/ui';\nimport type { LucideIcon } from '@gntik-ai/icons';\n\n/** A header/toolbar action rendered as a kit Button (or a MoreMenu item when folded). */\nexport interface PageChromeAction {\n  /** Stable key; defaults to `label`. */\n  id?: string;\n  label: string;\n  icon?: LucideIcon;\n  /** Button style; when omitted the block picks one (primary for the main action, secondary otherwise). */\n  variant?: ButtonProps['variant'];\n  disabled?: boolean;\n  onClick?: () => void;\n}\n\n/** Maps a PageChromeAction to a MoreMenu item (destructive variant → destructive item). */\nexport function toMenuAction(action: PageChromeAction): MoreMenuAction {\n  return {\n    label: action.label,\n    icon: action.icon,\n    disabled: action.disabled,\n    destructive: action.variant === 'destructive',\n    onSelect: action.onClick,\n  };\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "page-chrome"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/page-chrome/PageToolbar/block.meta.ts"
+  }
+}

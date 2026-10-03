@@ -1,6 +1,6 @@
 import { Check, Copy, RotateCw, ServerCrash } from '@gntik-ai/icons';
 import type { LucideIcon } from '@gntik-ai/icons';
-import { Button, Collapsible, CollapsiblePanel, CollapsibleTrigger, IconButton, cn } from '@gntik-ai/ui';
+import { Button, Collapsible, CollapsiblePanel, CollapsibleTrigger, IconButton, cn, useI18n } from '@gntik-ai/ui';
 import { useId, useRef, useState, type ReactNode } from 'react';
 import type { FeedbackAction } from '../types';
 
@@ -36,11 +36,13 @@ export function ErrorPanel({
   details = 'GET /v1/projects/acme-web/deployments\n503 Service Unavailable\nupstream timed out after 30000 ms (pool: api-eu-west-1)',
   onRetry,
   retrying,
-  retryLabel = 'Try again',
+  retryLabel: retryLabelProp,
   secondaryAction = { label: 'Contact support', variant: 'ghost' },
   titleAs: Heading = 'h3',
   className,
 }: ErrorPanelProps) {
+  const { t } = useI18n();
+  const retryLabel = retryLabelProp ?? t('error.retry');
   const id = useId();
   const [innerRetrying, setInnerRetrying] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -87,15 +89,15 @@ export function ErrorPanel({
           {message != null && <p className="mt-1.5 max-w-xl text-[13px] leading-6 text-muted-foreground">{message}</p>}
           {requestId && (
             <div className="mt-3 flex items-center gap-1.5 text-[12px] text-muted-foreground">
-              <span>Request ID</span>
+              <span>{t('error.requestId')}</span>
               <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11.5px] text-foreground">{requestId}</code>
-              <IconButton icon={copied ? Check : Copy} label={copied ? 'Copied' : 'Copy request ID'} size="sm" variant="ghost" className="size-7" onClick={() => void copy()} />
+              <IconButton icon={copied ? Check : Copy} label={copied ? t('common.copied') : t('error.copyRequestId')} size="sm" variant="ghost" className="size-7" onClick={() => void copy()} />
             </div>
           )}
           <div className="mt-4 flex flex-wrap items-center gap-2">
             {onRetry && (
               <Button variant="secondary" size="sm" icon={RotateCw} loading={busy} onClick={() => void retry()}>
-                {busy ? 'Retrying…' : retryLabel}
+                {busy ? t('error.retrying') : retryLabel}
               </Button>
             )}
             {secondaryAction && (
@@ -112,7 +114,7 @@ export function ErrorPanel({
           </div>
           {details && (
             <Collapsible className="mt-4">
-              <CollapsibleTrigger className="text-[12.5px]">Technical details</CollapsibleTrigger>
+              <CollapsibleTrigger className="text-[12.5px]">{t('error.details')}</CollapsibleTrigger>
               <CollapsiblePanel>
                 <pre className="mt-2 max-h-60 overflow-auto rounded-md border border-border bg-muted/50 p-3 font-mono text-[11.5px] leading-5 whitespace-pre-wrap text-foreground">
                   {details}
@@ -121,7 +123,7 @@ export function ErrorPanel({
             </Collapsible>
           )}
           <p role="status" className="sr-only">
-            {busy ? 'Retrying' : copied ? 'Request ID copied' : ''}
+            {busy ? t('error.retryingStatus') : copied ? t('error.requestIdCopied') : ''}
           </p>
         </div>
       </div>

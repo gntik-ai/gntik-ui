@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "plan-card",
+  "type": "registry:block",
+  "title": "Plan card",
+  "description": "Current plan header: name, status, price per cycle with a monthly/annual toggle, renewal date, included features and upgrade/manage actions.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/billing/PlanCard/PlanCard.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/billing/plan-card/PlanCard.tsx",
+      "content": "import { useState } from 'react';\nimport { Badge, Button, Card, Toggle, ToggleGroup, cn, type BadgeTone } from '@gntik-ai/ui';\nimport { Check, Sparkles } from '@gntik-ai/icons';\nimport { formatDate, formatMoney, type DateInput } from '../format';\nimport { samplePlan } from './fixtures';\n\nexport type PlanStatus = 'active' | 'trialing' | 'past_due' | 'canceled';\nexport type BillingCycle = 'monthly' | 'annual';\n\nexport interface BillingPlan {\n  name: string;\n  status?: PlanStatus;\n  /** Price per month on the monthly cycle. */\n  priceMonthly: number;\n  /** Price per month when billed annually. Enables the monthly/annual toggle. */\n  priceAnnual?: number;\n  /** ISO 4217 code. Default USD. */\n  currency?: string;\n  /** Next renewal date. */\n  renewsOn: DateInput;\n  /** Short line after the renewal date, e.g. \"50 seats · 2 regions\". */\n  summary?: string;\n  features?: string[];\n}\n\nexport interface PlanCardProps {\n  plan?: BillingPlan;\n  /** Initial cycle shown (uncontrolled). */\n  defaultCycle?: BillingCycle;\n  onCycleChange?: (cycle: BillingCycle) => void;\n  onUpgrade?: () => void;\n  onManage?: () => void;\n  upgradeLabel?: string;\n  manageLabel?: string;\n  /** Heading level of the title, to fit the page outline (default h3). */\n  titleAs?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\nconst STATUS: Record<PlanStatus, { label: string; tone: BadgeTone }> = {\n  active: { label: 'Active', tone: 'success' },\n  trialing: { label: 'Trial', tone: 'info' },\n  past_due: { label: 'Past due', tone: 'warning' },\n  canceled: { label: 'Canceled', tone: 'neutral' },\n};\n\n/** Billing page header: the current plan, its price per cycle, renewal date, features and actions. */\nexport function PlanCard({\n  plan = samplePlan,\n  defaultCycle = 'monthly',\n  onCycleChange,\n  onUpgrade,\n  onManage,\n  upgradeLabel = 'Upgrade plan',\n  manageLabel = 'Manage',\n  titleAs: TitleTag = 'h3',\n  className,\n}: PlanCardProps) {\n  const [cycle, setCycle] = useState<BillingCycle>(defaultCycle);\n  const hasAnnual = plan.priceAnnual != null;\n  const annual = hasAnnual && cycle === 'annual';\n  const perMonth = annual ? (plan.priceAnnual ?? plan.priceMonthly) : plan.priceMonthly;\n  const currency = plan.currency ?? 'USD';\n  const savings = hasAnnual ? Math.round((1 - (plan.priceAnnual ?? 0) / plan.priceMonthly) * 100) : 0;\n  const status = STATUS[plan.status ?? 'active'];\n\n  const changeCycle = (value: string[]) => {\n    const next = value[0];\n    if (next !== 'monthly' && next !== 'annual') return;\n    setCycle(next);\n    onCycleChange?.(next);\n  };\n\n  return (\n    <Card className={cn('p-6', className)}>\n      <div className=\"flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between\">\n        <div className=\"min-w-0\">\n          <div className=\"flex flex-wrap items-center gap-2\">\n            <TitleTag className=\"text-[17px] font-semibold tracking-tight text-foreground\">{plan.name} plan</TitleTag>\n            <Badge tone={status.tone} dot>\n              {status.label}\n            </Badge>\n          </div>\n          <p className=\"mt-1 text-[13px] text-muted-foreground\">\n            Renews {formatDate(plan.renewsOn)}\n            {plan.summary && <> · {plan.summary}</>}\n          </p>\n          <p className=\"mt-4 flex items-baseline gap-1.5\">\n            <span className=\"text-[30px] font-semibold tracking-tight text-foreground tabular-nums\">\n              {formatMoney(perMonth, currency, true)}\n            </span>\n            <span className=\"text-[13px] text-muted-foreground\">/ month</span>\n          </p>\n          <p className=\"mt-1 text-[12px] text-muted-foreground\">\n            {annual ? `Billed annually (${formatMoney(perMonth * 12, currency, true)})` : 'Billed monthly'}\n          </p>\n        </div>\n        <div className=\"flex flex-col items-start gap-3 sm:items-end\">\n          {hasAnnual && (\n            <ToggleGroup size=\"sm\" aria-label=\"Billing cycle\" value={[cycle]} onValueChange={changeCycle}>\n              <Toggle value=\"monthly\">Monthly</Toggle>\n              <Toggle value=\"annual\">Annual{savings > 0 && ` −${savings}%`}</Toggle>\n            </ToggleGroup>\n          )}\n          <div className=\"flex flex-wrap items-center gap-2\">\n            <Button variant=\"secondary\" onClick={onManage}>\n              {manageLabel}\n            </Button>\n            <Button icon={Sparkles} onClick={onUpgrade}>\n              {upgradeLabel}\n            </Button>\n          </div>\n        </div>\n      </div>\n      {plan.features && plan.features.length > 0 && (\n        <ul aria-label={`${plan.name} plan features`} className=\"mt-5 grid gap-x-6 gap-y-2 border-t border-border pt-5 sm:grid-cols-2\">\n          {plan.features.map((f) => (\n            <li key={f} className=\"flex items-start gap-2 text-[13px] text-foreground\">\n              <Check size={15} aria-hidden className=\"mt-0.5 shrink-0 text-primary-text\" />\n              {f}\n            </li>\n          ))}\n        </ul>\n      )}\n    </Card>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/PlanCard/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/plan-card/fixtures.ts",
+      "content": "import type { BillingPlan } from './PlanCard';\n\n/** Sample current plan (neutral workspace data). */\nexport const samplePlan: BillingPlan = {\n  name: 'Scale',\n  status: 'active',\n  priceMonthly: 1200,\n  priceAnnual: 1000,\n  currency: 'USD',\n  renewsOn: '2026-06-01',\n  summary: '50 seats · 2 regions',\n  features: ['500,000 requests / month', '120M tokens / month', '20 GB storage', 'Audit log and SSO', 'Email support · 1 business day'],\n};\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/format.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/format.ts",
+      "content": "/** Shared formatting for the billing blocks (en-US, Intl). */\n\n/** A calendar date: a `Date` or an ISO `YYYY-MM-DD` string (read as a local date, no UTC shift). */\nexport type DateInput = Date | string;\n\nexport function toDate(value: DateInput): Date {\n  if (value instanceof Date) return value;\n  const m = /^(\\d{4})-(\\d{2})-(\\d{2})$/.exec(value);\n  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));\n  return new Date(value);\n}\n\nconst dateFmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });\nconst shortDateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });\n\n/** \"June 1, 2026\". */\nexport function formatDate(value: DateInput): string {\n  return dateFmt.format(toDate(value));\n}\n\n/** \"Jun 1, 2026\". */\nexport function formatShortDate(value: DateInput): string {\n  return shortDateFmt.format(toDate(value));\n}\n\n/** Money with the currency symbol: \"$1,620.00\" (or no decimals with `whole`). */\nexport function formatMoney(amount: number, currency = 'USD', whole = false): string {\n  return new Intl.NumberFormat('en-US', {\n    style: 'currency',\n    currency,\n    minimumFractionDigits: whole ? 0 : 2,\n    maximumFractionDigits: whole ? 0 : 2,\n  }).format(amount);\n}\n\n/** Grouped number, compact above a million: \"412,800\", \"78.4M\". */\nexport function formatQuantity(value: number): string {\n  if (Math.abs(value) >= 1_000_000) {\n    return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value);\n  }\n  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(value);\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "billing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/billing/PlanCard/block.meta.ts"
+  }
+}

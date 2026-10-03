@@ -46,7 +46,7 @@ export function Slider({
       {(label || showValue) && (
         <div className={v.header()}>
           {label && <BaseSlider.Label className={v.label()}>{label}</BaseSlider.Label>}
-          {showValue && <BaseSlider.Value className={cn(v.value(), !label && 'ml-auto')}>{formatValue}</BaseSlider.Value>}
+          {showValue && <BaseSlider.Value className={cn(v.value(), !label && 'ms-auto')}>{formatValue}</BaseSlider.Value>}
         </div>
       )}
       <BaseSlider.Control className={v.control()}>

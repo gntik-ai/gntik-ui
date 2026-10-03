@@ -14,10 +14,10 @@ export const dialogVariants = tv({
       'data-ending-style:translate-y-2 data-ending-style:scale-[0.97] data-ending-style:opacity-0',
     ],
     close: [
-      'absolute top-3.5 right-3.5 grid size-8 place-items-center rounded-lg text-muted-foreground transition-colors',
+      'absolute top-3.5 end-3.5 grid size-8 place-items-center rounded-lg text-muted-foreground transition-colors',
       'hover:bg-secondary/60 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
-    header: 'flex flex-col gap-1 border-b border-border px-5 py-4 pr-14',
+    header: 'flex flex-col gap-1 border-b border-border px-5 py-4 pe-14',
     title: 'text-[15px] font-semibold tracking-tight text-foreground',
     description: 'text-[12.5px] leading-5 text-muted-foreground text-pretty',
     body: 'px-5 py-4',

@@ -316,3 +316,6 @@ function NavbarsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['navbars'] = NavbarsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

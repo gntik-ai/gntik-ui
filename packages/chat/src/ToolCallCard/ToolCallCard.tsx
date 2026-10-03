@@ -1,4 +1,4 @@
-import { Collapsible, CollapsiblePanel, CollapsibleTrigger, Spinner, StatusTag, cn } from '@gntik-ai/ui';
+import { Collapsible, CollapsiblePanel, CollapsibleTrigger, Spinner, StatusTag, cn, useI18n, type MessageKey } from '@gntik-ai/ui';
 import { CircleAlert, Wrench } from 'lucide-react';
 import type { Ref } from 'react';
 import { formatDuration } from '../utils/format';
@@ -28,7 +28,7 @@ export interface ToolCallCardProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-const VERB: Record<ToolCallStatus, string> = { running: 'Calling', succeeded: 'Called', failed: 'Failed to call' };
+const VERB: Record<ToolCallStatus, MessageKey> = { running: 'toolCall.calling', succeeded: 'toolCall.called', failed: 'toolCall.failed' };
 
 /**
  * A tool invocation inside an assistant turn: name, status, duration, and a collapsible body
@@ -47,6 +47,7 @@ export function ToolCallCard({
   className,
   ref,
 }: ToolCallCardProps) {
+  const { t } = useI18n();
   const failed = status === 'failed';
   return (
     <Collapsible
@@ -62,7 +63,7 @@ export function ToolCallCard({
           {status === 'running' ? <Spinner size={13} /> : failed ? <CircleAlert size={13} aria-hidden /> : <Wrench size={13} aria-hidden />}
         </span>
         <span className={s.label}>
-          <span className={s.verb}>{VERB[status]}</span>
+          <span className={s.verb}>{t(VERB[status])}</span>
           <span className={s.name}>{name}</span>
         </span>
         <span className={s.meta}>
@@ -72,14 +73,14 @@ export function ToolCallCard({
       </CollapsibleTrigger>
       <CollapsiblePanel className="pt-0">
         <div className={s.body}>
-          {args !== undefined && <JsonView label="Arguments" value={args} />}
+          {args !== undefined && <JsonView label={t('toolCall.arguments')} value={args} />}
           {failed && error && (
             <p role="alert" className={s.error}>
               {error}
             </p>
           )}
-          {result !== undefined && <JsonView label="Result" value={result} />}
-          {status === 'running' && result === undefined && <p className="text-[12.5px] text-muted-foreground">Waiting for the result…</p>}
+          {result !== undefined && <JsonView label={t('toolCall.result')} value={result} />}
+          {status === 'running' && result === undefined && <p className="text-[12.5px] text-muted-foreground">{t('toolCall.waiting')}</p>}
         </div>
       </CollapsiblePanel>
     </Collapsible>

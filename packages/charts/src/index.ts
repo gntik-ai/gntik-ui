@@ -9,3 +9,30 @@ export { ChartLegend, useHiddenSeries, type ChartLegendProps, type ChartLegendIt
 export { useChartTheme, CHART_COLORS, SERIES_TOKENS, type ChartColor, type ChartTheme, type UseChartThemeOptions } from './theme';
 export { chartFmt, type ValueFormatter } from './format';
 export type { BaseChartProps } from './shared';
+export { FunnelChart, funnelStages, type FunnelChartProps, type FunnelStage } from './FunnelChart';
+export { SankeyChart, resolveSankeyLinks, type SankeyChartProps, type SankeyNodeDatum, type SankeyLinkDatum } from './SankeyChart';
+export { RadarChart, type RadarChartProps } from './RadarChart';
+export { Heatmap, cellHeightFor, type HeatmapProps } from './Heatmap';
+export { MiniBar, describeBars, type MiniBarProps, type MiniBarTone } from './MiniBar';
+export {
+  SAFE_CHART_COLORS,
+  sequentialRamp,
+  divergingRamp,
+  rampIndex,
+  rampColor,
+  type SequentialRampOptions,
+  type DivergingRampOptions,
+  type TokenName,
+} from './palette';
+export {
+  ChartEmpty,
+  ChartLoading,
+  ChartError,
+  ChartDataTable,
+  type ChartState,
+  type ChartStateProps,
+  type ChartEmptyProps,
+  type ChartLoadingProps,
+  type ChartErrorProps,
+  type ChartDataTableProps,
+} from './states';

@@ -9,6 +9,8 @@
    ============================================================================ */
 @import "./brand.css";
 @import "./pairing.css";
+@import "./motion.css";
+@import "./density.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -72,3 +74,54 @@
   --default-ring-color: hsl(var(--ring) / 0.5);
   --spacing-18: 4.5rem;
 }
+
+/* Motion (motion.css): `ease-standard|emphasized|exit` come from the --ease-*
+   theme namespace; Tailwind 4 has no duration namespace, so the three named
+   durations are static utilities. The bare `transition*` utilities default to
+   the brand duration and easing, so they collapse under reduced motion too. */
+@theme inline {
+  --ease-standard: var(--ease-standard);
+  --ease-emphasized: var(--ease-emphasized);
+  --ease-exit: var(--ease-exit);
+  --default-transition-duration: var(--duration-fast);
+  --default-transition-timing-function: var(--ease-standard);
+}
+
+@utility duration-fast {
+  --tw-duration: var(--duration-fast);
+  transition-duration: var(--duration-fast);
+}
+@utility duration-normal {
+  --tw-duration: var(--duration-normal);
+  transition-duration: var(--duration-normal);
+}
+@utility duration-slow {
+  --tw-duration: var(--duration-slow);
+  transition-duration: var(--duration-slow);
+}
+
+/* Density (density.css): static utilities over the per-density variables, so a
+   control follows `data-density` on any ancestor. Comfortable values equal the
+   kit's original classes (h-control = h-9, px-control = px-3.5, h-row = h-10…). */
+@utility h-control-sm { height: var(--control-h-sm); }
+@utility h-control { height: var(--control-h-md); }
+@utility h-control-lg { height: var(--control-h-lg); }
+@utility w-control-sm { width: var(--control-h-sm); }
+@utility w-control { width: var(--control-h-md); }
+@utility w-control-lg { width: var(--control-h-lg); }
+@utility size-control-sm { width: var(--control-h-sm); height: var(--control-h-sm); }
+@utility size-control { width: var(--control-h-md); height: var(--control-h-md); }
+@utility size-control-lg { width: var(--control-h-lg); height: var(--control-h-lg); }
+@utility px-control-sm { padding-inline: var(--control-px-sm); }
+@utility px-control { padding-inline: var(--control-px-md); }
+@utility px-control-lg { padding-inline: var(--control-px-lg); }
+@utility px-field { padding-inline: var(--field-px); }
+@utility ps-field { padding-inline-start: var(--field-px); }
+@utility gap-tight { gap: var(--gap-tight); }
+@utility h-item { height: var(--item-h); }
+@utility h-tab { height: var(--tab-h); }
+@utility h-chip { height: var(--chip-h); }
+@utility h-token { height: var(--token-h); }
+@utility h-row { height: var(--row-h); }
+@utility py-cell { padding-block: var(--cell-py); }
+@utility py-bar { padding-block: var(--bar-py); }

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "citation",
+  "type": "registry:ui",
+  "title": "Citation",
+  "description": "Numbered source references for grounded answers: an inline [n] marker that previews the source (title, host, snippet, link) on hover, focus + Enter or click, and CitationList, the numbered list of sources under a reply. Only http(s) URLs become links.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui",
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/chat/src/Citation/Citation.tsx",
+      "type": "registry:ui",
+      "target": "components/chat/citation/Citation.tsx",
+      "content": "import { Popover, PopoverContent, PopoverDescription, PopoverTitle, PopoverTrigger, cn, useI18n } from '@gntik-ai/ui';\nimport { ExternalLink, Globe } from 'lucide-react';\nimport { useId, type ReactNode } from 'react';\nimport { citationStyles as s } from './citation.variants';\n\nexport interface CitationSource {\n  /** Source title. */\n  title: string;\n  /** Where it lives; shown as its host name and linked. */\n  url?: string;\n  /** Short excerpt that supports the claim. */\n  snippet?: string;\n  /** Publisher or site name; defaults to the URL host. */\n  publisher?: string;\n}\n\n/** Host name of a URL (\"docs.example.com\"), or undefined if it cannot be parsed. */\nexport function sourceHost(url?: string) {\n  if (!url) return undefined;\n  try {\n    return new URL(url).host.replace(/^www\\./, '');\n  } catch {\n    return undefined;\n  }\n}\n\n/** Only http(s) sources become links. */\nexport function safeSourceUrl(url?: string) {\n  return url && /^https?:\\/\\//i.test(url) ? url : undefined;\n}\n\nexport interface CitationProps {\n  /** 1-based number shown in the marker. */\n  index: number;\n  source: CitationSource;\n  /** Hover delay before the preview opens (keyboard and click open it immediately). */\n  delay?: number;\n  className?: string;\n}\n\n/**\n * Inline numbered reference ([1]). Hovering, focusing + Enter or clicking opens a preview\n * card with the title, host, snippet and a link to the source.\n */\nexport function Citation({ index, source, delay = 200, className }: CitationProps) {\n  const { t } = useI18n();\n  const host = source.publisher ?? sourceHost(source.url);\n  const href = safeSourceUrl(source.url);\n  return (\n    <Popover>\n      <PopoverTrigger openOnHover delay={delay} aria-label={t('chat.source', { index, title: source.title })} className={cn(s.trigger, className)}>\n        {index}\n      </PopoverTrigger>\n      <PopoverContent side=\"top\" align=\"start\" className={s.popup}>\n        <div className={s.head}>\n          <span className={s.index}>{index}</span>\n          <Globe size={12} aria-hidden />\n          {host && <span className=\"truncate\">{host}</span>}\n        </div>\n        <PopoverTitle className={s.title}>{source.title}</PopoverTitle>\n        {source.snippet && <PopoverDescription className={s.snippet}>{source.snippet}</PopoverDescription>}\n        {href && (\n          <a href={href} target=\"_blank\" rel=\"noopener noreferrer nofollow\" className={s.open}>\n            {t('chat.openSource')}\n            <ExternalLink size={12} aria-hidden />\n            <span className=\"sr-only\"> {t('link.external')}</span>\n          </a>\n        )}\n      </PopoverContent>\n    </Popover>\n  );\n}\n\nexport interface CitationListProps {\n  sources: CitationSource[];\n  /** Visible heading; also the list's accessible name. */\n  heading?: ReactNode;\n  className?: string;\n}\n\n/** Numbered list of the sources cited in a reply, matching the inline markers. */\nexport function CitationList({ sources, heading: headingProp, className }: CitationListProps) {\n  const { t } = useI18n();\n  const heading = headingProp ?? t('chat.sources');\n  const headingId = useId();\n  if (sources.length === 0) return null;\n  return (\n    <section aria-labelledby={headingId} className={className}>\n      <h3 id={headingId} className={s.heading}>\n        {heading}\n      </h3>\n      <ol className={s.list}>\n        {sources.map((src, i) => {\n          const href = safeSourceUrl(src.url);\n          const host = src.publisher ?? sourceHost(src.url);\n          return (\n            <li key={`${i}-${src.title}`} className={s.item}>\n              <span className={s.index} aria-hidden>\n                {i + 1}\n              </span>\n              <div className={s.itemBody}>\n                {href ? (\n                  <a href={href} target=\"_blank\" rel=\"noopener noreferrer nofollow\" className={s.itemTitle}>\n                    {src.title}\n                    <span className=\"sr-only\"> {t('link.external')}</span>\n                  </a>\n                ) : (\n                  <span className=\"text-[13px] font-medium text-foreground\">{src.title}</span>\n                )}\n                {host && <div className={s.itemHost}>{host}</div>}\n              </div>\n            </li>\n          );\n        })}\n      </ol>\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/chat/src/Citation/citation.variants.ts",
+      "type": "registry:ui",
+      "target": "components/chat/citation/citation.variants.ts",
+      "content": "import { focusRing } from '../utils/focus';\n\n/** Slot classes for Citation and CitationList. */\nexport const citationStyles = {\n  trigger: [\n    'mx-0.5 inline-flex h-[18px] min-w-[18px] -translate-y-px cursor-pointer items-center justify-center rounded-md px-1',\n    'bg-primary/14 align-baseline font-mono text-[10.5px] font-semibold leading-none text-primary-chip-text',\n    `transition-colors hover:bg-primary/24 data-[popup-open]:bg-primary/24 motion-reduce:transition-none ${focusRing}`,\n  ].join(' '),\n  popup: 'w-80',\n  head: 'flex items-center gap-2 text-[11.5px] text-muted-foreground',\n  index: 'grid h-[18px] min-w-[18px] place-items-center rounded-md bg-secondary px-1 font-mono text-[10.5px] font-semibold text-foreground',\n  title: 'mt-1.5 text-[13px] font-semibold leading-snug text-foreground',\n  snippet: 'mt-1 line-clamp-4 text-[12.5px] leading-relaxed text-muted-foreground',\n  open: `mt-2.5 inline-flex items-center gap-1 rounded-sm text-[12.5px] font-medium text-primary-text hover:underline ${focusRing}`,\n  list: 'flex flex-col gap-1.5',\n  heading: 'mb-1 text-[11.5px] font-semibold tracking-wide text-muted-foreground uppercase',\n  item: 'flex gap-2.5 rounded-lg border border-border bg-card px-3 py-2.5',\n  itemBody: 'min-w-0 flex-1',\n  itemTitle: `rounded-sm text-[13px] font-medium text-foreground hover:text-primary-text hover:underline ${focusRing}`,\n  itemHost: 'mt-0.5 truncate font-mono text-[11px] text-muted-foreground',\n} as const;\n"
+    },
+    {
+      "path": "packages/chat/src/Citation/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/citation/index.ts",
+      "content": "export { Citation, CitationList, sourceHost, safeSourceUrl, type CitationProps, type CitationListProps, type CitationSource } from './Citation';\nexport { citationStyles } from './citation.variants';\nexport { doc as citationDoc } from './Citation.doc';\n"
+    },
+    {
+      "path": "packages/chat/src/utils/focus.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/focus.ts",
+      "content": "/** Focus ring shared by every interactive element in the pack (brand rule). */\nexport const focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';\n"
+    },
+    {
+      "path": "packages/chat/src/Citation/Citation.doc.ts",
+      "type": "registry:ui",
+      "target": "components/chat/citation/Citation.doc.ts",
+      "content": "import type { ComponentDoc } from '@gntik-ai/ui';\n\nexport const doc: ComponentDoc = {\n  name: 'Citation',\n  group: 'Display',\n  status: 'beta',\n  description:\n    'Numbered source references for grounded answers: an inline [n] marker that previews the source (title, host, snippet, link) on hover, focus + Enter or click, and CitationList, the numbered list of sources under a reply. Only http(s) URLs become links.',\n  primitive: '@base-ui/react/popover',\n  pattern: 'dialog (non-modal)',\n  keyboard: [\n    ['Enter', 'On a marker: opens the source preview'],\n    ['Space', 'On a marker: opens the source preview'],\n    ['Escape', 'Closes the preview and returns focus to the marker'],\n    ['Tab', 'Moves to the \"Open source\" link inside an open preview'],\n  ],\n  tokens: ['primary', 'primary-text', 'popover', 'secondary', 'card', 'border', 'muted-foreground', 'focus-ring'],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "component",
+    "Display"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/chat",
+    "status": "beta",
+    "source": "packages/chat/src/Citation/Citation.doc.ts"
+  }
+}

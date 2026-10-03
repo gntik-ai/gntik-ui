@@ -5,7 +5,8 @@
   "license": "MIT",
   "type": "module",
   "files": [
-    "src"
+    "src",
+    "dist"
   ],
   "exports": {
     "./brand.css": "./src/brand.css",
@@ -14,6 +15,14 @@
     "./runtime": {
       "types": "./src/runtime.d.ts",
       "default": "./src/runtime.js"
+    },
+    "./motion.css": "./src/motion.css",
+    "./density.css": "./src/density.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./figma-variables.json": "./dist/figma-variables.json",
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "default": "./dist/tokens.js"
     },
     "./package.json": "./package.json"
   },
@@ -29,6 +38,7 @@
     "directory": "packages/tokens"
   },
   "scripts": {
+    "build": "node scripts/export-tokens.mjs",
     "test": "node --test test/*.test.mjs"
   }
 }

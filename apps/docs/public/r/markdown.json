@@ -1,0 +1,74 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "markdown",
+  "type": "registry:ui",
+  "title": "Markdown",
+  "description": "Safe, token-styled markdown for model output (react-markdown + remark-gfm): headings, lists, task lists, tables, blockquotes, inline and fenced code with a copy button, links with an external marker. Raw HTML is never rendered, unsafe URL schemes are stripped, and partial streamed input (unclosed fences) renders cleanly.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui",
+    "lucide-react@^1.48.0",
+    "react-markdown@^10.1.0",
+    "remark-gfm@^4.0.1"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/chat/src/Markdown/CodeBlock.tsx",
+      "type": "registry:ui",
+      "target": "components/chat/markdown/CodeBlock.tsx",
+      "content": "import { Button, useI18n } from '@gntik-ai/ui';\nimport { Check, Copy } from 'lucide-react';\nimport { useCopy } from '../utils/useCopy';\nimport { markdownStyles } from './markdown.variants';\n\nconst s = markdownStyles.code;\n\nexport interface CodeBlockProps {\n  /** Source text. */\n  code: string;\n  /** Language tag from the fence (```ts). */\n  language?: string;\n  className?: string;\n}\n\n/** Fenced code with a language label and a copy button. */\nexport function CodeBlock({ code, language, className }: CodeBlockProps) {\n  const { copied, copy } = useCopy();\n  const { t } = useI18n();\n  return (\n    <div className={className ? `${s.root} ${className}` : s.root} data-language={language}>\n      <div className={s.header}>\n        <span className={s.lang}>{language || 'text'}</span>\n        <Button\n          size=\"sm\"\n          variant=\"ghost\"\n          icon={copied ? Check : Copy}\n          aria-label={copied ? t('chat.copiedCode') : t('chat.copyCode')}\n          className=\"h-7 px-2\"\n          onClick={() => void copy(code)}\n        >\n          {copied ? t('common.copied') : t('common.copy')}\n        </Button>\n      </div>\n      <pre className={s.pre}>\n        <code>{code}</code>\n      </pre>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/chat/src/Markdown/Markdown.tsx",
+      "type": "registry:ui",
+      "target": "components/chat/markdown/Markdown.tsx",
+      "content": "import { cn, useI18n } from '@gntik-ai/ui';\nimport { ExternalLink } from 'lucide-react';\nimport { Children, isValidElement, memo, type ReactNode } from 'react';\nimport ReactMarkdown, { defaultUrlTransform, type Components } from 'react-markdown';\nimport remarkGfm from 'remark-gfm';\nimport { CodeBlock } from './CodeBlock';\nimport { markdownStyles as s, streamingCaretClass } from './markdown.variants';\n\nexport interface MarkdownProps {\n  /** Markdown source (GitHub-flavoured: tables, task lists, strikethrough, autolinks). */\n  children: string;\n  /** Text is still arriving: closes a dangling code fence and draws the caret. */\n  streaming?: boolean;\n  className?: string;\n}\n\nconst SAFE_PROTOCOL = /^(https?|mailto|tel):/i;\n\n/**\n * URL policy: relative URLs, anchors and http(s)/mailto/tel only. Everything else\n * (javascript:, data:, vbscript:, …) is dropped, on top of react-markdown's own transform.\n */\nexport function safeUrl(url: string): string {\n  const cleaned = defaultUrlTransform(url);\n  if (!cleaned) return '';\n  // Ignore whitespace and control characters browsers skip (\"java\\tscript:\").\n  const compact = Array.from(cleaned)\n    .filter((c) => c.charCodeAt(0) > 0x20)\n    .join('');\n  if (/^[a-z][a-z0-9+.-]*:/i.test(compact) && !SAFE_PROTOCOL.test(compact)) return '';\n  return cleaned;\n}\n\n/**\n * Makes partial streamed markdown render sanely: a fence that has opened but not closed is\n * closed at the end, so the tail renders as code instead of flashing as paragraphs.\n */\nexport function repairStreamingMarkdown(text: string): string {\n  const fences = text.match(/^ {0,3}(`{3,}|~{3,})/gm) ?? [];\n  if (fences.length % 2 === 0) return text;\n  const opener = (fences[fences.length - 1] ?? '```').trim();\n  return `${text}${text.endsWith('\\n') ? '' : '\\n'}${opener}`;\n}\n\nconst isExternal = (href: string) => /^https?:\\/\\//i.test(href);\n\n/** Drops react-markdown's `node` (hast) prop before spreading onto a DOM element. */\n/** Screen-reader note on links that open a new tab. */\nfunction NewTabHint() {\n  const { t } = useI18n();\n  return <span className=\"sr-only\"> {t('link.external')}</span>;\n}\n\n/** Remote images can track readers and break layout mid-stream: show them as links. */\nfunction ImageLink({ href, alt }: { href: string; alt?: string }) {\n  const { t } = useI18n();\n  const text = t('chat.image', { alt: alt || t('chat.untitled') });\n  return href ? (\n    <a href={href} target=\"_blank\" rel=\"noopener noreferrer nofollow\" className={s.link}>\n      {text}\n      <NewTabHint />\n    </a>\n  ) : (\n    <span className={s.image}>{text}</span>\n  );\n}\n\nfunction TaskCheckbox({ checked }: { checked: boolean }) {\n  const { t } = useI18n();\n  return <input type=\"checkbox\" checked={checked} readOnly disabled aria-label={checked ? t('chat.taskDone') : t('chat.taskNotDone')} className={s.checkbox} />;\n}\n\nfunction omitNode<T extends { node?: unknown }>(props: T): Omit<T, 'node'> {\n  const { node, ...rest } = props;\n  void node;\n  return rest;\n}\n\ntype CodeChildProps = { className?: string; children?: ReactNode };\n\nconst components: Components = {\n  h1: (p) => <h1 {...omitNode(p)} className={s.h1} />,\n  h2: (p) => <h2 {...omitNode(p)} className={s.h2} />,\n  h3: (p) => <h3 {...omitNode(p)} className={s.h3} />,\n  h4: (p) => <h4 {...omitNode(p)} className={s.h4} />,\n  h5: (p) => <h4 {...omitNode(p)} className={s.h4} />,\n  h6: (p) => <h4 {...omitNode(p)} className={s.h4} />,\n  p: (p) => <p {...omitNode(p)} className={s.p} />,\n  ul: (p) => <ul {...omitNode(p)} className={cn(s.ul, p.className === 'contains-task-list' && 'ps-1')} />,\n  ol: (p) => <ol {...omitNode(p)} className={s.ol} />,\n  li: (p) => <li {...omitNode(p)} className={cn(s.li, p.className)} />,\n  blockquote: (p) => <blockquote {...omitNode(p)} className={s.blockquote} />,\n  hr: () => <hr className={s.hr} />,\n  table: (p) => (\n    <div className={s.tableWrap}>\n      <table {...omitNode(p)} className={s.table} />\n    </div>\n  ),\n  th: (p) => <th {...omitNode(p)} className={s.th} />,\n  td: (p) => <td {...omitNode(p)} className={s.td} />,\n  a: (props) => {\n    const { href, children, ...p } = omitNode(props);\n    if (!href) return <span>{children}</span>;\n    if (!isExternal(href)) {\n      return (\n        <a href={href} className={s.link} {...p}>\n          {children}\n        </a>\n      );\n    }\n    return (\n      <a href={href} target=\"_blank\" rel=\"noopener noreferrer nofollow\" className={s.link} {...p}>\n        {children}\n        <ExternalLink size={12} aria-hidden className={s.linkIcon} />\n        <NewTabHint />\n      </a>\n    );\n  },\n  img: ({ src, alt }) => <ImageLink href={typeof src === 'string' ? src : ''} alt={alt} />,\n  input: ({ checked, type }) =>\n    type === 'checkbox' ? (\n      <TaskCheckbox checked={!!checked} />\n    ) : null,\n  code: ({ className, children }) => <code className={cn(s.inlineCode, className)}>{children}</code>,\n  pre: ({ children }) => {\n    const child = Children.toArray(children)[0];\n    if (!isValidElement<CodeChildProps>(child)) return <pre className={s.code.pre}>{children}</pre>;\n    const language = /language-([\\w+#.-]+)/.exec(child.props.className ?? '')?.[1];\n    const code = String(Children.toArray(child.props.children).join('')).replace(/\\n$/, '');\n    return <CodeBlock code={code} language={language} />;\n  },\n};\n\nconst remarkPlugins = [remarkGfm];\n\n/**\n * Safe markdown for model output: raw HTML is never rendered (skipped, not parsed), links are\n * restricted to http(s)/mailto/tel/relative, external links open in a new tab with a marker,\n * and fenced code gets a copy button. Partial input from a stream is tolerated.\n */\nexport const Markdown = memo(function Markdown({ children, streaming = false, className }: MarkdownProps) {\n  const source = streaming ? repairStreamingMarkdown(children) : children;\n  return (\n    <div data-streaming={streaming || undefined} className={cn(s.root, streaming && streamingCaretClass, className)}>\n      <ReactMarkdown remarkPlugins={remarkPlugins} components={components} skipHtml urlTransform={safeUrl}>\n        {source}\n      </ReactMarkdown>\n    </div>\n  );\n});\n\n"
+    },
+    {
+      "path": "packages/chat/src/Markdown/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/markdown/index.ts",
+      "content": "export { Markdown, repairStreamingMarkdown, safeUrl, type MarkdownProps } from './Markdown';\nexport { CodeBlock, type CodeBlockProps } from './CodeBlock';\nexport { markdownStyles, streamingCaretClass } from './markdown.variants';\nexport { doc as markdownDoc } from './Markdown.doc';\n"
+    },
+    {
+      "path": "packages/chat/src/Markdown/markdown.variants.ts",
+      "type": "registry:ui",
+      "target": "components/chat/markdown/markdown.variants.ts",
+      "content": "import { focusRing } from '../utils/focus';\n\n/**\n * Blinking caret drawn after the last block while text streams in. Pure CSS (an ::after on the\n * last child), so it follows paragraphs, list items and code without extra DOM.\n */\nexport const streamingCaretClass = [\n  \"[&>:last-child]:after:ms-0.5 [&>:last-child]:after:inline-block [&>:last-child]:after:h-[1.05em] [&>:last-child]:after:w-[2px]\",\n  \"[&>:last-child]:after:translate-y-[2px] [&>:last-child]:after:bg-primary [&>:last-child]:after:content-['']\",\n  '[&>:last-child]:after:animate-pulse motion-reduce:[&>:last-child]:after:animate-none',\n].join(' ');\n\n/** Element classes for Markdown (token colours only). */\nexport const markdownStyles = {\n  root: 'min-w-0 text-[14px] leading-[1.7] text-foreground [overflow-wrap:anywhere] [&>:first-child]:mt-0 [&>:last-child]:mb-0',\n  h1: 'mt-5 mb-2 text-[18px] font-semibold tracking-tight',\n  h2: 'mt-5 mb-2 text-[16px] font-semibold tracking-tight',\n  h3: 'mt-4 mb-1.5 text-[14.5px] font-semibold',\n  h4: 'mt-4 mb-1.5 text-[13.5px] font-semibold text-muted-foreground',\n  p: 'my-2.5',\n  ul: 'my-2.5 list-disc space-y-1 ps-5 marker:text-muted-foreground',\n  ol: 'my-2.5 list-decimal space-y-1 ps-5 marker:text-muted-foreground',\n  li: 'ps-1 [&>ul]:my-1 [&>ol]:my-1 [&.task-list-item]:list-none [&.task-list-item]:-ms-5',\n  blockquote: 'my-3 border-s-2 border-primary/50 ps-3.5 text-muted-foreground',\n  hr: 'my-5 border-border',\n  link: `rounded-sm font-medium text-primary-text underline decoration-primary/40 underline-offset-2 hover:decoration-primary ${focusRing}`,\n  linkIcon: 'ms-0.5 inline-block align-[-1px]',\n  inlineCode: 'rounded-md border border-border bg-secondary/60 px-1.5 py-px font-mono text-[12.5px]',\n  tableWrap: 'my-3 overflow-x-auto rounded-lg border border-border',\n  table: 'w-full border-collapse text-start text-[13px]',\n  th: 'border-b border-border bg-secondary/50 px-3 py-2 font-semibold',\n  td: 'border-b border-border px-3 py-2 align-top [tr:last-child_&]:border-b-0',\n  checkbox: 'me-1.5 align-[-2px] accent-primary',\n  image: 'text-muted-foreground italic',\n  code: {\n    root: 'my-3 overflow-hidden rounded-lg border border-border bg-secondary/40',\n    header: 'flex h-9 items-center justify-between border-b border-border bg-secondary/50 ps-3 pe-1.5',\n    lang: 'font-mono text-[11px] tracking-wide text-muted-foreground uppercase',\n    pre: 'overflow-x-auto p-3 font-mono text-[12.5px] leading-6',\n  },\n} as const;\n"
+    },
+    {
+      "path": "packages/chat/src/utils/focus.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/focus.ts",
+      "content": "/** Focus ring shared by every interactive element in the pack (brand rule). */\nexport const focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';\n"
+    },
+    {
+      "path": "packages/chat/src/utils/useCopy.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/useCopy.ts",
+      "content": "import { useCallback, useEffect, useRef, useState } from 'react';\n\n/**\n * Copies text to the clipboard and exposes a short-lived `copied` flag for the button label.\n * The reset timer is cleared on unmount and on every new copy.\n */\nexport function useCopy(resetMs = 1600) {\n  const [copied, setCopied] = useState(false);\n  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);\n\n  useEffect(() => () => clearTimeout(timer.current), []);\n\n  const copy = useCallback(\n    async (text: string) => {\n      try {\n        await navigator.clipboard?.writeText(text);\n      } catch {\n        // Clipboard can be denied (insecure context, permissions); the flag still gives feedback.\n      }\n      setCopied(true);\n      clearTimeout(timer.current);\n      timer.current = setTimeout(() => setCopied(false), resetMs);\n    },\n    [resetMs],\n  );\n\n  return { copied, copy };\n}\n"
+    },
+    {
+      "path": "packages/chat/src/Markdown/Markdown.doc.ts",
+      "type": "registry:ui",
+      "target": "components/chat/markdown/Markdown.doc.ts",
+      "content": "import type { ComponentDoc } from '@gntik-ai/ui';\n\nexport const doc: ComponentDoc = {\n  name: 'Markdown',\n  group: 'Display',\n  status: 'beta',\n  description:\n    'Safe, token-styled markdown for model output (react-markdown + remark-gfm): headings, lists, task lists, tables, blockquotes, inline and fenced code with a copy button, links with an external marker. Raw HTML is never rendered, unsafe URL schemes are stripped, and partial streamed input (unclosed fences) renders cleanly.',\n  keyboard: [\n    ['Tab', 'Moves through links and code-block copy buttons in reading order'],\n    ['Enter', 'Follows a link or copies the focused code block'],\n  ],\n  tokens: ['foreground', 'muted-foreground', 'primary-text', 'secondary', 'border', 'focus-ring'],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "component",
+    "Display"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/chat",
+    "status": "beta",
+    "source": "packages/chat/src/Markdown/Markdown.doc.ts"
+  }
+}

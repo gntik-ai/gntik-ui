@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "notification-matrix",
+  "type": "registry:block",
+  "title": "Notification matrix",
+  "description": "Event × channel table of checkboxes with column and row toggles (mixed state) and always-on cells.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/team/NotificationMatrix/NotificationMatrix.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/team/notification-matrix/NotificationMatrix.tsx",
+      "content": "import { Checkbox, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, cn } from '@gntik-ai/ui';\nimport { useState } from 'react';\nimport {\n  notificationChannels,\n  notificationDefaults,\n  notificationEvents,\n  type NotificationChannel,\n  type NotificationEvent,\n  type NotificationMatrixValue,\n} from './fixtures';\n\nexport type { NotificationChannel, NotificationEvent, NotificationMatrixValue } from './fixtures';\n\nexport interface NotificationMatrixProps {\n  channels?: NotificationChannel[];\n  events?: NotificationEvent[];\n  /** Event id → enabled channel ids (controlled). */\n  value?: NotificationMatrixValue;\n  defaultValue?: NotificationMatrixValue;\n  onValueChange?: (value: NotificationMatrixValue) => void;\n  caption?: string;\n  className?: string;\n}\n\n/**\n * Event × channel grid of checkboxes. Column headers toggle a channel for every event, the last\n * column toggles every channel for one event; both show the mixed state. Locked cells stay on.\n */\nexport function NotificationMatrix({\n  channels = notificationChannels,\n  events = notificationEvents,\n  value: valueProp,\n  defaultValue = notificationDefaults,\n  onValueChange,\n  caption = 'Notification preferences',\n  className,\n}: NotificationMatrixProps) {\n  const [inner, setInner] = useState<NotificationMatrixValue>(defaultValue);\n  const value = valueProp ?? inner;\n  const isOn = (e: NotificationEvent, c: string) => !!e.locked?.includes(c) || !!value[e.id]?.includes(c);\n\n  const commit = (next: NotificationMatrixValue) => {\n    setInner(next);\n    onValueChange?.(next);\n  };\n\n  /** Sets the given (event, channel) cells, keeping locked ones on and the channel order stable. */\n  const setCells = (cells: Array<[NotificationEvent, string]>, on: boolean) => {\n    const next: NotificationMatrixValue = { ...value };\n    for (const [e, c] of cells) {\n      const current = new Set(next[e.id] ?? []);\n      if (on || e.locked?.includes(c)) current.add(c);\n      else current.delete(c);\n      next[e.id] = channels.map((ch) => ch.id).filter((id) => current.has(id));\n    }\n    commit(next);\n  };\n\n  const state = (cells: Array<[NotificationEvent, string]>) => {\n    const editable = cells.filter(([e, c]) => !e.locked?.includes(c));\n    const on = editable.filter(([e, c]) => isOn(e, c)).length;\n    return { checked: editable.length > 0 && on === editable.length, indeterminate: on > 0 && on < editable.length, disabled: editable.length === 0 };\n  };\n\n  return (\n    <Table className={cn('min-w-[520px]', className)}>\n      <TableCaption srOnly>{caption}</TableCaption>\n      <TableHeader>\n        <TableRow>\n          <TableHead>Event</TableHead>\n          {channels.map((c) => {\n            const cells = events.map((e): [NotificationEvent, string] => [e, c.id]);\n            const s = state(cells);\n            return (\n              <TableHead key={c.id} align=\"center\" className=\"w-24\">\n                <div className=\"flex flex-col items-center gap-1.5\">\n                  <span>{c.label}</span>\n                  <Checkbox aria-label={`All events by ${c.label}`} {...s} onCheckedChange={(on) => setCells(cells, on)} />\n                </div>\n              </TableHead>\n            );\n          })}\n          <TableHead align=\"center\" className=\"w-20\">\n            All\n          </TableHead>\n        </TableRow>\n      </TableHeader>\n      <TableBody>\n        {events.map((e) => {\n          const cells = channels.map((c): [NotificationEvent, string] => [e, c.id]);\n          const s = state(cells);\n          return (\n            <TableRow key={e.id}>\n              <TableCell>\n                <div className=\"text-[13px] font-medium text-foreground\">{e.label}</div>\n                {e.description && <div className=\"mt-0.5 text-[12px] leading-5 text-muted-foreground\">{e.description}</div>}\n              </TableCell>\n              {channels.map((c) => {\n                const locked = !!e.locked?.includes(c.id);\n                return (\n                  <TableCell key={c.id} align=\"center\">\n                    <Checkbox\n                      aria-label={`${e.label} by ${c.label}${locked ? ' (always on)' : ''}`}\n                      checked={isOn(e, c.id)}\n                      disabled={locked}\n                      onCheckedChange={(on) => setCells([[e, c.id]], on)}\n                    />\n                  </TableCell>\n                );\n              })}\n              <TableCell align=\"center\">\n                <Checkbox aria-label={`All channels for ${e.label}`} {...s} onCheckedChange={(on) => setCells(cells, on)} />\n              </TableCell>\n            </TableRow>\n          );\n        })}\n      </TableBody>\n    </Table>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/team/NotificationMatrix/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/team/notification-matrix/fixtures.ts",
+      "content": "export interface NotificationChannel {\n  id: string;\n  label: string;\n}\n\nexport interface NotificationEvent {\n  id: string;\n  label: string;\n  description?: string;\n  /** Channels that are always on for this event (shown checked and disabled). */\n  locked?: string[];\n}\n\nexport type NotificationMatrixValue = Record<string, string[]>;\n\nexport const notificationChannels: NotificationChannel[] = [\n  { id: 'email', label: 'Email' },\n  { id: 'in-app', label: 'In-app' },\n  { id: 'push', label: 'Push' },\n];\n\nexport const notificationEvents: NotificationEvent[] = [\n  { id: 'deploy-failed', label: 'Deployment failed', description: 'A deployment you own fails or is rolled back.' },\n  { id: 'deploy-succeeded', label: 'Deployment succeeded', description: 'A deployment you started goes live.' },\n  { id: 'mentions', label: 'Mentions', description: 'Someone mentions you in a comment or review.' },\n  { id: 'member-joined', label: 'Member joined', description: 'Someone accepts an invitation to the workspace.' },\n  { id: 'usage', label: 'Usage threshold', description: 'Usage reaches 80% or 100% of a quota.' },\n  { id: 'security', label: 'Security alerts', description: 'New sign-ins and changes to keys or roles.', locked: ['email'] },\n];\n\nexport const notificationDefaults: NotificationMatrixValue = {\n  'deploy-failed': ['email', 'in-app', 'push'],\n  'deploy-succeeded': ['in-app'],\n  mentions: ['email', 'in-app'],\n  'member-joined': [],\n  usage: ['email'],\n  security: ['email', 'in-app'],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "team"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/team/NotificationMatrix/block.meta.ts"
+  }
+}

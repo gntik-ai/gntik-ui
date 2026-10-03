@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "comment-thread",
+  "type": "registry:block",
+  "title": "Comment thread",
+  "description": "Plain-text comments with avatar, author and Timestamp, plus a reply composer (Textarea + Button, ⌘/Ctrl+Enter posts).",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/data-display/CommentThread/CommentThread.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/data-display/comment-thread/CommentThread.tsx",
+      "content": "import { Avatar, Button, cn, Textarea, Timestamp, type DateInput, useI18n } from '@gntik-ai/ui';\nimport { useId, useState, type FormEvent, type KeyboardEvent } from 'react';\nimport { COMMENT_AUTHOR, REVIEW_COMMENTS } from './fixtures';\n\nexport interface CommentAuthor {\n  name: string;\n  src?: string;\n}\n\nexport interface ThreadComment {\n  id: string;\n  author: CommentAuthor;\n  /** Plain text (no markdown); line breaks are kept. */\n  body: string;\n  at: DateInput;\n}\n\nexport interface CommentThreadProps {\n  comments?: readonly ThreadComment[];\n  /** Author of new comments (the signed-in user). */\n  currentUser?: CommentAuthor;\n  /** Called with the trimmed text when a comment is posted. */\n  onSubmit?: (body: string) => void;\n  /** Append posted comments locally (default). Turn off when the parent updates `comments`. */\n  appendOnSubmit?: boolean;\n  /** Accessible name of the thread. */\n  label?: string;\n  placeholder?: string;\n  submitLabel?: string;\n  className?: string;\n}\n\n/** Comment thread: avatar, author, plain-text body and Timestamp, with a reply composer (⌘/Ctrl+Enter posts). */\nexport function CommentThread({\n  comments = REVIEW_COMMENTS,\n  currentUser = COMMENT_AUTHOR,\n  onSubmit,\n  appendOnSubmit = true,\n  label: labelProp,\n  placeholder: placeholderProp,\n  submitLabel: submitLabelProp,\n  className,\n}: CommentThreadProps) {\n  const { t } = useI18n();\n  const label = labelProp ?? t('comments.label');\n  const placeholder = placeholderProp ?? t('comments.placeholder');\n  const submitLabel = submitLabelProp ?? t('comments.submit');\n  const [draft, setDraft] = useState('');\n  const [posted, setPosted] = useState<ThreadComment[]>([]);\n  const hintId = useId();\n  const all = appendOnSubmit ? [...comments, ...posted] : comments;\n  const text = draft.trim();\n\n  const post = () => {\n    if (!text) return;\n    onSubmit?.(text);\n    if (appendOnSubmit) setPosted((prev) => [...prev, { id: `local-${prev.length + 1}`, author: currentUser, body: text, at: Date.now() }]);\n    setDraft('');\n  };\n  const submit = (event: FormEvent) => {\n    event.preventDefault();\n    post();\n  };\n  const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {\n    if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {\n      event.preventDefault();\n      post();\n    }\n  };\n\n  return (\n    <section aria-label={label} className={cn('flex flex-col gap-6', className)}>\n      <ul aria-label={`${all.length} ${all.length === 1 ? 'comment' : 'comments'}`} className=\"flex flex-col gap-5\">\n        {all.map((comment, i) => (\n          <li key={comment.id} className=\"relative flex gap-3\">\n            {i < all.length - 1 && <span aria-hidden className=\"absolute top-9 -bottom-5 start-[15.5px] w-px bg-border\" />}\n            <Avatar name={comment.author.name} src={comment.author.src} size=\"sm\" className=\"relative z-10\" />\n            <article className=\"min-w-0 flex-1 rounded-lg border border-border bg-background/50 p-3\">\n              <header className=\"flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5\">\n                <span className=\"text-[12.5px] font-semibold text-foreground\">{comment.author.name}</span>\n                <Timestamp value={comment.at} className=\"font-mono text-[11px]\" />\n              </header>\n              <p className=\"mt-1 text-[13px] leading-relaxed whitespace-pre-line text-foreground/85\">{comment.body}</p>\n            </article>\n          </li>\n        ))}\n      </ul>\n      <form onSubmit={submit} className=\"flex gap-3\">\n        <Avatar name={currentUser.name} src={currentUser.src} size=\"sm\" />\n        <div className=\"min-w-0 flex-1 rounded-lg border border-border bg-background/50 transition-colors focus-within:border-primary/50\">\n          <Textarea\n            aria-label={t('comments.write')}\n            aria-describedby={hintId}\n            value={draft}\n            onValueChange={setDraft}\n            onKeyDown={onKeyDown}\n            placeholder={placeholder}\n            rows={3}\n            resize=\"none\"\n            className=\"border-0 bg-transparent shadow-none\"\n          />\n          <div className=\"flex items-center justify-between gap-2 border-t border-border/60 px-3 py-2\">\n            <span id={hintId} className=\"text-[11.5px] text-muted-foreground\">\n              Plain text · ⌘/Ctrl + Enter to post\n            </span>\n            <Button type=\"submit\" size=\"sm\" disabled={!text}>\n              {submitLabel}\n            </Button>\n          </div>\n        </div>\n      </form>\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/data-display/CommentThread/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/data-display/comment-thread/fixtures.ts",
+      "content": "import type { ThreadComment, CommentAuthor } from './CommentThread';\n\nconst MIN = 60_000;\nconst NOW = Date.now();\n\nexport const COMMENT_AUTHOR: CommentAuthor = { name: 'Jordan Blake' };\n\n/** Review discussion on a pull request, oldest first. */\nexport const REVIEW_COMMENTS: ThreadComment[] = [\n  {\n    id: 'c1',\n    author: { name: 'Ana Lopez' },\n    body: 'The retry policy now backs off exponentially. Can someone check the timeout on the invoice worker?',\n    at: NOW - 95 * MIN,\n  },\n  {\n    id: 'c2',\n    author: { name: 'Sam Carter' },\n    body: 'Looks good. 30 seconds is fine for the worker, the queue redelivers after 60.',\n    at: NOW - 70 * MIN,\n  },\n  {\n    id: 'c3',\n    author: { name: 'Priya Nair' },\n    body: 'Approved. Please add a changelog entry before merging.',\n    at: NOW - 12 * MIN,\n  },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "data-display"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/data-display/CommentThread/block.meta.ts"
+  }
+}

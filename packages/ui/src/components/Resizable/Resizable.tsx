@@ -24,6 +24,7 @@ import {
   clamp,
   type PanelConstraints,
 } from './resizable-layout';
+import { useI18n } from '../../i18n/I18nProvider';
 import { resizableVariants } from './resizable.variants';
 
 type Direction = 'horizontal' | 'vertical';
@@ -184,8 +185,12 @@ export interface ResizeHandleProps extends DivProps {
   disabled?: boolean;
 }
 
+const isRtl = (el: Element) => getComputedStyle(el).direction === 'rtl';
+
 interface DragState {
   start: number;
+  /** -1 when a horizontal group runs right to left (the first panel is on the right). */
+  sign: number;
   px: number;
   sizes: number[];
   last: number[];
@@ -206,9 +211,11 @@ export function ResizeHandle({
   onPointerMove,
   onPointerUp,
   onPointerCancel,
-  'aria-label': ariaLabel = 'Resize',
+  'aria-label': ariaLabelProp,
   ...props
 }: ResizeHandleProps) {
+  const { t } = useI18n();
+  const ariaLabel = ariaLabelProp ?? t('common.resize');
   const ctx = useGroup('ResizeHandle');
   const i = useContext(SlotContext);
   const dragRef = useRef<DragState | null>(null);
@@ -244,8 +251,9 @@ export function ResizeHandle({
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     onKeyDown?.(event);
     if (event.defaultPrevented || disabled || !a || !b) return;
-    const dec = horizontal ? 'ArrowLeft' : 'ArrowUp';
-    const inc = horizontal ? 'ArrowRight' : 'ArrowDown';
+    const rtl = horizontal && isRtl(event.currentTarget);
+    const dec = horizontal ? (rtl ? 'ArrowRight' : 'ArrowLeft') : 'ArrowUp';
+    const inc = horizontal ? (rtl ? 'ArrowLeft' : 'ArrowRight') : 'ArrowDown';
     let next: number[] | null = null;
     if (event.key === dec) next = movePair(sizes, panels, i, sizeA - step);
     else if (event.key === inc) next = movePair(sizes, panels, i, sizeA + step);
@@ -277,7 +285,8 @@ export function ResizeHandle({
       const rect = el.getBoundingClientRect();
       px += horizontal ? rect.width : rect.height;
     });
-    dragRef.current = { start: horizontal ? event.clientX : event.clientY, px, sizes, last: sizes };
+    const sign = horizontal && isRtl(handle) ? -1 : 1;
+    dragRef.current = { start: horizontal ? event.clientX : event.clientY, sign, px, sizes, last: sizes };
     setDragging(true);
   }
 
@@ -285,7 +294,7 @@ export function ResizeHandle({
     onPointerMove?.(event);
     const drag = dragRef.current;
     if (!drag || drag.px <= 0) return;
-    const delta = (((horizontal ? event.clientX : event.clientY) - drag.start) / drag.px) * 100;
+    const delta = (((horizontal ? event.clientX : event.clientY) - drag.start) / drag.px) * 100 * drag.sign;
     const next = movePair(drag.sizes, panels, i, (drag.sizes[i] ?? 0) + delta);
     drag.last = next;
     update(next);

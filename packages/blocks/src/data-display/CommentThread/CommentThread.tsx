@@ -1,4 +1,4 @@
-import { Avatar, Button, cn, Textarea, Timestamp, type DateInput } from '@gntik-ai/ui';
+import { Avatar, Button, cn, Textarea, Timestamp, type DateInput, useI18n } from '@gntik-ai/ui';
 import { useId, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { COMMENT_AUTHOR, REVIEW_COMMENTS } from './fixtures';
 
@@ -36,11 +36,15 @@ export function CommentThread({
   currentUser = COMMENT_AUTHOR,
   onSubmit,
   appendOnSubmit = true,
-  label = 'Comments',
-  placeholder = 'Add a comment…',
-  submitLabel = 'Comment',
+  label: labelProp,
+  placeholder: placeholderProp,
+  submitLabel: submitLabelProp,
   className,
 }: CommentThreadProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('comments.label');
+  const placeholder = placeholderProp ?? t('comments.placeholder');
+  const submitLabel = submitLabelProp ?? t('comments.submit');
   const [draft, setDraft] = useState('');
   const [posted, setPosted] = useState<ThreadComment[]>([]);
   const hintId = useId();
@@ -69,7 +73,7 @@ export function CommentThread({
       <ul aria-label={`${all.length} ${all.length === 1 ? 'comment' : 'comments'}`} className="flex flex-col gap-5">
         {all.map((comment, i) => (
           <li key={comment.id} className="relative flex gap-3">
-            {i < all.length - 1 && <span aria-hidden className="absolute top-9 -bottom-5 left-[15.5px] w-px bg-border" />}
+            {i < all.length - 1 && <span aria-hidden className="absolute top-9 -bottom-5 start-[15.5px] w-px bg-border" />}
             <Avatar name={comment.author.name} src={comment.author.src} size="sm" className="relative z-10" />
             <article className="min-w-0 flex-1 rounded-lg border border-border bg-background/50 p-3">
               <header className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
@@ -85,7 +89,7 @@ export function CommentThread({
         <Avatar name={currentUser.name} src={currentUser.src} size="sm" />
         <div className="min-w-0 flex-1 rounded-lg border border-border bg-background/50 transition-colors focus-within:border-primary/50">
           <Textarea
-            aria-label="Write a comment"
+            aria-label={t('comments.write')}
             aria-describedby={hintId}
             value={draft}
             onValueChange={setDraft}

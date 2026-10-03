@@ -27,24 +27,26 @@ export const numberInputVariants = tv({
       'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
       'disabled:cursor-not-allowed disabled:text-muted-foreground/40 disabled:hover:bg-transparent',
     ],
-    decrement: 'border-r',
-    increment: 'border-l',
+    decrement: 'border-e',
+    increment: 'border-s',
   },
   variants: {
     size: {
-      sm: { group: 'h-8 text-[12px]', input: 'px-2.5 text-[12px]', unit: 'pr-2.5 text-[12px]', stepper: 'w-8' },
-      md: { group: 'h-9 text-[13px]', input: 'px-3 text-[13px]', unit: 'pr-3 text-[12.5px]', stepper: 'w-9' },
+      /** Follows `data-density` (comfortable = md). */
+      auto: { group: 'h-control text-[13px]', input: 'px-field text-[13px]', unit: 'pe-3 text-[12.5px]', stepper: 'w-control' },
+      sm: { group: 'h-8 text-[12px]', input: 'px-2.5 text-[12px]', unit: 'pe-2.5 text-[12px]', stepper: 'w-8' },
+      md: { group: 'h-9 text-[13px]', input: 'px-3 text-[13px]', unit: 'pe-3 text-[12.5px]', stepper: 'w-9' },
     },
     align: {
-      start: { input: 'text-left' },
+      start: { input: 'text-start' },
       center: { input: 'text-center' },
-      end: { input: 'text-right' },
+      end: { input: 'text-end' },
     },
   },
-  defaultVariants: { size: 'md', align: 'start' },
+  defaultVariants: { size: 'auto', align: 'start' },
 });
 
 export type NumberInputVariantProps = VariantProps<typeof numberInputVariants>;
 
 /** Stepper icon size (px) per size. */
-export const NUMBER_INPUT_ICON_SIZE = { sm: 13, md: 14 } as const;
+export const NUMBER_INPUT_ICON_SIZE = { auto: 14, sm: 13, md: 14 } as const;

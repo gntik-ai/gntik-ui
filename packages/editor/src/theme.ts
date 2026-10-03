@@ -53,6 +53,44 @@ const RULES: ReadonlyArray<readonly [token: string, color: string, fontStyle?: s
   ['metatag', 'category-rose'],
 ];
 
+const channel = (hex: string, i: number) => parseInt(hex.slice(1 + 2 * i, 3 + 2 * i), 16);
+const luminance = (hex: string) => {
+  const [r, g, b] = [0, 1, 2].map((i) => {
+    const v = channel(hex, i) / 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!;
+};
+export const contrastRatio = (a: string, b: string) => {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi! + 0.05) / (lo! + 0.05);
+};
+/** Syntax text target: AA (4.5:1) with headroom for the current-line highlight. */
+const SYNTAX_CONTRAST = 4.7;
+
+/**
+ * Keeps a syntax colour's hue but mixes it toward `fg` in 10% steps until it reaches
+ * SYNTAX_CONTRAST on `bg` (green, amber and cyan on the light theme's white card otherwise
+ * fall to 2–3:1). Token values never change; only the mix is derived from them.
+ */
+export function readableOn(color: string, bg: string, fg: string): string {
+  for (let step = 0; step <= 10; step++) {
+    const hex = mixHex(color, fg, step / 10);
+    if (contrastRatio(hex, bg) >= SYNTAX_CONTRAST) return hex;
+  }
+  return fg;
+}
+
+/** `a` mixed with `b` by `t` (0–1), per sRGB channel. */
+export function mixHex(a: string, b: string, t: number): string {
+  return `#${[0, 1, 2]
+    .map((i) => Math.round(channel(a, i) * (1 - t) + channel(b, i) * t).toString(16).padStart(2, '0'))
+    .join('')}`;
+}
+
+/** Alpha of the current-line highlight (`${fg}0d`): syntax text must also read on it. */
+const LINE_HIGHLIGHT_ALPHA = 0x0d;
+
 /**
  * Builds Monaco theme data from the live brand tokens read on `el`
  * (default: <html>). Every colour comes from `tokenHex`; alpha is a hex suffix.
@@ -67,13 +105,16 @@ export function brandThemeData(theme: Theme, el?: Element): editor.IStandaloneTh
   const popover = c('popover');
   const destructive = c('destructive');
   const transparent = `${card}00`;
+  // Darkest surface syntax text sits on: the card under the current-line highlight.
+  const lineBg = mixHex(card, fg, LINE_HIGHLIGHT_ALPHA / 255);
+  const syntax = (color: string) => readableOn(color, lineBg, fg);
 
   return {
     base: BASE[theme],
     inherit: true,
     rules: RULES.map(([token, color, fontStyle]) => ({
       token,
-      foreground: c(color).slice(1),
+      foreground: syntax(c(color)).slice(1),
       ...(fontStyle ? { fontStyle } : {}),
     })),
     colors: {
@@ -85,7 +126,7 @@ export function brandThemeData(theme: Theme, el?: Element): editor.IStandaloneTh
       'editor.selectionBackground': `${primary}33`,
       'editor.inactiveSelectionBackground': `${primary}1f`,
       'editor.selectionHighlightBackground': `${primary}1f`,
-      'editor.lineHighlightBackground': `${fg}0d`,
+      'editor.lineHighlightBackground': `${fg}${LINE_HIGHLIGHT_ALPHA.toString(16).padStart(2, '0')}`,
       'editor.lineHighlightBorder': transparent,
       'editorIndentGuide.background': `${border}99`,
       'editorIndentGuide.activeBackground': `${primary}80`,
@@ -93,9 +134,9 @@ export function brandThemeData(theme: Theme, el?: Element): editor.IStandaloneTh
       'editorWhitespace.foreground': border,
       'editorBracketMatch.background': `${primary}26`,
       'editorBracketMatch.border': `${primary}99`,
-      'editorBracketHighlight.foreground1': primary,
-      'editorBracketHighlight.foreground2': c('category-violet'),
-      'editorBracketHighlight.foreground3': c('category-cyan'),
+      'editorBracketHighlight.foreground1': syntax(primary),
+      'editorBracketHighlight.foreground2': syntax(c('category-violet')),
+      'editorBracketHighlight.foreground3': syntax(c('category-cyan')),
       'editorOverviewRuler.border': transparent,
       'scrollbarSlider.background': `${muted}2e`,
       'scrollbarSlider.hoverBackground': `${muted}4d`,

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "system-banner",
+  "type": "registry:block",
+  "title": "System banner",
+  "description": "Full-width, dismissible banner for maintenance windows, incidents and system-wide notices.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/feedback/SystemBanner/SystemBanner.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/feedback/system-banner/SystemBanner.tsx",
+      "content": "import { CircleAlert, Info, Wrench, X } from '@gntik-ai/icons';\nimport type { LucideIcon } from '@gntik-ai/icons';\nimport { Button, IconButton, Link, cn } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport type { FeedbackAction } from '../types';\n\nexport type SystemBannerKind = 'maintenance' | 'incident' | 'info';\n\nconst KIND: Record<SystemBannerKind, { root: string; accent: string; icon: LucideIcon }> = {\n  info: { root: 'border-info/25 bg-info/10', accent: 'text-foreground', icon: Info },\n  maintenance: { root: 'border-warning/30 bg-warning/10', accent: 'text-warning-text', icon: Wrench },\n  incident: { root: 'border-destructive/30 bg-destructive/10', accent: 'text-destructive-text', icon: CircleAlert },\n};\nconst ICON_TONE: Record<SystemBannerKind, string> = {\n  info: 'text-info',\n  maintenance: 'text-warning-text',\n  incident: 'text-destructive-text',\n};\n\nexport interface SystemBannerProps {\n  kind?: SystemBannerKind;\n  /** Bold lead-in. */\n  title?: ReactNode;\n  message?: ReactNode;\n  /** Optional call to action (status page, details). */\n  action?: FeedbackAction | null;\n  /** Shows a dismiss button. Incidents are usually not dismissible. */\n  dismissible?: boolean;\n  /** Controlled visibility; omit to let the banner hide itself on dismiss. */\n  open?: boolean;\n  onDismiss?: () => void;\n  className?: string;\n}\n\n/**\n * Full-width banner above the app chrome for system-wide notices. Incidents are announced\n * assertively (role=\"alert\"); maintenance and info politely (role=\"status\").\n */\nexport function SystemBanner({\n  kind = 'maintenance',\n  title = 'Scheduled maintenance.',\n  message = 'Services restart zone by zone on Jul 2 at 02:00 UTC. No downtime expected.',\n  action = { label: 'View details', href: '#status' },\n  dismissible = true,\n  open,\n  onDismiss,\n  className,\n}: SystemBannerProps) {\n  const [dismissed, setDismissed] = useState(false);\n  if (!(open ?? !dismissed)) return null;\n  const k = KIND[kind];\n  const Icon = k.icon;\n  return (\n    <div\n      role={kind === 'incident' ? 'alert' : 'status'}\n      data-kind={kind}\n      className={cn('flex w-full flex-col gap-2.5 border-b px-4 py-2.5 sm:flex-row sm:items-center sm:gap-4 sm:px-6', k.root, className)}\n    >\n      <div className=\"flex min-w-0 flex-1 items-start gap-3 sm:items-center\">\n        <Icon size={17} strokeWidth={1.9} aria-hidden className={cn('mt-0.5 shrink-0 sm:mt-0', ICON_TONE[kind])} />\n        <p className=\"min-w-0 text-[13px] leading-6 text-foreground\">\n          {title != null && <span className={cn('font-semibold', k.accent)}>{title} </span>}\n          {message}\n        </p>\n      </div>\n      {(action || dismissible) && (\n        <div className=\"flex shrink-0 items-center gap-2 ps-7 sm:ps-0\">\n          {action &&\n            (action.href ? (\n              <Link href={action.href} className=\"text-[12.5px] font-semibold\">\n                {action.label}\n              </Link>\n            ) : (\n              <Button size=\"sm\" variant={action.variant ?? 'secondary'} icon={action.icon} disabled={action.disabled} onClick={action.onClick}>\n                {action.label}\n              </Button>\n            ))}\n          {dismissible && (\n            <IconButton\n              icon={X}\n              label=\"Dismiss banner\"\n              size=\"sm\"\n              variant=\"ghost\"\n              className=\"ms-auto\"\n              onClick={() => {\n                setDismissed(true);\n                onDismiss?.();\n              }}\n            />\n          )}\n        </div>\n      )}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/feedback/types.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/feedback/types.ts",
+      "content": "import type { ButtonProps } from '@gntik-ai/ui';\nimport type { LucideIcon } from '@gntik-ai/icons';\n\n/** An action rendered as a kit Button, or as a Link when `href` is set. */\nexport interface FeedbackAction {\n  id?: string;\n  label: string;\n  href?: string;\n  icon?: LucideIcon;\n  variant?: ButtonProps['variant'];\n  disabled?: boolean;\n  onClick?: () => void;\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "feedback"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/feedback/SystemBanner/block.meta.ts"
+  }
+}

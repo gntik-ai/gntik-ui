@@ -1,0 +1,60 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-demo",
+  "type": "registry:ui",
+  "title": "ChatDemo",
+  "description": "Reference composition of the chat pack: suggestions in the empty state, a tool call, a streamed markdown reply with sources, Stop, Retry and feedback, and a resizable details panel. Streaming is mocked with timers that are cleaned up.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/chat-composer.json",
+    "https://gntik-ui.invalid/r/chat-layout.json",
+    "https://gntik-ui.invalid/r/chat-message.json",
+    "https://gntik-ui.invalid/r/citation.json",
+    "https://gntik-ui.invalid/r/markdown.json",
+    "https://gntik-ui.invalid/r/suggestion-chips.json",
+    "https://gntik-ui.invalid/r/tool-call-card.json"
+  ],
+  "files": [
+    {
+      "path": "packages/chat/src/ChatDemo/ChatDemo.tsx",
+      "type": "registry:ui",
+      "target": "components/chat/chat-demo/ChatDemo.tsx",
+      "content": "import { TooltipProvider, cn } from '@gntik-ai/ui';\nimport { useEffect, useRef, useState } from 'react';\nimport { ChatAnnouncer, ChatMessage, type ChatFeedback, type ChatRole } from '../chat-message';\nimport { ChatComposer } from '../chat-composer';\nimport { ChatLayout } from '../chat-layout';\nimport { CitationList } from '../citation';\nimport { Markdown } from '../markdown';\nimport { SuggestionChips } from '../suggestion-chips';\nimport { ToolCallCard, type ToolCallStatus } from '../tool-call-card';\nimport { DEMO_REPLY, DEMO_SOURCES, DEMO_SUGGESTIONS, DEMO_TOOL, chunk } from './demoScript';\n\ninterface DemoMessage {\n  id: number;\n  role: ChatRole;\n  text: string;\n  time: Date;\n  streaming?: boolean;\n  tool?: { status: ToolCallStatus; durationMs?: number };\n  sources?: boolean;\n  feedback?: ChatFeedback;\n}\n\nexport interface ChatDemoProps {\n  /** Show the resizable details panel. */\n  withPanel?: boolean;\n  /** Milliseconds between streamed chunks. */\n  tickMs?: number;\n  className?: string;\n}\n\n/**\n * End-to-end example: suggestions, a user turn, a tool call, a streamed markdown reply with\n * sources, Stop, Retry and feedback. Streaming is mocked with timers that are cleared on\n * Stop and on unmount.\n */\nexport function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoProps) {\n  const [messages, setMessages] = useState<DemoMessage[]>([]);\n  const [streaming, setStreaming] = useState(false);\n  const nextId = useRef(1);\n  const timers = useRef<Array<ReturnType<typeof setTimeout>>>([]);\n\n  const clearTimers = () => {\n    timers.current.forEach((t) => clearTimeout(t));\n    timers.current = [];\n  };\n  useEffect(() => () => clearTimers(), []);\n\n  const patch = (id: number, fn: (m: DemoMessage) => DemoMessage) => setMessages((ms) => ms.map((m) => (m.id === id ? fn(m) : m)));\n\n  const respond = () => {\n    clearTimers();\n    const toolId = nextId.current++;\n    const replyId = nextId.current++;\n    const now = new Date();\n    setStreaming(true);\n    setMessages((ms) => [\n      ...ms,\n      { id: toolId, role: 'tool', text: '', time: now, tool: { status: 'running' } },\n      { id: replyId, role: 'assistant', text: '', time: now, streaming: true },\n    ]);\n    const pieces = chunk(DEMO_REPLY);\n    const startAt = DEMO_TOOL.durationMs;\n    timers.current.push(setTimeout(() => patch(toolId, (m) => ({ ...m, tool: { status: 'succeeded', durationMs: DEMO_TOOL.durationMs } })), startAt));\n    pieces.forEach((piece, i) => {\n      timers.current.push(setTimeout(() => patch(replyId, (m) => ({ ...m, text: m.text + piece })), startAt + (i + 1) * tickMs));\n    });\n    timers.current.push(\n      setTimeout(() => {\n        patch(replyId, (m) => ({ ...m, streaming: false, sources: true }));\n        setStreaming(false);\n      }, startAt + (pieces.length + 1) * tickMs),\n    );\n  };\n\n  const send = (text: string) => {\n    setMessages((ms) => [...ms, { id: nextId.current++, role: 'user', text, time: new Date() }]);\n    respond();\n  };\n\n  const stop = () => {\n    clearTimers();\n    setMessages((ms) =>\n      ms.map((m) =>\n        m.streaming ? { ...m, streaming: false } : m.tool?.status === 'running' ? { ...m, tool: { status: 'failed', durationMs: 0 } } : m,\n      ),\n    );\n    setStreaming(false);\n  };\n\n  const retry = (id: number) => {\n    setMessages((ms) => {\n      const at = ms.findIndex((m) => m.id === id);\n      // Drop the reply and the tool call that preceded it.\n      const cut = at > 0 && ms[at - 1]?.role === 'tool' ? at - 1 : at;\n      return ms.slice(0, cut);\n    });\n    respond();\n  };\n\n  const lastReply = [...messages].reverse().find((m) => m.role === 'assistant' && !m.streaming)?.text;\n\n  return (\n    <TooltipProvider>\n      <div className={cn('h-[640px] overflow-hidden rounded-xl border border-border', className)}>\n        <ChatLayout\n          header={<div className=\"px-4 py-3 text-[13px] font-semibold text-foreground\">New conversation</div>}\n          panel={\n            withPanel ? (\n              <div className=\"flex flex-col gap-4 p-4 text-[13px]\">\n                <div>\n                  <h2 className=\"font-semibold text-foreground\">Details</h2>\n                  <p className=\"mt-1 text-muted-foreground\">Workspace assistant with read access to projects, deployments and invoices.</p>\n                </div>\n                <CitationList sources={DEMO_SOURCES} heading=\"Context sources\" />\n              </div>\n            ) : undefined\n          }\n          composer={<ChatComposer onSubmit={send} streaming={streaming} onStop={stop} maxLength={4000} />}\n        >\n          {messages.length === 0 && (\n            <div className=\"flex flex-col gap-5 pt-10\">\n              <h2 className=\"text-center text-[20px] font-semibold tracking-tight text-foreground\">How can I help?</h2>\n              <SuggestionChips suggestions={DEMO_SUGGESTIONS} onSelect={send} />\n            </div>\n          )}\n          {messages.map((m) => {\n            if (m.role === 'tool' && m.tool) {\n              return (\n                <ChatMessage key={m.id} role=\"tool\" author=\"Tool\" timestamp={m.time}>\n                  <ToolCallCard\n                    name={DEMO_TOOL.name}\n                    status={m.tool.status}\n                    durationMs={m.tool.durationMs}\n                    args={DEMO_TOOL.args}\n                    result={m.tool.status === 'succeeded' ? DEMO_TOOL.result : undefined}\n                    error={m.tool.status === 'failed' ? 'Stopped by the user.' : undefined}\n                  />\n                </ChatMessage>\n              );\n            }\n            if (m.role === 'assistant') {\n              return (\n                <ChatMessage\n                  key={m.id}\n                  role=\"assistant\"\n                  timestamp={m.time}\n                  streaming={m.streaming}\n                  copyText={m.text}\n                  onRetry={streaming ? undefined : () => retry(m.id)}\n                  feedback={m.feedback ?? null}\n                  onFeedback={(f) => patch(m.id, (x) => ({ ...x, feedback: f }))}\n                >\n                  {m.text && <Markdown streaming={m.streaming}>{m.text}</Markdown>}\n                  {m.sources && <CitationList sources={DEMO_SOURCES} className=\"mt-3\" />}\n                </ChatMessage>\n              );\n            }\n            return (\n              <ChatMessage key={m.id} role={m.role} timestamp={m.time}>\n                {m.text}\n              </ChatMessage>\n            );\n          })}\n          <ChatAnnouncer streaming={streaming} lastReply={lastReply} />\n        </ChatLayout>\n      </div>\n    </TooltipProvider>\n  );\n}\n"
+    },
+    {
+      "path": "packages/chat/src/ChatDemo/demoScript.ts",
+      "type": "registry:ui",
+      "target": "components/chat/chat-demo/demoScript.ts",
+      "content": "import type { CitationSource } from '../citation';\nimport type { Suggestion } from '../suggestion-chips';\n\n/** Fixtures for ChatDemo: generic workspace data, no product names. */\nexport const DEMO_SUGGESTIONS: Suggestion[] = [\n  { label: 'Summarise deployments', description: 'What shipped this week across projects' },\n  { label: 'Find unpaid invoices', description: 'Invoices still open from last month' },\n  { label: 'Review member access', description: 'Who has admin rights' },\n  { label: 'Explain a failed build', description: 'Likely cause and a fix' },\n];\n\nexport const DEMO_SOURCES: CitationSource[] = [\n  { title: 'Deployment history · web-app', url: 'https://app.example.com/projects/web-app/deployments', snippet: '12 deployments in the last 7 days, 1 rolled back.' },\n  { title: 'Rollback guide', url: 'https://docs.example.com/deployments/rollback', snippet: 'Roll back from the Deployments page or with the CLI.' },\n];\n\nexport const DEMO_TOOL = {\n  name: 'list_deployments',\n  args: { project: 'web-app', since: '7d' },\n  result: { count: 12, succeeded: 11, rolledBack: 1, latest: 'v2.14.0' },\n  durationMs: 640,\n};\n\nexport const DEMO_REPLY = `Here is the summary for **web-app** over the last 7 days:\n\n| Status | Count |\n| --- | --- |\n| Succeeded | 11 |\n| Rolled back | 1 |\n\nThe rollback was \\`v2.13.2\\`: a health check failed in one region, so traffic went back to the previous build.\n\nTo pin a release from the CLI:\n\n\\`\\`\\`bash\ndeploy pin --project web-app --version v2.14.0\n\\`\\`\\`\n\nSee the [rollback guide](https://docs.example.com/deployments/rollback) for the full steps.`;\n\n/** Splits text into small chunks to imitate token streaming. */\nexport function chunk(text: string, size = 6): string[] {\n  const out: string[] = [];\n  for (let i = 0; i < text.length; i += size) out.push(text.slice(i, i + size));\n  return out;\n}\n"
+    },
+    {
+      "path": "packages/chat/src/ChatDemo/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/chat-demo/index.ts",
+      "content": "export { ChatDemo, type ChatDemoProps } from './ChatDemo';\nexport { doc as chatDemoDoc } from './ChatDemo.doc';\n"
+    },
+    {
+      "path": "packages/chat/src/ChatDemo/ChatDemo.doc.ts",
+      "type": "registry:ui",
+      "target": "components/chat/chat-demo/ChatDemo.doc.ts",
+      "content": "import type { ComponentDoc } from '@gntik-ai/ui';\n\nexport const doc: ComponentDoc = {\n  name: 'ChatDemo',\n  group: 'Layout',\n  status: 'experimental',\n  description:\n    'Reference composition of the chat pack: suggestions in the empty state, a tool call, a streamed markdown reply with sources, Stop, Retry and feedback, and a resizable details panel. Streaming is mocked with timers that are cleaned up.',\n  keyboard: [\n    ['Enter', 'In the composer: sends; on a suggestion: sends it'],\n    ['Escape', 'In the composer while streaming: stops the reply'],\n  ],\n  tokens: ['background', 'card', 'border', 'primary', 'focus-ring'],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "component",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/chat",
+    "status": "experimental",
+    "source": "packages/chat/src/ChatDemo/ChatDemo.doc.ts"
+  }
+}

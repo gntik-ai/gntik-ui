@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-404",
+  "type": "registry:block",
+  "title": "404 Not found",
+  "description": "Full-page not-found state: code, message, a primary way home, Go back and a support link.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/status-404/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/status-404/Page.tsx",
+      "content": "import { ArrowLeft, FileQuestion, Home } from '@gntik-ai/icons';\nimport { Button, Link, Logo, StatusLayout } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\nimport { notFoundContent } from './data';\n\nexport interface Status404Props {\n  title: ReactNode;\n  description: ReactNode;\n  /** Where the primary action leads. */\n  homeHref: string;\n  homeLabel: string;\n  /** Go back handler; defaults to `history.back()`. */\n  onBack: () => void;\n  backLabel: string;\n  supportHref: string;\n  supportLabel: string;\n  /** Minimal top bar; defaults to the Logo with wordmark. */\n  header: ReactNode;\n  fullScreen: boolean;\n}\n\n/** 404 page: StatusLayout with a way home, Go back and a support link in the footer. */\nexport default function Status404Page(props: Partial<Status404Props>) {\n  const {\n    title = notFoundContent.title,\n    description = notFoundContent.description,\n    homeHref = notFoundContent.homeHref,\n    homeLabel = notFoundContent.homeLabel,\n    onBack = () => window.history.back(),\n    backLabel = notFoundContent.backLabel,\n    supportHref = notFoundContent.supportHref,\n    supportLabel = notFoundContent.supportLabel,\n    header = <Logo size={24} wordmark />,\n    fullScreen = true,\n  } = props;\n  return (\n    <StatusLayout\n      fullScreen={fullScreen}\n      header={header}\n      icon={FileQuestion}\n      code={notFoundContent.code}\n      title={title}\n      description={description}\n      primaryAction={\n        <Button icon={Home} render={<a href={homeHref} />} nativeButton={false}>\n          {homeLabel}\n        </Button>\n      }\n      secondaryAction={\n        <Button variant=\"secondary\" icon={ArrowLeft} onClick={onBack}>\n          {backLabel}\n        </Button>\n      }\n      footer={<Link href={supportHref}>{supportLabel}</Link>}\n    />\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/status-404/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/status-404/data.ts",
+      "content": "/** Neutral fixtures for the 404 page. */\nexport const notFoundContent = {\n  code: '404 · Not found',\n  title: 'We can’t find that page',\n  description: 'The page may have been moved or deleted, or the link is out of date. Check the address or head back to the dashboard.',\n  homeLabel: 'Go to dashboard',\n  homeHref: '/',\n  backLabel: 'Go back',\n  supportLabel: 'Contact support',\n  supportHref: '/support',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "System"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/status-404/template.meta.ts"
+  }
+}

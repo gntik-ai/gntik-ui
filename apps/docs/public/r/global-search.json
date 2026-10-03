@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "global-search",
+  "type": "registry:block",
+  "title": "Global search",
+  "description": "⌘K search button opening a CommandPalette pre-wired with recent items and grouped results: pages, records and actions.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/shell/GlobalSearch/GlobalSearch.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/shell/global-search/GlobalSearch.tsx",
+      "content": "import { CommandPalette, CommandPaletteTrigger, type CommandGroup, type CommandItem, useI18n } from '@gntik-ai/ui';\nimport { globalSearchActions, globalSearchPages, globalSearchRecent, globalSearchRecords } from './fixtures';\n\nexport type GlobalSearchGroup = 'pages' | 'records' | 'actions' | 'recent';\n\nexport interface GlobalSearchProps {\n  pages?: CommandItem[];\n  records?: CommandItem[];\n  actions?: CommandItem[];\n  /** Shown first while the query is empty. */\n  recent?: CommandItem[];\n  /** Called with every chosen item and the group it came from (after the item's own onSelect). */\n  onSelect?: (item: CommandItem, group: GlobalSearchGroup) => void;\n  /** Group headings. */\n  labels?: Partial<Record<GlobalSearchGroup, string>>;\n  /** Registers ⌘K / Ctrl+K. */\n  shortcut?: boolean;\n  open?: boolean;\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  placeholder?: string;\n  /** Text of the trigger button. */\n  triggerLabel?: string;\n  /** Classes for the trigger (e.g. `hidden md:inline-flex`). */\n  className?: string;\n}\n\n/** ⌘K search: a CommandPalette pre-wired with recent items and Pages / Records / Actions groups. */\nexport function GlobalSearch({\n  pages = globalSearchPages,\n  records = globalSearchRecords,\n  actions = globalSearchActions,\n  recent = globalSearchRecent,\n  onSelect,\n  labels,\n  shortcut = true,\n  open,\n  defaultOpen,\n  onOpenChange,\n  placeholder: placeholderProp,\n  triggerLabel: triggerLabelProp,\n  className,\n}: GlobalSearchProps) {\n  const { t } = useI18n();\n  const placeholder = placeholderProp ?? t('globalSearch.placeholder');\n  const triggerLabel = triggerLabelProp ?? t('common.search');\n  const l: Record<GlobalSearchGroup, string> = {\n    pages: labels?.pages ?? t('globalSearch.pages'),\n    records: labels?.records ?? t('globalSearch.records'),\n    actions: labels?.actions ?? t('globalSearch.actions'),\n    recent: labels?.recent ?? t('commandPalette.recent'),\n  };\n  const origin = new Map<string, GlobalSearchGroup>();\n  const tag = (items: CommandItem[], group: GlobalSearchGroup) => {\n    for (const item of items) if (!origin.has(item.id)) origin.set(item.id, group);\n    return items;\n  };\n  const groups: CommandGroup[] = [\n    { label: l.pages, items: tag(pages, 'pages') },\n    { label: l.records, items: tag(records, 'records') },\n    { label: l.actions, items: tag(actions, 'actions') },\n  ].filter((g) => g.items.length > 0);\n  for (const item of recent) if (!origin.has(item.id)) origin.set(item.id, 'recent');\n  return (\n    <CommandPalette\n      groups={groups}\n      recent={recent}\n      recentLabel={l.recent}\n      shortcut={shortcut}\n      open={open}\n      defaultOpen={defaultOpen}\n      onOpenChange={onOpenChange}\n      placeholder={placeholder}\n      label={t('globalSearch.label')}\n      onSelect={(item) => onSelect?.(item, origin.get(item.id) ?? 'recent')}\n    >\n      <CommandPaletteTrigger className={className}>{triggerLabel}</CommandPaletteTrigger>\n    </CommandPalette>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/shell/GlobalSearch/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/shell/global-search/fixtures.ts",
+      "content": "import { BarChart3, CreditCard, FileText, FolderKanban, FolderPlus, Home, Rocket, Settings, UserPlus, Users } from '@gntik-ai/icons';\nimport type { CommandItem } from '@gntik-ai/ui';\n\nexport const globalSearchPages: CommandItem[] = [\n  { id: 'page-overview', label: 'Overview', icon: Home, shortcut: ['G', 'O'] },\n  { id: 'page-projects', label: 'Projects', icon: FolderKanban, shortcut: ['G', 'P'] },\n  { id: 'page-deployments', label: 'Deployments', icon: Rocket },\n  { id: 'page-analytics', label: 'Analytics', icon: BarChart3 },\n  { id: 'page-members', label: 'Members', icon: Users, keywords: ['team', 'people'] },\n  { id: 'page-billing', label: 'Billing', icon: CreditCard, keywords: ['invoices', 'plan'] },\n  { id: 'page-settings', label: 'Settings', icon: Settings, shortcut: ['⌘', ','] },\n];\n\nexport const globalSearchRecords: CommandItem[] = [\n  { id: 'record-web-frontend', label: 'web-frontend', icon: FolderKanban, mono: true, description: 'Project · eu-west' },\n  { id: 'record-billing-api', label: 'billing-api', icon: FolderKanban, mono: true, description: 'Project · us-east' },\n  { id: 'record-inv-2041', label: 'INV-2041', icon: FileText, mono: true, description: 'Invoice · Orbit Freight · overdue' },\n  { id: 'record-dana', label: 'Dana Whitfield', icon: Users, description: 'Member · Owner', keywords: ['dana@example.com'] },\n];\n\nexport const globalSearchActions: CommandItem[] = [\n  { id: 'action-new-project', label: 'Create project', icon: FolderPlus, shortcut: ['⌘', 'N'], keywords: ['new'] },\n  { id: 'action-deploy', label: 'Deploy to production', icon: Rocket, description: 'Promote the latest build of the current project' },\n  { id: 'action-invite', label: 'Invite member', icon: UserPlus, keywords: ['team', 'people'] },\n];\n\nexport const globalSearchRecent: CommandItem[] = [\n  { id: 'recent-web-frontend', label: 'web-frontend', icon: FolderKanban, mono: true, description: 'Project' },\n  { id: 'recent-billing', label: 'Billing', icon: CreditCard, description: 'Page' },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "shell"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/shell/GlobalSearch/block.meta.ts"
+  }
+}

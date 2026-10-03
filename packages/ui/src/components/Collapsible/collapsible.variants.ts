@@ -25,7 +25,7 @@ export const collapsibleVariants = tv({
       /** Full-width row with a divider, same family as Accordion. */
       row: {
         root: 'border-b border-border',
-        trigger: 'w-full justify-between rounded-sm py-3.5 text-left hover:text-foreground/80',
+        trigger: 'w-full justify-between rounded-sm py-3.5 text-start hover:text-foreground/80',
         content: 'pt-0 pb-4',
       },
     },

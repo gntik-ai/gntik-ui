@@ -2,6 +2,7 @@ import { Field } from '@base-ui/react/field';
 import { useId, useRef, useState, type ClipboardEvent, type KeyboardEvent, type MouseEvent, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { TokenInputChip } from './TokenInputChip';
+import { useI18n } from '../../i18n/I18nProvider';
 import { tokenInputVariants, type TokenInputVariantProps } from './token-input.variants';
 
 export interface TokenInputProps extends TokenInputVariantProps {
@@ -66,12 +67,15 @@ export function TokenInput({
   className,
   inputClassName,
   ref,
-  removeLabel = (t) => `Remove ${t}`,
-  listLabel = 'Entries',
+  removeLabel: removeLabelProp,
+  listLabel: listLabelProp,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
 }: TokenInputProps) {
+  const i18n = useI18n();
+  const listLabel = listLabelProp ?? i18n.t('tokenInput.entries');
+  const removeLabel = removeLabelProp ?? ((token: string) => i18n.t('common.removeItem', { label: token }));
   const [inner, setInner] = useState<string[]>(defaultValue ?? []);
   const [draft, setDraft] = useState('');
   const [announcement, setAnnouncement] = useState('');
@@ -107,14 +111,14 @@ export function TokenInput({
       added.push(t);
     }
     setDraft('');
-    if (added.length) update(next, `Added ${added.join(', ')}.${limited ? ` Limit of ${maxItems} reached.` : ''}`);
-    else if (limited) setAnnouncement(`Limit of ${maxItems} reached.`);
+    if (added.length) update(next, [i18n.t('tokenInput.added', { items: added.join(', ') }), limited ? i18n.t('tokenInput.limit', { max: maxItems ?? 0 }) : ''].filter(Boolean).join(' '));
+    else if (limited) setAnnouncement(i18n.t('tokenInput.limit', { max: maxItems ?? 0 }));
   };
 
   const remove = (index: number) => {
     const t = tokens[index];
     if (t === undefined) return;
-    update(tokens.filter((_, i) => i !== index), `Removed ${t}.`);
+    update(tokens.filter((_, i) => i !== index), i18n.t('common.removed', { label: t }));
     inputRef.current?.focus();
   };
 

@@ -7,7 +7,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const tableVariants = tv({
   slots: {
     container: 'relative w-full overflow-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
-    table: 'w-full border-separate border-spacing-0 text-left text-[13px] text-foreground',
+    table: 'w-full border-separate border-spacing-0 text-start text-[13px] text-foreground',
     header: '',
     body: '[&>tr:last-child>td]:border-b-0',
     footer: 'font-medium [&>tr>td]:border-t [&>tr>td]:border-b-0 [&>tr>td]:border-border [&>tr>td]:bg-secondary/30',
@@ -18,7 +18,7 @@ export const tableVariants = tv({
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
     cell: 'border-b border-border px-4 align-middle',
-    caption: 'caption-bottom px-4 py-3 text-left text-[12px] text-muted-foreground',
+    caption: 'caption-bottom px-4 py-3 text-start text-[12px] text-muted-foreground',
   },
   variants: {
     density: {
@@ -30,8 +30,8 @@ export const tableVariants = tv({
       false: { head: 'bg-secondary/30' },
     },
     align: {
-      left: { head: 'text-left', cell: 'text-left' },
-      right: { head: 'text-right', cell: 'text-right tabular-nums', sortButton: 'flex-row-reverse' },
+      left: { head: 'text-start', cell: 'text-start' },
+      right: { head: 'text-end', cell: 'text-end tabular-nums', sortButton: 'flex-row-reverse' },
       center: { head: 'text-center', cell: 'text-center' },
     },
     active: {

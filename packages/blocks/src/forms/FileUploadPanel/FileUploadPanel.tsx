@@ -1,4 +1,4 @@
-import { Button, IconButton, Progress, cn } from '@gntik-ai/ui';
+import { Button, IconButton, Progress, cn, useI18n } from '@gntik-ai/ui';
 import { CircleAlert, FileText, RotateCcw, Upload, X } from '@gntik-ai/icons';
 import { useId, useRef, useState, type DragEvent } from 'react';
 import { acceptsFile, formatBytes, simulateUpload, uploadItems, type UploadItem } from './fixtures';
@@ -38,18 +38,20 @@ export function FileUploadPanel({
   defaultFiles = uploadItems,
   onUpload = simulateUpload,
   onRemove,
-  label = 'Upload files',
+  label: labelProp,
   hint,
   disabled = false,
   className,
 }: FileUploadPanelProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('upload.label');
   const id = useId();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [sources, setSources] = useState<Record<string, File>>({});
   const [items, setItems] = useState<UploadItem[]>(defaultFiles);
   const [dragging, setDragging] = useState(false);
   const [announcement, setAnnouncement] = useState('');
-  const hintText = hint ?? `${accept.split(',').map((a) => a.replace('.', '').toUpperCase()).join(' · ')} · max ${formatBytes(maxSize)} per file`;
+  const hintText = hint ?? t('upload.hint', { types: accept.split(',').map((a) => a.replace('.', '').toUpperCase()).join(' · '), size: formatBytes(maxSize) });
 
   const patch = (itemId: string, next: Partial<UploadItem>) => setItems((list) => list.map((x) => (x.id === itemId ? { ...x, ...next } : x)));
 
@@ -58,11 +60,11 @@ export function FileUploadPanel({
     onUpload(file, (pct) => patch(itemId, { progress: pct })).then(
       () => {
         patch(itemId, { status: 'done', progress: 100 });
-        setAnnouncement(`${file.name} uploaded.`);
+        setAnnouncement(t('upload.done', { name: file.name }));
       },
       (e: unknown) => {
-        patch(itemId, { status: 'error', error: e instanceof Error ? e.message : 'Upload failed' });
-        setAnnouncement(`${file.name} failed to upload.`);
+        patch(itemId, { status: 'error', error: e instanceof Error ? e.message : t('upload.failed') });
+        setAnnouncement(t('upload.error', { name: file.name }));
       },
     );
   };
@@ -74,7 +76,7 @@ export function FileUploadPanel({
     const kept: Record<string, File> = {};
     for (const file of files) {
       const itemId = nextId();
-      const error = !acceptsFile(file, accept) ? 'File type not accepted' : file.size > maxSize ? `Exceeds the ${formatBytes(maxSize)} limit` : undefined;
+      const error = !acceptsFile(file, accept) ? t('upload.typeRejected') : file.size > maxSize ? t('upload.tooLarge', { size: formatBytes(maxSize) }) : undefined;
       added.push({ id: itemId, name: file.name, size: file.size, progress: 0, status: error ? 'error' : 'uploading', error });
       if (!error) {
         kept[itemId] = file;
@@ -84,14 +86,14 @@ export function FileUploadPanel({
     setItems((current) => (multiple ? [...current, ...added] : added));
     setSources((current) => ({ ...current, ...kept }));
     const rejected = added.filter((a) => a.error).length;
-    setAnnouncement(`${added.length - rejected} ${added.length - rejected === 1 ? 'file' : 'files'} added.${rejected ? ` ${rejected} rejected.` : ''}`);
+    setAnnouncement([t('upload.added', { count: added.length - rejected }), rejected ? t('upload.rejected', { count: rejected }) : ''].filter(Boolean).join(' '));
     for (const [itemId, file] of toStart) start(itemId, file);
   };
 
   const remove = (item: UploadItem) => {
     setSources((current) => Object.fromEntries(Object.entries(current).filter(([k]) => k !== item.id)));
     setItems((list) => list.filter((x) => x.id !== item.id));
-    setAnnouncement(`${item.name} removed.`);
+    setAnnouncement(t('upload.removed', { name: item.name }));
     onRemove?.(item);
   };
 
@@ -128,9 +130,9 @@ export function FileUploadPanel({
         <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-secondary/70 text-muted-foreground ring-1 ring-border">
           <Upload size={22} aria-hidden />
         </div>
-        <p className="mt-4 text-[13.5px] text-foreground">Drag files here or</p>
+        <p className="mt-4 text-[13.5px] text-foreground">{t('upload.drop')}</p>
         <Button variant="secondary" size="sm" className="mt-2" disabled={disabled} onClick={() => inputRef.current?.click()} aria-describedby={`${id}-hint`}>
-          Browse files
+          {t('upload.browse')}
         </Button>
         <p id={`${id}-hint`} className="mt-3 font-mono text-[11.5px] text-muted-foreground">
           {hintText}
@@ -149,7 +151,7 @@ export function FileUploadPanel({
         />
       </div>
       {items.length > 0 && (
-        <ul aria-label="Files" className="mt-4 space-y-2">
+        <ul aria-label={t('upload.files')} className="mt-4 space-y-2">
           {items.map((item) => (
             <FileRow key={item.id} item={item} onRemove={() => remove(item)} onRetry={retryFor(item.id)} />
           ))}
@@ -163,6 +165,7 @@ export function FileUploadPanel({
 }
 
 function FileRow({ item, onRemove, onRetry }: { item: UploadItem; onRemove: () => void; onRetry?: () => void }) {
+  const { t } = useI18n();
   const err = item.status === 'error';
   const done = item.status === 'done';
   return (
@@ -173,16 +176,16 @@ function FileRow({ item, onRemove, onRetry }: { item: UploadItem; onRemove: () =
       <div className="min-w-0 flex-1">
         <div className="truncate text-[13px] font-medium text-foreground">{item.name}</div>
         {item.status === 'uploading' ? (
-          <Progress value={item.progress} size="sm" aria-label={`Uploading ${item.name}`} className="mt-1.5" />
+          <Progress value={item.progress} size="sm" aria-label={t('upload.uploading', { name: item.name })} className="mt-1.5" />
         ) : (
           <div className={cn('mt-0.5 font-mono text-[11px]', err ? 'text-destructive-text' : 'text-muted-foreground')}>
-            {err ? `${item.error ?? 'Upload failed'} · not uploaded` : `${formatBytes(item.size)} · uploaded`}
+            {err ? t('upload.notUploaded', { error: item.error ?? t('upload.failed') }) : t('upload.uploaded', { size: formatBytes(item.size) })}
           </div>
         )}
       </div>
       {item.status === 'uploading' && <span className="shrink-0 font-mono text-[10.5px] text-muted-foreground tabular-nums">{Math.round(item.progress)}%</span>}
-      {err && onRetry && <IconButton icon={RotateCcw} size="sm" label={`Retry ${item.name}`} onClick={onRetry} />}
-      <IconButton icon={X} size="sm" label={`Remove ${item.name}`} onClick={onRemove} />
+      {err && onRetry && <IconButton icon={RotateCcw} size="sm" label={t('upload.retry', { name: item.name })} onClick={onRetry} />}
+      <IconButton icon={X} size="sm" label={t('common.removeItem', { label: item.name })} onClick={onRemove} />
     </li>
   );
 }

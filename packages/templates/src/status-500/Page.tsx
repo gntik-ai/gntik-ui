@@ -56,7 +56,7 @@ export default function Status500Page(props: Partial<Status500Props>) {
     >
       <ErrorPanel
         titleAs="h2"
-        className="text-left"
+        className="text-start"
         title={serverErrorContent.panelTitle}
         message={serverErrorContent.panelMessage}
         code={errorCode}

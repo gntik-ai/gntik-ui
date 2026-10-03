@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "environment-badge",
+  "type": "registry:block",
+  "title": "Environment badge",
+  "description": "Environment + region chip (\"production · eu-west\") for the topbar or a page header; tone follows the environment.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/shell/EnvironmentBadge/EnvironmentBadge.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/shell/environment-badge/EnvironmentBadge.tsx",
+      "content": "import { Badge, cn } from '@gntik-ai/ui';\n\nexport type EnvironmentTone = 'primary' | 'warning' | 'info' | 'neutral' | 'destructive';\n\n/** Default tone per environment name; anything else is neutral. */\nexport const environmentTones: Record<string, EnvironmentTone> = {\n  production: 'primary',\n  prod: 'primary',\n  staging: 'warning',\n  preview: 'info',\n  development: 'neutral',\n  dev: 'neutral',\n};\n\nexport interface EnvironmentBadgeProps {\n  /** Environment name, e.g. `production`, `staging`, `preview`. */\n  environment?: string;\n  /** Region or cluster shown after the environment, e.g. `eu-west`; `null` hides it. */\n  region?: string | null;\n  /** Overrides the tone looked up from `environmentTones`. */\n  tone?: EnvironmentTone;\n  /** Prefix read by screen readers only. */\n  srLabel?: string;\n  className?: string;\n}\n\n/** Environment + region chip for the topbar or a page header: \"production · eu-west\". */\nexport function EnvironmentBadge({ environment = 'production', region = 'eu-west', tone, srLabel = 'Environment:', className }: EnvironmentBadgeProps) {\n  const resolved = tone ?? environmentTones[environment.toLowerCase()] ?? 'neutral';\n  return (\n    <Badge tone={resolved} dot data-environment={environment} className={cn('font-mono text-[10.5px] whitespace-nowrap', className)}>\n      <span className=\"sr-only\">{srLabel} </span>\n      {environment}\n      {region && (\n        <>\n          <span aria-hidden className=\"opacity-60\">\n            ·\n          </span>\n          <span className=\"sr-only\">, region</span> {region}\n        </>\n      )}\n    </Badge>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "shell"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/shell/EnvironmentBadge/block.meta.ts"
+  }
+}

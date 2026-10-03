@@ -14,7 +14,7 @@ export default function TokenRecipients() {
           <Token
             key={name}
             size="sm"
-            icon={<Avatar name={name} size="xs" tone="accent" aria-hidden className="-ml-1 size-4" />}
+            icon={<Avatar name={name} size="xs" tone="accent" aria-hidden className="-ms-1 size-4" />}
             label={name}
             onRemove={() => setPeople((list) => list.filter((n) => n !== name))}
           />

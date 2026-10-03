@@ -1,5 +1,6 @@
 import { Tabs as BaseTabs } from '@base-ui/react/tabs';
 import { createContext, useContext, type ComponentType, type ReactNode, type Ref } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { tabsVariants } from './tabs.variants';
 
@@ -74,13 +75,14 @@ export interface TabsTabProps extends Omit<BaseTabs.Tab.Props, 'className'> {
 /** A single tab (role="tab"). `value` links it to the TabsPanel with the same value. */
 export function TabsTab({ icon: IconCmp, count, className, children, ...props }: TabsTabProps) {
   const { variant, indicator, fullWidth } = useContext(TabsContext);
+  const { locale } = useI18n();
   const s = tabsVariants({ variant, indicator, fullWidth });
   return (
     <BaseTabs.Tab className={cn(s.tab(), className)} {...props}>
       {IconCmp && <IconCmp size={variant === 'pills' ? 15 : 16} className={s.icon()} aria-hidden />}
       {children}
       {count != null && (
-        <span className={s.count()}>{typeof count === 'number' ? count.toLocaleString('en-US') : count}</span>
+        <span className={s.count()}>{typeof count === 'number' ? count.toLocaleString(locale) : count}</span>
       )}
     </BaseTabs.Tab>
   );

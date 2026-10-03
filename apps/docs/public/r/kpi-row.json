@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kpi-row",
+  "type": "registry:block",
+  "title": "KPI row",
+  "description": "Three to five stat tiles: label, value, a delta whose arrow and colour are independent, and an optional sparkline. Cards or a divided strip.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/data-display/KpiRow/KpiRow.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/data-display/kpi-row/KpiRow.tsx",
+      "content": "import { cn, Sparkline, type SparklineTone } from '@gntik-ai/ui';\nimport { TrendDelta, type KpiDelta } from '../shared/TrendDelta';\nimport { KPI_ITEMS } from './fixtures';\n\nexport interface KpiItem {\n  id: string;\n  label: string;\n  /** Pre-formatted value (\"38,921\", \"842 ms\"). */\n  value: string;\n  delta?: KpiDelta;\n  /** Optional series for a sparkline under the value, oldest first. */\n  trend?: readonly number[];\n  trendTone?: SparklineTone;\n}\n\nexport interface KpiRowProps {\n  /** 3–5 tiles read best; more wrap onto a new row. */\n  items?: readonly KpiItem[];\n  /** `cards` (one card per KPI, default) or `strip` (a single divided card, for page headers). */\n  variant?: 'cards' | 'strip';\n  /** Draw sparklines for items that have a `trend`. */\n  showTrends?: boolean;\n  /** Accessible name of the list. */\n  label?: string;\n  className?: string;\n}\n\nconst COLS: Record<number, string> = {\n  1: 'lg:grid-cols-1',\n  2: 'lg:grid-cols-2',\n  3: 'lg:grid-cols-3',\n  4: 'lg:grid-cols-4',\n  5: 'lg:grid-cols-5',\n};\n\n/**\n * KPI row: label, big number, delta (direction and sentiment are independent) and an optional\n * Sparkline. A description list, so each label is announced with its value.\n */\nexport function KpiRow({ items = KPI_ITEMS, variant = 'cards', showTrends = true, label = 'Key metrics', className }: KpiRowProps) {\n  const strip = variant === 'strip';\n  const cols = COLS[Math.min(items.length, 5)] ?? 'lg:grid-cols-4';\n  return (\n    <dl\n      aria-label={label}\n      className={cn(\n        'grid grid-cols-1 sm:grid-cols-2',\n        cols,\n        strip ? 'divide-y divide-border overflow-hidden rounded-xl border border-border bg-card shadow-sm sm:divide-x lg:divide-y-0' : 'gap-4',\n        className,\n      )}\n    >\n      {items.map((item) => (\n        <div\n          key={item.id}\n          className={cn('flex min-w-0 flex-col', strip ? 'px-5 py-4' : 'rounded-xl border border-border bg-card p-5 shadow-sm')}\n        >\n          <dt className={cn('truncate font-medium text-muted-foreground', strip ? 'text-[12px]' : 'text-[13px]')}>{item.label}</dt>\n          <dd className=\"mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1\">\n            <span className={cn('font-semibold tracking-tight text-foreground tabular-nums', strip ? 'text-[22px]' : 'text-[26px]')}>\n              {item.value}\n            </span>\n            {item.delta && <TrendDelta {...item.delta} />}\n          </dd>\n          {item.delta?.note && !strip && <dd className=\"mt-1 text-[12px] text-muted-foreground\">{item.delta.note}</dd>}\n          {showTrends && item.trend && item.trend.length > 1 && (\n            <dd className=\"mt-3\">\n              <Sparkline data={item.trend} label={item.label} area tone={item.trendTone ?? 'primary'} width={240} height={40} className=\"block h-auto w-full\" />\n            </dd>\n          )}\n        </div>\n      ))}\n    </dl>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/data-display/KpiRow/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/data-display/kpi-row/fixtures.ts",
+      "content": "import type { KpiItem } from './KpiRow';\n\n/** Four project KPIs: note latency and spend — same arrow logic, different sentiment. */\nexport const KPI_ITEMS: KpiItem[] = [\n  {\n    id: 'projects',\n    label: 'Active projects',\n    value: '142',\n    delta: { value: '+6', direction: 'up', sentiment: 'positive', note: 'vs. 30 days ago' },\n    trend: [128, 130, 131, 133, 134, 137, 139, 142],\n  },\n  {\n    id: 'requests',\n    label: 'Requests · 24h',\n    value: '38,921',\n    delta: { value: '+12.4%', direction: 'up', sentiment: 'positive', note: 'vs. previous 24h' },\n    trend: [31, 34, 33, 38, 36, 41, 39],\n  },\n  {\n    id: 'latency',\n    label: 'Avg latency',\n    value: '842 ms',\n    delta: { value: '−8.1%', direction: 'down', sentiment: 'positive', note: 'vs. previous 24h' },\n    trend: [910, 884, 902, 861, 852, 848, 842],\n  },\n  {\n    id: 'spend',\n    label: 'Spend · month to date',\n    value: '$18,204',\n    delta: { value: '+4.2%', direction: 'up', sentiment: 'negative', note: 'vs. last month' },\n    trend: [12.1, 13.4, 14.2, 15.0, 16.3, 17.1, 18.2],\n    trendTone: 'warning',\n  },\n];\n"
+    },
+    {
+      "path": "packages/blocks/src/data-display/shared/TrendDelta.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/data-display/shared/TrendDelta.tsx",
+      "content": "import { cn } from '@gntik-ai/ui';\n\n/** Arrow shape of a change. */\nexport type DeltaDirection = 'up' | 'down' | 'flat';\n/** Whether the change is good, bad or neither — independent of its direction (lower latency is good). */\nexport type DeltaSentiment = 'positive' | 'negative' | 'neutral';\n\nexport interface KpiDelta {\n  /** Display text, e.g. \"+12.4%\". */\n  value: string;\n  direction: DeltaDirection;\n  sentiment: DeltaSentiment;\n  /** Comparison context, e.g. \"vs. previous 24h\". */\n  note?: string;\n}\n\nconst SENTIMENT_CLASS: Record<DeltaSentiment, string> = {\n  positive: 'text-success-text',\n  negative: 'text-destructive-text',\n  neutral: 'text-muted-foreground',\n};\n\nconst DIRECTION_TEXT: Record<DeltaDirection, string> = { up: 'Increased by', down: 'Decreased by', flat: 'Unchanged:' };\nconst SENTIMENT_TEXT: Record<DeltaSentiment, string> = { positive: 'favourable', negative: 'unfavourable', neutral: '' };\n\nexport interface TrendDeltaProps extends KpiDelta {\n  className?: string;\n}\n\n/**\n * Mono delta with a triangle: the arrow follows `direction`, the colour follows `sentiment`.\n * Screen readers get the direction and sentiment in words.\n */\nexport function TrendDelta({ value, direction, sentiment, className }: TrendDeltaProps) {\n  const sr = [DIRECTION_TEXT[direction], value, SENTIMENT_TEXT[sentiment] && `(${SENTIMENT_TEXT[sentiment]})`].filter(Boolean).join(' ');\n  return (\n    <span\n      data-sentiment={sentiment}\n      className={cn('inline-flex items-center gap-1 font-mono text-[12px] font-medium tabular-nums', SENTIMENT_CLASS[sentiment], className)}\n    >\n      <svg width=\"9\" height=\"9\" viewBox=\"0 0 10 10\" aria-hidden className=\"shrink-0\">\n        {direction === 'up' && <path d=\"M5 1.5 9 8.5H1z\" fill=\"currentColor\" />}\n        {direction === 'down' && <path d=\"M5 8.5 1 1.5h8z\" fill=\"currentColor\" />}\n        {direction === 'flat' && <path d=\"M1 4h8v2H1z\" fill=\"currentColor\" />}\n      </svg>\n      <span aria-hidden>{value}</span>\n      <span className=\"sr-only\">{sr}</span>\n    </span>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "data-display"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/data-display/KpiRow/block.meta.ts"
+  }
+}

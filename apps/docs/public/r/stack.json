@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stack",
+  "type": "registry:ui",
+  "title": "Stack",
+  "description": "Flex layout primitives: Stack (any direction), HStack, VStack and Center. Gap on the spacing scale (0–12), align, justify, wrap and inline; render as any block tag with `as`, or any element with `render`. Paints nothing.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Stack/Stack.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/stack/Stack.tsx",
+      "content": "import { mergeProps } from '@base-ui/react/merge-props';\nimport { useRender } from '@base-ui/react/use-render';\nimport { cn } from '../../utils/cn';\nimport { GAP_CLASSES, centerVariants, stackVariants, type SpaceScale, type StackVariantProps } from './stack.variants';\n\n/** Block-level tags a layout primitive may render as (use `render` for anything else). */\nexport type LayoutElement =\n  | 'div' | 'section' | 'article' | 'aside' | 'header' | 'footer' | 'main' | 'nav'\n  | 'ul' | 'ol' | 'li' | 'form' | 'fieldset' | 'span' | 'dl';\n\nexport interface StackProps extends Omit<useRender.ComponentProps<'div'>, 'className'> {\n  className?: string;\n  /** Tag to render. `render` (Base UI) wins when both are set. */\n  as?: LayoutElement;\n  /** Main axis. Default `column`. */\n  direction?: StackVariantProps['direction'];\n  /** Space between children on the spacing scale (0–12 → `gap-0`…`gap-12`). */\n  gap?: SpaceScale;\n  /** Cross-axis alignment. */\n  align?: StackVariantProps['align'];\n  /** Main-axis distribution. */\n  justify?: StackVariantProps['justify'];\n  /** Lets children wrap onto new lines. */\n  wrap?: boolean;\n  /** Renders `inline-flex`. */\n  inline?: boolean;\n}\n\n/** Flex layout primitive: one axis, a gap on the spacing scale, alignment and wrapping. */\nexport function Stack({\n  as = 'div',\n  direction,\n  gap,\n  align,\n  justify,\n  wrap,\n  inline,\n  className,\n  render,\n  ref,\n  ...props\n}: StackProps) {\n  return useRender({\n    defaultTagName: as,\n    render,\n    ref,\n    props: mergeProps<'div'>(props, {\n      className: cn(\n        stackVariants({ direction, align, justify, wrap, inline }),\n        gap != null && GAP_CLASSES[gap],\n        className,\n      ),\n    }),\n  });\n}\n\nexport type HStackProps = Omit<StackProps, 'direction'> & { reverse?: boolean };\n\n/** Horizontal Stack; children are centred on the cross axis by default. */\nexport function HStack({ reverse, align = 'center', ...props }: HStackProps) {\n  return <Stack direction={reverse ? 'row-reverse' : 'row'} align={align} {...props} />;\n}\n\nexport type VStackProps = Omit<StackProps, 'direction'> & { reverse?: boolean };\n\n/** Vertical Stack. */\nexport function VStack({ reverse, ...props }: VStackProps) {\n  return <Stack direction={reverse ? 'column-reverse' : 'column'} {...props} />;\n}\n\nexport interface CenterProps extends Omit<useRender.ComponentProps<'div'>, 'className'> {\n  className?: string;\n  as?: LayoutElement;\n  /** Renders `inline-flex` (e.g. to centre an icon in a fixed box). */\n  inline?: boolean;\n}\n\n/** Centres its children on both axes. */\nexport function Center({ as = 'div', inline, className, render, ref, ...props }: CenterProps) {\n  return useRender({\n    defaultTagName: as,\n    render,\n    ref,\n    props: mergeProps<'div'>(props, { className: cn(centerVariants({ inline }), className) }),\n  });\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Stack/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/stack/index.ts",
+      "content": "export {\n  Stack,\n  HStack,\n  VStack,\n  Center,\n  type StackProps,\n  type HStackProps,\n  type VStackProps,\n  type CenterProps,\n  type LayoutElement,\n} from './Stack';\nexport { stackVariants, centerVariants, GAP_CLASSES, type SpaceScale, type StackVariantProps } from './stack.variants';\nexport { doc as stackDoc } from './Stack.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Stack/stack.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/stack/stack.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\n/** Spacing scale steps (Tailwind units of 0.25rem). */\nexport type SpaceScale = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;\n\n/** Static `gap-*` map so Tailwind sees every class. */\nexport const GAP_CLASSES: Record<SpaceScale, string> = {\n  0: 'gap-0',\n  1: 'gap-1',\n  2: 'gap-2',\n  3: 'gap-3',\n  4: 'gap-4',\n  5: 'gap-5',\n  6: 'gap-6',\n  7: 'gap-7',\n  8: 'gap-8',\n  9: 'gap-9',\n  10: 'gap-10',\n  11: 'gap-11',\n  12: 'gap-12',\n};\n\nexport const stackVariants = tv({\n  base: 'flex min-w-0',\n  variants: {\n    direction: {\n      row: 'flex-row',\n      column: 'flex-col',\n      'row-reverse': 'flex-row-reverse',\n      'column-reverse': 'flex-col-reverse',\n    },\n    align: {\n      start: 'items-start',\n      center: 'items-center',\n      end: 'items-end',\n      stretch: 'items-stretch',\n      baseline: 'items-baseline',\n    },\n    justify: {\n      start: 'justify-start',\n      center: 'justify-center',\n      end: 'justify-end',\n      between: 'justify-between',\n      around: 'justify-around',\n      evenly: 'justify-evenly',\n    },\n    wrap: {\n      true: 'flex-wrap',\n      false: 'flex-nowrap',\n    },\n    inline: {\n      true: 'inline-flex',\n    },\n  },\n  defaultVariants: { direction: 'column', wrap: false },\n});\n\nexport const centerVariants = tv({\n  base: 'flex items-center justify-center',\n  variants: {\n    inline: { true: 'inline-flex' },\n  },\n});\n\nexport type StackVariantProps = VariantProps<typeof stackVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Stack/Stack.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/stack/Stack.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Stack',\n  group: 'Layout',\n  status: 'stable',\n  description:\n    'Flex layout primitives: Stack (any direction), HStack, VStack and Center. Gap on the spacing scale (0–12), align, justify, wrap and inline; render as any block tag with `as`, or any element with `render`. Paints nothing.',\n  primitive: '@base-ui/react/use-render',\n  tokens: [],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Stack/Stack.doc.ts"
+  }
+}

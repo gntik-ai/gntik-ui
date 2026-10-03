@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "form-section",
+  "type": "registry:block",
+  "title": "Form section",
+  "description": "Two-column settings section: title and help on the left, fields on the right; stacks on small screens.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/forms/FormSection/FormSection.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/forms/form-section/FormSection.tsx",
+      "content": "import { Field, FieldDescription, FieldLabel, Input, Textarea, cn } from '@gntik-ai/ui';\nimport { useId, type HTMLAttributes, type ReactNode } from 'react';\n\nexport interface FormSectionProps extends Omit<HTMLAttributes<HTMLElement>, 'title' | 'className'> {\n  /** Section title shown in the left column; also names the section landmark. */\n  title?: ReactNode;\n  /** Help text under the title. */\n  description?: ReactNode;\n  /** The fields (right column). Defaults to a sample \"General\" field set. */\n  children?: ReactNode;\n  /** Footer row under the fields (e.g. Save / Cancel). */\n  actions?: ReactNode;\n  /** Heading level that fits the page outline. */\n  headingLevel?: 'h2' | 'h3' | 'h4';\n  /** Draws a rule above the section (for stacked sections). */\n  divided?: boolean;\n  className?: string;\n}\n\nfunction SampleFields() {\n  return (\n    <div className=\"grid grid-cols-1 gap-4 sm:grid-cols-6\">\n      <Field className=\"sm:col-span-4\">\n        <FieldLabel>Project name</FieldLabel>\n        <Input defaultValue=\"billing-dashboard\" />\n        <FieldDescription>Lowercase letters, numbers and dashes.</FieldDescription>\n      </Field>\n      <Field className=\"sm:col-span-6\">\n        <FieldLabel>Description</FieldLabel>\n        <Textarea rows={3} defaultValue=\"Usage and invoice reporting for every workspace.\" />\n      </Field>\n    </div>\n  );\n}\n\n/**\n * Two-column form section: title and help on the left, fields on the right. Stacks into a\n * single column on small screens.\n */\nexport function FormSection({\n  title = 'General',\n  description = 'Basic details shown to everyone who can access this project.',\n  children,\n  actions,\n  headingLevel: Heading = 'h2',\n  divided = false,\n  className,\n  ...props\n}: FormSectionProps) {\n  const id = useId();\n  return (\n    <section\n      aria-labelledby={title != null ? `${id}-title` : undefined}\n      className={cn('grid grid-cols-1 gap-x-10 gap-y-5 md:grid-cols-3', divided && 'border-t border-border pt-8', className)}\n      {...props}\n    >\n      <div className=\"min-w-0\">\n        {title != null && (\n          <Heading id={`${id}-title`} className=\"text-[14px] font-semibold tracking-tight text-foreground\">\n            {title}\n          </Heading>\n        )}\n        {description != null && <p className=\"mt-1 text-[13px] leading-6 text-pretty text-muted-foreground\">{description}</p>}\n      </div>\n      <div className=\"min-w-0 md:col-span-2\">\n        {children ?? <SampleFields />}\n        {actions != null && <div className=\"mt-6 flex flex-wrap items-center justify-end gap-2.5\">{actions}</div>}\n      </div>\n    </section>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "forms"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/forms/FormSection/block.meta.ts"
+  }
+}

@@ -101,7 +101,7 @@ export function ConfirmDestructive({
           </AlertDialogDescription>
         </AlertDialogHeader>
         {consequences.length > 0 && (
-          <ul className="mt-4 list-disc space-y-1 rounded-md border border-destructive/25 bg-destructive/5 py-2.5 pr-3 pl-8 text-[12.5px] text-muted-foreground">
+          <ul className="mt-4 list-disc space-y-1 rounded-md border border-destructive/25 bg-destructive/5 py-2.5 pe-3 ps-8 text-[12.5px] text-muted-foreground">
             {consequences.map((c) => (
               <li key={c}>{c}</li>
             ))}

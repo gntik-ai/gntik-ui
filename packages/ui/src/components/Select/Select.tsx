@@ -1,6 +1,7 @@
 import { Select as BaseSelect } from '@base-ui/react/select';
 import { Check, ChevronDown } from 'lucide-react';
 import type { ReactNode, Ref } from 'react';
+import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { selectVariants, type SelectVariantProps } from './select.variants';
 
@@ -61,9 +62,10 @@ export function SelectContent({
   children,
   ...props
 }: SelectContentProps) {
+  const dir = usePortalDir();
   return (
     <BaseSelect.Portal container={container}>
-      <BaseSelect.Positioner
+      <BaseSelect.Positioner dir={dir}
         className={s.positioner()}
         alignItemWithTrigger={alignItemWithTrigger}
         side={side}
@@ -126,12 +128,14 @@ export interface SimpleSelectProps<V extends string = string>
 export function SimpleSelect<V extends string = string>({
   items,
   label,
-  placeholder = 'Select…',
+  placeholder: placeholderProp,
   size,
   className,
   'aria-label': ariaLabel,
   ...props
 }: SimpleSelectProps<V>) {
+  const { t } = useI18n();
+  const placeholder = placeholderProp ?? t('common.selectPlaceholder');
   return (
     <Select<V> items={items.map(({ value, label: l }) => ({ value, label: l }))} {...props}>
       {label && <SelectLabel>{label}</SelectLabel>}

@@ -3,6 +3,7 @@ import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
 import { formatDate, toISODate } from '../Calendar/calendar-utils';
 import { Popover, PopoverContent } from '../Popover';
 import { DateTrigger } from './DateTrigger';
+import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import type { DatePickerVariantProps } from './date-picker.variants';
 
 type CalendarPassThrough = Pick<CalendarSingleProps, 'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'today'>;
@@ -42,7 +43,7 @@ export function DatePicker({
   defaultValue,
   onValueChange,
   formatOptions,
-  placeholder = 'Pick a date',
+  placeholder: placeholderProp,
   open: openProp,
   defaultOpen = false,
   onOpenChange,
@@ -52,7 +53,7 @@ export function DatePicker({
   invalid,
   size,
   className,
-  locale,
+  locale: localeProp,
   weekStartsOn,
   min,
   max,
@@ -61,6 +62,10 @@ export function DatePicker({
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
 }: DatePickerProps) {
+  const { t } = useI18n();
+  const providerLocale = useOptionalI18n()?.locale;
+  const locale = localeProp ?? providerLocale;
+  const placeholder = placeholderProp ?? t('datePicker.placeholder');
   const [inner, setInner] = useState<Date | null>(defaultValue ?? null);
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const calendarRef = useRef<HTMLDivElement | null>(null);
@@ -86,10 +91,10 @@ export function DatePicker({
         aria-describedby={ariaDescribedBy}
       />
       {name && <input type="hidden" name={name} value={date ? toISODate(date) : ''} />}
-      <PopoverContent aria-label="Choose date" align="start" sideOffset={6} padding="none" initialFocus={() => focusCalendarDay(calendarRef.current)}>
+      <PopoverContent aria-label={t('datePicker.choose')} align="start" sideOffset={6} padding="none" initialFocus={() => focusCalendarDay(calendarRef.current)}>
         <Calendar
           ref={calendarRef}
-          aria-label="Choose date"
+          aria-label={t('datePicker.choose')}
           value={date}
           onValueChange={(d) => {
             setInner(d);

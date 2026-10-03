@@ -328,3 +328,6 @@ function DescriptionListsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['description-lists'] = DescriptionListsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

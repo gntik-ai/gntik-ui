@@ -2,6 +2,7 @@ import { NumberField } from '@base-ui/react/number-field';
 import { Minus, MoveHorizontal, Plus } from 'lucide-react';
 import { useId, type KeyboardEvent, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
+import { useI18n } from '../../i18n/I18nProvider';
 import { NUMBER_INPUT_ICON_SIZE, numberInputVariants, type NumberInputVariantProps } from './number-input.variants';
 
 export interface NumberInputProps
@@ -48,7 +49,7 @@ function onPageKey(event: KeyboardEvent<HTMLInputElement>) {
  * label, min/max/step clamping and locale formatting (`format`). Works inside Field.
  */
 export function NumberInput({
-  size = 'md',
+  size = 'auto',
   align,
   className,
   inputClassName,
@@ -57,8 +58,8 @@ export function NumberInput({
   invalid,
   scrubLabel,
   hideSteppers = false,
-  decrementLabel = 'Decrease',
-  incrementLabel = 'Increase',
+  decrementLabel: decrementLabelProp,
+  incrementLabel: incrementLabelProp,
   placeholder,
   id,
   'aria-label': ariaLabel,
@@ -66,6 +67,9 @@ export function NumberInput({
   'aria-describedby': ariaDescribedBy,
   ...props
 }: NumberInputProps) {
+  const { t } = useI18n();
+  const decrementLabel = decrementLabelProp ?? t('numberInput.decrease');
+  const incrementLabel = incrementLabelProp ?? t('numberInput.increase');
   const autoId = useId();
   const inputId = id ?? (scrubLabel != null ? autoId : undefined);
   const s = numberInputVariants({ size, align });

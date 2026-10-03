@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import { cn } from '@gntik-ai/ui';
+import { cn, useI18n } from '@gntik-ai/ui';
 import { sampleTimeSlots } from './fixtures';
 
 export interface TimeSlot {
@@ -47,13 +47,15 @@ export function TimeSlotPicker({
   value,
   defaultValue = null,
   onValueChange,
-  legend = 'Available times',
+  legend: legendProp,
   description,
   name,
   columns = 4,
   maxHeight = 244,
   className,
 }: TimeSlotPickerProps) {
+  const { t } = useI18n();
+  const legend = legendProp ?? t('calendar.availableTimes');
   const autoName = useId();
   const descId = useId();
   const [inner, setInner] = useState<string | null>(defaultValue);
@@ -98,7 +100,7 @@ export function TimeSlotPicker({
                   )}
                 >
                   {slot.label ?? slot.value}
-                  {!available && <span className="sr-only"> (unavailable)</span>}
+                  {!available && <span className="sr-only"> {t('calendar.unavailable')}</span>}
                 </span>
               </label>
             );

@@ -5,6 +5,7 @@ import { add } from './commands/add.js';
 import { eject } from './commands/eject.js';
 import { init } from './commands/init.js';
 import { docs, list, search } from './commands/query.js';
+import { upgrade } from './commands/upgrade.js';
 import { defaultExec, type CommandResult, type Context, type Exec } from './context.js';
 import { CliError } from './errors.js';
 import { HELP } from './help.js';
@@ -26,6 +27,7 @@ const HANDLERS: Record<CommandName, (ctx: Context, positionals: string[]) => Pro
   list: (ctx) => list(ctx),
   search,
   docs,
+  upgrade,
 };
 
 /** Runs the CLI and returns the exit code. Never calls process.exit. */

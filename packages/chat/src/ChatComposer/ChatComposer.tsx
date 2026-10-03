@@ -1,4 +1,4 @@
-import { Button, IconButton, cn } from '@gntik-ai/ui';
+import { Button, IconButton, cn, useI18n } from '@gntik-ai/ui';
 import { ArrowUp, FileText, Paperclip, Square, X } from 'lucide-react';
 import { useId, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type ReactNode, type Ref } from 'react';
 import { formatBytes } from '../utils/format';
@@ -57,8 +57,8 @@ export function ChatComposer({
   streaming = false,
   onStop,
   disabled = false,
-  placeholder = 'Message the assistant…',
-  label = 'Message',
+  placeholder: placeholderProp,
+  label: labelProp,
   maxLength,
   attachments = [],
   onAttach,
@@ -70,6 +70,9 @@ export function ChatComposer({
   className,
   ref,
 }: ChatComposerProps) {
+  const { t } = useI18n();
+  const placeholder = placeholderProp ?? t('chat.placeholder');
+  const label = labelProp ?? t('chat.messageLabel');
   const id = useId();
   const [inner, setInner] = useState(defaultValue);
   const text = value ?? inner;
@@ -110,7 +113,7 @@ export function ChatComposer({
   const hintNode =
     hint === undefined ? (
       <>
-        <kbd className="font-sans">Enter</kbd> to send · <kbd className="font-sans">Shift + Enter</kbd> for a new line
+        <kbd className="font-sans">{t('kbd.enter')}</kbd> {t('chat.hintSend')} · <kbd className="font-sans">{t('chat.shiftEnter')}</kbd> {t('chat.hintNewLine')}
       </>
     ) : (
       hint
@@ -127,7 +130,7 @@ export function ChatComposer({
         }}
       >
         {attachments.length > 0 && (
-          <ul aria-label="Attachments" className={s.attachments}>
+          <ul aria-label={t('chat.attachments')} className={s.attachments}>
             {attachments.map((a) => (
               <li key={a.id} className={s.chip}>
                 <FileText size={13} aria-hidden className="shrink-0 text-muted-foreground" />
@@ -139,7 +142,7 @@ export function ChatComposer({
                   <button
                     type="button"
                     className={s.chipRemove}
-                    aria-label={`Remove ${a.name}`}
+                    aria-label={t('common.removeItem', { label: a.name })}
                     disabled={disabled}
                     onClick={() => onRemoveAttachment(a.id)}
                   >
@@ -168,8 +171,8 @@ export function ChatComposer({
           <div className={s.tools}>
             {onAttach && (
               <>
-                <IconButton size="sm" icon={Paperclip} label="Attach files" disabled={disabled} onClick={() => fileInput.current?.click()} />
-                <input ref={fileInput} type="file" multiple hidden accept={accept} aria-label="Attach files" onChange={onFiles} />
+                <IconButton size="sm" icon={Paperclip} label={t('chat.attach')} disabled={disabled} onClick={() => fileInput.current?.click()} />
+                <input ref={fileInput} type="file" multiple hidden accept={accept} aria-label={t('chat.attach')} onChange={onFiles} />
               </>
             )}
             {tools}
@@ -178,16 +181,16 @@ export function ChatComposer({
             {showCount && (
               <span id={`${id}-count`} className={cn(s.count, over && s.countOver)}>
                 {length}/{maxLength}
-                {over && <span className="sr-only"> characters, over the limit</span>}
+                {over && <span className="sr-only"> {t('chat.overLimit')}</span>}
               </span>
             )}
             {modelPicker}
             {streaming ? (
-              <Button size="sm" variant="secondary" icon={Square} aria-label="Stop generating" onClick={onStop} disabled={!onStop}>
-                Stop
+              <Button size="sm" variant="secondary" icon={Square} aria-label={t('chat.stop')} onClick={onStop} disabled={!onStop}>
+                {t('common.stop')}
               </Button>
             ) : (
-              <IconButton size="sm" variant="primary" icon={ArrowUp} label="Send message" type="submit" disabled={!canSend} />
+              <IconButton size="sm" variant="primary" icon={ArrowUp} label={t('chat.send')} type="submit" disabled={!canSend} />
             )}
           </div>
         </div>

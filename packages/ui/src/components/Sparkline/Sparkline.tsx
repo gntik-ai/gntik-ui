@@ -1,4 +1,7 @@
 import type { ReactNode, Ref, SVGAttributes } from 'react';
+import { createFormatters, type I18nFormatters } from '../../i18n/format';
+import { useI18n } from '../../i18n/I18nProvider';
+import { en } from '../../i18n/messages/en';
 import { cn } from '../../utils/cn';
 import { sparklineVariants, type SparklineVariantProps } from './sparkline.variants';
 
@@ -24,20 +27,31 @@ export interface SparklineProps extends Omit<SVGAttributes<SVGSVGElement>, 'clas
   formatValue?: (value: number) => string;
 }
 
-const defaultFormat = (v: number) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(v);
+const EN = createFormatters('en', en);
 
-/** "Requests: trending up 12% from 140 to 157 over 12 points (low 120, high 160)". */
-export function describeTrend(data: readonly number[], label = 'Trend', format = defaultFormat) {
+/**
+ * "Requests: trending up 12% from 140 to 157 over 12 points (low 120, high 160)". Pass the
+ * `useI18n()` value as `i18n` for another language; English otherwise.
+ */
+export function describeTrend(
+  data: readonly number[],
+  label?: string,
+  format?: (value: number) => string,
+  i18n: Pick<I18nFormatters, 't' | 'formatNumber'> = EN,
+) {
+  const { t } = i18n;
+  const name = label ?? t('common.trend');
+  const fmt = format ?? ((v: number) => i18n.formatNumber(v, { maximumFractionDigits: 2 }));
   const first = data[0];
   const last = data[data.length - 1];
-  if (first === undefined || last === undefined) return `${label}: no data`;
-  if (data.length === 1) return `${label}: ${format(first)}`;
+  if (first === undefined || last === undefined) return t('sparkline.noData', { label: name });
+  if (data.length === 1) return t('sparkline.single', { label: name, value: fmt(first) });
   const min = Math.min(...data);
   const max = Math.max(...data);
   const pct = first !== 0 ? Math.round(((last - first) / Math.abs(first)) * 100) : null;
-  const direction = last > first ? 'trending up' : last < first ? 'trending down' : 'flat';
-  const change = pct !== null && last !== first ? ` ${Math.abs(pct)}%` : '';
-  return `${label}: ${direction}${change} from ${format(first)} to ${format(last)} over ${data.length} points (low ${format(min)}, high ${format(max)})`;
+  const direction = t(last > first ? 'sparkline.up' : last < first ? 'sparkline.down' : 'sparkline.flat');
+  const change = pct !== null && last !== first ? ` ${i18n.formatNumber(Math.abs(pct))}%` : '';
+  return t('sparkline.summary', { label: name, direction, change, first: fmt(first), last: fmt(last), count: data.length, min: fmt(min), max: fmt(max) });
 }
 
 /**
@@ -58,8 +72,9 @@ export function Sparkline({
   className,
   ...props
 }: SparklineProps) {
+  const i18n = useI18n();
   const s = sparklineVariants({ tone });
-  const name = props['aria-label'] ?? describeTrend(data, label, formatValue);
+  const name = props['aria-label'] ?? describeTrend(data, label, formatValue, i18n);
   const n = data.length;
   const min = n ? Math.min(...data) : 0;
   const max = n ? Math.max(...data) : 0;

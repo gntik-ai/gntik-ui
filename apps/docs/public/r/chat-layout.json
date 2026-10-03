@@ -1,0 +1,72 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-layout",
+  "type": "registry:ui",
+  "title": "ChatLayout",
+  "description": "Full-height chat frame: scrollable thread with auto-scroll that respects scrolling up, a jump-to-latest button, a composer pinned below and an optional resizable side panel (artifact or details).",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui",
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/chat/src/ChatLayout/ChatLayout.tsx",
+      "type": "registry:ui",
+      "target": "components/chat/chat-layout/ChatLayout.tsx",
+      "content": "import { IconButton, cn, useI18n } from '@gntik-ai/ui';\nimport { ArrowDown } from 'lucide-react';\nimport { useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode, type Ref } from 'react';\nimport { useChatScroll } from '../useChatScroll';\nimport { chatLayoutStyles as s } from './chatLayout.variants';\n\nexport interface ChatLayoutProps {\n  /** The messages (ChatMessage list, suggestions, …). */\n  children?: ReactNode;\n  /** Pinned at the bottom of the thread column, outside the scroll area (usually ChatComposer). */\n  composer?: ReactNode;\n  /** Optional header above the thread (title, model, actions). */\n  header?: ReactNode;\n  /** Optional side panel (artifact preview, details). Omit to hide it and its resize handle. */\n  panel?: ReactNode;\n  /** Accessible name of the side panel landmark. */\n  panelLabel?: string;\n  /** Initial panel width in px. */\n  defaultPanelWidth?: number;\n  minPanelWidth?: number;\n  maxPanelWidth?: number;\n  onPanelWidthChange?: (width: number) => void;\n  /** Accessible name of the thread region. */\n  label?: string;\n  /** Label of the \"jump to latest\" button. */\n  scrollButtonLabel?: string;\n  /** Extra classes on the root. */\n  className?: string;\n  /** Extra classes on the centred content column. */\n  contentClassName?: string;\n  ref?: Ref<HTMLDivElement>;\n}\n\nconst clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));\nconst isRtl = (el: Element) => getComputedStyle(el).direction === 'rtl';\n\n/**\n * Full-height chat frame: a scrollable thread with auto-scroll that respects scrolling up,\n * a \"jump to latest\" button, the composer pinned below, and an optional side panel that the\n * user can resize by dragging or with the arrow keys on its separator.\n */\nexport function ChatLayout({\n  children,\n  composer,\n  header,\n  panel,\n  panelLabel: panelLabelProp,\n  defaultPanelWidth = 380,\n  minPanelWidth = 260,\n  maxPanelWidth = 720,\n  onPanelWidthChange,\n  label: labelProp,\n  scrollButtonLabel: scrollButtonLabelProp,\n  className,\n  contentClassName,\n  ref,\n}: ChatLayoutProps) {\n  const { t } = useI18n();\n  const panelLabel = panelLabelProp ?? t('chat.details');\n  const label = labelProp ?? t('chat.conversation');\n  const scrollButtonLabel = scrollButtonLabelProp ?? t('chat.scrollToBottom');\n  const { scrollRef, contentRef, isAtBottom, scrollToBottom } = useChatScroll();\n  const [width, setWidth] = useState(() => clamp(defaultPanelWidth, minPanelWidth, maxPanelWidth));\n  const [dragging, setDragging] = useState(false);\n  const drag = useRef<{ x: number; width: number; sign: number } | null>(null);\n\n  const resize = (next: number) => {\n    const w = clamp(Math.round(next), minPanelWidth, maxPanelWidth);\n    setWidth(w);\n    onPanelWidthChange?.(w);\n  };\n\n  const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {\n    e.currentTarget.setPointerCapture?.(e.pointerId);\n    drag.current = { x: e.clientX, width, sign: isRtl(e.currentTarget) ? -1 : 1 };\n    setDragging(true);\n  };\n  const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {\n    if (!drag.current) return;\n    // The panel sits on the inline end (right in LTR): dragging toward the thread widens it.\n    resize(drag.current.width + (drag.current.x - e.clientX) * drag.current.sign);\n  };\n  const endDrag = () => {\n    drag.current = null;\n    setDragging(false);\n  };\n  const onHandleKey = (e: KeyboardEvent<HTMLDivElement>) => {\n    const step = (e.shiftKey ? 64 : 16) * (isRtl(e.currentTarget) ? -1 : 1);\n    const actions: Record<string, () => void> = {\n      ArrowLeft: () => resize(width + step),\n      ArrowRight: () => resize(width - step),\n      Home: () => resize(maxPanelWidth),\n      End: () => resize(minPanelWidth),\n    };\n    const action = actions[e.key];\n    if (action) {\n      e.preventDefault();\n      action();\n    }\n  };\n\n  return (\n    <div ref={ref} className={cn(s.root, className)}>\n      <section aria-label={label} className={s.thread}>\n        {header && <div className={s.header}>{header}</div>}\n        <div className={s.viewport}>\n          <div ref={scrollRef} tabIndex={0} aria-label={t('chat.messages')} role=\"region\" className={s.scroller}>\n            <div ref={contentRef} className={cn(s.content, contentClassName)}>\n              {children}\n            </div>\n          </div>\n          {!isAtBottom && (\n            <div className={s.jump}>\n              <IconButton\n                icon={ArrowDown}\n                label={scrollButtonLabel}\n                variant=\"secondary\"\n                size=\"sm\"\n                className={s.jumpButton}\n                onClick={() => scrollToBottom()}\n              />\n            </div>\n          )}\n        </div>\n        {composer && (\n          <div className={s.composer}>\n            <div className={s.composerInner}>{composer}</div>\n          </div>\n        )}\n      </section>\n      {panel && (\n        <>\n          <div\n            role=\"separator\"\n            aria-orientation=\"vertical\"\n            aria-label={t('chat.resizePanel', { panel: panelLabel.toLowerCase() })}\n            aria-valuenow={width}\n            aria-valuemin={minPanelWidth}\n            aria-valuemax={maxPanelWidth}\n            tabIndex={0}\n            data-dragging={dragging || undefined}\n            className={s.handle}\n            onPointerDown={onPointerDown}\n            onPointerMove={onPointerMove}\n            onPointerUp={endDrag}\n            onPointerCancel={endDrag}\n            onKeyDown={onHandleKey}\n          />\n          <aside aria-label={panelLabel} className={s.panel} style={{ width }}>\n            {panel}\n          </aside>\n        </>\n      )}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/chat/src/ChatLayout/chatLayout.variants.ts",
+      "type": "registry:ui",
+      "target": "components/chat/chat-layout/chatLayout.variants.ts",
+      "content": "import { focusRing } from '../utils/focus';\n\n/** Slot classes for ChatLayout (plain strings: this package does not ship tailwind-variants). */\nexport const chatLayoutStyles = {\n  root: 'flex h-full min-h-0 w-full bg-background text-foreground',\n  thread: 'flex min-w-0 flex-1 flex-col',\n  header: 'shrink-0 border-b border-border',\n  viewport: 'relative min-h-0 flex-1',\n  scroller: `h-full overflow-y-auto overscroll-contain ${focusRing} focus-visible:-outline-offset-2`,\n  content: 'mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6',\n  jump: 'pointer-events-none absolute inset-x-0 bottom-3 flex justify-center',\n  jumpButton: 'pointer-events-auto rounded-full shadow-md',\n  composer: 'shrink-0 bg-background px-4 pb-4 pt-2 sm:px-6',\n  composerInner: 'mx-auto w-full max-w-3xl',\n  handle: [\n    'group relative w-1.5 shrink-0 cursor-col-resize touch-none bg-transparent',\n    'after:absolute after:inset-y-0 after:left-1/2 after:w-px after:-translate-x-1/2 after:bg-border',\n    'hover:after:w-0.5 hover:after:bg-primary/60 data-[dragging]:after:w-0.5 data-[dragging]:after:bg-primary',\n    'focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-focus-ring',\n  ].join(' '),\n  panel: 'flex min-h-0 shrink-0 flex-col overflow-hidden border-s border-border bg-card',\n} as const;\n"
+    },
+    {
+      "path": "packages/chat/src/ChatLayout/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/chat-layout/index.ts",
+      "content": "export { ChatLayout, type ChatLayoutProps } from './ChatLayout';\nexport { chatLayoutStyles } from './chatLayout.variants';\nexport { doc as chatLayoutDoc } from './ChatLayout.doc';\n"
+    },
+    {
+      "path": "packages/chat/src/useChatScroll/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/useChatScroll/index.ts",
+      "content": "export { useChatScroll, type UseChatScrollOptions, type UseChatScrollResult } from './useChatScroll';\n"
+    },
+    {
+      "path": "packages/chat/src/useChatScroll/useChatScroll.ts",
+      "type": "registry:ui",
+      "target": "components/chat/useChatScroll/useChatScroll.ts",
+      "content": "import { useCallback, useEffect, useRef, useState } from 'react';\n\nexport interface UseChatScrollOptions {\n  /** Distance from the bottom (px) still treated as \"at the bottom\". */\n  threshold?: number;\n}\n\nexport interface UseChatScrollResult {\n  /** Callback ref for the scrolling element. */\n  scrollRef: (el: HTMLElement | null) => void;\n  /** Callback ref for the content inside it (watched for growth, e.g. streamed tokens). */\n  contentRef: (el: HTMLElement | null) => void;\n  /** True while the viewport is pinned to the latest message. */\n  isAtBottom: boolean;\n  /** Scrolls to the latest message and re-pins auto-scroll. */\n  scrollToBottom: (behavior?: ScrollBehavior) => void;\n}\n\n/** Imperative DOM write kept outside the hook (state values must not be mutated in place). */\nfunction pinToBottom(el: HTMLElement) {\n  el.scrollTop = el.scrollHeight;\n}\n\nfunction distanceFromBottom(el: HTMLElement) {\n  return el.scrollHeight - el.scrollTop - el.clientHeight;\n}\n\n/**\n * Auto-scroll for a chat thread that respects the reader: new content keeps the view pinned\n * to the bottom only while the user is already there. Scrolling up unpins it (and\n * `isAtBottom` turns false, so a \"scroll to latest\" button can show); `scrollToBottom()`\n * pins it again.\n */\nexport function useChatScroll({ threshold = 48 }: UseChatScrollOptions = {}): UseChatScrollResult {\n  const [scrollEl, setScrollEl] = useState<HTMLElement | null>(null);\n  const [contentEl, setContentEl] = useState<HTMLElement | null>(null);\n  const [isAtBottom, setIsAtBottom] = useState(true);\n  const pinned = useRef(true);\n  const lastTop = useRef(0);\n\n  useEffect(() => {\n    if (!scrollEl) return;\n    lastTop.current = scrollEl.scrollTop;\n    const onScroll = () => {\n      const top = scrollEl.scrollTop;\n      // Re-pin at the bottom; unpin only when the reader moves up (a smooth programmatic\n      // scroll towards the bottom passes through \"not at bottom\" without unpinning).\n      if (distanceFromBottom(scrollEl) <= threshold) pinned.current = true;\n      else if (top < lastTop.current) pinned.current = false;\n      lastTop.current = top;\n      setIsAtBottom(pinned.current);\n    };\n    scrollEl.addEventListener('scroll', onScroll, { passive: true });\n    return () => scrollEl.removeEventListener('scroll', onScroll);\n  }, [scrollEl, threshold]);\n\n  useEffect(() => {\n    if (!scrollEl) return;\n    const follow = () => {\n      if (!pinned.current) return;\n      pinToBottom(scrollEl);\n      lastTop.current = scrollEl.scrollTop;\n    };\n    follow();\n    const target = contentEl ?? scrollEl;\n    const mo = new MutationObserver(follow);\n    mo.observe(target, { childList: true, subtree: true, characterData: true });\n    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(follow) : undefined;\n    ro?.observe(target);\n    return () => {\n      mo.disconnect();\n      ro?.disconnect();\n    };\n  }, [scrollEl, contentEl]);\n\n  const scrollToBottom = useCallback(\n    (behavior: ScrollBehavior = 'smooth') => {\n      if (!scrollEl) return;\n      pinned.current = true;\n      setIsAtBottom(true);\n      const reduce = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n      if (typeof scrollEl.scrollTo === 'function') {\n        scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: reduce ? 'auto' : behavior });\n      } else {\n        pinToBottom(scrollEl);\n      }\n    },\n    [scrollEl],\n  );\n\n  return { scrollRef: setScrollEl, contentRef: setContentEl, isAtBottom, scrollToBottom };\n}\n"
+    },
+    {
+      "path": "packages/chat/src/utils/focus.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/focus.ts",
+      "content": "/** Focus ring shared by every interactive element in the pack (brand rule). */\nexport const focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';\n"
+    },
+    {
+      "path": "packages/chat/src/ChatLayout/ChatLayout.doc.ts",
+      "type": "registry:ui",
+      "target": "components/chat/chat-layout/ChatLayout.doc.ts",
+      "content": "import type { ComponentDoc } from '@gntik-ai/ui';\n\nexport const doc: ComponentDoc = {\n  name: 'ChatLayout',\n  group: 'Layout',\n  status: 'beta',\n  description:\n    'Full-height chat frame: scrollable thread with auto-scroll that respects scrolling up, a jump-to-latest button, a composer pinned below and an optional resizable side panel (artifact or details).',\n  pattern: 'window splitter',\n  keyboard: [\n    ['Tab', 'Moves through the thread, the composer, the resize handle and the panel'],\n    ['ArrowLeft', 'On the resize handle: widens the side panel (Shift for bigger steps)'],\n    ['ArrowRight', 'On the resize handle: narrows the side panel'],\n    ['Home', 'On the resize handle: panel to its maximum width'],\n    ['End', 'On the resize handle: panel to its minimum width'],\n  ],\n  tokens: ['background', 'foreground', 'card', 'border', 'primary', 'focus-ring'],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "component",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/chat",
+    "status": "beta",
+    "source": "packages/chat/src/ChatLayout/ChatLayout.doc.ts"
+  }
+}

@@ -1,4 +1,4 @@
-import { Popover, PopoverContent, PopoverDescription, PopoverTitle, PopoverTrigger, cn } from '@gntik-ai/ui';
+import { Popover, PopoverContent, PopoverDescription, PopoverTitle, PopoverTrigger, cn, useI18n } from '@gntik-ai/ui';
 import { ExternalLink, Globe } from 'lucide-react';
 import { useId, type ReactNode } from 'react';
 import { citationStyles as s } from './citation.variants';
@@ -43,11 +43,12 @@ export interface CitationProps {
  * card with the title, host, snippet and a link to the source.
  */
 export function Citation({ index, source, delay = 200, className }: CitationProps) {
+  const { t } = useI18n();
   const host = source.publisher ?? sourceHost(source.url);
   const href = safeSourceUrl(source.url);
   return (
     <Popover>
-      <PopoverTrigger openOnHover delay={delay} aria-label={`Source ${index}: ${source.title}`} className={cn(s.trigger, className)}>
+      <PopoverTrigger openOnHover delay={delay} aria-label={t('chat.source', { index, title: source.title })} className={cn(s.trigger, className)}>
         {index}
       </PopoverTrigger>
       <PopoverContent side="top" align="start" className={s.popup}>
@@ -60,9 +61,9 @@ export function Citation({ index, source, delay = 200, className }: CitationProp
         {source.snippet && <PopoverDescription className={s.snippet}>{source.snippet}</PopoverDescription>}
         {href && (
           <a href={href} target="_blank" rel="noopener noreferrer nofollow" className={s.open}>
-            Open source
+            {t('chat.openSource')}
             <ExternalLink size={12} aria-hidden />
-            <span className="sr-only"> (opens in a new tab)</span>
+            <span className="sr-only"> {t('link.external')}</span>
           </a>
         )}
       </PopoverContent>
@@ -78,7 +79,9 @@ export interface CitationListProps {
 }
 
 /** Numbered list of the sources cited in a reply, matching the inline markers. */
-export function CitationList({ sources, heading = 'Sources', className }: CitationListProps) {
+export function CitationList({ sources, heading: headingProp, className }: CitationListProps) {
+  const { t } = useI18n();
+  const heading = headingProp ?? t('chat.sources');
   const headingId = useId();
   if (sources.length === 0) return null;
   return (
@@ -99,7 +102,7 @@ export function CitationList({ sources, heading = 'Sources', className }: Citati
                 {href ? (
                   <a href={href} target="_blank" rel="noopener noreferrer nofollow" className={s.itemTitle}>
                     {src.title}
-                    <span className="sr-only"> (opens in a new tab)</span>
+                    <span className="sr-only"> {t('link.external')}</span>
                   </a>
                 ) : (
                   <span className="text-[13px] font-medium text-foreground">{src.title}</span>

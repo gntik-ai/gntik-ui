@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sign-in-card",
+  "type": "registry:block",
+  "title": "Sign in (card)",
+  "description": "Centred card sign-in: email and password form with remember me and forgot-password link, legal footer, no single sign-on.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/sign-in-card/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/sign-in-card/Page.tsx",
+      "content": "import { SignInForm, type SignInValues } from '@gntik-ai/blocks';\nimport { AuthLayout, Link } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\nimport { signInCardCopy } from './data';\n\nexport interface SignInCardPageProps {\n  onSubmit: (values: SignInValues) => void | Promise<void>;\n  error: string | null;\n  defaultEmail: string;\n  forgotPasswordHref: string;\n  onForgotPassword: () => void;\n  signUpHref: string;\n  onSignUp: () => void;\n  /** Optional SSO area under the form; hidden by default. */\n  sso: ReactNode;\n  eyebrow: ReactNode;\n  title: ReactNode;\n  description: ReactNode;\n  termsHref: string;\n  privacyHref: string;\n  logo: ReactNode;\n}\n\n/** Card sign-in: AuthLayout `card` + SignInForm without SSO. */\nexport default function SignInCardPage({\n  onSubmit,\n  error,\n  defaultEmail,\n  forgotPasswordHref,\n  onForgotPassword,\n  signUpHref,\n  onSignUp,\n  sso = null,\n  eyebrow = signInCardCopy.eyebrow,\n  title = signInCardCopy.title,\n  description = signInCardCopy.description,\n  termsHref = signInCardCopy.termsHref,\n  privacyHref = signInCardCopy.privacyHref,\n  logo,\n}: Partial<SignInCardPageProps>) {\n  return (\n    <AuthLayout\n      fullScreen\n      variant=\"card\"\n      logo={logo}\n      footer={\n        <>\n          By signing in you agree to the <Link href={termsHref}>Terms</Link> and <Link href={privacyHref}>Privacy Policy</Link>.\n        </>\n      }\n    >\n      <SignInForm\n        onSubmit={onSubmit}\n        error={error}\n        defaultEmail={defaultEmail}\n        forgotPasswordHref={forgotPasswordHref}\n        onForgotPassword={onForgotPassword}\n        signUpHref={signUpHref}\n        onSignUp={onSignUp}\n        sso={sso}\n        eyebrow={eyebrow}\n        title={title}\n        description={description}\n      />\n    </AuthLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/sign-in-card/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/sign-in-card/data.ts",
+      "content": "/** Copy for the card sign-in (no SSO, legal footer). */\nexport const signInCardCopy = {\n  eyebrow: 'Welcome back',\n  title: 'Sign in',\n  description: 'Use the email and password for your account.',\n  termsHref: '#terms',\n  privacyHref: '#privacy',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Auth"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "stable",
+    "source": "packages/templates/src/sign-in-card/template.meta.ts"
+  }
+}

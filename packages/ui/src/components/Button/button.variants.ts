@@ -15,6 +15,8 @@ export const buttonVariants = tv({
       destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
     },
     size: {
+      /** Follows `data-density` (comfortable = md). */
+      auto: 'h-control gap-1.5 px-control text-[13px] rounded-lg',
       sm: 'h-8 gap-1.5 px-3 text-[12.5px] rounded-md',
       md: 'h-9 gap-1.5 px-3.5 text-[13px] rounded-lg',
       lg: 'h-11 gap-2 px-5 text-[14.5px] rounded-lg',
@@ -22,14 +24,20 @@ export const buttonVariants = tv({
     iconOnly: { true: 'px-0' },
   },
   compoundVariants: [
+    { iconOnly: true, size: 'auto', class: 'size-control' },
     { iconOnly: true, size: 'sm', class: 'size-8' },
     { iconOnly: true, size: 'md', class: 'size-9' },
     { iconOnly: true, size: 'lg', class: 'size-11' },
   ],
-  defaultVariants: { variant: 'primary', size: 'md', iconOnly: false },
+  defaultVariants: { variant: 'primary', size: 'auto', iconOnly: false },
 });
 
 export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 
 /** Icon size (px) per button size. */
 export const BUTTON_ICON_SIZE = { sm: 14, md: 15, lg: 17 } as const;
+
+/** Icon size for a button size, resolving `auto` through the density. */
+export function buttonIconSize(size: 'auto' | 'sm' | 'md' | 'lg', density: 'compact' | 'comfortable'): number {
+  return BUTTON_ICON_SIZE[size === 'auto' ? (density === 'compact' ? 'sm' : 'md') : size];
+}

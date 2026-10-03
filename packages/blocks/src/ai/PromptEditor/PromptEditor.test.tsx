@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
+import ControlledVariables from './examples/controlled-variables';
 import { PromptEditor, extractPromptVariables } from './PromptEditor';
 
 const chips = () => within(screen.getByRole('list', { name: 'Detected variables' })).getAllByRole('listitem').map((li) => li.textContent);
@@ -42,5 +43,36 @@ describe('PromptEditor', () => {
     render(<PromptEditor defaultUser="" />);
     expect(screen.getByRole('button', { name: 'Run' })).toBeDisabled();
     expect(extractPromptVariables('{{ a }} {{b.c}} {{a}}')).toEqual(['a', 'b.c']);
+  });
+
+  it('supports controlled variables', async () => {
+    const user = userEvent.setup();
+    const onVariablesChange = vi.fn();
+    const onRun = vi.fn();
+    const { rerender } = render(
+      <PromptEditor variables={{ company: 'Acme', language: 'French', ticket: 'T-1' }} onVariablesChange={onVariablesChange} onRun={onRun} />,
+    );
+    const company = screen.getByRole('textbox', { name: 'company' });
+    expect(company).toHaveValue('Acme');
+    await user.type(company, 'x');
+    expect(onVariablesChange).toHaveBeenLastCalledWith({ company: 'Acmex', language: 'French', ticket: 'T-1' });
+    // Controlled: the parent has not updated the value.
+    expect(company).toHaveValue('Acme');
+    rerender(<PromptEditor variables={{ company: 'Globex', language: 'French', ticket: 'T-1' }} onVariablesChange={onVariablesChange} onRun={onRun} />);
+    expect(company).toHaveValue('Globex');
+    await user.click(screen.getByRole('button', { name: 'Run' }));
+    expect(onRun).toHaveBeenCalledWith(expect.objectContaining({ variables: { company: 'Globex', language: 'French', ticket: 'T-1' } }));
+  });
+
+  it('controlled example: the page fills a variable', async () => {
+    const user = userEvent.setup();
+    render(<ControlledVariables />);
+    expect(screen.getByText('1 variable has no value')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Fill from sample ticket' }));
+    expect(screen.getByRole('textbox', { name: 'ticket' })).toHaveValue('Cannot reset my password');
+    expect(screen.queryByText('1 variable has no value')).toBeNull();
+    await user.type(screen.getByRole('textbox', { name: 'company' }), ' Inc');
+    expect(screen.getByRole('textbox', { name: 'company' })).toHaveValue('Acme Inc');
+    await expectNoAxeViolations();
   });
 });

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "members",
+    "prompt": "Build a members management page.",
+    "expect": { "templates": ["settings-members"], "blocks": ["members-table", "invite-members-dialog"], "layout": "settings-layout" },
+    "mustNot": ["data-table"]
+  },
+  {
+    "id": "usage-dashboard",
+    "prompt": "A usage analytics dashboard with a date range filter.",
+    "expect": { "templates": ["usage-analytics"], "blocks": ["date-range-filter", "chart-card"], "layout": "sidebar-layout" }
+  },
+  {
+    "id": "sso-sign-in",
+    "prompt": "Sign-in with SSO.",
+    "expect": { "templates": ["sso-login", "sign-in"], "layout": "auth-layout" },
+    "mustNot": ["app-sidebar", "sidebar-layout"]
+  },
+  {
+    "id": "api-keys",
+    "prompt": "API keys settings page.",
+    "expect": { "templates": ["settings-api-keys"], "blocks": ["create-api-key-dialog", "confirm-destructive"], "layout": "settings-layout" }
+  },
+  {
+    "id": "incident-kanban",
+    "prompt": "A kanban board for incidents: columns for each status, a card per incident with its severity.",
+    "expect": { "templates": ["incident-board"], "blocks": ["page-header", "kpi-row"], "layout": "sidebar-layout" }
+  },
+  {
+    "id": "audit-log",
+    "prompt": "Audit log with filters.",
+    "expect": { "templates": ["audit-log"], "blocks": ["filter-bar", "data-table"], "layout": "sidebar-layout" }
+  },
+  {
+    "id": "billing",
+    "prompt": "Billing page.",
+    "expect": { "templates": ["settings-billing"], "blocks": ["plan-card", "invoice-table"], "layout": "settings-layout" }
+  },
+  {
+    "id": "onboarding-wizard",
+    "prompt": "An onboarding wizard that sets up a new workspace step by step.",
+    "expect": { "templates": ["create-workspace", "create-wizard"], "layout": "wizard-layout" },
+    "mustNot": ["data-table"]
+  },
+  {
+    "id": "notifications-inbox",
+    "prompt": "Notifications inbox.",
+    "expect": { "templates": ["notification-inbox"], "layout": "split-layout" }
+  },
+  {
+    "id": "not-found",
+    "prompt": "A 404 page.",
+    "expect": { "templates": ["status-404"], "layout": "status-layout" },
+    "mustNot": ["app-sidebar", "data-table"]
+  },
+  {
+    "id": "docs-article",
+    "prompt": "A docs article page with a table of contents.",
+    "expect": { "templates": ["docs-article"], "blocks": ["inline-callout"], "layout": "docs-layout" },
+    "mustNot": ["data-table"]
+  },
+  {
+    "id": "workflow-builder",
+    "prompt": "A workflow builder screen.",
+    "expect": { "templates": ["workflow-builder"], "blocks": ["flow-builder"], "layout": "canvas-layout" }
+  }
+]

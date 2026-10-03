@@ -143,7 +143,7 @@ export function LogViewer({
             {visible.length} of {lines.length}
           </span>
         </div>
-        <div className="flex flex-wrap items-center gap-2 lg:ml-auto">
+        <div className="flex flex-wrap items-center gap-2 lg:ms-auto">
           <ToggleGroup aria-label="Log levels" size="sm" multiple value={levels} onValueChange={(v) => setLevels(v)}>
             {LOG_LEVELS.map((lv) => (
               <Toggle key={lv} value={lv}>

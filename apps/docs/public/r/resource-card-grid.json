@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "resource-card-grid",
+  "type": "registry:block",
+  "title": "Resource card grid",
+  "description": "Responsive grid of resource cards with icon or avatar, name, status, meta figures and a row-actions menu.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/data-display/ResourceCardGrid/ResourceCardGrid.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/data-display/resource-card-grid/ResourceCardGrid.tsx",
+      "content": "import { Copy, ExternalLink, Pencil, Trash2, type LucideIcon } from '@gntik-ai/icons';\nimport { Avatar, cn, MoreMenu, StatusTag, type MoreMenuAction } from '@gntik-ai/ui';\nimport { RESOURCE_CARDS } from './fixtures';\n\nexport interface ResourceCard {\n  id: string;\n  name: string;\n  description?: string;\n  /** Icon tile (a lucide icon). Ignored when `avatar` is set. */\n  icon?: LucideIcon;\n  /** Avatar instead of the icon tile (people, teams, organisations). */\n  avatar?: { name: string; src?: string };\n  /** StatusTag state key (running, paused, failed…). */\n  status?: string;\n  /** Two or three small figures at the bottom of the card. */\n  meta?: ReadonlyArray<{ label: string; value: string }>;\n}\n\nexport type ResourceAction = 'open' | 'rename' | 'duplicate' | 'delete';\n\nexport interface ResourceCardGridProps {\n  items?: readonly ResourceCard[];\n  /** Accessible name of the list. */\n  label?: string;\n  /** Called with the default actions (Open, Rename, Duplicate, Delete). */\n  onAction?: (action: ResourceAction, item: ResourceCard) => void;\n  /** Replaces the default menu entirely. Return an empty array to hide the menu. */\n  getActions?: (item: ResourceCard) => Array<MoreMenuAction | 'separator'>;\n  /** Columns at the widest breakpoint. */\n  columns?: 2 | 3 | 4;\n  /** Heading level of each card's name, to fit the page outline (default h3). */\n  titleAs?: 'h2' | 'h3' | 'h4';\n  className?: string;\n}\n\nconst COLS = { 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-3 xl:grid-cols-4' } as const;\n\n/** Responsive grid of resource cards: icon or avatar, name, status, meta figures and a row-actions MoreMenu. */\nexport function ResourceCardGrid({ items = RESOURCE_CARDS, label = 'Resources', onAction, getActions, columns = 3, titleAs: TitleTag = 'h3', className }: ResourceCardGridProps) {\n  const defaults = (item: ResourceCard): Array<MoreMenuAction | 'separator'> => [\n    { label: 'Open', icon: ExternalLink, onSelect: () => onAction?.('open', item) },\n    { label: 'Rename', icon: Pencil, onSelect: () => onAction?.('rename', item) },\n    { label: 'Duplicate', icon: Copy, onSelect: () => onAction?.('duplicate', item) },\n    'separator',\n    { label: 'Delete', icon: Trash2, destructive: true, onSelect: () => onAction?.('delete', item) },\n  ];\n  return (\n    <ul aria-label={label} className={cn('grid grid-cols-1 gap-4 sm:grid-cols-2', COLS[columns], className)}>\n      {items.map((item) => {\n        const actions = getActions ? getActions(item) : defaults(item);\n        const IconCmp = item.icon;\n        return (\n          <li key={item.id} className=\"flex min-w-0 flex-col rounded-xl border border-border bg-card p-5 shadow-sm\">\n            <div className=\"flex items-start justify-between gap-3\">\n              {item.avatar ? (\n                <Avatar name={item.avatar.name} src={item.avatar.src} size=\"md\" shape=\"rounded\" />\n              ) : (\n                <span className=\"inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-muted-foreground\">\n                  {IconCmp && <IconCmp size={20} aria-hidden />}\n                </span>\n              )}\n              <div className=\"flex items-center gap-2\">\n                {item.status && <StatusTag status={item.status} />}\n                {actions.length > 0 && <MoreMenu items={actions} label={`Actions for ${item.name}`} variant=\"ghost\" size=\"sm\" />}\n              </div>\n            </div>\n            <div className=\"mt-4 min-w-0\">\n              <TitleTag className=\"truncate text-[14px] font-semibold text-foreground\">{item.name}</TitleTag>\n              {item.description && <p className=\"mt-0.5 truncate text-[12.5px] text-muted-foreground\">{item.description}</p>}\n            </div>\n            {item.meta && item.meta.length > 0 && (\n              <dl className=\"mt-4 grid grid-cols-2 gap-3 border-t border-border pt-4\">\n                {item.meta.map((m) => (\n                  <div key={m.label} className=\"flex min-w-0 flex-col-reverse\">\n                    <dt className=\"truncate text-[11px] text-muted-foreground\">{m.label}</dt>\n                    <dd className=\"truncate font-mono text-[14px] text-foreground tabular-nums\">{m.value}</dd>\n                  </div>\n                ))}\n              </dl>\n            )}\n          </li>\n        );\n      })}\n    </ul>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/data-display/ResourceCardGrid/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/data-display/resource-card-grid/fixtures.ts",
+      "content": "import { Boxes, Database, Globe, HardDrive, Server, Workflow } from '@gntik-ai/icons';\nimport type { ResourceCard } from './ResourceCardGrid';\n\n/** Project resources. */\nexport const RESOURCE_CARDS: ResourceCard[] = [\n  { id: 'api', name: 'orders-api', description: 'Public REST API', icon: Server, status: 'running', meta: [{ label: 'Requests 30d', value: '1.2M' }, { label: 'Cost 30d', value: '$412' }] },\n  { id: 'db', name: 'orders-db', description: 'Postgres 17 · 3 replicas', icon: Database, status: 'running', meta: [{ label: 'Storage', value: '84 GB' }, { label: 'Cost 30d', value: '$238' }] },\n  { id: 'worker', name: 'invoice-worker', description: 'Queue consumer', icon: Workflow, status: 'degraded', meta: [{ label: 'Jobs 30d', value: '48,210' }, { label: 'Cost 30d', value: '$96' }] },\n  { id: 'cdn', name: 'static-assets', description: 'Edge cache', icon: Globe, status: 'running', meta: [{ label: 'Hit rate', value: '97.4%' }, { label: 'Cost 30d', value: '$31' }] },\n  { id: 'batch', name: 'nightly-export', description: 'Scheduled job', icon: Boxes, status: 'paused', meta: [{ label: 'Last run', value: '2 days ago' }, { label: 'Cost 30d', value: '$12' }] },\n  { id: 'bucket', name: 'backups', description: 'Object storage', icon: HardDrive, status: 'failed', meta: [{ label: 'Objects', value: '18,422' }, { label: 'Cost 30d', value: '$54' }] },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "data-display"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/data-display/ResourceCardGrid/block.meta.ts"
+  }
+}

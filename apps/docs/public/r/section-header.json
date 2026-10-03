@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "section-header",
+  "type": "registry:block",
+  "title": "Section header",
+  "description": "Heading for a section within a page: title with optional count, description and small actions.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/page-chrome/SectionHeader/SectionHeader.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/page-chrome/section-header/SectionHeader.tsx",
+      "content": "import { Button, cn } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\nimport type { PageChromeAction } from '../types';\n\nexport interface SectionHeaderProps {\n  title?: ReactNode;\n  description?: ReactNode;\n  /** Count pill after the title (members, items…). */\n  count?: number;\n  /** Small actions on the right; the last one without a variant is secondary. */\n  actions?: PageChromeAction[];\n  /** Heading level that fits the page outline. */\n  as?: 'h2' | 'h3';\n  /** Hairline under the header. */\n  bordered?: boolean;\n  /** Id for the heading, so a section can use `aria-labelledby`. */\n  headingId?: string;\n  className?: string;\n}\n\nconst sectionHeaderDefaultActions: PageChromeAction[] = [{ label: 'Add policy', variant: 'secondary' }];\n\n/** Heading for a section inside a page: title (+ count), description and small actions. */\nexport function SectionHeader({\n  title = 'Policies',\n  description = 'Guardrails applied to every deployment in this project.',\n  count,\n  actions = sectionHeaderDefaultActions,\n  as: Heading = 'h2',\n  bordered = true,\n  headingId,\n  className,\n}: SectionHeaderProps) {\n  return (\n    <div className={cn('flex flex-wrap items-end justify-between gap-x-4 gap-y-3', bordered && 'border-b border-border pb-3', className)}>\n      <div className=\"min-w-0\">\n        <div className=\"flex items-center gap-2.5\">\n          <Heading id={headingId} className=\"text-[17px] font-semibold tracking-tight text-foreground\">\n            {title}\n          </Heading>\n          {count != null && (\n            <span className=\"inline-flex h-5 items-center rounded-full bg-secondary px-2 font-mono text-[11px] text-muted-foreground\">\n              {count.toLocaleString('en-US')}\n            </span>\n          )}\n        </div>\n        {description != null && <p className=\"mt-1 text-[13px] text-muted-foreground\">{description}</p>}\n      </div>\n      {actions.length > 0 && (\n        <div className=\"flex shrink-0 flex-wrap items-center gap-2\">\n          {actions.map((a) => (\n            <Button key={a.id ?? a.label} size=\"sm\" variant={a.variant ?? 'secondary'} icon={a.icon} disabled={a.disabled} onClick={a.onClick}>\n              {a.label}\n            </Button>\n          ))}\n        </div>\n      )}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/page-chrome/types.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/page-chrome/types.ts",
+      "content": "import type { ButtonProps, MoreMenuAction } from '@gntik-ai/ui';\nimport type { LucideIcon } from '@gntik-ai/icons';\n\n/** A header/toolbar action rendered as a kit Button (or a MoreMenu item when folded). */\nexport interface PageChromeAction {\n  /** Stable key; defaults to `label`. */\n  id?: string;\n  label: string;\n  icon?: LucideIcon;\n  /** Button style; when omitted the block picks one (primary for the main action, secondary otherwise). */\n  variant?: ButtonProps['variant'];\n  disabled?: boolean;\n  onClick?: () => void;\n}\n\n/** Maps a PageChromeAction to a MoreMenu item (destructive variant → destructive item). */\nexport function toMenuAction(action: PageChromeAction): MoreMenuAction {\n  return {\n    label: action.label,\n    icon: action.icon,\n    disabled: action.disabled,\n    destructive: action.variant === 'destructive',\n    onSelect: action.onClick,\n  };\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "page-chrome"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/page-chrome/SectionHeader/block.meta.ts"
+  }
+}

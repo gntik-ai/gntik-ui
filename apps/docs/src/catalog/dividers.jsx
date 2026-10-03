@@ -175,3 +175,6 @@ function DividersSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['dividers'] = DividersSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

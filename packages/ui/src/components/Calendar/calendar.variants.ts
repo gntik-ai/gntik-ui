@@ -22,7 +22,7 @@ export const calendarVariants = tv({
     weekdayAbbr: 'no-underline',
     cell: [
       'h-8 p-0 text-center',
-      'data-in-range:bg-primary/12 data-range-start:rounded-l-md data-range-end:rounded-r-md',
+      'data-in-range:bg-primary/12 data-range-start:rounded-s-md data-range-end:rounded-e-md',
     ],
     day: [
       'mx-auto grid size-8 place-items-center rounded-md text-[12.5px] text-foreground tabular-nums outline-none select-none',

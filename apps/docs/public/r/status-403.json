@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-403",
+  "type": "registry:block",
+  "title": "403 Forbidden",
+  "description": "Full-page permission state: explains who can grant access, with a Request access action (idle · pending · requested, like NoAccessEmpty) and a way home.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/status-403/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/status-403/Page.tsx",
+      "content": "import { Check, Home, Lock } from '@gntik-ai/icons';\nimport { Button, Link, Logo, StatusLayout } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport { forbiddenContent } from './data';\n\nexport interface Status403Props {\n  /** What the viewer cannot see. */\n  resource: string;\n  /** Who can grant access. */\n  owner: string;\n  /** Called on \"Request access\"; may return a promise (the button shows a spinner). */\n  onRequestAccess: () => void | Promise<void>;\n  /** Start in the \"requested\" state (a pending request exists). */\n  defaultRequested: boolean;\n  homeHref: string;\n  homeLabel: string;\n  /** Account shown in the footer; `null` hides the line. */\n  signedInAs: string | null;\n  switchAccountHref: string;\n  header: ReactNode;\n  fullScreen: boolean;\n}\n\ntype RequestState = 'idle' | 'pending' | 'requested';\n\n/** 403 page: StatusLayout with Request access (NoAccessEmpty behaviour) and a way home. */\nexport default function Status403Page(props: Partial<Status403Props>) {\n  const {\n    resource = forbiddenContent.resource,\n    owner = forbiddenContent.owner,\n    onRequestAccess,\n    defaultRequested = false,\n    homeHref = forbiddenContent.homeHref,\n    homeLabel = forbiddenContent.homeLabel,\n    signedInAs = forbiddenContent.signedInAs,\n    switchAccountHref = forbiddenContent.switchAccountHref,\n    header = <Logo size={24} wordmark />,\n    fullScreen = true,\n  } = props;\n  const [state, setState] = useState<RequestState>(defaultRequested ? 'requested' : 'idle');\n\n  const request = async () => {\n    setState('pending');\n    try {\n      await onRequestAccess?.();\n      setState('requested');\n    } catch {\n      setState('idle');\n    }\n  };\n\n  const requested = state === 'requested';\n  return (\n    <StatusLayout\n      fullScreen={fullScreen}\n      tone=\"warning\"\n      header={header}\n      icon={Lock}\n      code={forbiddenContent.code}\n      title={`You don’t have access to ${resource}`}\n      description={`Ask ${owner} to grant you a role that includes ${resource.toLowerCase()} permissions.`}\n      primaryAction={\n        <Button\n          variant={requested ? 'secondary' : 'primary'}\n          icon={requested ? Check : undefined}\n          loading={state === 'pending'}\n          disabled={requested}\n          onClick={() => void request()}\n        >\n          {requested ? 'Access requested' : 'Request access'}\n        </Button>\n      }\n      secondaryAction={\n        <Button variant=\"secondary\" icon={Home} render={<a href={homeHref} />} nativeButton={false}>\n          {homeLabel}\n        </Button>\n      }\n      footer={\n        signedInAs ? (\n          <span>\n            Signed in as <span className=\"font-mono\">{signedInAs}</span> · <Link href={switchAccountHref}>{forbiddenContent.switchAccountLabel}</Link>\n          </span>\n        ) : undefined\n      }\n    >\n      <p role=\"status\" className=\"sr-only\">\n        {requested ? 'Access request sent' : ''}\n      </p>\n    </StatusLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/status-403/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/status-403/data.ts",
+      "content": "import { noAccessSample } from '@gntik-ai/blocks';\n\n/** Neutral fixtures for the 403 page (resource and owner reuse the NoAccessEmpty sample). */\nexport const forbiddenContent = {\n  code: '403 · Forbidden',\n  resource: noAccessSample.resource,\n  owner: noAccessSample.owner,\n  homeLabel: 'Go to dashboard',\n  homeHref: '/',\n  signedInAs: 'dana@example.com',\n  switchAccountLabel: 'Switch account',\n  switchAccountHref: '/sign-in',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "System"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/status-403/template.meta.ts"
+  }
+}

@@ -192,3 +192,6 @@ function PageHeadingsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['page-headings'] = PageHeadingsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

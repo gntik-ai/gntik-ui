@@ -21,8 +21,9 @@ npx @gntik-ai/cli add button dialog
 | `list [--kind k] [--group g]` | Table, or JSON. |
 | `search <query> [--kind k] [--limit n]` | Fuzzy match on id, name, group and description; every term must match. |
 | `docs <id>` | Description, status, package, files, dependencies, and the keyboard table parsed from the item's `*.doc.ts`. |
+| `upgrade [paths...]` | Runs the `@gntik-ai/codemods` transforms for the breaking changes between two versions. Dry run unless `--apply`. See [Upgrading](#upgrading). |
 
-Options: `--json`, `--cwd <dir>`, `--registry <dir|file|url>`, `--dry-run` (init/add/eject),
+Options: `--json`, `--cwd <dir>`, `--registry <dir|file|url>`, `--dry-run` (init/add/eject/upgrade),
 `--overwrite`, `--no-install`, `--yes` (accepted; the CLI never prompts), `--help`, `--version`.
 
 ### Registry
@@ -50,14 +51,41 @@ relative imports into kit code that is not copied become package imports
 **conflicts**: nothing is written and the exit code is 4 unless `--overwrite`. Identical files
 are reported as `identical` and left alone.
 
+### Upgrading
+
+```bash
+pnpm add -D @gntik-ai/codemods        # once; upgrade loads it from the project
+npx gntik-ui upgrade --list           # every codemod, and which ones this upgrade selects
+npx gntik-ui upgrade                  # dry run: files it would change + warnings
+npx gntik-ui upgrade --apply          # write the changes
+npx gntik-ui upgrade src --codemod chip-text-aliases --apply
+```
+
+The CLI stays dependency-free: `upgrade` imports `@gntik-ai/codemods` from the project's
+`node_modules` (walking up from `--cwd`); when it is missing it prints the install command for
+the detected package manager and exits 1 (`CODEMODS`). `--from` defaults to the `@gntik-ai/*`
+versions declared in `package.json` (per package; every codemod when none are declared, e.g.
+`workspace:*`), `--to` to `latest`; a codemod is selected when the upgrade crosses its
+`toVersion`. `--codemod <id>` (repeatable or comma-separated) runs exactly those, whatever the
+versions; `--skip-codemod <id>` leaves some out. Paths limit the run to files/dirs; by default the
+whole project is scanned without `node_modules`, `dist`, `build`, `.next`, … Report-only codemods
+(`link-underline-default`) never write; their findings are `reports`.
+
+| Codemod | Package | What it does |
+| --- | --- | --- |
+| `templates-renamed-ids` | templates | `FlowBuilderPage` → `WorkflowBuilderPage`, `MfaChallengePage` → `MfaPage`, `flowBuilderTemplateMeta` → `workflowBuilderTemplateMeta`, `mfaChallengeTemplateMeta` → `mfaTemplateMeta` (imports, references, re-exports). |
+| `flow-builder-controlled-console` | blocks | `<FlowBuilder consoleEntries={x}>` without `onConsoleChange` → `defaultConsoleEntries={x}` (spread props: reported, left alone). |
+| `chip-text-aliases` | tokens | In a class string/template with `bg-<tone>/NN` and `text-<tone>-text` (primary, success, warning, destructive) → `text-<tone>-chip-text`. |
+| `link-underline-default` | ui | Report only: `<Link>` from `@gntik-ai/ui` without `underline` (now underlined by default). |
+
 ## Exit codes
 
-`0` ok · `1` error (registry unreadable, install failed) · `2` usage · `3` unknown item · `4` conflicts.
+`0` ok · `1` error (registry unreadable, install failed, codemods missing, a file failed to transform) · `2` usage · `3` unknown item · `4` conflicts.
 
 ## JSON shapes
 
 Every `--json` response is one object with `ok` and `command`; failures add
-`error: { code: "USAGE"|"NOT_FOUND"|"CONFLICT"|"REGISTRY"|"INSTALL"|"ERROR", message }`.
+`error: { code: "USAGE"|"NOT_FOUND"|"CONFLICT"|"REGISTRY"|"INSTALL"|"CODEMODS"|"ERROR", message }`.
 
 ```ts
 type Summary = { id; kind: 'component'|'layout'|'block'|'template'; name; package; group; status; description };
@@ -77,6 +105,14 @@ eject  → { ok, command, dryRun, configured, id, items: string[], files, writte
 init   → { ok, command, dryRun, project: { framework, packageManager, css, cssExisted, entry, src },
            config, changes: { file, action: 'create'|'patch'|'unchanged' }[],
            snippet: { file, code }[], warnings: string[], install: Install }
+upgrade → { ok, command, dryRun, from: string | Record<pkg, version> | null, to: string,
+           codemods: { installed, version: string|null, install: string|null },
+           transforms: Codemod[], scanned, files: { file, status: 'modified'|'unchanged'|'error', transforms: string[],
+           reports: { transform, line, message }[], error? }[], changed: string[],
+           reports: { file, line, transform, message }[], errors: { file, message }[] }
+upgrade --list → { ok, command, dryRun, from, to, codemods, transforms: (Codemod & { selected: boolean })[] }
+           // Codemod = { id, package, fromVersion, toVersion, reportOnly, description }
+           // codemods missing → { ok: false, …, codemods: { installed: false, version: null, install: "pnpm add -D @gntik-ai/codemods" } }
 ```
 
 Paths in output are project-relative (posix). With `--json`, installer output is captured, not

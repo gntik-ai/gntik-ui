@@ -428,3 +428,6 @@ function BillingUsageSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['billing-usage'] = BillingUsageSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

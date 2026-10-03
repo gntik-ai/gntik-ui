@@ -23,11 +23,13 @@ export const paginationVariants = tv({
   },
   variants: {
     size: {
+      /** Follows `data-density` (comfortable = md). */
+      auto: { page: 'size-control text-[13px]', arrow: 'size-control', ellipsis: 'size-control' },
       sm: { page: 'size-8 text-[12.5px]', arrow: 'size-8', ellipsis: 'size-8' },
       md: { page: 'size-9 text-[13px]', arrow: 'size-9', ellipsis: 'size-9' },
     },
   },
-  defaultVariants: { size: 'md' },
+  defaultVariants: { size: 'auto' },
 });
 
 export type PaginationVariantProps = VariantProps<typeof paginationVariants>;

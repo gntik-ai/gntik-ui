@@ -74,7 +74,7 @@ export function ActivityFeed({ items = PROJECT_ACTIVITY, label = 'Recent activit
             <ul aria-labelledby={headingId} className="flex flex-col">
               {group.items.map((item, i) => (
                 <li key={item.id} className="relative flex gap-3 pb-5 last:pb-0">
-                  {i < group.items.length - 1 && <span aria-hidden className="absolute top-7 bottom-0.5 left-[11.5px] w-px bg-border" />}
+                  {i < group.items.length - 1 && <span aria-hidden className="absolute top-7 bottom-0.5 start-[11.5px] w-px bg-border" />}
                   <Avatar name={item.actor.name} src={item.actor.src} size="xs" className="mt-0.5" />
                   <div className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
                     <p className="min-w-0 text-[13px] text-muted-foreground">

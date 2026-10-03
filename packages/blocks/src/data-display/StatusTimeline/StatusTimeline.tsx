@@ -41,7 +41,7 @@ export function StatusTimeline({ events = DEPLOYMENT_EVENTS, label = 'Status his
           const last = i === shown.length - 1;
           return (
             <li key={event.id} className="relative flex gap-3 pb-6 last:pb-0">
-              {!last && <span aria-hidden className="absolute top-5 bottom-0 left-[9px] w-px bg-border" />}
+              {!last && <span aria-hidden className="absolute top-5 bottom-0 start-[9px] w-px bg-border" />}
               <span className="relative z-10 mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-card">
                 <StatusDot tone={event.tone} pulse={event.live} size="lg" />
               </span>
@@ -67,7 +67,7 @@ export function StatusTimeline({ events = DEPLOYMENT_EVENTS, label = 'Status his
         })}
       </ol>
       {(hidden > 0 || (expanded && maxVisible !== undefined && events.length > maxVisible)) && (
-        <Button variant="ghost" size="sm" className="mt-3 ml-6" aria-expanded={expanded} onClick={() => setExpanded((v) => !v)}>
+        <Button variant="ghost" size="sm" className="mt-3 ms-6" aria-expanded={expanded} onClick={() => setExpanded((v) => !v)}>
           {expanded ? 'Show fewer' : `Show ${hidden} earlier ${hidden === 1 ? 'event' : 'events'}`}
         </Button>
       )}

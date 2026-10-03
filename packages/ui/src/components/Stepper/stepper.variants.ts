@@ -5,7 +5,7 @@ export const stepperVariants = tv({
     list: 'm-0 flex list-none p-0',
     item: 'relative flex',
     step: [
-      'group flex rounded-lg text-left outline-none',
+      'group flex rounded-lg text-start outline-none',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
     indicator: 'relative z-10 grid size-8 shrink-0 place-items-center rounded-full text-[12px] font-bold transition-colors motion-reduce:transition-none',
@@ -34,9 +34,9 @@ export const stepperVariants = tv({
       vertical: {
         list: 'flex-col',
         item: 'flex-col',
-        step: 'items-start gap-3 py-1 pr-2',
+        step: 'items-start gap-3 py-1 pe-2',
         text: 'pt-1.5',
-        connector: 'my-1 ml-[15px] min-h-6 w-0.5',
+        connector: 'my-1 ms-[15px] min-h-6 w-0.5',
         connectorFill: 'w-full',
       },
     },

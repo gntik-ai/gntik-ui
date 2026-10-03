@@ -14,6 +14,7 @@ import {
 import { Button } from '../../components/Button';
 import { Stepper, type StepItem } from '../../components/Stepper';
 import { SkipLink } from '../../components/VisuallyHidden';
+import { useI18n } from '../../i18n/I18nProvider';
 import { wizardLayoutVariants, type WizardLayoutVariantProps } from './wizard-layout.variants';
 
 export interface WizardLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title' | 'children'> {
@@ -75,26 +76,37 @@ export function WizardLayout({
   children,
   footerStart,
   footer,
-  backLabel = 'Back',
-  nextLabel = 'Next',
-  finishLabel = 'Finish',
+  backLabel: backLabelProp,
+  nextLabel: nextLabelProp,
+  finishLabel: finishLabelProp,
   nextDisabled = false,
   nextLoading = false,
-  exitLabel = 'Exit',
+  exitLabel: exitLabelProp,
   confirmExit = true,
-  exitTitle = 'Leave this setup?',
-  exitDescription = 'Your progress on this step will be lost.',
-  exitConfirmLabel = 'Leave',
-  exitCancelLabel = 'Stay',
-  stepsLabel = 'Progress',
+  exitTitle: exitTitleProp,
+  exitDescription: exitDescriptionProp,
+  exitConfirmLabel: exitConfirmLabelProp,
+  exitCancelLabel: exitCancelLabelProp,
+  stepsLabel: stepsLabelProp,
   width,
   mainId = 'main',
-  skipLinkLabel = 'Skip to step',
+  skipLinkLabel: skipLinkLabelProp,
   fullScreen = false,
   className,
   onKeyDown,
   ...props
 }: WizardLayoutProps) {
+  const { t } = useI18n();
+  const backLabel = backLabelProp ?? t('common.back');
+  const nextLabel = nextLabelProp ?? t('common.next');
+  const finishLabel = finishLabelProp ?? t('common.finish');
+  const exitLabel = exitLabelProp ?? t('common.exit');
+  const exitTitle = exitTitleProp ?? t('wizard.exitTitle');
+  const exitDescription = exitDescriptionProp ?? t('wizard.exitDescription');
+  const exitConfirmLabel = exitConfirmLabelProp ?? t('wizard.leave');
+  const exitCancelLabel = exitCancelLabelProp ?? t('wizard.stay');
+  const stepsLabel = stepsLabelProp ?? t('common.progress');
+  const skipLinkLabel = skipLinkLabelProp ?? t('skip.step');
   const [exitOpen, setExitOpen] = useState(false);
   const s = wizardLayoutVariants({ width, fullScreen });
   const last = current >= steps.length - 1;

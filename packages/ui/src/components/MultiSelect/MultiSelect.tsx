@@ -1,6 +1,7 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, ChevronDown, X } from 'lucide-react';
 import { useId, useRef, useState, type ReactNode, type Ref } from 'react';
+import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { comboboxVariants } from '../Combobox/combobox.variants';
 import { multiSelectVariants, type MultiSelectVariantProps } from './multi-select.variants';
@@ -61,14 +62,14 @@ export function MultiSelect({
   defaultValue,
   onValueChange,
   label,
-  placeholder = 'Search…',
+  placeholder: placeholderProp,
   maxVisibleChips = 3,
   showSelectAll = true,
-  selectAllLabel = 'Select all',
-  deselectAllLabel = 'Deselect all',
-  clearLabel = 'Clear all',
-  triggerLabel = 'Show options',
-  emptyText = 'No matches.',
+  selectAllLabel: selectAllLabelProp,
+  deselectAllLabel: deselectAllLabelProp,
+  clearLabel: clearLabelProp,
+  triggerLabel: triggerLabelProp,
+  emptyText: emptyTextProp,
   removeLabel = (l) => `Remove ${l}`,
   renderOption,
   name,
@@ -81,6 +82,14 @@ export function MultiSelect({
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
 }: MultiSelectProps) {
+  const { t } = useI18n();
+  const placeholder = placeholderProp ?? t('common.searchPlaceholder');
+  const selectAllLabel = selectAllLabelProp ?? t('common.selectAll');
+  const deselectAllLabel = deselectAllLabelProp ?? t('common.deselectAll');
+  const clearLabel = clearLabelProp ?? t('common.clearAll');
+  const triggerLabel = triggerLabelProp ?? t('common.showOptions');
+  const emptyText = emptyTextProp ?? t('common.noMatches');
+  const dir = usePortalDir();
   const autoId = useId();
   const inputId = id ?? (label ? autoId : undefined);
   const [inner, setInner] = useState<string[]>(defaultValue ?? []);
@@ -152,7 +161,7 @@ export function MultiSelect({
           {hidden > 0 && (
             <span className={s.more()}>
               +{hidden}
-              <span className="sr-only"> more selected</span>
+              <span className="sr-only"> {t('multiSelect.moreSelected')}</span>
             </span>
           )}
           <BaseCombobox.Input
@@ -176,7 +185,7 @@ export function MultiSelect({
         </BaseCombobox.Trigger>
       </BaseCombobox.InputGroup>
       <BaseCombobox.Portal>
-        <BaseCombobox.Positioner className={cb.positioner()} side="bottom" align="start" sideOffset={6}>
+        <BaseCombobox.Positioner dir={dir} className={cb.positioner()} side="bottom" align="start" sideOffset={6}>
           <BaseCombobox.Popup className={cb.popup()}>
             <BaseCombobox.Empty className={cb.empty()}>{emptyText}</BaseCombobox.Empty>
             <BaseCombobox.List className={cb.list()}>

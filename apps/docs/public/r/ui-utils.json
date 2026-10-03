@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ui-utils",
+  "type": "registry:ui",
+  "title": "UI utilities",
+  "description": "cn() class merging and tv() variants helpers used by every component.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.7.0",
+    "tailwind-variants@^3.3.1"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/utils/cn.ts",
+      "type": "registry:ui",
+      "target": "components/utils/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { extendTailwindMerge } from 'tailwind-merge';\nimport { densityMergeConfig } from './density-merge';\n\nconst twMerge = extendTailwindMerge(densityMergeConfig);\n\n/** Joins class names and resolves Tailwind conflicts (last one wins), density utilities included. */\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n"
+    },
+    {
+      "path": "packages/ui/src/utils/density-merge.ts",
+      "type": "registry:ui",
+      "target": "components/utils/density-merge.ts",
+      "content": "/**\n * Teaches tailwind-merge the density utilities from @gntik-ai/tokens (density.css), so\n * `cn('h-control', 'h-10')` and `px-control … px-0` resolve like any other Tailwind conflict.\n * Shared by `cn()` and the `tv()` instance.\n */\nexport const densityMergeConfig = {\n  extend: {\n    classGroups: {\n      h: [{ h: ['control-sm', 'control', 'control-lg', 'item', 'tab', 'chip', 'token', 'row'] }],\n      w: [{ w: ['control-sm', 'control', 'control-lg'] }],\n      size: [{ size: ['control-sm', 'control', 'control-lg'] }],\n      px: [{ px: ['control-sm', 'control', 'control-lg', 'field'] }],\n      ps: [{ ps: ['field'] }],\n      py: [{ py: ['cell', 'bar'] }],\n      gap: [{ gap: ['tight'] }],\n    },\n  },\n};\n"
+    },
+    {
+      "path": "packages/ui/src/utils/rtl.ts",
+      "type": "registry:ui",
+      "target": "components/utils/rtl.ts",
+      "content": "\n/** Mirrors a directional glyph (chevron, arrow) in right-to-left text. */\nexport const RTL_FLIP = 'rtl:-scale-x-100';\n\nconst DIRECTIONAL = /^(?:Chevrons?(?:Left|Right)|Arrow(?:Left|Right)\\w*|Move(?:Left|Right)|Panel(?:Left|Right)\\w*|Undo\\d?|Redo\\d?|Corner\\w+(?:Left|Right)|Indent\\w*|Outdent\\w*)$/;\n\n/**\n * True for lucide icons that point along the inline axis (ChevronLeft, ArrowRight,\n * PanelLeftClose…), which mirror under RTL. Detected from the icon's displayName.\n */\nexport function isDirectionalIcon(icon: unknown): boolean {\n  const name = (icon as { displayName?: unknown } | null | undefined)?.displayName;\n  return typeof name === 'string' && DIRECTIONAL.test(name);\n}\n\n/** `RTL_FLIP` for a directional icon, else undefined. */\nexport const rtlIconClass = (icon: unknown) => (isDirectionalIcon(icon) ? RTL_FLIP : undefined);\n"
+    },
+    {
+      "path": "packages/ui/src/utils/tv.ts",
+      "type": "registry:ui",
+      "target": "components/utils/tv.ts",
+      "content": "import { createTV } from 'tailwind-variants';\nimport { densityMergeConfig } from './density-merge';\n\nexport { type VariantProps } from 'tailwind-variants';\n\n/** `tv()` with tailwind-merge aware of the density utilities (h-control, px-control…). */\nexport const tv = createTV({ twMergeConfig: densityMergeConfig });\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Utilities"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable"
+  }
+}

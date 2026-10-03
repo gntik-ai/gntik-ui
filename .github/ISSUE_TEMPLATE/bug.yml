@@ -1,0 +1,80 @@
+name: Bug report
+description: Something in a @gntik-ai package or the catalog behaves wrongly.
+title: '[Bug] '
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting. One bug per issue, please — a minimal reproduction gets it fixed fastest.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      options:
+        - '@gntik-ai/ui'
+        - '@gntik-ai/tokens'
+        - '@gntik-ai/blocks'
+        - '@gntik-ai/templates'
+        - '@gntik-ai/chat'
+        - '@gntik-ai/icons'
+        - '@gntik-ai/charts'
+        - '@gntik-ai/flow'
+        - '@gntik-ai/editor'
+        - '@gntik-ai/cli'
+        - '@gntik-ai/codemods'
+        - Catalog (docs site)
+        - Other / not sure
+    validations:
+      required: true
+  - type: input
+    id: item
+    attributes:
+      label: Component, block or template
+      placeholder: e.g. Combobox, DataTable block, settings-billing template
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: e.g. 0.4.1 (see your lockfile)
+    validations:
+      required: true
+  - type: checkboxes
+    id: themes
+    attributes:
+      label: Themes affected
+      options:
+        - label: dark
+        - label: light
+        - label: high_contrast
+  - type: dropdown
+    id: category
+    attributes:
+      label: Kind of bug
+      options:
+        - Behaviour / logic
+        - Accessibility (keyboard, screen reader, contrast, focus)
+        - Visual / brand (colour, spacing, radius, motion)
+        - Types / API
+        - Build / packaging
+        - Docs / catalog
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Minimal code (or a link to a repo / StackBlitz), plus the steps.
+      render: tsx
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: Browser + version, OS, assistive technology if relevant, React / Vite / Next version

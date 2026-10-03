@@ -98,3 +98,6 @@ function LibrarySection() {
 
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['ui-components'] = LibrarySection;
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

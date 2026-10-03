@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gntik-tokens",
+  "type": "registry:theme",
+  "title": "gntik-ui brand tokens",
+  "description": "Brand tokens (dark, light, high contrast) as CSS variables plus the Tailwind 4 bridge and Geist fonts. Every gntik-ui item depends on it.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/tokens",
+    "@fontsource/geist",
+    "@fontsource/geist-mono"
+  ],
+  "registryDependencies": [],
+  "files": [],
+  "css": {
+    "@import \"@fontsource/geist\"": {},
+    "@import \"@fontsource/geist-mono\"": {},
+    "@import \"@fontsource/geist/500.css\"": {},
+    "@import \"@fontsource/geist/600.css\"": {},
+    "@import \"@fontsource/geist/700.css\"": {},
+    "@import \"@fontsource/geist-mono/500.css\"": {},
+    "@import \"@gntik-ai/tokens/tailwind.css\"": {}
+  },
+  "docs": "gntik-ui packages are published to GitHub Packages: add `@gntik-ai:registry=https://npm.pkg.github.com` to .npmrc (with a token that can read packages). The theme class goes on <html>: \"dark\" (default), \"\" (light) or \"high_contrast\". If the app was set up with `shadcn init`, remove its :root/.dark variables and @theme block from the CSS file: @gntik-ai/tokens/tailwind.css defines them.",
+  "categories": [
+    "theme"
+  ],
+  "meta": {
+    "package": "@gntik-ai/tokens",
+    "version": "0.1.0"
+  }
+}

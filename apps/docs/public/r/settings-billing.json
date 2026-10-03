@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-billing",
+  "type": "registry:block",
+  "title": "Billing settings",
+  "description": "Current plan with billing cycle, quota meters, the default payment method and invoice history.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/settings-profile.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/settings-billing/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/settings-billing/Page.tsx",
+      "content": "import { InvoiceTable, PaymentMethodCard, PlanCard, QuotaMeters, type BillingCycle, type BillingPlan, type Invoice, type PaymentMethod, type Quota } from '@gntik-ai/blocks';\nimport { Section } from '@gntik-ai/ui';\nimport { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';\nimport { invoices as defaultInvoices, paymentMethod as defaultPaymentMethod, plan as defaultPlan, quotas as defaultQuotas } from './data';\n\nexport interface SettingsBillingProps extends SettingsFrameOptions {\n  plan: BillingPlan;\n  quotas: Quota[];\n  paymentMethod: PaymentMethod;\n  invoices: Invoice[];\n  /** ISO 4217 code for the invoice table. */\n  currency: string;\n  onUpgrade: () => void;\n  onManagePlan: () => void;\n  onCycleChange: (cycle: BillingCycle) => void;\n  onUpdatePaymentMethod: () => void;\n  onDownloadInvoice: (invoice: Invoice) => void;\n}\n\n/** Billing settings: PlanCard, QuotaMeters, PaymentMethodCard and InvoiceTable. */\nexport default function SettingsBillingPage({\n  plan = defaultPlan,\n  quotas = defaultQuotas,\n  paymentMethod = defaultPaymentMethod,\n  invoices = defaultInvoices,\n  currency = 'USD',\n  onUpgrade,\n  onManagePlan,\n  onCycleChange,\n  onUpdatePaymentMethod,\n  onDownloadInvoice,\n  ...frame\n}: Partial<SettingsBillingProps>) {\n  return (\n    <SettingsFrame page=\"billing\" width=\"wide\" description=\"Your plan, usage this cycle, payment method and invoices.\" {...frame}>\n      <PlanCard titleAs=\"h2\" plan={plan} onUpgrade={onUpgrade} onManage={onManagePlan} onCycleChange={onCycleChange} />\n      <Section title=\"Usage\" description=\"Resets at the start of each billing cycle.\">\n        <QuotaMeters quotas={quotas} title=\"Plan quotas\" />\n      </Section>\n      <PaymentMethodCard titleAs=\"h2\" method={paymentMethod} description=\"Charged on the first day of each cycle.\" onUpdate={onUpdatePaymentMethod} />\n      <Section title=\"Invoices\">\n        <InvoiceTable invoices={invoices} currency={currency} onDownload={onDownloadInvoice} />\n      </Section>\n    </SettingsFrame>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/settings-billing/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/settings-billing/data.ts",
+      "content": "import { sampleInvoices, samplePaymentMethod, samplePlan, sampleQuotas, type BillingPlan, type Invoice, type PaymentMethod, type Quota } from '@gntik-ai/blocks';\n\nexport const plan: BillingPlan = samplePlan;\nexport const quotas: Quota[] = sampleQuotas;\nexport const paymentMethod: PaymentMethod = samplePaymentMethod;\nexport const invoices: Invoice[] = sampleInvoices;\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Settings"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/settings-billing/template.meta.ts"
+  }
+}

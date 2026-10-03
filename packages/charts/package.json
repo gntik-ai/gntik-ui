@@ -1,7 +1,7 @@
 {
   "name": "@gntik-ai/charts",
   "version": "0.1.0",
-  "description": "Recharts 3 charts themed by the gntik-ui brand tokens (area, bar, line, combo, donut).",
+  "description": "Recharts 3 charts themed by the gntik-ui brand tokens: area, bar, line, combo, donut, bar list, funnel, sankey, radar, heatmap and mini bars, with token ramps and empty/loading/error states.",
   "license": "MIT",
   "type": "module",
   "sideEffects": [

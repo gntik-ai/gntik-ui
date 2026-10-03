@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "landing",
+  "type": "registry:block",
+  "title": "Landing",
+  "description": "Public landing: Hero, FeatureGrid, PricingTable, Faq",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/landing/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/landing/Page.tsx",
+      "content": "import { Faq, FeatureGrid, Hero, PricingTable, type FaqItem, type Feature, type MarketingAction, type PricingCycle, type PricingTier } from '@gntik-ai/blocks';\nimport { Button, Link, Logo, StackedLayout, ThemeSwitcher, type NavItem } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\nimport { landingCopyright, landingFooterLinks, landingLinks } from './data';\n\nexport interface LandingProps {\n  /** Logo or product name in the navbar. */\n  brand: ReactNode;\n  links: NavItem[];\n  signInHref: string;\n  getStartedHref: string;\n  heroTitle: ReactNode;\n  heroDescription: ReactNode;\n  heroPrimaryAction: MarketingAction | null;\n  heroSecondaryAction: MarketingAction | null;\n  /** Hero screenshot slot; omit for the block placeholder. */\n  heroMedia: ReactNode;\n  /** Omitted lists use the marketing block samples. */\n  features: Feature[];\n  tiers: PricingTier[];\n  faqs: FaqItem[];\n  onSelectTier: (tier: PricingTier, cycle: PricingCycle) => void;\n  footerLinks: Array<{ label: string; href: string }>;\n  copyright: ReactNode;\n}\n\n/** Public landing: StackedLayout with Hero, FeatureGrid, PricingTable and Faq. */\nexport default function LandingPage(props: Partial<LandingProps>) {\n  const {\n    brand = <Logo size={26} wordmark />,\n    links = landingLinks,\n    signInHref = '/sign-in',\n    getStartedHref = '/sign-up',\n    heroTitle,\n    heroDescription,\n    heroPrimaryAction = { label: 'Get started', href: getStartedHref },\n    heroSecondaryAction,\n    heroMedia,\n    features,\n    tiers,\n    faqs,\n    onSelectTier,\n    footerLinks = landingFooterLinks,\n    copyright = landingCopyright,\n  } = props;\n  return (\n    <StackedLayout\n      fullScreen\n      width=\"wide\"\n      brand={brand}\n      links={links}\n      navLabel=\"Primary\"\n      mobileTitle=\"Menu\"\n      actions={\n        <>\n          <ThemeSwitcher size=\"sm\" className=\"hidden md:inline-flex\" />\n          <Button variant=\"ghost\" size=\"sm\" render={<a href={signInHref} />} nativeButton={false}>\n            Sign in\n          </Button>\n          <Button size=\"sm\" render={<a href={getStartedHref} />} nativeButton={false}>\n            Get started\n          </Button>\n        </>\n      }\n      footer={\n        <div className=\"flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between\">\n          <span>{copyright}</span>\n          <nav aria-label=\"Footer\">\n            <ul className=\"flex flex-wrap gap-x-4 gap-y-1\">\n              {footerLinks.map((l) => (\n                <li key={l.href}>\n                  <Link href={l.href} tone=\"muted\" underline=\"hover\">\n                    {l.label}\n                  </Link>\n                </li>\n              ))}\n            </ul>\n          </nav>\n        </div>\n      }\n    >\n      <Hero title={heroTitle} description={heroDescription} primaryAction={heroPrimaryAction} secondaryAction={heroSecondaryAction} media={heroMedia} />\n      <div id=\"features\" className=\"scroll-mt-20\">\n        <FeatureGrid features={features} />\n      </div>\n      <div id=\"pricing\" className=\"scroll-mt-20\">\n        <PricingTable tiers={tiers} onSelectTier={onSelectTier} />\n      </div>\n      <div id=\"faq\" className=\"scroll-mt-20\">\n        <Faq items={faqs} />\n      </div>\n    </StackedLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/landing/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/landing/data.ts",
+      "content": "import type { NavItem } from '@gntik-ai/ui';\n\n/** Neutral fixtures for the landing page; sections reuse the marketing block samples. */\nexport const landingLinks: NavItem[] = [\n  { label: 'Features', href: '#features' },\n  { label: 'Pricing', href: '#pricing' },\n  { label: 'FAQ', href: '#faq' },\n  { label: 'Docs', href: '/docs' },\n];\n\nexport const landingFooterLinks = [\n  { label: 'Status', href: '/status' },\n  { label: 'Privacy', href: '/privacy' },\n  { label: 'Terms', href: '/terms' },\n];\n\nexport const landingCopyright = `© ${new Date().getFullYear()} Example, Inc.`;\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Overview"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "experimental",
+    "source": "packages/templates/src/landing/template.meta.ts"
+  }
+}

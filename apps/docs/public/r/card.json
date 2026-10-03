@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:ui",
+  "title": "Card",
+  "description": "The base content surface: border, token radius, generous padding and a flat shadow. Parts: Card, CardHeader (optionally divided), CardTitle, CardDescription, CardAction (header right slot), CardBody and CardFooter. Variants: default, well and outline.",
+  "author": "gntik-ai",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Card/Card.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/card/Card.tsx",
+      "content": "import type { HTMLAttributes, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { cardVariants, type CardVariantProps } from './card.variants';\n\nconst s = cardVariants();\n\ntype DivProps = Omit<HTMLAttributes<HTMLDivElement>, 'className'> & { className?: string; ref?: Ref<HTMLDivElement> };\n\nexport interface CardProps extends DivProps {\n  /** `default` (card + flat shadow), `well` (lower hierarchy, no shadow) or `outline`. */\n  variant?: CardVariantProps['variant'];\n}\n\n/** Content surface: 1px border, token radius and a flat shadow. Compose with the Card* parts. */\nexport function Card({ variant, className, ...props }: CardProps) {\n  return <div className={cn(cardVariants({ variant }).root(), className)} {...props} />;\n}\n\nexport interface CardHeaderProps extends DivProps {\n  /** Draws a border between the header and the body. */\n  divided?: boolean;\n}\n\n/** Title + description on the left, CardAction on the right. */\nexport function CardHeader({ divided, className, ...props }: CardHeaderProps) {\n  return <div className={cn(cardVariants({ divided }).header(), className)} {...props} />;\n}\n\nexport interface CardTitleProps extends Omit<HTMLAttributes<HTMLHeadingElement>, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLHeadingElement>;\n  /** Heading level that fits the page outline. */\n  as?: 'h2' | 'h3' | 'h4';\n}\n\nexport function CardTitle({ as: Heading = 'h3', className, ...props }: CardTitleProps) {\n  return <Heading className={cn(s.title(), className)} {...props} />;\n}\n\nexport interface CardDescriptionProps extends Omit<HTMLAttributes<HTMLParagraphElement>, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLParagraphElement>;\n}\n\nexport function CardDescription({ className, ...props }: CardDescriptionProps) {\n  return <p className={cn(s.description(), className)} {...props} />;\n}\n\n/** Right-hand header slot (button, menu, status). */\nexport function CardAction({ className, ...props }: DivProps) {\n  return <div className={cn(s.action(), className)} {...props} />;\n}\n\nexport function CardBody({ className, ...props }: DivProps) {\n  return <div className={cn(s.body(), className)} {...props} />;\n}\n\n/** Action row on a subtle well, right-aligned. */\nexport function CardFooter({ className, ...props }: DivProps) {\n  return <div className={cn(s.footer(), className)} {...props} />;\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Card/card.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/card/card.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const cardVariants = tv({\n  slots: {\n    root: 'overflow-hidden rounded-xl border border-border text-card-foreground',\n    header: 'grid grid-cols-[1fr_auto] items-start gap-x-4 px-5 py-4',\n    title: 'col-start-1 text-[15px] font-semibold tracking-tight text-foreground',\n    description: 'col-start-1 mt-0.5 text-[13px] text-muted-foreground',\n    action: 'col-start-2 row-span-2 row-start-1 shrink-0 self-start',\n    body: 'px-5 py-4 text-[13px] leading-relaxed text-muted-foreground',\n    footer: 'flex flex-wrap items-center justify-end gap-2 border-t border-border bg-secondary/40 px-5 py-3',\n  },\n  variants: {\n    variant: {\n      default: { root: 'bg-card shadow-sm' },\n      well: { root: 'bg-secondary/50' },\n      outline: { root: 'bg-transparent' },\n    },\n    divided: {\n      true: { header: 'border-b border-border' },\n    },\n  },\n  defaultVariants: { variant: 'default', divided: false },\n});\n\nexport type CardVariantProps = VariantProps<typeof cardVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Card/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/card/index.ts",
+      "content": "export {\n  Card,\n  CardHeader,\n  CardTitle,\n  CardDescription,\n  CardAction,\n  CardBody,\n  CardFooter,\n  type CardProps,\n  type CardHeaderProps,\n  type CardTitleProps,\n  type CardDescriptionProps,\n} from './Card';\nexport { cardVariants, type CardVariantProps } from './card.variants';\nexport { doc as cardDoc } from './Card.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Card/Card.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/card/Card.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Card',\n  group: 'Layout',\n  status: 'stable',\n  description: 'The base content surface: border, token radius, generous padding and a flat shadow. Parts: Card, CardHeader (optionally divided), CardTitle, CardDescription, CardAction (header right slot), CardBody and CardFooter. Variants: default, well and outline.',\n  tokens: ['card', 'card-foreground', 'border', 'secondary', 'muted-foreground', 'shadow-sm', 'radius-xl'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Card/Card.doc.ts"
+  }
+}

@@ -53,7 +53,7 @@ export function ForgotPasswordForm({
           : undefined
       }
     >
-      <ArrowLeft size={14} aria-hidden />
+      <ArrowLeft size={14} aria-hidden className="rtl:-scale-x-100" />
       Back to sign in
     </Link>
   );

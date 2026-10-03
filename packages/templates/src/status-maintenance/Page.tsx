@@ -74,7 +74,7 @@ export default function StatusMaintenancePage(props: Partial<StatusMaintenancePr
         title={bannerTitle}
         message={bannerMessage}
         action={{ label: maintenanceContent.subscribeLabel, href: subscribeHref }}
-        className="rounded-lg border text-left"
+        className="rounded-lg border text-start"
       />
       <p aria-live="polite" className="mt-3 min-h-4 text-[12.5px] text-muted-foreground">
         {note}

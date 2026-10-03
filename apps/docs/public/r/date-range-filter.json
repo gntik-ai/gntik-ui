@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-range-filter",
+  "type": "registry:block",
+  "title": "Date range filter",
+  "description": "Compact date range picker for toolbars: small trigger with short dates, presets and a clear button.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/forms/DateRangeFilter/DateRangeFilter.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/forms/date-range-filter/DateRangeFilter.tsx",
+      "content": "import { DEFAULT_DATE_RANGE_PRESETS, DateRangePicker, IconButton, cn, type DateRange, type DateRangePreset, useI18n } from '@gntik-ai/ui';\nimport { X } from '@gntik-ai/icons';\nimport { useState } from 'react';\n\nexport interface DateRangeFilterProps {\n  value?: DateRange;\n  /** Initial range; defaults to the \"Last 7 days\" preset. Pass `{ start: null, end: null }` for none. */\n  defaultValue?: DateRange;\n  /** Called with a complete range, or an empty one when cleared. */\n  onValueChange?: (range: DateRange) => void;\n  presets?: DateRangePreset[];\n  /** \"Today\" for the presets (defaults to the current date). */\n  today?: Date;\n  /** Accessible name of the field. */\n  label?: string;\n  placeholder?: string;\n  /** Show a clear button while a range is set. */\n  clearable?: boolean;\n  disabled?: boolean;\n  className?: string;\n}\n\nconst EMPTY: DateRange = { start: null, end: null };\nconst SHORT: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };\n\n/** Compact DateRangePicker for toolbars: small trigger, short dates, presets and a clear button. */\nexport function DateRangeFilter({\n  value,\n  defaultValue,\n  onValueChange,\n  presets = DEFAULT_DATE_RANGE_PRESETS,\n  today,\n  label: labelProp,\n  placeholder: placeholderProp,\n  clearable = true,\n  disabled,\n  className,\n}: DateRangeFilterProps) {\n  const { t } = useI18n();\n  const label = labelProp ?? t('dateRange.label');\n  const placeholder = placeholderProp ?? t('dateRange.any');\n  const [inner, setInner] = useState<DateRange>(() => defaultValue ?? presets.find((p) => p.id === 'last-7')?.range?.(today ?? new Date()) ?? EMPTY);\n  const range = value ?? inner;\n  const set = (next: DateRange) => {\n    setInner(next);\n    onValueChange?.(next);\n  };\n  return (\n    <div className={cn('inline-flex items-center gap-1', className)}>\n      <DateRangePicker\n        size=\"sm\"\n        aria-label={label}\n        value={range}\n        onValueChange={set}\n        presets={presets}\n        today={today}\n        placeholder={placeholder}\n        formatOptions={SHORT}\n        disabled={disabled}\n        className=\"w-[13.5rem]\"\n      />\n      {clearable && range.start && (\n        <IconButton icon={X} size=\"sm\" label={t('common.clearItem', { label: label.toLowerCase() })} disabled={disabled} onClick={() => set(EMPTY)} />\n      )}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "forms"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "stable",
+    "source": "packages/blocks/src/forms/DateRangeFilter/block.meta.ts"
+  }
+}

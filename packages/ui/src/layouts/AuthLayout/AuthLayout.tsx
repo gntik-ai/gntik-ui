@@ -3,6 +3,7 @@ import { cn } from '../../utils/cn';
 import { SkipLink } from '../../components/VisuallyHidden';
 import { Logo } from '../../theme/Logo';
 import { useTheme } from '../../theme/ThemeProvider';
+import { useI18n } from '../../i18n/I18nProvider';
 import { authLayoutVariants, type AuthLayoutVariantProps } from './auth-layout.variants';
 
 export interface AuthLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'> {
@@ -42,11 +43,13 @@ export function AuthLayout({
   brandLabel,
   footer,
   mainId = 'main',
-  skipLinkLabel = 'Skip to sign-in form',
+  skipLinkLabel: skipLinkLabelProp,
   fullScreen = false,
   className,
   ...props
 }: AuthLayoutProps) {
+  const { t } = useI18n();
+  const skipLinkLabel = skipLinkLabelProp ?? t('skip.signIn');
   const theme = useTheme();
   const s = authLayoutVariants({ variant, fullScreen });
   const mark = logo ?? <Logo size={28} wordmark />;

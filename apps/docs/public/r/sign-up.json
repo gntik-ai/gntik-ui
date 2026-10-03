@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sign-up",
+  "type": "registry:block",
+  "title": "Sign up",
+  "description": "Split sign-up: brand panel with the value pitch, name, work email and password with a strength meter, terms consent and single sign-on.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/sign-in.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/sign-up/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/sign-up/Page.tsx",
+      "content": "import { SignUpForm, SsoButtons, type SignUpValues, type SsoProvider } from '@gntik-ai/blocks';\nimport { AuthLayout } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport { BrandPanel, type BrandPanelCopy } from '../sign-in/BrandPanel';\nimport { signUpBrand, signUpSsoProviders } from './data';\n\nexport interface SignUpPageProps {\n  /** Creates the account. A returned promise shows the loading state; a rejection shows in the alert. */\n  onSubmit: (values: SignUpValues) => void | Promise<void>;\n  /** Starts single sign-on with a provider id. */\n  onSso: (providerId: string) => void;\n  ssoProviders: SsoProvider[];\n  error: string | null;\n  minPasswordLength: number;\n  termsHref: string;\n  privacyHref: string;\n  signInHref: string;\n  onSignIn: () => void;\n  brand: BrandPanelCopy;\n  brandFooter: ReactNode;\n  logo: ReactNode;\n}\n\n/** Split sign-up: AuthLayout brand panel + SignUpForm with SsoButtons. */\nexport default function SignUpPage({\n  onSubmit,\n  onSso,\n  ssoProviders = signUpSsoProviders,\n  error,\n  minPasswordLength,\n  termsHref,\n  privacyHref,\n  signInHref,\n  onSignIn,\n  brand = signUpBrand,\n  brandFooter = signUpBrand.footer,\n  logo,\n}: Partial<SignUpPageProps>) {\n  const [ssoLoading, setSsoLoading] = useState<string | null>(null);\n  return (\n    <AuthLayout fullScreen variant=\"split\" logo={logo} brand={<BrandPanel {...brand} />} brandFooter={brandFooter} skipLinkLabel=\"Skip to sign-up form\">\n      <SignUpForm\n        onSubmit={onSubmit}\n        error={error}\n        minPasswordLength={minPasswordLength}\n        termsHref={termsHref}\n        privacyHref={privacyHref}\n        signInHref={signInHref}\n        onSignIn={onSignIn}\n        sso={\n          <SsoButtons\n            providers={ssoProviders}\n            loadingId={ssoLoading}\n            onSelect={(id) => {\n              setSsoLoading(id);\n              onSso?.(id);\n            }}\n          />\n        }\n      />\n    </AuthLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/sign-up/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/sign-up/data.ts",
+      "content": "import { ssoProviders } from '@gntik-ai/blocks';\n\nexport { ssoProviders as signUpSsoProviders };\n\n/** Brand panel copy for the split layout. */\nexport const signUpBrand = {\n  eyebrow: 'Free for small teams',\n  headline: 'Your whole team, one workspace.',\n  features: ['Invite teammates with roles from day one', 'Projects, environments and deployments together', 'Usage-based plans, no card to start'],\n  footer: 'SOC 2 · encrypted at rest · audited access',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Auth"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "stable",
+    "source": "packages/templates/src/sign-up/template.meta.ts"
+  }
+}

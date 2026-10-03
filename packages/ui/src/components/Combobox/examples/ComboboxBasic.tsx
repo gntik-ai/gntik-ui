@@ -27,7 +27,7 @@ export default function ComboboxBasic() {
           {(item: Runtime) => (
             <ComboboxItem key={item.value} value={item}>
               <span className="truncate font-medium">{item.label}</span>
-              <span className="ml-auto font-mono text-[11px] text-muted-foreground">{item.note}</span>
+              <span className="ms-auto font-mono text-[11px] text-muted-foreground">{item.note}</span>
             </ComboboxItem>
           )}
         </ComboboxContent>

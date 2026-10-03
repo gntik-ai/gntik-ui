@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "Textarea",
+  "description": "Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Textarea/Textarea.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/textarea/Textarea.tsx",
+      "content": "import { Field } from '@base-ui/react/field';\nimport { mergeProps } from '@base-ui/react/merge-props';\nimport type { ComponentProps, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { textareaVariants, type TextareaVariantProps } from './textarea.variants';\n\ntype NativeTextareaProps = Omit<ComponentProps<'textarea'>, 'className' | 'ref' | 'value' | 'defaultValue' | 'onChange'>;\n\nexport interface TextareaProps extends NativeTextareaProps, TextareaVariantProps {\n  className?: string;\n  ref?: Ref<HTMLTextAreaElement>;\n  value?: string;\n  defaultValue?: string;\n  onChange?: ComponentProps<'textarea'>['onChange'];\n  /** Called with the new string value (mirrors Input's `onValueChange`). */\n  onValueChange?: (value: string) => void;\n  /** Marks the value as invalid (sets aria-invalid). Inside a Field, `Field invalid` does this. */\n  invalid?: boolean;\n}\n\n/**\n * Multi-line text input. Renders a native <textarea> through Base UI Field.Control, so a\n * surrounding Field links its label, description and error and tracks dirty/touched state.\n * `autosize` grows the box with its content via CSS `field-sizing: content`.\n */\nexport function Textarea({\n  size,\n  resize,\n  autosize,\n  invalid,\n  className,\n  ref,\n  id,\n  name,\n  disabled,\n  value,\n  defaultValue,\n  onValueChange,\n  rows = 4,\n  ...rest\n}: TextareaProps) {\n  return (\n    <Field.Control\n      ref={ref as Ref<HTMLElement> | undefined}\n      id={id}\n      name={name}\n      disabled={disabled}\n      value={value}\n      defaultValue={defaultValue}\n      onValueChange={onValueChange ? (v) => onValueChange(v) : undefined}\n      render={(controlProps) => (\n        <textarea\n          {...mergeProps<'textarea'>(controlProps as ComponentProps<'textarea'>, rest, {\n            rows: autosize ? undefined : rows,\n            'aria-invalid': invalid || undefined,\n            className: cn(textareaVariants({ size, resize, autosize }), className),\n          })}\n        />\n      )}\n    />\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Textarea/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/textarea/index.ts",
+      "content": "export { Textarea, type TextareaProps } from './Textarea';\nexport { textareaVariants, type TextareaVariantProps } from './textarea.variants';\nexport { doc as textareaDoc } from './Textarea.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Textarea/textarea.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/textarea/textarea.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const textareaVariants = tv({\n  base: [\n    'block w-full min-w-0 rounded-md border border-border bg-background px-3 py-2 text-foreground shadow-sm',\n    'placeholder:text-muted-foreground transition-colors motion-reduce:transition-none',\n    'focus-visible:border-primary/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n    'data-invalid:border-destructive/70 aria-invalid:border-destructive/70',\n    'disabled:cursor-not-allowed disabled:bg-secondary/50 disabled:text-muted-foreground',\n    'read-only:bg-secondary/40',\n  ],\n  variants: {\n    size: {\n      sm: 'text-[12px] leading-5',\n      md: 'text-[13px] leading-6',\n    },\n    resize: {\n      none: 'resize-none',\n      vertical: 'resize-y',\n    },\n    autosize: {\n      true: 'field-sizing-content min-h-[88px] resize-none',\n      false: '',\n    },\n  },\n  defaultVariants: { size: 'md', resize: 'none', autosize: false },\n});\n\nexport type TextareaVariantProps = VariantProps<typeof textareaVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Textarea/Textarea.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/textarea/Textarea.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Textarea',\n  group: 'Forms',\n  status: 'stable',\n  description: 'Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field.',\n  primitive: '@base-ui/react/field (Field.Control)',\n  pattern: 'textbox (multi-line)',\n  keyboard: [\n    ['Tab', 'Moves focus into and out of the textarea'],\n    ['Enter', 'Inserts a new line (does not submit the form)'],\n  ],\n  tokens: ['background', 'border', 'foreground', 'muted-foreground', 'primary', 'destructive', 'secondary', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Forms"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Textarea/Textarea.doc.ts"
+  }
+}

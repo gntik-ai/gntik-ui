@@ -1,4 +1,4 @@
-import { cn } from '@gntik-ai/ui';
+import { cn, useI18n } from '@gntik-ai/ui';
 import { useId, type ComponentType, type ReactNode } from 'react';
 import { suggestionChipsStyles as s } from './suggestionChips.variants';
 
@@ -37,10 +37,12 @@ export function SuggestionChips({
   onSelect,
   layout = 'cards',
   heading,
-  label = 'Suggested prompts',
+  label: labelProp,
   disabled = false,
   className,
 }: SuggestionChipsProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('chat.suggestions');
   const headingId = useId();
   const items = suggestions.map(normalize);
   return (

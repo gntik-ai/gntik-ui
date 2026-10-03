@@ -754,3 +754,6 @@ function FeedsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['feeds'] = FeedsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

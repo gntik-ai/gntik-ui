@@ -2,6 +2,7 @@ import type { LucideIcon } from 'lucide-react';
 import type { HTMLAttributes, ReactNode, Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { SkipLink } from '../../components/VisuallyHidden';
+import { useI18n } from '../../i18n/I18nProvider';
 import { statusLayoutVariants, type StatusLayoutVariantProps } from './status-layout.variants';
 
 export interface StatusLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title' | 'children'> {
@@ -51,11 +52,13 @@ export function StatusLayout({
   footer,
   tone,
   mainId = 'main',
-  skipLinkLabel = 'Skip to content',
+  skipLinkLabel: skipLinkLabelProp,
   fullScreen = false,
   className,
   ...props
 }: StatusLayoutProps) {
+  const { t } = useI18n();
+  const skipLinkLabel = skipLinkLabelProp ?? t('skip.content');
   const s = statusLayoutVariants({ tone, fullScreen });
   return (
     <div className={cn(s.root(), className)} {...props}>

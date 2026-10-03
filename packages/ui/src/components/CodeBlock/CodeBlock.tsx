@@ -1,5 +1,6 @@
 import { Check, Copy, WrapText } from 'lucide-react';
 import { useEffect, useMemo, useState, type ReactNode, type Ref } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { codeBlockVariants, tokenClass } from './code-block.variants';
 import { tokenizeLines } from './tokenize';
@@ -86,9 +87,10 @@ export function CodeBlock({
   };
 
   const marked = new Set(highlightLines);
+  const { t } = useI18n();
   const gutter = `${String(lines.length).length}ch`;
-  const regionLabel = label ?? filename ?? (language ? `${language} code` : 'Code');
-  const announcement = status === 'copied' ? 'Copied to clipboard' : status === 'failed' ? 'Copy failed' : '';
+  const regionLabel = label ?? filename ?? (language ? t('codeBlock.languageCode', { language }) : t('codeBlock.code'));
+  const announcement = status === 'copied' ? t('common.copiedToClipboard') : status === 'failed' ? t('common.copyFailed') : '';
 
   return (
     <div ref={ref} className={cn(s.root(), className)}>
@@ -99,14 +101,14 @@ export function CodeBlock({
         </div>
         <div className={s.actions()}>
           {wrapToggle && (
-            <button type="button" aria-label="Wrap lines" aria-pressed={wrap} onClick={() => setWrap((w) => !w)} className={s.button()}>
+            <button type="button" aria-label={t('codeBlock.wrap')} aria-pressed={wrap} onClick={() => setWrap((w) => !w)} className={s.button()}>
               <WrapText size={14} aria-hidden />
             </button>
           )}
           {copyable && (
             <button type="button" onClick={copy} className={cn(s.button(), status === 'copied' && s.copied())}>
               {status === 'copied' ? <Check size={14} aria-hidden /> : <Copy size={14} aria-hidden />}
-              {status === 'copied' ? 'Copied' : 'Copy'}
+              {status === 'copied' ? t('common.copied') : t('common.copy')}
             </button>
           )}
           <span role="status" className="sr-only">

@@ -9,7 +9,7 @@ import {
   type ToggleVariantProps,
 } from './toggle-group.variants';
 
-type GroupStyle = { variant: 'segmented' | 'joined'; size: 'sm' | 'md' };
+type GroupStyle = { variant: 'segmented' | 'joined'; size: 'auto' | 'sm' | 'md' };
 const GroupStyleContext = createContext<GroupStyle | null>(null);
 
 export interface ToggleProps extends Omit<BaseToggle.Props, 'className'>, Omit<ToggleVariantProps, 'variant'> {
@@ -29,7 +29,7 @@ export function Toggle({ size, iconOnly, className, type = 'button', ...props }:
     <BaseToggle
       type={type}
       className={cn(
-        toggleVariants({ variant: group?.variant ?? 'standalone', size: size ?? group?.size ?? 'md', iconOnly }),
+        toggleVariants({ variant: group?.variant ?? 'standalone', size: size ?? group?.size ?? 'auto', iconOnly }),
         className,
       )}
       {...props}
@@ -42,8 +42,8 @@ export interface ToggleGroupProps
     ToggleGroupVariantProps {
   className?: string;
   ref?: Ref<HTMLDivElement>;
-  /** Item size, passed down to every Toggle. */
-  size?: 'sm' | 'md';
+  /** Item size, passed down to every Toggle. `auto` (default) follows the density. */
+  size?: 'auto' | 'sm' | 'md';
 }
 
 /**
@@ -51,7 +51,7 @@ export interface ToggleGroupProps
  * or multi-select toolbar (`multiple`). Arrow keys move focus; Space/Enter toggles.
  * Give it an `aria-label`.
  */
-export function ToggleGroup({ variant = 'segmented', size = 'md', className, ...props }: ToggleGroupProps) {
+export function ToggleGroup({ variant = 'segmented', size = 'auto', className, ...props }: ToggleGroupProps) {
   return (
     <GroupStyleContext.Provider value={{ variant: variant ?? 'segmented', size }}>
       <BaseToggleGroup className={cn(toggleGroupVariants({ variant }), className)} {...props} />

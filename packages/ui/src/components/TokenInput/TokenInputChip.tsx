@@ -1,6 +1,7 @@
 import { CircleAlert, X } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { cn } from '../../utils/cn';
+import { useI18n } from '../../i18n/I18nProvider';
 import { tokenInputVariants, type TokenInputVariantProps } from './token-input.variants';
 
 export interface TokenInputChipProps extends TokenInputVariantProps {
@@ -15,7 +16,9 @@ export interface TokenInputChipProps extends TokenInputVariantProps {
 }
 
 /** A committed entry inside TokenInput: text, invalid state and a remove button. */
-export function TokenInputChip({ children, error, onRemove, removeLabel = 'Remove', disabled, size, className }: TokenInputChipProps) {
+export function TokenInputChip({ children, error, onRemove, removeLabel: removeLabelProp, disabled, size, className }: TokenInputChipProps) {
+  const { t } = useI18n();
+  const removeLabel = removeLabelProp ?? t('common.remove');
   const s = tokenInputVariants({ size });
   return (
     <span
@@ -27,7 +30,7 @@ export function TokenInputChip({ children, error, onRemove, removeLabel = 'Remov
     >
       {error && <CircleAlert size={11} strokeWidth={2.4} aria-hidden className="shrink-0" />}
       <span className={s.chipText()}>{children}</span>
-      {error && <span className="sr-only">, invalid: {error}</span>}
+      {error && <span className="sr-only">, {t('common.invalid', { error })}</span>}
       {onRemove && (
         <button type="button" aria-label={removeLabel} disabled={disabled} className={s.chipRemove()} onClick={onRemove}>
           <X size={11} strokeWidth={2.4} aria-hidden />

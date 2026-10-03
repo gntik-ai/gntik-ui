@@ -34,7 +34,7 @@ export default function InspectorLayoutProperties() {
                 type="button"
                 aria-pressed={name === selected}
                 onClick={() => setSelected(name)}
-                className="w-full rounded-[10px] border border-border bg-card p-4 text-left font-mono text-[13px] hover:bg-accent/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring aria-pressed:border-primary"
+                className="w-full rounded-[10px] border border-border bg-card p-4 text-start font-mono text-[13px] hover:bg-accent/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring aria-pressed:border-primary"
               >
                 {name}
               </button>

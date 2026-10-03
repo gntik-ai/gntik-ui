@@ -14,8 +14,11 @@ export const SERIES_TOKENS = {
 
 export type ChartColor = keyof typeof SERIES_TOKENS;
 
-/** Default series order: primary first, then the categorical accents. */
-export const CHART_COLORS: readonly ChartColor[] = ['primary', 'violet', 'cyan', 'amber', 'rose'];
+/**
+ * Default series order: primary first, then the categorical accents ordered so every adjacent
+ * pair differs in luminance by ≥ 1.5:1 in all three themes (see `palette.ts`).
+ */
+export const CHART_COLORS: readonly ChartColor[] = ['primary', 'violet', 'cyan', 'rose', 'amber'];
 
 export interface ChartTheme {
   /** Active theme ("dark" | "light" | "high_contrast"); "dark" on the server and during hydration. */

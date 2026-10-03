@@ -9,7 +9,7 @@ export const authLayoutVariants = tv({
     logo: 'mb-8 flex',
     surface: 'w-full',
     footer: 'mt-7 text-center text-[13px] text-muted-foreground',
-    brand: 'relative hidden w-[46%] max-w-[640px] shrink-0 flex-col justify-between gap-10 overflow-y-auto border-r border-border/60 bg-chrome p-12 lg:order-first lg:flex',
+    brand: 'relative hidden w-[46%] max-w-[640px] shrink-0 flex-col justify-between gap-10 overflow-y-auto border-e border-border/60 bg-chrome p-12 lg:order-first lg:flex',
     brandBody: 'max-w-[420px]',
     brandFooter: 'font-mono text-[11.5px] text-muted-foreground',
   },

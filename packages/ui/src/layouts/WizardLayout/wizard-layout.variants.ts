@@ -14,7 +14,7 @@ export const wizardLayoutVariants = tv({
     body: 'mx-auto w-full px-4 py-8 sm:px-6',
     footer: 'shrink-0 border-t border-border bg-card',
     footerRow: 'mx-auto flex w-full items-center gap-2 px-4 py-3 sm:px-6',
-    footerAside: 'mr-auto min-w-0 truncate text-[12.5px] text-muted-foreground',
+    footerAside: 'me-auto min-w-0 truncate text-[12.5px] text-muted-foreground',
   },
   variants: {
     width: {

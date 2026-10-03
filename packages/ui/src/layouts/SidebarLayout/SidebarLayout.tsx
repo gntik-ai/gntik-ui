@@ -5,6 +5,7 @@ import { IconButton } from '../../components/Button';
 import { Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '../../components/Drawer';
 import { SkipLink } from '../../components/VisuallyHidden';
 import { sidebarLayoutVariants } from './sidebar-layout.variants';
+import { useI18n } from '../../i18n/I18nProvider';
 import { usePersistedCollapse } from './use-persisted-collapse';
 
 /** State handed to sidebar slots, so they can adapt (icon rail) or close the mobile drawer. */
@@ -97,14 +98,20 @@ export function SidebarLayout({
   storageKey,
   drawerOpen: drawerOpenProp,
   onDrawerOpenChange,
-  sidebarLabel = 'Sidebar',
+  sidebarLabel: sidebarLabelProp,
   mainId = 'main',
-  skipLinkLabel = 'Skip to main content',
-  menuLabel = 'Open navigation',
-  collapseLabel = 'Collapse sidebar',
-  expandLabel = 'Expand sidebar',
+  skipLinkLabel: skipLinkLabelProp,
+  menuLabel: menuLabelProp,
+  collapseLabel: collapseLabelProp,
+  expandLabel: expandLabelProp,
   fullScreen = false,
 }: SidebarLayoutProps) {
+  const { t } = useI18n();
+  const sidebarLabel = sidebarLabelProp ?? t('nav.sidebar');
+  const skipLinkLabel = skipLinkLabelProp ?? t('skip.main');
+  const menuLabel = menuLabelProp ?? t('nav.openNavigation');
+  const collapseLabel = collapseLabelProp ?? t('nav.collapseSidebar');
+  const expandLabel = expandLabelProp ?? t('nav.expandSidebar');
   const sidebarId = useId();
   const [collapsed, setCollapsed] = usePersistedCollapse(collapsedProp, defaultCollapsed, storageKey, onCollapsedChange);
   const [drawerState, setDrawerState] = useState(false);
@@ -142,7 +149,7 @@ export function SidebarLayout({
           <header className={s.topbar()}>
             <Drawer side="left" open={drawerOpen} onOpenChange={(open) => setDrawerOpen(open)}>
               <DrawerTrigger render={<IconButton icon={MenuIcon} label={menuLabel} className={s.menuButton()} />} />
-              <DrawerContent size="sm" className={s.drawer()} closeLabel="Close navigation">
+              <DrawerContent size="sm" className={s.drawer()} closeLabel={t('nav.closeNavigation')}>
                 <DrawerHeader className={s.drawerHeader()}>
                   <DrawerTitle className={sidebarHeader ? 'sr-only' : undefined}>{sidebarLabel}</DrawerTitle>
                   {sidebarHeader && renderSlot(sidebarHeader, mobile)}

@@ -3,6 +3,7 @@ import { useId, useState, type HTMLAttributes, type ReactNode, type Ref } from '
 import { cn } from '../../utils/cn';
 import { IconButton } from '../../components/Button';
 import { SkipLink } from '../../components/VisuallyHidden';
+import { useI18n } from '../../i18n/I18nProvider';
 import { canvasLayoutVariants } from './canvas-layout.variants';
 
 /** Controlled-or-uncontrolled boolean (open state of a panel). */
@@ -71,30 +72,37 @@ export function CanvasLayout({
   header,
   toolbar,
   palette,
-  paletteLabel = 'Palette',
+  paletteLabel: paletteLabelProp,
   paletteOpen: paletteOpenProp,
   defaultPaletteOpen = true,
   onPaletteOpenChange,
   inspector,
-  inspectorLabel = 'Inspector',
+  inspectorLabel: inspectorLabelProp,
   inspectorOpen: inspectorOpenProp,
   defaultInspectorOpen = true,
   onInspectorOpenChange,
   console: consoleContent,
-  consoleLabel = 'Console',
+  consoleLabel: consoleLabelProp,
   consoleActions,
   consoleOpen: consoleOpenProp,
   defaultConsoleOpen = true,
   onConsoleOpenChange,
-  smallScreenNotice = 'Open on a larger screen to edit. The canvas is read-only here.',
+  smallScreenNotice: smallScreenNoticeProp,
   embedded = false,
   mainId = 'main',
-  mainLabel = 'Canvas',
-  skipLinkLabel = 'Skip to canvas',
+  mainLabel: mainLabelProp,
+  skipLinkLabel: skipLinkLabelProp,
   fullScreen = false,
   className,
   ...props
 }: CanvasLayoutProps) {
+  const { t } = useI18n();
+  const paletteLabel = paletteLabelProp ?? t('canvas.palette');
+  const inspectorLabel = inspectorLabelProp ?? t('canvas.inspector');
+  const consoleLabel = consoleLabelProp ?? t('canvas.console');
+  const smallScreenNotice = smallScreenNoticeProp ?? t('canvas.smallScreen');
+  const mainLabel = mainLabelProp ?? t('canvas.main');
+  const skipLinkLabel = skipLinkLabelProp ?? t('skip.canvas');
   const MainTag = embedded ? 'div' : 'main';
   const [paletteOpen, setPaletteOpen] = usePanelState(paletteOpenProp, defaultPaletteOpen, onPaletteOpenChange);
   const [inspectorOpen, setInspectorOpen] = usePanelState(inspectorOpenProp, defaultInspectorOpen, onInspectorOpenChange);

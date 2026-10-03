@@ -1,0 +1,58 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "type": "registry:ui",
+  "title": "Checkbox",
+  "description": "Checkbox with optional label and description, including the indeterminate state. CheckboxGroup shares state across several checkboxes (plain or bordered list layout) and supports a parent \"select all\" checkbox.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0",
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Checkbox/Checkbox.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/checkbox/Checkbox.tsx",
+      "content": "import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';\nimport { CheckboxGroup as BaseCheckboxGroup } from '@base-ui/react/checkbox-group';\nimport { Check, Minus } from 'lucide-react';\nimport { useId, type ReactNode, type Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { checkboxVariants, type CheckboxVariantProps } from './checkbox.variants';\n\nconst s = checkboxVariants();\n\nexport interface CheckboxProps extends Omit<BaseCheckbox.Root.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLElement>;\n  /** Visible label. Without it, pass `aria-label` or wrap in a Field. */\n  label?: ReactNode;\n  /** Helper line under the label, linked with aria-describedby. */\n  description?: ReactNode;\n}\n\n/**\n * Two-state (or indeterminate) checkbox. Controlled with `checked` + `onCheckedChange`,\n * uncontrolled with `defaultChecked`. Inside a CheckboxGroup, identify it with `value`.\n */\nexport function Checkbox({ label, description, className, ...props }: CheckboxProps) {\n  const descId = useId();\n  const control = (\n    <BaseCheckbox.Root\n      className={cn(s.root(), label != null && 'mt-px', label == null && className)}\n      aria-describedby={description != null ? descId : undefined}\n      {...props}\n    >\n      <BaseCheckbox.Indicator\n        className={s.indicator()}\n        render={(indicatorProps, state) => (\n          <span {...indicatorProps}>\n            {state.indeterminate ? <Minus size={13} strokeWidth={2.6} aria-hidden /> : <Check size={13} strokeWidth={2.6} aria-hidden />}\n          </span>\n        )}\n      />\n    </BaseCheckbox.Root>\n  );\n  if (label == null) return control;\n  return (\n    <div className={cn(s.item(), className)}>\n      <label className={s.label()}>\n        {control}\n        <span className={s.labelText()}>{label}</span>\n      </label>\n      {description != null && (\n        <p id={descId} className={s.description()}>\n          {description}\n        </p>\n      )}\n    </div>\n  );\n}\n\nexport interface CheckboxGroupProps extends Omit<BaseCheckboxGroup.Props, 'className'>, CheckboxVariantProps {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n}\n\n/**\n * Shared state for several checkboxes (`value` is the array of ticked `value`s). Name it with\n * `aria-labelledby`, or render it as a Fieldset: `<Fieldset render={<CheckboxGroup />}>`.\n * A `parent` checkbox plus `allValues` gives a \"select all\" with the indeterminate state.\n */\nexport function CheckboxGroup({ variant, className, ...props }: CheckboxGroupProps) {\n  return <BaseCheckboxGroup className={cn(checkboxVariants({ variant }).group(), className)} {...props} />;\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Checkbox/checkbox.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/checkbox/checkbox.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const checkboxVariants = tv({\n  slots: {\n    root: [\n      'inline-flex size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-[5px] border border-border bg-background text-primary-foreground',\n      'transition-colors motion-reduce:transition-none hover:border-muted-foreground/50',\n      'data-checked:border-primary data-checked:bg-primary data-indeterminate:border-primary data-indeterminate:bg-primary',\n      'data-invalid:border-destructive/70',\n      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n      'data-disabled:cursor-not-allowed data-disabled:opacity-50',\n    ],\n    indicator: 'flex items-center justify-center data-unchecked:hidden',\n    item: 'grid grid-cols-[auto_1fr] items-start gap-x-3 gap-y-0.5',\n    label: 'col-span-2 grid cursor-pointer grid-cols-subgrid items-start has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-70',\n    labelText: 'text-[13px] leading-5 font-medium text-foreground select-none',\n    description: 'col-start-2 text-[12.5px] leading-5 text-muted-foreground text-pretty',\n    group: 'flex flex-col',\n  },\n  variants: {\n    variant: {\n      plain: { group: 'gap-2.5' },\n      list: { group: 'divide-y divide-border/60 overflow-hidden rounded-md border border-border bg-background/40 *:px-4 *:py-3.5' },\n    },\n  },\n  defaultVariants: { variant: 'plain' },\n});\n\nexport type CheckboxVariantProps = VariantProps<typeof checkboxVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Checkbox/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/checkbox/index.ts",
+      "content": "export { Checkbox, CheckboxGroup, type CheckboxProps, type CheckboxGroupProps } from './Checkbox';\nexport { checkboxVariants, type CheckboxVariantProps } from './checkbox.variants';\nexport { doc as checkboxDoc } from './Checkbox.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Checkbox/Checkbox.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/checkbox/Checkbox.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Checkbox',\n  group: 'Forms',\n  status: 'stable',\n  description: 'Checkbox with optional label and description, including the indeterminate state. CheckboxGroup shares state across several checkboxes (plain or bordered list layout) and supports a parent \"select all\" checkbox.',\n  primitive: '@base-ui/react/checkbox, @base-ui/react/checkbox-group',\n  pattern: 'checkbox (dual and mixed state)',\n  keyboard: [\n    ['Space', 'Toggles the focused checkbox; a parent checkbox ticks or clears the whole group'],\n    ['Tab', 'Moves focus to the next checkbox (each checkbox is a tab stop)'],\n  ],\n  tokens: ['background', 'border', 'primary', 'primary-foreground', 'foreground', 'muted-foreground', 'destructive', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Forms"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Checkbox/Checkbox.doc.ts"
+  }
+}

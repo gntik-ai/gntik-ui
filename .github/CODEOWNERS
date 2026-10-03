@@ -1,0 +1,17 @@
+# Code owners — reviewers requested automatically on PRs. Later rules win.
+# @gntik-ai/design-system is the design-system team; @andrea-mucci is the fallback owner.
+
+*                                   @andrea-mucci
+
+# Published packages
+/packages/                          @gntik-ai/design-system @andrea-mucci
+
+# Brand tokens: frozen colour values, contrast pairing, motion
+/packages/tokens/                   @gntik-ai/design-system @andrea-mucci
+
+# Catalog, governance and release plumbing
+/apps/docs/                         @gntik-ai/design-system @andrea-mucci
+/docs/governance/                   @gntik-ai/design-system @andrea-mucci
+/.changeset/                        @gntik-ai/design-system @andrea-mucci
+/.github/                           @andrea-mucci
+/eslint.config.js                   @gntik-ai/design-system @andrea-mucci

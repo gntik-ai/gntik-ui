@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group",
+  "type": "registry:ui",
+  "title": "RadioGroup",
+  "description": "Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/RadioGroup/RadioGroup.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/radio-group/RadioGroup.tsx",
+      "content": "import { Radio as BaseRadio } from '@base-ui/react/radio';\nimport { RadioGroup as BaseRadioGroup } from '@base-ui/react/radio-group';\nimport { createContext, useContext, useId, type ReactNode, type Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { radioGroupVariants, type RadioGroupVariantProps } from './radio-group.variants';\n\ntype Variant = NonNullable<RadioGroupVariantProps['variant']>;\nconst VariantContext = createContext<Variant>('plain');\n\nexport interface RadioGroupProps<Value = string>\n  extends Omit<BaseRadioGroup.Props<Value>, 'className'>,\n    RadioGroupVariantProps {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n}\n\n/**\n * Single-choice group (role radiogroup). Arrow keys move and select; Tab enters the group\n * once, on the selected radio. Name it with `aria-labelledby`, or render it as a Fieldset:\n * `<Fieldset render={<RadioGroup />}>`. Variants: plain, list (bordered rows) and card.\n */\nexport function RadioGroup<Value = string>({ variant = 'plain', className, ...props }: RadioGroupProps<Value>) {\n  return (\n    <VariantContext.Provider value={variant}>\n      <BaseRadioGroup<Value> className={cn(radioGroupVariants({ variant }).group(), className)} {...props} />\n    </VariantContext.Provider>\n  );\n}\n\nexport interface RadioProps<Value = string> extends Omit<BaseRadio.Root.Props<Value>, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLElement>;\n  /** Visible label. Without it, pass `aria-label`. */\n  label?: ReactNode;\n  /** Helper line under the label, linked with aria-describedby. */\n  description?: ReactNode;\n  /** Right-aligned content on the label row (e.g. a price in the card variant); announced as description. */\n  trailing?: ReactNode;\n}\n\n/** One option of a RadioGroup. Identified by `value`. */\nexport function Radio<Value = string>({ label, description, trailing, className, ...props }: RadioProps<Value>) {\n  const variant = useContext(VariantContext);\n  const s = radioGroupVariants({ variant });\n  const descId = useId();\n  const trailingId = useId();\n  const describedBy = [trailing != null && trailingId, description != null && descId].filter(Boolean).join(' ') || undefined;\n  const control = (\n    <BaseRadio.Root<Value>\n      className={cn(s.radio(), label != null && 'mt-px', label == null && className)}\n      aria-describedby={describedBy}\n      {...props}\n    >\n      <BaseRadio.Indicator className={s.indicator()} />\n    </BaseRadio.Root>\n  );\n  if (label == null) return control;\n  return (\n    <div className={cn(s.item(), className)}>\n      <label className={s.label()}>\n        {control}\n        <span className={s.labelText()}>{label}</span>\n      </label>\n      {trailing != null && (\n        <span id={trailingId} className={s.trailing()}>\n          {trailing}\n        </span>\n      )}\n      {description != null && (\n        <p id={descId} className={s.description()}>\n          {description}\n        </p>\n      )}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/RadioGroup/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/radio-group/index.ts",
+      "content": "export { RadioGroup, Radio, type RadioGroupProps, type RadioProps } from './RadioGroup';\nexport { radioGroupVariants, type RadioGroupVariantProps } from './radio-group.variants';\nexport { doc as radioGroupDoc } from './RadioGroup.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/RadioGroup/radio-group.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/radio-group/radio-group.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const radioGroupVariants = tv({\n  slots: {\n    group: 'flex flex-col',\n    radio: [\n      'inline-flex size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-background',\n      'transition-colors motion-reduce:transition-none hover:border-muted-foreground/50',\n      'data-checked:border-primary data-checked:bg-primary data-invalid:border-destructive/70',\n      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n      'data-disabled:cursor-not-allowed data-disabled:opacity-50',\n    ],\n    indicator: 'size-1.5 rounded-full bg-primary-foreground data-unchecked:hidden',\n    item: 'grid grid-cols-[auto_1fr_auto] items-start gap-x-3 gap-y-0.5',\n    label: 'col-span-2 grid cursor-pointer grid-cols-subgrid items-start has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-70',\n    labelText: 'min-w-0 text-[13px] leading-5 font-medium text-foreground select-none',\n    trailing: 'col-start-3 row-start-1 text-end text-[13px] leading-5 font-semibold text-foreground',\n    description: 'col-start-2 col-end-4 text-[12.5px] leading-5 text-muted-foreground text-pretty',\n  },\n  variants: {\n    variant: {\n      plain: { group: 'gap-2.5' },\n      list: {\n        group: 'gap-0 divide-y divide-border/60 overflow-hidden rounded-md border border-border bg-background/40',\n        item: 'px-4 py-3.5',\n      },\n      card: {\n        group: 'gap-3',\n        item: [\n          'rounded-md border border-border bg-background px-4 py-3.5 transition-colors motion-reduce:transition-none',\n          'hover:border-muted-foreground/40 has-[[data-checked]]:border-primary/60 has-[[data-checked]]:ring-2 has-[[data-checked]]:ring-primary/20',\n          'has-[[data-disabled]]:hover:border-border',\n        ],\n        labelText: 'font-semibold',\n        description: 'text-[12px]',\n      },\n    },\n  },\n  defaultVariants: { variant: 'plain' },\n});\n\nexport type RadioGroupVariantProps = VariantProps<typeof radioGroupVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/RadioGroup/RadioGroup.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/radio-group/RadioGroup.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'RadioGroup',\n  group: 'Forms',\n  status: 'stable',\n  description: 'Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants.',\n  primitive: '@base-ui/react/radio-group, @base-ui/react/radio',\n  pattern: 'radio group',\n  keyboard: [\n    ['Tab', 'Enters the group once, on the selected radio (or the first one); Tab again leaves the group'],\n    ['Arrow Down / Arrow Right', 'Moves to the next radio and selects it (wraps)'],\n    ['Arrow Up / Arrow Left', 'Moves to the previous radio and selects it (wraps)'],\n    ['Space', 'Selects the focused radio if it is not already selected'],\n  ],\n  tokens: ['background', 'border', 'primary', 'primary-foreground', 'foreground', 'muted-foreground', 'destructive', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Forms"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/RadioGroup/RadioGroup.doc.ts"
+  }
+}

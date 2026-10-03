@@ -14,6 +14,11 @@ export interface MeterProps extends Omit<BaseMeter.Root.Props, 'className' | 'ch
   hideValue?: boolean;
   /** Percent-of-max thresholds for the warning and destructive levels. */
   thresholds?: MeterThresholds;
+  /**
+   * Inverts the thresholds: low values are bad (scores, health, remaining budget). Default
+   * false (high is bad, as for quotas). Defaults become warning ≤ 50 %, destructive ≤ 20 %.
+   */
+  higherIsBetter?: boolean;
   /** Helper line under the bar, coloured by level (e.g. "Overage billed at $0.002 / request"). */
   note?: ReactNode;
 }
@@ -31,13 +36,14 @@ export function Meter({
   valueLabel,
   hideValue = false,
   thresholds,
+  higherIsBetter = false,
   note,
   className,
   ...props
 }: MeterProps) {
   const range = max - min;
   const percent = range > 0 ? ((value - min) / range) * 100 : 0;
-  const level = getMeterLevel(percent, thresholds);
+  const level = getMeterLevel(percent, thresholds, higherIsBetter);
   const s = meterVariants({ level, size });
   const clamped = Math.min(Math.max(value, min), max);
   return (

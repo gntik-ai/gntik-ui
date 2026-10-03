@@ -186,3 +186,6 @@ function ButtonGroupsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['button-groups'] = ButtonGroupsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

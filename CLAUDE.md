@@ -1,14 +1,14 @@
 # Gntik UI — sistema de diseño de marca (CLAUDE.md)
 
 Este proyecto ES **gntik-ui**: el design system **agnóstico** de los productos gntik-ai
-(musematic, Falcone, llmwiki…), con layout + estilos nacidos en musematic. Hoy es un catálogo
+(musematic, Falcone…), con layout + estilos nacidos en musematic. Hoy es un catálogo
 estilo Tailwind Plus: cada componente se **ve** (preview interactivo) y trae su **código
 React/Tailwind** para pegar. Rumbo: monorepo estilo Astryx (ver la propuesta de evolución).
 
 ## Decisiones (fijadas con el usuario — no revertir sin preguntar)
-- **Contenido: agnóstico.** El núcleo no nombra ningún producto. musematic, Falcone y
-  llmwiki son *presets* de tema (logo, nombre, assets) + apps de ejemplo; sus datos de
-  dominio viven en fixtures, nunca en los componentes.
+- **Contenido: agnóstico.** El núcleo no nombra ningún producto. musematic y Falcone
+  son *presets* de tema (logo, nombre, assets) + apps de ejemplo; sus datos de dominio
+  viven en fixtures, nunca en los componentes. llmwiki queda fuera (usa otra UI por ahora).
 - **Colores congelados:** los valores HSL de `tokens/brand.css` no cambian. Los presets
   solo difieren en logo, nombre y assets. El contraste se arregla emparejando tokens
   existentes (texto verde/ámbar en light → tokens más oscuros), nunca cambiando valores.
@@ -49,7 +49,7 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
   badges), `text-<tono>-chip-text`; todos apuntan a tokens existentes y un test exige AA en los
   3 temas (también sobre el tinte). Los enlaces en texto van subrayados.
 - `packages/chat` (pack de chat IA), `packages/blocks` (69 bloques: `src/<familia>/<Nombre>/`
-  con `block.meta.ts`), `packages/templates` (40 páginas: `src/<id>/Page.tsx` +
+  con `block.meta.ts`), `packages/templates` (57 páginas: `src/<id>/Page.tsx` +
   `template.meta.ts`; las de consola usan `shared/ConsoleShell`), `packages/cli`
   (`gntik-ui init|add|eject|list|search|docs`, `--json`). Layouts en `packages/ui/src/layouts/`
   (`embedded` cuando van dentro de un shell que ya tiene `<main>`).
@@ -62,6 +62,14 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
 - `packages/mcp` — MCP server (privado, imagen Docker); sirve `registry.json` (raíz), generado
   con `pnpm registry`.
 - Releases: Changesets (`pnpm changeset`) → workflow Release → GitHub Packages.
+- Fase 4 (ecosistema): i18n en `packages/ui/src/i18n` (en/es, utilidades lógicas RTL);
+  densidad (`DensityProvider`, `tokens/src/density.css`, `size:'auto'` → `h-control`, `h-row`…);
+  `motion.css`; export DTCG/Figma (`packages/tokens` build); `packages/codemods` +
+  `gntik-ui upgrade`; registro shadcn en `apps/docs/public/r/` y `llms*.txt` (ambos de
+  `pnpm registry`; URL base vía `GNTIK_REGISTRY_BASE_URL`); `apps/sandbox`; `AGENTS.md` +
+  `.claude/skills/`; gobernanza en `docs/governance/`; workflow canary.
+- `packages/evals`: evals de agente contra la API de Claude. **Cuestan dinero**: no correrlas
+  sin permiso explícito del usuario (`--confirm-spend`).
 
 ## Cómo añadir un componente
 1. Crear/editar el `.jsx` de su grupo en `apps/docs/src/catalog/`: sección con preview

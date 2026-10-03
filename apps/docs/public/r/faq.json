@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "faq",
+  "type": "registry:block",
+  "title": "FAQ",
+  "description": "Frequently asked questions in an accordion with a heading block, stacked or split layout, single or multiple open items.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/marketing/Faq/Faq.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/marketing/faq/Faq.tsx",
+      "content": "import { useId, type ReactNode } from 'react';\nimport { Accordion, AccordionItem, AccordionPanel, AccordionTrigger, cn } from '@gntik-ai/ui';\nimport { sampleFaqs } from './fixtures';\n\nexport interface FaqItem {\n  id: string;\n  question: string;\n  answer: ReactNode;\n}\n\nexport interface FaqProps {\n  items?: FaqItem[];\n  title?: ReactNode;\n  description?: ReactNode;\n  /** `stacked` (heading over the list) or `split` (heading left from `lg`). */\n  layout?: 'stacked' | 'split';\n  /** Ids of the items open on mount. */\n  defaultOpen?: string[];\n  /** Allow several items open at once. */\n  multiple?: boolean;\n  headingLevel?: 'h2' | 'h3';\n  className?: string;\n}\n\n/** Frequently asked questions in an accordion, with a heading block. */\nexport function Faq({\n  items = sampleFaqs,\n  title = 'Frequently asked questions',\n  description = 'Can’t find what you’re looking for? Reach out to our support team.',\n  layout = 'stacked',\n  defaultOpen,\n  multiple = false,\n  headingLevel: Heading = 'h2',\n  className,\n}: FaqProps) {\n  const titleId = useId();\n  const split = layout === 'split';\n  return (\n    <section\n      aria-labelledby={titleId}\n      className={cn('px-4 py-16 sm:px-6 sm:py-20', split ? 'mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_2fr]' : 'mx-auto max-w-3xl', className)}\n    >\n      <div className={cn(!split && 'text-center')}>\n        <Heading id={titleId} className=\"text-[28px] leading-tight font-semibold tracking-tight text-balance text-foreground sm:text-[34px]\">\n          {title}\n        </Heading>\n        {description && <p className=\"mt-4 text-[15px] leading-relaxed text-pretty text-muted-foreground\">{description}</p>}\n      </div>\n      <Accordion variant=\"flush\" multiple={multiple} defaultValue={defaultOpen} className={cn(!split && 'mt-10')}>\n        {items.map((item) => (\n          <AccordionItem key={item.id} value={item.id}>\n            <AccordionTrigger headingLevel={Heading === 'h2' ? 3 : 4}>{item.question}</AccordionTrigger>\n            <AccordionPanel>{item.answer}</AccordionPanel>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/marketing/Faq/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/marketing/faq/fixtures.ts",
+      "content": "import type { FaqItem } from './Faq';\n\n/** Sample product-agnostic questions. */\nexport const sampleFaqs: FaqItem[] = [\n  { id: 'trial', question: 'Is there a free trial?', answer: 'Yes. Every paid plan starts with a 14-day trial, no card required. You can cancel at any time during the trial.' },\n  { id: 'billing', question: 'How is usage billed?', answer: 'Usage is metered per project and billed monthly. You can set a spending limit and get alerts before you reach it.' },\n  { id: 'plans', question: 'Can I change plans later?', answer: 'Upgrade or downgrade whenever you like. Changes are prorated to the day on your next invoice.' },\n  { id: 'members', question: 'Can I invite people outside my organization?', answer: 'Yes. Guests only get access to the projects you share with them.' },\n  { id: 'data', question: 'Where is my data stored?', answer: 'You choose the region when you create a project. Data stays in that region unless you move it.' },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "marketing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/marketing/Faq/block.meta.ts"
+  }
+}

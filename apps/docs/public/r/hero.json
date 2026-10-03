@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero",
+  "type": "registry:block",
+  "title": "Hero",
+  "description": "Landing hero in centered or split layout: eyebrow badge, title, description, primary/secondary calls to action and a screenshot slot with a neutral placeholder.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/marketing/Hero/Hero.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/marketing/hero/Hero.tsx",
+      "content": "import type { ReactNode } from 'react';\nimport { Badge, cn } from '@gntik-ai/ui';\nimport { ArrowRight } from '@gntik-ai/icons';\nimport { ActionButton, type MarketingAction } from '../actions';\n\nexport interface HeroProps {\n  /** `centered` (copy over the media) or `split` (copy left, media right from `lg`). */\n  variant?: 'centered' | 'split';\n  /** Small label above the title. */\n  eyebrow?: ReactNode;\n  title?: ReactNode;\n  description?: ReactNode;\n  primaryAction?: MarketingAction | null;\n  secondaryAction?: MarketingAction | null;\n  /** Screenshot slot. Defaults to a neutral app-window placeholder; null hides it. */\n  media?: ReactNode;\n  /** Heading level of the title. */\n  headingLevel?: 'h1' | 'h2';\n  className?: string;\n}\n\n/** Neutral app-window placeholder for the screenshot slot (decorative). */\nexport function HeroScreenshotPlaceholder({ className }: { className?: string }) {\n  return (\n    <div aria-hidden className={cn('overflow-hidden rounded-xl border border-border bg-card shadow-sm', className)}>\n      <div className=\"flex h-9 items-center gap-1.5 border-b border-border bg-secondary/40 px-3\">\n        <span className=\"size-2.5 rounded-full bg-muted-foreground/30\" />\n        <span className=\"size-2.5 rounded-full bg-muted-foreground/30\" />\n        <span className=\"size-2.5 rounded-full bg-muted-foreground/30\" />\n      </div>\n      <div className=\"flex\">\n        <div className=\"hidden w-36 shrink-0 space-y-2 border-e border-border bg-secondary/30 p-3 sm:block\">\n          {[70, 55, 80, 60, 45].map((w, i) => (\n            <div key={i} className={cn('h-2 rounded-full', i === 0 ? 'bg-primary/60' : 'bg-muted-foreground/20')} style={{ width: `${w}%` }} />\n          ))}\n        </div>\n        <div className=\"min-w-0 flex-1 space-y-4 p-4\">\n          <div className=\"grid grid-cols-3 gap-3\">\n            {[0, 1, 2].map((i) => (\n              <div key={i} className=\"space-y-2 rounded-lg border border-border p-3\">\n                <div className=\"h-1.5 w-1/2 rounded-full bg-muted-foreground/25\" />\n                <div className=\"h-3 w-3/4 rounded-full bg-foreground/20\" />\n              </div>\n            ))}\n          </div>\n          <div className=\"flex h-28 items-end gap-1.5 rounded-lg border border-border p-3\">\n            {[40, 55, 35, 70, 60, 85, 65, 90, 75, 95, 80, 100].map((h, i) => (\n              <div key={i} className=\"flex-1 rounded-t-sm bg-primary/50\" style={{ height: `${h}%` }} />\n            ))}\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n\n/** Landing hero: eyebrow, title, description, two calls to action and a screenshot slot. */\nexport function Hero({\n  variant = 'centered',\n  eyebrow = 'New · Usage-based billing',\n  title = 'Ship your product faster, with less to maintain',\n  description = 'Projects, deployments and team access in one place. Start in minutes, scale without rewriting, and keep every change reviewable.',\n  primaryAction = { label: 'Get started', href: '#get-started', icon: ArrowRight },\n  secondaryAction = { label: 'Book a demo', href: '#demo' },\n  media,\n  headingLevel: Heading = 'h1',\n  className,\n}: HeroProps) {\n  const split = variant === 'split';\n  const slot = media === undefined ? <HeroScreenshotPlaceholder /> : media;\n  return (\n    <section\n      className={cn(\n        'px-4 py-16 sm:px-6 sm:py-24',\n        split ? 'grid items-center gap-12 lg:grid-cols-2 lg:gap-16' : 'flex flex-col items-center text-center',\n        className,\n      )}\n    >\n      <div className={cn('min-w-0', !split && 'flex max-w-3xl flex-col items-center')}>\n        {eyebrow && (\n          <Badge tone=\"primary\" size=\"lg\" shape=\"pill\" dot>\n            {eyebrow}\n          </Badge>\n        )}\n        <Heading className=\"mt-5 text-[36px] leading-[1.1] font-semibold tracking-tight text-balance text-foreground sm:text-[48px]\">\n          {title}\n        </Heading>\n        {description && <p className=\"mt-5 max-w-2xl text-[16px] leading-relaxed text-pretty text-muted-foreground sm:text-[17px]\">{description}</p>}\n        {(primaryAction || secondaryAction) && (\n          <div className={cn('mt-8 flex flex-wrap items-center gap-3', !split && 'justify-center')}>\n            {primaryAction && <ActionButton action={primaryAction} variant=\"primary\" />}\n            {secondaryAction && <ActionButton action={secondaryAction} variant=\"secondary\" />}\n          </div>\n        )}\n      </div>\n      {slot && <div className={cn('w-full min-w-0', !split && 'mt-14 max-w-5xl')}>{slot}</div>}\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/marketing/actions.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/marketing/actions.tsx",
+      "content": "import type { ComponentType } from 'react';\nimport { Button, buttonVariants, cn } from '@gntik-ai/ui';\n\ntype IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean }>;\n\n/** A call to action: a link when `href` is set, otherwise a button. */\nexport interface MarketingAction {\n  label: string;\n  href?: string;\n  onClick?: () => void;\n  /** Trailing icon (lucide component). */\n  icon?: IconComponent;\n}\n\nexport function ActionButton({\n  action,\n  variant,\n  size = 'lg',\n  className,\n}: {\n  action: MarketingAction;\n  variant: 'primary' | 'secondary' | 'ghost';\n  size?: 'md' | 'lg';\n  className?: string;\n}) {\n  const Trailing = action.icon;\n  if (action.href) {\n    return (\n      <a href={action.href} onClick={action.onClick} className={cn(buttonVariants({ variant, size }), className)}>\n        {action.label}\n        {Trailing && <Trailing size={size === 'lg' ? 17 : 15} aria-hidden />}\n      </a>\n    );\n  }\n  return (\n    <Button variant={variant} size={size} trailingIcon={Trailing} onClick={action.onClick} className={className}>\n      {action.label}\n    </Button>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "marketing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/marketing/Hero/block.meta.ts"
+  }
+}

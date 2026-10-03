@@ -4,6 +4,8 @@ import { useTheme, type ThemeMode } from '../../theme/ThemeProvider';
 import { cn } from '../../utils/cn';
 import { IconButton, type IconButtonProps } from '../Button';
 import { Toggle, ToggleGroup } from '../ToggleGroup';
+import { useI18n } from '../../i18n/I18nProvider';
+import type { MessageKey } from '../../i18n/messages/en';
 import { themeSwitcherVariants } from './theme-switcher.variants';
 
 type IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean; className?: string }>;
@@ -22,6 +24,14 @@ export const THEME_OPTIONS: ThemeOption[] = [
   { value: 'system', label: 'System', icon: Monitor },
 ];
 
+const THEME_KEYS: Record<ThemeMode, MessageKey> = { light: 'theme.light', dark: 'theme.dark', high_contrast: 'theme.highContrast', system: 'theme.system' };
+
+/** `options`, or the four built-in modes with labels from the I18nProvider catalog. */
+export function useThemeOptions(options?: ThemeOption[]): ThemeOption[] {
+  const { t } = useI18n();
+  return options ?? THEME_OPTIONS.map((o) => ({ ...o, label: t(THEME_KEYS[o.value]) }));
+}
+
 export interface ThemeSwitcherProps {
   className?: string;
   /** Modes offered (and their labels). Defaults to Light · Dark · High contrast · System. */
@@ -37,7 +47,10 @@ export interface ThemeSwitcherProps {
  * Segmented control (ToggleGroup) bound to `useTheme()`: arrow keys move between options,
  * Enter / Space selects. One option is always pressed.
  */
-export function ThemeSwitcher({ className, options = THEME_OPTIONS, showLabels = true, size = 'sm', label = 'Theme' }: ThemeSwitcherProps) {
+export function ThemeSwitcher({ className, options: optionsProp, showLabels = true, size = 'sm', label: labelProp }: ThemeSwitcherProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('theme.label');
+  const options = useThemeOptions(optionsProp);
   const { mode, setMode } = useTheme();
   const s = themeSwitcherVariants({ labels: showLabels });
   return (
@@ -68,13 +81,15 @@ export interface ThemeCycleButtonProps extends Omit<IconButtonProps, 'icon' | 'l
   getLabel?: (current: ThemeOption, next: ThemeOption) => string;
 }
 
-const defaultCycleLabel = (current: ThemeOption, next: ThemeOption) => `Theme: ${current.label}. Switch to ${next.label}`;
 
 /** Compact icon button for toolbars: shows the current mode's icon and cycles to the next on click. */
-export function ThemeCycleButton({ options = THEME_OPTIONS, getLabel = defaultCycleLabel, variant = 'secondary', ...props }: ThemeCycleButtonProps) {
+export function ThemeCycleButton({ options: optionsProp, getLabel, variant = 'secondary', ...props }: ThemeCycleButtonProps) {
+  const { t } = useI18n();
+  const options = useThemeOptions(optionsProp);
+  const label = getLabel ?? ((current: ThemeOption, next: ThemeOption) => t('theme.cycle', { current: current.label, next: next.label }));
   const { mode, setMode } = useTheme();
   const index = Math.max(0, options.findIndex((o) => o.value === mode));
   const current = options[index] ?? THEME_OPTIONS[1]!;
   const next = options[(index + 1) % options.length] ?? current;
-  return <IconButton icon={current.icon} label={getLabel(current, next)} variant={variant} onClick={() => setMode(next.value)} {...props} />;
+  return <IconButton icon={current.icon} label={label(current, next)} variant={variant} onClick={() => setMode(next.value)} {...props} />;
 }

@@ -42,7 +42,7 @@ beforeEach(() => {
 
 describe('CHART_COLORS', () => {
   it('keeps the brand series order', () => {
-    expect(CHART_COLORS).toEqual(['primary', 'violet', 'cyan', 'amber', 'rose']);
+    expect(CHART_COLORS).toEqual(['primary', 'violet', 'cyan', 'rose', 'amber']);
   });
 });
 

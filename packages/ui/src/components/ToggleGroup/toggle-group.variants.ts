@@ -28,20 +28,25 @@ export const toggleVariants = tv({
       joined: 'hover:bg-secondary/50',
     },
     size: {
+      /** Follows `data-density` (comfortable = md). */
+      auto: 'h-control px-4 text-[13px]',
       sm: 'h-8 px-3 text-[12.5px]',
       md: 'h-9 px-4 text-[13px]',
     },
     iconOnly: { true: 'px-0' },
   },
   compoundVariants: [
+    { variant: 'segmented', size: 'auto', class: 'h-control-sm px-control-sm text-[12.5px]' },
     { variant: 'segmented', size: 'md', class: 'h-8 px-3 text-[12.5px]' },
     { variant: 'segmented', size: 'sm', class: 'h-7 px-2.5 text-[12px]' },
+    { iconOnly: true, size: 'auto', class: 'size-control px-0' },
     { iconOnly: true, size: 'sm', class: 'size-8 px-0' },
     { iconOnly: true, size: 'md', class: 'size-9 px-0' },
+    { iconOnly: true, variant: 'segmented', size: 'auto', class: 'size-control-sm' },
     { iconOnly: true, variant: 'segmented', size: 'md', class: 'size-8' },
     { iconOnly: true, variant: 'segmented', size: 'sm', class: 'size-7' },
   ],
-  defaultVariants: { variant: 'standalone', size: 'md', iconOnly: false },
+  defaultVariants: { variant: 'standalone', size: 'auto', iconOnly: false },
 });
 
 export type ToggleGroupVariantProps = VariantProps<typeof toggleGroupVariants>;

@@ -20,22 +20,22 @@ export const navListVariants = tv({
       'data-starting-style:h-0 data-ending-style:h-0',
     ],
     item: [
-      'relative flex h-9 cursor-pointer items-center rounded-lg text-[13px] no-underline transition-colors motion-reduce:transition-none',
+      'relative flex h-control cursor-pointer items-center rounded-lg text-[13px] no-underline transition-colors motion-reduce:transition-none',
       'font-medium text-muted-foreground hover:bg-accent/45 hover:text-foreground',
       'aria-[current=page]:bg-accent aria-[current=page]:font-semibold aria-[current=page]:text-accent-foreground',
       'aria-disabled:pointer-events-none aria-disabled:opacity-50',
       focus,
     ],
-    indicator: 'absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r bg-primary',
+    indicator: 'absolute top-1.5 bottom-1.5 start-0 w-[3px] rounded-e bg-primary',
     icon: 'shrink-0',
-    label: 'min-w-0 flex-1 truncate text-left',
+    label: 'min-w-0 flex-1 truncate text-start',
     badge: 'inline-flex h-[18px] shrink-0 items-center rounded-full bg-secondary px-1.5 font-mono text-[10.5px] text-muted-foreground',
-    railBadge: 'absolute top-1.5 right-1.5 size-1.5 rounded-full bg-primary',
+    railBadge: 'absolute top-1.5 end-1.5 size-1.5 rounded-full bg-primary',
     parent: 'w-full font-semibold text-foreground',
     parentChevron: 'shrink-0 text-muted-foreground transition-transform duration-200 group-data-panel-closed:-rotate-90 motion-reduce:transition-none',
-    subList: 'm-0 mt-0.5 ml-[18px] flex list-none flex-col gap-0.5 border-l border-border p-0 pl-3',
+    subList: 'm-0 mt-0.5 ms-[18px] flex list-none flex-col gap-0.5 border-s border-border p-0 ps-3',
     subItem: [
-      'flex h-8 cursor-pointer items-center gap-2 rounded-md px-2.5 text-[12.5px] no-underline transition-colors motion-reduce:transition-none',
+      'flex h-control-sm cursor-pointer items-center gap-2 rounded-md px-2.5 text-[12.5px] no-underline transition-colors motion-reduce:transition-none',
       'font-medium text-muted-foreground hover:bg-accent/40 hover:text-foreground',
       'aria-[current=page]:bg-accent aria-[current=page]:font-semibold aria-[current=page]:text-accent-foreground',
       focus,
@@ -43,7 +43,7 @@ export const navListVariants = tv({
   },
   variants: {
     collapsed: {
-      true: { item: 'mx-auto w-9 justify-center' },
+      true: { item: 'mx-auto w-control justify-center' },
       false: { item: 'w-full gap-2.5 px-2.5' },
     },
     current: {

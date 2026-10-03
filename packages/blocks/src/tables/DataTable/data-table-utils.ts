@@ -123,3 +123,38 @@ export function formatCell(value: CellValue): ReactNode {
   if (typeof value === 'boolean') return value ? 'Yes' : 'No';
   return value;
 }
+
+/** Groups rows by a field key or by a function returning the group key. */
+export type DataTableGroupBy<T> = Extract<keyof T, string> | ((row: T) => string | number | null | undefined);
+
+/** One group of rows, in display order. */
+export interface DataTableGroup<T> {
+  /** Group key (`''` for rows without a value). */
+  key: string;
+  rows: T[];
+}
+
+/** Group key of a row (`''` when the value is null or undefined). */
+export function groupKeyOf<T>(row: T, groupBy: DataTableGroupBy<T>): string {
+  const value = typeof groupBy === 'function' ? groupBy(row) : (row as Record<string, unknown>)[groupBy];
+  return value == null ? '' : String(value);
+}
+
+/**
+ * Splits rows into groups, keeping the row order inside each group. Groups follow `order` (the
+ * keys' first appearance in it, e.g. the unsorted input) and then any key not seen there.
+ */
+export function groupRows<T>(rows: readonly T[], groupBy: DataTableGroupBy<T>, order: readonly T[] = rows): DataTableGroup<T>[] {
+  const groups = new Map<string, T[]>();
+  for (const row of order) {
+    const key = groupKeyOf(row, groupBy);
+    if (!groups.has(key)) groups.set(key, []);
+  }
+  for (const row of rows) {
+    const key = groupKeyOf(row, groupBy);
+    const list = groups.get(key);
+    if (list) list.push(row);
+    else groups.set(key, [row]);
+  }
+  return [...groups].filter(([, list]) => list.length > 0).map(([key, list]) => ({ key, rows: list }));
+}

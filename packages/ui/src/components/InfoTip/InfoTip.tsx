@@ -1,6 +1,7 @@
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { Info } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { Popover, PopoverContent, PopoverTitle, PopoverTrigger, type PopoverContentProps } from '../Popover';
 import { infoTipVariants, type InfoTipVariantProps } from './info-tip.variants';
@@ -42,11 +43,12 @@ export function InfoTip({
   contentClassName,
   ...rootProps
 }: InfoTipProps) {
+  const { t } = useI18n();
   const s = infoTipVariants({ size });
   return (
     <Popover {...rootProps}>
       <PopoverTrigger
-        aria-label={`More information about ${label}`}
+        aria-label={t('common.moreInfo', { label })}
         openOnHover={openOnHover}
         delay={delay}
         className={cn(s.trigger(), className)}

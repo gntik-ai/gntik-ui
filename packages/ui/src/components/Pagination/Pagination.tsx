@@ -1,6 +1,8 @@
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import type { Ref } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { RTL_FLIP } from '../../utils/rtl';
 import { getPageRange } from './pageRange';
 import { paginationVariants, type PaginationVariantProps } from './pagination.variants';
 
@@ -13,12 +15,16 @@ export interface PaginationLabels {
   page?: (page: number) => string;
 }
 
-const DEFAULT_LABELS: Required<PaginationLabels> = {
-  nav: 'Pagination',
-  previous: 'Previous page',
-  next: 'Next page',
-  page: (p) => `Page ${p}`,
-};
+/** Built-in labels from the I18nProvider catalog (English outside one); `labels` wins. */
+function useLabels(labels: PaginationLabels | undefined): Required<PaginationLabels> {
+  const { t } = useI18n();
+  return {
+    nav: labels?.nav ?? t('pagination.label'),
+    previous: labels?.previous ?? t('pagination.previous'),
+    next: labels?.next ?? t('pagination.next'),
+    page: labels?.page ?? ((page) => t('pagination.page', { page })),
+  };
+}
 
 interface ArrowsProps {
   page: number;
@@ -32,7 +38,7 @@ interface ArrowsProps {
 function PrevButton({ page, onPageChange, labels, className, iconSize }: Omit<ArrowsProps, 'pageCount'>) {
   return (
     <button type="button" className={className} aria-label={labels.previous} disabled={page <= 1} onClick={() => onPageChange(page - 1)}>
-      <ChevronLeft size={iconSize} aria-hidden />
+      <ChevronLeft size={iconSize} aria-hidden className={RTL_FLIP} />
     </button>
   );
 }
@@ -40,7 +46,7 @@ function PrevButton({ page, onPageChange, labels, className, iconSize }: Omit<Ar
 function NextButton({ page, pageCount, onPageChange, labels, className, iconSize }: ArrowsProps) {
   return (
     <button type="button" className={className} aria-label={labels.next} disabled={page >= pageCount} onClick={() => onPageChange(page + 1)}>
-      <ChevronRight size={iconSize} aria-hidden />
+      <ChevronRight size={iconSize} aria-hidden className={RTL_FLIP} />
     </button>
   );
 }
@@ -65,7 +71,7 @@ export interface PaginationProps extends PaginationVariantProps {
  */
 export function Pagination({ page, pageCount, onPageChange, siblingCount = 1, size, labels, className, ref }: PaginationProps) {
   const s = paginationVariants({ size });
-  const l = { ...DEFAULT_LABELS, ...labels };
+  const l = useLabels(labels);
   const go = (p: number) => {
     const next = Math.min(Math.max(1, p), Math.max(1, pageCount));
     if (next !== page) onPageChange(next);
@@ -112,9 +118,9 @@ export interface PaginationCompactProps extends PaginationVariantProps {
   /** Total number of rows. */
   total: number;
   onPageChange: (page: number) => void;
-  /** Locale for number formatting. */
+  /** Locale for number formatting; defaults to the I18nProvider's (English outside one). */
   locale?: string;
-  /** Word between the range and the total ("1–10 of 97"). */
+  /** Word between the range and the total ("1–10 of 97"); defaults to the catalog's. */
   ofLabel?: string;
   labels?: Pick<PaginationLabels, 'nav' | 'previous' | 'next'>;
   className?: string;
@@ -127,19 +133,20 @@ export function PaginationCompact({
   pageSize,
   total,
   onPageChange,
-  locale = 'en-US',
-  ofLabel = 'of',
+  locale,
+  ofLabel,
   size,
   labels,
   className,
   ref,
 }: PaginationCompactProps) {
   const s = paginationVariants({ size });
-  const l = { ...DEFAULT_LABELS, ...labels };
+  const l = useLabels(labels);
   const pageCount = Math.max(1, Math.ceil(total / Math.max(1, pageSize)));
   const from = total === 0 ? 0 : (page - 1) * pageSize + 1;
   const to = Math.min(page * pageSize, total);
-  const fmt = (n: number) => n.toLocaleString(locale);
+  const i18n = useI18n();
+  const fmt = (n: number) => n.toLocaleString(locale ?? i18n.locale);
   const go = (p: number) => onPageChange(Math.min(Math.max(1, p), pageCount));
   const iconSize = size === 'sm' ? 15 : 16;
   return (
@@ -148,7 +155,7 @@ export function PaginationCompact({
         <span className={s.summaryValue()}>
           {fmt(from)}–{fmt(to)}
         </span>{' '}
-        {ofLabel} <span className={s.summaryValue()}>{fmt(total)}</span>
+        {ofLabel ?? i18n.t('pagination.of')} <span className={s.summaryValue()}>{fmt(total)}</span>
       </p>
       <div className="flex items-center gap-1.5">
         <PrevButton page={page} onPageChange={go} labels={l} className={s.arrow()} iconSize={iconSize} />

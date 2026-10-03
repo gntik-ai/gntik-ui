@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sso-login",
+  "type": "registry:block",
+  "title": "Single sign-on",
+  "description": "Centred card SSO entry: work email lookup, then a \"Redirecting to your identity provider\" state with cancel and a password fallback.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/sso-login/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/sso-login/Page.tsx",
+      "content": "import { AuthHeader } from '@gntik-ai/blocks';\nimport { Building2 } from '@gntik-ai/icons';\nimport { Alert, AuthLayout, Button, Field, FieldDescription, FieldError, FieldLabel, Input, Link, Spinner, Stack, Text } from '@gntik-ai/ui';\nimport { useState, type ReactNode } from 'react';\nimport { ssoEmailPattern, ssoLoginSample } from './data';\n\nexport interface SsoLoginPageProps {\n  /**\n   * Looks up the domain's identity provider and starts the redirect. A rejection's message shows\n   * in the alert (e.g. \"No SSO connection for this domain\").\n   */\n  onSubmit: (email: string) => void | Promise<void>;\n  /** Leaves the redirecting state. */\n  onCancel: () => void;\n  defaultEmail: string;\n  /** Name shown while redirecting. */\n  providerName: string;\n  signInHref: string;\n  error: string | null;\n  logo: ReactNode;\n}\n\n/** Card SSO entry: work email → \"Redirecting to your identity provider\". */\nexport default function SsoLoginPage({\n  onSubmit,\n  onCancel,\n  defaultEmail = ssoLoginSample.defaultEmail,\n  providerName = ssoLoginSample.providerName,\n  signInHref = ssoLoginSample.signInHref,\n  error: errorProp = null,\n  logo,\n}: Partial<SsoLoginPageProps>) {\n  const [email, setEmail] = useState(defaultEmail);\n  const [submitted, setSubmitted] = useState(false);\n  const [loading, setLoading] = useState(false);\n  const [redirecting, setRedirecting] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n  const invalid = submitted && !ssoEmailPattern.test(email.trim());\n  const domain = email.trim().split('@')[1] ?? '';\n  const alert = errorProp ?? error;\n\n  const start = async () => {\n    setError(null);\n    setLoading(true);\n    try {\n      await onSubmit?.(email.trim());\n      setRedirecting(true);\n    } catch (e) {\n      setError(e instanceof Error ? e.message : 'Single sign-on could not start. Try again.');\n    }\n    setLoading(false);\n  };\n\n  const footer = (\n    <>\n      Not using SSO? <Link href={signInHref}>Sign in with a password</Link>\n    </>\n  );\n\n  return (\n    <AuthLayout fullScreen variant=\"card\" logo={logo} skipLinkLabel=\"Skip to single sign-on\" footer={footer}>\n      {redirecting ? (\n        <Stack gap={6}>\n          <AuthHeader\n            className=\"mb-0\"\n            eyebrow=\"Single sign-on\"\n            title={`Redirecting to ${providerName}`}\n            description={\n              <>\n                <span className=\"font-medium text-foreground\">{domain}</span> signs in through {providerName}. If nothing happens in a few seconds, try again.\n              </>\n            }\n          />\n          <Stack direction=\"row\" align=\"center\" gap={3} role=\"status\">\n            <Spinner size={18} />\n            <Text variant=\"supporting\" tone=\"muted\">\n              Waiting for {providerName}…\n            </Text>\n          </Stack>\n          <Stack gap={2}>\n            <Button variant=\"secondary\" size=\"lg\" className=\"w-full\" onClick={() => void start()} loading={loading}>\n              Try again\n            </Button>\n            <Button\n              variant=\"ghost\"\n              size=\"lg\"\n              className=\"w-full\"\n              onClick={() => {\n                setRedirecting(false);\n                onCancel?.();\n              }}\n            >\n              Use a different email\n            </Button>\n          </Stack>\n        </Stack>\n      ) : (\n        <>\n          <AuthHeader eyebrow=\"Single sign-on\" title=\"Sign in with SSO\" description=\"Enter your work email and we'll send you to your organization's identity provider.\" />\n          <form\n            noValidate\n            aria-label=\"Single sign-on\"\n            className=\"flex flex-col gap-4\"\n            onSubmit={(e) => {\n              e.preventDefault();\n              setSubmitted(true);\n              if (ssoEmailPattern.test(email.trim())) void start();\n            }}\n          >\n            {alert && <Alert tone=\"destructive\" description={alert} />}\n            <Field invalid={invalid}>\n              <FieldLabel>Work email</FieldLabel>\n              <Input type=\"email\" leadingIcon={Building2} autoComplete=\"email\" placeholder=\"name@company.com\" value={email} onValueChange={setEmail} required />\n              <FieldDescription>Your domain decides where you sign in.</FieldDescription>\n              <FieldError match={invalid}>Enter a valid work email.</FieldError>\n            </Field>\n            <Button type=\"submit\" size=\"lg\" loading={loading} className=\"mt-2 w-full\">\n              Continue with SSO\n            </Button>\n          </form>\n        </>\n      )}\n    </AuthLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/sso-login/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/sso-login/data.ts",
+      "content": "/** Sample copy for the single sign-on lookup. */\nexport const ssoLoginSample = {\n  defaultEmail: '',\n  signInHref: '#sign-in',\n  /** Identity provider shown while redirecting (resolved from the email domain in a real product). */\n  providerName: 'your identity provider',\n};\n\n/** Simple shape check before asking the server for the domain's identity provider. */\nexport const ssoEmailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Auth"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/sso-login/template.meta.ts"
+  }
+}

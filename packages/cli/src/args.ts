@@ -1,7 +1,7 @@
 import { parseArgs } from 'node:util';
 import { CliError } from './errors.js';
 
-export const COMMANDS = ['init', 'add', 'eject', 'list', 'search', 'docs'] as const;
+export const COMMANDS = ['init', 'add', 'eject', 'list', 'search', 'docs', 'upgrade'] as const;
 export type CommandName = (typeof COMMANDS)[number];
 
 export interface Flags {
@@ -17,6 +17,16 @@ export interface Flags {
   group?: string;
   brand?: string;
   limit?: number;
+  /** upgrade: version upgrading from / to. */
+  from?: string;
+  to?: string;
+  /** upgrade: --codemod / --skip-codemod ids (repeatable). */
+  codemods: string[];
+  skipCodemods: string[];
+  /** upgrade: list the transforms instead of running them. */
+  list: boolean;
+  /** upgrade: write changes (dry run otherwise). */
+  apply: boolean;
   help: boolean;
   version: boolean;
 }
@@ -40,6 +50,12 @@ const OPTIONS = {
   group: { type: 'string', short: 'g' },
   brand: { type: 'string' },
   limit: { type: 'string' },
+  from: { type: 'string' },
+  to: { type: 'string' },
+  codemod: { type: 'string', multiple: true },
+  'skip-codemod': { type: 'string', multiple: true },
+  list: { type: 'boolean' },
+  apply: { type: 'boolean' },
   help: { type: 'boolean', short: 'h' },
   version: { type: 'boolean', short: 'v' },
 } as const;
@@ -52,6 +68,7 @@ const COMMAND_FLAGS: Record<CommandName, string[]> = {
   list: ['kind', 'group'],
   search: ['kind', 'limit'],
   docs: [],
+  upgrade: ['dry-run', 'from', 'to', 'codemod', 'skip-codemod', 'list', 'apply'],
 };
 const GLOBAL_FLAGS = ['json', 'cwd', 'registry', 'help', 'version', 'yes'];
 
@@ -78,6 +95,7 @@ export function parseCliArgs(argv: string[]): ParsedArgs {
     limit = Number(values.limit);
     if (!Number.isInteger(limit) || limit < 1) throw new CliError('USAGE', '--limit must be a positive integer');
   }
+  if (values.apply && values['dry-run']) throw new CliError('USAGE', '--apply and --dry-run cannot be combined');
   return {
     command,
     positionals: command ? rest : positionals,
@@ -94,8 +112,19 @@ export function parseCliArgs(argv: string[]): ParsedArgs {
       group: values.group,
       brand: values.brand,
       limit,
+      from: values.from,
+      to: values.to,
+      codemods: (values.codemod ?? []).flatMap(splitList),
+      skipCodemods: (values['skip-codemod'] ?? []).flatMap(splitList),
+      list: values.list ?? false,
+      apply: values.apply ?? false,
       help: values.help ?? false,
       version: values.version ?? false,
     },
   };
+}
+
+/** `--codemod a,b --codemod c` → ['a', 'b', 'c']. */
+function splitList(value: string): string[] {
+  return value.split(',').map((v) => v.trim()).filter(Boolean);
 }

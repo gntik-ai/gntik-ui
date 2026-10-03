@@ -8,7 +8,7 @@ export const chatComposerStyles = {
     'data-[disabled]:opacity-60',
   ].join(' '),
   attachments: 'flex flex-wrap gap-1.5 px-3 pt-3',
-  chip: 'inline-flex h-7 max-w-60 items-center gap-1.5 rounded-md border border-border bg-secondary/50 pl-2 pr-1 text-[12px] text-foreground',
+  chip: 'inline-flex h-7 max-w-60 items-center gap-1.5 rounded-md border border-border bg-secondary/50 ps-2 pe-1 text-[12px] text-foreground',
   chipName: 'truncate font-medium',
   chipSize: 'shrink-0 font-mono text-[10.5px] text-muted-foreground',
   chipRemove: `grid size-5 shrink-0 place-items-center rounded text-muted-foreground hover:bg-foreground/10 hover:text-foreground ${focusRing}`,

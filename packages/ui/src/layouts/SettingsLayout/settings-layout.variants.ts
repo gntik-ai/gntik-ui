@@ -4,7 +4,7 @@ export const settingsLayoutVariants = tv({
   slots: {
     root: 'relative flex flex-col overflow-hidden bg-background font-sans text-foreground lg:flex-row',
     skipLink: 'focus:absolute',
-    sidebar: 'hidden w-60 shrink-0 flex-col gap-4 overflow-y-auto border-r border-border bg-background px-3 py-6 lg:flex',
+    sidebar: 'hidden w-60 shrink-0 flex-col gap-4 overflow-y-auto border-e border-border bg-background px-3 py-6 lg:flex',
     sidebarHeading: 'px-2.5 text-[13px] font-semibold tracking-tight text-foreground',
     compactNav: 'shrink-0 border-b border-border px-4 py-3 lg:hidden',
     main: 'flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto outline-none',

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /* ============================================================================
-   gntik-ui-mcp · index.ts — entrada CLI
+   gntik-ui-mcp · index.ts — CLI entry
    ----------------------------------------------------------------------------
-   stdio (defecto): para Claude Code local →  claude mcp add gntik-ui -- node …
-   http  (--http):  para Kubernetes        →  POST /mcp (+ /healthz /readyz)
-   IMPORTANTE: en stdio, stdout es del protocolo → logs SIEMPRE a stderr.
+   stdio (default): local Claude Code →  claude mcp add gntik-ui -- node …
+   http  (--http):  Kubernetes        →  POST /mcp (+ /healthz /readyz)
+   IMPORTANT: on stdio, stdout belongs to the protocol → logs ALWAYS to stderr.
    ============================================================================ */
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { resolveConfig } from './config.js';
@@ -23,8 +23,8 @@ async function main(): Promise<void> {
     source: resolved.source,
     gitHead: await gitHead(resolved.root),
   });
-  log(`catálogo: ${resolved.root} (${resolved.source})${index.gitHead ? ` · HEAD ${index.gitHead}` : ''}`);
-  log(`índice: ${index.stats.components} componentes · ${index.stats.snippets} snippets · ${index.stats.tokens} tokens`);
+  log(`design system: ${resolved.root} (${resolved.source})${index.gitHead ? ` · HEAD ${index.gitHead}` : ''}`);
+  log(`index: ${index.stats.components} catalog entries · ${index.stats.snippets} snippets · ${index.stats.tokens} tokens`);
 
   const ctx: ServerContext = {
     getIndex: () => index,
@@ -34,7 +34,7 @@ async function main(): Promise<void> {
         try {
           updated = (await pullClone(resolved.root, cfg)).updated;
         } catch (err) {
-          log('sync: git pull falló, re-indexo el estado actual —', (err as Error).message);
+          log('sync: git pull failed, re-indexing the current state —', (err as Error).message);
         }
       }
       index = loadIndex(resolved.root, {
@@ -45,7 +45,7 @@ async function main(): Promise<void> {
     },
   };
 
-  // auto-sync opcional (solo tiene sentido siguiendo un repo)
+  // optional auto-sync (only meaningful when following a repo)
   if (cfg.syncMinutes > 0) {
     const timer = setInterval(() => {
       ctx.sync().then(
@@ -54,13 +54,13 @@ async function main(): Promise<void> {
       );
     }, cfg.syncMinutes * 60_000);
     timer.unref();
-    log(`auto-sync cada ${cfg.syncMinutes} min`);
+    log(`auto-sync every ${cfg.syncMinutes} min`);
   }
 
   if (cfg.transport === 'http') {
     const httpServer = await startHttp(ctx, cfg.port);
     const shutdown = (signal: string) => {
-      log(`${signal} → cerrando`);
+      log(`${signal} → shutting down`);
       httpServer.close(() => process.exit(0));
       setTimeout(() => process.exit(0), 5_000).unref();
     };
@@ -70,11 +70,11 @@ async function main(): Promise<void> {
     const server = buildServer(ctx);
     const transport = new StdioServerTransport();
     await server.connect(transport);
-    log('stdio listo');
+    log('stdio ready');
   }
 }
 
 main().catch((err) => {
-  console.error('[gntik-ui-mcp] fallo al arrancar:', err instanceof Error ? err.message : err);
+  console.error('[gntik-ui-mcp] failed to start:', err instanceof Error ? err.message : err);
   process.exit(1);
 });

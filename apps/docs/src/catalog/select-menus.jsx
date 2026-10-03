@@ -286,3 +286,6 @@ function SelectMenusSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['select-menus'] = SelectMenusSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

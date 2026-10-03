@@ -32,7 +32,7 @@ export function NodePalette({ items, onAdd, titleAs: TitleTag = 'h3' }: NodePale
               onClick={() => onAdd(item)}
               aria-label={`Add ${item.title}`}
               title={item.description}
-              className="group flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-left hover:bg-secondary/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+              className="group flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-start hover:bg-secondary/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
             >
               <span className={cn('grid size-7 shrink-0 place-items-center rounded-md', KIND_CHIP[item.kind])}>
                 <KindGlyph kind={item.kind} size={14} />
@@ -135,7 +135,7 @@ export interface RunConsoleProps {
 export function RunConsole({ entries, onClear, titleAs: TitleTag = 'h3' }: RunConsoleProps) {
   return (
     <div className="flex h-full min-h-0 flex-col bg-card">
-      <div className="flex items-center justify-between border-b border-border pr-2">
+      <div className="flex items-center justify-between border-b border-border pe-2">
         <TitleTag className={cn(panelTitle, 'pb-2')}>Run console</TitleTag>
         <Button variant="ghost" size="sm" onClick={onClear} disabled={entries.length === 0} className="h-7">
           Clear

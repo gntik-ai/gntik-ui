@@ -1,4 +1,4 @@
-import { Button, cn } from '@gntik-ai/ui';
+import { Button, cn, useI18n } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 
 export interface StickyActionBarProps {
@@ -27,14 +27,20 @@ export function StickyActionBar({
   saving = false,
   onSave,
   onCancel,
-  dirtyMessage = 'You have unsaved changes',
-  cleanMessage = 'All changes saved',
-  saveLabel = 'Save changes',
-  cancelLabel = 'Discard',
+  dirtyMessage: dirtyMessageProp,
+  cleanMessage: cleanMessageProp,
+  saveLabel: saveLabelProp,
+  cancelLabel: cancelLabelProp,
   hideWhenClean = false,
-  'aria-label': ariaLabel = 'Save changes',
+  'aria-label': ariaLabelProp,
   className,
 }: StickyActionBarProps) {
+  const { t } = useI18n();
+  const dirtyMessage = dirtyMessageProp ?? t('actionBar.unsaved');
+  const cleanMessage = cleanMessageProp ?? t('actionBar.saved');
+  const saveLabel = saveLabelProp ?? t('actionBar.save');
+  const cancelLabel = cancelLabelProp ?? t('actionBar.discard');
+  const ariaLabel = ariaLabelProp ?? t('actionBar.save');
   if (hideWhenClean && !dirty && !saving) return null;
   return (
     <section
@@ -44,7 +50,7 @@ export function StickyActionBar({
       <div className="mx-auto flex max-w-5xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p role="status" className="flex items-center gap-2 text-[13px] text-foreground">
           <span aria-hidden className={cn('size-2 shrink-0 rounded-full', dirty ? 'bg-warning' : 'bg-success')} />
-          {saving ? 'Saving…' : dirty ? dirtyMessage : cleanMessage}
+          {saving ? t('actionBar.saving') : dirty ? dirtyMessage : cleanMessage}
         </p>
         <div className="flex items-center gap-2 sm:justify-end [&>*]:flex-1 sm:[&>*]:flex-none">
           <Button variant="ghost" disabled={!dirty || saving} onClick={onCancel}>

@@ -31,3 +31,36 @@ export const COST_RANGES: ChartCardRange[] = [
   { value: '30d', label: '30d', summary: { value: '$9,880', delta: { value: '+4.1%', direction: 'up', sentiment: 'negative' } } },
   { value: '90d', label: '90d', summary: { value: '$27,306', delta: { value: '−2.3%', direction: 'down', sentiment: 'positive' } } },
 ];
+
+export interface TrafficRow {
+  day: string;
+  '00h': number;
+  '03h': number;
+  '06h': number;
+  '09h': number;
+  '12h': number;
+  '15h': number;
+  '18h': number;
+  '21h': number;
+}
+
+/** Three-hour buckets of TRAFFIC_BY_RANGE, in display order. */
+export const TRAFFIC_BUCKETS = ['00h', '03h', '06h', '09h', '12h', '15h', '18h', '21h'] as const;
+
+const SHAPE = [0.18, 0.12, 0.3, 0.82, 1, 0.94, 0.7, 0.4];
+
+/** Requests (thousands) per weekday and three-hour bucket: a heatmap for a ChartCard. */
+export const TRAFFIC_BY_RANGE: Record<string, TrafficRow[]> = {
+  '7d': DAYS7.map((day, d) => {
+    const weekend = d >= 5 ? 0.45 : 1;
+    const row = { day } as TrafficRow;
+    TRAFFIC_BUCKETS.forEach((bucket, b) => {
+      row[bucket] = Math.round((SHAPE[b] ?? 0) * weekend * (42 + ((d * 7 + b * 3) % 9)));
+    });
+    return row;
+  }),
+};
+
+export const TRAFFIC_RANGES: ChartCardRange[] = [
+  { value: '7d', label: 'Last 7 days', summary: { value: '4.8M requests', delta: { value: '+6.2%', direction: 'up', sentiment: 'positive' } } },
+];

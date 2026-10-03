@@ -51,7 +51,7 @@ export function ProfileHeader({
               label="Change avatar"
               size="sm"
               variant="secondary"
-              className="absolute -right-1 -bottom-1 rounded-full"
+              className="absolute -end-1 -bottom-1 rounded-full"
               onClick={() => fileRef.current?.click()}
             />
             <input

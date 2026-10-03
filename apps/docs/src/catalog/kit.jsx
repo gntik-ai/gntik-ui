@@ -231,3 +231,6 @@ Object.assign(window, {
   Icon, LogoMark, Wordmark, MusematicMark, MARK_D, CodeBlock, Card, SectionHead, StatusTag, Grid, Mono,
   ScaleFrame, useClickOutside, useState, useEffect, useRef, useCallback,
 });
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

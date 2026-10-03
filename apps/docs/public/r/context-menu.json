@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-menu",
+  "type": "registry:ui",
+  "title": "ContextMenu",
+  "description": "Menu that opens at the pointer on right click or long press, and from the keyboard with Shift+F10 or the ContextMenu key on the focused area. Uses the Menu item parts (icons, shortcuts, destructive tone, checkbox/radio items, groups, submenus).",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/menu.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/ContextMenu/ContextMenu.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/context-menu/ContextMenu.tsx",
+      "content": "import { ContextMenu as BaseContextMenu } from '@base-ui/react/context-menu';\nimport type { KeyboardEvent, ReactNode } from 'react';\nimport { cn } from '../../utils/cn';\nimport { contextMenuVariants } from './context-menu.variants';\n\nconst s = contextMenuVariants();\n\n/**\n * Context menu state container (open, defaultOpen, onOpenChange, disabled). Renders no element.\n * Items, groups, separators and submenus are the Menu parts (MenuItem, MenuCheckboxItem,\n * MenuRadioGroup, MenuSeparator, MenuSub…), so a context menu and a dropdown look identical.\n */\nexport const ContextMenu = BaseContextMenu.Root;\n\nexport interface ContextMenuTriggerProps extends Omit<BaseContextMenu.Trigger.Props, 'className'> {\n  className?: string;\n  /**\n   * Accessible hint appended to the area's description so keyboard users know the menu exists.\n   * Pass `null` to omit it.\n   */\n  hint?: string | null;\n}\n\nfunction isMenuKey(event: KeyboardEvent<HTMLDivElement>) {\n  return event.key === 'ContextMenu' || (event.key === 'F10' && event.shiftKey);\n}\n\n/**\n * The area that opens the menu: right click, long press (touch) or, when focused,\n * Shift+F10 / the ContextMenu key. Focusable by default (`tabIndex={0}`).\n */\nexport function ContextMenuTrigger({ className, tabIndex = 0, hint = 'Press Shift+F10 for actions', onKeyDown, children, ...props }: ContextMenuTriggerProps) {\n  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {\n    onKeyDown?.(event as Parameters<NonNullable<typeof onKeyDown>>[0]);\n    if (event.defaultPrevented || !isMenuKey(event)) return;\n    // Browsers fire `contextmenu` for these keys inconsistently; open at the area's top-start corner.\n    event.preventDefault();\n    const el = event.currentTarget;\n    const rect = el.getBoundingClientRect();\n    const rtl = getComputedStyle(el).direction === 'rtl';\n    el.dispatchEvent(\n      new MouseEvent('contextmenu', {\n        bubbles: true,\n        cancelable: true,\n        clientX: rtl ? rect.right - 8 : rect.left + 8,\n        clientY: rect.top + 8,\n      }),\n    );\n  }\n  return (\n    <BaseContextMenu.Trigger className={cn(s.trigger(), className)} tabIndex={tabIndex} onKeyDown={handleKeyDown} {...props}>\n      {children}\n      {hint && <span className=\"sr-only\"> ({hint})</span>}\n    </BaseContextMenu.Trigger>\n  );\n}\n\nexport interface ContextMenuContentProps extends Omit<BaseContextMenu.Popup.Props, 'className'> {\n  className?: string;\n  /** Portal container; defaults to document.body. */\n  container?: BaseContextMenu.Portal.Props['container'];\n  children?: ReactNode;\n}\n\n/** The floating list (role `menu`) placed at the pointer; same look as MenuContent. */\nexport function ContextMenuContent({ className, container, children, ...props }: ContextMenuContentProps) {\n  return (\n    <BaseContextMenu.Portal container={container}>\n      <BaseContextMenu.Positioner className={s.positioner()}>\n        <BaseContextMenu.Popup className={cn(s.popup(), className)} {...props}>\n          {children}\n        </BaseContextMenu.Popup>\n      </BaseContextMenu.Positioner>\n    </BaseContextMenu.Portal>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/ContextMenu/context-menu.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/context-menu/context-menu.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\nimport { menuVariants } from '../menu/menu.variants';\n\nconst menu = menuVariants();\n\n/** Context menus reuse the Menu popup and item styles; only the trigger area is new. */\nexport const contextMenuVariants = tv({\n  slots: {\n    trigger: [\n      'rounded-lg select-none [-webkit-touch-callout:none]',\n      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n      'data-popup-open:bg-secondary/40',\n    ],\n    positioner: menu.positioner(),\n    popup: menu.popup(),\n  },\n});\n\nexport type ContextMenuVariantProps = VariantProps<typeof contextMenuVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/ContextMenu/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/context-menu/index.ts",
+      "content": "export {\n  ContextMenu,\n  ContextMenuTrigger,\n  ContextMenuContent,\n  type ContextMenuTriggerProps,\n  type ContextMenuContentProps,\n} from './ContextMenu';\nexport { contextMenuVariants, type ContextMenuVariantProps } from './context-menu.variants';\nexport { doc as contextMenuDoc } from './ContextMenu.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/ContextMenu/ContextMenu.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/context-menu/ContextMenu.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'ContextMenu',\n  group: 'Overlays',\n  status: 'beta',\n  description:\n    'Menu that opens at the pointer on right click or long press, and from the keyboard with Shift+F10 or the ContextMenu key on the focused area. Uses the Menu item parts (icons, shortcuts, destructive tone, checkbox/radio items, groups, submenus).',\n  primitive: '@base-ui/react/context-menu',\n  pattern: 'menu',\n  keyboard: [\n    ['Shift+F10 / ContextMenu', 'On the focused area: opens the menu'],\n    ['ArrowDown / ArrowUp', 'Moves between items (wraps)'],\n    ['Enter', 'Activates the highlighted item and closes the menu'],\n    ['ArrowRight', 'Opens the submenu of a submenu trigger; ArrowLeft closes it'],\n    ['Escape', 'Closes the menu'],\n  ],\n  tokens: ['popover', 'popover-foreground', 'border', 'secondary', 'muted-foreground', 'destructive', 'destructive-text', 'focus-ring'],\n};\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Overlays"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/components/ContextMenu/ContextMenu.doc.ts"
+  }
+}

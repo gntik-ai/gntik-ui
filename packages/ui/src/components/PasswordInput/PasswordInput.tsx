@@ -3,7 +3,8 @@ import { useId, useState } from 'react';
 import { cn } from '../../utils/cn';
 import { IconButton } from '../Button';
 import { Input, type InputProps } from '../Input';
-import { DEFAULT_STRENGTH_LABELS, scorePassword, type PasswordStrength } from './password-strength';
+import { scorePassword, type PasswordStrength } from './password-strength';
+import { useI18n } from '../../i18n/I18nProvider';
 import { PASSWORD_SEGMENT_FILL, passwordInputVariants } from './password-input.variants';
 
 export interface PasswordInputProps extends Omit<InputProps, 'type' | 'trailingAddon' | 'value' | 'defaultValue'> {
@@ -40,17 +41,22 @@ export function PasswordInput({
   onVisibleChange,
   showStrength = false,
   strength,
-  strengthLabels = DEFAULT_STRENGTH_LABELS,
-  strengthPrefix = 'Strength:',
-  showLabel = 'Show password',
-  hideLabel = 'Hide password',
-  size = 'md',
+  strengthLabels: strengthLabelsProp,
+  strengthPrefix: strengthPrefixProp,
+  showLabel: showLabelProp,
+  hideLabel: hideLabelProp,
+  size = 'auto',
   wrapperClassName,
   className,
   disabled,
   'aria-describedby': describedBy,
   ...props
 }: PasswordInputProps) {
+  const { t } = useI18n();
+  const strengthPrefix = strengthPrefixProp ?? t('password.strength');
+  const showLabel = showLabelProp ?? t('password.show');
+  const hideLabel = hideLabelProp ?? t('password.hide');
+  const strengthLabels = strengthLabelsProp ?? ([t('password.tooWeak'), t('password.weak'), t('password.fair'), t('password.good'), t('password.strong')] as const);
   const strengthId = useId();
   const [innerValue, setInnerValue] = useState(defaultValue ?? '');
   const [innerVisible, setInnerVisible] = useState(defaultVisible);
@@ -71,7 +77,7 @@ export function PasswordInput({
       {...(describedByIds ? { 'aria-describedby': describedByIds } : {})}
       size={size}
       disabled={disabled}
-      className={cn('pr-1', className)}
+      className={cn('pe-1', className)}
       type={visible ? 'text' : 'password'}
       autoComplete={props.autoComplete ?? (showStrength ? 'new-password' : 'current-password')}
       value={value}

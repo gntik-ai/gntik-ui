@@ -841,3 +841,6 @@ function GridListsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['grid-lists'] = GridListsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

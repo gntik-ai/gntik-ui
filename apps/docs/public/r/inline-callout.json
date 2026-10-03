@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "inline-callout",
+  "type": "registry:block",
+  "title": "Inline callout",
+  "description": "Alert-based in-content callout with a tone, title, body, action buttons or links and optional dismiss.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/feedback/InlineCallout/InlineCallout.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/feedback/inline-callout/InlineCallout.tsx",
+      "content": "import { Alert, Button, Link, type AlertTone } from '@gntik-ai/ui';\nimport type { LucideIcon } from '@gntik-ai/icons';\nimport { useState, type ReactNode } from 'react';\nimport type { FeedbackAction } from '../types';\n\nexport interface InlineCalloutProps {\n  tone?: AlertTone;\n  title?: ReactNode;\n  description?: ReactNode;\n  /** Buttons (or links when `href` is set) under the text; the first is the main one. */\n  actions?: FeedbackAction[];\n  /** Replaces the tone icon; `null` hides it. */\n  icon?: LucideIcon | null;\n  /** Shows a dismiss button; the callout hides itself unless `open` is controlled. */\n  dismissible?: boolean;\n  open?: boolean;\n  onDismiss?: () => void;\n  className?: string;\n}\n\nconst inlineCalloutDefaultActions: FeedbackAction[] = [\n  { label: 'Upgrade plan', variant: 'secondary' },\n  { label: 'View usage', href: '#usage' },\n];\n\n/** In-content callout built on Alert: tone, title, body and a row of actions. */\nexport function InlineCallout({\n  tone = 'warning',\n  title = 'You have used 92% of your build minutes',\n  description = 'Builds will queue once the monthly limit is reached. Upgrade the plan or reduce concurrent builds.',\n  actions = inlineCalloutDefaultActions,\n  icon,\n  dismissible = false,\n  open,\n  onDismiss,\n  className,\n}: InlineCalloutProps) {\n  const [dismissed, setDismissed] = useState(false);\n  if (!(open ?? !dismissed)) return null;\n  return (\n    <Alert\n      tone={tone}\n      title={title}\n      description={description}\n      icon={icon}\n      className={className}\n      onDismiss={\n        dismissible\n          ? () => {\n              setDismissed(true);\n              onDismiss?.();\n            }\n          : undefined\n      }\n      actions={\n        actions.length > 0 ? (\n          <>\n            {actions.map((a, i) =>\n              a.href ? (\n                <Link key={a.id ?? a.label} href={a.href} className=\"text-[12.5px] font-semibold\">\n                  {a.label}\n                </Link>\n              ) : (\n                <Button\n                  key={a.id ?? a.label}\n                  size=\"sm\"\n                  variant={a.variant ?? (i === 0 ? 'secondary' : 'ghost')}\n                  icon={a.icon}\n                  disabled={a.disabled}\n                  onClick={a.onClick}\n                >\n                  {a.label}\n                </Button>\n              ),\n            )}\n          </>\n        ) : undefined\n      }\n    />\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/feedback/types.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/feedback/types.ts",
+      "content": "import type { ButtonProps } from '@gntik-ai/ui';\nimport type { LucideIcon } from '@gntik-ai/icons';\n\n/** An action rendered as a kit Button, or as a Link when `href` is set. */\nexport interface FeedbackAction {\n  id?: string;\n  label: string;\n  href?: string;\n  icon?: LucideIcon;\n  variant?: ButtonProps['variant'];\n  disabled?: boolean;\n  onClick?: () => void;\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "feedback"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/feedback/InlineCallout/block.meta.ts"
+  }
+}

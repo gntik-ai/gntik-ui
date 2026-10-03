@@ -6,6 +6,7 @@ import { ChatAnnouncer } from './ChatAnnouncer';
 import { ChatMessage } from './ChatMessage';
 import ChatMessageRoles from './examples/ChatMessageRoles';
 import ChatMessageStreaming from './examples/ChatMessageStreaming';
+import ChatMessageTeam from './examples/ChatMessageTeam';
 
 describe('ChatMessage', () => {
   it('is an article named by its author, with a timestamp', () => {
@@ -85,12 +86,44 @@ describe('ChatMessage', () => {
     expect(screen.getByRole('article', { name: 'System' })).toHaveTextContent('Conversation started');
   });
 
+  it('participant turns: another person, start-aligned outlined bubble with name and initials', () => {
+    render(
+      <ChatMessage role="participant" author="Daniel Okafor" timestamp="10:02">
+        Can we roll back?
+      </ChatMessage>,
+    );
+    const article = screen.getByRole('article', { name: 'Daniel Okafor' });
+    expect(article).toHaveAttribute('data-role', 'participant');
+    expect(article).not.toHaveClass('flex-row-reverse');
+    expect(screen.getByText('DO')).toBeInTheDocument();
+    expect(screen.getByText('Can we roll back?')).toHaveClass('border-border', 'bg-card', 'rounded-ss-md');
+  });
+
+  it('participant defaults its author and keeps actions reachable with Tab, Enter activating them', async () => {
+    const user = userEvent.setup();
+    const onRetry = vi.fn();
+    render(
+      <ChatMessage role="participant" onRetry={onRetry}>
+        Ping
+      </ChatMessage>,
+    );
+    expect(screen.getByRole('article', { name: 'Participant' })).toBeInTheDocument();
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'Retry' })).toHaveFocus();
+    await user.keyboard('{Enter}');
+    expect(onRetry).toHaveBeenCalledOnce();
+  });
+
   it('examples have no axe violations', async () => {
     const { container, unmount } = render(<ChatMessageRoles />);
     await expectNoAxeViolations(container);
     unmount();
     const r = render(<ChatMessageStreaming />);
     await expectNoAxeViolations(r.container);
+    r.unmount();
+    const team = render(<ChatMessageTeam />);
+    expect(screen.getByRole('article', { name: 'Daniel Okafor' })).toHaveAttribute('data-role', 'participant');
+    await expectNoAxeViolations(team.container);
   });
 });
 

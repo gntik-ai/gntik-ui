@@ -1,4 +1,5 @@
 import { useEffect, useState, type HTMLAttributes, type Ref } from 'react';
+import { useOptionalI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { SimpleTooltip } from '../Tooltip';
 import { formatRelative, refreshInterval, toDate, type DateInput } from './format';
@@ -11,7 +12,7 @@ export interface TimestampProps extends Omit<HTMLAttributes<HTMLTimeElement>, 'c
   value: DateInput;
   /** `relative` ("3 minutes ago", default) or `absolute` (Intl date/time). */
   format?: 'relative' | 'absolute';
-  /** BCP 47 locale for Intl; defaults to the runtime locale. */
+  /** BCP 47 locale for Intl; defaults to the I18nProvider's, else the runtime locale. */
   locale?: string;
   /** Relative wording style. */
   relativeStyle?: Intl.RelativeTimeFormatStyle;
@@ -45,7 +46,7 @@ const FULL: Intl.DateTimeFormatOptions = { dateStyle: 'full', timeStyle: 'long' 
 export function Timestamp({
   value,
   format = 'relative',
-  locale,
+  locale: localeProp,
   relativeStyle = 'long',
   dateOptions = ABSOLUTE,
   tooltipOptions = FULL,
@@ -58,6 +59,8 @@ export function Timestamp({
   className,
   ...props
 }: TimestampProps) {
+  const providerLocale = useOptionalI18n()?.locale;
+  const locale = localeProp ?? providerLocale;
   const date = toDate(value);
   const [now, setNow] = useState(() => initialNow ?? Date.now());
   const time = date?.getTime();

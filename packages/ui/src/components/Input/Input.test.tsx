@@ -42,7 +42,7 @@ describe('Input', () => {
     const input = screen.getByRole('textbox', { name: 'Email' });
     expect(input).toHaveAttribute('aria-invalid', 'true');
     expect(input.parentElement).toHaveAttribute('data-invalid');
-    expect(input.parentElement).toHaveClass('max-w-xs', 'h-9');
+    expect(input.parentElement).toHaveClass('max-w-xs', 'h-control');
   });
 
   it('sets data-invalid from an invalid Field and stays out of tab order when disabled', async () => {

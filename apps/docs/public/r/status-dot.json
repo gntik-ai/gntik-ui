@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-dot",
+  "type": "registry:ui",
+  "title": "StatusDot",
+  "description": "State dot with an optional label and a soft pulse for live states (disabled under reduced motion). Tones: success, warning, destructive, info, neutral, primary — generic, with no product-specific states. Without a label it needs an aria-label (exposed as an image) so colour is never the only signal.",
+  "author": "gntik-ai",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/StatusDot/StatusDot.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/status-dot/StatusDot.tsx",
+      "content": "import type { HTMLAttributes, ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { statusDotVariants, type StatusDotVariantProps } from './status-dot.variants';\n\nexport interface StatusDotProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'className' | 'children'>, StatusDotVariantProps {\n  className?: string;\n  ref?: Ref<HTMLSpanElement>;\n  /** Visible text next to the dot. Without it, pass `aria-label` (or keep the dot decorative). */\n  label?: ReactNode;\n  /** Soft ping animation for live / in-progress states. Off under prefers-reduced-motion. */\n  pulse?: boolean;\n}\n\n/**\n * Small state indicator: a coloured dot with an optional label. Colour is never the only\n * signal — give it a `label` or an `aria-label` (then it is exposed as role=\"img\").\n */\nexport function StatusDot({ tone, size, label, pulse = false, className, ...props }: StatusDotProps) {\n  const s = statusDotVariants({ tone, size });\n  const named = label == null && props['aria-label'] != null;\n  return (\n    <span\n      role={named ? 'img' : undefined}\n      aria-hidden={label == null && !named ? true : undefined}\n      data-tone={tone ?? 'neutral'}\n      className={cn(s.root(), className)}\n      {...props}\n    >\n      <span aria-hidden className={s.dot()}>\n        {pulse && <span data-pulse className={s.ping()} />}\n      </span>\n      {label != null && <span className={s.label()}>{label}</span>}\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/StatusDot/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/status-dot/index.ts",
+      "content": "export { StatusDot, type StatusDotProps } from './StatusDot';\nexport { statusDotVariants, type StatusDotVariantProps, type StatusDotTone } from './status-dot.variants';\nexport { doc as statusDotDoc } from './StatusDot.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/StatusDot/status-dot.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/status-dot/status-dot.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const statusDotVariants = tv({\n  slots: {\n    root: 'inline-flex items-center gap-2 align-middle',\n    dot: 'relative inline-flex shrink-0 rounded-full',\n    ping: 'absolute inset-0 animate-ping rounded-full opacity-60 motion-reduce:hidden motion-reduce:animate-none',\n    label: 'text-[12.5px] leading-5 font-medium text-foreground',\n  },\n  variants: {\n    tone: {\n      success: { dot: 'bg-success', ping: 'bg-success' },\n      warning: { dot: 'bg-warning', ping: 'bg-warning' },\n      destructive: { dot: 'bg-destructive', ping: 'bg-destructive' },\n      info: { dot: 'bg-info', ping: 'bg-info' },\n      neutral: { dot: 'bg-muted-foreground', ping: 'bg-muted-foreground' },\n      primary: { dot: 'bg-primary', ping: 'bg-primary' },\n    },\n    size: {\n      sm: { dot: 'size-1.5', label: 'text-[12px]' },\n      md: { dot: 'size-2' },\n      lg: { dot: 'size-2.5', label: 'text-[13px]' },\n    },\n  },\n  defaultVariants: { tone: 'neutral', size: 'md' },\n});\n\nexport type StatusDotVariantProps = VariantProps<typeof statusDotVariants>;\nexport type StatusDotTone = NonNullable<StatusDotVariantProps['tone']>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/StatusDot/StatusDot.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/status-dot/StatusDot.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'StatusDot',\n  group: 'Display',\n  status: 'beta',\n  description: 'State dot with an optional label and a soft pulse for live states (disabled under reduced motion). Tones: success, warning, destructive, info, neutral, primary — generic, with no product-specific states. Without a label it needs an aria-label (exposed as an image) so colour is never the only signal.',\n  pattern: 'img (when unlabelled)',\n  tokens: ['success', 'warning', 'destructive', 'info', 'muted-foreground', 'primary', 'foreground'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Display"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "beta",
+    "source": "packages/ui/src/components/StatusDot/StatusDot.doc.ts"
+  }
+}

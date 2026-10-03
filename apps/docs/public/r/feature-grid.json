@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feature-grid",
+  "type": "registry:block",
+  "title": "Feature grid",
+  "description": "Features section: eyebrow, title and description over a responsive grid of icon tile, title and description.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/marketing/FeatureGrid/FeatureGrid.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/marketing/feature-grid/FeatureGrid.tsx",
+      "content": "import { useId, type ReactNode } from 'react';\nimport { cn } from '@gntik-ai/ui';\nimport type { LucideIcon } from '@gntik-ai/icons';\nimport { sampleFeatures } from './fixtures';\n\nexport interface Feature {\n  icon: LucideIcon;\n  title: string;\n  description: ReactNode;\n}\n\nexport interface FeatureGridProps {\n  features?: Feature[];\n  eyebrow?: ReactNode;\n  title?: ReactNode;\n  description?: ReactNode;\n  /** Columns from `lg` (one column on phones, two on tablets). */\n  columns?: 2 | 3 | 4;\n  /** Heading level of the section title; feature titles use the next level. */\n  headingLevel?: 'h2' | 'h3';\n  className?: string;\n}\n\nconst COLS = { 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' } as const;\n\n/** Features section: a heading block over a grid of icon + title + description. */\nexport function FeatureGrid({\n  features = sampleFeatures,\n  eyebrow = 'Everything included',\n  title = 'All the building blocks, none of the glue code',\n  description = 'The essentials every product needs, designed to work together from day one.',\n  columns = 3,\n  headingLevel: Heading = 'h2',\n  className,\n}: FeatureGridProps) {\n  const titleId = useId();\n  const ItemHeading = Heading === 'h2' ? 'h3' : 'h4';\n  return (\n    <section aria-labelledby={title ? titleId : undefined} className={cn('px-4 py-16 sm:px-6 sm:py-20', className)}>\n      {(eyebrow || title || description) && (\n        <div className=\"mx-auto max-w-2xl text-center\">\n          {eyebrow && <p className=\"font-mono text-[12px] font-semibold tracking-wide text-primary-text uppercase\">{eyebrow}</p>}\n          {title && (\n            <Heading id={titleId} className=\"mt-2 text-[28px] leading-tight font-semibold tracking-tight text-balance text-foreground sm:text-[34px]\">\n              {title}\n            </Heading>\n          )}\n          {description && <p className=\"mt-4 text-[15.5px] leading-relaxed text-pretty text-muted-foreground\">{description}</p>}\n        </div>\n      )}\n      <ul className={cn('mx-auto mt-12 grid max-w-6xl gap-x-8 gap-y-10 sm:grid-cols-2', COLS[columns])}>\n        {features.map((f) => {\n          const Glyph = f.icon;\n          return (\n            <li key={f.title} className=\"flex flex-col\">\n              <span aria-hidden className=\"inline-flex size-10 items-center justify-center rounded-lg bg-primary/14 text-primary-chip-text\">\n                <Glyph size={19} />\n              </span>\n              <ItemHeading className=\"mt-4 text-[15px] font-semibold tracking-tight text-foreground\">{f.title}</ItemHeading>\n              <p className=\"mt-1.5 text-[13.5px] leading-relaxed text-muted-foreground\">{f.description}</p>\n            </li>\n          );\n        })}\n      </ul>\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/marketing/FeatureGrid/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/marketing/feature-grid/fixtures.ts",
+      "content": "import { Gauge, Globe, Layers, Lock, Users, Zap } from '@gntik-ai/icons';\nimport type { Feature } from './FeatureGrid';\n\n/** Sample product-agnostic features. */\nexport const sampleFeatures: Feature[] = [\n  { icon: Zap, title: 'Instant deployments', description: 'Push a change and get a preview URL in seconds. Promote it to production with one click.' },\n  { icon: Users, title: 'Team access', description: 'Invite members, assign roles per project and review every permission change in the audit log.' },\n  { icon: Gauge, title: 'Usage you can read', description: 'Meters for every quota, alerts before the cap and a forecast for the end of the cycle.' },\n  { icon: Lock, title: 'Secure by default', description: 'SSO, scoped API keys and encrypted secrets, with no extra configuration to get right.' },\n  { icon: Globe, title: 'Multi-region', description: 'Run close to your users and keep data in the region you choose.' },\n  { icon: Layers, title: 'Composable', description: 'Start from a template, extend it with your own components and keep one design system.' },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "marketing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/marketing/FeatureGrid/block.meta.ts"
+  }
+}

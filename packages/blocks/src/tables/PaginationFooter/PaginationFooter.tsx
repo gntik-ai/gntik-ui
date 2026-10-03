@@ -1,4 +1,4 @@
-import { cn, Pagination, SimpleSelect } from '@gntik-ai/ui';
+import { cn, Pagination, SimpleSelect, useI18n } from '@gntik-ai/ui';
 import { useState } from 'react';
 
 export interface PaginationFooterProps {
@@ -29,10 +29,13 @@ export function PaginationFooter({
   defaultPageSize = 10,
   onPageSizeChange,
   pageSizeOptions = [10, 25, 50, 100],
-  noun = 'Rows',
-  locale = 'en-US',
+  noun: nounProp,
+  locale: localeProp,
   className,
 }: PaginationFooterProps) {
+  const { t, locale: providerLocale } = useI18n();
+  const locale = localeProp ?? providerLocale;
+  const noun = nounProp ?? t('table.rows');
   const [innerPage, setInnerPage] = useState(defaultPage);
   const [innerSize, setInnerSize] = useState(defaultPageSize);
   const pageSize = sizeProp ?? innerSize;
@@ -60,10 +63,10 @@ export function PaginationFooter({
     <div className={cn('flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between', className)}>
       <div className="flex items-center gap-2.5">
         <span className="text-[12.5px] text-muted-foreground" aria-hidden>
-          Rows per page
+          {t('table.rowsPerPage')}
         </span>
         <SimpleSelect
-          aria-label="Rows per page"
+          aria-label={t('table.rowsPerPage')}
           size="sm"
           className="w-[76px] font-mono"
           value={String(pageSize)}
@@ -76,9 +79,9 @@ export function PaginationFooter({
           <span className="font-mono text-foreground">
             {fmt(from)}–{fmt(to)}
           </span>{' '}
-          of <span className="font-mono text-foreground">{fmt(total)}</span>
+          {t('pagination.of')} <span className="font-mono text-foreground">{fmt(total)}</span>
         </p>
-        <Pagination page={page} pageCount={pageCount} onPageChange={goTo} size="sm" labels={{ nav: `${noun} pagination` }} />
+        <Pagination page={page} pageCount={pageCount} onPageChange={goTo} size="sm" labels={{ nav: t('table.pagination', { noun }) }} />
       </div>
     </div>
   );

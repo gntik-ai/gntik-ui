@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-group",
+  "type": "registry:ui",
+  "title": "ToggleGroup",
+  "description": "Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined looks, two sizes, icon-only items.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/ToggleGroup/ToggleGroup.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/toggle-group/ToggleGroup.tsx",
+      "content": "import { Toggle as BaseToggle } from '@base-ui/react/toggle';\nimport { ToggleGroup as BaseToggleGroup } from '@base-ui/react/toggle-group';\nimport { createContext, useContext, type ReactNode, type Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport {\n  toggleGroupVariants,\n  toggleVariants,\n  type ToggleGroupVariantProps,\n  type ToggleVariantProps,\n} from './toggle-group.variants';\n\ntype GroupStyle = { variant: 'segmented' | 'joined'; size: 'auto' | 'sm' | 'md' };\nconst GroupStyleContext = createContext<GroupStyle | null>(null);\n\nexport interface ToggleProps extends Omit<BaseToggle.Props, 'className'>, Omit<ToggleVariantProps, 'variant'> {\n  className?: string;\n  ref?: Ref<HTMLButtonElement>;\n  children?: ReactNode;\n}\n\n/**\n * Two-state (pressed) button. Standalone: `pressed` / `defaultPressed` / `onPressedChange`.\n * Inside a ToggleGroup: give it a `value`; it inherits the group's look. Icon-only toggles\n * need `aria-label` (set `iconOnly`).\n */\nexport function Toggle({ size, iconOnly, className, type = 'button', ...props }: ToggleProps) {\n  const group = useContext(GroupStyleContext);\n  return (\n    <BaseToggle\n      type={type}\n      className={cn(\n        toggleVariants({ variant: group?.variant ?? 'standalone', size: size ?? group?.size ?? 'auto', iconOnly }),\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport interface ToggleGroupProps\n  extends Omit<BaseToggleGroup.Props<string>, 'className'>,\n    ToggleGroupVariantProps {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** Item size, passed down to every Toggle. `auto` (default) follows the density. */\n  size?: 'auto' | 'sm' | 'md';\n}\n\n/**\n * A set of Toggles with shared state: segmented control (`multiple={false}`, the default)\n * or multi-select toolbar (`multiple`). Arrow keys move focus; Space/Enter toggles.\n * Give it an `aria-label`.\n */\nexport function ToggleGroup({ variant = 'segmented', size = 'auto', className, ...props }: ToggleGroupProps) {\n  return (\n    <GroupStyleContext.Provider value={{ variant: variant ?? 'segmented', size }}>\n      <BaseToggleGroup className={cn(toggleGroupVariants({ variant }), className)} {...props} />\n    </GroupStyleContext.Provider>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/ToggleGroup/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/toggle-group/index.ts",
+      "content": "export { Toggle, ToggleGroup, type ToggleProps, type ToggleGroupProps } from './ToggleGroup';\nexport { toggleGroupVariants, toggleVariants } from './toggle-group.variants';\nexport { doc as toggleGroupDoc } from './ToggleGroup.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/ToggleGroup/toggle-group.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/toggle-group/toggle-group.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const toggleGroupVariants = tv({\n  base: 'inline-flex data-[orientation=vertical]:flex-col data-disabled:opacity-50',\n  variants: {\n    variant: {\n      /** Pill container; the pressed item lifts onto bg-secondary. */\n      segmented: 'items-center gap-0.5 rounded-lg border border-border bg-card p-0.5 shadow-sm',\n      /** Buttons sharing borders; rounding only on the container. */\n      joined: 'overflow-hidden rounded-lg border border-border bg-card shadow-sm divide-x divide-border data-[orientation=vertical]:divide-x-0 data-[orientation=vertical]:divide-y',\n    },\n  },\n  defaultVariants: { variant: 'segmented' },\n});\n\nexport const toggleVariants = tv({\n  base: [\n    'inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap text-muted-foreground transition-colors select-none',\n    'hover:text-foreground data-pressed:bg-secondary data-pressed:text-foreground',\n    'focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n    'data-disabled:cursor-not-allowed data-disabled:opacity-50 data-disabled:hover:text-muted-foreground',\n  ],\n  variants: {\n    variant: {\n      /** Standalone pressed button. */\n      standalone: 'rounded-lg border border-border bg-card shadow-sm hover:bg-secondary/50 data-pressed:border-primary/40',\n      segmented: 'rounded-md data-pressed:shadow-sm',\n      joined: 'hover:bg-secondary/50',\n    },\n    size: {\n      /** Follows `data-density` (comfortable = md). */\n      auto: 'h-control px-4 text-[13px]',\n      sm: 'h-8 px-3 text-[12.5px]',\n      md: 'h-9 px-4 text-[13px]',\n    },\n    iconOnly: { true: 'px-0' },\n  },\n  compoundVariants: [\n    { variant: 'segmented', size: 'auto', class: 'h-control-sm px-control-sm text-[12.5px]' },\n    { variant: 'segmented', size: 'md', class: 'h-8 px-3 text-[12.5px]' },\n    { variant: 'segmented', size: 'sm', class: 'h-7 px-2.5 text-[12px]' },\n    { iconOnly: true, size: 'auto', class: 'size-control px-0' },\n    { iconOnly: true, size: 'sm', class: 'size-8 px-0' },\n    { iconOnly: true, size: 'md', class: 'size-9 px-0' },\n    { iconOnly: true, variant: 'segmented', size: 'auto', class: 'size-control-sm' },\n    { iconOnly: true, variant: 'segmented', size: 'md', class: 'size-8' },\n    { iconOnly: true, variant: 'segmented', size: 'sm', class: 'size-7' },\n  ],\n  defaultVariants: { variant: 'standalone', size: 'auto', iconOnly: false },\n});\n\nexport type ToggleGroupVariantProps = VariantProps<typeof toggleGroupVariants>;\nexport type ToggleVariantProps = VariantProps<typeof toggleVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/ToggleGroup/ToggleGroup.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/toggle-group/ToggleGroup.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'ToggleGroup',\n  group: 'Actions',\n  status: 'stable',\n  description:\n    'Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined looks, two sizes, icon-only items.',\n  primitive: '@base-ui/react/toggle-group',\n  pattern: 'toolbar-style group of toggle buttons (aria-pressed)',\n  keyboard: [\n    ['ArrowRight / ArrowLeft', 'Moves focus to the next / previous item (wraps)'],\n    ['Home / End', 'Moves focus to the first / last item'],\n    ['Space / Enter', 'Toggles the focused item'],\n    ['Tab', 'Moves focus into and out of the group (one tab stop)'],\n  ],\n  tokens: ['card', 'border', 'secondary', 'foreground', 'muted-foreground', 'primary', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Actions"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/ToggleGroup/ToggleGroup.doc.ts"
+  }
+}

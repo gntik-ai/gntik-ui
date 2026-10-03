@@ -19,7 +19,8 @@ import {
   MenuTrigger,
   menuVariants,
 } from '../Menu';
-import { THEME_OPTIONS, type ThemeOption } from '../ThemeSwitcher';
+import { useThemeOptions, type ThemeOption } from '../ThemeSwitcher/ThemeSwitcher';
+import { useI18n } from '../../i18n/I18nProvider';
 import { userMenuVariants } from './user-menu.variants';
 
 type IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean; className?: string }>;
@@ -103,20 +104,24 @@ export function UserMenu({
   user,
   items = [],
   showTheme = true,
-  themeOptions = THEME_OPTIONS,
-  themeLabel = 'Theme',
+  themeOptions: themeOptionsProp,
+  themeLabel: themeLabelProp,
   onSignOut,
-  signOutLabel = 'Sign out',
+  signOutLabel: signOutLabelProp,
   showName = false,
   triggerLabel,
   children,
 }: UserMenuProps) {
+  const { t } = useI18n();
+  const themeLabel = themeLabelProp ?? t('theme.label');
+  const signOutLabel = signOutLabelProp ?? t('userMenu.signOut');
+  const themeOptions = useThemeOptions(themeOptionsProp);
   const { mode, setMode } = useTheme();
   const s = userMenuVariants({ showName });
   const hasEnd = showTheme || children || onSignOut;
   return (
     <Menu>
-      <MenuTrigger aria-label={triggerLabel ?? `Account menu for ${user.name}`} className={cn(s.trigger(), className)}>
+      <MenuTrigger aria-label={triggerLabel ?? t('userMenu.label', { name: user.name })} className={cn(s.trigger(), className)}>
         <Avatar src={user.avatarSrc} initials={getInitials(user.name)} size="sm" shape="rounded" />
         {showName && <span className={s.triggerName()}>{user.name}</span>}
       </MenuTrigger>

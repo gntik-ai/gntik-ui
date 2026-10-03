@@ -1,5 +1,6 @@
 import type { HTMLAttributes, ReactNode, Ref } from 'react';
 import { cn } from '../../utils/cn';
+import { useI18n } from '../../i18n/I18nProvider';
 import { pageVariants, type PageVariantProps } from './page.variants';
 
 export interface PageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title'> {
@@ -32,11 +33,13 @@ export function Page({
   description,
   actions,
   actionBar,
-  actionBarLabel = 'Page actions',
+  actionBarLabel: actionBarLabelProp,
   className,
   children,
   ...props
 }: PageProps) {
+  const { t } = useI18n();
+  const actionBarLabel = actionBarLabelProp ?? t('nav.pageActions');
   const s = pageVariants({ width });
   const simpleHeader = title || description || actions;
   return (

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "section",
+  "type": "registry:ui",
+  "title": "Section",
+  "description": "A painted content region (<section>, named by its title). Variants plain / card / muted, padding none–lg, optional dividers between children, and a header slot with title, description and actions.",
+  "author": "gntik-ai",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Section/Section.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/section/Section.tsx",
+      "content": "import { useId, type HTMLAttributes, type ReactNode, type Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { sectionVariants, type SectionVariantProps } from './section.variants';\n\nexport interface SectionProps extends Omit<HTMLAttributes<HTMLElement>, 'className' | 'title'> {\n  className?: string;\n  ref?: Ref<HTMLElement>;\n  /** `plain` (no surface), `card` (card surface + flat shadow) or `muted` (secondary well). */\n  variant?: SectionVariantProps['variant'];\n  /** Inner padding: none, sm, md or lg (lg grows on wider screens). */\n  padding?: SectionVariantProps['padding'];\n  /** Draws a rule under the header and between the children. */\n  divided?: boolean;\n  /** Header title; also names the section landmark (aria-labelledby). */\n  title?: ReactNode;\n  /** Supporting line under the title. */\n  description?: ReactNode;\n  /** Right-hand header slot (buttons, menu). */\n  actions?: ReactNode;\n  /** Heading level of the title that fits the page outline. */\n  headingLevel?: 'h2' | 'h3' | 'h4';\n  /** Class for the body wrapper around the children. */\n  bodyClassName?: string;\n}\n\n/**\n * A painted content region (`<section>`): optional header (title, description, actions), padding and\n * dividers between its children.\n */\nexport function Section({\n  variant,\n  padding,\n  divided,\n  title,\n  description,\n  actions,\n  headingLevel: Heading = 'h2',\n  className,\n  bodyClassName,\n  children,\n  ...props\n}: SectionProps) {\n  const id = useId();\n  const titleId = `${id}-title`;\n  const descId = `${id}-desc`;\n  const s = sectionVariants({ variant, padding, divided });\n  const hasHeader = title != null || description != null || actions != null;\n  return (\n    <section\n      aria-labelledby={title != null ? titleId : undefined}\n      aria-describedby={description != null ? descId : undefined}\n      className={cn(s.root(), className)}\n      {...props}\n    >\n      {hasHeader && (\n        <div className={s.header()}>\n          {title != null && <Heading id={titleId} className={s.title()}>{title}</Heading>}\n          {description != null && <p id={descId} className={s.description()}>{description}</p>}\n          {actions != null && <div className={s.actions()}>{actions}</div>}\n        </div>\n      )}\n      <div className={cn(s.body(), bodyClassName)}>{children}</div>\n    </section>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Section/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/section/index.ts",
+      "content": "export { Section, type SectionProps } from './Section';\nexport { sectionVariants, type SectionVariantProps } from './section.variants';\nexport { doc as sectionDoc } from './Section.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Section/section.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/section/section.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const sectionVariants = tv({\n  slots: {\n    root: 'min-w-0 text-foreground',\n    header: 'grid grid-cols-[1fr_auto] items-start gap-x-4',\n    title: 'col-start-1 text-[15px] font-semibold tracking-tight text-foreground',\n    description: 'col-start-1 mt-0.5 text-[13px] leading-snug text-muted-foreground',\n    actions: 'col-start-2 row-span-2 row-start-1 flex shrink-0 items-center gap-2 self-start',\n    body: 'flex min-w-0 flex-col',\n  },\n  variants: {\n    variant: {\n      plain: {},\n      card: { root: 'rounded-xl border border-border bg-card text-card-foreground shadow-sm' },\n      muted: { root: 'rounded-xl border border-border bg-secondary/50' },\n    },\n    padding: {\n      none: { root: 'p-0', header: 'mb-3', body: 'gap-4' },\n      sm: { root: 'p-4', header: 'mb-3', body: 'gap-3' },\n      md: { root: 'p-5', header: 'mb-4', body: 'gap-4' },\n      lg: { root: 'p-6 sm:p-8', header: 'mb-5', body: 'gap-5' },\n    },\n    divided: {\n      true: {\n        header: 'border-b border-border',\n        body: 'gap-0 divide-y divide-border *:py-4 *:first:pt-0 *:last:pb-0',\n      },\n    },\n  },\n  compoundVariants: [\n    { divided: true, padding: 'none', class: { header: 'pb-3' } },\n    { divided: true, padding: 'sm', class: { header: 'pb-3' } },\n    { divided: true, padding: 'md', class: { header: 'pb-4' } },\n    { divided: true, padding: 'lg', class: { header: 'pb-5' } },\n  ],\n  defaultVariants: { variant: 'plain', padding: 'none', divided: false },\n});\n\nexport type SectionVariantProps = VariantProps<typeof sectionVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Section/Section.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/section/Section.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Section',\n  group: 'Layout',\n  status: 'stable',\n  description:\n    'A painted content region (<section>, named by its title). Variants plain / card / muted, padding none–lg, optional dividers between children, and a header slot with title, description and actions.',\n  pattern: 'region',\n  tokens: ['card', 'card-foreground', 'secondary', 'border', 'foreground', 'muted-foreground', 'shadow-sm', 'radius-xl'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Section/Section.doc.ts"
+  }
+}

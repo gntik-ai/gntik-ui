@@ -1,0 +1,66 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-composer",
+  "type": "registry:ui",
+  "title": "ChatComposer",
+  "description": "Chat input: autosizing textarea, Enter sends and Shift+Enter adds a line, removable attachment chips, a model-picker slot, a character counter near the limit, a disabled state, and a Stop button while a reply streams.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui",
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/chat/src/ChatComposer/ChatComposer.tsx",
+      "type": "registry:ui",
+      "target": "components/chat/chat-composer/ChatComposer.tsx",
+      "content": "import { Button, IconButton, cn, useI18n } from '@gntik-ai/ui';\nimport { ArrowUp, FileText, Paperclip, Square, X } from 'lucide-react';\nimport { useId, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent, type ReactNode, type Ref } from 'react';\nimport { formatBytes } from '../utils/format';\nimport { chatComposerStyles as s } from './chatComposer.variants';\n\nexport interface ComposerAttachment {\n  id: string;\n  name: string;\n  /** Size in bytes. */\n  size?: number;\n}\n\nexport interface ChatComposerProps {\n  /** Controlled text. Pair with `onValueChange`. */\n  value?: string;\n  defaultValue?: string;\n  onValueChange?: (value: string) => void;\n  /** Called with the trimmed text when the user sends. Uncontrolled composers clear themselves. */\n  onSubmit: (text: string, attachments: ComposerAttachment[]) => void;\n  /** A reply is streaming: Send turns into Stop, Enter no longer sends, Escape stops. */\n  streaming?: boolean;\n  onStop?: () => void;\n  disabled?: boolean;\n  placeholder?: string;\n  /** Accessible name of the text box. */\n  label?: string;\n  /** Soft limit: shows a counter near the limit and blocks sending above it. */\n  maxLength?: number;\n  /** Attached files shown as removable chips. */\n  attachments?: ComposerAttachment[];\n  /** Shows the attach button; called with the files the user picked. */\n  onAttach?: (files: File[]) => void;\n  onRemoveAttachment?: (id: string) => void;\n  /** `accept` for the file picker (e.g. \".pdf,.csv,image/*\"). */\n  accept?: string;\n  /** Slot left of the send button, e.g. a model Select. */\n  modelPicker?: ReactNode;\n  /** Extra tools after the attach button. */\n  tools?: ReactNode;\n  /** Small line under the box. Defaults to the keyboard hint; pass null to hide it. */\n  hint?: ReactNode;\n  className?: string;\n  ref?: Ref<HTMLTextAreaElement>;\n}\n\n/**\n * Message box for a chat: grows with its content, Enter sends and Shift+Enter adds a line,\n * files show as removable chips, a model picker can sit in the toolbar, and while a reply\n * streams the send button becomes Stop (Escape also stops).\n */\nexport function ChatComposer({\n  value,\n  defaultValue = '',\n  onValueChange,\n  onSubmit,\n  streaming = false,\n  onStop,\n  disabled = false,\n  placeholder: placeholderProp,\n  label: labelProp,\n  maxLength,\n  attachments = [],\n  onAttach,\n  onRemoveAttachment,\n  accept,\n  modelPicker,\n  tools,\n  hint,\n  className,\n  ref,\n}: ChatComposerProps) {\n  const { t } = useI18n();\n  const placeholder = placeholderProp ?? t('chat.placeholder');\n  const label = labelProp ?? t('chat.messageLabel');\n  const id = useId();\n  const [inner, setInner] = useState(defaultValue);\n  const text = value ?? inner;\n  const fileInput = useRef<HTMLInputElement>(null);\n\n  const setText = (next: string) => {\n    if (value === undefined) setInner(next);\n    onValueChange?.(next);\n  };\n\n  const length = text.length;\n  const over = maxLength !== undefined && length > maxLength;\n  const showCount = maxLength !== undefined && length >= maxLength * 0.8;\n  const canSend = !disabled && !streaming && !over && (text.trim().length > 0 || attachments.length > 0);\n\n  const send = () => {\n    if (!canSend) return;\n    onSubmit(text.trim(), attachments);\n    if (value === undefined) setInner('');\n  };\n\n  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {\n    if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {\n      e.preventDefault();\n      send();\n    } else if (e.key === 'Escape' && streaming && onStop) {\n      e.preventDefault();\n      onStop();\n    }\n  };\n\n  const onFiles = (e: ChangeEvent<HTMLInputElement>) => {\n    const files = Array.from(e.target.files ?? []);\n    if (files.length) onAttach?.(files);\n    e.target.value = '';\n  };\n\n  const hintNode =\n    hint === undefined ? (\n      <>\n        <kbd className=\"font-sans\">{t('kbd.enter')}</kbd> {t('chat.hintSend')} · <kbd className=\"font-sans\">{t('chat.shiftEnter')}</kbd> {t('chat.hintNewLine')}\n      </>\n    ) : (\n      hint\n    );\n\n  return (\n    <div className={className}>\n      <form\n        className={s.root}\n        data-disabled={disabled || undefined}\n        onSubmit={(e: FormEvent) => {\n          e.preventDefault();\n          send();\n        }}\n      >\n        {attachments.length > 0 && (\n          <ul aria-label={t('chat.attachments')} className={s.attachments}>\n            {attachments.map((a) => (\n              <li key={a.id} className={s.chip}>\n                <FileText size={13} aria-hidden className=\"shrink-0 text-muted-foreground\" />\n                <span className={s.chipName} title={a.name}>\n                  {a.name}\n                </span>\n                {a.size !== undefined && <span className={s.chipSize}>{formatBytes(a.size)}</span>}\n                {onRemoveAttachment && (\n                  <button\n                    type=\"button\"\n                    className={s.chipRemove}\n                    aria-label={t('common.removeItem', { label: a.name })}\n                    disabled={disabled}\n                    onClick={() => onRemoveAttachment(a.id)}\n                  >\n                    <X size={12} aria-hidden />\n                  </button>\n                )}\n              </li>\n            ))}\n          </ul>\n        )}\n        <textarea\n          ref={ref}\n          id={`${id}-input`}\n          rows={1}\n          value={text}\n          onChange={(e) => setText(e.target.value)}\n          onKeyDown={onKeyDown}\n          disabled={disabled}\n          placeholder={placeholder}\n          aria-label={label}\n          aria-invalid={over || undefined}\n          aria-describedby={showCount ? `${id}-count` : undefined}\n          className={s.textarea}\n        />\n        <div className={s.toolbar}>\n          <div className={s.tools}>\n            {onAttach && (\n              <>\n                <IconButton size=\"sm\" icon={Paperclip} label={t('chat.attach')} disabled={disabled} onClick={() => fileInput.current?.click()} />\n                <input ref={fileInput} type=\"file\" multiple hidden accept={accept} aria-label={t('chat.attach')} onChange={onFiles} />\n              </>\n            )}\n            {tools}\n          </div>\n          <div className={s.end}>\n            {showCount && (\n              <span id={`${id}-count`} className={cn(s.count, over && s.countOver)}>\n                {length}/{maxLength}\n                {over && <span className=\"sr-only\"> {t('chat.overLimit')}</span>}\n              </span>\n            )}\n            {modelPicker}\n            {streaming ? (\n              <Button size=\"sm\" variant=\"secondary\" icon={Square} aria-label={t('chat.stop')} onClick={onStop} disabled={!onStop}>\n                {t('common.stop')}\n              </Button>\n            ) : (\n              <IconButton size=\"sm\" variant=\"primary\" icon={ArrowUp} label={t('chat.send')} type=\"submit\" disabled={!canSend} />\n            )}\n          </div>\n        </div>\n      </form>\n      {hintNode !== null && <p className={s.hint}>{hintNode}</p>}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/chat/src/ChatComposer/chatComposer.variants.ts",
+      "type": "registry:ui",
+      "target": "components/chat/chat-composer/chatComposer.variants.ts",
+      "content": "import { focusRing } from '../utils/focus';\n\n/** Slot classes for ChatComposer (focus ring on the frame, like the legacy composer). */\nexport const chatComposerStyles = {\n  root: [\n    'overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-colors motion-reduce:transition-none',\n    'focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-ring/25',\n    'data-[disabled]:opacity-60',\n  ].join(' '),\n  attachments: 'flex flex-wrap gap-1.5 px-3 pt-3',\n  chip: 'inline-flex h-7 max-w-60 items-center gap-1.5 rounded-md border border-border bg-secondary/50 ps-2 pe-1 text-[12px] text-foreground',\n  chipName: 'truncate font-medium',\n  chipSize: 'shrink-0 font-mono text-[10.5px] text-muted-foreground',\n  chipRemove: `grid size-5 shrink-0 place-items-center rounded text-muted-foreground hover:bg-foreground/10 hover:text-foreground ${focusRing}`,\n  textarea: [\n    'block max-h-[220px] min-h-[52px] w-full resize-none bg-transparent px-3.5 py-3 text-[14px] leading-6 text-foreground',\n    'field-sizing-content placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed',\n  ].join(' '),\n  toolbar: 'flex items-center justify-between gap-2 px-2 pb-2',\n  tools: 'flex min-w-0 items-center gap-1',\n  end: 'flex shrink-0 items-center gap-2',\n  count: 'font-mono text-[11px] text-muted-foreground tabular-nums',\n  countOver: 'text-destructive-text',\n  hint: 'mt-1.5 px-1 text-center text-[11.5px] text-muted-foreground',\n} as const;\n"
+    },
+    {
+      "path": "packages/chat/src/ChatComposer/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/chat-composer/index.ts",
+      "content": "export { ChatComposer, type ChatComposerProps, type ComposerAttachment } from './ChatComposer';\nexport { chatComposerStyles } from './chatComposer.variants';\nexport { doc as chatComposerDoc } from './ChatComposer.doc';\n"
+    },
+    {
+      "path": "packages/chat/src/utils/focus.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/focus.ts",
+      "content": "/** Focus ring shared by every interactive element in the pack (brand rule). */\nexport const focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';\n"
+    },
+    {
+      "path": "packages/chat/src/utils/format.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/format.ts",
+      "content": "/** \"840 ms\" below a second, \"2.4 s\" below a minute, \"1 m 05 s\" above. */\nexport function formatDuration(ms: number) {\n  if (ms < 1000) return `${Math.round(ms)} ms`;\n  if (ms < 60_000) return `${(ms / 1000).toFixed(1)} s`;\n  const m = Math.floor(ms / 60_000);\n  const s = Math.round((ms % 60_000) / 1000);\n  return `${m} m ${String(s).padStart(2, '0')} s`;\n}\n\n/** \"12 KB\", \"3.4 MB\". */\nexport function formatBytes(bytes: number) {\n  if (bytes < 1024) return `${bytes} B`;\n  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;\n  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;\n}\n\n/** Short local time (\"14:05\") for a message timestamp. */\nexport function formatTime(date: Date) {\n  return date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });\n}\n\n/** Pretty-prints any value as JSON; falls back to String() for cyclic or exotic values. */\nexport function toJson(value: unknown) {\n  if (typeof value === 'string') return value;\n  try {\n    return JSON.stringify(value, null, 2) ?? String(value);\n  } catch {\n    return String(value);\n  }\n}\n"
+    },
+    {
+      "path": "packages/chat/src/ChatComposer/ChatComposer.doc.ts",
+      "type": "registry:ui",
+      "target": "components/chat/chat-composer/ChatComposer.doc.ts",
+      "content": "import type { ComponentDoc } from '@gntik-ai/ui';\n\nexport const doc: ComponentDoc = {\n  name: 'ChatComposer',\n  group: 'Forms',\n  status: 'beta',\n  description:\n    'Chat input: autosizing textarea, Enter sends and Shift+Enter adds a line, removable attachment chips, a model-picker slot, a character counter near the limit, a disabled state, and a Stop button while a reply streams.',\n  keyboard: [\n    ['Enter', 'Sends the message (ignored while streaming or during IME composition)'],\n    ['Shift+Enter', 'Inserts a new line'],\n    ['Escape', 'While a reply streams: stops it'],\n    ['Tab', 'Moves from the text box to attachment remove buttons, tools, the model picker and Send/Stop'],\n  ],\n  tokens: ['card', 'border', 'primary', 'ring', 'secondary', 'muted-foreground', 'destructive-text', 'focus-ring'],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "component",
+    "Forms"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/chat",
+    "status": "beta",
+    "source": "packages/chat/src/ChatComposer/ChatComposer.doc.ts"
+  }
+}

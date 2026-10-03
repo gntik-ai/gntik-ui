@@ -3,8 +3,8 @@ import type { TokenKind } from './tokenize';
 
 export const codeBlockVariants = tv({
   slots: {
-    root: 'overflow-hidden rounded-md border border-border bg-card text-left',
-    header: 'flex h-9 items-center justify-between gap-2 border-b border-border/70 pr-1.5 pl-3',
+    root: 'overflow-hidden rounded-md border border-border bg-card text-start',
+    header: 'flex h-9 items-center justify-between gap-2 border-b border-border/70 pe-1.5 ps-3',
     heading: 'flex min-w-0 items-center gap-2',
     filename: 'truncate font-mono text-[11.5px] text-foreground',
     language: 'shrink-0 font-mono text-[11px] tracking-wide text-muted-foreground uppercase',
@@ -20,8 +20,8 @@ export const codeBlockVariants = tv({
       'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
     ],
     code: 'grid font-mono',
-    line: 'flex border-l-2 border-transparent pr-4 pl-3.5 data-highlighted:border-primary data-highlighted:bg-primary/10',
-    lineNumber: 'mr-4 inline-block shrink-0 text-right text-muted-foreground select-none',
+    line: 'flex border-s-2 border-transparent pe-4 ps-3.5 data-highlighted:border-primary data-highlighted:bg-primary/10',
+    lineNumber: 'me-4 inline-block shrink-0 text-end text-muted-foreground select-none',
     content: 'min-w-0 flex-1',
   },
   variants: {

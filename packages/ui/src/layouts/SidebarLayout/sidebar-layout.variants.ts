@@ -5,7 +5,7 @@ export const sidebarLayoutVariants = tv({
     root: 'relative flex w-full min-w-0 overflow-hidden bg-background font-sans text-foreground',
     skip: 'focus:absolute',
     sidebar: [
-      'hidden shrink-0 flex-col overflow-hidden border-r border-border/60 bg-chrome lg:flex',
+      'hidden shrink-0 flex-col overflow-hidden border-e border-border/60 bg-chrome lg:flex',
       'transition-[width] duration-200 motion-reduce:transition-none',
     ],
     sidebarHeader: 'flex shrink-0 items-center px-3 pt-4 pb-3',
@@ -26,7 +26,7 @@ export const sidebarLayoutVariants = tv({
     state: {
       expanded: { sidebar: 'w-[248px]' },
       rail: { sidebar: 'w-16', sidebarHeader: 'justify-center px-2', sidebarBody: 'px-2', sidebarFooter: 'px-2' },
-      offcanvas: { sidebar: 'w-0 border-r-0' },
+      offcanvas: { sidebar: 'w-0 border-e-0' },
     },
   },
   defaultVariants: { fullScreen: false, state: 'expanded' },

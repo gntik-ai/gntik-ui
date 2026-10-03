@@ -3,7 +3,7 @@
    Wrappers with the Tremor API (index · categories · colors · valueFormatter)
    over Recharts. ZERO hardcoded colour: everything is read live from
    tokens/brand.css, so the theme switch reskins charts like everything else.
-   Primary green = hero · categoricals (violet/cyan/amber/rose) = extra series.
+   Primary green = hero · categoricals (violet/cyan/rose/amber, colour-blind-safe order) = extra series.
    Sober: no gradients, no glow, no entry animation.
    Exports to window: AreaChart · BarChart · LineChart · ComboChart · DonutChart
    · useChartTheme · chartFmt · CHART_COLORS.
@@ -28,7 +28,7 @@ const SERIES = {
   violet: '--category-violet', cyan: '--category-cyan',
   amber: '--category-amber', rose: '--category-rose', info: '--info',
 };
-const CHART_COLORS = ['primary', 'violet', 'cyan', 'amber', 'rose'];
+const CHART_COLORS = ['primary', 'violet', 'cyan', 'rose', 'amber'];
 
 /* ── theme hook: re-reads tokens when the <html> class changes ───────────── */
 function useChartTheme() {
@@ -331,3 +331,6 @@ Object.assign(window, {
   useChartTheme, ChartTooltip, ChartLegend, chartFmt, CHART_COLORS,
 });
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "aspect-ratio",
+  "type": "registry:ui",
+  "title": "AspectRatio",
+  "description": "A box locked to a width / height ratio (16:9 by default) for images, video and embeds; direct children fill it (object-cover). Radius none–xl and an optional bordered placeholder surface.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/AspectRatio/AspectRatio.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/aspect-ratio/AspectRatio.tsx",
+      "content": "import { mergeProps } from '@base-ui/react/merge-props';\nimport { useRender } from '@base-ui/react/use-render';\nimport { cn } from '../../utils/cn';\nimport { aspectRatioVariants, type AspectRatioVariantProps } from './aspect-ratio.variants';\n\nexport interface AspectRatioProps extends Omit<useRender.ComponentProps<'div'>, 'className'> {\n  className?: string;\n  /** Width / height, e.g. `16 / 9` (default), `4 / 3`, `1`. */\n  ratio?: number;\n  /** Corner radius: none, md, lg (default) or xl. */\n  radius?: AspectRatioVariantProps['radius'];\n  /** Paints a bordered secondary placeholder behind the media (while it loads, or when empty). */\n  surface?: boolean;\n}\n\n/** Fixed-ratio box for media: direct children (img, video, iframe, a placeholder) fill it. */\nexport function AspectRatio({ ratio = 16 / 9, radius, surface, className, style, render, ref, ...props }: AspectRatioProps) {\n  return useRender({\n    defaultTagName: 'div',\n    render,\n    ref,\n    props: mergeProps<'div'>(props, {\n      className: cn(aspectRatioVariants({ radius, surface }), className),\n      style: { aspectRatio: String(ratio), ...style },\n    }),\n  });\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/AspectRatio/aspect-ratio.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/aspect-ratio/aspect-ratio.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const aspectRatioVariants = tv({\n  base: 'relative w-full overflow-hidden *:absolute *:inset-0 *:size-full [&>img]:object-cover [&>video]:object-cover',\n  variants: {\n    radius: {\n      none: 'rounded-none',\n      md: 'rounded-md',\n      lg: 'rounded-lg',\n      xl: 'rounded-xl',\n    },\n    surface: {\n      true: 'border border-border bg-secondary',\n    },\n  },\n  defaultVariants: { radius: 'lg', surface: false },\n});\n\nexport type AspectRatioVariantProps = VariantProps<typeof aspectRatioVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/AspectRatio/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/aspect-ratio/index.ts",
+      "content": "export { AspectRatio, type AspectRatioProps } from './AspectRatio';\nexport { aspectRatioVariants, type AspectRatioVariantProps } from './aspect-ratio.variants';\nexport { doc as aspectRatioDoc } from './AspectRatio.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/AspectRatio/AspectRatio.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/aspect-ratio/AspectRatio.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'AspectRatio',\n  group: 'Layout',\n  status: 'stable',\n  description:\n    'A box locked to a width / height ratio (16:9 by default) for images, video and embeds; direct children fill it (object-cover). Radius none–xl and an optional bordered placeholder surface.',\n  primitive: '@base-ui/react/use-render',\n  tokens: ['border', 'secondary', 'muted-foreground', 'radius-lg'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/AspectRatio/AspectRatio.doc.ts"
+  }
+}

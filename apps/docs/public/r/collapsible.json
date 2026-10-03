@@ -1,0 +1,58 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "collapsible",
+  "type": "registry:ui",
+  "title": "Collapsible",
+  "description": "A single show/hide section: an inline toggle (\"Advanced settings\") or a full-width row in the Accordion family. The chevron rotates and the height animates. Compound parts: Collapsible, CollapsibleTrigger, CollapsiblePanel.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0",
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Collapsible/Collapsible.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/collapsible/Collapsible.tsx",
+      "content": "import { Collapsible as BaseCollapsible } from '@base-ui/react/collapsible';\nimport { ChevronDown } from 'lucide-react';\nimport { createContext, useContext, type ReactNode, type Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { collapsibleVariants, type CollapsibleVariantProps } from './collapsible.variants';\n\ntype CollapsibleVariant = NonNullable<CollapsibleVariantProps['variant']>;\nconst CollapsibleContext = createContext<CollapsibleVariant>('subtle');\n\nexport interface CollapsibleProps extends Omit<BaseCollapsible.Root.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** `subtle` (inline toggle) or `row` (full-width row with a divider, like an accordion item). */\n  variant?: CollapsibleVariant;\n}\n\n/** A single show/hide section. Controlled with `open` + `onOpenChange`, or uncontrolled with `defaultOpen`. */\nexport function Collapsible({ variant = 'subtle', className, ...props }: CollapsibleProps) {\n  return (\n    <CollapsibleContext.Provider value={variant}>\n      <BaseCollapsible.Root className={cn(collapsibleVariants({ variant }).root(), className)} {...props} />\n    </CollapsibleContext.Provider>\n  );\n}\n\nexport interface CollapsibleTriggerProps extends Omit<BaseCollapsible.Trigger.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLButtonElement>;\n  /** Show the rotating chevron. */\n  showChevron?: boolean;\n  children?: ReactNode;\n}\n\n/** The toggle button (aria-expanded, aria-controls). */\nexport function CollapsibleTrigger({ showChevron = true, className, children, ...props }: CollapsibleTriggerProps) {\n  const variant = useContext(CollapsibleContext);\n  const s = collapsibleVariants({ variant });\n  return (\n    <BaseCollapsible.Trigger className={cn(s.trigger(), className)} {...props}>\n      {children}\n      {showChevron && <ChevronDown size={variant === 'row' ? 16 : 15} className={s.chevron()} aria-hidden />}\n    </BaseCollapsible.Trigger>\n  );\n}\n\nexport interface CollapsiblePanelProps extends Omit<BaseCollapsible.Panel.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  children?: ReactNode;\n}\n\n/** The hidden content. Height animates; reduced motion turns the animation off. */\nexport function CollapsiblePanel({ className, children, ...props }: CollapsiblePanelProps) {\n  const variant = useContext(CollapsibleContext);\n  const s = collapsibleVariants({ variant });\n  return (\n    <BaseCollapsible.Panel className={s.panel()} {...props}>\n      <div className={cn(s.content(), className)}>{children}</div>\n    </BaseCollapsible.Panel>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Collapsible/collapsible.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/collapsible/collapsible.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const collapsibleVariants = tv({\n  slots: {\n    root: 'flex flex-col',\n    trigger: [\n      'group inline-flex cursor-pointer items-center gap-2 rounded-md text-[13px] font-medium text-foreground transition-colors',\n      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n      'data-disabled:cursor-not-allowed data-disabled:opacity-50',\n    ],\n    chevron: [\n      'shrink-0 text-muted-foreground transition-transform duration-200 motion-reduce:transition-none',\n      'group-data-panel-open:rotate-180',\n    ],\n    panel: [\n      'h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 ease-out motion-reduce:transition-none',\n      'data-starting-style:h-0 data-ending-style:h-0',\n    ],\n    content: 'pt-2 text-[13px] leading-relaxed text-muted-foreground text-pretty',\n  },\n  variants: {\n    variant: {\n      /** Compact inline toggle (\"Show advanced settings\"). */\n      subtle: { trigger: 'h-8 -mx-2 px-2 hover:bg-secondary/60' },\n      /** Full-width row with a divider, same family as Accordion. */\n      row: {\n        root: 'border-b border-border',\n        trigger: 'w-full justify-between rounded-sm py-3.5 text-start hover:text-foreground/80',\n        content: 'pt-0 pb-4',\n      },\n    },\n  },\n  defaultVariants: { variant: 'subtle' },\n});\n\nexport type CollapsibleVariantProps = VariantProps<typeof collapsibleVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Collapsible/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/collapsible/index.ts",
+      "content": "export {\n  Collapsible,\n  CollapsibleTrigger,\n  CollapsiblePanel,\n  type CollapsibleProps,\n  type CollapsibleTriggerProps,\n  type CollapsiblePanelProps,\n} from './Collapsible';\nexport { collapsibleVariants, type CollapsibleVariantProps } from './collapsible.variants';\nexport { doc as collapsibleDoc } from './Collapsible.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Collapsible/Collapsible.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/collapsible/Collapsible.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Collapsible',\n  group: 'Display',\n  status: 'stable',\n  description:\n    'A single show/hide section: an inline toggle (\"Advanced settings\") or a full-width row in the Accordion family. The chevron rotates and the height animates. Compound parts: Collapsible, CollapsibleTrigger, CollapsiblePanel.',\n  primitive: '@base-ui/react/collapsible',\n  pattern: 'disclosure',\n  keyboard: [\n    ['Enter / Space', 'Expands or collapses the panel'],\n    ['Tab', 'Moves focus from the trigger into the open panel content'],\n  ],\n  tokens: ['border', 'secondary', 'foreground', 'muted-foreground', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Display"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Collapsible/Collapsible.doc.ts"
+  }
+}

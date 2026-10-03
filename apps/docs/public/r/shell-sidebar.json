@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell-sidebar",
+  "type": "registry:block",
+  "title": "Sidebar shell",
+  "description": "Console starter: app sidebar, topbar and an empty Page with a title, description and a first-run empty state.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/shared/ConsoleShell.tsx",
+      "type": "registry:component",
+      "target": "app/templates/shared/ConsoleShell.tsx",
+      "content": "import {\n  AppSidebarFooter,\n  AppSidebarHeader,\n  AppSidebarNav,\n  AppTopbar,\n  type AppSidebarFooterProps,\n  type AppSidebarHeaderProps,\n  type AppTopbarProps,\n} from '@gntik-ai/blocks';\nimport { SidebarLayout, type BreadcrumbItem, type NavGroup, type SidebarLayoutProps, type UserMenuUser, type Workspace } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\n\nexport interface ConsoleShellProps\n  extends Pick<AppSidebarHeaderProps, 'currentWorkspaceId' | 'onWorkspaceChange' | 'onCreateWorkspace'>,\n    Pick<AppSidebarFooterProps, 'usage' | 'helpHref' | 'helpLabel' | 'userMenuItems' | 'onSignOut'>,\n    Pick<SidebarLayoutProps, 'sidebarLabel' | 'collapseMode'> {\n  /** Page content (usually a <Page>). */\n  children: ReactNode;\n  /** Sidebar navigation; defaults to the AppSidebar sample groups. */\n  nav?: NavGroup[];\n  /** Href of the current page, marks the active nav item. */\n  currentHref?: string;\n  breadcrumbs?: BreadcrumbItem[] | null;\n  workspaces?: Workspace[] | null;\n  user?: UserMenuUser | null;\n  /** Extra AppTopbar props (environment, notifications, theme control…). */\n  topbar?: Omit<AppTopbarProps, 'breadcrumbs' | 'user'>;\n  /** localStorage key for the collapsed sidebar; `undefined` disables persistence. */\n  storageKey?: string;\n}\n\n/**\n * The console frame shared by the templates: SidebarLayout with the AppSidebar header, nav and\n * footer, and the AppTopbar (breadcrumb, ⌘K search, notifications, theme, user menu).\n * Templates fill it with a Page; products swap the nav, workspaces, user, usage meter, help\n * link and user-menu items.\n */\nexport function ConsoleShell({\n  children,\n  nav,\n  currentHref,\n  breadcrumbs,\n  workspaces,\n  currentWorkspaceId,\n  onWorkspaceChange,\n  onCreateWorkspace,\n  user,\n  usage,\n  helpHref,\n  helpLabel,\n  userMenuItems,\n  onSignOut,\n  topbar,\n  storageKey,\n  sidebarLabel,\n  collapseMode,\n}: ConsoleShellProps) {\n  return (\n    <SidebarLayout\n      fullScreen\n      storageKey={storageKey}\n      sidebarLabel={sidebarLabel}\n      collapseMode={collapseMode}\n      sidebarHeader={({ collapsed }) => (\n        <AppSidebarHeader\n          collapsed={collapsed}\n          workspaces={workspaces}\n          currentWorkspaceId={currentWorkspaceId}\n          onWorkspaceChange={onWorkspaceChange}\n          onCreateWorkspace={onCreateWorkspace}\n        />\n      )}\n      sidebar={({ collapsed }) => <AppSidebarNav groups={nav} currentHref={currentHref} collapsed={collapsed} />}\n      sidebarFooter={({ collapsed }) => (\n        <AppSidebarFooter\n          collapsed={collapsed}\n          user={user}\n          usage={usage}\n          helpHref={helpHref}\n          helpLabel={helpLabel}\n          userMenuItems={userMenuItems}\n          onSignOut={onSignOut}\n        />\n      )}\n      topbar={<AppTopbar breadcrumbs={breadcrumbs} user={user} {...topbar} />}\n    >\n      {children}\n    </SidebarLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/shell-sidebar/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/shell-sidebar/Page.tsx",
+      "content": "import { FirstRunEmpty, PageHeader } from '@gntik-ai/blocks';\nimport { Page, type BreadcrumbItem, type NavGroup, type UserMenuUser, type Workspace } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\nimport { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';\nimport { shellSidebarBreadcrumbs, shellSidebarCopy, shellSidebarNav, shellSidebarUser, shellSidebarWorkspaces } from './data';\n\nexport interface ShellSidebarPageProps {\n  nav: NavGroup[];\n  currentHref: string;\n  breadcrumbs: BreadcrumbItem[] | null;\n  workspaces: Workspace[] | null;\n  user: UserMenuUser | null;\n  title: ReactNode;\n  description: ReactNode;\n  emptyTitle: ReactNode;\n  emptyDescription: ReactNode;\n  emptyActionLabel: string;\n  emptySteps: string[];\n  /** Primary action of the empty state. */\n  onCreate: () => void;\n  /** Replaces the empty state with real page content. */\n  children: ReactNode;\n  /** Other ConsoleShell props (sidebar footer, workspace callbacks, topbar…). */\n  shell: Omit<ConsoleShellProps, 'children'>;\n}\n\n/** Console starter: ConsoleShell around an empty Page (title, description, first-run state). */\nexport default function ShellSidebarPage({\n  nav = shellSidebarNav,\n  currentHref = shellSidebarCopy.currentHref,\n  breadcrumbs = shellSidebarBreadcrumbs,\n  workspaces = shellSidebarWorkspaces,\n  user = shellSidebarUser,\n  title = shellSidebarCopy.title,\n  description = shellSidebarCopy.description,\n  emptyTitle = shellSidebarCopy.emptyTitle,\n  emptyDescription = shellSidebarCopy.emptyDescription,\n  emptyActionLabel = shellSidebarCopy.emptyActionLabel,\n  emptySteps = shellSidebarCopy.emptySteps,\n  onCreate,\n  children,\n  shell,\n}: Partial<ShellSidebarPageProps>) {\n  return (\n    <ConsoleShell nav={nav} currentHref={currentHref} breadcrumbs={breadcrumbs} workspaces={workspaces} user={user} {...shell}>\n      <Page header={<PageHeader breadcrumbs={null} title={title} description={description} status=\"\" meta={[]} actions={[]} tabs={null} />}>\n        {children ?? (\n          <FirstRunEmpty\n            titleAs=\"h2\"\n            title={emptyTitle}\n            description={emptyDescription}\n            actionLabel={emptyActionLabel}\n            onAction={onCreate}\n            steps={emptySteps}\n          />\n        )}\n      </Page>\n    </ConsoleShell>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/shell-sidebar/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/shell-sidebar/data.ts",
+      "content": "import { appSidebarNavGroups, appSidebarUser, appSidebarWorkspaces, firstRunSteps } from '@gntik-ai/blocks';\nimport type { BreadcrumbItem } from '@gntik-ai/ui';\n\nexport { appSidebarNavGroups as shellSidebarNav, appSidebarUser as shellSidebarUser, appSidebarWorkspaces as shellSidebarWorkspaces };\n\nexport const shellSidebarBreadcrumbs: BreadcrumbItem[] = [{ label: 'Acme Industries', href: '/overview' }, { label: 'Projects' }];\n\nexport const shellSidebarCopy = {\n  currentHref: '/projects',\n  title: 'Projects',\n  description: 'Services, environments and deployments, grouped by project.',\n  emptyTitle: 'Create your first project',\n  emptyDescription: 'Projects group your services, environments and deployments. Start one from a repository in a couple of minutes.',\n  emptyActionLabel: 'New project',\n  emptySteps: firstRunSteps,\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Shells"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "stable",
+    "source": "packages/templates/src/shell-sidebar/template.meta.ts"
+  }
+}

@@ -4,6 +4,7 @@ export const EXIT_CODES = {
   ERROR: 1,
   REGISTRY: 1,
   INSTALL: 1,
+  CODEMODS: 1,
   USAGE: 2,
   NOT_FOUND: 3,
   CONFLICT: 4,

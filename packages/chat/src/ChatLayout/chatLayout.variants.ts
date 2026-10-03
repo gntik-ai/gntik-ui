@@ -18,5 +18,5 @@ export const chatLayoutStyles = {
     'hover:after:w-0.5 hover:after:bg-primary/60 data-[dragging]:after:w-0.5 data-[dragging]:after:bg-primary',
     'focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-focus-ring',
   ].join(' '),
-  panel: 'flex min-h-0 shrink-0 flex-col overflow-hidden border-l border-border bg-card',
+  panel: 'flex min-h-0 shrink-0 flex-col overflow-hidden border-s border-border bg-card',
 } as const;

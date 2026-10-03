@@ -1,6 +1,8 @@
 import { AlertTriangle, Check } from 'lucide-react';
 import type { HTMLAttributes, ReactNode, Ref } from 'react';
 import { cn } from '../../utils/cn';
+import { useI18n } from '../../i18n/I18nProvider';
+import type { MessageKey } from '../../i18n/messages/en';
 import { stepperVariants } from './stepper.variants';
 
 export type StepStatus = 'complete' | 'current' | 'upcoming' | 'error';
@@ -33,7 +35,7 @@ export interface StepperProps extends Omit<HTMLAttributes<HTMLElement>, 'classNa
   formatCount?: (step: number, total: number) => string;
 }
 
-const STATUS_TEXT: Record<StepStatus, string> = { complete: 'completed', current: 'current step', upcoming: 'not started', error: 'error' };
+const STATUS_KEYS = { complete: 'stepper.complete', current: 'stepper.current', upcoming: 'stepper.upcoming', error: 'stepper.error' } as const satisfies Record<StepStatus, MessageKey>;
 
 /** Resolves each step's status from `current` unless set explicitly. */
 export function resolveStepStatus(steps: StepItem[], current: number): StepStatus[] {
@@ -51,14 +53,22 @@ export function Stepper({
   orientation = 'horizontal',
   onStepClick,
   compact = false,
-  label = 'Progress',
+  label: labelProp,
   statusText,
-  formatCount = (step, total) => `Step ${step} of ${total}`,
+  formatCount: formatCountProp,
   className,
   ...props
 }: StepperProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('common.progress');
   const statuses = resolveStepStatus(steps, current);
-  const words = { ...STATUS_TEXT, ...statusText };
+  const formatCount = formatCountProp ?? ((step: number, total: number) => t('stepper.step', { step, total }));
+  const words: Record<StepStatus, string> = {
+    complete: statusText?.complete ?? t(STATUS_KEYS.complete),
+    current: statusText?.current ?? t(STATUS_KEYS.current),
+    upcoming: statusText?.upcoming ?? t(STATUS_KEYS.upcoming),
+    error: statusText?.error ?? t(STATUS_KEYS.error),
+  };
   const total = steps.length;
   const base = stepperVariants({ orientation });
 

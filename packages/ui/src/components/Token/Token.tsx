@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import type { HTMLAttributes, KeyboardEvent, ReactNode, Ref } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { tokenVariants, type TokenVariantProps } from './token.variants';
 
@@ -37,8 +38,9 @@ export function Token({
   className,
   ...props
 }: TokenProps) {
+  const { t } = useI18n();
   const s = tokenVariants({ tone, size, removable: onRemove != null });
-  const name = removeLabel ?? (typeof label === 'string' || typeof label === 'number' ? `Remove ${label}` : 'Remove');
+  const name = removeLabel ?? (typeof label === 'string' || typeof label === 'number' ? t('common.removeItem', { label }) : t('common.remove'));
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (disabled || !onRemove) return;
     if (event.key === 'Backspace' || event.key === 'Delete') {

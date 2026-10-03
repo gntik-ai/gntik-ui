@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Button, IconButton } from '@gntik-ai/ui';
+import { Button, IconButton, useI18n } from '@gntik-ai/ui';
 import { ChevronLeft, ChevronRight } from '@gntik-ai/icons';
 
 export interface CalendarHeaderProps {
@@ -16,6 +16,7 @@ export interface CalendarHeaderProps {
 
 /** Title + previous / today / next navigation + caller actions. */
 export function CalendarHeader({ titleId, title, subtitle, prevLabel, nextLabel, onPrev, onNext, onToday, actions }: CalendarHeaderProps) {
+  const { t } = useI18n();
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-5">
       <div className="min-w-0">
@@ -28,7 +29,7 @@ export function CalendarHeader({ titleId, title, subtitle, prevLabel, nextLabel,
         <div className="flex items-center gap-1">
           <IconButton icon={ChevronLeft} label={prevLabel} variant="secondary" size="sm" onClick={onPrev} />
           <Button variant="secondary" size="sm" onClick={onToday}>
-            Today
+            {t('calendar.today')}
           </Button>
           <IconButton icon={ChevronRight} label={nextLabel} variant="secondary" size="sm" onClick={onNext} />
         </div>

@@ -21,7 +21,7 @@ export interface DateTriggerProps extends DatePickerVariantProps {
  * Read-only input that opens the popover (combobox with a dialog popup). It is both the
  * Popover trigger and a Base UI Field control, so FieldLabel / FieldDescription wire to it.
  */
-export function DateTrigger({ text, placeholder, id, disabled, invalid, size = 'md', className, ...aria }: DateTriggerProps) {
+export function DateTrigger({ text, placeholder, id, disabled, invalid, size = 'auto', className, ...aria }: DateTriggerProps) {
   const s = datePickerVariants({ size });
   const px = size === 'sm' ? 14 : 15;
   return (

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider",
+  "type": "registry:ui",
+  "title": "Slider",
+  "description": "Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Slider/Slider.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/slider/Slider.tsx",
+      "content": "import { Slider as BaseSlider } from '@base-ui/react/slider';\nimport type { ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { sliderVariants, type SliderVariantProps } from './slider.variants';\n\nexport interface SliderProps extends Omit<BaseSlider.Root.Props, 'className' | 'children'>, SliderVariantProps {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** Visible label; labels every thumb. Without it, pass `aria-label` (single) or `thumbLabels`. */\n  label?: ReactNode;\n  /** Accessible name of a single thumb when there is no visible label. */\n  'aria-label'?: string;\n  /** Per-thumb accessible names for range sliders, e.g. `['Minimum', 'Maximum']`. */\n  thumbLabels?: string[];\n  /** Show the formatted value next to the label. */\n  showValue?: boolean;\n  /** Custom value text; receives formatted strings and raw numbers. */\n  formatValue?: (formatted: readonly string[], values: readonly number[]) => ReactNode;\n}\n\nfunction thumbCount(value: SliderProps['value'], defaultValue: SliderProps['defaultValue']) {\n  const v = value ?? defaultValue;\n  return Array.isArray(v) ? v.length : 1;\n}\n\n/**\n * Pick a number (or a range) on a track. Pass an array to `value` / `defaultValue` for a\n * range: one thumb per entry. Arrow keys step, Page Up/Down take `largeStep`, Home/End jump.\n */\nexport function Slider({\n  size,\n  label,\n  'aria-label': ariaLabel,\n  thumbLabels,\n  showValue = false,\n  formatValue = (formatted) => formatted.join(' – '),\n  className,\n  value,\n  defaultValue,\n  ...props\n}: SliderProps) {\n  const v = sliderVariants({ size });\n  const count = thumbCount(value, defaultValue);\n  return (\n    <BaseSlider.Root className={cn(v.root(), className)} value={value} defaultValue={defaultValue} {...props}>\n      {(label || showValue) && (\n        <div className={v.header()}>\n          {label && <BaseSlider.Label className={v.label()}>{label}</BaseSlider.Label>}\n          {showValue && <BaseSlider.Value className={cn(v.value(), !label && 'ms-auto')}>{formatValue}</BaseSlider.Value>}\n        </div>\n      )}\n      <BaseSlider.Control className={v.control()}>\n        <BaseSlider.Track className={v.track()}>\n          <BaseSlider.Indicator className={v.indicator()} />\n          {Array.from({ length: count }, (_, i) => (\n            <BaseSlider.Thumb\n              key={i}\n              index={i}\n              aria-label={thumbLabels?.[i] ?? (count === 1 ? ariaLabel : undefined)}\n              className={v.thumb()}\n            />\n          ))}\n        </BaseSlider.Track>\n      </BaseSlider.Control>\n    </BaseSlider.Root>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Slider/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/slider/index.ts",
+      "content": "export { Slider, type SliderProps } from './Slider';\nexport { sliderVariants } from './slider.variants';\nexport { doc as sliderDoc } from './Slider.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Slider/slider.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/slider/slider.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const sliderVariants = tv({\n  slots: {\n    root: 'flex w-full flex-col gap-2 data-disabled:opacity-50',\n    header: 'flex items-baseline justify-between gap-3',\n    label: 'text-[13px] font-medium text-foreground',\n    value: 'font-mono text-[12px] text-muted-foreground tabular-nums',\n    control: 'flex w-full touch-none items-center select-none data-disabled:cursor-not-allowed',\n    track: 'relative w-full rounded-full bg-secondary select-none',\n    indicator: 'rounded-full bg-primary select-none',\n    thumb: [\n      'rounded-full border border-primary bg-background shadow-sm transition-[scale] select-none motion-reduce:transition-none',\n      'has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus-ring',\n      'data-dragging:scale-110 data-disabled:cursor-not-allowed',\n    ],\n  },\n  variants: {\n    size: {\n      sm: { control: 'py-2', track: 'h-1', thumb: 'size-3.5' },\n      md: { control: 'py-2.5', track: 'h-1.5', thumb: 'size-[18px]' },\n    },\n  },\n  defaultVariants: { size: 'md' },\n});\n\nexport type SliderVariantProps = VariantProps<typeof sliderVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Slider/Slider.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/slider/Slider.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Slider',\n  group: 'Forms',\n  status: 'stable',\n  description:\n    'Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form.',\n  primitive: '@base-ui/react/slider',\n  pattern: 'slider (multi-thumb for ranges)',\n  keyboard: [\n    ['ArrowRight / ArrowUp', 'Increases the focused thumb by one step'],\n    ['ArrowLeft / ArrowDown', 'Decreases the focused thumb by one step'],\n    ['PageUp / PageDown', 'Increases / decreases by the large step'],\n    ['Home / End', 'Moves the focused thumb to the minimum / maximum'],\n    ['Tab', 'Moves focus between thumbs'],\n  ],\n  tokens: ['primary', 'secondary', 'background', 'foreground', 'muted-foreground', 'focus-ring'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Forms"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Slider/Slider.doc.ts"
+  }
+}

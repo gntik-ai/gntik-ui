@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toolbar",
+  "type": "registry:ui",
+  "title": "Toolbar",
+  "description": "Action bar above tables and lists: search, filters and actions with a single Tab stop and arrow-key navigation. Start / center / end lanes, groups, separators, links and inputs; buttons use the kit Button styles. Variants: bar, floating, plain.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/button.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Toolbar/Toolbar.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/toolbar/Toolbar.tsx",
+      "content": "import { Toolbar as BaseToolbar } from '@base-ui/react/toolbar';\nimport type { ComponentType, HTMLAttributes, ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { buttonVariants, BUTTON_ICON_SIZE } from '../button/button.variants';\nimport { toolbarVariants, type ToolbarVariantProps } from './toolbar.variants';\n\ntype IconComponent = ComponentType<{ size?: number; className?: string; 'aria-hidden'?: boolean }>;\ntype ButtonVariant = 'primary' | 'secondary' | 'soft' | 'ghost' | 'destructive';\n\nconst s = toolbarVariants();\n\nexport interface ToolbarProps extends Omit<BaseToolbar.Root.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** `bar` (table/list header), `floating` (bordered group) or `plain`. */\n  variant?: ToolbarVariantProps['variant'];\n  /** Accessible name; required when the page has more than one toolbar. */\n  'aria-label'?: string;\n}\n\n/**\n * A row of controls with one Tab stop: arrow keys move focus between items (roving tabindex),\n * Tab leaves the toolbar. Items can sit inside ToolbarStart / ToolbarCenter / ToolbarEnd lanes.\n */\nexport function Toolbar({ variant, className, ...props }: ToolbarProps) {\n  return <BaseToolbar.Root className={cn(toolbarVariants({ variant }).root(), className)} {...props} />;\n}\n\ntype LaneProps = HTMLAttributes<HTMLDivElement> & { ref?: Ref<HTMLDivElement> };\n\n/** Left-aligned lane (search, filters). */\nexport function ToolbarStart({ className, ...props }: LaneProps) {\n  return <div className={cn(toolbarVariants({ lane: 'start' }).lane(), className)} {...props} />;\n}\n/** Centered lane (titles, pagers). */\nexport function ToolbarCenter({ className, ...props }: LaneProps) {\n  return <div className={cn(toolbarVariants({ lane: 'center' }).lane(), className)} {...props} />;\n}\n/** Right-aligned lane (primary action). */\nexport function ToolbarEnd({ className, ...props }: LaneProps) {\n  return <div className={cn(toolbarVariants({ lane: 'end' }).lane(), className)} {...props} />;\n}\n\nexport interface ToolbarButtonProps extends Omit<BaseToolbar.Button.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLButtonElement>;\n  /** Kit button variant. */\n  variant?: ButtonVariant;\n  /** Fixed button size. Omitted, the button is small and follows the density (h-control-sm). */\n  size?: 'sm' | 'md';\n  /** Leading icon. Without children the button is icon-only: pass `aria-label`. */\n  icon?: IconComponent;\n  children?: ReactNode;\n}\n\n/** A toolbar item styled as a kit Button (ghost, small by default). Stays focusable when disabled. */\nexport function ToolbarButton({ variant = 'ghost', size, icon: IconCmp, className, children, ...props }: ToolbarButtonProps) {\n  const iconOnly = children == null;\n  // No size: the small button with density-driven height/padding (comfortable = sm exactly).\n  const auto = size == null && (iconOnly ? 'size-control-sm' : 'h-control-sm px-control-sm');\n  return (\n    <BaseToolbar.Button className={cn(buttonVariants({ variant, size: size ?? 'sm', iconOnly }), auto, className)} {...props}>\n      {IconCmp && <IconCmp size={BUTTON_ICON_SIZE[size ?? 'sm']} aria-hidden />}\n      {children}\n    </BaseToolbar.Button>\n  );\n}\n\nexport interface ToolbarGroupProps extends Omit<BaseToolbar.Group.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n}\n\n/** Groups related items; `disabled` disables all of them. */\nexport function ToolbarGroup({ className, ...props }: ToolbarGroupProps) {\n  return <BaseToolbar.Group className={cn(s.group(), className)} {...props} />;\n}\n\nexport interface ToolbarSeparatorProps extends Omit<BaseToolbar.Separator.Props, 'className'> {\n  className?: string;\n}\n\n/** Thin divider between groups (role=\"separator\", perpendicular to the toolbar). */\nexport function ToolbarSeparator({ className, ...props }: ToolbarSeparatorProps) {\n  return <BaseToolbar.Separator className={cn(s.separator(), className)} {...props} />;\n}\n\nexport interface ToolbarLinkProps extends Omit<BaseToolbar.Link.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLAnchorElement>;\n}\n\n/** A link inside the toolbar, in brand green. */\nexport function ToolbarLink({ className, ...props }: ToolbarLinkProps) {\n  return <BaseToolbar.Link className={cn(s.link(), className)} {...props} />;\n}\n\nexport interface ToolbarInputProps extends Omit<BaseToolbar.Input.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLInputElement>;\n  /** Leading icon inside the field (e.g. Search). */\n  icon?: IconComponent;\n  /** Class for the wrapper that sizes the field. */\n  wrapperClassName?: string;\n}\n\n/** A text field inside the toolbar. ArrowLeft/Right move the caret; at the edges they move to the next item. */\nexport function ToolbarInput({ icon: IconCmp, className, wrapperClassName, ...props }: ToolbarInputProps) {\n  return (\n    <div className={cn(s.inputWrap(), wrapperClassName)}>\n      {IconCmp && <IconCmp size={14} className={s.inputIcon()} aria-hidden />}\n      <BaseToolbar.Input className={cn(s.input(), IconCmp && 'ps-8', className)} {...props} />\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Toolbar/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/toolbar/index.ts",
+      "content": "export {\n  Toolbar,\n  ToolbarStart,\n  ToolbarCenter,\n  ToolbarEnd,\n  ToolbarButton,\n  ToolbarGroup,\n  ToolbarSeparator,\n  ToolbarLink,\n  ToolbarInput,\n  type ToolbarProps,\n  type ToolbarButtonProps,\n  type ToolbarGroupProps,\n  type ToolbarSeparatorProps,\n  type ToolbarLinkProps,\n  type ToolbarInputProps,\n} from './Toolbar';\nexport { toolbarVariants, type ToolbarVariantProps } from './toolbar.variants';\nexport { doc as toolbarDoc } from './Toolbar.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Toolbar/toolbar.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/toolbar/toolbar.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nconst focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';\n\nexport const toolbarVariants = tv({\n  slots: {\n    root: 'flex w-full min-w-0 items-center gap-2',\n    group: 'flex items-center gap-1',\n    lane: 'flex min-w-0 items-center gap-2',\n    separator: 'mx-1 h-4 w-px shrink-0 bg-border',\n    inputWrap: 'relative min-w-0 flex-1',\n    inputIcon: 'pointer-events-none absolute top-1/2 start-2.5 -translate-y-1/2 text-muted-foreground',\n    input: [\n      'h-control-sm w-full min-w-[150px] rounded-md border border-border bg-background px-2.5 text-[12.5px] text-foreground transition-colors',\n      'placeholder:text-muted-foreground hover:border-ring/50',\n      focusRing,\n      'data-disabled:cursor-not-allowed data-disabled:opacity-50',\n    ],\n    link: ['inline-flex h-control-sm items-center rounded-md px-1.5 text-[12.5px] font-medium text-primary-text underline-offset-4 hover:underline', focusRing],\n  },\n  variants: {\n    variant: {\n      /** Full-width action bar above a table or list. */\n      bar: { root: 'border-b border-border bg-secondary/20 px-3 py-bar' },\n      /** Self-contained floating group (e.g. formatting controls). */\n      floating: { root: 'w-auto inline-flex rounded-lg border border-border bg-card p-1 shadow-sm gap-1' },\n      /** No chrome; lays out items only. */\n      plain: {},\n    },\n    lane: {\n      start: { lane: 'me-auto' },\n      center: { lane: 'mx-auto justify-center' },\n      end: { lane: 'ms-auto justify-end' },\n    },\n  },\n  defaultVariants: { variant: 'bar', lane: 'start' },\n});\n\nexport type ToolbarVariantProps = VariantProps<typeof toolbarVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Toolbar/Toolbar.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/toolbar/Toolbar.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Toolbar',\n  group: 'Actions',\n  status: 'stable',\n  description:\n    'Action bar above tables and lists: search, filters and actions with a single Tab stop and arrow-key navigation. Start / center / end lanes, groups, separators, links and inputs; buttons use the kit Button styles. Variants: bar, floating, plain.',\n  primitive: '@base-ui/react/toolbar',\n  pattern: 'toolbar',\n  keyboard: [\n    ['ArrowRight / ArrowLeft', 'Moves focus to the next / previous item (roving tabindex, wraps around)'],\n    ['Tab / Shift+Tab', 'Moves focus out of the toolbar (one Tab stop)'],\n    ['Enter / Space', 'Activates the focused button'],\n  ],\n  tokens: ['border', 'secondary', 'card', 'background', 'primary', 'primary-text', 'muted-foreground', 'foreground', 'focus-ring'],\n};\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Actions"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Toolbar/Toolbar.doc.ts"
+  }
+}

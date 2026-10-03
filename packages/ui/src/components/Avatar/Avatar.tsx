@@ -1,5 +1,6 @@
 import { Avatar as BaseAvatar } from '@base-ui/react/avatar';
 import { Children, createContext, isValidElement, useContext, type HTMLAttributes, type ReactNode, type Ref } from 'react';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { avatarVariants, type AvatarSize, type AvatarStatus, type AvatarVariantProps } from './avatar.variants';
 
@@ -82,6 +83,7 @@ export interface AvatarGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, '
 
 /** Overlapping stack of avatars with a "+N more" overflow chip. */
 export function AvatarGroup({ size = 'md', max, label, className, children, ...props }: AvatarGroupProps) {
+  const { t } = useI18n();
   const items = Children.toArray(children).filter(isValidElement);
   const shown = max !== undefined ? items.slice(0, max) : items;
   const extra = items.length - shown.length;
@@ -93,7 +95,7 @@ export function AvatarGroup({ size = 'md', max, label, className, children, ...p
         {extra > 0 && (
           <span className={s.overflow()}>
             +{extra}
-            <span className="sr-only"> more</span>
+            <span className="sr-only"> {t('avatar.more')}</span>
           </span>
         )}
       </div>

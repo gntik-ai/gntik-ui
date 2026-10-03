@@ -434,3 +434,6 @@ function StatsSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['stats'] = StatsSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

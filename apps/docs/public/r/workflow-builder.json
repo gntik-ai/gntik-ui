@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "workflow-builder",
+  "type": "registry:block",
+  "title": "Flow builder",
+  "description": "Full-screen editor: CanvasLayout top bar (breadcrumb, title, status, Save and Publish) around the FlowBuilder block (palette, React Flow canvas, inspector, run console). The app must import '@gntik-ai/flow/styles.css' once for the canvas styles.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/workflow-builder/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/workflow-builder/Page.tsx",
+      "content": "import { FlowBuilder, type ConsoleEntry, type FlowBuilderProps, type FlowEdge, type FlowNode, type PaletteItem } from '@gntik-ai/blocks';\nimport { Save, Upload } from '@gntik-ai/icons';\nimport { Breadcrumbs, Button, CanvasLayout, StatusTag, type BreadcrumbItem } from '@gntik-ai/ui';\nimport { useState } from 'react';\nimport { flowBuilderBreadcrumbs, flowBuilderContent } from './data';\n\nexport interface FlowBuilderPageProps {\n  title: string;\n  /** StatusTag key next to the title (draft, active…). */\n  status: string;\n  /** Initial graph and palette; omitted values use the FlowBuilder block samples. */\n  nodes: FlowNode[];\n  edges: FlowEdge[];\n  palette: PaletteItem[];\n  /** Return console entries (or a promise of them) to log the real run; nothing logs a simulated run. */\n  onRun: NonNullable<FlowBuilderProps['onRun']>;\n  /** Run console output (controlled); report changes with `onConsoleChange`. */\n  consoleEntries: ConsoleEntry[];\n  /** Initial run console output (uncontrolled). */\n  defaultConsoleEntries: ConsoleEntry[];\n  onConsoleChange: (entries: ConsoleEntry[]) => void;\n  onConsoleClear: () => void;\n  onSave: () => void | Promise<void>;\n  onPublish: () => void;\n  breadcrumbs: BreadcrumbItem[];\n  /** Builder height in px on wide screens. */\n  height: number;\n  fullScreen: boolean;\n}\n\n/**\n * Flow builder page: CanvasLayout + the FlowBuilder block. The app imports\n * '@gntik-ai/flow/styles.css' once for the React Flow canvas.\n */\nexport default function FlowBuilderPage(props: Partial<FlowBuilderPageProps>) {\n  const {\n    title = flowBuilderContent.title,\n    status = flowBuilderContent.status,\n    nodes,\n    edges,\n    palette,\n    onRun,\n    consoleEntries,\n    defaultConsoleEntries,\n    onConsoleChange,\n    onConsoleClear,\n    onSave,\n    onPublish,\n    breadcrumbs = flowBuilderBreadcrumbs,\n    height = 640,\n    fullScreen = true,\n  } = props;\n  const [saving, setSaving] = useState(false);\n  const [savedNote, setSavedNote] = useState(flowBuilderContent.lastSaved);\n\n  const save = async () => {\n    setSaving(true);\n    try {\n      await onSave?.();\n      setSavedNote('All changes saved');\n    } finally {\n      setSaving(false);\n    }\n  };\n\n  return (\n    <CanvasLayout\n      fullScreen={fullScreen}\n      mainLabel={`${title} editor`}\n      smallScreenNotice={null}\n      header={\n        <>\n          <div className=\"flex min-w-0 flex-1 items-center gap-3\">\n            <Breadcrumbs items={breadcrumbs} className=\"hidden min-w-0 md:flex\" />\n            <h1 className=\"truncate text-[14px] font-semibold text-foreground\">{title}</h1>\n            <StatusTag status={status} />\n            <p aria-live=\"polite\" className=\"hidden text-[12px] text-muted-foreground sm:block\">\n              {savedNote}\n            </p>\n          </div>\n          <div className=\"flex shrink-0 items-center gap-2\">\n            <Button size=\"sm\" variant=\"secondary\" icon={Save} loading={saving} onClick={() => void save()}>\n              Save\n            </Button>\n            <Button size=\"sm\" icon={Upload} onClick={onPublish}>\n              Publish\n            </Button>\n          </div>\n        </>\n      }\n    >\n      <div className=\"h-full overflow-auto p-3 sm:p-4\">\n        <FlowBuilder\n          title={title}\n          nodes={nodes}\n          edges={edges}\n          palette={palette}\n          onRun={onRun}\n          consoleEntries={consoleEntries}\n          defaultConsoleEntries={defaultConsoleEntries}\n          onConsoleChange={onConsoleChange}\n          onConsoleClear={onConsoleClear}\n          height={height}\n        />\n      </div>\n    </CanvasLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/workflow-builder/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/workflow-builder/data.ts",
+      "content": "import type { BreadcrumbItem } from '@gntik-ai/ui';\n\n/** Neutral fixtures for the flow builder page; the graph itself uses the FlowBuilder block fixtures. */\nexport const flowBuilderContent = {\n  title: 'Order sync',\n  status: 'draft',\n  lastSaved: 'Saved 2 min ago',\n};\n\nexport const flowBuilderBreadcrumbs: BreadcrumbItem[] = [\n  { label: 'Automations', href: '/automations' },\n  { label: 'order-sync', mono: true },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Builders"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "experimental",
+    "source": "packages/templates/src/workflow-builder/template.meta.ts"
+  }
+}

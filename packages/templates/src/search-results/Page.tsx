@@ -1,6 +1,6 @@
 import { NoResultsEmpty, PageHeader, SectionHeader } from '@gntik-ai/blocks';
 import { Search } from '@gntik-ai/icons';
-import { Checkbox, CheckboxGroup, Grid, GridItem, Input, Kbd, Link, Page, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
+import { Checkbox, CheckboxGroup, Grid, GridItem, Input, Kbd, Link, Page, Stack, useI18n, type BreadcrumbItem } from '@gntik-ai/ui';
 import { useId, useRef, useState, type KeyboardEvent } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import {
@@ -41,6 +41,7 @@ export function matchQuery(hits: readonly SearchHit[], query: string) {
 
 /** Search results: ConsoleShell + Page with Checkbox-group facets and results grouped by type. */
 export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
+  const { t } = useI18n();
   const {
     hits = searchHits,
     facets = searchFacets,
@@ -118,7 +119,7 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
                 focusResult('first');
               }
             }}
-            placeholder="Search…"
+            placeholder={t('common.searchPlaceholder')}
             className="max-w-xl"
           />
           <p id={`${id}-hint`} className="mt-2 text-[12px] text-muted-foreground">
@@ -126,7 +127,7 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
           </p>
         </div>
         <Grid cols={{ base: 1, lg: 4 }} gap={6}>
-          <GridItem as="aside" aria-label="Filters" span={{ base: 1, lg: 1 }}>
+          <GridItem as="aside" aria-label={t('filters.label')} span={{ base: 1, lg: 1 }}>
             <Stack gap={6}>
               {facets.map((facet) => (
                 <div key={facet.id}>

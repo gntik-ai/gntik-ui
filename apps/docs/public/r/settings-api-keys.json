@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-api-keys",
+  "type": "registry:block",
+  "title": "API keys settings",
+  "description": "API key list with scopes and last use, a create-key dialog that shows the secret once, and typed revoke confirmation.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/settings-profile.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/settings-api-keys/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/settings-api-keys/Page.tsx",
+      "content": "import { ConfirmDestructive, CreateApiKeyDialog, DataTable, generateDemoSecret, type ApiKeyExpiry, type ApiKeyScope, type CreateApiKeyInput, type DataTableColumn } from '@gntik-ai/blocks';\nimport { KeyRound, Plus, Trash2 } from '@gntik-ai/icons';\nimport { Badge, EmptyState, Timestamp } from '@gntik-ai/ui';\nimport { useState } from 'react';\nimport { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';\nimport { apiKeys as defaultKeys, expiries as defaultExpiries, scopes as defaultScopes, type ApiKey } from './data';\n\nexport interface SettingsApiKeysProps extends SettingsFrameOptions {\n  keys: ApiKey[];\n  scopes: ApiKeyScope[];\n  expiries: ApiKeyExpiry[];\n  /** Creates a key and returns its secret (shown once). Defaults to a demo generator. */\n  onCreate: (input: CreateApiKeyInput) => string | Promise<string>;\n  /** Revokes a key after the typed confirmation. A rejection shows its message. */\n  onRevoke: (key: ApiKey) => void | Promise<void>;\n}\n\nconst COLUMNS: DataTableColumn<ApiKey>[] = [\n  {\n    id: 'name',\n    header: 'Name',\n    accessor: (k) => k.name,\n    sortable: true,\n    cell: (k) => (\n      <div className=\"min-w-0\">\n        <div className=\"truncate text-[13px] font-medium text-foreground\">{k.name}</div>\n        <div className=\"font-mono text-[11.5px] text-muted-foreground\">{k.prefix}…</div>\n      </div>\n    ),\n  },\n  {\n    id: 'scopes',\n    header: 'Scopes',\n    hideable: true,\n    cell: (k) => (\n      <div className=\"flex flex-wrap gap-1\">\n        {k.scopes.map((s) => (\n          <Badge key={s} size=\"sm\" className=\"font-mono\">\n            {s}\n          </Badge>\n        ))}\n      </div>\n    ),\n  },\n  { id: 'created', header: 'Created', accessor: (k) => k.createdAt, sortable: true, cell: (k) => <Timestamp value={k.createdAt} tooltip={false} /> },\n  {\n    id: 'lastUsed',\n    header: 'Last used',\n    accessor: (k) => k.lastUsedAt ?? '',\n    sortable: true,\n    cell: (k) => (k.lastUsedAt ? <Timestamp value={k.lastUsedAt} tooltip={false} /> : 'Never'),\n  },\n  { id: 'createdBy', header: 'Created by', accessor: (k) => k.createdBy, defaultHidden: true },\n];\n\n/** API keys settings: DataTable of keys, CreateApiKeyDialog (header action), revoke via ConfirmDestructive. */\nexport default function SettingsApiKeysPage({\n  keys = defaultKeys,\n  scopes = defaultScopes,\n  expiries = defaultExpiries,\n  onCreate = () => generateDemoSecret(),\n  onRevoke,\n  ...frame\n}: Partial<SettingsApiKeysProps>) {\n  const [created, setCreated] = useState<ApiKey[]>([]);\n  const [revokedIds, setRevokedIds] = useState<string[]>([]);\n  const [createOpen, setCreateOpen] = useState(false);\n  const [revoking, setRevoking] = useState<ApiKey | null>(null);\n  const [confirmOpen, setConfirmOpen] = useState(false);\n  const rows = [...created, ...keys].filter((k) => !revokedIds.includes(k.id));\n\n  const create = async (input: CreateApiKeyInput) => {\n    const secret = await onCreate(input);\n    setCreated((list) => [\n      { id: `new-${list.length}-${input.name}`, name: input.name, prefix: secret.slice(0, 12), scopes: input.scopes, createdAt: new Date().toISOString(), lastUsedAt: null, createdBy: 'You' },\n      ...list,\n    ]);\n    return secret;\n  };\n\n  const revoke = async () => {\n    if (!revoking) return;\n    await onRevoke?.(revoking);\n    setRevokedIds((ids) => [...ids, revoking.id]);\n  };\n\n  return (\n    <SettingsFrame\n      page=\"api-keys\"\n      width=\"wide\"\n      description=\"Keys authenticate scripts and services against the API. Treat them like passwords.\"\n      actions={[{ label: 'Create API key', icon: Plus, variant: 'primary', onClick: () => setCreateOpen(true) }]}\n      {...frame}\n    >\n      <DataTable\n        rows={rows}\n        columns={COLUMNS}\n        caption=\"API keys\"\n        showCaption\n        paginated={false}\n        getRowLabel={(k) => k.name}\n        rowActions={(k) => [\n          {\n            label: 'Revoke key',\n            icon: Trash2,\n            destructive: true,\n            onSelect: () => {\n              setRevoking(k);\n              setConfirmOpen(true);\n            },\n          },\n        ]}\n        emptyState={<EmptyState icon={KeyRound} title=\"No API keys\" description=\"Create a key to call the API from scripts and services.\" />}\n      />\n      <CreateApiKeyDialog trigger={null} open={createOpen} onOpenChange={setCreateOpen} scopes={scopes} expiries={expiries} onCreate={create} />\n      {revoking && (\n        <ConfirmDestructive\n          key={revoking.id}\n          triggerLabel={null}\n          open={confirmOpen}\n          onOpenChange={setConfirmOpen}\n          resourceName={revoking.name}\n          resourceType=\"API key\"\n          title=\"Revoke API key?\"\n          confirmLabel=\"Revoke key\"\n          consequences={['Requests signed with this key start failing immediately', 'Scripts and services using it must get a new key']}\n          onConfirm={revoke}\n        />\n      )}\n    </SettingsFrame>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/settings-api-keys/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/settings-api-keys/data.ts",
+      "content": "import { apiKeyExpiries, apiKeyScopes, type ApiKeyExpiry, type ApiKeyScope } from '@gntik-ai/blocks';\n\nconst daysAgo = (d: number) => new Date(Date.now() - d * 86_400_000).toISOString();\n\nexport interface ApiKey {\n  id: string;\n  name: string;\n  /** Visible start of the secret, e.g. \"sk_live_3f9a\". */\n  prefix: string;\n  scopes: string[];\n  /** ISO date. */\n  createdAt: string;\n  /** ISO date; null when never used. */\n  lastUsedAt: string | null;\n  createdBy: string;\n}\n\nexport const scopes: ApiKeyScope[] = apiKeyScopes;\nexport const expiries: ApiKeyExpiry[] = apiKeyExpiries;\n\nexport const apiKeys: ApiKey[] = [\n  { id: 'k1', name: 'ci-deploy', prefix: 'sk_live_3f9a', scopes: ['projects:read', 'projects:write'], createdAt: daysAgo(120), lastUsedAt: daysAgo(0.02), createdBy: 'Avery Collins' },\n  { id: 'k2', name: 'metrics-exporter', prefix: 'sk_live_81c0', scopes: ['projects:read', 'billing:read'], createdAt: daysAgo(64), lastUsedAt: daysAgo(1), createdBy: 'Sam Rivera' },\n  { id: 'k3', name: 'directory-sync', prefix: 'sk_live_c27e', scopes: ['members:read'], createdAt: daysAgo(30), lastUsedAt: daysAgo(9), createdBy: 'Avery Collins' },\n  { id: 'k4', name: 'local-testing', prefix: 'sk_live_09bd', scopes: ['projects:read'], createdAt: daysAgo(4), lastUsedAt: null, createdBy: 'Jordan Lee' },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Settings"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/settings-api-keys/template.meta.ts"
+  }
+}

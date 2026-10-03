@@ -278,3 +278,6 @@ function SignInSection() {
 window.SECTIONS = window.SECTIONS || {};
 window.SECTIONS['sign-in'] = SignInSection;
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

@@ -1,25 +1,35 @@
 import { Drawer as BaseDrawer } from '@base-ui/react/drawer';
 import { X } from 'lucide-react';
 import { createContext, useContext, type HTMLAttributes, type ReactNode } from 'react';
+import { useI18n, usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { drawerVariants, type DrawerVariantProps } from './drawer.variants';
 
 export type DrawerSide = NonNullable<DrawerVariantProps['side']>;
 
 const s = drawerVariants();
-const SWIPE: Record<DrawerSide, BaseDrawer.Root.Props['swipeDirection']> = { right: 'right', left: 'left', bottom: 'down' };
+type Swipe = BaseDrawer.Root.Props['swipeDirection'];
+// `left` / `right` are the inline start / end edges: in RTL they mirror (and so does the swipe).
+const SWIPE: Record<'ltr' | 'rtl', Record<DrawerSide, Swipe>> = {
+  ltr: { right: 'right', left: 'left', bottom: 'down' },
+  rtl: { right: 'left', left: 'right', bottom: 'down' },
+};
 const SideContext = createContext<DrawerSide>('right');
 
 export interface DrawerProps extends Omit<BaseDrawer.Root.Props, 'swipeDirection'> {
-  /** Edge the panel slides in from; it is also the swipe-to-dismiss direction. */
+  /**
+   * Edge the panel slides in from; it is also the swipe-to-dismiss direction. `right` and `left`
+   * are the inline end and start edges, so they mirror under RTL (I18nProvider `dir`).
+   */
   side?: DrawerSide;
 }
 
 /** Drawer state container (open, defaultOpen, onOpenChange, modal). Renders no element. */
 export function Drawer({ side = 'right', ...props }: DrawerProps) {
+  const { dir } = useI18n();
   return (
     <SideContext.Provider value={side}>
-      <BaseDrawer.Root swipeDirection={SWIPE[side]} {...props} />
+      <BaseDrawer.Root swipeDirection={SWIPE[dir][side]} {...props} />
     </SideContext.Provider>
   );
 }
@@ -35,7 +45,7 @@ export interface DrawerContentProps extends Omit<BaseDrawer.Popup.Props, 'classN
   size?: DrawerVariantProps['size'];
   /** Show the top-right close button. */
   showClose?: boolean;
-  /** Accessible name of the close button. */
+  /** Accessible name of the close button (default: the catalog's "Close"). */
   closeLabel?: string;
   /** Portal container; defaults to document.body. */
   container?: BaseDrawer.Portal.Props['container'];
@@ -47,18 +57,20 @@ export interface DrawerContentProps extends Omit<BaseDrawer.Popup.Props, 'classN
  * Focus is trapped inside, Escape, an outside press or a swipe close it, and focus returns
  * to the trigger. Lay out the inside with DrawerHeader, DrawerBody and DrawerFooter.
  */
-export function DrawerContent({ size, className, showClose = true, closeLabel = 'Close', container, children, ...props }: DrawerContentProps) {
+export function DrawerContent({ size, className, showClose = true, closeLabel, container, children, ...props }: DrawerContentProps) {
+  const dir = usePortalDir();
+  const { t } = useI18n();
   const side = useContext(SideContext);
   const v = drawerVariants({ side, size });
   return (
     <BaseDrawer.Portal container={container}>
       <BaseDrawer.Backdrop className={v.backdrop()} />
-      <BaseDrawer.Viewport className={v.viewport()}>
+      <BaseDrawer.Viewport dir={dir} className={v.viewport()}>
         <BaseDrawer.Popup className={cn(v.popup(), className)} {...props}>
           {side === 'bottom' && <div className={v.handle()} aria-hidden />}
           <BaseDrawer.Content className={v.content()}>{children}</BaseDrawer.Content>
           {showClose && (
-            <BaseDrawer.Close aria-label={closeLabel} className={v.close()}>
+            <BaseDrawer.Close aria-label={closeLabel ?? t('common.close')} className={v.close()}>
               <X size={16} aria-hidden />
             </BaseDrawer.Close>
           )}

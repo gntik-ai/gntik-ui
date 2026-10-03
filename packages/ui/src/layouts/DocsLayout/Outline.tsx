@@ -1,5 +1,6 @@
 import { useEffect, useEffectEvent, useId, useState, type HTMLAttributes, type MouseEvent, type ReactNode, type Ref, type RefObject } from 'react';
 import { cn } from '../../utils/cn';
+import { useI18n } from '../../i18n/I18nProvider';
 import { outlineVariants } from './docs-layout.variants';
 
 export interface OutlineItem {
@@ -38,7 +39,7 @@ const NATIVELY_FOCUSABLE = 'a[href], button, input, select, textarea, summary, [
  */
 export function Outline({
   items,
-  label = 'On this page',
+  label: labelProp,
   hideHeading = false,
   landmark = true,
   activeId: activeProp,
@@ -49,6 +50,8 @@ export function Outline({
   ref,
   ...props
 }: OutlineProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('nav.onThisPage');
   const [inner, setInner] = useState<string | undefined>(items[0]?.id);
   const active = activeProp ?? inner;
   const headingId = useId();

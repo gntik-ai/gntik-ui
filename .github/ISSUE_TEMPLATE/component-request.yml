@@ -1,0 +1,65 @@
+name: Component request
+description: Propose a new component, block, template or variant for the kit.
+title: '[Request] '
+labels: [component-request, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The kit is product-agnostic: a piece earns its place when at least two consumers need it.
+        Accepted requests start in **lab** (see docs/governance/lifecycle.md) and get a short spec
+        (docs/governance/component-spec-template.md).
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of addition
+      options:
+        - New component (@gntik-ai/ui)
+        - New variant / prop on an existing component
+        - New block (@gntik-ai/blocks)
+        - New page template (@gntik-ai/templates)
+        - New token
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Proposed name
+      placeholder: e.g. DateRangePicker
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What users need to do today that the kit does not support. Describe it without product-specific names.
+    validations:
+      required: true
+  - type: textarea
+    id: consumers
+    attributes:
+      label: Consumers
+      description: Which apps, blocks or templates would use it (at least two).
+    validations:
+      required: true
+  - type: textarea
+    id: prior-art
+    attributes:
+      label: Existing pieces and prior art
+      description: Kit components that come close and why they don't fit; Base UI primitive or WAI-ARIA pattern; references from other design systems.
+  - type: textarea
+    id: api
+    attributes:
+      label: Sketch of the API (optional)
+      render: tsx
+  - type: textarea
+    id: a11y
+    attributes:
+      label: Accessibility notes (optional)
+      description: Keyboard interaction, roles, announcements.
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I can open the PR (spec + implementation following packages/ui/CONTRIBUTING.md)

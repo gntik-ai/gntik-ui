@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "time-slot-picker",
+  "type": "registry:block",
+  "title": "Time slot picker",
+  "description": "Grid of selectable time slots with native radio semantics (arrow keys, form name), taken slots struck through and disabled, controlled or uncontrolled.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/scheduling/TimeSlotPicker/TimeSlotPicker.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/scheduling/time-slot-picker/TimeSlotPicker.tsx",
+      "content": "import { useId, useState } from 'react';\nimport { cn, useI18n } from '@gntik-ai/ui';\nimport { sampleTimeSlots } from './fixtures';\n\nexport interface TimeSlot {\n  /** Submitted value, e.g. \"09:30\". */\n  value: string;\n  /** Visible label. Defaults to `value`. */\n  label?: string;\n  /** Taken slots render struck through and disabled. Default true. */\n  available?: boolean;\n}\n\nexport interface TimeSlotPickerProps {\n  slots?: TimeSlot[];\n  /** Controlled value. */\n  value?: string | null;\n  /** Uncontrolled initial value. */\n  defaultValue?: string | null;\n  onValueChange?: (value: string) => void;\n  /** Group label (the fieldset legend). */\n  legend?: string;\n  /** Secondary line under the legend, e.g. the chosen date. */\n  description?: string;\n  /** Form field name. */\n  name?: string;\n  /** Slot columns from the `sm` breakpoint (two on small screens). */\n  columns?: 2 | 3 | 4 | 6;\n  /** Max height of the scrolling slot list in px. */\n  maxHeight?: number;\n  className?: string;\n}\n\nconst COLS: Record<NonNullable<TimeSlotPickerProps['columns']>, string> = {\n  2: 'sm:grid-cols-2',\n  3: 'sm:grid-cols-3',\n  4: 'sm:grid-cols-4',\n  6: 'sm:grid-cols-6',\n};\n\n/**\n * Pick one time slot. Native radio semantics: Tab enters the group, arrow keys move and select,\n * taken slots are disabled.\n */\nexport function TimeSlotPicker({\n  slots = sampleTimeSlots,\n  value,\n  defaultValue = null,\n  onValueChange,\n  legend: legendProp,\n  description,\n  name,\n  columns = 4,\n  maxHeight = 244,\n  className,\n}: TimeSlotPickerProps) {\n  const { t } = useI18n();\n  const legend = legendProp ?? t('calendar.availableTimes');\n  const autoName = useId();\n  const descId = useId();\n  const [inner, setInner] = useState<string | null>(defaultValue);\n  const current = value !== undefined ? value : inner;\n\n  const choose = (next: string) => {\n    if (value === undefined) setInner(next);\n    onValueChange?.(next);\n  };\n\n  return (\n    <fieldset aria-describedby={description ? descId : undefined} className={cn('min-w-0', className)}>\n      <legend className=\"text-[12.5px] font-medium text-foreground\">{legend}</legend>\n      {description && (\n        <p id={descId} className=\"mt-0.5 text-[12px] text-muted-foreground\">\n          {description}\n        </p>\n      )}\n      <div className=\"mt-2.5 overflow-y-auto p-0.5\" style={{ maxHeight }}>\n        <div className={cn('grid grid-cols-2 gap-1.5', COLS[columns])}>\n          {slots.map((slot) => {\n            const available = slot.available !== false;\n            return (\n              <label key={slot.value} className={cn('relative block', available ? 'cursor-pointer' : 'cursor-not-allowed')}>\n                <input\n                  type=\"radio\"\n                  name={name ?? autoName}\n                  value={slot.value}\n                  checked={current === slot.value}\n                  disabled={!available}\n                  onChange={() => choose(slot.value)}\n                  className=\"peer sr-only\"\n                />\n                <span\n                  className={cn(\n                    'flex h-8 items-center justify-center rounded-md border font-mono text-[12px] font-medium tabular-nums transition-colors motion-reduce:transition-none',\n                    'peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus-ring',\n                    'peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-checked:shadow-sm',\n                    available\n                      ? 'border-border bg-background text-foreground hover:border-muted-foreground/40 hover:bg-secondary/60'\n                      : 'border-border/50 bg-secondary/20 text-muted-foreground line-through',\n                  )}\n                >\n                  {slot.label ?? slot.value}\n                  {!available && <span className=\"sr-only\"> {t('calendar.unavailable')}</span>}\n                </span>\n              </label>\n            );\n          })}\n        </div>\n      </div>\n    </fieldset>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/scheduling/TimeSlotPicker/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/scheduling/time-slot-picker/fixtures.ts",
+      "content": "import type { TimeSlot } from './TimeSlotPicker';\n\nconst busy = new Set(['09:00', '09:30', '12:00', '14:30', '15:00', '18:30']);\n\n/** Half-hour slots from 09:00 to 21:00 with a few already taken. */\nexport const sampleTimeSlots: TimeSlot[] = Array.from({ length: 25 }, (_, i) => {\n  const minutes = 9 * 60 + i * 30;\n  const value = `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;\n  return { value, available: !busy.has(value) };\n});\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "scheduling"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/scheduling/TimeSlotPicker/block.meta.ts"
+  }
+}

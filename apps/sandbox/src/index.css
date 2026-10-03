@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "@fontsource/geist";
+@import "@fontsource/geist-mono";
+@import "@fontsource/geist/500.css";
+@import "@fontsource/geist/600.css";
+@import "@fontsource/geist/700.css";
+@import "@fontsource/geist-mono/500.css";
+
+/* Tokens, the Tailwind bridge and the sources of every kit package (ui, blocks, charts, chat, flow, editor, templates). */
+@import "@gntik-ai/templates/styles.css";
+
+/* The example gallery (src/examples) is scanned like any source file, so its classes exist.
+   User code can only use classes that are already generated (see README · Tailwind classes). */
+@source "./";

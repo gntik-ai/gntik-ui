@@ -4,6 +4,7 @@ import { useLinkComponent } from '../../components/Link';
 import { MobileNav } from '../../components/MobileNav';
 import { isNavItemCurrent, type NavItem } from '../../components/NavList';
 import { SkipLink } from '../../components/VisuallyHidden';
+import { useI18n } from '../../i18n/I18nProvider';
 import { stackedLayoutVariants, type StackedLayoutVariantProps } from './stacked-layout.variants';
 
 export interface StackedLayoutProps {
@@ -16,6 +17,11 @@ export interface StackedLayoutProps {
   currentHref?: string;
   /** Called when a link is activated (desktop or drawer). */
   onNavigate?: (item: NavItem) => void;
+  /**
+   * Custom primary navigation for the navbar on large screens (e.g. a MegaMenu). Replaces the
+   * desktop `links` row; `links` still feed the MobileNav drawer below lg (see `megaMenuNavItems`).
+   */
+  nav?: ReactNode;
   /** Right side of the navbar: ⌘K, notifications, user menu… */
   actions?: ReactNode;
   /** Optional second row under the navbar, e.g. a Tabs sub-nav. */
@@ -60,7 +66,7 @@ function DesktopLink({ item, current, className, onNavigate }: { item: NavItem; 
 }
 
 /**
- * Top-navigation shell: navbar (brand · links · actions) · optional tab sub-nav · optional page
+ * Top-navigation shell: navbar (brand · links or a custom `nav` · actions) · optional tab sub-nav · optional page
  * header band · centered content · footer. Below lg the links collapse into a MobileNav drawer.
  */
 export function StackedLayout({
@@ -69,19 +75,23 @@ export function StackedLayout({
   links = [],
   currentHref,
   onNavigate,
+  nav,
   actions,
   subnav,
   pageHeader,
   children,
   footer,
   width = 'default',
-  navLabel = 'Main',
+  navLabel: navLabelProp,
   mobileTitle,
   mobileFooter,
   mainId = 'main',
-  skipLinkLabel = 'Skip to main content',
+  skipLinkLabel: skipLinkLabelProp,
   fullScreen = false,
 }: StackedLayoutProps) {
+  const { t } = useI18n();
+  const navLabel = navLabelProp ?? t('common.main');
+  const skipLinkLabel = skipLinkLabelProp ?? t('skip.main');
   const s = stackedLayoutVariants({ fullScreen, width });
   return (
     <div className={cn(s.root(), className)}>
@@ -102,21 +112,28 @@ export function StackedLayout({
             />
           )}
           {brand && <div className={s.brand()}>{brand}</div>}
-          {links.length > 0 && (
+          {nav != null ? (
             <>
               <div aria-hidden className={s.divider()} />
-              <nav aria-label={navLabel} className={s.nav()}>
-                {links.map((item) => (
-                  <DesktopLink
-                    key={item.id ?? item.href ?? item.label}
-                    item={item}
-                    current={isNavItemCurrent(item, currentHref)}
-                    className={s.link()}
-                    onNavigate={onNavigate}
-                  />
-                ))}
-              </nav>
+              <div className={s.navSlot()}>{nav}</div>
             </>
+          ) : (
+            links.length > 0 && (
+              <>
+                <div aria-hidden className={s.divider()} />
+                <nav aria-label={navLabel} className={s.nav()}>
+                  {links.map((item) => (
+                    <DesktopLink
+                      key={item.id ?? item.href ?? item.label}
+                      item={item}
+                      current={isNavItemCurrent(item, currentHref)}
+                      className={s.link()}
+                      onNavigate={onNavigate}
+                    />
+                  ))}
+                </nav>
+              </>
+            )
           )}
           {actions && <div className={s.actions()}>{actions}</div>}
         </div>

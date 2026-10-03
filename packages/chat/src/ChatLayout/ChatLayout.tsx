@@ -1,4 +1,4 @@
-import { IconButton, cn } from '@gntik-ai/ui';
+import { IconButton, cn, useI18n } from '@gntik-ai/ui';
 import { ArrowDown } from 'lucide-react';
 import { useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode, type Ref } from 'react';
 import { useChatScroll } from '../useChatScroll';
@@ -32,6 +32,7 @@ export interface ChatLayoutProps {
 }
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
+const isRtl = (el: Element) => getComputedStyle(el).direction === 'rtl';
 
 /**
  * Full-height chat frame: a scrollable thread with auto-scroll that respects scrolling up,
@@ -43,21 +44,25 @@ export function ChatLayout({
   composer,
   header,
   panel,
-  panelLabel = 'Details',
+  panelLabel: panelLabelProp,
   defaultPanelWidth = 380,
   minPanelWidth = 260,
   maxPanelWidth = 720,
   onPanelWidthChange,
-  label = 'Conversation',
-  scrollButtonLabel = 'Scroll to latest message',
+  label: labelProp,
+  scrollButtonLabel: scrollButtonLabelProp,
   className,
   contentClassName,
   ref,
 }: ChatLayoutProps) {
+  const { t } = useI18n();
+  const panelLabel = panelLabelProp ?? t('chat.details');
+  const label = labelProp ?? t('chat.conversation');
+  const scrollButtonLabel = scrollButtonLabelProp ?? t('chat.scrollToBottom');
   const { scrollRef, contentRef, isAtBottom, scrollToBottom } = useChatScroll();
   const [width, setWidth] = useState(() => clamp(defaultPanelWidth, minPanelWidth, maxPanelWidth));
   const [dragging, setDragging] = useState(false);
-  const drag = useRef<{ x: number; width: number } | null>(null);
+  const drag = useRef<{ x: number; width: number; sign: number } | null>(null);
 
   const resize = (next: number) => {
     const w = clamp(Math.round(next), minPanelWidth, maxPanelWidth);
@@ -67,20 +72,20 @@ export function ChatLayout({
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
     e.currentTarget.setPointerCapture?.(e.pointerId);
-    drag.current = { x: e.clientX, width };
+    drag.current = { x: e.clientX, width, sign: isRtl(e.currentTarget) ? -1 : 1 };
     setDragging(true);
   };
   const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
     if (!drag.current) return;
-    // The panel sits on the right: dragging left widens it.
-    resize(drag.current.width + (drag.current.x - e.clientX));
+    // The panel sits on the inline end (right in LTR): dragging toward the thread widens it.
+    resize(drag.current.width + (drag.current.x - e.clientX) * drag.current.sign);
   };
   const endDrag = () => {
     drag.current = null;
     setDragging(false);
   };
   const onHandleKey = (e: KeyboardEvent<HTMLDivElement>) => {
-    const step = e.shiftKey ? 64 : 16;
+    const step = (e.shiftKey ? 64 : 16) * (isRtl(e.currentTarget) ? -1 : 1);
     const actions: Record<string, () => void> = {
       ArrowLeft: () => resize(width + step),
       ArrowRight: () => resize(width - step),
@@ -99,7 +104,7 @@ export function ChatLayout({
       <section aria-label={label} className={s.thread}>
         {header && <div className={s.header}>{header}</div>}
         <div className={s.viewport}>
-          <div ref={scrollRef} tabIndex={0} aria-label="Messages" role="region" className={s.scroller}>
+          <div ref={scrollRef} tabIndex={0} aria-label={t('chat.messages')} role="region" className={s.scroller}>
             <div ref={contentRef} className={cn(s.content, contentClassName)}>
               {children}
             </div>
@@ -128,7 +133,7 @@ export function ChatLayout({
           <div
             role="separator"
             aria-orientation="vertical"
-            aria-label={`Resize ${panelLabel.toLowerCase()} panel`}
+            aria-label={t('chat.resizePanel', { panel: panelLabel.toLowerCase() })}
             aria-valuenow={width}
             aria-valuemin={minPanelWidth}
             aria-valuemax={maxPanelWidth}

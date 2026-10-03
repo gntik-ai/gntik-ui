@@ -112,7 +112,7 @@ export function StatCard({
           {action.href ? (
             <Link underline="hover" href={action.href} className="inline-flex items-center gap-1 text-[12.5px] font-semibold">
               {action.label}
-              <ArrowRight size={14} aria-hidden />
+              <ArrowRight size={14} aria-hidden className="rtl:-scale-x-100" />
             </Link>
           ) : (
             <Button variant="ghost" size="sm" trailingIcon={ArrowRight} className="-mx-2 text-primary-text hover:text-primary-text" onClick={action.onClick}>

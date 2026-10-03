@@ -26,7 +26,9 @@ ENV NODE_ENV=production \
 WORKDIR /app
 
 # catálogo (snapshot del build): índice generado + referencias HTML + docs
-COPY registry.json *.md /app/design-system/
+COPY registry.json kit-registry.json *.md /app/design-system/
+# Kit sources so get_component / get_block / get_template can return file contents.
+COPY packages /app/design-system/packages
 COPY blocks /app/design-system/blocks
 
 # server

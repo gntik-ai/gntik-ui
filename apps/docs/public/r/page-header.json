@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-header",
+  "type": "registry:block",
+  "title": "Page header",
+  "description": "Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/page-chrome/PageHeader/PageHeader.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/page-chrome/page-header/PageHeader.tsx",
+      "content": "import {\n  Breadcrumbs,\n  Button,\n  MoreMenu,\n  StatusTag,\n  Tabs,\n  TabsList,\n  TabsTab,\n  cn,\n  type BreadcrumbItem,\n  type StatusDefinition,\n} from '@gntik-ai/ui';\nimport type { LucideIcon } from '@gntik-ai/icons';\nimport type { ReactNode } from 'react';\nimport { toMenuAction, type PageChromeAction } from '../types';\nimport { pageHeaderActions, pageHeaderBreadcrumbs, pageHeaderMeta, pageHeaderTabs } from './fixtures';\n\nexport interface PageHeaderMetaItem {\n  /** Term (screen-reader only when an icon is shown). */\n  label: string;\n  value: ReactNode;\n  icon?: LucideIcon;\n  /** Render the value in Geist Mono (ids, regions, versions). */\n  mono?: boolean;\n}\n\nexport interface PageHeaderTab {\n  value: string;\n  label: string;\n  count?: number;\n}\n\nexport interface PageHeaderProps {\n  /** Root element. Use 'div' where the layout already has a banner (e.g. StackedLayout's pageHeader slot). */\n  as?: 'header' | 'div';\n  /** Location trail above the title; `null` hides it. */\n  breadcrumbs?: BreadcrumbItem[] | null;\n  title?: ReactNode;\n  description?: ReactNode;\n  /** StatusTag key next to the title (e.g. `active`, `paused`, `failed`). */\n  status?: string;\n  statuses?: Record<string, StatusDefinition>;\n  /** Meta row under the description. */\n  meta?: PageHeaderMetaItem[];\n  /**\n   * Header actions in visual order. The primary one (first with `variant: 'primary'`, else the\n   * last) stays visible on small screens; the rest fold into a MoreMenu.\n   */\n  actions?: PageChromeAction[];\n  /** Resource-level navigation tabs under the header; `null` hides them. */\n  tabs?: PageHeaderTab[] | null;\n  tab?: string;\n  defaultTab?: string;\n  onTabChange?: (value: string) => void;\n  className?: string;\n}\n\n/** Screen header: breadcrumb, title + status, description, meta row, actions and optional tabs. */\nexport function PageHeader({\n  as: Root = 'header',\n  breadcrumbs = pageHeaderBreadcrumbs,\n  title = 'Deployments',\n  description = 'Every build and release of this project across its environments.',\n  status = 'active',\n  statuses,\n  meta = pageHeaderMeta,\n  actions = pageHeaderActions,\n  tabs = pageHeaderTabs,\n  tab,\n  defaultTab,\n  onTabChange,\n  className,\n}: PageHeaderProps) {\n  const explicitPrimary = actions.findIndex((a) => a.variant === 'primary');\n  const primaryIndex = explicitPrimary >= 0 ? explicitPrimary : actions.length - 1;\n  const primary = actions[primaryIndex];\n  const folded = actions.filter((_, i) => i !== primaryIndex);\n\n  const renderAction = (action: PageChromeAction, index: number) => (\n    <Button\n      key={action.id ?? action.label}\n      variant={action.variant ?? (index === primaryIndex ? 'primary' : 'secondary')}\n      icon={action.icon}\n      disabled={action.disabled}\n      onClick={action.onClick}\n    >\n      {action.label}\n    </Button>\n  );\n\n  return (\n    <Root className={cn('min-w-0', className)}>\n      {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} maxItems={4} className=\"mb-2.5\" />}\n      <div className=\"flex flex-wrap items-end justify-between gap-4\">\n        <div className=\"min-w-0 flex-1\">\n          <div className=\"flex flex-wrap items-center gap-x-3 gap-y-1.5\">\n            <h1 className=\"min-w-0 truncate text-2xl font-bold tracking-tight text-foreground\">{title}</h1>\n            {status && <StatusTag status={status} statuses={statuses} />}\n          </div>\n          {description != null && <p className=\"mt-1.5 max-w-2xl text-[13px] leading-6 text-muted-foreground\">{description}</p>}\n          {meta.length > 0 && (\n            <dl className=\"mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12.5px] text-muted-foreground\">\n              {meta.map(({ label, value, icon: Icon, mono }) => (\n                <div key={label} className=\"inline-flex items-center gap-1.5\">\n                  {Icon && <Icon size={14} aria-hidden />}\n                  <dt className={cn(Icon && 'sr-only')}>{label}</dt>\n                  <dd className={cn('text-foreground', mono && 'font-mono text-[12px]')}>{value}</dd>\n                </div>\n              ))}\n            </dl>\n          )}\n        </div>\n        {actions.length > 0 && (\n          <>\n            <div className=\"hidden shrink-0 items-center gap-2.5 sm:flex\">{actions.map(renderAction)}</div>\n            <div className=\"flex shrink-0 items-center gap-2 sm:hidden\">\n              {folded.length > 0 && <MoreMenu items={folded.map(toMenuAction)} label=\"More actions\" />}\n              {primary && renderAction(primary, primaryIndex)}\n            </div>\n          </>\n        )}\n      </div>\n      {tabs && tabs.length > 0 && (\n        <Tabs\n          value={tab}\n          defaultValue={defaultTab ?? tabs[0]?.value}\n          onValueChange={(value) => onTabChange?.(String(value))}\n          className=\"mt-5\"\n        >\n          <TabsList aria-label=\"Page sections\" className=\"overflow-x-auto\">\n            {tabs.map((t) => (\n              <TabsTab key={t.value} value={t.value} count={t.count}>\n                {t.label}\n              </TabsTab>\n            ))}\n          </TabsList>\n        </Tabs>\n      )}\n    </Root>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/page-chrome/PageHeader/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/page-chrome/page-header/fixtures.ts",
+      "content": "import { Globe, GitBranch, Clock } from '@gntik-ai/icons';\nimport type { BreadcrumbItem } from '@gntik-ai/ui';\nimport type { PageChromeAction } from '../types';\nimport type { PageHeaderMetaItem, PageHeaderTab } from './PageHeader';\n\nexport const pageHeaderBreadcrumbs: BreadcrumbItem[] = [\n  { label: 'Projects', href: '#projects' },\n  { label: 'acme-web', href: '#acme-web', mono: true },\n  { label: 'Deployments' },\n];\n\nexport const pageHeaderMeta: PageHeaderMetaItem[] = [\n  { label: 'Region', value: 'eu-west-1', icon: Globe, mono: true },\n  { label: 'Branch', value: 'main', icon: GitBranch, mono: true },\n  { label: 'Last deploy', value: '12 min ago', icon: Clock },\n];\n\nexport const pageHeaderActions: PageChromeAction[] = [\n  { label: 'View logs', variant: 'secondary' },\n  { label: 'Pause', variant: 'secondary' },\n  { label: 'New deployment', variant: 'primary' },\n];\n\nexport const pageHeaderTabs: PageHeaderTab[] = [\n  { value: 'overview', label: 'Overview' },\n  { value: 'deployments', label: 'Deployments', count: 1284 },\n  { value: 'domains', label: 'Domains' },\n  { value: 'settings', label: 'Settings' },\n];\n"
+    },
+    {
+      "path": "packages/blocks/src/page-chrome/types.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/page-chrome/types.ts",
+      "content": "import type { ButtonProps, MoreMenuAction } from '@gntik-ai/ui';\nimport type { LucideIcon } from '@gntik-ai/icons';\n\n/** A header/toolbar action rendered as a kit Button (or a MoreMenu item when folded). */\nexport interface PageChromeAction {\n  /** Stable key; defaults to `label`. */\n  id?: string;\n  label: string;\n  icon?: LucideIcon;\n  /** Button style; when omitted the block picks one (primary for the main action, secondary otherwise). */\n  variant?: ButtonProps['variant'];\n  disabled?: boolean;\n  onClick?: () => void;\n}\n\n/** Maps a PageChromeAction to a MoreMenu item (destructive variant → destructive item). */\nexport function toMenuAction(action: PageChromeAction): MoreMenuAction {\n  return {\n    label: action.label,\n    icon: action.icon,\n    disabled: action.disabled,\n    destructive: action.variant === 'destructive',\n    onSelect: action.onClick,\n  };\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "page-chrome"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/page-chrome/PageHeader/block.meta.ts"
+  }
+}

@@ -1,4 +1,4 @@
-import { AreaChart, BarChart, LineChart, chartFmt, type ChartColor, type ValueFormatter } from '@gntik-ai/charts';
+import { AreaChart, BarChart, Heatmap, LineChart, chartFmt, type ChartColor, type ChartStateProps, type HeatmapProps, type ValueFormatter } from '@gntik-ai/charts';
 import { Card, CardAction, CardDescription, CardHeader, CardTitle, cn, Toggle, ToggleGroup } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
 import { TrendDelta, type KpiDelta } from '../shared/TrendDelta';
@@ -12,21 +12,32 @@ export interface ChartCardRange {
   summary?: { value: string; delta?: KpiDelta };
 }
 
-export interface ChartCardProps<T extends object> {
+/** Heatmap-only options of a ChartCard with `kind="heatmap"`. */
+export type ChartCardHeatmapOptions = Pick<HeatmapProps<object>, 'scale' | 'domain' | 'steps' | 'showValues' | 'rowHeader'>;
+
+export interface ChartCardProps<T extends object> extends ChartStateProps {
   title?: string;
   description?: string;
   ranges?: readonly ChartCardRange[];
   /** Chart rows per range key. */
   dataByRange?: Readonly<Record<string, readonly T[]>>;
-  /** X-axis field. */
+  /** X-axis field (heatmap: the row label field). */
   index?: Extract<keyof T, string>;
-  /** Series fields (one legend entry each). */
+  /** Series fields, one legend entry each (heatmap: the columns, in order). */
   categories?: ReadonlyArray<Extract<keyof T, string>>;
-  kind?: 'area' | 'line' | 'bar';
+  /**
+   * Chart type. `heatmap` renders an @gntik-ai/charts Heatmap: rows from `index`, columns from
+   * `categories`, its hue from `colors[0]`, its colour scale as the legend (`showLegend`) and its
+   * cells sized to fill `height`.
+   */
+  kind?: 'area' | 'line' | 'bar' | 'heatmap';
+  /** Heatmap options (scale, domain, steps, showValues, rowHeader). */
+  heatmap?: ChartCardHeatmapOptions;
   stacked?: boolean;
   colors?: readonly ChartColor[];
   valueFormatter?: ValueFormatter;
   showLegend?: boolean;
+  /** Plot height in px (heatmap: the grid, column labels included). */
   height?: number;
   defaultRange?: string;
   range?: string;
@@ -45,7 +56,8 @@ const DEFAULT_COLORS: readonly ChartColor[] = ['primary', 'violet', 'cyan'];
 
 /**
  * Chart in a Card: title, optional headline value + delta, a 7d/30d/90d range ToggleGroup, and an
- * @gntik-ai/charts chart with its interactive legend.
+ * @gntik-ai/charts area, line, bar or heatmap chart with its legend (heatmap: its colour scale).
+ * The chart states (`state`, `emptyMessage`, `errorMessage`, `onRetry`) and `dataTable` pass through.
  */
 export function ChartCard<T extends object = CostPoint>({
   title = 'Infrastructure cost',
@@ -55,6 +67,7 @@ export function ChartCard<T extends object = CostPoint>({
   index = 'day' as Extract<keyof T, string>,
   categories = DEFAULT_CATEGORIES as unknown as ReadonlyArray<Extract<keyof T, string>>,
   kind = 'area',
+  heatmap,
   stacked = true,
   colors = DEFAULT_COLORS,
   valueFormatter = chartFmt.usd,
@@ -67,13 +80,19 @@ export function ChartCard<T extends object = CostPoint>({
   footer,
   titleAs = 'h3',
   className,
+  state,
+  emptyMessage,
+  errorMessage,
+  onRetry,
+  dataTable,
 }: ChartCardProps<T>) {
   const [inner, setInner] = useState(defaultRange ?? ranges[0]?.value ?? '');
   const current = rangeProp ?? inner;
   const active = ranges.find((r) => r.value === current) ?? ranges[0];
   const data = (active && dataByRange[active.value]) ?? [];
   const chartLabel = `${title}${active ? `, ${active.label}` : ''}`;
-  const common = { data, index, categories, colors, valueFormatter, showLegend, height, 'aria-label': chartLabel };
+  const states = { state, emptyMessage, errorMessage, onRetry, dataTable };
+  const common = { data, index, categories, colors, valueFormatter, showLegend, height, 'aria-label': chartLabel, ...states };
   return (
     <Card className={className}>
       <CardHeader className="pb-2">
@@ -109,7 +128,21 @@ export function ChartCard<T extends object = CostPoint>({
         </p>
       )}
       <div className={cn('px-3 pb-4 pt-3 sm:px-4', !footer && 'pb-5')}>
-        {kind === 'bar' ? (
+        {kind === 'heatmap' ? (
+          <Heatmap
+            data={data}
+            index={index}
+            categories={categories}
+            color={colors[0] ?? 'primary'}
+            valueFormatter={valueFormatter}
+            showScale={showLegend}
+            height={height}
+            aria-label={chartLabel}
+            {...heatmap}
+            {...states}
+            dataTable={dataTable ?? true}
+          />
+        ) : kind === 'bar' ? (
           <BarChart {...common} stacked={stacked} />
         ) : kind === 'line' ? (
           <LineChart {...common} />

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "field",
+  "type": "registry:ui",
+  "title": "Field",
+  "description": "Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0",
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Field/Field.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/field/Field.tsx",
+      "content": "import { Field as BaseField } from '@base-ui/react/field';\nimport { Fieldset as BaseFieldset } from '@base-ui/react/fieldset';\nimport { CircleAlert } from 'lucide-react';\nimport type { HTMLAttributes, ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { fieldVariants } from './field.variants';\n\nconst s = fieldVariants();\n\nexport interface FieldProps extends Omit<BaseField.Root.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n}\n\n/**\n * Groups a label, a control, a description and an error. Base UI wires the ids: the label\n * targets the control, and the description and error are linked with aria-describedby.\n * Pass `invalid` to drive the error from outside (e.g. a form library).\n */\nexport function Field({ className, ...props }: FieldProps) {\n  return <BaseField.Root className={cn(s.root(), className)} {...props} />;\n}\n\nexport interface FieldLabelProps extends Omit<BaseField.Label.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLLabelElement>;\n  /** Shows a required marker after the label text (also set `required` on the control). */\n  required?: boolean;\n}\n\n/** Visible label; clicking it focuses the field's control. */\nexport function FieldLabel({ className, required, children, ...props }: FieldLabelProps) {\n  return (\n    <BaseField.Label className={cn(s.label(), className)} {...props}>\n      {children}\n      {required && (\n        <span aria-hidden className={s.required()}>\n          *\n        </span>\n      )}\n    </BaseField.Label>\n  );\n}\n\nexport interface FieldDescriptionProps extends Omit<BaseField.Description.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLParagraphElement>;\n}\n\n/** Helper text under the control, announced as part of its description. */\nexport function FieldDescription({ className, ...props }: FieldDescriptionProps) {\n  return <BaseField.Description className={cn(s.description(), className)} {...props} />;\n}\n\nexport interface FieldErrorProps extends Omit<BaseField.Error.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** Hide the leading alert icon. */\n  hideIcon?: boolean;\n}\n\n/**\n * Validation message. Rendered only while the field is invalid (or when `match` says so)\n * and linked to the control through aria-describedby.\n */\nexport function FieldError({ className, hideIcon, children, ...props }: FieldErrorProps) {\n  return (\n    <BaseField.Error className={cn(s.error(), className)} {...props}>\n      {!hideIcon && <CircleAlert size={13} aria-hidden className=\"mt-[3px] shrink-0\" />}\n      <span>{children}</span>\n    </BaseField.Error>\n  );\n}\n\nexport interface FieldItemProps extends Omit<BaseField.Item.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n}\n\n/** Wraps one checkbox or radio inside a group that lives in a Field. */\nexport function FieldItem({ className, ...props }: FieldItemProps) {\n  return <BaseField.Item className={cn(s.item(), className)} {...props} />;\n}\n\nexport interface FieldsetProps extends Omit<BaseFieldset.Root.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLFieldSetElement>;\n}\n\n/** Groups related fields (or a checkbox/radio group) under a shared legend. */\nexport function Fieldset({ className, ...props }: FieldsetProps) {\n  return <BaseFieldset.Root className={cn(s.fieldset(), className)} {...props} />;\n}\n\nexport interface FieldsetLegendProps extends Omit<BaseFieldset.Legend.Props, 'className'> {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n}\n\n/** The fieldset's accessible name. */\nexport function FieldsetLegend({ className, ...props }: FieldsetLegendProps) {\n  return <BaseFieldset.Legend className={cn(s.legend(), className)} {...props} />;\n}\n\n/** Supporting text under a legend. */\nexport function FieldsetDescription({ className, ...props }: HTMLAttributes<HTMLParagraphElement> & { children?: ReactNode }) {\n  return <p className={cn(s.legendDescription(), className)} {...props} />;\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Field/field.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/field/field.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const fieldVariants = tv({\n  slots: {\n    root: 'flex min-w-0 flex-col gap-2 data-disabled:opacity-70',\n    label: 'inline-flex items-center gap-0.5 text-[13px] font-medium text-foreground data-disabled:cursor-not-allowed',\n    required: 'text-destructive-text',\n    description: 'text-[12px] leading-5 text-muted-foreground text-pretty',\n    error: 'flex items-start gap-1.5 text-[12px] leading-5 text-destructive-text',\n    item: 'flex',\n    fieldset: 'm-0 flex min-w-0 flex-col gap-3 border-0 p-0 data-disabled:opacity-70',\n    legend: 'p-0 text-[13px] font-semibold text-foreground',\n    legendDescription: '-mt-2 text-[13px] leading-6 text-muted-foreground text-pretty',\n  },\n});\n\nexport type FieldVariantProps = VariantProps<typeof fieldVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Field/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/field/index.ts",
+      "content": "export {\n  Field,\n  FieldLabel,\n  FieldDescription,\n  FieldError,\n  FieldItem,\n  Fieldset,\n  FieldsetLegend,\n  FieldsetDescription,\n  type FieldProps,\n  type FieldLabelProps,\n  type FieldDescriptionProps,\n  type FieldErrorProps,\n  type FieldItemProps,\n  type FieldsetProps,\n  type FieldsetLegendProps,\n} from './Field';\nexport { fieldVariants } from './field.variants';\nexport { doc as fieldDoc } from './Field.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Field/Field.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/field/Field.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Field',\n  group: 'Forms',\n  status: 'stable',\n  description: 'Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name.',\n  primitive: '@base-ui/react/field, @base-ui/react/fieldset',\n  pattern: 'form field (label + description + error), fieldset/legend',\n  keyboard: [\n    ['Click on label', 'Moves focus to the field control'],\n    ['Tab', 'Moves focus to the control; its description and error are announced via aria-describedby'],\n  ],\n  tokens: ['foreground', 'muted-foreground', 'destructive-text'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Forms"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Field/Field.doc.ts"
+  }
+}

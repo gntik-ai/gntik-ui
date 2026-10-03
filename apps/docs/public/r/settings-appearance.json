@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-appearance",
+  "type": "registry:block",
+  "title": "Appearance settings",
+  "description": "Theme switcher wired to the ThemeProvider, table density and interface language.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/blocks",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/settings-profile.json"
+  ],
+  "files": [
+    {
+      "path": "packages/templates/src/settings-appearance/Page.tsx",
+      "type": "registry:component",
+      "target": "app/templates/settings-appearance/Page.tsx",
+      "content": "import { SettingsRow } from '@gntik-ai/blocks';\nimport { Section, SimpleSelect, ThemeSwitcher, Toggle, ToggleGroup, useTheme } from '@gntik-ai/ui';\nimport { useState } from 'react';\nimport { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';\nimport { THEME_LABELS, densities, languages as defaultLanguages, type Density, type LanguageOption } from './data';\n\nexport interface SettingsAppearanceProps extends SettingsFrameOptions {\n  density: Density;\n  onDensityChange: (density: Density) => void;\n  language: string;\n  languages: LanguageOption[];\n  onLanguageChange: (language: string) => void;\n}\n\n/**\n * Appearance settings: ThemeSwitcher (reads and sets the mode through useTheme, so it needs the\n * app's ThemeProvider), density ToggleGroup and language Select, laid out as SettingsRows.\n */\nexport default function SettingsAppearancePage({\n  density: initialDensity = 'comfortable',\n  onDensityChange,\n  language: initialLanguage = 'en',\n  languages = defaultLanguages,\n  onLanguageChange,\n  ...frame\n}: Partial<SettingsAppearanceProps>) {\n  const { mode, resolved } = useTheme();\n  const [density, setDensity] = useState<Density>(initialDensity);\n  const [language, setLanguage] = useState(initialLanguage);\n\n  return (\n    <SettingsFrame page=\"appearance\" description=\"How the interface looks on this device. Saved automatically.\" {...frame}>\n      <Section title=\"Display\" divided>\n        <SettingsRow\n          label=\"Theme\"\n          description={mode === 'system' ? `Follows your system setting (now ${THEME_LABELS[resolved]}).` : 'Dark is the default. High contrast strengthens borders and text.'}\n          control={<ThemeSwitcher label=\"Theme\" />}\n        />\n        <SettingsRow\n          label=\"Density\"\n          description=\"Compact fits more rows in tables and lists.\"\n          control={({ labelId, descriptionId }) => (\n            <ToggleGroup\n              size=\"sm\"\n              aria-labelledby={labelId}\n              aria-describedby={descriptionId}\n              value={[density]}\n              onValueChange={(v) => {\n                const next = v[0] as Density | undefined;\n                if (!next) return;\n                setDensity(next);\n                onDensityChange?.(next);\n              }}\n            >\n              {densities.map((d) => (\n                <Toggle key={d.value} value={d.value}>\n                  {d.label}\n                </Toggle>\n              ))}\n            </ToggleGroup>\n          )}\n        />\n        <SettingsRow\n          label=\"Language\"\n          description=\"Used for menus, emails and dates.\"\n          control={\n            <SimpleSelect\n              aria-label=\"Language\"\n              size=\"sm\"\n              items={languages}\n              value={language}\n              onValueChange={(v) => {\n                if (v == null) return;\n                setLanguage(v);\n                onLanguageChange?.(v);\n              }}\n              className=\"w-44\"\n            />\n          }\n        />\n      </Section>\n    </SettingsFrame>\n  );\n}\n"
+    },
+    {
+      "path": "packages/templates/src/settings-appearance/data.ts",
+      "type": "registry:lib",
+      "target": "app/templates/settings-appearance/data.ts",
+      "content": "export type Density = 'comfortable' | 'compact';\n\nexport interface LanguageOption {\n  value: string;\n  label: string;\n}\n\nexport const densities: Array<{ value: Density; label: string }> = [\n  { value: 'comfortable', label: 'Comfortable' },\n  { value: 'compact', label: 'Compact' },\n];\n\nexport const languages: LanguageOption[] = [\n  { value: 'en', label: 'English' },\n  { value: 'es', label: 'Español' },\n  { value: 'pt', label: 'Português' },\n  { value: 'de', label: 'Deutsch' },\n  { value: 'fr', label: 'Français' },\n];\n\nexport const THEME_LABELS = { dark: 'Dark', light: 'Light', high_contrast: 'High contrast' } as const;\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {},
+    "@import \"@gntik-ai/blocks/styles.css\"": {}
+  },
+  "categories": [
+    "template",
+    "Settings"
+  ],
+  "meta": {
+    "kind": "template",
+    "package": "@gntik-ai/templates",
+    "status": "beta",
+    "source": "packages/templates/src/settings-appearance/template.meta.ts"
+  }
+}

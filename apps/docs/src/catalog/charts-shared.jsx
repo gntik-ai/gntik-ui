@@ -61,3 +61,6 @@ function ChartSegmented({ value, onChange, options }) {
 
 Object.assign(window, { ChartCard, ChartDelta, ChartVariant, ChartSegmented });
 })();
+
+// ES module marker: the dev server compiles module files with the automatic JSX runtime.
+export {};

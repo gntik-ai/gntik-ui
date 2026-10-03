@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator",
+  "type": "registry:ui",
+  "title": "Separator",
+  "description": "Thin rule between content. Horizontal or vertical, default / subtle / strong weight, and an optional label (plain text, mono kicker or pill) placed at the start, centre or end of a horizontal line.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://gntik-ui.invalid/r/gntik-tokens.json",
+    "https://gntik-ui.invalid/r/ui-utils.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Separator/Separator.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/separator/Separator.tsx",
+      "content": "import { Separator as BaseSeparator } from '@base-ui/react/separator';\nimport type { ReactNode, Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { separatorVariants, type SeparatorVariantProps } from './separator.variants';\n\nexport interface SeparatorProps extends Omit<BaseSeparator.Props, 'className'>, SeparatorVariantProps {\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n  /** Text (or icon) set into a horizontal line, e.g. a date or section kicker. */\n  label?: ReactNode;\n  /** Where the label sits along the line. */\n  labelPosition?: 'start' | 'center' | 'end';\n}\n\n/**\n * Thematic break between content (role=\"separator\"). Horizontal or vertical; a horizontal\n * separator can carry a label. Purely decorative dividers can pass `render={<div aria-hidden />}`.\n */\nexport function Separator({\n  orientation = 'horizontal',\n  variant,\n  labelStyle,\n  label,\n  labelPosition = 'center',\n  className,\n  ...props\n}: SeparatorProps) {\n  const s = separatorVariants({ orientation, variant, labelStyle });\n  if (label == null || orientation === 'vertical') {\n    return <BaseSeparator orientation={orientation} className={cn(s.line(), className)} {...props} />;\n  }\n  const line = s.line({ class: 'w-auto flex-1' });\n  return (\n    <div className={cn(s.labelled(), className)}>\n      {labelPosition !== 'start' && <BaseSeparator orientation=\"horizontal\" className={line} {...props} />}\n      <span className={s.label()}>{label}</span>\n      {labelPosition !== 'end' && (\n        labelPosition === 'start'\n          ? <BaseSeparator orientation=\"horizontal\" className={line} {...props} />\n          : <span aria-hidden className={line} />\n      )}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/ui/src/components/Separator/index.ts",
+      "type": "registry:ui",
+      "target": "components/ui/separator/index.ts",
+      "content": "export { Separator, type SeparatorProps } from './Separator';\nexport { separatorVariants, type SeparatorVariantProps } from './separator.variants';\nexport { doc as separatorDoc } from './Separator.doc';\n"
+    },
+    {
+      "path": "packages/ui/src/components/Separator/separator.variants.ts",
+      "type": "registry:ui",
+      "target": "components/ui/separator/separator.variants.ts",
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const separatorVariants = tv({\n  slots: {\n    line: 'shrink-0 border-0',\n    labelled: 'flex w-full items-center gap-3',\n    label: 'shrink-0',\n  },\n  variants: {\n    orientation: {\n      horizontal: { line: 'h-px w-full' },\n      vertical: { line: 'w-px self-stretch' },\n    },\n    variant: {\n      default: { line: 'bg-border' },\n      subtle: { line: 'bg-border/50' },\n      strong: { line: 'rounded-full bg-border' },\n    },\n    labelStyle: {\n      plain: { label: 'text-[12.5px] text-muted-foreground' },\n      kicker: { label: 'font-mono text-[10.5px] tracking-[0.14em] text-muted-foreground uppercase' },\n      pill: { label: 'inline-flex h-[22px] items-center rounded-full bg-secondary px-2.5 font-mono text-[10.5px] font-semibold text-muted-foreground' },\n    },\n  },\n  compoundVariants: [\n    { orientation: 'horizontal', variant: 'strong', class: { line: 'h-0.5' } },\n    { orientation: 'vertical', variant: 'strong', class: { line: 'w-0.5' } },\n  ],\n  defaultVariants: { orientation: 'horizontal', variant: 'default', labelStyle: 'plain' },\n});\n\nexport type SeparatorVariantProps = VariantProps<typeof separatorVariants>;\n"
+    },
+    {
+      "path": "packages/ui/src/components/Separator/Separator.doc.ts",
+      "type": "registry:ui",
+      "target": "components/ui/separator/Separator.doc.ts",
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Separator',\n  group: 'Layout',\n  status: 'stable',\n  description: 'Thin rule between content. Horizontal or vertical, default / subtle / strong weight, and an optional label (plain text, mono kicker or pill) placed at the start, centre or end of a horizontal line.',\n  primitive: '@base-ui/react/separator',\n  pattern: 'separator',\n  tokens: ['border', 'secondary', 'muted-foreground'],\n};\n"
+    },
+    {
+      "path": "packages/ui/src/doc.ts",
+      "type": "registry:ui",
+      "target": "components/doc.ts",
+      "content": "/**\n * Component documentation contract. Every component folder exports a `*.doc.ts`\n * with this shape; the registry build and the docs site read it.\n */\nexport interface ComponentDoc {\n  /** Public component name, e.g. \"Button\". */\n  name: string;\n  /** Inventory group, e.g. \"Actions\", \"Forms\", \"Overlays\". */\n  group: 'Actions' | 'Forms' | 'Overlays' | 'Navigation' | 'Display' | 'Feedback' | 'Layout' | 'Theme';\n  /** Lifecycle badge. */\n  status: 'stable' | 'beta' | 'experimental';\n  description: string;\n  /** Headless primitive it is built on, if any (e.g. \"@base-ui/react/dialog\"). */\n  primitive?: string;\n  /** WAI-ARIA pattern the a11y contract test checks. */\n  pattern?: string;\n  /** Keyboard contract: key → behaviour. Each row is covered by a test. */\n  keyboard?: Array<[key: string, behaviour: string]>;\n  /** Tokens the component reads (for the theming docs). */\n  tokens?: string[];\n}\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Layout"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/components/Separator/Separator.doc.ts"
+  }
+}
