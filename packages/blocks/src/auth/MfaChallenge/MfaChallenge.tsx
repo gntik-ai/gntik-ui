@@ -48,8 +48,10 @@ export function MfaChallenge({
   const [code, setCode] = useState('');
   const [backup, setBackup] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [now, setNow] = useState(() => Date.now());
-  const [resendAt, setResendAt] = useState(() => Date.now() + (initialCooldown ?? resendCooldown) * 1000);
+  // One start time for both, so the first render shows the full cooldown (not cooldown + 1s).
+  const [start] = useState(() => Date.now());
+  const [now, setNow] = useState(start);
+  const [resendAt, setResendAt] = useState(() => start + (initialCooldown ?? resendCooldown) * 1000);
   const [resent, setResent] = useState(false);
   const { loading, error, run } = useAsyncSubmit('That code did not work. Try again.');
   const busy = loadingProp ?? loading;
