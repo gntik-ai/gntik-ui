@@ -1,9 +1,9 @@
 /* ============================================================================
-   Gntik UI · notifications.jsx — toasts (grupo "Overlays").
-   Notificaciones efímeras apiladas en una esquina, contenidas en el preview.
-   Toast de marca (tono semántico + icono + barra de progreso) con autodismiss,
-   pausa al pasar el ratón y cierre manual. Tres patrones: los cuatro tonos,
-   stack interactivo con autodismiss, y toast con acción «deshacer». Tokens.
+   Gntik UI · notifications.jsx — toasts ("Overlays" group).
+   Ephemeral notifications stacked in a corner, contained in the preview.
+   Brand toast (semantic tone + icon + progress bar) with auto-dismiss,
+   pause on hover and manual close. Three patterns: the four tones, an
+   interactive stack with auto-dismiss, and a toast with an "undo" action. Tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useEffect, useRef } = window;
@@ -19,7 +19,7 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── tono semántico (nunca compite con el verde de marca salvo en éxito) ──── */
+/* ── semantic tone (never competes with brand green except on success) ──── */
 const TTONE = {
   success:     { fg: 'text-primary',     icon: 'check', bar: 'bg-primary' },
   info:        { fg: 'text-info',        icon: 'info',  bar: 'bg-info' },
@@ -27,7 +27,7 @@ const TTONE = {
   destructive: { fg: 'text-destructive', icon: 'alert', bar: 'bg-destructive' },
 };
 
-/* ── Toast · progreso por rAF, pausa al hover, salida animada ─────────────── */
+/* ── Toast · rAF progress, pause on hover, animated exit ──────────────────── */
 function Toast({ t, onClose, onAction }) {
   const tn = TTONE[t.tone] || TTONE.info;
   const duration = t.duration ?? 5000;
@@ -72,7 +72,7 @@ function Toast({ t, onClose, onAction }) {
             </div>
           )}
         </div>
-        <button onClick={close} aria-label="Cerrar"
+        <button onClick={close} aria-label="Close"
           className="-mr-1 -mt-0.5 grid size-6 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-foreground/10 hover:text-foreground">
           <Icon name="x" size={13} stroke={2.4} />
         </button>
@@ -82,7 +82,7 @@ function Toast({ t, onClose, onAction }) {
   );
 }
 
-/* ── stack en esquina (contenido en el preview con absolute) ──────────────── */
+/* ── corner stack (contained in the preview with absolute) ───────────────── */
 function ToastStack({ toasts, onClose, onAction }) {
   return (
     <div className="pointer-events-none absolute bottom-4 right-4 z-50 flex w-[320px] flex-col items-end gap-2.5">
@@ -91,7 +91,7 @@ function ToastStack({ toasts, onClose, onAction }) {
   );
 }
 
-/* hook: cola de toasts con tope, salida diferida */
+/* hook: capped toast queue, deferred exit */
 let SEQ = 1;
 function useToaster(max = 4) {
   const [toasts, setToasts] = useState([]);
@@ -104,30 +104,30 @@ function useToaster(max = 4) {
   return { toasts, push, dismiss, clear };
 }
 
-/* ── 1 · LOS CUATRO TONOS (estáticos, sin autodismiss) ───────────────────── */
+/* ── 1 · THE FOUR TONES (static, no auto-dismiss) ───────────────────────── */
 function Tones() {
   const init = [
-    { id: 's', tone: 'success', title: 'Deploy completado', body: 'billing-copilot sirve tráfico en eu-west-1.', duration: 0 },
-    { id: 'i', tone: 'info', title: 'Nueva versión de runtime', body: 'El Fleet pasará a sonnet-4.5 esta noche.', duration: 0 },
-    { id: 'w', tone: 'warning', title: 'Presupuesto al 92%', body: '$9.2k de $10k consumidos este mes.', duration: 0 },
-    { id: 'd', tone: 'destructive', title: '3 agentes sin responder', body: 'us-east-1 no responde desde hace 4 min.', duration: 0 },
+    { id: 's', tone: 'success', title: 'Deploy complete', body: 'checkout-api is serving traffic in eu-west-1.', duration: 0 },
+    { id: 'i', tone: 'info', title: 'New runtime version', body: 'All services move to runtime 4.5 tonight.', duration: 0 },
+    { id: 'w', tone: 'warning', title: 'Budget at 92%', body: '$9.2k of $10k used this month.', duration: 0 },
+    { id: 'd', tone: 'destructive', title: '3 workers not responding', body: 'us-east-1 has been unresponsive for 4 min.', duration: 0 },
   ];
   const [list, setList] = useState(init);
   const remove = (id) => setList(l => l.filter(t => t.id !== id));
   return (
     <div className="mx-auto grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
       {list.map(t => <div key={t.id} className="flex justify-center"><Toast t={t} onClose={remove} /></div>)}
-      {list.length === 0 && <button onClick={() => setList(init)} className="col-span-full mx-auto font-mono text-[12px] text-primary hover:underline">restaurar toasts</button>}
+      {list.length === 0 && <button onClick={() => setList(init)} className="col-span-full mx-auto font-mono text-[12px] text-primary hover:underline">restore toasts</button>}
     </div>
   );
 }
 
-/* ── 2 · STACK INTERACTIVO con autodismiss ───────────────────────────────── */
+/* ── 2 · INTERACTIVE STACK with auto-dismiss ──────────────────────────────── */
 const SPAWN = [
-  { label: 'Deploy', tone: 'success', icon: 'check', payload: { tone: 'success', title: 'Deploy completado', body: 'billing-copilot v4.5 está activo.' } },
-  { label: 'Runtime', tone: 'info', icon: 'info', payload: { tone: 'info', title: 'Nueva versión disponible', body: 'sonnet-4.5 listo para el Fleet.' } },
-  { label: 'Presupuesto', tone: 'warning', icon: 'alert', payload: { tone: 'warning', title: 'Presupuesto al 92%', body: '$9.2k de $10k este mes.' } },
-  { label: 'Caída', tone: 'destructive', icon: 'alert', payload: { tone: 'destructive', title: '3 agentes sin responder', body: 'Revisa us-east-1.' } },
+  { label: 'Deploy', tone: 'success', icon: 'check', payload: { tone: 'success', title: 'Deploy complete', body: 'checkout-api v4.5 is live.' } },
+  { label: 'Runtime', tone: 'info', icon: 'info', payload: { tone: 'info', title: 'New version available', body: 'Runtime 4.5 is ready to roll out.' } },
+  { label: 'Budget', tone: 'warning', icon: 'alert', payload: { tone: 'warning', title: 'Budget at 92%', body: '$9.2k of $10k this month.' } },
+  { label: 'Outage', tone: 'destructive', icon: 'alert', payload: { tone: 'destructive', title: '3 workers not responding', body: 'Check us-east-1.' } },
 ];
 const SPBTN = { success: 'text-primary', info: 'text-info', warning: 'text-warning', destructive: 'text-destructive' };
 function StackDemo() {
@@ -135,7 +135,7 @@ function StackDemo() {
   return (
     <div className="relative h-[440px] rounded-lg overflow-hidden">
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-        <p className="mb-4 text-[12.5px] text-muted-foreground">Lanza un toast — se apila abajo a la derecha y desaparece solo. Pasa el ratón por encima para pausarlo.</p>
+        <p className="mb-4 text-[12.5px] text-muted-foreground">Fire a toast — it stacks at the bottom right and dismisses itself. Hover over it to pause.</p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           {SPAWN.map(s => (
             <button key={s.label} onClick={() => push(s.payload)}
@@ -145,32 +145,32 @@ function StackDemo() {
           ))}
         </div>
         <button onClick={clear} disabled={!toasts.length}
-          className="mt-3 font-mono text-[11.5px] text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40">limpiar todo · {toasts.length}/4</button>
+          className="mt-3 font-mono text-[11.5px] text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40">clear all · {toasts.length}/4</button>
       </div>
       <ToastStack toasts={toasts} onClose={dismiss} />
     </div>
   );
 }
 
-/* ── 3 · CON ACCIÓN (deshacer) ───────────────────────────────────────────── */
+/* ── 3 · WITH ACTION (undo) ─────────────────────────────────────────────── */
 function UndoDemo() {
   const { toasts, push, dismiss } = useToaster(2);
   const [paused, setPaused] = useState(false);
   const pause = () => {
     setPaused(true);
-    push({ tone: 'warning', title: 'Fleet en pausa', body: 'Los 24 agentes dejaron de aceptar tráfico.', action: 'Deshacer', duration: 7000 });
+    push({ tone: 'warning', title: 'Workers paused', body: 'All 24 workers stopped accepting traffic.', action: 'Undo', duration: 7000 });
   };
   return (
     <div className="relative h-[420px] rounded-lg overflow-hidden">
       <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3 text-center">
         <span className={"inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11.5px] " + (paused ? 'border-warning/30 bg-warning/10 text-warning' : 'border-primary/30 bg-primary/10 text-primary')}>
-          <span className="size-1.5 rounded-full bg-current" />Fleet {paused ? 'en pausa' : 'activo'}
+          <span className="size-1.5 rounded-full bg-current" />Workers {paused ? 'paused' : 'active'}
         </span>
         <button onClick={pause} disabled={paused}
           className="inline-flex h-9 items-center gap-2 rounded-lg border border-border bg-card px-3.5 text-[13px] font-semibold text-foreground shadow-sm transition-colors hover:bg-secondary/60 disabled:opacity-50">
-          <Icon name="pause" size={15} />Pausar Fleet
+          <Icon name="pause" size={15} />Pause workers
         </button>
-        <p className="text-[12px] text-muted-foreground">Pulsa <span className="font-mono text-foreground">Deshacer</span> en el toast para revertir.</p>
+        <p className="text-[12px] text-muted-foreground">Click <span className="font-mono text-foreground">Undo</span> in the toast to revert.</p>
       </div>
       <ToastStack toasts={toasts} onClose={dismiss} onAction={() => setPaused(false)} />
     </div>
@@ -178,31 +178,31 @@ function UndoDemo() {
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_TOASTER = `// useToaster — cola con tope y salida diferida; autodismiss vive en cada Toast
+const CODE_TOASTER = `// useToaster — capped queue with deferred exit; auto-dismiss lives in each Toast
 let SEQ = 1;
 function useToaster(max = 4) {
   const [toasts, setToasts] = useState([]);
   const dismiss = (id) => {
     setToasts((ts) => ts.map((t) => (t.id === id ? { ...t, leaving: true } : t)));
-    setTimeout(() => setToasts((ts) => ts.filter((t) => t.id !== id)), 220);  // deja salir la animación
+    setTimeout(() => setToasts((ts) => ts.filter((t) => t.id !== id)), 220);  // let the exit animation finish
   };
   const push = (toast) => setToasts((ts) => [...ts, { id: SEQ++, ...toast }].slice(-max));
   return { toasts, push, dismiss };
 }
 
-// Stack contenido en una esquina (en producción: fixed bottom-4 right-4)
+// Stack contained in a corner (in production: fixed bottom-4 right-4)
 <div className="pointer-events-none absolute bottom-4 right-4 z-50 flex w-[320px] flex-col items-end gap-2.5">
   {toasts.map((t) => <Toast key={t.id} t={t} onClose={dismiss} />)}
 </div>`;
 
-const CODE_TOAST = `// Toast — progreso por requestAnimationFrame, pausa al pasar el ratón
+const CODE_TOAST = `// Toast — requestAnimationFrame progress, pause on hover
 function Toast({ t, onClose }) {
   const duration = t.duration ?? 5000;
   const [pct, setPct] = useState(100);
   const start = useRef(0), elapsed = useRef(0), raf = useRef(0), paused = useRef(false);
 
   useEffect(() => {
-    if (duration === 0) return;                  // 0 = fijo (sin autodismiss)
+    if (duration === 0) return;                  // 0 = sticky (no auto-dismiss)
     const tick = (now) => {
       if (paused.current) { raf.current = requestAnimationFrame(tick); return; }
       if (!start.current) start.current = now;
@@ -217,29 +217,29 @@ function Toast({ t, onClose }) {
 
   const onEnter = () => { paused.current = true; elapsed.current += performance.now() - start.current; start.current = 0; };
   const onLeave = () => { paused.current = false; };
-  // … barra: <div style={{ width: pct + "%" }} className={"h-full " + tn.bar} /> …
+  // … bar: <div style={{ width: pct + "%" }} className={"h-full " + tn.bar} /> …
 }`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function NotificationsSection() {
   return (
     <div>
       <SectionHead kicker="Overlays" title="Notifications" status="done"
-        intro="El aviso efímero que aparece en una esquina, informa de algo que ya pasó y se va solo. Un Toast de marca con tono semántico, icono y barra de progreso; se apilan con tope, se pausan al pasar el ratón y se pueden cerrar a mano o llevar una acción de deshacer. Aquí van contenidos en el preview; en producción, fixed en la esquina. El tono solo se vuelve verde en el éxito — nunca compite con la marca." />
+        intro="The ephemeral notice that appears in a corner, reports something that already happened and goes away on its own. A brand Toast with semantic tone, icon and progress bar; they stack up to a cap, pause on hover and can be closed manually or carry an undo action. Here they are contained in the preview; in production, fixed to the corner. The tone only turns green on success — it never competes with the brand." />
 
-      <Variant title="Los cuatro tonos"
-        desc="La anatomía en reposo (sin autodismiss): icono en tono, título, cuerpo y la ✕ para cerrar. Éxito en verde de marca, info, aviso y destructivo. Ciérralos y el enlace los restaura.">
+      <Variant title="The four tones"
+        desc="The anatomy at rest (no auto-dismiss): toned icon, title, body and the ✕ to close. Success in brand green, info, warning and destructive. Close them and the link restores them.">
         <Tones />
       </Variant>
 
-      <Variant title="Apilados con autodismiss"
-        desc="Lanza toasts: se apilan abajo a la derecha con un tope de 4, cada uno con su barra de progreso y desaparición automática. Pasa el ratón por encima para pausar el temporizador; «limpiar todo» los cierra a la vez."
+      <Variant title="Stacked with auto-dismiss"
+        desc="Fire toasts: they stack at the bottom right up to 4, each with its own progress bar and automatic dismissal. Hover to pause the timer; “clear all” closes them at once."
         code={CODE_TOASTER}>
         <StackDemo />
       </Variant>
 
-      <Variant title="Con acción (deshacer)"
-        desc="El patrón optimista: ejecuta ya y ofrece revertir mientras el toast vive. Pausa el Fleet y pulsa Deshacer antes de que el toast caduque — el estado vuelve a activo."
+      <Variant title="With action (undo)"
+        desc="The optimistic pattern: act now and offer to revert while the toast is alive. Pause the workers and click Undo before the toast expires — the state goes back to active."
         code={CODE_TOAST}>
         <UndoDemo />
       </Variant>

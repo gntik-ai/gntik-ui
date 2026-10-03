@@ -1,13 +1,13 @@
 /* ============================================================================
-   Gntik UI · action-panels.jsx — paneles de acción (grupo "Formularios").
-   La card-con-acción de marca: título + descripción + un control. Simple,
-   con acción a la derecha, con input inline (allowlist de dominios), con toggle
-   y zona de peligro. Dominio musematic. Tokens, cero color hardcodeado.
+   Gntik UI · action-panels.jsx — action panels ("Forms" group).
+   The brand card-with-action: title + description + one control. Simple,
+   with a right-hand action, with an inline input (domain allowlist), with a toggle
+   and a danger zone. Tokens only, zero hardcoded colour.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
 
-/* aquí el panel ES la card → la superficie de preview va punteada para que flote */
+/* here the panel IS the card → the preview surface is dotted so it floats */
 const Variant = ({ title, desc, code, children }) => (
   <div className="mb-11">
     <div className="mb-3">
@@ -47,11 +47,11 @@ function SimplePanel() {
   return (
     <Panel>
       <div className="px-6 py-5">
-        <H>Rotar la API key del workspace</H>
-        <P>Genera una clave nueva e invalida la actual. Los runs en vuelo siguen con la clave anterior durante 5 minutos para no cortar tráfico.</P>
+        <H>Rotate the workspace API key</H>
+        <P>Generates a new key and revokes the current one. In-flight requests keep using the old key for 5 minutes so traffic is not interrupted.</P>
         <div className="mt-4">
           <Primary onClick={() => { setDone(true); setTimeout(() => setDone(false), 1600); }}>
-            {done ? <><Icon name="check" size={15} stroke={2.4} />Clave rotada</> : <><Icon name="refresh" size={15} />Rotar API key</>}
+            {done ? <><Icon name="check" size={15} stroke={2.4} />Key rotated</> : <><Icon name="refresh" size={15} />Rotate API key</>}
           </Primary>
         </div>
       </div>
@@ -59,24 +59,24 @@ function SimplePanel() {
   );
 }
 
-/* ── 2 · CON ACCIÓN A LA DERECHA ─────────────────────────────────────────── */
+/* ── 2 · WITH RIGHT-HAND ACTION ──────────────────────────────────────────── */
 function RightActionPanel() {
   return (
     <Panel>
       <div className="px-6 py-5 sm:flex sm:items-center sm:justify-between sm:gap-6">
         <div className="min-w-0">
-          <H>Exportar registro de auditoría</H>
-          <P>Descarga todos los eventos del Fleet de los últimos 90 días en CSV firmado para tu equipo de compliance.</P>
+          <H>Export audit log</H>
+          <P>Download every workspace event from the last 90 days as a signed CSV for your compliance team.</P>
         </div>
         <div className="mt-4 shrink-0 sm:mt-0">
-          <Secondary><Icon name="download" size={15} className="text-muted-foreground" />Exportar CSV</Secondary>
+          <Secondary><Icon name="download" size={15} className="text-muted-foreground" />Export CSV</Secondary>
         </div>
       </div>
     </Panel>
   );
 }
 
-/* ── 3 · CON INPUT INLINE (allowlist) ────────────────────────────────────── */
+/* ── 3 · WITH INLINE INPUT (allowlist) ───────────────────────────────────── */
 function InputPanel() {
   const [domains, setDomains] = useState(['acme.com', 'acme.dev']);
   const [val, setVal] = useState('');
@@ -89,15 +89,15 @@ function InputPanel() {
   return (
     <Panel>
       <div className="px-6 py-5">
-        <H>Dominios permitidos</H>
-        <P>Solo los emails de estos dominios pueden unirse al workspace sin invitación manual.</P>
+        <H>Allowed domains</H>
+        <P>Only emails from these domains can join the workspace without a manual invite.</P>
         <form onSubmit={add} className="mt-4 flex max-w-md gap-2.5">
           <div className="flex w-full items-center rounded-md border border-border bg-background pl-3 shadow-sm transition-colors focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-ring/25">
             <span className="select-none text-[13px] text-muted-foreground">@</span>
-            <input value={val} onChange={e => setVal(e.target.value)} placeholder="empresa.com"
+            <input value={val} onChange={e => setVal(e.target.value)} placeholder="company.com"
               className="h-9 w-full bg-transparent pl-1 pr-3 text-[13px] text-foreground placeholder:text-muted-foreground focus:outline-none" />
           </div>
-          <Primary onClick={add}><Icon name="plus" size={15} stroke={2.4} />Añadir</Primary>
+          <Primary onClick={add}><Icon name="plus" size={15} stroke={2.4} />Add</Primary>
         </form>
         <div className="mt-3.5 flex flex-wrap gap-2">
           {domains.map(d => (
@@ -112,7 +112,7 @@ function InputPanel() {
   );
 }
 
-/* ── 4 · CON TOGGLE + ZONA DE PELIGRO ────────────────────────────────────── */
+/* ── 4 · WITH TOGGLE + DANGER ZONE ───────────────────────────────────────── */
 function TogglePanel() {
   const [paused, setPaused] = useState(false);
   const [confirm, setConfirm] = useState('');
@@ -123,25 +123,25 @@ function TogglePanel() {
       <div className="rounded-lg border border-border bg-card shadow-sm">
         <div className="flex items-start justify-between gap-6 px-6 py-5">
           <div className="min-w-0">
-            <H>Pausar el Fleet</H>
-            <P>Detiene la admisión de nuevos requests en todos los agentes del workspace. Los runs activos terminan con normalidad.</P>
-            {paused && <span className="mt-2.5 inline-flex items-center gap-1.5 rounded bg-warning/16 px-2 py-1 font-mono text-[11px] font-semibold text-warning"><span className="size-1.5 rounded-full bg-warning" />Fleet en pausa</span>}
+            <H>Pause deployments</H>
+            <P>Stops accepting new requests on every service in the workspace. Active jobs finish normally.</P>
+            {paused && <span className="mt-2.5 inline-flex items-center gap-1.5 rounded bg-warning/16 px-2 py-1 font-mono text-[11px] font-semibold text-warning"><span className="size-1.5 rounded-full bg-warning" />Deployments paused</span>}
           </div>
           <Switch on={paused} onChange={() => setPaused(v => !v)} />
         </div>
       </div>
 
-      {/* zona de peligro */}
+      {/* danger zone */}
       <div className="rounded-lg border border-destructive/35 bg-card shadow-sm">
         <div className="px-6 py-5">
-          <H>Eliminar workspace</H>
-          <P>Borra <span className="font-mono text-foreground">{target}</span>, sus agentes, policies y la auditoría. Esta acción no se puede deshacer.</P>
+          <H>Delete workspace</H>
+          <P>Deletes <span className="font-mono text-foreground">{target}</span>, its services, policies and audit log. This action cannot be undone.</P>
           <div className="mt-4 flex flex-col gap-2.5 sm:flex-row sm:items-center">
-            <input value={confirm} onChange={e => setConfirm(e.target.value)} placeholder={'Escribe "' + target + '" para confirmar'}
+            <input value={confirm} onChange={e => setConfirm(e.target.value)} placeholder={'Type "' + target + '" to confirm'}
               className="h-9 w-full rounded-md border border-border bg-background px-3 text-[13px] text-foreground placeholder:text-muted-foreground shadow-sm transition-colors focus:outline-none focus:border-destructive/60 focus:ring-2 focus:ring-destructive/25 sm:max-w-xs" />
             <Danger disabled={confirm !== target} aria-disabled={confirm !== target}
               className={confirm !== target ? 'opacity-50 cursor-not-allowed' : ''}>
-              <Icon name="trash" size={15} />Eliminar workspace
+              <Icon name="trash" size={15} />Delete workspace
             </Danger>
           </div>
         </div>
@@ -151,78 +151,78 @@ function TogglePanel() {
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_SIMPLE = `// Panel simple — título + descripción + acción primaria
+const CODE_SIMPLE = `// Simple panel — title + description + primary action
 <div className="rounded-lg border border-border bg-card shadow-sm">
   <div className="px-6 py-5">
-    <h3 className="text-[15px] font-semibold text-foreground">Rotar la API key</h3>
-    <p className="mt-1.5 max-w-xl text-[13px] leading-6 text-muted-foreground">Genera una clave nueva e invalida la actual…</p>
+    <h3 className="text-[15px] font-semibold text-foreground">Rotate the API key</h3>
+    <p className="mt-1.5 max-w-xl text-[13px] leading-6 text-muted-foreground">Generates a new key and revokes the current one…</p>
     <button className="mt-4 inline-flex h-9 items-center gap-1.5 rounded-md bg-primary px-3.5 text-[13px]
                        font-semibold text-primary-foreground shadow-sm hover:bg-primary/90">
-      <RefreshIcon /> Rotar API key
+      <RefreshIcon /> Rotate API key
     </button>
   </div>
 </div>`;
 
-const CODE_RIGHT = `// Acción a la derecha — apila en móvil, fila en sm+
+const CODE_RIGHT = `// Right-hand action — stacks on mobile, row on sm+
 <div className="px-6 py-5 sm:flex sm:items-center sm:justify-between sm:gap-6">
   <div>
-    <h3 className="text-[15px] font-semibold text-foreground">Exportar auditoría</h3>
-    <p className="mt-1.5 text-[13px] text-muted-foreground">Descarga 90 días de eventos en CSV firmado.</p>
+    <h3 className="text-[15px] font-semibold text-foreground">Export audit log</h3>
+    <p className="mt-1.5 text-[13px] text-muted-foreground">Download 90 days of events as a signed CSV.</p>
   </div>
   <button className="mt-4 shrink-0 sm:mt-0 inline-flex h-9 items-center gap-1.5 rounded-md border border-border
-                     bg-card px-3.5 text-[13px] font-medium shadow-sm hover:bg-secondary/70">Exportar CSV</button>
+                     bg-card px-3.5 text-[13px] font-medium shadow-sm hover:bg-secondary/70">Export CSV</button>
 </div>`;
 
-const CODE_INPUT = `// Con input inline — añade chips (allowlist)
+const CODE_INPUT = `// With inline input — adds chips (allowlist)
 <form onSubmit={add} className="mt-4 flex max-w-md gap-2.5">
   <div className="flex w-full items-center rounded-md border border-border bg-background pl-3 shadow-sm
                   focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-ring/25">
     <span className="text-[13px] text-muted-foreground">@</span>
     <input value={val} onChange={(e) => setVal(e.target.value)} className="h-9 w-full bg-transparent pl-1 focus:outline-none" />
   </div>
-  <button className="h-9 rounded-md bg-primary px-3.5 text-[13px] font-semibold text-primary-foreground">Añadir</button>
+  <button className="h-9 rounded-md bg-primary px-3.5 text-[13px] font-semibold text-primary-foreground">Add</button>
 </form>`;
 
-const CODE_DANGER = `// Zona de peligro — borde destructive + confirmación por nombre
+const CODE_DANGER = `// Danger zone — destructive border + confirm by name
 <div className="rounded-lg border border-destructive/35 bg-card shadow-sm px-6 py-5">
-  <h3 className="text-[15px] font-semibold text-foreground">Eliminar workspace</h3>
-  <p className="mt-1.5 text-[13px] text-muted-foreground">Esta acción no se puede deshacer.</p>
+  <h3 className="text-[15px] font-semibold text-foreground">Delete workspace</h3>
+  <p className="mt-1.5 text-[13px] text-muted-foreground">This action cannot be undone.</p>
   <div className="mt-4 sm:flex sm:gap-2.5">
     <input value={confirm} onChange={(e) => setConfirm(e.target.value)}
       className="h-9 rounded-md border border-border bg-background px-3 text-[13px]
                  focus:border-destructive/60 focus:ring-2 focus:ring-destructive/25" />
     <button disabled={confirm !== target} className="h-9 rounded-md bg-destructive px-3.5 text-[13px]
-      font-semibold text-destructive-foreground disabled:opacity-50">Eliminar workspace</button>
+      font-semibold text-destructive-foreground disabled:opacity-50">Delete workspace</button>
   </div>
 </div>`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function ActionPanelsSection() {
   return (
     <div>
-      <SectionHead kicker="Formularios" title="Action panels" status="done"
-        intro="La card-con-acción: un título, una descripción y un único control que ejecuta algo concreto sobre el workspace o el Fleet. Cinco variantes — simple, con la acción a la derecha, con input inline para una allowlist, con toggle, y la zona de peligro con confirmación por nombre. Cada panel es la card de marca (bg-card, sombra plana) flotando sobre la superficie de preview." />
+      <SectionHead kicker="Forms" title="Action panels" status="done"
+        intro="The card-with-action: a title, a description and a single control that does one concrete thing to the workspace. Five variants — simple, with the action on the right, with an inline input for an allowlist, with a toggle, and the danger zone with confirm-by-name. Each panel is the brand card (bg-card, flat shadow) floating on the preview surface." />
 
       <Variant title="Simple"
-        desc="Título, descripción y un botón primario debajo. El botón confirma en sitio con un check efímero al pulsarlo."
+        desc="Title, description and a primary button below. The button confirms in place with a brief check when pressed."
         code={CODE_SIMPLE}>
         <SimplePanel />
       </Variant>
 
-      <Variant title="Con acción a la derecha"
-        desc="La descripción a la izquierda y un botón secundario a la derecha; se apila en móvil y pasa a fila en pantallas medianas."
+      <Variant title="With right-hand action"
+        desc="Description on the left and a secondary button on the right; stacks on mobile and becomes a row on medium screens."
         code={CODE_RIGHT}>
         <RightActionPanel />
       </Variant>
 
-      <Variant title="Con input inline"
-        desc="Un mini-formulario dentro del panel: añade dominios a la allowlist como chips con prefijo @, y quítalos con la ✕. Pulsa Añadir y aparece el chip."
+      <Variant title="With inline input"
+        desc="A mini form inside the panel: add domains to the allowlist as chips with an @ prefix, and remove them with the ✕. Press Add and the chip appears."
         code={CODE_INPUT}>
         <InputPanel />
       </Variant>
 
-      <Variant title="Con toggle y zona de peligro"
-        desc="Un panel con switch para pausar el Fleet (con badge de estado) y, debajo, la zona de peligro: borde destructive y un botón que solo se habilita al escribir el nombre del workspace."
+      <Variant title="With toggle and danger zone"
+        desc="A panel with a switch to pause deployments (with a status badge) and, below, the danger zone: destructive border and a button that only enables once you type the workspace name."
         code={CODE_DANGER}>
         <TogglePanel />
       </Variant>

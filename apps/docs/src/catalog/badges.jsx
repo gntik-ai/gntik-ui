@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · badges.jsx — badges & pills (grupo "Elementos").
-   Status pills del Fleet (tonos semánticos), tonos y formas (soft/solid/
-   outline · cuadrada/pill), badges de conteo sobre nav e iconos, y tags
-   removibles con los colores categóricos. Todo en mono, todo desde tokens.
+   Gntik UI · badges.jsx — badges & pills ("Elements" group).
+   Status pills (semantic tones), tones and shapes (soft/solid/
+   outline · square/pill), count badges on nav and icons, and removable
+   tags with the categorical colours. All mono, all from tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
@@ -18,7 +18,7 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── Status pill de marca ────────────────────────────────────────────────── */
+/* ── Brand status pill ───────────────────────────────────────────────────── */
 const PILL_TONE = {
   primary:     'bg-primary/14 text-primary',
   muted:       'bg-muted-foreground/16 text-muted-foreground',
@@ -45,7 +45,7 @@ function StatusPills() {
   );
 }
 
-/* ── 2 · TONOS Y FORMAS ──────────────────────────────────────────────────── */
+/* ── 2 · TONES AND SHAPES ────────────────────────────────────────────────── */
 function TonesShapes() {
   return (
     <div className="flex flex-col items-center gap-6">
@@ -57,7 +57,7 @@ function TonesShapes() {
       </div>
       <div className="flex flex-wrap items-center justify-center gap-2.5">
         <span className="inline-flex items-center h-[24px] px-2.5 rounded-full bg-primary/14 text-primary text-[11.5px] font-semibold">pill</span>
-        <span className="inline-flex items-center gap-1.5 h-[24px] px-2.5 rounded-md bg-primary/14 text-primary text-[11.5px] font-semibold"><Icon name="check" size={12} stroke={2.6} />verificado</span>
+        <span className="inline-flex items-center gap-1.5 h-[24px] px-2.5 rounded-md bg-primary/14 text-primary text-[11.5px] font-semibold"><Icon name="check" size={12} stroke={2.6} />verified</span>
         <span className="inline-flex items-center gap-1.5 h-[24px] px-2.5 rounded-md bg-warning/16 text-warning text-[11.5px] font-semibold"><Icon name="alert" size={12} />97% budget</span>
         <span className="inline-flex items-center gap-1.5 h-[24px] pl-1.5 pr-2.5 rounded-full bg-secondary text-secondary-foreground text-[11.5px] font-semibold"><span className="size-1.5 rounded-full bg-primary" />live</span>
       </div>
@@ -65,35 +65,35 @@ function TonesShapes() {
   );
 }
 
-/* ── 3 · BADGES DE CONTEO ────────────────────────────────────────────────── */
+/* ── 3 · COUNT BADGES ────────────────────────────────────────────────────── */
 function CountBadges() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
       <div className="inline-flex items-center gap-2.5 h-9 px-3 rounded-lg bg-secondary/60 text-[13px] font-medium text-foreground">
-        <Icon name="bell" size={16} className="text-muted-foreground" />Alertas
+        <Icon name="bell" size={16} className="text-muted-foreground" />Alerts
         <span className="grid h-[18px] min-w-[18px] place-items-center rounded-full bg-primary px-1 font-mono text-[10px] font-bold text-primary-foreground">5</span>
       </div>
-      <button className="relative inline-flex items-center justify-center size-9 rounded-lg border border-border bg-card text-muted-foreground shadow-sm" aria-label="Bandeja · 12 sin leer">
+      <button className="relative inline-flex items-center justify-center size-9 rounded-lg border border-border bg-card text-muted-foreground shadow-sm" aria-label="Inbox · 12 unread">
         <Icon name="inbox" size={17} />
         <span className="absolute -top-1.5 -right-1.5 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-destructive px-1 font-mono text-[10px] font-bold text-destructive-foreground ring-2 ring-card">12</span>
       </button>
-      <button className="relative inline-flex items-center justify-center size-9 rounded-lg border border-border bg-card text-muted-foreground shadow-sm" aria-label="Notificaciones nuevas">
+      <button className="relative inline-flex items-center justify-center size-9 rounded-lg border border-border bg-card text-muted-foreground shadow-sm" aria-label="New notifications">
         <Icon name="bell" size={17} />
         <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-primary ring-2 ring-card" />
       </button>
-      <span className="inline-flex items-center h-[20px] px-2 rounded-md bg-primary/14 text-primary font-mono text-[9.5px] font-bold tracking-[0.1em] uppercase">Nuevo</span>
+      <span className="inline-flex items-center h-[20px] px-2 rounded-md bg-primary/14 text-primary font-mono text-[9.5px] font-bold tracking-[0.1em] uppercase">New</span>
       <div className="inline-flex items-center gap-2 pb-2 border-b-2 border-primary text-[13px] font-semibold text-foreground">
-        Runs<span className="grid h-[18px] min-w-[18px] place-items-center rounded-full bg-primary/14 px-1 font-mono text-[10px] font-bold text-primary">128</span>
+        Jobs<span className="grid h-[18px] min-w-[18px] place-items-center rounded-full bg-primary/14 px-1 font-mono text-[10px] font-bold text-primary">128</span>
       </div>
     </div>
   );
 }
 
-/* ── 4 · TAGS REMOVIBLES ─────────────────────────────────────────────────── */
+/* ── 4 · REMOVABLE TAGS ──────────────────────────────────────────────────── */
 const CAT_DOT = { rose: 'bg-category-rose', violet: 'bg-category-violet', amber: 'bg-category-amber', cyan: 'bg-category-cyan' };
 const TAGS0 = [
   { label: 'production', cat: 'rose' }, { label: 'eu-west-1', cat: 'cyan' },
-  { label: 'sonnet-4', cat: 'violet' }, { label: 'pii-redaction', cat: 'amber' },
+  { label: 'node-24', cat: 'violet' }, { label: 'pii-redaction', cat: 'amber' },
 ];
 function Tags() {
   const [tags, setTags] = useState(TAGS0);
@@ -104,18 +104,18 @@ function Tags() {
         {tags.map(t => (
           <span key={t.label} className="inline-flex items-center gap-1.5 h-[26px] pl-2.5 pr-1.5 rounded-md border border-border bg-card text-[12px] font-medium text-foreground">
             <span className={"size-2 rounded-full " + CAT_DOT[t.cat]} />{t.label}
-            <button onClick={() => remove(t.label)} aria-label={'Quitar ' + t.label} className="grid size-4 place-items-center rounded text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"><Icon name="x" size={11} stroke={2.4} /></button>
+            <button onClick={() => remove(t.label)} aria-label={'Remove ' + t.label} className="grid size-4 place-items-center rounded text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"><Icon name="x" size={11} stroke={2.4} /></button>
           </span>
         ))}
-        {tags.length === 0 && <button onClick={() => setTags(TAGS0)} className="font-mono text-[11px] text-primary hover:underline">restaurar etiquetas</button>}
+        {tags.length === 0 && <button onClick={() => setTags(TAGS0)} className="font-mono text-[11px] text-primary hover:underline">restore tags</button>}
       </div>
-      <span className="font-mono text-[11px] text-muted-foreground/80">pulsa la ✕ para quitar — el punto usa los colores categóricos</span>
+      <span className="font-mono text-[11px] text-muted-foreground/80">press the ✕ to remove — the dot uses the categorical colours</span>
     </div>
   );
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_PILL = `// Status pill — tono semántico soft + punto que hereda el color (bg-current)
+const CODE_PILL = `// Status pill — soft semantic tone + dot that inherits the colour (bg-current)
 const TONE = {
   primary:     "bg-primary/14 text-primary",
   muted:       "bg-muted-foreground/16 text-muted-foreground",
@@ -129,46 +129,46 @@ const StatusPill = ({ tone = "primary", children }) => (
   </span>
 );`;
 
-const CODE_COUNT = `// Badge de conteo sobre un icono — ring del color de la superficie
+const CODE_COUNT = `// Count badge on an icon — ring in the surface colour
 <button className="relative size-9 rounded-lg border border-border bg-card text-muted-foreground shadow-sm">
   <InboxIcon />
   <span className="absolute -top-1.5 -right-1.5 grid h-[18px] min-w-[18px] place-items-center rounded-full
                    bg-destructive px-1 font-mono text-[10px] font-bold text-destructive-foreground ring-2 ring-card">12</span>
 </button>`;
 
-const CODE_TAG = `// Tag removible — punto categórico + botón ✕
+const CODE_TAG = `// Removable tag — categorical dot + ✕ button
 <span className="inline-flex items-center gap-1.5 h-[26px] pl-2.5 pr-1.5 rounded-md border border-border bg-card text-[12px] font-medium">
-  <span className="size-2 rounded-full bg-category-violet" />sonnet-4
-  <button onClick={() => remove(tag)} aria-label="Quitar"
+  <span className="size-2 rounded-full bg-category-violet" />node-24
+  <button onClick={() => remove(tag)} aria-label="Remove"
     className="grid size-4 place-items-center rounded text-muted-foreground hover:bg-secondary hover:text-foreground"><XIcon /></button>
 </span>`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function BadgesSection() {
   return (
     <div>
-      <SectionHead kicker="Elementos" title="Badges & pills" status="done"
-        intro="Etiquetas compactas para estado y metadatos: las status pills del Fleet con sus tonos semánticos, los estilos soft / solid / outline en forma cuadrada o pill, los badges de conteo sobre nav e iconos, y los tags removibles con los colores categóricos. Todo el texto en mono y todo el color desde tokens." />
+      <SectionHead kicker="Elements" title="Badges & pills" status="done"
+        intro="Compact labels for status and metadata: status pills with their semantic tones, soft / solid / outline styles in square or pill shape, count badges on nav and icons, and removable tags with the categorical colours. All text in mono and all colour from tokens." />
 
       <Variant title="Status pills"
-        desc="El estado de un agente en un vistazo: tono soft + punto que hereda el color con bg-current. Verde para sano, ámbar para degradado, rojo para fallo — el primario nunca compite con la severidad."
+        desc="A service's status at a glance: soft tone + a dot that inherits the colour via bg-current. Green for healthy, amber for degraded, red for failed — primary never competes with severity."
         code={CODE_PILL}>
         <StatusPills />
       </Variant>
 
-      <Variant title="Tonos y formas"
-        desc="Cuatro estilos (soft, solid, outline, neutral) y dos formas (cuadrada rounded-md o pill rounded-full), con punto o icono opcional. Soft es el de uso diario; solid se reserva para énfasis puntual.">
+      <Variant title="Tones and shapes"
+        desc="Four styles (soft, solid, outline, neutral) and two shapes (square rounded-md or pill rounded-full), with an optional dot or icon. Soft is for everyday use; solid is reserved for occasional emphasis.">
         <TonesShapes />
       </Variant>
 
-      <Variant title="Badges de conteo"
-        desc="Números sobre items de nav, esquina de un icono con ring del color de fondo, punto indicador sin número, etiqueta “Nuevo” y contador en tab activa."
+      <Variant title="Count badges"
+        desc="Numbers on nav items, an icon corner with a ring in the background colour, a dot indicator without a number, a “New” label and a counter on the active tab."
         code={CODE_COUNT}>
         <CountBadges />
       </Variant>
 
-      <Variant title="Tags removibles"
-        desc="Chips de metadatos con punto categórico y botón ✕. Pulsa la ✕ para quitar uno; cuando se vacía, aparece el enlace para restaurarlos."
+      <Variant title="Removable tags"
+        desc="Metadata chips with a categorical dot and a ✕ button. Press the ✕ to remove one; once empty, a link appears to restore them."
         code={CODE_TAG}>
         <Tags />
       </Variant>

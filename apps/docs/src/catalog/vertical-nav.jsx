@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · vertical-nav.jsx — navegación lateral de página (grupo "Navegación").
-   La nav que vive dentro del contenido (ajustes, detalle de recurso): simple
-   con iconos, con sub-secciones expandibles, y con contadores. Activo con
-   barra de acento a la izquierda, como el sidebar del shell. Tokens.
+   Gntik UI · vertical-nav.jsx — in-page side navigation ("Navigation" group).
+   The nav that lives inside the content (settings, resource detail): simple
+   with icons, with expandable sub-sections, and with counters. Active item
+   with an accent bar on the left, like the shell sidebar. Tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
@@ -29,8 +29,8 @@ const Row = ({ icon, label, on, count, onClick }) => (
   </button>
 );
 
-/* ── 1 · SIMPLE con iconos ───────────────────────────────────────────────── */
-const SIMPLE = [['settings', 'General'], ['user', 'Perfil'], ['shield', 'Seguridad'], ['bell', 'Notificaciones'], ['coin', 'Facturación'], ['net', 'Integraciones']];
+/* ── 1 · SIMPLE with icons ───────────────────────────────────────────────── */
+const SIMPLE = [['settings', 'General'], ['user', 'Profile'], ['shield', 'Security'], ['bell', 'Notifications'], ['coin', 'Billing'], ['net', 'Integrations']];
 function Simple() {
   const [active, setActive] = useState('General');
   return (
@@ -40,15 +40,15 @@ function Simple() {
   );
 }
 
-/* ── 2 · CON SUB-SECCIONES (acordeón) ────────────────────────────────────── */
+/* ── 2 · WITH SUB-SECTIONS (accordion) ───────────────────────────────────── */
 const GROUPS = [
-  ['Workspace', 'fleet', [['General', 'settings'], ['Miembros', 'users'], ['Facturación', 'coin']]],
-  ['Agentes', 'bot', [['Defaults', 'cog'], ['Policies', 'shield'], ['Secrets', 'lock']]],
-  ['Avanzado', 'sliders', [['API keys', 'code'], ['Webhooks', 'net']]],
+  ['Workspace', 'fleet', [['General', 'settings'], ['Members', 'users'], ['Billing', 'coin']]],
+  ['Services', 'bot', [['Defaults', 'cog'], ['Policies', 'shield'], ['Secrets', 'lock']]],
+  ['Advanced', 'sliders', [['API keys', 'code'], ['Webhooks', 'net']]],
 ];
 function Nested() {
-  const [open, setOpen] = useState({ Workspace: true, Agentes: true });
-  const [active, setActive] = useState('Miembros');
+  const [open, setOpen] = useState({ Workspace: true, Services: true });
+  const [active, setActive] = useState('Members');
   const toggle = g => setOpen(o => ({ ...o, [g]: !o[g] }));
   return (
     <nav className="w-64 flex flex-col gap-1.5">
@@ -80,19 +80,19 @@ function Nested() {
   );
 }
 
-/* ── 3 · CON CONTADORES ──────────────────────────────────────────────────── */
-const COUNTS = [['inbox', 'Todos', 248], ['activity', 'Activos', 9], ['pause', 'Pausados', 3], ['alert', 'Con incidencias', 2], ['clock', 'Programados', 5]];
+/* ── 3 · WITH COUNTERS ───────────────────────────────────────────────────── */
+const COUNTS = [['inbox', 'All', 248], ['activity', 'Active', 9], ['pause', 'Paused', 3], ['alert', 'With issues', 2], ['clock', 'Scheduled', 5]];
 function Counters() {
-  const [active, setActive] = useState('Todos');
+  const [active, setActive] = useState('All');
   return (
     <nav className="w-60 flex flex-col gap-0.5">
-      <div className="px-2.5 pb-1.5 font-mono text-[9.5px] tracking-[0.14em] uppercase text-muted-foreground/70">Fleet</div>
+      <div className="px-2.5 pb-1.5 font-mono text-[9.5px] tracking-[0.14em] uppercase text-muted-foreground/70">Deployments</div>
       {COUNTS.map(([ic, l, n]) => <Row key={l} icon={ic} label={l} count={n} on={active === l} onClick={() => setActive(l)} />)}
     </nav>
   );
 }
 
-const CODE_SIMPLE = `// Vertical nav — barra de acento a la izquierda en el activo
+const CODE_SIMPLE = `// Vertical nav — accent bar on the left of the active item
 <nav className="w-60 flex flex-col gap-0.5">
   {items.map(({ id, label, Icon, count }) => {
     const on = active === id;
@@ -113,7 +113,7 @@ const CODE_SIMPLE = `// Vertical nav — barra de acento a la izquierda en el ac
   })}
 </nav>`;
 
-const CODE_NESTED = `// Sub-secciones — grupo colapsable con hijos en una guía vertical
+const CODE_NESTED = `// Sub-sections — collapsible group with children on a vertical guide
 <button onClick={() => toggle(g)} className="flex w-full items-center gap-2.5 h-9 px-2.5 rounded-lg text-[13px] font-semibold hover:bg-accent/40">
   <Icon className="size-4 text-muted-foreground" /><span className="flex-1 text-left">{g}</span>
   <ChevronDown className={"size-3.5 text-muted-foreground transition-transform " + (open ? "" : "-rotate-90")} />
@@ -127,23 +127,23 @@ const CODE_NESTED = `// Sub-secciones — grupo colapsable con hijos en una guí
 function VerticalNavSection() {
   return (
     <div>
-      <SectionHead kicker="Navegación" title="Vertical navigation" status="done"
-        intro="La navegación que vive dentro del contenido —ajustes, filtros del Fleet, detalle de un recurso—, no el chrome de la app. Simple con iconos, con sub-secciones expandibles, y con contadores. El activo lleva la barra de acento a la izquierda, igual que el sidebar." />
+      <SectionHead kicker="Navigation" title="Vertical navigation" status="done"
+        intro="The navigation that lives inside the content —settings, list filters, resource detail—, not the app chrome. Simple with icons, with expandable sub-sections, and with counters. The active item carries the accent bar on the left, just like the sidebar." />
 
-      <Variant title="Simple con iconos"
-        desc="La nav de una página de ajustes: icono, etiqueta y barra de acento en el activo. Pulsa para cambiar de sección."
+      <Variant title="Simple with icons"
+        desc="The nav of a settings page: icon, label and accent bar on the active item. Click to switch sections."
         code={CODE_SIMPLE}>
         <Simple />
       </Variant>
 
-      <Variant title="Con sub-secciones"
-        desc="Grupos colapsables con sus hijos sobre una guía vertical. Abre y cierra los grupos; el hijo activo se resalta."
+      <Variant title="With sub-sections"
+        desc="Collapsible groups with their children on a vertical guide. Open and close the groups; the active child is highlighted."
         code={CODE_NESTED}>
         <Nested />
       </Variant>
 
-      <Variant title="Con contadores"
-        desc="Filtros del Fleet con el conteo a la derecha en mono; el contador del activo toma el verde de marca.">
+      <Variant title="With counters"
+        desc="Deployment filters with the count on the right in mono; the active counter takes the brand green.">
         <Counters />
       </Variant>
     </div>

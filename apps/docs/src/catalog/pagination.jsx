@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · pagination.jsx — paginación (grupo "Navegación").
-   Numerada con elipsis y prev/next, prev/next minimal con "Página X de Y", y
-   pie de tabla con rango ("1–20 de 1.284") + selector de tamaño. El activo en
-   verde de marca. Dominio musematic, todo en tokens.
+   Gntik UI · pagination.jsx — pagination ("Navigation" group).
+   Numbered with ellipsis and prev/next, minimal prev/next with "Page X of Y",
+   and a table footer with range ("1–20 of 1,284") + page-size selector. Active
+   page in brand green. Neutral fixtures, all tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
@@ -18,7 +18,7 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* rango con elipsis: 1 … (cur-1) cur (cur+1) … total */
+/* range with ellipsis: 1 … (cur-1) cur (cur+1) … total */
 function pageRange(cur, total) {
   const out = [];
   const push = n => out.push(n);
@@ -32,13 +32,13 @@ function pageRange(cur, total) {
 }
 
 const Arrow = ({ dir, disabled, onClick }) => (
-  <button onClick={onClick} disabled={disabled} aria-label={dir === 'l' ? 'Anterior' : 'Siguiente'}
+  <button onClick={onClick} disabled={disabled} aria-label={dir === 'l' ? 'Previous' : 'Next'}
     className="grid size-9 place-items-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:text-foreground hover:border-ring/50 disabled:opacity-40 disabled:pointer-events-none">
     <Icon name={dir === 'l' ? 'chevronLeft' : 'chevronRight'} size={16} />
   </button>
 );
 
-/* ── 1 · NUMERADA con elipsis ────────────────────────────────────────────── */
+/* ── 1 · NUMBERED with ellipsis ───────────────────────────────────────────── */
 function Numbered() {
   const total = 42;
   const [cur, setCur] = useState(6);
@@ -69,14 +69,14 @@ function PrevNext() {
   );
   return (
     <div className="flex items-center justify-between gap-4">
-      <Btn dir="l" label="Anterior" disabled={cur === 1} onClick={() => setCur(c => Math.max(1, c - 1))} />
-      <span className="text-[13px] text-muted-foreground">Página <span className="font-mono font-semibold text-foreground">{cur}</span> de <span className="font-mono text-foreground">{total}</span></span>
-      <Btn dir="r" label="Siguiente" disabled={cur === total} onClick={() => setCur(c => Math.min(total, c + 1))} />
+      <Btn dir="l" label="Previous" disabled={cur === 1} onClick={() => setCur(c => Math.max(1, c - 1))} />
+      <span className="text-[13px] text-muted-foreground">Page <span className="font-mono font-semibold text-foreground">{cur}</span> of <span className="font-mono text-foreground">{total}</span></span>
+      <Btn dir="r" label="Next" disabled={cur === total} onClick={() => setCur(c => Math.min(total, c + 1))} />
     </div>
   );
 }
 
-/* ── 3 · PIE DE TABLA con rango ──────────────────────────────────────────── */
+/* ── 3 · TABLE FOOTER with range ─────────────────────────────────────────── */
 function TableFooter() {
   const totalRows = 1284;
   const [size, setSize] = useState(20);
@@ -87,7 +87,7 @@ function TableFooter() {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div className="flex items-center gap-2.5">
-        <span className="text-[12.5px] text-muted-foreground">Filas</span>
+        <span className="text-[12.5px] text-muted-foreground">Rows</span>
         <div className="inline-flex items-center gap-0.5 p-0.5 rounded-lg border border-border bg-secondary/40">
           {[20, 50, 100].map(n => (
             <button key={n} onClick={() => setSizeReset(n)}
@@ -97,7 +97,7 @@ function TableFooter() {
       </div>
       <div className="flex items-center gap-3">
         <span className="text-[12.5px] text-muted-foreground tabular-nums">
-          <span className="font-mono text-foreground">{from.toLocaleString('es')}–{to.toLocaleString('es')}</span> de <span className="font-mono text-foreground">{totalRows.toLocaleString('es')}</span>
+          <span className="font-mono text-foreground">{from.toLocaleString('en')}–{to.toLocaleString('en')}</span> of <span className="font-mono text-foreground">{totalRows.toLocaleString('en')}</span>
         </span>
         <div className="flex items-center gap-1.5">
           <Arrow dir="l" disabled={cur === 1} onClick={() => setCur(c => Math.max(1, c - 1))} />
@@ -108,7 +108,7 @@ function TableFooter() {
   );
 }
 
-const CODE_NUM = `// Numerada — rango con elipsis alrededor de la página actual
+const CODE_NUM = `// Numbered — range with ellipsis around the current page
 function pageRange(cur, total) {
   const out = [1];
   const lo = Math.max(2, cur - 1), hi = Math.min(total - 1, cur + 1);
@@ -132,33 +132,33 @@ function pageRange(cur, total) {
   <ArrowButton dir="next" disabled={cur === total} onClick={() => setCur(cur + 1)} />
 </nav>`;
 
-const CODE_TABLE = `// Pie de tabla — tamaño de página + rango "desde–hasta de total"
+const CODE_TABLE = `// Table footer — page size + "from–to of total" range
 const pages = Math.ceil(totalRows / size);
 const from = (cur - 1) * size + 1, to = Math.min(cur * size, totalRows);
 
 <span className="text-[12.5px] text-muted-foreground tabular-nums">
-  <span className="font-mono text-foreground">{from}–{to}</span> de <span className="font-mono text-foreground">{totalRows}</span>
+  <span className="font-mono text-foreground">{from}–{to}</span> of <span className="font-mono text-foreground">{totalRows}</span>
 </span>`;
 
 function PaginationSection() {
   return (
     <div>
-      <SectionHead kicker="Navegación" title="Pagination" status="done"
-        intro="Paginación para tablas y listados largos del operador. Numerada con elipsis para saltar lejos, prev/next minimal cuando solo importa avanzar, y el pie de tabla con rango “desde–hasta de total” y selector de filas por página. La página activa va en verde de marca." />
+      <SectionHead kicker="Navigation" title="Pagination" status="done"
+        intro="Pagination for tables and long lists. Numbered with ellipsis to jump far, minimal prev/next when moving forward is all that matters, and the table footer with a “from–to of total” range and a rows-per-page selector. The active page is in brand green." />
 
-      <Variant title="Numerada"
-        desc="Con elipsis alrededor de la página actual y primera/última siempre visibles. Pulsa un número o las flechas; el rango se recalcula."
+      <Variant title="Numbered"
+        desc="With ellipsis around the current page and first/last always visible. Click a number or the arrows; the range recalculates."
         code={CODE_NUM}>
         <Numbered />
       </Variant>
 
       <Variant title="Prev / Next"
-        desc="Minimal, para cuando solo se avanza secuencialmente. Las flechas se deshabilitan en los extremos.">
+        desc="Minimal, for when you only move sequentially. The arrows are disabled at the ends.">
         <PrevNext />
       </Variant>
 
-      <Variant title="Pie de tabla"
-        desc="El patrón de un listado: filas por página a la izquierda, rango y navegación a la derecha. Cambiar el tamaño vuelve a la página 1."
+      <Variant title="Table footer"
+        desc="The list pattern: rows per page on the left, range and navigation on the right. Changing the size goes back to page 1."
         code={CODE_TABLE}>
         <TableFooter />
       </Variant>

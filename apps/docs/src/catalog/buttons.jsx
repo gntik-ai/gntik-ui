@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · buttons.jsx — botones (grupo "Elementos").
-   El botón de marca: cinco variantes (primary · secondary · soft · ghost ·
-   destructive), tres tamaños, con icono (leading / trailing / solo) y estados
-   (loading con spinner, disabled). Mono-brand verde, sombras planas, tokens.
+   Gntik UI · buttons.jsx — buttons ("Elements" group).
+   The brand button: five variants (primary · secondary · soft · ghost ·
+   destructive), three sizes, with icon (leading / trailing / icon-only) and states
+   (loading with spinner, disabled). Mono-brand green, flat shadows, tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
@@ -24,7 +24,7 @@ const Demo = ({ label, children }) => (
   </div>
 );
 
-/* ── Botón de marca ──────────────────────────────────────────────────────── */
+/* ── Brand button ────────────────────────────────────────────────────────── */
 const BTN_VARIANT = {
   primary:     'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90',
   secondary:   'border border-border bg-card text-foreground shadow-sm hover:bg-secondary/70',
@@ -59,59 +59,59 @@ function Btn({ variant = 'primary', size = 'md', icon, trailingIcon, iconOnly, l
   );
 }
 
-/* ── 1 · VARIANTES ───────────────────────────────────────────────────────── */
+/* ── 1 · VARIANTS ────────────────────────────────────────────────────────── */
 function VariantsRow() {
   return (
     <div className="flex flex-wrap items-start justify-center gap-x-8 gap-y-6">
-      <Demo label="primary"><Btn icon="plus">Deploy agent</Btn></Demo>
-      <Demo label="secondary"><Btn variant="secondary" icon="sliders">Filtros</Btn></Demo>
-      <Demo label="soft"><Btn variant="soft" icon="refresh">Reintentar</Btn></Demo>
-      <Demo label="ghost"><Btn variant="ghost">Cancelar</Btn></Demo>
-      <Demo label="destructive"><Btn variant="destructive" icon="trash">Eliminar</Btn></Demo>
+      <Demo label="primary"><Btn icon="plus">New deployment</Btn></Demo>
+      <Demo label="secondary"><Btn variant="secondary" icon="sliders">Filters</Btn></Demo>
+      <Demo label="soft"><Btn variant="soft" icon="refresh">Retry</Btn></Demo>
+      <Demo label="ghost"><Btn variant="ghost">Cancel</Btn></Demo>
+      <Demo label="destructive"><Btn variant="destructive" icon="trash">Delete</Btn></Demo>
     </div>
   );
 }
 
-/* ── 2 · TAMAÑOS ─────────────────────────────────────────────────────────── */
+/* ── 2 · SIZES ───────────────────────────────────────────────────────────── */
 function SizesRow() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
-      <Demo label="sm"><Btn size="sm" icon="plus">Deploy agent</Btn></Demo>
-      <Demo label="md"><Btn size="md" icon="plus">Deploy agent</Btn></Demo>
-      <Demo label="lg"><Btn size="lg" icon="plus">Deploy agent</Btn></Demo>
+      <Demo label="sm"><Btn size="sm" icon="plus">New deployment</Btn></Demo>
+      <Demo label="md"><Btn size="md" icon="plus">New deployment</Btn></Demo>
+      <Demo label="lg"><Btn size="lg" icon="plus">New deployment</Btn></Demo>
     </div>
   );
 }
 
-/* ── 3 · CON ICONO + SOLO ICONO ──────────────────────────────────────────── */
+/* ── 3 · WITH ICON + ICON-ONLY ───────────────────────────────────────────── */
 function IconsRow() {
   return (
     <div className="flex flex-wrap items-start justify-center gap-x-8 gap-y-6">
-      <Demo label="leading"><Btn variant="secondary" icon="download">Exportar CSV</Btn></Demo>
-      <Demo label="trailing"><Btn variant="secondary" trailingIcon="arrow">Ver runs</Btn></Demo>
-      <Demo label="solo · primary"><Btn iconOnly icon="plus" aria-label="Añadir" /></Demo>
-      <Demo label="solo · secondary"><Btn iconOnly variant="secondary" icon="dot3" aria-label="Más acciones" /></Demo>
-      <Demo label="solo · ghost"><Btn iconOnly variant="ghost" icon="settings" aria-label="Ajustes" /></Demo>
+      <Demo label="leading"><Btn variant="secondary" icon="download">Export CSV</Btn></Demo>
+      <Demo label="trailing"><Btn variant="secondary" trailingIcon="arrow">View jobs</Btn></Demo>
+      <Demo label="solo · primary"><Btn iconOnly icon="plus" aria-label="Add" /></Demo>
+      <Demo label="solo · secondary"><Btn iconOnly variant="secondary" icon="dot3" aria-label="More actions" /></Demo>
+      <Demo label="solo · ghost"><Btn iconOnly variant="ghost" icon="settings" aria-label="Settings" /></Demo>
     </div>
   );
 }
 
-/* ── 4 · ESTADOS ─────────────────────────────────────────────────────────── */
+/* ── 4 · STATES ──────────────────────────────────────────────────────────── */
 function StatesRow() {
   const [loading, setLoading] = useState(false);
   const go = () => { if (loading) return; setLoading(true); setTimeout(() => setLoading(false), 1900); };
   return (
     <div className="flex flex-wrap items-start justify-center gap-x-8 gap-y-6">
-      <Demo label="click → loading"><Btn icon="bolt" loading={loading} onClick={go}>{loading ? 'Desplegando…' : 'Desplegar'}</Btn></Demo>
-      <Demo label="loading · secondary"><Btn variant="secondary" loading>Guardando…</Btn></Demo>
-      <Demo label="disabled"><Btn icon="plus" disabled>Deploy agent</Btn></Demo>
-      <Demo label="disabled · secondary"><Btn variant="secondary" disabled>Filtros</Btn></Demo>
+      <Demo label="click → loading"><Btn icon="bolt" loading={loading} onClick={go}>{loading ? 'Deploying…' : 'Deploy'}</Btn></Demo>
+      <Demo label="loading · secondary"><Btn variant="secondary" loading>Saving…</Btn></Demo>
+      <Demo label="disabled"><Btn icon="plus" disabled>New deployment</Btn></Demo>
+      <Demo label="disabled · secondary"><Btn variant="secondary" disabled>Filters</Btn></Demo>
     </div>
   );
 }
 
 /* ── snippet ─────────────────────────────────────────────────────────────── */
-const CODE_BTN = `// Botón de marca — variant × size, con icono y estado loading
+const CODE_BTN = `// Brand button — variant × size, with icon and loading state
 const VARIANT = {
   primary:     "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
   secondary:   "border border-border bg-card text-foreground shadow-sm hover:bg-secondary/70",
@@ -138,36 +138,36 @@ function Button({ variant = "primary", size = "md", icon: Lead, loading, childre
   );
 }`;
 
-const CODE_ICON = `// Solo icono — caja cuadrada por tamaño; siempre con aria-label
+const CODE_ICON = `// Icon-only — square box per size; always with an aria-label
 const ICONBOX = { sm: "size-8 rounded-md", md: "size-9 rounded-lg", lg: "size-11 rounded-lg" };
-<Button iconOnly icon={PlusIcon} aria-label="Añadir" />`;
+<Button iconOnly icon={PlusIcon} aria-label="Add" />`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function ButtonsSection() {
   return (
     <div>
-      <SectionHead kicker="Elementos" title="Buttons" status="done"
-        intro="El botón de marca en sus cinco variantes — primary, secondary, soft, ghost y destructive —, tres tamaños, con icono o solo icono, y los estados de carga y deshabilitado. Un único componente Button con mapas de variant y size; mono-brand verde y sombras planas que leen bien sobre cualquier tema." />
+      <SectionHead kicker="Elements" title="Buttons" status="done"
+        intro="The brand button in its five variants — primary, secondary, soft, ghost and destructive — three sizes, with an icon or icon-only, and the loading and disabled states. A single Button component with variant and size maps; mono-brand green and flat shadows that read well on any theme." />
 
-      <Variant title="Variantes"
-        desc="Primary para la acción principal; secondary con borde para la secundaria; soft como acento de bajo peso; ghost para acciones terciarias; destructive solo para lo irreversible."
+      <Variant title="Variants"
+        desc="Primary for the main action; bordered secondary for the secondary one; soft as a low-weight accent; ghost for tertiary actions; destructive only for the irreversible."
         code={CODE_BTN}>
         <VariantsRow />
       </Variant>
 
-      <Variant title="Tamaños"
-        desc="sm para toolbars densas, md por defecto, lg para CTAs y formularios. El alto y el padding escalan; el icono se ajusta solo.">
+      <Variant title="Sizes"
+        desc="sm for dense toolbars, md by default, lg for CTAs and forms. Height and padding scale; the icon adjusts itself.">
         <SizesRow />
       </Variant>
 
-      <Variant title="Con icono y solo icono"
-        desc="Icono a la izquierda o a la derecha, o caja cuadrada de solo icono. El botón de solo icono siempre lleva aria-label."
+      <Variant title="With icon and icon-only"
+        desc="Icon on the left or right, or a square icon-only box. The icon-only button always carries an aria-label."
         code={CODE_ICON}>
         <IconsRow />
       </Variant>
 
-      <Variant title="Estados"
-        desc="Pulsa “Desplegar” para ver el spinner: en loading el botón se deshabilita y cambia el icono. El estado disabled baja la opacidad y corta los eventos.">
+      <Variant title="States"
+        desc="Press “Deploy” to see the spinner: while loading the button is disabled and the icon changes. The disabled state lowers opacity and blocks events.">
         <StatesRow />
       </Variant>
     </div>

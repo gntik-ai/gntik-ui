@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · avatars.jsx — avatares (grupo "Elementos").
-   El avatar de iniciales de marca: cinco tamaños, cuadrado o redondo, en tonos
-   para distinguir personas y un icono para los agentes; con indicador de estado
-   en la esquina y apilado en grupo con desbordamiento +N. Tokens, sin imágenes.
+   Gntik UI · avatars.jsx — avatars ("Elements" group).
+   The brand initials avatar: five sizes, square or round, in tones to tell
+   people apart and an icon for bots/services; with a corner status indicator
+   and stacked in a group with +N overflow. Tokens only, no images.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon } = window;
@@ -18,7 +18,7 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── Avatar de marca ─────────────────────────────────────────────────────── */
+/* ── Brand avatar ────────────────────────────────────────────────────────── */
 const AV = {
   xs: { box: 'size-6',  fs: 'text-[10px]', r: 'rounded-md',     dot: 'size-2',   ico: 13 },
   sm: { box: 'size-8',  fs: 'text-[11px]', r: 'rounded-lg',     dot: 'size-2.5', ico: 16 },
@@ -49,7 +49,7 @@ function Avatar({ size = 'md', round, tone = 'primary', initials, icon, status, 
   );
 }
 
-/* ── 1 · TAMAÑOS Y FORMA ─────────────────────────────────────────────────── */
+/* ── 1 · SIZES AND SHAPE ─────────────────────────────────────────────────── */
 function SizesShape() {
   return (
     <div className="flex flex-col items-center gap-7">
@@ -66,7 +66,7 @@ function SizesShape() {
   );
 }
 
-/* ── 2 · TONOS E ICONO ───────────────────────────────────────────────────── */
+/* ── 2 · TONES AND ICON ──────────────────────────────────────────────────── */
 function TonesIcons() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
@@ -83,8 +83,8 @@ function TonesIcons() {
   );
 }
 
-/* ── 3 · CON ESTADO ──────────────────────────────────────────────────────── */
-const STATUSES = [['online', 'en línea', 'primary', 'MR'], ['idle', 'inactivo', 'violet', 'JL'], ['busy', 'ocupado', 'cyan', 'SK'], ['offline', 'offline', 'secondary', 'VG']];
+/* ── 3 · WITH STATUS ─────────────────────────────────────────────────────── */
+const STATUSES = [['online', 'online', 'primary', 'MR'], ['idle', 'idle', 'violet', 'JL'], ['busy', 'busy', 'cyan', 'SK'], ['offline', 'offline', 'secondary', 'VG']];
 function WithStatus() {
   return (
     <div className="flex flex-wrap items-start justify-center gap-x-8 gap-y-6">
@@ -98,7 +98,7 @@ function WithStatus() {
   );
 }
 
-/* ── 4 · GRUPO APILADO ───────────────────────────────────────────────────── */
+/* ── 4 · STACKED GROUP ───────────────────────────────────────────────────── */
 const TEAM = [
   { initials: 'MR', tone: 'primary' }, { initials: 'JL', tone: 'violet' }, { initials: 'SK', tone: 'cyan' },
   { initials: 'AT', tone: 'rose' }, { initials: 'VG', tone: 'amber' }, { initials: 'DN', tone: 'accent' }, { initials: 'PL', tone: 'secondary' },
@@ -117,7 +117,7 @@ const Group = ({ size, max }) => {
 function Stacked() {
   return (
     <div className="flex flex-col items-center gap-7">
-      <div className="flex flex-col items-center gap-2.5"><Group size="md" max={4} /><span className="font-mono text-[10.5px] uppercase tracking-wider text-muted-foreground/80">operadores · 7</span></div>
+      <div className="flex flex-col items-center gap-2.5"><Group size="md" max={4} /><span className="font-mono text-[10.5px] uppercase tracking-wider text-muted-foreground/80">team · 7</span></div>
       <div className="flex flex-wrap items-center justify-center gap-8">
         <div className="flex flex-col items-center gap-2"><Group size="sm" max={5} /><span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground/80">sm</span></div>
         <div className="flex flex-col items-center gap-2"><Group size="lg" max={3} /><span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground/80">lg</span></div>
@@ -127,7 +127,7 @@ function Stacked() {
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_AV = `// Avatar de marca — tamaño × tono; icono para agentes, iniciales para personas
+const CODE_AV = `// Brand avatar — size × tone; icon for bots, initials for people
 const SIZE = {
   xs: "size-6 text-[10px] rounded-md",   sm: "size-8 text-[11px] rounded-lg",
   md: "size-10 text-[13px] rounded-[10px]", lg: "size-12 text-[15px] rounded-xl",
@@ -146,14 +146,14 @@ function Avatar({ size = "md", round, tone = "primary", initials, icon: Glyph })
   );
 }`;
 
-const CODE_STATUS = `// Indicador de estado — punto en la esquina con ring del color de fondo
+const CODE_STATUS = `// Status indicator — corner dot with a ring in the background colour
 <span className="relative inline-flex">
   <Avatar size="lg" round initials="MR" />
   <span className="absolute -bottom-0.5 -right-0.5 size-3.5 rounded-full bg-primary ring-2 ring-card" />
 </span>
 // online → bg-primary · idle → bg-warning · busy → bg-destructive · offline → bg-muted-foreground`;
 
-const CODE_GROUP = `// Grupo apilado — solapamiento con -space-x + ring, y overflow +N
+const CODE_GROUP = `// Stacked group — overlap with -space-x + ring, and +N overflow
 <div className="flex -space-x-2.5">
   {people.slice(0, max).map((p) => <Avatar key={p.id} round ring {...p} />)}
   {extra > 0 && (
@@ -162,32 +162,32 @@ const CODE_GROUP = `// Grupo apilado — solapamiento con -space-x + ring, y ove
   )}
 </div>`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function AvatarsSection() {
   return (
     <div>
-      <SectionHead kicker="Elementos" title="Avatars" status="done"
-        intro="El avatar de iniciales de marca: cinco tamaños (xs–xl), cuadrado por defecto o redondo, en tonos para distinguir personas y un icono para representar agentes. Con indicador de estado en la esquina y apilado en grupo con desbordamiento +N. Sin imágenes — todo desde tokens, legible en cualquier tema." />
+      <SectionHead kicker="Elements" title="Avatars" status="done"
+        intro="The brand initials avatar: five sizes (xs–xl), square by default or round, in tones to tell people apart and an icon to represent bots and services. With a corner status indicator and stacked in a group with +N overflow. No images — everything from tokens, legible in any theme." />
 
-      <Variant title="Tamaños y forma"
-        desc="Cinco tamaños con el radio escalando con la caja; round lo convierte en círculo. md es el de uso general; xl para cabeceras de perfil."
+      <Variant title="Sizes and shape"
+        desc="Five sizes with the radius scaling with the box; round turns it into a circle. md is the general-purpose size; xl is for profile headers."
         code={CODE_AV}>
         <SizesShape />
       </Variant>
 
-      <Variant title="Tonos e icono"
-        desc="Tonos sólidos (primary, accent) y categóricos suaves para diferenciar a las personas de un vistazo; el icono (bot / user) marca a los agentes frente a los operadores.">
+      <Variant title="Tones and icon"
+        desc="Solid tones (primary, accent) and soft categoricals to tell people apart at a glance; the icon (bot / user) marks automated accounts versus people.">
         <TonesIcons />
       </Variant>
 
-      <Variant title="Con estado"
-        desc="Un punto en la esquina inferior con ring del color de la superficie para que se separe del avatar: verde en línea, ámbar inactivo, rojo ocupado, gris offline."
+      <Variant title="With status"
+        desc="A dot in the bottom corner with a ring in the surface colour so it stands apart from the avatar: green online, amber idle, red busy, grey offline."
         code={CODE_STATUS}>
         <WithStatus />
       </Variant>
 
-      <Variant title="Grupo apilado"
-        desc="Avatares solapados con -space-x y un ring que los separa; cuando hay más de los que caben, un chip +N cierra el grupo."
+      <Variant title="Stacked group"
+        desc="Avatars overlapped with -space-x and a ring that separates them; when there are more than fit, a +N chip closes the group."
         code={CODE_GROUP}>
         <Stacked />
       </Variant>

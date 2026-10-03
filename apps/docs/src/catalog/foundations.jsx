@@ -1,6 +1,6 @@
 /* ============================================================================
-   Gntik UI · foundations.jsx — color · tipografía · espaciado · radios ·
-   sombras · iconos. Todo referencia tokens de tokens/brand.css.
+   Gntik UI · foundations.jsx — color · typography · spacing · radii ·
+   shadows · icons. Everything references tokens from tokens/brand.css.
    ============================================================================ */
 (function () {
 const { Card, SectionHead, Icon, CodeBlock, LogoMark, Wordmark, MusematicMark } = window;
@@ -67,17 +67,17 @@ function FoundationsSection() {
 
   return (
     <div>
-      <SectionHead kicker="Fundamentos" title="Foundations" status="done"
-        intro="La base del sistema: color, tipografía, espaciado, radios y sombras — todo como token en tokens/brand.css. Cambia el bloque de marca y todo el catálogo se reskinea. Tres temas: light · dark · high_contrast." />
+      <SectionHead kicker="Foundations" title="Foundations" status="done"
+        intro="The base of the system: color, typography, spacing, radii and shadows — all as tokens in tokens/brand.css. Change the brand block and the whole catalog reskins. Three themes: light · dark · high_contrast." />
 
-      <Block title="Marca / logo" hint="no recolorear · clear-space ≥ altura de la m">
+      <Block title="Brand / logo" hint="do not recolour · clear-space ≥ height of the m">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="rounded-lg border border-border bg-card p-6 flex flex-col items-center justify-center gap-4"><LogoMark s={72} /><code className="font-mono text-[11px] text-muted-foreground">Monograma · app icon</code></div>
+          <div className="rounded-lg border border-border bg-card p-6 flex flex-col items-center justify-center gap-4"><LogoMark s={72} /><code className="font-mono text-[11px] text-muted-foreground">Monogram · app icon</code></div>
           <div className="rounded-lg border border-border bg-card p-6 flex flex-col items-center justify-center gap-4"><Wordmark s={40} fs={26} /><code className="font-mono text-[11px] text-muted-foreground">Wordmark</code></div>
-          <div className="rounded-lg border border-border bg-card p-6 flex flex-col items-center justify-center gap-4 text-foreground"><MusematicMark s={64} /><code className="font-mono text-[11px] text-muted-foreground">Símbolo · currentColor</code></div>
+          <div className="rounded-lg border border-border bg-card p-6 flex flex-col items-center justify-center gap-4 text-foreground"><MusematicMark s={64} /><code className="font-mono text-[11px] text-muted-foreground">Symbol · currentColor</code></div>
         </div>
         <div className="flex flex-wrap gap-3 mt-4">
-          {[['Noche', '#0C2017'], ['Verde', '#33CE73'], ['Crema', '#EEF1E6']].map(([n, hex]) => (
+          {[['Night', '#0C2017'], ['Green', '#33CE73'], ['Cream', '#EEF1E6']].map(([n, hex]) => (
             <div key={hex} className="flex items-center gap-2.5 rounded-md border border-border bg-card px-3 py-2">
               <span className="w-5 h-5 rounded border border-border" style={{ background: hex }} />
               <div className="leading-tight"><div className="font-sans text-[11.5px] text-foreground font-medium">{n}</div><code className="font-mono text-[10.5px] text-muted-foreground">{hex}</code></div>
@@ -86,21 +86,21 @@ function FoundationsSection() {
         </div>
       </Block>
 
-      <Block title="Color" hint="hsl(var(--token)) · soporta /opacidad">
+      <Block title="Color" hint="hsl(var(--token)) · supports /opacity">
         <div className="flex flex-col gap-8">
-          <div><div className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground mb-3.5">Superficie & texto</div><SwatchRow items={surface} /></div>
-          <div><div className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground mb-3.5">Marca (mono-brand · verde 145)</div><SwatchRow items={brand} /></div>
-          <div><div className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground mb-3.5">Estado / semántico</div><SwatchRow items={status} /></div>
-          <div><div className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground mb-3.5">Categórico (gráficas · tags)</div><SwatchRow items={charts} /></div>
+          <div><div className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground mb-3.5">Surface & text</div><SwatchRow items={surface} /></div>
+          <div><div className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground mb-3.5">Brand (mono-brand · green 145)</div><SwatchRow items={brand} /></div>
+          <div><div className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground mb-3.5">Status / semantic</div><SwatchRow items={status} /></div>
+          <div><div className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground mb-3.5">Categorical (charts · tags)</div><SwatchRow items={charts} /></div>
         </div>
-        <CodeBlock lang="tsx" code={`<div className="bg-card text-card-foreground border border-border" />\n<button className="bg-primary text-primary-foreground" />\n<span className="text-primary/70" />   {/* opacidad sobre token */}`} />
+        <CodeBlock lang="tsx" code={`<div className="bg-card text-card-foreground border border-border" />\n<button className="bg-primary text-primary-foreground" />\n<span className="text-primary/70" />   {/* opacity on a token */}`} />
       </Block>
 
-      <Block title="Tipografía" hint="Geist · 400 / 500 / 600 / 700">
+      <Block title="Typography" hint="Geist · 400 / 500 / 600 / 700">
         <div className="rounded-lg border border-border bg-card divide-y divide-border">
           {typeScale.map(([name, cls, spec, tw]) => (
             <div key={name} className="flex items-center justify-between gap-6 px-6 py-4">
-              <div className={"text-foreground min-w-0 truncate " + cls}>musematic</div>
+              <div className={"text-foreground min-w-0 truncate " + cls}>gntik</div>
               <div className="text-right shrink-0">
                 <div className="font-sans text-[12.5px] text-foreground font-medium">{name}</div>
                 <div className="font-mono text-[11px] text-muted-foreground">{spec}</div>
@@ -115,7 +115,7 @@ function FoundationsSection() {
         </div>
       </Block>
 
-      <Block title="Espaciado" hint="escala Tailwind + 18 custom">
+      <Block title="Spacing" hint="Tailwind scale + custom 18">
         <div className="rounded-lg border border-border bg-card p-6 flex flex-col gap-2.5">
           {spacing.map(([n, w]) => (
             <div key={n} className="flex items-center gap-4">
@@ -128,7 +128,7 @@ function FoundationsSection() {
       </Block>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Block title="Radios" hint="--radius: 0.625rem (sm/md/lg/xl)">
+        <Block title="Radii" hint="--radius: 0.625rem (sm/md/lg/xl)">
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
             {radii.map(([n, cls, v]) => (
               <div key={n}>
@@ -139,7 +139,7 @@ function FoundationsSection() {
             ))}
           </div>
         </Block>
-        <Block title="Sombras" hint="planas · brand-tinted · sin glow">
+        <Block title="Shadows" hint="flat · brand-tinted · no glow">
           <div className="grid grid-cols-3 gap-4">
             {shadows.map(([n, cls]) => (
               <div key={n}>
@@ -152,7 +152,7 @@ function FoundationsSection() {
         </Block>
       </div>
 
-      <Block title="Iconos" hint="stroke 1.7 · currentColor · 24px grid">
+      <Block title="Icons" hint="stroke 1.7 · currentColor · 24px grid">
         <div className="rounded-lg border border-border bg-card p-5 grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-9 gap-x-3 gap-y-5">
           {icons.map(n => (
             <div key={n} className="flex flex-col items-center gap-2 text-foreground">

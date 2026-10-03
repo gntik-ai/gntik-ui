@@ -1,23 +1,23 @@
 /* ============================================================================
-   Gntik UI · line-charts.jsx — subcategoría "Line charts" (grupo Gráficas).
-   Series finas para comparar tendencias. Latencia por percentil (multi) y tasa
-   de éxito (una serie). Tooltip + leyenda interactiva, tema en vivo.
+   Gntik UI · line-charts.jsx — "Line charts" subcategory (Charts group).
+   Thin series to compare trends. Latency by percentile (multi) and success
+   rate (single series). Tooltip + interactive legend, live theme.
    ============================================================================ */
 (function () {
 const { SectionHead, ChartCard, ChartVariant, LineChart, chartFmt, Icon } = window;
 
 const LATENCY = [
-  { day: 'Lun', p50: 240, p95: 880, p99: 1520 },
-  { day: 'Mar', p50: 232, p95: 910, p99: 1610 },
-  { day: 'Mié', p50: 251, p95: 1020, p99: 1840 },
-  { day: 'Jue', p50: 244, p95: 870, p99: 1490 },
-  { day: 'Vie', p50: 268, p95: 1140, p99: 2010 },
-  { day: 'Sáb', p50: 210, p95: 760, p99: 1280 },
-  { day: 'Dom', p50: 198, p95: 720, p99: 1190 },
+  { day: 'Mon', p50: 240, p95: 880, p99: 1520 },
+  { day: 'Tue', p50: 232, p95: 910, p99: 1610 },
+  { day: 'Wed', p50: 251, p95: 1020, p99: 1840 },
+  { day: 'Thu', p50: 244, p95: 870, p99: 1490 },
+  { day: 'Fri', p50: 268, p95: 1140, p99: 2010 },
+  { day: 'Sat', p50: 210, p95: 760, p99: 1280 },
+  { day: 'Sun', p50: 198, p95: 720, p99: 1190 },
 ];
 const SUCCESS = [
-  { day: 'Lun', Éxito: 97.1 }, { day: 'Mar', Éxito: 97.6 }, { day: 'Mié', Éxito: 96.4 },
-  { day: 'Jue', Éxito: 98.0 }, { day: 'Vie', Éxito: 97.2 }, { day: 'Sáb', Éxito: 98.4 }, { day: 'Dom', Éxito: 98.7 },
+  { day: 'Mon', Success: 97.1 }, { day: 'Tue', Success: 97.6 }, { day: 'Wed', Success: 96.4 },
+  { day: 'Thu', Success: 98.0 }, { day: 'Fri', Success: 97.2 }, { day: 'Sat', Success: 98.4 }, { day: 'Sun', Success: 98.7 },
 ];
 
 const C_MULTI = `<LineChart
@@ -31,13 +31,13 @@ const C_MULTI = `<LineChart
 const C_SINGLE = `<LineChart
   data={success}
   index="day"
-  categories={["Éxito"]}
+  categories={["Success"]}
   colors={["primary"]}
   valueFormatter={(v) => \`\${v}%\`}
   showLegend={false}
 />`;
 
-/* multi-serie + panel de resumen lateral (patrón de tarjeta de dashboard) */
+/* multi-series + side summary panel (dashboard card pattern) */
 const RUNS = [
   { date: 'Jun 1', 'contract-summarize': 212, 'pii-redaction': 124, 'lead-enrich': 521 },
   { date: 'Jun 2', 'contract-summarize': 198, 'pii-redaction': 141, 'lead-enrich': 540 },
@@ -78,10 +78,10 @@ const SUMMARY = [
 
 const C_COMPARE = `<div className="rounded-lg border border-border bg-card p-5">
   <h3 className="text-[15px] font-semibold tracking-tight text-foreground">
-    Runs por agente
+    Runs per service
   </h3>
   <p className="mt-1 text-[13px] leading-6 text-muted-foreground">
-    Volumen diario de ejecuciones · junio
+    Daily run volume · June
   </p>
   <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-4">
     <div className="md:col-span-3">
@@ -112,7 +112,7 @@ const C_COMPARE = `<div className="rounded-lg border border-border bg-card p-5">
       </ul>
       <button className="mt-6 inline-flex items-center gap-1.5 py-2 text-[13px] font-medium text-primary hover:text-primary/80">
         <Plus className="size-4 shrink-0" />
-        Comparar agente
+        Compare service
       </button>
     </div>
   </div>
@@ -120,14 +120,14 @@ const C_COMPARE = `<div className="rounded-lg border border-border bg-card p-5">
 
 const C_TWOCARD = `<>
   <h3 className="text-[15px] font-semibold tracking-tight text-foreground">
-    Runs por agente
+    Runs per service
   </h3>
   <p className="mt-1 text-[13px] leading-6 text-muted-foreground">
-    Volumen diario de ejecuciones · junio
+    Daily run volume · June
   </p>
   <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
     <div className="rounded-lg border border-border bg-card p-5 lg:col-span-2">
-      {/* desktop: gráfica completa con eje Y */}
+      {/* desktop: full chart with Y axis */}
       <div className="hidden sm:block">
         <LineChart
           data={runs}
@@ -138,7 +138,7 @@ const C_TWOCARD = `<>
           showLegend={false}
         />
       </div>
-      {/* móvil: compacta — solo extremos del eje X, sin eje Y */}
+      {/* mobile: compact — X-axis ends only, no Y axis */}
       <div className="sm:hidden">
         <LineChart
           data={runs}
@@ -170,7 +170,7 @@ const C_TWOCARD = `<>
       </ul>
       <button className="mt-4 inline-flex items-center gap-1.5 py-2 text-[13px] font-medium text-primary hover:text-primary/80">
         <Plus className="size-4 shrink-0" />
-        Comparar agente
+        Compare service
       </button>
     </div>
   </div>
@@ -179,27 +179,27 @@ const C_TWOCARD = `<>
 function LineChartsSection() {
   return (
     <div>
-      <SectionHead kicker="Gráficas" title="Line charts" status="done"
-        intro="Varias series finas para comparar tendencias. La mediana frente a la cola, una tasa a lo largo del tiempo. Haz clic en la leyenda para aislar un percentil." />
+      <SectionHead kicker="Charts" title="Line charts" status="done"
+        intro="Several thin series to compare trends. The median against the tail, a rate over time. Click the legend to isolate a percentile." />
 
-      <ChartVariant title="Multi-serie" desc="Latencia por percentil (p50 · p95 · p99). La mediana se mantiene plana mientras la cola se dispara los viernes." code={C_MULTI}>
-        <ChartCard title="Latencia por percentil · 7 días" value="1,140 ms" delta="p95 · pico el viernes" deltaTone="neg">
+      <ChartVariant title="Multi-series" desc="Latency by percentile (p50 · p95 · p99). The median stays flat while the tail spikes on Fridays." code={C_MULTI}>
+        <ChartCard title="Latency by percentile · 7 days" value="1,140 ms" delta="p95 · Friday peak" deltaTone="neg">
           <LineChart data={LATENCY} index="day" categories={['p50', 'p95', 'p99']}
             colors={['primary', 'cyan', 'violet']} valueFormatter={chartFmt.ms} />
         </ChartCard>
       </ChartVariant>
 
-      <ChartVariant title="Una serie" desc="Una sola tendencia, sin leyenda. Tasa de éxito diaria de los runs en porcentaje." code={C_SINGLE}>
-        <ChartCard title="Tasa de éxito · 7 días" value="97.6%" delta="+0.4 pts vs. semana previa" deltaTone="pos">
-          <LineChart data={SUCCESS} index="day" categories={['Éxito']} colors={['primary']}
+      <ChartVariant title="Single series" desc="A single trend, no legend. Daily run success rate as a percentage." code={C_SINGLE}>
+        <ChartCard title="Success rate · 7 days" value="97.6%" delta="+0.4 pts vs. previous week" deltaTone="pos">
+          <LineChart data={SUCCESS} index="day" categories={['Success']} colors={['primary']}
             valueFormatter={chartFmt.pct} showLegend={false} />
         </ChartCard>
       </ChartVariant>
 
-      <ChartVariant title="Comparativa con resumen" desc="Gráfica sin leyenda incrustada + panel lateral que resume el último valor de cada serie y permite añadir otra al cotejo. El patrón de tarjeta de dashboard para comparar agentes." code={C_COMPARE}>
+      <ChartVariant title="Comparison with summary" desc="Chart without an embedded legend + side panel that summarizes the latest value of each series and lets you add another to the comparison. The dashboard card pattern for comparing services." code={C_COMPARE}>
         <div className="rounded-lg border border-border bg-card p-5">
-          <h3 className="text-[15px] font-semibold tracking-tight text-foreground">Runs por agente</h3>
-          <p className="mt-1 text-[13px] leading-6 text-muted-foreground">Volumen diario de ejecuciones · junio</p>
+          <h3 className="text-[15px] font-semibold tracking-tight text-foreground">Runs per service</h3>
+          <p className="mt-1 text-[13px] leading-6 text-muted-foreground">Daily run volume · June</p>
           <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-4">
             <div className="md:col-span-3">
               <LineChart data={RUNS} index="date" categories={['contract-summarize', 'pii-redaction', 'lead-enrich']}
@@ -219,17 +219,17 @@ function LineChartsSection() {
               </ul>
               <button type="button" className="mt-6 inline-flex items-center gap-1.5 py-2 text-[13px] font-medium text-primary hover:text-primary/80 transition-colors">
                 <Icon name="plus" size={16} className="shrink-0" />
-                Comparar agente
+                Compare service
               </button>
             </div>
           </div>
         </div>
       </ChartVariant>
 
-      <ChartVariant title="Dos tarjetas" desc="Encabezado fuera de las tarjetas; gráfica y resumen en tarjetas independientes lado a lado. La lista usa separadores y alinea nombre y valor en fila. En móvil la gráfica se compacta: solo extremos del eje X y sin eje Y." code={C_TWOCARD}>
+      <ChartVariant title="Two cards" desc="Heading outside the cards; chart and summary in separate cards side by side. The list uses dividers and aligns name and value in a row. On mobile the chart compacts: X-axis ends only and no Y axis." code={C_TWOCARD}>
         <div>
-          <h3 className="text-[15px] font-semibold tracking-tight text-foreground">Runs por agente</h3>
-          <p className="mt-1 text-[13px] leading-6 text-muted-foreground">Volumen diario de ejecuciones · junio</p>
+          <h3 className="text-[15px] font-semibold tracking-tight text-foreground">Runs per service</h3>
+          <p className="mt-1 text-[13px] leading-6 text-muted-foreground">Daily run volume · June</p>
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
             <div className="rounded-lg border border-border bg-card p-5 lg:col-span-2">
               <div className="hidden sm:block">
@@ -255,7 +255,7 @@ function LineChartsSection() {
               </ul>
               <button type="button" className="mt-4 inline-flex items-center gap-1.5 py-2 text-[13px] font-medium text-primary hover:text-primary/80 transition-colors">
                 <Icon name="plus" size={16} className="shrink-0" />
-                Comparar agente
+                Compare service
               </button>
             </div>
           </div>

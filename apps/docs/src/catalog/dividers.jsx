@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · dividers.jsx — separadores (grupo "Elementos").
-   La regla simple (default · sutil · gruesa), con etiqueta (centrada · alineada
-   · en pill), con icono central o acción a la derecha, y reglas verticales para
-   metadatos y bloques de stats. Solo border tokens, sin color hardcodeado.
+   Gntik UI · dividers.jsx — separators ("Elements" group).
+   The simple rule (default · subtle · thick), with a label (centred · aligned
+   · in a pill), with a central icon or a right-hand action, and vertical rules
+   for metadata and stat blocks. Border tokens only, no hardcoded colour.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
@@ -25,36 +25,36 @@ function SimpleDividers() {
   );
   return (
     <div className="mx-auto w-full max-w-md space-y-8">
-      <Row label="Por defecto"><div className="h-px w-full bg-border" /></Row>
-      <Row label="Sutil — bg-border/50"><div className="h-px w-full bg-border/50" /></Row>
-      <Row label="Gruesa"><div className="h-0.5 w-full rounded-full bg-border" /></Row>
+      <Row label="Default"><div className="h-px w-full bg-border" /></Row>
+      <Row label="Subtle — bg-border/50"><div className="h-px w-full bg-border/50" /></Row>
+      <Row label="Thick"><div className="h-0.5 w-full rounded-full bg-border" /></Row>
     </div>
   );
 }
 
-/* ── 2 · CON ETIQUETA ────────────────────────────────────────────────────── */
+/* ── 2 · WITH LABEL ──────────────────────────────────────────────────────── */
 function LabelDividers() {
   return (
     <div className="mx-auto w-full max-w-md space-y-9">
       <div className="flex items-center gap-3">
         <div className="h-px flex-1 bg-border" />
-        <span className="text-[12.5px] text-muted-foreground">Runs de hoy</span>
+        <span className="text-[12.5px] text-muted-foreground">Today's jobs</span>
         <div className="h-px flex-1 bg-border" />
       </div>
       <div className="flex items-center gap-3">
-        <span className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground">Esta semana</span>
+        <span className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground">This week</span>
         <div className="h-px flex-1 bg-border" />
       </div>
       <div className="flex items-center gap-3">
         <div className="h-px flex-1 bg-border" />
-        <span className="inline-flex h-[22px] items-center rounded-full bg-secondary px-2.5 font-mono text-[10.5px] font-semibold text-muted-foreground">ayer</span>
+        <span className="inline-flex h-[22px] items-center rounded-full bg-secondary px-2.5 font-mono text-[10.5px] font-semibold text-muted-foreground">yesterday</span>
         <div className="h-px flex-1 bg-border" />
       </div>
     </div>
   );
 }
 
-/* ── 3 · CON ICONO / CON ACCIÓN ──────────────────────────────────────────── */
+/* ── 3 · WITH ICON / WITH ACTION ─────────────────────────────────────────── */
 function ActionDividers() {
   const [open, setOpen] = useState(false);
   return (
@@ -66,21 +66,21 @@ function ActionDividers() {
       </div>
 
       <div className="flex items-center gap-4">
-        <span className="shrink-0 font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground">Miembros</span>
+        <span className="shrink-0 font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground">Members</span>
         <div className="h-px flex-1 bg-border" />
-        <button className="inline-flex shrink-0 items-center gap-1.5 text-[12.5px] font-semibold text-primary transition-colors hover:text-primary/80"><Icon name="plus" size={14} />Invitar</button>
+        <button className="inline-flex shrink-0 items-center gap-1.5 text-[12.5px] font-semibold text-primary transition-colors hover:text-primary/80"><Icon name="plus" size={14} />Invite</button>
       </div>
 
       <div>
         <ul className="space-y-2 text-[13px] text-foreground">
           <li>support-triage</li>
-          <li>billing-bot</li>
+          <li>billing-api</li>
           {open && (<React.Fragment><li>data-enricher</li><li>lead-router</li><li>fraud-scan</li></React.Fragment>)}
         </ul>
         <button onClick={() => setOpen(o => !o)} className="group mt-3 flex w-full items-center gap-3">
           <div className="h-px flex-1 bg-border" />
           <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground transition-colors group-hover:text-foreground">
-            <Icon name={open ? 'chevronUp' : 'chevron'} size={14} />{open ? 'Mostrar menos' : 'Mostrar 3 más'}
+            <Icon name={open ? 'chevronUp' : 'chevron'} size={14} />{open ? 'Show less' : 'Show 3 more'}
           </span>
           <div className="h-px flex-1 bg-border" />
         </button>
@@ -94,14 +94,14 @@ function VerticalDividers() {
   return (
     <div className="mx-auto flex w-full max-w-md flex-col gap-9">
       <div className="flex items-center justify-center gap-3 text-[13px] text-muted-foreground">
-        <span className="font-medium text-foreground">12 agentes</span>
+        <span className="font-medium text-foreground">12 services</span>
         <div className="h-3.5 w-px bg-border" />
         <span>eu-west-1</span>
         <div className="h-3.5 w-px bg-border" />
         <span className="font-mono text-[12px]">v2.3.0</span>
       </div>
       <div className="flex items-stretch gap-5">
-        {[['9', 'activos'], ['3', 'pausados'], ['$2.1k', 'gasto/día']].map(([n, label], i) => (
+        {[['9', 'active'], ['3', 'paused'], ['$2.1k', 'spend/day']].map(([n, label], i) => (
           <React.Fragment key={label}>
             {i > 0 && <div className="w-px self-stretch bg-border" />}
             <div className="flex-1 text-center">
@@ -116,55 +116,55 @@ function VerticalDividers() {
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_LABEL = `// Divisor con etiqueta — dos reglas flexibles a los lados del texto
+const CODE_LABEL = `// Divider with label — two flexible rules on either side of the text
 <div className="flex items-center gap-3">
   <div className="h-px flex-1 bg-border" />
-  <span className="text-[12.5px] text-muted-foreground">Runs de hoy</span>
+  <span className="text-[12.5px] text-muted-foreground">Today's jobs</span>
   <div className="h-px flex-1 bg-border" />
 </div>`;
 
-const CODE_ACTION = `// Con acción — label a la izquierda, regla flexible, botón a la derecha
+const CODE_ACTION = `// With action — label on the left, flexible rule, button on the right
 <div className="flex items-center gap-4">
-  <span className="shrink-0 font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground">Miembros</span>
+  <span className="shrink-0 font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground">Members</span>
   <div className="h-px flex-1 bg-border" />
   <button className="shrink-0 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary hover:text-primary/80">
-    <PlusIcon /> Invitar
+    <PlusIcon /> Invite
   </button>
 </div>`;
 
-const CODE_VERTICAL = `// Vertical — w-px que se estira con self-stretch entre bloques
+const CODE_VERTICAL = `// Vertical — a w-px that stretches with self-stretch between blocks
 <div className="flex items-stretch gap-5">
   <div className="flex-1 text-center">…</div>
   <div className="w-px self-stretch bg-border" />
   <div className="flex-1 text-center">…</div>
 </div>`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function DividersSection() {
   return (
     <div>
-      <SectionHead kicker="Elementos" title="Dividers" status="done"
-        intro="Separadores para dar ritmo al contenido: la regla simple en tres pesos, con etiqueta (centrada, alineada o en pill), con icono central, con una acción a la derecha (y un divisor que expande la lista), y reglas verticales para metadatos y bloques de stats. Solo usan el token border." />
+      <SectionHead kicker="Elements" title="Dividers" status="done"
+        intro="Separators that give content rhythm: the simple rule in three weights, with a label (centred, aligned or in a pill), with a central icon, with a right-hand action (and a divider that expands the list), and vertical rules for metadata and stat blocks. They only use the border token." />
 
       <Variant title="Simple"
-        desc="La regla horizontal en tres pesos: por defecto, sutil (border/50) para separaciones de bajo contraste, y gruesa para cierres de bloque.">
+        desc="The horizontal rule in three weights: default, subtle (border/50) for low-contrast separations, and thick to close a block.">
         <SimpleDividers />
       </Variant>
 
-      <Variant title="Con etiqueta"
-        desc="Texto entre dos reglas que rellenan el espacio: centrado, alineado a la izquierda como kicker en mono, o envuelto en una pill."
+      <Variant title="With label"
+        desc="Text between two rules that fill the space: centred, left-aligned as a mono kicker, or wrapped in a pill."
         code={CODE_LABEL}>
         <LabelDividers />
       </Variant>
 
-      <Variant title="Con icono y acción"
-        desc="Un icono central como marca de sección, una cabecera con acción a la derecha, y un divisor clicable que expande la lista. Pulsa “Mostrar 3 más”."
+      <Variant title="With icon and action"
+        desc="A central icon as a section mark, a header with a right-hand action, and a clickable divider that expands the list. Press “Show 3 more”."
         code={CODE_ACTION}>
         <ActionDividers />
       </Variant>
 
       <Variant title="Vertical"
-        desc="Reglas verticales finas para separar metadatos en una fila, y divisores que se estiran con self-stretch entre bloques de stats."
+        desc="Thin vertical rules to separate metadata in a row, and dividers that stretch with self-stretch between stat blocks."
         code={CODE_VERTICAL}>
         <VerticalDividers />
       </Variant>

@@ -1,14 +1,14 @@
 /* ============================================================================
-   Gntik UI · app-shell.jsx — el chrome compartido (sidebar + topbar + header).
-   Versión React interactiva del block aprobado (blocks/Shell.html):
-   grupos colapsables · dropdowns (theme / notificaciones / perfil) · tabla.
+   Gntik UI · app-shell.jsx — the shared chrome (sidebar + topbar + header).
+   Interactive React version of the approved block (blocks/Shell.html):
+   collapsible groups · dropdowns (theme / notifications / profile) · table.
    ============================================================================ */
 (function () {
 const { Icon, Wordmark, SectionHead, ScaleFrame, CodeBlock, useState, useRef, useClickOutside } = window;
 
 const NAV = [
-  ['Workspace', [['home', 'Home'], ['chat', 'Conversations'], ['store', 'Marketplace']]],
-  ['Agents & Flows', [['bot', 'Agents'], ['book', 'Knowledge'], ['net', 'Fleet', true], ['flow', 'Workflows'], ['flow', 'Workflow Studio'], ['flask', 'Evaluation']]],
+  ['Workspace', [['home', 'Home'], ['chat', 'Messages'], ['store', 'Marketplace']]],
+  ['Build', [['bot', 'Services'], ['book', 'Docs'], ['net', 'Deployments', true], ['flow', 'Workflows'], ['flow', 'Workflow Studio'], ['flask', 'Testing']]],
   ['Insights', [['line', 'Analytics'], ['coin', 'Costs']]],
   ['Governance', [['shield', 'Policies'], ['finger', 'Trust'], ['finger', 'Trust Workbench']]],
   ['Operations', [['activity', 'Operator']]],
@@ -90,7 +90,7 @@ function AppShellDemo() {
       {/* ── MAIN ── */}
       <div className="flex-1 min-w-0 flex flex-col">
         <header className="h-16 shrink-0 flex items-center gap-3.5 px-5 bg-chrome border-b border-border/60">
-          {/* ── Workspace switcher · selector de workspaces (layout de dos líneas) ── */}
+          {/* ── Workspace switcher (two-line layout) ── */}
           <div ref={wsRef} className="relative shrink-0">
             <button onClick={() => setWsOpen(o => !o)} className="flex items-center gap-2.5 h-11 pl-1.5 pr-2.5 rounded-[10px] border border-border bg-card hover:bg-secondary/50 transition-colors">
               <span className="w-[30px] h-[30px] rounded-lg bg-primary text-primary-foreground flex items-center justify-center font-bold text-[11px] shrink-0">AC</span>
@@ -119,12 +119,12 @@ function AppShellDemo() {
             )}
           </div>
 
-          {/* ── Tenant (mono) + breadcrumb, agrupados y pegados ── */}
+          {/* ── Tenant (mono) + breadcrumb, grouped together ── */}
           <div className="flex items-center gap-2.5 min-w-0">
             <span className="font-mono text-[12.5px] text-foreground/90">acme-industries</span>
             <Icon name="chevronRight" size={14} className="text-muted-foreground/40 shrink-0" />
             <div className="flex items-center gap-1.5 text-[12.5px] text-muted-foreground">
-              <span>Operation</span><span className="opacity-50">/</span><span className="text-foreground font-medium">Fleet</span>
+              <span>Operation</span><span className="opacity-50">/</span><span className="text-foreground font-medium">Deployments</span>
             </div>
           </div>
 
@@ -150,9 +150,9 @@ function AppShellDemo() {
                 <span className="absolute top-[-3px] right-[-3px] w-2 h-2 rounded-full bg-destructive border-2 border-chrome" /><Icon name="bell" size={16} />
               </button>
               {menu === 'notif' && <Menu width={288}><MLabel>Notifications</MLabel>
-                {[['var(--warning)', <span><b>contract-summarize</b> reached 97% of daily budget</span>, '2m ago · throttled to 1 run/min'],
+                {[['var(--warning)', <span><b>contract-summarize</b> reached 97% of daily budget</span>, '2m ago · throttled to 1 req/min'],
                   ['var(--primary)', <span>New policy <b>pii-redaction</b> activated</span>, '18m ago · by marta@acme.co'],
-                  ['var(--info)', <span>Agent <b>lead-enrich</b> went idle</span>, '1h ago']].map(([c, t, s], i) => (
+                  ['var(--info)', <span>Service <b>lead-enrich</b> went idle</span>, '1h ago']].map(([c, t, s], i) => (
                   <div key={i} className="flex gap-2.5 px-2.5 py-2 rounded-[7px] cursor-pointer hover:bg-secondary/60">
                     <span className="w-[7px] h-[7px] rounded-full mt-1.5 shrink-0" style={{ background: `hsl(${c})` }} />
                     <div><div className="text-[12.5px] leading-snug">{t}</div><div className="font-mono text-[10px] text-muted-foreground mt-0.5">{s}</div></div>
@@ -176,10 +176,10 @@ function AppShellDemo() {
 
         {/* page header */}
         <div className="flex items-end justify-between px-[26px] pt-[22px] pb-4">
-          <div><h1 className="text-2xl font-bold tracking-tight">Fleet</h1><div className="text-[13px] text-muted-foreground mt-1">12 agents · 3 namespaces · eu-west-1</div></div>
+          <div><h1 className="text-2xl font-bold tracking-tight">Deployments</h1><div className="text-[13px] text-muted-foreground mt-1">12 services · 3 namespaces · eu-west-1</div></div>
           <div className="flex gap-2.5">
             <button className="flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-border bg-card text-[13px] font-semibold"><Icon name="sliders" size={15} />Filters</button>
-            <button className="flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-primary text-primary-foreground text-[13px] font-semibold"><Icon name="plus" size={15} />Deploy agent</button>
+            <button className="flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-primary text-primary-foreground text-[13px] font-semibold"><Icon name="plus" size={15} />New deployment</button>
           </div>
         </div>
 
@@ -187,7 +187,7 @@ function AppShellDemo() {
         <div className="flex-1 overflow-y-auto px-[26px] pb-[26px]">
           <div className="border border-border rounded-[10px] bg-card overflow-hidden">
             <div className="grid grid-cols-[1.6fr_0.8fr_0.6fr_1fr_0.7fr_0.6fr] items-center px-5 py-3 bg-secondary/40 border-b border-border">
-              {['agent', 'state', 'runs', 'spend / budget', 'uptime', 'last'].map(h => <span key={h} className="font-mono text-[10px] font-semibold tracking-[0.08em] uppercase text-muted-foreground">{h}</span>)}
+              {['service', 'state', 'requests', 'spend / budget', 'uptime', 'last'].map(h => <span key={h} className="font-mono text-[10px] font-semibold tracking-[0.08em] uppercase text-muted-foreground">{h}</span>)}
             </div>
             {ROWS.map((r, i) => (
               <div key={i} className="grid grid-cols-[1.6fr_0.8fr_0.6fr_1fr_0.7fr_0.6fr] items-center px-5 py-3 text-[13.5px] border-b border-border/50 last:border-0">
@@ -206,12 +206,12 @@ function AppShellDemo() {
 }
 
 const CODE = `// AppShell.tsx — sidebar + topbar + page header (gntik-ui)
-// Iconos vía lucide-react · clases = tokens de tokens/brand.css
+// Icons via lucide-react · classes = tokens from tokens/brand.css
 import { Home, Bot, Network, GitBranch, Bell, Moon, Plus, SlidersHorizontal, ChevronDown } from "lucide-react";
 
 const NAV = [
-  ["Workspace", [["Home", Home], ["Conversations", Chat], ["Marketplace", Store]]],
-  ["Agents & Flows", [["Agents", Bot], ["Fleet", Network, true], ["Workflows", GitBranch]]],
+  ["Workspace", [["Home", Home], ["Messages", Chat], ["Marketplace", Store]]],
+  ["Build", [["Services", Bot], ["Deployments", Network, true], ["Workflows", GitBranch]]],
   // …Insights · Governance · Operations · System
 ];
 
@@ -238,12 +238,12 @@ export function AppShell({ children }) {
 
       <div className="flex-1 min-w-0 flex flex-col">
         <header className="h-16 shrink-0 flex items-center gap-3.5 px-5 bg-chrome border-b border-border/60">
-          {/* Switcher de dos líneas · tenant (mono) · breadcrumb pegado */}
-          <WorkspaceSwitcher />            {/* avatar · nombre · env·region · ▾ */}
+          {/* Two-line switcher · tenant (mono) · attached breadcrumb */}
+          <WorkspaceSwitcher />            {/* avatar · name · env·region · ▾ */}
           <div className="flex items-center gap-2.5 min-w-0">
             <span className="font-mono text-[12.5px] text-foreground/90">acme-industries</span>
             <ChevronRight className="size-3.5 text-muted-foreground/40" />
-            <Breadcrumb>Operation / Fleet</Breadcrumb>
+            <Breadcrumb>Operation / Deployments</Breadcrumb>
           </div>
           <div className="flex-1" />
           <div className="flex items-center gap-2.5">
@@ -251,9 +251,9 @@ export function AppShell({ children }) {
             <ThemeMenu /> <NotificationsMenu /> <UserMenu />
           </div>
         </header>
-        <PageHeader title="Fleet" subtitle="12 agents · 3 namespaces · eu-west-1"
+        <PageHeader title="Deployments" subtitle="12 services · 3 namespaces · eu-west-1"
           actions={<><Button variant="outline"><SlidersHorizontal className="size-4" />Filters</Button>
-                     <Button><Plus className="size-4" />Deploy agent</Button></>} />
+                     <Button><Plus className="size-4" />New deployment</Button></>} />
         <main className="flex-1 overflow-y-auto px-[26px] pb-[26px]">{children}</main>
       </div>
     </div>
@@ -264,7 +264,7 @@ function AppShellSection() {
   return (
     <div>
       <SectionHead kicker="App shell" title="App shell" status="done"
-        intro="El chrome compartido que vive detrás de cada pantalla: sidebar con grupos colapsables, topbar (workspace · tenant · ⌘K · perfil) y cabecera de página. Arréglalo una vez y todas las pantallas heredan. Interactivo: colapsa grupos y abre los menús." />
+        intro="The shared chrome behind every screen: sidebar with collapsible groups, topbar (workspace · tenant · ⌘K · profile) and page header. Fix it once and every screen inherits it. Interactive: collapse groups and open the menus." />
       <div className="rounded-lg border border-border bg-card p-4 sm:p-6 overflow-hidden">
         <ScaleFrame width={1340}><AppShellDemo /></ScaleFrame>
       </div>

@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · button-groups.jsx — botones agrupados (grupo "Elementos").
-   Segmentado con contadores (filtro del Fleet), botones unidos (cambio de
-   vista + stepper de zoom), split button con menú adjunto, y barra de iconos.
-   Bordes compartidos, redondeo solo en los extremos. Dominio musematic, tokens.
+   Gntik UI · button-groups.jsx — grouped buttons ("Elements" group).
+   Segmented with counters (status filter), joined buttons (view switch +
+   zoom stepper), split button with attached menu, and icon bar.
+   Shared borders, rounding only on the ends. Tokens only.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useRef, useClickOutside } = window;
@@ -18,8 +18,8 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── 1 · SEGMENTADO con contadores ───────────────────────────────────────── */
-const FLEET_FILTERS = [['all', 'Todos', 12], ['active', 'Activos', 9], ['paused', 'Pausados', 3]];
+/* ── 1 · SEGMENTED with counters ─────────────────────────────────────────── */
+const FLEET_FILTERS = [['all', 'All', 12], ['active', 'Active', 9], ['paused', 'Paused', 3]];
 function Segmented() {
   const [sel, setSel] = useState('all');
   return (
@@ -36,13 +36,13 @@ function Segmented() {
           );
         })}
       </div>
-      <span className="font-mono text-[11px] text-muted-foreground/80">filtro del Fleet · contenedor segmentado</span>
+      <span className="font-mono text-[11px] text-muted-foreground/80">status filter · segmented container</span>
     </div>
   );
 }
 
-/* ── 2 · BOTONES UNIDOS + stepper ────────────────────────────────────────── */
-const VIEWS = [['day', 'Día'], ['week', 'Semana'], ['month', 'Mes']];
+/* ── 2 · JOINED BUTTONS + stepper ────────────────────────────────────────── */
+const VIEWS = [['day', 'Day'], ['week', 'Week'], ['month', 'Month']];
 function Joined() {
   const [view, setView] = useState('week');
   const [zoom, setZoom] = useState(100);
@@ -56,26 +56,26 @@ function Joined() {
         })}
       </div>
       <div className="inline-flex items-center overflow-hidden rounded-lg border border-border bg-card shadow-sm divide-x divide-border">
-        <button onClick={() => setZoom(z => Math.max(50, z - 10))} aria-label="Alejar" className="grid size-9 place-items-center text-muted-foreground transition-colors hover:bg-secondary/50 hover:text-foreground"><Icon name="minus" size={16} /></button>
+        <button onClick={() => setZoom(z => Math.max(50, z - 10))} aria-label="Zoom out" className="grid size-9 place-items-center text-muted-foreground transition-colors hover:bg-secondary/50 hover:text-foreground"><Icon name="minus" size={16} /></button>
         <span className="grid h-9 w-16 place-items-center font-mono text-[12.5px] font-medium text-foreground">{zoom}%</span>
-        <button onClick={() => setZoom(z => Math.min(200, z + 10))} aria-label="Acercar" className="grid size-9 place-items-center text-muted-foreground transition-colors hover:bg-secondary/50 hover:text-foreground"><Icon name="plus" size={16} /></button>
+        <button onClick={() => setZoom(z => Math.min(200, z + 10))} aria-label="Zoom in" className="grid size-9 place-items-center text-muted-foreground transition-colors hover:bg-secondary/50 hover:text-foreground"><Icon name="plus" size={16} /></button>
       </div>
     </div>
   );
 }
 
 /* ── 3 · SPLIT BUTTON ────────────────────────────────────────────────────── */
-const DEPLOY_OPTS = [['bolt', 'Desplegar ahora'], ['clock', 'Programar deploy'], ['copy', 'Duplicar config'], ['code', 'Desplegar desde YAML']];
+const DEPLOY_OPTS = [['bolt', 'Deploy now'], ['clock', 'Schedule deploy'], ['copy', 'Duplicate config'], ['code', 'Deploy from YAML']];
 function SplitButton() {
   const [open, setOpen] = useState(false);
-  const [label, setLabel] = useState('Desplegar ahora');
+  const [label, setLabel] = useState('Deploy now');
   const ref = useRef(null);
   useClickOutside(ref, () => setOpen(false), open);
   return (
     <div className="flex flex-col items-center gap-4">
       <div ref={ref} className="relative inline-flex">
         <button className="inline-flex items-center gap-1.5 h-9 pl-3.5 pr-3 rounded-l-lg bg-primary text-primary-foreground text-[13px] font-semibold shadow-sm transition-colors hover:bg-primary/90"><Icon name="bolt" size={15} />{label}</button>
-        <button onClick={() => setOpen(o => !o)} aria-label="Más opciones de deploy" aria-expanded={open}
+        <button onClick={() => setOpen(o => !o)} aria-label="More deploy options" aria-expanded={open}
           className="grid size-9 place-items-center rounded-r-lg border-l border-primary-foreground/25 bg-primary text-primary-foreground shadow-sm transition-colors hover:bg-primary/90">
           <Icon name="chevron" size={15} className={"transition-transform " + (open ? 'rotate-180' : '')} />
         </button>
@@ -88,13 +88,13 @@ function SplitButton() {
           </div>
         )}
       </div>
-      <span className="font-mono text-[11px] text-muted-foreground/80">acción principal + menú adjunto</span>
+      <span className="font-mono text-[11px] text-muted-foreground/80">main action + attached menu</span>
     </div>
   );
 }
 
-/* ── 4 · GRUPO DE ICONOS (toolbar) ───────────────────────────────────────── */
-const VIEW_ICONS = [['list', 'list', 'Lista'], ['grid', 'grid', 'Rejilla'], ['layout', 'board', 'Tablero']];
+/* ── 4 · ICON GROUP (toolbar) ────────────────────────────────────────────── */
+const VIEW_ICONS = [['list', 'list', 'List'], ['grid', 'grid', 'Grid'], ['layout', 'board', 'Board']];
 function IconGroup() {
   const [view, setView] = useState('list');
   return (
@@ -107,7 +107,7 @@ function IconGroup() {
         })}
       </div>
       <div className="inline-flex overflow-hidden rounded-lg border border-border bg-card shadow-sm divide-x divide-border">
-        {[['refresh', 'Refrescar'], ['pause', 'Pausar'], ['download', 'Exportar'], ['dot3', 'Más']].map(([ic, label]) => (
+        {[['refresh', 'Refresh'], ['pause', 'Pause'], ['download', 'Export'], ['dot3', 'More']].map(([ic, label]) => (
           <button key={ic} aria-label={label} title={label} className="grid size-9 place-items-center text-muted-foreground transition-colors hover:bg-secondary/50 hover:text-foreground"><Icon name={ic} size={16} /></button>
         ))}
       </div>
@@ -116,7 +116,7 @@ function IconGroup() {
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_SEG = `// Segmentado — contenedor; el activo va en bg-secondary con sombra
+const CODE_SEG = `// Segmented — container; the active one sits on bg-secondary with a shadow
 <div className="inline-flex items-center gap-0.5 p-0.5 rounded-lg border border-border bg-card shadow-sm">
   {filters.map((f) => (
     <button key={f.id} onClick={() => setSel(f.id)}
@@ -127,7 +127,7 @@ const CODE_SEG = `// Segmentado — contenedor; el activo va en bg-secondary con
   ))}
 </div>`;
 
-const CODE_JOINED = `// Botones unidos — borde compartido con divide-x; redondeo en el contenedor
+const CODE_JOINED = `// Joined buttons — shared border with divide-x; rounding on the container
 <div className="inline-flex overflow-hidden rounded-lg border border-border bg-card shadow-sm divide-x divide-border">
   {views.map((v) => (
     <button key={v.id} onClick={() => setView(v.id)}
@@ -138,45 +138,45 @@ const CODE_JOINED = `// Botones unidos — borde compartido con divide-x; redond
   ))}
 </div>`;
 
-const CODE_SPLIT = `// Split button — acción + chevron adjunto que abre el menú
+const CODE_SPLIT = `// Split button — action + attached chevron that opens the menu
 <div ref={ref} className="relative inline-flex">
   <button className="h-9 pl-3.5 pr-3 rounded-l-lg bg-primary text-primary-foreground text-[13px] font-semibold shadow-sm hover:bg-primary/90">
-    Desplegar ahora
+    Deploy now
   </button>
-  <button onClick={() => setOpen(o => !o)} aria-label="Más opciones"
+  <button onClick={() => setOpen(o => !o)} aria-label="More options"
     className="grid size-9 place-items-center rounded-r-lg border-l border-primary-foreground/25 bg-primary text-primary-foreground shadow-sm hover:bg-primary/90">
     <ChevronIcon />
   </button>
   {open && <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-56 rounded-[10px] border border-border bg-popover p-1.5 shadow-md">…</div>}
 </div>`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function ButtonGroupsSection() {
   return (
     <div>
-      <SectionHead kicker="Elementos" title="Button groups" status="done"
-        intro="Botones agrupados para acciones relacionadas: el contenedor segmentado para filtrar el Fleet, botones unidos para cambiar de vista o ajustar el zoom, el split button con su menú adjunto, y la barra de iconos. Bordes compartidos con divide-x y esquinas redondeadas solo en los extremos." />
+      <SectionHead kicker="Elements" title="Button groups" status="done"
+        intro="Grouped buttons for related actions: the segmented container for filtering a list, joined buttons to switch views or adjust zoom, the split button with its attached menu, and the icon bar. Shared borders with divide-x and rounded corners only on the ends." />
 
-      <Variant title="Segmentado con contadores"
-        desc="Selección única dentro de un contenedor; el activo pasa a bg-secondary con sombra. El contador en mono acompaña a cada opción."
+      <Variant title="Segmented with counters"
+        desc="Single selection inside a container; the active option moves to bg-secondary with a shadow. A mono counter accompanies each option."
         code={CODE_SEG}>
         <Segmented />
       </Variant>
 
-      <Variant title="Botones unidos"
-        desc="El grupo clásico: un solo borde, separadores con divide-x y redondeo únicamente en el primer y último botón. Sirve como toggle de vista y como stepper."
+      <Variant title="Joined buttons"
+        desc="The classic group: a single border, divide-x separators and rounding only on the first and last button. Works as a view toggle and as a stepper."
         code={CODE_JOINED}>
         <Joined />
       </Variant>
 
       <Variant title="Split button"
-        desc="Una acción principal con un chevron adjunto que abre alternativas. Pulsa el chevron para cambiar la acción; cierra al hacer clic fuera o con Esc."
+        desc="A main action with an attached chevron that opens alternatives. Press the chevron to change the action; it closes on outside click or Esc."
         code={CODE_SPLIT}>
         <SplitButton />
       </Variant>
 
-      <Variant title="Grupo de iconos"
-        desc="Barra de solo iconos para vistas y acciones de toolbar. El activo se resalta; el resto son acciones sueltas. Cada botón lleva aria-label.">
+      <Variant title="Icon group"
+        desc="Icon-only bar for views and toolbar actions. The active one is highlighted; the rest are standalone actions. Every button has an aria-label.">
         <IconGroup />
       </Variant>
     </div>

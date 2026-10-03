@@ -37,7 +37,7 @@ const overview = textOf(await client.callTool({ name: 'overview', arguments: {} 
 if (!/design system/i.test(overview) || !/componentes/.test(overview)) fail('overview vacío');
 ok('overview');
 
-const list = textOf(await client.callTool({ name: 'list_components', arguments: { group: 'Elementos' } }));
+const list = textOf(await client.callTool({ name: 'list_components', arguments: { group: 'Elements' } }));
 if (!list.includes('`buttons`')) fail('list_components no lista buttons');
 ok('list_components (filtro grupo)');
 

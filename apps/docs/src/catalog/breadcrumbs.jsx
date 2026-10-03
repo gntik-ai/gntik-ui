@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · breadcrumbs.jsx — migas de pan (grupo "Navegación").
-   Con chevron (raíz como icono home), truncado (el centro colapsa en "…" que
-   despliega los tramos ocultos), y con dropdown en el tramo actual para saltar
-   entre hermanos. Separadores sobrios, último tramo no enlazado. Tokens.
+   Gntik UI · breadcrumbs.jsx — breadcrumbs ("Navigation" group).
+   With chevron (root as a home icon), truncated (the middle collapses into "…"
+   which expands the hidden segments), and with a dropdown on the current segment
+   to jump between siblings. Sober separators, last segment not linked. Tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useRef, useClickOutside } = window;
@@ -26,9 +26,9 @@ const Crumb = ({ children, current, onClick }) => (
 const Chev = () => <Icon name="chevronRight" size={14} className="text-muted-foreground/40 shrink-0" />;
 const Slash = () => <span className="text-muted-foreground/40 select-none">/</span>;
 
-/* ── 1 · CON CHEVRON + HOME ──────────────────────────────────────────────── */
+/* ── 1 · WITH CHEVRON + HOME ─────────────────────────────────────────────── */
 function WithChevron() {
-  const trail = ['Operation', 'Fleet', 'support-triage'];
+  const trail = ['Operation', 'Deployments', 'support-triage'];
   return (
     <nav aria-label="Breadcrumb" className="flex items-center gap-2.5">
       <button aria-label="Home" className="grid size-7 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground"><Icon name="home" size={15} /></button>
@@ -43,9 +43,9 @@ function WithChevron() {
   );
 }
 
-/* ── 2 · TRUNCADO (centro colapsado) ─────────────────────────────────────── */
+/* ── 2 · TRUNCATED (collapsed middle) ────────────────────────────────────── */
 function Truncated() {
-  const full = ['Operation', 'Fleet', 'eu-west-1', 'namespaces', 'support-triage'];
+  const full = ['Operation', 'Deployments', 'eu-west-1', 'namespaces', 'support-triage'];
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   useClickOutside(ref, () => setOpen(false), open);
@@ -55,7 +55,7 @@ function Truncated() {
       <Crumb>{first}</Crumb>
       <Slash />
       <div ref={ref} className="relative">
-        <button onClick={() => setOpen(o => !o)} aria-label="Mostrar tramos ocultos" aria-expanded={open}
+        <button onClick={() => setOpen(o => !o)} aria-label="Show hidden segments" aria-expanded={open}
           className={"grid h-7 px-1.5 place-items-center rounded-md transition-colors " + (open ? 'bg-secondary text-foreground' : 'text-muted-foreground hover:bg-secondary/60 hover:text-foreground')}>
           <Icon name="dot3" size={16} />
         </button>
@@ -75,7 +75,7 @@ function Truncated() {
   );
 }
 
-/* ── 3 · CON DROPDOWN EN EL TRAMO ACTUAL ─────────────────────────────────── */
+/* ── 3 · WITH DROPDOWN ON THE CURRENT SEGMENT ────────────────────────────── */
 const SIBLINGS = ['support-triage', 'invoice-ocr', 'contract-summarize', 'nightly-recon'];
 function WithDropdown() {
   const [current, setCurrent] = useState('support-triage');
@@ -85,7 +85,7 @@ function WithDropdown() {
   return (
     <nav aria-label="Breadcrumb" className="flex items-center gap-2.5">
       <Crumb>Operation</Crumb><Chev />
-      <Crumb>Fleet</Crumb><Chev />
+      <Crumb>Deployments</Crumb><Chev />
       <div ref={ref} className="relative">
         <button onClick={() => setOpen(o => !o)} aria-expanded={open}
           className="inline-flex items-center gap-1.5 h-7 px-2 -mx-1 rounded-md font-mono text-[13px] font-semibold text-foreground transition-colors hover:bg-secondary/60">
@@ -93,7 +93,7 @@ function WithDropdown() {
         </button>
         {open && (
           <div className="absolute left-0 top-[calc(100%+8px)] z-50 w-56 rounded-[10px] border border-border bg-popover p-1.5 shadow-md">
-            <div className="px-2.5 pt-1.5 pb-1 font-mono text-[9px] tracking-[0.12em] uppercase text-muted-foreground">Cambiar agente</div>
+            <div className="px-2.5 pt-1.5 pb-1 font-mono text-[9px] tracking-[0.12em] uppercase text-muted-foreground">Switch service</div>
             {SIBLINGS.map(s => (
               <button key={s} onClick={() => { setCurrent(s); setOpen(false); }}
                 className="flex w-full items-center gap-2.5 h-[34px] px-2.5 rounded-[7px] text-left transition-colors hover:bg-secondary/70">
@@ -109,7 +109,7 @@ function WithDropdown() {
   );
 }
 
-const CODE_CHEVRON = `// Breadcrumb con chevron — último tramo no enlazado (aria-current)
+const CODE_CHEVRON = `// Breadcrumb with chevron — last segment not linked (aria-current)
 <nav aria-label="Breadcrumb" className="flex items-center gap-2.5">
   <a className="grid size-7 place-items-center rounded-md text-muted-foreground hover:text-foreground"><Home className="size-4" /></a>
   <ChevronRight className="size-3.5 text-muted-foreground/40" />
@@ -126,30 +126,30 @@ const CODE_CHEVRON = `// Breadcrumb con chevron — último tramo no enlazado (a
   })}
 </nav>`;
 
-const CODE_TRUNC = `// Truncado — el centro se pliega en "…" y un dropdown muestra lo oculto
+const CODE_TRUNC = `// Truncated — the middle folds into "…" and a dropdown shows what is hidden
 const first = full[0], last = full.at(-1), hidden = full.slice(1, -1);
-// first  /  [ … ]  /  last     ← el botón "…" abre los tramos intermedios`;
+// first  /  [ … ]  /  last     ← the "…" button opens the middle segments`;
 
 function BreadcrumbsSection() {
   return (
     <div>
-      <SectionHead kicker="Navegación" title="Breadcrumbs" status="done"
-        intro="Migas de pan para ubicar al operador dentro de la jerarquía. Con chevron y raíz como icono; truncado, donde el centro se colapsa en “…” y un dropdown muestra los tramos ocultos; y con dropdown en el tramo actual para saltar entre hermanos sin volver atrás. El último tramo nunca es enlace." />
+      <SectionHead kicker="Navigation" title="Breadcrumbs" status="done"
+        intro="Breadcrumbs to locate the user within the hierarchy. With chevron and the root as an icon; truncated, where the middle collapses into “…” and a dropdown shows the hidden segments; and with a dropdown on the current segment to jump between siblings without going back. The last segment is never a link." />
 
-      <Variant title="Con chevron"
-        desc="El patrón base: raíz como icono home, separadores con chevron y el recurso actual en mono, no enlazado (aria-current)."
+      <Variant title="With chevron"
+        desc="The base pattern: root as a home icon, chevron separators and the current resource in mono, not linked (aria-current)."
         code={CODE_CHEVRON}>
         <WithChevron />
       </Variant>
 
-      <Variant title="Truncado"
-        desc="Cuando la ruta es larga, los tramos del medio se pliegan en un “…”. Pulsa para desplegarlos; separador con slash."
+      <Variant title="Truncated"
+        desc="When the path is long, the middle segments fold into a “…”. Press it to expand them; slash separator."
         code={CODE_TRUNC}>
         <Truncated />
       </Variant>
 
-      <Variant title="Con dropdown"
-        desc="El tramo actual es un selector: abre el menú para saltar a un agente hermano sin retroceder. El trigger se actualiza al elegir.">
+      <Variant title="With dropdown"
+        desc="The current segment is a picker: open the menu to jump to a sibling service without going back. The trigger updates on selection.">
         <WithDropdown />
       </Variant>
     </div>

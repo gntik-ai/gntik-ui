@@ -1,14 +1,14 @@
 /* ============================================================================
-   Gntik UI · description-lists.jsx — pares clave-valor para detalle de recurso.
-   La <dl> que describe un agente, un run o un namespace: etiqueta + valor en
-   filas divididas. Valores como pills de estado, IDs mono copiables, avatar de
-   owner, chips de policy y una API key con reveal. Dominio musematic · tokens.
-   Variantes: simple · en card · rayada · dos columnas.
+   Gntik UI · description-lists.jsx — key-value pairs for resource details.
+   The <dl> describing a service, a job or a namespace: label + value in
+   divided rows. Values as status pills, copyable mono IDs, owner avatar,
+   policy chips and an API key with reveal. Tokens only.
+   Variants: simple · in card · summary · striped · two columns.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
 
-/* ── pill de estado (mono · tono por estado) ─────────────────────────────── */
+/* ── status pill (mono · tone per status) ────────────────────────────────── */
 const Pill = ({ tone = 'primary', children }) => {
   const map = {
     primary: 'bg-primary/14 text-primary',
@@ -22,14 +22,14 @@ const Pill = ({ tone = 'primary', children }) => {
   );
 };
 
-/* ── valor mono con copiar (interactivo) ─────────────────────────────────── */
+/* ── mono value with copy (interactive) ──────────────────────────────────── */
 function CopyVal({ value, display }) {
   const [copied, setCopied] = useState(false);
   const copy = () => navigator.clipboard.writeText(value).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1400); });
   return (
     <span className="inline-flex items-center gap-2 min-w-0">
       <span className="font-mono text-[12.5px] text-foreground truncate">{display || value}</span>
-      <button onClick={copy} aria-label="Copiar"
+      <button onClick={copy} aria-label="Copy"
         className="shrink-0 text-muted-foreground hover:text-foreground transition-colors">
         <Icon name={copied ? 'check' : 'copy'} size={13} className={copied ? 'text-primary' : ''} />
       </button>
@@ -37,7 +37,7 @@ function CopyVal({ value, display }) {
   );
 }
 
-/* ── avatar de iniciales + nombre ────────────────────────────────────────── */
+/* ── initials avatar + name ──────────────────────────────────────────────── */
 const Owner = ({ initials, name }) => (
   <span className="inline-flex items-center gap-2">
     <span className="w-6 h-6 rounded-full bg-primary/14 text-primary font-mono text-[10px] font-semibold inline-flex items-center justify-center">{initials}</span>
@@ -45,12 +45,12 @@ const Owner = ({ initials, name }) => (
   </span>
 );
 
-/* ── chip de policy (mono · secundario) ──────────────────────────────────── */
+/* ── policy chip (mono · secondary) ──────────────────────────────────────── */
 const Chip = ({ children }) => (
   <span className="inline-flex items-center h-[22px] px-2 rounded-md bg-secondary text-secondary-foreground font-mono text-[11px]">{children}</span>
 );
 
-/* ── API key enmascarada con reveal + copiar (interactivo) ───────────────── */
+/* ── masked API key with reveal + copy (interactive) ─────────────────────── */
 function SecretVal({ value }) {
   const [shown, setShown] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -61,7 +61,7 @@ function SecretVal({ value }) {
       <span className="font-mono text-[12.5px] text-foreground truncate">{shown ? value : masked}</span>
       <div className="flex items-center gap-3 shrink-0">
         <button onClick={() => setShown(s => !s)} className="text-[12.5px] font-semibold text-primary hover:text-primary/80 transition-colors">{shown ? 'Hide' : 'Reveal'}</button>
-        <button onClick={copy} aria-label="Copiar" className="text-muted-foreground hover:text-foreground transition-colors">
+        <button onClick={copy} aria-label="Copy" className="text-muted-foreground hover:text-foreground transition-colors">
           <Icon name={copied ? 'check' : 'copy'} size={13} className={copied ? 'text-primary' : ''} />
         </button>
       </div>
@@ -69,7 +69,7 @@ function SecretVal({ value }) {
   );
 }
 
-/* ── fila clave-valor (dos columnas, alineada arriba) ────────────────────── */
+/* ── key-value row (two columns, top-aligned) ────────────────────────────── */
 const Row = ({ label, children, labelW = '160px' }) => (
   <div className="grid gap-4 py-3.5 items-start" style={{ gridTemplateColumns: labelW + ' minmax(0,1fr)' }}>
     <dt className="text-[13px] text-muted-foreground">{label}</dt>
@@ -77,12 +77,12 @@ const Row = ({ label, children, labelW = '160px' }) => (
   </div>
 );
 
-/* ── botón de cabecera de card ───────────────────────────────────────────── */
+/* ── card header button ──────────────────────────────────────────────────── */
 const EditBtn = ({ children }) => (
   <button className="shrink-0 h-8 px-3 rounded-md border border-border bg-card text-[12.5px] font-semibold text-foreground hover:bg-secondary/60 transition-colors">{children}</button>
 );
 
-/* ── fila de meta con icono al frente (card de resumen) ──────────────────── */
+/* ── meta row with leading icon (summary card) ───────────────────────────── */
 const MetaRow = ({ icon, srLabel, first, children }) => (
   <div className={"flex w-full items-center gap-x-3 px-6 " + (first ? 'mt-6 border-t border-border pt-6' : 'mt-4')}>
     <dt className="flex-none">
@@ -93,7 +93,7 @@ const MetaRow = ({ icon, srLabel, first, children }) => (
   </div>
 );
 
-/* ── footer link "Download receipt" (interactivo) ────────────────────────── */
+/* ── footer link "Download receipt" (interactive) ────────────────────────── */
 function DownloadReceipt() {
   const [done, setDone] = useState(false);
   const go = (e) => { e.preventDefault(); setDone(true); setTimeout(() => setDone(false), 1600); };
@@ -106,7 +106,7 @@ function DownloadReceipt() {
   );
 }
 
-/* ── envoltura: nombre + descripción + preview + código ──────────────────── */
+/* ── wrapper: name + description + preview + code ───────────────────────── */
 const Variant = ({ title, desc, code, surface = false, children }) => (
   <div className="mb-12">
     <div className="mb-3">
@@ -120,19 +120,19 @@ const Variant = ({ title, desc, code, surface = false, children }) => (
   </div>
 );
 
-/* ── datos de la variante rayada (run detail) ────────────────────────────── */
+/* ── striped variant data (job detail) ───────────────────────────────────── */
 const RUN_ROWS = [
-  { label: 'Run ID', value: <CopyVal value="run_5h2k8d3f9a" /> },
+  { label: 'Job ID', value: <CopyVal value="job_5h2k8d3f9a" /> },
   { label: 'Trigger', value: 'webhook · POST /ingest' },
   { label: 'Started', value: 'Apr 18, 2026 · 14:32:08' },
   { label: 'Duration', value: '4.2s' },
-  { label: 'Tokens', value: '18,204 in · 2,118 out' },
+  { label: 'Data', value: '18.2 MB in · 2.1 MB out' },
   { label: 'Cost', value: '$0.0461' },
   { label: 'Result', value: <Pill>Succeeded</Pill> },
 ];
 
-/* ── snippets para pegar ─────────────────────────────────────────────────── */
-const CODE_SIMPLE = `// Simple — dl de dos columnas con filas divididas
+/* ── snippets to paste ───────────────────────────────────────────────────── */
+const CODE_SIMPLE = `// Simple — two-column dl with divided rows
 <dl className="divide-y divide-border">
   <div className="grid grid-cols-[160px_1fr] gap-4 py-3.5">
     <dt className="text-[13px] text-muted-foreground">Status</dt>
@@ -143,13 +143,13 @@ const CODE_SIMPLE = `// Simple — dl de dos columnas con filas divididas
     </dd>
   </div>
   <div className="grid grid-cols-[160px_1fr] gap-4 py-3.5">
-    <dt className="text-[13px] text-muted-foreground">Agent ID</dt>
-    <dd className="font-mono text-[12.5px] text-foreground">agt_7f3c9a21</dd>
+    <dt className="text-[13px] text-muted-foreground">Service ID</dt>
+    <dd className="font-mono text-[12.5px] text-foreground">svc_7f3c9a21</dd>
   </div>
-  {/* …más filas: Region · Model · Owner · Created */}
+  {/* …more rows: Region · Runtime · Owner · Created */}
 </dl>`;
 
-const CODE_CARD = `// En card — chrome de card con cabecera + acción, dl dividida
+const CODE_CARD = `// In card — card chrome with header + action, divided dl
 <div className="rounded-lg border border-border bg-card overflow-hidden">
   <div className="flex items-center justify-between px-5 py-4 border-b border-border">
     <h3 className="text-[15px] font-semibold tracking-tight text-foreground">Configuration</h3>
@@ -157,14 +157,14 @@ const CODE_CARD = `// En card — chrome de card con cabecera + acción, dl divi
   </div>
   <dl className="px-5 divide-y divide-border">
     <div className="grid grid-cols-[150px_1fr] gap-4 py-3.5">
-      <dt className="text-[13px] text-muted-foreground">Model</dt>
-      <dd className="font-mono text-[12.5px] text-foreground">claude-sonnet-4</dd>
+      <dt className="text-[13px] text-muted-foreground">Runtime</dt>
+      <dd className="font-mono text-[12.5px] text-foreground">node-24</dd>
     </div>
-    {/* …Endpoint (copiar) · Budget cap · Concurrency · Policies (chips) · API key (reveal) */}
+    {/* …Endpoint (copy) · Budget cap · Concurrency · Policies (chips) · API key (reveal) */}
   </dl>
 </div>`;
 
-const CODE_SUMMARY = `// Resumen — card de factura: importe + estado, filas con icono, footer
+const CODE_SUMMARY = `// Summary — invoice card: amount + status, icon rows, footer
 <div className="rounded-lg border border-border bg-card overflow-hidden">
   <dl className="flex flex-wrap">
     <div className="flex-auto pt-6 pl-6">
@@ -188,7 +188,7 @@ const CODE_SUMMARY = `// Resumen — card de factura: importe + estado, filas co
   </div>
 </div>`;
 
-const CODE_STRIPED = `// Rayada — filas alternas para metadata densa
+const CODE_STRIPED = `// Striped — alternating rows for dense metadata
 <dl className="rounded-lg overflow-hidden border border-border">
   {rows.map((r, i) => (
     <div key={r.label} className={"grid grid-cols-[170px_1fr] gap-4 px-4 py-2.5 " +
@@ -199,49 +199,49 @@ const CODE_STRIPED = `// Rayada — filas alternas para metadata densa
   ))}
 </dl>`;
 
-const CODE_TWOCOL = `// Dos columnas — campos apilados (label arriba) en rejilla responsiva
+const CODE_TWOCOL = `// Two columns — stacked fields (label on top) in a responsive grid
 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
   <div>
     <dt className="text-[12px] text-muted-foreground">Namespace</dt>
     <dd className="mt-1 text-[13px] text-foreground">production</dd>
   </div>
-  {/* …Owner · Plan · Region · Created · Agents */}
+  {/* …Owner · Plan · Region · Created · Services */}
   <div className="sm:col-span-2">
     <dt className="text-[12px] text-muted-foreground">Description</dt>
-    <dd className="mt-1 text-[13px] text-foreground">Customer-facing agents serving the EU region.</dd>
+    <dd className="mt-1 text-[13px] text-foreground">Customer-facing services serving the EU region.</dd>
   </div>
 </dl>`;
 
 function DescriptionListsSection() {
   return (
     <div>
-      <SectionHead kicker="Datos" title="Description lists" status="done"
-        intro="La lista de definición que describe un recurso: pares etiqueta-valor en filas divididas. La etiqueta en gris a la izquierda, el valor a la derecha — y el valor puede ser texto, un pill de estado, un ID mono copiable, el avatar del owner, chips de policy o una API key con reveal. Cinco layouts — simple, en card, resumen, rayada y dos columnas — para detalle de agente, run, factura o namespace." />
+      <SectionHead kicker="Data" title="Description lists" status="done"
+        intro="The definition list describing a resource: label-value pairs in divided rows. The label in grey on the left, the value on the right — and the value can be text, a status pill, a copyable mono ID, the owner avatar, policy chips or an API key with reveal. Five layouts — simple, in card, summary, striped and two columns — for service, job, invoice or namespace details." />
 
       {/* 1 · Simple */}
-      <Variant title="Simple" desc="dl de dos columnas con filas divididas. El detalle de recurso por defecto: etiqueta a la izquierda, valor a la derecha. El ID se copia." code={CODE_SIMPLE}>
+      <Variant title="Simple" desc="Two-column dl with divided rows. The default resource detail: label on the left, value on the right. The ID can be copied." code={CODE_SIMPLE}>
         <dl className="divide-y divide-border">
           <Row label="Status"><Pill>Running</Pill></Row>
-          <Row label="Agent ID"><CopyVal value="agt_7f3c9a21" /></Row>
+          <Row label="Service ID"><CopyVal value="svc_7f3c9a21" /></Row>
           <Row label="Region"><span className="font-mono text-[12.5px]">eu-west-1</span></Row>
-          <Row label="Model"><span className="font-mono text-[12.5px]">claude-sonnet-4</span></Row>
+          <Row label="Runtime"><span className="font-mono text-[12.5px]">node-24</span></Row>
           <Row label="Owner"><Owner initials="DR" name="Dana Ruiz" /></Row>
           <Row label="Created">Apr 12, 2026</Row>
         </dl>
       </Variant>
 
-      {/* 2 · En card */}
-      <Variant title="En card" desc="La misma dl dentro del chrome de una card, con cabecera y una acción de edición. El panel de configuración de un agente; el endpoint se copia y la API key se revela." surface code={CODE_CARD}>
+      {/* 2 · In card */}
+      <Variant title="In card" desc="The same dl inside a card chrome, with a header and an edit action. A service configuration panel; the endpoint can be copied and the API key revealed." surface code={CODE_CARD}>
         <div className="w-full max-w-[560px] rounded-lg border border-border bg-card overflow-hidden">
           <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-border">
             <h3 className="text-[15px] font-semibold tracking-tight text-foreground">Configuration</h3>
             <EditBtn>Edit</EditBtn>
           </div>
           <dl className="px-5 divide-y divide-border">
-            <Row label="Endpoint" labelW="130px"><CopyVal value="https://eu.musematic.app/v1/agents/support-triage" display="…/v1/agents/support-triage" /></Row>
-            <Row label="Model" labelW="130px"><span className="font-mono text-[12.5px]">claude-sonnet-4</span></Row>
+            <Row label="Endpoint" labelW="130px"><CopyVal value="https://eu.example.com/v1/services/support-triage" display="…/v1/services/support-triage" /></Row>
+            <Row label="Runtime" labelW="130px"><span className="font-mono text-[12.5px]">node-24</span></Row>
             <Row label="Budget cap" labelW="130px"><span className="font-mono text-[12.5px]">$200.00</span> <span className="text-muted-foreground">/ day</span></Row>
-            <Row label="Concurrency" labelW="130px"><span className="font-mono text-[12.5px]">8 runs</span></Row>
+            <Row label="Concurrency" labelW="130px"><span className="font-mono text-[12.5px]">8 jobs</span></Row>
             <Row label="Policies" labelW="130px">
               <div className="flex flex-wrap gap-1.5">
                 <Chip>pii-redaction</Chip><Chip>eu-only</Chip><Chip>rate-limit</Chip>
@@ -252,8 +252,8 @@ function DescriptionListsSection() {
         </div>
       </Variant>
 
-      {/* 3 · Resumen */}
-      <Variant title="Resumen" desc="Card de resumen: una cifra destacada con su estado arriba, y debajo filas con icono al frente — cuenta, vencimiento, método de pago. Cierra con una acción en el footer. Para el detalle de una factura o un cargo. El footer responde al clic." surface code={CODE_SUMMARY}>
+      {/* 3 · Summary */}
+      <Variant title="Summary" desc="Summary card: a highlighted figure with its status on top, and below it rows with a leading icon — account, due date, payment method. It closes with an action in the footer. For an invoice or charge detail. The footer responds to clicks." surface code={CODE_SUMMARY}>
         <div className="w-full max-w-[380px] rounded-lg border border-border bg-card overflow-hidden">
           <dl className="flex flex-wrap">
             <div className="flex-auto pt-6 pl-6">
@@ -274,8 +274,8 @@ function DescriptionListsSection() {
         </div>
       </Variant>
 
-      {/* 4 · Rayada */}
-      <Variant title="Rayada" desc="Filas alternas, más compactas, para metadata densa como el detalle de un run. El fondo alternado guía la lectura sin necesidad de divisores." code={CODE_STRIPED}>
+      {/* 4 · Striped */}
+      <Variant title="Striped" desc="Alternating, more compact rows for dense metadata such as a job detail. The alternating background guides reading without dividers." code={CODE_STRIPED}>
         <dl className="rounded-lg overflow-hidden border border-border">
           {RUN_ROWS.map((r, i) => (
             <div key={r.label} className={"grid gap-4 px-4 py-2.5 items-center " + (i % 2 === 0 ? 'bg-secondary/40' : '')} style={{ gridTemplateColumns: '170px minmax(0,1fr)' }}>
@@ -288,8 +288,8 @@ function DescriptionListsSection() {
         </dl>
       </Variant>
 
-      {/* 5 · Dos columnas */}
-      <Variant title="Dos columnas" desc="Campos apilados (etiqueta arriba, valor debajo) en una rejilla que pasa a dos columnas. Para resúmenes con muchos campos cortos — un namespace, una cuenta — donde el último campo puede ocupar todo el ancho." code={CODE_TWOCOL}>
+      {/* 5 · Two columns */}
+      <Variant title="Two columns" desc="Stacked fields (label on top, value below) in a grid that becomes two columns. For summaries with many short fields — a namespace, an account — where the last field can span the full width." code={CODE_TWOCOL}>
         <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
           <div>
             <dt className="text-[12px] text-muted-foreground">Namespace</dt>
@@ -312,12 +312,12 @@ function DescriptionListsSection() {
             <dd className="mt-1 text-[13px] text-foreground">Mar 2, 2026</dd>
           </div>
           <div>
-            <dt className="text-[12px] text-muted-foreground">Agents</dt>
+            <dt className="text-[12px] text-muted-foreground">Services</dt>
             <dd className="mt-1 text-[13px] text-foreground">12 active · 2 paused</dd>
           </div>
           <div className="sm:col-span-2">
             <dt className="text-[12px] text-muted-foreground">Description</dt>
-            <dd className="mt-1 text-[13px] text-foreground leading-relaxed" style={{ textWrap: 'pretty' }}>Customer-facing agents serving the EU region. Subject to PII redaction and EU-only data residency policies.</dd>
+            <dd className="mt-1 text-[13px] text-foreground leading-relaxed" style={{ textWrap: 'pretty' }}>Customer-facing services serving the EU region. Subject to PII redaction and EU-only data residency policies.</dd>
           </div>
         </dl>
       </Variant>

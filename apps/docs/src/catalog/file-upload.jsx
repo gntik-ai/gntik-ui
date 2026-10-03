@@ -1,9 +1,9 @@
 /* ============================================================================
-   Gntik UI · file-upload.jsx — subida de archivos (grupo "Formularios").
-   Distinto del dropzone de Empty states (que es un vacío): aquí el control real
-   de formulario — dropzone multi-archivo con progreso y estados, input compacto
-   botón+nombre, y subida de imagen/logo. Click simula la selección (preview
-   determinista). Dominio musematic. Tokens, cero color hardcodeado.
+   Gntik UI · file-upload.jsx — file upload ("Forms" group).
+   Different from the Empty states dropzone (which fills a void): this is the
+   real form control — multi-file dropzone with progress and states, compact
+   button+name input, and image/logo upload. Click simulates the selection
+   (deterministic preview). Tokens only, zero hardcoded colour.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useRef, useEffect } = window;
@@ -29,18 +29,18 @@ const KIND = {
 };
 const kindOf = (name) => KIND[name.split('.').pop()] || { icon: 'audit', tag: 'FILE' };
 
-/* ── 1 · DROPZONE MULTI-ARCHIVO CON PROGRESO ─────────────────────────────── */
+/* ── 1 · MULTI-FILE DROPZONE WITH PROGRESS ───────────────────────────────── */
 const QUEUE = [
   { name: 'support-tickets-q2.csv', kb: 880 },
-  { name: 'eval-suite.jsonl', kb: 1640 },
-  { name: 'fleet-config.json', kb: 36 },
+  { name: 'events-export.jsonl', kb: 1640 },
+  { name: 'service-config.json', kb: 36 },
   { name: 'onboarding-handbook.pdf', kb: 3220 },
 ];
 let UID = 100;
 function Uploader() {
   const [files, setFiles] = useState([
     { id: 1, name: 'pii-redaction.yaml', kb: 4.2, progress: 100, status: 'done' },
-    { id: 2, name: 'model-weights.bin', kb: 2480, progress: 0, status: 'error' },
+    { id: 2, name: 'db-snapshot.bin', kb: 2480, progress: 0, status: 'error' },
   ]);
   const [drag, setDrag] = useState(false);
   const [qi, setQi] = useState(0);
@@ -71,8 +71,8 @@ function Uploader() {
         className={"block w-full rounded-xl border-2 border-dashed px-6 py-10 text-center transition-colors " +
           (drag ? 'border-primary bg-primary/10' : 'border-border bg-background/40 hover:border-primary/50 hover:bg-primary/5')}>
         <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-secondary/70 text-muted-foreground ring-1 ring-border"><Icon name="upload" size={22} /></div>
-        <p className="mt-4 text-[13.5px] text-foreground">Arrastra archivos aquí o <span className="font-semibold text-primary">búscalos</span></p>
-        <p className="mt-1 font-mono text-[11.5px] text-muted-foreground">CSV · JSON · YAML · PDF · máx 25 MB por archivo</p>
+        <p className="mt-4 text-[13.5px] text-foreground">Drag files here or <span className="font-semibold text-primary">browse</span></p>
+        <p className="mt-1 font-mono text-[11.5px] text-muted-foreground">CSV · JSON · YAML · PDF · max 25 MB per file</p>
       </button>
 
       {files.length > 0 && (
@@ -100,49 +100,49 @@ function Uploader() {
                   ) : (
                     <div className="mt-0.5 flex items-center gap-1.5 font-mono text-[11px]">
                       {err
-                        ? <span className="text-destructive">Supera el límite de 25 MB · no subido</span>
-                        : <span className="text-muted-foreground"><span className="text-primary">✓</span> {fmtSize(f.kb)} · subido</span>}
+                        ? <span className="text-destructive">Exceeds the 25 MB limit · not uploaded</span>
+                        : <span className="text-muted-foreground"><span className="text-primary">✓</span> {fmtSize(f.kb)} · uploaded</span>}
                     </div>
                   )}
                 </div>
                 {err
-                  ? <button onClick={addFile} className="shrink-0 font-mono text-[11.5px] text-primary transition-colors hover:text-primary/80">Reintentar</button>
+                  ? <button onClick={addFile} className="shrink-0 font-mono text-[11.5px] text-primary transition-colors hover:text-primary/80">Retry</button>
                   : null}
-                <button onClick={() => remove(f.id)} aria-label="Quitar" className="grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"><Icon name="x" size={14} stroke={2.2} /></button>
+                <button onClick={() => remove(f.id)} aria-label="Remove" className="grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"><Icon name="x" size={14} stroke={2.2} /></button>
               </li>
             );
           })}
         </ul>
       )}
-      <p className="mt-3 text-center font-mono text-[11px] text-muted-foreground/80">click en la zona para simular una subida</p>
+      <p className="mt-3 text-center font-mono text-[11px] text-muted-foreground/80">click the area to simulate an upload</p>
     </div>
   );
 }
 
-/* ── 2 · INPUT COMPACTO (botón + nombre) ─────────────────────────────────── */
+/* ── 2 · COMPACT INPUT (button + name) ───────────────────────────────────── */
 function CompactInput() {
   const [name, setName] = useState('');
   return (
     <div className="mx-auto max-w-md space-y-5">
       <div>
-        <label className="mb-1.5 block text-[12.5px] font-medium text-foreground">Dataset de entrenamiento</label>
+        <label className="mb-1.5 block text-[12.5px] font-medium text-foreground">Import data</label>
         <div className="flex items-center gap-3">
           <button type="button" onClick={() => setName('support-tickets-q2.csv')}
             className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md border border-border bg-card px-3 text-[13px] font-medium text-foreground shadow-sm transition-colors hover:bg-secondary/70">
-            <Icon name="paperclip" size={15} className="text-muted-foreground" />Elegir archivo
+            <Icon name="paperclip" size={15} className="text-muted-foreground" />Choose file
           </button>
-          <span className={"min-w-0 flex-1 truncate text-[13px] " + (name ? 'text-foreground' : 'text-muted-foreground')}>{name || 'Ningún archivo seleccionado'}</span>
-          {name && <button onClick={() => setName('')} aria-label="Quitar" className="grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"><Icon name="x" size={13} stroke={2.2} /></button>}
+          <span className={"min-w-0 flex-1 truncate text-[13px] " + (name ? 'text-foreground' : 'text-muted-foreground')}>{name || 'No file selected'}</span>
+          {name && <button onClick={() => setName('')} aria-label="Remove" className="grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"><Icon name="x" size={13} stroke={2.2} /></button>}
         </div>
-        <p className="mt-1.5 font-mono text-[11px] text-muted-foreground">CSV o Parquet · hasta 200 MB</p>
+        <p className="mt-1.5 font-mono text-[11px] text-muted-foreground">CSV or Parquet · up to 200 MB</p>
       </div>
 
       <div>
-        <label className="mb-1.5 block text-[12.5px] font-medium text-foreground">Adjunto en línea</label>
+        <label className="mb-1.5 block text-[12.5px] font-medium text-foreground">Inline attachment</label>
         <div className="flex items-center rounded-md border border-border bg-background shadow-sm transition-colors focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-ring/25">
           <button type="button" onClick={() => setName('pii-redaction.yaml')}
             className="inline-flex h-9 items-center gap-1.5 rounded-l-md border-r border-border bg-secondary/60 px-3 text-[12.5px] font-medium text-foreground transition-colors hover:bg-secondary">
-            <Icon name="upload" size={14} className="text-muted-foreground" />Subir
+            <Icon name="upload" size={14} className="text-muted-foreground" />Upload
           </button>
           <span className={"flex h-9 min-w-0 flex-1 items-center truncate px-3 text-[13px] " + (name ? 'text-foreground' : 'text-muted-foreground')}>{name || 'policy.yaml…'}</span>
         </div>
@@ -151,7 +151,7 @@ function CompactInput() {
   );
 }
 
-/* ── 3 · SUBIDA DE LOGO / AVATAR ─────────────────────────────────────────── */
+/* ── 3 · LOGO / AVATAR UPLOAD ────────────────────────────────────────────── */
 const STRIPES = { backgroundImage: 'repeating-linear-gradient(135deg, hsl(var(--muted-foreground) / 0.10) 0 6px, transparent 6px 12px)' };
 function AvatarUpload() {
   const [on, setOn] = useState(false);
@@ -159,26 +159,26 @@ function AvatarUpload() {
     <div className="mx-auto flex max-w-md items-center gap-5">
       {on ? (
         <div className="group relative size-[72px] shrink-0 overflow-hidden rounded-xl ring-1 ring-border">
-          <div className="grid size-full place-items-center bg-primary/15 font-sans text-[26px] font-bold text-primary">m</div>
+          <div className="grid size-full place-items-center bg-primary/15 font-sans text-[26px] font-bold text-primary">a</div>
           <button onClick={() => setOn(true)} className="absolute inset-0 grid place-items-center bg-foreground/55 text-background opacity-0 transition-opacity group-hover:opacity-100">
             <Icon name="upload" size={18} />
           </button>
         </div>
       ) : (
-        <button type="button" onClick={() => setOn(true)} aria-label="Subir logo"
+        <button type="button" onClick={() => setOn(true)} aria-label="Upload logo"
           className="grid size-[72px] shrink-0 place-items-center rounded-xl border-2 border-dashed border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary" style={STRIPES}>
           <Icon name="upload" size={20} />
         </button>
       )}
       <div className="min-w-0">
-        <div className="text-[13.5px] font-semibold tracking-tight text-foreground">Logo del workspace</div>
-        <p className="mt-0.5 text-[12px] leading-5 text-muted-foreground" style={{ textWrap: 'pretty' }}>PNG o SVG cuadrado, mínimo 256×256. Se muestra en la topbar y en las invitaciones.</p>
+        <div className="text-[13.5px] font-semibold tracking-tight text-foreground">Workspace logo</div>
+        <p className="mt-0.5 text-[12px] leading-5 text-muted-foreground" style={{ textWrap: 'pretty' }}>Square PNG or SVG, at least 256×256. Shown in the topbar and in invitations.</p>
         <div className="mt-2.5 flex items-center gap-2">
           <button onClick={() => setOn(true)}
             className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-3 text-[12.5px] font-medium text-foreground shadow-sm transition-colors hover:bg-secondary/70">
-            <Icon name="upload" size={13} className="text-muted-foreground" />{on ? 'Cambiar' : 'Subir'}
+            <Icon name="upload" size={13} className="text-muted-foreground" />{on ? 'Change' : 'Upload'}
           </button>
-          {on && <button onClick={() => setOn(false)} className="inline-flex h-8 items-center gap-1.5 rounded-md px-2.5 text-[12.5px] font-medium text-muted-foreground transition-colors hover:text-destructive">Quitar</button>}
+          {on && <button onClick={() => setOn(false)} className="inline-flex h-8 items-center gap-1.5 rounded-md px-2.5 text-[12.5px] font-medium text-muted-foreground transition-colors hover:text-destructive">Remove</button>}
         </div>
       </div>
     </div>
@@ -186,7 +186,7 @@ function AvatarUpload() {
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_DROP = `// Dropzone multi-archivo — drag highlight + progreso animado por archivo
+const CODE_DROP = `// Multi-file dropzone — drag highlight + animated per-file progress
 const addFile = () => {
   const id = nextId();
   setFiles((f) => [...f, { id, name, kb, progress: 0, status: "uploading" }]);
@@ -207,26 +207,26 @@ const addFile = () => {
   …
 </button>
 
-{/* fila de progreso */}
+{/* progress row */}
 <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
   <div className="h-full rounded-full bg-primary" style={{ width: f.progress + "%" }} />
 </div>`;
 
-const CODE_COMPACT = `// Input compacto — botón dispara el <input type="file"> oculto + nombre
+const CODE_COMPACT = `// Compact input — button triggers the hidden <input type="file"> + name
 <div className="flex items-center gap-3">
   <button onClick={() => inputRef.current.click()}
     className="inline-flex h-9 items-center gap-1.5 rounded-md border border-border bg-card px-3
                text-[13px] font-medium shadow-sm hover:bg-secondary/70">
-    <PaperclipIcon /> Elegir archivo
+    <PaperclipIcon /> Choose file
   </button>
   <span className={name ? "truncate text-foreground" : "text-muted-foreground"}>
-    {name || "Ningún archivo seleccionado"}
+    {name || "No file selected"}
   </span>
   <input ref={inputRef} type="file" className="sr-only"
     onChange={(e) => setName(e.target.files[0]?.name ?? "")} />
 </div>`;
 
-const CODE_AVA = `// Subida de logo — placeholder rayado → preview con overlay al hover
+const CODE_AVA = `// Logo upload — striped placeholder → preview with hover overlay
 {src ? (
   <div className="group relative size-[72px] overflow-hidden rounded-xl ring-1 ring-border">
     <img src={src} className="size-full object-cover" />
@@ -234,32 +234,32 @@ const CODE_AVA = `// Subida de logo — placeholder rayado → preview con overl
                        opacity-0 group-hover:opacity-100"><UploadIcon /></button>
   </div>
 ) : (
-  <button onClick={pick} aria-label="Subir logo"
+  <button onClick={pick} aria-label="Upload logo"
     className="grid size-[72px] place-items-center rounded-xl border-2 border-dashed border-border
                text-muted-foreground hover:border-primary/50 hover:text-primary"><UploadIcon /></button>
 )}`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function FileUploadSection() {
   return (
     <div>
-      <SectionHead kicker="Formularios" title="File upload" status="done"
-        intro="El control real de subida dentro de un formulario — no confundir con el dropzone de Empty states, que rellena un vacío. Tres formas: el dropzone multi-archivo con barra de progreso por archivo y estados (subiendo, subido, error con reintento); el input compacto de botón + nombre para un único adjunto en una fila; y la subida de imagen para logo o avatar, con placeholder rayado y preview. En el catálogo, hacer click simula la selección para que el preview sea determinista." />
+      <SectionHead kicker="Forms" title="File upload" status="done"
+        intro="The real upload control inside a form — not to be confused with the Empty states dropzone, which fills a void. Three forms: the multi-file dropzone with a per-file progress bar and states (uploading, uploaded, error with retry); the compact button + name input for a single attachment in a row; and image upload for a logo or avatar, with a striped placeholder and preview. In the catalog, clicking simulates the selection so the preview is deterministic." />
 
-      <Variant title="Dropzone multi-archivo"
-        desc="Arrastra (se tiñe de primario) o haz click para encolar archivos. Cada uno sube con su barra de progreso y termina en ✓; el ejemplo incluye un archivo en error con su acción de reintento. La ✕ lo quita de la cola."
+      <Variant title="Multi-file dropzone"
+        desc="Drag (it tints primary) or click to queue files. Each one uploads with its progress bar and ends in ✓; the example includes a failed file with its retry action. The ✕ removes it from the queue."
         code={CODE_DROP}>
         <Uploader />
       </Variant>
 
-      <Variant title="Input compacto"
-        desc="Para un único adjunto en una fila de formulario: un botón que dispara el selector y el nombre del archivo al lado. Dos tratamientos — botón suelto y botón pegado al campo. Click para simular la selección."
+      <Variant title="Compact input"
+        desc="For a single attachment in a form row: a button that opens the picker and the file name next to it. Two treatments — standalone button and button attached to the field. Click to simulate the selection."
         code={CODE_COMPACT}>
         <CompactInput />
       </Variant>
 
-      <Variant title="Subida de logo / avatar"
-        desc="Para imágenes: un cuadro con placeholder rayado que, al seleccionar, muestra el preview con un overlay de cambio al pasar el ratón, más las acciones de cambiar y quitar. Click para alternar el estado."
+      <Variant title="Logo / avatar upload"
+        desc="For images: a box with a striped placeholder that, once selected, shows the preview with a change overlay on hover, plus change and remove actions. Click to toggle the state."
         code={CODE_AVA}>
         <AvatarUpload />
       </Variant>

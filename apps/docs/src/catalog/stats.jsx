@@ -1,10 +1,10 @@
 /* ============================================================================
-   Gntik UI · stats.jsx — subcategoría "Stats" (grupo Datos).
-   La tarjeta de KPI: etiqueta + cifra grande + delta con dirección — y, cuando
-   ayuda, una mini gráfica de tendencia (línea/área), barras o un anillo de
-   progreso. Dirección de la flecha y color son independientes: bajar la latencia
-   o el coste es bueno (verde, flecha abajo). Mini-charts leen el tema en vivo.
-   Variantes: simple · banda dividida · sparkline · mini-barras · anillo · icono+footer.
+   Gntik UI · stats.jsx — "Stats" subcategory (Data group).
+   The KPI card: label + big number + directional delta — and, when it
+   helps, a mini trend chart (line/area), bars or a progress ring. Arrow
+   direction and color are independent: lower latency or cost is good
+   (green, arrow down). Mini charts read the live theme.
+   Variants: simple · divided strip · sparkline · mini bars · ring · icon+footer.
    ============================================================================ */
 (function () {
 const { SectionHead, Icon, CodeBlock, useChartTheme } = window;
@@ -12,7 +12,7 @@ const { useState } = React;
 const RC = window.Recharts;
 const { ResponsiveContainer, AreaChart: RArea, Area, LineChart: RLine, Line, BarChart: RBar, Bar } = RC;
 
-/* ── delta mono con flecha · dir = forma de la flecha, tone = color ────────── */
+/* ── mono delta with arrow · dir = arrow shape, tone = color ───────────────── */
 const Trend = ({ dir = 'up', tone = 'pos', children }) => {
   const c = tone === 'pos' ? 'text-primary' : tone === 'neg' ? 'text-destructive' : 'text-muted-foreground';
   return (
@@ -27,14 +27,14 @@ const Trend = ({ dir = 'up', tone = 'pos', children }) => {
   );
 };
 
-/* ── cuadro de icono (tono de marca) ──────────────────────────────────────── */
+/* ── icon tile (brand tone) ──────────────────────────────────────────────── */
 const IconTile = ({ name }) => (
   <span className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-primary/14 text-primary shrink-0">
     <Icon name={name} size={18} />
   </span>
 );
 
-/* ── sparkline · área o línea, sin ejes ni tooltip ───────────────────────── */
+/* ── sparkline · area or line, no axes or tooltip ───────────────────────── */
 function Sparkline({ data, color = 'primary', type = 'area', height = 46 }) {
   const t = useChartTheme();
   const c = t.color(color);
@@ -52,7 +52,7 @@ function Sparkline({ data, color = 'primary', type = 'area', height = 46 }) {
     </div>);
 }
 
-/* ── mini-barras · sin ejes ──────────────────────────────────────────────── */
+/* ── mini bars · no axes ─────────────────────────────────────────────────── */
 function SparkBars({ data, color = 'primary', height = 48 }) {
   const t = useChartTheme();
   const c = t.color(color);
@@ -66,7 +66,7 @@ function SparkBars({ data, color = 'primary', height = 48 }) {
     </div>);
 }
 
-/* ── anillo de progreso (track + arco) ───────────────────────────────────── */
+/* ── progress ring (track + arc) ────────────────────────────────────────── */
 function Ring({ pct, size = 60, stroke = 7, color = 'primary' }) {
   const t = useChartTheme();
   const r = (size - stroke) / 2;
@@ -85,7 +85,7 @@ function Ring({ pct, size = 60, stroke = 7, color = 'primary' }) {
     </div>);
 }
 
-/* ── segmented compacto (toggle de rango) ────────────────────────────────── */
+/* ── compact segmented (range toggle) ───────────────────────────────────── */
 function Seg({ value, onChange, options }) {
   return (
     <div className="flex items-center gap-0.5 p-0.5 rounded-md border border-border bg-card">
@@ -100,17 +100,17 @@ function Seg({ value, onChange, options }) {
     </div>);
 }
 
-/* ── footer link interactivo ─────────────────────────────────────────────── */
+/* ── interactive footer link ─────────────────────────────────────────────── */
 function FootLink({ children }) {
   const [hot, setHot] = useState(false);
   const go = (e) => { e.preventDefault(); setHot(true); setTimeout(() => setHot(false), 1400); };
   return (
     <a href="#" onClick={go} className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-primary hover:text-primary/80 transition-colors">
-      {hot ? 'Abriendo…' : children}{!hot && <span aria-hidden="true">→</span>}
+      {hot ? 'Opening…' : children}{!hot && <span aria-hidden="true">→</span>}
     </a>);
 }
 
-/* ── envoltura: nombre + descripción + preview (surface) + código ────────── */
+/* ── wrapper: name + description + preview (surface) + code ─────────────── */
 const StatV = ({ title, desc, code, children }) => (
   <div className="mb-12">
     <div className="mb-3">
@@ -122,10 +122,10 @@ const StatV = ({ title, desc, code, children }) => (
   </div>);
 
 /* ════════════════════════════════════════════════════════════════════════
-   DATOS (dominio musematic · flota de agentes)
+   DATA (neutral fixtures · services)
    ════════════════════════════════════════════════════════════════════════ */
 const KPIS = [
-  { label: 'Active agents', value: '142', delta: '+6', dir: 'up', tone: 'pos', note: 'vs. 30d ago' },
+  { label: 'Active services', value: '142', delta: '+6', dir: 'up', tone: 'pos', note: 'vs. 30d ago' },
   { label: 'Runs · 24h', value: '38,921', delta: '+12.4%', dir: 'up', tone: 'pos', note: 'vs. prev 24h' },
   { label: 'Avg latency', value: '842 ms', delta: '−8.1%', dir: 'down', tone: 'pos', note: 'vs. prev 24h' },
   { label: 'Spend · MTD', value: '$18,204', delta: '+4.2%', dir: 'up', tone: 'neg', note: 'vs. last month' },
@@ -138,7 +138,7 @@ const STRIP = [
   { label: 'Spend today', value: '$612.40' },
 ];
 
-/* sparkline por rango — la cifra y el delta se recalculan al cambiar el toggle */
+/* sparkline per range — number and delta recalculate when the toggle changes */
 const TREND = {
   '7d': {
     runs: { v: '38,921', d: '+12.4%', dir: 'up', tone: 'pos', data: [31,34,33,38,36,41,39].map(v => ({ v })) },
@@ -172,8 +172,8 @@ const FOOTERS = [
   { icon: 'clock', label: 'Avg latency', value: '842 ms', delta: '−8.1%', dir: 'down', tone: 'pos', link: 'View latency' },
 ];
 
-/* ── snippets para pegar ─────────────────────────────────────────────────── */
-const C_TREND = `// dir = forma de la flecha · tone = color (independientes)
+/* ── snippets to paste ───────────────────────────────────────────────────── */
+const C_TREND = `// dir = arrow shape · tone = color (independent)
 const Trend = ({ dir = "up", tone = "pos", children }) => {
   const c = tone === "pos" ? "text-primary"
           : tone === "neg" ? "text-destructive"
@@ -189,7 +189,7 @@ const Trend = ({ dir = "up", tone = "pos", children }) => {
   );
 };`;
 
-const C_SIMPLE = `// Rejilla de KPIs — bajar latencia/coste es bueno → flecha abajo, verde
+const C_SIMPLE = `// KPI grid — lower latency/cost is good → arrow down, green
 <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
   {kpis.map((s) => (
     <div key={s.label} className="rounded-lg border border-border bg-card p-5">
@@ -203,7 +203,7 @@ const C_SIMPLE = `// Rejilla de KPIs — bajar latencia/coste es bueno → flech
   ))}
 </dl>`;
 
-const C_STRIP = `// Banda dividida — una sola tarjeta, KPIs separados por divisores
+const C_STRIP = `// Divided strip — a single card, KPIs separated by dividers
 <dl className="grid grid-cols-2 lg:grid-cols-4 rounded-lg border border-border bg-card
                divide-y divide-x divide-border overflow-hidden
                lg:divide-y-0">
@@ -217,7 +217,7 @@ const C_STRIP = `// Banda dividida — una sola tarjeta, KPIs separados por divi
   ))}
 </dl>`;
 
-const C_SPARK = `// Sparkline — área/línea sin ejes; el toggle recalcula cifra + delta
+const C_SPARK = `// Sparkline — area/line with no axes; the toggle recalculates number + delta
 function Sparkline({ data, color = "primary", type = "area", height = 46 }) {
   const t = useChartTheme();
   const c = t.color(color);
@@ -242,7 +242,7 @@ function Sparkline({ data, color = "primary", type = "area", height = 46 }) {
   <div className="mt-3"><Sparkline data={m.data} color="primary" type="area" /></div>
 </div>`;
 
-const C_BARS = `// Mini-barras — la forma diaria de los últimos 14 días
+const C_BARS = `// Mini bars — the daily shape of the last 14 days
 <div className="rounded-lg border border-border bg-card p-5">
   <div className="flex items-center justify-between">
     <span className="text-[13px] font-medium text-muted-foreground">Runs / day</span>
@@ -252,7 +252,7 @@ const C_BARS = `// Mini-barras — la forma diaria de los últimos 14 días
   <div className="mt-3"><SparkBars data={runs14} color="primary" /></div>
 </div>`;
 
-const C_RING = `// Anillo de progreso — track + arco; el centro repite el %
+const C_RING = `// Progress ring — track + arc; the center repeats the %
 function Ring({ pct, size = 60, stroke = 7, color = "primary" }) {
   const t = useChartTheme();
   const r = (size - stroke) / 2, C = 2 * Math.PI * r;
@@ -279,7 +279,7 @@ function Ring({ pct, size = 60, stroke = 7, color = "primary" }) {
   </div>
 </div>`;
 
-const C_FOOT = `// Icono + footer — cuadro de icono, cifra, delta y una acción
+const C_FOOT = `// Icon + footer — icon tile, number, delta and an action
 <div className="rounded-lg border border-border bg-card overflow-hidden">
   <div className="p-5">
     <div className="flex items-center gap-3">
@@ -307,16 +307,16 @@ function StatsSection() {
   const sparks = [
     { key: 'runs', label: 'Runs', color: 'primary', type: 'area', m: tr.runs },
     { key: 'lat', label: 'Avg latency', color: 'cyan', type: 'line', m: tr.lat },
-    { key: 'tok', label: 'Tokens', color: 'violet', type: 'area', m: tr.tok },
+    { key: 'tok', label: 'Events', color: 'violet', type: 'area', m: tr.tok },
   ];
 
   return (
     <div>
-      <SectionHead kicker="Datos" title="Stats" status="done"
-        intro="La tarjeta de KPI: una etiqueta, una cifra grande y un delta con dirección — y, cuando ayuda, una mini gráfica de tendencia, barras o un anillo de progreso. La dirección de la flecha y su color son independientes: bajar la latencia o el coste es bueno (verde, flecha abajo); subir el gasto pide atención (rojo, flecha arriba). Para la banda de KPIs de una página, la cabecera de un dashboard o el resumen de la flota." />
+      <SectionHead kicker="Data" title="Stats" status="done"
+        intro="The KPI card: a label, a big number and a directional delta — and, when it helps, a mini trend chart, bars or a progress ring. Arrow direction and color are independent: lower latency or cost is good (green, arrow down); rising spend needs attention (red, arrow up). For a page's KPI strip, a dashboard header or a services summary." />
 
       {/* 1 · Simple */}
-      <StatV title="Simple" desc="La rejilla de KPIs por defecto: etiqueta, cifra y delta contra el periodo anterior. Cuatro tarjetas que pasan de una a cuatro columnas. Fíjate en latencia y coste: misma caída, distinto color." code={C_TREND + '\n\n' + C_SIMPLE}>
+      <StatV title="Simple" desc="The default KPI grid: label, number and delta against the previous period. Four cards that go from one to four columns. Note latency and cost: same drop, different color." code={C_TREND + '\n\n' + C_SIMPLE}>
         <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {KPIS.map((s) => (
             <div key={s.label} className="rounded-lg border border-border bg-card p-5">
@@ -331,8 +331,8 @@ function StatsSection() {
         </dl>
       </StatV>
 
-      {/* 2 · Banda dividida */}
-      <StatV title="Banda dividida" desc="Los mismos KPIs en una sola banda separada por divisores, sin tarjetas individuales. Para fijar bajo la cabecera de una página o de un dashboard, donde el espacio vertical escasea." code={C_STRIP}>
+      {/* 2 · Divided strip */}
+      <StatV title="Divided strip" desc="The same KPIs in a single strip separated by dividers, with no individual cards. To pin under a page or dashboard header, where vertical space is scarce." code={C_STRIP}>
         <dl className="grid grid-cols-2 lg:grid-cols-4 rounded-lg border border-border bg-card overflow-hidden divide-x divide-y lg:divide-y-0 divide-border">
           {STRIP.map((s) => (
             <div key={s.label} className="px-5 py-4">
@@ -343,10 +343,10 @@ function StatsSection() {
         </dl>
       </StatV>
 
-      {/* 3 · Con sparkline */}
-      <StatV title="Con sparkline" desc="Cada tarjeta añade una mini gráfica de tendencia bajo la cifra — área para volumen, línea para latencia. El segmented cambia el rango y recalcula la cifra y el delta. La sparkline no tiene ejes: solo la forma." code={C_SPARK}>
+      {/* 3 · With sparkline */}
+      <StatV title="With sparkline" desc="Each card adds a mini trend chart under the number — area for volume, line for latency. The segmented control changes the range and recalculates the number and delta. The sparkline has no axes: just the shape." code={C_SPARK}>
         <div className="flex items-center justify-between gap-4 mb-4">
-          <span className="text-[12px] font-medium text-muted-foreground">Tendencia de la flota</span>
+          <span className="text-[12px] font-medium text-muted-foreground">Services trend</span>
           <Seg value={range} onChange={setRange} options={[{ value: '7d', label: '7d' }, { value: '30d', label: '30d' }, { value: '90d', label: '90d' }]} />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -363,8 +363,8 @@ function StatsSection() {
         </div>
       </StatV>
 
-      {/* 4 · Con mini-barras */}
-      <StatV title="Con mini-barras" desc="Cuando la forma diaria importa más que la curva: barras compactas de los últimos 14 días. Color categórico por serie para distinguirlas de un vistazo." code={C_BARS}>
+      {/* 4 · With mini bars */}
+      <StatV title="With mini bars" desc="When the daily shape matters more than the curve: compact bars for the last 14 days. Categorical color per series to tell them apart at a glance." code={C_BARS}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[640px]">
           <div className="rounded-lg border border-border bg-card p-5">
             <div className="flex items-center justify-between">
@@ -379,7 +379,7 @@ function StatsSection() {
           </div>
           <div className="rounded-lg border border-border bg-card p-5">
             <div className="flex items-center justify-between">
-              <span className="text-[13px] font-medium text-muted-foreground">Tokens / day</span>
+              <span className="text-[13px] font-medium text-muted-foreground">Events / day</span>
               <span className="font-mono text-[11px] text-muted-foreground">14d</span>
             </div>
             <div className="mt-1 flex items-baseline gap-2">
@@ -391,8 +391,8 @@ function StatsSection() {
         </div>
       </StatV>
 
-      {/* 5 · Anillo de progreso */}
-      <StatV title="Anillo de progreso" desc="Para métricas con meta o tope: un anillo marca el porcentaje y la cifra del centro lo repite. Presupuesto consumido, SLA cumplido y concurrencia de la flota." code={C_RING}>
+      {/* 5 · Progress ring */}
+      <StatV title="Progress ring" desc="For metrics with a target or cap: a ring marks the percentage and the number in the center repeats it. Budget used, SLA met and concurrency." code={C_RING}>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {RINGS.map((r) => (
             <div key={r.label} className="flex items-center gap-4 rounded-lg border border-border bg-card p-5">
@@ -406,8 +406,8 @@ function StatsSection() {
         </div>
       </StatV>
 
-      {/* 6 · Icono + footer */}
-      <StatV title="Con icono + footer" desc="La anatomía completa: un cuadro de icono al frente, la cifra, el delta y una acción en el footer. El enlace responde al clic." code={C_FOOT}>
+      {/* 6 · Icon + footer */}
+      <StatV title="With icon + footer" desc="The full anatomy: a leading icon tile, the number, the delta and an action in the footer. The link responds to clicks." code={C_FOOT}>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {FOOTERS.map((s) => (
             <div key={s.label} className="rounded-lg border border-border bg-card overflow-hidden">

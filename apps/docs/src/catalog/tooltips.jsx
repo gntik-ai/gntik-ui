@@ -1,9 +1,9 @@
 /* ============================================================================
-   Gntik UI · tooltips.jsx — tooltips (grupo "Overlays").
-   El hint efímero que aparece al pasar el ratón o enfocar con teclado.
-   Canónico: sólido invertido (bg-foreground) para etiquetas cortas; variante
-   "rich" sobre bg-popover para contenido de varias líneas. Posiciones en los 4
-   lados, flecha, retardo de apertura y soporte de foco. Dominio musematic.
+   Gntik UI · tooltips.jsx — tooltips ("Overlays" group).
+   The ephemeral hint shown on hover or keyboard focus.
+   Canonical: inverted solid (bg-foreground) for short labels; a "rich"
+   variant on bg-popover for multi-line content. Positions on all 4 sides,
+   arrow, open delay and focus support. Neutral fixtures.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useRef } = window;
@@ -19,7 +19,7 @@ const Variant = ({ title, desc, code, surface = 'dots', children }) => (
   </div>
 );
 
-/* ── Tooltip sólido (canónico) ───────────────────────────────────────────── */
+/* ── Solid tooltip (canonical) ───────────────────────────────────────────── */
 const WRAP = {
   top:    'bottom-full left-1/2 -translate-x-1/2 mb-2 origin-bottom',
   bottom: 'top-full left-1/2 -translate-x-1/2 mt-2 origin-top',
@@ -57,7 +57,7 @@ function Tooltip({ label, kbd, side = 'top', delay = 130, children }) {
   );
 }
 
-/* ── Tooltip enriquecido (card sobre bg-popover) ─────────────────────────── */
+/* ── Rich tooltip (card on bg-popover) ──────────────────────────────────── */
 function RichTooltip({ side = 'top', width = 256, delay = 130, children, render }) {
   const [open, bind] = useHoverIntent(delay);
   return (
@@ -73,7 +73,7 @@ function RichTooltip({ side = 'top', width = 256, delay = 130, children, render 
   );
 }
 
-/* triggers reutilizados */
+/* reused triggers */
 const Chip = ({ children }) => (
   <span className="inline-flex h-9 cursor-default items-center rounded-md border border-border bg-card px-3.5 text-[13px] font-medium text-foreground shadow-sm">{children}</span>
 );
@@ -85,48 +85,48 @@ const IconBtn = ({ name, danger }) => (
   </button>
 );
 
-/* ── 1 · POSICIONES ──────────────────────────────────────────────────────── */
+/* ── 1 · POSITIONS ───────────────────────────────────────────────────────── */
 function Positions() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-4 py-8">
-      <Tooltip side="top" label="Arriba"><Chip>Top</Chip></Tooltip>
-      <Tooltip side="right" label="A la derecha"><Chip>Right</Chip></Tooltip>
-      <Tooltip side="bottom" label="Abajo"><Chip>Bottom</Chip></Tooltip>
-      <Tooltip side="left" label="A la izquierda"><Chip>Left</Chip></Tooltip>
+      <Tooltip side="top" label="Above"><Chip>Top</Chip></Tooltip>
+      <Tooltip side="right" label="To the right"><Chip>Right</Chip></Tooltip>
+      <Tooltip side="bottom" label="Below"><Chip>Bottom</Chip></Tooltip>
+      <Tooltip side="left" label="To the left"><Chip>Left</Chip></Tooltip>
     </div>
   );
 }
 
-/* ── 2 · TOOLBAR DE ICONOS ───────────────────────────────────────────────── */
+/* ── 2 · ICON TOOLBAR ───────────────────────────────────────────────────── */
 function IconToolbar() {
   return (
     <div className="flex flex-col items-center gap-3 py-6">
       <div className="flex items-center gap-1.5 rounded-lg border border-border bg-card p-1.5 shadow-sm">
-        <Tooltip label="Buscar" kbd="⌘K"><IconBtn name="search" /></Tooltip>
-        <Tooltip label="Pausar agente"><IconBtn name="pause" /></Tooltip>
-        <Tooltip label="Reintentar run"><IconBtn name="refresh" /></Tooltip>
-        <Tooltip label="Descargar logs"><IconBtn name="download" /></Tooltip>
+        <Tooltip label="Search" kbd="⌘K"><IconBtn name="search" /></Tooltip>
+        <Tooltip label="Pause service"><IconBtn name="pause" /></Tooltip>
+        <Tooltip label="Retry run"><IconBtn name="refresh" /></Tooltip>
+        <Tooltip label="Download logs"><IconBtn name="download" /></Tooltip>
         <span className="mx-0.5 h-5 w-px bg-border" />
-        <Tooltip label="Configurar"><IconBtn name="settings" /></Tooltip>
-        <Tooltip label="Eliminar"><IconBtn name="trash" danger /></Tooltip>
+        <Tooltip label="Configure"><IconBtn name="settings" /></Tooltip>
+        <Tooltip label="Delete"><IconBtn name="trash" danger /></Tooltip>
       </div>
-      <p className="font-mono text-[11px] text-muted-foreground/80">cada botón-icono lleva su etiqueta · pasa el ratón o usa Tab</p>
+      <p className="font-mono text-[11px] text-muted-foreground/80">every icon button carries its label · hover or use Tab</p>
     </div>
   );
 }
 
-/* ── 3 · TOOLTIP ENRIQUECIDO ─────────────────────────────────────────────── */
+/* ── 3 · RICH TOOLTIP ───────────────────────────────────────────────────── */
 function RichDemo() {
   const richContent = (
     <>
       <div className="flex items-center gap-2">
-        <span className="text-[12.5px] font-semibold tracking-tight text-foreground">Coste por 1k tokens</span>
+        <span className="text-[12.5px] font-semibold tracking-tight text-foreground">Cost per 1k requests</span>
       </div>
       <p className="mt-1 text-[12px] leading-5 text-muted-foreground" style={{ textWrap: 'pretty' }}>
-        Promedio ponderado de input + output del agente en la ventana seleccionada, antes de descuentos por volumen.
+        Weighted average of compute + egress for the service in the selected window, before volume discounts.
       </p>
       <div className="mt-2 flex items-center gap-1.5 border-t border-border/70 pt-2 font-mono text-[11px] text-muted-foreground">
-        <Icon name="refresh" size={12} />Se recalcula cada hora
+        <Icon name="refresh" size={12} />Recalculated every hour
       </div>
     </>
   );
@@ -135,9 +135,9 @@ function RichDemo() {
       <div className="flex items-end gap-10">
         <div>
           <div className="flex items-center gap-1.5">
-            <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Coste / 1k tok</span>
+            <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Cost / 1k req</span>
             <RichTooltip render={richContent}>
-              <button type="button" aria-label="Más información" className="grid size-[18px] place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
+              <button type="button" aria-label="More information" className="grid size-[18px] place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
                 <Icon name="info" size={14} />
               </button>
             </RichTooltip>
@@ -148,8 +148,8 @@ function RichDemo() {
           <RichTooltip side="right" width={232} render={(
             <>
               <div className="text-[12.5px] font-semibold tracking-tight text-foreground">support-triage</div>
-              <p className="mt-1 text-[12px] leading-5 text-muted-foreground">Claude Sonnet · 14 policies activas · región eu-west.</p>
-              <div className="mt-2 flex items-center gap-1.5 font-mono text-[11px] text-primary"><span className="size-1.5 rounded-full bg-primary" />Operativo</div>
+              <p className="mt-1 text-[12px] leading-5 text-muted-foreground">Node 24 runtime · 14 active policies · eu-west region.</p>
+              <div className="mt-2 flex items-center gap-1.5 font-mono text-[11px] text-primary"><span className="size-1.5 rounded-full bg-primary" />Operational</div>
             </>
           )}>
             <span className="inline-flex cursor-default items-center gap-2 rounded-md border border-border bg-card px-3 py-1.5 text-[13px] font-medium text-foreground shadow-sm">
@@ -158,13 +158,13 @@ function RichDemo() {
           </RichTooltip>
         </div>
       </div>
-      <p className="font-mono text-[11px] text-muted-foreground/80">la ⓘ y el chip abren una card con título, descripción y meta</p>
+      <p className="font-mono text-[11px] text-muted-foreground/80">the ⓘ and the chip open a card with title, description and meta</p>
     </div>
   );
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_TT = `// Tooltip sólido — hover + foco, retardo de apertura, flecha
+const CODE_TT = `// Solid tooltip — hover + focus, open delay, arrow
 function Tooltip({ label, side = "top", delay = 130, children }) {
   const [open, setOpen] = useState(false);
   const t = useRef(null);
@@ -190,53 +190,53 @@ function Tooltip({ label, side = "top", delay = 130, children }) {
   );
 }`;
 
-const CODE_TOOL = `// Botón-icono con etiqueta + atajo
-<Tooltip label="Buscar" kbd="⌘K">
+const CODE_TOOL = `// Icon button with label + shortcut
+<Tooltip label="Search" kbd="⌘K">
   <button className="grid size-9 place-items-center rounded-md border border-border bg-card
                      text-muted-foreground shadow-sm hover:text-foreground hover:border-primary/40">
     <SearchIcon />
   </button>
 </Tooltip>`;
 
-const CODE_RICH = `// Tooltip enriquecido — card sobre bg-popover para varias líneas
+const CODE_RICH = `// Rich tooltip — card on bg-popover for multiple lines
 <RichTooltip render={
   <>
-    <div className="text-[12.5px] font-semibold text-foreground">Coste por 1k tokens</div>
+    <div className="text-[12.5px] font-semibold text-foreground">Cost per 1k requests</div>
     <p className="mt-1 text-[12px] leading-5 text-muted-foreground">
-      Promedio ponderado de input + output del agente en la ventana seleccionada.
+      Weighted average of compute + egress for the service in the selected window.
     </p>
     <div className="mt-2 flex items-center gap-1.5 border-t border-border/70 pt-2
                     font-mono text-[11px] text-muted-foreground">
-      <RefreshIcon /> Se recalcula cada hora
+      <RefreshIcon /> Recalculated every hour
     </div>
   </>
 }>
-  <button aria-label="Más información"
+  <button aria-label="More information"
     className="grid size-[18px] place-items-center rounded-full text-muted-foreground
                hover:bg-secondary hover:text-foreground"><InfoIcon /></button>
 </RichTooltip>`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function TooltipsSection() {
   return (
     <div>
       <SectionHead kicker="Overlays" title="Tooltips" status="done"
-        intro="El hint efímero: una etiqueta corta que aparece al pasar el ratón o enfocar con teclado, sin robar el foco ni ocupar layout. El canónico es sólido invertido (bg-foreground) para nombres y atajos; cuando hace falta explicar algo en varias líneas, la variante enriquecida usa una card sobre bg-popover. Ambos abren con un pequeño retardo, traen flecha y responden también a Tab — no solo al ratón." />
+        intro="The ephemeral hint: a short label that appears on hover or keyboard focus, without stealing focus or taking up layout. The canonical one is inverted solid (bg-foreground) for names and shortcuts; when something needs a multi-line explanation, the rich variant uses a card on bg-popover. Both open with a short delay, have an arrow and respond to Tab too — not just the mouse." />
 
-      <Variant title="Posiciones"
-        desc="El mismo tooltip colocado arriba, a la derecha, abajo o a la izquierda del trigger. Abre con ~130 ms de retardo y una micro-animación de escala; la flecha apunta siempre al elemento."
+      <Variant title="Positions"
+        desc="The same tooltip placed above, to the right, below or to the left of the trigger. Opens after a ~130 ms delay with a subtle scale animation; the arrow always points at the element."
         code={CODE_TT}>
         <Positions />
       </Variant>
 
-      <Variant title="Toolbar de iconos"
-        desc="El uso más común: un botón-icono no se explica solo, así que cada uno lleva su etiqueta. El primero añade además un atajo de teclado en un chip. Pasa el ratón o navega con Tab para verlos."
+      <Variant title="Icon toolbar"
+        desc="The most common use: an icon button doesn't explain itself, so each one carries its label. The first also adds a keyboard shortcut in a chip. Hover or navigate with Tab to see them."
         code={CODE_TOOL}>
         <IconToolbar />
       </Variant>
 
-      <Variant title="Tooltip enriquecido" surface="card"
-        desc="Cuando una etiqueta no basta: card sobre bg-popover con título, descripción y una línea de meta. Ideal para explicar una métrica detrás de una ⓘ o dar contexto de un recurso al pasar por encima."
+      <Variant title="Rich tooltip" surface="card"
+        desc="When a label isn't enough: a card on bg-popover with title, description and a meta line. Ideal for explaining a metric behind an ⓘ or giving context about a resource on hover."
         code={CODE_RICH}>
         <RichDemo />
       </Variant>

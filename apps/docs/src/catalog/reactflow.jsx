@@ -1,14 +1,14 @@
 /* ============================================================================
-   Gntik UI · reactflow.jsx — lienzo de nodos (grupo "Flow").
-   ReactFlow (v11) tematizado con los tokens de marca: nodos de agente como
-   cards de musematic, handles y edges en verde, controles/minimap/fondo sobre
-   tokens. El reskin del tema lo arrastra todo. Dominio: orquestación del Fleet.
-   Variantes: lienzo de orquestación (interactivo) · tipos de nodo · tematizado.
+   Gntik UI · reactflow.jsx — node canvas ("Flow" group).
+   ReactFlow (v11) themed with the brand tokens: service nodes as brand
+   cards, green handles and edges, controls/minimap/background on tokens.
+   The theme reskin carries everything. Domain: a generic order pipeline.
+   Variants: orchestration canvas (interactive) · node types · theming.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useCallback } = window;
 
-/* ── ReactFlow desde el UMD global (cargado en index.html) ───────────────── */
+/* ── ReactFlow from the global UMD (loaded in index.html) ────────────────── */
 const RF = window.ReactFlow || {};
 const Flow = RF.ReactFlow || RF.default;
 const { Background, Controls, MiniMap, Handle, Position, Panel,
@@ -16,7 +16,7 @@ const { Background, Controls, MiniMap, Handle, Position, Panel,
 const Frag = React.Fragment;
 const BG_DOTS = BackgroundVariant ? BackgroundVariant.Dots : 'dots';
 
-/* ── CSS de marca para ReactFlow — todo apunta a tokens/brand.css ─────────── */
+/* ── Brand CSS for ReactFlow — everything points at tokens/brand.css ────────── */
 const FLOW_CSS = `
 .gu-rf .react-flow { background: transparent; }
 .gu-rf .react-flow__pane { cursor: grab; }
@@ -39,26 +39,26 @@ const FLOW_CSS = `
 .gu-rf .react-flow__handle.connectingfrom,
 .gu-rf .react-flow__handle.valid { background: hsl(var(--primary)); border-color: hsl(var(--primary)); }
 
-/* nodo — el ring de selección lo dibuja el componente; quitamos el outline nativo */
+/* node — the selection ring is drawn by the component; drop the native outline */
 .gu-rf .react-flow__node { font-family: var(--font-sans); }
 .gu-rf .react-flow__node:focus, .gu-rf .react-flow__node:focus-visible { outline: none; }
 .gu-rf .react-flow__node.selected { box-shadow: none; }
 
-/* RESET de los tipos integrados de ReactFlow (default/input/output/group): sus
-   estilos por defecto (fondo blanco, padding, borde) chocaban con la card de marca
-   — el tipo "output" coincide de nombre con el integrado y heredaba el cuadro blanco. */
+/* RESET of ReactFlow's built-in types (default/input/output/group): their
+   default styles (white background, padding, border) clashed with the brand card
+   — the "output" type shares its name with the built-in one and inherited the white box. */
 .gu-rf .react-flow__node-default,
 .gu-rf .react-flow__node-input,
 .gu-rf .react-flow__node-output,
 .gu-rf .react-flow__node-group { padding: 0; width: auto; background: transparent;
   border: none; border-radius: 0; color: inherit; box-shadow: none; text-align: left; }
 
-/* borde "trabajando" — un segmento verde recorre el perímetro del nodo activo */
+/* "working" border — a green segment travels around the active node's perimeter */
 @keyframes gu-rf-run { to { stroke-dashoffset: -100; } }
 .gu-rf .gu-rf-run { animation: gu-rf-run 1.8s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .gu-rf .gu-rf-run { animation: none; } }
 
-/* controles */
+/* controls */
 .gu-rf .react-flow__controls { box-shadow: var(--shadow-md); border: 1px solid hsl(var(--border));
   border-radius: var(--radius-md); overflow: hidden; }
 .gu-rf .react-flow__controls-button { width: 26px; height: 26px; background: hsl(var(--card));
@@ -67,17 +67,17 @@ const FLOW_CSS = `
 .gu-rf .react-flow__controls-button:last-child { border-bottom: none; }
 .gu-rf .react-flow__controls-button svg { fill: currentColor; max-width: 13px; max-height: 13px; }
 
-/* minimap + fondo */
+/* minimap + background */
 .gu-rf .react-flow__minimap { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius-md); }
 .gu-rf .react-flow__minimap-mask { fill: hsl(var(--muted-foreground) / .12); }
 .gu-rf .react-flow__background-pattern circle { fill: hsl(var(--border)); }
 
-/* atribución — discreta, sobre tokens */
+/* attribution — subtle, on tokens */
 .gu-rf .react-flow__attribution { background: transparent; padding: 2px 5px; }
 .gu-rf .react-flow__attribution a { color: hsl(var(--muted-foreground) / .55); font-size: 9px; }
 `;
 
-/* ── envoltura de variante ───────────────────────────────────────────────── */
+/* ── variant wrapper ────────────────────────────────────────────────────── */
 const Variant = ({ title, desc, code, children }) => (
   <div className="mb-12">
     <div className="mb-3">
@@ -89,7 +89,7 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── vocabulario de marca para los nodos ─────────────────────────────────── */
+/* ── brand vocabulary for the nodes ─────────────────────────────────────── */
 const ICON_BY_KIND = { trigger: 'bolt', agent: 'bot', router: 'flow', output: 'check' };
 const CHIP = {
   trigger: 'bg-primary text-primary-foreground',
@@ -97,26 +97,26 @@ const CHIP = {
   router: 'bg-secondary text-foreground border border-border',
   output: 'bg-accent text-accent-foreground',
 };
-/* estado del nodo → color corporativo. Verde = activo/healthy (nunca severidad);
-   ámbar = degradado; rojo = fallo; violet/rose = requiere intervención humana. */
+/* node status → brand color. Green = active/healthy (never severity);
+   amber = degraded; red = failure; violet/rose = needs human intervention. */
 const TONES = {
   running:  { label: 'Running',  pill: 'bg-primary/14 text-primary',                   border: 'border-primary/60',   march: true },
   degraded: { label: 'Degraded', pill: 'bg-warning/16 text-warning',                   border: 'border-warning/65' },
   failed:   { label: 'Failed',   pill: 'bg-destructive/15 text-destructive',           border: 'border-destructive/65' },
   paused:   { label: 'Paused',   pill: 'bg-muted-foreground/16 text-muted-foreground', border: null },
-  done:     { label: 'Resuelto', pill: 'bg-primary/14 text-primary',                   border: 'border-primary/70' },
+  done:     { label: 'Resolved', pill: 'bg-primary/14 text-primary',                   border: 'border-primary/70' },
   handoff:  { label: 'Handoff',  pill: 'bg-category-violet/16 text-category-violet',    border: 'border-category-violet' },
-  review:   { label: 'Revisión', pill: 'bg-category-rose/16 text-category-rose',        border: 'border-category-rose' },
+  review:   { label: 'Review',   pill: 'bg-category-rose/16 text-category-rose',        border: 'border-category-rose' },
 };
 
-/* ── NodeShell · la card de marca (sin handles; la reusa el nodo y la galería) ── */
+/* ── NodeShell · the brand card (no handles; reused by the node and the gallery) ── */
 function NodeShell({ kind = 'agent', icon, title, subtitle, meta, tone, selected }) {
   const t = TONES[tone];
   const running = !!(t && t.march);
   const border = selected
     ? 'border-2 border-primary/60 ring-2 ring-primary/35 shadow-md'
     : (t && t.border)
-      ? 'border-2 ' + t.border + ' shadow-sm'   // borde grueso del color del estado
+      ? 'border-2 ' + t.border + ' shadow-sm'   // thick border in the status color
       : 'border border-border shadow-sm';
   return (
     <div className="relative" style={{ width: '100%', height: '100%' }}>
@@ -150,7 +150,7 @@ function NodeShell({ kind = 'agent', icon, title, subtitle, meta, tone, selected
   );
 }
 
-/* ── tipos de nodo (handles según el rol) ────────────────────────────────── */
+/* ── node types (handles by role) ───────────────────────────────────────── */
 function TriggerNode({ data, selected }) {
   return (<div className="relative" style={{ width: '100%', height: '100%' }}>
     <NodeShell kind="trigger" icon={data.icon} title={data.title} subtitle={data.subtitle} selected={selected} />
@@ -179,36 +179,36 @@ function OutputNode({ data, selected }) {
 }
 const NODE_TYPES = { trigger: TriggerNode, agent: AgentNode, router: RouterNode, output: OutputNode };
 
-/* ── marcadores de flecha (color = token, reactivo al tema) ──────────────── */
+/* ── arrow markers (color = token, theme-reactive) ─────────────────────── */
 const arrowMuted = MarkerType ? { type: MarkerType.ArrowClosed, width: 15, height: 15, color: 'hsl(var(--muted-foreground))' } : undefined;
 const arrowOn = MarkerType ? { type: MarkerType.ArrowClosed, width: 15, height: 15, color: 'hsl(var(--primary))' } : undefined;
 
-/* ── datos del flujo del Fleet ───────────────────────────────────────────── */
+/* ── pipeline flow data ─────────────────────────────────────────────────── */
 const HERO_NODES = [
-  { id: 'trig',     type: 'trigger', position: { x: 0,    y: 168 }, style: { width: 208, height: 56 }, data: { title: 'Inbound ticket', subtitle: 'webhook · /v1/hooks', icon: 'bolt' } },
-  { id: 'triage',   type: 'agent',   position: { x: 256,  y: 152 }, style: { width: 208, height: 90 }, data: { title: 'support-triage', subtitle: 'eu-west-1',  meta: 'claude-sonnet-4', tone: 'running' } },
-  { id: 'router',   type: 'router',  position: { x: 520,  y: 168 }, style: { width: 208, height: 56 }, data: { title: 'Intent router',  subtitle: '4 rutas',    icon: 'flow' } },
-  { id: 'billing',  type: 'agent',   position: { x: 800,  y: 32  }, style: { width: 208, height: 90 }, data: { title: 'billing-bot',    subtitle: 'us-east-1',  meta: 'claude-haiku-4',  tone: 'degraded' } },
-  { id: 'kb',       type: 'agent',   position: { x: 800,  y: 176 }, style: { width: 208, height: 90 }, data: { title: 'kb-summarizer',  subtitle: 'ap-south-1', meta: 'claude-sonnet-4', tone: 'failed' } },
-  { id: 'escalate', type: 'output',  position: { x: 800,  y: 320 }, style: { width: 208, height: 90 }, data: { title: 'Escalate',       subtitle: 'handoff → human', icon: 'user',  tone: 'handoff' } },
-  { id: 'resolve',  type: 'output',  position: { x: 1084, y: 112 }, style: { width: 208, height: 90 }, data: { title: 'Resolve',        subtitle: 'ticket.close',    icon: 'check', tone: 'done' } },
+  { id: 'trig',     type: 'trigger', position: { x: 0,    y: 168 }, style: { width: 208, height: 56 }, data: { title: 'Order event', subtitle: 'webhook · /v1/hooks', icon: 'bolt' } },
+  { id: 'triage',   type: 'agent',   position: { x: 256,  y: 152 }, style: { width: 208, height: 90 }, data: { title: 'order-validator', subtitle: 'eu-west-1',  meta: 'node 24', tone: 'running' } },
+  { id: 'router',   type: 'router',  position: { x: 520,  y: 168 }, style: { width: 208, height: 56 }, data: { title: 'Order router',   subtitle: '4 routes',   icon: 'flow' } },
+  { id: 'billing',  type: 'agent',   position: { x: 800,  y: 32  }, style: { width: 208, height: 90 }, data: { title: 'payment-service', subtitle: 'us-east-1', meta: 'go 1.24',  tone: 'degraded' } },
+  { id: 'kb',       type: 'agent',   position: { x: 800,  y: 176 }, style: { width: 208, height: 90 }, data: { title: 'inventory-sync', subtitle: 'ap-south-1', meta: 'python 3.13', tone: 'failed' } },
+  { id: 'escalate', type: 'output',  position: { x: 800,  y: 320 }, style: { width: 208, height: 90 }, data: { title: 'Manual review',  subtitle: 'handoff → human', icon: 'user',  tone: 'handoff' } },
+  { id: 'resolve',  type: 'output',  position: { x: 1084, y: 112 }, style: { width: 208, height: 90 }, data: { title: 'Fulfill',        subtitle: 'order.complete',  icon: 'check', tone: 'done' } },
 ];
 const HERO_EDGES = [
-  { id: 'e1', source: 'trig',    target: 'triage',   animated: true, label: 'ticket',    markerEnd: arrowOn },
-  { id: 'e2', source: 'triage',  target: 'router',   animated: true, label: 'intent',    markerEnd: arrowOn },
-  { id: 'e3', source: 'router',  target: 'billing',  label: 'refund',    markerEnd: arrowMuted },
-  { id: 'e4', source: 'router',  target: 'kb',       label: 'FAQ',       markerEnd: arrowMuted },
-  { id: 'e5', source: 'router',  target: 'escalate', label: 'low conf.', markerEnd: arrowMuted },
+  { id: 'e1', source: 'trig',    target: 'triage',   animated: true, label: 'event',     markerEnd: arrowOn },
+  { id: 'e2', source: 'triage',  target: 'router',   animated: true, label: 'valid',     markerEnd: arrowOn },
+  { id: 'e3', source: 'router',  target: 'billing',  label: 'payment',   markerEnd: arrowMuted },
+  { id: 'e4', source: 'router',  target: 'kb',       label: 'stock',     markerEnd: arrowMuted },
+  { id: 'e5', source: 'router',  target: 'escalate', label: 'flagged',   markerEnd: arrowMuted },
   { id: 'e6', source: 'billing', target: 'resolve',  markerEnd: arrowMuted },
   { id: 'e7', source: 'kb',      target: 'escalate', markerEnd: arrowMuted },
 ];
 
-/* ── leyenda + pista (Panels del lienzo) ─────────────────────────────────── */
+/* ── legend + hint (canvas Panels) ──────────────────────────────────────── */
 function HeroLegend() {
-  const rows = [['trigger', 'Disparador'], ['agent', 'Agente'], ['router', 'Router'], ['output', 'Salida']];
+  const rows = [['trigger', 'Trigger'], ['agent', 'Service'], ['router', 'Router'], ['output', 'Output']];
   return (
     <div className="rounded-md border border-border bg-card/90 px-3 py-2.5 shadow-sm" style={{ backdropFilter: 'blur(6px)' }}>
-      <div className="font-mono text-[9px] tracking-[0.14em] uppercase text-muted-foreground mb-2">support-triage · flujo</div>
+      <div className="font-mono text-[9px] tracking-[0.14em] uppercase text-muted-foreground mb-2">order-pipeline · flow</div>
       <div className="flex flex-col gap-1.5">
         {rows.map(([k, l]) => (
           <div key={k} className="flex items-center gap-2">
@@ -222,12 +222,12 @@ function HeroLegend() {
 function HeroHint() {
   return (
     <div className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card/90 px-2.5 py-1.5 shadow-sm font-mono text-[10px] text-muted-foreground" style={{ backdropFilter: 'blur(6px)' }}>
-      <Icon name="finger" size={12} className="text-primary" />arrastra · conecta · zoom
+      <Icon name="finger" size={12} className="text-primary" />drag · connect · zoom
     </div>
   );
 }
 
-/* ── 1 · Lienzo de orquestación (interactivo) ────────────────────────────── */
+/* ── 1 · Orchestration canvas (interactive) ─────────────────────────────── */
 function OrchestrationCanvas() {
   const [nodes, , onNodesChange] = useNodesState(HERO_NODES);
   const [edges, setEdges, onEdgesChange] = useEdgesState(HERO_EDGES);
@@ -261,12 +261,12 @@ function OrchestrationCanvas() {
   );
 }
 
-/* ── 2 · Tipos de nodo (compacto, sin zoom/pan) ──────────────────────────── */
+/* ── 2 · Node types (compact, no zoom/pan) ──────────────────────────────── */
 const TYPE_NODES = [
-  { id: 't', type: 'trigger', position: { x: 0,   y: 30 }, style: { width: 208, height: 56 }, data: { title: 'Trigger', subtitle: 'evento de entrada', icon: 'bolt' } },
-  { id: 'a', type: 'agent',   position: { x: 252, y: 18 }, style: { width: 208, height: 90 }, data: { title: 'Agent',   subtitle: 'paso del agente', meta: 'claude-sonnet-4', tone: 'running' } },
-  { id: 'r', type: 'router',  position: { x: 516, y: 30 }, style: { width: 208, height: 56 }, data: { title: 'Router',  subtitle: 'rama condicional', icon: 'flow' } },
-  { id: 'o', type: 'output',  position: { x: 780, y: 30 }, style: { width: 208, height: 90 }, data: { title: 'Output',  subtitle: 'acción · salida', icon: 'check', tone: 'done' } },
+  { id: 't', type: 'trigger', position: { x: 0,   y: 30 }, style: { width: 208, height: 56 }, data: { title: 'Trigger', subtitle: 'incoming event', icon: 'bolt' } },
+  { id: 'a', type: 'agent',   position: { x: 252, y: 18 }, style: { width: 208, height: 90 }, data: { title: 'Service', subtitle: 'processing step', meta: 'node 24', tone: 'running' } },
+  { id: 'r', type: 'router',  position: { x: 516, y: 30 }, style: { width: 208, height: 56 }, data: { title: 'Router',  subtitle: 'conditional branch', icon: 'flow' } },
+  { id: 'o', type: 'output',  position: { x: 780, y: 30 }, style: { width: 208, height: 90 }, data: { title: 'Output',  subtitle: 'action · output', icon: 'check', tone: 'done' } },
 ];
 const TYPE_EDGES = [
   { id: 'x1', source: 't', target: 'a', animated: true, label: 'in', markerEnd: arrowOn },
@@ -291,18 +291,18 @@ function NodeTypesFlow() {
   );
 }
 
-/* ── 3 · Tematizado de marca (referencia clase → token) ──────────────────── */
+/* ── 3 · Brand theming (class → token reference) ───────────────────────── */
 const THEME_MAP = [
-  ['.react-flow',                 'bg-border',                'Fondo transparente · puntos en border'],
-  ['.react-flow__node',           'bg-card',                  'Card + border; ring-primary al seleccionar'],
-  ['.gu-rf-run · nodo activo',    'bg-primary',               'Segmento verde que recorre el borde de un nodo trabajando'],
-  ['estado · severidad',          'bg-warning',               'Borde + pill por estado: running verde · degraded ámbar · failed rojo'],
-  ['intervención humana',         'bg-category-violet',       'Handoff / revisión: borde en violet (o rose) para que resalte'],
-  ['.react-flow__handle',         'bg-primary',               'Card en reposo → primary al pasar / conectar'],
-  ['.react-flow__edge-path',      'bg-muted-foreground/45',   'muted-foreground; primary si la edge está activa'],
-  ['.react-flow__edge-text',      'bg-foreground',            'foreground · mono; recuadro en card'],
-  ['.react-flow__controls-button','bg-card',                  'Card; hover en secondary; iconos en foreground'],
-  ['.react-flow__minimap',        'bg-card',                  'Card; máscara en muted-foreground/12'],
+  ['.react-flow',                 'bg-border',                'Transparent background · dots in border'],
+  ['.react-flow__node',           'bg-card',                  'Card + border; ring-primary when selected'],
+  ['.gu-rf-run · active node',    'bg-primary',               'Green segment travelling around the border of a working node'],
+  ['status · severity',           'bg-warning',               'Border + pill per status: running green · degraded amber · failed red'],
+  ['human intervention',          'bg-category-violet',       'Handoff / review: violet (or rose) border so it stands out'],
+  ['.react-flow__handle',         'bg-primary',               'Card at rest → primary on hover / connect'],
+  ['.react-flow__edge-path',      'bg-muted-foreground/45',   'muted-foreground; primary when the edge is active'],
+  ['.react-flow__edge-text',      'bg-foreground',            'foreground · mono; card-colored box'],
+  ['.react-flow__controls-button','bg-card',                  'Card; secondary on hover; icons in foreground'],
+  ['.react-flow__minimap',        'bg-card',                  'Card; mask in muted-foreground/12'],
 ];
 function ThemeMap() {
   return (
@@ -317,13 +317,13 @@ function ThemeMap() {
   );
 }
 
-/* ── sin librería (fallback defensivo) ───────────────────────────────────── */
+/* ── no library (defensive fallback) ────────────────────────────────────── */
 function NoLib() {
   return (
     <div className="rounded-lg border border-dashed border-border bg-card/40 px-8 py-14 text-center">
       <span className="w-12 h-12 rounded-xl bg-accent text-accent-foreground inline-flex items-center justify-center mb-3"><Icon name="flowGraph" size={22} /></span>
-      <div className="font-sans font-semibold text-[15px] text-foreground">ReactFlow no se cargó</div>
-      <p className="text-[13px] text-muted-foreground mt-1.5">Revisa que el UMD de <span className="font-mono">reactflow@11</span> esté incluido en <span className="font-mono">index.html</span>.</p>
+      <div className="font-sans font-semibold text-[15px] text-foreground">ReactFlow failed to load</div>
+      <p className="text-[13px] text-muted-foreground mt-1.5">Check that the <span className="font-mono">reactflow@11</span> UMD is included in <span className="font-mono">index.html</span>.</p>
     </div>
   );
 }
@@ -334,7 +334,7 @@ const CODE_CANVAS = `import ReactFlow, {
   useNodesState, useEdgesState, addEdge, MarkerType,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import './reactflow-brand.css';            // overrides → tokens de marca
+import './reactflow-brand.css';            // overrides → brand tokens
 
 const nodeTypes = { trigger: TriggerNode, agent: AgentNode, router: RouterNode, output: OutputNode };
 const arrow = { type: MarkerType.ArrowClosed, width: 15, height: 15, color: 'hsl(var(--muted-foreground))' };
@@ -365,8 +365,8 @@ function OrchestrationCanvas() {
 
 const CODE_NODE = `import { Handle, Position } from 'reactflow';
 
-// Estado del nodo → color de marca: verde activo · ámbar degradado · rojo fallo;
-// violet/rose = requiere intervención humana. El primario nunca es severidad.
+// Node status → brand color: green active · amber degraded · red failure;
+// violet/rose = needs human intervention. Primary is never severity.
 const TONES = {
   running:  { label: 'Running',  pill: 'bg-primary/14 text-primary',                border: 'border-primary/60', march: true },
   degraded: { label: 'Degraded', pill: 'bg-warning/16 text-warning',                border: 'border-warning/65' },
@@ -374,14 +374,14 @@ const TONES = {
   handoff:  { label: 'Handoff',  pill: 'bg-category-violet/16 text-category-violet', border: 'border-category-violet' },
 };
 
-// Nodo de agente — card de marca con handles (target izq · source der).
+// Service node — brand card with handles (target left · source right).
 function AgentNode({ data, selected }) {
   const t = TONES[data.tone];
   const border = selected ? 'border-2 border-primary/60 ring-2 ring-primary/35'
     : t ? 'border-2 ' + t.border : 'border border-border';
   return (
     <div className="relative w-[208px]">
-      {t?.march && <RunningBorder />}            {/* rect SVG con pathLength=100 que recorre el borde */}
+      {t?.march && <RunningBorder />}            {/* SVG rect with pathLength=100 that travels the border */}
       <Handle type="target" position={Position.Left} />
       <div className={\`flex flex-col rounded-lg bg-card overflow-hidden shadow-sm \${border}\`}>
         <div className="flex items-center gap-2.5 px-3 py-2.5">
@@ -402,13 +402,13 @@ function AgentNode({ data, selected }) {
   );
 }`;
 
-const CODE_THEME = `/* reactflow-brand.css — tematiza ReactFlow con los tokens de marca.
-   Cárgalo DESPUÉS de reactflow/dist/style.css. Envuelve el lienzo en .gu-rf.
-   No hay un solo color hardcodeado: el switch de tema lo reskinea todo. */
+const CODE_THEME = `/* reactflow-brand.css — themes ReactFlow with the brand tokens.
+   Load it AFTER reactflow/dist/style.css. Wrap the canvas in .gu-rf.
+   Not a single hardcoded color: the theme switch reskins everything. */
 .gu-rf .react-flow { background: transparent; }
 
-/* RESET de los tipos integrados (default/input/output/group) — evita el cuadro
-   blanco por defecto cuando tu tipo se llama igual que uno integrado ("output"). */
+/* RESET of the built-in types (default/input/output/group) — avoids the default
+   white box when your type has the same name as a built-in one ("output"). */
 .gu-rf .react-flow__node-default, .gu-rf .react-flow__node-input,
 .gu-rf .react-flow__node-output, .gu-rf .react-flow__node-group {
   padding: 0; width: auto; background: transparent; border: none; border-radius: 0; }
@@ -427,7 +427,7 @@ const CODE_THEME = `/* reactflow-brand.css — tematiza ReactFlow con los tokens
 .gu-rf .react-flow__handle:hover,
 .gu-rf .react-flow__handle.connectingfrom { background: hsl(var(--primary)); border-color: hsl(var(--primary)); }
 
-/* controles */
+/* controls */
 .gu-rf .react-flow__controls { border: 1px solid hsl(var(--border)); border-radius: var(--radius-md);
   box-shadow: var(--shadow-md); overflow: hidden; }
 .gu-rf .react-flow__controls-button { background: hsl(var(--card)); color: hsl(var(--foreground));
@@ -435,39 +435,39 @@ const CODE_THEME = `/* reactflow-brand.css — tematiza ReactFlow con los tokens
 .gu-rf .react-flow__controls-button:hover { background: hsl(var(--secondary)); }
 .gu-rf .react-flow__controls-button svg { fill: currentColor; }
 
-/* minimap + fondo de puntos */
+/* minimap + dot background */
 .gu-rf .react-flow__minimap { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius-md); }
 .gu-rf .react-flow__minimap-mask { fill: hsl(var(--muted-foreground) / .12); }
 .gu-rf .react-flow__background-pattern circle { fill: hsl(var(--border)); }
 
-/* nodo "trabajando" — un segmento verde recorre el borde (rect con pathLength=100) */
+/* "working" node — a green segment travels the border (rect with pathLength=100) */
 @keyframes gu-rf-run { to { stroke-dashoffset: -100; } }
 .gu-rf .gu-rf-run { animation: gu-rf-run 1.8s linear infinite; }`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function ReactFlowSection() {
   return (
     <div>
       <style>{FLOW_CSS}</style>
       <SectionHead kicker="Flow" title="ReactFlow" status="done"
-        intro="El lienzo de orquestación del Fleet, montado sobre ReactFlow y tematizado con los tokens de marca: cada nodo es una card de musematic con sus handles, las edges activas van en verde y el fondo, controles y minimap se pintan sobre tokens. Arrastra los nodos, conéctalos tirando de un handle a otro, y haz zoom/pan sobre el lienzo — todo reskinea con el tema." />
+        intro="An orchestration canvas built on ReactFlow and themed with the brand tokens: each node is a brand card with its handles, active edges are green and the background, controls and minimap are painted on tokens. Drag the nodes, connect them by pulling from one handle to another, and zoom/pan the canvas — everything reskins with the theme." />
 
       {!Flow ? <NoLib /> : (
         <div>
-          <Variant title="Lienzo de orquestación"
-            desc="El flujo real de support-triage: un disparador entra, el agente clasifica, el router abre rutas y cierra en una salida. El borde de cada nodo refleja su estado — verde en ejecución (con un segmento que recorre el borde), ámbar si va degradado, rojo si falla — y los pasos que piden intervención humana se resaltan en violet. Arrastra cualquier nodo, tira de un handle para crear una edge, y haz zoom/pan."
+          <Variant title="Orchestration canvas"
+            desc="An order pipeline: an event comes in, a service validates it, the router opens routes and it ends in an output. Each node's border reflects its status — green while running (with a segment travelling the border), amber when degraded, red when failing — and steps that need human intervention are highlighted in violet. Drag any node, pull from a handle to create an edge, and zoom/pan."
             code={CODE_CANVAS}>
             <OrchestrationCanvas />
           </Variant>
 
-          <Variant title="Tipos de nodo & handles"
-            desc="Las cuatro piezas del lienzo, encadenadas: disparador (solo source), agente (target + source, con modelo y estado), router (rama condicional) y salida (solo target). Los handles son los puntos de conexión; la primera edge va animada para marcar el flujo activo y la última lleva etiqueta. Aquí el zoom/pan está fijo — solo se arrastran los nodos."
+          <Variant title="Node types & handles"
+            desc="The four canvas pieces, chained: trigger (source only), service (target + source, with runtime and status), router (conditional branch) and output (target only). Handles are the connection points; the first edge is animated to mark the active flow and the last one has a label. Zoom/pan is locked here — only the nodes can be dragged."
             code={CODE_NODE}>
             <NodeTypesFlow />
           </Variant>
 
-          <Variant title="Tematizado de marca"
-            desc="ReactFlow trae sus propias clases; aquí cada una se reescribe contra los tokens. No hay color hardcodeado, así que el lienzo cambia de tema con el resto del catálogo. Carga este CSS después de reactflow/dist/style.css y envuelve el lienzo en .gu-rf."
+          <Variant title="Brand theming"
+            desc="ReactFlow ships its own classes; here each one is rewritten against the tokens. There are no hardcoded colors, so the canvas changes theme with the rest of the catalog. Load this CSS after reactflow/dist/style.css and wrap the canvas in .gu-rf."
             code={CODE_THEME}>
             <ThemeMap />
           </Variant>

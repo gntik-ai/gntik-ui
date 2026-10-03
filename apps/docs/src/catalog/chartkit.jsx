@@ -1,28 +1,28 @@
 /* ============================================================================
-   Gntik UI · chartkit.jsx — capa de gráficas (Recharts tematizado a la marca).
-   Wrappers con la API de Tremor (index · categories · colors · valueFormatter)
-   sobre Recharts. CERO color hardcodeado: todo se lee de tokens/brand.css en
-   vivo, así el switch de tema reskinea las gráficas igual que el resto.
-   Verde primario = héroe · categóricos (violet/cyan/amber/rose) = series extra.
-   Sobrio: sin degradados, sin glow, sin animación de entrada.
-   Exporta a window: AreaChart · BarChart · LineChart · ComboChart · DonutChart
+   Gntik UI · chartkit.jsx — charts layer (Recharts themed to the brand).
+   Wrappers with the Tremor API (index · categories · colors · valueFormatter)
+   over Recharts. ZERO hardcoded colour: everything is read live from
+   tokens/brand.css, so the theme switch reskins charts like everything else.
+   Primary green = hero · categoricals (violet/cyan/amber/rose) = extra series.
+   Sober: no gradients, no glow, no entry animation.
+   Exports to window: AreaChart · BarChart · LineChart · ComboChart · DonutChart
    · useChartTheme · chartFmt · CHART_COLORS.
    ============================================================================ */
 (function () {
 const { useState, useEffect, useMemo } = React;
 const RC = window.Recharts;
-if (!RC) { console.error('[chartkit] Recharts no cargó'); return; }
+if (!RC) { console.error('[chartkit] Recharts did not load'); return; }
 const {
   ResponsiveContainer, AreaChart: RAreaChart, Area, BarChart: RBarChart, Bar,
   LineChart: RLineChart, Line, ComposedChart, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip,
 } = RC;
 
-/* ── token → color concreto (hsl) ────────────────────────────────────────── */
+/* ── token → concrete colour (hsl) ───────────────────────────────────────── */
 const readVar = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 const hsl = (name, a) => { const v = readVar(name); return a != null ? `hsl(${v} / ${a})` : `hsl(${v})`; };
 
-/* paleta de series: verde héroe + categóricos de marca */
+/* series palette: hero green + brand categoricals */
 const SERIES = {
   primary: '--primary', emerald: '--brand-accent',
   violet: '--category-violet', cyan: '--category-cyan',
@@ -30,7 +30,7 @@ const SERIES = {
 };
 const CHART_COLORS = ['primary', 'violet', 'cyan', 'amber', 'rose'];
 
-/* ── hook de tema: re-lee tokens cuando cambia la clase de <html> ─────────── */
+/* ── theme hook: re-reads tokens when the <html> class changes ───────────── */
 function useChartTheme() {
   const [v, setV] = useState(0);
   useEffect(() => {
@@ -48,7 +48,7 @@ function useChartTheme() {
   }), [v]);
 }
 
-/* ── formatos de valor ───────────────────────────────────────────────────── */
+/* ── value formats ───────────────────────────────────────────────────────── */
 const nf = (opts) => new Intl.NumberFormat('en-US', opts);
 const chartFmt = {
   usd: (n) => '$' + nf({ maximumFractionDigits: 0 }).format(n),
@@ -61,7 +61,7 @@ const chartFmt = {
 };
 const ident = (x) => x;
 
-/* ── tooltip de marca (card + valores mono) ──────────────────────────────── */
+/* ── brand tooltip (card + mono values) ──────────────────────────────────── */
 function ChartTooltip({ active, payload, label, valueFormatter = ident, labelFormatter }) {
   if (!active || !payload || !payload.length) return null;
   const rows = payload.filter(p => p.value != null);
@@ -88,7 +88,7 @@ function ChartTooltip({ active, payload, label, valueFormatter = ident, labelFor
     </div>);
 }
 
-/* ── leyenda interactiva: clic activa/desactiva la serie ─────────────────── */
+/* ── interactive legend: click toggles the series ────────────────────────── */
 function ChartLegend({ items, hidden, onToggle, className = '' }) {
   return (
     <div className={"flex flex-wrap items-center gap-x-4 gap-y-1.5 " + className}>
@@ -106,14 +106,14 @@ function ChartLegend({ items, hidden, onToggle, className = '' }) {
     </div>);
 }
 
-/* hook de estado de leyenda (set de series ocultas) */
+/* legend state hook (set of hidden series) */
 function useHidden() {
   const [hidden, setHidden] = useState(() => new Set());
   const toggle = (k) => setHidden(s => { const n = new Set(s); n.has(k) ? n.delete(k) : n.add(k); return n; });
   return [hidden, toggle];
 }
 
-/* ejes compartidos */
+/* shared axes */
 const axisProps = (t) => ({ stroke: t.axis, tickLine: false, axisLine: false, tick: { fill: t.text, fontSize: 11 } });
 const ChartWrap = ({ height, children }) => (
   <div style={{ width: '100%', height, fontFamily: 'var(--font-sans)' }}>
@@ -159,7 +159,7 @@ function BarChart({ data, index, categories = [], colors = CHART_COLORS, valueFo
   const [hidden, toggle] = useHidden();
   const col = (i) => t.color(colors[i % colors.length]);
   const legend = categories.map((c, i) => ({ key: c, label: c, color: col(i) }));
-  const vertical = layout === 'vertical'; // barras horizontales (categorías en eje Y)
+  const vertical = layout === 'vertical'; // horizontal bars (categories on the Y axis)
   const radius = stacked ? 0 : (vertical ? [0, 3, 3, 0] : [3, 3, 0, 0]);
   return (
     <div>
@@ -215,7 +215,7 @@ function LineChart({ data, index, categories = [], colors = CHART_COLORS, valueF
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   COMBO CHART  (barras eje izq · línea eje der)
+   COMBO CHART  (bars on left axis · line on right axis)
    ════════════════════════════════════════════════════════════════════════ */
 function ComboChart({ data, index, barSeries, lineSeries, barColor = 'primary', lineColor = 'amber',
   barFormatter = ident, lineFormatter = ident, showLegend = true, showGrid = true, height = 300 }) {
@@ -244,7 +244,7 @@ function ComboChart({ data, index, barSeries, lineSeries, barColor = 'primary', 
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   DONUT CHART  (donut · pie · con etiqueta central)
+   DONUT CHART  (donut · pie · with centre label)
    ════════════════════════════════════════════════════════════════════════ */
 function DonutChart({ data, index, category, colors = CHART_COLORS, valueFormatter = ident,
   variant = 'donut', showLegend = true, centerLabel, height = 264 }) {
@@ -299,7 +299,7 @@ function DonutChart({ data, index, category, colors = CHART_COLORS, valueFormatt
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   BAR LIST  (sin ejes · etiqueta dentro de la barra · valor a la derecha)
+   BAR LIST  (no axes · label inside the bar · value on the right)
    ════════════════════════════════════════════════════════════════════════ */
 function BarList({ data, index, category, valueFormatter = ident, color = 'primary', sortOrder = 'desc' }) {
   const BG = { primary: 'bg-primary/20', violet: 'bg-category-violet/20', cyan: 'bg-category-cyan/20', amber: 'bg-category-amber/20', rose: 'bg-category-rose/20' };

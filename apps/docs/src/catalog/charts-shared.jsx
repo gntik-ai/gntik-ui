@@ -1,19 +1,19 @@
 /* ============================================================================
-   Gntik UI · charts-shared.jsx — chrome compartido de las secciones de Gráficas.
-   ChartCard (tarjeta de dashboard) · ChartDelta · ChartVariant (nombre + desc +
-   preview + código) · ChartSegmented. Lo usan area-charts, bar-charts, etc.
-   Las gráficas en sí viven en chartkit.jsx; esto es solo presentación.
+   Gntik UI · charts-shared.jsx — shared chrome for the Charts sections.
+   ChartCard (dashboard card) · ChartDelta · ChartVariant (name + desc +
+   preview + code) · ChartSegmented. Used by area-charts, bar-charts, etc.
+   The charts themselves live in chartkit.jsx; this is presentation only.
    ============================================================================ */
 (function () {
 const { Icon, CodeBlock } = window;
 
-/* delta mono · verde = bien, rojo = atención, gris = neutro */
+/* mono delta · green = good, red = attention, grey = neutral */
 const ChartDelta = ({ tone = 'pos', children }) => {
   const c = tone === 'pos' ? 'text-primary' : tone === 'neg' ? 'text-destructive' : 'text-muted-foreground';
   return <span className={"font-mono text-[12px] font-medium " + c} style={{ fontVariantNumeric: 'tabular-nums' }}>{children}</span>;
 };
 
-/* chrome de tarjeta de dashboard: título + métrica + acción + (chart) + footer */
+/* dashboard card chrome: title + metric + action + (chart) + footer */
 function ChartCard({ title, value, delta, deltaTone, action, foot, children }) {
   return (
     <div className="rounded-lg border border-border bg-card p-5">
@@ -33,7 +33,7 @@ function ChartCard({ title, value, delta, deltaTone, action, foot, children }) {
     </div>);
 }
 
-/* nombre + descripción + preview + código (copiable) */
+/* name + description + preview + code (copyable) */
 const ChartVariant = ({ title, desc, code, children }) => (
   <div className="mb-12">
     <div className="mb-3">
@@ -44,7 +44,7 @@ const ChartVariant = ({ title, desc, code, children }) => (
     {code && <CodeBlock code={code} lang="tsx" />}
   </div>);
 
-/* segmented control (donut/pie, periodos, etc.) */
+/* segmented control (donut/pie, periods, etc.) */
 function ChartSegmented({ value, onChange, options }) {
   return (
     <div className="flex items-center gap-0.5 p-0.5 rounded-md border border-border bg-card">

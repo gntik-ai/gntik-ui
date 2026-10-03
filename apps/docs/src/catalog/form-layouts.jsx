@@ -1,16 +1,16 @@
 /* ============================================================================
-   Gntik UI · form-layouts.jsx — composiciones de formulario (grupo "Formularios").
-   Tres layouts canónicos sobre primitivas de marca (input · select nativo ·
-   textarea · checkbox · radio-card), todo con tokens:
-     1 · Ajustes con secciones — etiqueta a la izquierda, campos a la derecha.
-     2 · Solicitud con paquetes — campos + tarjetas de capacidad seleccionables.
-     3 · Crear workspace — dos columnas: plan en tarjetas + panel de ayuda.
-   Dominio musematic (operador · workspace · Fleet · costes). Cero color hardcodeado.
+   Gntik UI · form-layouts.jsx — form compositions ("Forms" group).
+   Three canonical layouts on brand primitives (input · native select ·
+   textarea · checkbox · radio card), all with tokens:
+     1 · Settings with sections — label on the left, fields on the right.
+     2 · Request with packages — fields + selectable capacity cards.
+     3 · Create workspace — two columns: plan cards + help panel.
+   Zero hardcoded colour.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
 
-/* ── primitivas de campo (reutilizadas por los 3 formularios) ─────────────── */
+/* ── field primitives (reused by the 3 forms) ────────────────────────────── */
 const labelCls = "block text-[13px] font-medium text-foreground";
 const fieldCls =
   "block w-full rounded-md border border-border bg-background px-3 text-[13px] text-foreground " +
@@ -42,7 +42,7 @@ const Field = ({ label, htmlFor, required, hint, children, className = "" }) => 
   </div>
 );
 
-/* checkbox de marca — input nativo estilizado (igual que en Tables) */
+/* brand checkbox — styled native input (same as in Tables) */
 const Check = ({ checked, onChange }) => (
   <span className="relative inline-flex items-center justify-center w-[18px] h-[18px] shrink-0">
     <input type="checkbox" checked={checked} onChange={onChange}
@@ -68,7 +68,7 @@ const GhostBtn = ({ children, ...p }) => (
   </button>
 );
 
-/* envoltura de variante — superficie de preview punteada, formulario al desnudo */
+/* variant wrapper — preview surface, bare form */
 const Variant = ({ title, desc, code, children }) => (
   <div className="mb-12">
     <div className="mb-3">
@@ -80,7 +80,7 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* hook mínimo: feedback efímero al enviar (sin acción real) */
+/* minimal hook: brief feedback on submit (no real action) */
 function useSubmitFlash() {
   const [done, setDone] = useState(false);
   const fire = (e) => { if (e) e.preventDefault(); setDone(true); setTimeout(() => setDone(false), 1600); };
@@ -88,7 +88,7 @@ function useSubmitFlash() {
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   1 · AJUSTES CON SECCIONES — operador · workspace · alertas
+   1 · SETTINGS WITH SECTIONS — profile · workspace · alerts
    ════════════════════════════════════════════════════════════════════════ */
 const SettingsHead = ({ title, desc }) => (
   <div>
@@ -98,14 +98,14 @@ const SettingsHead = ({ title, desc }) => (
 );
 
 const TEAM_ALERTS = [
-  { id: 'access', label: 'Solicitudes de acceso al workspace', on: true },
-  { id: 'digest', label: 'Resumen semanal de actividad del equipo', on: false },
+  { id: 'access', label: 'Workspace access requests', on: true },
+  { id: 'digest', label: 'Weekly team activity digest', on: false },
 ];
 const OPS_ALERTS = [
-  { id: 'cost', label: 'Picos de coste por namespace', on: true },
-  { id: 'latency', label: 'Latencia alta de agentes', on: false },
-  { id: 'retries', label: 'Reintentos y caídas al fallback', on: true },
-  { id: 'quota', label: 'Cuota de tokens cerca del límite', on: true },
+  { id: 'cost', label: 'Cost spikes per namespace', on: true },
+  { id: 'latency', label: 'High service latency', on: false },
+  { id: 'retries', label: 'Retries and fallbacks', on: true },
+  { id: 'quota', label: 'Usage quota near the limit', on: true },
 ];
 
 function SettingsForm() {
@@ -128,30 +128,30 @@ function SettingsForm() {
 
   return (
     <form onSubmit={fire} className="mx-auto w-full max-w-4xl">
-      {/* Perfil del operador */}
+      {/* Profile */}
       <div className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-3">
-        <SettingsHead title="Perfil del operador" desc="Cómo apareces en runs, auditorías y asignaciones dentro del workspace." />
+        <SettingsHead title="Profile" desc="How you appear in jobs, audits and assignments within the workspace." />
         <div className="md:col-span-2">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-6">
-            <Field className="col-span-full sm:col-span-3" label="Nombre" htmlFor="first-name">
+            <Field className="col-span-full sm:col-span-3" label="First name" htmlFor="first-name">
               <Input id="first-name" name="first-name" autoComplete="given-name" placeholder="Emma" />
             </Field>
-            <Field className="col-span-full sm:col-span-3" label="Apellido" htmlFor="last-name">
+            <Field className="col-span-full sm:col-span-3" label="Last name" htmlFor="last-name">
               <Input id="last-name" name="last-name" autoComplete="family-name" placeholder="Crown" />
             </Field>
-            <Field className="col-span-full" label="Email de trabajo" htmlFor="email">
-              <Input id="email" name="email" type="email" autoComplete="email" placeholder="emma@empresa.com" />
+            <Field className="col-span-full" label="Work email" htmlFor="email">
+              <Input id="email" name="email" type="email" autoComplete="email" placeholder="emma@company.com" />
             </Field>
-            <Field className="col-span-full sm:col-span-3" label="Zona horaria" htmlFor="tz">
+            <Field className="col-span-full sm:col-span-3" label="Time zone" htmlFor="tz">
               <NativeSelect id="tz" name="tz" defaultValue="eu">
                 <option value="eu">Europe/Madrid (CET)</option>
                 <option value="us-e">America/New_York (EST)</option>
                 <option value="us-w">America/Los_Angeles (PST)</option>
               </NativeSelect>
             </Field>
-            <Field className="col-span-full sm:col-span-3" label="Rol" htmlFor="role"
-              hint="El rol solo lo puede cambiar un administrador del sistema.">
-              <Input id="role" name="role" placeholder="Operador senior" disabled defaultValue="Operador senior" />
+            <Field className="col-span-full sm:col-span-3" label="Role" htmlFor="role"
+              hint="Only a system administrator can change the role.">
+              <Input id="role" name="role" placeholder="Senior engineer" disabled defaultValue="Senior engineer" />
             </Field>
           </div>
         </div>
@@ -159,23 +159,23 @@ function SettingsForm() {
 
       <Divider className="my-9" />
 
-      {/* Ajustes del workspace */}
+      {/* Workspace settings */}
       <div className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-3">
-        <SettingsHead title="Ajustes del workspace" desc="Nombre, visibilidad y descripción del workspace actual." />
+        <SettingsHead title="Workspace settings" desc="Name, visibility and description of the current workspace." />
         <div className="md:col-span-2">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-6">
-            <Field className="col-span-full sm:col-span-3" label="Nombre del workspace" htmlFor="ws-name">
+            <Field className="col-span-full sm:col-span-3" label="Workspace name" htmlFor="ws-name">
               <Input id="ws-name" name="ws-name" placeholder="prod-workspace" />
             </Field>
-            <Field className="col-span-full sm:col-span-3" label="Visibilidad" htmlFor="ws-vis">
+            <Field className="col-span-full sm:col-span-3" label="Visibility" htmlFor="ws-vis">
               <NativeSelect id="ws-vis" name="ws-vis" defaultValue="private">
-                <option value="private">Privado</option>
-                <option value="public">Público</option>
+                <option value="private">Private</option>
+                <option value="public">Public</option>
               </NativeSelect>
             </Field>
-            <Field className="col-span-full" label="Descripción" htmlFor="ws-desc"
-              hint="Nota: la descripción no se muestra fuera de la organización.">
-              <Textarea id="ws-desc" name="ws-desc" rows={4} placeholder="Para qué sirve este workspace…" />
+            <Field className="col-span-full" label="Description" htmlFor="ws-desc"
+              hint="Note: the description is not shown outside the organisation.">
+              <Textarea id="ws-desc" name="ws-desc" rows={4} placeholder="What this workspace is for…" />
             </Field>
           </div>
         </div>
@@ -183,18 +183,18 @@ function SettingsForm() {
 
       <Divider className="my-9" />
 
-      {/* Alertas */}
+      {/* Alerts */}
       <div className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-3">
-        <SettingsHead title="Alertas" desc="Elige qué eventos del equipo y de operación quieres recibir." />
+        <SettingsHead title="Alerts" desc="Choose which team and operations events you want to receive." />
         <div className="md:col-span-2 space-y-7">
           <fieldset>
-            <legend className="text-[13px] font-medium text-foreground">Equipo</legend>
-            <p className="mt-1 text-[13px] text-muted-foreground">Avisos sobre acceso y actividad del equipo.</p>
+            <legend className="text-[13px] font-medium text-foreground">Team</legend>
+            <p className="mt-1 text-[13px] text-muted-foreground">Notices about team access and activity.</p>
             <AlertList items={TEAM_ALERTS} />
           </fieldset>
           <fieldset>
-            <legend className="text-[13px] font-medium text-foreground">Operación</legend>
-            <p className="mt-1 text-[13px] text-muted-foreground">Señales del Fleet: coste, latencia y fiabilidad de los agentes.</p>
+            <legend className="text-[13px] font-medium text-foreground">Operations</legend>
+            <p className="mt-1 text-[13px] text-muted-foreground">Operational signals: service cost, latency and reliability.</p>
             <AlertList items={OPS_ALERTS} />
           </fieldset>
         </div>
@@ -202,23 +202,23 @@ function SettingsForm() {
 
       <Divider className="my-9" />
       <div className="flex items-center justify-end gap-3">
-        <GhostBtn>Volver</GhostBtn>
-        <SubmitBtn label="Guardar ajustes" done={done} doneLabel="Guardado" />
+        <GhostBtn>Back</GhostBtn>
+        <SubmitBtn label="Save settings" done={done} doneLabel="Saved" />
       </div>
     </form>
   );
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   2 · SOLICITUD CON PAQUETES — campos + tarjetas de capacidad seleccionables
+   2 · REQUEST WITH PACKAGES — fields + selectable capacity cards
    ════════════════════════════════════════════════════════════════════════ */
 const PACKAGES = [
-  { id: 'starter',    title: 'Starter',    desc: 'Hasta 10.000 requests al día.',     price: 'Gratis',
-    features: ['Soporte de comunidad', '50 GB de almacenamiento', 'Constructor de agentes integrado'] },
-  { id: 'premium',    title: 'Premium',    desc: '500.000 requests al día¹',          price: '$900/mes²',
-    features: ['Soporte por Slack Connect', '100 GB de almacenamiento', 'Workspace gestionado', 'Constructor de agentes integrado'] },
-  { id: 'enterprise', title: 'Enterprise', desc: 'Según las necesidades de tu equipo', price: 'A medida',
-    features: ['Soporte prioritario por Slack Connect', 'Almacenamiento ilimitado', 'Constructor de agentes integrado', 'Descuento por volumen'] },
+  { id: 'starter',    title: 'Starter',    desc: 'Up to 10,000 requests per day.',   price: 'Free',
+    features: ['Community support', '50 GB of storage', 'Built-in workflow builder'] },
+  { id: 'premium',    title: 'Premium',    desc: '500,000 requests per day¹',        price: '$900/mo²',
+    features: ['Slack Connect support', '100 GB of storage', 'Managed workspace', 'Built-in workflow builder'] },
+  { id: 'enterprise', title: 'Enterprise', desc: 'Tailored to your team\'s needs',   price: 'Custom',
+    features: ['Priority Slack Connect support', 'Unlimited storage', 'Built-in workflow builder', 'Volume discount'] },
 ];
 
 function PackagesForm() {
@@ -228,27 +228,27 @@ function PackagesForm() {
 
   return (
     <form onSubmit={fire} className="mx-auto w-full max-w-2xl">
-      <h3 className="font-sans text-[18px] font-semibold tracking-tight text-foreground">Solicitar capacidad para un equipo</h3>
+      <h3 className="font-sans text-[18px] font-semibold tracking-tight text-foreground">Request capacity for a team</h3>
       <p className="mt-1.5 text-[13px] leading-6 text-muted-foreground" style={{ textWrap: 'pretty' }}>
-        Provisiona un workspace con cuota dedicada. Aprobamos la solicitud y dejamos el namespace listo en menos de un día hábil.
+        Provision a workspace with a dedicated quota. We approve the request and have the namespace ready in less than one business day.
       </p>
 
       <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-6">
-        <Field className="col-span-full sm:col-span-3" label="Nombre" htmlFor="p-first" required>
+        <Field className="col-span-full sm:col-span-3" label="First name" htmlFor="p-first" required>
           <Input id="p-first" name="p-first" autoComplete="given-name" required placeholder="Emma" />
         </Field>
-        <Field className="col-span-full sm:col-span-3" label="Apellido" htmlFor="p-last">
+        <Field className="col-span-full sm:col-span-3" label="Last name" htmlFor="p-last">
           <Input id="p-last" name="p-last" autoComplete="family-name" placeholder="Crown" />
         </Field>
-        <Field className="col-span-full" label="Email de trabajo" htmlFor="p-email" required>
-          <Input id="p-email" name="p-email" type="email" autoComplete="email" required placeholder="emma@empresa.com" />
+        <Field className="col-span-full" label="Work email" htmlFor="p-email" required>
+          <Input id="p-email" name="p-email" type="email" autoComplete="email" required placeholder="emma@company.com" />
         </Field>
-        <Field className="col-span-full sm:col-span-3" label="Equipo" htmlFor="p-team">
-          <Input id="p-team" name="p-team" autoComplete="organization" placeholder="Plataforma, Soporte…" />
+        <Field className="col-span-full sm:col-span-3" label="Team" htmlFor="p-team">
+          <Input id="p-team" name="p-team" autoComplete="organization" placeholder="Platform, Support…" />
         </Field>
-        <Field className="col-span-full sm:col-span-3" label="Tamaño del equipo" htmlFor="p-size">
+        <Field className="col-span-full sm:col-span-3" label="Team size" htmlFor="p-size">
           <NativeSelect id="p-size" name="p-size" defaultValue="">
-            <option value="" disabled>Selecciona…</option>
+            <option value="" disabled>Select…</option>
             <option value="1-9">1–9</option>
             <option value="10-50">10–50</option>
             <option value="50-250">50–250</option>
@@ -259,8 +259,8 @@ function PackagesForm() {
 
       <Divider className="my-8" />
 
-      <div role="radiogroup" aria-label="Paquete de capacidad">
-        <p className="text-[13px] font-semibold text-foreground">Elige un paquete de capacidad</p>
+      <div role="radiogroup" aria-label="Capacity package">
+        <p className="text-[13px] font-semibold text-foreground">Choose a capacity package</p>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {PACKAGES.map(p => {
             const on = sel === p.id;
@@ -279,7 +279,7 @@ function PackagesForm() {
           })}
         </div>
 
-        <p className="mt-6 text-[13px] font-medium text-foreground">Incluye:</p>
+        <p className="mt-6 text-[13px] font-medium text-foreground">Includes:</p>
         <ul role="list" className="mt-2 space-y-2">
           {pkg.features.map((f, i) => (
             <li key={i} className="flex items-center gap-2">
@@ -288,34 +288,34 @@ function PackagesForm() {
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-[12px] text-muted-foreground"><sup>1</sup> $0,5 / 10K requests al superar el límite.</p>
-        <p className="mt-1 text-[12px] text-muted-foreground"><sup>2</sup> No se requiere tarjeta para registrarse.</p>
+        <p className="mt-6 text-[12px] text-muted-foreground"><sup>1</sup> $0.50 / 10K requests over the limit.</p>
+        <p className="mt-1 text-[12px] text-muted-foreground"><sup>2</sup> No card required to sign up.</p>
       </div>
 
       <Divider className="my-8" />
       <div className="flex items-center justify-end gap-3">
-        <GhostBtn>Volver</GhostBtn>
-        <SubmitBtn label="Solicitar acceso" done={done} doneLabel="Solicitud enviada" />
+        <GhostBtn>Back</GhostBtn>
+        <SubmitBtn label="Request access" done={done} doneLabel="Request sent" />
       </div>
     </form>
   );
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   3 · CREAR WORKSPACE — dos columnas: plan en tarjetas + panel de ayuda
+   3 · CREATE WORKSPACE — two columns: plan cards + help panel
    ════════════════════════════════════════════════════════════════════════ */
 const PLANS = [
   { id: 'hobby', name: 'Hobby', price: '$40', recommended: false,
-    features: ['1.000 requests al día', '3 entornos', 'Hasta 10 operadores', 'Soporte de comunidad'] },
+    features: ['1,000 requests per day', '3 environments', 'Up to 10 members', 'Community support'] },
   { id: 'premium', name: 'Premium', price: '$80', recommended: true,
-    features: ['100.000 requests al día', '10 entornos', 'Hasta 50 operadores', 'Soporte premium por Slack'] },
+    features: ['100,000 requests per day', '10 environments', 'Up to 50 members', 'Premium Slack support'] },
   { id: 'enterprise', name: 'Enterprise', price: '$160', recommended: false,
-    features: ['Requests ilimitados', 'Entornos y operadores ilimitados', 'SSO con SAML', 'SLA del 99,99 %', 'Descuento por volumen'] },
+    features: ['Unlimited requests', 'Unlimited environments and members', 'SSO with SAML', '99.99% SLA', 'Volume discount'] },
 ];
 const WS_HIGHLIGHTS = [
-  'Lo usan equipos de operación 24/7',
-  'Construido sobre tecnología open-source',
-  'La mayor comunidad de operadores',
+  'Used by 24/7 operations teams',
+  'Built on open-source technology',
+  'The largest community of practitioners',
 ];
 
 function CreateWorkspaceForm() {
@@ -324,26 +324,26 @@ function CreateWorkspaceForm() {
 
   return (
     <form onSubmit={fire} className="w-full">
-      <h3 className="font-sans text-[18px] font-semibold tracking-tight text-foreground">Crear nuevo workspace</h3>
+      <h3 className="font-sans text-[18px] font-semibold tracking-tight text-foreground">Create new workspace</h3>
 
       <div className="mt-6 grid grid-cols-1 gap-x-12 gap-y-8 lg:grid-cols-12">
-        {/* columna principal */}
+        {/* main column */}
         <div className="lg:col-span-7">
           <div className="space-y-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-4">
-              <Field className="sm:w-56 shrink-0" label="Organización" htmlFor="ws-org">
+              <Field className="sm:w-56 shrink-0" label="Organisation" htmlFor="ws-org">
                 <NativeSelect id="ws-org" name="ws-org" defaultValue="1">
                   <option value="1">Acme, Inc.</option>
                   <option value="2">Hero Labs</option>
                   <option value="3">Rose Holding</option>
                 </NativeSelect>
               </Field>
-              <Field className="flex-1" label="Nombre del workspace" htmlFor="ws-new">
+              <Field className="flex-1" label="Workspace name" htmlFor="ws-new">
                 <Input id="ws-new" name="ws-new" placeholder="prod-eu" />
               </Field>
             </div>
-            <Field label="Región" htmlFor="ws-region"
-              hint="Para el mejor rendimiento, elige la región más cercana a tu operación.">
+            <Field label="Region" htmlFor="ws-region"
+              hint="For the best performance, pick the region closest to your users.">
               <NativeSelect id="ws-region" name="ws-region" defaultValue="1">
                 <option value="1">EU-West (Frankfurt)</option>
                 <option value="2">US-East (Boston)</option>
@@ -352,8 +352,8 @@ function CreateWorkspaceForm() {
             </Field>
           </div>
 
-          <h4 className="mt-10 text-[13px] font-medium text-foreground">Tipo de plan<span className="text-destructive">*</span></h4>
-          <div role="radiogroup" aria-label="Tipo de plan" className="mt-3 space-y-4">
+          <h4 className="mt-10 text-[13px] font-medium text-foreground">Plan type<span className="text-destructive">*</span></h4>
+          <div role="radiogroup" aria-label="Plan type" className="mt-3 space-y-4">
             {PLANS.map(plan => {
               const on = sel === plan.id;
               return (
@@ -369,7 +369,7 @@ function CreateWorkspaceForm() {
                       <p className="flex items-center gap-2 leading-6">
                         <span className="text-[13px] font-semibold text-foreground">{plan.name}</span>
                         {plan.recommended && (
-                          <span className="inline-flex items-center rounded px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-primary bg-primary/14">recomendado</span>
+                          <span className="inline-flex items-center rounded px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-primary bg-primary/14">recommended</span>
                         )}
                       </p>
                       <ul className="mt-2 space-y-1.5">
@@ -383,11 +383,11 @@ function CreateWorkspaceForm() {
                   </div>
                   <div className="flex items-center justify-between border-t border-border bg-background/60 px-5 py-2.5">
                     <span className="inline-flex items-center gap-1 text-[12.5px] text-primary hover:underline underline-offset-4">
-                      Saber más <Icon name="external" size={13} />
+                      Learn more <Icon name="external" size={13} />
                     </span>
                     <div>
                       <span className="text-[15px] font-semibold text-foreground">{plan.price}</span>
-                      <span className="text-[12.5px] text-muted-foreground">/mes</span>
+                      <span className="text-[12.5px] text-muted-foreground">/mo</span>
                     </div>
                   </div>
                 </button>
@@ -396,12 +396,12 @@ function CreateWorkspaceForm() {
           </div>
         </div>
 
-        {/* panel de ayuda */}
+        {/* help panel */}
         <div className="lg:col-span-5">
           <div className="rounded-lg border border-border bg-secondary/50 p-6">
-            <h4 className="text-[13px] font-semibold text-foreground">¿Qué plan encaja mejor?</h4>
+            <h4 className="text-[13px] font-semibold text-foreground">Which plan fits best?</h4>
             <p className="mt-2 text-[13px] leading-6 text-muted-foreground" style={{ textWrap: 'pretty' }}>
-              Empieza en Hobby para validar un agente y sube a Premium cuando el tráfico sea constante. Enterprise añade SSO, SLA y soporte dedicado.
+              Start on Hobby to validate a service and move to Premium once traffic is steady. Enterprise adds SSO, an SLA and dedicated support.
             </p>
             <ul role="list" className="mt-4 space-y-3">
               {WS_HIGHLIGHTS.map((h, i) => (
@@ -412,7 +412,7 @@ function CreateWorkspaceForm() {
               ))}
             </ul>
             <a href="#" onClick={(e) => e.preventDefault()} className="mt-5 inline-flex items-center gap-1 text-[13px] font-medium text-primary hover:underline underline-offset-4">
-              Comparar planes de workspace <Icon name="external" size={14} />
+              Compare workspace plans <Icon name="external" size={14} />
             </a>
           </div>
         </div>
@@ -420,15 +420,15 @@ function CreateWorkspaceForm() {
 
       <Divider className="my-8" />
       <div className="flex items-center justify-end gap-3">
-        <GhostBtn>Cancelar</GhostBtn>
-        <SubmitBtn label="Crear workspace" done={done} doneLabel="Workspace creado" />
+        <GhostBtn>Cancel</GhostBtn>
+        <SubmitBtn label="Create workspace" done={done} doneLabel="Workspace created" />
       </div>
     </form>
   );
 }
 
-/* ── snippets para pegar ─────────────────────────────────────────────────── */
-const CODE_PRIMS = `// Primitivas de campo — input recessed (bg-background) + ring de marca
+/* ── snippets to paste ───────────────────────────────────────────────────── */
+const CODE_PRIMS = `// Field primitives — recessed input (bg-background) + brand ring
 const field =
   "block w-full rounded-md border border-border bg-background px-3 text-[13px] " +
   "text-foreground placeholder:text-muted-foreground shadow-sm transition-colors " +
@@ -452,7 +452,7 @@ const Field = ({ label, required, hint, children }) => (
   </div>
 );`;
 
-const CODE_SETTINGS = `// Ajustes con secciones — etiqueta a la izquierda, campos a la derecha
+const CODE_SETTINGS = `// Settings with sections — label on the left, fields on the right
 {sections.map((s) => (
   <div key={s.id} className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-3">
     <div>
@@ -464,7 +464,7 @@ const CODE_SETTINGS = `// Ajustes con secciones — etiqueta a la izquierda, cam
     </div>
   </div>
 ))}
-// Lista de alertas: checkbox de marca en filas divididas
+// Alert list: brand checkbox in divided rows
 <div className="rounded-md border border-border bg-background/40 divide-y divide-border/60">
   {alerts.map((a) => (
     <label key={a.id} className="flex items-center gap-3 px-3.5 h-[46px] cursor-pointer">
@@ -473,9 +473,9 @@ const CODE_SETTINGS = `// Ajustes con secciones — etiqueta a la izquierda, cam
     </label>
   ))}
 </div>
-// pie: <Divider /> + acciones a la derecha (Volver · Guardar ajustes)`;
+// footer: <Divider /> + actions on the right (Back · Save settings)`;
 
-const CODE_PACKAGES = `// Tarjetas de capacidad seleccionables — el "Incluye" reacciona a la elección
+const CODE_PACKAGES = `// Selectable capacity cards — the "Includes" list reacts to the choice
 const [sel, setSel] = useState('starter');
 const pkg = PACKAGES.find((p) => p.id === sel);
 
@@ -507,10 +507,10 @@ const pkg = PACKAGES.find((p) => p.id === sel);
   ))}
 </ul>`;
 
-const CODE_WORKSPACE = `// Crear workspace — plan en tarjetas (col 7) + panel de ayuda (col 5)
+const CODE_WORKSPACE = `// Create workspace — plan cards (col 7) + help panel (col 5)
 <div className="grid grid-cols-1 gap-x-12 gap-y-8 lg:grid-cols-12">
   <div className="lg:col-span-7">
-    {/* Organización + Nombre (fila) · Región (con hint) */}
+    {/* Organisation + Name (row) · Region (with hint) */}
     <div role="radiogroup" className="mt-3 space-y-4">
       {PLANS.map((plan) => {
         const on = sel === plan.id;
@@ -525,72 +525,72 @@ const CODE_WORKSPACE = `// Crear workspace — plan en tarjetas (col 7) + panel 
               </span>
               <div>
                 <span className="text-[13px] font-semibold text-foreground">{plan.name}</span>
-                {plan.recommended && <Badge>recomendado</Badge>}
+                {plan.recommended && <Badge>recommended</Badge>}
                 <ul>{plan.features.map((f) => <li key={f}><CheckIcon />{f}</li>)}</ul>
               </div>
             </div>
             <div className="flex items-center justify-between border-t border-border bg-background/60 px-5 py-2.5">
-              <a className="text-primary">Saber más</a>
-              <span className="text-[15px] font-semibold text-foreground">{plan.price}<small>/mes</small></span>
+              <a className="text-primary">Learn more</a>
+              <span className="text-[15px] font-semibold text-foreground">{plan.price}<small>/mo</small></span>
             </div>
           </button>
         );
       })}
     </div>
   </div>
-  <aside className="lg:col-span-5">{/* panel bg-secondary/50 con highlights */}</aside>
+  <aside className="lg:col-span-5">{/* bg-secondary/50 panel with highlights */}</aside>
 </div>`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function FormLayoutsSection() {
   return (
     <div>
-      <SectionHead kicker="Formularios" title="Form layouts" status="done"
-        intro="Composiciones completas de formulario sobre las primitivas de marca: input, select nativo, textarea, checkbox y radio-card, todas con el ring verde y los radios y sombras de los tokens. Tres layouts canónicos del dominio musematic — ajustes con secciones, una solicitud de capacidad y la creación de un workspace. Los campos van recessed (bg-background) sobre la card y todo reacciona en vivo: marca, escribe y envía." />
+      <SectionHead kicker="Forms" title="Form layouts" status="done"
+        intro="Complete form compositions on the brand primitives: input, native select, textarea, checkbox and radio card, all with the green ring and the token radii and shadows. Three canonical layouts — settings with sections, a capacity request and workspace creation. Fields are recessed (bg-background) on the card and everything reacts live: check, type and submit." />
 
-      <Variant title="Primitivas de campo"
-        desc="La base que comparten los tres formularios. Campo recessed con borde de token, ring de marca al enfocar, y un wrapper Field con etiqueta, asterisco de requerido y nota de ayuda. Select nativo con su propio chevron."
+      <Variant title="Field primitives"
+        desc="The base shared by the three forms. A recessed field with a token border, brand ring on focus, and a Field wrapper with label, required asterisk and help note. Native select with its own chevron."
         code={CODE_PRIMS}>
         <div className="mx-auto grid w-full max-w-2xl grid-cols-1 gap-5 sm:grid-cols-2">
-          <Field label="Email de trabajo" htmlFor="demo-email" required>
-            <Input id="demo-email" type="email" placeholder="emma@empresa.com" />
+          <Field label="Work email" htmlFor="demo-email" required>
+            <Input id="demo-email" type="email" placeholder="emma@company.com" />
           </Field>
-          <Field label="Región" htmlFor="demo-region">
+          <Field label="Region" htmlFor="demo-region">
             <NativeSelect id="demo-region" defaultValue="1">
               <option value="1">EU-West (Frankfurt)</option>
               <option value="2">US-East (Boston)</option>
             </NativeSelect>
           </Field>
-          <Field className="sm:col-span-2" label="Descripción" htmlFor="demo-desc" hint="Texto de ayuda bajo el campo.">
-            <Textarea id="demo-desc" rows={3} placeholder="Para qué sirve este workspace…" />
+          <Field className="sm:col-span-2" label="Description" htmlFor="demo-desc" hint="Help text under the field.">
+            <Textarea id="demo-desc" rows={3} placeholder="What this workspace is for…" />
           </Field>
-          <Field label="Estado" htmlFor="demo-disabled" hint="Campo deshabilitado.">
-            <Input id="demo-disabled" disabled defaultValue="Solo lectura" />
+          <Field label="Status" htmlFor="demo-disabled" hint="Disabled field.">
+            <Input id="demo-disabled" disabled defaultValue="Read-only" />
           </Field>
           <div>
-            <span className={labelCls}>Alerta</span>
+            <span className={labelCls}>Alert</span>
             <label className="mt-2 flex items-center gap-3 h-9 cursor-pointer">
               <Check checked onChange={() => {}} />
-              <span className="text-[13px] font-medium text-foreground">Picos de coste</span>
+              <span className="text-[13px] font-medium text-foreground">Cost spikes</span>
             </label>
           </div>
         </div>
       </Variant>
 
-      <Variant title="Ajustes con secciones"
-        desc="El layout clásico de página de ajustes: cada bloque lleva su título y descripción a la izquierda y los campos en una rejilla a la derecha, separados por divisores. Perfil del operador, ajustes del workspace y una lista de alertas con checkboxes que togglean en vivo."
+      <Variant title="Settings with sections"
+        desc="The classic settings page layout: each block has its title and description on the left and the fields in a grid on the right, separated by dividers. Profile, workspace settings and an alert list with checkboxes that toggle live."
         code={CODE_SETTINGS}>
         <SettingsForm />
       </Variant>
 
-      <Variant title="Solicitud con paquetes"
-        desc="Un formulario de alta con tarjetas de capacidad seleccionables. Elige Starter, Premium o Enterprise y la lista «Incluye» se actualiza al instante; la tarjeta activa toma el ring verde y la marca de check."
+      <Variant title="Request with packages"
+        desc="A sign-up form with selectable capacity cards. Pick Starter, Premium or Enterprise and the “Includes” list updates instantly; the active card takes the green ring and the check mark."
         code={CODE_PACKAGES}>
         <PackagesForm />
       </Variant>
 
-      <Variant title="Crear workspace"
-        desc="Layout a dos columnas: a la izquierda los datos y el plan como tarjetas apiladas con features y precio; a la derecha un panel de ayuda que sostiene la decisión. El plan recomendado se marca y la selección resalta con el ring de marca."
+      <Variant title="Create workspace"
+        desc="Two-column layout: on the left the details and the plan as stacked cards with features and price; on the right a help panel that supports the decision. The recommended plan is flagged and the selection is highlighted with the brand ring."
         code={CODE_WORKSPACE}>
         <CreateWorkspaceForm />
       </Variant>

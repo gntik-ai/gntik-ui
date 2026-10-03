@@ -1,24 +1,24 @@
 /* ============================================================================
-   Gntik UI · combo-charts.jsx — subcategoría "Combo charts" (grupo Gráficas).
-   Dos magnitudes con escalas distintas en un mismo eje X: barras (eje izq.) +
-   línea (eje der.). Tokens vs. coste y requests vs. latencia. Tema en vivo.
+   Gntik UI · combo-charts.jsx — "Combo charts" subcategory (Charts group).
+   Two measures with different scales on one X axis: bars (left axis) +
+   line (right axis). Tokens vs. cost and requests vs. latency. Live theme.
    ============================================================================ */
 (function () {
 const { SectionHead, ChartCard, ChartVariant, ComboChart, chartFmt } = window;
 
 const USAGE = [
-  { month: 'Ene', Tokens: 182000000, Coste: 3520 },
-  { month: 'Feb', Tokens: 198000000, Coste: 3650 },
-  { month: 'Mar', Tokens: 232000000, Coste: 4210 },
-  { month: 'Abr', Tokens: 256000000, Coste: 4350 },
-  { month: 'May', Tokens: 298000000, Coste: 5060 },
-  { month: 'Jun', Tokens: 332000000, Coste: 5550 },
+  { month: 'Jan', Tokens: 182000000, Cost: 3520 },
+  { month: 'Feb', Tokens: 198000000, Cost: 3650 },
+  { month: 'Mar', Tokens: 232000000, Cost: 4210 },
+  { month: 'Apr', Tokens: 256000000, Cost: 4350 },
+  { month: 'May', Tokens: 298000000, Cost: 5060 },
+  { month: 'Jun', Tokens: 332000000, Cost: 5550 },
 ];
 const REQLAT = [
-  { month: 'Ene', Requests: 412000, 'p95': 820 },
+  { month: 'Jan', Requests: 412000, 'p95': 820 },
   { month: 'Feb', Requests: 458000, 'p95': 860 },
   { month: 'Mar', Requests: 521000, 'p95': 940 },
-  { month: 'Abr', Requests: 566000, 'p95': 910 },
+  { month: 'Apr', Requests: 566000, 'p95': 910 },
   { month: 'May', Requests: 638000, 'p95': 1080 },
   { month: 'Jun', Requests: 694000, 'p95': 1010 },
 ];
@@ -27,7 +27,7 @@ const C_TOKENS = `<ComboChart
   data={usage}
   index="month"
   barSeries="Tokens"
-  lineSeries="Coste"
+  lineSeries="Cost"
   barColor="primary"
   lineColor="amber"
   barFormatter={(v) => Intl.NumberFormat("en", { notation: "compact" }).format(v)}
@@ -48,18 +48,18 @@ const C_REQ = `<ComboChart
 function ComboChartsSection() {
   return (
     <div>
-      <SectionHead kicker="Gráficas" title="Combo charts" status="done"
-        intro="Dos magnitudes con escalas distintas en un mismo eje X: barras para el volumen y línea para la métrica que lo acompaña, cada una con su eje y su formato. Clic en la leyenda para aislar." />
+      <SectionHead kicker="Charts" title="Combo charts" status="done"
+        intro="Two measures with different scales on one X axis: bars for volume and a line for the metric that goes with it, each with its own axis and format. Click the legend to isolate." />
 
-      <ChartVariant title="Tokens vs. coste" desc="Barras para el volumen de tokens (eje izq.) y línea para el coste facturado (eje der.)." code={C_TOKENS}>
-        <ChartCard title="Tokens vs. coste · 6 meses" value="332M tokens" delta="$5,550 facturado" deltaTone="muted">
-          <ComboChart data={USAGE} index="month" barSeries="Tokens" lineSeries="Coste"
+      <ChartVariant title="Tokens vs. cost" desc="Bars for token volume (left axis) and a line for billed cost (right axis)." code={C_TOKENS}>
+        <ChartCard title="Tokens vs. cost · 6 months" value="332M tokens" delta="$5,550 billed" deltaTone="muted">
+          <ComboChart data={USAGE} index="month" barSeries="Tokens" lineSeries="Cost"
             barColor="primary" lineColor="amber" barFormatter={chartFmt.compact} lineFormatter={chartFmt.usd} />
         </ChartCard>
       </ChartVariant>
 
-      <ChartVariant title="Volumen vs. latencia" desc="Requests por mes (barras) frente a la latencia p95 (línea). Útil para ver si el volumen presiona la cola." code={C_REQ}>
-        <ChartCard title="Requests vs. p95 · 6 meses" value="694K req" delta="p95 1,010 ms" deltaTone="muted">
+      <ChartVariant title="Volume vs. latency" desc="Requests per month (bars) against p95 latency (line). Useful to see whether volume is pressuring the queue." code={C_REQ}>
+        <ChartCard title="Requests vs. p95 · 6 months" value="694K req" delta="p95 1,010 ms" deltaTone="muted">
           <ComboChart data={REQLAT} index="month" barSeries="Requests" lineSeries="p95"
             barColor="primary" lineColor="cyan" barFormatter={chartFmt.compact} lineFormatter={chartFmt.ms} />
         </ChartCard>

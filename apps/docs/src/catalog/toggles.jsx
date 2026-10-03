@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · toggles.jsx — switches (grupo "Formularios").
-   El switch de marca (pista que se pone verde, knob recessed) en simple +
-   tamaños, fila de ajuste con etiqueta y descripción, y con icono dentro del
-   knob / inline. Dominio musematic (auto-scaling, reintentos, mantenimiento).
+   Gntik UI · toggles.jsx — switches ("Forms" group).
+   The brand switch (track turns green, recessed knob) as simple + sizes,
+   a setting row with label and description, and with an icon inside the
+   knob / inline. Neutral fixtures (auto-scaling, retries, maintenance).
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
@@ -18,7 +18,7 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── Switch de marca ─────────────────────────────────────────────────────── */
+/* ── Brand switch ────────────────────────────────────────────────────────── */
 const SW = {
   sm: { track: 'h-[18px] w-8', knob: 'size-3.5', on: 'translate-x-[14px]', ic: 9 },
   md: { track: 'h-[22px] w-[40px]', knob: 'size-[18px]', on: 'translate-x-[18px]', ic: 11 },
@@ -38,10 +38,10 @@ const Switch = ({ on, onChange, size = 'md', disabled, icon }) => {
   );
 };
 
-/* hook: estado local por id */
+/* hook: local state by id */
 const useToggles = (init) => { const [on, set] = useState(init); return [on, (id) => set(o => ({ ...o, [id]: !o[id] }))]; };
 
-/* ── 1 · SIMPLE + tamaños + estados ──────────────────────────────────────── */
+/* ── 1 · SIMPLE + sizes + states ────────────────────────────────────────── */
 function SimpleToggles() {
   const [a, setA] = useState(true);
   const [b, setB] = useState(false);
@@ -64,12 +64,12 @@ function SimpleToggles() {
   );
 }
 
-/* ── 2 · FILA DE AJUSTE con etiqueta + descripción ───────────────────────── */
+/* ── 2 · SETTING ROW with label + description ────────────────────────────── */
 const SETTINGS = [
-  { id: 'autoscale', label: 'Auto-scaling del Fleet', desc: 'Provisiona réplicas según la cola de requests.' },
-  { id: 'retry', label: 'Reintentos automáticos', desc: 'Reintenta 3× con backoff antes de caer al fallback.' },
-  { id: 'anon', label: 'Anonimizar logs', desc: 'Redacta PII en la auditoría antes de persistir.' },
-  { id: 'maint', label: 'Modo mantenimiento', desc: 'Bloqueado: requiere rol de administrador del sistema.', locked: true },
+  { id: 'autoscale', label: 'Auto-scaling', desc: 'Provisions replicas based on the request queue.' },
+  { id: 'retry', label: 'Automatic retries', desc: 'Retries 3× with backoff before falling back.' },
+  { id: 'anon', label: 'Anonymize logs', desc: 'Redacts PII in the audit trail before persisting.' },
+  { id: 'maint', label: 'Maintenance mode', desc: 'Locked: requires the system administrator role.', locked: true },
 ];
 function SettingRows() {
   const [on, toggle] = useToggles({ autoscale: true, retry: true, anon: false, maint: false });
@@ -91,40 +91,40 @@ function SettingRows() {
   );
 }
 
-/* ── 3 · CON ICONO + INLINE ──────────────────────────────────────────────── */
+/* ── 3 · WITH ICON + INLINE ──────────────────────────────────────────────── */
 function IconInline() {
   const [hot, setHot] = useState(true);
   const [verbose, setVerbose] = useState(false);
   const [live, setLive] = useState(true);
   return (
     <div className="mx-auto w-full max-w-lg space-y-7">
-      {/* con icono dentro del knob */}
+      {/* with an icon inside the knob */}
       <div className="flex items-center justify-between rounded-md border border-border bg-background/40 px-4 py-3.5">
         <div>
-          <div className="text-[13px] font-medium text-foreground">Mantener caliente</div>
-          <p className="mt-0.5 text-[12.5px] text-muted-foreground">Evita el arranque en frío del agente.</p>
+          <div className="text-[13px] font-medium text-foreground">Keep warm</div>
+          <p className="mt-0.5 text-[12.5px] text-muted-foreground">Avoids the service's cold start.</p>
         </div>
         <Switch on={hot} icon onChange={() => setHot(v => !v)} />
       </div>
 
-      {/* inline con etiqueta a la izquierda */}
+      {/* inline with the label beside it */}
       <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
         <label className="flex cursor-pointer items-center gap-3" onClick={() => setVerbose(v => !v)}>
           <Switch size="sm" on={verbose} onChange={() => setVerbose(v => !v)} />
-          <span className="text-[13px] font-medium text-foreground">Trazas verbose</span>
+          <span className="text-[13px] font-medium text-foreground">Verbose traces</span>
         </label>
         <label className="flex cursor-pointer items-center gap-3" onClick={() => setLive(v => !v)}>
           <Switch size="sm" on={live} icon onChange={() => setLive(v => !v)} />
-          <span className="text-[13px] font-medium text-foreground">Stream en vivo</span>
+          <span className="text-[13px] font-medium text-foreground">Live stream</span>
         </label>
       </div>
-      <p className="text-[12px] text-muted-foreground">El knob muestra check/✕ con la prop <code className="font-mono text-[11px]">icon</code>; en tamaño sm sirve como toggle compacto junto a la etiqueta.</p>
+      <p className="text-[12px] text-muted-foreground">The knob shows check/✕ with the <code className="font-mono text-[11px]">icon</code> prop; at size sm it works as a compact toggle next to the label.</p>
     </div>
   );
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_SWITCH = `// Switch de marca — pista bg-primary/bg-secondary; knob recessed (bg-background)
+const CODE_SWITCH = `// Brand switch — bg-primary/bg-secondary track; recessed knob (bg-background)
 const SW = {
   sm: { track: 'h-[18px] w-8',     knob: 'size-3.5',    on: 'translate-x-[14px]' },
   md: { track: 'h-[22px] w-[40px]', knob: 'size-[18px]', on: 'translate-x-[18px]' },
@@ -144,7 +144,7 @@ const Switch = ({ on, onChange, size = 'md', disabled, icon }) => {
   );
 };`;
 
-const CODE_ROW = `// Fila de ajuste — etiqueta + descripción a la izquierda, switch a la derecha
+const CODE_ROW = `// Setting row — label + description on the left, switch on the right
 <div className="flex items-center justify-between gap-4 px-4 py-3.5">
   <div>
     <div className="flex items-center gap-2">
@@ -156,27 +156,27 @@ const CODE_ROW = `// Fila de ajuste — etiqueta + descripción a la izquierda, 
   <Switch on={on[s.id]} disabled={s.locked} onChange={() => toggle(s.id)} />
 </div>`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function TogglesSection() {
   return (
     <div>
-      <SectionHead kicker="Formularios" title="Toggles" status="done"
-        intro="El switch de marca para estados binarios: la pista se pone verde al activarse y el knob va recessed (bg-background) para leer bien sobre cualquier tema, incluido el de alto contraste. Aquí simple y en tres tamaños, como fila de ajuste con etiqueta y descripción, y con un check/✕ dentro del knob o en formato compacto junto a una etiqueta." />
+      <SectionHead kicker="Forms" title="Toggles" status="done"
+        intro="The brand switch for binary states: the track turns green when on and the knob is recessed (bg-background) so it reads well on any theme, including high contrast. Shown here simple and in three sizes, as a setting row with label and description, and with a check/✕ inside the knob or in a compact format next to a label." />
 
-      <Variant title="Simple, tamaños y estados"
-        desc="El switch suelto en sm · md · lg, más los estados off, on-disabled y off-disabled. role=switch y foco visible para accesibilidad."
+      <Variant title="Simple, sizes and states"
+        desc="The standalone switch in sm · md · lg, plus the off, on-disabled and off-disabled states. role=switch and visible focus for accessibility."
         code={CODE_SWITCH}>
         <SimpleToggles />
       </Variant>
 
-      <Variant title="Fila de ajuste"
-        desc="El uso más común: una lista dividida donde cada fila lleva etiqueta, descripción y el switch a la derecha. La fila bloqueada muestra candado y queda deshabilitada."
+      <Variant title="Setting row"
+        desc="The most common use: a divided list where each row has a label, a description and the switch on the right. The locked row shows a padlock and is disabled."
         code={CODE_ROW}>
         <SettingRows />
       </Variant>
 
-      <Variant title="Con icono e inline"
-        desc="El knob puede mostrar un check al activarse y una ✕ al apagarse (prop icon); en tamaño sm funciona como toggle compacto pegado a su etiqueta."
+      <Variant title="With icon and inline"
+        desc="The knob can show a check when on and an ✕ when off (icon prop); at size sm it works as a compact toggle next to its label."
         code={CODE_SWITCH}>
         <IconInline />
       </Variant>

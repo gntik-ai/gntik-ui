@@ -1,14 +1,14 @@
 /* ============================================================================
-   Gntik UI · list-containers.jsx — el chrome que envuelve una lista.
-   Misma fila (icono + nombre + meta + chevron) montada en cuatro contenedores:
-   a sangre, en card, en tarjetas separadas y en card con cabecera y footer.
-   Aquí lo que se enseña es el envoltorio, no la fila. Dominio musematic · tokens.
-   Variantes: a sangre · en card · tarjetas separadas · con cabecera y footer.
+   Gntik UI · list-containers.jsx — the chrome that wraps a list.
+   Same row (icon + name + meta + chevron) mounted in four containers:
+   flush, in a card, as separate cards and in a card with header and footer.
+   What's shown here is the wrapper, not the row. Neutral fixtures · tokens.
+   Variants: flush · in card · separate cards · with header and footer.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon } = window;
 
-/* ── envoltura de variante ───────────────────────────────────────────────── */
+/* ── variant wrapper ─────────────────────────────────────────────────────── */
 const Variant = ({ title, desc, code, surface = false, children }) => (
   <div className="mb-12">
     <div className="mb-3">
@@ -22,15 +22,15 @@ const Variant = ({ title, desc, code, surface = false, children }) => (
   </div>
 );
 
-/* ── datos: la misma fila en todos los contenedores ──────────────────────── */
+/* ── data: the same row in every container ───────────────────────────────── */
 const SPACES = [
-  { name: 'production', icon: 'box', meta: '12 agentes · 1.2M runs' },
-  { name: 'staging', icon: 'flask', meta: '6 agentes · 88k runs' },
-  { name: 'eu-residency', icon: 'shield', meta: '8 agentes · 640k runs' },
-  { name: 'sandbox', icon: 'bot', meta: '4 agentes · 12k runs' },
+  { name: 'production', icon: 'box', meta: '12 services · 1.2M runs' },
+  { name: 'staging', icon: 'flask', meta: '6 services · 88k runs' },
+  { name: 'eu-residency', icon: 'shield', meta: '8 services · 640k runs' },
+  { name: 'sandbox', icon: 'bot', meta: '4 services · 12k runs' },
 ];
 
-/* ── la fila reutilizable (el contenido es constante; cambia el contenedor) ── */
+/* ── the reusable row (content is constant; the container changes) ── */
 const RowInner = ({ s }) => (
   <>
     <span className="w-9 h-9 rounded-lg bg-primary/14 text-primary inline-flex items-center justify-center shrink-0"><Icon name={s.icon} size={17} /></span>
@@ -43,7 +43,7 @@ const RowInner = ({ s }) => (
 );
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_FLUSH = `// A sangre — ul dividida, sin borde ni fondo: ocupa el ancho del padre
+const CODE_FLUSH = `// Flush — divided ul, no border or background: takes the parent's width
 <ul role="list" className="divide-y divide-border">
   {items.map((s) => (
     <li key={s.name}>
@@ -54,7 +54,7 @@ const CODE_FLUSH = `// A sangre — ul dividida, sin borde ni fondo: ocupa el an
   ))}
 </ul>`;
 
-const CODE_CARD = `// En card — la lista dentro de un contenedor con borde y radio; filas a tope
+const CODE_CARD = `// In card — the list inside a bordered, rounded container; rows edge to edge
 <div className="rounded-xl border border-border bg-card overflow-hidden">
   <ul role="list" className="divide-y divide-border">
     {items.map((s) => (
@@ -67,7 +67,7 @@ const CODE_CARD = `// En card — la lista dentro de un contenedor con borde y r
   </ul>
 </div>`;
 
-const CODE_SEP = `// Tarjetas separadas — cada fila es su propia card; separadas por gap
+const CODE_SEP = `// Separate cards — each row is its own card, separated by a gap
 <ul role="list" className="flex flex-col gap-2.5">
   {items.map((s) => (
     <li key={s.name}>
@@ -78,7 +78,7 @@ const CODE_SEP = `// Tarjetas separadas — cada fila es su propia card; separad
   ))}
 </ul>`;
 
-const CODE_HEADFOOT = `// Con cabecera y footer — card con título + contador arriba y acción abajo
+const CODE_HEADFOOT = `// With header and footer — card with title + count on top and action below
 <div className="rounded-xl border border-border bg-card overflow-hidden">
   <div className="flex items-center justify-between px-4 py-3 border-b border-border">
     <h3 className="text-[13px] font-semibold text-foreground">Namespaces</h3>
@@ -86,21 +86,21 @@ const CODE_HEADFOOT = `// Con cabecera y footer — card con título + contador 
   </div>
   <ul role="list" className="divide-y divide-border">
     {items.map((s) => (
-      <li key={s.name}><a className="flex items-center gap-3 px-4 py-3 hover:bg-accent/40">{/* fila */}</a></li>
+      <li key={s.name}><a className="flex items-center gap-3 px-4 py-3 hover:bg-accent/40">{/* row */}</a></li>
     ))}
   </ul>
   <div className="border-t border-border px-4 py-2.5">
-    <a className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary">Ver todos <span aria-hidden>→</span></a>
+    <a className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary">View all <span aria-hidden>→</span></a>
   </div>
 </div>`;
 
 function ListContainersSection() {
   return (
     <div>
-      <SectionHead kicker="Listas" title="List containers" status="done"
-        intro="La misma fila — icono, nombre, meta y chevron — montada en cuatro envoltorios. Aquí no cambia el contenido del renglón sino su contenedor: a sangre para ocupar todo el ancho, en card cuando la lista necesita marco, en tarjetas separadas para darle peso a cada fila, o con cabecera y footer cuando es un panel con título y acción." />
+      <SectionHead kicker="Lists" title="List containers" status="done"
+        intro="The same row — icon, name, meta and chevron — mounted in four wrappers. What changes here is not the row content but its container: flush to take the full width, in a card when the list needs a frame, as separate cards to give each row weight, or with header and footer when it's a panel with a title and an action." />
 
-      <Variant title="A sangre" desc="Lista dividida sin borde ni fondo propio: hereda el ancho del contenedor padre. La opción más liviana, para dentro de una página o un drawer ya delimitado." code={CODE_FLUSH}>
+      <Variant title="Flush" desc="Divided list with no border or background of its own: inherits the width of the parent container. The lightest option, for use inside a page or an already framed drawer." code={CODE_FLUSH}>
         <ul role="list" className="divide-y divide-border px-1">
           {SPACES.map((s) => (
             <li key={s.name}>
@@ -110,7 +110,7 @@ function ListContainersSection() {
         </ul>
       </Variant>
 
-      <Variant title="En card" desc="La misma lista dentro de una card con borde y radio; las filas llegan a los bordes y se iluminan al hover. El contenedor por defecto para una lista autónoma." surface code={CODE_CARD}>
+      <Variant title="In card" desc="The same list inside a bordered, rounded card; rows reach the edges and highlight on hover. The default container for a standalone list." surface code={CODE_CARD}>
         <div className="mx-auto max-w-[460px] rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <ul role="list" className="divide-y divide-border">
             {SPACES.map((s) => (
@@ -122,7 +122,7 @@ function ListContainersSection() {
         </div>
       </Variant>
 
-      <Variant title="Tarjetas separadas" desc="Cada fila es su propia card con sombra plana, separadas por un gap. Da peso e independencia a cada elemento — útil cuando la fila es accionable por sí sola." surface code={CODE_SEP}>
+      <Variant title="Separate cards" desc="Each row is its own card with a flat shadow, separated by a gap. Gives each item weight and independence — useful when the row is actionable on its own." surface code={CODE_SEP}>
         <ul role="list" className="mx-auto max-w-[460px] flex flex-col gap-2.5">
           {SPACES.map((s) => (
             <li key={s.name}>
@@ -132,7 +132,7 @@ function ListContainersSection() {
         </ul>
       </Variant>
 
-      <Variant title="Con cabecera y footer" desc="La card crece a panel: una cabecera con título y contador, la lista en medio y un footer con la acción de ver todo. El contenedor para un módulo del dashboard." surface code={CODE_HEADFOOT}>
+      <Variant title="With header and footer" desc="The card grows into a panel: a header with title and count, the list in the middle and a footer with a view-all action. The container for a dashboard module." surface code={CODE_HEADFOOT}>
         <div className="mx-auto max-w-[460px] rounded-xl border border-border bg-card overflow-hidden shadow-sm">
           <div className="flex items-center justify-between px-4 py-3 border-b border-border">
             <h3 className="font-sans text-[13px] font-semibold text-foreground">Namespaces</h3>
@@ -146,7 +146,7 @@ function ListContainersSection() {
             ))}
           </ul>
           <div className="border-t border-border px-4 py-2.5">
-            <a href="#" onClick={e => e.preventDefault()} className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary hover:text-primary/80 transition-colors">Ver todos <span aria-hidden="true">→</span></a>
+            <a href="#" onClick={e => e.preventDefault()} className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary hover:text-primary/80 transition-colors">View all <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </Variant>

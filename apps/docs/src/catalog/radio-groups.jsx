@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · radio-groups.jsx — selección única (grupo "Formularios").
-   El radio de marca (anillo que se rellena de verde) en lista con descripción,
-   tarjetas apiladas con check, y controles segmentados / pills para valores
-   cortos. Dominio musematic (fallback, despliegue, intervalo, memoria).
+   Gntik UI · radio-groups.jsx — single selection ("Forms" group).
+   The brand radio (ring that fills green) as a list with descriptions,
+   stacked cards with a check, and segmented controls / pills for short
+   values. Neutral fixtures (fallback, deployment, interval, memory).
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
@@ -18,24 +18,24 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* radio de marca (mismo patrón que el plan-card de form-layouts) */
+/* brand radio (same pattern as the plan card in form-layouts) */
 const Radio = ({ checked }) => (
   <span className={"flex size-[18px] shrink-0 items-center justify-center rounded-full border transition-colors " + (checked ? 'border-primary bg-primary' : 'border-border bg-background')}>
     <span className={"size-1.5 rounded-full transition-colors " + (checked ? 'bg-primary-foreground' : 'bg-transparent')} />
   </span>
 );
 
-/* ── 1 · LISTA con descripción ───────────────────────────────────────────── */
+/* ── 1 · LIST with description ───────────────────────────────────────────── */
 const FALLBACKS = [
-  { id: 'retry', label: 'Reintentar 3×', desc: 'Vuelve a llamar al mismo modelo con backoff antes de fallar.' },
-  { id: 'cheap', label: 'Caer a modelo barato', desc: 'Conmuta a haiku-3.5 para no romper el SLA de latencia.' },
-  { id: 'human', label: 'Escalar a humano', desc: 'Abre un ticket al operador on-call y pausa el run.' },
+  { id: 'retry', label: 'Retry 3×', desc: 'Calls the same upstream again with backoff before failing.' },
+  { id: 'cheap', label: 'Fall back to a cheaper tier', desc: 'Switches to the lite tier to keep the latency SLA.' },
+  { id: 'human', label: 'Escalate to a human', desc: 'Opens a ticket for the on-call operator and pauses the run.' },
 ];
 function ListRadio() {
   const [v, setV] = useState('retry');
   return (
-    <fieldset className="mx-auto w-full max-w-lg" role="radiogroup" aria-label="Estrategia de fallback">
-      <legend className="text-[13px] font-semibold text-foreground">Estrategia de fallback</legend>
+    <fieldset className="mx-auto w-full max-w-lg" role="radiogroup" aria-label="Fallback strategy">
+      <legend className="text-[13px] font-semibold text-foreground">Fallback strategy</legend>
       <div className="mt-3 divide-y divide-border/60 overflow-hidden rounded-md border border-border bg-background/40">
         {FALLBACKS.map(f => {
           const on = v === f.id;
@@ -55,17 +55,17 @@ function ListRadio() {
   );
 }
 
-/* ── 2 · TARJETAS apiladas con check ─────────────────────────────────────── */
+/* ── 2 · STACKED CARDS with check ────────────────────────────────────────── */
 const DEPLOYS = [
-  { id: 'shared', name: 'Compartido', spec: 'CPU compartida · arranque en frío', price: 'Gratis' },
-  { id: 'dedicated', name: 'Dedicado', spec: '2 vCPU · siempre caliente', price: '$80/mes', tag: 'recomendado' },
-  { id: 'isolated', name: 'Aislado (VPC)', spec: 'Red privada · sin vecinos', price: '$240/mes' },
+  { id: 'shared', name: 'Shared', spec: 'Shared CPU · cold start', price: 'Free' },
+  { id: 'dedicated', name: 'Dedicated', spec: '2 vCPU · always warm', price: '$80/mo', tag: 'recommended' },
+  { id: 'isolated', name: 'Isolated (VPC)', spec: 'Private network · no neighbors', price: '$240/mo' },
 ];
 function CardRadio() {
   const [v, setV] = useState('dedicated');
   return (
-    <fieldset className="mx-auto w-full max-w-lg" role="radiogroup" aria-label="Modo de despliegue">
-      <legend className="mb-3 text-[13px] font-semibold text-foreground">Modo de despliegue</legend>
+    <fieldset className="mx-auto w-full max-w-lg" role="radiogroup" aria-label="Deployment mode">
+      <legend className="mb-3 text-[13px] font-semibold text-foreground">Deployment mode</legend>
       <div className="space-y-3">
         {DEPLOYS.map(d => {
           const on = v === d.id;
@@ -93,7 +93,7 @@ function CardRadio() {
   );
 }
 
-/* ── 3 · SEGMENTADO + PILLS ──────────────────────────────────────────────── */
+/* ── 3 · SEGMENTED + PILLS ───────────────────────────────────────────────── */
 function SegmentedRadio() {
   const [interval, setInterval] = useState('5m');
   const [mem, setMem] = useState('1 GB');
@@ -101,10 +101,10 @@ function SegmentedRadio() {
   const MEMS = ['512 MB', '1 GB', '2 GB', '4 GB'];
   return (
     <div className="mx-auto grid w-full max-w-2xl grid-cols-1 gap-8 sm:grid-cols-2">
-      {/* segmentado */}
+      {/* segmented */}
       <div>
-        <div className="mb-2.5 text-[13px] font-medium text-foreground">Intervalo de refresco</div>
-        <div role="radiogroup" aria-label="Intervalo" className="inline-flex rounded-md bg-secondary/70 p-0.5 shadow-sm">
+        <div className="mb-2.5 text-[13px] font-medium text-foreground">Refresh interval</div>
+        <div role="radiogroup" aria-label="Interval" className="inline-flex rounded-md bg-secondary/70 p-0.5 shadow-sm">
           {INTERVALS.map(o => {
             const on = interval === o;
             return (
@@ -114,13 +114,13 @@ function SegmentedRadio() {
             );
           })}
         </div>
-        <p className="mt-3 text-[12px] text-muted-foreground">Pista enmarcada, segmento activo elevado — para 2–4 valores cortos.</p>
+        <p className="mt-3 text-[12px] text-muted-foreground">Framed track, raised active segment — for 2–4 short values.</p>
       </div>
 
-      {/* pills con anillo */}
+      {/* pills with ring */}
       <div>
-        <div className="mb-2.5 text-[13px] font-medium text-foreground">Memoria por agente</div>
-        <div role="radiogroup" aria-label="Memoria" className="flex flex-wrap gap-2">
+        <div className="mb-2.5 text-[13px] font-medium text-foreground">Memory per instance</div>
+        <div role="radiogroup" aria-label="Memory" className="flex flex-wrap gap-2">
           {MEMS.map(o => {
             const on = mem === o;
             return (
@@ -132,14 +132,14 @@ function SegmentedRadio() {
             );
           })}
         </div>
-        <p className="mt-3 text-[12px] text-muted-foreground">Pills con borde; el activo toma el anillo verde y el tick.</p>
+        <p className="mt-3 text-[12px] text-muted-foreground">Bordered pills; the active one takes the green ring and the tick.</p>
       </div>
     </div>
   );
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_RADIO = `// Radio de marca — anillo que se rellena; el input va sr-only
+const CODE_RADIO = `// Brand radio — a ring that fills; the input is sr-only
 const Radio = ({ checked }) => (
   <span className={\`flex size-[18px] items-center justify-center rounded-full border \${
     checked ? 'border-primary bg-primary' : 'border-border bg-background'}\`}>
@@ -156,7 +156,7 @@ const Radio = ({ checked }) => (
   </span>
 </label>`;
 
-const CODE_CARD = `// Tarjeta apilada — el anillo de marca marca la elección, precio a la derecha
+const CODE_CARD = `// Stacked card — the brand ring marks the choice, price on the right
 <label className={\`flex items-center gap-3.5 rounded-md border bg-background px-4 py-3.5 cursor-pointer \${
   on ? 'border-primary/60 ring-2 ring-primary/20' : 'border-border hover:border-muted-foreground/40'}\`}>
   <input type="radio" name="dep" checked={on} onChange={pick} className="sr-only" />
@@ -165,7 +165,7 @@ const CODE_CARD = `// Tarjeta apilada — el anillo de marca marca la elección,
   <span className="font-semibold text-foreground">{price}</span>
 </label>`;
 
-const CODE_SEG = `// Segmentado — pista bg-secondary, segmento activo elevado (bg-card)
+const CODE_SEG = `// Segmented — bg-secondary track, raised active segment (bg-card)
 <div role="radiogroup" className="inline-flex rounded-md bg-secondary/70 p-0.5 shadow-sm">
   {opts.map((o) => (
     <button key={o} role="radio" aria-checked={v === o} onClick={() => setV(o)}
@@ -174,33 +174,33 @@ const CODE_SEG = `// Segmentado — pista bg-secondary, segmento activo elevado 
   ))}
 </div>
 
-// Pills con anillo — el activo toma border-primary + ring + tick
+// Pills with ring — the active one takes border-primary + ring + tick
 <button className={\`h-9 rounded-md border px-3 text-[13px] font-medium \${
   on ? 'border-primary/60 bg-primary/10 ring-1 ring-primary/25' : 'border-border bg-background text-muted-foreground'}\`}>
   {on && <CheckIcon className="text-primary" />}{label}
 </button>`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function RadioGroupsSection() {
   return (
     <div>
-      <SectionHead kicker="Formularios" title="Radio groups" status="done"
-        intro="Selección única con el radio de marca: un anillo que se rellena de verde con un punto interior, sobre el input nativo oculto. Tres densidades — una lista con descripción para estrategias, tarjetas apiladas con precio para el modo de despliegue, y controles compactos (segmentado y pills) para valores cortos como el intervalo o la memoria." />
+      <SectionHead kicker="Forms" title="Radio groups" status="done"
+        intro="Single selection with the brand radio: a ring that fills green with an inner dot, over the hidden native input. Three densities — a list with descriptions for strategies, stacked cards with prices for the deployment mode, and compact controls (segmented and pills) for short values like the interval or memory." />
 
-      <Variant title="Lista con descripción"
-        desc="El caso por defecto: radio arriba a la izquierda, etiqueta y una línea que explica la opción. Para decisiones que necesitan contexto."
+      <Variant title="List with description"
+        desc="The default case: radio at the top left, a label and a line explaining the option. For decisions that need context."
         code={CODE_RADIO}>
         <ListRadio />
       </Variant>
 
-      <Variant title="Tarjetas apiladas"
-        desc="Cada opción es una tarjeta con spec y precio; la elegida toma el anillo de marca. El patrón para planes, tamaños o modos de despliegue."
+      <Variant title="Stacked cards"
+        desc="Each option is a card with spec and price; the chosen one takes the brand ring. The pattern for plans, sizes or deployment modes."
         code={CODE_CARD}>
         <CardRadio />
       </Variant>
 
-      <Variant title="Segmentado y pills"
-        desc="Para 2–4 valores cortos: un control segmentado con la pista enmarcada y el segmento activo elevado, y pills con borde que toman el anillo verde al seleccionarse."
+      <Variant title="Segmented and pills"
+        desc="For 2–4 short values: a segmented control with a framed track and a raised active segment, and bordered pills that take the green ring when selected."
         code={CODE_SEG}>
         <SegmentedRadio />
       </Variant>

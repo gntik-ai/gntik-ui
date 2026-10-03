@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · section-headings.jsx — cabeceras de bloque dentro del contenido.
-   Mismo sistema que las page headings: rótulo verde mono (opcional) + título
-   en blanco + divisor inferior. Sin iconos. Dominio musematic · tokens.
-   Variantes: simple · con acciones · con rótulo · con contador.
+   Gntik UI · section-headings.jsx — block headings inside the content.
+   Same system as page headings: green mono kicker (optional) + title
+   in foreground + bottom divider. No icons. Neutral fixtures · tokens.
+   Variants: simple · with actions · with kicker · with count.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock } = window;
@@ -27,13 +27,13 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-const CODE_SIMPLE = `// Simple — título + descripción, con divisor inferior
+const CODE_SIMPLE = `// Simple — title + description, with bottom divider
 <div className="pb-3 border-b border-border">
   <h2 className="text-[17px] font-semibold tracking-tight text-foreground">Recent runs</h2>
-  <p className="mt-1 text-[13px] text-muted-foreground">Last 24 hours across every agent in this namespace.</p>
+  <p className="mt-1 text-[13px] text-muted-foreground">Last 24 hours across every service in this project.</p>
 </div>`;
 
-const CODE_ACTIONS = `// Con acciones — título + descripción a la izquierda, acción a la derecha
+const CODE_ACTIONS = `// With actions — title + description on the left, action on the right
 <div className="flex items-end justify-between gap-4 flex-wrap pb-3 border-b border-border">
   <div>
     <h2 className="text-[17px] font-semibold tracking-tight text-foreground">Policies</h2>
@@ -42,7 +42,7 @@ const CODE_ACTIONS = `// Con acciones — título + descripción a la izquierda,
   <button className="h-8 px-3 rounded-md border border-border bg-card text-[12.5px] font-semibold">Add policy</button>
 </div>`;
 
-const CODE_COUNT = `// Con contador — título + total + acción de texto
+const CODE_COUNT = `// With count — title + total + text action
 <div className="flex items-center justify-between gap-4 pb-3 border-b border-border">
   <div className="flex items-center gap-2.5">
     <h2 className="text-[17px] font-semibold tracking-tight text-foreground">Members</h2>
@@ -55,18 +55,18 @@ function SectionHeadingsSection() {
   return (
     <div>
       <SectionHead kicker="Headings" title="Section headings" status="done"
-        intro="Cabeceras de bloque dentro de una vista: dividen el contenido en bloques (Health, Recent runs, Budget…). A diferencia de la page heading no llevan rótulo verde —el verde marca la ubicación de la página— ni repiten el nombre de la página o de la tab activa. Título en blanco a menor escala, sin iconos." />
+        intro="Block headings inside a view: they split the content into blocks (Health, Recent runs, Budget…). Unlike the page heading they carry no green kicker —green marks the page location— and they don't repeat the page name or the active tab. Foreground title at a smaller scale, no icons." />
 
       {/* 1 · Simple */}
-      <Variant title="Simple" desc="Título y descripción con un divisor inferior. El separador de bloque por defecto." code={CODE_SIMPLE}>
+      <Variant title="Simple" desc="Title and description with a bottom divider. The default block separator." code={CODE_SIMPLE}>
         <div className="pb-3 border-b border-border">
           <h2 className="text-[17px] font-semibold tracking-tight text-foreground">Recent runs</h2>
-          <p className="mt-1 text-[13px] text-muted-foreground">Last 24 hours across every agent in this namespace.</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">Last 24 hours across every service in this project.</p>
         </div>
       </Variant>
 
-      {/* 2 · Con acciones */}
-      <Variant title="Con acciones" desc="Título y descripción a la izquierda; una acción de bloque a la derecha." code={CODE_ACTIONS}>
+      {/* 2 · With actions */}
+      <Variant title="With actions" desc="Title and description on the left; a block action on the right." code={CODE_ACTIONS}>
         <div className="flex items-end justify-between gap-4 flex-wrap pb-3 border-b border-border">
           <div>
             <h2 className="text-[17px] font-semibold tracking-tight text-foreground">Policies</h2>
@@ -76,8 +76,8 @@ function SectionHeadingsSection() {
         </div>
       </Variant>
 
-      {/* 3 · Con contador */}
-      <Variant title="Con contador" desc="Título con el total al lado y una acción de texto. Para cabeceras de lista o colección." code={CODE_COUNT}>
+      {/* 3 · With count */}
+      <Variant title="With count" desc="Title with the total beside it and a text action. For list or collection headers." code={CODE_COUNT}>
         <div className="flex items-center justify-between gap-4 pb-3 border-b border-border">
           <div className="flex items-center gap-2.5">
             <h2 className="text-[17px] font-semibold tracking-tight text-foreground">Members</h2>

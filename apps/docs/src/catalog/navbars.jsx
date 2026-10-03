@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · navbars.jsx — barras superiores (grupo "Navegación").
-   Barra de producto (nav horizontal + ⌘K + perfil), barra centrada en el
-   buscador, y barra con menú de overflow ("Más ▾") cuando hay muchos enlaces.
-   Chrome de marca; el enlace activo va en bg-accent. Dominio musematic, tokens.
+   Gntik UI · navbars.jsx — top bars ("Navigation" group).
+   Product bar (horizontal nav + ⌘K + profile), search-centered bar, and a
+   bar with an overflow menu ("More ▾") when there are many links.
+   Brand chrome; the active link is bg-accent. Neutral fixtures, tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, Wordmark, useState, useRef, useClickOutside } = window;
@@ -28,21 +28,21 @@ const NavLink = ({ icon, label, on, onClick }) => (
 
 const CmdK = () => (
   <button className="hidden sm:inline-flex items-center gap-2 h-9 pl-3 pr-2 rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:text-foreground">
-    <Icon name="search" size={15} /><span className="text-[12.5px]">Buscar</span>
+    <Icon name="search" size={15} /><span className="text-[12.5px]">Search</span>
     <span className="font-mono text-[10.5px] font-semibold rounded border border-border px-1.5 py-0.5 leading-none">⌘K</span>
   </button>
 );
 const BellBtn = () => (
-  <button aria-label="Notificaciones" className="relative grid size-9 place-items-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:text-foreground">
+  <button aria-label="Notifications" className="relative grid size-9 place-items-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:text-foreground">
     <span className="absolute top-1.5 right-1.5 size-1.5 rounded-full bg-destructive" /><Icon name="bell" size={17} />
   </button>
 );
-const Avatar = () => <button aria-label="Perfil" className="grid size-9 place-items-center rounded-lg bg-primary text-primary-foreground text-[11.5px] font-bold">MR</button>;
+const Avatar = () => <button aria-label="Profile" className="grid size-9 place-items-center rounded-lg bg-primary text-primary-foreground text-[11.5px] font-bold">MR</button>;
 
-/* ── 1 · BARRA DE PRODUCTO ───────────────────────────────────────────────── */
-const PRIMARY = [['home', 'Home'], ['bot', 'Agents'], ['net', 'Fleet'], ['coin', 'Costs'], ['shield', 'Policies']];
+/* ── 1 · PRODUCT BAR ────────────────────────────────────────────────────── */
+const PRIMARY = [['home', 'Home'], ['bot', 'Services'], ['net', 'Deployments'], ['coin', 'Costs'], ['shield', 'Policies']];
 function ProductBar() {
-  const [active, setActive] = useState('Fleet');
+  const [active, setActive] = useState('Deployments');
   return (
     <div className="w-full rounded-xl border border-border bg-chrome shadow-sm">
       <div className="flex items-center gap-1 h-15 px-3" style={{ height: 60 }}>
@@ -58,7 +58,7 @@ function ProductBar() {
   );
 }
 
-/* ── 2 · CENTRADA EN EL BUSCADOR ─────────────────────────────────────────── */
+/* ── 2 · SEARCH-CENTERED ────────────────────────────────────────────────── */
 function SearchBar() {
   const [q, setQ] = useState('');
   return (
@@ -67,14 +67,14 @@ function SearchBar() {
         <div className="shrink-0"><Wordmark s={24} fs={16} /></div>
         <label className="flex items-center gap-2.5 flex-1 min-w-0 h-10 px-3.5 rounded-lg border border-border bg-background/60 text-muted-foreground focus-within:border-ring/70 transition-colors">
           <Icon name="search" size={16} className="shrink-0" />
-          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Buscar agentes, runs, policies…"
+          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search services, runs, policies…"
             className="flex-1 min-w-0 bg-transparent outline-none text-[13px] text-foreground placeholder:text-muted-foreground/70" />
           {q
             ? <button onClick={() => setQ('')} className="grid place-items-center size-5 rounded text-muted-foreground hover:text-foreground"><Icon name="x" size={14} /></button>
             : <span className="font-mono text-[10.5px] font-semibold rounded border border-border px-1.5 py-0.5 leading-none">⌘K</span>}
         </label>
         <div className="flex items-center gap-2 shrink-0">
-          <button className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-primary text-primary-foreground text-[13px] font-semibold transition-colors hover:bg-primary/90"><Icon name="plus" size={15} />Deploy agent</button>
+          <button className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-primary text-primary-foreground text-[13px] font-semibold transition-colors hover:bg-primary/90"><Icon name="plus" size={15} />New deployment</button>
           <Avatar />
         </div>
       </div>
@@ -82,12 +82,12 @@ function SearchBar() {
   );
 }
 
-/* ── 3 · CON MENÚ DE OVERFLOW ────────────────────────────────────────────── */
-const ALL = [['home', 'Home'], ['bot', 'Agents'], ['net', 'Fleet'], ['coin', 'Costs'], ['shield', 'Policies'], ['line', 'Analytics'], ['flow', 'Workflows'], ['cog', 'Admin']];
+/* ── 3 · WITH OVERFLOW MENU ─────────────────────────────────────────────── */
+const ALL = [['home', 'Home'], ['bot', 'Services'], ['net', 'Deployments'], ['coin', 'Costs'], ['shield', 'Policies'], ['line', 'Analytics'], ['flow', 'Workflows'], ['cog', 'Admin']];
 function OverflowBar() {
   const VISIBLE = 4;
   const head = ALL.slice(0, VISIBLE), extra = ALL.slice(VISIBLE);
-  const [active, setActive] = useState('Fleet');
+  const [active, setActive] = useState('Deployments');
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   useClickOutside(ref, () => setOpen(false), open);
@@ -102,7 +102,7 @@ function OverflowBar() {
           <div ref={ref} className="relative">
             <button onClick={() => setOpen(o => !o)} aria-expanded={open}
               className={"inline-flex items-center gap-1.5 h-9 px-3 rounded-lg text-[13px] transition-colors " + (inExtra ? 'bg-accent text-accent-foreground font-semibold' : 'text-muted-foreground font-medium hover:text-foreground hover:bg-accent/45')}>
-              Más<Icon name="chevron" size={14} className={"transition-transform " + (open ? 'rotate-180' : '')} />
+              More<Icon name="chevron" size={14} className={"transition-transform " + (open ? 'rotate-180' : '')} />
             </button>
             {open && (
               <div className="absolute left-0 top-[calc(100%+8px)] z-50 w-52 rounded-[10px] border border-border bg-popover p-1.5 shadow-md">
@@ -124,19 +124,19 @@ function OverflowBar() {
   );
 }
 
-/* ── 4 · MEGA-MENÚ (paneles al hover) ────────────────────────────────────── */
+/* ── 4 · MEGA MENU (panels on hover) ─────────────────────────────────────── */
 const FEATURE = [
-  ['Introduction', 'Qué es musematic y cómo encaja en tu stack de agentes.'],
-  ['Agents', 'Crea, versiona y despliega agentes desde una plantilla.'],
-  ['Workflows', 'Orquesta varios agentes en un flujo con pasos y ramas.'],
+  ['Introduction', 'What the platform is and how it fits into your stack.'],
+  ['Services', 'Create, version and deploy services from a template.'],
+  ['Workflows', 'Orchestrate several services in a flow with steps and branches.'],
 ];
 const RESOURCES = [
-  ['net', 'Fleet', 'Todos tus agentes desplegados, su estado y su consumo en un sitio.'],
-  ['coin', 'Costs', 'Gasto por agente, presupuestos y alertas cuando se acercan al límite.'],
-  ['shield', 'Policies', 'Reglas de gobierno: redacción de PII, topes de gasto, allowlists.'],
-  ['line', 'Analytics', 'Volumen, latencia p95 y tendencias de uso por periodo.'],
-  ['book', 'Knowledge', 'Las fuentes que alimentan las respuestas de tus agentes.'],
-  ['flask', 'Evaluation', 'Test sets y scorecards para validar cada cambio antes de salir.'],
+  ['net', 'Deployments', 'Everything you have deployed, its status and usage in one place.'],
+  ['coin', 'Costs', 'Spend per service, budgets and alerts as they near the limit.'],
+  ['shield', 'Policies', 'Governance rules: PII redaction, spend caps, allowlists.'],
+  ['line', 'Analytics', 'Volume, p95 latency and usage trends by period.'],
+  ['book', 'Knowledge', 'The sources and docs your team relies on.'],
+  ['flask', 'Evaluation', 'Test sets and scorecards to validate every change before it ships.'],
 ];
 const STATUS = [['inbox', 'Backlog'], ['clock', 'In progress'], ['check', 'Done']];
 const MENUS = [
@@ -193,8 +193,8 @@ function MegaBar() {
                 <Panel k="platform" w={520}>
                   <div className="grid gap-2.5" style={{ gridTemplateColumns: '.9fr 1.1fr' }}>
                     <a className="flex flex-col justify-end rounded-lg bg-primary p-5 text-primary-foreground cursor-pointer no-underline">
-                      <Wordmark s={26} fs={17} label="musematic" />
-                      <p className="text-[12.5px] leading-snug mt-3 text-primary-foreground/90">La plataforma para desplegar, gobernar y observar tu flota de agentes.</p>
+                      <Wordmark s={26} fs={17} />
+                      <p className="text-[12.5px] leading-snug mt-3 text-primary-foreground/90">The platform to deploy, govern and observe your services.</p>
                     </a>
                     <div className="flex flex-col gap-0.5">
                       {FEATURE.map(([t, d]) => <Row key={t} title={t} desc={d} />)}
@@ -233,7 +233,7 @@ function MegaBar() {
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_BAR = `// Navbar de producto — chrome + nav horizontal + ⌘K + perfil
+const CODE_BAR = `// Product navbar — chrome + horizontal nav + ⌘K + profile
 <header className="flex items-center gap-1 h-[60px] px-3 rounded-xl border border-border bg-chrome shadow-sm">
   <Wordmark />
   <span className="mx-2 h-6 w-px bg-border/70" />
@@ -251,12 +251,12 @@ const CODE_BAR = `// Navbar de producto — chrome + nav horizontal + ⌘K + per
   <CmdKButton /> <NotificationsButton /> <Avatar />
 </header>`;
 
-const CODE_OVERFLOW = `// Overflow — los enlaces que no caben se pliegan en un menú "Más ▾"
+const CODE_OVERFLOW = `// Overflow — links that don't fit fold into a "More ▾" menu
 const VISIBLE = 4;
 const head = links.slice(0, VISIBLE), extra = links.slice(VISIBLE);
-// … head como botones; extra dentro de un Dropdown con cierre al clic fuera (useClickOutside)`;
+// … head as buttons; extra inside a Dropdown that closes on outside click (useClickOutside)`;
 
-const CODE_MEGA = `// Mega-menú — triggers que abren un panel al hover (cierre con retardo)
+const CODE_MEGA = `// Mega menu — triggers that open a panel on hover (delayed close)
 const [open, setOpen] = useState(null);
 const closeT = useRef(null);
 const enter = k => { clearTimeout(closeT.current); setOpen(k); };
@@ -274,7 +274,7 @@ const leave = () => { closeT.current = setTimeout(() => setOpen(null), 110); };
       {open === m.key && (
         <div className="absolute left-0 top-[calc(100%+10px)] z-50 rounded-xl border border-border
                         bg-popover p-2.5 shadow-md" style={{ width: m.width }}>
-          {/* featured card (bg-primary) · grid de links · lista con icono */}
+          {/* featured card (bg-primary) · link grid · icon list */}
         </div>
       )}
     </div>
@@ -284,28 +284,28 @@ const leave = () => { closeT.current = setTimeout(() => setOpen(null), 110); };
 function NavbarsSection() {
   return (
     <div>
-      <SectionHead kicker="Navegación" title="Navbars" status="done"
-        intro="Barras superiores para layouts de navegación horizontal: la barra de producto con su nav, el ⌘K y el perfil; la barra centrada en un buscador con CTA; y la barra que pliega los enlaces sobrantes en un menú “Más”. Chrome de marca y el enlace activo en bg-accent." />
+      <SectionHead kicker="Navigation" title="Navbars" status="done"
+        intro="Top bars for horizontal navigation layouts: the product bar with its nav, ⌘K and profile; the bar centered on a search field with a CTA; and the bar that folds extra links into a “More” menu. Brand chrome with the active link in bg-accent." />
 
-      <Variant title="Barra de producto"
-        desc="Wordmark, navegación horizontal con estado activo, y el clúster de la derecha (⌘K, notificaciones, perfil). Pulsa un enlace para cambiar el activo."
+      <Variant title="Product bar"
+        desc="Wordmark, horizontal navigation with active state, and the right-hand cluster (⌘K, notifications, profile). Click a link to change the active one."
         code={CODE_BAR}>
         <ProductBar />
       </Variant>
 
-      <Variant title="Centrada en el buscador"
-        desc="Cuando buscar es la acción principal: un input que ocupa el centro con su atajo ⌘K, y la acción primaria a la derecha. Escribe para ver el botón de limpiar.">
+      <Variant title="Search-centered"
+        desc="When search is the main action: an input that takes the center with its ⌘K shortcut, and the primary action on the right. Type to see the clear button.">
         <SearchBar />
       </Variant>
 
-      <Variant title="Mega-menú (paneles al hover)"
-        desc="Para navegación rica: cada sección abre al hover un panel — una card destacada, una rejilla de recursos con descripción, o una lista con iconos. “Docs” es un enlace plano sin panel. Pasa el ratón por encima."
+      <Variant title="Mega menu (panels on hover)"
+        desc="For rich navigation: each section opens a panel on hover — a featured card, a grid of resources with descriptions, or an icon list. “Docs” is a plain link with no panel. Hover over it."
         code={CODE_MEGA}>
         <MegaBar />
       </Variant>
 
-      <Variant title="Con menú de overflow"
-        desc="Para muchas secciones: los primeros enlaces quedan visibles y el resto se pliegan en “Más ▾”. Si el activo vive dentro del menú, el disparador se resalta."
+      <Variant title="With overflow menu"
+        desc="For many sections: the first links stay visible and the rest fold into “More ▾”. If the active link lives inside the menu, the trigger is highlighted."
         code={CODE_OVERFLOW}>
         <OverflowBar />
       </Variant>

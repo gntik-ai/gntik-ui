@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · catalog.jsx — marco del catálogo.
-   Sidebar (nav desde REGISTRY con estado) + topbar (theme switch) + router
-   (hash + localStorage). Expone window.__goto y window.__setTheme.
-   Las secciones pendientes muestran un placeholder con su alcance previsto.
+   Gntik UI · catalog.jsx — catalog frame.
+   Sidebar (nav from REGISTRY with status) + topbar (theme switch) + router
+   (hash + localStorage). Exposes window.__goto and window.__setTheme.
+   Pending sections show a placeholder with their planned scope.
    ============================================================================ */
 const { Icon, LogoMark, StatusTag, REGISTRY, regFlat, regFind, regCounts, useState, useEffect, useRef } = window;
 
@@ -37,15 +37,15 @@ function Pending({ item }) {
 
       <div className="mt-8 rounded-xl border border-dashed border-border bg-card/40 px-8 py-14 flex flex-col items-center text-center">
         <span className="w-14 h-14 rounded-xl bg-accent text-accent-foreground flex items-center justify-center mb-4"><Icon name={item.icon} size={24} /></span>
-        <div className="font-sans font-semibold text-[15px] text-foreground">Próximamente</div>
+        <div className="font-sans font-semibold text-[15px] text-foreground">Coming soon</div>
         <p className="font-sans text-[13.5px] text-muted-foreground mt-1.5 max-w-sm" style={{ textWrap: 'pretty' }}>
-          Este componente entra en una de las siguientes tandas. Avísame si quieres priorizarlo.
+          This component lands in one of the next batches. Let us know if you want it prioritised.
         </p>
       </div>
 
       {siblings && (
         <div className="mt-10">
-          <div className="font-mono text-[11px] tracking-[0.16em] uppercase text-muted-foreground mb-3">Resto del grupo · {siblings.group}</div>
+          <div className="font-mono text-[11px] tracking-[0.16em] uppercase text-muted-foreground mb-3">Rest of the group · {siblings.group}</div>
           <div className="flex flex-wrap gap-2">
             {siblings.items.map(s => (
               <button key={s.id} onClick={() => window.__goto(s.id)}
@@ -113,7 +113,7 @@ function CatalogShell() {
           ))}
         </nav>
         <div className="m-2.5 p-3 rounded-[10px] bg-card border border-border">
-          <div className="flex items-center justify-between mb-2"><span className="font-sans font-semibold text-[12px]">Progreso</span><span className="font-mono text-[10.5px] text-muted-foreground">{c.done}/{c.total}</span></div>
+          <div className="flex items-center justify-between mb-2"><span className="font-sans font-semibold text-[12px]">Progress</span><span className="font-mono text-[10.5px] text-muted-foreground">{c.done}/{c.total}</span></div>
           <div className="h-1.5 rounded-full bg-secondary overflow-hidden"><div className="h-full bg-primary" style={{ width: `${(c.done / c.total) * 100}%` }} /></div>
         </div>
       </aside>
@@ -130,7 +130,7 @@ function CatalogShell() {
         </header>
         <main ref={mainRef} className="flex-1 overflow-y-auto">
           <div className="max-w-[1120px] mx-auto px-6 sm:px-10 py-12">
-            {Section ? <Section /> : item ? <Pending item={item} /> : <div className="text-muted-foreground">Sección no encontrada.</div>}
+            {Section ? <Section /> : item ? <Pending item={item} /> : <div className="text-muted-foreground">Section not found.</div>}
           </div>
         </main>
       </div>

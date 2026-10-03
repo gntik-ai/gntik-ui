@@ -1,14 +1,14 @@
 /* ============================================================================
-   Gntik UI · tables.jsx — tabla densa con estado, orden y selección.
-   La tabla del Fleet: agentes en filas, columnas de modelo, región, estado,
-   coste y último run. Cabeceras ordenables (clic), selección con checkbox +
-   barra de acciones en bloque, y menú de acciones por fila. Dominio musematic ·
-   tokens. Variantes: simple · ordenable · con selección · con acciones de fila.
+   Gntik UI · tables.jsx — dense table with status, sorting and selection.
+   The services table: services as rows, columns for runtime, region, status,
+   cost and last run. Sortable headers (click), checkbox selection + bulk
+   action bar, and a per-row actions menu. Neutral fixtures · tokens.
+   Variants: simple · sortable · with selection · with row actions.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
 
-/* ── pill de estado ──────────────────────────────────────────────────────── */
+/* ── status pill ─────────────────────────────────────────────────────────── */
 const TONES = {
   running: 'bg-primary/14 text-primary',
   paused: 'bg-muted-foreground/16 text-muted-foreground',
@@ -21,7 +21,7 @@ const Pill = ({ tone = 'running', children }) => (
   </span>
 );
 
-/* ── checkbox de marca (input nativo estilizado) ─────────────────────────── */
+/* ── brand checkbox (styled native input) ───────────────────────────────── */
 const Check = ({ checked, indeterminate, onChange }) => (
   <span className="relative inline-flex items-center justify-center w-[18px] h-[18px]">
     <input type="checkbox" checked={checked} ref={el => el && (el.indeterminate = !!indeterminate)} onChange={onChange}
@@ -32,7 +32,7 @@ const Check = ({ checked, indeterminate, onChange }) => (
   </span>
 );
 
-/* ── envoltura de variante ───────────────────────────────────────────────── */
+/* ── variant wrapper ────────────────────────────────────────────────────── */
 const Variant = ({ title, desc, code, children }) => (
   <div className="mb-12">
     <div className="mb-3">
@@ -44,20 +44,20 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── datos del fleet ─────────────────────────────────────────────────────── */
+/* ── services data ──────────────────────────────────────────────────────── */
 const FLEET = [
-  { id: 1, name: 'support-triage', model: 'sonnet-4', region: 'eu-west-1', tone: 'running', state: 'Running', cost: 412.8, runs: 18204, last: 'hace 2 min' },
-  { id: 2, name: 'billing-bot', model: 'haiku-4', region: 'us-east-1', tone: 'running', state: 'Running', cost: 88.4, runs: 9442, last: 'hace 5 min' },
-  { id: 3, name: 'data-enricher', model: 'sonnet-4', region: 'eu-west-1', tone: 'degraded', state: 'Degraded', cost: 1204.1, runs: 22931, last: 'hace 1 h' },
-  { id: 4, name: 'churn-watch', model: 'haiku-4', region: 'ap-south-1', tone: 'paused', state: 'Paused', cost: 0, runs: 0, last: 'hace 2 d' },
-  { id: 5, name: 'lead-router', model: 'sonnet-4', region: 'us-east-1', tone: 'running', state: 'Running', cost: 233.5, runs: 7188, last: 'hace 11 min' },
-  { id: 6, name: 'fraud-scan', model: 'opus-4', region: 'eu-west-1', tone: 'failed', state: 'Failed', cost: 51.2, runs: 1102, last: 'hace 3 h' },
+  { id: 1, name: 'support-triage', model: 'node-24', region: 'eu-west-1', tone: 'running', state: 'Running', cost: 412.8, runs: 18204, last: '2 min ago' },
+  { id: 2, name: 'billing-api', model: 'go-1.24', region: 'us-east-1', tone: 'running', state: 'Running', cost: 88.4, runs: 9442, last: '5 min ago' },
+  { id: 3, name: 'data-enricher', model: 'python-3.13', region: 'eu-west-1', tone: 'degraded', state: 'Degraded', cost: 1204.1, runs: 22931, last: '1 h ago' },
+  { id: 4, name: 'churn-watch', model: 'go-1.24', region: 'ap-south-1', tone: 'paused', state: 'Paused', cost: 0, runs: 0, last: '2 d ago' },
+  { id: 5, name: 'lead-router', model: 'node-24', region: 'us-east-1', tone: 'running', state: 'Running', cost: 233.5, runs: 7188, last: '11 min ago' },
+  { id: 6, name: 'fraud-scan', model: 'rust-1.85', region: 'eu-west-1', tone: 'failed', state: 'Failed', cost: 51.2, runs: 1102, last: '3 h ago' },
 ];
 
 const money = (n) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const fmt = (n) => n.toLocaleString('en-US');
 
-/* ── celdas comunes ──────────────────────────────────────────────────────── */
+/* ── shared cells ───────────────────────────────────────────────────────── */
 const Th = ({ children, className = '' }) => (
   <th className={"text-left font-sans font-medium text-[11.5px] tracking-wide uppercase text-muted-foreground px-4 h-10 whitespace-nowrap " + className}>{children}</th>
 );
@@ -67,7 +67,7 @@ const NameCell = ({ name, model }) => (
       <span className="w-8 h-8 rounded-lg bg-primary/14 text-primary inline-flex items-center justify-center shrink-0"><Icon name="bot" size={16} /></span>
       <div>
         <div className="font-sans font-semibold text-[13px] text-foreground">{name}</div>
-        <div className="font-mono text-[11px] text-muted-foreground">claude-{model}</div>
+        <div className="font-mono text-[11px] text-muted-foreground">{model}</div>
       </div>
     </div>
   </td>
@@ -78,7 +78,7 @@ function SimpleTable() {
   return (
     <table className="w-full border-collapse">
       <thead><tr className="border-b border-border bg-secondary/30">
-        <Th>Agente</Th><Th>Región</Th><Th>Estado</Th><Th className="text-right">Coste 30 d</Th><Th className="text-right">Último run</Th>
+        <Th>Service</Th><Th>Region</Th><Th>Status</Th><Th className="text-right">Cost 30 d</Th><Th className="text-right">Last run</Th>
       </tr></thead>
       <tbody className="divide-y divide-border">
         {FLEET.slice(0, 5).map((a) => (
@@ -95,7 +95,7 @@ function SimpleTable() {
   );
 }
 
-/* ── 2 · Ordenable ───────────────────────────────────────────────────────── */
+/* ── 2 · Sortable ────────────────────────────────────────────────────────── */
 function SortableTable() {
   const [sort, setSort] = useState({ key: 'cost', dir: 'desc' });
   const click = (key) => setSort(s => s.key === key ? { key, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { key, dir: 'asc' });
@@ -118,8 +118,8 @@ function SortableTable() {
   return (
     <table className="w-full border-collapse">
       <thead><tr className="border-b border-border bg-secondary/30">
-        <SortTh k="name">Agente</SortTh><SortTh k="region">Región</SortTh><SortTh k="state">Estado</SortTh>
-        <SortTh k="runs" align="right">Runs</SortTh><SortTh k="cost" align="right">Coste 30 d</SortTh>
+        <SortTh k="name">Service</SortTh><SortTh k="region">Region</SortTh><SortTh k="state">Status</SortTh>
+        <SortTh k="runs" align="right">Runs</SortTh><SortTh k="cost" align="right">Cost 30 d</SortTh>
       </tr></thead>
       <tbody className="divide-y divide-border">
         {rows.map((a) => (
@@ -136,7 +136,7 @@ function SortableTable() {
   );
 }
 
-/* ── 3 · Con selección + barra de acciones en bloque ─────────────────────── */
+/* ── 3 · With selection + bulk action bar ───────────────────────────────── */
 function SelectableTable() {
   const [sel, setSel] = useState(() => new Set([1, 3]));
   const all = FLEET.length, n = sel.size;
@@ -144,24 +144,24 @@ function SelectableTable() {
   const toggleAll = () => setSel(s => s.size === all ? new Set() : new Set(FLEET.map(a => a.id)));
   return (
     <div className="relative">
-      {/* barra de acciones en bloque (aparece con selección) */}
+      {/* bulk action bar (appears with a selection) */}
       <div className={"flex items-center gap-3 px-4 h-12 border-b border-border transition-colors " + (n ? 'bg-primary/8' : 'bg-secondary/30')}>
         {n > 0 ? (
           <>
-            <span className="font-sans text-[12.5px] font-semibold text-foreground">{n} seleccionado{n > 1 ? 's' : ''}</span>
+            <span className="font-sans text-[12.5px] font-semibold text-foreground">{n} selected</span>
             <div className="h-4 w-px bg-border" />
-            <button className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-muted-foreground hover:text-foreground transition-colors"><Icon name="pause" size={14} />Pausar</button>
-            <button className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-muted-foreground hover:text-foreground transition-colors"><Icon name="refresh" size={14} />Reasignar</button>
-            <button className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-destructive/90 hover:text-destructive transition-colors"><Icon name="trash" size={14} />Eliminar</button>
+            <button className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-muted-foreground hover:text-foreground transition-colors"><Icon name="pause" size={14} />Pause</button>
+            <button className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-muted-foreground hover:text-foreground transition-colors"><Icon name="refresh" size={14} />Reassign</button>
+            <button className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-destructive/90 hover:text-destructive transition-colors"><Icon name="trash" size={14} />Delete</button>
           </>
         ) : (
-          <span className="font-sans text-[12.5px] text-muted-foreground">Selecciona agentes para acciones en bloque</span>
+          <span className="font-sans text-[12.5px] text-muted-foreground">Select services for bulk actions</span>
         )}
       </div>
       <table className="w-full border-collapse">
         <thead><tr className="border-b border-border">
           <th className="w-12 px-4 h-10"><Check checked={n === all} indeterminate={n > 0 && n < all} onChange={toggleAll} /></th>
-          <Th>Agente</Th><Th>Región</Th><Th>Estado</Th><Th className="text-right">Coste 30 d</Th>
+          <Th>Service</Th><Th>Region</Th><Th>Status</Th><Th className="text-right">Cost 30 d</Th>
         </tr></thead>
         <tbody className="divide-y divide-border">
           {FLEET.map((a) => {
@@ -182,7 +182,7 @@ function SelectableTable() {
   );
 }
 
-/* ── 4 · Con acciones de fila (menú) ─────────────────────────────────────── */
+/* ── 4 · With row actions (menu) ───────────────────────────────────────── */
 function ActionRow({ a }) {
   const [open, setOpen] = useState(false);
   const ref = window.useRef(null);
@@ -195,19 +195,19 @@ function ActionRow({ a }) {
       <td className="px-4 py-3 text-right font-mono text-[12.5px] text-foreground whitespace-nowrap">{money(a.cost)}</td>
       <td className="px-4 py-3 text-right whitespace-nowrap">
         <div className="inline-flex items-center gap-1 justify-end">
-          <button className="h-7 px-2.5 rounded-md text-[12px] font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">Abrir</button>
+          <button className="h-7 px-2.5 rounded-md text-[12px] font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">Open</button>
           <div className="relative" ref={ref}>
-            <button onClick={() => setOpen(o => !o)} aria-label="Más acciones"
+            <button onClick={() => setOpen(o => !o)} aria-label="More actions"
               className={"w-7 h-7 rounded-md inline-flex items-center justify-center transition-colors " + (open ? 'bg-secondary text-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-secondary')}>
               <Icon name="dot3" size={16} />
             </button>
             {open && (
               <div className="absolute right-0 top-8 z-20 w-40 py-1 rounded-lg border border-border bg-popover shadow-md">
-                {[['eye', 'Ver detalle'], ['pause', 'Pausar'], ['refresh', 'Reintentar']].map(([ic, l]) => (
+                {[['eye', 'View details'], ['pause', 'Pause'], ['refresh', 'Retry']].map(([ic, l]) => (
                   <button key={l} onClick={() => setOpen(false)} className="w-full flex items-center gap-2.5 px-3 h-8 text-[12.5px] text-popover-foreground hover:bg-accent/60 transition-colors"><Icon name={ic} size={14} className="text-muted-foreground" />{l}</button>
                 ))}
                 <div className="my-1 h-px bg-border" />
-                <button onClick={() => setOpen(false)} className="w-full flex items-center gap-2.5 px-3 h-8 text-[12.5px] text-destructive hover:bg-destructive/10 transition-colors"><Icon name="trash" size={14} />Eliminar</button>
+                <button onClick={() => setOpen(false)} className="w-full flex items-center gap-2.5 px-3 h-8 text-[12.5px] text-destructive hover:bg-destructive/10 transition-colors"><Icon name="trash" size={14} />Delete</button>
               </div>
             )}
           </div>
@@ -220,7 +220,7 @@ function RowActionsTable() {
   return (
     <table className="w-full border-collapse">
       <thead><tr className="border-b border-border bg-secondary/30">
-        <Th>Agente</Th><Th>Región</Th><Th>Estado</Th><Th className="text-right">Coste 30 d</Th><Th className="text-right pr-4">Acciones</Th>
+        <Th>Service</Th><Th>Region</Th><Th>Status</Th><Th className="text-right">Cost 30 d</Th><Th className="text-right pr-4">Actions</Th>
       </tr></thead>
       <tbody className="divide-y divide-border">
         {FLEET.slice(0, 5).map((a) => <ActionRow key={a.id} a={a} />)}
@@ -229,7 +229,7 @@ function RowActionsTable() {
   );
 }
 
-/* ── 5 · Con toolbar (buscar en vivo + filtros + añadir) ───────────── */
+/* ── 5 · With toolbar (live search + filters + add) ───────────────── */
 function ToolbarTable() {
   const [q, setQ] = useState('');
   const [added, setAdded] = useState(false);
@@ -237,25 +237,25 @@ function ToolbarTable() {
   const rows = FLEET.filter(a => !query || (a.name + ' ' + a.model + ' ' + a.region).toLowerCase().includes(query));
   return (
     <div>
-      {/* toolbar: buscador + filtros a la izquierda, alta a la derecha */}
+      {/* toolbar: search + filters on the left, add on the right */}
       <div className="flex items-center gap-2 px-3 py-3 border-b border-border bg-secondary/20">
         <div className="relative flex-1 min-w-0 max-w-[300px]">
           <Icon name="search" size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Buscar agente, modelo o región…"
+          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search service, runtime or region…"
             className="w-full h-9 rounded-md border border-border bg-card pl-9 pr-3 text-[13px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/35 focus:border-ring/60 transition-shadow" />
         </div>
         <button className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-border bg-card text-[12.5px] font-medium text-foreground hover:bg-secondary/60 transition-colors shrink-0">
-          <Icon name="filter" size={15} className="text-muted-foreground" />Filtros
+          <Icon name="filter" size={15} className="text-muted-foreground" />Filters
         </button>
         <button onClick={() => { setAdded(true); setTimeout(() => setAdded(false), 1600); }}
           className="ml-auto shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-md bg-primary text-primary-foreground text-[12.5px] font-semibold hover:bg-primary/90 transition-colors">
-          <Icon name={added ? 'check' : 'plus'} size={15} />{added ? 'Agente añadido' : 'Añadir agente'}
+          <Icon name={added ? 'check' : 'plus'} size={15} />{added ? 'Service added' : 'Add service'}
         </button>
       </div>
-      {/* tabla filtrada */}
+      {/* filtered table */}
       <table className="w-full border-collapse">
         <thead><tr className="border-b border-border bg-secondary/30">
-          <Th>Agente</Th><Th>Región</Th><Th>Estado</Th><Th className="text-right">Coste 30 d</Th>
+          <Th>Service</Th><Th>Region</Th><Th>Status</Th><Th className="text-right">Cost 30 d</Th>
         </tr></thead>
         <tbody className="divide-y divide-border">
           {rows.map((a) => (
@@ -269,35 +269,35 @@ function ToolbarTable() {
           {rows.length === 0 && (
             <tr><td colSpan={4} className="px-4 py-14 text-center">
               <span className="w-11 h-11 rounded-xl bg-secondary text-muted-foreground inline-flex items-center justify-center mb-3"><Icon name="search" size={20} /></span>
-              <div className="text-[13px] text-foreground font-medium">Sin agentes para “{q}”</div>
-              <div className="text-[12px] text-muted-foreground mt-0.5">Prueba con otro nombre, modelo o región.</div>
+              <div className="text-[13px] text-foreground font-medium">No services match “{q}”</div>
+              <div className="text-[12px] text-muted-foreground mt-0.5">Try another name, runtime or region.</div>
             </td></tr>
           )}
         </tbody>
       </table>
-      {/* contador */}
+      {/* counter */}
       <div className="px-4 py-2.5 border-t border-border bg-secondary/20">
-        <span className="font-mono text-[11px] text-muted-foreground">{rows.length} de {FLEET.length} agentes</span>
+        <span className="font-mono text-[11px] text-muted-foreground">{rows.length} of {FLEET.length} services</span>
       </div>
     </div>
   );
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_SIMPLE = `// Simple — thead con tono sutil, filas divididas, números en mono a la derecha
+const CODE_SIMPLE = `// Simple — subtly tinted thead, divided rows, mono numbers on the right
 <table className="w-full border-collapse">
   <thead>
     <tr className="border-b border-border bg-secondary/30">
-      <th className="text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10">Agente</th>
-      <th className="text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10">Región</th>
-      <th className="text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10">Estado</th>
-      <th className="text-right text-[11.5px] uppercase text-muted-foreground px-4 h-10">Coste 30 d</th>
+      <th className="text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10">Service</th>
+      <th className="text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10">Region</th>
+      <th className="text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10">Status</th>
+      <th className="text-right text-[11.5px] uppercase text-muted-foreground px-4 h-10">Cost 30 d</th>
     </tr>
   </thead>
   <tbody className="divide-y divide-border">
     {rows.map((a) => (
       <tr key={a.id} className="hover:bg-accent/30">
-        <td className="px-4 py-3">{/* avatar + nombre + modelo */}</td>
+        <td className="px-4 py-3">{/* avatar + name + runtime */}</td>
         <td className="px-4 py-3 font-mono text-[12px] text-muted-foreground">{a.region}</td>
         <td className="px-4 py-3"><StatusPill tone={a.tone}>{a.state}</StatusPill></td>
         <td className="px-4 py-3 text-right font-mono text-[12.5px]">{money(a.cost)}</td>
@@ -306,7 +306,7 @@ const CODE_SIMPLE = `// Simple — thead con tono sutil, filas divididas, númer
   </tbody>
 </table>`;
 
-const CODE_SORT = `// Ordenable — el estado de orden vive en React; la cabecera alterna asc/desc
+const CODE_SORT = `// Sortable — sort state lives in React; the header toggles asc/desc
 const [sort, setSort] = useState({ key: 'cost', dir: 'desc' });
 const click = (key) => setSort((s) => s.key === key
   ? { key, dir: s.dir === 'asc' ? 'desc' : 'asc' }
@@ -320,47 +320,47 @@ const rows = [...data].sort((a, b) => {
 
 <th>
   <button onClick={() => click('cost')} className="inline-flex items-center gap-1">
-    Coste 30 d
+    Cost 30 d
     <ChevronIcon className={sort.key === 'cost' ? 'opacity-100' : 'opacity-25'} dir={sort.dir} />
   </button>
 </th>`;
 
-const CODE_SELECT = `// Con selección — Set de ids; checkbox maestro indeterminado; barra en bloque
+const CODE_SELECT = `// With selection — Set of ids; indeterminate master checkbox; bulk bar
 const [sel, setSel] = useState(new Set());
 const toggle = (id) => setSel((s) => { const x = new Set(s); x.has(id) ? x.delete(id) : x.add(id); return x; });
 const toggleAll = () => setSel((s) => s.size === all ? new Set() : new Set(data.map((a) => a.id)));
 
 {sel.size > 0 && (
   <div className="flex items-center gap-3 px-4 h-12 border-b border-border bg-primary/8">
-    <span className="text-[12.5px] font-semibold">{sel.size} seleccionados</span>
-    <button>Pausar</button><button>Reasignar</button>
-    <button className="text-destructive">Eliminar</button>
+    <span className="text-[12.5px] font-semibold">{sel.size} selected</span>
+    <button>Pause</button><button>Reassign</button>
+    <button className="text-destructive">Delete</button>
   </div>
 )}
 
 <th><Checkbox checked={n === all} indeterminate={n > 0 && n < all} onChange={toggleAll} /></th>
 <td><Checkbox checked={sel.has(a.id)} onChange={() => toggle(a.id)} /></td>`;
 
-const CODE_ROWACT = `// Acciones de fila — botón "Abrir" + menú (…) con cierre al clic fuera
+const CODE_ROWACT = `// Row actions — "Open" button + (…) menu that closes on outside click
 const [open, setOpen] = useState(false);
 const ref = useRef(null);
 useClickOutside(ref, () => setOpen(false), open);
 
 <td className="text-right">
-  <button className="h-7 px-2.5 rounded-md text-[12px] hover:bg-secondary">Abrir</button>
+  <button className="h-7 px-2.5 rounded-md text-[12px] hover:bg-secondary">Open</button>
   <div className="relative" ref={ref}>
     <button onClick={() => setOpen((o) => !o)}><DotsIcon /></button>
     {open && (
       <div className="absolute right-0 top-8 w-40 py-1 rounded-lg border border-border bg-popover shadow-md">
-        <button>Ver detalle</button><button>Pausar</button><button>Reintentar</button>
+        <button>View details</button><button>Pause</button><button>Retry</button>
         <div className="my-1 h-px bg-border" />
-        <button className="text-destructive">Eliminar</button>
+        <button className="text-destructive">Delete</button>
       </div>
     )}
   </div>
 </td>`;
 
-const CODE_TOOLBAR = `// Con toolbar — buscador que filtra en vivo + "Añadir"; el filtrado vive en React
+const CODE_TOOLBAR = `// With toolbar — live-filtering search + "Add"; filtering lives in React
 const [q, setQ] = useState('');
 const rows = data.filter((a) => !q ||
   (a.name + ' ' + a.model + ' ' + a.region).toLowerCase().includes(q.trim().toLowerCase()));
@@ -368,39 +368,39 @@ const rows = data.filter((a) => !q ||
 <div className="flex items-center gap-2 px-3 py-3 border-b border-border bg-secondary/20">
   <div className="relative flex-1 max-w-[300px]">
     <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-    <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar agente…"
+    <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search services…"
       className="w-full h-9 rounded-md border border-border bg-card pl-9 pr-3 text-[13px] focus:ring-2 focus:ring-ring/35" />
   </div>
-  <button className="h-9 px-3 rounded-md border border-border bg-card text-[12.5px] font-medium"><FilterIcon /> Filtros</button>
-  <button className="ml-auto h-9 px-3.5 rounded-md bg-primary text-primary-foreground text-[12.5px] font-semibold"><PlusIcon /> Añadir agente</button>
+  <button className="h-9 px-3 rounded-md border border-border bg-card text-[12.5px] font-medium"><FilterIcon /> Filters</button>
+  <button className="ml-auto h-9 px-3.5 rounded-md bg-primary text-primary-foreground text-[12.5px] font-semibold"><PlusIcon /> Add service</button>
 </div>
 
-{/* … la tabla pinta rows; estado vacío cuando rows.length === 0 … */}
-// El sistema completo (popovers, chips, vistas guardadas) vive en el componente Filters.`;
+{/* … the table renders rows; empty state when rows.length === 0 … */}
+// The full system (popovers, chips, saved views) lives in the Filters component.`;
 
 function TablesSection() {
   return (
     <div>
-      <SectionHead kicker="Listas" title="Tables" status="done"
-        intro="La tabla del Fleet: cada agente en una fila, con modelo, región, estado, coste y actividad en columnas. Densa pero legible — números en mono alineados a la derecha, pills de estado y tono sutil en la cabecera. Cinco niveles: simple, con cabeceras ordenables, con selección y barra de acciones en bloque, con menú de acciones por fila, y con toolbar de búsqueda en vivo y alta de agente." />
+      <SectionHead kicker="Lists" title="Tables" status="done"
+        intro="The services table: each service in a row, with runtime, region, status, cost and activity as columns. Dense but readable — right-aligned mono numbers, status pills and a subtly tinted header. Five levels: simple, with sortable headers, with selection and a bulk action bar, with a per-row actions menu, and with a toolbar for live search and adding a service." />
 
-      <Variant title="Simple" desc="La base: cabecera con tono sutil, filas divididas que se iluminan al hover, identidad del agente con avatar a la izquierda y métricas en mono a la derecha." code={CODE_SIMPLE}>
+      <Variant title="Simple" desc="The base: subtly tinted header, divided rows that highlight on hover, service identity with avatar on the left and mono metrics on the right." code={CODE_SIMPLE}>
         <SimpleTable />
       </Variant>
 
-      <Variant title="Ordenable" desc="Clic en una cabecera para ordenar; un segundo clic invierte la dirección. La flecha marca la columna activa y su sentido. Empieza ordenada por coste descendente." code={CODE_SORT}>
+      <Variant title="Sortable" desc="Click a header to sort; a second click reverses the direction. The arrow marks the active column and its direction. Starts sorted by cost, descending." code={CODE_SORT}>
         <SortableTable />
       </Variant>
 
-      <Variant title="Con selección" desc="Checkbox por fila más uno maestro con estado indeterminado. Al seleccionar aparece la barra de acciones en bloque — pausar, reasignar, eliminar. Las filas marcadas quedan teñidas." code={CODE_SELECT}>
+      <Variant title="With selection" desc="A checkbox per row plus a master one with an indeterminate state. Selecting shows the bulk action bar — pause, reassign, delete. Checked rows are tinted." code={CODE_SELECT}>
         <SelectableTable />
       </Variant>
 
-      <Variant title="Con acciones de fila" desc="Una acción primaria visible más un menú de overflow que se cierra al hacer clic fuera o con Escape. Para abrir, pausar, reintentar o eliminar un agente sin salir de la tabla." code={CODE_ROWACT}>
+      <Variant title="With row actions" desc="A visible primary action plus an overflow menu that closes on outside click or Escape. To open, pause, retry or delete a service without leaving the table." code={CODE_ROWACT}>
         <RowActionsTable />
       </Variant>
 
-      <Variant title="Con toolbar" desc="La tabla autocontenida: el buscador filtra las filas en vivo, junto a un botón de filtros y el alta de agente en la cabecera. El sistema completo de filtrado — popovers, chips, vistas guardadas — vive en el componente Filters; aquí va la versión mínima embebida." code={CODE_TOOLBAR}>
+      <Variant title="With toolbar" desc="The self-contained table: the search box filters rows live, next to a filters button and an add-service action in the header. The full filtering system — popovers, chips, saved views — lives in the Filters component; this is the minimal embedded version." code={CODE_TOOLBAR}>
         <ToolbarTable />
       </Variant>
     </div>

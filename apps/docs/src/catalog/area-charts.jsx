@@ -1,25 +1,25 @@
 /* ============================================================================
-   Gntik UI · area-charts.jsx — subcategoría "Area charts" (grupo Gráficas).
-   Tendencia con relleno. Coste de inferencia musematic: apilada por modelo y
-   una sola serie de total. Tooltip + leyenda interactiva, tema en vivo.
+   Gntik UI · area-charts.jsx — "Area charts" subcategory (Charts group).
+   Filled trend. Infrastructure cost: stacked by resource and a single total
+   series. Tooltip + interactive legend, live theme.
    ============================================================================ */
 (function () {
 const { SectionHead, ChartCard, ChartVariant, AreaChart, chartFmt } = window;
 
 const COST = [
-  { month: 'Ene', Sonnet: 1840, Haiku: 420, Opus: 1260 },
-  { month: 'Feb', Sonnet: 2010, Haiku: 460, Opus: 1180 },
-  { month: 'Mar', Sonnet: 2360, Haiku: 510, Opus: 1340 },
-  { month: 'Abr', Sonnet: 2720, Haiku: 540, Opus: 1090 },
-  { month: 'May', Sonnet: 3180, Haiku: 620, Opus: 1260 },
-  { month: 'Jun', Sonnet: 3460, Haiku: 680, Opus: 1410 },
+  { month: 'Jan', Compute: 1840, Storage: 420, Network: 1260 },
+  { month: 'Feb', Compute: 2010, Storage: 460, Network: 1180 },
+  { month: 'Mar', Compute: 2360, Storage: 510, Network: 1340 },
+  { month: 'Apr', Compute: 2720, Storage: 540, Network: 1090 },
+  { month: 'May', Compute: 3180, Storage: 620, Network: 1260 },
+  { month: 'Jun', Compute: 3460, Storage: 680, Network: 1410 },
 ];
-const TOTAL = COST.map(d => ({ month: d.month, Total: d.Sonnet + d.Haiku + d.Opus }));
+const TOTAL = COST.map(d => ({ month: d.month, Total: d.Compute + d.Storage + d.Network }));
 
 const C_STACK = `<AreaChart
   data={cost}
   index="month"
-  categories={["Sonnet", "Haiku", "Opus"]}
+  categories={["Compute", "Storage", "Network"]}
   colors={["primary", "violet", "cyan"]}
   valueFormatter={(v) => \`$\${v.toLocaleString()}\`}
   stacked
@@ -37,18 +37,18 @@ const C_SINGLE = `<AreaChart
 function AreaChartsSection() {
   return (
     <div>
-      <SectionHead kicker="Gráficas" title="Area charts" status="done"
-        intro="Tendencia con relleno. La versión apilada muestra la composición del total; la de una sola serie, la trayectoria limpia. Pasa el ratón para el tooltip y haz clic en la leyenda para aislar series." />
+      <SectionHead kicker="Charts" title="Area charts" status="done"
+        intro="Filled trend. The stacked version shows how the total is composed; the single-series one, the clean trajectory. Hover for the tooltip and click the legend to isolate series." />
 
-      <ChartVariant title="Apilada" desc="Composición del total a lo largo del tiempo. Coste de inferencia mensual repartido por modelo — el verde lleva la serie principal." code={C_STACK}>
-        <ChartCard title="Coste de inferencia · 6 meses" value="$5,550" delta="+9.7% vs. May" deltaTone="neg">
-          <AreaChart data={COST} index="month" categories={['Sonnet', 'Haiku', 'Opus']}
+      <ChartVariant title="Stacked" desc="Composition of the total over time. Monthly infrastructure cost split by resource — green carries the main series." code={C_STACK}>
+        <ChartCard title="Infrastructure cost · 6 months" value="$5,550" delta="+9.7% vs. May" deltaTone="neg">
+          <AreaChart data={COST} index="month" categories={['Compute', 'Storage', 'Network']}
             colors={['primary', 'violet', 'cyan']} valueFormatter={chartFmt.usd} stacked />
         </ChartCard>
       </ChartVariant>
 
-      <ChartVariant title="Una serie" desc="Una sola métrica con relleno tenue, sin leyenda. Para la tendencia de un total cuando no hace falta desglosar." code={C_SINGLE}>
-        <ChartCard title="Coste total · 6 meses" value="$5,550" delta="+9.7% vs. May" deltaTone="neg">
+      <ChartVariant title="Single series" desc="A single metric with a faint fill and no legend. For the trend of a total when no breakdown is needed." code={C_SINGLE}>
+        <ChartCard title="Total cost · 6 months" value="$5,550" delta="+9.7% vs. May" deltaTone="neg">
           <AreaChart data={TOTAL} index="month" categories={['Total']} colors={['primary']}
             valueFormatter={chartFmt.usd} showLegend={false} />
         </ChartCard>

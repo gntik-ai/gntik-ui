@@ -1,9 +1,9 @@
 /* ============================================================================
-   Gntik UI · sidebar-nav.jsx — sidebar de producto (grupo "Navegación").
-   El sidebar completo de la app, con su capacidad de colapsar a un rail de
-   iconos. Distinto de vertical-nav (nav de página dentro del contenido) y del
-   app-shell (que lo muestra montado). Aquí vive aislado, con el toggle en vivo.
-   Chrome de marca; activo con barra de acento. Dominio musematic, tokens.
+   Gntik UI · sidebar-nav.jsx — product sidebar ("Navigation" group).
+   The full app sidebar, able to collapse to an icon rail. Different from
+   vertical-nav (in-content page nav) and from app-shell (which shows it
+   mounted). Here it lives on its own, with a live toggle.
+   Brand chrome; active item with accent bar. Neutral fixtures, tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, Wordmark, MusematicMark, useState } = window;
@@ -20,7 +20,7 @@ const Variant = ({ title, desc, code, children }) => (
 );
 
 const NAV = [
-  ['Operación', [['home', 'Home'], ['bot', 'Agents', 24], ['net', 'Fleet'], ['coin', 'Costs']]],
+  ['Operations', [['home', 'Home'], ['bot', 'Services', 24], ['net', 'Deployments'], ['coin', 'Costs']]],
   ['Control', [['activity', 'Runs', '1.2k'], ['shield', 'Policies', 3], ['list', 'Logs']]],
 ];
 
@@ -42,7 +42,7 @@ function SidebarItem({ icon, label, count, on, collapsed, onClick }) {
 
 function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
-  const [active, setActive] = useState('Fleet');
+  const [active, setActive] = useState('Deployments');
   const [shut, setShut] = useState({});
   const toggleGroup = (g) => setShut(s => ({ ...s, [g]: !s[g] }));
   return (
@@ -55,7 +55,7 @@ function Sidebar() {
             ? <span className="text-primary"><MusematicMark s={22} /></span>
             : <div className="flex-1 min-w-0"><Wordmark s={24} fs={16} /></div>}
           {!collapsed && (
-            <button onClick={() => setCollapsed(true)} aria-label="Colapsar" className="grid size-8 place-items-center rounded-lg text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors">
+            <button onClick={() => setCollapsed(true)} aria-label="Collapse" className="grid size-8 place-items-center rounded-lg text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors">
               <Icon name="chevronLeft" size={16} />
             </button>
           )}
@@ -81,7 +81,7 @@ function Sidebar() {
         {/* footer */}
         <div className={"shrink-0 border-t border-border/60 py-2.5 " + (collapsed ? 'px-3' : 'px-3')}>
           {collapsed ? (
-            <button onClick={() => setCollapsed(false)} aria-label="Expandir" className="grid size-9 mx-auto place-items-center rounded-lg text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors">
+            <button onClick={() => setCollapsed(false)} aria-label="Expand" className="grid size-9 mx-auto place-items-center rounded-lg text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors">
               <Icon name="chevronRight" size={16} />
             </button>
           ) : (
@@ -99,9 +99,9 @@ function Sidebar() {
   );
 }
 
-const CODE = `// Sidebar colapsable — rail de iconos (width animado) + grupos plegables
-const [collapsed, setCollapsed] = useState(false);   // rail vs. expandido
-const [shut, setShut] = useState({});                // grupos plegados
+const CODE = `// Collapsible sidebar — icon rail (animated width) + collapsible groups
+const [collapsed, setCollapsed] = useState(false);   // rail vs. expanded
+const [shut, setShut] = useState({});                // collapsed groups
 
 <aside className="flex flex-col border-r border-border bg-chrome"
   style={{ width: collapsed ? 68 : 248, transition: "width .22s cubic-bezier(.4,0,.2,1)" }}>
@@ -111,7 +111,7 @@ const [shut, setShut] = useState({});                // grupos plegados
       const off = !collapsed && shut[g.name];
       return (
       <div key={g.name} className="flex flex-col gap-0.5">
-        {/* cabecera de grupo = botón con chevron que rota al plegar */}
+        {/* group header = button with a chevron that rotates on collapse */}
         {!collapsed && (
           <button onClick={() => setShut(s => ({ ...s, [g.name]: !s[g.name] }))}
             className="group flex items-center justify-between px-2.5 py-1 rounded-md hover:bg-accent/40">
@@ -138,11 +138,11 @@ const [shut, setShut] = useState({});                // grupos plegados
 function SidebarNavSection() {
   return (
     <div>
-      <SectionHead kicker="Navegación" title="Sidebar navigation" status="done"
-        intro="El sidebar de producto, con dos plegados: a rail de iconos (recupera ancho) y por grupo (pulsa la cabecera para plegar sus ítems, con el chevron que rota — el mismo patrón del app-shell). Mismo chrome y verde de marca; el activo conserva la barra de acento a la izquierda y, en rail, cada ítem muestra su etiqueta como tooltip." />
+      <SectionHead kicker="Navigation" title="Sidebar navigation" status="done"
+        intro="The product sidebar, with two kinds of collapse: to an icon rail (reclaims width) and per group (click the header to fold its items, with a rotating chevron — the same pattern as the app shell). Same chrome and brand green; the active item keeps the accent bar on the left and, in rail mode, each item shows its label as a tooltip." />
 
-      <Variant title="Rail + grupos colapsables"
-        desc="Pulsa el chevron de la cabecera para plegar a 68px; las cabeceras de grupo pliegan sus ítems (chevron que rota), igual que en el app-shell."
+      <Variant title="Rail + collapsible groups"
+        desc="Click the header chevron to collapse to 68px; group headers fold their items (rotating chevron), just like in the app shell."
         code={CODE}>
         <Sidebar />
       </Variant>

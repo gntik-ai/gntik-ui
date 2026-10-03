@@ -233,7 +233,7 @@ export function buildServer(ctx: ServerContext): McpServer {
     title: 'Listar componentes',
     description: 'Inventario completo del catálogo (id, grupo, estado, snippets). Filtra por grupo o estado.',
     inputSchema: {
-      group: z.string().optional().describe('Filtrar por grupo (p.ej. "Formularios", "Overlays")'),
+      group: z.string().optional().describe('Filtrar por grupo (p.ej. "Forms", "Overlays")'),
       status: z.string().optional().describe('Filtrar por estado: done | wip | todo'),
     },
   }, async ({ group, status }) => text(mdList(ctx.getIndex(), group, status)));

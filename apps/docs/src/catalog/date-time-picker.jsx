@@ -1,9 +1,9 @@
 /* ============================================================================
-   Gntik UI · date-time-picker.jsx — selector de fecha y hora (grupo "Formularios").
-   Fecha Y hora editables de dos maneras: tecleando (campos DD/MM/AAAA y HH:MM con
-   stepper) o eligiendo (calendario mensual + slots). Calendario de marca: ES,
-   semana empieza en lunes, "hoy" con anillo, pasado deshabilitado, verde primary
-   en lo seleccionado. Dominio musematic (programar un run / una ventana). Tokens.
+   Gntik UI · date-time-picker.jsx — date and time picker ("Forms" group).
+   Date AND time editable two ways: typing (DD/MM/YYYY and HH:MM fields with a
+   stepper) or picking (month calendar + slots). Brand calendar: week starts
+   on Monday, "today" with a ring, past disabled, primary green on the
+   selection (scheduling a job / a window). Tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useEffect, useRef, useClickOutside } = window;
@@ -19,13 +19,13 @@ const Variant = ({ title, desc, code, children, minH = '' }) => (
   </div>
 );
 
-/* ── fecha · utilidades ──────────────────────────────────────────────────── */
+/* ── date · utilities ────────────────────────────────────────────────────── */
 const pad = (n) => String(n).padStart(2, '0');
-const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-const MON3 = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
-const WD1 = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
-const WD_LONG = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-const TODAY = new Date(2026, 5, 28);   // "hoy" del catálogo: dom 28 jun 2026
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MON3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WD1 = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+const WD_LONG = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const TODAY = new Date(2026, 5, 28);   // the catalog's "today": Sun 28 Jun 2026
 
 const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
 const sameDay = (a, b) => a && b && startOfDay(a).getTime() === startOfDay(b).getTime();
@@ -41,7 +41,7 @@ const fmtLong = (d) => `${d.getDate()} ${MON3[d.getMonth()]} ${d.getFullYear()}`
 const fmtWeekday = (d) => `${WD_LONG[(d.getDay() + 6) % 7]}, ${d.getDate()}`;
 const TIME_RE = /^([01]?\d|2[0-3]):([0-5]\d)$/;
 
-/* ── slots de hora (disponibilidad estática) ─────────────────────────────── */
+/* ── time slots (static availability) ────────────────────────────────────── */
 const SLOTS = (() => {
   const busy = new Set(['09:00', '09:30', '12:00', '14:30', '15:00', '18:30']);
   const out = [];
@@ -53,7 +53,7 @@ const SLOTS = (() => {
   return out;
 })();
 
-/* ── calendario mensual compacto ─────────────────────────────────────────── */
+/* ── compact month calendar ──────────────────────────────────────────────── */
 function MiniCalendar({ month, setMonth, selected, onSelect, minDate }) {
   const y = month.getFullYear(), m = month.getMonth();
   const canPrev = !(y === minDate.getFullYear() && m === minDate.getMonth());
@@ -96,7 +96,7 @@ function MiniCalendar({ month, setMonth, selected, onSelect, minDate }) {
   );
 }
 
-/* ── campo de hora editable (teclear + stepper) ──────────────────────────── */
+/* ── editable time field (type + stepper) ────────────────────────────────── */
 function EditableTime({ value, onChange, className = '' }) {
   const [raw, setRaw] = useState(value);
   useEffect(() => { setRaw(value); }, [value]);
@@ -114,18 +114,18 @@ function EditableTime({ value, onChange, className = '' }) {
       (bad ? 'border-destructive/70 focus-within:ring-2 focus-within:ring-destructive/25'
            : 'border-border focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-ring/25') + ' ' + className}>
       <Icon name="clock" size={15} className="shrink-0 text-muted-foreground" />
-      <input value={raw} inputMode="numeric" placeholder="HH:MM" aria-label="Hora"
+      <input value={raw} inputMode="numeric" placeholder="HH:MM" aria-label="Time"
         onChange={(e) => { setRaw(e.target.value); commit(e.target.value); }} onBlur={() => commit(raw)}
         className="h-9 w-full bg-transparent px-2 font-mono text-[13px] text-foreground placeholder:text-muted-foreground focus:outline-none" />
       <div className="flex shrink-0 flex-col">
-        <button type="button" tabIndex={-1} aria-label="Subir" onClick={() => bump(15)} className="grid h-[15px] w-5 place-items-center rounded-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"><Icon name="chevronUp" size={12} /></button>
-        <button type="button" tabIndex={-1} aria-label="Bajar" onClick={() => bump(-15)} className="grid h-[15px] w-5 place-items-center rounded-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"><Icon name="chevron" size={12} /></button>
+        <button type="button" tabIndex={-1} aria-label="Increase" onClick={() => bump(15)} className="grid h-[15px] w-5 place-items-center rounded-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"><Icon name="chevronUp" size={12} /></button>
+        <button type="button" tabIndex={-1} aria-label="Decrease" onClick={() => bump(-15)} className="grid h-[15px] w-5 place-items-center rounded-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"><Icon name="chevron" size={12} /></button>
       </div>
     </div>
   );
 }
 
-/* ── campo de fecha editable (DD/MM/AAAA) ────────────────────────────────── */
+/* ── editable date field (DD/MM/YYYY) ────────────────────────────────────── */
 function EditableDate({ value, onChange, minDate, className = '' }) {
   const [raw, setRaw] = useState(() => fmtSlash(value));
   useEffect(() => { setRaw(fmtSlash(value)); }, [value]);
@@ -143,7 +143,7 @@ function EditableDate({ value, onChange, minDate, className = '' }) {
       (bad ? 'border-destructive/70 focus-within:ring-2 focus-within:ring-destructive/25'
            : 'border-border focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-ring/25') + ' ' + className}>
       <Icon name="calendar" size={15} className="shrink-0 text-muted-foreground" />
-      <input value={raw} inputMode="numeric" placeholder="DD/MM/AAAA" aria-label="Fecha"
+      <input value={raw} inputMode="numeric" placeholder="DD/MM/YYYY" aria-label="Date"
         onChange={(e) => { setRaw(e.target.value); commit(e.target.value); }} onBlur={() => commit(raw)}
         className="h-9 w-full bg-transparent px-2 font-mono text-[13px] text-foreground placeholder:text-muted-foreground focus:outline-none" />
       {bad && <Icon name="alert" size={14} className="shrink-0 text-destructive" />}
@@ -151,7 +151,7 @@ function EditableDate({ value, onChange, minDate, className = '' }) {
   );
 }
 
-/* ── slots de hora (lista en scroll) ─────────────────────────────────────── */
+/* ── time slots (scrolling list) ─────────────────────────────────────────── */
 function TimeSlots({ value, onChange, dateLabel, cols = 'grid-cols-2 sm:grid-cols-1' }) {
   return (
     <div className="flex min-w-0 flex-1 flex-col">
@@ -176,7 +176,7 @@ function TimeSlots({ value, onChange, dateLabel, cols = 'grid-cols-2 sm:grid-col
   );
 }
 
-/* ── popover genérico (trigger + contenido, cierre con clic-fuera) ───────── */
+/* ── generic popover (trigger + content, closes on outside click) ────────── */
 function Popover({ render, children }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -204,7 +204,7 @@ const Trigger = ({ open, toggle, filled, label, width = 'w-[280px]' }) => (
 );
 
 /* ════════════════════════════════════════════════════════════════════════
-   1 · POPOVER — calendario + hora (typeable o por slots)
+   1 · POPOVER — calendar + time (typeable or by slots)
    ════════════════════════════════════════════════════════════════════════ */
 function PopoverPicker() {
   const [month, setMonth] = useState(firstOf(TODAY));
@@ -224,11 +224,11 @@ function PopoverPicker() {
                 <div className="mt-2"><EditableTime value={time} onChange={setTime} /></div>
               </div>
               <div className="mt-3 border-t border-border/60 pt-2.5">
-                <TimeSlots value={time} onChange={setTime} dateLabel="Slots disponibles" />
+                <TimeSlots value={time} onChange={setTime} dateLabel="Available slots" />
               </div>
               <div className="flex items-center justify-between gap-2 border-t border-border/60 px-3 py-2">
                 <span className="font-mono text-[11px] text-muted-foreground">{fmtSlash(date)} {time}</span>
-                <button type="button" onClick={close} className="inline-flex h-7 items-center rounded-md bg-primary px-3 text-[12px] font-semibold text-primary-foreground hover:bg-primary/90 transition-colors">Listo</button>
+                <button type="button" onClick={close} className="inline-flex h-7 items-center rounded-md bg-primary px-3 text-[12px] font-semibold text-primary-foreground hover:bg-primary/90 transition-colors">Done</button>
               </div>
             </div>
           </div>
@@ -239,9 +239,9 @@ function PopoverPicker() {
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   2 · INLINE — campos editables (teclear) + calendario + chips
+   2 · INLINE — editable fields (typing) + calendar + chips
    ════════════════════════════════════════════════════════════════════════ */
-const QUICK = [['Mañana', '09:00'], ['Mediodía', '12:00'], ['Tarde', '16:00'], ['Noche', '21:00']];
+const QUICK = [['Morning', '09:00'], ['Midday', '12:00'], ['Afternoon', '16:00'], ['Evening', '21:00']];
 function InlinePicker() {
   const [month, setMonth] = useState(firstOf(TODAY));
   const [date, setDate] = useState(TODAY);
@@ -250,11 +250,11 @@ function InlinePicker() {
     <div className="mx-auto w-full max-w-xl">
       <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-2 block text-[13px] font-medium text-foreground">Fecha</label>
+          <label className="mb-2 block text-[13px] font-medium text-foreground">Date</label>
           <EditableDate value={date} minDate={TODAY} onChange={(d) => { setDate(d); setMonth(firstOf(d)); }} />
         </div>
         <div>
-          <label className="mb-2 block text-[13px] font-medium text-foreground">Hora</label>
+          <label className="mb-2 block text-[13px] font-medium text-foreground">Time</label>
           <EditableTime value={time} onChange={setTime} />
         </div>
       </div>
@@ -285,13 +285,13 @@ function InlinePicker() {
           </div>
         </div>
       </div>
-      <p className="mt-3 text-[12px] text-muted-foreground" style={{ textWrap: 'pretty' }}>Edita tecleando en los campos (DD/MM/AAAA · HH:MM), con el stepper de la hora, o eligiendo en el calendario y los chips — todo está sincronizado.</p>
+      <p className="mt-3 text-[12px] text-muted-foreground" style={{ textWrap: 'pretty' }}>Edit by typing in the fields (DD/MM/YYYY · HH:MM), with the time stepper, or by picking in the calendar and the chips — everything stays in sync.</p>
     </div>
   );
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   3 · ESTADOS DEL TRIGGER
+   3 · TRIGGER STATES
    ════════════════════════════════════════════════════════════════════════ */
 function TriggerStates() {
   const Box = ({ label, children }) => (
@@ -311,17 +311,17 @@ function TriggerStates() {
   );
   return (
     <div className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-3">
-      <Box label="Placeholder"><Static label="Elige fecha y hora" /></Box>
-      <Box label="Con valor"><Static filled label="28 jun 2026 · 10:00" /></Box>
-      <Box label="Deshabilitado"><Static disabled filled label="Bloqueado por policy" /></Box>
+      <Box label="Placeholder"><Static label="Pick a date and time" /></Box>
+      <Box label="With value"><Static filled label="28 Jun 2026 · 10:00" /></Box>
+      <Box label="Disabled"><Static disabled filled label="Locked by policy" /></Box>
     </div>
   );
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_CAL = `// Calendario mensual — semana en lunes, "hoy" con anillo, pasado deshabilitado
+const CODE_CAL = `// Month calendar — week starts Monday, "today" with a ring, past disabled
 const monthMatrix = (y, m) => {
-  const off = (new Date(y, m, 1).getDay() + 6) % 7;        // 0 = lunes
+  const off = (new Date(y, m, 1).getDay() + 6) % 7;        // 0 = Monday
   return Array.from({ length: 42 }, (_, i) => new Date(y, m, 1 - off + i));
 };
 
@@ -341,7 +341,7 @@ const monthMatrix = (y, m) => {
   );
 })}`;
 
-const CODE_POP = `// Popover: calendario + columna de hora (campo typeable arriba, slots debajo)
+const CODE_POP = `// Popover: calendar + time column (typeable field on top, slots below)
 <Popover render={(open, toggle) => <Trigger open={open} toggle={toggle} label={\`\${fmtLong(date)} · \${time}\`} />}>
   {(close) => (
     <div className="flex max-sm:flex-col">
@@ -349,15 +349,15 @@ const CODE_POP = `// Popover: calendario + columna de hora (campo typeable arrib
       <div className="sm:w-44 sm:border-l border-border">
         <div className="px-4 pt-3">
           <div className="text-[12.5px] font-medium">{fmtWeekday(date)}</div>
-          <EditableTime value={time} onChange={setTime} />     {/* teclear o stepper */}
+          <EditableTime value={time} onChange={setTime} />     {/* type or stepper */}
         </div>
-        <TimeSlots value={time} onChange={setTime} />          {/* o elegir slot */}
+        <TimeSlots value={time} onChange={setTime} />          {/* or pick a slot */}
       </div>
     </div>
   )}
 </Popover>`;
 
-const CODE_EDIT = `// Hora editable — teclea HH:MM (se valida) o usa el stepper ±15 min
+const CODE_EDIT = `// Editable time — type HH:MM (validated) or use the ±15 min stepper
 const TIME_RE = /^([01]?\\d|2[0-3]):([0-5]\\d)$/;
 const commit = (s) => { if (TIME_RE.test(s.trim())) { const [h, m] = s.trim().split(':'); onChange(pad(+h)+':'+pad(+m)); } };
 const bump = (delta) => {
@@ -368,29 +368,29 @@ const bump = (delta) => {
 <input value={raw} inputMode="numeric" placeholder="HH:MM"
   onChange={(e) => { setRaw(e.target.value); commit(e.target.value); }} onBlur={() => commit(raw)} />
 
-// Fecha editable — DD/MM/AAAA, rechaza fechas inválidas o anteriores a minDate`;
+// Editable date — DD/MM/YYYY, rejects invalid dates or dates before minDate`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function DateTimePickerSection() {
   return (
     <div>
-      <SectionHead kicker="Formularios" title="Date & time picker" status="done"
-        intro="Selector de fecha y hora donde ambas son editables de dos formas: tecleando en campos validados (DD/MM/AAAA y HH:MM con stepper de ±15 min) o eligiendo en el calendario y los slots — siempre sincronizados. El calendario es de marca: español, semana en lunes, «hoy» con anillo verde, fechas pasadas deshabilitadas y la selección en primary. Pensado para programar un run o una ventana de mantenimiento del Fleet." />
+      <SectionHead kicker="Forms" title="Date & time picker" status="done"
+        intro="A date and time picker where both are editable two ways: typing into validated fields (DD/MM/YYYY and HH:MM with a ±15 min stepper) or picking in the calendar and the slots — always in sync. The calendar is on-brand: week starting Monday, “today” with a green ring, past dates disabled and the selection in primary. Built for scheduling a job or a maintenance window." />
 
-      <Variant title="Popover · fecha + hora"
-        desc="El patrón de referencia: un campo que abre el calendario a la izquierda y la columna de hora a la derecha. La hora se teclea en el campo de arriba o se elige de los slots (los no disponibles van tachados); ambos quedan en sync."
+      <Variant title="Popover · date + time"
+        desc="The reference pattern: a field that opens the calendar on the left and the time column on the right. The time is typed into the top field or picked from the slots (unavailable ones are struck through); both stay in sync."
         code={CODE_POP} minH="min-h-[120px]">
         <PopoverPicker />
       </Variant>
 
-      <Variant title="Inline · campos editables"
-        desc="Sin popover: los campos de fecha y hora son inputs que se teclean y validan en vivo (rojo si la fecha no existe o es pasada), con el calendario y unos chips rápidos enlazados a los mismos valores."
+      <Variant title="Inline · editable fields"
+        desc="No popover: the date and time fields are inputs typed and validated live (red if the date does not exist or is in the past), with the calendar and some quick chips bound to the same values."
         code={CODE_EDIT}>
         <InlinePicker />
       </Variant>
 
-      <Variant title="Estados del trigger"
-        desc="La anatomía del campo que dispara el picker: vacío (placeholder), con un valor de fecha y hora, y deshabilitado por policy."
+      <Variant title="Trigger states"
+        desc="The anatomy of the field that opens the picker: empty (placeholder), with a date and time value, and disabled by policy."
         code={CODE_CAL}>
         <TriggerStates />
       </Variant>

@@ -1,16 +1,16 @@
 /* ============================================================================
-   Gntik UI · kit.jsx — primitivas del catálogo
-   Icon · Logo/Wordmark · CodeBlock (copiar) · Card · SectionHead · Grid ·
-   ScaleFrame · useClickOutside. Todo se pinta con clases Tailwind que resuelven
-   a los tokens de tokens/brand.css → el switch de tema reskinea todo en vivo.
+   Gntik UI · kit.jsx — catalog primitives
+   Icon · Logo/Wordmark · CodeBlock (copy) · Card · SectionHead · Grid ·
+   ScaleFrame · useClickOutside. Everything is painted with Tailwind classes that
+   resolve to the tokens in tokens/brand.css → the theme switch reskins it all live.
    ============================================================================ */
 const { useState, useEffect, useRef, useCallback } = React;
 
-/* ── Iconos · stroke currentColor, viewBox 24 ─────────────────────────────── */
+/* ── Icons · stroke currentColor, viewBox 24 ───────────────────────────────── */
 function Icon({ name, size = 18, stroke = 1.7, className = '' }) {
   const p = { fill: 'none', stroke: 'currentColor', strokeWidth: stroke, strokeLinecap: 'round', strokeLinejoin: 'round' };
   const g = {
-    /* navegación de producto (app shell) */
+    /* product navigation (app shell) */
     home: <><path d="M3 11l9-7 9 7" {...p} /><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10" {...p} /><path d="M9 21v-6h6v6" {...p} /></>,
     chat: <path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z" {...p} />,
     store: <><path d="M3 9l1.5-5h15L21 9" {...p} /><path d="M4 9v10a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9" {...p} /><path d="M9 21v-7h6v7" {...p} /></>,
@@ -24,7 +24,7 @@ function Icon({ name, size = 18, stroke = 1.7, className = '' }) {
     finger: <path d="M12 10a2 2 0 0 0-2 2c0 1.5.5 4-1 6M12 6a6 6 0 0 1 6 6c0 2-.3 4-1 5.5M8.5 19.5C9.5 17 9 14 9 12a3 3 0 0 1 6 0c0 1 0 2.5-.5 4M5 13c0-3 1.5-7 7-7 2 0 3.7.7 5 2" {...p} />,
     activity: <path d="M22 12h-4l-3 9L9 3l-3 9H2" {...p} />,
     cog: <><circle cx="12" cy="12" r="3" {...p} /><path d="M12 2v3M12 19v3M22 12h-3M5 12H2M19.1 4.9l-2.1 2.1M7 17l-2.1 2.1M19.1 19.1L17 17M7 7L4.9 4.9" {...p} /></>,
-    /* primitivas de UI */
+    /* UI primitives */
     fleet: <><rect x="3" y="3" width="7" height="7" rx="1.5" {...p} /><rect x="14" y="3" width="7" height="7" rx="1.5" {...p} /><rect x="3" y="14" width="7" height="7" rx="1.5" {...p} /><rect x="14" y="14" width="7" height="7" rx="1.5" {...p} /></>,
     audit: <><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" {...p} /><path d="M14 3v5h5M8.5 13h7M8.5 17h7" {...p} /></>,
     settings: <><circle cx="12" cy="12" r="3" {...p} /><path d="M12 2v3M12 19v3M22 12h-3M5 12H2M19.1 4.9l-2.1 2.1M7 17l-2.1 2.1M19.1 19.1L17 17M7 7L4.9 4.9" {...p} /></>,
@@ -78,7 +78,7 @@ function Icon({ name, size = 18, stroke = 1.7, className = '' }) {
     logout: <path d="M15 4h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3M10 17l-5-5 5-5M5 12h11" {...p} />,
     eye: <><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" {...p} /><circle cx="12" cy="12" r="2.5" {...p} /></>,
     refresh: <path d="M21 12a9 9 0 1 1-3-6.7M21 4v5h-5" {...p} />,
-    /* iconos de categoría del catálogo */
+    /* catalog category icons */
     heading: <path d="M6 4v16M18 4v16M6 12h12" {...p} />,
     list: <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" {...p} />,
     table: <><rect x="3" y="4" width="18" height="16" rx="2" {...p} /><path d="M3 9h18M9 4v16" {...p} /></>,
@@ -95,7 +95,7 @@ function Icon({ name, size = 18, stroke = 1.7, className = '' }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" className={className} style={{ display: 'block', flex: '0 0 auto' }}>{g[name] || null}</svg>;
 }
 
-/* ── Logo · marca musematic (vectorizada, hereda currentColor) ────────────── */
+/* ── Logo · musematic mark (vectorised, inherits currentColor) ────────────── */
 const MARK_D = "M252.45 62L256 61.04L260 62.84L301.33 88L301.41 141L294 146.26L260 166.28L188 207.56L186.51 209L187 210.37L316 282.34L332 290.19L332.89 161L338 156.62L375 134.68L380 133.8L423 158.51L425.52 161L426.18 169L425.94 327L425 351.92L273 441.24L259.03 449L256 449.5L251 448.26L215 427.9L208.5 423L208.93 371L217 364.81L323 303.3L325.27 301L324 299.76L180 219.93L179.03 232L179.48 348L178.03 353L136.02 377L132 377.96L86.44 352L85.54 351L84.94 333L85.52 161L90.26 157L114 142.76ZM253.38 75L255 74.28L259 75.85L282 89.31L283.28 91L280 93.49L133 179.21L131 179.51L129 178.5L103.88 164L104 162.57L115 155.76ZM288.37 102L290.25 102L290.29 134L288 136.48L273 145.37L174 202.69L172 202.39L150 189.98L144.57 186ZM375.87 148L378 147.11L381 147.86L405 161.54L407.1 163L407.01 164L380 179.22L374 176.82L353 165.5L350.56 163ZM343.63 174L346 174.42L366 185.59L373.51 191L373 313.81L351 302.36L345 298.89L343.62 297ZM96.44 175L98 174.32L108 179.54L125 189.52L126.75 192L126.76 352L126.71 360L126 361.22L102 348.23L96.35 344ZM411.61 175L413 174.2L414.35 175L413.92 344L410 347.18L325 397.29L262 433.37L261.32 432L261.33 402L262.58 400L375 333.92L384.62 327L384.98 192L388 188.71ZM138.4 198L140 197.49L158 207.55L167 213.03L168.24 216L168.25 344L165 347.26L139 361.79ZM337.79 308L366.5 324L366 325.45L353 333.28L256 390.29L226.93 374L230 370.98ZM219.89 385L221 384.24L223 385.12L249.52 401L249.7 432L249 433.65L219.89 417Z";
 
 function MusematicMark({ s = 28, color = 'currentColor' }) {
@@ -121,7 +121,7 @@ function Wordmark({ s = 28, fs = 18, label = 'musematic' }) {
     </div>);
 }
 
-/* ── CodeBlock · colapsable + copiar ─────────────────────────────────────── */
+/* ── CodeBlock · collapsible + copy ──────────────────────────────────────── */
 function CodeBlock({ code, lang = 'tsx', open: openInit = false }) {
   const [open, setOpen] = useState(openInit);
   const [copied, setCopied] = useState(false);
@@ -135,14 +135,14 @@ function CodeBlock({ code, lang = 'tsx', open: openInit = false }) {
         </button>
         <button onClick={copy} className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
           <Icon name={copied ? 'check' : 'copy'} size={14} className={copied ? 'text-primary' : ''} />
-          <span className={"font-mono text-[11px] " + (copied ? 'text-primary' : '')}>{copied ? 'Copiado' : 'Copiar'}</span>
+          <span className={"font-mono text-[11px] " + (copied ? 'text-primary' : '')}>{copied ? 'Copied' : 'Copy'}</span>
         </button>
       </div>
       {open && <pre className="m-0 p-4 overflow-x-auto text-[12.5px] leading-relaxed text-foreground/85 bg-background/40"><code>{code}</code></pre>}
     </div>);
 }
 
-/* ── Card · una entrada del catálogo: nombre + blurb + preview + código ───── */
+/* ── Card · one catalog entry: name + blurb + preview + code ─────────────── */
 function Card({ name, blurb, code, lang = 'tsx', children, align = 'center', pad = 'p-10', surface = true, span = 1 }) {
   const justify = align === 'start' ? 'justify-start' : align === 'stretch' ? '' : 'justify-center';
   const colSpan = span === 2 ? 'lg:col-span-2' : '';
@@ -160,7 +160,7 @@ function Card({ name, blurb, code, lang = 'tsx', children, align = 'center', pad
     </section>);
 }
 
-/* ── Encabezado de sección ───────────────────────────────────────────────── */
+/* ── Section header ──────────────────────────────────────────────────────── */
 function SectionHead({ kicker, title, intro, status }) {
   return (
     <div className="mb-8 max-w-3xl">
@@ -173,12 +173,12 @@ function SectionHead({ kicker, title, intro, status }) {
     </div>);
 }
 
-/* ── Etiqueta de estado (done / wip / todo) ──────────────────────────────── */
+/* ── Status tag (done / wip / todo) ──────────────────────────────────────── */
 function StatusTag({ status }) {
   const map = {
-    done: ['Listo', 'bg-primary/14 text-primary-text'],
-    wip: ['En curso', 'bg-warning/16 text-warning-text'],
-    todo: ['Pendiente', 'bg-muted-foreground/16 text-muted-foreground'],
+    done: ['Done', 'bg-primary/14 text-primary-text'],
+    wip: ['In progress', 'bg-warning/16 text-warning-text'],
+    todo: ['To do', 'bg-muted-foreground/16 text-muted-foreground'],
   };
   const [label, cls] = map[status] || map.todo;
   return <span className={"inline-flex items-center gap-1.5 h-[22px] px-2.5 rounded-md font-mono text-[10px] font-semibold tracking-wide uppercase " + cls}>
@@ -186,14 +186,14 @@ function StatusTag({ status }) {
   </span>;
 }
 
-/* ── Grilla de cards ─────────────────────────────────────────────────────── */
+/* ── Card grid ───────────────────────────────────────────────────────────── */
 const Grid = ({ children, cols = 2 }) =>
   <div className={"grid gap-x-8 gap-y-12 " + (cols === 1 ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2')}>{children}</div>;
 
 const Mono = ({ children, className = '' }) =>
   <code className={"font-mono text-[12px] text-muted-foreground " + className}>{children}</code>;
 
-/* ── ScaleFrame · renderiza a un ancho de diseño fijo y escala para encajar ── */
+/* ── ScaleFrame · renders at a fixed design width and scales to fit ──────── */
 function ScaleFrame({ width = 1320, children }) {
   const outer = useRef(null), inner = useRef(null);
   const [s, setS] = useState(1), [h, setH] = useState(0);

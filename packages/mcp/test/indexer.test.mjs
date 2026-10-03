@@ -13,7 +13,7 @@ test('registry: inventario completo', () => {
   assert.ok(index.stats.groups >= 10, `esperaba ≥10 grupos, hay ${index.stats.groups}`);
   const buttons = index.registry.find((r) => r.id === 'buttons');
   assert.ok(buttons, 'buttons en el registry');
-  assert.equal(buttons.group, 'Elementos');
+  assert.equal(buttons.group, 'Elements');
 });
 
 test('componentes: snippets canónicos extraídos', () => {

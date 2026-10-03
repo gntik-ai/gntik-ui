@@ -1,14 +1,14 @@
 /* ============================================================================
-   Gntik UI · sign-in.jsx — auth (grupo "Formularios").
-   Split de marca: panel-hero (bg-chrome, acentos primary) + formulario con dos
-   modos (Sign in · Create account) + SSO con Google, Facebook y GitHub.
-   En el tema dark (principal) el panel reproduce el brand oscuro de la app.
-   Dominio musematic. Tokens, cero color hardcodeado salvo los logos de marca.
+   Gntik UI · sign-in.jsx — auth ("Forms" group).
+   Brand split: hero panel (bg-chrome, primary accents) + form with two
+   modes (Sign in · Create account) + SSO with Google, Facebook and GitHub.
+   In the dark theme (default) the panel reproduces the app's dark brand.
+   Neutral fixtures. Tokens, no hardcoded colors except the brand logos.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, Wordmark, ScaleFrame, useState } = window;
 
-/* ── Logos de proveedor · monocromos (heredan currentColor), viewBox 24 ──── */
+/* ── Provider logos · monochrome (inherit currentColor), viewBox 24 ──── */
 const PROVIDERS = {
   google: 'M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z',
   facebook: 'M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z',
@@ -20,7 +20,7 @@ const ProviderIcon = ({ name, size = 18 }) => (
   </svg>
 );
 
-/* ── Ojo / ojo-tachado para revelar la contraseña ─────────────────────────── */
+/* ── Eye / eye-off to reveal the password ────────────────────────────────── */
 const EyeIcon = ({ off }) => {
   const p = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' };
   return (
@@ -32,7 +32,7 @@ const EyeIcon = ({ off }) => {
   );
 };
 
-/* ── Campo de input con icono ─────────────────────────────────────────────── */
+/* ── Input field with icon ────────────────────────────────────────────────── */
 function Field({ label, icon, type = 'text', placeholder, value, onChange, trailing }) {
   return (
     <label className="block">
@@ -47,7 +47,7 @@ function Field({ label, icon, type = 'text', placeholder, value, onChange, trail
   );
 }
 
-/* ── El split completo ────────────────────────────────────────────────────── */
+/* ── The full split ───────────────────────────────────────────────────────── */
 function AuthSplit() {
   const [mode, setMode] = useState('signin');          // 'signin' | 'register'
   const [show, setShow] = useState(false);
@@ -74,17 +74,17 @@ function AuthSplit() {
   return (
     <div className="h-[720px] flex overflow-hidden rounded-xl border border-border bg-background font-sans text-foreground">
 
-      {/* ── PANEL DE MARCA (izq) ── */}
+      {/* ── BRAND PANEL (left) ── */}
       <aside className="relative hidden md:flex w-[46%] shrink-0 flex-col justify-between bg-chrome border-r border-border/60 p-12 overflow-hidden">
         <Wordmark s={30} fs={21} />
 
         <div className="max-w-[420px]">
-          <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-primary mb-5">Control plane · agents</p>
+          <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-primary mb-5">Control plane · services</p>
           <h2 className="font-sans font-bold leading-[1.08] text-foreground" style={{ fontSize: 'clamp(30px,2.6vw,42px)', letterSpacing: '-0.03em', textWrap: 'balance' }}>
             Trust the workflow,<br /><span className="text-primary">not the tab chaos.</span>
           </h2>
           <div className="flex flex-col gap-3.5 mt-9">
-            {['Fleet, runs and costs on a single plane', "Policies your agents can't bypass", 'Immutable audit, exportable to SIEM'].map((t, i) => (
+            {['Deployments, runs and costs on a single plane', "Policies your services can't bypass", 'Immutable audit, exportable to SIEM'].map((t, i) => (
               <div key={i} className="flex items-center gap-3">
                 <span className="grid place-items-center size-[23px] rounded-[7px] bg-primary/14 text-primary shrink-0"><Icon name="check" size={14} stroke={2.6} /></span>
                 <span className="text-[14.5px] text-muted-foreground">{t}</span>
@@ -99,11 +99,11 @@ function AuthSplit() {
         </div>
       </aside>
 
-      {/* ── FORMULARIO (der) ── */}
+      {/* ── FORM (right) ── */}
       <main className="flex-1 min-w-0 flex items-center justify-center p-7 sm:p-10 overflow-y-auto">
         <div className="w-full max-w-[392px]">
 
-          {/* chip de tenant */}
+          {/* tenant chip */}
           <div className="flex items-center gap-3 pb-5 mb-6 border-b border-border">
             <span className="grid place-items-center size-10 rounded-[9px] border border-border bg-card font-bold text-[13px] text-primary shrink-0">AC</span>
             <div className="leading-tight">
@@ -121,11 +121,11 @@ function AuthSplit() {
           </div>
 
           <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-primary mb-2.5">{isReg ? 'Get started' : 'Secure access'}</p>
-          <h3 className="text-[27px] font-semibold tracking-tight text-foreground" style={{ letterSpacing: '-0.025em' }}>{isReg ? 'Create your account' : 'Sign in to Musematic'}</h3>
-          <p className="text-[14px] leading-relaxed text-muted-foreground mt-2 mb-6">{isReg ? 'Spin up a workspace and bring your Fleet under one control plane.' : 'Use your workspace credentials to continue into the control surface.'}</p>
+          <h3 className="text-[27px] font-semibold tracking-tight text-foreground" style={{ letterSpacing: '-0.025em' }}>{isReg ? 'Create your account' : 'Sign in to your workspace'}</h3>
+          <p className="text-[14px] leading-relaxed text-muted-foreground mt-2 mb-6">{isReg ? 'Spin up a workspace and bring your services under one control plane.' : 'Use your workspace credentials to continue into the control surface.'}</p>
 
           <div className="flex flex-col gap-4">
-            {isReg && <Field label="Full name" icon="user" placeholder="Marta Ríos" value={vals.name} onChange={set('name')} />}
+            {isReg && <Field label="Full name" icon="user" placeholder="Alex Morgan" value={vals.name} onChange={set('name')} />}
             <Field label={isReg ? 'Work email' : 'Email'} icon="mail" type="email" placeholder="name@company.com" value={vals.email} onChange={set('email')} />
             <div>
               <div className="flex items-center justify-between mb-1.5">
@@ -175,7 +175,7 @@ function AuthSplit() {
           <p className="text-center text-[13px] text-muted-foreground mt-7">
             {isReg
               ? <>Already have an account? <a href="#" onClick={e => { e.preventDefault(); swap('signin'); }} className="text-primary font-medium hover:underline">Sign in</a></>
-              : <>New to Musematic? <a href="#" onClick={e => { e.preventDefault(); swap('register'); }} className="text-primary font-medium hover:underline">Create account</a></>}
+              : <>New here? <a href="#" onClick={e => { e.preventDefault(); swap('register'); }} className="text-primary font-medium hover:underline">Create account</a></>}
           </p>
         </div>
       </main>
@@ -184,18 +184,18 @@ function AuthSplit() {
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_LAYOUT = `// AuthLayout.tsx — split de marca + formulario (gntik-ui)
-// Iconos vía lucide-react · clases = tokens de tokens/brand.css → reskinea con el tema.
-// El panel usa bg-chrome (negro-verde en dark) para reproducir el brand oscuro de la app.
+const CODE_LAYOUT = `// AuthLayout.tsx — brand split + form (gntik-ui)
+// Icons via lucide-react · classes = tokens from tokens/brand.css → reskins with the theme.
+// The panel uses bg-chrome (green-black in dark) to reproduce the app's dark brand.
 export function AuthLayout({ children }) {
   return (
     <div className="min-h-screen flex bg-background text-foreground font-sans">
-      {/* Panel de marca — solo en lg+, como el sidebar */}
+      {/* Brand panel — md+ only, like the sidebar */}
       <aside className="relative hidden md:flex w-[46%] shrink-0 flex-col justify-between
                         bg-chrome border-r border-border/60 p-12">
         <Wordmark />
         <div className="max-w-[420px]">
-          <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-primary mb-5">Control plane · agents</p>
+          <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-primary mb-5">Control plane · services</p>
           <h2 className="text-[42px] font-bold leading-[1.08] tracking-tight">
             Trust the workflow,<br/><span className="text-primary">not the tab chaos.</span>
           </h2>
@@ -216,7 +216,7 @@ export function AuthLayout({ children }) {
         </div>
       </aside>
 
-      {/* Formulario */}
+      {/* Form */}
       <main className="flex-1 grid place-items-center p-10">
         <div className="w-full max-w-[392px]">{children}</div>
       </main>
@@ -224,8 +224,8 @@ export function AuthLayout({ children }) {
   );
 }`;
 
-const CODE_OAUTH = `// OAuthRow.tsx — Google · Facebook · GitHub (monocromos, heredan currentColor)
-// Etiqueta visible en lg+, icon-only en pantallas estrechas.
+const CODE_OAUTH = `// OAuthRow.tsx — Google · Facebook · GitHub (monochrome, inherit currentColor)
+// Label visible on lg+, icon-only on narrow screens.
 import { Google, Facebook, Github } from "@/components/brand-icons";
 
 const PROVIDERS = [
@@ -258,12 +258,12 @@ export function OAuthRow({ onPick }) {
   );
 }`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function SignInSection() {
   return (
     <div>
-      <SectionHead kicker="Formularios" title="Sign-in & registro" status="done"
-        intro="La pantalla de acceso: panel de marca a la izquierda (hero, checklist y sello de seguridad) y, a la derecha, el formulario con dos modos — iniciar sesión y crear cuenta — más SSO con Google, Facebook y GitHub. Es interactivo: alterna los modos en el segmented, escribe en los campos, revela la contraseña con el ojo y marca los términos para habilitar el alta. El panel usa bg-chrome, así que en el tema dark (principal) reproduce el brand oscuro de la app y reskinea con el resto." />
+      <SectionHead kicker="Forms" title="Sign-in & sign-up" status="done"
+        intro="The access screen: brand panel on the left (hero, checklist and security seal) and, on the right, the form with two modes — sign in and create account — plus SSO with Google, Facebook and GitHub. It's interactive: switch modes in the segmented control, type in the fields, reveal the password with the eye and tick the terms to enable sign-up. The panel uses bg-chrome, so in the dark theme (default) it reproduces the app's dark brand and reskins with everything else." />
 
       <div className="rounded-lg border border-border bg-card p-4 sm:p-6 overflow-hidden">
         <ScaleFrame width={1120}><AuthSplit /></ScaleFrame>

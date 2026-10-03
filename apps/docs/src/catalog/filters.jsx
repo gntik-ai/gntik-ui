@@ -1,14 +1,14 @@
 /* ============================================================================
-   Gntik UI · filters.jsx — sistema de filtrado (grupo "Filtros").
-   La toolbar del Fleet: buscador en vivo + popovers de faceta (selección
-   múltiple con recuento y búsqueda) + chips de filtro activo + vistas
-   guardadas. Filtra una lista real de agentes. Dominio musematic · tokens.
-   Variantes: popover de faceta · chips · vistas guardadas · toolbar completo.
+   Gntik UI · filters.jsx — filtering system ("Filters" group).
+   The list toolbar: live search + facet popovers (multi-select with counts
+   and search) + active filter chips + saved views. Filters a real list
+   of services. Tokens only.
+   Variants: facet popover · chips · saved views · compact toolbar · full toolbar.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useRef, useClickOutside } = window;
 
-/* ── envoltura de variante ───────────────────────────────────────────────── */
+/* ── variant wrapper ─────────────────────────────────────────────────────── */
 const Variant = ({ title, desc, code, children }) => (
   <div className="mb-12">
     <div className="mb-3">
@@ -20,39 +20,39 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── datos del fleet ─────────────────────────────────────────────────────── */
+/* ── sample service data ─────────────────────────────────────────────────── */
 const FLEET = [
-  { id: 1,  name: 'support-triage', model: 'sonnet-4', region: 'eu-west-1',  tone: 'running',  state: 'Running',  cost: 412.8,  owner: 'Emma Crown' },
-  { id: 2,  name: 'billing-bot',    model: 'haiku-4',  region: 'us-east-1',  tone: 'running',  state: 'Running',  cost: 88.4,   owner: 'Leo Park' },
-  { id: 3,  name: 'data-enricher',  model: 'sonnet-4', region: 'eu-west-1',  tone: 'degraded', state: 'Degraded', cost: 1204.1, owner: 'Mara Vidal' },
-  { id: 4,  name: 'churn-watch',    model: 'haiku-4',  region: 'ap-south-1', tone: 'paused',   state: 'Paused',   cost: 0,      owner: 'Noah Frey' },
-  { id: 5,  name: 'lead-router',    model: 'sonnet-4', region: 'us-east-1',  tone: 'running',  state: 'Running',  cost: 233.5,  owner: 'Emma Crown' },
-  { id: 6,  name: 'fraud-scan',     model: 'opus-4',   region: 'eu-west-1',  tone: 'failed',   state: 'Failed',   cost: 51.2,   owner: 'Inés Roca' },
-  { id: 7,  name: 'invoice-parse',  model: 'haiku-4',  region: 'us-east-1',  tone: 'running',  state: 'Running',  cost: 142.6,  owner: 'Leo Park' },
-  { id: 8,  name: 'kb-summarizer',  model: 'sonnet-4', region: 'ap-south-1', tone: 'degraded', state: 'Degraded', cost: 319.0,  owner: 'Mara Vidal' },
-  { id: 9,  name: 'tos-classifier', model: 'opus-4',   region: 'eu-west-1',  tone: 'running',  state: 'Running',  cost: 688.9,  owner: 'Emma Crown' },
-  { id: 10, name: 'spam-gate',      model: 'haiku-4',  region: 'us-east-1',  tone: 'paused',   state: 'Paused',   cost: 0,      owner: 'Noah Frey' },
-  { id: 11, name: 'sentiment-tap',  model: 'sonnet-4', region: 'eu-west-1',  tone: 'running',  state: 'Running',  cost: 97.3,   owner: 'Inés Roca' },
-  { id: 12, name: 'doc-router',     model: 'opus-4',   region: 'ap-south-1', tone: 'failed',   state: 'Failed',   cost: 24.7,   owner: 'Mara Vidal' },
+  { id: 1,  name: 'support-triage', model: 'node-24', region: 'eu-west-1',  tone: 'running',  state: 'Running',  cost: 412.8,  owner: 'Emma Crown' },
+  { id: 2,  name: 'billing-api',    model: 'python-3.13',  region: 'us-east-1',  tone: 'running',  state: 'Running',  cost: 88.4,   owner: 'Leo Park' },
+  { id: 3,  name: 'data-enricher',  model: 'node-24', region: 'eu-west-1',  tone: 'degraded', state: 'Degraded', cost: 1204.1, owner: 'Mara Vidal' },
+  { id: 4,  name: 'churn-watch',    model: 'python-3.13',  region: 'ap-south-1', tone: 'paused',   state: 'Paused',   cost: 0,      owner: 'Noah Frey' },
+  { id: 5,  name: 'lead-router',    model: 'node-24', region: 'us-east-1',  tone: 'running',  state: 'Running',  cost: 233.5,  owner: 'Emma Crown' },
+  { id: 6,  name: 'fraud-scan',     model: 'go-1.24',   region: 'eu-west-1',  tone: 'failed',   state: 'Failed',   cost: 51.2,   owner: 'Inés Roca' },
+  { id: 7,  name: 'invoice-parse',  model: 'python-3.13',  region: 'us-east-1',  tone: 'running',  state: 'Running',  cost: 142.6,  owner: 'Leo Park' },
+  { id: 8,  name: 'kb-summarizer',  model: 'node-24', region: 'ap-south-1', tone: 'degraded', state: 'Degraded', cost: 319.0,  owner: 'Mara Vidal' },
+  { id: 9,  name: 'tos-classifier', model: 'go-1.24',   region: 'eu-west-1',  tone: 'running',  state: 'Running',  cost: 688.9,  owner: 'Emma Crown' },
+  { id: 10, name: 'spam-gate',      model: 'python-3.13',  region: 'us-east-1',  tone: 'paused',   state: 'Paused',   cost: 0,      owner: 'Noah Frey' },
+  { id: 11, name: 'sentiment-tap',  model: 'node-24', region: 'eu-west-1',  tone: 'running',  state: 'Running',  cost: 97.3,   owner: 'Inés Roca' },
+  { id: 12, name: 'doc-router',     model: 'go-1.24',   region: 'ap-south-1', tone: 'failed',   state: 'Failed',   cost: 24.7,   owner: 'Mara Vidal' },
 ];
 
 const FACETS = {
-  state:  { key: 'state',  label: 'Estado',   icon: 'activity', options: ['Running', 'Degraded', 'Paused', 'Failed'] },
-  model:  { key: 'model',  label: 'Modelo',   icon: 'bot',      options: ['sonnet-4', 'haiku-4', 'opus-4'] },
-  region: { key: 'region', label: 'Región',   icon: 'net',      options: ['eu-west-1', 'us-east-1', 'ap-south-1'] },
-  owner:  { key: 'owner',  label: 'Operador', icon: 'user', searchable: true, options: ['Emma Crown', 'Leo Park', 'Mara Vidal', 'Noah Frey', 'Inés Roca'] },
+  state:  { key: 'state',  label: 'Status',   icon: 'activity', options: ['Running', 'Degraded', 'Paused', 'Failed'] },
+  model:  { key: 'model',  label: 'Runtime',  icon: 'bot',      options: ['node-24', 'python-3.13', 'go-1.24'] },
+  region: { key: 'region', label: 'Region',   icon: 'net',      options: ['eu-west-1', 'us-east-1', 'ap-south-1'] },
+  owner:  { key: 'owner',  label: 'Owner',    icon: 'user', searchable: true, options: ['Emma Crown', 'Leo Park', 'Mara Vidal', 'Noah Frey', 'Inés Roca'] },
 };
-const LABELS = { state: 'Estado', model: 'Modelo', region: 'Región', owner: 'Operador' };
+const LABELS = { state: 'Status', model: 'Runtime', region: 'Region', owner: 'Owner' };
 
 const countBy = (key) => FLEET.reduce((m, a) => { m[a[key]] = (m[a[key]] || 0) + 1; return m; }, {});
 const COUNTS = { state: countBy('state'), model: countBy('model'), region: countBy('region'), owner: countBy('owner') };
 
-/* vistas guardadas: cada una almacena su conjunto de facetas */
+/* saved views: each one stores its set of facets */
 const VIEWS = [
-  { id: 'all',  label: 'Todos',           facets: {} },
-  { id: 'inc',  label: 'Incidencias',     facets: { state: ['Degraded', 'Failed'] } },
-  { id: 'eu',   label: 'Producción EU',   facets: { region: ['eu-west-1'], state: ['Running'] } },
-  { id: 'prem', label: 'Modelos premium', facets: { model: ['opus-4', 'sonnet-4'] } },
+  { id: 'all',  label: 'All',             facets: {} },
+  { id: 'inc',  label: 'Incidents',       facets: { state: ['Degraded', 'Failed'] } },
+  { id: 'eu',   label: 'EU production',   facets: { region: ['eu-west-1'], state: ['Running'] } },
+  { id: 'prem', label: 'Go & Node',       facets: { model: ['go-1.24', 'node-24'] } },
 ];
 
 /* ── helpers ─────────────────────────────────────────────────────────────── */
@@ -81,7 +81,7 @@ function sameFacets(a, b) {
   return true;
 }
 
-/* ── pill de estado ──────────────────────────────────────────────────────── */
+/* ── status pill ─────────────────────────────────────────────────────────── */
 const TONES = {
   running: 'bg-primary/14 text-primary',
   paused: 'bg-muted-foreground/16 text-muted-foreground',
@@ -94,12 +94,12 @@ const Pill = ({ tone = 'running', children }) => (
   </span>
 );
 
-/* ── cabecera de columna (tabla del toolbar ligero) ──────────────────────── */
+/* ── column header (compact toolbar table) ───────────────────────────────── */
 const Th = ({ children, className = '' }) => (
   <th className={"text-left font-sans font-medium text-[11.5px] tracking-wide uppercase text-muted-foreground px-4 h-10 whitespace-nowrap " + className}>{children}</th>
 );
 
-/* ── mini-checkbox (solo lectura; la fila gestiona el toggle) ────────────── */
+/* ── mini checkbox (read-only; the row handles the toggle) ───────────────── */
 const Box = ({ on }) => (
   <span className="relative inline-flex items-center justify-center w-[16px] h-[16px] shrink-0">
     <span className={"w-[16px] h-[16px] rounded-[4px] border transition-colors " + (on ? 'bg-primary border-primary' : 'border-border bg-card')} />
@@ -107,7 +107,7 @@ const Box = ({ on }) => (
   </span>
 );
 
-/* ── FacetFilter · botón + popover de selección múltiple con recuento ─────── */
+/* ── FacetFilter · button + multi-select popover with counts ─────────────── */
 function FacetFilter({ facet, selected, onChange, compact }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
@@ -143,13 +143,13 @@ function FacetFilter({ facet, selected, onChange, compact }) {
           {facet.searchable && (
             <div className="flex items-center gap-2 px-2.5 h-9 border-b border-border/70">
               <Icon name="search" size={14} className="text-muted-foreground shrink-0" />
-              <input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder={'Buscar ' + facet.label.toLowerCase() + '…'}
+              <input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder={'Search ' + facet.label.toLowerCase() + '…'}
                 className="w-full bg-transparent text-[12.5px] text-foreground placeholder:text-muted-foreground focus:outline-none" />
             </div>
           )}
           <ul role="listbox" aria-multiselectable="true" className="max-h-60 overflow-auto p-1">
             {opts.length === 0
-              ? <li className="px-2.5 py-3 text-center text-[12px] text-muted-foreground">Sin coincidencias.</li>
+              ? <li className="px-2.5 py-3 text-center text-[12px] text-muted-foreground">No matches.</li>
               : opts.map(val => {
                 const on = sel.includes(val);
                 return (
@@ -166,7 +166,7 @@ function FacetFilter({ facet, selected, onChange, compact }) {
             <div className="border-t border-border/70 p-1">
               <button onClick={() => onChange([])}
                 className="w-full h-8 rounded-[6px] text-[12.5px] font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/70 transition-colors">
-                Limpiar {facet.label.toLowerCase()}
+                Clear {facet.label.toLowerCase()}
               </button>
             </div>
           )}
@@ -176,30 +176,30 @@ function FacetFilter({ facet, selected, onChange, compact }) {
   );
 }
 
-/* ── ActiveChips · resumen siempre visible de los filtros aplicados ───────── */
+/* ── ActiveChips · always-visible summary of applied filters ─────────────── */
 function ActiveChips({ facets, onRemove, onClear }) {
   const entries = [];
   Object.keys(facets).forEach(key => (facets[key] || []).forEach(val => entries.push({ key, val })));
   if (!entries.length) return null;
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-muted-foreground/80">Filtros</span>
+      <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-muted-foreground/80">Filters</span>
       {entries.map(({ key, val }) => (
         <span key={key + val} className="inline-flex items-center gap-1.5 h-7 pl-2.5 pr-1 rounded-md border border-border bg-background text-[12px]">
           <span className="text-muted-foreground">{LABELS[key]}:</span>
           <span className="font-medium text-foreground max-w-[140px] truncate">{val}</span>
-          <button onClick={() => onRemove(key, val)} aria-label={'Quitar ' + val}
+          <button onClick={() => onRemove(key, val)} aria-label={'Remove ' + val}
             className="grid h-5 w-5 place-items-center rounded text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
             <Icon name="x" size={12} stroke={2.4} />
           </button>
         </span>
       ))}
-      <button onClick={onClear} className="inline-flex items-center h-7 px-2 rounded-md text-[12px] font-medium text-muted-foreground hover:text-destructive transition-colors">Limpiar todo</button>
+      <button onClick={onClear} className="inline-flex items-center h-7 px-2 rounded-md text-[12px] font-medium text-muted-foreground hover:text-destructive transition-colors">Clear all</button>
     </div>
   );
 }
 
-/* ── SavedViews · conjuntos de filtros con nombre ────────────────────────── */
+/* ── SavedViews · named filter sets ──────────────────────────────────────── */
 function SavedViews({ views, activeId, onPick, onSave, canSave }) {
   return (
     <div className="flex items-center gap-1 flex-wrap">
@@ -220,7 +220,7 @@ function SavedViews({ views, activeId, onPick, onSave, canSave }) {
           <button onClick={onSave} disabled={!canSave}
             className={"inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md text-[12.5px] font-medium transition-colors " +
               (canSave ? 'text-muted-foreground hover:text-foreground hover:bg-secondary/50' : 'text-muted-foreground/40 cursor-not-allowed')}>
-            <Icon name="plus" size={14} />Guardar vista
+            <Icon name="plus" size={14} />Save view
           </button>
         </>
       )}
@@ -228,7 +228,7 @@ function SavedViews({ views, activeId, onPick, onSave, canSave }) {
   );
 }
 
-/* ── 1 · Popover de faceta (independiente) ───────────────────────────────── */
+/* ── 1 · Facet popover (standalone) ──────────────────────────────────────── */
 function FacetDemo() {
   const [facets, setFacets] = useState({ state: ['Running'] });
   const setFacet = (key, vals) => setFacets(f => { const n = { ...f }; if (vals.length) n[key] = vals; else delete n[key]; return n; });
@@ -241,13 +241,13 @@ function FacetDemo() {
         <FacetFilter facet={FACETS.owner} selected={facets.owner} onChange={v => setFacet('owner', v)} />
       </div>
       <p className="mt-4 text-[12.5px] text-muted-foreground">
-        <span className="font-mono text-foreground tabular-nums">{n}</span> de {FLEET.length} agentes coinciden. El popover es multi-selección; el recuento de cada opción sale a la derecha y «Operador» trae búsqueda dentro.
+        <span className="font-mono text-foreground tabular-nums">{n}</span> of {FLEET.length} services match. The popover is multi-select; each option's count shows on the right and “Owner” has search built in.
       </p>
     </div>
   );
 }
 
-/* ── 2 · Chips de filtro activo (independiente) ──────────────────────────── */
+/* ── 2 · Active filter chips (standalone) ────────────────────────────────── */
 function ChipsDemo() {
   const [facets, setFacets] = useState({ state: ['Degraded', 'Failed'], region: ['eu-west-1'], owner: ['Mara Vidal'] });
   const removeChip = (key, val) => setFacets(f => { const n = { ...f }; const arr = (n[key] || []).filter(v => v !== val); if (arr.length) n[key] = arr; else delete n[key]; return n; });
@@ -257,16 +257,16 @@ function ChipsDemo() {
         ? <ActiveChips facets={facets} onRemove={removeChip} onClear={() => setFacets({})} />
         : (
           <div className="flex items-center gap-2 text-[12.5px] text-muted-foreground">
-            <Icon name="check" size={15} className="text-primary" />Sin filtros activos.
+            <Icon name="check" size={15} className="text-primary" />No active filters.
             <button onClick={() => setFacets({ state: ['Degraded', 'Failed'], region: ['eu-west-1'], owner: ['Mara Vidal'] })}
-              className="font-medium text-foreground hover:text-primary transition-colors underline underline-offset-2">Restaurar ejemplo</button>
+              className="font-medium text-foreground hover:text-primary transition-colors underline underline-offset-2">Restore example</button>
           </div>
         )}
     </div>
   );
 }
 
-/* ── 3 · Vistas guardadas (independiente) ────────────────────────────────── */
+/* ── 3 · Saved views (standalone) ────────────────────────────────────────── */
 function ViewsDemo() {
   const [activeId, setActiveId] = useState('inc');
   const view = VIEWS.find(v => v.id === activeId) || VIEWS[0];
@@ -280,14 +280,14 @@ function ViewsDemo() {
       <div className="px-4 py-4">
         {hasAny(facets)
           ? <ActiveChips facets={facets} onRemove={() => {}} onClear={() => setActiveId('all')} />
-          : <span className="text-[12.5px] text-muted-foreground">«Todos» no aplica ningún filtro.</span>}
-        <p className="mt-3 font-mono text-[11px] text-muted-foreground tabular-nums">{n} de {FLEET.length} agentes en esta vista</p>
+          : <span className="text-[12.5px] text-muted-foreground">“All” applies no filters.</span>}
+        <p className="mt-3 font-mono text-[11px] text-muted-foreground tabular-nums">{n} of {FLEET.length} services in this view</p>
       </div>
     </div>
   );
 }
 
-/* ── 4 · Toolbar ligero (buscador + filtros de columna) ──────────────────── */
+/* ── 4 · Compact toolbar (search + column filters) ───────────────────────── */
 function CompactToolbar() {
   const [q, setQ] = useState('');
   const [facets, setFacets] = useState({ state: ['Running'] });
@@ -297,11 +297,11 @@ function CompactToolbar() {
   const active = hasAny(facets) || q.trim() !== '';
   return (
     <div>
-      {/* toolbar compacto: buscador + filtros de columna */}
+      {/* compact toolbar: search + column filters */}
       <div className="flex flex-wrap items-center gap-2 px-3 py-2.5 border-b border-border bg-secondary/20">
         <div className="relative flex-1 min-w-[150px] max-w-[240px]">
           <Icon name="search" size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Buscar…"
+          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search…"
             className="w-full h-8 rounded-md border border-border bg-background pl-8 pr-2.5 text-[12.5px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/35 focus:border-ring/60 transition-shadow" />
         </div>
         <FacetFilter compact facet={FACETS.state} selected={facets.state} onChange={v => setFacet('state', v)} />
@@ -310,16 +310,16 @@ function CompactToolbar() {
         <div className="ml-auto flex items-center gap-3 shrink-0">
           {active && (
             <button onClick={clearAll} className="inline-flex items-center gap-1 text-[12px] font-medium text-muted-foreground hover:text-destructive transition-colors">
-              <Icon name="x" size={13} />Limpiar
+              <Icon name="x" size={13} />Clear
             </button>
           )}
           <span className="font-mono text-[11px] text-muted-foreground tabular-nums">{rows.length}/{FLEET.length}</span>
         </div>
       </div>
-      {/* tabla filtrada — filtros sobre columnas reales */}
+      {/* filtered table — filters over real columns */}
       <table className="w-full border-collapse">
         <thead><tr className="border-b border-border bg-secondary/30">
-          <Th>Agente</Th><Th>Región</Th><Th>Estado</Th><Th className="text-right">Coste 30 d</Th>
+          <Th>Service</Th><Th>Region</Th><Th>Status</Th><Th className="text-right">Cost 30 d</Th>
         </tr></thead>
         <tbody className="divide-y divide-border">
           {rows.map(a => (
@@ -329,7 +329,7 @@ function CompactToolbar() {
                   <span className="w-8 h-8 rounded-lg bg-primary/14 text-primary inline-flex items-center justify-center shrink-0"><Icon name="bot" size={15} /></span>
                   <div>
                     <div className="font-sans font-semibold text-[13px] text-foreground">{a.name}</div>
-                    <div className="font-mono text-[11px] text-muted-foreground">claude-{a.model}</div>
+                    <div className="font-mono text-[11px] text-muted-foreground">{a.model}</div>
                   </div>
                 </div>
               </td>
@@ -340,8 +340,8 @@ function CompactToolbar() {
           ))}
           {rows.length === 0 && (
             <tr><td colSpan={4} className="px-4 py-12 text-center">
-              <div className="text-[13px] text-foreground font-medium">Ningún agente coincide</div>
-              <div className="text-[12px] text-muted-foreground mt-0.5">Afloja un filtro o limpia la búsqueda.</div>
+              <div className="text-[13px] text-foreground font-medium">No services match</div>
+              <div className="text-[12px] text-muted-foreground mt-0.5">Loosen a filter or clear the search.</div>
             </td></tr>
           )}
         </tbody>
@@ -350,7 +350,7 @@ function CompactToolbar() {
   );
 }
 
-/* ── 5 · Toolbar completo (todo el sistema) ──────────────────────────────── */
+/* ── 5 · Full toolbar (the whole system) ─────────────────────────────────── */
 function FullToolbar() {
   const [q, setQ] = useState('');
   const [facets, setFacets] = useState({});
@@ -365,8 +365,8 @@ function FullToolbar() {
   const pickView = (v) => { setFacets(cloneFacets(v.facets)); setQ(''); };
   const canSave = activeId === null && hasAny(facets);
   const saveView = () => {
-    const nv = { id: 'v' + Date.now(), label: 'Vista ' + (++counterRef.current - 1 || ''), facets: cloneFacets(facets) };
-    nv.label = 'Vista ' + (views.filter(v => v.id[0] === 'v').length + 1);
+    const nv = { id: 'v' + Date.now(), label: 'View ' + (++counterRef.current - 1 || ''), facets: cloneFacets(facets) };
+    nv.label = 'View ' + (views.filter(v => v.id[0] === 'v').length + 1);
     setViews(vs => [...vs, nv]);
   };
 
@@ -374,16 +374,16 @@ function FullToolbar() {
 
   return (
     <div>
-      {/* vistas guardadas */}
+      {/* saved views */}
       <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-secondary/20 overflow-x-auto">
         <SavedViews views={views} activeId={activeId} onPick={pickView} onSave={saveView} canSave={canSave} />
       </div>
 
-      {/* toolbar: buscador + facetas */}
+      {/* toolbar: search + facets */}
       <div className="flex flex-wrap items-center gap-2 px-3 py-3 border-b border-border">
         <div className="relative flex-1 min-w-[180px] max-w-[280px]">
           <Icon name="search" size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Buscar agente…"
+          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search services…"
             className="w-full h-9 rounded-md border border-border bg-background pl-9 pr-3 text-[13px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/35 focus:border-ring/60 transition-shadow" />
         </div>
         <FacetFilter facet={FACETS.state} selected={facets.state} onChange={v => setFacet('state', v)} />
@@ -392,31 +392,31 @@ function FullToolbar() {
         <FacetFilter facet={FACETS.owner} selected={facets.owner} onChange={v => setFacet('owner', v)} />
       </div>
 
-      {/* chips activos */}
+      {/* active chips */}
       {(hasAny(facets) || q.trim()) && (
         <div className="flex flex-wrap items-center gap-2 px-3 py-2.5 border-b border-border bg-secondary/10">
           {q.trim() && (
             <span className="inline-flex items-center gap-1.5 h-7 pl-2.5 pr-1 rounded-md border border-border bg-background text-[12px]">
-              <span className="text-muted-foreground">Buscar:</span>
+              <span className="text-muted-foreground">Search:</span>
               <span className="font-medium text-foreground max-w-[140px] truncate">{q.trim()}</span>
-              <button onClick={() => setQ('')} aria-label="Quitar búsqueda" className="grid h-5 w-5 place-items-center rounded text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"><Icon name="x" size={12} stroke={2.4} /></button>
+              <button onClick={() => setQ('')} aria-label="Clear search" className="grid h-5 w-5 place-items-center rounded text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"><Icon name="x" size={12} stroke={2.4} /></button>
             </span>
           )}
           <ActiveChips facets={facets} onRemove={removeChip} onClear={() => setFacets({})} />
           {(hasAny(facets) && q.trim()) && (
-            <button onClick={clearAll} className="inline-flex items-center h-7 px-2 rounded-md text-[12px] font-medium text-muted-foreground hover:text-destructive transition-colors">Limpiar todo</button>
+            <button onClick={clearAll} className="inline-flex items-center h-7 px-2 rounded-md text-[12px] font-medium text-muted-foreground hover:text-destructive transition-colors">Clear all</button>
           )}
         </div>
       )}
 
-      {/* resultados */}
+      {/* results */}
       <div className="divide-y divide-border">
         {rows.map(a => (
           <div key={a.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-accent/30 transition-colors">
             <span className="w-8 h-8 rounded-lg bg-primary/14 text-primary inline-flex items-center justify-center shrink-0"><Icon name="bot" size={15} /></span>
             <div className="min-w-0">
               <div className="font-sans font-semibold text-[13px] text-foreground truncate">{a.name}</div>
-              <div className="font-mono text-[11px] text-muted-foreground truncate">claude-{a.model} · {a.region}</div>
+              <div className="font-mono text-[11px] text-muted-foreground truncate">{a.model} · {a.region}</div>
             </div>
             <span className="ml-auto hidden sm:inline-grid place-items-center w-6 h-6 rounded-full bg-accent text-accent-foreground text-[10px] font-semibold shrink-0" title={a.owner}>{initials(a.owner)}</span>
             <div className="w-[104px] hidden md:flex shrink-0"><Pill tone={a.tone}>{a.state}</Pill></div>
@@ -426,20 +426,20 @@ function FullToolbar() {
         {rows.length === 0 && (
           <div className="px-4 py-14 text-center">
             <span className="w-11 h-11 rounded-xl bg-secondary text-muted-foreground inline-flex items-center justify-center mb-3"><Icon name="filter" size={20} /></span>
-            <div className="text-[13px] text-foreground font-medium">Ningún agente coincide</div>
-            <div className="text-[12px] text-muted-foreground mt-0.5">Afloja un filtro o limpia para ver todo el Fleet.</div>
-            <button onClick={clearAll} className="mt-3 inline-flex items-center gap-1.5 h-8 px-3 rounded-md border border-border bg-card text-[12.5px] font-medium text-foreground hover:bg-secondary/60 transition-colors"><Icon name="x" size={13} />Limpiar filtros</button>
+            <div className="text-[13px] text-foreground font-medium">No services match</div>
+            <div className="text-[12px] text-muted-foreground mt-0.5">Loosen a filter or clear to see every service.</div>
+            <button onClick={clearAll} className="mt-3 inline-flex items-center gap-1.5 h-8 px-3 rounded-md border border-border bg-card text-[12.5px] font-medium text-foreground hover:bg-secondary/60 transition-colors"><Icon name="x" size={13} />Clear filters</button>
           </div>
         )}
       </div>
 
-      {/* contador */}
+      {/* counter */}
       <div className="flex items-center justify-between px-4 py-2.5 border-t border-border bg-secondary/20">
-        <span className="font-mono text-[11px] text-muted-foreground tabular-nums">{rows.length} de {FLEET.length} agentes</span>
+        <span className="font-mono text-[11px] text-muted-foreground tabular-nums">{rows.length} of {FLEET.length} services</span>
         {activeId
-          ? <span className="font-mono text-[11px] text-muted-foreground">Vista · {views.find(v => v.id === activeId)?.label}</span>
+          ? <span className="font-mono text-[11px] text-muted-foreground">View · {views.find(v => v.id === activeId)?.label}</span>
           : (hasAny(facets) || q.trim())
-            ? <span className="font-mono text-[11px] text-primary">Vista sin guardar</span>
+            ? <span className="font-mono text-[11px] text-primary">Unsaved view</span>
             : null}
       </div>
     </div>
@@ -447,7 +447,7 @@ function FullToolbar() {
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_FACET = `// FacetFilter — botón que abre un popover de selección múltiple con recuento
+const CODE_FACET = `// FacetFilter — a button that opens a multi-select popover with counts
 const [open, setOpen] = useState(false);
 const ref = useRef(null);
 useClickOutside(ref, () => setOpen(false), open);
@@ -468,7 +468,7 @@ const toggle = (val) => onChange(sel.includes(val) ? sel.filter((v) => v !== val
 </button>
 {open && (
   <div className="absolute z-30 mt-1.5 w-[246px] rounded-md border border-border bg-popover shadow-lg">
-    {/* búsqueda dentro si la lista es larga */}
+    {/* search inside when the list is long */}
     <ul className="max-h-60 overflow-auto p-1">
       {options.map((val) => (
         <li key={val} onClick={() => toggle(val)}
@@ -480,15 +480,15 @@ const toggle = (val) => onChange(sel.includes(val) ? sel.filter((v) => v !== val
         </li>
       ))}
     </ul>
-    {sel.length > 0 && <button onClick={() => onChange([])}>Limpiar {facet.label}</button>}
+    {sel.length > 0 && <button onClick={() => onChange([])}>Clear {facet.label}</button>}
   </div>
 )}`;
 
-const CODE_CHIPS = `// ActiveChips — un chip clave:valor por filtro; la × lo quita, "Limpiar todo" resetea
+const CODE_CHIPS = `// ActiveChips — one key:value chip per filter; the × removes it, "Clear all" resets
 const entries = Object.entries(facets).flatMap(([key, vals]) => vals.map((val) => ({ key, val })));
 
 <div className="flex flex-wrap items-center gap-2">
-  <span className="font-mono text-[10px] uppercase text-muted-foreground/80">Filtros</span>
+  <span className="font-mono text-[10px] uppercase text-muted-foreground/80">Filters</span>
   {entries.map(({ key, val }) => (
     <span key={key + val} className="inline-flex items-center gap-1.5 h-7 pl-2.5 pr-1 rounded-md border border-border bg-background text-[12px]">
       <span className="text-muted-foreground">{LABELS[key]}:</span>
@@ -496,10 +496,10 @@ const entries = Object.entries(facets).flatMap(([key, vals]) => vals.map((val) =
       <button onClick={() => removeChip(key, val)}><XIcon /></button>
     </span>
   ))}
-  <button onClick={clearAll} className="text-[12px] text-muted-foreground hover:text-destructive">Limpiar todo</button>
+  <button onClick={clearAll} className="text-[12px] text-muted-foreground hover:text-destructive">Clear all</button>
 </div>`;
 
-const CODE_SYSTEM = `// El sistema — buscador + facetas + vistas guardadas filtran una lista, todo en React
+const CODE_SYSTEM = `// The system — search + facets + saved views filter a list, all in React
 const [q, setQ] = useState('');
 const [facets, setFacets] = useState({});           // { state: ['Running'], model: [...] }
 
@@ -508,13 +508,13 @@ const rows = data.filter((a) => {
   return Object.entries(facets).every(([k, sel]) => !sel.length || sel.includes(a[k]));
 });
 
-// Vistas guardadas: cada vista ES un conjunto de facetas. Está activa la que coincide.
+// Saved views: each view IS a set of facets. The matching one is active.
 const activeId = q.trim() === '' ? views.find((v) => sameFacets(v.facets, facets))?.id : null;
 const pickView = (v) => { setFacets(structuredClone(v.facets)); setQ(''); };
-const saveView = () => setViews((vs) => [...vs, { id: crypto.randomUUID(), label: 'Vista ' + (vs.length + 1), facets }]);
-// canSave: no coincide con ninguna vista y hay filtros → el filtrado actual es nuevo`;
+const saveView = () => setViews((vs) => [...vs, { id: crypto.randomUUID(), label: 'View ' + (vs.length + 1), facets }]);
+// canSave: matches no view and there are filters → the current filtering is new`;
 
-const CODE_COMPACT = `// Toolbar ligero — buscador + filtros de columna; sin vistas ni chips
+const CODE_COMPACT = `// Compact toolbar — search + column filters; no views or chips
 const [q, setQ] = useState('');
 const [facets, setFacets] = useState({});
 const rows = data.filter((a) => {
@@ -525,48 +525,48 @@ const rows = data.filter((a) => {
 <div className="flex items-center gap-2 px-3 py-2.5 border-b border-border bg-secondary/20">
   <div className="relative flex-1 max-w-[240px]">
     <SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-    <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar…"
+    <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search…"
       className="w-full h-8 rounded-md border border-border bg-background pl-8 text-[12.5px] focus:ring-2 focus:ring-ring/35" />
   </div>
   <FacetFilter compact facet={FACETS.state} selected={facets.state} onChange={(v) => setFacet('state', v)} />
   <FacetFilter compact facet={FACETS.region} selected={facets.region} onChange={(v) => setFacet('region', v)} />
   <span className="ml-auto font-mono text-[11px] text-muted-foreground">{rows.length}/{data.length}</span>
 </div>
-{/* … <table> con columnas reales (Agente · Región · Estado · Coste); filas = rows … */}`;
+{/* … <table> with real columns (Service · Region · Status · Cost); rows = rows … */}`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function FiltersSection() {
   return (
     <div>
-      <SectionHead kicker="Filtros" title="Filters" status="done"
-        intro="El sistema para acotar el Fleet sin salir de la lista. Cuatro piezas que encajan: un buscador en vivo, popovers de faceta con selección múltiple y recuento por opción, chips que resumen lo aplicado, y vistas guardadas que convierten un filtrado en un atajo con nombre. Mono-brand verde, popovers y check de Select menus, todo sobre tokens." />
+      <SectionHead kicker="Filters" title="Filters" status="done"
+        intro="The system for narrowing a list without leaving it. Four pieces that fit together: live search, facet popovers with multi-select and per-option counts, chips summarising what is applied, and saved views that turn a filter set into a named shortcut. Mono-brand green, Select menus popovers and check, all on tokens." />
 
-      <Variant title="Popover de faceta"
-        desc="Cada faceta es un botón que abre un popover de selección múltiple con recuento por opción y, cuando la lista es larga, búsqueda dentro. El botón muestra el valor único elegido o cuántos hay activos."
+      <Variant title="Facet popover"
+        desc="Each facet is a button that opens a multi-select popover with per-option counts and, when the list is long, search inside. The button shows the single chosen value or how many are active."
         code={CODE_FACET}>
         <FacetDemo />
       </Variant>
 
-      <Variant title="Chips de filtro activo"
-        desc="Cada filtro aplicado se vuelve un chip «clave: valor» que se quita con la ×; «Limpiar todo» resetea de una. Es el resumen siempre visible de qué está acotando la lista."
+      <Variant title="Active filter chips"
+        desc="Each applied filter becomes a “key: value” chip removed with the ×; “Clear all” resets in one go. It is the always-visible summary of what is narrowing the list."
         code={CODE_CHIPS}>
         <ChipsDemo />
       </Variant>
 
-      <Variant title="Vistas guardadas"
-        desc="Conjuntos de filtros con nombre — incidencias, producción EU, modelos premium. Un clic los aplica y los chips muestran qué acota cada uno. En la toolbar, «Guardar vista» convierte el filtrado actual en una vista nueva."
+      <Variant title="Saved views"
+        desc="Named filter sets — incidents, EU production, Go & Node. One click applies them and the chips show what each one narrows. In the toolbar, “Save view” turns the current filtering into a new view."
         code={CODE_SYSTEM}>
         <ViewsDemo />
       </Variant>
 
-      <Variant title="Toolbar ligero"
-        desc="Una versión reducida: solo el buscador y unos filtros de columna (estado, región, modelo) sobre la tabla. Sin vistas guardadas ni fila de chips — lo elegido vive en cada botón y el contador va a la derecha. Para tablas donde basta con acotar rápido."
+      <Variant title="Compact toolbar"
+        desc="A reduced version: just search and a few column filters (status, region, runtime) over the table. No saved views or chip row — the selection lives in each button and the counter sits on the right. For tables where a quick narrow-down is enough."
         code={CODE_COMPACT}>
         <CompactToolbar />
       </Variant>
 
-      <Variant title="Toolbar completo"
-        desc="Todo junto sobre el Fleet: buscador, facetas, chips activos y vistas guardadas filtrando una lista real de agentes. Cambia una faceta y la vista pasa a «sin guardar» hasta que la guardes; busca y verás el término como un chip más."
+      <Variant title="Full toolbar"
+        desc="Everything together: search, facets, active chips and saved views filtering a real list of services. Change a facet and the view becomes “unsaved” until you save it; search and you will see the term as another chip."
         code={CODE_SYSTEM}>
         <FullToolbar />
       </Variant>

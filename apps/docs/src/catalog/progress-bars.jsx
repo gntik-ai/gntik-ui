@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · progress-bars.jsx — progreso (grupo "Navegación").
-   Barra lineal con etiqueta, pasos (wizard) con avance en vivo, anillo circular
-   en SVG, y barra segmentada (consumo de cuota). Fill en verde de marca; el
-   track en bg-secondary. Dominio musematic, todo en tokens.
+   Gntik UI · progress-bars.jsx — progress ("Navigation" group).
+   Linear bar with label, steps (wizard) with live progress, circular SVG
+   ring, and segmented bar (quota usage). Fill in brand green; track in
+   bg-secondary. Neutral fixtures, all tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
@@ -18,12 +18,12 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── 1 · BARRA LINEAL ────────────────────────────────────────────────────── */
+/* ── 1 · LINEAR BAR ──────────────────────────────────────────────────────── */
 function Linear() {
   const rows = [
-    ['Indexado del corpus', 72, 'primary'],
-    ['Migración de policies', 100, 'success'],
-    ['Reentrenamiento', 34, 'primary'],
+    ['Indexing documents', 72, 'primary'],
+    ['Migrating policies', 100, 'success'],
+    ['Rebuilding cache', 34, 'primary'],
   ];
   const fill = { primary: 'bg-primary', success: 'bg-success' };
   const txt = { primary: 'text-foreground', success: 'text-success' };
@@ -44,10 +44,10 @@ function Linear() {
   );
 }
 
-/* ── 2 · PASOS (wizard) ──────────────────────────────────────────────────── */
-const STEPS = ['Conectar', 'Permisos', 'Policies', 'Revisar'];
+/* ── 2 · STEPS (wizard) ──────────────────────────────────────────────────── */
+const STEPS = ['Connect', 'Permissions', 'Policies', 'Review'];
 function Steps() {
-  const [cur, setCur] = useState(1); // índice del paso actual (0-based)
+  const [cur, setCur] = useState(1); // current step index (0-based)
   return (
     <div className="max-w-xl mx-auto">
       <div className="flex items-center">
@@ -74,11 +74,11 @@ function Steps() {
       <div className="flex items-center justify-center gap-2 mt-7">
         <button onClick={() => setCur(c => Math.max(0, c - 1))} disabled={cur === 0}
           className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-border bg-card text-[12.5px] font-medium text-foreground transition-colors hover:border-ring/50 disabled:opacity-40 disabled:pointer-events-none">
-          <Icon name="chevronLeft" size={14} />Atrás
+          <Icon name="chevronLeft" size={14} />Back
         </button>
         <button onClick={() => setCur(c => Math.min(STEPS.length - 1, c + 1))} disabled={cur === STEPS.length - 1}
           className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-primary text-primary-foreground text-[12.5px] font-semibold transition-colors hover:bg-primary/90 disabled:opacity-40 disabled:pointer-events-none">
-          Siguiente<Icon name="chevronRight" size={14} />
+          Next<Icon name="chevronRight" size={14} />
         </button>
       </div>
     </div>
@@ -110,20 +110,20 @@ function Ring({ value, size = 96, label, sub }) {
 function Circular() {
   return (
     <div className="flex flex-wrap items-start justify-center gap-10">
-      <Ring value={68} label="Presupuesto" sub="$3.4k / $5k" />
-      <Ring value={92} label="SLA cumplido" sub="últimos 30 d" />
-      <Ring value={24} label="Cuota GPU" sub="vCPU-h" />
+      <Ring value={68} label="Budget" sub="$3.4k / $5k" />
+      <Ring value={92} label="SLA met" sub="last 30 d" />
+      <Ring value={24} label="GPU quota" sub="vCPU-h" />
     </div>
   );
 }
 
-/* ── 4 · SEGMENTADA ──────────────────────────────────────────────────────── */
+/* ── 4 · SEGMENTED ───────────────────────────────────────────────────────── */
 function Segmented() {
   const used = 7, total = 10;
   return (
     <div className="max-w-md">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-[12.5px] font-medium text-foreground">Asientos de operador</span>
+        <span className="text-[12.5px] font-medium text-foreground">Seats</span>
         <span className="font-mono text-[11.5px] text-muted-foreground"><span className="text-foreground font-semibold">{used}</span> / {total}</span>
       </div>
       <div className="flex items-center gap-1">
@@ -131,12 +131,12 @@ function Segmented() {
           <div key={i} className={"h-2.5 flex-1 rounded-sm " + (i < used ? 'bg-primary' : 'bg-secondary')} />
         ))}
       </div>
-      <p className="mt-2 text-[11.5px] text-muted-foreground">Quedan <span className="font-mono text-foreground">{total - used}</span> asientos en el plan actual.</p>
+      <p className="mt-2 text-[11.5px] text-muted-foreground"><span className="font-mono text-foreground">{total - used}</span> seats left on the current plan.</p>
     </div>
   );
 }
 
-const CODE_LINEAR = `// Barra lineal — track bg-secondary, fill bg-primary (success cuando completa)
+const CODE_LINEAR = `// Linear bar — bg-secondary track, bg-primary fill (success when complete)
 <div>
   <div className="flex items-center justify-between mb-1.5">
     <span className="text-[12.5px] font-medium text-foreground">{label}</span>
@@ -147,7 +147,7 @@ const CODE_LINEAR = `// Barra lineal — track bg-secondary, fill bg-primary (su
   </div>
 </div>`;
 
-const CODE_RING = `// Anillo — dos circles SVG; el progreso usa strokeDasharray/offset
+const CODE_RING = `// Ring — two SVG circles; progress uses strokeDasharray/offset
 const stroke = 8, r = (size - stroke) / 2, c = 2 * Math.PI * r;
 <svg width={size} height={size} className="-rotate-90">
   <circle cx={size/2} cy={size/2} r={r} fill="none" strokeWidth={stroke} className="stroke-secondary" />
@@ -158,28 +158,28 @@ const stroke = 8, r = (size - stroke) / 2, c = 2 * Math.PI * r;
 function ProgressBarsSection() {
   return (
     <div>
-      <SectionHead kicker="Navegación" title="Progress bars" status="done"
-        intro="Indicadores de progreso para tareas largas, asistentes y consumo de cuota. Barra lineal con etiqueta y porcentaje, pasos para un wizard con avance en vivo, anillo circular en SVG, y barra segmentada para asientos o créditos. El relleno siempre en verde de marca; el verde de éxito solo al completar." />
+      <SectionHead kicker="Navigation" title="Progress bars" status="done"
+        intro="Progress indicators for long tasks, wizards and quota usage. Linear bar with label and percentage, steps for a wizard with live progress, a circular SVG ring, and a segmented bar for seats or credits. The fill is always brand green; success green only on completion." />
 
-      <Variant title="Lineal"
-        desc="El indicador base: track sobre bg-secondary y relleno en primary. Al llegar al 100% pasa al verde de éxito."
+      <Variant title="Linear"
+        desc="The base indicator: track on bg-secondary and fill in primary. At 100% it switches to success green."
         code={CODE_LINEAR}>
         <Linear />
       </Variant>
 
-      <Variant title="Pasos"
-        desc="Para asistentes de varios pasos: los completados llevan check, el actual va con anillo. Usa Atrás/Siguiente o pulsa un paso.">
+      <Variant title="Steps"
+        desc="For multi-step wizards: completed steps get a check, the current one a ring. Use Back/Next or click a step.">
         <Steps />
       </Variant>
 
       <Variant title="Circular"
-        desc="Anillo SVG con el porcentaje al centro — para KPIs compactos en una tarjeta de métrica."
+        desc="SVG ring with the percentage in the center — for compact KPIs in a metric card."
         code={CODE_RING}>
         <Circular />
       </Variant>
 
-      <Variant title="Segmentada"
-        desc="Tramos discretos para contar unidades consumidas: asientos, créditos o licencias.">
+      <Variant title="Segmented"
+        desc="Discrete segments to count consumed units: seats, credits or licenses.">
         <Segmented />
       </Variant>
     </div>

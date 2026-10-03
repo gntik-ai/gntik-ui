@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · skeletons.jsx — skeleton / loading states (grupo "Feedback").
-   Marcadores de carga que preservan el layout: bloques con animate-pulse sobre
-   bg-muted. Primitiva (líneas, círculo, rect), lista, tabla y un swap real
-   cargando → cargado. Dominio musematic. Tokens, cero color hardcodeado.
+   Gntik UI · skeletons.jsx — skeleton / loading states ("Feedback" group).
+   Loading placeholders that preserve layout: animate-pulse blocks on
+   bg-muted. Primitive (lines, circle, rect), list, table and a real
+   loading → loaded swap. Neutral fixtures. Tokens, no hardcoded colors.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useRef, useEffect } = window;
@@ -18,10 +18,10 @@ const Variant = ({ title, desc, code, surface = 'card', children }) => (
   </div>
 );
 
-/* ── primitiva ───────────────────────────────────────────────────────────── */
+/* ── primitive ───────────────────────────────────────────────────────────── */
 const Sk = ({ className = '', style }) => <div style={style} className={"animate-pulse rounded-md bg-muted " + className} />;
 
-/* ── 1 · BLOQUES BASE ────────────────────────────────────────────────────── */
+/* ── 1 · BASE BLOCKS ─────────────────────────────────────────────────────── */
 const SpecimenLabel = ({ children }) => <span className="mt-3 block font-mono text-[10.5px] text-muted-foreground/70">{children}</span>;
 function Blocks() {
   return (
@@ -30,11 +30,11 @@ function Blocks() {
         <div className="space-y-2">
           <Sk className="h-3 w-full" /><Sk className="h-3 w-full" /><Sk className="h-3 w-2/3" />
         </div>
-        <SpecimenLabel>text · líneas</SpecimenLabel>
+        <SpecimenLabel>text · lines</SpecimenLabel>
       </div>
       <div>
         <Sk className="size-11 rounded-full" />
-        <SpecimenLabel>avatar · círculo</SpecimenLabel>
+        <SpecimenLabel>avatar · circle</SpecimenLabel>
       </div>
       <div>
         <Sk className="aspect-[4/3] w-full rounded-lg" />
@@ -44,13 +44,13 @@ function Blocks() {
         <div className="flex flex-col gap-2">
           <Sk className="h-8 w-24 rounded-md" /><Sk className="h-5 w-16 rounded-full" />
         </div>
-        <SpecimenLabel>botón · pill</SpecimenLabel>
+        <SpecimenLabel>button · pill</SpecimenLabel>
       </div>
     </div>
   );
 }
 
-/* ── 2 · LISTA (stacked) ─────────────────────────────────────────────────── */
+/* ── 2 · LIST (stacked) ─────────────────────────────────────────────────── */
 function ListSkeleton() {
   return (
     <div className="mx-auto max-w-xl overflow-hidden rounded-lg border border-border bg-card">
@@ -74,7 +74,7 @@ function ListSkeleton() {
   );
 }
 
-/* ── 3 · TABLA ───────────────────────────────────────────────────────────── */
+/* ── 3 · TABLE ───────────────────────────────────────────────────────────── */
 function TableSkeleton() {
   const COLS = ['38%', '20%', '16%', '14%', '12%'];
   return (
@@ -100,12 +100,12 @@ function TableSkeleton() {
   );
 }
 
-/* ── 4 · CARGANDO → CARGADO (swap real) ──────────────────────────────────── */
+/* ── 4 · LOADING → LOADED (real swap) ─────────────────────────────────────── */
 const STATS = [
   { label: 'Runs · 24h', value: '18,402', delta: '+12%', up: true },
-  { label: 'Coste · 24h', value: '$1,284', delta: '−4%', up: false },
-  { label: 'Latencia p95', value: '842 ms', delta: '+38 ms', up: false },
-  { label: 'Agentes activos', value: '27', delta: '+3', up: true },
+  { label: 'Cost · 24h', value: '$1,284', delta: '−4%', up: false },
+  { label: 'Latency p95', value: '842 ms', delta: '+38 ms', up: false },
+  { label: 'Active services', value: '27', delta: '+3', up: true },
 ];
 function StatCardSkeleton() {
   return (
@@ -138,11 +138,11 @@ function LoadSwap() {
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2 font-mono text-[11.5px] text-muted-foreground">
           <span className={"size-1.5 rounded-full " + (loading ? 'animate-pulse bg-warning' : 'bg-primary')} />
-          {loading ? 'Cargando métricas del Fleet…' : 'Actualizado hace un momento'}
+          {loading ? 'Loading metrics…' : 'Updated a moment ago'}
         </div>
         <button onClick={reload} disabled={loading}
           className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-3 text-[12.5px] font-medium text-foreground shadow-sm transition-colors hover:bg-secondary/70 disabled:opacity-50">
-          <Icon name="refresh" size={13} className={loading ? 'animate-spin text-muted-foreground' : 'text-muted-foreground'} />Recargar
+          <Icon name="refresh" size={13} className={loading ? 'animate-spin text-muted-foreground' : 'text-muted-foreground'} />Reload
         </button>
       </div>
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -155,11 +155,11 @@ function LoadSwap() {
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_SK = `// Primitiva — un único bloque que pulsa; compón el resto con tamaños
+const CODE_SK = `// Primitive — a single pulsing block; compose the rest with sizes
 const Skeleton = ({ className = "" }) =>
   <div className={"animate-pulse rounded-md bg-muted " + className} />;
 
-// líneas de texto
+// text lines
 <div className="space-y-2">
   <Skeleton className="h-3 w-full" />
   <Skeleton className="h-3 w-full" />
@@ -168,7 +168,7 @@ const Skeleton = ({ className = "" }) =>
 <Skeleton className="size-11 rounded-full" />   {/* avatar */}
 <Skeleton className="aspect-[4/3] w-full rounded-lg" />  {/* media */}`;
 
-const CODE_LIST = `// Lista — calca la fila real: avatar + dos líneas + meta + acción
+const CODE_LIST = `// List — mirrors the real row: avatar + two lines + meta + action
 <li className="flex items-center gap-3 px-4 py-3.5">
   <Skeleton className="size-9 shrink-0 rounded-full" />
   <div className="min-w-0 flex-1 space-y-2">
@@ -179,7 +179,7 @@ const CODE_LIST = `// Lista — calca la fila real: avatar + dos líneas + meta 
   <Skeleton className="size-7 rounded-md" />
 </li>`;
 
-const CODE_TABLE = `// Tabla — cabecera tenue + filas; el nombre decrece de ancho por fila
+const CODE_TABLE = `// Table — faint header + rows; the name width shrinks per row
 <div className="flex items-center gap-4 px-4 py-3.5">
   <div className="flex min-w-0 items-center gap-2.5" style={{ width: "38%" }}>
     <Skeleton className="size-7 shrink-0 rounded-md" />
@@ -191,44 +191,44 @@ const CODE_TABLE = `// Tabla — cabecera tenue + filas; el nombre decrece de an
   <Skeleton className="ml-auto h-3 w-10 rounded" />
 </div>`;
 
-const CODE_SWAP = `// Swap real — mismo grid, intercambia placeholder por contenido
+const CODE_SWAP = `// Real swap — same grid, swaps placeholder for content
 {loading
   ? STATS.map((_, i) => <StatCardSkeleton key={i} />)
   : STATS.map((s) => <StatCard key={s.label} s={s} />)}
 
-// dispara la carga
+// trigger the load
 const reload = () => {
   setLoading(true);
   setTimeout(() => setLoading(false), 1600);
 };`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function SkeletonsSection() {
   return (
     <div>
       <SectionHead kicker="Feedback" title="Skeletons" status="done"
-        intro="Mientras llegan los datos, en vez de un spinner centrado o un salto de layout, se pinta el esqueleto del contenido: bloques con animate-pulse sobre bg-muted que ocupan exactamente el sitio de lo que va a cargar. La regla es calcar la forma real — mismas alturas, mismos anchos, misma rejilla — para que el cambio a contenido sea imperceptible. Una sola primitiva (Skeleton) compone todos los casos." />
+        intro="While data is on its way, instead of a centered spinner or a layout jump, the skeleton of the content is drawn: animate-pulse blocks on bg-muted that take exactly the space of what is loading. The rule is to mirror the real shape — same heights, same widths, same grid — so the switch to content is imperceptible. A single primitive (Skeleton) composes every case." />
 
-      <Variant title="Bloques base" surface="dots"
-        desc="La primitiva y sus formas: líneas de texto de ancho decreciente, círculo para avatar, rectángulo con aspect-ratio para media y pills para botones/tags. Todo es el mismo <Skeleton> con distinto tamaño y radio."
+      <Variant title="Base blocks" surface="dots"
+        desc="The primitive and its shapes: text lines of decreasing width, a circle for avatars, an aspect-ratio rectangle for media and pills for buttons/tags. It's all the same <Skeleton> with a different size and radius."
         code={CODE_SK}>
         <Blocks />
       </Variant>
 
-      <Variant title="Lista"
-        desc="El esqueleto de una stacked list: cada fila replica avatar, dos líneas de texto (anchos variados para que no parezca un patrón), su badge de estado y el botón de acción."
+      <Variant title="List"
+        desc="The skeleton of a stacked list: each row mirrors the avatar, two text lines (varied widths so it doesn't look like a pattern), its status badge and the action button."
         code={CODE_LIST}>
         <ListSkeleton />
       </Variant>
 
-      <Variant title="Tabla"
-        desc="Para tablas densas: cabecera tenue y filas con el icono del recurso, su nombre de ancho decreciente, una columna de texto, el pill de estado y la métrica alineada a la derecha."
+      <Variant title="Table"
+        desc="For dense tables: a faint header and rows with the resource icon, its name of decreasing width, a text column, the status pill and the right-aligned metric."
         code={CODE_TABLE}>
         <TableSkeleton />
       </Variant>
 
-      <Variant title="Cargando → cargado"
-        desc="El caso real: el mismo grid de stat cards se pinta como esqueleto y, al resolver, intercambia a los valores sin mover nada. Pulsa “Recargar” para volver a verlo."
+      <Variant title="Loading → loaded"
+        desc="The real case: the same grid of stat cards is drawn as a skeleton and, once resolved, swaps to the values without moving anything. Click “Reload” to see it again."
         code={CODE_SWAP}>
         <LoadSwap />
       </Variant>

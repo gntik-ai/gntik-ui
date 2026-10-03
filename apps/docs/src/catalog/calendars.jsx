@@ -1,33 +1,33 @@
 /* ============================================================================
-   Gntik UI · calendars.jsx — el calendario del Fleet.
-   No son citas con personas: son schedulers — runs en cron, deploys, auditorías,
-   backups y ventanas de mantenimiento. Cuatro vistas que comparten un mismo mapa
-   de eventos (EVENTS, por fecha ISO) y los tokens de marca. Sin avatares: cada
-   tarea lleva un tile de tipo. Dominio musematic · tokens.
-   Variantes: mes · semana · día (con agenda en scroll) · borderless side-by-side.
+   Gntik UI · calendars.jsx — the scheduler calendar.
+   Not meetings with people: schedulers — cron jobs, deploys, audits,
+   backups and maintenance windows. Four views sharing one event map
+   (EVENTS, by ISO date) and the brand tokens. No avatars: each task
+   carries a type tile. Tokens only.
+   Variants: month · week · day (with scrolling agenda) · borderless side-by-side.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useEffect, useRef, useClickOutside } = window;
 
-/* ── constantes de tiempo / etiquetas ────────────────────────────────────── */
-const HOUR = 52;                 // px por hora en la rejilla horaria
-const NOW = 10 + 20 / 60;        // línea "ahora" fija (10:20) para una posición estable
-const TODAY = new Date(2026, 3, 15);   // mié 15 abr 2026 — "hoy" del catálogo
-const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-const WD = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
-const WD1 = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
-const WD_LONG = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+/* ── time constants / labels ─────────────────────────────────────────────── */
+const HOUR = 52;                 // px per hour in the time grid
+const NOW = 10 + 20 / 60;        // fixed "now" line (10:20) for a stable position
+const TODAY = new Date(2026, 3, 15);   // Wed 15 Apr 2026 — the catalog's "today"
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const WD = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const WD1 = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+const WD_LONG = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-/* ── tipos de tarea (categóricos · tokens; el verde primario = run) ───────── */
+/* ── task types (categorical · tokens; primary green = job) ──────────────── */
 const KIND = {
-  run:    { label: 'Run',        icon: 'refresh',  dot: 'bg-primary',          soft: 'bg-primary/12',          text: 'text-primary',          sub: 'text-primary/70' },
+  run:    { label: 'Job',        icon: 'refresh',  dot: 'bg-primary',          soft: 'bg-primary/12',          text: 'text-primary',          sub: 'text-primary/70' },
   deploy: { label: 'Deploy',     icon: 'upload',   dot: 'bg-category-violet',  soft: 'bg-category-violet/14',  text: 'text-category-violet',  sub: 'text-category-violet/70' },
-  audit:  { label: 'Auditoría',  icon: 'shield',   dot: 'bg-category-cyan',    soft: 'bg-category-cyan/14',    text: 'text-category-cyan',    sub: 'text-category-cyan/70' },
+  audit:  { label: 'Audit',  icon: 'shield',   dot: 'bg-category-cyan',    soft: 'bg-category-cyan/14',    text: 'text-category-cyan',    sub: 'text-category-cyan/70' },
   backup: { label: 'Backup',     icon: 'database', dot: 'bg-category-amber',   soft: 'bg-category-amber/16',   text: 'text-category-amber',   sub: 'text-category-amber/70' },
-  maint:  { label: 'Mantenim.',  icon: 'cog',      dot: 'bg-muted-foreground', soft: 'bg-secondary',           text: 'text-muted-foreground', sub: 'text-muted-foreground/70' },
+  maint:  { label: 'Maint.',  icon: 'cog',      dot: 'bg-muted-foreground', soft: 'bg-secondary',           text: 'text-muted-foreground', sub: 'text-muted-foreground/70' },
 };
 
-/* ── utilidades de fecha ─────────────────────────────────────────────────── */
+/* ── date utilities ──────────────────────────────────────────────────────── */
 const pad = (n) => String(n).padStart(2, '0');
 const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 const addDays = (d, n) => { const x = new Date(d); x.setDate(d.getDate() + n); return x; };
@@ -38,7 +38,7 @@ const hhmm = (h) => `${pad(Math.floor(h))}:${pad(Math.round((h % 1) * 60))}`;
 const fmtDM = (d) => `${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`;
 const fmtFull = (d) => `${WD_LONG[(d.getDay() + 6) % 7]}, ${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`;
 
-/* ── mapa de eventos (start = hora decimal · dur = horas) ─────────────────── */
+/* ── event map (start = decimal hour · dur = hours) ──────────────────────── */
 const EVENTS = {
   '2026-04-03': [{ kind: 'deploy', name: 'support-triage v3.1', start: 10, dur: 1, place: 'eu-west-1' }],
   '2026-04-07': [
@@ -60,41 +60,41 @@ const EVENTS = {
     { kind: 'run', name: 'support-triage · cron', start: 6, dur: 0.5 },
     { kind: 'run', name: 'lead-router · cron', start: 7, dur: 0.5 },
     { kind: 'deploy', name: 'fraud-scan hotfix', start: 9, dur: 1, place: 'eu-west-1' },
-    { kind: 'audit', name: 'Compliance review', start: 10.5, dur: 1.5, place: 'todas las regiones' },
+    { kind: 'audit', name: 'Compliance review', start: 10.5, dur: 1.5, place: 'all regions' },
     { kind: 'backup', name: 'Snapshot · prod DB', start: 13, dur: 1 },
     { kind: 'run', name: 'churn-watch · weekly', start: 15, dur: 0.5 },
-    { kind: 'maint', name: 'Ventana de mantenimiento', start: 16, dur: 2, place: 'ap-south-1' },
+    { kind: 'maint', name: 'Maintenance window', start: 16, dur: 2, place: 'ap-south-1' },
     { kind: 'run', name: 'doc-indexer · reindex', start: 19, dur: 1 },
     { kind: 'run', name: 'usage rollup', start: 21.5, dur: 0.5 },
   ],
   '2026-04-16': [
     { kind: 'run', name: 'support-triage · sync', start: 7, dur: 0.5 },
     { kind: 'deploy', name: 'lead-router v1.8', start: 13.5, dur: 1, place: 'us-east-1' },
-    { kind: 'maint', name: 'Upgrade del node pool', start: 22, dur: 1.5 },
+    { kind: 'maint', name: 'Node pool upgrade', start: 22, dur: 1.5 },
   ],
   '2026-04-17': [
-    { kind: 'audit', name: 'Auditoría de coste semanal', start: 10, dur: 1 },
-    { kind: 'backup', name: 'Backup completo', start: 23, dur: 1 },
+    { kind: 'audit', name: 'Weekly cost audit', start: 10, dur: 1 },
+    { kind: 'backup', name: 'Full backup', start: 23, dur: 1 },
   ],
-  '2026-04-18': [{ kind: 'run', name: 'Health-check de fin de semana', start: 9, dur: 0.5 }],
-  '2026-04-19': [{ kind: 'maint', name: 'Rotación de certificados', start: 3, dur: 1 }],
+  '2026-04-18': [{ kind: 'run', name: 'Weekend health check', start: 9, dur: 0.5 }],
+  '2026-04-19': [{ kind: 'maint', name: 'Certificate rotation', start: 3, dur: 1 }],
   '2026-04-22': [
     { kind: 'run', name: 'support-triage · cron', start: 7, dur: 0.5 },
     { kind: 'deploy', name: 'billing-bot v2.5', start: 11, dur: 1, place: 'us-east-1' },
-    { kind: 'audit', name: 'Revisión de policies', start: 15, dur: 1 },
+    { kind: 'audit', name: 'Policy review', start: 15, dur: 1 },
   ],
   '2026-04-24': [{ kind: 'run', name: 'data-enricher batch', start: 6.5, dur: 2 }],
-  '2026-04-28': [{ kind: 'maint', name: 'Ventana de mantenimiento', start: 16, dur: 2, place: 'eu-west-1' }],
+  '2026-04-28': [{ kind: 'maint', name: 'Maintenance window', start: 16, dur: 2, place: 'eu-west-1' }],
   '2026-04-30': [
-    { kind: 'audit', name: 'Auditoría de cierre de mes', start: 9, dur: 2 },
-    { kind: 'backup', name: 'Backup completo', start: 23, dur: 1 },
+    { kind: 'audit', name: 'Month-end audit', start: 9, dur: 2 },
+    { kind: 'backup', name: 'Full backup', start: 23, dur: 1 },
   ],
 };
 const evFor = (d) => (EVENTS[iso(d)] || []).slice().sort((a, b) => a.start - b.start);
 
-/* ── conmutador de vista (mes · semana · día) ────────────────────────────── */
+/* ── view switcher (month · week · day) ──────────────────────────────────── */
 function ViewMenu({ view, onView }) {
-  const VIEWS = [['month', 'Mes'], ['week', 'Semana'], ['day', 'Día']];
+  const VIEWS = [['month', 'Month'], ['week', 'Week'], ['day', 'Day']];
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   useClickOutside(ref, () => setOpen(false), open);
@@ -125,7 +125,7 @@ function ViewMenu({ view, onView }) {
   );
 }
 
-/* ── cabecera compartida: navegación + conmutador + "Programar" ──────────── */
+/* ── shared header: navigation + switcher + "Schedule" ───────────────────── */
 function CalHeader({ title, sub, view, onView, onPrev, onToday, onNext }) {
   const [added, setAdded] = useState(false);
   return (
@@ -136,21 +136,21 @@ function CalHeader({ title, sub, view, onView, onPrev, onToday, onNext }) {
       </div>
       <div className="flex items-center gap-2 shrink-0">
         <div className="flex items-center rounded-md border border-border bg-card overflow-hidden">
-          <button onClick={onPrev} aria-label="Anterior" className="w-9 h-9 inline-flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronLeft" size={16} /></button>
-          <button onClick={onToday} className="hidden sm:block px-3 h-9 text-[12.5px] font-semibold text-foreground border-x border-border hover:bg-secondary/60 transition-colors">Hoy</button>
-          <button onClick={onNext} aria-label="Siguiente" className="w-9 h-9 inline-flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronRight" size={16} /></button>
+          <button onClick={onPrev} aria-label="Previous" className="w-9 h-9 inline-flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronLeft" size={16} /></button>
+          <button onClick={onToday} className="hidden sm:block px-3 h-9 text-[12.5px] font-semibold text-foreground border-x border-border hover:bg-secondary/60 transition-colors">Today</button>
+          <button onClick={onNext} aria-label="Next" className="w-9 h-9 inline-flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronRight" size={16} /></button>
         </div>
         {view && onView && <ViewMenu view={view} onView={onView} />}
         <button onClick={() => { setAdded(true); setTimeout(() => setAdded(false), 1500); }}
           className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-md bg-primary text-primary-foreground text-[12.5px] font-semibold hover:bg-primary/90 transition-colors">
-          <Icon name={added ? 'check' : 'plus'} size={15} />{added ? 'Programado' : 'Programar'}
+          <Icon name={added ? 'check' : 'plus'} size={15} />{added ? 'Scheduled' : 'Schedule'}
         </button>
       </div>
     </div>
   );
 }
 
-/* ── fila de agenda (sin avatar · tile de tipo) ──────────────────────────── */
+/* ── agenda row (no avatar · type tile) ──────────────────────────────────── */
 function EventRow({ e }) {
   const k = KIND[e.kind];
   return (
@@ -170,21 +170,21 @@ function EventRow({ e }) {
   );
 }
 
-/* ── lista de agenda con scroll + estado vacío ───────────────────────────── */
+/* ── scrolling agenda list + empty state ─────────────────────────────────── */
 function ScheduleList({ events, maxH = 360 }) {
   if (!events.length) {
     return (
       <div className="px-6 py-12 flex flex-col items-center text-center">
         <span className="w-11 h-11 rounded-xl bg-secondary text-muted-foreground inline-flex items-center justify-center mb-3"><Icon name="calendar" size={20} /></span>
-        <div className="text-[13px] text-foreground font-medium">Sin tareas programadas</div>
-        <div className="text-[12px] text-muted-foreground mt-0.5">Este día no tiene schedulers activos.</div>
+        <div className="text-[13px] text-foreground font-medium">No scheduled tasks</div>
+        <div className="text-[12px] text-muted-foreground mt-0.5">This day has no active schedulers.</div>
       </div>
     );
   }
   return <ul role="list" className="divide-y divide-border overflow-y-auto" style={{ maxHeight: maxH }}>{events.map((e, i) => <EventRow key={i} e={e} />)}</ul>;
 }
 
-/* ── rejilla horaria (compartida por semana y día) ───────────────────────── */
+/* ── time grid (shared by week and day) ──────────────────────────────────── */
 function TimeGrid({ days, showNow, height = 480 }) {
   const ref = useRef(null);
   useEffect(() => { if (ref.current) ref.current.scrollTop = 7 * HOUR - 8; }, []);
@@ -220,7 +220,7 @@ function TimeGrid({ days, showNow, height = 480 }) {
             <div className="absolute left-0 right-0 z-20 pointer-events-none flex items-center" style={{ top: NOW * HOUR }}>
               <span className="w-2 h-2 rounded-full bg-primary shrink-0 -ml-1" />
               <div className="h-px flex-1 bg-primary/70" />
-              <span className="font-mono text-[9px] text-primary-foreground bg-primary rounded px-1 shrink-0">ahora</span>
+              <span className="font-mono text-[9px] text-primary-foreground bg-primary rounded px-1 shrink-0">now</span>
             </div>
           )}
         </div>
@@ -229,15 +229,15 @@ function TimeGrid({ days, showNow, height = 480 }) {
   );
 }
 
-/* ── mini-mes compacto · selector de día para la vista diaria ─────────────── */
+/* ── compact mini-month · day picker for the day view ────────────────────── */
 function MiniMonth({ cursor, selected, onSelect, onShift }) {
   const dates = monthGrid(cursor.y, cursor.m);
   return (
     <div className="p-4 sm:p-5">
       <div className="flex items-center justify-between mb-3.5">
-        <button onClick={() => onShift(-1)} aria-label="Mes anterior" className="w-7 h-7 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronLeft" size={15} /></button>
+        <button onClick={() => onShift(-1)} aria-label="Previous month" className="w-7 h-7 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronLeft" size={15} /></button>
         <h4 className="font-sans font-semibold text-[13px] text-foreground tracking-tight">{MONTHS[cursor.m]} {cursor.y}</h4>
-        <button onClick={() => onShift(1)} aria-label="Mes siguiente" className="w-7 h-7 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronRight" size={15} /></button>
+        <button onClick={() => onShift(1)} aria-label="Next month" className="w-7 h-7 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronRight" size={15} /></button>
       </div>
       <div className="grid grid-cols-7">
         {WD1.map((d, i) => <div key={i} className="text-center pb-2 text-[10.5px] font-medium text-muted-foreground">{d}</div>)}
@@ -261,7 +261,7 @@ function MiniMonth({ cursor, selected, onSelect, onShift }) {
   );
 }
 
-/* ── cuerpos de cada vista (sin cabecera — la pone el shell) ──────────────── */
+/* ── view bodies (no header — the shell provides it) ─────────────────────── */
 function MonthBody({ cursor, selected, onSelect }) {
   const dates = monthGrid(cursor.y, cursor.m);
   return (
@@ -288,7 +288,7 @@ function MonthBody({ cursor, selected, onSelect }) {
                     <span className="hidden xl:block ml-auto font-mono text-[10px] text-muted-foreground shrink-0">{hhmm(e.start)}</span>
                   </div>
                 ))}
-                {evs.length > 2 && <div className="text-[10.5px] text-muted-foreground pl-3">+ {evs.length - 2} más</div>}
+                {evs.length > 2 && <div className="text-[10.5px] text-muted-foreground pl-3">+ {evs.length - 2} more</div>}
               </div>
             </button>
           );
@@ -332,7 +332,7 @@ function DayBody({ date, cursor, onSelect, onShift }) {
         <MiniMonth cursor={cursor} selected={date} onSelect={onSelect} onShift={onShift} />
         <div className="flex flex-col min-h-0 border-t border-border">
           <div className="flex items-center justify-between px-4 sm:px-5 py-2.5 bg-secondary/30 border-b border-border">
-            <span className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Programado para este día</span>
+            <span className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Scheduled for this day</span>
             <span className="font-mono text-[11px] text-muted-foreground/70">{evs.length}</span>
           </div>
           <ScheduleList events={evs} maxH={224} />
@@ -342,7 +342,7 @@ function DayBody({ date, cursor, onSelect, onShift }) {
   );
 }
 
-/* ── shell con conmutador de vista (mes · semana · día) ───────────────────── */
+/* ── shell with view switcher (month · week · day) ──────────────────────── */
 function SwitchableCalendar() {
   const [view, setView] = useState('day');
   const [date, setDate] = useState(new Date(2026, 3, 15));
@@ -357,9 +357,9 @@ function SwitchableCalendar() {
 
   const week = weekDates(date);
   let title, sub;
-  if (view === 'month') { title = `${MONTHS[cursor.m]} ${cursor.y}`; sub = 'Fleet · todos los schedulers'; }
-  else if (view === 'week') { title = `${fmtDM(week[0])} – ${fmtDM(week[6])} ${week[6].getFullYear()}`; sub = 'Rejilla horaria · Fleet'; }
-  else { title = `${WD_LONG[(date.getDay() + 6) % 7]}, ${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`; sub = `${evFor(date).length} tareas programadas`; }
+  if (view === 'month') { title = `${MONTHS[cursor.m]} ${cursor.y}`; sub = 'All schedulers'; }
+  else if (view === 'week') { title = `${fmtDM(week[0])} – ${fmtDM(week[6])} ${week[6].getFullYear()}`; sub = 'Time grid · all schedulers'; }
+  else { title = `${WD_LONG[(date.getDay() + 6) % 7]}, ${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`; sub = `${evFor(date).length} scheduled tasks`; }
 
   return (
     <div className="bg-card">
@@ -380,12 +380,12 @@ function BorderlessView() {
   const evs = evFor(sel);
   return (
     <div className="grid md:grid-cols-2 md:divide-x md:divide-border">
-      {/* mini-calendario */}
+      {/* mini calendar */}
       <div className="p-5 sm:p-6">
         <div className="flex items-center">
           <h4 className="flex-auto font-sans font-semibold text-[14px] text-foreground">{MONTHS[cur.m]} {cur.y}</h4>
-          <button onClick={() => shift(-1)} aria-label="Mes anterior" className="w-7 h-7 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronLeft" size={15} /></button>
-          <button onClick={() => shift(1)} aria-label="Mes siguiente" className="w-7 h-7 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronRight" size={15} /></button>
+          <button onClick={() => shift(-1)} aria-label="Previous month" className="w-7 h-7 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronLeft" size={15} /></button>
+          <button onClick={() => shift(1)} aria-label="Next month" className="w-7 h-7 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"><Icon name="chevronRight" size={15} /></button>
         </div>
         <div className="mt-5 grid grid-cols-7 text-center">
           {WD1.map((d, i) => <div key={i} className="text-[10.5px] text-muted-foreground py-1">{d}</div>)}
@@ -407,11 +407,11 @@ function BorderlessView() {
           })}
         </div>
       </div>
-      {/* agenda del día seleccionado */}
+      {/* agenda for the selected day */}
       <div className="flex flex-col">
         <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-3">
           <h4 className="font-sans font-semibold text-[14px] text-foreground">Agenda · {fmtFull(sel)}</h4>
-          <p className="font-mono text-[11px] text-muted-foreground mt-0.5">{evs.length} tareas programadas</p>
+          <p className="font-mono text-[11px] text-muted-foreground mt-0.5">{evs.length} scheduled tasks</p>
         </div>
         <ScheduleList events={evs} maxH={320} />
       </div>
@@ -419,7 +419,7 @@ function BorderlessView() {
   );
 }
 
-/* ── envoltura de variante ───────────────────────────────────────────────── */
+/* ── variant wrapper ─────────────────────────────────────────────────────── */
 const Variant = ({ title, desc, code, children }) => (
   <div className="mb-12">
     <div className="mb-3">
@@ -431,10 +431,10 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── snippets para pegar ─────────────────────────────────────────────────── */
-const CODE_CAL = `// Conmutador de vista — una sola superficie; el dropdown cambia mes/semana/día.
+/* ── snippets to paste ───────────────────────────────────────────────────── */
+const CODE_CAL = `// View switcher — a single surface; the dropdown switches month/week/day.
 function ViewMenu({ view, onView }) {
-  const VIEWS = [['month','Mes'], ['week','Semana'], ['day','Día']];
+  const VIEWS = [['month','Month'], ['week','Week'], ['day','Day']];
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   useClickOutside(ref, () => setOpen(false), open);
@@ -461,7 +461,7 @@ function ViewMenu({ view, onView }) {
   );
 }
 
-// Vista diaria — rejilla a la izquierda · mini-mes + agenda a la derecha.
+// Day view — grid on the left · mini-month + agenda on the right.
 <div className="grid lg:grid-cols-[minmax(0,1fr)_336px] lg:divide-x lg:divide-border">
   <TimeGrid days={[date]} height={576} />
 
@@ -470,7 +470,7 @@ function ViewMenu({ view, onView }) {
 
     <div className="border-t border-border">
       <div className="flex items-center justify-between px-5 py-2.5 bg-secondary/30 border-b border-border">
-        <span className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Programado para este día</span>
+        <span className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Scheduled for this day</span>
         <span className="font-mono text-[11px] text-muted-foreground/70">{events.length}</span>
       </div>
       <ScheduleList events={events} maxH={224} />
@@ -478,12 +478,12 @@ function ViewMenu({ view, onView }) {
   </div>
 </div>`;
 
-const CODE_BORDERLESS = `// Borderless side-by-side — mini-mes (izq) + agenda del día (der), divididos
+const CODE_BORDERLESS = `// Borderless side-by-side — mini-month (left) + day agenda (right), divided
 const [sel, setSel] = useState(TODAY);
 
 <div className="grid md:grid-cols-2 md:divide-x md:divide-border">
   <div className="p-6">
-    {/* mini calendario: clic en un día actualiza la agenda */}
+    {/* mini calendar: clicking a day updates the agenda */}
     <div className="grid grid-cols-7">
       {monthGrid(y, m).map((d) => {
         const on = sameDay(d, sel), has = evFor(d).length > 0;
@@ -502,23 +502,23 @@ const [sel, setSel] = useState(TODAY);
   <div>
     <div className="px-6 pt-6 pb-3">
       <h4 className="text-[14px] font-semibold text-foreground">Agenda · {fmtFull(sel)}</h4>
-      <p className="font-mono text-[11px] text-muted-foreground">{evFor(sel).length} tareas programadas</p>
+      <p className="font-mono text-[11px] text-muted-foreground">{evFor(sel).length} scheduled tasks</p>
     </div>
-    <ScheduleList events={evFor(sel)} maxH={320} />   {/* tile de tipo + nombre + horario, sin avatar */}
+    <ScheduleList events={evFor(sel)} maxH={320} />   {/* type tile + name + time, no avatar */}
   </div>
 </div>`;
 
 function CalendarsSection() {
   return (
     <div>
-      <SectionHead kicker="Datos" title="Calendars" status="done"
-        intro="El calendario del Fleet — no son citas con personas, sino schedulers: runs en cron, deploys, auditorías, backups y ventanas de mantenimiento. Una sola superficie con conmutador de vista (mes · semana · día) en la cabecera: el mes completo, la semana con rejilla horaria, y el día con su mini-mes navegable a la derecha y la agenda justo debajo. Más la vista borderless de mini-calendario + agenda. Sin avatares — cada tarea lleva su tile de tipo." />
+      <SectionHead kicker="Data" title="Calendars" status="done"
+        intro="The scheduler calendar — not meetings with people, but schedulers: cron jobs, deploys, audits, backups and maintenance windows. A single surface with a view switcher (month · week · day) in the header: the full month, the week with a time grid, and the day with a navigable mini-month on the right and the agenda right below. Plus the borderless mini-calendar + agenda view. No avatars — each task carries its type tile." />
 
-      <Variant title="Calendario con cambio de vista" desc="Una sola superficie con un dropdown de vista (mes · semana · día) en la cabecera. La diaria pone la rejilla horaria a la izquierda, un mini-mes navegable a la derecha y, justo debajo, lo programado para ese día — clic en cualquier día del mini-mes mueve el detalle. Prev / «Hoy» / next se adaptan a la vista activa." code={CODE_CAL}>
+      <Variant title="Calendar with view switcher" desc="A single surface with a view dropdown (month · week · day) in the header. The day view puts the time grid on the left, a navigable mini-month on the right and, right below, what is scheduled for that day — click any day in the mini-month to move the detail. Prev / “Today” / next adapt to the active view." code={CODE_CAL}>
         <SwitchableCalendar />
       </Variant>
 
-      <Variant title="Borderless side-by-side" desc="Mini-calendario a la izquierda y agenda a la derecha, separados solo por un divisor. Clic en cualquier día del mini-mes y la agenda se actualiza al instante; los días con tareas llevan un punto. La lista hace scroll y cae a un estado vacío cuando no hay nada programado." code={CODE_BORDERLESS}>
+      <Variant title="Borderless side-by-side" desc="Mini calendar on the left and agenda on the right, separated only by a divider. Click any day in the mini-month and the agenda updates instantly; days with tasks carry a dot. The list scrolls and falls back to an empty state when nothing is scheduled." code={CODE_BORDERLESS}>
         <BorderlessView />
       </Variant>
     </div>

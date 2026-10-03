@@ -1,9 +1,9 @@
 /* ============================================================================
-   Gntik UI · tabs.jsx — pestañas (grupo "Navegación").
-   Subrayado con badges, pills en contenedor, con iconos, y barra full-width
-   justificada. Selección única; el activo en verde de marca. Distinto del
-   header de página (que ya trae tabs) — aquí viven como navegación de bloque.
-   Dominio musematic, todo en tokens.
+   Gntik UI · tabs.jsx — tabs ("Navigation" group).
+   Underline with badges, pills in a container, with icons, and a justified
+   full-width bar. Single selection; active in brand green. Different from the
+   page header (which already has tabs) — here they live as block navigation.
+   Neutral fixtures, all tokens.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState } = window;
@@ -19,7 +19,7 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── 1 · SUBRAYADO con badges ────────────────────────────────────────────── */
+/* ── 1 · UNDERLINE with badges ───────────────────────────────────────────── */
 const UNDER = [['overview', 'Overview'], ['runs', 'Runs', 1284], ['policies', 'Policies', 3], ['logs', 'Logs'], ['settings', 'Settings']];
 function Underline() {
   const [active, setActive] = useState('overview');
@@ -41,8 +41,8 @@ function Underline() {
   );
 }
 
-/* ── 2 · PILLS en contenedor ─────────────────────────────────────────────── */
-const PILLS = [['day', 'Día'], ['week', 'Semana'], ['month', 'Mes'], ['quarter', 'Trimestre']];
+/* ── 2 · PILLS in a container ────────────────────────────────────────────── */
+const PILLS = [['day', 'Day'], ['week', 'Week'], ['month', 'Month'], ['quarter', 'Quarter']];
 function Pills() {
   const [active, setActive] = useState('week');
   return (
@@ -58,8 +58,8 @@ function Pills() {
   );
 }
 
-/* ── 3 · CON ICONOS (subrayado) ──────────────────────────────────────────── */
-const ICONS = [['activity', 'Actividad'], ['line', 'Métricas'], ['shield', 'Policies'], ['cog', 'Ajustes']];
+/* ── 3 · WITH ICONS (underline) ─────────────────────────────────────────── */
+const ICONS = [['activity', 'Activity'], ['line', 'Metrics'], ['shield', 'Policies'], ['cog', 'Settings']];
 function WithIcons() {
   const [active, setActive] = useState('activity');
   return (
@@ -79,8 +79,8 @@ function WithIcons() {
   );
 }
 
-/* ── 4 · FULL-WIDTH justificado ──────────────────────────────────────────── */
-const FULL = [['summary', 'Resumen'], ['cost', 'Coste'], ['latency', 'Latencia'], ['errors', 'Errores']];
+/* ── 4 · FULL-WIDTH justified ───────────────────────────────────────────── */
+const FULL = [['summary', 'Summary'], ['cost', 'Cost'], ['latency', 'Latency'], ['errors', 'Errors']];
 function FullWidth() {
   const [active, setActive] = useState('summary');
   return (
@@ -96,7 +96,7 @@ function FullWidth() {
   );
 }
 
-const CODE_UNDER = `// Subrayado — el activo lleva border-primary; badge en mono
+const CODE_UNDER = `// Underline — the active tab gets border-primary; badge in mono
 <div className="border-b border-border">
   <nav className="flex items-center gap-6">
     {tabs.map((t) => {
@@ -116,7 +116,7 @@ const CODE_UNDER = `// Subrayado — el activo lleva border-primary; badge en mo
   </nav>
 </div>`;
 
-const CODE_PILLS = `// Pills — contenedor en bg-secondary; el activo sube a bg-card con sombra
+const CODE_PILLS = `// Pills — bg-secondary container; the active pill lifts to bg-card with a shadow
 <div className="inline-flex items-center gap-1 p-1 rounded-lg border border-border bg-secondary/40">
   {tabs.map((t) => (
     <button key={t.id} onClick={() => setActive(t.id)}
@@ -130,28 +130,28 @@ const CODE_PILLS = `// Pills — contenedor en bg-secondary; el activo sube a bg
 function TabsSection() {
   return (
     <div>
-      <SectionHead kicker="Navegación" title="Tabs" status="done"
-        intro="Pestañas para navegar entre vistas de un mismo bloque sin cambiar de pantalla. Subrayado con badges para el detalle de un recurso, pills en contenedor para rangos, con iconos, y una barra full-width justificada. Selección única, con el activo siempre en verde de marca." />
+      <SectionHead kicker="Navigation" title="Tabs" status="done"
+        intro="Tabs to move between views of the same block without leaving the screen. Underline with badges for resource detail, pills in a container for ranges, with icons, and a justified full-width bar. Single selection, with the active tab always in brand green." />
 
-      <Variant title="Subrayado"
-        desc="El patrón por defecto: línea inferior en el activo y badges en mono para conteos. Igual que el header de recurso, reutilizable como navegación de bloque."
+      <Variant title="Underline"
+        desc="The default pattern: bottom line on the active tab and mono badges for counts. Same as the resource header, reusable as block navigation."
         code={CODE_UNDER}>
         <Underline />
       </Variant>
 
       <Variant title="Pills"
-        desc="Compactas, dentro de un contenedor; el activo sube a bg-card con sombra. Para rangos y vistas cortas dentro de una tarjeta."
+        desc="Compact, inside a container; the active pill lifts to bg-card with a shadow. For ranges and short views inside a card."
         code={CODE_PILLS}>
         <Pills />
       </Variant>
 
-      <Variant title="Con iconos"
-        desc="Subrayado con icono delante; el icono toma el verde de marca al activarse. Útil cuando la etiqueta sola no basta.">
+      <Variant title="With icons"
+        desc="Underline with a leading icon; the icon turns brand green when active. Useful when the label alone is not enough.">
         <WithIcons />
       </Variant>
 
       <Variant title="Full-width"
-        desc="Pills repartidas en columnas iguales para ocupar todo el ancho — habitual en paneles estrechos y en móvil.">
+        desc="Pills spread over equal columns to fill the full width — common in narrow panels and on mobile.">
         <FullWidth />
       </Variant>
     </div>

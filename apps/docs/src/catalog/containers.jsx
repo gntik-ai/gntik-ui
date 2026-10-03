@@ -1,14 +1,14 @@
 /* ============================================================================
-   Gntik UI · containers.jsx — anchos de contenido y padding de página (grupo "Layout").
-   El esqueleto invisible: la escala de anchos máximos, el contenedor centrado de
-   lectura, los gutters responsivos de la página y el patrón full-bleed con
-   contenido constreñido. No pinta UI nueva, ordena el espacio. Dominio musematic.
-   Variantes: escala de anchos · centrado · gutters · full-bleed constreñido.
+   Gntik UI · containers.jsx — content widths and page padding ("Layout" group).
+   The invisible skeleton: the max-width scale, the centred reading container,
+   the page's responsive gutters and the full-bleed pattern with constrained
+   content. It paints no new UI, it organises space.
+   Variants: width scale · centred · gutters · constrained full-bleed.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon } = window;
 
-/* ── envoltura de variante ───────────────────────────────────────────────── */
+/* ── variant wrapper ─────────────────────────────────────────────────────── */
 const Variant = ({ title, desc, code, children }) => (
   <div className="mb-12">
     <div className="mb-3">
@@ -20,49 +20,49 @@ const Variant = ({ title, desc, code, children }) => (
   </div>
 );
 
-/* ── barra de medida — representa un max-w con su etiqueta mono ───────────── */
+/* ── measure bar — represents a max-w with its mono label ────────────────── */
 const WIDTHS = [
   { cls: 'max-w-sm', px: '24rem', use: 'modal / aside' },
-  { cls: 'max-w-md', px: '28rem', use: 'formulario' },
-  { cls: 'max-w-2xl', px: '42rem', use: 'lectura / detalle' },
-  { cls: 'max-w-4xl', px: '56rem', use: 'contenido de página' },
+  { cls: 'max-w-md', px: '28rem', use: 'form' },
+  { cls: 'max-w-2xl', px: '42rem', use: 'reading / detail' },
+  { cls: 'max-w-4xl', px: '56rem', use: 'page content' },
   { cls: 'max-w-7xl', px: '80rem', use: 'shell / dashboard' },
 ];
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_SCALE = `// Anchos máximos — siempre con mx-auto para centrar el bloque
-<div className="mx-auto max-w-2xl">{/* lectura / detalle de recurso */}</div>
-<div className="mx-auto max-w-7xl">{/* el shell completo del dashboard */}</div>`;
+const CODE_SCALE = `// Max widths — always with mx-auto to centre the block
+<div className="mx-auto max-w-2xl">{/* reading / resource detail */}</div>
+<div className="mx-auto max-w-7xl">{/* the full dashboard shell */}</div>`;
 
-const CODE_CENTER = `// Contenedor centrado de lectura — columna estrecha sobre la página
+const CODE_CENTER = `// Centred reading container — a narrow column on the page
 <main className="px-6 py-10">
   <div className="mx-auto max-w-2xl space-y-6">
-    <h1 className="text-[22px] font-bold tracking-tight text-foreground">Editar agente</h1>
-    {/* el formulario nunca se estira más allá de ~42rem */}
+    <h1 className="text-[22px] font-bold tracking-tight text-foreground">Edit service</h1>
+    {/* the form never stretches beyond ~42rem */}
   </div>
 </main>`;
 
-const CODE_GUTTER = `// Gutters responsivos — el padding lateral crece con el viewport
+const CODE_GUTTER = `// Responsive gutters — side padding grows with the viewport
 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-  {/* el contenido respira en pantallas anchas y se pega en móvil */}
+  {/* content breathes on wide screens and hugs the edges on mobile */}
 </div>`;
 
-const CODE_BLEED = `// Full-bleed con contenido constreñido — banda al ancho total,
-// contenido centrado dentro. La cabecera sangra, el cuerpo no.
+const CODE_BLEED = `// Full-bleed with constrained content — full-width band,
+// content centred inside. The header bleeds, the body does not.
 <header className="border-b border-border bg-card">
-  <div className="mx-auto max-w-7xl px-6 py-4">{/* título + acciones */}</div>
+  <div className="mx-auto max-w-7xl px-6 py-4">{/* title + actions */}</div>
 </header>
-<main className="mx-auto max-w-7xl px-6 py-8">{/* contenido */}</main>`;
+<main className="mx-auto max-w-7xl px-6 py-8">{/* content */}</main>`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function ContainersSection() {
   return (
     <div>
       <SectionHead kicker="Layout" title="Containers" status="done"
-        intro="El esqueleto invisible de cada pantalla: la escala de anchos máximos que evita líneas de texto demasiado largas, el contenedor centrado para lectura y formularios, los gutters que crecen con el viewport, y el patrón full-bleed donde una banda ocupa todo el ancho pero su contenido queda constreñido. No pinta componentes — ordena el espacio en el que viven." />
+        intro="The invisible skeleton of every screen: the max-width scale that keeps lines of text from running too long, the centred container for reading and forms, gutters that grow with the viewport, and the full-bleed pattern where a band spans the full width but its content stays constrained. It paints no components — it organises the space they live in." />
 
-      {/* 1 · ESCALA DE ANCHOS */}
-      <Variant title="Escala de anchos" desc="Los anchos máximos que usa la template, del modal al shell completo. Cada bloque se centra con mx-auto; la barra muestra su ancho relativo y para qué se usa." code={CODE_SCALE}>
+      {/* 1 · WIDTH SCALE */}
+      <Variant title="Width scale" desc="The max widths the template uses, from modal to full shell. Each block is centred with mx-auto; the bar shows its relative width and what it is used for." code={CODE_SCALE}>
         <div className="space-y-3.5">
           {WIDTHS.map((w) => (
             <div key={w.cls} className="flex items-center gap-4">
@@ -77,13 +77,13 @@ function ContainersSection() {
         </div>
       </Variant>
 
-      {/* 2 · CENTRADO */}
-      <Variant title="Contenedor centrado" desc="Una columna estrecha (max-w-2xl) centrada sobre el ancho de la página: el patrón para detalle de recurso, lectura o un formulario, donde estirarse sería ilegible." code={CODE_CENTER}>
+      {/* 2 · CENTRED */}
+      <Variant title="Centred container" desc="A narrow column (max-w-2xl) centred across the page width: the pattern for resource details, reading or a form, where stretching would be illegible." code={CODE_CENTER}>
         <div className="rounded-lg bg-secondary/40 px-4 py-6 [background-image:repeating-linear-gradient(135deg,hsl(var(--border)/0.35)_0_1px,transparent_1px_12px)]">
           <div className="mx-auto max-w-[440px] rounded-xl border border-border bg-card p-5 shadow-sm">
             <div className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-primary">max-w-2xl · mx-auto</div>
-            <h3 className="mt-2 text-[15px] font-semibold text-foreground">Editar agente</h3>
-            <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground" style={{ textWrap: 'pretty' }}>La columna se mantiene legible aunque la página crezca: el contenido nunca pasa de ~42rem y el resto queda como margen.</p>
+            <h3 className="mt-2 text-[15px] font-semibold text-foreground">Edit service</h3>
+            <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground" style={{ textWrap: 'pretty' }}>The column stays legible as the page grows: content never exceeds ~42rem and the rest becomes margin.</p>
             <div className="mt-4 space-y-2">
               <div className="h-9 rounded-md border border-border bg-background/60" />
               <div className="h-9 rounded-md border border-border bg-background/60" />
@@ -93,14 +93,14 @@ function ContainersSection() {
       </Variant>
 
       {/* 3 · GUTTERS */}
-      <Variant title="Gutters responsivos" desc="El padding lateral del contenedor crece por breakpoint (px-4 → sm:px-6 → lg:px-8): el contenido respira en pantallas anchas y se pega a los bordes en móvil. Las zonas rayadas son los gutters." code={CODE_GUTTER}>
+      <Variant title="Responsive gutters" desc="The container's side padding grows per breakpoint (px-4 → sm:px-6 → lg:px-8): content breathes on wide screens and hugs the edges on mobile. The striped areas are the gutters." code={CODE_GUTTER}>
         <div className="overflow-hidden rounded-lg border border-border bg-card">
           <div className="flex items-stretch">
             <div className="w-8 shrink-0 [background-image:repeating-linear-gradient(135deg,hsl(var(--primary)/0.18)_0_1px,transparent_1px_8px)]" />
             <div className="flex-1 py-6">
               <div className="flex items-center justify-between">
                 <div className="font-mono text-[11px] text-muted-foreground">px-4 · sm:px-6 · lg:px-8</div>
-                <span className="inline-flex h-[22px] items-center gap-1.5 rounded-md bg-primary/14 px-2.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-primary"><Icon name="layout" size={12} />contenido</span>
+                <span className="inline-flex h-[22px] items-center gap-1.5 rounded-md bg-primary/14 px-2.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-primary"><Icon name="layout" size={12} />content</span>
               </div>
               <div className="mt-4 grid grid-cols-3 gap-3">
                 {[0, 1, 2].map(i => <div key={i} className="h-16 rounded-lg border border-border bg-secondary/50" />)}
@@ -112,21 +112,21 @@ function ContainersSection() {
       </Variant>
 
       {/* 4 · FULL-BLEED */}
-      <Variant title="Full-bleed con contenido constreñido" desc="Una banda — cabecera o footer — ocupa el ancho total con su propio fondo y borde, pero su contenido se centra en el mismo max-w que el cuerpo. Así el separador sangra de lado a lado y el contenido queda alineado." code={CODE_BLEED}>
+      <Variant title="Full-bleed with constrained content" desc="A band — header or footer — spans the full width with its own background and border, but its content is centred on the same max-w as the body. The separator bleeds edge to edge while the content stays aligned." code={CODE_BLEED}>
         <div className="overflow-hidden rounded-lg border border-border bg-card">
-          {/* banda a sangre */}
+          {/* full-bleed band */}
           <div className="border-b border-border bg-secondary/40">
             <div className="mx-auto flex max-w-[520px] items-center justify-between px-5 py-3.5">
               <div className="flex items-center gap-2.5">
                 <span className="grid size-7 place-items-center rounded-md bg-primary/14 text-primary"><Icon name="fleet" size={15} /></span>
-                <span className="text-[13.5px] font-semibold text-foreground">Fleet</span>
+                <span className="text-[13.5px] font-semibold text-foreground">Deployments</span>
               </div>
-              <span className="font-mono text-[11px] text-muted-foreground">banda full-bleed</span>
+              <span className="font-mono text-[11px] text-muted-foreground">full-bleed band</span>
             </div>
           </div>
-          {/* cuerpo constreñido al mismo ancho */}
+          {/* body constrained to the same width */}
           <div className="mx-auto max-w-[520px] px-5 py-6">
-            <p className="text-[13px] leading-relaxed text-muted-foreground" style={{ textWrap: 'pretty' }}>El fondo de la cabecera llega a los dos bordes, pero su título se alinea con este párrafo porque ambos comparten <code className="font-mono text-[12px] text-foreground">max-w</code> y <code className="font-mono text-[12px] text-foreground">px</code>.</p>
+            <p className="text-[13px] leading-relaxed text-muted-foreground" style={{ textWrap: 'pretty' }}>The header background reaches both edges, but its title lines up with this paragraph because both share <code className="font-mono text-[12px] text-foreground">max-w</code> and <code className="font-mono text-[12px] text-foreground">px</code>.</p>
             <div className="mt-4 h-20 rounded-lg border border-border bg-secondary/40" />
           </div>
         </div>

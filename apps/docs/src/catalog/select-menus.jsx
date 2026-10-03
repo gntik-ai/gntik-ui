@@ -1,8 +1,8 @@
 /* ============================================================================
-   Gntik UI · select-menus.jsx — selects (grupo "Formularios").
-   El select nativo de marca + un Listbox custom reutilizable (botón → popover
-   con check en el seleccionado), declinado para texto, avatar+secundario y
-   estado con punto de color. Dominio musematic. Tokens, cero hardcode.
+   Gntik UI · select-menus.jsx — selects ("Forms" group).
+   The brand native select + a reusable custom Listbox (button → popover
+   with a check on the selected option), in text, avatar+secondary and
+   status-dot flavors. Neutral fixtures. Tokens, no hardcoding.
    ============================================================================ */
 (function () {
 const { SectionHead, CodeBlock, Icon, useState, useRef, useClickOutside } = window;
@@ -25,8 +25,8 @@ const Avatar = ({ initials, size = 22 }) => (
 );
 const Dot = ({ tone }) => <span className={"size-2 rounded-full shrink-0 " + tone} />;
 
-/* ── Listbox custom reutilizable ─────────────────────────────────────────── */
-function Listbox({ value, onChange, options, render, placeholder = 'Selecciona…' }) {
+/* ── Reusable custom Listbox ────────────────────────────────────────────── */
+function Listbox({ value, onChange, options, render, placeholder = 'Select…' }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   useClickOutside(ref, () => setOpen(false), open);
@@ -60,12 +60,12 @@ function Listbox({ value, onChange, options, render, placeholder = 'Selecciona�
   );
 }
 
-/* ── datos ───────────────────────────────────────────────────────────────── */
+/* ── data ────────────────────────────────────────────────────────────────── */
 const REGIONS = [
   { value: 'eu', label: 'EU-West · Frankfurt' },
   { value: 'us-e', label: 'US-East · Boston' },
   { value: 'us-w', label: 'US-West · San Francisco' },
-  { value: 'ap', label: 'AP-South · Singapur', disabled: true },
+  { value: 'ap', label: 'AP-South · Singapore', disabled: true },
 ];
 const OPERATORS = [
   { value: 'emma', name: 'Emma Crown', email: 'emma@acme.com', init: 'EC' },
@@ -74,19 +74,19 @@ const OPERATORS = [
   { value: 'noah', name: 'Noah Frey', email: 'noah@acme.com', init: 'NF' },
 ];
 const ENVS = [
-  { value: 'prod', label: 'Producción', tone: 'bg-primary', note: '12 agentes' },
-  { value: 'staging', label: 'Staging', tone: 'bg-warning', note: '4 agentes' },
-  { value: 'dev', label: 'Desarrollo', tone: 'bg-info', note: '7 agentes' },
-  { value: 'paused', label: 'Pausado', tone: 'bg-muted-foreground/40', note: '0 agentes' },
+  { value: 'prod', label: 'Production', tone: 'bg-primary', note: '12 services' },
+  { value: 'staging', label: 'Staging', tone: 'bg-warning', note: '4 services' },
+  { value: 'dev', label: 'Development', tone: 'bg-info', note: '7 services' },
+  { value: 'paused', label: 'Paused', tone: 'bg-muted-foreground/40', note: '0 services' },
 ];
 
-/* ── 1 · NATIVO ──────────────────────────────────────────────────────────── */
+/* ── 1 · NATIVE ──────────────────────────────────────────────────────────── */
 function NativeSelects() {
   const sel = "h-9 w-full appearance-none rounded-md border border-border bg-background pl-3 pr-9 text-[13px] text-foreground shadow-sm transition-colors focus:outline-none focus:border-primary/60 focus:ring-2 focus:ring-ring/25 cursor-pointer";
   return (
     <div className="mx-auto grid w-full max-w-2xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
       <div>
-        <label className={labelCls}>Región</label>
+        <label className={labelCls}>Region</label>
         <div className="relative">
           <select defaultValue="eu" className={sel}>
             {REGIONS.map(r => <option key={r.value} value={r.value} disabled={r.disabled}>{r.label}</option>)}
@@ -95,40 +95,40 @@ function NativeSelects() {
         </div>
       </div>
       <div>
-        <label className={labelCls}>Modelo</label>
+        <label className={labelCls}>Instance type</label>
         <div className="relative">
           <select defaultValue="" className={sel}>
-            <option value="" disabled>Selecciona modelo…</option>
-            <optgroup label="Rápidos"><option>haiku-3.5</option><option>gpt-4o-mini</option></optgroup>
-            <optgroup label="Razonadores"><option>sonnet-4</option><option>o3</option></optgroup>
+            <option value="" disabled>Select instance type…</option>
+            <optgroup label="Compute-optimized"><option>c7.large</option><option>c7.xlarge</option></optgroup>
+            <optgroup label="Memory-optimized"><option>r7.large</option><option>r7.xlarge</option></optgroup>
           </select>
           <Icon name="chevron" size={15} className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
         </div>
-        <p className="mt-2 text-[12px] text-muted-foreground">El select nativo del SO, con el chevron de marca.</p>
+        <p className="mt-2 text-[12px] text-muted-foreground">The OS-native select, with the brand chevron.</p>
       </div>
     </div>
   );
 }
 
-/* ── 2 · CUSTOM básico ───────────────────────────────────────────────────── */
+/* ── 2 · CUSTOM basic ────────────────────────────────────────────────────── */
 function CustomBasic() {
   const [v, setV] = useState('eu');
   return (
     <div className="mx-auto w-full max-w-sm">
-      <label className={labelCls}>Región de despliegue</label>
+      <label className={labelCls}>Deployment region</label>
       <Listbox value={v} onChange={setV} options={REGIONS}
-        render={(o) => <span className="truncate">{o.label}{o.disabled && <span className="ml-1.5 font-mono text-[10px] text-muted-foreground">pronto</span>}</span>} />
-      <p className="mt-2 text-[12px] text-muted-foreground">Listbox custom: check en el activo, opción deshabilitada y cierre al hacer clic fuera.</p>
+        render={(o) => <span className="truncate">{o.label}{o.disabled && <span className="ml-1.5 font-mono text-[10px] text-muted-foreground">soon</span>}</span>} />
+      <p className="mt-2 text-[12px] text-muted-foreground">Custom Listbox: check on the active option, disabled option and close on outside click.</p>
     </div>
   );
 }
 
-/* ── 3 · CON AVATAR + secundario ─────────────────────────────────────────── */
+/* ── 3 · WITH AVATAR + secondary ─────────────────────────────────────────── */
 function WithAvatar() {
   const [v, setV] = useState('emma');
   return (
     <div className="mx-auto w-full max-w-sm">
-      <label className={labelCls}>Asignar operador</label>
+      <label className={labelCls}>Assign operator</label>
       <Listbox value={v} onChange={setV} options={OPERATORS}
         render={(o) => (
           <span className="flex min-w-0 items-center gap-2.5">
@@ -138,17 +138,17 @@ function WithAvatar() {
             </span>
           </span>
         )} />
-      <p className="mt-2 text-[12px] text-muted-foreground">Cada opción lleva avatar; el email se muestra en la fila del popover.</p>
+      <p className="mt-2 text-[12px] text-muted-foreground">Each option has an avatar; the email shows in the popover row.</p>
     </div>
   );
 }
 
-/* variante del render con email en el desplegable (mismo Listbox, render con 2 líneas) */
+/* render variant with email in the dropdown (same Listbox, 2-line render) */
 function WithAvatarRich() {
   const [v, setV] = useState('leo');
   return (
     <div className="mx-auto w-full max-w-sm">
-      <label className={labelCls}>Revisor del policy</label>
+      <label className={labelCls}>Policy reviewer</label>
       <Listbox value={v} onChange={setV} options={OPERATORS}
         render={(o) => (
           <span className="flex min-w-0 items-center gap-2.5">
@@ -163,12 +163,12 @@ function WithAvatarRich() {
   );
 }
 
-/* ── 4 · CON ESTADO (punto de color) ─────────────────────────────────────── */
+/* ── 4 · WITH STATUS (color dot) ────────────────────────────────────────── */
 function WithStatus() {
   const [v, setV] = useState('prod');
   return (
     <div className="mx-auto w-full max-w-sm">
-      <label className={labelCls}>Entorno activo</label>
+      <label className={labelCls}>Active environment</label>
       <Listbox value={v} onChange={setV} options={ENVS}
         render={(o) => (
           <span className="flex min-w-0 items-center gap-2.5">
@@ -177,13 +177,13 @@ function WithStatus() {
             <span className="ml-1 truncate font-mono text-[11px] text-muted-foreground">{o.note}</span>
           </span>
         )} />
-      <p className="mt-2 text-[12px] text-muted-foreground">Punto de estado por entorno: prod en verde, staging en ámbar, dev en azul-info.</p>
+      <p className="mt-2 text-[12px] text-muted-foreground">Status dot per environment: prod in green, staging in amber, dev in info blue.</p>
     </div>
   );
 }
 
 /* ── snippets ────────────────────────────────────────────────────────────── */
-const CODE_LISTBOX = `// Listbox custom — botón + popover; el render decide cómo se pinta cada opción
+const CODE_LISTBOX = `// Custom Listbox — button + popover; render decides how each option is drawn
 function Listbox({ value, onChange, options, render }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -195,7 +195,7 @@ function Listbox({ value, onChange, options, render }) {
         className={\`flex h-9 w-full items-center justify-between gap-2 rounded-md border bg-background pl-3 pr-2.5
           text-[13px] shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/25 \${
           open ? 'border-primary/60 ring-2 ring-ring/25' : 'border-border hover:border-muted-foreground/40'}\`}>
-        <span className="flex items-center gap-2 truncate">{sel ? render(sel) : <span className="text-muted-foreground">Selecciona…</span>}</span>
+        <span className="flex items-center gap-2 truncate">{sel ? render(sel) : <span className="text-muted-foreground">Select…</span>}</span>
         <ChevronIcon className={\`text-muted-foreground transition-transform \${open ? 'rotate-180' : ''}\`} />
       </button>
       {open && (
@@ -219,16 +219,16 @@ function Listbox({ value, onChange, options, render }) {
   );
 }`;
 
-const CODE_NATIVE = `// Nativo: appearance-none + chevron de marca posicionado encima
+const CODE_NATIVE = `// Native: appearance-none + brand chevron positioned on top
 <div className="relative">
   <select className="h-9 w-full appearance-none rounded-md border border-border bg-background pl-3 pr-9
                      text-[13px] shadow-sm focus:outline-none focus:border-primary/60 focus:ring-2 focus:ring-ring/25">
-    <optgroup label="Rápidos"><option>haiku-3.5</option></optgroup>
+    <optgroup label="Compute-optimized"><option>c7.large</option></optgroup>
   </select>
   <ChevronIcon className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
 </div>`;
 
-const CODE_RENDER = `// Mismo Listbox, distintos render → avatar+secundario · punto de estado
+const CODE_RENDER = `// Same Listbox, different renders → avatar+secondary · status dot
 render={(o) => (
   <span className="flex items-center gap-2.5">
     <Avatar initials={o.init} />
@@ -246,27 +246,27 @@ render={(o) => (
   </span>
 )}`;
 
-/* ── sección ─────────────────────────────────────────────────────────────── */
+/* ── section ─────────────────────────────────────────────────────────────── */
 function SelectMenusSection() {
   return (
     <div>
-      <SectionHead kicker="Formularios" title="Select menus" status="done"
-        intro="Dos caminos: el select nativo de marca (rápido, accesible, con el chevron de los tokens) y un Listbox custom reutilizable cuando cada opción necesita más que texto. El mismo componente, cambiando solo la función render, sirve para regiones, asignar un operador con avatar y email, o elegir entorno con punto de estado. Check verde en el activo y cierre al clicar fuera." />
+      <SectionHead kicker="Forms" title="Select menus" status="done"
+        intro="Two paths: the brand native select (fast, accessible, with the token chevron) and a reusable custom Listbox when each option needs more than text. The same component, changing only the render function, works for regions, assigning an operator with avatar and email, or picking an environment with a status dot. Green check on the active option and close on outside click." />
 
-      <Variant title="Nativo"
-        desc="El <select> del sistema con appearance-none y el chevron de marca. Soporta grupos, opción deshabilitada y placeholder. El más robusto para listas simples."
+      <Variant title="Native"
+        desc="The system <select> with appearance-none and the brand chevron. Supports groups, disabled options and a placeholder. The most robust choice for simple lists."
         code={CODE_NATIVE}>
         <NativeSelects />
       </Variant>
 
-      <Variant title="Custom · básico"
-        desc="El Listbox de marca: botón que abre un popover sobre bg-popover, check verde en el seleccionado, fila deshabilitada y cierre con clic-fuera o Escape."
+      <Variant title="Custom · basic"
+        desc="The brand Listbox: a button that opens a popover on bg-popover, green check on the selected option, a disabled row and close on outside click or Escape."
         code={CODE_LISTBOX}>
         <CustomBasic />
       </Variant>
 
-      <Variant title="Con avatar y secundario"
-        desc="El mismo Listbox con un render que pinta avatar + nombre + email. Para asignar operador, elegir revisor de un policy o transferir ownership."
+      <Variant title="With avatar and secondary"
+        desc="The same Listbox with a render that draws avatar + name + email. For assigning an operator, picking a policy reviewer or transferring ownership."
         code={CODE_RENDER}>
         <div className="grid grid-cols-1 gap-x-10 gap-y-7 sm:grid-cols-2">
           <WithAvatar />
@@ -274,8 +274,8 @@ function SelectMenusSection() {
         </div>
       </Variant>
 
-      <Variant title="Con estado"
-        desc="Render con punto de color por entorno y un contador secundario. Verde prod, ámbar staging, azul-info dev — la misma escala semántica del resto de la librería."
+      <Variant title="With status"
+        desc="Render with a color dot per environment and a secondary counter. Green prod, amber staging, info-blue dev — the same semantic scale as the rest of the library."
         code={CODE_RENDER}>
         <WithStatus />
       </Variant>
