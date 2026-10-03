@@ -58,8 +58,8 @@ jobs:
   visual:
     needs: checks
     runs-on: ubuntu-latest
-    # Baselines were first recorded outside CI; if fonts or antialiasing differ
-    # on the runner, regenerate them with `pnpm visual:update` from CI output.
+    # Baselines are recorded on this runner image (see visual-update below): fonts and
+    # antialiasing differ between machines, so CI is the reference renderer.
     continue-on-error: true
     steps:
       - uses: actions/checkout@v7
@@ -80,3 +80,42 @@ jobs:
           path: |
             apps/docs/playwright-report
             apps/docs/test-results
+
+  # Re-records the visual baselines on the CI runner and commits them to the PR branch.
+  # Opt in per push: put [visual-update] in the head commit message of a same-repo PR.
+  visual-update:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref }}
+      - id: ask
+        run: |
+          if git log -1 --format=%B | grep -q '\[visual-update\]'; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.ask.outputs.run == 'true'
+        run: corepack enable
+      - if: steps.ask.outputs.run == 'true'
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - if: steps.ask.outputs.run == 'true'
+        run: pnpm install --frozen-lockfile
+      - if: steps.ask.outputs.run == 'true'
+        run: pnpm --filter @gntik-ai/docs build
+      - if: steps.ask.outputs.run == 'true'
+        run: pnpm --filter @gntik-ai/docs exec playwright install --with-deps chromium
+      - if: steps.ask.outputs.run == 'true'
+        name: Re-record baselines
+        run: rm -rf apps/docs/e2e/__screenshots__ && pnpm visual:update
+      - if: steps.ask.outputs.run == 'true'
+        name: Commit baselines to the PR branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/docs/e2e/__screenshots__
+          git diff --cached --quiet || { git commit -m "Visual baselines recorded on the CI runner"; git push; }
