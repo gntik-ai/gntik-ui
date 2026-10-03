@@ -49,7 +49,7 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
   badges), `text-<tono>-chip-text`; todos apuntan a tokens existentes y un test exige AA en los
   3 temas (también sobre el tinte). Los enlaces en texto van subrayados.
 - `packages/chat` (pack de chat IA), `packages/blocks` (69 bloques: `src/<familia>/<Nombre>/`
-  con `block.meta.ts`), `packages/templates` (40 páginas: `src/<id>/Page.tsx` +
+  con `block.meta.ts`), `packages/templates` (57 páginas: `src/<id>/Page.tsx` +
   `template.meta.ts`; las de consola usan `shared/ConsoleShell`), `packages/cli`
   (`gntik-ui init|add|eject|list|search|docs`, `--json`). Layouts en `packages/ui/src/layouts/`
   (`embedded` cuando van dentro de un shell que ya tiene `<main>`).
@@ -62,6 +62,14 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
 - `packages/mcp` — MCP server (privado, imagen Docker); sirve `registry.json` (raíz), generado
   con `pnpm registry`.
 - Releases: Changesets (`pnpm changeset`) → workflow Release → GitHub Packages.
+- Fase 4 (ecosistema): i18n en `packages/ui/src/i18n` (en/es, utilidades lógicas RTL);
+  densidad (`DensityProvider`, `tokens/src/density.css`, `size:'auto'` → `h-control`, `h-row`…);
+  `motion.css`; export DTCG/Figma (`packages/tokens` build); `packages/codemods` +
+  `gntik-ui upgrade`; registro shadcn en `apps/docs/public/r/` y `llms*.txt` (ambos de
+  `pnpm registry`; URL base vía `GNTIK_REGISTRY_BASE_URL`); `apps/sandbox`; `AGENTS.md` +
+  `.claude/skills/`; gobernanza en `docs/governance/`; workflow canary.
+- `packages/evals`: evals de agente contra la API de Claude. **Cuestan dinero**: no correrlas
+  sin permiso explícito del usuario (`--confirm-spend`).
 
 ## Cómo añadir un componente
 1. Crear/editar el `.jsx` de su grupo en `apps/docs/src/catalog/`: sección con preview
