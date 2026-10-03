@@ -44,4 +44,19 @@ export const musematicPreset: BrandPreset = {
   ),
 };
 
-export const presets = { gntik: gntikPreset, musematic: musematicPreset } as const;
+/**
+ * Falcone — PLACEHOLDER until the product's logo artwork lands: a token-coloured "F" monogram.
+ * Swap `mark` for the real artwork (as musematic does); the name and id stay.
+ */
+export const falconePreset: BrandPreset = {
+  id: 'falcone',
+  name: 'Falcone',
+  mark: (size) => (
+    <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true" className="block shrink-0">
+      <rect width="64" height="64" rx="14" className="fill-chrome" />
+      <path d="M24 46V18h18M24 32h13" fill="none" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" className="stroke-primary" />
+    </svg>
+  ),
+};
+
+export const presets = { gntik: gntikPreset, musematic: musematicPreset, falcone: falconePreset } as const;

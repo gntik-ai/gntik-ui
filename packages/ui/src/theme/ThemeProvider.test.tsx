@@ -104,3 +104,11 @@ describe('ThemeProvider', () => {
     expect(themeScript('k', 'light')).toContain('"k"');
   });
 });
+
+describe('falcone preset (placeholder)', () => {
+  it('renders its name as the logo label', async () => {
+    const { falconePreset } = await import('./presets');
+    render(<Logo brand={falconePreset} wordmark />);
+    expect(screen.getByRole('img', { name: 'Falcone' })).toBeInTheDocument();
+  });
+});

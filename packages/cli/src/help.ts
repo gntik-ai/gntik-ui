@@ -25,7 +25,7 @@ Commands:
   docs <id>          Show an item's description, files, dependencies and keyboard contract
 
 ${GLOBAL}`,
-  init: `Usage: gntik-ui init [--brand gntik|musematic] [--dry-run] [--no-install] [--overwrite]
+  init: `Usage: gntik-ui init [--brand gntik|musematic|falcone] [--dry-run] [--no-install] [--overwrite]
 
 Detects the framework (Vite, Next, generic), package manager and CSS entry, then:
   - adds "@gntik-ai:registry=https://npm.pkg.github.com" to .npmrc

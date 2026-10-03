@@ -15,7 +15,7 @@ import {
   type GntikConfig,
 } from '../project.js';
 
-export const BRANDS = ['gntik', 'musematic'] as const;
+export const BRANDS = ['gntik', 'musematic', 'falcone'] as const;
 export const SCOPE_LINE = `${SCOPE}:registry=${NPM_REGISTRY}`;
 export const CSS_IMPORTS = [
   '@import "tailwindcss";',
