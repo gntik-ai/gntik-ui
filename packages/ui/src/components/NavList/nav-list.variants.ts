@@ -1,0 +1,56 @@
+import { tv, type VariantProps } from '../../utils/tv';
+
+const focus = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';
+
+export const navListVariants = tv({
+  slots: {
+    root: 'flex flex-col gap-4',
+    group: 'flex flex-col gap-0.5',
+    groupLabel: 'px-2.5 pt-1 pb-1 font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground uppercase select-none',
+    groupTrigger: [
+      'group mb-0.5 flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1 transition-colors select-none hover:bg-accent/40 motion-reduce:transition-none',
+      focus,
+    ],
+    groupTriggerLabel: 'font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground uppercase group-hover:text-foreground',
+    groupChevron: 'shrink-0 text-muted-foreground transition-transform duration-200 group-data-panel-closed:-rotate-90 motion-reduce:transition-none',
+    railDivider: 'mx-auto mb-1 h-px w-5 bg-border',
+    list: 'm-0 flex list-none flex-col gap-0.5 p-0',
+    panel: [
+      'h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 ease-out motion-reduce:transition-none',
+      'data-starting-style:h-0 data-ending-style:h-0',
+    ],
+    item: [
+      'relative flex h-9 cursor-pointer items-center rounded-lg text-[13px] no-underline transition-colors motion-reduce:transition-none',
+      'font-medium text-muted-foreground hover:bg-accent/45 hover:text-foreground',
+      'aria-[current=page]:bg-accent aria-[current=page]:font-semibold aria-[current=page]:text-accent-foreground',
+      'aria-disabled:pointer-events-none aria-disabled:opacity-50',
+      focus,
+    ],
+    indicator: 'absolute top-1.5 bottom-1.5 left-0 w-[3px] rounded-r bg-primary',
+    icon: 'shrink-0',
+    label: 'min-w-0 flex-1 truncate text-left',
+    badge: 'inline-flex h-[18px] shrink-0 items-center rounded-full bg-secondary px-1.5 font-mono text-[10.5px] text-muted-foreground',
+    railBadge: 'absolute top-1.5 right-1.5 size-1.5 rounded-full bg-primary',
+    parent: 'w-full font-semibold text-foreground',
+    parentChevron: 'shrink-0 text-muted-foreground transition-transform duration-200 group-data-panel-closed:-rotate-90 motion-reduce:transition-none',
+    subList: 'm-0 mt-0.5 ml-[18px] flex list-none flex-col gap-0.5 border-l border-border p-0 pl-3',
+    subItem: [
+      'flex h-8 cursor-pointer items-center gap-2 rounded-md px-2.5 text-[12.5px] no-underline transition-colors motion-reduce:transition-none',
+      'font-medium text-muted-foreground hover:bg-accent/40 hover:text-foreground',
+      'aria-[current=page]:bg-accent aria-[current=page]:font-semibold aria-[current=page]:text-accent-foreground',
+      focus,
+    ],
+  },
+  variants: {
+    collapsed: {
+      true: { item: 'mx-auto w-9 justify-center' },
+      false: { item: 'w-full gap-2.5 px-2.5' },
+    },
+    current: {
+      true: { badge: 'bg-primary/16 text-primary-text' },
+    },
+  },
+  defaultVariants: { collapsed: false, current: false },
+});
+
+export type NavListVariantProps = VariantProps<typeof navListVariants>;
