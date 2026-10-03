@@ -71,7 +71,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @gntik-ai/docs build
       - run: pnpm --filter @gntik-ai/docs exec playwright install --with-deps chromium
-      - name: Visual baselines (60 entries dark + 8 in light and high contrast)
+      - name: Visual baselines (63 entries dark + 8 in light and high contrast)
         run: pnpm visual
       - if: failure()
         uses: actions/upload-artifact@v7
