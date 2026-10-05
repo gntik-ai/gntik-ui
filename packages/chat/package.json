@@ -1,6 +1,6 @@
 {
   "name": "@gntik-ai/chat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "AI chat pack for gntik-ui: chat layout, messages, streaming markdown, composer, tool calls and citations.",
   "license": "MIT",
   "type": "module",
