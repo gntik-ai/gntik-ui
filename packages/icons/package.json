@@ -1,6 +1,6 @@
 {
   "name": "@gntik-ai/icons",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "lucide icons for gntik-ui with brand size tokens; the single icon source for gntik-ai products.",
   "license": "MIT",
   "type": "module",
