@@ -20,7 +20,7 @@
     "visual:update": "pnpm --filter @gntik-ai/docs visual:update",
     "a11y": "pnpm --filter @gntik-ai/docs a11y",
     "changeset": "changeset",
-    "version-packages": "changeset version",
+    "version-packages": "changeset version && pnpm registry",
     "release": "pnpm -r build && changeset publish"
   },
   "devDependencies": {
