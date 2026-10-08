@@ -5,8 +5,8 @@
   "description": "Agent evaluations: a prompt battery run against the kit through its MCP tools; scores component choice, brand rules, kit-only imports and typechecking.",
   "type": "module",
   "scripts": {
-    "eval": "tsx src/run.ts",
-    "eval:dry": "tsx src/run.ts --dry-run",
+    "eval": "node --import tsx src/run.ts",
+    "eval:dry": "node --import tsx src/run.ts --dry-run",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run"
   },

@@ -157,8 +157,10 @@ test('sync writes, then check reports changed and stale files', () => {
 
 test('CLI --check exits 1 when stale and 0 when fresh', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'shadcn-cli-'));
-  const tsx = path.resolve(here, '../node_modules/.bin/tsx');
-  const run = (...args) => spawnSync(tsx, [SCRIPT, '--out', dir, ...args], { env: { ...process.env, GNTIK_REGISTRY_BASE_URL: BASE }, encoding: 'utf8' });
+  // `node --import tsx`, not the tsx CLI: the CLI opens an IPC pipe that sandboxed runners
+  // (Hermes makers) refuse; the loader alone needs none.
+  const loader = import.meta.resolve('tsx');
+  const run = (...args) => spawnSync(process.execPath, ['--import', loader, SCRIPT, '--out', dir, ...args], { env: { ...process.env, GNTIK_REGISTRY_BASE_URL: BASE }, encoding: 'utf8' });
   try {
     assert.equal(run('--check').status, 1);
     assert.equal(run().status, 0);

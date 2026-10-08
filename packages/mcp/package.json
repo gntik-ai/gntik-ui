@@ -17,14 +17,14 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "dev": "tsx src/index.ts --stdio",
-    "dev:http": "tsx src/index.ts --http",
+    "dev": "node --import tsx src/index.ts --stdio",
+    "dev:http": "node --import tsx src/index.ts --http",
     "start": "node dist/index.js",
     "start:http": "node dist/index.js --http",
     "test": "npm run build && node --test test/*.test.mjs",
     "smoke": "npm run build && node scripts/smoke.mjs",
-    "registry": "tsx scripts/build-kit-registry.ts && tsx scripts/build-inventory.ts && tsx scripts/build-llms.ts && tsc -p tsconfig.json && node dist/build-registry.js && tsx scripts/build-shadcn-registry.ts",
-    "registry:check": "tsx scripts/build-kit-registry.ts --check && tsx scripts/build-inventory.ts --check && tsx scripts/build-llms.ts --check && tsc -p tsconfig.json && node dist/build-registry.js --check && tsx scripts/build-shadcn-registry.ts --check",
+    "registry": "node --import tsx scripts/build-kit-registry.ts && node --import tsx scripts/build-inventory.ts && node --import tsx scripts/build-llms.ts && tsc -p tsconfig.json && node dist/build-registry.js && node --import tsx scripts/build-shadcn-registry.ts",
+    "registry:check": "node --import tsx scripts/build-kit-registry.ts --check && node --import tsx scripts/build-inventory.ts --check && node --import tsx scripts/build-llms.ts --check && tsc -p tsconfig.json && node dist/build-registry.js --check && node --import tsx scripts/build-shadcn-registry.ts --check",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
