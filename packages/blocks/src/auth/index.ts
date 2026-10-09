@@ -12,3 +12,4 @@ export * from './SsoButtons/SsoButtons';
 export { meta as ssoButtonsMeta } from './SsoButtons/block.meta';
 export { ssoProviders } from './SsoButtons/fixtures';
 export { AuthHeader, AuthDivider, type AuthHeaderProps } from './shared';
+export type { AuthIdentifierConfig, AuthValidationMessages, AuthFormAccessibilityProps } from './shared';

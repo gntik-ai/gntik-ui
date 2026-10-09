@@ -5,7 +5,8 @@ export interface AuthHeaderProps {
   eyebrow?: ReactNode;
   title: ReactNode;
   description?: ReactNode;
-  headingLevel?: 'h1' | 'h2' | 'h3';
+  /** Defaults to h1. `null` omits the title heading. */
+  headingLevel?: 'h1' | 'h2' | 'h3' | null;
   className?: string;
 }
 
@@ -14,7 +15,7 @@ export function AuthHeader({ eyebrow, title, description, headingLevel: Heading 
   return (
     <div className={cn('mb-6', className)}>
       {eyebrow != null && <p className="mb-2.5 font-mono text-[11px] tracking-[0.2em] text-primary-text uppercase">{eyebrow}</p>}
-      <Heading className="text-[24px] font-semibold tracking-tight text-balance text-foreground sm:text-[27px]">{title}</Heading>
+      {Heading != null && title != null && <Heading className="text-[24px] font-semibold tracking-tight text-balance text-foreground sm:text-[27px]">{title}</Heading>}
       {description != null && <p className="mt-2 text-[14px] leading-relaxed text-pretty text-muted-foreground">{description}</p>}
     </div>
   );
@@ -54,3 +55,45 @@ export function useAsyncSubmit(fallbackError = 'Something went wrong. Try again.
 }
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/** Email by default; text mode supports a username or username-or-email identifier. */
+export interface AuthIdentifierConfig {
+  type?: 'email' | 'text';
+  autoComplete?: string;
+  label?: ReactNode;
+  help?: ReactNode;
+  /** Optional stable id for the FieldDescription. Otherwise Base UI generates it. */
+  helpId?: string;
+  placeholder?: string;
+  minLength?: number;
+  maxLength?: number;
+}
+
+/** Kit-owned inline validation; consumers supply copy rather than running a second validator. */
+export interface AuthValidationMessages {
+  identifierRequired?: string;
+  identifierInvalid?: string;
+  identifierTooShort?: string;
+  passwordRequired?: string;
+}
+
+/** Server errors use only these props plus the form's error alert; inline validation stays in the kit. */
+export interface AuthFormAccessibilityProps {
+  fieldInvalid?: { identifier?: boolean; password?: boolean };
+  /** Id of the server alert (or an external feedback element), appended to flagged inputs. */
+  feedbackId?: string;
+  /** Describes the form itself; does not replace the per-field feedback association. */
+  'aria-describedby'?: string;
+  'aria-label'?: string;
+  'aria-labelledby'?: string;
+}
+
+export function authIdentifierError(value: string, config?: AuthIdentifierConfig, messages?: AuthValidationMessages) {
+  const trimmed = value.trim();
+  const fallback = config?.type === 'text' ? 'Enter a valid identifier.' : 'Enter a valid email address.';
+  if (!trimmed) return messages?.identifierRequired ?? fallback;
+  if (config?.minLength !== undefined && trimmed.length < config.minLength) return messages?.identifierTooShort ?? messages?.identifierInvalid ?? fallback;
+  if (((config?.type ?? 'email') === 'email' && !EMAIL_RE.test(trimmed)) || (config?.maxLength !== undefined && trimmed.length > config.maxLength))
+    return messages?.identifierInvalid ?? fallback;
+  return null;
+}

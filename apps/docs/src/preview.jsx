@@ -16,6 +16,8 @@ const theme = ['dark', 'light', 'high_contrast'].includes(params.get('theme')) ?
 const padded = params.get('pad') !== '0';
 const density = params.get('density') === 'compact' ? 'compact' : 'comfortable';
 const dir = params.get('dir') === 'rtl' ? 'rtl' : 'ltr';
+const authPreview = ['sign-in-form', 'forgot-password-form', 'sign-in-card', 'forgot-password'].includes(id.split('--')[0]);
+const authHeadingProps = authPreview && params.get('headings') === 'suppressed' ? { headingLevel: null, suppressAllHeadings: true } : {};
 
 function Preview() {
   const Comp = useMemo(() => {
@@ -25,7 +27,7 @@ function Preview() {
   if (!Comp) return <p className="p-6 text-[13px] text-muted-foreground">Nothing to preview for {kind} “{id}”.</p>;
   return (
     <Suspense fallback={<p className="p-6 text-[13px] text-muted-foreground">Loading…</p>}>
-      <Comp />
+      <Comp {...authHeadingProps} />
     </Suspense>
   );
 }

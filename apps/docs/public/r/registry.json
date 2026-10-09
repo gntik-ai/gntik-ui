@@ -4204,7 +4204,7 @@
       "name": "forgot-password",
       "type": "registry:block",
       "title": "Forgot password",
-      "description": "Centred card password recovery: request a reset link by email, then a check-your-inbox state with resend and a way back to sign in.",
+      "description": "Centred card recovery with default email, inbox feedback and resend. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. Forwards ForgotPasswordForm props unchanged, including ref.focus(identifier), title/description, sentTitle/sentDescription, sentStatus and resendActions (null hides sent copy or actions). suppressAllHeadings suppresses headings in request and sent states. footer accepts replacement content or null. Preview: forgot-password--username-or-email.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",
@@ -4244,7 +4244,7 @@
       "name": "forgot-password-form",
       "type": "registry:block",
       "title": "Forgot password form",
-      "description": "Requests a password reset link by email, then shows a \"check your email\" state with resend.",
+      "description": "Email (default) or username-or-email password recovery; onSubmit receives the trimmed identifier. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. ref.focus accepts identifier. title/description and sentTitle/sentDescription configure request and sent copy; sentTitle, sentDescription, sentStatus and resendActions accept null to hide inbox copy, announcements and resend/change-identifier actions. Preview: forgot-password-form--username-or-email.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -10108,7 +10108,7 @@
       "name": "sign-in-card",
       "type": "registry:block",
       "title": "Sign in (card)",
-      "description": "Centred card sign-in: email and password form with remember me and forgot-password link, legal footer, no single sign-on.",
+      "description": "Centred card sign-in with default email and password, legal footer and no SSO. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. Forwards SignInForm props unchanged, including passwordHelp/passwordHelpId and ref.focus(identifier/password). Text submissions retain email and add identifier. suppressAllHeadings suppresses every internal heading. footer, sso and signUpPrompt accept replacements or null. Preview: sign-in-card--username.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",
@@ -10148,7 +10148,7 @@
       "name": "sign-in-form",
       "type": "registry:block",
       "title": "Sign-in form",
-      "description": "Email and password sign-in with remember me, forgot-password link, SSO slot, error alert and loading state.",
+      "description": "Email (default) or text identifier and password sign-in. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. passwordHelp/passwordHelpId describe the password. Text submissions add values.identifier and retain values.email; email-mode payloads are unchanged. sso and signUpPrompt accept replacements or null. Preview: sign-in-form--username.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
