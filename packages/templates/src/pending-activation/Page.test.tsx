@@ -360,6 +360,53 @@ describe("PendingActivationPage", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("removes stale actions during refresh and hides the region when none remain", () => {
+    const { rerender } = render(
+      <PendingActivationPage recoveryLinks={recoveryLinks} actions={actions} />,
+    );
+    expect(screen.getByRole("link", { name: "Review request" })).toBeVisible();
+
+    rerender(
+      <PendingActivationPage
+        recoveryLinks={recoveryLinks}
+        actions={actions}
+        loading
+      />,
+    );
+    const busyRegion = screen.getByRole("region", {
+      name: "Available actions",
+    });
+    expect(busyRegion).toHaveAttribute("aria-busy", "true");
+    expect(within(busyRegion).queryByRole("link")).not.toBeInTheDocument();
+    expect(within(busyRegion).queryByRole("button")).not.toBeInTheDocument();
+
+    // An empty action response must keep placeholders until loading finishes.
+    rerender(
+      <PendingActivationPage
+        recoveryLinks={recoveryLinks}
+        actions={[]}
+        loading
+      />,
+    );
+    expect(
+      screen.getByRole("region", { name: "Available actions" }),
+    ).toHaveAttribute("aria-busy", "true");
+
+    rerender(
+      <PendingActivationPage recoveryLinks={recoveryLinks} actions={[]} />,
+    );
+    expect(
+      screen.queryByRole("region", { name: "Available actions" }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute(
+      "href",
+      "/sign-in",
+    );
+    expect(
+      screen.getByRole("link", { name: "Review sign-up" }),
+    ).toHaveAttribute("href", "/sign-up");
+  });
+
   it("shows an optional reference after status and removes it when absent", () => {
     const { rerender } = render(
       <PendingActivationPage
