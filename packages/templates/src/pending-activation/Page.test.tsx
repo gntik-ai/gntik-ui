@@ -424,6 +424,76 @@ describe("PendingActivationPage", () => {
     expect(screen.getAllByRole("status")).toHaveLength(1);
   });
 
+  it.each(["no-access", "not-found", "error"] as const)(
+    "retains status, reference and recovery when entering and leaving %s",
+    (errorState) => {
+      const props = {
+        recoveryLinks,
+        actions,
+        title: "Awaiting review",
+        intro: "Your registration is complete.",
+        statusTitle: "Review pending",
+        statusMessage: "We will notify you after approval.",
+        reference: { label: "Request received", value: "REQ-2048" },
+        onRetry: () => {},
+      };
+      const { rerender } = render(<PendingActivationPage {...props} />);
+
+      rerender(
+        <PendingActivationPage
+          {...props}
+          errorState={errorState}
+          errorTitle="Cannot load account status"
+          errorMessage="Return to sign in or try again."
+          loading
+        />,
+      );
+      expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+      expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+        "Awaiting review",
+      );
+      expect(screen.getByText("Your registration is complete.")).toBeVisible();
+      expect(
+        screen.getByRole("status", { name: "Review pending" }),
+      ).toHaveAccessibleDescription("We will notify you after approval.");
+      expect(
+        screen.getByRole("status", { name: "Request received" }),
+      ).toHaveAccessibleDescription("REQ-2048");
+      expect(
+        screen.queryByRole("region", { name: "Available actions" }),
+      ).not.toBeInTheDocument();
+      expect(screen.queryAllByRole("button")).toEqual(
+        errorState === "error"
+          ? [screen.getByRole("button", { name: "Retry" })]
+          : [],
+      );
+      expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute(
+        "href",
+        "/sign-in",
+      );
+      expect(
+        screen.getByRole("link", { name: "Review sign-up" }),
+      ).toHaveAttribute("href", "/sign-up");
+
+      rerender(<PendingActivationPage {...props} />);
+      expect(
+        screen.queryByRole("heading", { level: 2 }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: "Retry" }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.getByRole("link", { name: "Review request" }),
+      ).toBeVisible();
+      expect(
+        screen.getByRole("button", { name: "Check status" }),
+      ).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "Account details" }),
+      ).toBeVisible();
+    },
+  );
+
   it("renders a meaningful default preview", () => {
     render(<PendingActivationPage />);
     expect(
