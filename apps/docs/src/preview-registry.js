@@ -51,6 +51,10 @@ export const PREVIEW_LOADERS = {
     ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
     'sign-in-card--username': () => import('../../../packages/templates/src/sign-in-card/examples/Username'),
     'forgot-password--username-or-email': () => import('../../../packages/templates/src/forgot-password/examples/UsernameOrEmail'),
+    'public-hub--full': () => import('../../../packages/templates/src/public-hub/examples/Full'),
+    'public-hub--minimal': () => import('../../../packages/templates/src/public-hub/examples/Minimal'),
+    'public-hub--loading': () => import('../../../packages/templates/src/public-hub/examples/Loading'),
+    'public-hub--minimal-loading': () => import('../../../packages/templates/src/public-hub/examples/MinimalLoading'),
   },
   layout: Object.fromEntries(LAYOUTS.map((l) => [l.id, l.load])),
 };

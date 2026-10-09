@@ -102,6 +102,27 @@ test('get_template: layout, blocks, console shell and source', async () => {
   assert.match(await call('get_template', { id: 'sign-in', include_source: false }), /\*\*Console shell:\*\* no/);
 });
 
+test('public-hub: Auth template lists its composition, props, keyboard and examples', async () => {
+  const listing = await call('list_kit', { kind: 'template' });
+  assert.match(listing, /`public-hub`/);
+  const item = kit.byId.get('public-hub');
+  assert.equal(item.kind, 'template');
+  assert.equal(item.group, 'Auth');
+  const documentation = await call('get_template', { id: 'public-hub', include_source: false });
+  for (const text of [
+    '**Layout:** AuthLayout', '`page-header`', 'instead of landing',
+    '**ARIA pattern:**', '## Keyboard', '| Tab / Shift+Tab |', '| Enter |',
+    'PublicHubPage', 'Skip to main content',
+  ]) assert.ok(documentation.includes(text), `catalogue includes ${text}`);
+  for (const prop of [
+    'eyebrow', 'title', 'description', 'cards', 'primaryAction', 'secondaryAction',
+    'tertiaryLink', 'footer', 'loading', 'logo', 'loadingLabel',
+  ]) assert.ok(documentation.includes(`| ${prop} |`), `documents ${prop}`);
+  for (const theme of ['dark', 'light', 'high_contrast']) {
+    assert.ok(documentation.includes(`defaultMode="${theme}"`), `example for ${theme}`);
+  }
+});
+
 test('pending-activation: discoverable Auth template with documented prop source', async () => {
   const listing = await call('list_kit', { kind: 'template', group: 'Auth' });
   assert.match(listing, /`pending-activation`/);

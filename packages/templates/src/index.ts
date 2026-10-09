@@ -120,6 +120,10 @@ export type { SignInPageProps } from './sign-in/Page';
 export { default as SignInCardPage } from './sign-in-card/Page';
 export { meta as signInCardTemplateMeta } from './sign-in-card/template.meta';
 export type { SignInCardPageProps } from './sign-in-card/Page';
+
+export { default as PublicHubPage } from './public-hub/Page';
+export { meta as publicHubTemplateMeta } from './public-hub/template.meta';
+export type { PublicHubPageProps, PublicHubAction } from './public-hub/Page';
 export { default as SignUpPage } from './sign-up/Page';
 export { meta as signUpTemplateMeta } from './sign-up/template.meta';
 export type { SignUpPageProps } from './sign-up/Page';

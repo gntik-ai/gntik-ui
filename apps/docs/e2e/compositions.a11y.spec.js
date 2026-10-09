@@ -21,6 +21,9 @@ const layoutExamples = kit.items
 
 const cases = [
   ...kit.items.filter((i) => i.kind === 'template').flatMap((i) => ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: i.id, theme }))),
+  ...['full', 'minimal', 'loading', 'minimal-loading'].flatMap((fixture) =>
+    ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: `public-hub--${fixture}`, theme })),
+  ),
   ...kit.items.filter((i) => i.kind === 'block').map((i) => ({ kind: 'block', id: i.id, theme: 'dark' })),
   ...layoutExamples.map((id) => ({ kind: 'layout', id, theme: 'dark' })),
 ];
