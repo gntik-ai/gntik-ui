@@ -250,6 +250,25 @@ describe("PendingActivationPage", () => {
     },
   );
 
+  it("omits internal error codes and demo content with default error copy", () => {
+    render(
+      <PendingActivationPage
+        recoveryLinks={recoveryLinks}
+        errorState="error"
+        onRetry={() => {}}
+      />,
+    );
+    const error = screen.getByRole("region", {
+      name: "Account status unavailable",
+    });
+    expect(error).toHaveTextContent(
+      /^Account status unavailableWe could not load your account status\. Try again in a moment\.Retry$/,
+    );
+    expect(within(error).getAllByRole("button")).toEqual([
+      within(error).getByRole("button", { name: "Retry" }),
+    ]);
+  });
+
   it.each(["click", "Enter", "Space"])(
     "retries once using %s without demo controls or details",
     async (gesture) => {
