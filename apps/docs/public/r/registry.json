@@ -8162,6 +8162,46 @@
       ]
     },
     {
+      "name": "public-hub",
+      "type": "registry:block",
+      "title": "Public hub",
+      "description": "Unauthenticated entry hub on AuthLayout full-bleed with PageHeader, explanatory cards and navigation actions. Use public-hub instead of landing for an account entry point without a marketing hero or screenshot; use sign-in-card for a single sign-in form. Recommend 2 to 4 cards; any number is supported. Cards use the kit sm breakpoint: one column below sm, two from sm. ARIA: a section labelled by the single PageHeader h1, h2 card headings and a ul/li card list. Loading replaces content with decorative kit Skeletons in an aria-busy section named by loadingLabel. Keyboard: Tab and Shift+Tab move through the primary, secondary and tertiary links in visual order; Enter follows href and invokes onClick, with visible focus and no trap. AuthLayout retains its skip link before the content in both states. The PageHeader title inherits truncation for long titles.\n\n## Props\n\n| Prop | Type | Default / behaviour |\n| --- | --- | --- |\n| eyebrow | string | Omitted; optional Badge before PageHeader |\n| title | string | Welcome; PageHeader h1 |\n| description | string | Omitted; PageHeader description |\n| cards | { title: string; body: string }[] | Omitted; explanatory list with h2 headings |\n| primaryAction | { label: string; href: string; onClick?: MouseEventHandler<HTMLAnchorElement> } | Sign in, #sign-in; Button rendered as an anchor |\n| secondaryAction | Same action shape | Omitted; secondary Button rendered as an anchor |\n| tertiaryLink | Same action shape | Omitted; one kit Link |\n| footer | string | Omitted; Separator then supporting Text |\n| loading | boolean | false; replaces header, cards and actions; hides eyebrow/footer copy |\n| logo | ReactNode | Active preset logo from AuthLayout |\n| loadingLabel | string | Loading; accessible name of the busy section |\n\nOptional content has no default fixtures and creates no empty wrappers; an empty cards array also renders no list. Without footer there is no separator. Preview fixtures: public-hub--full, public-hub--minimal, public-hub--loading and public-hub--minimal-loading.\n\n## Theme examples\n\nImport ThemeProvider from @gntik-ai/ui and PublicHubPage from @gntik-ai/templates. Pass account routes and copy as props. Each theme supports the same full, minimal and loading composition.\n\n```tsx\n<ThemeProvider defaultMode=\"dark\" storageKey={null}>\n  <PublicHubPage title=\"Welcome\" primaryAction={{ label: 'Sign in', href: '/sign-in' }} />\n</ThemeProvider>\n```\n\n```tsx\n<ThemeProvider defaultMode=\"light\" storageKey={null}>\n  <PublicHubPage title=\"Welcome\" primaryAction={{ label: 'Sign in', href: '/sign-in' }} />\n</ThemeProvider>\n```\n\n```tsx\n<ThemeProvider defaultMode=\"high_contrast\" storageKey={null}>\n  <PublicHubPage title=\"Welcome\" primaryAction={{ label: 'Sign in', href: '/sign-in' }} />\n</ThemeProvider>\n```",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Auth"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "stable",
+        "source": "packages/templates/src/public-hub/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/public-hub/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/public-hub/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/public-hub/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/public-hub/data.ts"
+        }
+      ]
+    },
+    {
       "name": "query-builder",
       "type": "registry:ui",
       "title": "QueryBuilder",
