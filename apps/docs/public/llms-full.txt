@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 112 components, 12 layouts, 70 blocks, 58 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 112 components, 12 layouts, 70 blocks, 59 templates.
 
 Packages are published as `@gntik-ai/*` on GitHub Packages: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -8437,6 +8437,29 @@ import { ForgotPasswordPage } from '@gntik-ai/templates';
 // Every prop is optional: unset ones fall back to the template fixtures.
 export default function Route() {
   return <ForgotPasswordPage />;
+}
+```
+
+### Pending activation (`pending-activation`)
+
+Centred card for registered accounts awaiting approval or activation: polite status, optional request reference, allowed actions and recovery links. Use instead of verify-email when activation requires approval rather than an email verification link.
+
+- Package: `@gntik-ai/templates` · export `PendingActivationPage` · group Auth · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/pending-activation/template.meta.ts
+- Layout: AuthLayout
+- Blocks: inline-callout, error-panel
+- Console shell: no
+- Preview: /preview.html?kind=template&id=pending-activation
+- Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add pending-activation`
+
+Usage:
+
+```tsx
+import { PendingActivationPage } from '@gntik-ai/templates';
+
+// Every prop is optional: unset ones fall back to the template fixtures.
+export default function Route() {
+  return <PendingActivationPage />;
 }
 ```
 

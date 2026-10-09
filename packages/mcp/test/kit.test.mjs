@@ -102,6 +102,30 @@ test('get_template: layout, blocks, console shell and source', async () => {
   assert.match(await call('get_template', { id: 'sign-in', include_source: false }), /\*\*Console shell:\*\* no/);
 });
 
+test('pending-activation: discoverable Auth template with documented prop source', async () => {
+  const listing = await call('list_kit', { kind: 'template', group: 'Auth' });
+  assert.match(listing, /`pending-activation`/);
+  const item = kit.byId.get('pending-activation');
+  assert.equal(item.kind, 'template');
+  assert.equal(item.group, 'Auth');
+  assert.equal(item.status, 'beta');
+  assert.match(item.description, /approval or activation/);
+  assert.match(item.description, /verify-email/);
+  const response = await call('get_template', { id: 'pending-activation' });
+  assert.match(response, /AuthLayout/);
+  assert.match(response, /`inline-callout`/);
+  assert.match(response, /`error-panel`/);
+  assert.match(response, /### packages\/templates\/src\/pending-activation\/Page\.tsx/);
+  assert.match(response, /export interface PendingActivationPageProps/);
+  const props = /export interface PendingActivationPageProps \{([\s\S]*?)\n\}/.exec(response)?.[1];
+  assert.ok(props, 'get_template returns the public prop interface');
+  for (const line of props.split('\n').filter((line) => /^ {2}\w+\??:/.test(line))) {
+    const offset = props.indexOf(line);
+    assert.match(props.slice(0, offset), /\/\*\*[\s\S]*?\*\/\s*$/, `doc comment for ${line.trim()}`);
+  }
+  assert.match(props, /recoveryLinks: readonly/);
+});
+
 test('scaffold_page: template → page with the shell prop', async () => {
   const md = await call('scaffold_page', { template: 'resource-index', route: '/projects' });
   const code = fenced(md);
