@@ -8068,6 +8068,32 @@
       "docs": "packages/templates/src/notification-inbox/template.meta.ts"
     },
     {
+      "id": "pending-activation",
+      "kind": "template",
+      "name": "Pending activation",
+      "package": "@gntik-ai/templates",
+      "group": "Auth",
+      "status": "beta",
+      "description": "Centred card for registered accounts awaiting approval or activation: polite status, optional request reference, allowed actions and recovery links. Use instead of verify-email when activation requires approval rather than an email verification link.",
+      "files": [
+        {
+          "path": "packages/templates/src/pending-activation/Page.tsx",
+          "target": "app/templates/pending-activation/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/pending-activation/data.ts",
+          "target": "app/templates/pending-activation/data.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/pending-activation/template.meta.ts"
+    },
+    {
       "id": "pricing",
       "kind": "template",
       "name": "Pricing",

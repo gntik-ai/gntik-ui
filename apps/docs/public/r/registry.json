@@ -7486,6 +7486,47 @@
       ]
     },
     {
+      "name": "pending-activation",
+      "type": "registry:block",
+      "title": "Pending activation",
+      "description": "Centred card for registered accounts awaiting approval or activation: polite status, optional request reference, allowed actions and recovery links. Use instead of verify-email when activation requires approval rather than an email verification link.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/icons",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {},
+        "@import \"@gntik-ai/blocks/styles.css\"": {}
+      },
+      "categories": [
+        "template",
+        "Auth"
+      ],
+      "meta": {
+        "kind": "template",
+        "package": "@gntik-ai/templates",
+        "status": "beta",
+        "source": "packages/templates/src/pending-activation/template.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/templates/src/pending-activation/Page.tsx",
+          "type": "registry:component",
+          "target": "app/templates/pending-activation/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/pending-activation/data.ts",
+          "type": "registry:lib",
+          "target": "app/templates/pending-activation/data.ts"
+        }
+      ]
+    },
+    {
       "name": "pending-invitations",
       "type": "registry:block",
       "title": "Pending invitations",

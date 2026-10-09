@@ -148,6 +148,9 @@ export type { TrafficPoint, UsageRow } from './usage-analytics/data';
 export { default as VerifyEmailPage } from './verify-email/Page';
 export { meta as verifyEmailTemplateMeta } from './verify-email/template.meta';
 export type { VerifyEmailPageProps } from './verify-email/Page';
+export { default as PendingActivationPage } from './pending-activation/Page';
+export { meta as pendingActivationTemplateMeta } from './pending-activation/template.meta';
+export type { PendingActivationPageProps, PendingActivationAction, PendingActivationLink } from './pending-activation/Page';
 
 // P3 — AI and builders
 export { default as RunTracePage } from './run-trace/Page';
