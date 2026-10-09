@@ -2,6 +2,11 @@ packages:
   - apps/*
   - packages/*
 
+# Recursive runs (pnpm -r build/test) handle two packages at a time. Unbounded, `pnpm test`
+# started ~4 vitest packages at once with up to ~7 workers each on 8 cores and, with a
+# Next.js build, ran Hermes makers out of their 5G memory cap (gntik-ui #25).
+workspaceConcurrency: 2
+
 # Supply-chain guard: only resolve releases published at least 7 days ago.
 minimumReleaseAge: 10080
 
