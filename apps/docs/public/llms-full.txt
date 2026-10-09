@@ -8465,7 +8465,7 @@ export default function Route() {
 
 ### Public hub (`public-hub`)
 
-Unauthenticated entry hub on AuthLayout full-bleed with PageHeader, explanatory cards and navigation actions. Use public-hub instead of landing for an account entry point without a marketing hero or screenshot; use sign-in-card for a single sign-in form. Recommend 2 to 4 cards; any number is supported. Cards use the kit sm breakpoint: one column below sm, two from sm. ARIA: a section labelled by the single PageHeader h1, h2 card headings and a ul/li card list. Loading replaces content with decorative kit Skeletons in an aria-busy section named by loadingLabel. Keyboard: Tab and Shift+Tab move through the primary, secondary and tertiary links in visual order; Enter follows href and invokes onClick, with visible focus and no trap. AuthLayout retains its skip link before the content in both states. The PageHeader title inherits truncation for long titles.
+Unauthenticated entry hub on AuthLayout full-bleed with PageHeader, explanatory cards and navigation actions. Use public-hub instead of landing for an account entry point without a marketing hero or screenshot; use sign-in-card for a single sign-in form. Recommend 2 to 4 cards; any number is supported. Cards use the kit sm breakpoint: one column below sm, two from sm. ARIA: a section labelled by the text span inside the single PageHeader h1, h2 card headings and a ul/li card list. The title span owns the aria-labelledby target id in server HTML and after hydration; PageHeader has no heading-id prop. Loading replaces content with decorative kit Skeletons in an aria-busy section named by loadingLabel. Keyboard: Tab and Shift+Tab move through the primary, secondary and tertiary links in visual order; Enter follows href and invokes onClick, with visible focus and no trap. AuthLayout retains its skip link, named "Skip to main content", before the content in both states. The PageHeader title inherits truncation for long titles.
 
 ## Props
 
@@ -8509,7 +8509,7 @@ Import ThemeProvider from @gntik-ai/ui and PublicHubPage from @gntik-ai/template
 
 - Package: `@gntik-ai/templates` · export `PublicHubPage` · group Auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/public-hub/template.meta.ts
-- ARIA pattern: Named section (aria-labelledby points to the PageHeader h1); h2 card headings in a ul/li list. Loading: aria-busy=true and aria-label=loadingLabel, with decorative Skeletons and no content links or headings.
+- ARIA pattern: Named section (aria-labelledby points to the title span inside the PageHeader h1, including in server HTML); h2 card headings in a ul/li list. Loading: aria-busy=true and aria-label=loadingLabel, with decorative Skeletons and no content links or headings.
 - Layout: AuthLayout
 - Blocks: page-header
 - Console shell: no
@@ -8520,7 +8520,7 @@ Keyboard:
 
 | Key | Behaviour |
 | --- | --- |
-| Tab / Shift+Tab | Move through primary, secondary and tertiary navigation links in reading order, after the AuthLayout skip link; focus is visible and can leave the page. |
+| Tab / Shift+Tab | Move through primary, secondary and tertiary navigation links in reading order, after the AuthLayout skip link named "Skip to main content"; focus is visible and can leave the page. |
 | Enter | Follow the focused anchor href and invoke its optional onClick handler. |
 
 Usage:

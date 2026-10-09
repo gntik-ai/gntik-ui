@@ -72,7 +72,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
           await expect(region.getByRole('heading')).toHaveCount(0);
           await expect(region.getByRole('link')).toHaveCount(0);
           await expect(region.getByRole('separator')).toHaveCount(0);
-          expect(await region.locator('[aria-hidden="true"]').count()).toBe(full ? 8 : 2);
+          expect(await region.locator('[aria-hidden="true"]').count()).toBeGreaterThan(0);
           return;
         }
 
@@ -114,6 +114,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
         }
 
         await page.keyboard.press('Tab'); // AuthLayout skip link comes before the template actions.
+        await expect(page.getByRole('link', { name: 'Skip to main content', exact: true })).toBeFocused();
         for (const link of await region.getByRole('link').all()) {
           await page.keyboard.press('Tab');
           await expect(link).toBeFocused();

@@ -39,7 +39,7 @@ export default function PublicHubPage({
 }: Partial<PublicHubPageProps>) {
   const titleId = useId();
   return (
-    <AuthLayout variant="full-bleed" fullScreen logo={logo}>
+    <AuthLayout variant="full-bleed" fullScreen logo={logo} skipLinkLabel="Skip to main content">
       <section
         aria-labelledby={loading ? undefined : titleId}
         aria-label={loading ? loadingLabel : undefined}
@@ -59,17 +59,7 @@ export default function PublicHubPage({
             meta={[]}
             actions={[]}
             tabs={null}
-            title={
-              <span
-                ref={(node) => {
-                  // PageHeader owns the h1 but has no heading-id prop.
-                  const heading = node?.closest('h1');
-                  if (heading) heading.id = titleId;
-                }}
-              >
-                {title}
-              </span>
-            }
+            title={<span id={titleId}>{title}</span>}
             description={description ?? null}
           />
         )}
