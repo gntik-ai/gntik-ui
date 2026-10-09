@@ -11,8 +11,11 @@ import {
 import { pendingActivationSample } from "./data";
 
 /** Navigation targets are passed directly to Link; validation belongs to the consumer. */
+export type PendingActivationLink = { label: string; href: string };
+
+/** An allowed navigation link or consumer callback. */
 export type PendingActivationAction =
-  | { label: string; href: string; onClick?: never }
+  | (PendingActivationLink & { onClick?: never })
   | { label: string; href?: never; onClick: () => void };
 
 export interface PendingActivationPageProps {
@@ -20,7 +23,7 @@ export interface PendingActivationPageProps {
   title?: string;
   /** Description directly below the page heading. */
   intro?: string;
-  /** Title announced by the polite status callout. */
+  /** Title announced by the polite status callout, retained in recovery states; match copy to the current state. */
   statusTitle?: string;
   /** Current approval or activation status, supplied by the consumer. */
   statusMessage?: string;
@@ -45,7 +48,7 @@ export interface PendingActivationPageProps {
   /** Text on the error variant's retry button. */
   retryLabel?: string;
   /** Consumer navigation, retained in every state. Required when configuring the page. */
-  recoveryLinks: readonly { label: string; href: string }[];
+  recoveryLinks: readonly PendingActivationLink[];
   /** Accessible name of the recovery navigation. */
   recoveryLabel?: string;
   /** AuthLayout skip link text. */
@@ -100,7 +103,8 @@ export default function PendingActivationPage({
             titleAs="h2"
             title={errorTitle ?? recovery?.title}
             message={errorMessage ?? recovery?.message}
-            code={errorState}
+            // @ts-expect-error ErrorPanel hides null codes at runtime, but its prop type excludes null.
+            code={null}
             requestId=""
             details=""
             secondaryAction={null}

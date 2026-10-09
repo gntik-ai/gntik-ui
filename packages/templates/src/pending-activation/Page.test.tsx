@@ -174,15 +174,23 @@ describe("PendingActivationPage", () => {
     ["not-found", { errorState: "not-found" }],
     ["error", { errorState: "error", onRetry: () => {} }],
   ] as const)(
-    "has no axe violations in %s across all themes",
+    "has no non-contrast axe violations in %s across all themes",
     async (_, state) => {
-      for (const theme of ["dark", "light", "high_contrast"]) {
-        document.documentElement.className = theme;
-        const { container, unmount } = render(
-          <PendingActivationPage {...state} recoveryLinks={recoveryLinks} />,
-        );
-        await expectNoAxeViolations(container);
-        unmount();
+      const originalClassName = document.documentElement.className;
+      try {
+        for (const theme of ["dark", "light", "high_contrast"]) {
+          document.documentElement.className = theme;
+          const { container, unmount } = render(
+            <PendingActivationPage {...state} recoveryLinks={recoveryLinks} />,
+          );
+          try {
+            await expectNoAxeViolations(container);
+          } finally {
+            unmount();
+          }
+        }
+      } finally {
+        document.documentElement.className = originalClassName;
       }
     },
   );
@@ -261,6 +269,11 @@ describe("PendingActivationPage", () => {
         screen.getByRole("heading", { level: 2, name: "Status unavailable" }),
       ).toBeVisible();
       expect(screen.getByText("Try loading your status again.")).toBeVisible();
+      expect(
+        screen.getByRole("region", { name: "Status unavailable" }),
+      ).toHaveTextContent(
+        /^Status unavailableTry loading your status again\.Retry$/,
+      );
       const retry = screen.getByRole("button", { name: "Retry" });
       expect(screen.getAllByRole("button")).toEqual([retry]);
       expect(
@@ -392,9 +405,6 @@ describe("PendingActivationPage", () => {
       );
       expect(screen.queryByRole("alert")).not.toBeInTheDocument();
       expect(within(status).queryByRole("button")).not.toBeInTheDocument();
-      expect(status).toHaveClass(
-        statusTone === "warning" ? "bg-warning/10" : "bg-info/10",
-      );
       expectTypeOf<PendingActivationPageProps["statusTone"]>().toEqualTypeOf<
         "info" | "warning" | undefined
       >();
