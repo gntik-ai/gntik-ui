@@ -19,7 +19,8 @@ for (const { kind, id, variant, recovery } of entries) {
         test(`${id} / ${theme} / ${mode} / ${headings}`, async ({ page }) => {
           const previewId = mode === 'email' ? id : `${id}--${variant}`;
           await page.goto(`/preview.html?kind=${kind}&id=${previewId}&theme=${theme}&headings=${headings}`);
-          const input = page.getByRole('textbox');
+          // The identifier is the first textbox; sign-in forms also have the password field.
+          const input = page.getByRole('textbox').first();
           await expect(input).toBeVisible();
           await page.addScriptTag({ content: AXE });
           const scan = async () => {
