@@ -7059,11 +7059,11 @@ import { TraceWaterfall } from '@gntik-ai/blocks';
 
 ### Forgot password form (`forgot-password-form`)
 
-Requests a password reset link by email, then shows a "check your email" state with resend.
+Email (default) or username-or-email password recovery; onSubmit receives the trimmed identifier. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. ref.focus accepts identifier. title/description and sentTitle/sentDescription configure request and sent copy; sentTitle, sentDescription, sentStatus and resendActions accept null to hide inbox copy, announcements and resend/change-identifier actions. Preview: forgot-password-form--username-or-email.
 
 - Package: `@gntik-ai/blocks` · export `ForgotPasswordForm` · group auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/auth/ForgotPasswordForm/block.meta.ts
-- Composes: Field, Input, Button, Alert, Link
+- Composes: Field, FieldLabel, FieldDescription, FieldError, Input, Button, Alert, Link
 - Preview: /preview.html?kind=block&id=forgot-password-form
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add forgot-password-form`
 
@@ -7116,11 +7116,11 @@ import { ResetPasswordForm } from '@gntik-ai/blocks';
 
 ### Sign-in form (`sign-in-form`)
 
-Email and password sign-in with remember me, forgot-password link, SSO slot, error alert and loading state.
+Email (default) or text identifier and password sign-in. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. passwordHelp/passwordHelpId describe the password. Text submissions add values.identifier and retain values.email; email-mode payloads are unchanged. sso and signUpPrompt accept replacements or null. Preview: sign-in-form--username.
 
 - Package: `@gntik-ai/blocks` · export `SignInForm` · group auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/auth/SignInForm/block.meta.ts
-- Composes: Field, Input, PasswordInput, Checkbox, Button, Alert, Link, SsoButtons
+- Composes: Field, FieldLabel, FieldDescription, FieldError, Input, PasswordInput, Checkbox, Button, Alert, Link, SsoButtons
 - Registry dependencies: sso-buttons
 - Preview: /preview.html?kind=block&id=sign-in-form
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add sign-in-form`
@@ -8419,7 +8419,7 @@ export default function Route() {
 
 ### Forgot password (`forgot-password`)
 
-Centred card password recovery: request a reset link by email, then a check-your-inbox state with resend and a way back to sign in.
+Centred card recovery with default email, inbox feedback and resend. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. Forwards ForgotPasswordForm props unchanged, including ref.focus(identifier), title/description, sentTitle/sentDescription, sentStatus and resendActions (null hides sent copy or actions). suppressAllHeadings suppresses headings in request and sent states. footer accepts replacement content or null. Preview: forgot-password--username-or-email.
 
 - Package: `@gntik-ai/templates` · export `ForgotPasswordPage` · group Auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/forgot-password/template.meta.ts
@@ -8511,7 +8511,7 @@ export default function Route() {
 
 ### Sign in (card) (`sign-in-card`)
 
-Centred card sign-in: email and password form with remember me and forgot-password link, legal footer, no single sign-on.
+Centred card sign-in with default email and password, legal footer and no SSO. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. Forwards SignInForm props unchanged, including passwordHelp/passwordHelpId and ref.focus(identifier/password). Text submissions retain email and add identifier. suppressAllHeadings suppresses every internal heading. footer, sso and signUpPrompt accept replacements or null. Preview: sign-in-card--username.
 
 - Package: `@gntik-ai/templates` · export `SignInCardPage` · group Auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/sign-in-card/template.meta.ts

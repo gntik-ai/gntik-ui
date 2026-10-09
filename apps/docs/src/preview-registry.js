@@ -42,8 +42,16 @@ const LAYOUTS = Object.entries(layoutDocs).flatMap(([docPath, doc]) => {
 const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.default }));
 
 export const PREVIEW_LOADERS = {
-  block: Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
-  template: Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
+  block: {
+    ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'sign-in-form--username': () => import('../../../packages/blocks/src/auth/SignInForm/examples/Username'),
+    'forgot-password-form--username-or-email': () => import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),
+  },
+  template: {
+    ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
+    'sign-in-card--username': () => import('../../../packages/templates/src/sign-in-card/examples/Username'),
+    'forgot-password--username-or-email': () => import('../../../packages/templates/src/forgot-password/examples/UsernameOrEmail'),
+  },
   layout: Object.fromEntries(LAYOUTS.map((l) => [l.id, l.load])),
 };
 export const CATALOG = { blocks: BLOCKS, templates: TEMPLATES, layouts: LAYOUTS };
