@@ -220,7 +220,7 @@ function productSetupPrompt(framework?: string): string {
       '1. Call `get_adoption_guide` and `get_tokens` (format css).',
       '2. Install `@gntik-ai/ui` + `@gntik-ai/tokens` (or run `gntik-ui init`); in the global CSS, after `@import "tailwindcss";`, import the Geist fonts and `@gntik-ai/ui/styles.css` (add `@gntik-ai/templates/styles.css` when using blocks/templates).',
       '3. Tailwind v4: the `tailwind.css` bridge already maps every token to `--color-*`; on Tailwind v3 use `hsl(var(--token) / <alpha-value>)`.',
-      '4. Wrap the app in `<ThemeProvider brand={preset}>` (`scaffold_preset` makes the preset) and inline `themeScript` in <head> to avoid a theme flash. Theme class on <html>: none = light · `dark` (default) · `high_contrast`.',
+      '4. Wrap the app in `<ThemeProvider brand={preset}>` (`scaffold_preset` makes the preset). For strict CSP, copy `@gntik-ai/ui/theme-bootstrap.js` to same-origin static assets and load it synchronously in <head> before stylesheets and the app bundle (no async, defer or type="module"). It uses storage key `gntik-theme` and default mode `dark`; for custom storageKey/defaultMode generate a file from `themeScript(storageKey, defaultMode)`. Inline `themeScript()` remains available when CSP permits it. Theme class on <html>: none = light · `dark` (default) · `high_contrast`.',
       '5. Check with a pilot page: `validate_page` must report 0 errors.',
     ].join('\n'),
   ].join('\n\n');
@@ -350,7 +350,7 @@ export function buildServer(ctx: ServerContext): McpServer {
       '## Tailwind v4 bridge (packages/tokens/src/tailwind.css · token → utility)',
       index.tailwindConfig ? `${F}css\n${index.tailwindConfig}\n${F}` : '(not found: packages/tokens/src/tailwind.css)',
       '## Theme switching',
-      'Class on `<html>`: none = light · `dark` · `high_contrast` (ThemeProvider handles it; `themeScript` avoids the flash). Fonts: Geist + Geist Mono (self-hosted with @fontsource/geist and @fontsource/geist-mono).',
+      'Class on `<html>`: none = light · `dark` · `high_contrast` (ThemeProvider handles it). For strict CSP, copy `@gntik-ai/ui/theme-bootstrap.js` to same-origin static assets and load it synchronously in <head> before stylesheets and the app bundle (no async, defer or type="module"). The file uses storage key `gntik-theme` and default mode `dark`; custom storageKey/defaultMode need a file generated from `themeScript(storageKey, defaultMode)`. Inline `themeScript()` is still an option when CSP permits it. Fonts: Geist + Geist Mono (self-hosted with @fontsource/geist and @fontsource/geist-mono).',
       'Full tokens: tool `get_tokens` (format css), or install `@gntik-ai/tokens`. Brand preset (name + logo): `scaffold_preset`.',
     ].join('\n\n');
     return text(out);

@@ -22,6 +22,7 @@
       "types": "./dist/theme-script.d.ts",
       "default": "./dist/theme-script.js"
     },
+    "./theme-bootstrap.js": "./dist/theme-bootstrap.js",
     "./forms": {
       "types": "./dist/forms.d.ts",
       "default": "./dist/forms.js"
@@ -38,7 +39,7 @@
     "directory": "packages/ui"
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown && node scripts/build-theme-bootstrap.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run"
   },

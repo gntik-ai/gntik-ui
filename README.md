@@ -90,7 +90,18 @@ components, blocks or page templates (`gntik-ui list --json` shows everything). 
    Import `@gntik-ai/templates/styles.css` instead: it brings ui, blocks, charts, chat, flow
    and editor sources in one line.
 3. Wrap the app: `<ThemeProvider brand={musematicPreset}>` (dark by default; light,
-   high_contrast or system; persisted). Inline `themeScript()` in `<head>` to avoid a flash.
+   high_contrast or system; persisted). For strict CSP (`script-src 'self'`), copy the file
+   resolved by `@gntik-ai/ui/theme-bootstrap.js` into your static assets and serve it same-origin.
+   Load it synchronously in `<head>` before stylesheets and the app bundle, with no async, defer or type="module":
+   ```html
+   <script src="/theme-bootstrap.js"></script>
+   ```
+   Resolve the published file with `require.resolve('@gntik-ai/ui/theme-bootstrap.js')` in a
+   Node copy step; it is generated from `themeScript()` and uses storage key `gntik-theme` and
+   default mode `dark`. If your ThemeProvider uses a custom `storageKey` or `defaultMode`, generate
+   your own static file from `themeScript(storageKey, defaultMode)` and serve it the same way.
+   The inline option remains: inline `themeScript()` (or the same customized call) in `<head>`
+   when your CSP permits inline scripts, before stylesheets and the app bundle, to avoid a flash.
 4. Load Geist and Geist Mono (`@fontsource/geist`, `@fontsource/geist-mono`).
 5. Import components: `import { Button, Dialog, DialogContent } from '@gntik-ai/ui'`, layouts
    (`SidebarLayout`, `SettingsLayout`…), blocks (`import { KpiRow } from '@gntik-ai/blocks'`)
