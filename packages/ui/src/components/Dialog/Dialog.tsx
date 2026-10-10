@@ -29,11 +29,11 @@ export interface DialogContentProps extends Omit<BaseDialog.Popup.Props, 'classN
  * The modal surface: portal, backdrop, scrollable viewport and popup. Focus is trapped
  * inside, Escape and an outside press close it, and focus returns to the trigger.
  */
-export function DialogContent({ size, className, showClose = true, closeLabel: closeLabelProp, container, children, ...props }: DialogContentProps) {
+export function DialogContent({ size, presentation, className, showClose = true, closeLabel: closeLabelProp, container, children, ...props }: DialogContentProps) {
   const { t } = useI18n();
   const closeLabel = closeLabelProp ?? t('common.close');
   const dir = usePortalDir();
-  const v = dialogVariants({ size });
+  const v = dialogVariants({ size, presentation });
   return (
     <BaseDialog.Portal container={container}>
       <BaseDialog.Backdrop className={v.backdrop()} />

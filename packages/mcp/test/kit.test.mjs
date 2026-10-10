@@ -83,6 +83,20 @@ test('list_kit: filters by kind, group and query', async () => {
   assert.match(await call('list_kit', { query: 'zzzz-nothing' }), /No kit items match/);
 });
 
+test('dialog-wizard: catalogued modal create flow exposes size defaults and source through MCP', async () => {
+  assert.match(await call('list_kit', { kind: 'block', query: 'dialog-wizard' }), /`dialog-wizard`/);
+  const block = await call('get_block', { id: 'dialog-wizard' });
+  assert.match(block, /Modal variant of create-wizard/);
+  assert.match(block, /Defaults to dialog size/);
+  assert.match(block, /DialogWizard/);
+  assert.match(block, /reviewStep/);
+  assert.match(block, /stepError/);
+  assert.match(block, /from '@gntik-ai\/blocks'/);
+  const layout = await call('get_component', { id: 'wizard-layout', include_source: false });
+  assert.match(layout, /size defaults to "fullscreen"/);
+  assert.match(layout, /Closing never resets/);
+});
+
 test('get_component: kit component with keyboard, usage and source; legacy ids still work', async () => {
   const md = await call('get_component', { id: 'Button' });
   assert.match(md, /`@gntik-ai\/ui`/);

@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 112 components, 12 layouts, 72 blocks, 60 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 112 components, 12 layouts, 73 blocks, 60 templates.
 
 Packages are published as `@gntik-ai/*` on GitHub Packages: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -6829,13 +6829,13 @@ export default function StatusLayoutHeading() {
 
 ### WizardLayout (`wizard-layout`)
 
-Focus-mode shell for multi-step flows (onboarding, create project, import): no sidebar · top bar with the flow title and Exit · Stepper header · step body · Back / Next footer (Finish on the last step). Exit, or Escape anywhere inside the layout, asks for confirmation in an AlertDialog (`confirmExit`). Completed steps are clickable to go back. Below `lg` the Stepper collapses to "Step 2 of 5". Fills its container; `fullScreen` switches to `h-dvh`.
+Focus-mode shell: title and Exit, Stepper, step body, Back / Next and Finish. mode="page" is the unchanged default (container height, or fullScreen for h-dvh). mode="overlay" is a controlled Base UI modal: open/onOpenChange keep the parent page mounted without navigation; size defaults to "fullscreen" at every viewport, while "dialog" reuses Dialog xl sizing and fills mobile viewports. Use page for a dedicated flow, fullscreen for a focused in-page flow, or the dialog-wizard block (default "dialog") for a compact create flow. Closing never resets the consumer-controlled current step or data. Exit, Escape and Cancel on step zero use confirmExit (default true). Outside presses are ignored unless closeOnInteractOutside is true, then use the same exit confirmation. returnFocusRef overrides focus return to the opener. Each step focuses its heading, first control or body, then announces via a separate polite live region. Supply stepAnnouncement({position,total,label}) from your i18n (required for rich step labels); positions are one-based. All action labels, stepsSummaryLabel and pendingLabel are overridable with i18n fallbacks. finishPending or nextLoading disables Finish and shows pendingLabel in overlay mode. Below lg, Stepper uses its compact summary.
 
 - Package: `@gntik-ai/ui` · export `WizardLayout` · group Layout · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/layouts/WizardLayout/WizardLayout.doc.ts
-- Primitive: `@base-ui/react/alert-dialog (exit confirmation)`
-- ARIA pattern: landmarks (header, labelled step nav, main, footer) + alertdialog
-- Registry dependencies: alert-dialog, button, stepper, ui-utils, visually-hidden
+- Primitive: `@base-ui/react/dialog + @base-ui/react/alert-dialog (exit confirmation)`
+- ARIA pattern: page landmarks or modal dialog with labelled step nav + nested alertdialog
+- Registry dependencies: alert-dialog, button, dialog, stepper, ui-utils, visually-hidden
 - Install: `gntik-ui add wizard-layout`; own the source with `gntik-ui eject wizard-layout`
 
 Keyboard:
@@ -6847,6 +6847,8 @@ Keyboard:
 | Escape | Opens the exit confirmation (keys inside portalled popups are ignored) |
 | Enter on Exit | Opens the exit confirmation; Leave confirms, Stay or Escape closes it |
 | Tab / Enter on the Stepper | Moves between completed steps; Enter goes back to one |
+| Tab / Shift+Tab in overlay | Wraps inside the modal; closing returns focus to returnFocusRef or the opener |
+| Next / Back in overlay | Moves focus to the new step heading or first control, then politely announces the step |
 
 Tokens: background, foreground, card, border, primary, muted-foreground, focus-ring
 
@@ -7680,6 +7682,25 @@ import { DateRangeFilter } from '@gntik-ai/blocks';
 
 // Props default to the block fixtures; pass your data.
 <DateRangeFilter />
+```
+
+### Dialog wizard (`dialog-wizard`)
+
+Modal variant of create-wizard for create flows over their parent page, without a route change. Defaults to dialog size (fullscreen on mobile); size="fullscreen" fills every viewport. Consumer-controlled step state survives closing. Use the create-wizard page template for a dedicated page flow, or WizardLayout mode="overlay" for a fullscreen flow. Supply all labels, pendingLabel and stepAnnouncement from your own i18n; stepError accepts ValidationSummary and reviewStep accepts DescriptionListCard.
+
+- Package: `@gntik-ai/blocks` · export `DialogWizard` · group forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/DialogWizard/block.meta.ts
+- Composes: WizardLayout, Dialog, Stepper, Button
+- Preview: /preview.html?kind=block&id=dialog-wizard
+- Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add dialog-wizard`
+
+Usage:
+
+```tsx
+import { DialogWizard } from '@gntik-ai/blocks';
+
+// Props default to the block fixtures; pass your data.
+<DialogWizard />
 ```
 
 ### File upload panel (`file-upload-panel`)
@@ -9257,12 +9278,12 @@ export default function Route() {
 
 ### Create wizard (`create-wizard`)
 
-Focus-mode create flow: details, source (selectable cards), configuration and a review step with editable summary cards.
+Focus-mode create flow: details, source, configuration and editable review cards. Page mode is the default; mode="overlay" mounts over an existing list without a new route. Overlay size defaults to fullscreen; size="dialog" uses a popup (fullscreen on mobile). Keep it mounted to preserve answers and the current step on close. The examples/Overlay.tsx demo goes from a list through Finish with step-local ErrorPanel and FirstRunEmpty surfaces. For a consumer-owned step model and validation/review slots, use dialog-wizard (default dialog size).
 
 - Package: `@gntik-ai/templates` · export `CreateWizardPage` · group Resources · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/create-wizard/template.meta.ts
 - Layout: WizardLayout
-- Blocks: description-list-card
+- Blocks: description-list-card, error-panel, empty-states
 - Console shell: no
 - Preview: /preview.html?kind=template&id=create-wizard
 - Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add create-wizard`

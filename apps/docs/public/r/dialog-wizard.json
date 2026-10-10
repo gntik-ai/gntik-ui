@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog-wizard",
+  "type": "registry:block",
+  "title": "Dialog wizard",
+  "description": "Modal variant of create-wizard for create flows over their parent page, without a route change. Defaults to dialog size (fullscreen on mobile); size=\"fullscreen\" fills every viewport. Consumer-controlled step state survives closing. Use the create-wizard page template for a dedicated page flow, or WizardLayout mode=\"overlay\" for a fullscreen flow. Supply all labels, pendingLabel and stepAnnouncement from your own i18n; stepError accepts ValidationSummary and reviewStep accepts DescriptionListCard.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/forms/DialogWizard/DialogWizard.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/forms/dialog-wizard/DialogWizard.tsx",
+      "content": "import { useI18n, WizardLayout, type WizardLayoutProps } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\n\nexport interface DialogWizardProps extends Omit<WizardLayoutProps, 'mode' | 'steps' | 'current'> {\n  steps?: WizardLayoutProps['steps'];\n  current?: number;\n  /** Step-local validation surface, normally a ValidationSummary with consumer copy. */\n  stepError?: ReactNode;\n  /** Replaces the last step body, normally a DescriptionListCard with consumer copy. */\n  reviewStep?: ReactNode;\n}\n\n/** Modal variant of create-wizard for a flow over its parent page. State stays consumer-owned. */\nexport function DialogWizard({ steps, current = 0, size = 'dialog', stepError, reviewStep, children, title, ...props }: DialogWizardProps) {\n  const { t } = useI18n();\n  const items = steps ?? [{ label: t('wizard.details') }, { label: t('wizard.review') }];\n  return (\n    <WizardLayout {...props} mode=\"overlay\" size={size} steps={items} current={current} title={title ?? t('wizard.title')}>\n      {stepError}\n      {current >= items.length - 1 && reviewStep != null ? reviewStep : children}\n    </WizardLayout>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/forms/DialogWizard/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/forms/dialog-wizard/fixtures.ts",
+      "content": "/** Example data only; consumers own every label and all step state. */\nexport const dialogWizardSteps = [{ label: 'Details' }, { label: 'Configuration' }, { label: 'Review' }];\nexport const dialogWizardCopy = {\n  title: 'Create resource', description: 'Configure and review a new resource.',\n  exitLabel: 'Exit', cancelLabel: 'Cancel', backLabel: 'Back', nextLabel: 'Next', finishLabel: 'Create resource',\n  pendingLabel: 'Creating resource…', stepsLabel: 'Setup progress', stepsSummaryLabel: 'Setup progress summary',\n  exitTitle: 'Leave this setup?', exitDescription: 'Your answers stay available when you reopen the flow.',\n  exitConfirmLabel: 'Leave', exitCancelLabel: 'Stay',\n  stepAnnouncement: ({ position, total, label }: { position: number; total: number; label: unknown }) => `Step ${position} of ${total}: ${label}`,\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "forms"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/forms/DialogWizard/block.meta.ts"
+  }
+}
