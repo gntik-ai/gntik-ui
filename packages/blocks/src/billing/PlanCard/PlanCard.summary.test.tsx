@@ -198,6 +198,46 @@ describe("PlanCard summary", () => {
     expect(screen.queryByText(/€|\$/)).toBeNull();
     expect(screen.queryByRole("button")).toBeNull();
   });
+
+  it("renders a name without inventing a status or any optional content", () => {
+    const { container } = render(
+      <PlanCard variant="summary" plan={{ name: "Fixture Plan" }} />,
+    );
+    expect(
+      screen.getByRole("heading", { name: "Fixture Plan" }),
+    ).toBeInTheDocument();
+    expect(container.textContent).toBe("Fixture Plan");
+    expect(screen.queryByText("Active")).toBeNull();
+    expect(screen.queryByRole("button")).toBeNull();
+    expect(screen.queryByRole("group")).toBeNull();
+    expect(screen.queryByRole("list")).toBeNull();
+  });
+
+  it("keeps zero annual pricing selectable with the keyboard", async () => {
+    const user = userEvent.setup();
+    render(
+      <PlanCard
+        variant="summary"
+        plan={{ ...minimal, priceMonthly: 10, priceAnnual: 0, currency: "EUR" }}
+      />,
+    );
+    const monthly = screen.getByRole("button", { name: "Monthly" });
+    const annual = screen.getByRole("button", { name: "Annual" });
+    expect(screen.getByText("€10")).toBeInTheDocument();
+    await user.tab();
+    expect(monthly).toHaveFocus();
+    await user.keyboard("{ArrowRight}");
+    expect(annual).toHaveFocus();
+    await user.keyboard(" ");
+    expect(screen.getByText("€0")).toBeInTheDocument();
+    expect(annual).toHaveAttribute("aria-pressed", "true");
+    expect(monthly).toHaveAttribute("aria-pressed", "false");
+    await user.keyboard("{ArrowLeft}{Enter}");
+    expect(screen.getByText("€10")).toBeInTheDocument();
+    expect(monthly).toHaveAttribute("aria-pressed", "true");
+    expect(annual).toHaveAttribute("aria-pressed", "false");
+  });
+
   it("renders only the consumer name and status for MINIMAL", () => {
     const { container } = render(<PlanCard variant="summary" plan={minimal} />);
     expect(
