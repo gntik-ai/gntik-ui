@@ -29,6 +29,9 @@ const cases = [
     ['dark', 'light', 'high_contrast'].filter((theme) => id !== 'subordinate-list' || theme !== 'dark').map((theme) => ({ kind: 'block', id, theme })),
   ),
   ...layoutExamples.map((id) => ({ kind: 'layout', id, theme: 'dark' })),
+  ...['stored', 'fresh'].flatMap((variant) =>
+    ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'block', id: `credential-disclosure-dialog--${variant}`, theme })),
+  ),
 ];
 
 for (const { kind, id, theme } of cases) {
@@ -36,6 +39,16 @@ for (const { kind, id, theme } of cases) {
   test(name, async ({ page }) => {
     await page.goto(`/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}`);
     await page.locator('#root > *').first().waitFor();
+    if (id === 'credential-disclosure-dialog--fresh') {
+      await page.getByRole('button', { name: 'Disclose fresh secret' }).click();
+    }
+    if (id.startsWith('credential-disclosure-dialog')) {
+      await expect(page.getByRole('dialog')).toBeFocused();
+      await page.keyboard.press('Shift+Tab');
+      await expect(page.getByRole('button', { name: 'Close', exact: true })).toBeFocused();
+      await page.keyboard.press('Tab');
+      await expect.poll(() => page.getByRole('dialog').evaluate((dialog) => dialog.contains(document.activeElement))).toBe(true);
+    }
     await page.waitForTimeout(kind === 'template' ? 900 : 500);
     await page.addScriptTag({ content: AXE });
     const violations = await page.evaluate(async () => {

@@ -2,6 +2,8 @@ export * from './DangerZone/DangerZone';
 export { meta as dangerZoneMeta } from './DangerZone/block.meta';
 export * from './CreateApiKeyDialog/CreateApiKeyDialog';
 export { meta as createApiKeyDialogMeta } from './CreateApiKeyDialog/block.meta';
+export * from './CredentialDisclosureDialog/CredentialDisclosureDialog';
+export { meta as credentialDisclosureDialogMeta } from './CredentialDisclosureDialog/block.meta';
 export * from './DateRangeFilter/DateRangeFilter';
 export { meta as dateRangeFilterMeta } from './DateRangeFilter/block.meta';
 export * from './FileUploadPanel/FileUploadPanel';

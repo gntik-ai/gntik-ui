@@ -38,6 +38,11 @@ export interface SecretFieldProps
   onRevealedChange?: (revealed: boolean) => void;
   /** Show the copy button (default true). Copies the real value even while masked. */
   copyable?: boolean;
+  /** Optional names for the reveal toggle and copy action, and its success announcement. */
+  showLabel?: string;
+  hideLabel?: string;
+  copyLabel?: string;
+  copiedAnnouncement?: string;
   /** Adds a Rotate action. Return a promise to show a loading state until it settles. */
   onRotate?: () => void | Promise<void>;
   /** Ask for confirmation before rotating (default true). */
@@ -78,6 +83,10 @@ function SecretFieldInner({
   defaultRevealed = false,
   onRevealedChange,
   copyable = true,
+  showLabel,
+  hideLabel,
+  copyLabel,
+  copiedAnnouncement,
   onRotate,
   confirmRotate = true,
   rotateLabel,
@@ -154,7 +163,7 @@ function SecretFieldInner({
                 size="sm"
                 className={s.toggle()}
                 icon={revealed ? EyeOff : Eye}
-                label={revealed ? t('secret.hide') : t('secret.show')}
+                label={revealed ? hideLabel ?? t('secret.hide') : showLabel ?? t('secret.show')}
                 aria-pressed={revealed}
                 disabled={disabled}
                 onClick={toggle}
@@ -164,8 +173,8 @@ function SecretFieldInner({
                   size="sm"
                   className={s.toggle()}
                   value={() => value}
-                  label={t('secret.copy')}
-                  announcement={t('secret.copied')}
+                  label={copyLabel ?? t('secret.copy')}
+                  announcement={copiedAnnouncement ?? t('secret.copied')}
                   disabled={disabled || !value}
                 />
               )}

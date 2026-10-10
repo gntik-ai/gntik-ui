@@ -2651,7 +2651,7 @@
       "name": "copy-button",
       "type": "registry:ui",
       "title": "CopyButton",
-      "description": "Copies a string, or the result of a (possibly async) getter, to the clipboard. Icon form (with tooltip) or labelled form, a \"Copied\" success state that resets after 2 s, a polite announcement (through LiveAnnouncer when present) and a fallback to execCommand when the Clipboard API is missing. `copyToClipboard` is exported too.",
+      "description": "Copies a string, or the result of a (possibly async) getter, to the clipboard. Icon form (with tooltip) or labelled form, a \"Copied\" success state that resets after 2 s, a polite announcement (through LiveAnnouncer when present) and a fallback to execCommand when the Clipboard API is missing. Optional failureLabel and failureAnnouncement override failure feedback; failurePoliteness changes the LiveAnnouncer failure priority (assertive by default). `copyToClipboard` is exported too.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -2890,6 +2890,44 @@
           "path": "packages/templates/src/create-workspace/data.ts",
           "type": "registry:lib",
           "target": "app/templates/create-workspace/data.ts"
+        }
+      ]
+    },
+    {
+      "name": "credential-disclosure-dialog",
+      "type": "registry:block",
+      "title": "Credential disclosure dialog",
+      "description": "Controlled disclosure for an existing credential. Set disclosure ({variant: stored | fresh, credentialId, expiresAt: caller-formatted ReactNode, secret}) only after a successful response; null renders nothing while pending or on failure. Clear disclosure to null in onClose to drop the secret; a fresh secret requires a new successful response before showing it again. No pending/error state or internal secret retention. Stored values start masked; each null-to-value opening or changed credentialId/secret resets masking and copy feedback. Fresh values use a non-copyable CodeBlock with a kit CopyButton and a replacement warning. Optional English defaults through en/es i18n for title, description, credentialIdLabel, expiryLabel, secretLabel, showLabel, hideLabel, copyLabel, copiedLabel, successAnnouncement, failureAnnouncement, warningTitle, warningText and closeLabel. Copy results are announced politely, including manual-selection fallback. Popup initial focus and focus trapping use Base UI; at close, resolveReturnFocus() is validated for connection, visibility, enabled state and focusability, then fallbackFocus(), then the original opener. Synthetic fixtures only; the default Stored preview is masked and the Fresh preview starts closed.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "block",
+        "forms"
+      ],
+      "meta": {
+        "kind": "block",
+        "package": "@gntik-ai/blocks",
+        "status": "beta",
+        "source": "packages/blocks/src/forms/CredentialDisclosureDialog/block.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/blocks/src/forms/CredentialDisclosureDialog/CredentialDisclosureDialog.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/forms/credential-disclosure-dialog/CredentialDisclosureDialog.tsx"
+        },
+        {
+          "path": "packages/blocks/src/forms/CredentialDisclosureDialog/fixtures.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/forms/credential-disclosure-dialog/fixtures.ts"
         }
       ]
     },
@@ -9102,7 +9140,7 @@
       "name": "secret-field",
       "type": "registry:ui",
       "title": "SecretField",
-      "description": "A secret value (API key, token, connection string) on Input: masked by default (fixed-length mask, optional visible prefix/suffix), a reveal toggle (aria-pressed), a CopyButton that copies the real value and announces it, an optional Rotate action behind an AlertDialog confirmation, and optional created / last-used meta. Read-only by default (`editable` turns it into a password field). While masked and read-only the secret is not in the DOM, and it is never put in a title or tooltip. `maskSecret` is exported too.",
+      "description": "A secret value (API key, token, connection string) on Input: masked by default (fixed-length mask, optional visible prefix/suffix), a reveal toggle (aria-pressed), a CopyButton that copies the real value and announces it, an optional Rotate action behind an AlertDialog confirmation, and optional created / last-used meta. Optional showLabel, hideLabel, copyLabel and copiedAnnouncement override i18n defaults. Read-only by default (`editable` turns it into a password field). While masked and read-only the secret is not in the DOM, and it is never put in a title or tooltip. `maskSecret` is exported too.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",

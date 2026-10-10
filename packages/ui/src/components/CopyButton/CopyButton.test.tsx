@@ -18,6 +18,27 @@ function removeClipboard() {
 }
 
 describe('CopyButton', () => {
+  it('can override the failure label and announcement with polite feedback', async () => {
+    const user = userEvent.setup();
+    mockClipboard(() => Promise.reject(new Error('denied')));
+    Object.defineProperty(document, 'execCommand', { value: () => false, configurable: true });
+    render(<LiveAnnouncer><CopyButton value="synthetic" display="label" failureLabel="Select manually" failureAnnouncement="Select and copy the value manually." failurePoliteness="polite" /></LiveAnnouncer>);
+    await user.click(screen.getByRole('button', { name: 'Copy' }));
+    expect(await screen.findByRole('button', { name: 'Select manually' })).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveAttribute('aria-live', 'polite');
+    expect(screen.getByRole('status')).toHaveTextContent('Select and copy the value manually.');
+    expect(document.querySelector('[aria-live="assertive"]')).toBeEmptyDOMElement();
+  });
+
+  it('keeps the default failure announcement assertive with a LiveAnnouncer', async () => {
+    const user = userEvent.setup();
+    removeClipboard();
+    Object.defineProperty(document, 'execCommand', { value: () => false, configurable: true });
+    render(<LiveAnnouncer><CopyButton value="synthetic" /></LiveAnnouncer>);
+    await user.click(screen.getByRole('button', { name: 'Copy' }));
+    await waitFor(() => expect(document.querySelector('[aria-live="assertive"]')).toHaveTextContent('Copy failed'));
+    expect(screen.getByRole('status')).toBeEmptyDOMElement();
+  });
   afterEach(() => {
     vi.useRealTimers();
     vi.restoreAllMocks();
