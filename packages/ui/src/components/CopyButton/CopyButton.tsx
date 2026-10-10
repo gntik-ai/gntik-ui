@@ -22,6 +22,12 @@ export interface CopyButtonProps extends Omit<ButtonProps, 'value' | 'children' 
   copiedLabel?: string;
   /** Polite announcement after a successful copy. Defaults to "Copied to clipboard". */
   announcement?: string;
+  /** Name / visible text when copying fails. Defaults to "Copy failed". */
+  failureLabel?: string;
+  /** Failure announcement. Defaults to the failure label. */
+  failureAnnouncement?: string;
+  /** LiveAnnouncer failure priority. Defaults to assertive. */
+  failurePoliteness?: 'polite' | 'assertive';
   /** Show a tooltip on the icon form (default true). */
   tooltip?: boolean;
   /** How long the success / failure state lasts, in ms (default 2000). */
@@ -41,6 +47,9 @@ export function CopyButton({
   label: labelProp,
   copiedLabel: copiedProp,
   announcement: announcementProp,
+  failureLabel,
+  failureAnnouncement,
+  failurePoliteness = 'assertive',
   tooltip = true,
   resetAfter = 2000,
   onCopy,
@@ -59,7 +68,8 @@ export function CopyButton({
   const label = labelProp ?? t('common.copy');
   const copiedLabel = copiedProp ?? t('common.copied');
   const successText = announcementProp ?? t('common.copiedToClipboard');
-  const failedText = t('common.copyFailed');
+  const failedText = failureLabel ?? t('common.copyFailed');
+  const failureText = failureAnnouncement ?? failedText;
 
   useEffect(() => {
     if (status === 'idle') return;
@@ -76,7 +86,7 @@ export function CopyButton({
       onCopy?.(text);
     } catch (error) {
       setStatus('failed');
-      if (hasAnnouncer) announce(failedText, 'assertive');
+      if (hasAnnouncer) announce(failureText, failurePoliteness);
       onCopyError?.(error);
     }
     setAttempt((n) => n + 1);
@@ -87,7 +97,7 @@ export function CopyButton({
   const StateIcon = status === 'copied' ? Check : status === 'failed' ? X : Copy;
   const region = !hasAnnouncer && (
     <span role="status" className={s.status()}>
-      {status === 'copied' ? successText : status === 'failed' ? failedText : ''}
+      {status === 'copied' ? successText : status === 'failed' ? failureText : ''}
     </span>
   );
 

@@ -44,6 +44,10 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 export const PREVIEW_LOADERS = {
   block: {
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'credential-disclosure-dialog': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),
+    'credential-disclosure-dialog--stored': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),
+    'credential-disclosure-dialog--fresh': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Fresh'),
+    'credential-disclosure-dialog--response-gating': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/ResponseGating'),
     'subordinate-list': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/ResourceForm'),
     'subordinate-list--loading': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/loading'),
     'subordinate-list--empty': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/empty'),

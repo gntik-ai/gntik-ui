@@ -25,6 +25,16 @@ function renderField(props: Partial<Parameters<typeof SecretField>[0]> = {}) {
 }
 
 describe('SecretField', () => {
+  it('uses caller reveal, hide, copy and success announcement labels', async () => {
+    const user = userEvent.setup();
+    const writeText = mockClipboard();
+    renderField({ showLabel: 'Reveal value', hideLabel: 'Mask value', copyLabel: 'Save value', copiedAnnouncement: 'Value saved' });
+    await user.click(screen.getByRole('button', { name: 'Reveal value' }));
+    expect(screen.getByRole('button', { name: 'Mask value' })).toHaveAttribute('aria-pressed', 'true');
+    await user.click(screen.getByRole('button', { name: 'Save value' }));
+    expect(writeText).toHaveBeenCalledWith(SECRET);
+    expect(screen.getByRole('status')).toHaveTextContent('Value saved');
+  });
   it('is read-only and masked; the secret is not in the DOM nor in any title', () => {
     const { container } = renderField({ createdAt: Date.now() - 86_400_000 });
     const input = screen.getByLabelText('API key');
