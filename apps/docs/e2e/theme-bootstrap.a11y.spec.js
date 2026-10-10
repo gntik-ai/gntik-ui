@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync, readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { themeScript } from '../../../packages/ui/src/theme/theme-script.ts';
 
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
-const bootstrap = readFileSync(require.resolve('@gntik-ai/ui/theme-bootstrap.js'), 'utf8');
-const { themeScript } = await import(require.resolve('@gntik-ai/ui/theme-script'));
+// The docs-only a11y job has no UI dist; UI unit tests verify the published file matches this source.
+const bootstrap = themeScript();
 const fixture = readFileSync(new URL('./fixtures/theme-bootstrap.html', import.meta.url), 'utf8');
 const probe = readFileSync(new URL('./fixtures/theme-probe.js', import.meta.url), 'utf8');
 const axe = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
@@ -65,7 +66,7 @@ async function scan(page) {
 }
 
 for (const theme of ['dark', 'light', 'high_contrast']) {
-  test(`external theme bootstrap before body and paint, CSP and axe --${theme}`, async ({ page }) => {
+  test(`external theme bootstrap before body and paint, CSP and axe --${theme}`, async ({ page, context }) => {
     const errors = await serve(page, { stored: theme });
     const expected = { classes: theme === 'light' ? '' : theme, colorScheme: theme === 'light' ? 'light' : 'dark' };
     expect(await themeState(page)).toEqual({ head: { ...expected, bodyPresent: false, painted: false }, body: expected, final: expected, violations: [] });
@@ -86,11 +87,16 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     const externalViolations = await scan(page);
     expect(errors).toEqual([]);
     expect((await themeState(page)).violations).toEqual([]);
-    await serve(page, { stored: theme, variant: 'inline-baseline' });
-    expect(await themeState(page)).toEqual({ head: { ...expected, bodyPresent: false, painted: false }, body: expected, final: expected, violations: [] });
-    const baselineViolations = await scan(page);
-    expect(externalViolations).toEqual(baselineViolations);
-    expect(externalViolations).toEqual([]);
+    const baselinePage = await context.newPage();
+    try {
+      await serve(baselinePage, { stored: theme, variant: 'inline-baseline' });
+      expect(await themeState(baselinePage)).toEqual({ head: { ...expected, bodyPresent: false, painted: false }, body: expected, final: expected, violations: [] });
+      const baselineViolations = await scan(baselinePage);
+      expect(externalViolations).toEqual(baselineViolations);
+      expect(externalViolations).toEqual([]);
+    } finally {
+      await baselinePage.close();
+    }
   });
 }
 
