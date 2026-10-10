@@ -216,7 +216,9 @@ export interface Usage {
 export function usageOf(root: string, item: KitItem): Usage {
   const dir = itemDir(item);
   const name = exportNameOf(root, item);
-  if ((item.kind === 'component' || item.kind === 'layout') && dir) {
+  const requiredBlock = item.kind === 'block' && dir
+    && hasRequiredProps(readRepoFile(root, `${dir}/${path.posix.basename(dir)}.tsx`) ?? '', name);
+  if ((item.kind === 'component' || item.kind === 'layout' || requiredBlock) && dir) {
     const exDir = path.join(root, dir, 'examples');
     const first = fs.existsSync(exDir) ? fs.readdirSync(exDir).filter((f) => f.endsWith('.tsx')).sort()[0] : undefined;
     const code = first ? readRepoFile(root, `${dir}/examples/${first}`) : undefined;

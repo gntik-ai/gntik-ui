@@ -34,3 +34,5 @@ export { meta as paginationFooterMeta } from './PaginationFooter/block.meta';
 export * from './InlineEditRow/InlineEditRow';
 export { meta as inlineEditRowMeta } from './InlineEditRow/block.meta';
 export { EDITABLE_MEMBER_FIELDS, EDITABLE_MEMBERS, type EditableMember } from './InlineEditRow/fixtures';
+export * from './SubordinateList/SubordinateList';
+export { meta as subordinateListMeta } from './SubordinateList/block.meta';

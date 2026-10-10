@@ -4,6 +4,11 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { ErrorPanel } from './ErrorPanel';
 
 describe('ErrorPanel', () => {
+  it('accepts a null code to hide the fixture chip', () => {
+    render(<ErrorPanel code={null} />);
+    expect(screen.queryByText('503')).not.toBeInTheDocument();
+  });
+
   it('renders the default panel', async () => {
     const { container } = render(<ErrorPanel onRetry={() => {}} />);
     expect(screen.getByRole('region', { name: 'We couldn’t load deployments' })).toBeInTheDocument();
