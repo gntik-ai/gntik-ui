@@ -46,6 +46,17 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 export const PREVIEW_LOADERS = {
   block: {
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'plan-card--summary-full': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryFull'),
+    'plan-card--summary-minimal': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryMinimal'),
+    'plan-card--summary-unassigned': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryUnassigned'),
+    'plan-card--summary-unassigned-no-label': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryUnassignedNoLabel'),
+    'plan-card--summary-price-only': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryPriceOnly'),
+    'plan-card--summary-zero-price': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryZeroPrice'),
+    'plan-card--summary-renewal-only': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryRenewalOnly'),
+    'plan-card--summary-features-only': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryFeaturesOnly'),
+    'plan-card--summary-actions-only': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryActionsOnly'),
+    'plan-definition-card--compact': () => import('../../../packages/blocks/src/billing/PlanDefinitionCard/examples/Compact'),
+    'plan-definition-card--full': () => import('../../../packages/blocks/src/billing/PlanDefinitionCard/examples/Full'),
     'dialog-wizard': () => import('../../../packages/blocks/src/forms/DialogWizard/examples/CreateResource'),
     'credential-disclosure-dialog': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),
     'credential-disclosure-dialog--stored': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),

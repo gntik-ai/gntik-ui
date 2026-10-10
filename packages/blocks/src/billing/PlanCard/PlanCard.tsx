@@ -3,6 +3,8 @@ import { Badge, Button, Card, Toggle, ToggleGroup, cn, type BadgeTone } from '@g
 import { Check, Sparkles } from '@gntik-ai/icons';
 import { formatDate, formatMoney, type DateInput } from '../format';
 import { samplePlan } from './fixtures';
+import { PlanSummary, type PlanSummaryProps } from './PlanSummary';
+export type { SummaryPlan, PlanSummaryProps } from './PlanSummary';
 
 export type PlanStatus = 'active' | 'trialing' | 'past_due' | 'canceled';
 export type BillingCycle = 'monthly' | 'annual';
@@ -23,7 +25,8 @@ export interface BillingPlan {
   features?: string[];
 }
 
-export interface PlanCardProps {
+export interface BillingPlanCardProps {
+  variant?: 'billing';
   plan?: BillingPlan;
   /** Initial cycle shown (uncontrolled). */
   defaultCycle?: BillingCycle;
@@ -37,6 +40,13 @@ export interface PlanCardProps {
   className?: string;
 }
 
+export type PlanCardProps = BillingPlanCardProps | PlanSummaryProps;
+
+/** Default billing header, or an opt-in summary without sample data. */
+export function PlanCard(props: PlanCardProps) {
+  return props.variant === 'summary' ? <PlanSummary {...props} /> : <BillingPlanCard {...props} />;
+}
+
 const STATUS: Record<PlanStatus, { label: string; tone: BadgeTone }> = {
   active: { label: 'Active', tone: 'success' },
   trialing: { label: 'Trial', tone: 'info' },
@@ -45,7 +55,7 @@ const STATUS: Record<PlanStatus, { label: string; tone: BadgeTone }> = {
 };
 
 /** Billing page header: the current plan, its price per cycle, renewal date, features and actions. */
-export function PlanCard({
+function BillingPlanCard({
   plan = samplePlan,
   defaultCycle = 'monthly',
   onCycleChange,
@@ -55,7 +65,7 @@ export function PlanCard({
   manageLabel = 'Manage',
   titleAs: TitleTag = 'h3',
   className,
-}: PlanCardProps) {
+}: BillingPlanCardProps) {
   const [cycle, setCycle] = useState<BillingCycle>(defaultCycle);
   const hasAnnual = plan.priceAnnual != null;
   const annual = hasAnnual && cycle === 'annual';
