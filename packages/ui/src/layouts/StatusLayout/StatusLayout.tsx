@@ -5,13 +5,13 @@ import { SkipLink } from '../../components/VisuallyHidden';
 import { useI18n } from '../../i18n/I18nProvider';
 import { statusLayoutVariants, type StatusLayoutVariantProps } from './status-layout.variants';
 
-export interface StatusLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title' | 'children'> {
+interface StatusLayoutBaseProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title' | 'children'> {
   className?: string;
   ref?: Ref<HTMLDivElement>;
+  /** Built-in h1 focus target. Adds tabIndex=-1 only when supplied; use the slot's own ref for a custom heading. */
+  titleRef?: Ref<HTMLHeadingElement>;
   /** Short status above the title: "404", "403 · Forbidden", "Maintenance". */
   code?: ReactNode;
-  /** The message, rendered as the page `<h1>`. */
-  title: ReactNode;
   description?: ReactNode;
   /** Neutral icon in a halo, when there is no illustration. */
   icon?: LucideIcon;
@@ -34,6 +34,11 @@ export interface StatusLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 
   fullScreen?: boolean;
 }
 
+export type StatusLayoutProps = StatusLayoutBaseProps & (
+  | { /** The message, rendered as the page h1 when the slot is empty. */ title: ReactNode; heading?: null }
+  | { /** Replaces the built-in title; supply exactly one h1. */ heading: NonNullable<ReactNode>; title?: never }
+);
+
 /**
  * Full-page status (404 · 403 · 500 · maintenance): a centred message with an illustration or
  * icon, a primary and a secondary action, and minimal chrome. The primary action comes first in
@@ -42,6 +47,8 @@ export interface StatusLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 
 export function StatusLayout({
   code,
   title,
+  heading,
+  titleRef,
   description,
   icon: Icon,
   illustration,
@@ -80,7 +87,11 @@ export function StatusLayout({
             )
           )}
           {code != null && <p className={s.code()}>{code}</p>}
-          <h1 className={s.title()}>{title}</h1>
+          {heading != null ? (
+            <div className={s.heading()}>{heading}</div>
+          ) : (
+            <h1 ref={titleRef} tabIndex={titleRef != null ? -1 : undefined} className={s.title()}>{title}</h1>
+          )}
           {description != null && <p className={s.description()}>{description}</p>}
           {(primaryAction != null || secondaryAction != null) && (
             <div className={s.actions()}>

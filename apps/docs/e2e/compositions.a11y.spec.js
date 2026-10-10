@@ -29,6 +29,8 @@ const cases = [
     ['dark', 'light', 'high_contrast'].filter((theme) => id !== 'subordinate-list' || theme !== 'dark').map((theme) => ({ kind: 'block', id, theme })),
   ),
   ...layoutExamples.map((id) => ({ kind: 'layout', id, theme: 'dark' })),
+  ...['light', 'high_contrast'].map((theme) => ({ kind: 'layout', id: 'status-layout--status-layout-heading', theme })),
+  ...['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: 'status-404--page-header', theme })),
   ...['stored', 'fresh'].flatMap((variant) =>
     ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'block', id: `credential-disclosure-dialog--${variant}`, theme })),
   ),
@@ -39,6 +41,12 @@ for (const { kind, id, theme } of cases) {
   test(name, async ({ page }) => {
     await page.goto(`/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}`);
     await page.locator('#root > *').first().waitFor();
+    if (id === 'status-layout--status-layout-heading' || id === 'status-404--page-header') {
+      await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+      await expect(page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeFocused();
+      await page.keyboard.press('Tab');
+      await expect(page.getByRole('button', { name: 'Go to dashboard' })).toBeFocused();
+    }
     if (id === 'credential-disclosure-dialog--fresh') {
       await page.getByRole('button', { name: 'Disclose fresh secret' }).click();
     }
