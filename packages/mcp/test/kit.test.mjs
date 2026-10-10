@@ -93,6 +93,23 @@ test('get_block: metadata, composed components, deps and source', async () => {
   assert.match(await call('get_block', { id: 'kpi' }), /Did you mean .*kpi-row/);
 });
 
+test('subordinate-list: catalogue supplies its required props and resource-form composition example', async () => {
+  assert.match(await call('list_kit', { kind: 'block' }), /`subordinate-list`/);
+  const md = await call('get_block', { id: 'subordinate-list' });
+  for (const id of ['section-header', 'data-table', 'pagination-footer', 'empty-states', 'skeletons', 'error-panel']) {
+    assert.ok(md.includes(id), `documents composition with ${id}`);
+  }
+  assert.match(md, /resource-form/);
+  const code = fenced(md);
+  assert.match(code, /<SubordinateList/);
+  assert.match(code, /<form/);
+  assert.match(code, /from '@gntik-ai\/blocks'/);
+  assert.doesNotMatch(code, /from ['"]\./);
+  assert.match(code, /title="History"/);
+  assert.match(code, /title="Consumers"/);
+  assert.doesNotMatch(code, /<SubordinateList \/>/);
+});
+
 test('get_template: layout, blocks, console shell and source', async () => {
   const md = await call('get_template', { id: 'home-dashboard' });
   assert.match(md, /\*\*Layout:\*\*/);

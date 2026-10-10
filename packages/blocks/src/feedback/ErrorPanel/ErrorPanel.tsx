@@ -10,7 +10,7 @@ export interface ErrorPanelProps {
   /** Human summary of what failed and what to do. */
   message?: ReactNode;
   /** Status or error code shown as a mono chip (e.g. 503, ECONNRESET). */
-  code?: string | number;
+  code?: string | number | null;
   /** Correlation id for support; gets a copy button. */
   requestId?: string;
   /** Raw details (response body, stack) behind a disclosure. */

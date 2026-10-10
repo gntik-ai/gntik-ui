@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "subordinate-list",
+  "type": "registry:block",
+  "title": "Subordinate list",
+  "description": "Read-only list section inside a resource-form host, composing section-header, data-table, pagination-footer, empty-states, skeletons and error-panel. All props are required: title (string), headingLevel (h2 or h3), count (number, including 0), columns (typed DataTableColumn<T>[]), rows (readonly T[]), getRowId, pagination ({limit, offset, total, onPageChange(offset)} or null), loading (boolean), error ({title, message, code: string | number | null} or null), onRetry and emptyState (host-supplied ReactNode). Every supplied row renders; server pagination converts the zero-based offset to a 1-based footer page and fixes pageSizeOptions to [limit]. No filtering, sorting, selection, create action, toolbar, virtualization, pinning or sticky region. Error takes precedence over loading, then empty and data; retry uses the current i18n locale. Error headings use h3 for either section heading level. Composition example: packages/blocks/src/tables/SubordinateList/examples/ResourceForm.tsx uses the resource-form form sections and sticky save bar with a server-paginated History section and an unpaginated Consumers section.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/icons",
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/data-table.json",
+    "https://ui.gntik.ai/r/error-panel.json",
+    "https://ui.gntik.ai/r/pagination-footer.json",
+    "https://ui.gntik.ai/r/section-header.json",
+    "https://ui.gntik.ai/r/skeletons.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/tables/SubordinateList/SubordinateList.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/tables/subordinate-list/SubordinateList.tsx",
+      "content": "import { useId, type ReactNode } from 'react';\nimport { SectionHeader } from '../../page-chrome/section-header/SectionHeader';\nimport { TableSkeleton } from '../../feedback/skeletons/Skeletons';\nimport { ErrorPanel } from '../../feedback/error-panel/ErrorPanel';\nimport { ServerCrash } from '@gntik-ai/icons';\nimport { DataTable } from '../data-table/DataTable';\nimport type { DataTableColumn } from '../data-table/data-table-utils';\nimport { PaginationFooter } from '../pagination-footer/PaginationFooter';\nimport { useI18n } from '@gntik-ai/ui';\n\nexport interface SubordinateListPagination {\n  /** Positive server page size. */\n  limit: number;\n  /** Zero-based server offset. */\n  offset: number;\n  total: number;\n  onPageChange: (offset: number) => void;\n}\n\nexport interface SubordinateListError {\n  title: string;\n  message: string;\n  /** null hides the error code chip. */\n  code: string | number | null;\n}\n\nexport interface SubordinateListProps<T> {\n  title: string;\n  headingLevel: 'h2' | 'h3';\n  /** Server total, or the length of an unpaginated collection (including zero). */\n  count: number;\n  columns: ReadonlyArray<DataTableColumn<T>>;\n  rows: readonly T[];\n  getRowId: (row: T) => string;\n  pagination: SubordinateListPagination | null;\n  loading: boolean;\n  error: SubordinateListError | null;\n  onRetry: () => void | Promise<void>;\n  /** Host-supplied EmptyStates composition. */\n  emptyState: ReactNode;\n}\n\n/** Read-only list section with explicit host data and no demo defaults. */\nexport function SubordinateList<T>({\n  title,\n  headingLevel,\n  count,\n  columns,\n  rows,\n  getRowId,\n  pagination,\n  loading,\n  error,\n  onRetry,\n  emptyState,\n}: SubordinateListProps<T>) {\n  const headingId = useId();\n  const { locale, t } = useI18n();\n  return (\n    <section aria-labelledby={headingId} aria-busy={loading} className=\"space-y-4\">\n      <SectionHeader title={title} as={headingLevel} count={count} description={null} actions={[]} bordered={true} headingId={headingId} className=\"\" />\n      {error !== null ? (\n        <ErrorPanel\n          icon={ServerCrash}\n          title={error.title}\n          message={error.message}\n          code={error.code}\n          requestId=\"\"\n          details=\"\"\n          onRetry={onRetry}\n          retrying={undefined}\n          retryLabel={t('error.retry')}\n          secondaryAction={null}\n          titleAs=\"h3\"\n          className=\"\"\n        />\n      ) : loading ? (\n        <TableSkeleton rows={pagination?.limit ?? 5} columns={columns.length} label={t('loading.table')} className=\"\" />\n      ) : rows.length === 0 ? (\n        emptyState\n      ) : (\n        <DataTable\n          rows={rows}\n          columns={columns.map((column) => ({\n            ...column,\n            sortable: false,\n            editable: false,\n          }))}\n          getRowId={getRowId}\n          caption={title}\n          showCaption={false}\n          paginated={false}\n          selectable={false}\n          selectedIds={[]}\n          selectionSummary={false}\n          sort={null}\n          defaultSort={null}\n          manualSorting={true}\n          showColumnMenu={false}\n          showDensityToggle={false}\n          showViewSwitcher={false}\n          resizable={false}\n          pinnedColumns={{}}\n          showPinMenu={false}\n          virtualize={false}\n          hiddenColumns={[]}\n          toolbar={null}\n          loading={false}\n          loadingRows={0}\n          emptyState={emptyState}\n          className=\"\"\n        />\n      )}\n      {error === null && !loading && pagination !== null && (\n        <PaginationFooter\n          total={pagination.total}\n          page={Math.floor(pagination.offset / pagination.limit) + 1}\n          defaultPage={1}\n          onPageChange={(page) => pagination.onPageChange((page - 1) * pagination.limit)}\n          pageSize={pagination.limit}\n          defaultPageSize={pagination.limit}\n          onPageSizeChange={() => {}}\n          pageSizeOptions={[pagination.limit]}\n          noun={title}\n          locale={locale}\n          className=\"\"\n        />\n      )}\n    </section>\n  );\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "tables"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/tables/SubordinateList/block.meta.ts"
+  }
+}

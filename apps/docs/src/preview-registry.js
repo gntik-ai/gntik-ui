@@ -44,6 +44,10 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 export const PREVIEW_LOADERS = {
   block: {
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'subordinate-list': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/ResourceForm'),
+    'subordinate-list--loading': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/loading'),
+    'subordinate-list--empty': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/empty'),
+    'subordinate-list--error': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/error'),
     'status-timeline--empty': () => import('../../../packages/blocks/src/data-display/StatusTimeline/examples/Empty'),
     'sign-in-form--username': () => import('../../../packages/blocks/src/auth/SignInForm/examples/Username'),
     'forgot-password-form--username-or-email': () => import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),

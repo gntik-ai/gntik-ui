@@ -25,6 +25,9 @@ const cases = [
     ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: `public-hub--${fixture}`, theme })),
   ),
   ...kit.items.filter((i) => i.kind === 'block').map((i) => ({ kind: 'block', id: i.id, theme: 'dark' })),
+  ...['subordinate-list', 'subordinate-list--loading', 'subordinate-list--empty', 'subordinate-list--error'].flatMap((id) =>
+    ['dark', 'light', 'high_contrast'].filter((theme) => id !== 'subordinate-list' || theme !== 'dark').map((theme) => ({ kind: 'block', id, theme })),
+  ),
   ...layoutExamples.map((id) => ({ kind: 'layout', id, theme: 'dark' })),
 ];
 

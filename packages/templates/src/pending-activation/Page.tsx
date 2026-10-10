@@ -103,7 +103,6 @@ export default function PendingActivationPage({
             titleAs="h2"
             title={errorTitle ?? recovery?.title}
             message={errorMessage ?? recovery?.message}
-            // @ts-expect-error ErrorPanel hides null codes at runtime, but its prop type excludes null.
             code={null}
             requestId=""
             details=""
