@@ -44,6 +44,7 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 export const PREVIEW_LOADERS = {
   block: {
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'status-timeline--empty': () => import('../../../packages/blocks/src/data-display/StatusTimeline/examples/Empty'),
     'sign-in-form--username': () => import('../../../packages/blocks/src/auth/SignInForm/examples/Username'),
     'forgot-password-form--username-or-email': () => import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),
   },

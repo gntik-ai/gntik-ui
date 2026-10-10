@@ -11334,7 +11334,7 @@
       "name": "status-timeline",
       "type": "registry:block",
       "title": "Status timeline",
-      "description": "Vertical timeline of state changes with a StatusDot per state, details, actor and Timestamp; collapses older events.",
+      "description": "Vertical timeline of state changes with a StatusDot per state, details, actor and Timestamp; collapses older events and renders an accessible empty state for an explicit empty events array, with a localizable emptyLabel. The label, showFewerLabel, showEarlierLabel(hidden) and actorLabel props override the localized defaults.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui"

@@ -7479,11 +7479,11 @@ import { StatCard } from '@gntik-ai/blocks';
 
 ### Status timeline (`status-timeline`)
 
-Vertical timeline of state changes with a StatusDot per state, details, actor and Timestamp; collapses older events.
+Vertical timeline of state changes with a StatusDot per state, details, actor and Timestamp; collapses older events and renders an accessible empty state for an explicit empty events array, with a localizable emptyLabel. The label, showFewerLabel, showEarlierLabel(hidden) and actorLabel props override the localized defaults.
 
 - Package: `@gntik-ai/blocks` · export `StatusTimeline` · group data-display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/data-display/StatusTimeline/block.meta.ts
-- Composes: StatusDot, Timestamp, Button
+- Composes: StatusDot, Timestamp, Button, EmptyState
 - Preview: /preview.html?kind=block&id=status-timeline
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add status-timeline`
 

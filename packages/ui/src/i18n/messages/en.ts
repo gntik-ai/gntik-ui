@@ -136,6 +136,11 @@ export const en = {
   'tokenInput.limit': 'Limit of {max} reached.',
   'avatar.more': 'more',
   // Data display
+  'statusTimeline.label': 'Status history',
+  'statusTimeline.empty': 'No status history',
+  'statusTimeline.showFewer': 'Show fewer',
+  'statusTimeline.showEarlier': 'Show {count} earlier {count, plural, one {event} other {events}}',
+  'statusTimeline.actor': 'by',
   'stepper.step': 'Step {step} of {total}',
   'stepper.complete': 'completed',
   'stepper.current': 'current step',

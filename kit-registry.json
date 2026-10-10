@@ -1658,7 +1658,7 @@
       "package": "@gntik-ai/blocks",
       "group": "data-display",
       "status": "beta",
-      "description": "Vertical timeline of state changes with a StatusDot per state, details, actor and Timestamp; collapses older events.",
+      "description": "Vertical timeline of state changes with a StatusDot per state, details, actor and Timestamp; collapses older events and renders an accessible empty state for an explicit empty events array, with a localizable emptyLabel. The label, showFewerLabel, showEarlierLabel(hidden) and actorLabel props override the localized defaults.",
       "files": [
         {
           "path": "packages/blocks/src/data-display/StatusTimeline/StatusTimeline.tsx",
