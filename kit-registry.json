@@ -1145,7 +1145,7 @@
       "package": "@gntik-ai/blocks",
       "group": "page-chrome",
       "status": "beta",
-      "description": "Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs.",
+      "description": "Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as=\"div\" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1.",
       "files": [
         {
           "path": "packages/blocks/src/page-chrome/PageHeader/PageHeader.tsx",
@@ -7319,7 +7319,7 @@
       "package": "@gntik-ai/ui",
       "group": "Layout",
       "status": "beta",
-      "description": "Full-page status for 404, 403, 500 and maintenance: a centred message (`code`, `title` as the page h1, `description`) with an illustration or icon halo, a primary and a secondary action, and minimal chrome (optional header with the Logo and a footer line). `tone` colours the code and halo with the severity tokens; brand green is only for positive states. Fills its container; `fullScreen` switches to `h-dvh`.",
+      "description": "Full-page status for 404, 403, 500 and maintenance: a centred message with a `heading` slot replacing `title` for exactly one page h1; `titleRef` on the built-in h1 enables focus() with tabIndex=-1 outside the Tab order. With no heading, `title` remains required and renders as today. Supply either title or a non-empty heading, never both; the slot must contain exactly one h1. The slot is full width within the centred column and uses the foreground token. For a PageHeader slot, set as=\"div\", breadcrumbs={null}, meta={[]}, tabs={null}, actions={[]}, status=\"\" and description={null} to disable demo fixtures; keep the description on StatusLayout so it appears once. Pass titleRef to PageHeader (or a ref and tabIndex=-1 to a generic h1) and call ref.current.focus() on route load when needed. Keep slot links and actions empty so the primary action stays first in main’s Tab order. Code stays above the heading, with description, illustration or icon halo, primary and secondary actions, optional Logo header and footer unchanged. `tone` colours the code and halo with severity tokens; brand green is only for positive states. Fills its container; `fullScreen` switches to `h-dvh`.",
       "files": [
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -8960,7 +8960,7 @@
       "package": "@gntik-ai/templates",
       "group": "System",
       "status": "beta",
-      "description": "Full-page not-found state: code, message, a primary way home, Go back and a support link.",
+      "description": "Full-page not-found state: code, message, a primary way home, Go back and a support link. The optional heading slot replaces the built-in title so PageHeader supplies the only h1; code stays above it and actions remain unchanged. In the PageHeader example set as=\"div\", breadcrumbs={null}, meta={[]}, tabs={null}, actions={[]}, status=\"\" and description={null}; use StatusLayout’s description once. PageHeader titleRef adds tabIndex=-1 for ref.current.focus() on route load without a Tab stop; leave slot links and actions empty to keep the primary action first in main.",
       "files": [
         {
           "path": "packages/templates/src/status-404/Page.tsx",

@@ -11,7 +11,7 @@ import {
   type StatusDefinition,
 } from '@gntik-ai/ui';
 import type { LucideIcon } from '@gntik-ai/icons';
-import type { ReactNode } from 'react';
+import type { ReactNode, Ref } from 'react';
 import { toMenuAction, type PageChromeAction } from '../types';
 import { pageHeaderActions, pageHeaderBreadcrumbs, pageHeaderMeta, pageHeaderTabs } from './fixtures';
 
@@ -36,6 +36,8 @@ export interface PageHeaderProps {
   /** Location trail above the title; `null` hides it. */
   breadcrumbs?: BreadcrumbItem[] | null;
   title?: ReactNode;
+  /** h1 focus target: adds tabIndex=-1 for titleRef.current.focus(), outside the Tab order. */
+  titleRef?: Ref<HTMLHeadingElement>;
   description?: ReactNode;
   /** StatusTag key next to the title (e.g. `active`, `paused`, `failed`). */
   status?: string;
@@ -60,6 +62,7 @@ export function PageHeader({
   as: Root = 'header',
   breadcrumbs = pageHeaderBreadcrumbs,
   title = 'Deployments',
+  titleRef,
   description = 'Every build and release of this project across its environments.',
   status = 'active',
   statuses,
@@ -94,7 +97,7 @@ export function PageHeader({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-            <h1 className="min-w-0 truncate text-2xl font-bold tracking-tight text-foreground">{title}</h1>
+            <h1 ref={titleRef} tabIndex={titleRef != null ? -1 : undefined} className="min-w-0 truncate text-2xl font-bold tracking-tight text-foreground">{title}</h1>
             {status && <StatusTag status={status} statuses={statuses} />}
           </div>
           {description != null && <p className="mt-1.5 max-w-2xl text-[13px] leading-6 text-muted-foreground">{description}</p>}

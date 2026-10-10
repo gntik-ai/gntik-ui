@@ -5,6 +5,8 @@ import { notFoundContent } from './data';
 
 export interface Status404Props {
   title: ReactNode;
+  /** Replaces the built-in title; supply exactly one h1 and use its own ref for route focus. */
+  heading?: ReactNode;
   description: ReactNode;
   /** Where the primary action leads. */
   homeHref: string;
@@ -23,6 +25,7 @@ export interface Status404Props {
 export default function Status404Page(props: Partial<Status404Props>) {
   const {
     title = notFoundContent.title,
+    heading,
     description = notFoundContent.description,
     homeHref = notFoundContent.homeHref,
     homeLabel = notFoundContent.homeLabel,
@@ -39,7 +42,7 @@ export default function Status404Page(props: Partial<Status404Props>) {
       header={header}
       icon={FileQuestion}
       code={notFoundContent.code}
-      title={title}
+      {...(heading != null ? { heading } : { title })}
       description={description}
       primaryAction={
         <Button icon={Home} render={<a href={homeHref} />} nativeButton={false}>

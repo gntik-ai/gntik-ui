@@ -58,6 +58,7 @@ export const PREVIEW_LOADERS = {
   },
   template: {
     ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
+    'status-404--page-header': () => import('../../../packages/templates/src/status-404/examples/PageHeader'),
     'sign-in-card--username': () => import('../../../packages/templates/src/sign-in-card/examples/Username'),
     'forgot-password--username-or-email': () => import('../../../packages/templates/src/forgot-password/examples/UsernameOrEmail'),
     'public-hub--full': () => import('../../../packages/templates/src/public-hub/examples/Full'),

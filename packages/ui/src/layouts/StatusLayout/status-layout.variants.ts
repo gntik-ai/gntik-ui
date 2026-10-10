@@ -11,6 +11,7 @@ export const statusLayoutVariants = tv({
     iconHalo: 'grid size-14 place-items-center rounded-full bg-secondary text-muted-foreground ring-1 ring-border',
     code: 'font-mono text-[12px] font-semibold tracking-[0.2em] uppercase',
     title: 'mt-3 text-[24px] font-semibold tracking-[-0.02em] text-balance text-foreground',
+    heading: 'mt-3 w-full text-foreground',
     description: 'mt-2 text-[14px] leading-relaxed text-pretty text-muted-foreground',
     actions: 'mt-7 flex flex-wrap items-center justify-center gap-2.5',
     extra: 'mt-6 w-full',
