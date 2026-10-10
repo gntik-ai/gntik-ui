@@ -29,6 +29,19 @@ before(async () => {
 });
 after(() => client.close());
 
+test('get_adoption_guide: documents the synchronous external file for strict CSP and preserves inline customization', async () => {
+  const guide = await call('get_adoption_guide');
+  assert.match(guide, /@gntik-ai\/ui\/theme-bootstrap\.js/);
+  assert.match(guide, /strict.CSP/i);
+  assert.match(guide, /same.origin/i);
+  assert.match(guide, /synchronously.*<head>.*before.*stylesheets.*app bundle/i);
+  assert.match(guide, /no async, defer or type="module"/);
+  assert.match(guide, /storageKey.*defaultMode/);
+  assert.match(guide, /themeScript\(\)/);
+  assert.match(guide, /themeScript\(storageKey, defaultMode\)/);
+  assert.match(guide, /gntik-theme.*dark/);
+});
+
 test('kit: registry loads every kind', () => {
   for (const kind of ['component', 'layout', 'block', 'template']) {
     assert.ok(kit.items.some((i) => i.kind === kind), `kit has ${kind}s`);
