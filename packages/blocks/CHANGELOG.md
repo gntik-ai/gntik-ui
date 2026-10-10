@@ -1,5 +1,22 @@
 # @gntik-ai/blocks
 
+## 0.3.0
+
+### Minor Changes
+
+- 005bcf8: Add configurable auth identifiers, consumer validation messages, focus controls, server-error associations, suppressible headings and optional auth content.
+- 08c916d: Add a credential disclosure dialog with masked stored values, fresh-secret warnings, translated copy feedback and validated focus return.
+- 965d2f7: Add a status heading slot and title focus refs so PageHeader can supply the only h1 on a not-found page.
+- e51af67: Add an accessible StatusTimeline empty state and localizable labels with English and Spanish defaults.
+- 5da66c7: Add a read-only subordinate list section with server pagination and isolated loading, empty and retry states for resource forms.
+
+### Patch Changes
+
+- Updated dependencies [08c916d]
+- Updated dependencies [965d2f7]
+- Updated dependencies [e51af67]
+  - @gntik-ai/ui@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes

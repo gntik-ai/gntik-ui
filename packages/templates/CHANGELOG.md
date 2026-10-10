@@ -1,5 +1,26 @@
 # @gntik-ai/templates
 
+## 0.3.0
+
+### Minor Changes
+
+- 005bcf8: Add configurable auth identifiers, consumer validation messages, focus controls, server-error associations, suppressible headings and optional auth content.
+- cc88a1f: Add a pending-activation auth template with status, optional reference, allowed actions and recovery states without internal error code chips.
+- 9aff41c: Add PublicHubPage for unauthenticated entry hubs with cards, navigation actions and accessible loading states.
+- 965d2f7: Add a status heading slot and title focus refs so PageHeader can supply the only h1 on a not-found page.
+
+### Patch Changes
+
+- 5da66c7: Add a read-only subordinate list section with server pagination and isolated loading, empty and retry states for resource forms.
+- Updated dependencies [005bcf8]
+- Updated dependencies [08c916d]
+- Updated dependencies [965d2f7]
+- Updated dependencies [e51af67]
+- Updated dependencies [5da66c7]
+  - @gntik-ai/blocks@0.3.0
+  - @gntik-ai/ui@0.3.0
+  - @gntik-ai/chat@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes
