@@ -1,4 +1,4 @@
-import { Button, StatusDot, Timestamp, type DateInput, type StatusDotTone } from '@gntik-ai/ui';
+import { Button, EmptyState, StatusDot, Timestamp, useI18n, type DateInput, type StatusDotTone } from '@gntik-ai/ui';
 import { useState } from 'react';
 import { DEPLOYMENT_EVENTS } from './fixtures';
 
@@ -21,6 +21,14 @@ export interface StatusTimelineProps {
   events?: readonly StatusEvent[];
   /** Accessible name of the list. */
   label?: string;
+  /** Title shown when events is an explicit empty array. */
+  emptyLabel?: string;
+  /** Collapse toggle text. */
+  showFewerLabel?: string;
+  /** Expand toggle text, given the number of hidden events. */
+  showEarlierLabel?: (hidden: number) => string;
+  /** Prefix before the actor's name. */
+  actorLabel?: string;
   /** Events shown before "Show earlier"; all when omitted. */
   maxVisible?: number;
   /** `relative` ("3 hours ago") or `absolute` timestamps. */
@@ -28,9 +36,28 @@ export interface StatusTimelineProps {
   className?: string;
 }
 
-/** Vertical timeline of state changes: a StatusDot per state, title, details and a Timestamp. */
-export function StatusTimeline({ events = DEPLOYMENT_EVENTS, label = 'Status history', maxVisible, timeFormat = 'relative', className }: StatusTimelineProps) {
+/** Vertical timeline of state changes, or a named empty state for an explicit empty events array. */
+export function StatusTimeline({
+  events = DEPLOYMENT_EVENTS,
+  label: labelProp,
+  emptyLabel: emptyLabelProp,
+  showFewerLabel: showFewerLabelProp,
+  showEarlierLabel: showEarlierLabelProp,
+  actorLabel: actorLabelProp,
+  maxVisible,
+  timeFormat = 'relative',
+  className,
+}: StatusTimelineProps) {
+  const { t } = useI18n();
+  const label = labelProp ?? t('statusTimeline.label');
+  const emptyLabel = emptyLabelProp ?? t('statusTimeline.empty');
+  const showFewerLabel = showFewerLabelProp ?? t('statusTimeline.showFewer');
+  const showEarlierLabel = showEarlierLabelProp ?? ((count: number) => t('statusTimeline.showEarlier', { count }));
+  const actorLabel = actorLabelProp ?? t('statusTimeline.actor');
   const [expanded, setExpanded] = useState(false);
+  if (events.length === 0) {
+    return <EmptyState role="region" aria-label={label} size="sm" title={emptyLabel} className={className} />;
+  }
   const limit = !expanded && maxVisible !== undefined ? maxVisible : events.length;
   const shown = events.slice(0, limit);
   const hidden = events.length - shown.length;
@@ -58,7 +85,7 @@ export function StatusTimeline({ events = DEPLOYMENT_EVENTS, label = 'Status his
                   <p className="mt-0.5 text-[12.5px] text-muted-foreground">
                     {event.description}
                     {event.description && event.actor && ' '}
-                    {event.actor && <span>by {event.actor}</span>}
+                    {event.actor && <span>{`${actorLabel} `}{event.actor}</span>}
                   </p>
                 )}
               </div>
@@ -68,7 +95,7 @@ export function StatusTimeline({ events = DEPLOYMENT_EVENTS, label = 'Status his
       </ol>
       {(hidden > 0 || (expanded && maxVisible !== undefined && events.length > maxVisible)) && (
         <Button variant="ghost" size="sm" className="mt-3 ms-6" aria-expanded={expanded} onClick={() => setExpanded((v) => !v)}>
-          {expanded ? 'Show fewer' : `Show ${hidden} earlier ${hidden === 1 ? 'event' : 'events'}`}
+          {expanded ? showFewerLabel : showEarlierLabel(hidden)}
         </Button>
       )}
     </div>

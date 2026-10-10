@@ -2,6 +2,11 @@ import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  'statusTimeline.label': 'Historial de estado',
+  'statusTimeline.empty': 'Sin historial de estado',
+  'statusTimeline.showFewer': 'Ver menos',
+  'statusTimeline.showEarlier': 'Ver {count} {count, plural, one {cambio anterior} other {cambios anteriores}}',
+  'statusTimeline.actor': 'por',
   'common.close': 'Cerrar',
   'common.dismiss': 'Descartar',
   'common.copy': 'Copiar',
