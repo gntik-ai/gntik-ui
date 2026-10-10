@@ -16,6 +16,7 @@ import {
   Textarea,
   WizardLayout,
   type StepItem,
+  type WizardLayoutProps,
 } from '@gntik-ai/ui';
 import { useId, useState, type ReactNode } from 'react';
 import {
@@ -31,7 +32,10 @@ import {
   type WizardValues,
 } from './data';
 
-export interface CreateWizardProps {
+export interface CreateWizardProps extends Pick<WizardLayoutProps,
+  'mode' | 'size' | 'open' | 'onOpenChange' | 'description' | 'returnFocusRef' | 'closeOnInteractOutside' | 'stepAnnouncement' | 'pendingLabel'> {
+  /** Step-local errors or empty states, rendered within the scrollable step body. */
+  stepFeedback?: (current: number) => ReactNode;
   /** Flow name in the top bar. */
   title: string;
   steps: StepItem[];
@@ -69,6 +73,8 @@ export default function CreateWizardPage({
   onExit,
   onStepChange,
   copy: copyOverrides,
+  stepFeedback,
+  ...presentation
 }: Partial<CreateWizardProps>) {
   const copy: CreateWizardCopy = { ...wizardCopy, ...copyOverrides };
   const id = useId();
@@ -100,6 +106,7 @@ export default function CreateWizardPage({
 
   return (
     <WizardLayout
+      {...presentation}
       fullScreen
       logo={<Logo size={22} />}
       title={title}
@@ -115,6 +122,7 @@ export default function CreateWizardPage({
       exitDescription={copy.exitDescription}
       footerStart={<span aria-live="polite">{status}</span>}
     >
+      {stepFeedback?.(step)}
       {step === 0 && (
         <section aria-labelledby={`${id}-details`}>
           <Stack gap={6}>

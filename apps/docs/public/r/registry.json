@@ -2815,7 +2815,7 @@
       "name": "create-wizard",
       "type": "registry:block",
       "title": "Create wizard",
-      "description": "Focus-mode create flow: details, source (selectable cards), configuration and a review step with editable summary cards.",
+      "description": "Focus-mode create flow: details, source, configuration and editable review cards. Page mode is the default; mode=\"overlay\" mounts over an existing list without a new route. Overlay size defaults to fullscreen; size=\"dialog\" uses a popup (fullscreen on mobile). Keep it mounted to preserve answers and the current step on close. The examples/Overlay.tsx demo goes from a list through Finish with step-local ErrorPanel and FirstRunEmpty surfaces. For a consumer-owned step model and validation/review slots, use dialog-wizard (default dialog size).",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",
@@ -3447,6 +3447,44 @@
           "path": "packages/ui/src/doc.ts",
           "type": "registry:ui",
           "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "dialog-wizard",
+      "type": "registry:block",
+      "title": "Dialog wizard",
+      "description": "Modal variant of create-wizard for create flows over their parent page, without a route change. Defaults to dialog size (fullscreen on mobile); size=\"fullscreen\" fills every viewport. Consumer-controlled step state survives closing. Use the create-wizard page template for a dedicated page flow, or WizardLayout mode=\"overlay\" for a fullscreen flow. Supply all labels, pendingLabel and stepAnnouncement from your own i18n; stepError accepts ValidationSummary and reviewStep accepts DescriptionListCard.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "block",
+        "forms"
+      ],
+      "meta": {
+        "kind": "block",
+        "package": "@gntik-ai/blocks",
+        "status": "beta",
+        "source": "packages/blocks/src/forms/DialogWizard/block.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/blocks/src/forms/DialogWizard/DialogWizard.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/forms/dialog-wizard/DialogWizard.tsx"
+        },
+        {
+          "path": "packages/blocks/src/forms/DialogWizard/fixtures.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/forms/dialog-wizard/fixtures.ts"
         }
       ]
     },
@@ -13722,7 +13760,7 @@
       "name": "wizard-layout",
       "type": "registry:block",
       "title": "WizardLayout",
-      "description": "Focus-mode shell for multi-step flows (onboarding, create project, import): no sidebar · top bar with the flow title and Exit · Stepper header · step body · Back / Next footer (Finish on the last step). Exit, or Escape anywhere inside the layout, asks for confirmation in an AlertDialog (`confirmExit`). Completed steps are clickable to go back. Below `lg` the Stepper collapses to \"Step 2 of 5\". Fills its container; `fullScreen` switches to `h-dvh`.",
+      "description": "Focus-mode shell: title and Exit, Stepper, step body, Back / Next and Finish. mode=\"page\" is the unchanged default (container height, or fullScreen for h-dvh). mode=\"overlay\" is a controlled Base UI modal: open/onOpenChange keep the parent page mounted without navigation; size defaults to \"fullscreen\" at every viewport, while \"dialog\" reuses Dialog xl sizing and fills mobile viewports. Use page for a dedicated flow, fullscreen for a focused in-page flow, or the dialog-wizard block (default \"dialog\") for a compact create flow. Closing never resets the consumer-controlled current step or data. Exit, Escape and Cancel on step zero use confirmExit (default true). Outside presses are ignored unless closeOnInteractOutside is true, then use the same exit confirmation. returnFocusRef overrides focus return to the opener. Each step focuses its heading, first control or body, then announces via a separate polite live region. Supply stepAnnouncement({position,total,label}) from your i18n (required for rich step labels); positions are one-based. All action labels, stepsSummaryLabel and pendingLabel are overridable with i18n fallbacks. finishPending or nextLoading disables Finish and shows pendingLabel in overlay mode. Below lg, Stepper uses its compact summary.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -13732,6 +13770,7 @@
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/alert-dialog.json",
         "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/dialog.json",
         "https://ui.gntik.ai/r/stepper.json",
         "https://ui.gntik.ai/r/ui-utils.json",
         "https://ui.gntik.ai/r/visually-hidden.json"
@@ -13776,6 +13815,11 @@
           "path": "packages/ui/src/layouts/WizardLayout/WizardLayout.tsx",
           "type": "registry:component",
           "target": "components/layouts/wizard-layout/WizardLayout.tsx"
+        },
+        {
+          "path": "packages/ui/src/layouts/WizardLayout/WizardOverlayBody.tsx",
+          "type": "registry:component",
+          "target": "components/layouts/wizard-layout/WizardOverlayBody.tsx"
         },
         {
           "path": "packages/ui/src/layouts/WizardLayout/index.ts",

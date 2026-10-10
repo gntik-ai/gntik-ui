@@ -104,6 +104,18 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
               {it.description && <p className="mb-2 max-w-3xl text-[13px] leading-6 text-muted-foreground" style={{ textWrap: 'pretty' }}>{it.description}</p>}
               {it.uses?.length > 0 && <p className="mb-3 text-[11.5px] text-muted-foreground">Uses: {it.uses.join(' · ')}</p>}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'template' && it.id === 'create-wizard' && <>
+                <p className="my-4 text-[13px] leading-6 text-muted-foreground">
+                  Keep the list mounted and open the flow from page state. WizardLayout overlay defaults to fullscreen;
+                  dialog-wizard defaults to a dialog on desktop and tablet, and fills mobile viewports. Use the page
+                  template for a dedicated flow. Closing preserves the current step and answers.
+                </p>
+                <Viewer kind="template" id="create-wizard--overlay" title="Create wizard over a list"
+                  file="../../../packages/templates/src/create-wizard/examples/Overlay.tsx" height={height} />
+                <h4 className="my-4 text-[15px] font-semibold text-foreground">Dialog wizard</h4>
+                <Viewer kind="block" id="dialog-wizard" title="Dialog wizard"
+                  file="../../../packages/blocks/src/forms/DialogWizard/examples/CreateResource.tsx" height={height} />
+              </>}
             </article>
           ))}
           {api?.(g, items)}

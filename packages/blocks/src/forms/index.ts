@@ -15,6 +15,9 @@ export { meta as inviteMembersDialogMeta } from './InviteMembersDialog/block.met
 export * from './SettingsRow/SettingsRow';
 export { meta as settingsRowMeta } from './SettingsRow/block.meta';
 export * from './ValidationSummary/ValidationSummary';
+export * from './DialogWizard/DialogWizard';
+export { meta as dialogWizardMeta } from './DialogWizard/block.meta';
+export { dialogWizardCopy, dialogWizardSteps } from './DialogWizard/fixtures';
 export { meta as validationSummaryMeta } from './ValidationSummary/block.meta';
 export { ConfirmDestructiveDialog, type ConfirmDestructiveDialogProps } from './DangerZone/ConfirmDestructiveDialog';
 export { dangerZoneActions } from './DangerZone/fixtures';

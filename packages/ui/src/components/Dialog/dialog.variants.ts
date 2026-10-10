@@ -30,6 +30,16 @@ export const dialogVariants = tv({
       lg: { popup: 'max-w-[560px]' },
       xl: { popup: 'max-w-[720px]' },
     },
+    presentation: {
+      fullscreen: {
+        viewport: 'overflow-hidden p-0 sm:p-0',
+        popup: 'mt-0 flex h-dvh max-w-none flex-col overflow-hidden rounded-none border-0 data-starting-style:translate-y-0 data-starting-style:scale-100 data-ending-style:translate-y-0 data-ending-style:scale-100',
+      },
+      responsive: {
+        viewport: 'overflow-hidden p-0 sm:p-8',
+        popup: 'mt-0 flex h-dvh flex-col overflow-hidden rounded-none border-0 sm:mt-[8vh] sm:h-[min(80dvh,48rem)] sm:rounded-xl sm:border',
+      },
+    },
   },
   defaultVariants: { size: 'md' },
 });

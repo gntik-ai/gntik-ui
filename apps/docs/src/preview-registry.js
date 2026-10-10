@@ -10,6 +10,8 @@ const templateMetas = import.meta.glob('../../../packages/templates/src/*/templa
 const layoutExamples = import.meta.glob('../../../packages/ui/src/layouts/*/examples/*.tsx');
 const layoutDocs = import.meta.glob('../../../packages/ui/src/layouts/*/*.doc.ts', { eager: true, import: 'doc' });
 const sourcesRaw = {
+  ...import.meta.glob('../../../packages/templates/src/*/examples/*.tsx', { query: '?raw', import: 'default' }),
+  ...import.meta.glob('../../../packages/blocks/src/*/*/examples/*.tsx', { query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/blocks/src/*/*/*.tsx', { query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/templates/src/*/Page.tsx', { query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/ui/src/layouts/*/examples/*.tsx', { query: '?raw', import: 'default' }),
@@ -44,6 +46,7 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 export const PREVIEW_LOADERS = {
   block: {
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'dialog-wizard': () => import('../../../packages/blocks/src/forms/DialogWizard/examples/CreateResource'),
     'credential-disclosure-dialog': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),
     'credential-disclosure-dialog--stored': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),
     'credential-disclosure-dialog--fresh': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Fresh'),
@@ -58,6 +61,7 @@ export const PREVIEW_LOADERS = {
   },
   template: {
     ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
+    'create-wizard--overlay': () => import('../../../packages/templates/src/create-wizard/examples/Overlay'),
     'status-404--page-header': () => import('../../../packages/templates/src/status-404/examples/PageHeader'),
     'sign-in-card--username': () => import('../../../packages/templates/src/sign-in-card/examples/Username'),
     'forgot-password--username-or-email': () => import('../../../packages/templates/src/forgot-password/examples/UsernameOrEmail'),
