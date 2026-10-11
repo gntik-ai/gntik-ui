@@ -118,7 +118,17 @@ export default function UsageAnalyticsPage<P extends object = CostPoint, T exten
     <ConsoleShell currentHref="/analytics" breadcrumbs={breadcrumbs} {...shell}>
       <Page
         width="wide"
-        header={<PageHeader breadcrumbs={null} title={title} description={description} status="" meta={[]} tabs={null} actions={[exportAction]} />}
+        header={
+          <PageHeader
+            breadcrumbs={null}
+            title={title}
+            description={description}
+            status=""
+            meta={[]}
+            tabs={null}
+            actions={[exportAction]}
+          />
+        }
       >
         <Stack gap={6}>
           <HStack align="start" gap={3} wrap>

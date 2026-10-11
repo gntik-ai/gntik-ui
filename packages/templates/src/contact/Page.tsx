@@ -23,7 +23,18 @@ import {
   type MegaMenuItem,
 } from '@gntik-ai/ui';
 import { useId, useState, type ReactNode } from 'react';
-import { contactTopics, emptyContact, offices, publicCopyright, publicFooterLinks, publicMenu, validateContact, type ContactTopic, type ContactValues, type Office } from './data';
+import {
+  contactTopics,
+  emptyContact,
+  offices,
+  publicCopyright,
+  publicFooterLinks,
+  publicMenu,
+  validateContact,
+  type ContactTopic,
+  type ContactValues,
+  type Office,
+} from './data';
 import { PublicFrame } from './PublicFrame';
 
 export interface ContactProps {
@@ -41,7 +52,13 @@ export interface ContactProps {
   copyright: ReactNode;
 }
 
-const LABELS: Record<keyof ContactValues, string> = { name: 'Name', email: 'Work email', company: 'Company', topic: 'Topic', message: 'Message' };
+const LABELS: Record<keyof ContactValues, string> = {
+  name: 'Name',
+  email: 'Work email',
+  company: 'Company',
+  topic: 'Topic',
+  message: 'Message',
+};
 
 /** Public contact page: StackedLayout + MegaMenu, a validated form with a success state, and office cards. */
 export default function ContactPage(props: Partial<ContactProps>) {
@@ -66,8 +83,13 @@ export default function ContactPage(props: Partial<ContactProps>) {
   const fieldId = (k: keyof ContactValues) => `${ids}-${k}`;
 
   const errors = submitCount > 0 ? validateContact(values) : {};
-  const issues: ValidationIssue[] = (Object.keys(errors) as Array<keyof ContactValues>).map((k) => ({ fieldId: fieldId(k), label: LABELS[k], message: errors[k] ?? '' }));
-  const set = <K extends keyof ContactValues>(key: K, value: ContactValues[K]) => setValues((v) => ({ ...v, [key]: value }));
+  const issues: ValidationIssue[] = (Object.keys(errors) as Array<keyof ContactValues>).map((k) => ({
+    fieldId: fieldId(k),
+    label: LABELS[k],
+    message: errors[k] ?? '',
+  }));
+  const set = <K extends keyof ContactValues>(key: K, value: ContactValues[K]) =>
+    setValues((v) => ({ ...v, [key]: value }));
 
   const submit = async () => {
     setSubmitCount((n) => n + 1);
@@ -99,12 +121,19 @@ export default function ContactPage(props: Partial<ContactProps>) {
           <Card className="lg:col-span-3">
             <CardBody className="p-6">
               {sent ? (
-                <div ref={(el) => el?.focus()} tabIndex={-1} role="status" className="flex flex-col items-start gap-3 py-6 outline-none">
+                <div
+                  ref={(el) => el?.focus()}
+                  tabIndex={-1}
+                  role="status"
+                  className="flex flex-col items-start gap-3 py-6 outline-none"
+                >
                   <CircleCheck size={28} aria-hidden className="text-success-text" />
                   <Heading level={2} size="sm">
                     Message sent
                   </Heading>
-                  <Text tone="muted">Thanks, {values.name.trim()}. We’ll reply to {values.email.trim()} within one business day.</Text>
+                  <Text tone="muted">
+                    Thanks, {values.name.trim()}. We’ll reply to {values.email.trim()} within one business day.
+                  </Text>
                   <Button variant="secondary" onClick={reset}>
                     Send another message
                   </Button>
@@ -123,17 +152,35 @@ export default function ContactPage(props: Partial<ContactProps>) {
                     <Grid cols={{ base: 1, sm: 2 }} gap={4}>
                       <Field invalid={errors.name != null}>
                         <FieldLabel required>{LABELS.name}</FieldLabel>
-                        <Input id={fieldId('name')} autoComplete="name" required value={values.name} onValueChange={(v) => set('name', v)} />
+                        <Input
+                          id={fieldId('name')}
+                          autoComplete="name"
+                          required
+                          value={values.name}
+                          onValueChange={(v) => set('name', v)}
+                        />
                         <FieldError match={errors.name != null}>{errors.name}</FieldError>
                       </Field>
                       <Field invalid={errors.email != null}>
                         <FieldLabel required>{LABELS.email}</FieldLabel>
-                        <Input id={fieldId('email')} type="email" autoComplete="email" required value={values.email} onValueChange={(v) => set('email', v)} />
+                        <Input
+                          id={fieldId('email')}
+                          type="email"
+                          autoComplete="email"
+                          required
+                          value={values.email}
+                          onValueChange={(v) => set('email', v)}
+                        />
                         <FieldError match={errors.email != null}>{errors.email}</FieldError>
                       </Field>
                       <Field>
                         <FieldLabel>{LABELS.company}</FieldLabel>
-                        <Input id={fieldId('company')} autoComplete="organization" value={values.company} onValueChange={(v) => set('company', v)} />
+                        <Input
+                          id={fieldId('company')}
+                          autoComplete="organization"
+                          value={values.company}
+                          onValueChange={(v) => set('company', v)}
+                        />
                       </Field>
                       <Field invalid={errors.topic != null}>
                         <FieldLabel required>{LABELS.topic}</FieldLabel>
@@ -156,7 +203,13 @@ export default function ContactPage(props: Partial<ContactProps>) {
                     </Grid>
                     <Field invalid={errors.message != null}>
                       <FieldLabel required>{LABELS.message}</FieldLabel>
-                      <Textarea id={fieldId('message')} rows={5} required value={values.message} onValueChange={(v) => set('message', v)} />
+                      <Textarea
+                        id={fieldId('message')}
+                        rows={5}
+                        required
+                        value={values.message}
+                        onValueChange={(v) => set('message', v)}
+                      />
                       <FieldError match={errors.message != null}>{errors.message}</FieldError>
                     </Field>
                     <Text variant="caption" tone="muted">

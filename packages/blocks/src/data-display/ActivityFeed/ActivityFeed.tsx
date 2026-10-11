@@ -57,7 +57,16 @@ export function groupActivityByDay(items: readonly ActivityItem[], now: Date, lo
 }
 
 /** Activity feed: actor avatar, action, target and Timestamp, grouped by day. */
-export function ActivityFeed({ items = PROJECT_ACTIVITY, label = 'Recent activity', now, locale, onLoadMore, loadingMore, groupHeadingAs: GroupTag = 'h3', className }: ActivityFeedProps) {
+export function ActivityFeed({
+  items = PROJECT_ACTIVITY,
+  label = 'Recent activity',
+  now,
+  locale,
+  onLoadMore,
+  loadingMore,
+  groupHeadingAs: GroupTag = 'h3',
+  className,
+}: ActivityFeedProps) {
   const [mountedAt] = useState(() => Date.now());
   const reference = toDate(now ?? mountedAt) ?? new Date(mountedAt);
   const groups = groupActivityByDay(items, reference, locale);
@@ -68,13 +77,18 @@ export function ActivityFeed({ items = PROJECT_ACTIVITY, label = 'Recent activit
         const headingId = `${id}-${group.key}`;
         return (
           <div key={group.key}>
-            <GroupTag id={headingId} className="mb-3 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase">
+            <GroupTag
+              id={headingId}
+              className="mb-3 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase"
+            >
               {group.label}
             </GroupTag>
             <ul aria-labelledby={headingId} className="flex flex-col">
               {group.items.map((item, i) => (
                 <li key={item.id} className="relative flex gap-3 pb-5 last:pb-0">
-                  {i < group.items.length - 1 && <span aria-hidden className="absolute top-7 bottom-0.5 start-[11.5px] w-px bg-border" />}
+                  {i < group.items.length - 1 && (
+                    <span aria-hidden className="absolute top-7 bottom-0.5 start-[11.5px] w-px bg-border" />
+                  )}
                   <Avatar name={item.actor.name} src={item.actor.src} size="xs" className="mt-0.5" />
                   <div className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
                     <p className="min-w-0 text-[13px] text-muted-foreground">

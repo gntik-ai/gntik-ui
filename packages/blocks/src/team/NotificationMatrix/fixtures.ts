@@ -25,7 +25,12 @@ export const notificationEvents: NotificationEvent[] = [
   { id: 'mentions', label: 'Mentions', description: 'Someone mentions you in a comment or review.' },
   { id: 'member-joined', label: 'Member joined', description: 'Someone accepts an invitation to the workspace.' },
   { id: 'usage', label: 'Usage threshold', description: 'Usage reaches 80% or 100% of a quota.' },
-  { id: 'security', label: 'Security alerts', description: 'New sign-ins and changes to keys or roles.', locked: ['email'] },
+  {
+    id: 'security',
+    label: 'Security alerts',
+    description: 'New sign-ins and changes to keys or roles.',
+    locked: ['email'],
+  },
 ];
 
 export const notificationDefaults: NotificationMatrixValue = {

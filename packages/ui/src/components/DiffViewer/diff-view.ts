@@ -12,7 +12,10 @@ export type ViewItem =
   | { kind: 'collapsed'; key: string; count: number };
 
 /** Adds word segments to removed/added lines paired by position within each changed block. */
-export function pairLines(lines: readonly DiffLine[], wordDiff: boolean): { lines: ViewLine[]; pairs: Map<number, number> } {
+export function pairLines(
+  lines: readonly DiffLine[],
+  wordDiff: boolean,
+): { lines: ViewLine[]; pairs: Map<number, number> } {
   const out: ViewLine[] = lines.map((line, index) => ({ ...line, index }));
   const pairs = new Map<number, number>();
   let i = 0;

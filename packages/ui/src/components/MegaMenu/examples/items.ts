@@ -9,8 +9,18 @@ export const megaMenuItems: MegaMenuItem[] = [
       {
         title: 'Build',
         links: [
-          { label: 'Projects', href: '#projects', icon: FolderKanban, description: 'Every project, its environments and owners.' },
-          { label: 'Deployments', href: '#deployments', icon: Rocket, description: 'Releases, rollbacks and deploy gates.' },
+          {
+            label: 'Projects',
+            href: '#projects',
+            icon: FolderKanban,
+            description: 'Every project, its environments and owners.',
+          },
+          {
+            label: 'Deployments',
+            href: '#deployments',
+            icon: Rocket,
+            description: 'Releases, rollbacks and deploy gates.',
+          },
         ],
       },
       {
@@ -27,7 +37,12 @@ export const megaMenuItems: MegaMenuItem[] = [
     sections: [
       {
         links: [
-          { label: 'Plan & usage', href: '#plan', icon: CreditCard, description: 'Your plan, seats and this month’s usage.' },
+          {
+            label: 'Plan & usage',
+            href: '#plan',
+            icon: CreditCard,
+            description: 'Your plan, seats and this month’s usage.',
+          },
           { label: 'Invoices', href: '#invoices', icon: FileText, description: 'Download and export past invoices.' },
         ],
       },

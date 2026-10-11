@@ -54,7 +54,8 @@ export default function SignInCardPage({
       footer={
         footer === undefined ? (
           <>
-            By signing in you agree to the <Link href={termsHref}>Terms</Link> and <Link href={privacyHref}>Privacy Policy</Link>.
+            By signing in you agree to the <Link href={termsHref}>Terms</Link> and{' '}
+            <Link href={privacyHref}>Privacy Policy</Link>.
           </>
         ) : (
           footer

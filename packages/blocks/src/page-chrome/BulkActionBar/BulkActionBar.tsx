@@ -40,12 +40,18 @@ export function BulkActionBar({
     <Toolbar
       variant="plain"
       aria-label={t('bulk.label')}
-      className={cn('flex-wrap gap-y-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 shadow-sm', className)}
+      className={cn(
+        'flex-wrap gap-y-2 rounded-lg border border-primary/30 bg-primary/8 px-3 py-2 shadow-sm',
+        className,
+      )}
     >
       <ToolbarStart>
         <p role="status" className="text-[13px] font-medium text-foreground">
           <span className="font-mono tabular-nums">{selectedCount.toLocaleString(locale)}</span>
-          {totalCount != null && <span className="text-muted-foreground"> {t('bulk.of', { total: totalCount.toLocaleString(locale) })}</span>} {word} {t('bulk.selected', { count: selectedCount })}
+          {totalCount != null && (
+            <span className="text-muted-foreground"> {t('bulk.of', { total: totalCount.toLocaleString(locale) })}</span>
+          )}{' '}
+          {word} {t('bulk.selected', { count: selectedCount })}
         </p>
         <ToolbarSeparator />
         <ToolbarButton icon={X} onClick={onClear}>

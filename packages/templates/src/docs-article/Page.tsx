@@ -27,7 +27,16 @@ import {
 } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import { ArticleFeedback, type ArticleFeedbackValue } from './ArticleFeedback';
-import { articleBreadcrumbs, articleNext, articlePrev, articleToc, docsNav, signatureHeaders, verifyCode, type ArticleLink } from './data';
+import {
+  articleBreadcrumbs,
+  articleNext,
+  articlePrev,
+  articleToc,
+  docsNav,
+  signatureHeaders,
+  verifyCode,
+  type ArticleLink,
+} from './data';
 
 export interface DocsArticleProps {
   brand: ReactNode;
@@ -60,9 +69,9 @@ function SampleBody() {
         How signing works
       </h2>
       <p className={P}>
-        Every delivery carries a <code className={CODE}>Signature</code> header: a
-        timestamp and an HMAC-SHA256 of the timestamp and the raw body, keyed with the endpoint secret. You find the secret on the
-        endpoint page; see <Link href="/docs/webhooks/create">Create a webhook</Link> if you have not added one yet.
+        Every delivery carries a <code className={CODE}>Signature</code> header: a timestamp and an HMAC-SHA256 of the
+        timestamp and the raw body, keyed with the endpoint secret. You find the secret on the endpoint page; see{' '}
+        <Link href="/docs/webhooks/create">Create a webhook</Link> if you have not added one yet.
       </p>
       <div className="my-5 overflow-hidden rounded-lg border border-border bg-card">
         <Table density="compact" containerLabel="Delivery headers">
@@ -88,7 +97,9 @@ function SampleBody() {
       <h2 id="verify" className={H2}>
         Verify a signature
       </h2>
-      <p className={P}>Compute the same HMAC on your side and compare it in constant time. Use the raw body, before any JSON parsing.</p>
+      <p className={P}>
+        Compute the same HMAC on your side and compare it in constant time. Use the raw body, before any JSON parsing.
+      </p>
       <h3 id="verify-node" className={H3}>
         Node.js example
       </h3>
@@ -96,15 +107,25 @@ function SampleBody() {
       <h2 id="replay" className={H2}>
         Reject replayed events
       </h2>
-      <p className={P}>Refuse deliveries whose timestamp is more than five minutes old, and store the ids of the events you processed.</p>
+      <p className={P}>
+        Refuse deliveries whose timestamp is more than five minutes old, and store the ids of the events you processed.
+      </p>
       <Blockquote source="Security review" sourceDetail="Platform team" className="my-5">
         A valid signature proves who sent the event, not when. Always check the timestamp too.
       </Blockquote>
       <h2 id="rotate" className={H2}>
         Rotate the secret
       </h2>
-      <p className={P}>Rolling a secret keeps the old one valid for 24 hours, so you can deploy the new value without dropping deliveries.</p>
-      <InlineCallout className="mt-4" tone="info" title="Tip" description="Store the secret in an environment variable, never in the repository." />
+      <p className={P}>
+        Rolling a secret keeps the old one valid for 24 hours, so you can deploy the new value without dropping
+        deliveries.
+      </p>
+      <InlineCallout
+        className="mt-4"
+        tone="info"
+        title="Tip"
+        description="Store the secret in an environment variable, never in the repository."
+      />
     </>
   );
 }

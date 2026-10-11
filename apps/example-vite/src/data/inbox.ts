@@ -13,7 +13,10 @@ export const notifications: InboxNotification[] = [
     id: 'n1',
     title: 'billing-service is degraded',
     preview: 'Error rate above 2% in eu-central-1 for 10 minutes.',
-    body: ['The error rate of billing-service has been above 2% in eu-central-1 for 10 minutes.', 'Open the project to see its status history and roll back if needed.'],
+    body: [
+      'The error rate of billing-service has been above 2% in eu-central-1 for 10 minutes.',
+      'Open the project to see its status history and roll back if needed.',
+    ],
     from: 'Monitoring',
     time: new Date(NOW - 6 * MIN),
     read: false,
@@ -25,7 +28,10 @@ export const notifications: InboxNotification[] = [
     id: 'n2',
     title: 'Jamie Chen mentioned you in “Launch plan”',
     preview: '@alex can you review the rollout steps before Thursday?',
-    body: ['“@alex can you review the rollout steps before Thursday?”', 'Reply in the thread to keep the discussion in one place.'],
+    body: [
+      '“@alex can you review the rollout steps before Thursday?”',
+      'Reply in the thread to keep the discussion in one place.',
+    ],
     from: 'Jamie Chen',
     time: new Date(NOW - 35 * MIN),
     read: false,

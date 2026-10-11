@@ -14,7 +14,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
     // Inlines the theme script in <head> of both pages so the stored theme applies before first paint.
-    { name: 'gntik-theme', transformIndexHtml: () => [{ tag: 'script', children: themeScript(), injectTo: 'head-prepend' }] },
+    {
+      name: 'gntik-theme',
+      transformIndexHtml: () => [{ tag: 'script', children: themeScript(), injectTo: 'head-prepend' }],
+    },
   ],
   resolve: {
     alias: [

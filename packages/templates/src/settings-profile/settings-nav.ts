@@ -59,11 +59,22 @@ export function settingsNav(basePath?: string, extraItems: readonly SettingsNavE
   const groups: NavGroup[] = [
     {
       label: 'Account',
-      items: [item('profile', User), item('security', ShieldCheck), item('notifications', Bell), item('appearance', Palette)],
+      items: [
+        item('profile', User),
+        item('security', ShieldCheck),
+        item('notifications', Bell),
+        item('appearance', Palette),
+      ],
     },
     {
       label: 'Workspace',
-      items: [item('workspace', Building2), item('members', Users), item('billing', CreditCard), item('api-keys', KeyRound), item('integrations', Plug)],
+      items: [
+        item('workspace', Building2),
+        item('members', Users),
+        item('billing', CreditCard),
+        item('api-keys', KeyRound),
+        item('integrations', Plug),
+      ],
     },
   ];
   for (const extra of extraItems) {
@@ -73,7 +84,10 @@ export function settingsNav(basePath?: string, extraItems: readonly SettingsNavE
       group = { label, items: [] };
       groups.push(group);
     }
-    group.items = [...group.items, { id: extra.id, label: extra.label, icon: extra.icon, href: extra.href ?? href(extra.id) }];
+    group.items = [
+      ...group.items,
+      { id: extra.id, label: extra.label, icon: extra.icon, href: extra.href ?? href(extra.id) },
+    ];
   }
   return groups;
 }

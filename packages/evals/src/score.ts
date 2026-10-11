@@ -57,7 +57,11 @@ const lineOf = (text: string, index: number) => text.slice(0, index).split('\n')
 export function scoreBrand(code: string): DimensionScore {
   const r = validatePage(code, { allow: ['no-tokens'] });
   const detail = r.findings.map((f) => `${f.severity} ${f.rule} L${f.line}: ${f.excerpt}`);
-  return { pass: r.ok, score: r.ok ? 1 - Math.min(0.3, 0.05 * r.warnings) : 0, detail: [`${r.errors} errors · ${r.warnings} warnings`, ...detail] };
+  return {
+    pass: r.ok,
+    score: r.ok ? 1 - Math.min(0.3, 0.05 * r.warnings) : 0,
+    detail: [`${r.errors} errors · ${r.warnings} warnings`, ...detail],
+  };
 }
 
 /* ── (b) kit-only (rules of apps/musematic/scripts/check-kit-only.mjs) ─────── */
@@ -88,16 +92,20 @@ export function scoreKitOnly(code: string): DimensionScore {
   const text = stripComments(code);
   const hard: string[] = [];
   const soft: string[] = [];
-  for (const [re, message] of COLOUR_RULES) for (const m of text.matchAll(re)) hard.push(`L${lineOf(text, m.index)} ${message}: ${m[0]}`);
+  for (const [re, message] of COLOUR_RULES)
+    for (const m of text.matchAll(re)) hard.push(`L${lineOf(text, m.index)} ${message}: ${m[0]}`);
   for (const re of IMPORT_RES) {
     for (const m of text.matchAll(re)) {
       const spec = m[1] ?? '';
       const where = `L${lineOf(text, m.index)}`;
-      if (!ALLOWED_IMPORT.test(spec)) hard.push(`${where} import of "${spec}" (only react, react-dom, @gntik-ai/* and relative paths)`);
-      else if (spec.endsWith('.css')) hard.push(`${where} CSS import "${spec}" (global CSS belongs in the app's index.css)`);
+      if (!ALLOWED_IMPORT.test(spec))
+        hard.push(`${where} import of "${spec}" (only react, react-dom, @gntik-ai/* and relative paths)`);
+      else if (spec.endsWith('.css'))
+        hard.push(`${where} CSS import "${spec}" (global CSS belongs in the app's index.css)`);
     }
   }
-  for (const [re, message] of OWN_STYLING) for (const m of text.matchAll(re)) soft.push(`L${lineOf(text, m.index)} ${message} (own styling)`);
+  for (const [re, message] of OWN_STYLING)
+    for (const m of text.matchAll(re)) soft.push(`L${lineOf(text, m.index)} ${message} (own styling)`);
   const pass = hard.length === 0;
   const score = pass ? Math.max(0.5, 1 - 0.1 * soft.length) : 0;
   return { pass, score, detail: [`${hard.length} violations · ${soft.length} own-styling uses`, ...hard, ...soft] };
@@ -171,14 +179,22 @@ export function typecheckPage(id: string, code: string, root = REPO_ROOT): Typec
   const tsc = requireFrom.resolve('typescript/bin/tsc');
   let out = '';
   try {
-    execFileSync(process.execPath, [tsc, '-p', path.join(dir, 'tsconfig.json'), '--pretty', 'false'], { encoding: 'utf8', stdio: 'pipe' });
+    execFileSync(process.execPath, [tsc, '-p', path.join(dir, 'tsconfig.json'), '--pretty', 'false'], {
+      encoding: 'utf8',
+      stdio: 'pipe',
+    });
   } catch (e) {
     const err = e as { stdout?: string; stderr?: string };
     out = `${err.stdout ?? ''}${err.stderr ?? ''}`.trim() || String(e);
   }
   const lines = out ? out.split('\n').filter((l) => /error TS\d+/.test(l)) : [];
   const errors = out && !lines.length ? 1 : lines.length;
-  return { pass: errors === 0, score: errors === 0 ? 1 : 0, errors, detail: [`${errors} type errors`, ...(lines.length ? lines : out ? [out] : []).slice(0, 20)] };
+  return {
+    pass: errors === 0,
+    score: errors === 0 ? 1 : 0,
+    errors,
+    detail: [`${errors} type errors`, ...(lines.length ? lines : out ? [out] : []).slice(0, 20)],
+  };
 }
 
 /* ── (d) composition recall ───────────────────────────────────────────────── */
@@ -232,12 +248,17 @@ export function usedKitIds(code: string, k: KitRegistry = loadKit()): { direct: 
   return { direct, all };
 }
 
-export function scoreComposition(task: Task, code: string, k: KitRegistry = loadKit()): DimensionScore & { recall: number } {
+export function scoreComposition(
+  task: Task,
+  code: string,
+  k: KitRegistry = loadKit(),
+): DimensionScore & { recall: number } {
   const { all } = usedKitIds(code, k);
   const e = task.expect;
   const parts: Array<[string, boolean]> = [];
   if (e.templates?.length) parts.push([`template ${e.templates.join(' | ')}`, e.templates.some((t) => all.has(t))]);
-  for (const id of [...(e.blocks ?? []), ...(e.components ?? []), ...(e.layout ? [e.layout] : [])]) parts.push([id, all.has(id)]);
+  for (const id of [...(e.blocks ?? []), ...(e.components ?? []), ...(e.layout ? [e.layout] : [])])
+    parts.push([id, all.has(id)]);
   const hits = parts.filter(([, hit]) => hit).length;
   const recall = parts.length ? hits / parts.length : 1;
   const violations = (task.mustNot ?? []).filter((id) => all.has(id));
@@ -259,7 +280,9 @@ export function scoreComposition(task: Task, code: string, k: KitRegistry = load
 
 export function scoreEfficiency(toolCalls: number): DimensionScore {
   const score =
-    toolCalls <= EFFICIENT_CALLS ? 1 : clamp01(1 - (toolCalls - EFFICIENT_CALLS) / (ZERO_EFFICIENCY_CALLS - EFFICIENT_CALLS));
+    toolCalls <= EFFICIENT_CALLS
+      ? 1
+      : clamp01(1 - (toolCalls - EFFICIENT_CALLS) / (ZERO_EFFICIENCY_CALLS - EFFICIENT_CALLS));
   return { score, pass: toolCalls <= EFFICIENT_CALLS, detail: [`${toolCalls} tool calls`] };
 }
 
@@ -276,13 +299,17 @@ const zero = (why: string): DimensionScore => ({ score: 0, pass: false, detail: 
 export function scorePage(task: Task, code: string | undefined, toolCalls: number, opts: ScoreOptions = {}): Scores {
   if (code === undefined) {
     const none = zero('no page submitted');
-    return { total: 0, dimensions: { brand: none, kitOnly: none, typecheck: none, composition: none, efficiency: none } };
+    return {
+      total: 0,
+      dimensions: { brand: none, kitOnly: none, typecheck: none, composition: none, efficiency: none },
+    };
   }
   const root = opts.root ?? REPO_ROOT;
   const dimensions: Record<Dimension, DimensionScore> = {
     brand: scoreBrand(code),
     kitOnly: scoreKitOnly(code),
-    typecheck: opts.typecheck === false ? { score: 1, pass: true, detail: ['skipped'] } : typecheckPage(task.id, code, root),
+    typecheck:
+      opts.typecheck === false ? { score: 1, pass: true, detail: ['skipped'] } : typecheckPage(task.id, code, root),
     composition: scoreComposition(task, code, loadKit(root)),
     efficiency: scoreEfficiency(toolCalls),
   };

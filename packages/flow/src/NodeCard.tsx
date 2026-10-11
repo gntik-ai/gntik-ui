@@ -28,8 +28,19 @@ export function NodeCard({ kind = 'step', icon, title, subtitle, meta, tone, sel
   return (
     <div className={cx('relative h-full w-full min-w-52', className)} data-tone={tone}>
       {running && (
-        <svg aria-hidden="true" width="100%" height="100%" className="gu-flow-run-frame pointer-events-none absolute inset-0 z-10">
-          <rect className="gu-flow-run fill-none stroke-primary" strokeWidth={2} strokeLinecap="round" pathLength={100} strokeDasharray="22 78" />
+        <svg
+          aria-hidden="true"
+          width="100%"
+          height="100%"
+          className="gu-flow-run-frame pointer-events-none absolute inset-0 z-10"
+        >
+          <rect
+            className="gu-flow-run fill-none stroke-primary"
+            strokeWidth={2}
+            strokeLinecap="round"
+            pathLength={100}
+            strokeDasharray="22 78"
+          />
         </svg>
       )}
       <div className={cx('flex h-full w-full flex-col overflow-hidden rounded-lg bg-card transition-shadow', border)}>

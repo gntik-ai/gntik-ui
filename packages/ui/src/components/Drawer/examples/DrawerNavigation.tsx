@@ -41,7 +41,9 @@ export default function DrawerNavigation() {
                       : 'font-medium text-muted-foreground hover:bg-accent/45 hover:text-foreground')
                   }
                 >
-                  {current && <span aria-hidden className="absolute top-2 bottom-2 start-0 w-[3px] rounded-e bg-primary" />}
+                  {current && (
+                    <span aria-hidden className="absolute top-2 bottom-2 start-0 w-[3px] rounded-e bg-primary" />
+                  )}
                   <Icon size={17} aria-hidden className="shrink-0" />
                   {label}
                 </button>

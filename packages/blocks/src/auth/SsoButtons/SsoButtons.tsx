@@ -28,7 +28,11 @@ export function SsoButtons({
   className,
 }: SsoButtonsProps) {
   return (
-    <div role="group" aria-label={label} className={cn('grid gap-2.5', layout === 'grid' && 'sm:grid-cols-2', className)}>
+    <div
+      role="group"
+      aria-label={label}
+      className={cn('grid gap-2.5', layout === 'grid' && 'sm:grid-cols-2', className)}
+    >
       {providers.map((p) => (
         <Button
           key={p.id}

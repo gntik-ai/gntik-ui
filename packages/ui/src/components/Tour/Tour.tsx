@@ -120,7 +120,12 @@ export function Tour({
     if (!ring) return;
     const place = () => {
       const r = el.getBoundingClientRect();
-      Object.assign(ring.style, { top: `${r.top}px`, left: `${r.left}px`, width: `${r.width}px`, height: `${r.height}px` });
+      Object.assign(ring.style, {
+        top: `${r.top}px`,
+        left: `${r.left}px`,
+        width: `${r.width}px`,
+        height: `${r.height}px`,
+      });
     };
     place();
     window.addEventListener('scroll', place, true);
@@ -168,7 +173,9 @@ export function Tour({
               <BasePopover.Arrow className={s.arrow()} />
               <p className={s.counter()}>{labels.counter(index, steps.length)}</p>
               <BasePopover.Title className={s.title()}>{current?.title}</BasePopover.Title>
-              {current?.content != null && <BasePopover.Description className={s.description()}>{current.content}</BasePopover.Description>}
+              {current?.content != null && (
+                <BasePopover.Description className={s.description()}>{current.content}</BasePopover.Description>
+              )}
               <button type="button" aria-label={labels.close} className={s.close()} onClick={() => end(false)}>
                 <X size={14} aria-hidden />
               </button>
@@ -192,7 +199,10 @@ export function Tour({
           </BasePopover.Positioner>
         </BasePopover.Portal>
       </BasePopover.Root>
-      {isOpen && highlight && typeof document !== 'undefined' && createPortal(<div ref={ringRef} aria-hidden data-tour-highlight="" className={s.highlight()} />, document.body)}
+      {isOpen &&
+        highlight &&
+        typeof document !== 'undefined' &&
+        createPortal(<div ref={ringRef} aria-hidden data-tour-highlight="" className={s.highlight()} />, document.body)}
     </>
   );
 }

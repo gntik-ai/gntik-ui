@@ -74,7 +74,14 @@ export function TargetsTable({ metrics, periods, index }: TargetsTableProps) {
                 />
               </TableCell>
               <TableCell>
-                <MiniBar data={series} labels={periods.slice(0, index + 1)} formatValue={m.format} label={`${m.label} by quarter`} width={88} height={24} />
+                <MiniBar
+                  data={series}
+                  labels={periods.slice(0, index + 1)}
+                  formatValue={m.format}
+                  label={`${m.label} by quarter`}
+                  width={88}
+                  height={24}
+                />
               </TableCell>
             </TableRow>
           );

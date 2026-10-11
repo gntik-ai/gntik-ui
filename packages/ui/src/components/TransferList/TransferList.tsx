@@ -115,7 +115,10 @@ export function TransferList({
   const remove = (values: string[]) => {
     const movable = values.filter((v) => !byValue.get(v)?.disabled);
     if (!movable.length) return;
-    commit(selectedValues.filter((v) => !movable.includes(v)), labels.removed(movable.length));
+    commit(
+      selectedValues.filter((v) => !movable.includes(v)),
+      labels.removed(movable.length),
+    );
     setCheckedRight(new Set([...checkedRight].filter((v) => !movable.includes(v))));
   };
 
@@ -156,10 +159,42 @@ export function TransferList({
         height={height}
       />
       <div role="group" aria-label={labels.actions} className={s.actions()}>
-        <IconButton size="sm" variant="secondary" icon={ChevronRight} label={labels.add} className="rtl:[&_svg]:-scale-x-100" disabled={!checkedLeft.size} onClick={() => add([...checkedLeft])} />
-        <IconButton size="sm" variant="secondary" icon={ChevronsRight} label={labels.addAll} className="rtl:[&_svg]:-scale-x-100" disabled={!available.some((it) => !it.disabled)} onClick={() => add(available.map((it) => it.value))} />
-        <IconButton size="sm" variant="secondary" icon={ChevronLeft} label={labels.remove} className="rtl:[&_svg]:-scale-x-100" disabled={!checkedRight.size} onClick={() => remove([...checkedRight])} />
-        <IconButton size="sm" variant="secondary" icon={ChevronsLeft} label={labels.removeAll} className="rtl:[&_svg]:-scale-x-100" disabled={!selected.some((it) => !it.disabled)} onClick={() => remove(selected.map((it) => it.value))} />
+        <IconButton
+          size="sm"
+          variant="secondary"
+          icon={ChevronRight}
+          label={labels.add}
+          className="rtl:[&_svg]:-scale-x-100"
+          disabled={!checkedLeft.size}
+          onClick={() => add([...checkedLeft])}
+        />
+        <IconButton
+          size="sm"
+          variant="secondary"
+          icon={ChevronsRight}
+          label={labels.addAll}
+          className="rtl:[&_svg]:-scale-x-100"
+          disabled={!available.some((it) => !it.disabled)}
+          onClick={() => add(available.map((it) => it.value))}
+        />
+        <IconButton
+          size="sm"
+          variant="secondary"
+          icon={ChevronLeft}
+          label={labels.remove}
+          className="rtl:[&_svg]:-scale-x-100"
+          disabled={!checkedRight.size}
+          onClick={() => remove([...checkedRight])}
+        />
+        <IconButton
+          size="sm"
+          variant="secondary"
+          icon={ChevronsLeft}
+          label={labels.removeAll}
+          className="rtl:[&_svg]:-scale-x-100"
+          disabled={!selected.some((it) => !it.disabled)}
+          onClick={() => remove(selected.map((it) => it.value))}
+        />
       </div>
       <TransferListPane
         id={`${id}-selected`}
@@ -179,8 +214,20 @@ export function TransferList({
         footer={
           reorderable ? (
             <>
-              <IconButton size="sm" icon={ArrowUp} label={labels.moveUp} disabled={!checkedRightValues.length} onClick={() => reorder(checkedRightValues, -1)} />
-              <IconButton size="sm" icon={ArrowDown} label={labels.moveDown} disabled={!checkedRightValues.length} onClick={() => reorder(checkedRightValues, 1)} />
+              <IconButton
+                size="sm"
+                icon={ArrowUp}
+                label={labels.moveUp}
+                disabled={!checkedRightValues.length}
+                onClick={() => reorder(checkedRightValues, -1)}
+              />
+              <IconButton
+                size="sm"
+                icon={ArrowDown}
+                label={labels.moveDown}
+                disabled={!checkedRightValues.length}
+                onClick={() => reorder(checkedRightValues, 1)}
+              />
               <span className={s.footHint()}>{labels.reorderHint}</span>
             </>
           ) : undefined

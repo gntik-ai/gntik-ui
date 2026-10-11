@@ -97,7 +97,9 @@ export function LogViewer({
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
     return lines.filter(
-      (l) => levels.includes(l.level) && (!q || l.message.toLowerCase().includes(q) || (l.source ?? '').toLowerCase().includes(q)),
+      (l) =>
+        levels.includes(l.level) &&
+        (!q || l.message.toLowerCase().includes(q) || (l.source ?? '').toLowerCase().includes(q)),
     );
   }, [lines, levels, query]);
 
@@ -176,7 +178,9 @@ export function LogViewer({
         style={{ height }}
       >
         {visible.length === 0 ? (
-          <p className="px-4 py-6 text-center font-sans text-[13px] text-muted-foreground">No lines match the current filters.</p>
+          <p className="px-4 py-6 text-center font-sans text-[13px] text-muted-foreground">
+            No lines match the current filters.
+          </p>
         ) : (
           <div className="relative w-full" style={{ height: total }}>
             {rows.map((line, i) => {
@@ -189,11 +193,22 @@ export function LogViewer({
                   style={{ top: (start + i) * rowHeight, height: rowHeight }}
                 >
                   <span className="shrink-0 text-muted-foreground tabular-nums">{line.timestamp}</span>
-                  <span className={cn('inline-flex h-4 w-12 shrink-0 items-center justify-center rounded text-[10px] font-semibold', lv.className)}>
+                  <span
+                    className={cn(
+                      'inline-flex h-4 w-12 shrink-0 items-center justify-center rounded text-[10px] font-semibold',
+                      lv.className,
+                    )}
+                  >
                     {lv.label}
                   </span>
-                  {line.source && <span className="hidden shrink-0 text-muted-foreground sm:inline">[{highlight(line.source, query.trim())}]</span>}
-                  <span className="min-w-0 flex-1 truncate text-foreground">{highlight(line.message, query.trim())}</span>
+                  {line.source && (
+                    <span className="hidden shrink-0 text-muted-foreground sm:inline">
+                      [{highlight(line.source, query.trim())}]
+                    </span>
+                  )}
+                  <span className="min-w-0 flex-1 truncate text-foreground">
+                    {highlight(line.message, query.trim())}
+                  </span>
                   <IconButton
                     size="sm"
                     icon={copied === line.id ? Check : Copy}

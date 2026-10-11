@@ -34,7 +34,12 @@ describe('Card', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><CardWithHeader /><CardVariants /></>);
+    render(
+      <>
+        <CardWithHeader />
+        <CardVariants />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

@@ -5,14 +5,20 @@ import AspectRatioMedia from './examples/AspectRatioMedia';
 
 describe('AspectRatio', () => {
   it('locks the box to 16:9 by default and makes children fill it', () => {
-    render(<AspectRatio data-testid="r"><img src="data:," alt="Preview" /></AspectRatio>);
+    render(
+      <AspectRatio data-testid="r">
+        <img src="data:," alt="Preview" />
+      </AspectRatio>,
+    );
     const r = screen.getByTestId('r');
     expect(r.style.aspectRatio).toBe(`${16 / 9} / 1`);
     expect(r).toHaveClass('relative', 'overflow-hidden', 'rounded-lg', '*:size-full');
   });
 
   it('takes a ratio, radius, surface and merges style / className', () => {
-    render(<AspectRatio data-testid="r" ratio={4 / 3} radius="none" surface className="max-w-xs" style={{ opacity: 0.5 }} />);
+    render(
+      <AspectRatio data-testid="r" ratio={4 / 3} radius="none" surface className="max-w-xs" style={{ opacity: 0.5 }} />,
+    );
     const r = screen.getByTestId('r');
     expect(r.style.aspectRatio).toBe(`${4 / 3} / 1`);
     expect(r.style.opacity).toBe('0.5');

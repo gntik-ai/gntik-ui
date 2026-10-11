@@ -16,7 +16,10 @@ export const toolbarVariants = tv({
       focusRing,
       'data-disabled:cursor-not-allowed data-disabled:opacity-50',
     ],
-    link: ['inline-flex h-control-sm items-center rounded-md px-1.5 text-[12.5px] font-medium text-primary-text underline-offset-4 hover:underline', focusRing],
+    link: [
+      'inline-flex h-control-sm items-center rounded-md px-1.5 text-[12.5px] font-medium text-primary-text underline-offset-4 hover:underline',
+      focusRing,
+    ],
   },
   variants: {
     variant: {

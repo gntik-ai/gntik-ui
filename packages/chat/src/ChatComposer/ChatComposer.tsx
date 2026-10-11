@@ -194,7 +194,8 @@ export function ChatComposer({
   const hintNode =
     hint === undefined ? (
       <>
-        <kbd className="font-sans">{t('kbd.enter')}</kbd> {t('chat.hintSend')} · <kbd className="font-sans">{t('chat.shiftEnter')}</kbd> {t('chat.hintNewLine')}
+        <kbd className="font-sans">{t('kbd.enter')}</kbd> {t('chat.hintSend')} ·{' '}
+        <kbd className="font-sans">{t('chat.shiftEnter')}</kbd> {t('chat.hintNewLine')}
       </>
     ) : (
       hint
@@ -233,7 +234,12 @@ export function ChatComposer({
                   <li key={m}>{m}</li>
                 ))}
               </ul>
-              <button type="button" className={s.errorDismiss} aria-label={t('common.dismiss')} onClick={() => setErrors([])}>
+              <button
+                type="button"
+                className={s.errorDismiss}
+                aria-label={t('common.dismiss')}
+                onClick={() => setErrors([])}
+              >
                 <X size={12} aria-hidden />
               </button>
             </>
@@ -258,8 +264,22 @@ export function ChatComposer({
           <div className={s.tools}>
             {onAttach && (
               <>
-                <IconButton size="sm" icon={Paperclip} label={t('chat.attach')} disabled={disabled} onClick={() => fileInput.current?.click()} />
-                <input ref={fileInput} type="file" multiple hidden accept={accept} aria-label={t('chat.attach')} onChange={onFiles} />
+                <IconButton
+                  size="sm"
+                  icon={Paperclip}
+                  label={t('chat.attach')}
+                  disabled={disabled}
+                  onClick={() => fileInput.current?.click()}
+                />
+                <input
+                  ref={fileInput}
+                  type="file"
+                  multiple
+                  hidden
+                  accept={accept}
+                  aria-label={t('chat.attach')}
+                  onChange={onFiles}
+                />
               </>
             )}
             {tools}
@@ -273,11 +293,25 @@ export function ChatComposer({
             )}
             {modelPicker}
             {streaming ? (
-              <Button size="sm" variant="secondary" icon={Square} aria-label={t('chat.stop')} onClick={onStop} disabled={!onStop}>
+              <Button
+                size="sm"
+                variant="secondary"
+                icon={Square}
+                aria-label={t('chat.stop')}
+                onClick={onStop}
+                disabled={!onStop}
+              >
                 {t('common.stop')}
               </Button>
             ) : (
-              <IconButton size="sm" variant="primary" icon={ArrowUp} label={t('chat.send')} type="submit" disabled={!canSend} />
+              <IconButton
+                size="sm"
+                variant="primary"
+                icon={ArrowUp}
+                label={t('chat.send')}
+                type="submit"
+                disabled={!canSend}
+              />
             )}
           </div>
         </div>

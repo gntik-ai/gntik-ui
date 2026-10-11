@@ -1,11 +1,23 @@
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
-import { createContext, useCallback, useContext, useState, type HTMLAttributes, type Ref, type TdHTMLAttributes, type ThHTMLAttributes } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  type HTMLAttributes,
+  type Ref,
+  type TdHTMLAttributes,
+  type ThHTMLAttributes,
+} from 'react';
 import { useI18n } from '../../i18n/I18nProvider';
 import { useDensity } from '../../density/density-context';
 import { cn } from '../../utils/cn';
 import { nextSortDirection, tableVariants, type SortDirection, type TableDensity } from './table.variants';
 
-const TableContext = createContext<{ density: TableDensity; sticky: boolean }>({ density: 'comfortable', sticky: false });
+const TableContext = createContext<{ density: TableDensity; sticky: boolean }>({
+  density: 'comfortable',
+  sticky: false,
+});
 const s = tableVariants();
 
 export interface TableProps extends Omit<HTMLAttributes<HTMLTableElement>, 'className'> {
@@ -22,7 +34,14 @@ export interface TableProps extends Omit<HTMLAttributes<HTMLTableElement>, 'clas
 }
 
 /** Semantic data table in a horizontally scrollable container. */
-export function Table({ density: densityProp, stickyHeader = false, containerClassName, containerLabel, className, ...props }: TableProps) {
+export function Table({
+  density: densityProp,
+  stickyHeader = false,
+  containerClassName,
+  containerLabel,
+  className,
+  ...props
+}: TableProps) {
   const { t } = useI18n();
   const contextDensity = useDensity();
   const density = densityProp ?? contextDensity;
@@ -52,7 +71,10 @@ export function Table({ density: densityProp, stickyHeader = false, containerCla
   );
 }
 
-type SectionProps = Omit<HTMLAttributes<HTMLTableSectionElement>, 'className'> & { className?: string; ref?: Ref<HTMLTableSectionElement> };
+type SectionProps = Omit<HTMLAttributes<HTMLTableSectionElement>, 'className'> & {
+  className?: string;
+  ref?: Ref<HTMLTableSectionElement>;
+};
 
 export function TableHeader({ className, ...props }: SectionProps) {
   return <thead className={cn(s.header(), className)} {...props} />;
@@ -104,11 +126,16 @@ export function TableHead({
 }: TableHeadProps) {
   const { density, sticky } = useContext(TableContext);
   const v = tableVariants({ density, sticky, align, active: sortDirection !== 'none' });
-  const SortIcon = sortDirection === 'ascending' ? ArrowUp : sortDirection === 'descending' ? ArrowDown : ChevronsUpDown;
+  const SortIcon =
+    sortDirection === 'ascending' ? ArrowUp : sortDirection === 'descending' ? ArrowDown : ChevronsUpDown;
   return (
     <th scope={scope} aria-sort={sortable ? sortDirection : undefined} className={cn(v.head(), className)} {...props}>
       {sortable ? (
-        <button type="button" className={v.sortButton()} onClick={() => onSortChange?.(nextSortDirection(sortDirection))}>
+        <button
+          type="button"
+          className={v.sortButton()}
+          onClick={() => onSortChange?.(nextSortDirection(sortDirection))}
+        >
           {children}
           <SortIcon size={13} aria-hidden className={sortDirection === 'none' ? 'opacity-40' : undefined} />
         </button>

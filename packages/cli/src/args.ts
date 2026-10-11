@@ -83,7 +83,8 @@ export function parseCliArgs(argv: string[]): ParsedArgs {
   const [first, ...rest] = positionals;
   let command: CommandName | undefined;
   if (first !== undefined) {
-    if (!(COMMANDS as readonly string[]).includes(first)) throw new CliError('USAGE', `Unknown command "${first}". Run gntik-ui --help.`);
+    if (!(COMMANDS as readonly string[]).includes(first))
+      throw new CliError('USAGE', `Unknown command "${first}". Run gntik-ui --help.`);
     command = first as CommandName;
     const allowed = new Set([...GLOBAL_FLAGS, ...COMMAND_FLAGS[command]]);
     for (const key of Object.keys(values)) {
@@ -126,5 +127,8 @@ export function parseCliArgs(argv: string[]): ParsedArgs {
 
 /** `--codemod a,b --codemod c` → ['a', 'b', 'c']. */
 function splitList(value: string): string[] {
-  return value.split(',').map((v) => v.trim()).filter(Boolean);
+  return value
+    .split(',')
+    .map((v) => v.trim())
+    .filter(Boolean);
 }

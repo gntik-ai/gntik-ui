@@ -1,7 +1,16 @@
 // The preview frame: receives source from the shell, compiles it and renders it in its own
 // document, so the theme class, breakpoints (frame width) and crashes stay isolated.
 import '../index.css';
-import { Component, StrictMode, useEffect, useState, type ComponentPropsWithRef, type ComponentType, type ErrorInfo, type ReactNode } from 'react';
+import {
+  Component,
+  StrictMode,
+  useEffect,
+  useState,
+  type ComponentPropsWithRef,
+  type ComponentType,
+  type ErrorInfo,
+  type ReactNode,
+} from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   LinkProvider,
@@ -47,11 +56,18 @@ class PreviewBoundary extends Component<BoundaryProps, { failed: boolean }> {
   componentDidCatch(error: unknown, info: ErrorInfo) {
     if (!this.props.report) return;
     const err = toSandboxError(error);
-    post({ type: 'gntik-sandbox:error', error: { ...err, details: [err.details, info.componentStack].filter(Boolean).join('\n') } });
+    post({
+      type: 'gntik-sandbox:error',
+      error: { ...err, details: [err.details, info.componentStack].filter(Boolean).join('\n') },
+    });
   }
   render() {
     if (this.state.failed) {
-      return <p className="p-6 text-[13px] text-muted-foreground">The component threw while rendering. See the error panel.</p>;
+      return (
+        <p className="p-6 text-[13px] text-muted-foreground">
+          The component threw while rendering. See the error panel.
+        </p>
+      );
     }
     return this.props.children;
   }
@@ -131,8 +147,12 @@ function Preview() {
 }
 
 // Errors thrown outside render (event handlers, timers, promises) go to the shell too.
-window.addEventListener('error', (e) => post({ type: 'gntik-sandbox:error', error: toSandboxError(e.error ?? e.message) }));
-window.addEventListener('unhandledrejection', (e) => post({ type: 'gntik-sandbox:error', error: toSandboxError(e.reason) }));
+window.addEventListener('error', (e) =>
+  post({ type: 'gntik-sandbox:error', error: toSandboxError(e.error ?? e.message) }),
+);
+window.addEventListener('unhandledrejection', (e) =>
+  post({ type: 'gntik-sandbox:error', error: toSandboxError(e.reason) }),
+);
 
 createRoot(document.getElementById('root')!, {
   // The boundary already reports caught errors to the shell; keep the console for real problems.

@@ -50,7 +50,10 @@ export const inboxNotifications: InboxNotification[] = [
     id: 'ntf_02',
     title: 'Sam Patel mentioned you in “Release checklist”',
     preview: '@dana can you confirm the rollback plan before Friday?',
-    body: ['“@dana can you confirm the rollback plan before Friday? The migration touches the orders table.”', 'Reply in the thread to keep the discussion in one place.'],
+    body: [
+      '“@dana can you confirm the rollback plan before Friday? The migration touches the orders table.”',
+      'Reply in the thread to keep the discussion in one place.',
+    ],
     from: 'Sam Patel',
     time: new Date(NOW - 22 * MIN),
     read: false,
@@ -62,7 +65,10 @@ export const inboxNotifications: InboxNotification[] = [
     id: 'ntf_03',
     title: 'Deployment web-app build 418 succeeded',
     preview: 'Promoted to production in eu-west-1 and us-east-1.',
-    body: ['Build 418 of web-app was promoted to production in eu-west-1 and us-east-1.', 'Health checks passed in 42 s. The previous build stays available for instant rollback for 24 hours.'],
+    body: [
+      'Build 418 of web-app was promoted to production in eu-west-1 and us-east-1.',
+      'Health checks passed in 42 s. The previous build stays available for instant rollback for 24 hours.',
+    ],
     from: 'Deployments',
     time: new Date(NOW - 75 * MIN),
     read: false,
@@ -74,7 +80,10 @@ export const inboxNotifications: InboxNotification[] = [
     id: 'ntf_04',
     title: 'Deployment orders-api build 212 failed',
     preview: 'Health check timed out in ap-south-1. Traffic stayed on build 211.',
-    body: ['Build 212 of orders-api failed its health check in ap-south-1 after 30 s. Traffic stayed on build 211.', 'Open the deployment to see the logs and retry.'],
+    body: [
+      'Build 212 of orders-api failed its health check in ap-south-1 after 30 s. Traffic stayed on build 211.',
+      'Open the deployment to see the logs and retry.',
+    ],
     from: 'Deployments',
     time: new Date(NOW - 5 * 60 * MIN),
     read: true,
@@ -86,7 +95,10 @@ export const inboxNotifications: InboxNotification[] = [
     id: 'ntf_05',
     title: 'Lee Chen requested access to Billing',
     preview: 'Approve or decline from Members.',
-    body: ['Lee Chen asked for a role that includes Billing permissions.', 'Approve or decline the request from the Members page. Requests expire after 7 days.'],
+    body: [
+      'Lee Chen asked for a role that includes Billing permissions.',
+      'Approve or decline the request from the Members page. Requests expire after 7 days.',
+    ],
     from: 'Access requests',
     time: new Date(NOW - 26 * 60 * MIN),
     read: true,
@@ -98,7 +110,10 @@ export const inboxNotifications: InboxNotification[] = [
     id: 'ntf_06',
     title: 'Invoice INV-2044 is available',
     preview: '$4,210.00 for September · paid by card ending 4242.',
-    body: ['Your September invoice INV-2044 for $4,210.00 was paid with the card ending in 4242.', 'Download the PDF from Billing.'],
+    body: [
+      'Your September invoice INV-2044 for $4,210.00 was paid with the card ending in 4242.',
+      'Download the PDF from Billing.',
+    ],
     from: 'Billing',
     time: new Date(NOW - 3 * 24 * 60 * MIN),
     read: true,
@@ -108,4 +123,7 @@ export const inboxNotifications: InboxNotification[] = [
   },
 ];
 
-export const inboxBreadcrumbs: BreadcrumbItem[] = [{ label: 'Acme Industries', href: '/overview' }, { label: 'Notifications' }];
+export const inboxBreadcrumbs: BreadcrumbItem[] = [
+  { label: 'Acme Industries', href: '/overview' },
+  { label: 'Notifications' },
+];

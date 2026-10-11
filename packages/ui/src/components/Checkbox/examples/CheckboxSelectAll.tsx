@@ -7,7 +7,13 @@ export default function CheckboxSelectAll() {
   const [value, setValue] = useState(['billing-api', 'support-portal']);
   const id = useId();
   return (
-    <CheckboxGroup aria-labelledby={id} value={value} onValueChange={setValue} allValues={PROJECTS} className="max-w-lg">
+    <CheckboxGroup
+      aria-labelledby={id}
+      value={value}
+      onValueChange={setValue}
+      allValues={PROJECTS}
+      className="max-w-lg"
+    >
       <div className="flex items-center gap-3 border-b border-border pb-3">
         <Checkbox parent label={<span id={id}>Include all projects</span>} />
         <span className="ms-auto font-mono text-[11px] text-muted-foreground">

@@ -24,6 +24,10 @@ describe('SignUpPage', () => {
     expect(onSubmit).not.toHaveBeenCalled();
     await userEvent.click(screen.getByRole('checkbox'));
     await userEvent.click(screen.getByRole('button', { name: 'Create account' }));
-    expect(onSubmit).toHaveBeenCalledWith({ name: 'Avery Collins', email: 'avery@example.com', password: 'long-enough-pass' });
+    expect(onSubmit).toHaveBeenCalledWith({
+      name: 'Avery Collins',
+      email: 'avery@example.com',
+      password: 'long-enough-pass',
+    });
   });
 });

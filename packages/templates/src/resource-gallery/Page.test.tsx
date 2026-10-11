@@ -10,7 +10,9 @@ describe('ResourceGalleryPage', () => {
     expect(screen.getByRole('main')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 1, name: 'Resources' })).toBeInTheDocument();
     expect(screen.getByRole('toolbar', { name: 'Resources toolbar' })).toBeInTheDocument();
-    expect(within(screen.getByRole('list', { name: 'Resources' })).getAllByRole('listitem')).toHaveLength(galleryItems.length);
+    expect(within(screen.getByRole('list', { name: 'Resources' })).getAllByRole('listitem')).toHaveLength(
+      galleryItems.length,
+    );
     expect(screen.getByRole('heading', { level: 2, name: galleryItems[0]!.name })).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'All resources' })).toBeNull();
     expect(screen.getByText(`${galleryItems.length} of ${galleryItems.length} shown`)).toBeInTheDocument();

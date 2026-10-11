@@ -14,9 +14,17 @@ export interface AuthHeaderProps {
 export function AuthHeader({ eyebrow, title, description, headingLevel: Heading = 'h1', className }: AuthHeaderProps) {
   return (
     <div className={cn('mb-6', className)}>
-      {eyebrow != null && <p className="mb-2.5 font-mono text-[11px] tracking-[0.2em] text-primary-text uppercase">{eyebrow}</p>}
-      {Heading != null && title != null && <Heading className="text-[24px] font-semibold tracking-tight text-balance text-foreground sm:text-[27px]">{title}</Heading>}
-      {description != null && <p className="mt-2 text-[14px] leading-relaxed text-pretty text-muted-foreground">{description}</p>}
+      {eyebrow != null && (
+        <p className="mb-2.5 font-mono text-[11px] tracking-[0.2em] text-primary-text uppercase">{eyebrow}</p>
+      )}
+      {Heading != null && title != null && (
+        <Heading className="text-[24px] font-semibold tracking-tight text-balance text-foreground sm:text-[27px]">
+          {title}
+        </Heading>
+      )}
+      {description != null && (
+        <p className="mt-2 text-[14px] leading-relaxed text-pretty text-muted-foreground">{description}</p>
+      )}
     </div>
   );
 }
@@ -26,7 +34,9 @@ export function AuthDivider({ children }: { children: ReactNode }) {
   return (
     <div className="my-6 flex items-center gap-3" role="presentation">
       <span className="h-px flex-1 bg-border" />
-      <span className="font-mono text-[10.5px] font-semibold tracking-[0.2em] text-muted-foreground uppercase">{children}</span>
+      <span className="font-mono text-[10.5px] font-semibold tracking-[0.2em] text-muted-foreground uppercase">
+        {children}
+      </span>
       <span className="h-px flex-1 bg-border" />
     </div>
   );
@@ -92,8 +102,12 @@ export function authIdentifierError(value: string, config?: AuthIdentifierConfig
   const trimmed = value.trim();
   const fallback = config?.type === 'text' ? 'Enter a valid identifier.' : 'Enter a valid email address.';
   if (!trimmed) return messages?.identifierRequired ?? fallback;
-  if (config?.minLength !== undefined && trimmed.length < config.minLength) return messages?.identifierTooShort ?? messages?.identifierInvalid ?? fallback;
-  if (((config?.type ?? 'email') === 'email' && !EMAIL_RE.test(trimmed)) || (config?.maxLength !== undefined && trimmed.length > config.maxLength))
+  if (config?.minLength !== undefined && trimmed.length < config.minLength)
+    return messages?.identifierTooShort ?? messages?.identifierInvalid ?? fallback;
+  if (
+    ((config?.type ?? 'email') === 'email' && !EMAIL_RE.test(trimmed)) ||
+    (config?.maxLength !== undefined && trimmed.length > config.maxLength)
+  )
     return messages?.identifierInvalid ?? fallback;
   return null;
 }

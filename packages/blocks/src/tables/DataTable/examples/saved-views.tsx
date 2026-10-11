@@ -9,9 +9,17 @@ interface Filters {
 }
 
 const VIEWS: DataTableView[] = [
-  { id: 'expensive', name: 'Most expensive', state: { sort: { columnId: 'cost', direction: 'descending' }, hiddenColumns: ['region', 'updated'] } },
+  {
+    id: 'expensive',
+    name: 'Most expensive',
+    state: { sort: { columnId: 'cost', direction: 'descending' }, hiddenColumns: ['region', 'updated'] },
+  },
   { id: 'by-region', name: 'By region', state: { groupBy: 'region', pinnedColumns: { left: ['name'] } } },
-  { id: 'failing', name: 'Needs attention', state: { filters: { status: 'failed' }, sort: { columnId: 'updated', direction: 'descending' }, hiddenColumns: [] } },
+  {
+    id: 'failing',
+    name: 'Needs attention',
+    state: { filters: { status: 'failed' }, sort: { columnId: 'updated', direction: 'descending' }, hiddenColumns: [] },
+  },
 ];
 
 const STATUS_FILTER = [

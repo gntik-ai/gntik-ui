@@ -27,7 +27,15 @@ export interface ConfirmDestructiveDialogProps {
 }
 
 /** Destructive confirmation (alertdialog) that can require typing the resource name first. */
-export function ConfirmDestructiveDialog({ open, onOpenChange, title, description, confirmText, confirmLabel, onConfirm }: ConfirmDestructiveDialogProps) {
+export function ConfirmDestructiveDialog({
+  open,
+  onOpenChange,
+  title,
+  description,
+  confirmText,
+  confirmLabel,
+  onConfirm,
+}: ConfirmDestructiveDialogProps) {
   const [typed, setTyped] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

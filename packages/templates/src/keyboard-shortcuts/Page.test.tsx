@@ -9,7 +9,8 @@ describe('KeyboardShortcutsPage', () => {
     render(<KeyboardShortcutsPage />);
     expect(screen.getByRole('main')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 1, name: 'Keyboard shortcuts' })).toBeInTheDocument();
-    for (const g of shortcutGroups) expect(screen.getByRole('heading', { level: 2, name: g.title })).toBeInTheDocument();
+    for (const g of shortcutGroups)
+      expect(screen.getByRole('heading', { level: 2, name: g.title })).toBeInTheDocument();
     await expectNoAxeViolations();
   });
 

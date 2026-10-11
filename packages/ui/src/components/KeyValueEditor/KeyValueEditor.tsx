@@ -64,7 +64,9 @@ export interface KeyValueEditorProps extends ValidateKeyValueOptions {
  */
 export function KeyValueEditor(props: KeyValueEditorProps) {
   // Without an announcer above, provide one so this field and its CopyButton share one status region.
-  return useHasLiveAnnouncer() ? <KeyValueEditorInner {...props} /> : (
+  return useHasLiveAnnouncer() ? (
+    <KeyValueEditorInner {...props} />
+  ) : (
     <LiveAnnouncer>
       <KeyValueEditorInner {...props} />
     </LiveAnnouncer>
@@ -107,13 +109,17 @@ function KeyValueEditorInner({
   const editable = !readOnly && !disabled;
   const atMax = rows.length >= maxRows;
 
-  const errors = useMemo(() => validateKeyValueRows(rows, { keyPattern, requireValue, caseInsensitive }), [rows, keyPattern, requireValue, caseInsensitive]);
+  const errors = useMemo(
+    () => validateKeyValueRows(rows, { keyPattern, requireValue, caseInsensitive }),
+    [rows, keyPattern, requireValue, caseInsensitive],
+  );
   const custom = useMemo(() => {
     const out: Record<string, string> = {};
-    if (validate) for (const row of rows) {
-      const message = validate(row, rows);
-      if (message) out[row.id] = message;
-    }
+    if (validate)
+      for (const row of rows) {
+        const message = validate(row, rows);
+        if (message) out[row.id] = message;
+      }
     return out;
   }, [rows, validate]);
   const valid = Object.keys(errors).length === 0 && Object.keys(custom).length === 0;
@@ -141,12 +147,12 @@ function KeyValueEditorInner({
     focusTarget.current = target;
   };
 
-
   const commit = (next: KeyValueRow[]) => {
     if (value === undefined) setInner(next);
     onChange?.(next);
   };
-  const update = (id: string, patch: Partial<KeyValueRow>) => commit(rows.map((row) => (row.id === id ? { ...row, ...patch } : row)));
+  const update = (id: string, patch: Partial<KeyValueRow>) =>
+    commit(rows.map((row) => (row.id === id ? { ...row, ...patch } : row)));
 
   const add = () => {
     if (atMax) return;
@@ -268,7 +274,14 @@ function KeyValueEditorInner({
                         onClick={() => update(row.id, { secret: !row.secret })}
                       />
                     )}
-                    {editable && <IconButton size="sm" icon={Trash2} label={t('kv.removeRow', { row: n })} onClick={() => remove(index)} />}
+                    {editable && (
+                      <IconButton
+                        size="sm"
+                        icon={Trash2}
+                        label={t('kv.removeRow', { row: n })}
+                        onClick={() => remove(index)}
+                      />
+                    )}
                   </div>
                 </li>
               );
@@ -324,13 +337,27 @@ function KeyValueEditorInner({
             </Button>
           )}
           {editable && allowPaste && (
-            <Button ref={pasteRef} variant="ghost" size="sm" icon={ClipboardPaste} aria-expanded={pasteOpen} onClick={() => setPasteOpen((o) => !o)}>
+            <Button
+              ref={pasteRef}
+              variant="ghost"
+              size="sm"
+              icon={ClipboardPaste}
+              aria-expanded={pasteOpen}
+              onClick={() => setPasteOpen((o) => !o)}
+            >
               {t('kv.paste')}
             </Button>
           )}
           {allowExport && (
             <span className={s.footerEnd()}>
-              <CopyButton display="label" size="sm" variant="ghost" label={t('kv.copyEnv')} value={() => serializeEnv(rows)} disabled={!rows.some((r) => r.key.trim())} />
+              <CopyButton
+                display="label"
+                size="sm"
+                variant="ghost"
+                label={t('kv.copyEnv')}
+                value={() => serializeEnv(rows)}
+                disabled={!rows.some((r) => r.key.trim())}
+              />
             </span>
           )}
         </div>

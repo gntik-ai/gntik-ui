@@ -16,7 +16,12 @@ export default function SuggestionChipsZeroState() {
           { label: 'Explain an error', description: 'Paste a log line and get a likely cause', icon: FileSearch },
         ]}
       />
-      <SuggestionChips layout="chips" label="Follow-up suggestions" onSelect={setPicked} suggestions={['Show only failed ones', 'Compare with last week', 'Export as CSV']} />
+      <SuggestionChips
+        layout="chips"
+        label="Follow-up suggestions"
+        onSelect={setPicked}
+        suggestions={['Show only failed ones', 'Compare with last week', 'Export as CSV']}
+      />
       <p className="text-[12.5px] text-muted-foreground" aria-live="polite">
         {picked ? `Selected: ${picked}` : 'Pick a suggestion.'}
       </p>

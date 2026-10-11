@@ -5,7 +5,8 @@ export const meta: TemplateMeta = {
   family: 'Auth',
   priority: 'P1',
   status: 'stable',
-  description: 'Centred card new-password step: password with a strength meter and confirmation, then a success state that continues to sign in.',
+  description:
+    'Centred card new-password step: password with a strength meter and confirmation, then a success state that continues to sign in.',
   layout: 'AuthLayout',
   blocks: ['reset-password-form'],
 };

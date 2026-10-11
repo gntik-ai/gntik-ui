@@ -1,5 +1,16 @@
 import { ModelKeysList, PageHeader } from '@gntik-ai/blocks';
-import { Bell, Building2, CreditCard, KeyRound, Palette, Plug, ShieldCheck, Sparkles, User, Users } from '@gntik-ai/icons';
+import {
+  Bell,
+  Building2,
+  CreditCard,
+  KeyRound,
+  Palette,
+  Plug,
+  ShieldCheck,
+  Sparkles,
+  User,
+  Users,
+} from '@gntik-ai/icons';
 import {
   ConsoleShell,
   SettingsApiKeysPage,
@@ -49,12 +60,42 @@ const PAGES: Record<string, () => ReactNode> = {
   notifications: () => <SettingsNotificationsPage {...frame} events={notificationEvents} value={notificationValue} />,
   appearance: () => <SettingsAppearancePage {...frame} />,
   workspace: () => (
-    <SettingsWorkspacePage {...frame} values={workspaceValues} regions={workspaceRegions} urlPrefix="app.musematic.ai/" onDangerAction={(id) => (id === 'delete' ? navigate('/sign-in') : undefined)} />
+    <SettingsWorkspacePage
+      {...frame}
+      values={workspaceValues}
+      regions={workspaceRegions}
+      urlPrefix="app.musematic.ai/"
+      onDangerAction={(id) => (id === 'delete' ? navigate('/sign-in') : undefined)}
+    />
   ),
-  members: () => <SettingsMembersPage {...frame} members={members} invitations={invitations} permissions={rolePermissions} currentUserId={currentUserId} />,
-  billing: () => <SettingsBillingPage {...frame} plan={plan} quotas={quotas} paymentMethod={paymentMethod} invoices={invoices} currency="USD" />,
+  members: () => (
+    <SettingsMembersPage
+      {...frame}
+      members={members}
+      invitations={invitations}
+      permissions={rolePermissions}
+      currentUserId={currentUserId}
+    />
+  ),
+  billing: () => (
+    <SettingsBillingPage
+      {...frame}
+      plan={plan}
+      quotas={quotas}
+      paymentMethod={paymentMethod}
+      invoices={invoices}
+      currency="USD"
+    />
+  ),
   'api-keys': () => <SettingsApiKeysPage {...frame} keys={apiKeys} scopes={apiScopes} />,
-  integrations: () => <SettingsIntegrationsPage {...frame} connectors={connectors} endpoints={webhookEndpoints} deliveries={webhookDeliveries} />,
+  integrations: () => (
+    <SettingsIntegrationsPage
+      {...frame}
+      connectors={connectors}
+      endpoints={webhookEndpoints}
+      deliveries={webhookDeliveries}
+    />
+  ),
   'model-keys': () => <ModelKeysSettings />,
 };
 
@@ -85,7 +126,10 @@ const settingsGroups: NavGroup[] = [
 /** Model keys: ConsoleShell + SettingsLayout (embedded) + PageHeader + ModelKeysList. */
 function ModelKeysSettings() {
   return (
-    <ConsoleShell {...shellFor('/settings/model-keys')} breadcrumbs={[{ label: 'Settings', href: BASE }, { label: 'Model keys' }]}>
+    <ConsoleShell
+      {...shellFor('/settings/model-keys')}
+      breadcrumbs={[{ label: 'Settings', href: BASE }, { label: 'Model keys' }]}
+    >
       <SettingsLayout
         embedded
         groups={settingsGroups}

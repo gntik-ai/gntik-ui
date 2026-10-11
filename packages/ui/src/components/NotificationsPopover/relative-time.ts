@@ -19,5 +19,9 @@ export function formatRelativeShort(value: TimeInput, now: Date = new Date()): s
   if (abs < 3600) return suffix(Math.max(1, Math.round(abs / 60)), 'm');
   if (abs < 86400) return suffix(Math.round(abs / 3600), 'h');
   if (abs < 7 * 86400) return suffix(Math.round(abs / 86400), 'd');
-  return date.toLocaleDateString('en', { month: 'short', day: 'numeric', ...(date.getFullYear() === now.getFullYear() ? {} : { year: 'numeric' }) });
+  return date.toLocaleDateString('en', {
+    month: 'short',
+    day: 'numeric',
+    ...(date.getFullYear() === now.getFullYear() ? {} : { year: 'numeric' }),
+  });
 }

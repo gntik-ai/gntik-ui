@@ -55,7 +55,12 @@ export function ComboboxInput({
       )}
       <BaseCombobox.InputGroup className={cn(v.inputGroup(), className)}>
         <Search size={15} aria-hidden className={v.searchIcon()} />
-        <BaseCombobox.Input id={inputId} aria-labelledby={label ? `${inputId}-label` : undefined} className={v.input()} {...props} />
+        <BaseCombobox.Input
+          id={inputId}
+          aria-labelledby={label ? `${inputId}-label` : undefined}
+          className={v.input()}
+          {...props}
+        />
         {showClear && (
           <BaseCombobox.Clear aria-label={clearLabel} className={v.iconButton()}>
             <X size={14} aria-hidden />
@@ -161,7 +166,12 @@ export function ComboboxContent({
   const enh = useComboboxEnhancement();
   let list = children;
   if (enh && typeof children === 'function') {
-    list = (item: unknown, index: number) => (isSpecialItem(item) ? <ComboboxSpecialItem key={`${item.__gntikSpecial}:${item.value}`} item={item} /> : children(item, index));
+    list = (item: unknown, index: number) =>
+      isSpecialItem(item) ? (
+        <ComboboxSpecialItem key={`${item.__gntikSpecial}:${item.value}`} item={item} />
+      ) : (
+        children(item, index)
+      );
   } else if (enh) {
     list = (
       <>
@@ -173,7 +183,8 @@ export function ComboboxContent({
     );
   }
   const busy = !!enh && (enh.loading || !!enh.error);
-  const errorText = typeof enh?.errorText === 'function' ? enh.errorText(enh.error) : (enh?.errorText ?? t('combobox.loadFailed'));
+  const errorText =
+    typeof enh?.errorText === 'function' ? enh.errorText(enh.error) : (enh?.errorText ?? t('combobox.loadFailed'));
   return (
     <BaseCombobox.Portal container={container}>
       <BaseCombobox.Positioner dir={dir} className={s.positioner()} side={side} align={align} sideOffset={sideOffset}>
@@ -201,7 +212,13 @@ export function ComboboxContent({
 }
 
 /** The built-in "Create “…”" and "Retry" rows (internal; MultiSelect reuses it). */
-export function ComboboxSpecialItem({ item, createLabel }: { item: SpecialItem; createLabel?: (input: string) => ReactNode }) {
+export function ComboboxSpecialItem({
+  item,
+  createLabel,
+}: {
+  item: SpecialItem;
+  createLabel?: (input: string) => ReactNode;
+}) {
   const { t } = useI18n();
   const enh = useComboboxEnhancement();
   const label = createLabel ?? enh?.createLabel;
@@ -209,7 +226,11 @@ export function ComboboxSpecialItem({ item, createLabel }: { item: SpecialItem; 
   return (
     <BaseCombobox.Item value={item} className={cn(s.item(), s.specialItem())}>
       <span className={s.itemContent()}>
-        {create ? <Plus size={14} aria-hidden className={s.specialIcon()} /> : <RotateCw size={14} aria-hidden className={s.specialIcon()} />}
+        {create ? (
+          <Plus size={14} aria-hidden className={s.specialIcon()} />
+        ) : (
+          <RotateCw size={14} aria-hidden className={s.specialIcon()} />
+        )}
         <span className="truncate">
           {create ? (label?.(item.value) ?? t('combobox.create', { label: item.value })) : t('common.retry')}
         </span>

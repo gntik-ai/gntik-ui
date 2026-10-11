@@ -10,11 +10,23 @@ function setup() {
   const onDraft = vi.fn();
   const onClose = vi.fn();
   render(
-    <SplitButton onClick={onClick} actions={[{ label: 'Save as draft', onSelect: onDraft }, { label: 'Save and close', onSelect: onClose }]}>
+    <SplitButton
+      onClick={onClick}
+      actions={[
+        { label: 'Save as draft', onSelect: onDraft },
+        { label: 'Save and close', onSelect: onClose },
+      ]}
+    >
       Save
     </SplitButton>,
   );
-  return { onClick, onDraft, onClose, action: screen.getByRole('button', { name: 'Save' }), trigger: screen.getByRole('button', { name: 'More options' }) };
+  return {
+    onClick,
+    onDraft,
+    onClose,
+    action: screen.getByRole('button', { name: 'Save' }),
+    trigger: screen.getByRole('button', { name: 'More options' }),
+  };
 }
 
 describe('SplitButton', () => {
@@ -38,15 +50,18 @@ describe('SplitButton', () => {
     expect(trigger).toHaveFocus();
   });
 
-  it.each([['{Enter}'], [' '], ['{ArrowDown}']])('%s on the menu button opens the menu on the first item', async (key) => {
-    const user = userEvent.setup();
-    const { trigger } = setup();
-    trigger.focus();
-    await user.keyboard(key);
-    const menu = await screen.findByRole('menu');
-    expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    await waitFor(() => expect(within(menu).getByRole('menuitem', { name: 'Save as draft' })).toHaveFocus());
-  });
+  it.each([['{Enter}'], [' '], ['{ArrowDown}']])(
+    '%s on the menu button opens the menu on the first item',
+    async (key) => {
+      const user = userEvent.setup();
+      const { trigger } = setup();
+      trigger.focus();
+      await user.keyboard(key);
+      const menu = await screen.findByRole('menu');
+      expect(trigger).toHaveAttribute('aria-expanded', 'true');
+      await waitFor(() => expect(within(menu).getByRole('menuitem', { name: 'Save as draft' })).toHaveFocus());
+    },
+  );
 
   it('arrows move between items; Enter runs one and closes the menu', async () => {
     const user = userEvent.setup();

@@ -16,11 +16,15 @@ export default function ToolbarTable() {
             onChange={(e) => setQuery(e.target.value)}
             wrapperClassName="max-w-[260px]"
           />
-          <ToolbarButton variant="secondary" icon={Filter}>Filters</ToolbarButton>
+          <ToolbarButton variant="secondary" icon={Filter}>
+            Filters
+          </ToolbarButton>
         </ToolbarStart>
         <ToolbarEnd>
           <ToolbarButton icon={Download} aria-label="Export CSV" />
-          <ToolbarButton variant="primary" icon={Plus}>New deployment</ToolbarButton>
+          <ToolbarButton variant="primary" icon={Plus}>
+            New deployment
+          </ToolbarButton>
         </ToolbarEnd>
       </Toolbar>
       <p className="px-4 py-6 text-[13px] text-muted-foreground">

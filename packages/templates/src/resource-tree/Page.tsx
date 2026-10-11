@@ -52,7 +52,10 @@ const STATUSES: Record<string, StatusDefinition> = {
   stopped: { label: 'Stopped', tone: 'neutral' },
 };
 
-const GROUP_ITEMS = (Object.keys(groupByLabels) as ResourceGroupBy[]).map((value) => ({ value, label: groupByLabels[value] }));
+const GROUP_ITEMS = (Object.keys(groupByLabels) as ResourceGroupBy[]).map((value) => ({
+  value,
+  label: groupByLabels[value],
+}));
 
 function columns(onOpen?: (r: TreeResource) => void): DataTableColumn<TreeResource>[] {
   return [
@@ -67,7 +70,11 @@ function columns(onOpen?: (r: TreeResource) => void): DataTableColumn<TreeResour
           <span className="inline-flex items-center gap-2">
             <Icon size={14} aria-hidden className="shrink-0 text-muted-foreground" />
             {onOpen ? (
-              <button type="button" onClick={() => onOpen(r)} className="font-medium text-foreground underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring">
+              <button
+                type="button"
+                onClick={() => onOpen(r)}
+                className="font-medium text-foreground underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+              >
                 {r.name}
               </button>
             ) : (
@@ -79,7 +86,12 @@ function columns(onOpen?: (r: TreeResource) => void): DataTableColumn<TreeResour
     },
     { id: 'project', header: 'Project', accessor: (r) => r.project, sortable: true, variant: 'muted' },
     { id: 'region', header: 'Region', accessor: (r) => r.region, variant: 'mono' },
-    { id: 'status', header: 'Status', accessor: (r) => r.status, cell: (r) => <StatusTag status={r.status} statuses={STATUSES} /> },
+    {
+      id: 'status',
+      header: 'Status',
+      accessor: (r) => r.status,
+      cell: (r) => <StatusTag status={r.status} statuses={STATUSES} />,
+    },
     {
       id: 'tags',
       header: 'Tags',
@@ -97,7 +109,13 @@ function columns(onOpen?: (r: TreeResource) => void): DataTableColumn<TreeResour
         />
       ),
     },
-    { id: 'updated', header: 'Updated', accessor: (r) => r.updatedAt, sortable: true, cell: (r) => <Timestamp value={r.updatedAt} className="text-muted-foreground" /> },
+    {
+      id: 'updated',
+      header: 'Updated',
+      accessor: (r) => r.updatedAt,
+      sortable: true,
+      cell: (r) => <Timestamp value={r.updatedAt} className="text-muted-foreground" />,
+    },
   ];
 }
 
@@ -144,7 +162,13 @@ export default function ResourceTreePage(props: Partial<ResourceTreeProps>) {
               <CardTitle as="h2">Teams</CardTitle>
             </CardHeader>
             <CardBody className="p-2">
-              <Button variant="ghost" size="sm" className="mb-1 w-full justify-start" aria-pressed={nodeId === null} onClick={() => setNodeId(null)}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="mb-1 w-full justify-start"
+                aria-pressed={nodeId === null}
+                onClick={() => setNodeId(null)}
+              >
                 All resources
               </Button>
               <TreeList
@@ -177,7 +201,12 @@ export default function ResourceTreePage(props: Partial<ResourceTreeProps>) {
               </HStack>
             </HStack>
             {groups.length === 0 ? (
-              <EmptyState size="sm" titleAs="h2" title="No resources here" description="Pick another team or project." />
+              <EmptyState
+                size="sm"
+                titleAs="h2"
+                title="No resources here"
+                description="Pick another team or project."
+              />
             ) : (
               groups.map((g) => (
                 <section key={g.key} aria-labelledby={`${ids}-${g.key}`}>

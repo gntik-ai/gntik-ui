@@ -1,4 +1,14 @@
-import { useEffect, useEffectEvent, useId, useState, type HTMLAttributes, type MouseEvent, type ReactNode, type Ref, type RefObject } from 'react';
+import {
+  useEffect,
+  useEffectEvent,
+  useId,
+  useState,
+  type HTMLAttributes,
+  type MouseEvent,
+  type ReactNode,
+  type Ref,
+  type RefObject,
+} from 'react';
 import { cn } from '../../utils/cn';
 import { useI18n } from '../../i18n/I18nProvider';
 import { outlineVariants } from './docs-layout.variants';
@@ -91,7 +101,8 @@ export function Outline({
     event.preventDefault();
     if (!target.matches(NATIVELY_FOCUSABLE)) target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });
-    const reduce = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduce =
+      typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     target.scrollIntoView?.({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
     setInner(id);
     onActiveChange?.(id);

@@ -20,12 +20,14 @@ export const bottomSheetVariants = tv({
       'group grid h-6 w-16 cursor-grab place-items-center rounded-full active:cursor-grabbing',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
-    handleBar: 'h-1 w-10 rounded-full bg-border transition-colors group-hover:bg-muted-foreground/60 motion-reduce:transition-none',
+    handleBar:
+      'h-1 w-10 rounded-full bg-border transition-colors group-hover:bg-muted-foreground/60 motion-reduce:transition-none',
     header: 'flex shrink-0 flex-col gap-0.5 border-b border-border px-5 pt-1 pb-3 pe-14',
     title: 'text-[15px] font-semibold tracking-tight text-foreground',
     description: 'text-[12px] text-muted-foreground text-pretty',
     content: 'min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-4 touch-auto',
-    footer: 'flex shrink-0 items-center justify-end gap-2.5 border-t border-border px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]',
+    footer:
+      'flex shrink-0 items-center justify-end gap-2.5 border-t border-border px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]',
     close: [
       'absolute end-3 top-3 grid size-8 place-items-center rounded-lg text-muted-foreground transition-colors',
       'hover:bg-secondary/60 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',

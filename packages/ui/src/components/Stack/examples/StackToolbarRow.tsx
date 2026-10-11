@@ -11,7 +11,9 @@ export default function StackToolbarRow() {
           <span className="text-[13px] text-muted-foreground">12 running across 3 regions.</span>
         </VStack>
         <HStack gap={2}>
-          <Button variant="secondary" size="sm">Export</Button>
+          <Button variant="secondary" size="sm">
+            Export
+          </Button>
           <Button size="sm">New deployment</Button>
         </HStack>
       </HStack>

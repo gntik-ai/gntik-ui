@@ -39,7 +39,12 @@ describe('Grid', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><GridResponsive /><GridAutoFill /></>);
+    render(
+      <>
+        <GridResponsive />
+        <GridAutoFill />
+      </>,
+    );
     expect(screen.getByRole('list', { name: 'Projects' })).toHaveClass('grid');
     await expectNoAxeViolations();
   });

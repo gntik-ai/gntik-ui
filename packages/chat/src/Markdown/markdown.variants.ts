@@ -5,7 +5,7 @@ import { focusRing } from '../utils/focus';
  * last child), so it follows paragraphs, list items and code without extra DOM.
  */
 export const streamingCaretClass = [
-  "[&>:last-child]:after:ms-0.5 [&>:last-child]:after:inline-block [&>:last-child]:after:h-[1.05em] [&>:last-child]:after:w-[2px]",
+  '[&>:last-child]:after:ms-0.5 [&>:last-child]:after:inline-block [&>:last-child]:after:h-[1.05em] [&>:last-child]:after:w-[2px]',
   "[&>:last-child]:after:translate-y-[2px] [&>:last-child]:after:bg-primary [&>:last-child]:after:content-['']",
   '[&>:last-child]:after:animate-pulse motion-reduce:[&>:last-child]:after:animate-none',
 ].join(' ');

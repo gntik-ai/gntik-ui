@@ -16,7 +16,10 @@ export interface ShortcutGroup {
   shortcuts: Shortcut[];
 }
 
-export const shortcutBreadcrumbs: BreadcrumbItem[] = [{ label: 'Help', href: '/help' }, { label: 'Keyboard shortcuts' }];
+export const shortcutBreadcrumbs: BreadcrumbItem[] = [
+  { label: 'Help', href: '/help' },
+  { label: 'Keyboard shortcuts' },
+];
 
 /** Neutral console shortcuts, grouped by area. */
 export const shortcutGroups: ShortcutGroup[] = [

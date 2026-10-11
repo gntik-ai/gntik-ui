@@ -11,5 +11,15 @@ export const doc: ComponentDoc = {
     ['Tab / Shift+Tab', 'Moves through every enabled control (previous, each page, next)'],
     ['Enter / Space', 'Activates the focused control and changes page'],
   ],
-  tokens: ['primary', 'primary-foreground', 'card', 'border', 'ring', 'secondary', 'muted-foreground', 'foreground', 'focus-ring'],
+  tokens: [
+    'primary',
+    'primary-foreground',
+    'card',
+    'border',
+    'ring',
+    'secondary',
+    'muted-foreground',
+    'foreground',
+    'focus-ring',
+  ],
 };

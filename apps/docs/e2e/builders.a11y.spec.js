@@ -9,7 +9,9 @@ const CSP =
 
 test('consumer YAML diagnostics come back from the yaml Worker under production CSP', async ({ page, context }) => {
   const manifest = JSON.parse(readFileSync(new URL('../dist/.vite/manifest.json', import.meta.url), 'utf8'));
-  const monaco = Object.values(manifest).find((entry) => entry.src?.includes('monaco-editor') && entry.src.endsWith('/esm/vs/index.js'));
+  const monaco = Object.values(manifest).find(
+    (entry) => entry.src?.includes('monaco-editor') && entry.src.endsWith('/esm/vs/index.js'),
+  );
   const yamlLoader = manifest['src/examples/yaml-loader.js'];
   expect(monaco).toBeDefined();
   expect(yamlLoader).toBeDefined();

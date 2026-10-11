@@ -118,7 +118,9 @@ describe('Heatmap', () => {
   });
 
   it('sizes its state placeholders to the fixed height', () => {
-    const { container } = render(<Heatmap aria-label="X" height={180} state="loading" data={cohorts} index="cohort" categories={['w1']} />);
+    const { container } = render(
+      <Heatmap aria-label="X" height={180} state="loading" data={cohorts} index="cohort" categories={['w1']} />,
+    );
     expect((container.querySelector('[data-chart-state="loading"]') as HTMLElement).style.height).toBe('180px');
   });
 
@@ -162,7 +164,14 @@ describe('Heatmap', () => {
   it('supports a diverging scale around zero', () => {
     const deltas = [{ team: 'A', q1: -20, q2: 0, q3: 30 }];
     const { container } = render(
-      <Heatmap aria-label="Deltas" scale="diverging" steps={5} data={deltas} index="team" categories={['q1', 'q2', 'q3']} />,
+      <Heatmap
+        aria-label="Deltas"
+        scale="diverging"
+        steps={5}
+        data={deltas}
+        index="team"
+        categories={['q1', 'q2', 'q3']}
+      />,
     );
     expect(container.querySelector('[data-cell="0-0"]')).toHaveAttribute('data-fill', 'hsl(var(--destructive))');
     expect(container.querySelector('[data-cell="0-1"]')).toHaveAttribute('data-fill', 'hsl(var(--muted))');

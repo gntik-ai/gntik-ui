@@ -78,7 +78,8 @@ export default function Status403Page(props: Partial<Status403Props>) {
       footer={
         signedInAs ? (
           <span>
-            Signed in as <span className="font-mono">{signedInAs}</span> · <Link href={switchAccountHref}>{forbiddenContent.switchAccountLabel}</Link>
+            Signed in as <span className="font-mono">{signedInAs}</span> ·{' '}
+            <Link href={switchAccountHref}>{forbiddenContent.switchAccountLabel}</Link>
           </span>
         ) : undefined
       }

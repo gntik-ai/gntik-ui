@@ -1,9 +1,32 @@
 import { SettingsRow } from '@gntik-ai/blocks';
 import { Plus } from '@gntik-ai/icons';
-import { Badge, Card, Grid, Section, SimpleSelect, StatusTag, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, Timestamp, type StatusDefinition } from '@gntik-ai/ui';
+import {
+  Badge,
+  Card,
+  Grid,
+  Section,
+  SimpleSelect,
+  StatusTag,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Timestamp,
+  type StatusDefinition,
+} from '@gntik-ai/ui';
 import { useState } from 'react';
 import { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';
-import { connectors as defaultConnectors, webhookDeliveries, webhookEndpoints, type Connector, type WebhookDelivery, type WebhookEndpoint } from './data';
+import {
+  connectors as defaultConnectors,
+  webhookDeliveries,
+  webhookEndpoints,
+  type Connector,
+  type WebhookDelivery,
+  type WebhookEndpoint,
+} from './data';
 
 export interface SettingsIntegrationsProps extends SettingsFrameOptions {
   connectors: Connector[];
@@ -19,7 +42,8 @@ const ENDPOINT_STATUSES: Record<string, StatusDefinition> = {
   failing: { label: 'Failing', tone: 'destructive' },
 };
 
-const deliveryTone = (code: number | null) => (code == null || code >= 500 ? 'destructive' : code >= 400 ? 'warning' : 'success');
+const deliveryTone = (code: number | null) =>
+  code == null || code >= 500 ? 'destructive' : code >= 400 ? 'warning' : 'success';
 
 /** Integrations settings: connector cards (SettingsRow switches), webhook endpoints Table, delivery log Table. */
 export default function SettingsIntegrationsPage({
@@ -30,7 +54,9 @@ export default function SettingsIntegrationsPage({
   onAddEndpoint,
   ...frame
 }: Partial<SettingsIntegrationsProps>) {
-  const [enabled, setEnabled] = useState<Record<string, boolean>>(() => Object.fromEntries(connectors.map((c) => [c.id, c.enabled])));
+  const [enabled, setEnabled] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(connectors.map((c) => [c.id, c.enabled])),
+  );
   const [endpointFilter, setEndpointFilter] = useState('all');
   const shown = endpointFilter === 'all' ? deliveries : deliveries.filter((d) => d.endpointId === endpointFilter);
   const urlOf = (id: string) => endpoints.find((e) => e.id === id)?.url ?? id;
@@ -113,7 +139,10 @@ export default function SettingsIntegrationsPage({
           <SimpleSelect
             aria-label="Filter deliveries by endpoint"
             size="sm"
-            items={[{ value: 'all', label: 'All endpoints' }, ...endpoints.map((e) => ({ value: e.id, label: e.url.replace('https://', '') }))]}
+            items={[
+              { value: 'all', label: 'All endpoints' },
+              ...endpoints.map((e) => ({ value: e.id, label: e.url.replace('https://', '') })),
+            ]}
             value={endpointFilter}
             onValueChange={(v) => setEndpointFilter(v ?? 'all')}
           />

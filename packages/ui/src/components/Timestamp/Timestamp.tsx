@@ -5,7 +5,8 @@ import { SimpleTooltip } from '../Tooltip';
 import { formatRelative, refreshInterval, toDate, type DateInput } from './format';
 import { timestampVariants, type TimestampVariantProps } from './timestamp.variants';
 
-export interface TimestampProps extends Omit<HTMLAttributes<HTMLTimeElement>, 'className' | 'children'>, Omit<TimestampVariantProps, 'interactive'> {
+export interface TimestampProps
+  extends Omit<HTMLAttributes<HTMLTimeElement>, 'className' | 'children'>, Omit<TimestampVariantProps, 'interactive'> {
   className?: string;
   ref?: Ref<HTMLTimeElement>;
   /** The moment to show: a Date, an ISO string or epoch milliseconds. */
@@ -85,7 +86,10 @@ export function Timestamp({
     return <span className={cn(timestampVariants({ tone }), className)}>{fallback}</span>;
   }
 
-  const label = format === 'relative' ? formatRelative(date, now, locale, relativeStyle) : new Intl.DateTimeFormat(locale, dateOptions).format(date);
+  const label =
+    format === 'relative'
+      ? formatRelative(date, now, locale, relativeStyle)
+      : new Intl.DateTimeFormat(locale, dateOptions).format(date);
   const full = new Intl.DateTimeFormat(locale, tooltipOptions).format(date);
   const showTooltip = tooltip && full !== label;
   const element = (
@@ -100,7 +104,8 @@ export function Timestamp({
       {label}
       {showTooltip && (
         <span suppressHydrationWarning className="sr-only">
-          {' '}({full})
+          {' '}
+          ({full})
         </span>
       )}
     </time>

@@ -137,7 +137,8 @@ export const es: Messages = {
   'stepper.error': 'error',
   'sparkline.noData': '{label}: sin datos',
   'sparkline.single': '{label}: {value}',
-  'sparkline.summary': '{label}: {direction}{change} de {first} a {last} en {count} puntos (mínimo {min}, máximo {max})',
+  'sparkline.summary':
+    '{label}: {direction}{change} de {first} a {last} en {count} puntos (mínimo {min}, máximo {max})',
   'sparkline.up': 'al alza',
   'sparkline.down': 'a la baja',
   'sparkline.flat': 'estable',
@@ -265,7 +266,8 @@ export const es: Messages = {
   'common.collapseItem': 'Contraer {label}',
   'kanban.label': 'Tablero',
   'kanban.roleDescription': 'tarjeta arrastrable',
-  'kanban.instructions': 'Pulsa Espacio para tomar la tarjeta. Usa las flechas para moverla, Espacio o Intro para soltarla y Escape para cancelar.',
+  'kanban.instructions':
+    'Pulsa Espacio para tomar la tarjeta. Usa las flechas para moverla, Espacio o Intro para soltarla y Escape para cancelar.',
   'kanban.pickedUp': 'Has tomado {card}. Posición {position} de {total} en {column}.',
   'kanban.moved': '{card} movida a la posición {position} de {total} en {column}.',
   'kanban.dropped': '{card} soltada en la posición {position} de {total} en {column}.',
@@ -359,7 +361,8 @@ export const es: Messages = {
   'credentialDisclosure.failure': 'No se pudo copiar. Selecciona y copia el valor manualmente.',
   'credentialDisclosure.close': 'Cerrar',
   'credentialDisclosure.warningTitle': 'Guarda este nuevo secreto',
-  'credentialDisclosure.warningText': 'Este valor reemplaza el secreto anterior. Cópialo ahora; se muestra una sola vez.',
+  'credentialDisclosure.warningText':
+    'Este valor reemplaza el secreto anterior. Cópialo ahora; se muestra una sola vez.',
   // Batch A: CopyButton, SplitButton, SecretField, KeyValueEditor, DiffViewer
   'splitButton.more': 'Más opciones',
   'secret.show': 'Mostrar secreto',
@@ -369,7 +372,8 @@ export const es: Messages = {
   'secret.hidden': 'Valor oculto',
   'secret.rotate': 'Rotar',
   'secret.rotateTitle': '¿Rotar este secreto?',
-  'secret.rotateDescription': 'Se genera un valor nuevo y el actual deja de funcionar. Lo que aún lo use fallará hasta que se actualice.',
+  'secret.rotateDescription':
+    'Se genera un valor nuevo y el actual deja de funcionar. Lo que aún lo use fallará hasta que se actualice.',
   'secret.rotateConfirm': 'Rotar secreto',
   'secret.rotated': 'Secreto rotado',
   'secret.rotateFailed': 'No se pudo rotar',
@@ -387,7 +391,8 @@ export const es: Messages = {
   'kv.empty': 'Aún no hay variables.',
   'kv.paste': 'Pegar .env',
   'kv.pasteLabel': 'Contenido .env',
-  'kv.pasteHint': 'Una CLAVE=valor por línea. Las líneas que empiezan por # se ignoran; las claves existentes se actualizan.',
+  'kv.pasteHint':
+    'Una CLAVE=valor por línea. Las líneas que empiezan por # se ignoran; las claves existentes se actualizan.',
   'kv.import': 'Añadir variables',
   'kv.imported': '{count, plural, one {# variable importada} other {# variables importadas}}',
   'kv.copyEnv': 'Copiar como .env',

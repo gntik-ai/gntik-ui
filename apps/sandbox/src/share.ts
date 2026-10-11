@@ -25,7 +25,10 @@ function fromBase64Url(text: string): Uint8Array<ArrayBuffer> {
   return out;
 }
 
-async function pipe(bytes: Uint8Array<ArrayBuffer>, stream: CompressionStream | DecompressionStream): Promise<Uint8Array> {
+async function pipe(
+  bytes: Uint8Array<ArrayBuffer>,
+  stream: CompressionStream | DecompressionStream,
+): Promise<Uint8Array> {
   const piped = new Blob([bytes]).stream().pipeThrough(stream);
   return new Uint8Array(await new Response(piped).arrayBuffer());
 }

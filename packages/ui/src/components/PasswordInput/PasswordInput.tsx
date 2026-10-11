@@ -56,7 +56,15 @@ export function PasswordInput({
   const strengthPrefix = strengthPrefixProp ?? t('password.strength');
   const showLabel = showLabelProp ?? t('password.show');
   const hideLabel = hideLabelProp ?? t('password.hide');
-  const strengthLabels = strengthLabelsProp ?? ([t('password.tooWeak'), t('password.weak'), t('password.fair'), t('password.good'), t('password.strong')] as const);
+  const strengthLabels =
+    strengthLabelsProp ??
+    ([
+      t('password.tooWeak'),
+      t('password.weak'),
+      t('password.fair'),
+      t('password.good'),
+      t('password.strong'),
+    ] as const);
   const strengthId = useId();
   const [innerValue, setInnerValue] = useState(defaultValue ?? '');
   const [innerVisible, setInnerVisible] = useState(defaultVisible);
@@ -107,7 +115,10 @@ export function PasswordInput({
       <div className={s.meter()}>
         <div className={s.segments()} aria-hidden>
           {[1, 2, 3, 4].map((n) => (
-            <span key={n} className={cn(s.segment(), current && n <= Math.max(score, 1) && PASSWORD_SEGMENT_FILL[score])} />
+            <span
+              key={n}
+              className={cn(s.segment(), current && n <= Math.max(score, 1) && PASSWORD_SEGMENT_FILL[score])}
+            />
           ))}
         </div>
         <p id={strengthId} className={s.text()}>

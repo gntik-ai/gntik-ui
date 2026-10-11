@@ -77,7 +77,8 @@ export default function CreateWorkspacePage({
   const [touched, setTouched] = useState(false);
   const [finishing, setFinishing] = useState(false);
   const [status, setStatus] = useState('');
-  const set = <K extends keyof WorkspaceValues>(key: K, value: WorkspaceValues[K]) => setValues((v) => ({ ...v, [key]: value }));
+  const set = <K extends keyof WorkspaceValues>(key: K, value: WorkspaceValues[K]) =>
+    setValues((v) => ({ ...v, [key]: value }));
 
   const slug = slugify(values.name);
   const nameValid = values.name.trim().length >= 2 && slug.length > 0;
@@ -121,9 +122,19 @@ export default function CreateWorkspacePage({
             </StepIntro>
             <Field invalid={touched && !nameValid}>
               <FieldLabel required>Workspace name</FieldLabel>
-              <Input required value={values.name} onValueChange={(v) => set('name', v)} onBlur={() => setTouched(true)} placeholder="Acme Inc." />
+              <Input
+                required
+                value={values.name}
+                onValueChange={(v) => set('name', v)}
+                onBlur={() => setTouched(true)}
+                placeholder="Acme Inc."
+              />
               <FieldDescription>
-                Address: <span className="font-mono text-foreground">{addressPrefix}{slug || 'your-workspace'}</span>
+                Address:{' '}
+                <span className="font-mono text-foreground">
+                  {addressPrefix}
+                  {slug || 'your-workspace'}
+                </span>
               </FieldDescription>
               <FieldError match={touched && !nameValid}>Enter at least two characters.</FieldError>
             </Field>
@@ -136,9 +147,21 @@ export default function CreateWorkspacePage({
             <StepIntro id={`${id}-region`} title="Where should your data live?">
               Projects in this workspace run and store data in this region.
             </StepIntro>
-            <SelectableCardGroup aria-labelledby={`${id}-region`} value={values.region} onValueChange={(v) => set('region', v)} columns={1}>
+            <SelectableCardGroup
+              aria-labelledby={`${id}-region`}
+              value={values.region}
+              onValueChange={(v) => set('region', v)}
+              columns={1}
+            >
               {regions.map((r) => (
-                <SelectableCard key={r.value} value={r.value} title={r.title} description={r.description} meta={r.meta} icon={<Globe size={18} aria-hidden />} />
+                <SelectableCard
+                  key={r.value}
+                  value={r.value}
+                  title={r.title}
+                  description={r.description}
+                  meta={r.meta}
+                  icon={<Globe size={18} aria-hidden />}
+                />
               ))}
             </SelectableCardGroup>
           </Stack>

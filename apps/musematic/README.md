@@ -12,19 +12,19 @@ kit layouts and blocks. The app owns no styles, no colours and no widgets: only
 
 ## Routes
 
-| Route | Built from |
-| --- | --- |
-| `/sign-in`, `/mfa` | `SignInPage`, `MfaPage` |
-| `/` | `HomeDashboardPage` (fleet KPIs, runs chart, activity, quick actions) |
-| `/agents`, `/agents/:id`, `/agents/new` | `ResourceIndexPage`, `ResourceDetailPage`, `CreateWizardPage` |
-| `/fleet` | `ResourceGalleryPage` |
-| `/runs` | `ResourceIndexPage` |
-| `/runs/:id` | `ConsoleShell` + `Page` + `PageHeader` + `TraceWaterfall` + `TokenCostCard` + `DescriptionListCard` |
-| `/workflows/:id` (`/workflows` → first) | `WorkflowBuilderPage` |
-| `/assistant` | `AssistantChatPage` |
-| `/evaluations` | `ConsoleShell` + `Page` + `PageHeader` + `EvaluationScorecard` |
-| `/settings/*` | the nine settings templates; `/settings/model-keys` = `ConsoleShell` + `SettingsLayout` + `PageHeader` + `ModelKeysList` |
-| anything else | `Status404Page` |
+| Route                                   | Built from                                                                                                               |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `/sign-in`, `/mfa`                      | `SignInPage`, `MfaPage`                                                                                                  |
+| `/`                                     | `HomeDashboardPage` (fleet KPIs, runs chart, activity, quick actions)                                                    |
+| `/agents`, `/agents/:id`, `/agents/new` | `ResourceIndexPage`, `ResourceDetailPage`, `CreateWizardPage`                                                            |
+| `/fleet`                                | `ResourceGalleryPage`                                                                                                    |
+| `/runs`                                 | `ResourceIndexPage`                                                                                                      |
+| `/runs/:id`                             | `ConsoleShell` + `Page` + `PageHeader` + `TraceWaterfall` + `TokenCostCard` + `DescriptionListCard`                      |
+| `/workflows/:id` (`/workflows` → first) | `WorkflowBuilderPage`                                                                                                    |
+| `/assistant`                            | `AssistantChatPage`                                                                                                      |
+| `/evaluations`                          | `ConsoleShell` + `Page` + `PageHeader` + `EvaluationScorecard`                                                           |
+| `/settings/*`                           | the nine settings templates; `/settings/model-keys` = `ConsoleShell` + `SettingsLayout` + `PageHeader` + `ModelKeysList` |
+| anything else                           | `Status404Page`                                                                                                          |
 
 ## Run
 

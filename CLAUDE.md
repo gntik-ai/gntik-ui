@@ -6,8 +6,9 @@ estilo Tailwind Plus: cada componente se **ve** (preview interactivo) y trae su 
 React/Tailwind** para pegar. Rumbo: monorepo estilo Astryx (ver la propuesta de evolución).
 
 ## Decisiones (fijadas con el usuario — no revertir sin preguntar)
+
 - **Contenido: agnóstico.** El núcleo no nombra ningún producto. musematic y Falcone
-  son *presets* de tema (logo, nombre, assets) + apps de ejemplo; sus datos de dominio
+  son _presets_ de tema (logo, nombre, assets) + apps de ejemplo; sus datos de dominio
   viven en fixtures, nunca en los componentes. llmwiki queda fuera (usa otra UI por ahora).
 - **Colores congelados:** los valores HSL de `tokens/brand.css` no cambian. Los presets
   solo difieren en logo, nombre y assets. El contraste se arregla emparejando tokens
@@ -23,6 +24,7 @@ React/Tailwind** para pegar. Rumbo: monorepo estilo Astryx (ver la propuesta de 
 - **Una canónica por componente**; luego se afina con feedback, uno a uno.
 
 ## Tokens = la marca (único punto de re-skin)
+
 `packages/tokens/src/brand.css` (`@gntik-ai/tokens`) define todo: color, tipografía, radios,
 sombras × 3 temas. HSL en canales (sin `hsl()`) → habilita `bg-primary/14`. Un test congela
 los valores (`packages/tokens/test/frozen-values.json`). `tailwind.css` es el puente Tailwind v4
@@ -30,6 +32,7 @@ los valores (`packages/tokens/test/frozen-values.json`). `tailwind.css` es el pu
 negro-verde en dark), `--radius 0.625rem`, sombras planas.
 
 ## Arquitectura (monorepo pnpm · Node 24 · <1000 líneas/archivo)
+
 - `apps/docs` — el catálogo: Vite 8 + React 19 + Tailwind 4. `src/main.jsx` importa los
   `.jsx` de `src/catalog/` en orden; `src/globals.js` expone React, Recharts y ReactFlow en
   `window` (las secciones siguen leyendo de `window`). `src/styles.css` = Tailwind + tokens.
@@ -72,20 +75,22 @@ negro-verde en dark), `--radius 0.625rem`, sombras planas.
   sin permiso explícito del usuario (`--confirm-spend`).
 
 ## Cómo añadir un componente
+
 1. Crear/editar el `.jsx` de su grupo en `apps/docs/src/catalog/`: sección con preview
    interactivo + `<CodeBlock>` con el código React/Tailwind real para pegar.
 2. `window.SECTIONS['id'] = Seccion`; si es archivo nuevo, importarlo en `apps/docs/src/main.jsx`.
 3. Poner `status:'done'` en `registry.jsx`, luego `pnpm registry`; las baselines visuales se
    regeneran en CI con `[visual-update]` en el mensaje del commit.
-Cada archivo lee de `window` arriba (`const { ... } = window;`) y exporta a `window` al final.
-Nombrar los objetos de estilo de forma única (nunca `const styles`).
-Componente de paquete: seguir `packages/ui/CONTRIBUTING.md`, exportarlo en `src/index.ts` y
-añadir un changeset. ESLint aplica las reglas de marca (sin paleta Tailwind, sin `dark:`, sin
-degradados, sin hex).
-Antes de dar algo por hecho: `pnpm lint && pnpm typecheck && pnpm test && pnpm registry:check`
-(+ `pnpm a11y` si se tocan ui/blocks/templates: axe en navegador sobre cada composición).
+   Cada archivo lee de `window` arriba (`const { ... } = window;`) y exporta a `window` al final.
+   Nombrar los objetos de estilo de forma única (nunca `const styles`).
+   Componente de paquete: seguir `packages/ui/CONTRIBUTING.md`, exportarlo en `src/index.ts` y
+   añadir un changeset. ESLint aplica las reglas de marca (sin paleta Tailwind, sin `dark:`, sin
+   degradados, sin hex).
+   Antes de dar algo por hecho: `pnpm lint && pnpm typecheck && pnpm test && pnpm registry:check`
+   (+ `pnpm a11y` si se tocan ui/blocks/templates: axe en navegador sobre cada composición).
 
 ## Reglas (duras)
+
 - Sobrio: sin degradados, sin glow; sombras planas brand-tinted. Mono-brand verde (hue 145)
   único color de marca; el primario no se confunde con severidad (rojo/ámbar/azul-info).
 - Cero colores hardcodeados: siempre clases `bg-*/text-*/border-*` que resuelven a tokens.

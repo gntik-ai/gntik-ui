@@ -9,7 +9,11 @@ import LinkRouter from './examples/LinkRouter';
 describe('Link', () => {
   it('renders an anchor with brand styles and merges className', () => {
     const ref = createRef<HTMLAnchorElement>();
-    render(<Link ref={ref} href="/docs" className="font-semibold">Docs</Link>);
+    render(
+      <Link ref={ref} href="/docs" className="font-semibold">
+        Docs
+      </Link>,
+    );
     const link = screen.getByRole('link', { name: 'Docs' });
     expect(link).toHaveAttribute('href', '/docs');
     expect(link).toHaveClass('text-primary-text', 'underline', 'font-semibold');
@@ -20,7 +24,11 @@ describe('Link', () => {
   it('Enter follows the link', async () => {
     const user = userEvent.setup();
     const onClick = vi.fn((e: { preventDefault: () => void }) => e.preventDefault());
-    render(<Link href="/projects" onClick={onClick}>Projects</Link>);
+    render(
+      <Link href="/projects" onClick={onClick}>
+        Projects
+      </Link>,
+    );
     await user.tab();
     expect(screen.getByRole('link', { name: 'Projects' })).toHaveFocus();
     await user.keyboard('{Enter}');
@@ -29,7 +37,12 @@ describe('Link', () => {
 
   it('Tab moves focus to and from the link', async () => {
     const user = userEvent.setup();
-    render(<><Link href="/a">First</Link><Link href="/b">Second</Link></>);
+    render(
+      <>
+        <Link href="/a">First</Link>
+        <Link href="/b">Second</Link>
+      </>,
+    );
     await user.tab();
     expect(screen.getByRole('link', { name: 'First' })).toHaveFocus();
     await user.tab();
@@ -37,7 +50,11 @@ describe('Link', () => {
   });
 
   it('external links open in a new tab with a hint and safe rel', () => {
-    render(<Link href="https://example.com" external>Help</Link>);
+    render(
+      <Link href="https://example.com" external>
+        Help
+      </Link>,
+    );
     const link = screen.getByRole('link', { name: /^Help\s*\(opens in a new tab\)$/ });
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
@@ -56,7 +73,12 @@ describe('Link', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><LinkVariants /><LinkRouter /></>);
+    render(
+      <>
+        <LinkVariants />
+        <LinkRouter />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

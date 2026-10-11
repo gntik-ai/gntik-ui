@@ -8,7 +8,8 @@ describe('ResourceFormPage', () => {
     const { container } = render(<ResourceFormPage />);
     expect(screen.getByRole('main')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 1, name: 'Edit project' })).toBeInTheDocument();
-    for (const name of ['General', 'Region', 'Billing']) expect(screen.getByRole('heading', { level: 2, name })).toBeInTheDocument();
+    for (const name of ['General', 'Region', 'Billing'])
+      expect(screen.getByRole('heading', { level: 2, name })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Save changes' })).toBeDisabled();
     // ValidationSummary links target control ids.
     expect(screen.getByRole('combobox', { name: /Region/ })).toHaveAttribute('id', 'region');

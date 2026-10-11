@@ -5,12 +5,24 @@ import { ResizablePanel, ResizablePanelGroup, ResizeHandle } from './Resizable';
 import ResizableWorkspace from './examples/ResizableWorkspace';
 import ResizableSplit from './examples/ResizableSplit';
 
-function Split({ direction, onLayout, autoSaveId }: { direction?: 'horizontal' | 'vertical'; onLayout?: (s: number[]) => void; autoSaveId?: string }) {
+function Split({
+  direction,
+  onLayout,
+  autoSaveId,
+}: {
+  direction?: 'horizontal' | 'vertical';
+  onLayout?: (s: number[]) => void;
+  autoSaveId?: string;
+}) {
   return (
     <ResizablePanelGroup direction={direction} onLayout={onLayout} autoSaveId={autoSaveId}>
-      <ResizablePanel id="left" defaultSize={30} minSize={20} maxSize={60} collapsible>Left</ResizablePanel>
+      <ResizablePanel id="left" defaultSize={30} minSize={20} maxSize={60} collapsible>
+        Left
+      </ResizablePanel>
       <ResizeHandle />
-      <ResizablePanel id="right" minSize={30}>Right</ResizablePanel>
+      <ResizablePanel id="right" minSize={30}>
+        Right
+      </ResizablePanel>
     </ResizablePanelGroup>
   );
 }
@@ -82,7 +94,9 @@ describe('Resizable', () => {
   });
 
   it('pointer drag resizes from the measured panel sizes and persists on release', () => {
-    const rect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({ width: 500, height: 200 } as DOMRect);
+    const rect = vi
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+      .mockReturnValue({ width: 500, height: 200 } as DOMRect);
     try {
       render(<Split autoSaveId="test-split" />);
       const h = handle();
@@ -115,8 +129,12 @@ describe('Resizable', () => {
   });
 
   it('keeps working when localStorage throws', async () => {
-    const get = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new Error('denied'); });
-    const set = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('denied'); });
+    const get = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('denied');
+    });
+    const set = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('denied');
+    });
     try {
       const user = userEvent.setup();
       render(<Split autoSaveId="blocked" />);
@@ -144,7 +162,12 @@ describe('Resizable', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><ResizableWorkspace /><ResizableSplit /></>);
+    render(
+      <>
+        <ResizableWorkspace />
+        <ResizableSplit />
+      </>,
+    );
     expect(screen.getAllByRole('separator')).toHaveLength(3);
     await expectNoAxeViolations();
   });

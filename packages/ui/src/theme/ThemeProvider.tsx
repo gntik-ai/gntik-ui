@@ -1,4 +1,13 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from 'react';
 import { gntikPreset, type BrandPreset } from './presets';
 import type { ResolvedTheme, ThemeMode } from './theme-script';
 
@@ -122,7 +131,5 @@ export function ThemeProvider({
 
 /** Current theme and brand. Outside a provider it reports the dark default and the gntik preset. */
 export function useTheme(): ThemeContextValue {
-  return (
-    useContext(ThemeContext) ?? { mode: 'dark', resolved: 'dark', setMode: () => {}, brand: gntikPreset }
-  );
+  return useContext(ThemeContext) ?? { mode: 'dark', resolved: 'dark', setMode: () => {}, brand: gntikPreset };
 }

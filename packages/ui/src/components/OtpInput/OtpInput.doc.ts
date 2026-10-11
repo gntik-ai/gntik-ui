@@ -14,5 +14,14 @@ export const doc: ComponentDoc = {
     ['ArrowLeft / ArrowRight', 'Moves between slots'],
     ['Paste (⌘V / Ctrl+V)', 'Fills the slots from the clipboard, dropping invalid characters'],
   ],
-  tokens: ['background', 'border', 'foreground', 'muted-foreground', 'primary', 'destructive', 'secondary', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'primary',
+    'destructive',
+    'secondary',
+    'focus-ring',
+  ],
 };

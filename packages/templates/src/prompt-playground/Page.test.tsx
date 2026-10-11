@@ -6,7 +6,12 @@ import PromptPlaygroundPage from './Page';
 
 /** Minimal Monaco stand-in (same approach as the CodePanel block tests). */
 function mockMonaco() {
-  const model = () => ({ getValue: () => '', setValue: vi.fn(), onDidChangeContent: () => ({ dispose: vi.fn() }), dispose: vi.fn() });
+  const model = () => ({
+    getValue: () => '',
+    setValue: vi.fn(),
+    onDidChangeContent: () => ({ dispose: vi.fn() }),
+    dispose: vi.fn(),
+  });
   const editor = {
     defineTheme: vi.fn(),
     setTheme: vi.fn(),
@@ -14,7 +19,13 @@ function mockMonaco() {
     remeasureFonts: vi.fn(),
     createModel: vi.fn(() => model()),
     create: vi.fn(),
-    createDiffEditor: vi.fn(() => ({ setModel: vi.fn(), getModel: () => null, updateOptions: vi.fn(), layout: vi.fn(), dispose: vi.fn() })),
+    createDiffEditor: vi.fn(() => ({
+      setModel: vi.fn(),
+      getModel: () => null,
+      updateOptions: vi.fn(),
+      layout: vi.fn(),
+      dispose: vi.fn(),
+    })),
   };
   return { editor, loader: (() => Promise.resolve({ editor })) as unknown as MonacoLoader };
 }
@@ -38,7 +49,10 @@ describe('PromptPlaygroundPage', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Run' }));
     await waitFor(() => expect(onGenerate).toHaveBeenCalledTimes(2));
     expect(onGenerate.mock.calls.map((c) => c[0])).toEqual(['general-large', 'general-small']);
-    expect(onGenerate).toHaveBeenCalledWith('general-large', expect.objectContaining({ variables: expect.objectContaining({ company: 'Northwind' }) }));
+    expect(onGenerate).toHaveBeenCalledWith(
+      'general-large',
+      expect.objectContaining({ variables: expect.objectContaining({ company: 'Northwind' }) }),
+    );
     expect(await screen.findByText('answer from general-small')).toBeInTheDocument();
 
     await userEvent.click(screen.getByRole('switch', { name: 'Diff' }));

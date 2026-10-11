@@ -1,6 +1,16 @@
 import { PageHeader } from '@gntik-ai/blocks';
 import { ConsoleShell } from '@gntik-ai/templates';
-import { Card, CardBody, CardHeader, CardTitle, Grid, Page, Stack, StatusTag, type StatusDefinition } from '@gntik-ai/ui';
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+  Grid,
+  Page,
+  Stack,
+  StatusTag,
+  type StatusDefinition,
+} from '@gntik-ai/ui';
 
 interface Incident {
   id: string;

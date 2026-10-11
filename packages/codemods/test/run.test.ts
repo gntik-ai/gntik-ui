@@ -18,7 +18,8 @@ async function project(files: Record<string, string>) {
 }
 
 const FILES = {
-  'src/App.tsx': "import { FlowBuilderPage } from '@gntik-ai/templates';\nimport { Link } from '@gntik-ai/ui';\n\nexport const App = () => <><FlowBuilderPage /><Link href=\"/\">Home</Link></>;\n",
+  'src/App.tsx':
+    "import { FlowBuilderPage } from '@gntik-ai/templates';\nimport { Link } from '@gntik-ai/ui';\n\nexport const App = () => <><FlowBuilderPage /><Link href=\"/\">Home</Link></>;\n",
   'src/chip.ts': "export const chip = 'bg-success/14 text-success-text';\n",
   'src/clean.ts': 'export const x = 1;\n',
   'src/broken.tsx': 'export const = ;\n',
@@ -41,14 +42,21 @@ describe('runCodemods', () => {
     ]);
     const app = r.files[0]!;
     expect(app.transforms).toEqual(['templates-renamed-ids']);
-    expect(app.reports).toEqual([{ transform: 'link-underline-default', line: 4, message: expect.stringContaining('without underline') }]);
+    expect(app.reports).toEqual([
+      { transform: 'link-underline-default', line: 4, message: expect.stringContaining('without underline') },
+    ]);
     expect(r.outputs['src/chip.ts']).toBe("export const chip = 'bg-success/14 text-success-chip-text';\n");
     expect(await readFile(path.join(cwd, 'src/chip.ts'), 'utf8')).toBe(FILES['src/chip.ts']);
   });
 
   it('writes with dry: false, limited to the given transforms and files', async () => {
     const cwd = await project(FILES);
-    const r = await runCodemods({ cwd, dry: false, transforms: ['chip-text-aliases'], files: ['src/chip.ts', 'src/App.tsx'] });
+    const r = await runCodemods({
+      cwd,
+      dry: false,
+      transforms: ['chip-text-aliases'],
+      files: ['src/chip.ts', 'src/App.tsx'],
+    });
     expect(r.scanned).toBe(2);
     expect(r.files.map((f) => f.file)).toEqual(['src/chip.ts']);
     expect(await readFile(path.join(cwd, 'src/chip.ts'), 'utf8')).toContain('text-success-chip-text');
@@ -69,13 +77,20 @@ describe('selectTransforms', () => {
   });
 
   it('uses per-package versions, falling back to the lowest', () => {
-    expect(ids({ from: { '@gntik-ai/ui': '0.2.0', '@gntik-ai/templates': '0.1.0' } })).toEqual(['templates-renamed-ids', 'flow-builder-controlled-console', 'chip-text-aliases']);
+    expect(ids({ from: { '@gntik-ai/ui': '0.2.0', '@gntik-ai/templates': '0.1.0' } })).toEqual([
+      'templates-renamed-ids',
+      'flow-builder-controlled-console',
+      'chip-text-aliases',
+    ]);
     expect(ids({ from: { '@gntik-ai/ui': 'workspace:*' } })).toHaveLength(transforms.length);
   });
 
   it('filters by only/skip, force ignores versions, validates input', () => {
     expect(ids({ only: ['chip-text-aliases'] })).toEqual(['chip-text-aliases']);
-    expect(ids({ skip: ['link-underline-default', 'chip-text-aliases'] })).toEqual(['templates-renamed-ids', 'flow-builder-controlled-console']);
+    expect(ids({ skip: ['link-underline-default', 'chip-text-aliases'] })).toEqual([
+      'templates-renamed-ids',
+      'flow-builder-controlled-console',
+    ]);
     expect(ids({ from: '1.0.0', only: ['chip-text-aliases'] })).toEqual([]);
     expect(ids({ from: '1.0.0', only: ['chip-text-aliases'], force: true })).toEqual(['chip-text-aliases']);
     expect(() => ids({ only: ['nope'] })).toThrow(/Unknown codemod/);

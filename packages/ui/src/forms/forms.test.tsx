@@ -54,7 +54,10 @@ describe('@gntik-ai/ui/forms', () => {
   it('useFieldProps wires field rules into a hand-built Field', async () => {
     function Manual() {
       const form = useForm<{ code: string }>({ defaultValues: { code: '' } });
-      const { fieldProps, controlProps, error } = useFieldProps('code', { control: form.control, rules: { required: 'Enter the code.' } });
+      const { fieldProps, controlProps, error } = useFieldProps('code', {
+        control: form.control,
+        rules: { required: 'Enter the code.' },
+      });
       return (
         <form noValidate onSubmit={form.handleSubmit(() => {})}>
           <Field {...fieldProps}>
@@ -80,7 +83,11 @@ describe('@gntik-ai/ui/forms', () => {
       const form = useForm<{ project: string }>({ defaultValues: { project: '' } });
       return (
         <Form form={form} onSubmit={() => {}}>
-          <FormField name="project" label="Project" rules={{ minLength: { value: 3, message: 'At least 3 characters.' } }}>
+          <FormField
+            name="project"
+            label="Project"
+            rules={{ minLength: { value: 3, message: 'At least 3 characters.' } }}
+          >
             {(field) => <Input {...field} />}
           </FormField>
           <Button type="submit">Create</Button>
@@ -95,16 +102,27 @@ describe('@gntik-ai/ui/forms', () => {
   });
 
   it('schemaResolver maps nested zod issues to react-hook-form errors', async () => {
-    const schema = z.object({ owner: z.object({ email: z.email('Bad email.') }), tags: z.array(z.string().min(2, 'Too short.')) });
+    const schema = z.object({
+      owner: z.object({ email: z.email('Bad email.') }),
+      tags: z.array(z.string().min(2, 'Too short.')),
+    });
     const resolver = schemaResolver(schema);
-    const result = await resolver({ owner: { email: 'x' }, tags: ['ok', 'x'] }, undefined, { fields: {}, shouldUseNativeValidation: false });
+    const result = await resolver({ owner: { email: 'x' }, tags: ['ok', 'x'] }, undefined, {
+      fields: {},
+      shouldUseNativeValidation: false,
+    });
     expect(result.errors).toEqual({
       owner: { email: { type: 'invalid_format', message: 'Bad email.' } },
       tags: { 1: { type: 'too_small', message: 'Too short.' } },
     });
-    const ok = await resolver({ owner: { email: 'a@b.co' }, tags: ['ok'] }, undefined, { fields: {}, shouldUseNativeValidation: false });
+    const ok = await resolver({ owner: { email: 'a@b.co' }, tags: ['ok'] }, undefined, {
+      fields: {},
+      shouldUseNativeValidation: false,
+    });
     expect(ok).toEqual({ values: { owner: { email: 'a@b.co' }, tags: ['ok'] }, errors: {} });
-    expect(issuesToErrors([{ path: [], message: 'Form-level.' }])).toEqual({ root: { type: 'validate', message: 'Form-level.' } });
+    expect(issuesToErrors([{ path: [], message: 'Form-level.' }])).toEqual({
+      root: { type: 'validate', message: 'Form-level.' },
+    });
   });
 
   it('FormInviteMember has no axe violations, before and after a failed submit', async () => {

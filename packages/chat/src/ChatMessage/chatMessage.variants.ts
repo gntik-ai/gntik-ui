@@ -21,20 +21,23 @@ export const chatMessageStyles = {
       root: 'flex-row-reverse',
       body: 'items-end',
       meta: 'flex-row-reverse',
-      content: 'max-w-[85%] rounded-2xl rounded-se-md bg-secondary px-4 py-2.5 whitespace-pre-wrap [overflow-wrap:anywhere]',
+      content:
+        'max-w-[85%] rounded-2xl rounded-se-md bg-secondary px-4 py-2.5 whitespace-pre-wrap [overflow-wrap:anywhere]',
     },
     assistant: { root: '', body: '', meta: '', content: '' },
     participant: {
       root: '',
       body: 'items-start',
       meta: '',
-      content: 'max-w-[85%] rounded-2xl rounded-ss-md border border-border bg-card px-4 py-2.5 whitespace-pre-wrap [overflow-wrap:anywhere]',
+      content:
+        'max-w-[85%] rounded-2xl rounded-ss-md border border-border bg-card px-4 py-2.5 whitespace-pre-wrap [overflow-wrap:anywhere]',
     },
     system: {
       root: 'justify-center',
       body: 'items-center',
       meta: 'sr-only',
-      content: 'rounded-full border border-border bg-card px-3 py-1 text-center text-[12px] leading-5 text-muted-foreground',
+      content:
+        'rounded-full border border-border bg-card px-3 py-1 text-center text-[12px] leading-5 text-muted-foreground',
     },
     tool: { root: '', body: '', meta: '', content: 'text-[13px]' },
   },

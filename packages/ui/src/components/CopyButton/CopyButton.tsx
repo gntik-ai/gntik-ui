@@ -10,7 +10,10 @@ import { copyButtonVariants } from './copy-button.variants';
 
 export type CopyStatus = 'idle' | 'copied' | 'failed';
 
-export interface CopyButtonProps extends Omit<ButtonProps, 'value' | 'children' | 'icon' | 'trailingIcon' | 'onClick' | 'onCopy' | 'iconOnly'> {
+export interface CopyButtonProps extends Omit<
+  ButtonProps,
+  'value' | 'children' | 'icon' | 'trailingIcon' | 'onClick' | 'onCopy' | 'iconOnly'
+> {
   ref?: Ref<HTMLButtonElement>;
   /** Text to copy, or a getter (sync or async) called on click — e.g. to read a secret lazily. */
   value: string | (() => string | Promise<string>);
@@ -104,7 +107,16 @@ export function CopyButton({
   if (display === 'label') {
     return (
       <>
-        <Button {...props} variant={variant} size={size} disabled={disabled} icon={StateIcon} className={cn(s.button(), className)} onClick={copy} data-status={status}>
+        <Button
+          {...props}
+          variant={variant}
+          size={size}
+          disabled={disabled}
+          icon={StateIcon}
+          className={cn(s.button(), className)}
+          onClick={copy}
+          data-status={status}
+        >
           {current}
         </Button>
         {region}
@@ -113,7 +125,17 @@ export function CopyButton({
   }
 
   const button = (
-    <IconButton {...props} variant={variant} size={size} disabled={disabled} icon={StateIcon} label={current} className={cn(s.button(), className)} onClick={copy} data-status={status} />
+    <IconButton
+      {...props}
+      variant={variant}
+      size={size}
+      disabled={disabled}
+      icon={StateIcon}
+      label={current}
+      className={cn(s.button(), className)}
+      onClick={copy}
+      data-status={status}
+    />
   );
   return (
     <>

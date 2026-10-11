@@ -25,7 +25,15 @@ export interface TypingIndicatorProps {
  * ("Assistant is typing") is always in the accessibility tree. Under reduced motion the dots
  * hold still.
  */
-export function TypingIndicator({ author, showLabel = false, label, size = 'md', announce = false, className, ref }: TypingIndicatorProps) {
+export function TypingIndicator({
+  author,
+  showLabel = false,
+  label,
+  size = 'md',
+  announce = false,
+  className,
+  ref,
+}: TypingIndicatorProps) {
   const { t, tc } = useChatI18n();
   const text = label ?? tc('chat.typing', { author: author ?? t('chat.assistant') });
   const sz = s.size[size];

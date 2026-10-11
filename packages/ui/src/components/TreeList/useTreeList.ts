@@ -52,10 +52,12 @@ export function useTreeList({
     if (!loadChildren || node.children || pending.current.has(node.id) || loaded[node.id]?.status === 'loaded') return;
     pending.current.add(node.id);
     setLoaded((m) => ({ ...m, [node.id]: { status: 'loading' } }));
-    loadChildren(node).then(
-      (kids) => setLoaded((m) => ({ ...m, [node.id]: { status: 'loaded', nodes: kids } })),
-      () => setLoaded((m) => ({ ...m, [node.id]: { status: 'error' } })),
-    ).finally(() => pending.current.delete(node.id));
+    loadChildren(node)
+      .then(
+        (kids) => setLoaded((m) => ({ ...m, [node.id]: { status: 'loaded', nodes: kids } })),
+        () => setLoaded((m) => ({ ...m, [node.id]: { status: 'error' } })),
+      )
+      .finally(() => pending.current.delete(node.id));
   };
 
   const setOpen = (node: TreeNode, open: boolean) => {
@@ -67,7 +69,8 @@ export function useTreeList({
   const select = (node: TreeNode, mode: 'replace' | 'toggle' = 'replace') => {
     if (selectionMode === 'none' || node.disabled) return;
     if (selectionMode === 'single') return setSelected([node.id]);
-    if (mode === 'toggle') setSelected(selected.has(node.id) ? selectedIds.filter((id) => id !== node.id) : [...selectedIds, node.id]);
+    if (mode === 'toggle')
+      setSelected(selected.has(node.id) ? selectedIds.filter((id) => id !== node.id) : [...selectedIds, node.id]);
     else setSelected([node.id]);
   };
 
@@ -78,7 +81,22 @@ export function useTreeList({
   /** Re-requests children after a failed load. */
   const retry = (node: TreeNode) => load(node);
 
-  const focusId = activeId !== undefined && visible.some((v) => v.node.id === activeId) ? activeId : (visible.find((v) => selected.has(v.node.id))?.node.id ?? visible[0]?.node.id);
+  const focusId =
+    activeId !== undefined && visible.some((v) => v.node.id === activeId)
+      ? activeId
+      : (visible.find((v) => selected.has(v.node.id))?.node.id ?? visible[0]?.node.id);
 
-  return { visible, expanded, selected, loaded, focusId, setActiveId, setOpen, select, selectAll, retry, selectionMode };
+  return {
+    visible,
+    expanded,
+    selected,
+    loaded,
+    focusId,
+    setActiveId,
+    setOpen,
+    select,
+    selectAll,
+    retry,
+    selectionMode,
+  };
 }

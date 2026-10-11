@@ -5,7 +5,12 @@ import SeparatorVariants from './examples/SeparatorVariants';
 
 describe('Separator', () => {
   it('exposes role separator with its orientation', () => {
-    render(<><Separator /><Separator orientation="vertical" /></>);
+    render(
+      <>
+        <Separator />
+        <Separator orientation="vertical" />
+      </>,
+    );
     const [h, v] = screen.getAllByRole('separator');
     expect(h).toHaveClass('h-px', 'bg-border');
     expect(v).toHaveAttribute('aria-orientation', 'vertical');

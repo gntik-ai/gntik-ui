@@ -14,7 +14,12 @@ describe.each(codemods.map((c) => c.meta.id))('%s', (id) => {
 
   it('has fixtures and complete meta', () => {
     expect(inputs.length).toBeGreaterThan(0);
-    expect(codemod.meta).toMatchObject({ id, fromVersion: expect.any(String), toVersion: expect.any(String), description: expect.any(String) });
+    expect(codemod.meta).toMatchObject({
+      id,
+      fromVersion: expect.any(String),
+      toVersion: expect.any(String),
+      description: expect.any(String),
+    });
   });
 
   it.each(inputs)('%s', (input) => {
@@ -43,7 +48,9 @@ describe.each(codemods.map((c) => c.meta.id))('%s', (id) => {
 describe('chip text helpers', () => {
   it('detects tinted tones with variants and rewrites only those', () => {
     expect([...tintedTones('hover:bg-primary/10 bg-success/14 bg-warning')]).toEqual(['primary', 'success']);
-    expect(rewriteChipText('md:text-primary-text text-warning-text', new Set(['primary']))).toBe('md:text-primary-chip-text text-warning-text');
+    expect(rewriteChipText('md:text-primary-text text-warning-text', new Set(['primary']))).toBe(
+      'md:text-primary-chip-text text-warning-text',
+    );
     expect(rewriteChipText('text-primary-texts', new Set(['primary']))).toBe('text-primary-texts');
   });
 });

@@ -2,7 +2,14 @@ import type { ReactElement, ReactNode } from 'react';
 import { ChartBrush, useChartRange, type ChartRange } from './ChartBrush';
 import type { ValueFormatter } from './format';
 import { usePrefersReducedMotion } from './live';
-import { annotationKey, ChartMarkers, referenceElements, useActiveAnnotation, type ChartAnnotation, type ChartThreshold } from './overlays';
+import {
+  annotationKey,
+  ChartMarkers,
+  referenceElements,
+  useActiveAnnotation,
+  type ChartAnnotation,
+  type ChartThreshold,
+} from './overlays';
 import { field, numField } from './shared';
 
 /** Thresholds, annotations, brush zoom and animation: shared by Line, Area, Bar and Combo charts. */
@@ -46,7 +53,15 @@ export interface CartesianExtras<T> {
 export function useCartesianExtras<T extends object>(
   data: readonly T[],
   index: string,
-  { thresholds = [], annotations = [], brush = false, range, defaultRange, onRangeChange, animate = false }: CartesianExtrasProps,
+  {
+    thresholds = [],
+    annotations = [],
+    brush = false,
+    range,
+    defaultRange,
+    onRangeChange,
+    animate = false,
+  }: CartesianExtrasProps,
   { valueFormatter, previewKey, vertical = false, yAxisIdOf }: CartesianExtrasOptions = {},
 ): CartesianExtras<T> {
   const [current, setRange] = useChartRange({ length: data.length, range, defaultRange, onRangeChange });

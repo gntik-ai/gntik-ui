@@ -150,7 +150,8 @@ export function parseAnsiState(text: string, initial: AnsiStyle = {}): { segment
         i = j + 1;
       } else if (kind === ']') {
         let j = i + 2;
-        while (j < text.length && text.charCodeAt(j) !== BEL && !(text.charCodeAt(j) === ESC && text[j + 1] === '\\')) j++;
+        while (j < text.length && text.charCodeAt(j) !== BEL && !(text.charCodeAt(j) === ESC && text[j + 1] === '\\'))
+          j++;
         i = text.charCodeAt(j) === BEL ? j + 1 : j + 2;
       } else {
         i += 2;

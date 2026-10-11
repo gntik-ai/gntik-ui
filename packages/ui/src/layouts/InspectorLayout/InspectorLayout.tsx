@@ -112,7 +112,12 @@ export function InspectorLayout({
 
   return (
     <InspectorContext.Provider value={ctx}>
-      <div ref={rootRef} className={cn(s.root(), className)} onKeyDown={handleKeyDown} data-inspector-open={open || undefined}>
+      <div
+        ref={rootRef}
+        className={cn(s.root(), className)}
+        onKeyDown={handleKeyDown}
+        data-inspector-open={open || undefined}
+      >
         <div className={s.main()}>{children}</div>
         {docked && open && (
           <aside
@@ -128,7 +133,13 @@ export function InspectorLayout({
               <h2 id={titleId} className={s.panelTitle()}>
                 {panelTitle}
               </h2>
-              <IconButton size="sm" icon={Pin} label={pinLabel} aria-pressed={pinned} onClick={() => setPinned(!pinned)} />
+              <IconButton
+                size="sm"
+                icon={Pin}
+                label={pinLabel}
+                aria-pressed={pinned}
+                onClick={() => setPinned(!pinned)}
+              />
               <IconButton size="sm" icon={X} label={closeLabel} onClick={close} />
             </div>
             <div className={s.panelBody()}>{panel}</div>

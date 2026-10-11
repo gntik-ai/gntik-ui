@@ -11,7 +11,11 @@ export default function PageSettings() {
         width="narrow"
         title="Project settings"
         description="General configuration of web-frontend."
-        actions={<Button variant="secondary" icon={Plus}>Add domain</Button>}
+        actions={
+          <Button variant="secondary" icon={Plus}>
+            Add domain
+          </Button>
+        }
         actionBar={
           <>
             <span aria-live="polite" className="me-auto text-[12px] text-muted-foreground">
@@ -25,7 +29,11 @@ export default function PageSettings() {
         }
       >
         {['General', 'Domains', 'Environment variables', 'Danger zone'].map((section) => (
-          <section key={section} aria-labelledby={`page-example-${section}`} className="rounded-[10px] border border-border bg-card p-4">
+          <section
+            key={section}
+            aria-labelledby={`page-example-${section}`}
+            className="rounded-[10px] border border-border bg-card p-4"
+          >
             <h2 id={`page-example-${section}`} className="text-[14px] font-semibold">
               {section}
             </h2>

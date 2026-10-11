@@ -21,7 +21,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const mode = parseMode((await cookies()).get(THEME_COOKIE)?.value);
   const cls = htmlClassFor(mode);
   return (
-    <html lang="en" className={cls || undefined} style={{ colorScheme: cls ? 'dark' : 'light' }} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={cls || undefined}
+      style={{ colorScheme: cls ? 'dark' : 'light' }}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

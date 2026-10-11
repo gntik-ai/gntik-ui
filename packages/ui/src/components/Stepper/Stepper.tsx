@@ -35,7 +35,12 @@ export interface StepperProps extends Omit<HTMLAttributes<HTMLElement>, 'classNa
   formatCount?: (step: number, total: number) => string;
 }
 
-const STATUS_KEYS = { complete: 'stepper.complete', current: 'stepper.current', upcoming: 'stepper.upcoming', error: 'stepper.error' } as const satisfies Record<StepStatus, MessageKey>;
+const STATUS_KEYS = {
+  complete: 'stepper.complete',
+  current: 'stepper.current',
+  upcoming: 'stepper.upcoming',
+  error: 'stepper.error',
+} as const satisfies Record<StepStatus, MessageKey>;
 
 /** Resolves each step's status from `current` unless set explicitly. */
 export function resolveStepStatus(steps: StepItem[], current: number): StepStatus[] {
@@ -99,7 +104,13 @@ export function Stepper({
           const content = (
             <>
               <span className={v.indicator()} aria-hidden>
-                {status === 'complete' ? <Check size={16} strokeWidth={2.6} /> : status === 'error' ? <AlertTriangle size={15} /> : i + 1}
+                {status === 'complete' ? (
+                  <Check size={16} strokeWidth={2.6} />
+                ) : status === 'error' ? (
+                  <AlertTriangle size={15} />
+                ) : (
+                  i + 1
+                )}
               </span>
               <span className={v.text()}>
                 <span className={v.label()}>
@@ -126,7 +137,11 @@ export function Stepper({
                 <div className={v.connector()} aria-hidden>
                   <div
                     className={v.connectorFill()}
-                    style={orientation === 'horizontal' ? { width: status === 'complete' ? '100%' : '0%' } : { height: status === 'complete' ? '100%' : '0%' }}
+                    style={
+                      orientation === 'horizontal'
+                        ? { width: status === 'complete' ? '100%' : '0%' }
+                        : { height: status === 'complete' ? '100%' : '0%' }
+                    }
                   />
                 </div>
               )}

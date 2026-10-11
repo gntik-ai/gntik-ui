@@ -11,7 +11,11 @@ const presentations = [
 ];
 
 for (const theme of ['dark', 'light', 'high_contrast']) {
-  for (const [device, width] of [['desktop', 1280], ['tablet', 768], ['mobile', 390]]) {
+  for (const [device, width] of [
+    ['desktop', 1280],
+    ['tablet', 768],
+    ['mobile', 390],
+  ]) {
     for (const [name, kind, id, fullscreen] of presentations) {
       test(`${name}: ${theme}, ${device}, sizing and mid/review axe`, async ({ page }) => {
         await page.setViewportSize({ width, height: 900 });

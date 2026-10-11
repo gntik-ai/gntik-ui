@@ -6,18 +6,21 @@ import MenuRowActions from './examples/MenuRowActions';
 import MenuSelection from './examples/MenuSelection';
 
 describe('Menu', () => {
-  it.each([['{Enter}'], [' '], ['{ArrowDown}']])('opens from the trigger with %s and highlights the first item', async (key) => {
-    const user = userEvent.setup();
-    render(<MenuRowActions />);
-    const trigger = screen.getByRole('button', { name: 'Deployment actions' });
-    expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
-    await user.tab();
-    expect(trigger).toHaveFocus();
-    await user.keyboard(key);
-    const menu = await screen.findByRole('menu');
-    expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    await waitFor(() => expect(within(menu).getByRole('menuitem', { name: 'View logs' })).toHaveFocus());
-  });
+  it.each([['{Enter}'], [' '], ['{ArrowDown}']])(
+    'opens from the trigger with %s and highlights the first item',
+    async (key) => {
+      const user = userEvent.setup();
+      render(<MenuRowActions />);
+      const trigger = screen.getByRole('button', { name: 'Deployment actions' });
+      expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
+      await user.tab();
+      expect(trigger).toHaveFocus();
+      await user.keyboard(key);
+      const menu = await screen.findByRole('menu');
+      expect(trigger).toHaveAttribute('aria-expanded', 'true');
+      await waitFor(() => expect(within(menu).getByRole('menuitem', { name: 'View logs' })).toHaveFocus());
+    },
+  );
 
   it('arrow keys move between items and wrap', async () => {
     const user = userEvent.setup();

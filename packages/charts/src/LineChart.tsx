@@ -2,7 +2,16 @@ import { CartesianGrid, Line, LineChart as RLineChart, Tooltip, XAxis, YAxis } f
 import { ChartLegend, useHiddenSeries } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
 import { formatAny, identity } from './format';
-import { accessibleName, cartesianTable, axisProps, CHART_MARGIN, ChartFrame, field, type BaseChartProps, type DataKey } from './shared';
+import {
+  accessibleName,
+  cartesianTable,
+  axisProps,
+  CHART_MARGIN,
+  ChartFrame,
+  field,
+  type BaseChartProps,
+  type DataKey,
+} from './shared';
 import { resolveState } from './states';
 import { useCartesianExtras, type CartesianExtrasProps } from './cartesian-extras';
 import { CHART_COLORS, seriesColor, useChartTheme } from './theme';
@@ -50,7 +59,12 @@ export function LineChart<T extends object>({
 }: LineChartProps<T>) {
   const t = useChartTheme();
   const [hidden, toggle] = useHiddenSeries();
-  const x = useCartesianExtras(data, index, { thresholds, annotations, brush, range, defaultRange, onRangeChange, animate }, { valueFormatter, previewKey: categories[0] });
+  const x = useCartesianExtras(
+    data,
+    index,
+    { thresholds, annotations, brush, range, defaultRange, onRangeChange, animate },
+    { valueFormatter, previewKey: categories[0] },
+  );
   const col = (i: number) => seriesColor(t, colors, i);
   const legend = categories.map((c, i) => ({ key: c, label: c, color: col(i) }));
   const first = x.view[0];

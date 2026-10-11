@@ -54,8 +54,16 @@ export function Section({
     >
       {hasHeader && (
         <div className={s.header()}>
-          {title != null && <Heading id={titleId} className={s.title()}>{title}</Heading>}
-          {description != null && <p id={descId} className={s.description()}>{description}</p>}
+          {title != null && (
+            <Heading id={titleId} className={s.title()}>
+              {title}
+            </Heading>
+          )}
+          {description != null && (
+            <p id={descId} className={s.description()}>
+              {description}
+            </p>
+          )}
           {actions != null && <div className={s.actions()}>{actions}</div>}
         </div>
       )}

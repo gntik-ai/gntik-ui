@@ -8,14 +8,16 @@ export default function CardWithHeader() {
         <CardTitle>Retry policy</CardTitle>
         <CardDescription>Applied to every deployment in this project.</CardDescription>
         <CardAction>
-          <Button variant="secondary" size="sm">Edit</Button>
+          <Button variant="secondary" size="sm">
+            Edit
+          </Button>
         </CardAction>
       </CardHeader>
-      <CardBody>
-        Failed jobs are retried up to 3 times with exponential backoff, starting at 30 seconds.
-      </CardBody>
+      <CardBody>Failed jobs are retried up to 3 times with exponential backoff, starting at 30 seconds.</CardBody>
       <CardFooter>
-        <Button variant="ghost" size="sm">Discard</Button>
+        <Button variant="ghost" size="sm">
+          Discard
+        </Button>
         <Button size="sm">Save changes</Button>
       </CardFooter>
     </Card>

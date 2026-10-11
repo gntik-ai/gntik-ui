@@ -40,17 +40,7 @@ export interface TextProps extends Omit<useRender.ComponentProps<'p'>, 'classNam
 }
 
 /** Body copy and small type roles: body, label, supporting, caption, code and display. */
-export function Text({
-  variant = 'body',
-  tone,
-  as,
-  truncate,
-  lineClamp,
-  className,
-  render,
-  ref,
-  ...props
-}: TextProps) {
+export function Text({ variant = 'body', tone, as, truncate, lineClamp, className, render, ref, ...props }: TextProps) {
   return useRender({
     defaultTagName: as ?? DEFAULT_TAG[variant],
     render,
@@ -78,7 +68,17 @@ export interface HeadingProps extends Omit<useRender.ComponentProps<'h2'>, 'clas
 }
 
 /** Section and page titles: the semantic level and the visual size are chosen separately. */
-export function Heading({ level = 2, size, tone, truncate, lineClamp, className, render, ref, ...props }: HeadingProps) {
+export function Heading({
+  level = 2,
+  size,
+  tone,
+  truncate,
+  lineClamp,
+  className,
+  render,
+  ref,
+  ...props
+}: HeadingProps) {
   return useRender({
     defaultTagName: `h${level}`,
     render,

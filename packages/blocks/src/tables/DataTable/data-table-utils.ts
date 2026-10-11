@@ -87,7 +87,11 @@ export function compareValues(a: CellValue, b: CellValue): number {
 }
 
 /** Client-side sort (stable). Returns the input order when there is no sort or the column has no accessor. */
-export function sortRows<T>(rows: readonly T[], columns: ReadonlyArray<DataTableColumn<T>>, sort: SortState | null): T[] {
+export function sortRows<T>(
+  rows: readonly T[],
+  columns: ReadonlyArray<DataTableColumn<T>>,
+  sort: SortState | null,
+): T[] {
   const column = sort ? columns.find((c) => c.id === sort.columnId) : undefined;
   if (!sort || !column?.accessor) return [...rows];
   const get = column.accessor;
@@ -117,7 +121,10 @@ export function paginate<T>(rows: readonly T[], page: number, pageSize: number):
 }
 
 /** Header checkbox state for the rows on screen. */
-export function selectionState(visibleIds: readonly string[], selected: ReadonlySet<string>): { checked: boolean; indeterminate: boolean } {
+export function selectionState(
+  visibleIds: readonly string[],
+  selected: ReadonlySet<string>,
+): { checked: boolean; indeterminate: boolean } {
   const count = visibleIds.filter((id) => selected.has(id)).length;
   return { checked: count > 0 && count === visibleIds.length, indeterminate: count > 0 && count < visibleIds.length };
 }
@@ -168,7 +175,11 @@ export function groupKeyOf<T>(row: T, groupBy: DataTableGroupBy<T>): string {
  * Splits rows into groups, keeping the row order inside each group. Groups follow `order` (the
  * keys' first appearance in it, e.g. the unsorted input) and then any key not seen there.
  */
-export function groupRows<T>(rows: readonly T[], groupBy: DataTableGroupBy<T>, order: readonly T[] = rows): DataTableGroup<T>[] {
+export function groupRows<T>(
+  rows: readonly T[],
+  groupBy: DataTableGroupBy<T>,
+  order: readonly T[] = rows,
+): DataTableGroup<T>[] {
   const groups = new Map<string, T[]>();
   for (const row of order) {
     const key = groupKeyOf(row, groupBy);

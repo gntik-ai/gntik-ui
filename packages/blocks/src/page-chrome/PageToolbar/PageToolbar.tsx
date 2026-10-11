@@ -1,6 +1,17 @@
 import { Plus, Search, SlidersHorizontal } from '@gntik-ai/icons';
 import type { LucideIcon } from '@gntik-ai/icons';
-import { Toggle, ToggleGroup, Toolbar, ToolbarButton, ToolbarEnd, ToolbarInput, ToolbarSeparator, ToolbarStart, cn, useI18n } from '@gntik-ai/ui';
+import {
+  Toggle,
+  ToggleGroup,
+  Toolbar,
+  ToolbarButton,
+  ToolbarEnd,
+  ToolbarInput,
+  ToolbarSeparator,
+  ToolbarStart,
+  cn,
+  useI18n,
+} from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
 import type { PageChromeAction } from '../types';
 import { pageToolbarViews } from './fixtures';
@@ -76,7 +87,9 @@ export function PageToolbar({
           }}
           wrapperClassName="max-w-sm"
         />
-        {filters !== undefined ? filters : (
+        {filters !== undefined ? (
+          filters
+        ) : (
           <ToolbarButton variant="secondary" icon={SlidersHorizontal}>
             Filters
           </ToolbarButton>

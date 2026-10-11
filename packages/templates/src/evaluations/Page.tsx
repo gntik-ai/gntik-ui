@@ -1,4 +1,11 @@
-import { DataTable, EvaluationScorecard, PageHeader, type DataTableColumn, type EvalMetric, type EvalRow } from '@gntik-ai/blocks';
+import {
+  DataTable,
+  EvaluationScorecard,
+  PageHeader,
+  type DataTableColumn,
+  type EvalMetric,
+  type EvalRow,
+} from '@gntik-ai/blocks';
 import { Heatmap, chartFmt } from '@gntik-ai/charts';
 import { Download, FileSearch, Play } from '@gntik-ai/icons';
 import {
@@ -53,7 +60,8 @@ export interface EvaluationsProps {
   shell: Omit<ConsoleShellProps, 'children'>;
 }
 
-const fmt = (format: EvalRegression['format'], n: number) => (format === 'percent' ? chartFmt.percent(n) : format === 'ms' ? `${Math.round(n)} ms` : String(n));
+const fmt = (format: EvalRegression['format'], n: number) =>
+  format === 'percent' ? chartFmt.percent(n) : format === 'ms' ? `${Math.round(n)} ms` : String(n);
 const fmtDelta = (format: EvalRegression['format'], n: number) =>
   format === 'percent' ? chartFmt.percentDelta(n) : `${n > 0 ? '+' : n < 0 ? '−' : ''}${fmt(format, Math.abs(n))}`;
 
@@ -90,8 +98,20 @@ export default function EvaluationsPage(props: Partial<EvaluationsProps>) {
   const columns: DataTableColumn<EvalRegression>[] = [
     { id: 'dataset', header: 'Dataset', accessor: (r) => r.dataset, variant: 'mono', sortable: true, hideable: false },
     { id: 'metric', header: 'Metric', accessor: (r) => r.metricLabel, sortable: true },
-    { id: 'baseline', header: baselineLabel, accessor: (r) => r.baseline, cell: (r) => fmt(r.format, r.baseline), variant: 'numeric' },
-    { id: 'current', header: 'This run', accessor: (r) => r.current, cell: (r) => fmt(r.format, r.current), variant: 'numeric' },
+    {
+      id: 'baseline',
+      header: baselineLabel,
+      accessor: (r) => r.baseline,
+      cell: (r) => fmt(r.format, r.baseline),
+      variant: 'numeric',
+    },
+    {
+      id: 'current',
+      header: 'This run',
+      accessor: (r) => r.current,
+      cell: (r) => fmt(r.format, r.current),
+      variant: 'numeric',
+    },
     {
       id: 'delta',
       header: 'Change',
@@ -106,7 +126,9 @@ export default function EvaluationsPage(props: Partial<EvaluationsProps>) {
   ];
 
   const actions = [
-    ...(onExport ? [{ label: 'Export results', icon: Download, variant: 'secondary' as const, onClick: onExport }] : []),
+    ...(onExport
+      ? [{ label: 'Export results', icon: Download, variant: 'secondary' as const, onClick: onExport }]
+      : []),
     ...(onRerun ? [{ label: 'Re-run evaluation', icon: Play, variant: 'primary' as const, onClick: onRerun }] : []),
   ];
 
@@ -120,16 +142,31 @@ export default function EvaluationsPage(props: Partial<EvaluationsProps>) {
             title={title}
             description={`${runLabel} compared with ${baselineLabel}.`}
             status={regressions.length ? 'failed' : 'succeeded'}
-            statuses={{ failed: { label: `${regressions.length} regressions`, tone: 'destructive' }, succeeded: { label: 'No regressions', tone: 'success' } }}
+            statuses={{
+              failed: { label: `${regressions.length} regressions`, tone: 'destructive' },
+              succeeded: { label: 'No regressions', tone: 'success' },
+            }}
             meta={[{ label: 'Finished', value: <Timestamp value={finishedAt} /> }]}
             tabs={null}
             actions={actions}
           />
         }
       >
-        <EvaluationScorecard titleAs="h2" title="Results per dataset" metrics={metrics} rows={rows} baselineLabel={baselineLabel} passRateTolerance={passRateTolerance} />
+        <EvaluationScorecard
+          titleAs="h2"
+          title="Results per dataset"
+          metrics={metrics}
+          rows={rows}
+          baselineLabel={baselineLabel}
+          passRateTolerance={passRateTolerance}
+        />
         <Grid cols={{ base: 1, xl: 2 }} gap={4}>
-          <Section variant="card" headingLevel="h2" title="Change vs baseline" description={`Score difference against ${baselineLabel}, per metric and dataset.`}>
+          <Section
+            variant="card"
+            headingLevel="h2"
+            title="Change vs baseline"
+            description={`Score difference against ${baselineLabel}, per metric and dataset.`}
+          >
             <Heatmap
               aria-label={`Score change vs ${baselineLabel} by dataset and metric`}
               data={heat}
@@ -142,7 +179,14 @@ export default function EvaluationsPage(props: Partial<EvaluationsProps>) {
               rowHeader="Dataset"
             />
           </Section>
-          <Section variant="card" padding="none" headingLevel="h2" title="Regressions" description="Worse than baseline by more than the metric's tolerance." bodyClassName="p-0">
+          <Section
+            variant="card"
+            padding="none"
+            headingLevel="h2"
+            title="Regressions"
+            description="Worse than baseline by more than the metric's tolerance."
+            bodyClassName="p-0"
+          >
             <DataTable<EvalRegression>
               caption="Regressions"
               rows={regressions}
@@ -153,7 +197,12 @@ export default function EvaluationsPage(props: Partial<EvaluationsProps>) {
               showDensityToggle={false}
               defaultDensity="compact"
               rowActions={(r) => [{ label: 'View samples', icon: FileSearch, onSelect: () => setDataset(r.dataset) }]}
-              emptyState={<EmptyState title="No regressions" description={`Every metric is within tolerance of ${baselineLabel}.`} />}
+              emptyState={
+                <EmptyState
+                  title="No regressions"
+                  description={`Every metric is within tolerance of ${baselineLabel}.`}
+                />
+              }
             />
           </Section>
         </Grid>
@@ -172,7 +221,10 @@ export default function EvaluationsPage(props: Partial<EvaluationsProps>) {
               </DrawerHeader>
               <DrawerBody>
                 {shown.length === 0 ? (
-                  <EmptyState title="No samples recorded" description="This dataset has no stored samples for the run." />
+                  <EmptyState
+                    title="No samples recorded"
+                    description="This dataset has no stored samples for the run."
+                  />
                 ) : (
                   <JsonViewer key={dataset} data={shown} label={`${dataset} samples`} defaultExpandDepth={2} />
                 )}

@@ -20,7 +20,11 @@ const sections: ComparisonSection[] = [
     title: 'Operations',
     features: [
       { id: 'managed', label: 'Managed updates', values: { shared: true, dedicated: true, 'self-hosted': false } },
-      { id: 'network', label: 'Private networking', values: { shared: false, dedicated: { value: true, note: 'VPC peering' }, 'self-hosted': true } },
+      {
+        id: 'network',
+        label: 'Private networking',
+        values: { shared: false, dedicated: { value: true, note: 'VPC peering' }, 'self-hosted': true },
+      },
     ],
   },
 ];

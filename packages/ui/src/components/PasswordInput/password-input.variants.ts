@@ -23,6 +23,12 @@ export const passwordInputVariants = tv({
 });
 
 /** Fill class for a filled segment at each score. */
-export const PASSWORD_SEGMENT_FILL = ['bg-destructive', 'bg-destructive', 'bg-warning', 'bg-success', 'bg-success'] as const;
+export const PASSWORD_SEGMENT_FILL = [
+  'bg-destructive',
+  'bg-destructive',
+  'bg-warning',
+  'bg-success',
+  'bg-success',
+] as const;
 
 export type PasswordInputVariantProps = VariantProps<typeof passwordInputVariants>;

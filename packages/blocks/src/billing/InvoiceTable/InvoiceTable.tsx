@@ -1,4 +1,17 @@
-import { Badge, Button, Link, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, cn, type BadgeTone } from '@gntik-ai/ui';
+import {
+  Badge,
+  Button,
+  Link,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  cn,
+  type BadgeTone,
+} from '@gntik-ai/ui';
 import { Download } from '@gntik-ai/icons';
 import { formatMoney, formatShortDate, type DateInput } from '../format';
 import { sampleInvoices } from './fixtures';
@@ -94,7 +107,13 @@ export function InvoiceTable({
                       PDF
                     </Link>
                   ) : onDownload && inv.status !== 'void' && inv.status !== 'draft' ? (
-                    <Button variant="ghost" size="sm" icon={Download} aria-label={label} onClick={() => onDownload(inv)}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      icon={Download}
+                      aria-label={label}
+                      onClick={() => onDownload(inv)}
+                    >
                       PDF
                     </Button>
                   ) : (

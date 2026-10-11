@@ -2,7 +2,8 @@ import type { HTMLAttributes, ReactNode, Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { statusDotVariants, type StatusDotVariantProps } from './status-dot.variants';
 
-export interface StatusDotProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'className' | 'children'>, StatusDotVariantProps {
+export interface StatusDotProps
+  extends Omit<HTMLAttributes<HTMLSpanElement>, 'className' | 'children'>, StatusDotVariantProps {
   className?: string;
   ref?: Ref<HTMLSpanElement>;
   /** Visible text next to the dot. Without it, pass `aria-label` (or keep the dot decorative). */

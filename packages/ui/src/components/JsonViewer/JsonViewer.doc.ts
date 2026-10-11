@@ -15,5 +15,17 @@ export const doc: ComponentDoc = {
     ['Enter / Space', 'Selects the key (its path shows in the toolbar)'],
     ['Type a character', 'Moves to the next key starting with it'],
   ],
-  tokens: ['card', 'border', 'secondary', 'foreground', 'muted-foreground', 'primary-text', 'warning-text', 'destructive-text', 'warning', 'warning-chip-text', 'focus-ring'],
+  tokens: [
+    'card',
+    'border',
+    'secondary',
+    'foreground',
+    'muted-foreground',
+    'primary-text',
+    'warning-text',
+    'destructive-text',
+    'warning',
+    'warning-chip-text',
+    'focus-ring',
+  ],
 };

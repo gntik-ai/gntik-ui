@@ -18,7 +18,12 @@ export default function ThresholdsAndAnnotations() {
       ]}
       annotations={[
         { x: 'Sep 6', label: 'Deploy v2.4', description: 'Rolled out to every region in 12 minutes.', tone: 'primary' },
-        { x: 'Sep 18', label: 'Incident', description: 'Cache cluster failover; latency recovered after 40 minutes.', tone: 'destructive' },
+        {
+          x: 'Sep 18',
+          label: 'Incident',
+          description: 'Cache cluster failover; latency recovered after 40 minutes.',
+          tone: 'destructive',
+        },
       ]}
     />
   );

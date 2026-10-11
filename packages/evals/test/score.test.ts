@@ -3,15 +3,28 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { scaffoldPage } from '../../mcp/src/scaffold.js';
 import type { Task } from '../src/battery.js';
-import { WEIGHTS, kitImports, scoreComposition, scoreEfficiency, scoreKitOnly, scorePage, usedKitIds } from '../src/score.js';
+import {
+  WEIGHTS,
+  kitImports,
+  scoreComposition,
+  scoreEfficiency,
+  scoreKitOnly,
+  scorePage,
+  usedKitIds,
+} from '../src/score.js';
 import { EVALS_ROOT, kit } from '../src/tools.js';
 
-const page = (name: string) => fs.readFileSync(path.join(EVALS_ROOT, 'test', 'fixtures', 'pages', `${name}.tsx`), 'utf8');
+const page = (name: string) =>
+  fs.readFileSync(path.join(EVALS_ROOT, 'test', 'fixtures', 'pages', `${name}.tsx`), 'utf8');
 const k = kit();
 const members: Task = {
   id: 'members',
   prompt: 'Build a members management page.',
-  expect: { templates: ['settings-members'], blocks: ['members-table', 'invite-members-dialog'], layout: 'settings-layout' },
+  expect: {
+    templates: ['settings-members'],
+    blocks: ['members-table', 'invite-members-dialog'],
+    layout: 'settings-layout',
+  },
   mustNot: ['data-table'],
 };
 const goodCode = scaffoldPage(k, { template: 'settings-members' }).code ?? '';
@@ -62,7 +75,8 @@ describe('score', () => {
 
   it('composition: template credit covers its blocks and layout; partial recall; mustNot penalty', () => {
     expect(scoreComposition(members, goodCode, k).recall).toBe(1);
-    const blocksOnly = "import { MembersTable, DataTable } from '@gntik-ai/blocks';\nexport default function P() { return <><MembersTable /><DataTable /></>; }";
+    const blocksOnly =
+      "import { MembersTable, DataTable } from '@gntik-ai/blocks';\nexport default function P() { return <><MembersTable /><DataTable /></>; }";
     const r = scoreComposition(members, blocksOnly, k);
     expect(r.recall).toBe(0.25);
     expect(r.score).toBe(0);
@@ -75,7 +89,9 @@ describe('score', () => {
     const { all, direct } = usedKitIds(page('incident-kanban'), k);
     expect([...direct].sort()).toEqual(['card', 'grid', 'page', 'page-header', 'stack', 'status-tag']);
     expect(all.has('sidebar-layout')).toBe(true);
-    expect(kitImports("import { Card as Box, type CardProps } from '@gntik-ai/ui';")).toEqual([{ pkg: '@gntik-ai/ui', name: 'Card', local: 'Box' }]);
+    expect(kitImports("import { Card as Box, type CardProps } from '@gntik-ai/ui';")).toEqual([
+      { pkg: '@gntik-ai/ui', name: 'Card', local: 'Box' },
+    ]);
   });
 
   it('efficiency and a missing submission', () => {

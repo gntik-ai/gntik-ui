@@ -1,8 +1,22 @@
 export type PasswordStrength = 0 | 1 | 2 | 3 | 4;
 
 const COMMON = new Set([
-  'password', 'password1', 'passw0rd', '123456', '12345678', '123456789', 'qwerty', 'qwerty123',
-  'letmein', 'welcome', 'admin', 'iloveyou', 'abc123', '111111', 'changeme', 'secret',
+  'password',
+  'password1',
+  'passw0rd',
+  '123456',
+  '12345678',
+  '123456789',
+  'qwerty',
+  'qwerty123',
+  'letmein',
+  'welcome',
+  'admin',
+  'iloveyou',
+  'abc123',
+  '111111',
+  'changeme',
+  'secret',
 ]);
 
 /**
@@ -22,4 +36,10 @@ export function scorePassword(password: string): PasswordStrength {
   return Math.min(score, 4) as PasswordStrength;
 }
 
-export const DEFAULT_STRENGTH_LABELS: readonly [string, string, string, string, string] = ['Too weak', 'Weak', 'Fair', 'Good', 'Strong'];
+export const DEFAULT_STRENGTH_LABELS: readonly [string, string, string, string, string] = [
+  'Too weak',
+  'Weak',
+  'Fair',
+  'Good',
+  'Strong',
+];

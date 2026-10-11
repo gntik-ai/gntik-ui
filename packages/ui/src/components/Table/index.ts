@@ -13,5 +13,11 @@ export {
   type TableCellProps,
   type TableCaptionProps,
 } from './Table';
-export { tableVariants, nextSortDirection, type TableVariantProps, type TableDensity, type SortDirection } from './table.variants';
+export {
+  tableVariants,
+  nextSortDirection,
+  type TableVariantProps,
+  type TableDensity,
+  type SortDirection,
+} from './table.variants';
 export { doc as tableDoc } from './Table.doc';

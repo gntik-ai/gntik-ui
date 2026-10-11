@@ -8,7 +8,9 @@ describe('ModelProvidersPage', () => {
     render(<ModelProvidersPage />);
     expect(screen.getByRole('main')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 1, name: 'Model providers' })).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /Model providers/ }).some((b) => b.getAttribute('aria-current') === 'page')).toBe(true);
+    expect(
+      screen.getAllByRole('button', { name: /Model providers/ }).some((b) => b.getAttribute('aria-current') === 'page'),
+    ).toBe(true);
     expect(screen.getByRole('heading', { level: 2, name: 'Provider keys' })).toBeInTheDocument();
     expect(screen.getByRole('meter', { name: 'Spend this month' })).toBeInTheDocument();
     await expectNoAxeViolations();
@@ -25,7 +27,13 @@ describe('ModelProvidersPage', () => {
   });
 
   it('adds a key from the dialog after validation', { timeout: 15000 }, async () => {
-    const onAddKey = vi.fn((input: { name: string; provider: string }) => ({ id: 'new', name: input.name, provider: input.provider, maskedKey: 'pa-…wxyz', status: 'untested' as const }));
+    const onAddKey = vi.fn((input: { name: string; provider: string }) => ({
+      id: 'new',
+      name: input.name,
+      provider: input.provider,
+      maskedKey: 'pa-…wxyz',
+      status: 'untested' as const,
+    }));
     render(<ModelProvidersPage onAddKey={onAddKey} />);
     await userEvent.click(screen.getAllByRole('button', { name: 'Add provider key' })[0]!);
     const dialog = await screen.findByRole('dialog');
@@ -37,7 +45,14 @@ describe('ModelProvidersPage', () => {
     await userEvent.click(await screen.findByRole('option', { name: 'Provider B' }));
     await userEvent.type(within(dialog).getByLabelText(/API key/), 'pb-secret-1234');
     await userEvent.click(within(dialog).getByRole('button', { name: 'Add key' }));
-    await waitFor(() => expect(onAddKey).toHaveBeenCalledWith({ name: 'Staging', provider: 'Provider B', endpoint: '', secret: 'pb-secret-1234' }));
+    await waitFor(() =>
+      expect(onAddKey).toHaveBeenCalledWith({
+        name: 'Staging',
+        provider: 'Provider B',
+        endpoint: '',
+        secret: 'pb-secret-1234',
+      }),
+    );
     expect(await screen.findByText('Staging')).toBeInTheDocument();
   });
 });

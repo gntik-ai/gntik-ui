@@ -16,7 +16,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import type {
-  ComponentDoc, DesignSystemIndex, PortableIndex, RegistryItem, Snippet, TokenTheme, BlockRef,
+  ComponentDoc,
+  DesignSystemIndex,
+  PortableIndex,
+  RegistryItem,
+  Snippet,
+  TokenTheme,
+  BlockRef,
 } from './types.js';
 
 /** Ubicación de cada fuente dentro del monorepo. */
@@ -26,7 +32,6 @@ export const PATHS = {
   tailwind: path.join('packages', 'tokens', 'src', 'tailwind.css'),
   registryJson: 'registry.json',
 } as const;
-
 
 /* ── utilidades de parseo ────────────────────────────────────────────────── */
 
@@ -39,16 +44,34 @@ function extractBalanced(text: string, start: number, open: string, close: strin
   for (let i = start; i < text.length; i++) {
     const ch = text[i];
     const prev = text[i - 1];
-    if (inLine) { if (ch === '\n') inLine = false; continue; }
-    if (inBlock) { if (prev === '*' && ch === '/') inBlock = false; continue; }
+    if (inLine) {
+      if (ch === '\n') inLine = false;
+      continue;
+    }
+    if (inBlock) {
+      if (prev === '*' && ch === '/') inBlock = false;
+      continue;
+    }
     if (inStr) {
-      if (ch === '\\') { i++; continue; }
+      if (ch === '\\') {
+        i++;
+        continue;
+      }
       if (ch === inStr) inStr = null;
       continue;
     }
-    if (ch === '/' && text[i + 1] === '/') { inLine = true; continue; }
-    if (ch === '/' && text[i + 1] === '*') { inBlock = true; continue; }
-    if (ch === '"' || ch === "'" || ch === '`') { inStr = ch; continue; }
+    if (ch === '/' && text[i + 1] === '/') {
+      inLine = true;
+      continue;
+    }
+    if (ch === '/' && text[i + 1] === '*') {
+      inBlock = true;
+      continue;
+    }
+    if (ch === '"' || ch === "'" || ch === '`') {
+      inStr = ch;
+      continue;
+    }
     if (ch === open) depth++;
     else if (ch === close) {
       depth--;
@@ -63,7 +86,10 @@ function readTemplateLiteral(text: string, backtickIdx: number): { raw: string; 
   if (text[backtickIdx] !== '`') return undefined;
   for (let i = backtickIdx + 1; i < text.length; i++) {
     const ch = text[i];
-    if (ch === '\\') { i++; continue; }
+    if (ch === '\\') {
+      i++;
+      continue;
+    }
     if (ch === '`') return { raw: text.slice(backtickIdx, i + 1), end: i };
   }
   return undefined;
@@ -74,7 +100,9 @@ function evalTemplate(raw: string): string {
   try {
     const v = vm.runInNewContext('(' + raw + ')', Object.create(null), { timeout: 1000 });
     if (typeof v === 'string') return v;
-  } catch { /* contiene ${…} sin escapar → fallback */ }
+  } catch {
+    /* contiene ${…} sin escapar → fallback */
+  }
   return raw
     .slice(1, -1)
     .replace(/\\`/g, '`')
@@ -101,8 +129,11 @@ export function parseRegistry(root: string): RegistryItem[] {
   if (openIdx < 0) throw new Error('registry.jsx: REGISTRY sin array');
   const arrText = extractBalanced(text, openIdx, '[', ']');
   if (!arrText) throw new Error('registry.jsx: no puedo extraer el array REGISTRY');
-  const groups = vm.runInNewContext('(' + arrText + ')', Object.create(null), { timeout: 2000 }) as
-    Array<{ group: string; icon?: string; items?: Array<Record<string, string>> }>;
+  const groups = vm.runInNewContext('(' + arrText + ')', Object.create(null), { timeout: 2000 }) as Array<{
+    group: string;
+    icon?: string;
+    items?: Array<Record<string, string>>;
+  }>;
   const items: RegistryItem[] = [];
   for (const g of groups) {
     for (const it of g.items ?? []) {
@@ -124,8 +155,12 @@ export function parseRegistry(root: string): RegistryItem[] {
 
 export function parseComponentFile(root: string, item: RegistryItem): ComponentDoc {
   const doc: ComponentDoc = {
-    id: item.id, label: item.label, group: item.group,
-    status: item.status, blurb: item.blurb, snippets: [],
+    id: item.id,
+    label: item.label,
+    group: item.group,
+    status: item.status,
+    blurb: item.blurb,
+    snippets: [],
   };
   const file = path.join(PATHS.catalog, `${item.id}.jsx`);
   const full = path.join(root, file);
@@ -249,7 +284,10 @@ export function extractSection(md: string | undefined, heading: RegExp): string 
   if (start < 0) return undefined;
   let end = lines.length;
   for (let i = start + 1; i < lines.length; i++) {
-    if (/^##\s/.test(lines[i])) { end = i; break; }
+    if (/^##\s/.test(lines[i])) {
+      end = i;
+      break;
+    }
   }
   return lines.slice(start, end).join('\n').trim();
 }
@@ -259,7 +297,8 @@ export function extractSection(md: string | undefined, heading: RegExp): string 
 function listBlocks(root: string): BlockRef[] {
   const dir = path.join(root, 'blocks');
   if (!fs.existsSync(dir)) return [];
-  return fs.readdirSync(dir)
+  return fs
+    .readdirSync(dir)
     .filter((f) => f.endsWith('.html'))
     .map((f) => ({ name: f.replace(/\.html$/, ''), file: path.join('blocks', f) }));
 }
@@ -316,10 +355,7 @@ export function serializeIndex(index: PortableIndex): string {
  * Índice servible: registry.json si existe (el contrato generado), si no se
  * parsea el catálogo en caliente.
  */
-export function loadIndex(
-  root: string,
-  meta: { source: 'dir' | 'git'; gitHead?: string },
-): DesignSystemIndex {
+export function loadIndex(root: string, meta: { source: 'dir' | 'git'; gitHead?: string }): DesignSystemIndex {
   const json = path.join(root, PATHS.registryJson);
   const portable: PortableIndex = fs.existsSync(json)
     ? (JSON.parse(fs.readFileSync(json, 'utf8')) as PortableIndex)

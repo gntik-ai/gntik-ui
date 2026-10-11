@@ -105,7 +105,11 @@ export function CanvasLayout({
   const skipLinkLabel = skipLinkLabelProp ?? t('skip.canvas');
   const MainTag = embedded ? 'div' : 'main';
   const [paletteOpen, setPaletteOpen] = usePanelState(paletteOpenProp, defaultPaletteOpen, onPaletteOpenChange);
-  const [inspectorOpen, setInspectorOpen] = usePanelState(inspectorOpenProp, defaultInspectorOpen, onInspectorOpenChange);
+  const [inspectorOpen, setInspectorOpen] = usePanelState(
+    inspectorOpenProp,
+    defaultInspectorOpen,
+    onInspectorOpenChange,
+  );
   const [consoleOpen, setConsoleOpen] = usePanelState(consoleOpenProp, defaultConsoleOpen, onConsoleOpenChange);
   const uid = useId();
   const paletteId = `${uid}-palette`;
@@ -157,7 +161,13 @@ export function CanvasLayout({
           </aside>
         )}
         <div className={s.center()}>
-          <MainTag id={mainId} tabIndex={-1} role={embedded ? 'region' : undefined} aria-label={mainLabel} className={s.main()}>
+          <MainTag
+            id={mainId}
+            tabIndex={-1}
+            role={embedded ? 'region' : undefined}
+            aria-label={mainLabel}
+            className={s.main()}
+          >
             {smallScreenNotice != null && (
               <p className={s.notice()}>
                 <Monitor size={14} aria-hidden className="shrink-0" />

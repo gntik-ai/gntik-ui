@@ -16,7 +16,12 @@ describe('settingsNav', () => {
     const groups = settingsNav('/settings', extras);
     expect(groups.map((g) => g.label)).toEqual(['Account', 'Workspace', 'Product']);
     const workspace = groups[1]!.items;
-    expect(workspace.at(-1)).toEqual({ id: 'model-keys', label: 'Model keys', icon: Cpu, href: '/settings/model-keys' });
+    expect(workspace.at(-1)).toEqual({
+      id: 'model-keys',
+      label: 'Model keys',
+      icon: Cpu,
+      href: '/settings/model-keys',
+    });
     expect(groups[2]!.items[0]!.href).toBe('/settings/labs');
     expect(settingsNav().flatMap((g) => g.items)).toHaveLength(9);
     expect(settingsNav(undefined, extras)[1]!.items.at(-1)!.href).toBeUndefined();
@@ -27,7 +32,12 @@ describe('SettingsFrame', () => {
   it('renders a product page in the shared nav and reports navigation', { timeout: 15000 }, async () => {
     const onNavigate = vi.fn();
     render(
-      <SettingsFrame page="model-keys" extraNavItems={extras} onNavigate={onNavigate} description="Bring your own provider keys.">
+      <SettingsFrame
+        page="model-keys"
+        extraNavItems={extras}
+        onNavigate={onNavigate}
+        description="Bring your own provider keys."
+      >
         <p>Keys table</p>
       </SettingsFrame>,
     );

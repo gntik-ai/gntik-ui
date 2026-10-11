@@ -67,7 +67,16 @@ function ImageLink({ href, alt }: { href: string; alt?: string }) {
 
 function TaskCheckbox({ checked }: { checked: boolean }) {
   const { t } = useI18n();
-  return <input type="checkbox" checked={checked} readOnly disabled aria-label={checked ? t('chat.taskDone') : t('chat.taskNotDone')} className={s.checkbox} />;
+  return (
+    <input
+      type="checkbox"
+      checked={checked}
+      readOnly
+      disabled
+      aria-label={checked ? t('chat.taskDone') : t('chat.taskNotDone')}
+      className={s.checkbox}
+    />
+  );
 }
 
 function omitNode<T extends { node?: unknown }>(props: T): Omit<T, 'node'> {
@@ -117,10 +126,7 @@ const components: Components = {
     );
   },
   img: ({ src, alt }) => <ImageLink href={typeof src === 'string' ? src : ''} alt={alt} />,
-  input: ({ checked, type }) =>
-    type === 'checkbox' ? (
-      <TaskCheckbox checked={!!checked} />
-    ) : null,
+  input: ({ checked, type }) => (type === 'checkbox' ? <TaskCheckbox checked={!!checked} /> : null),
   code: ({ className, children }) => <code className={cn(s.inlineCode, className)}>{children}</code>,
   pre: ({ children }) => {
     const child = Children.toArray(children)[0];
@@ -148,4 +154,3 @@ export const Markdown = memo(function Markdown({ children, streaming = false, cl
     </div>
   );
 });
-

@@ -11,8 +11,18 @@ export default function DateRangePickerPresets() {
     <div className="max-w-sm">
       <Field>
         <FieldLabel>Usage period</FieldLabel>
-        <DateRangePicker value={range} onValueChange={setRange} locale="en-US" weekStartsOn={0} today={today} max={today} name="period" />
-        <FieldDescription>Showing deployments from {formatDateRange(range, 'en-US', { month: 'short', day: 'numeric' })}.</FieldDescription>
+        <DateRangePicker
+          value={range}
+          onValueChange={setRange}
+          locale="en-US"
+          weekStartsOn={0}
+          today={today}
+          max={today}
+          name="period"
+        />
+        <FieldDescription>
+          Showing deployments from {formatDateRange(range, 'en-US', { month: 'short', day: 'numeric' })}.
+        </FieldDescription>
       </Field>
     </div>
   );

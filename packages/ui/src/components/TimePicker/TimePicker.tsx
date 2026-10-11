@@ -108,12 +108,20 @@ export function TimePicker({
   const s = timePickerVariants({ size });
   const minuteStep = Math.max(1, Math.floor(step));
 
-  const keys: SegmentKey[] = ['hour', 'minute', ...(withSeconds ? (['second'] as const) : []), ...(hourCycle === 12 ? (['period'] as const) : [])];
+  const keys: SegmentKey[] = [
+    'hour',
+    'minute',
+    ...(withSeconds ? (['second'] as const) : []),
+    ...(hourCycle === 12 ? (['period'] as const) : []),
+  ];
   const current = draftToValue(draft, withSeconds);
   const parsed = parseTimeOfDay(current);
   const minT = parseTimeOfDay(min);
   const maxT = parseTimeOfDay(max);
-  const outOfRange = !!parsed && ((!!minT && timeToSeconds(parsed) < timeToSeconds(minT)) || (!!maxT && timeToSeconds(parsed) > timeToSeconds(maxT)));
+  const outOfRange =
+    !!parsed &&
+    ((!!minT && timeToSeconds(parsed) < timeToSeconds(minT)) ||
+      (!!maxT && timeToSeconds(parsed) > timeToSeconds(maxT)));
 
   const periodFlag = draft.hour !== null ? draft.hour >= 12 : draft.pm;
   const display = (key: SegmentKey): number | null => {
@@ -158,7 +166,8 @@ export function TimePicker({
     const top = Math.floor(hi / stepSize) * stepSize;
     let next: number;
     if (cur === null) next = delta > 0 ? lo : top;
-    else if (stepSize > 1) next = delta > 0 ? (Math.floor(cur / stepSize) + 1) * stepSize : (Math.ceil(cur / stepSize) - 1) * stepSize;
+    else if (stepSize > 1)
+      next = delta > 0 ? (Math.floor(cur / stepSize) + 1) * stepSize : (Math.ceil(cur / stepSize) - 1) * stepSize;
     else next = cur + delta;
     if (next > hi) next = lo;
     if (next < lo) next = top;
@@ -189,7 +198,8 @@ export function TimePicker({
     else if (e.key === 'ArrowUp') spin(key, 1);
     else if (e.key === 'ArrowDown') spin(key, -1);
     else if (e.key === 'Home') commit(withSegment(draft, key, range(key)[0]));
-    else if (e.key === 'End') commit(withSegment(draft, key, key === 'minute' ? Math.floor(59 / minuteStep) * minuteStep : range(key)[1]));
+    else if (e.key === 'End')
+      commit(withSegment(draft, key, key === 'minute' ? Math.floor(59 / minuteStep) * minuteStep : range(key)[1]));
     else if (e.key === 'Backspace' || e.key === 'Delete') {
       buffer.current = null;
       commit(withSegment(draft, key, null));
@@ -212,7 +222,15 @@ export function TimePicker({
   };
 
   const label = (key: SegmentKey) =>
-    t(key === 'hour' ? 'timePicker.hours' : key === 'minute' ? 'timePicker.minutes' : key === 'second' ? 'timePicker.seconds' : 'timePicker.period');
+    t(
+      key === 'hour'
+        ? 'timePicker.hours'
+        : key === 'minute'
+          ? 'timePicker.minutes'
+          : key === 'second'
+            ? 'timePicker.seconds'
+            : 'timePicker.period',
+    );
 
   return (
     <>

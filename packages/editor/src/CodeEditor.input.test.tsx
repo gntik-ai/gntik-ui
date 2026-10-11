@@ -13,7 +13,9 @@ beforeAll(async () => {
   stylesheet.textContent = [
     'node_modules/monaco-editor/esm/vs/editor/browser/controller/editContext/textArea/textAreaEditContext.css',
     'src/styles.css',
-  ].map((file) => readFileSync(resolve(process.cwd(), file), 'utf8')).join('\n');
+  ]
+    .map((file) => readFileSync(resolve(process.cwd(), file), 'utf8'))
+    .join('\n');
   document.head.append(stylesheet);
 }, 300000);
 

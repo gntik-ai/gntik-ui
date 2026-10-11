@@ -46,7 +46,9 @@ describe('AttachmentChip / AttachmentList', () => {
     const onRetry = vi.fn();
     const onRemove = vi.fn();
     const user = userEvent.setup();
-    render(<AttachmentChip attachment={{ id: 'x', name: 'notes.md', error: true }} onRetry={onRetry} onRemove={onRemove} />);
+    render(
+      <AttachmentChip attachment={{ id: 'x', name: 'notes.md', error: true }} onRetry={onRetry} onRemove={onRemove} />,
+    );
     expect(screen.getByText('Upload failed')).toBeInTheDocument();
     await user.tab();
     expect(screen.getByRole('button', { name: 'Retry uploading notes.md' })).toHaveFocus();
@@ -89,7 +91,12 @@ describe('validateFiles', () => {
     const big = file('b.png', 'image/png', 50);
     const bad = file('c.exe', '', 5);
     const extra = file('d.png', 'image/png', 5);
-    const { accepted, rejected } = validateFiles([ok, big, bad, extra], { accept: 'image/*', maxSize: 20, maxFiles: 2, current: 1 });
+    const { accepted, rejected } = validateFiles([ok, big, bad, extra], {
+      accept: 'image/*',
+      maxSize: 20,
+      maxFiles: 2,
+      current: 1,
+    });
     expect(accepted).toEqual([ok]);
     expect(rejected.map((r) => [r.file.name, r.reason])).toEqual([
       ['b.png', 'size'],

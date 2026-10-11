@@ -80,7 +80,8 @@ const getServerSnapshot = () => SERVER_THEME;
 const getVarSnapshot = () => varTheme(currentTheme());
 function getResolvedSnapshot() {
   const theme = currentTheme();
-  if (!resolvedSnapshot || resolvedSnapshot.theme !== theme) resolvedSnapshot = buildTheme(theme, (token, alpha) => tokenColor(token, alpha));
+  if (!resolvedSnapshot || resolvedSnapshot.theme !== theme)
+    resolvedSnapshot = buildTheme(theme, (token, alpha) => tokenColor(token, alpha));
   return resolvedSnapshot;
 }
 

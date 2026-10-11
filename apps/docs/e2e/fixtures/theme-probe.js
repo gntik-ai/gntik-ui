@@ -11,10 +11,13 @@
       classes: document.documentElement.className,
       colorScheme: document.documentElement.style.colorScheme,
     };
-    window.themeProbe[phase] = phase === 'head' ? {
-      ...snapshot,
-      bodyPresent: document.body !== null,
-      painted: performance.getEntriesByType('paint').length > 0,
-    } : snapshot;
+    window.themeProbe[phase] =
+      phase === 'head'
+        ? {
+            ...snapshot,
+            bodyPresent: document.body !== null,
+            painted: performance.getEntriesByType('paint').length > 0,
+          }
+        : snapshot;
   }
 }

@@ -2,7 +2,8 @@ import type { HTMLAttributes, Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { skeletonVariants, type SkeletonVariantProps } from './skeleton.variants';
 
-export interface SkeletonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'>, SkeletonVariantProps {
+export interface SkeletonProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'>, SkeletonVariantProps {
   className?: string;
   ref?: Ref<HTMLDivElement>;
   /** For `shape="text"`: number of lines; the last one is shorter. */

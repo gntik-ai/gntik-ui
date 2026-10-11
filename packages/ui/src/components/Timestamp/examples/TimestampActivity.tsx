@@ -9,7 +9,11 @@ export default function TimestampActivity() {
   const events = [
     { id: 1, text: 'Maria Ruiz deployed api-gateway to production', at: now - 3 * MINUTE },
     { id: 2, text: 'Invoice INV-2041 was paid', at: now - 2 * 60 * MINUTE },
-    { id: 3, text: 'Daniel Okafor joined the Platform project', at: new Date(now - 3 * 24 * 60 * MINUTE).toISOString() },
+    {
+      id: 3,
+      text: 'Daniel Okafor joined the Platform project',
+      at: new Date(now - 3 * 24 * 60 * MINUTE).toISOString(),
+    },
   ];
   return (
     <TooltipProvider>

@@ -29,7 +29,8 @@ export function useBoard({ columns, cards, initial, onMove }: UseBoardOptions) {
 
   const titleOf = (id: string) => cards.find((c) => c.id === id)?.title ?? id;
   const columnTitle = (id: string) => columns.find((c) => c.id === id)?.title ?? id;
-  const where = (s: BoardState, column: string, index: number) => `${columnTitle(column)}, position ${index + 1} of ${s[column]?.length ?? 0}`;
+  const where = (s: BoardState, column: string, index: number) =>
+    `${columnTitle(column)}, position ${index + 1} of ${s[column]?.length ?? 0}`;
 
   const register = (id: string) => (el: HTMLButtonElement | null) => {
     if (el) buttons.current.set(id, el);
@@ -65,7 +66,9 @@ export function useBoard({ columns, cards, initial, onMove }: UseBoardOptions) {
         onMove?.(id, at.column, at.index);
       } else {
         setGrab({ id, origin: at });
-        setAnnouncement(`Picked up ${titleOf(id)} in ${where(state, at.column, at.index)}. Use the arrow keys to move, Space to drop, Escape to cancel.`);
+        setAnnouncement(
+          `Picked up ${titleOf(id)} in ${where(state, at.column, at.index)}. Use the arrow keys to move, Space to drop, Escape to cancel.`,
+        );
       }
       return;
     }

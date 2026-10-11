@@ -31,7 +31,9 @@ describe('HoverCard', () => {
     const onClick = vi.fn((e: { preventDefault: () => void }) => e.preventDefault());
     render(
       <HoverCard>
-        <HoverCardTrigger href="/projects/atlas" onClick={onClick}>Atlas</HoverCardTrigger>
+        <HoverCardTrigger href="/projects/atlas" onClick={onClick}>
+          Atlas
+        </HoverCardTrigger>
         <HoverCardContent>Atlas project</HoverCardContent>
       </HoverCard>,
     );

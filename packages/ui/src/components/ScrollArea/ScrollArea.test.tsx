@@ -62,9 +62,16 @@ describe('ScrollArea', () => {
     const restore = fakeOverflow();
     try {
       const { container, rerender } = render(<ScrollArea>x</ScrollArea>);
-      const bars = () => Array.from(container.querySelectorAll('[data-orientation]')).filter((b) => !b.parentElement?.hasAttribute('data-orientation')).map((b) => b.getAttribute('data-orientation'));
+      const bars = () =>
+        Array.from(container.querySelectorAll('[data-orientation]'))
+          .filter((b) => !b.parentElement?.hasAttribute('data-orientation'))
+          .map((b) => b.getAttribute('data-orientation'));
       await waitFor(() => expect(bars()).toEqual(['vertical']));
-      rerender(<ScrollArea orientation="both" bordered className="h-10">x</ScrollArea>);
+      rerender(
+        <ScrollArea orientation="both" bordered className="h-10">
+          x
+        </ScrollArea>,
+      );
       await waitFor(() => expect(bars()).toEqual(expect.arrayContaining(['vertical', 'horizontal'])));
       expect(container.firstElementChild).toHaveClass('border', 'h-10');
     } finally {
@@ -73,7 +80,12 @@ describe('ScrollArea', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><ScrollAreaActivity /><ScrollAreaHorizontal /></>);
+    render(
+      <>
+        <ScrollAreaActivity />
+        <ScrollAreaHorizontal />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

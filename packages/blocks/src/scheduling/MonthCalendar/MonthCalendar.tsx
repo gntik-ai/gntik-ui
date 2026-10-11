@@ -1,7 +1,21 @@
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { cn, useI18n } from '@gntik-ai/ui';
 import { CalendarHeader } from '../shared/CalendarHeader';
-import { addDays, addMonths, dayKey, formatFullDate, formatMonth, formatTime, formatWeekday, monthGrid, sameDay, sameMonth, startOfDay, startOfMonth, startOfWeek } from '../shared/dates';
+import {
+  addDays,
+  addMonths,
+  dayKey,
+  formatFullDate,
+  formatMonth,
+  formatTime,
+  formatWeekday,
+  monthGrid,
+  sameDay,
+  sameMonth,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+} from '../shared/dates';
 import { defaultEventKinds, groupByDay, kindOf, TONE, type EventKind, type ScheduleEvent } from '../shared/events';
 import { sampleEvents, sampleToday } from '../shared/fixtures';
 
@@ -137,7 +151,12 @@ export function MonthCalendar({
               const isSelected = sameDay(date, selected);
               const extra = list.length - maxEventsPerDay;
               return (
-                <div key={key} role="gridcell" aria-selected={isSelected} className="min-w-0 border-e border-b border-border/70 [&:nth-child(7)]:border-e-0">
+                <div
+                  key={key}
+                  role="gridcell"
+                  aria-selected={isSelected}
+                  className="min-w-0 border-e border-b border-border/70 [&:nth-child(7)]:border-e-0"
+                >
                   <button
                     type="button"
                     data-date={key}
@@ -181,10 +200,16 @@ export function MonthCalendar({
                         <span key={e.id} className="flex min-w-0 items-center gap-1.5">
                           <span className={cn('size-1.5 shrink-0 rounded-full', TONE[kindOf(e, kinds).tone].dot)} />
                           <span className="truncate text-[11px] text-foreground/80">{e.title}</span>
-                          <span className="ms-auto hidden shrink-0 font-mono text-[10px] text-muted-foreground xl:block">{formatTime(e.start, locale)}</span>
+                          <span className="ms-auto hidden shrink-0 font-mono text-[10px] text-muted-foreground xl:block">
+                            {formatTime(e.start, locale)}
+                          </span>
                         </span>
                       ))}
-                      {extra > 0 && <span className="block ps-3 text-[10.5px] text-muted-foreground">+ {t('common.more', { count: extra })}</span>}
+                      {extra > 0 && (
+                        <span className="block ps-3 text-[10.5px] text-muted-foreground">
+                          + {t('common.more', { count: extra })}
+                        </span>
+                      )}
                     </span>
                   </button>
                 </div>

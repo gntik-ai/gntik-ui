@@ -31,7 +31,9 @@ describe('JsonViewer', () => {
     expect(screen.getByText('null')).toHaveClass('text-muted-foreground');
     expect(node(/^o:\s*\{ \} 1 key/)).toHaveAttribute('aria-expanded', 'true');
     expect(node(/^a:\s*\[ \] 2 items/)).toHaveAttribute('aria-expanded', 'true');
-    const classes = Array.from(document.querySelectorAll('[class]')).map((el) => el.getAttribute('class')).join(' ');
+    const classes = Array.from(document.querySelectorAll('[class]'))
+      .map((el) => el.getAttribute('class'))
+      .join(' ');
     expect(classes).not.toMatch(/text-(primary|success|warning|destructive|info)(?![-\w])/);
   });
 

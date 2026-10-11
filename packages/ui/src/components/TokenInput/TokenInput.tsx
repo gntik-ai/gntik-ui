@@ -111,14 +111,26 @@ export function TokenInput({
       added.push(t);
     }
     setDraft('');
-    if (added.length) update(next, [i18n.t('tokenInput.added', { items: added.join(', ') }), limited ? i18n.t('tokenInput.limit', { max: maxItems ?? 0 }) : ''].filter(Boolean).join(' '));
+    if (added.length)
+      update(
+        next,
+        [
+          i18n.t('tokenInput.added', { items: added.join(', ') }),
+          limited ? i18n.t('tokenInput.limit', { max: maxItems ?? 0 }) : '',
+        ]
+          .filter(Boolean)
+          .join(' '),
+      );
     else if (limited) setAnnouncement(i18n.t('tokenInput.limit', { max: maxItems ?? 0 }));
   };
 
   const remove = (index: number) => {
     const t = tokens[index];
     if (t === undefined) return;
-    update(tokens.filter((_, i) => i !== index), i18n.t('common.removed', { label: t }));
+    update(
+      tokens.filter((_, i) => i !== index),
+      i18n.t('common.removed', { label: t }),
+    );
     inputRef.current?.focus();
   };
 

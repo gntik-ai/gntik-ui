@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 
-const pkg = (name, entry = 'src/index.ts') => fileURLToPath(new URL(`../../packages/${name}/${entry}`, import.meta.url));
+const pkg = (name, entry = 'src/index.ts') =>
+  fileURLToPath(new URL(`../../packages/${name}/${entry}`, import.meta.url));
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],

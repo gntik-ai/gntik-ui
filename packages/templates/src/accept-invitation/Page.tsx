@@ -46,7 +46,11 @@ export default function AcceptInvitationPage({
   const body =
     outcome === 'accepted' ? (
       <Stack gap={2}>
-        <AuthHeader eyebrow="Invitation accepted" title={`Welcome to ${workspace}`} description={`You joined as ${role}. ${inviter.name} has been notified.`} />
+        <AuthHeader
+          eyebrow="Invitation accepted"
+          title={`Welcome to ${workspace}`}
+          description={`You joined as ${role}. ${inviter.name} has been notified.`}
+        />
         <Button size="lg" className="w-full" onClick={onOpenWorkspace}>
           Open workspace
         </Button>
@@ -60,7 +64,11 @@ export default function AcceptInvitationPage({
       />
     ) : (
       <>
-        <AuthHeader eyebrow="Invitation" title={`Join ${workspace}`} description={`${inviter.name} invited you to collaborate. This invitation expires in ${expiresIn}.`} />
+        <AuthHeader
+          eyebrow="Invitation"
+          title={`Join ${workspace}`}
+          description={`${inviter.name} invited you to collaborate. This invitation expires in ${expiresIn}.`}
+        />
         <Stack gap={5}>
           {error && <Alert tone="destructive" description={error} />}
           <Stack direction="row" align="center" gap={3}>
@@ -73,26 +81,49 @@ export default function AcceptInvitationPage({
           <Separator />
           <Stack as="dl" gap={3}>
             <Stack direction="row" justify="between" align="center" gap={4}>
-              <Text as="dt" variant="supporting" tone="muted">Workspace</Text>
-              <Text as="dd" variant="label">{workspace}</Text>
+              <Text as="dt" variant="supporting" tone="muted">
+                Workspace
+              </Text>
+              <Text as="dd" variant="label">
+                {workspace}
+              </Text>
             </Stack>
             <Stack direction="row" justify="between" align="center" gap={4}>
-              <Text as="dt" variant="supporting" tone="muted">Role</Text>
+              <Text as="dt" variant="supporting" tone="muted">
+                Role
+              </Text>
               <Text as="dd" variant="label">
                 <Badge tone="primary">{role}</Badge>
               </Text>
             </Stack>
             <Stack direction="row" justify="between" align="center" gap={4}>
-              <Text as="dt" variant="supporting" tone="muted">Members</Text>
-              <Text as="dd" variant="label">{memberCount}</Text>
+              <Text as="dt" variant="supporting" tone="muted">
+                Members
+              </Text>
+              <Text as="dd" variant="label">
+                {memberCount}
+              </Text>
             </Stack>
           </Stack>
           <Text variant="caption">{roleDescription}</Text>
           <Stack gap={2}>
-            <Button size="lg" className="w-full" loading={busy === 'accept'} disabled={busy === 'decline'} onClick={() => void act('accept')}>
+            <Button
+              size="lg"
+              className="w-full"
+              loading={busy === 'accept'}
+              disabled={busy === 'decline'}
+              onClick={() => void act('accept')}
+            >
               Join {workspace}
             </Button>
-            <Button variant="ghost" size="lg" className="w-full" loading={busy === 'decline'} disabled={busy === 'accept'} onClick={() => void act('decline')}>
+            <Button
+              variant="ghost"
+              size="lg"
+              className="w-full"
+              loading={busy === 'decline'}
+              disabled={busy === 'accept'}
+              onClick={() => void act('decline')}
+            >
               Decline
             </Button>
           </Stack>
@@ -108,7 +139,8 @@ export default function AcceptInvitationPage({
       skipLinkLabel="Skip to invitation"
       footer={
         <>
-          Signed in as <span className="font-medium text-foreground">{inviteeEmail}</span>. <Link href={switchAccountHref}>Not you?</Link>
+          Signed in as <span className="font-medium text-foreground">{inviteeEmail}</span>.{' '}
+          <Link href={switchAccountHref}>Not you?</Link>
         </>
       }
     >

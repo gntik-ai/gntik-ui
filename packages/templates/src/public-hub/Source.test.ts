@@ -14,7 +14,10 @@ const forbidden = [
   /\b(?:rgba?|hsla?|hwb|oklch|oklab|lab|lch|color)\s*\(/i,
   /\b\d*\.?\d+(?:px|rem|em)\b/i,
   new RegExp(`(?:['"\x60]|:\\s*)(?:${namedColours})(?:['"\x60]|\\s*[;}])`, 'i'),
-  new RegExp(`\\b(?:bg|text|border|ring|outline|fill|stroke|shadow|divide|decoration)-(?:${namedColours})(?:-\\d+)?\\b`, 'i'),
+  new RegExp(
+    `\\b(?:bg|text|border|ring|outline|fill|stroke|shadow|divide|decoration)-(?:${namedColours})(?:-\\d+)?\\b`,
+    'i',
+  ),
   /\bdark:|\bbg-(?:gradient|linear|radial|conic)-|\bglow\b/,
 ];
 

@@ -1,6 +1,19 @@
 import { AuthHeader } from '@gntik-ai/blocks';
 import { Building2 } from '@gntik-ai/icons';
-import { Alert, AuthLayout, Button, Field, FieldDescription, FieldError, FieldLabel, Input, Link, Spinner, Stack, Text } from '@gntik-ai/ui';
+import {
+  Alert,
+  AuthLayout,
+  Button,
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  Input,
+  Link,
+  Spinner,
+  Stack,
+  Text,
+} from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
 import { ssoEmailPattern, ssoLoginSample } from './data';
 
@@ -67,7 +80,8 @@ export default function SsoLoginPage({
             title={`Redirecting to ${providerName}`}
             description={
               <>
-                <span className="font-medium text-foreground">{domain}</span> signs in through {providerName}. If nothing happens in a few seconds, try again.
+                <span className="font-medium text-foreground">{domain}</span> signs in through {providerName}. If
+                nothing happens in a few seconds, try again.
               </>
             }
           />
@@ -96,7 +110,11 @@ export default function SsoLoginPage({
         </Stack>
       ) : (
         <>
-          <AuthHeader eyebrow="Single sign-on" title="Sign in with SSO" description="Enter your work email and we'll send you to your organization's identity provider." />
+          <AuthHeader
+            eyebrow="Single sign-on"
+            title="Sign in with SSO"
+            description="Enter your work email and we'll send you to your organization's identity provider."
+          />
           <form
             noValidate
             aria-label="Single sign-on"
@@ -110,7 +128,15 @@ export default function SsoLoginPage({
             {alert && <Alert tone="destructive" description={alert} />}
             <Field invalid={invalid}>
               <FieldLabel>Work email</FieldLabel>
-              <Input type="email" leadingIcon={Building2} autoComplete="email" placeholder="name@company.com" value={email} onValueChange={setEmail} required />
+              <Input
+                type="email"
+                leadingIcon={Building2}
+                autoComplete="email"
+                placeholder="name@company.com"
+                value={email}
+                onValueChange={setEmail}
+                required
+              />
               <FieldDescription>Your domain decides where you sign in.</FieldDescription>
               <FieldError match={invalid}>Enter a valid work email.</FieldError>
             </Field>

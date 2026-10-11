@@ -51,7 +51,12 @@ export function ComboChart<T extends object>({
 }: ComboChartProps<T>) {
   const t = useChartTheme();
   const [hidden, toggle] = useHiddenSeries();
-  const x = useCartesianExtras(data, index, { thresholds, annotations, brush, range, defaultRange, onRangeChange, animate }, { valueFormatter: barFormatter, previewKey: barSeries, yAxisIdOf: (axis) => axis });
+  const x = useCartesianExtras(
+    data,
+    index,
+    { thresholds, annotations, brush, range, defaultRange, onRangeChange, animate },
+    { valueFormatter: barFormatter, previewKey: barSeries, yAxisIdOf: (axis) => axis },
+  );
   const bc = t.color(barColor);
   const lc = t.color(lineColor);
   const legend = [

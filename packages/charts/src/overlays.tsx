@@ -75,7 +75,15 @@ function ThresholdLabel(props: { label: string; tone: ChartTone; vertical: boole
     );
   }
   return (
-    <text x={box.x + box.width - 4} y={box.y - 5} textAnchor="end" fill={fill} fontSize={11} fontWeight={500} data-chart-threshold-label="">
+    <text
+      x={box.x + box.width - 4}
+      y={box.y - 5}
+      textAnchor="end"
+      fill={fill}
+      fontSize={11}
+      fontWeight={500}
+      data-chart-threshold-label=""
+    >
       {label}
     </text>
   );
@@ -140,10 +148,22 @@ function AnnotationMarker({
 }
 
 /** Recharts clones a label element with the line's `viewBox` (and the plot's `parentViewBox`). */
-function AnnotationLabel(props: { annotation: ChartAnnotation; active: boolean; onActive: (key: string | null) => void }) {
+function AnnotationLabel(props: {
+  annotation: ChartAnnotation;
+  active: boolean;
+  onActive: (key: string | null) => void;
+}) {
   const box = boxOf(props);
   if (!box) return null;
-  return <AnnotationMarker box={box} plotRight={plotRightOf(props)} annotation={props.annotation} active={props.active} onActive={props.onActive} />;
+  return (
+    <AnnotationMarker
+      box={box}
+      plotRight={plotRightOf(props)}
+      annotation={props.annotation}
+      active={props.active}
+      onActive={props.onActive}
+    />
+  );
 }
 
 export interface ReferenceElementsOptions {
@@ -225,19 +245,41 @@ export interface ChartMarkersProps {
  * route to the same information as the in-plot markers. Focusing or hovering an annotation
  * highlights its marker and opens its tooltip in the plot.
  */
-export function ChartMarkers({ thresholds = [], annotations = [], valueFormatter, active = null, onActiveChange, className }: ChartMarkersProps) {
+export function ChartMarkers({
+  thresholds = [],
+  annotations = [],
+  valueFormatter,
+  active = null,
+  onActiveChange,
+  className,
+}: ChartMarkersProps) {
   const id = useId();
   if (thresholds.length === 0 && annotations.length === 0) return null;
   const fmt = (n: number) => (valueFormatter ? valueFormatter(n) : String(n));
   return (
-    <ul aria-label="Chart markers" className={cx('mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 px-1 text-[12px] text-muted-foreground', className)}>
+    <ul
+      aria-label="Chart markers"
+      className={cx(
+        'mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 px-1 text-[12px] text-muted-foreground',
+        className,
+      )}
+    >
       {thresholds.map((th, i) => (
         <li key={`t-${i}`} className="flex items-center gap-1.5" data-chart-marker="threshold">
           <svg aria-hidden width="18" height="4" className="shrink-0">
-            <line x1="0" y1="2" x2="18" y2="2" stroke={v(TONE_TOKENS[th.tone ?? 'neutral'].stroke)} strokeWidth={1.5} strokeDasharray={THRESHOLD_DASH} />
+            <line
+              x1="0"
+              y1="2"
+              x2="18"
+              y2="2"
+              stroke={v(TONE_TOKENS[th.tone ?? 'neutral'].stroke)}
+              strokeWidth={1.5}
+              strokeDasharray={THRESHOLD_DASH}
+            />
           </svg>
           <span>
-            <span className="sr-only">Threshold:</span> {th.label} <span className="font-mono tabular-nums">({fmt(th.value)})</span>
+            <span className="sr-only">Threshold:</span> {th.label}{' '}
+            <span className="font-mono tabular-nums">({fmt(th.value)})</span>
           </span>
         </li>
       ))}
@@ -256,7 +298,11 @@ export function ChartMarkers({ thresholds = [], annotations = [], valueFormatter
               onKeyDown={(e) => {
                 if (e.key === 'Escape') onActiveChange?.(null);
               }}
-              className={cx('flex items-center gap-1.5 hover:text-foreground', active === key && 'text-foreground', legendFocus)}
+              className={cx(
+                'flex items-center gap-1.5 hover:text-foreground',
+                active === key && 'text-foreground',
+                legendFocus,
+              )}
             >
               <svg aria-hidden width="10" height="10" viewBox="0 0 10 10" className="shrink-0">
                 <path d="M1,1 l8,4 l-8,4 z" fill={v(TONE_TOKENS[a.tone ?? 'neutral'].stroke)} />

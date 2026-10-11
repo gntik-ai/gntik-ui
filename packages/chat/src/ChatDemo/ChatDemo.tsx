@@ -70,7 +70,8 @@ export function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoP
     setFiles((all) => [...all, ...added]);
   };
 
-  const patch = (id: number, fn: (m: DemoMessage) => DemoMessage) => setMessages((ms) => ms.map((m) => (m.id === id ? fn(m) : m)));
+  const patch = (id: number, fn: (m: DemoMessage) => DemoMessage) =>
+    setMessages((ms) => ms.map((m) => (m.id === id ? fn(m) : m)));
 
   const respond = () => {
     clearTimers();
@@ -85,15 +86,25 @@ export function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoP
     ]);
     const pieces = chunk(DEMO_REPLY);
     const startAt = DEMO_TOOL.durationMs;
-    timers.current.push(setTimeout(() => patch(toolId, (m) => ({ ...m, tool: { status: 'succeeded', durationMs: DEMO_TOOL.durationMs } })), startAt));
+    timers.current.push(
+      setTimeout(
+        () => patch(toolId, (m) => ({ ...m, tool: { status: 'succeeded', durationMs: DEMO_TOOL.durationMs } })),
+        startAt,
+      ),
+    );
     pieces.forEach((piece, i) => {
-      timers.current.push(setTimeout(() => patch(replyId, (m) => ({ ...m, text: m.text + piece })), startAt + (i + 1) * tickMs));
+      timers.current.push(
+        setTimeout(() => patch(replyId, (m) => ({ ...m, text: m.text + piece })), startAt + (i + 1) * tickMs),
+      );
     });
     timers.current.push(
-      setTimeout(() => {
-        patch(replyId, (m) => ({ ...m, streaming: false, sources: true }));
-        setStreaming(false);
-      }, startAt + (pieces.length + 1) * tickMs),
+      setTimeout(
+        () => {
+          patch(replyId, (m) => ({ ...m, streaming: false, sources: true }));
+          setStreaming(false);
+        },
+        startAt + (pieces.length + 1) * tickMs,
+      ),
     );
   };
 
@@ -107,7 +118,11 @@ export function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoP
     clearTimers();
     setMessages((ms) =>
       ms.map((m) =>
-        m.streaming ? { ...m, streaming: false } : m.tool?.status === 'running' ? { ...m, tool: { status: 'failed', durationMs: 0 } } : m,
+        m.streaming
+          ? { ...m, streaming: false }
+          : m.tool?.status === 'running'
+            ? { ...m, tool: { status: 'failed', durationMs: 0 } }
+            : m,
       ),
     );
     setStreaming(false);
@@ -135,7 +150,9 @@ export function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoP
               <div className="flex flex-col gap-4 p-4 text-[13px]">
                 <div>
                   <h2 className="font-semibold text-foreground">Details</h2>
-                  <p className="mt-1 text-muted-foreground">Workspace assistant with read access to projects, deployments and invoices.</p>
+                  <p className="mt-1 text-muted-foreground">
+                    Workspace assistant with read access to projects, deployments and invoices.
+                  </p>
                 </div>
                 <CitationList sources={DEMO_SOURCES} heading="Context sources" />
               </div>
@@ -203,7 +220,9 @@ export function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoP
             return (
               <ChatMessage key={m.id} role={m.role} timestamp={m.time}>
                 {m.text}
-                {m.attachments && m.attachments.length > 0 && <AttachmentList attachments={m.attachments} variant="tile" className="mt-2" />}
+                {m.attachments && m.attachments.length > 0 && (
+                  <AttachmentList attachments={m.attachments} variant="tile" className="mt-2" />
+                )}
               </ChatMessage>
             );
           })}

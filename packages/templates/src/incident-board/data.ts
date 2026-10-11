@@ -1,5 +1,12 @@
 import type { ActiveFilter, FilterField, KpiItem } from '@gntik-ai/blocks';
-import { moveKanbanCard, type BreadcrumbItem, type KanbanCard, type KanbanColumn, type KanbanMove, type StatusDefinition } from '@gntik-ai/ui';
+import {
+  moveKanbanCard,
+  type BreadcrumbItem,
+  type KanbanCard,
+  type KanbanColumn,
+  type KanbanMove,
+  type StatusDefinition,
+} from '@gntik-ai/ui';
 
 export type TriageSeverity = 'sev1' | 'sev2' | 'sev3';
 export type TriageStage = 'triage' | 'investigating' | 'mitigated' | 'resolved';
@@ -59,29 +66,87 @@ export const triageColumns: KanbanColumn<TriageIncident>[] = [
     id: 'triage',
     title: triageStageLabels.triage,
     cards: [
-      incident('INC-3120', 'Checkout latency above 2 s', 'sev1', 'payments-api', UNASSIGNED, 12, 'p95 latency on checkout doubled after the 14:00 deploy; error budget burning at 6×.'),
-      incident('INC-3118', 'Search results missing new items', 'sev3', 'search-index', UNASSIGNED, 95, 'Items created in the last hour do not appear in search; indexing lag is growing.'),
+      incident(
+        'INC-3120',
+        'Checkout latency above 2 s',
+        'sev1',
+        'payments-api',
+        UNASSIGNED,
+        12,
+        'p95 latency on checkout doubled after the 14:00 deploy; error budget burning at 6×.',
+      ),
+      incident(
+        'INC-3118',
+        'Search results missing new items',
+        'sev3',
+        'search-index',
+        UNASSIGNED,
+        95,
+        'Items created in the last hour do not appear in search; indexing lag is growing.',
+      ),
     ],
   },
   {
     id: 'investigating',
     title: triageStageLabels.investigating,
     cards: [
-      incident('INC-3115', 'Elevated 5xx on the API gateway', 'sev1', 'api-gateway', 'Ada Park', 48, 'One availability zone returns 502s for 4% of requests; traffic shift in progress.'),
-      incident('INC-3111', 'Webhook deliveries delayed', 'sev2', 'webhooks', 'Linus Ortega', 190, 'Delivery queue depth at 40k; workers restart on an out-of-memory error.'),
+      incident(
+        'INC-3115',
+        'Elevated 5xx on the API gateway',
+        'sev1',
+        'api-gateway',
+        'Ada Park',
+        48,
+        'One availability zone returns 502s for 4% of requests; traffic shift in progress.',
+      ),
+      incident(
+        'INC-3111',
+        'Webhook deliveries delayed',
+        'sev2',
+        'webhooks',
+        'Linus Ortega',
+        190,
+        'Delivery queue depth at 40k; workers restart on an out-of-memory error.',
+      ),
     ],
   },
   {
     id: 'mitigated',
     title: triageStageLabels.mitigated,
-    cards: [incident('INC-3104', 'Sign-in emails bouncing', 'sev2', 'auth-service', 'Grace Kim', 420, 'Mail provider rate limit hit; traffic moved to the backup sender.')],
+    cards: [
+      incident(
+        'INC-3104',
+        'Sign-in emails bouncing',
+        'sev2',
+        'auth-service',
+        'Grace Kim',
+        420,
+        'Mail provider rate limit hit; traffic moved to the backup sender.',
+      ),
+    ],
   },
   {
     id: 'resolved',
     title: triageStageLabels.resolved,
     cards: [
-      incident('INC-3097', 'Dashboard charts not loading', 'sev3', 'analytics', 'Mei Chen', 1500, 'A stale CDN asset broke the chart bundle; cache purged and a fix deployed.'),
-      incident('INC-3092', 'Billing worker stuck on retries', 'sev2', 'billing-worker', 'Ada Park', 2900, 'A malformed invoice blocked the queue; it was skipped and the parser fixed.'),
+      incident(
+        'INC-3097',
+        'Dashboard charts not loading',
+        'sev3',
+        'analytics',
+        'Mei Chen',
+        1500,
+        'A stale CDN asset broke the chart bundle; cache purged and a fix deployed.',
+      ),
+      incident(
+        'INC-3092',
+        'Billing worker stuck on retries',
+        'sev2',
+        'billing-worker',
+        'Ada Park',
+        2900,
+        'A malformed invoice blocked the queue; it was skipped and the parser fixed.',
+      ),
     ],
   },
 ];
@@ -124,7 +189,10 @@ export function triageKpis(columns: KanbanColumn<TriageIncident>[]): KpiItem[] {
   ];
 }
 
-export const triageBreadcrumbs: BreadcrumbItem[] = [{ label: 'Acme Industries', href: '/overview' }, { label: 'Incidents' }];
+export const triageBreadcrumbs: BreadcrumbItem[] = [
+  { label: 'Acme Industries', href: '/overview' },
+  { label: 'Incidents' },
+];
 
 /**
  * Maps a move made on the filtered (visible) board onto the full board: the card lands before the
@@ -142,7 +210,11 @@ export function applyVisibleMove<T extends KanbanCard>(
   const destFull = cardsOf(full, move.toColumnId).filter((c) => c.id !== move.cardId);
   const anchor = destVisible[move.toIndex];
   const last = destVisible[destVisible.length - 1];
-  const toIndex = anchor ? destFull.findIndex((c) => c.id === anchor.id) : last ? destFull.findIndex((c) => c.id === last.id) + 1 : destFull.length;
+  const toIndex = anchor
+    ? destFull.findIndex((c) => c.id === anchor.id)
+    : last
+      ? destFull.findIndex((c) => c.id === last.id) + 1
+      : destFull.length;
   const fullMove = { ...move, fromIndex, toIndex };
   return { columns: moveKanbanCard(full, fullMove), move: fullMove };
 }

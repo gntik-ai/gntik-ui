@@ -14,7 +14,21 @@ export const doc: ComponentDoc = {
     ['Enter', 'Toggles the highlighted option (on "Select all": selects or clears every option)'],
     ['Escape', 'Closes the popup, keeping focus in the input'],
     ['Backspace', 'On an empty input, removes the last chip'],
-    ['Enter on “Create …” / “Retry”', 'Creates and selects an option from the typed text / loads the options again after an error'],
+    [
+      'Enter on “Create …” / “Retry”',
+      'Creates and selects an option from the typed text / loads the options again after an error',
+    ],
   ],
-  tokens: ['background', 'border', 'popover', 'popover-foreground', 'primary', 'primary-text', 'secondary', 'muted-foreground', 'destructive', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'popover',
+    'popover-foreground',
+    'primary',
+    'primary-text',
+    'secondary',
+    'muted-foreground',
+    'destructive',
+    'focus-ring',
+  ],
 };

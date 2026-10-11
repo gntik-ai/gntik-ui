@@ -32,7 +32,13 @@ export const workspaceRegions: WorkspaceRegion[] = [
 export const workspacePlans: PricingTier[] = samplePricingTiers;
 export const workspaceRoles: RoleOption[] = memberRoles;
 
-export const workspaceInitialValues: WorkspaceValues = { name: '', region: 'eu', plan: 'team', invites: [], role: 'member' };
+export const workspaceInitialValues: WorkspaceValues = {
+  name: '',
+  region: 'eu',
+  plan: 'team',
+  invites: [],
+  role: 'member',
+};
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -48,4 +54,8 @@ const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD',
 
 /** "$49 / month", "Free" or "Custom pricing". */
 export const planPrice = (tier: PricingTier) =>
-  tier.priceMonthly == null ? 'Custom pricing' : tier.priceMonthly === 0 ? 'Free' : `${usd.format(tier.priceMonthly)} / month`;
+  tier.priceMonthly == null
+    ? 'Custom pricing'
+    : tier.priceMonthly === 0
+      ? 'Free'
+      : `${usd.format(tier.priceMonthly)} / month`;

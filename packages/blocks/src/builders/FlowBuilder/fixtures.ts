@@ -23,11 +23,41 @@ const SLIM = { width: 208, height: 56 } as const;
 
 /** Neutral starter flow: webhook → validate → route → notify / store. */
 export const builderNodes: FlowNode[] = [
-  { id: 'webhook', type: 'trigger', position: { x: 0, y: 112 }, ...SLIM, data: { title: 'Webhook', subtitle: 'POST /v1/orders' } },
-  { id: 'validate', type: 'step', position: { x: 256, y: 96 }, ...CARD, data: { title: 'Validate payload', subtitle: 'schema check', meta: 'v1.4', tone: 'done' } },
-  { id: 'route', type: 'router', position: { x: 512, y: 112 }, ...SLIM, data: { title: 'Route by region', subtitle: '2 branches' } },
-  { id: 'notify', type: 'output', position: { x: 768, y: 16 }, ...CARD, data: { title: 'Notify team', subtitle: 'email digest' } },
-  { id: 'store', type: 'output', position: { x: 768, y: 192 }, ...CARD, data: { title: 'Store record', subtitle: 'orders table' } },
+  {
+    id: 'webhook',
+    type: 'trigger',
+    position: { x: 0, y: 112 },
+    ...SLIM,
+    data: { title: 'Webhook', subtitle: 'POST /v1/orders' },
+  },
+  {
+    id: 'validate',
+    type: 'step',
+    position: { x: 256, y: 96 },
+    ...CARD,
+    data: { title: 'Validate payload', subtitle: 'schema check', meta: 'v1.4', tone: 'done' },
+  },
+  {
+    id: 'route',
+    type: 'router',
+    position: { x: 512, y: 112 },
+    ...SLIM,
+    data: { title: 'Route by region', subtitle: '2 branches' },
+  },
+  {
+    id: 'notify',
+    type: 'output',
+    position: { x: 768, y: 16 },
+    ...CARD,
+    data: { title: 'Notify team', subtitle: 'email digest' },
+  },
+  {
+    id: 'store',
+    type: 'output',
+    position: { x: 768, y: 192 },
+    ...CARD,
+    data: { title: 'Store record', subtitle: 'orders table' },
+  },
 ];
 
 export const builderEdges: FlowEdge[] = [

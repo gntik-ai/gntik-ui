@@ -96,7 +96,10 @@ export function VirtualList<T>({
   const s = virtualListVariants({ divided });
   const isListbox = role === 'listbox';
 
-  const sizeOf = useCallback((i: number) => itemHeight ?? sizes[i] ?? estimatedItemHeight, [itemHeight, sizes, estimatedItemHeight]);
+  const sizeOf = useCallback(
+    (i: number) => itemHeight ?? sizes[i] ?? estimatedItemHeight,
+    [itemHeight, sizes, estimatedItemHeight],
+  );
   const win = useVirtualWindow(count, sizeOf, scrollTop, viewportHeight, overscan);
 
   const scrollToIndex = (index: number, align: VirtualListAlign = 'auto') => {
@@ -126,7 +129,8 @@ export function VirtualList<T>({
   };
 
   useImperativeHandle(ref, () => ({
-    scrollToIndex: (index, options) => (options?.focus ? moveTo(index, options.align) : scrollToIndex(index, options?.align)),
+    scrollToIndex: (index, options) =>
+      options?.focus ? moveTo(index, options.align) : scrollToIndex(index, options?.align),
   }));
 
   useLayoutEffect(() => {
@@ -148,7 +152,10 @@ export function VirtualList<T>({
     const row = e.target as HTMLElement;
     if (row.dataset.index === undefined || row.parentElement?.parentElement !== e.currentTarget) return;
     const from = Number(row.dataset.index);
-    const page = Math.max(1, Math.floor((e.currentTarget.clientHeight || viewportHeight) / (itemHeight ?? estimatedItemHeight)) - 1);
+    const page = Math.max(
+      1,
+      Math.floor((e.currentTarget.clientHeight || viewportHeight) / (itemHeight ?? estimatedItemHeight)) - 1,
+    );
     const keys: Record<string, () => void> = {
       ArrowDown: () => moveTo(from + 1),
       ArrowUp: () => moveTo(from - 1),
@@ -157,7 +164,7 @@ export function VirtualList<T>({
       Home: () => moveTo(0),
       End: () => moveTo(count - 1),
     };
-    if ((e.key === 'Enter' || (isListbox && e.key === ' '))) {
+    if (e.key === 'Enter' || (isListbox && e.key === ' ')) {
       e.preventDefault();
       if (isListbox) select(from);
       else if (items[from] !== undefined) onActivate?.(items[from] as T, from);
@@ -215,7 +222,13 @@ export function VirtualList<T>({
           {emptyText}
         </div>
       ) : (
-        <div role={role} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy} className={s.spacer()} style={{ height: win.total }}>
+        <div
+          role={role}
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabelledBy}
+          className={s.spacer()}
+          style={{ height: win.total }}
+        >
           {indices.map((i) => {
             const item = items[i] as T;
             const key = getKey(item, i);

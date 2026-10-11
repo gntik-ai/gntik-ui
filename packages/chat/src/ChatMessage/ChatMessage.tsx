@@ -61,7 +61,9 @@ function DefaultAvatar({ role, author, src }: { role: ChatRole; author: string; 
   if (role === 'assistant') return <Avatar size="sm" tone="primary" fallback={<Sparkles size={15} aria-hidden />} />;
   if (role === 'tool') return <Avatar size="sm" tone="secondary" fallback={<Wrench size={14} aria-hidden />} />;
   // Decorative: the author name is already shown next to it.
-  return <Avatar size="sm" tone={role === 'participant' ? 'accent' : 'secondary'} src={src} initials={getInitials(author)} />;
+  return (
+    <Avatar size="sm" tone={role === 'participant' ? 'accent' : 'secondary'} src={src} initials={getInitials(author)} />
+  );
 }
 
 /**
@@ -113,7 +115,9 @@ export function ChatMessage({
       data-streaming={streaming || undefined}
       className={cn(s.root, v.root, className)}
     >
-      {showAvatar && <div className={s.avatar}>{avatar ?? <DefaultAvatar role={role} author={name} src={avatarSrc} />}</div>}
+      {showAvatar && (
+        <div className={s.avatar}>{avatar ?? <DefaultAvatar role={role} author={name} src={avatarSrc} />}</div>
+      )}
       <div className={cn(s.body, v.body)}>
         <div className={cn(s.meta, v.meta)}>
           <span id={`${id}-author`} className={s.author}>
@@ -134,10 +138,19 @@ export function ChatMessage({
           )}
         </div>
         {hasActions && (
-          <div role="group" aria-label={t('chat.actionsFor', { name })} className={cn(s.actions, alwaysShowActions && s.actionsVisible)}>
+          <div
+            role="group"
+            aria-label={t('chat.actionsFor', { name })}
+            className={cn(s.actions, alwaysShowActions && s.actionsVisible)}
+          >
             {copyText !== undefined && (
               <SimpleTooltip content={copied ? t('common.copied') : t('common.copy')}>
-                <IconButton size="sm" icon={copied ? Check : Copy} label={copied ? t('common.copied') : t('chat.copyMessage')} onClick={() => void copy(copyText)} />
+                <IconButton
+                  size="sm"
+                  icon={copied ? Check : Copy}
+                  label={copied ? t('common.copied') : t('chat.copyMessage')}
+                  onClick={() => void copy(copyText)}
+                />
               </SimpleTooltip>
             )}
             {onRetry && (

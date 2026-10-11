@@ -25,8 +25,10 @@ export interface ResolvedRoot {
 /** Un checkout válido trae registry.json o el catálogo fuente. */
 export function isDesignSystemRoot(dir: string): boolean {
   try {
-    return fs.existsSync(path.join(dir, 'registry.json'))
-      || fs.existsSync(path.join(dir, 'apps', 'docs', 'src', 'catalog', 'registry.jsx'));
+    return (
+      fs.existsSync(path.join(dir, 'registry.json')) ||
+      fs.existsSync(path.join(dir, 'apps', 'docs', 'src', 'catalog', 'registry.jsx'))
+    );
   } catch {
     return false;
   }
@@ -86,18 +88,14 @@ export async function resolveRoot(cfg: Config): Promise<ResolvedRoot> {
     }
     fs.rmSync(dest, { recursive: true, force: true });
     fs.mkdirSync(cfg.cacheDir, { recursive: true });
-    await run('git', [
-      'clone', '--depth', '1', '--branch', cfg.ref, authUrl(cfg.repo, cfg.token), dest,
-    ]);
+    await run('git', ['clone', '--depth', '1', '--branch', cfg.ref, authUrl(cfg.repo, cfg.token), dest]);
     if (!isDesignSystemRoot(dest)) {
       throw new Error(`El repo clonado (${cfg.repo}) no contiene el catálogo gntik-ui`);
     }
     return { root: dest, source: 'git' };
   }
 
-  throw new Error(
-    'No encuentro el catálogo gntik-ui. Define GNTIK_UI_DIR (checkout local) o GNTIK_UI_REPO (URL git).',
-  );
+  throw new Error('No encuentro el catálogo gntik-ui. Define GNTIK_UI_DIR (checkout local) o GNTIK_UI_REPO (URL git).');
 }
 
 /** Actualiza el clon propio a origin/<ref>. Solo para source === 'git'. */

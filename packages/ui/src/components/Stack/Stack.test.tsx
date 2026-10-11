@@ -7,7 +7,15 @@ import StackCenter from './examples/StackCenter';
 describe('Stack', () => {
   it('maps gap, align, justify and wrap to static classes', () => {
     render(<Stack data-testid="s" direction="row" gap={6} align="end" justify="between" wrap className="p-2" />);
-    expect(screen.getByTestId('s')).toHaveClass('flex', 'flex-row', 'gap-6', 'items-end', 'justify-between', 'flex-wrap', 'p-2');
+    expect(screen.getByTestId('s')).toHaveClass(
+      'flex',
+      'flex-row',
+      'gap-6',
+      'items-end',
+      'justify-between',
+      'flex-wrap',
+      'p-2',
+    );
   });
 
   it('defaults to a column and covers the whole 0–12 gap scale', () => {
@@ -33,8 +41,12 @@ describe('Stack', () => {
   it('renders as another tag with `as` or any element with `render`', () => {
     render(
       <>
-        <Stack as="ul" aria-label="Members"><li>Ada</li></Stack>
-        <HStack render={<nav aria-label="Sections" />} gap={2}>x</HStack>
+        <Stack as="ul" aria-label="Members">
+          <li>Ada</li>
+        </Stack>
+        <HStack render={<nav aria-label="Sections" />} gap={2}>
+          x
+        </HStack>
       </>,
     );
     expect(screen.getByRole('list', { name: 'Members' })).toHaveClass('flex');
@@ -47,7 +59,12 @@ describe('Stack', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><StackToolbarRow /><StackCenter /></>);
+    render(
+      <>
+        <StackToolbarRow />
+        <StackCenter />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

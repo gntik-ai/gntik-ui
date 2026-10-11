@@ -15,5 +15,14 @@ export const doc: ComponentDoc = {
     ['ArrowRight', 'Opens the submenu of a submenu trigger; ArrowLeft closes it'],
     ['Escape', 'Closes the menu'],
   ],
-  tokens: ['popover', 'popover-foreground', 'border', 'secondary', 'muted-foreground', 'destructive', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'popover',
+    'popover-foreground',
+    'border',
+    'secondary',
+    'muted-foreground',
+    'destructive',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

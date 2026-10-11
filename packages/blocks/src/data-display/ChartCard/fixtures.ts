@@ -27,9 +27,21 @@ export const COST_BY_RANGE: Record<string, CostPoint[]> = {
 };
 
 export const COST_RANGES: ChartCardRange[] = [
-  { value: '7d', label: '7d', summary: { value: '$2,412', delta: { value: '+9.7%', direction: 'up', sentiment: 'negative' } } },
-  { value: '30d', label: '30d', summary: { value: '$9,880', delta: { value: '+4.1%', direction: 'up', sentiment: 'negative' } } },
-  { value: '90d', label: '90d', summary: { value: '$27,306', delta: { value: '−2.3%', direction: 'down', sentiment: 'positive' } } },
+  {
+    value: '7d',
+    label: '7d',
+    summary: { value: '$2,412', delta: { value: '+9.7%', direction: 'up', sentiment: 'negative' } },
+  },
+  {
+    value: '30d',
+    label: '30d',
+    summary: { value: '$9,880', delta: { value: '+4.1%', direction: 'up', sentiment: 'negative' } },
+  },
+  {
+    value: '90d',
+    label: '90d',
+    summary: { value: '$27,306', delta: { value: '−2.3%', direction: 'down', sentiment: 'positive' } },
+  },
 ];
 
 export interface TrafficRow {
@@ -62,5 +74,9 @@ export const TRAFFIC_BY_RANGE: Record<string, TrafficRow[]> = {
 };
 
 export const TRAFFIC_RANGES: ChartCardRange[] = [
-  { value: '7d', label: 'Last 7 days', summary: { value: '4.8M requests', delta: { value: '+6.2%', direction: 'up', sentiment: 'positive' } } },
+  {
+    value: '7d',
+    label: 'Last 7 days',
+    summary: { value: '4.8M requests', delta: { value: '+6.2%', direction: 'up', sentiment: 'positive' } },
+  },
 ];

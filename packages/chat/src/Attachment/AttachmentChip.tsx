@@ -1,5 +1,18 @@
 import { cn, fileKind, type FileKind } from '@gntik-ai/ui';
-import { AlertCircle, File, FileArchive, FileAudio, FileCode, FileImage, FileSpreadsheet, FileText, FileVideo, RotateCcw, X, type LucideIcon } from 'lucide-react';
+import {
+  AlertCircle,
+  File,
+  FileArchive,
+  FileAudio,
+  FileCode,
+  FileImage,
+  FileSpreadsheet,
+  FileText,
+  FileVideo,
+  RotateCcw,
+  X,
+  type LucideIcon,
+} from 'lucide-react';
 import type { Ref } from 'react';
 import { formatBytes } from '../utils/format';
 import { useChatI18n } from '../utils/i18n';
@@ -58,7 +71,15 @@ export function attachmentStatus(a: ChatAttachment): AttachmentStatus {
  * One attached file: image thumbnail or file-type icon, name, size, upload progress
  * (a progressbar), error with retry, and a remove button.
  */
-export function AttachmentChip({ attachment: a, variant = 'chip', onRemove, onRetry, disabled = false, className, ref }: AttachmentChipProps) {
+export function AttachmentChip({
+  attachment: a,
+  variant = 'chip',
+  onRemove,
+  onRetry,
+  disabled = false,
+  className,
+  ref,
+}: AttachmentChipProps) {
   const { t, tc } = useChatI18n();
   const status = attachmentStatus(a);
   const kind = fileKind(a.name, a.type);
@@ -85,12 +106,24 @@ export function AttachmentChip({ attachment: a, variant = 'chip', onRemove, onRe
   const buttons = (
     <>
       {status === 'error' && onRetry && (
-        <button type="button" className={s.button} aria-label={tc('chat.retryUpload', { name: a.name })} disabled={disabled} onClick={() => onRetry(a.id)}>
+        <button
+          type="button"
+          className={s.button}
+          aria-label={tc('chat.retryUpload', { name: a.name })}
+          disabled={disabled}
+          onClick={() => onRetry(a.id)}
+        >
           <RotateCcw size={12} aria-hidden />
         </button>
       )}
       {onRemove && (
-        <button type="button" className={s.button} aria-label={t('common.removeItem', { label: a.name })} disabled={disabled} onClick={() => onRemove(a.id)}>
+        <button
+          type="button"
+          className={s.button}
+          aria-label={t('common.removeItem', { label: a.name })}
+          disabled={disabled}
+          onClick={() => onRemove(a.id)}
+        >
           <X size={12} aria-hidden />
         </button>
       )}
@@ -106,7 +139,9 @@ export function AttachmentChip({ attachment: a, variant = 'chip', onRemove, onRe
         </span>
         {meta}
       </span>
-      {tile ? (onRemove || (status === 'error' && onRetry)) && <span className={s.tileActions}>{buttons}</span> : buttons}
+      {tile
+        ? (onRemove || (status === 'error' && onRetry)) && <span className={s.tileActions}>{buttons}</span>
+        : buttons}
       {status === 'uploading' && (
         <span
           role="progressbar"
@@ -116,7 +151,10 @@ export function AttachmentChip({ attachment: a, variant = 'chip', onRemove, onRe
           aria-valuenow={pct ?? undefined}
           className={s.track}
         >
-          <span className={pct === null ? s.barIndeterminate : s.bar} style={pct === null ? undefined : { width: `${pct}%` }} />
+          <span
+            className={pct === null ? s.barIndeterminate : s.bar}
+            style={pct === null ? undefined : { width: `${pct}%` }}
+          />
         </span>
       )}
     </div>

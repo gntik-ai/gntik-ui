@@ -13,7 +13,14 @@ export default function SliderSingle() {
         value={replicas}
         onValueChange={(v) => setReplicas(Array.isArray(v) ? (v[0] ?? 1) : v)}
       />
-      <Slider label="Traffic to canary" showValue defaultValue={20} step={5} largeStep={25} formatValue={(f) => `${f[0] ?? ''}%`} />
+      <Slider
+        label="Traffic to canary"
+        showValue
+        defaultValue={20}
+        step={5}
+        largeStep={25}
+        formatValue={(f) => `${f[0] ?? ''}%`}
+      />
       <Slider aria-label="Log retention (days)" size="sm" defaultValue={30} max={90} />
       <Slider label="Storage limit (locked)" showValue defaultValue={50} disabled />
     </div>

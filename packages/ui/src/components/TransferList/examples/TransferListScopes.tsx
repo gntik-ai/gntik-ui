@@ -1,6 +1,14 @@
 import { TransferList } from '../TransferList';
 
-const scopes = ['projects:read', 'projects:write', 'members:read', 'members:invite', 'billing:read', 'invoices:export', 'deployments:trigger'].map((s) => ({
+const scopes = [
+  'projects:read',
+  'projects:write',
+  'members:read',
+  'members:invite',
+  'billing:read',
+  'invoices:export',
+  'deployments:trigger',
+].map((s) => ({
   value: s,
   label: s,
 }));

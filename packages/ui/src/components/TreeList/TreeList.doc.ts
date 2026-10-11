@@ -18,5 +18,15 @@ export const doc: ComponentDoc = {
     ['Ctrl/⌘ + A', 'Multiple mode: selects every node'],
     ['Type a character', 'Moves to the next node whose label starts with the typed text'],
   ],
-  tokens: ['foreground', 'muted-foreground', 'secondary', 'primary', 'primary-chip-text', 'primary-foreground', 'border', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'foreground',
+    'muted-foreground',
+    'secondary',
+    'primary',
+    'primary-chip-text',
+    'primary-foreground',
+    'border',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

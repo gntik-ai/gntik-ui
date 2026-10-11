@@ -1,4 +1,11 @@
-import { memberRoles, sampleInvitations, sampleMembers, type Invitation, type Member, type RoleOption } from '@gntik-ai/blocks';
+import {
+  memberRoles,
+  sampleInvitations,
+  sampleMembers,
+  type Invitation,
+  type Member,
+  type RoleOption,
+} from '@gntik-ai/blocks';
 
 export const members: Member[] = sampleMembers;
 export const invitations: Invitation[] = sampleInvitations;

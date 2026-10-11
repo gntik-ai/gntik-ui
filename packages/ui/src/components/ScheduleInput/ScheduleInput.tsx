@@ -140,7 +140,14 @@ export function ScheduleInput({
   const timeField = (
     <Field className={s.editor()}>
       <FieldLabel className={s.editorLabel()}>{t('scheduleInput.atTime')}</FieldLabel>
-      <TimePicker value={time} onValueChange={onTime} hourCycle={hourCycle} locale={locale} disabled={disabled} className="w-auto" />
+      <TimePicker
+        value={time}
+        onValueChange={onTime}
+        hourCycle={hourCycle}
+        locale={locale}
+        disabled={disabled}
+        className="w-auto"
+      />
     </Field>
   );
 
@@ -168,7 +175,14 @@ export function ScheduleInput({
           {frequency === 'hourly' && (
             <Field className={s.editor()}>
               <FieldLabel className={s.editorLabel()}>{t('scheduleInput.atMinute')}</FieldLabel>
-              <NumberInput value={parts.minute} min={0} max={59} onValueChange={(v) => v !== null && update({ minute: v })} disabled={disabled} className="w-32" />
+              <NumberInput
+                value={parts.minute}
+                min={0}
+                max={59}
+                onValueChange={(v) => v !== null && update({ minute: v })}
+                disabled={disabled}
+                className="w-32"
+              />
             </Field>
           )}
           {frequency === 'weekly' && (
@@ -196,7 +210,14 @@ export function ScheduleInput({
           {frequency === 'monthly' && (
             <Field className={s.editor()}>
               <FieldLabel className={s.editorLabel()}>{t('scheduleInput.dayOfMonth')}</FieldLabel>
-              <NumberInput value={parts.dayOfMonth} min={1} max={31} onValueChange={(v) => v !== null && update({ dayOfMonth: v })} disabled={disabled} className="w-32" />
+              <NumberInput
+                value={parts.dayOfMonth}
+                min={1}
+                max={31}
+                onValueChange={(v) => v !== null && update({ dayOfMonth: v })}
+                disabled={disabled}
+                className="w-32"
+              />
             </Field>
           )}
           {frequency !== 'hourly' && timeField}

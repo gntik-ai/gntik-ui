@@ -62,10 +62,18 @@ export function AppTopbar({
     <div className={cn('flex min-w-0 flex-1 items-center gap-2 lg:gap-3', className)}>
       <div className="flex min-w-0 flex-1 items-center gap-2.5">
         {breadcrumb ?? (breadcrumbs && <Breadcrumbs className="min-w-0" items={breadcrumbs} />)}
-        {environment && <EnvironmentBadge {...environment} className={cn('hidden sm:inline-flex', environment.className)} />}
+        {environment && (
+          <EnvironmentBadge {...environment} className={cn('hidden sm:inline-flex', environment.className)} />
+        )}
       </div>
       {searchNode}
-      {notifications && <NotificationsPopover notifications={notifications} onSelect={onNotificationSelect} onMarkAllRead={onMarkAllRead} />}
+      {notifications && (
+        <NotificationsPopover
+          notifications={notifications}
+          onSelect={onNotificationSelect}
+          onMarkAllRead={onMarkAllRead}
+        />
+      )}
       {theme === 'cycle' && <ThemeCycleButton />}
       {theme === 'segmented' && <ThemeSwitcher size="sm" className="hidden md:inline-flex" />}
       {user && <UserMenu user={user} items={userMenuItems} onSignOut={onSignOut} />}

@@ -72,14 +72,21 @@ export function AgendaList({
         </span>
       </div>
       {groups.length === 0 ? (
-        <EmptyState icon={CalendarDays} title={emptyTitle} titleAs={TitleTag === 'h2' ? 'h3' : 'h4'} description={emptyDescription} className="py-12" />
+        <EmptyState
+          icon={CalendarDays}
+          title={emptyTitle}
+          titleAs={TitleTag === 'h2' ? 'h3' : 'h4'}
+          description={emptyDescription}
+          className="py-12"
+        />
       ) : (
         <div
           style={maxHeight ? { maxHeight } : undefined}
           tabIndex={maxHeight ? 0 : undefined}
           role={maxHeight ? 'region' : undefined}
           aria-label={maxHeight ? `${title} list` : undefined}
-          className="overflow-y-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring">
+          className="overflow-y-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring"
+        >
           {groups.map(([key, list]) => {
             const first = list[0];
             if (!first) return null;
@@ -92,7 +99,10 @@ export function AgendaList({
                 >
                   {dayLabel(first.start)}
                 </SubTag>
-                <ul aria-labelledby={headingId} className="divide-y divide-border border-b border-border last:border-b-0">
+                <ul
+                  aria-labelledby={headingId}
+                  className="divide-y divide-border border-b border-border last:border-b-0"
+                >
                   {list.map((event) => {
                     const kind = kindOf(event, kinds);
                     const range = formatRange(event.start, event.end, locale);
@@ -100,7 +110,9 @@ export function AgendaList({
                       <>
                         <EventTile kind={kind} />
                         <span className="min-w-0 flex-1">
-                          <span className="block truncate text-[13px] font-semibold text-foreground">{event.title}</span>
+                          <span className="block truncate text-[13px] font-semibold text-foreground">
+                            {event.title}
+                          </span>
                           <span className="mt-0.5 flex items-center gap-1.5 font-mono text-[11.5px] text-muted-foreground">
                             <Clock size={12} aria-hidden className="shrink-0" />
                             <span>{range}</span>
@@ -130,7 +142,11 @@ export function AgendaList({
                             )}
                           >
                             {content}
-                            <ChevronRight size={16} aria-hidden className="shrink-0 text-muted-foreground transition-colors group-hover:text-foreground rtl:-scale-x-100" />
+                            <ChevronRight
+                              size={16}
+                              aria-hidden
+                              className="shrink-0 text-muted-foreground transition-colors group-hover:text-foreground rtl:-scale-x-100"
+                            />
                           </button>
                         ) : (
                           <div className={row}>{content}</div>

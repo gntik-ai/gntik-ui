@@ -4,7 +4,8 @@ export const doc: ComponentDoc = {
   name: 'Popover',
   group: 'Overlays',
   status: 'stable',
-  description: 'Non-modal floating panel anchored to a trigger, for short forms, details and filters. Optional arrow, four sides, three paddings. Parts: Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose.',
+  description:
+    'Non-modal floating panel anchored to a trigger, for short forms, details and filters. Optional arrow, four sides, three paddings. Parts: Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose.',
   primitive: '@base-ui/react/popover',
   pattern: 'dialog (non-modal disclosure)',
   keyboard: [

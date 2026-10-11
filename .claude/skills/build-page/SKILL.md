@@ -12,11 +12,11 @@ handlers, and passes the brand rules. Order of preference: **template → layout
 
 Use the MCP server if it is connected, otherwise the CLI (both read `kit-registry.json`):
 
-| Need | MCP | CLI |
-| --- | --- | --- |
-| Templates for the page type | `list_kit kind=template query="members"` | `gntik-ui search members --kind template --json` |
-| Blocks | `list_kit kind=block group=tables` | `gntik-ui list --kind block --group tables --json` |
-| Details, props, source | `get_template id` / `get_block id` / `get_component id` | `gntik-ui docs <id> --json`, then read the files it lists |
+| Need                        | MCP                                                     | CLI                                                       |
+| --------------------------- | ------------------------------------------------------- | --------------------------------------------------------- |
+| Templates for the page type | `list_kit kind=template query="members"`                | `gntik-ui search members --kind template --json`          |
+| Blocks                      | `list_kit kind=block group=tables`                      | `gntik-ui list --kind block --group tables --json`        |
+| Details, props, source      | `get_template id` / `get_block id` / `get_component id` | `gntik-ui docs <id> --json`, then read the files it lists |
 
 Read the template's `Page.tsx` (and `data.ts`) to learn its props before wiring it: props are all
 optional and default to fixtures, so missing data still renders — do not ship the fixtures.

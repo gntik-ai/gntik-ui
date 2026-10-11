@@ -52,7 +52,11 @@ export async function tempProject(files: Record<string, string>): Promise<string
 
 export const viteProject = () =>
   tempProject({
-    'package.json': JSON.stringify({ name: 'app', dependencies: { react: '^19.0.0' }, devDependencies: { vite: '^8.0.0' } }),
+    'package.json': JSON.stringify({
+      name: 'app',
+      dependencies: { react: '^19.0.0' },
+      devDependencies: { vite: '^8.0.0' },
+    }),
     'pnpm-lock.yaml': 'lockfileVersion: 9\n',
     'vite.config.ts': 'export default {};\n',
     'src/main.tsx': "import './index.css';\n",
@@ -61,7 +65,10 @@ export const viteProject = () =>
 
 export const nextProject = () =>
   tempProject({
-    'package.json': JSON.stringify({ name: 'web', dependencies: { next: '^16.0.0', react: '^19.0.0', tailwindcss: '^4.0.0' } }),
+    'package.json': JSON.stringify({
+      name: 'web',
+      dependencies: { next: '^16.0.0', react: '^19.0.0', tailwindcss: '^4.0.0' },
+    }),
     'package-lock.json': '{}\n',
     'next.config.mjs': 'export default {};\n',
     'app/layout.tsx': 'export default function RootLayout() { return null; }\n',

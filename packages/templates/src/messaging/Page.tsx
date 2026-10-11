@@ -19,7 +19,12 @@ import {
 } from '@gntik-ai/ui';
 import { useId, useState } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
-import { conversations as sampleConversations, messagingBreadcrumbs, type Conversation, type MessageAttachment } from './data';
+import {
+  conversations as sampleConversations,
+  messagingBreadcrumbs,
+  type Conversation,
+  type MessageAttachment,
+} from './data';
 
 export interface MessagingProps {
   conversations: Conversation[];
@@ -65,7 +70,15 @@ export default function MessagingPage(props: Partial<MessagingProps>) {
     const attachments = pending;
     setItems((list) =>
       list.map((c) =>
-        c.id === selected.id ? { ...c, messages: [...c.messages, { id: `m-${at.getTime()}`, author: currentUser, mine: true, text, at, attachments }] } : c,
+        c.id === selected.id
+          ? {
+              ...c,
+              messages: [
+                ...c.messages,
+                { id: `m-${at.getTime()}`, author: currentUser, mine: true, text, at, attachments },
+              ],
+            }
+          : c,
       ),
     );
     setPending([]);
@@ -87,7 +100,14 @@ export default function MessagingPage(props: Partial<MessagingProps>) {
               <Avatar size="sm" name={c.title} aria-hidden />
               <span className="min-w-0 flex-1">
                 <span className="flex items-baseline gap-2">
-                  <span className={cn('min-w-0 flex-1 truncate text-[13px] text-foreground', c.unread > 0 && 'font-semibold')}>{c.title}</span>
+                  <span
+                    className={cn(
+                      'min-w-0 flex-1 truncate text-[13px] text-foreground',
+                      c.unread > 0 && 'font-semibold',
+                    )}
+                  >
+                    {c.title}
+                  </span>
                   {last && <Timestamp value={last.at} tooltip={false} className="shrink-0 font-mono text-[11px]" />}
                 </span>
                 <span className="mt-0.5 flex items-center gap-2">
@@ -126,7 +146,11 @@ export default function MessagingPage(props: Partial<MessagingProps>) {
           ))}
         </AvatarGroup>
       </header>
-      <div role="log" aria-label={`Messages in ${selected.title}`} className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-5 py-5">
+      <div
+        role="log"
+        aria-label={`Messages in ${selected.title}`}
+        className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-5 py-5"
+      >
         {selected.messages.map((m) => (
           <ChatMessage
             key={m.id}
@@ -153,14 +177,29 @@ export default function MessagingPage(props: Partial<MessagingProps>) {
           onSubmit={send}
           attachments={pending.map(({ id, name, size }) => ({ id, name, size }))}
           onAttach={(files) =>
-            setPending((p) => [...p, ...files.map((f, i) => ({ id: `${f.name}-${Date.now()}-${i}`, name: f.name, size: f.size, type: f.type || undefined }))])
+            setPending((p) => [
+              ...p,
+              ...files.map((f, i) => ({
+                id: `${f.name}-${Date.now()}-${i}`,
+                name: f.name,
+                size: f.size,
+                type: f.type || undefined,
+              })),
+            ])
           }
           onRemoveAttachment={(id) => setPending((p) => p.filter((a) => a.id !== id))}
         />
       </div>
     </section>
   ) : (
-    <EmptyState icon={MessagesSquare} size="sm" titleAs="h2" className="mx-auto mt-16" title="Select a conversation" description="Messages and files show up here." />
+    <EmptyState
+      icon={MessagesSquare}
+      size="sm"
+      titleAs="h2"
+      className="mx-auto mt-16"
+      title="Select a conversation"
+      description="Messages and files show up here."
+    />
   );
 
   return (
@@ -181,7 +220,14 @@ export default function MessagingPage(props: Partial<MessagingProps>) {
       >
         <TooltipProvider>
           <div className="h-[680px] min-h-0 overflow-hidden rounded-xl border border-border">
-            <SplitLayout listLabel="Conversations" detailLabel="Conversation" showDetail={showDetail} onShowDetailChange={setShowDetail} list={list} detail={detail} />
+            <SplitLayout
+              listLabel="Conversations"
+              detailLabel="Conversation"
+              showDetail={showDetail}
+              onShowDetailChange={setShowDetail}
+              list={list}
+              detail={detail}
+            />
           </div>
         </TooltipProvider>
       </Page>

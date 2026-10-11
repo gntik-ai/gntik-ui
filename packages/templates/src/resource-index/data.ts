@@ -1,4 +1,11 @@
-import { DEPLOYMENT_COLUMNS, DEPLOYMENT_ROWS, type ActiveFilter, type DeploymentRow, type FilterField, type SavedView } from '@gntik-ai/blocks';
+import {
+  DEPLOYMENT_COLUMNS,
+  DEPLOYMENT_ROWS,
+  type ActiveFilter,
+  type DeploymentRow,
+  type FilterField,
+  type SavedView,
+} from '@gntik-ai/blocks';
 import type { BreadcrumbItem } from '@gntik-ai/ui';
 
 export type ResourceRow = DeploymentRow;
@@ -6,7 +13,10 @@ export type ResourceRow = DeploymentRow;
 export const resourceRows: ResourceRow[] = DEPLOYMENT_ROWS;
 export const resourceColumns = DEPLOYMENT_COLUMNS;
 
-export const resourceBreadcrumbs: BreadcrumbItem[] = [{ label: 'Overview', href: '/overview' }, { label: 'Deployments' }];
+export const resourceBreadcrumbs: BreadcrumbItem[] = [
+  { label: 'Overview', href: '/overview' },
+  { label: 'Deployments' },
+];
 
 export const resourceFilterFields: FilterField[] = [
   { id: 'status', label: 'Status', options: ['Running', 'Queued', 'Paused', 'Degraded', 'Failed'] },
@@ -15,8 +25,22 @@ export const resourceFilterFields: FilterField[] = [
 
 export const resourceSavedViews: SavedView[] = [
   { value: 'all', label: 'All deployments', filters: [] },
-  { value: 'attention', label: 'Needs attention', filters: [{ field: 'status', value: 'Degraded' }, { field: 'status', value: 'Failed' }] },
-  { value: 'eu', label: 'EU regions', filters: [{ field: 'region', value: 'eu-west-1' }, { field: 'region', value: 'eu-central-1' }] },
+  {
+    value: 'attention',
+    label: 'Needs attention',
+    filters: [
+      { field: 'status', value: 'Degraded' },
+      { field: 'status', value: 'Failed' },
+    ],
+  },
+  {
+    value: 'eu',
+    label: 'EU regions',
+    filters: [
+      { field: 'region', value: 'eu-west-1' },
+      { field: 'region', value: 'eu-central-1' },
+    ],
+  },
 ];
 
 type Column<T> = { id: string; accessor?: (row: T) => unknown };
@@ -47,7 +71,8 @@ export function filterResources<T extends object = ResourceRow>(
       const r = row as Record<string, unknown>;
       let haystack = [r.name, r.id].map(text).filter((v) => v !== undefined);
       // Rows without a name/id: search every column value instead.
-      if (haystack.length === 0 && columns) haystack = columns.map((c) => text(c.accessor?.(row))).filter((v) => v !== undefined);
+      if (haystack.length === 0 && columns)
+        haystack = columns.map((c) => text(c.accessor?.(row))).filter((v) => v !== undefined);
       if (!haystack.some((v) => v.includes(q))) return false;
     }
     for (const [field, values] of byField) {

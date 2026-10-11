@@ -16,7 +16,11 @@ const noopSubscribe = () => () => {};
  * the template once on the client so the legend swatches get their colours. SSR output is kept.
  */
 function useHydrated() {
-  return useSyncExternalStore(noopSubscribe, () => true, () => false);
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
 }
 
 export function DashboardView({ now }: { now: number }) {
@@ -28,7 +32,12 @@ export function DashboardView({ now }: { now: number }) {
       title="Dashboard"
       breadcrumbs={[{ label: 'Dashboard' }]}
       actions={[
-        { label: 'Invite members', icon: UserPlus, variant: 'secondary', onClick: () => router.push('/settings/members') },
+        {
+          label: 'Invite members',
+          icon: UserPlus,
+          variant: 'secondary',
+          onClick: () => router.push('/settings/members'),
+        },
         { label: 'Projects', icon: Plus, variant: 'primary', onClick: () => router.push('/projects') },
       ]}
       kpis={kpis}

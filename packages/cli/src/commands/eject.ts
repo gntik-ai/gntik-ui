@@ -1,7 +1,14 @@
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { applyCopy, fileSummary, planCopy } from '../copy.js';
-import { installLines, openRegistry, runInstall, withInstallStatus, type CommandResult, type Context } from '../context.js';
+import {
+  installLines,
+  openRegistry,
+  runInstall,
+  withInstallStatus,
+  type CommandResult,
+  type Context,
+} from '../context.js';
 import { CliError } from '../errors.js';
 import { CONFIG_FILE, mapTarget } from '../project.js';
 import type { RegistryItem } from '../registry.js';
@@ -29,15 +36,31 @@ export interface Usage {
 }
 
 /** Finds `import { … } from '<package>'` lines that use the ejected component's names. */
-export async function findUsages(cwd: string, pkg: string, names: string[], localEntry: string, skip: Set<string>): Promise<Usage[]> {
+export async function findUsages(
+  cwd: string,
+  pkg: string,
+  names: string[],
+  localEntry: string,
+  skip: Set<string>,
+): Promise<Usage[]> {
   const usages: Usage[] = [];
-  const re = new RegExp(String.raw`import\s*(?:type\s*)?\{([^}]*)\}\s*from\s*['"]${pkg.replace(/[/.]/g, '\\$&')}['"]`, 'g');
+  const re = new RegExp(
+    String.raw`import\s*(?:type\s*)?\{([^}]*)\}\s*from\s*['"]${pkg.replace(/[/.]/g, '\\$&')}['"]`,
+    'g',
+  );
   for (const abs of await walk(cwd)) {
     const rel = path.relative(cwd, abs).split(path.sep).join('/');
     if (skip.has(rel)) continue;
     const text = await readFile(abs, 'utf8');
     for (const m of text.matchAll(re)) {
-      const imported = (m[1] ?? '').split(',').map((s) => s.trim().replace(/^type\s+/, '').split(/\s+as\s+/)[0]?.trim() ?? '');
+      const imported = (m[1] ?? '').split(',').map(
+        (s) =>
+          s
+            .trim()
+            .replace(/^type\s+/, '')
+            .split(/\s+as\s+/)[0]
+            ?.trim() ?? '',
+      );
       const hit = imported.filter((n) => names.includes(n));
       if (!hit.length) continue;
       let spec = path.posix.relative(path.posix.dirname(rel), localEntry);
@@ -60,7 +83,10 @@ export async function eject(ctx: Context, positionals: string[]): Promise<Comman
   const items: RegistryItem[] = ctx.flags.deps ? registry.closure([id]) : [item];
 
   const plan = await planCopy(registry, items, config, ctx.cwd, { includeDocs: true });
-  const { conflicts, written } = await applyCopy(plan, ctx.cwd, { overwrite: ctx.flags.overwrite, dryRun: ctx.flags.dryRun });
+  const { conflicts, written } = await applyCopy(plan, ctx.cwd, {
+    overwrite: ctx.flags.overwrite,
+    dryRun: ctx.flags.dryRun,
+  });
 
   const indexFile = item.files.find((f) => /\/index\.[jt]sx?$/.test(f.path)) ?? item.files[0];
   const localEntry = indexFile
@@ -75,7 +101,10 @@ export async function eject(ctx: Context, positionals: string[]): Promise<Comman
 
   const install = conflicts.length
     ? { packages: [], dev: [], commands: [], ran: false, exitCode: null }
-    : runInstall(ctx, config.packageManager, info.packageJson, [...items.flatMap((i) => i.dependencies), ...plan.packages]);
+    : runInstall(ctx, config.packageManager, info.packageJson, [
+        ...items.flatMap((i) => i.dependencies),
+        ...plan.packages,
+      ]);
 
   const nextSteps = [
     `Import ${names.join(', ')} from the local copy (${localEntry}) instead of '${item.package}'.`,
@@ -103,7 +132,12 @@ export async function eject(ctx: Context, positionals: string[]): Promise<Comman
   text.push(`Eject ${item.name} (${items.map((i) => i.id).join(', ')}):`, ...copySection(plan, conflicts, ctx));
   if (conflicts.length) {
     if (ctx.flags.deps) text.push('Tip: --no-deps ejects only this item and keeps its dependencies on the package.');
-    return { code: 4, data, text, error: new CliError('CONFLICT', `${conflicts.length} file(s) already exist: ${conflicts.join(', ')}`) };
+    return {
+      code: 4,
+      data,
+      text,
+      error: new CliError('CONFLICT', `${conflicts.length} file(s) already exist: ${conflicts.join(', ')}`),
+    };
   }
   text.push('Next:', ...nextSteps.map((s) => `  - ${s}`));
   for (const u of usages) text.push(`  ${u.file}:${u.line}  ${u.replacement}`);

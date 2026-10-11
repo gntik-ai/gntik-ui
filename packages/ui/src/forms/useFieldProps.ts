@@ -43,12 +43,20 @@ export interface UseFieldPropsResult<TValues extends FieldValues, TName extends 
  * Wires one react-hook-form field (through `useController`) into the kit's Field parts.
  * Works with uncontrolled-looking inputs too: `Input` gets `value` / `onChange` / `onBlur` / `ref`.
  */
-export function useFieldProps<TValues extends FieldValues = FieldValues, TName extends FieldPath<TValues> = FieldPath<TValues>>(
+export function useFieldProps<
+  TValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TValues> = FieldPath<TValues>,
+>(
   name: TName,
   { control, rules, disabled }: UseFieldPropsOptions<TValues, TName> = {},
 ): UseFieldPropsResult<TValues, TName> {
   const context = useFormContext<TValues>();
-  const { field, fieldState } = useController<TValues, TName>({ name, control: control ?? context?.control, rules, disabled });
+  const { field, fieldState } = useController<TValues, TName>({
+    name,
+    control: control ?? context?.control,
+    rules,
+    disabled,
+  });
   const invalid = !!fieldState.error;
   return {
     fieldProps: { name, invalid, touched: fieldState.isTouched, dirty: fieldState.isDirty },

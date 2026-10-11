@@ -101,7 +101,9 @@ export function PricingTable({
   const TierHeading: 'h2' | 'h3' | 'h4' = !hasTitle ? Heading : Heading === 'h2' ? 'h3' : 'h4';
   // Without a title the block is not a landmark of its own: the list / radio group carries the name.
   const Wrapper = hasTitle ? 'section' : 'div';
-  const labelling = hasTitle ? { 'aria-labelledby': titleId } : { 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledBy };
+  const labelling = hasTitle
+    ? { 'aria-labelledby': titleId }
+    : { 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledBy };
   const money = new Intl.NumberFormat('en-US', { style: 'currency', currency, maximumFractionDigits: 0 });
   const cols = columns ?? (Math.min(Math.max(tiers.length, 1), 4) as 1 | 2 | 3 | 4);
   const gridClass = cn(
@@ -129,13 +131,20 @@ export function PricingTable({
     <Wrapper {...(hasTitle ? labelling : {})} className={cn('px-4 py-16 sm:px-6 sm:py-20', className)}>
       {hasHeader && (
         <div className="mx-auto max-w-2xl text-center">
-          {eyebrow && <p className="font-mono text-[12px] font-semibold tracking-wide text-primary-text uppercase">{eyebrow}</p>}
+          {eyebrow && (
+            <p className="font-mono text-[12px] font-semibold tracking-wide text-primary-text uppercase">{eyebrow}</p>
+          )}
           {hasTitle && (
-            <Heading id={titleId} className="mt-2 text-[28px] leading-tight font-semibold tracking-tight text-balance text-foreground sm:text-[34px]">
+            <Heading
+              id={titleId}
+              className="mt-2 text-[28px] leading-tight font-semibold tracking-tight text-balance text-foreground sm:text-[34px]"
+            >
               {title}
             </Heading>
           )}
-          {description && <p className="mt-4 text-[15.5px] leading-relaxed text-pretty text-muted-foreground">{description}</p>}
+          {description && (
+            <p className="mt-4 text-[15.5px] leading-relaxed text-pretty text-muted-foreground">{description}</p>
+          )}
         </div>
       )}
       {showCycleToggle && (
@@ -238,7 +247,18 @@ interface TierBodyProps {
   action?: ReactNode;
 }
 
-function TierBody({ tier, tierId, cycle, money, TierHeading, currentTierId, currentPlanLabel, control, selected, action }: TierBodyProps) {
+function TierBody({
+  tier,
+  tierId,
+  cycle,
+  money,
+  TierHeading,
+  currentTierId,
+  currentPlanLabel,
+  control,
+  selected,
+  action,
+}: TierBodyProps) {
   const price = cycle === 'annual' ? tier.priceAnnual : tier.priceMonthly;
   const isCurrent = tier.id === currentTierId;
   return (
@@ -262,7 +282,10 @@ function TierBody({ tier, tierId, cycle, money, TierHeading, currentTierId, curr
             </Badge>
           )}
           {selected && (
-            <span data-testid="tier-check" className="grid size-5 place-items-center rounded-full bg-primary text-primary-foreground">
+            <span
+              data-testid="tier-check"
+              className="grid size-5 place-items-center rounded-full bg-primary text-primary-foreground"
+            >
               <Check size={13} strokeWidth={2.6} aria-hidden />
             </span>
           )}
@@ -277,7 +300,13 @@ function TierBody({ tier, tierId, cycle, money, TierHeading, currentTierId, curr
           {price != null && <span className="text-[13px] text-muted-foreground">/ month</span>}
         </p>
         <p className="mt-1 h-4 text-[12px] text-muted-foreground">
-          {price == null ? 'Tailored to your volume' : price === 0 ? 'Free forever' : cycle === 'annual' ? `${money.format(price * 12)} billed yearly` : 'Billed monthly'}
+          {price == null
+            ? 'Tailored to your volume'
+            : price === 0
+              ? 'Free forever'
+              : cycle === 'annual'
+                ? `${money.format(price * 12)} billed yearly`
+                : 'Billed monthly'}
         </p>
       </div>
       {action}

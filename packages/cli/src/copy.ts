@@ -154,7 +154,9 @@ export async function planCopy(
             next = pkgByDir.get(dir) ?? `@gntik-ai/${dir}`;
             // Doc files only import the ComponentDoc type, which the package exports.
             if (source !== item.docs) {
-              warnings.push(`${target}: '${spec}' is kit-internal code outside the registry; mapped to '${next}' — check that it is exported there.`);
+              warnings.push(
+                `${target}: '${spec}' is kit-internal code outside the registry; mapped to '${next}' — check that it is exported there.`,
+              );
             }
           } else {
             warnings.push(`${target}: could not resolve '${spec}'; left unchanged.`);

@@ -105,7 +105,9 @@ describe('FlowBuilder', () => {
     const onConsoleClear = vi.fn();
     const changes: ConsoleEntry[][] = [];
     function Host() {
-      const [entries, setEntries] = useState<ConsoleEntry[]>([{ id: 'h', time: '09:00:00', level: 'info', message: 'From host' }]);
+      const [entries, setEntries] = useState<ConsoleEntry[]>([
+        { id: 'h', time: '09:00:00', level: 'info', message: 'From host' },
+      ]);
       return (
         <FlowBuilder
           consoleEntries={entries}
@@ -169,7 +171,10 @@ function connectHandles(sourceId: string, handleId: string, targetId: string) {
 
 it('preserves built-in node kinds in the public inspector props', () => {
   const node: NonNullable<blocks.NodeInspectorProps['node']> = {
-    id: 'step', type: 'step', position: { x: 0, y: 0 }, data: { title: 'Step' },
+    id: 'step',
+    type: 'step',
+    position: { x: 0, y: 0 },
+    data: { title: 'Step' },
   };
   const kind: import('@gntik-ai/flow').FlowNodeKind = node.type;
   expect(kind).toBe('step');
@@ -417,7 +422,11 @@ it('lets the consumer own and clear rejection problems without duplicates', asyn
           ]}
           edges={[]}
           nodeTypes={[
-            { type: 'branch', handles: [{ id: 'arm', kind: 'source' }], render: ({ data }) => <span>{data.title}</span> },
+            {
+              type: 'branch',
+              handles: [{ id: 'arm', kind: 'source' }],
+              render: ({ data }) => <span>{data.title}</span>,
+            },
           ]}
           isValidConnection={() => ({ code: 'cycle', message: 'Cycles are not allowed' })}
           onConnectionRejected={(issue) => setIssues([issue])}

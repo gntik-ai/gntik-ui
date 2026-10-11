@@ -27,11 +27,22 @@ export default function SidebarLayoutApp() {
                   collapsed ? (
                     <Logo size={26} />
                   ) : (
-                    <WorkspaceSwitcher className="w-full" workspaces={WORKSPACES} currentId={workspace} onSelect={(w) => setWorkspace(w.id)} />
+                    <WorkspaceSwitcher
+                      className="w-full"
+                      workspaces={WORKSPACES}
+                      currentId={workspace}
+                      onSelect={(w) => setWorkspace(w.id)}
+                    />
                   )
                 }
                 sidebar={({ collapsed, closeDrawer }) => (
-                  <NavList groups={NAV_GROUPS} currentHref={path} collapsed={collapsed} label="Workspace" onNavigate={closeDrawer} />
+                  <NavList
+                    groups={NAV_GROUPS}
+                    currentHref={path}
+                    collapsed={collapsed}
+                    label="Workspace"
+                    onNavigate={closeDrawer}
+                  />
                 )}
                 sidebarFooter={({ collapsed }) =>
                   collapsed ? null : (
@@ -50,12 +61,14 @@ export default function SidebarLayoutApp() {
                   <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
                   <p className="mt-1 text-[13px] text-muted-foreground">12 projects · 3 environments · eu-west</p>
                   <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                    {['web-frontend', 'billing-api', 'auth-service', 'search-indexer', 'media-worker', 'reports'].map((name) => (
-                      <div key={name} className="rounded-[10px] border border-border bg-card p-4">
-                        <div className="font-mono text-[13px] font-semibold">{name}</div>
-                        <div className="mt-1 text-[12px] text-muted-foreground">Deployed 2h ago</div>
-                      </div>
-                    ))}
+                    {['web-frontend', 'billing-api', 'auth-service', 'search-indexer', 'media-worker', 'reports'].map(
+                      (name) => (
+                        <div key={name} className="rounded-[10px] border border-border bg-card p-4">
+                          <div className="font-mono text-[13px] font-semibold">{name}</div>
+                          <div className="mt-1 text-[12px] text-muted-foreground">Deployed 2h ago</div>
+                        </div>
+                      ),
+                    )}
                   </div>
                 </div>
               </SidebarLayout>

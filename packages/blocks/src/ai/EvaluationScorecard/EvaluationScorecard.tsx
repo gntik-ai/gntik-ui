@@ -58,7 +58,17 @@ const TREND: Record<Trend, { className: string; sr: string }> = {
   flat: { className: 'text-muted-foreground', sr: 'unchanged' },
 };
 
-function Delta({ delta, trend, format, increase }: { delta: number; trend: Trend; format: EvalMetric['format']; increase: boolean }) {
+function Delta({
+  delta,
+  trend,
+  format,
+  increase,
+}: {
+  delta: number;
+  trend: Trend;
+  format: EvalMetric['format'];
+  increase: boolean;
+}) {
   const t = TREND[trend];
   const TrendIcon = trend === 'flat' ? Minus : increase ? ArrowUp : ArrowDown;
   return (
@@ -108,7 +118,10 @@ export function EvaluationScorecard({
   const overallTrend = trendOf(overall - overallBase, true, passRateTolerance / 2);
 
   return (
-    <section aria-labelledby={titleId} className={cn('overflow-hidden rounded-lg border border-border bg-card shadow-sm', className)}>
+    <section
+      aria-labelledby={titleId}
+      className={cn('overflow-hidden rounded-lg border border-border bg-card shadow-sm', className)}
+    >
       <header className="flex flex-col gap-3 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <TitleTag id={titleId} className="text-[13.5px] font-semibold text-foreground">
@@ -118,7 +131,12 @@ export function EvaluationScorecard({
             <span>
               Pass rate <span className="font-mono font-semibold text-foreground">{formatValue(overall)}</span>
             </span>
-            <Delta delta={overall - overallBase} trend={overallTrend} format="percent" increase={overall >= overallBase} />
+            <Delta
+              delta={overall - overallBase}
+              trend={overallTrend}
+              format="percent"
+              increase={overall >= overallBase}
+            />
             <span>
               vs {baselineLabel} · {samples.toLocaleString('en-US')} samples
             </span>
@@ -178,7 +196,12 @@ export function EvaluationScorecard({
                 </TableCell>
                 <TableCell align="right">
                   <span className="block font-mono text-[12.5px] text-foreground">{formatValue(passRate)}</span>
-                  <Delta delta={passRate - basePassRate} trend={passTrend} format="percent" increase={passRate >= basePassRate} />
+                  <Delta
+                    delta={passRate - basePassRate}
+                    trend={passTrend}
+                    format="percent"
+                    increase={passRate >= basePassRate}
+                  />
                 </TableCell>
                 {cells.map(({ metric, value, delta, trend, passes }) => (
                   <TableCell key={metric.id} align="right">
@@ -186,7 +209,12 @@ export function EvaluationScorecard({
                       <span className="text-muted-foreground">—</span>
                     ) : (
                       <>
-                        <span className={cn('block font-mono text-[12.5px]', passes ? 'text-foreground' : 'text-warning-text')}>
+                        <span
+                          className={cn(
+                            'block font-mono text-[12.5px]',
+                            passes ? 'text-foreground' : 'text-warning-text',
+                          )}
+                        >
                           {formatValue(value, metric.format)}
                           {!passes && <span className="sr-only"> (below threshold)</span>}
                         </span>

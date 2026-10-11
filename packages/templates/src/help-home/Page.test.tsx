@@ -12,7 +12,10 @@ describe('HelpHomePage', () => {
     expect(screen.getByRole('search', { name: 'Help articles' })).toBeInTheDocument();
     expect(screen.getByRole('navigation', { name: 'Help center' })).toBeInTheDocument();
     expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(helpCategories.length);
-    expect(within(screen.getByRole('main')).getByRole('link', { name: 'Deployments' })).toHaveAttribute('href', '/help/deployments');
+    expect(within(screen.getByRole('main')).getByRole('link', { name: 'Deployments' })).toHaveAttribute(
+      'href',
+      '/help/deployments',
+    );
     expect(screen.getByRole('heading', { level: 2, name: 'Popular articles' })).toBeInTheDocument();
     await expectNoAxeViolations();
   });

@@ -16,7 +16,15 @@ export interface TokenInputChipProps extends TokenInputVariantProps {
 }
 
 /** A committed entry inside TokenInput: text, invalid state and a remove button. */
-export function TokenInputChip({ children, error, onRemove, removeLabel: removeLabelProp, disabled, size, className }: TokenInputChipProps) {
+export function TokenInputChip({
+  children,
+  error,
+  onRemove,
+  removeLabel: removeLabelProp,
+  disabled,
+  size,
+  className,
+}: TokenInputChipProps) {
   const { t } = useI18n();
   const removeLabel = removeLabelProp ?? t('common.remove');
   const s = tokenInputVariants({ size });
@@ -32,7 +40,13 @@ export function TokenInputChip({ children, error, onRemove, removeLabel: removeL
       <span className={s.chipText()}>{children}</span>
       {error && <span className="sr-only">, {t('common.invalid', { error })}</span>}
       {onRemove && (
-        <button type="button" aria-label={removeLabel} disabled={disabled} className={s.chipRemove()} onClick={onRemove}>
+        <button
+          type="button"
+          aria-label={removeLabel}
+          disabled={disabled}
+          className={s.chipRemove()}
+          onClick={onRemove}
+        >
           <X size={11} strokeWidth={2.4} aria-hidden />
         </button>
       )}

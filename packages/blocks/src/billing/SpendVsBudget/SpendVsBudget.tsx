@@ -56,7 +56,12 @@ export function SpendVsBudget({
   const toDate = lastValue(data.map((d) => d.spend)) ?? 0;
   const forecast = lastValue(data.map((d) => d.forecast)) ?? toDate;
   const over = forecast > budget;
-  const rows: ChartRow[] = data.map((d) => ({ day: d.label, Spend: d.spend, Forecast: d.forecast ?? null, Budget: budget }));
+  const rows: ChartRow[] = data.map((d) => ({
+    day: d.label,
+    Spend: d.spend,
+    Forecast: d.forecast ?? null,
+    Budget: budget,
+  }));
   const money = (n: number) => formatMoney(n, currency, true);
   const stats = [
     { label: 'Spend to date', value: formatMoney(toDate, currency) },
@@ -79,7 +84,9 @@ export function SpendVsBudget({
         {stats.map((s) => (
           <div key={s.label} className="min-w-0">
             <dt className="text-[11.5px] text-muted-foreground">{s.label}</dt>
-            <dd className="mt-1 truncate font-mono text-[14px] font-semibold text-foreground tabular-nums">{s.value}</dd>
+            <dd className="mt-1 truncate font-mono text-[14px] font-semibold text-foreground tabular-nums">
+              {s.value}
+            </dd>
           </div>
         ))}
       </dl>

@@ -23,7 +23,15 @@ function Value({ value }: { value: ComparisonValue | undefined }) {
 }
 
 /** Plan comparison: one column per tier, rows grouped by section (column-group headers). */
-export function ComparisonTable({ tiers, sections, caption }: { tiers: readonly PricingTier[]; sections: readonly ComparisonSection[]; caption: string }) {
+export function ComparisonTable({
+  tiers,
+  sections,
+  caption,
+}: {
+  tiers: readonly PricingTier[];
+  sections: readonly ComparisonSection[];
+  caption: string;
+}) {
   return (
     <Table containerLabel={caption}>
       <TableCaption srOnly>{caption}</TableCaption>

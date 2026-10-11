@@ -10,7 +10,9 @@ function Basic({ multiple = false }: { multiple?: boolean }) {
     <Accordion multiple={multiple}>
       <AccordionItem value="a">
         <AccordionTrigger>Alpha</AccordionTrigger>
-        <AccordionPanel>Alpha body <button type="button">Inner</button></AccordionPanel>
+        <AccordionPanel>
+          Alpha body <button type="button">Inner</button>
+        </AccordionPanel>
       </AccordionItem>
       <AccordionItem value="b">
         <AccordionTrigger>Beta</AccordionTrigger>
@@ -106,7 +108,12 @@ describe('Accordion', () => {
 
   it('examples have no axe violations (with panels open)', async () => {
     const user = userEvent.setup();
-    render(<><AccordionSingle /><AccordionMultiple /></>);
+    render(
+      <>
+        <AccordionSingle />
+        <AccordionMultiple />
+      </>,
+    );
     await user.click(trigger('Notifications'));
     await waitFor(() => expect(screen.getAllByRole('region').length).toBeGreaterThanOrEqual(3));
     await expectNoAxeViolations();

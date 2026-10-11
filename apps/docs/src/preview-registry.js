@@ -6,7 +6,10 @@ const kebab = (s) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 const blockModules = import.meta.glob('../../../packages/blocks/src/*/*/*.tsx');
 const blockMetas = import.meta.glob('../../../packages/blocks/src/*/*/block.meta.ts', { eager: true, import: 'meta' });
 const templateModules = import.meta.glob('../../../packages/templates/src/*/Page.tsx');
-const templateMetas = import.meta.glob('../../../packages/templates/src/*/template.meta.ts', { eager: true, import: 'meta' });
+const templateMetas = import.meta.glob('../../../packages/templates/src/*/template.meta.ts', {
+  eager: true,
+  import: 'meta',
+});
 const layoutExamples = import.meta.glob('../../../packages/ui/src/layouts/*/examples/*.tsx');
 const layoutDocs = import.meta.glob('../../../packages/ui/src/layouts/*/*.doc.ts', { eager: true, import: 'doc' });
 const sourcesRaw = {
@@ -17,28 +20,43 @@ const sourcesRaw = {
   ...import.meta.glob('../../../packages/ui/src/layouts/*/examples/*.tsx', { query: '?raw', import: 'default' }),
 };
 
-const BLOCKS = Object.entries(blockMetas).map(([metaPath, meta]) => {
-  const dir = metaPath.slice(0, metaPath.lastIndexOf('/'));
-  const name = dir.slice(dir.lastIndexOf('/') + 1);
-  const family = dir.split('/').at(-2);
-  const file = `${dir}/${name}.tsx`;
-  return { id: kebab(name), name, family, meta, file, load: blockModules[file] };
-}).filter((b) => b.load).sort((a, b) => a.family.localeCompare(b.family) || a.name.localeCompare(b.name));
+const BLOCKS = Object.entries(blockMetas)
+  .map(([metaPath, meta]) => {
+    const dir = metaPath.slice(0, metaPath.lastIndexOf('/'));
+    const name = dir.slice(dir.lastIndexOf('/') + 1);
+    const family = dir.split('/').at(-2);
+    const file = `${dir}/${name}.tsx`;
+    return { id: kebab(name), name, family, meta, file, load: blockModules[file] };
+  })
+  .filter((b) => b.load)
+  .sort((a, b) => a.family.localeCompare(b.family) || a.name.localeCompare(b.name));
 
-const TEMPLATES = Object.entries(templateMetas).map(([metaPath, meta]) => {
-  const dir = metaPath.slice(0, metaPath.lastIndexOf('/'));
-  const id = dir.slice(dir.lastIndexOf('/') + 1);
-  const file = `${dir}/Page.tsx`;
-  return { id, meta, file, load: templateModules[file] };
-}).filter((t) => t.load);
+const TEMPLATES = Object.entries(templateMetas)
+  .map(([metaPath, meta]) => {
+    const dir = metaPath.slice(0, metaPath.lastIndexOf('/'));
+    const id = dir.slice(dir.lastIndexOf('/') + 1);
+    const file = `${dir}/Page.tsx`;
+    return { id, meta, file, load: templateModules[file] };
+  })
+  .filter((t) => t.load);
 
 const LAYOUTS = Object.entries(layoutDocs).flatMap(([docPath, doc]) => {
   const dir = docPath.slice(0, docPath.lastIndexOf('/'));
   const folder = dir.slice(dir.lastIndexOf('/') + 1);
-  return Object.keys(layoutExamples).filter((p) => p.startsWith(dir + '/examples/')).sort().map((file) => {
-    const example = file.slice(file.lastIndexOf('/') + 1, -4);
-    return { id: `${kebab(folder)}--${kebab(example)}`, layout: folder, example, doc, file, load: layoutExamples[file] };
-  });
+  return Object.keys(layoutExamples)
+    .filter((p) => p.startsWith(dir + '/examples/'))
+    .sort()
+    .map((file) => {
+      const example = file.slice(file.lastIndexOf('/') + 1, -4);
+      return {
+        id: `${kebab(folder)}--${kebab(example)}`,
+        layout: folder,
+        example,
+        doc,
+        file,
+        load: layoutExamples[file],
+      };
+    });
 });
 
 const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.default }));
@@ -48,34 +66,48 @@ export const PREVIEW_LOADERS = {
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
     'plan-card--summary-full': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryFull'),
     'plan-card--summary-minimal': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryMinimal'),
-    'plan-card--summary-unassigned': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryUnassigned'),
-    'plan-card--summary-unassigned-no-label': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryUnassignedNoLabel'),
-    'plan-card--summary-price-only': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryPriceOnly'),
-    'plan-card--summary-zero-price': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryZeroPrice'),
-    'plan-card--summary-renewal-only': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryRenewalOnly'),
-    'plan-card--summary-features-only': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryFeaturesOnly'),
-    'plan-card--summary-actions-only': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryActionsOnly'),
-    'plan-definition-card--compact': () => import('../../../packages/blocks/src/billing/PlanDefinitionCard/examples/Compact'),
+    'plan-card--summary-unassigned': () =>
+      import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryUnassigned'),
+    'plan-card--summary-unassigned-no-label': () =>
+      import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryUnassignedNoLabel'),
+    'plan-card--summary-price-only': () =>
+      import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryPriceOnly'),
+    'plan-card--summary-zero-price': () =>
+      import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryZeroPrice'),
+    'plan-card--summary-renewal-only': () =>
+      import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryRenewalOnly'),
+    'plan-card--summary-features-only': () =>
+      import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryFeaturesOnly'),
+    'plan-card--summary-actions-only': () =>
+      import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryActionsOnly'),
+    'plan-definition-card--compact': () =>
+      import('../../../packages/blocks/src/billing/PlanDefinitionCard/examples/Compact'),
     'plan-definition-card--full': () => import('../../../packages/blocks/src/billing/PlanDefinitionCard/examples/Full'),
     'dialog-wizard': () => import('../../../packages/blocks/src/forms/DialogWizard/examples/CreateResource'),
-    'credential-disclosure-dialog': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),
-    'credential-disclosure-dialog--stored': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),
-    'credential-disclosure-dialog--fresh': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Fresh'),
-    'credential-disclosure-dialog--response-gating': () => import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/ResponseGating'),
+    'credential-disclosure-dialog': () =>
+      import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),
+    'credential-disclosure-dialog--stored': () =>
+      import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),
+    'credential-disclosure-dialog--fresh': () =>
+      import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Fresh'),
+    'credential-disclosure-dialog--response-gating': () =>
+      import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/ResponseGating'),
     'subordinate-list': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/ResourceForm'),
     'subordinate-list--loading': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/loading'),
     'subordinate-list--empty': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/empty'),
     'subordinate-list--error': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/error'),
     'status-timeline--empty': () => import('../../../packages/blocks/src/data-display/StatusTimeline/examples/Empty'),
     'sign-in-form--username': () => import('../../../packages/blocks/src/auth/SignInForm/examples/Username'),
-    'forgot-password-form--username-or-email': () => import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),
+    'forgot-password-form--username-or-email': () =>
+      import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),
   },
   template: {
     ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
     'create-wizard--overlay': () => import('../../../packages/templates/src/create-wizard/examples/Overlay'),
     'status-404--page-header': () => import('../../../packages/templates/src/status-404/examples/PageHeader'),
     'sign-in-card--username': () => import('../../../packages/templates/src/sign-in-card/examples/Username'),
-    'forgot-password--username-or-email': () => import('../../../packages/templates/src/forgot-password/examples/UsernameOrEmail'),
+    'forgot-password--username-or-email': () =>
+      import('../../../packages/templates/src/forgot-password/examples/UsernameOrEmail'),
     'public-hub--full': () => import('../../../packages/templates/src/public-hub/examples/Full'),
     'public-hub--minimal': () => import('../../../packages/templates/src/public-hub/examples/Minimal'),
     'public-hub--loading': () => import('../../../packages/templates/src/public-hub/examples/Loading'),

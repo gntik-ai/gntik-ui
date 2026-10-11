@@ -20,18 +20,18 @@ router.
 
 ## Routes
 
-| Route | Built from |
-| --- | --- |
-| `/sign-in` | `SignInPage` |
-| `/` | `HomeDashboardPage` (invocations, error rate, p95, cost KPIs; metered-cost and invocations charts; activity; quick actions) |
-| `/projects` | `ResourceIndexPage` (Falcone columns; rows link via `getRowHref`) |
-| `/projects/:id` | `ResourceDetailPage` (stages, MCP endpoint, channels, model provider, metrics) |
-| `/functions` | `ResourceIndexPage` (runtime, stage, invocations, p95, errors; the project cell links to the project) |
-| `/workflows/:id` (`/workflows` → first) | `WorkflowBuilderPage` |
-| `/usage` | `UsageAnalyticsPage` (metering per tenant / project / stage) |
-| `/audit` | `AuditLogPage` |
-| `/settings/*` | the nine settings templates with `extraNavItems`; `/settings/model-providers` = `SettingsFrame` + `ModelKeysList` |
-| anything else | `Status404Page` |
+| Route                                   | Built from                                                                                                                  |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `/sign-in`                              | `SignInPage`                                                                                                                |
+| `/`                                     | `HomeDashboardPage` (invocations, error rate, p95, cost KPIs; metered-cost and invocations charts; activity; quick actions) |
+| `/projects`                             | `ResourceIndexPage` (Falcone columns; rows link via `getRowHref`)                                                           |
+| `/projects/:id`                         | `ResourceDetailPage` (stages, MCP endpoint, channels, model provider, metrics)                                              |
+| `/functions`                            | `ResourceIndexPage` (runtime, stage, invocations, p95, errors; the project cell links to the project)                       |
+| `/workflows/:id` (`/workflows` → first) | `WorkflowBuilderPage`                                                                                                       |
+| `/usage`                                | `UsageAnalyticsPage` (metering per tenant / project / stage)                                                                |
+| `/audit`                                | `AuditLogPage`                                                                                                              |
+| `/settings/*`                           | the nine settings templates with `extraNavItems`; `/settings/model-providers` = `SettingsFrame` + `ModelKeysList`           |
+| anything else                           | `Status404Page`                                                                                                             |
 
 ## Run
 

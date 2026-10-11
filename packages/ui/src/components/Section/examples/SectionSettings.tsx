@@ -16,7 +16,11 @@ export default function SectionSettings() {
       divided
       title="Notifications"
       description="Choose what reaches your inbox."
-      actions={<Button variant="secondary" size="sm">Reset</Button>}
+      actions={
+        <Button variant="secondary" size="sm">
+          Reset
+        </Button>
+      }
       className="max-w-[560px]"
     >
       {ROWS.map(([label, hint]) => (

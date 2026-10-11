@@ -48,7 +48,10 @@ const ratio = (a: string, b: string) => {
 
 // The frozen brand tokens (workspace source of @gntik-ai/tokens/brand.css). Vitest may serve
 // the URL under its /@fs prefix, so strip it to get the file-system path.
-const brandPath = decodeURIComponent(new URL('../../tokens/src/brand.css', import.meta.url).pathname).replace(/^\/@fs/, '');
+const brandPath = decodeURIComponent(new URL('../../tokens/src/brand.css', import.meta.url).pathname).replace(
+  /^\/@fs/,
+  '',
+);
 const brand = parse(readFileSync(brandPath, 'utf8'));
 const THEMES = [':root', '.dark', '.high_contrast'] as const;
 const tokensOf = (theme: string): Vars => ({
@@ -68,7 +71,8 @@ describe('categorical palette (colour-blind safety)', () => {
 
   it.each(THEMES)('every categorical colour stands out from the card (≥ 2:1, non-text) in %s', (theme) => {
     const tokens = tokensOf(theme);
-    for (const c of SAFE_CHART_COLORS) expect(ratio(tokens[SERIES_TOKENS[c]]!, tokens['--card']!)).toBeGreaterThanOrEqual(2);
+    for (const c of SAFE_CHART_COLORS)
+      expect(ratio(tokens[SERIES_TOKENS[c]]!, tokens['--card']!)).toBeGreaterThanOrEqual(2);
   });
 
   it('uses the same five accents as CHART_COLORS', () => {

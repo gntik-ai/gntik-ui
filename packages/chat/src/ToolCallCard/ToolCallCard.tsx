@@ -1,4 +1,13 @@
-import { Collapsible, CollapsiblePanel, CollapsibleTrigger, Spinner, StatusTag, cn, useI18n, type MessageKey } from '@gntik-ai/ui';
+import {
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+  Spinner,
+  StatusTag,
+  cn,
+  useI18n,
+  type MessageKey,
+} from '@gntik-ai/ui';
 import { CircleAlert, Wrench } from 'lucide-react';
 import type { Ref } from 'react';
 import { formatDuration } from '../utils/format';
@@ -28,7 +37,11 @@ export interface ToolCallCardProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-const VERB: Record<ToolCallStatus, MessageKey> = { running: 'toolCall.calling', succeeded: 'toolCall.called', failed: 'toolCall.failed' };
+const VERB: Record<ToolCallStatus, MessageKey> = {
+  running: 'toolCall.calling',
+  succeeded: 'toolCall.called',
+  failed: 'toolCall.failed',
+};
 
 /**
  * A tool invocation inside an assistant turn: name, status, duration, and a collapsible body
@@ -60,7 +73,13 @@ export function ToolCallCard({
     >
       <CollapsibleTrigger className={s.trigger}>
         <span className={cn(s.icon, failed && s.iconFailed)}>
-          {status === 'running' ? <Spinner size={13} /> : failed ? <CircleAlert size={13} aria-hidden /> : <Wrench size={13} aria-hidden />}
+          {status === 'running' ? (
+            <Spinner size={13} />
+          ) : failed ? (
+            <CircleAlert size={13} aria-hidden />
+          ) : (
+            <Wrench size={13} aria-hidden />
+          )}
         </span>
         <span className={s.label}>
           <span className={s.verb}>{t(VERB[status])}</span>
@@ -80,7 +99,9 @@ export function ToolCallCard({
             </p>
           )}
           {result !== undefined && <JsonView label={t('toolCall.result')} value={result} />}
-          {status === 'running' && result === undefined && <p className="text-[12.5px] text-muted-foreground">{t('toolCall.waiting')}</p>}
+          {status === 'running' && result === undefined && (
+            <p className="text-[12.5px] text-muted-foreground">{t('toolCall.waiting')}</p>
+          )}
         </div>
       </CollapsiblePanel>
     </Collapsible>

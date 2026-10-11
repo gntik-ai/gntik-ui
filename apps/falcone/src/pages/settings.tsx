@@ -56,7 +56,9 @@ const frame = (page: string): SettingsFrameOptions => ({
 const PAGES: Record<string, () => ReactNode> = {
   profile: () => <SettingsProfilePage {...frame('profile')} profile={profile} values={profileValues} />,
   security: () => <SettingsSecurityPage {...frame('security')} />,
-  notifications: () => <SettingsNotificationsPage {...frame('notifications')} events={notificationEvents} value={notificationValue} />,
+  notifications: () => (
+    <SettingsNotificationsPage {...frame('notifications')} events={notificationEvents} value={notificationValue} />
+  ),
   appearance: () => <SettingsAppearancePage {...frame('appearance')} />,
   workspace: () => (
     <SettingsWorkspacePage
@@ -67,10 +69,34 @@ const PAGES: Record<string, () => ReactNode> = {
       onDangerAction={(id) => (id === 'delete' ? navigate('/sign-in') : undefined)}
     />
   ),
-  members: () => <SettingsMembersPage {...frame('members')} members={members} invitations={invitations} permissions={rolePermissions} currentUserId={currentUserId} />,
-  billing: () => <SettingsBillingPage {...frame('billing')} plan={plan} quotas={quotas} paymentMethod={paymentMethod} invoices={invoices} currency="USD" />,
+  members: () => (
+    <SettingsMembersPage
+      {...frame('members')}
+      members={members}
+      invitations={invitations}
+      permissions={rolePermissions}
+      currentUserId={currentUserId}
+    />
+  ),
+  billing: () => (
+    <SettingsBillingPage
+      {...frame('billing')}
+      plan={plan}
+      quotas={quotas}
+      paymentMethod={paymentMethod}
+      invoices={invoices}
+      currency="USD"
+    />
+  ),
   'api-keys': () => <SettingsApiKeysPage {...frame('api-keys')} keys={apiKeys} scopes={apiScopes} />,
-  integrations: () => <SettingsIntegrationsPage {...frame('integrations')} connectors={connectors} endpoints={webhookEndpoints} deliveries={webhookDeliveries} />,
+  integrations: () => (
+    <SettingsIntegrationsPage
+      {...frame('integrations')}
+      connectors={connectors}
+      endpoints={webhookEndpoints}
+      deliveries={webhookDeliveries}
+    />
+  ),
   'model-providers': () => (
     <SettingsFrame
       {...frame('model-providers')}

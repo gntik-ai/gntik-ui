@@ -37,7 +37,13 @@ const COLS: Record<number, string> = {
  * KPI row: label, big number, delta (direction and sentiment are independent) and an optional
  * Sparkline. A description list, so each label is announced with its value.
  */
-export function KpiRow({ items = KPI_ITEMS, variant = 'cards', showTrends = true, label = 'Key metrics', className }: KpiRowProps) {
+export function KpiRow({
+  items = KPI_ITEMS,
+  variant = 'cards',
+  showTrends = true,
+  label = 'Key metrics',
+  className,
+}: KpiRowProps) {
   const strip = variant === 'strip';
   const cols = COLS[Math.min(items.length, 5)] ?? 'lg:grid-cols-4';
   return (
@@ -46,18 +52,30 @@ export function KpiRow({ items = KPI_ITEMS, variant = 'cards', showTrends = true
       className={cn(
         'grid grid-cols-1 sm:grid-cols-2',
         cols,
-        strip ? 'divide-y divide-border overflow-hidden rounded-xl border border-border bg-card shadow-sm sm:divide-x lg:divide-y-0' : 'gap-4',
+        strip
+          ? 'divide-y divide-border overflow-hidden rounded-xl border border-border bg-card shadow-sm sm:divide-x lg:divide-y-0'
+          : 'gap-4',
         className,
       )}
     >
       {items.map((item) => (
         <div
           key={item.id}
-          className={cn('flex min-w-0 flex-col', strip ? 'px-5 py-4' : 'rounded-xl border border-border bg-card p-5 shadow-sm')}
+          className={cn(
+            'flex min-w-0 flex-col',
+            strip ? 'px-5 py-4' : 'rounded-xl border border-border bg-card p-5 shadow-sm',
+          )}
         >
-          <dt className={cn('truncate font-medium text-muted-foreground', strip ? 'text-[12px]' : 'text-[13px]')}>{item.label}</dt>
+          <dt className={cn('truncate font-medium text-muted-foreground', strip ? 'text-[12px]' : 'text-[13px]')}>
+            {item.label}
+          </dt>
           <dd className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <span className={cn('font-semibold tracking-tight text-foreground tabular-nums', strip ? 'text-[22px]' : 'text-[26px]')}>
+            <span
+              className={cn(
+                'font-semibold tracking-tight text-foreground tabular-nums',
+                strip ? 'text-[22px]' : 'text-[26px]',
+              )}
+            >
               {item.value}
             </span>
             {item.delta && <TrendDelta {...item.delta} />}
@@ -65,7 +83,15 @@ export function KpiRow({ items = KPI_ITEMS, variant = 'cards', showTrends = true
           {item.delta?.note && !strip && <dd className="mt-1 text-[12px] text-muted-foreground">{item.delta.note}</dd>}
           {showTrends && item.trend && item.trend.length > 1 && (
             <dd className="mt-3">
-              <Sparkline data={item.trend} label={item.label} area tone={item.trendTone ?? 'primary'} width={240} height={40} className="block h-auto w-full" />
+              <Sparkline
+                data={item.trend}
+                label={item.label}
+                area
+                tone={item.trendTone ?? 'primary'}
+                width={240}
+                height={40}
+                className="block h-auto w-full"
+              />
             </dd>
           )}
         </div>

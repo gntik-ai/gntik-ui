@@ -6,15 +6,15 @@ It shows the kit working with Server Components, client templates and no theme f
 
 ## Routes
 
-| Route | Template |
-| --- | --- |
-| `/sign-in` | `SignInPage` |
-| `/dashboard` | `HomeDashboardPage` |
-| `/projects` | `ResourceIndexPage` (row menu → Open goes to the detail) |
-| `/projects/[id]` | `ResourceDetailPage` (unknown id → not-found) |
-| `/settings/profile` · `/settings/members` | `SettingsProfilePage` · `SettingsMembersPage` |
-| `/settings/[section]` | the other seven settings templates (security, notifications, appearance, workspace, billing, api-keys, integrations) |
-| `not-found.tsx` · `error.tsx` | `Status404Page` · `Status500Page` (Retry calls `reset`) |
+| Route                                     | Template                                                                                                             |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `/sign-in`                                | `SignInPage`                                                                                                         |
+| `/dashboard`                              | `HomeDashboardPage`                                                                                                  |
+| `/projects`                               | `ResourceIndexPage` (row menu → Open goes to the detail)                                                             |
+| `/projects/[id]`                          | `ResourceDetailPage` (unknown id → not-found)                                                                        |
+| `/settings/profile` · `/settings/members` | `SettingsProfilePage` · `SettingsMembersPage`                                                                        |
+| `/settings/[section]`                     | the other seven settings templates (security, notifications, appearance, workspace, billing, api-keys, integrations) |
+| `not-found.tsx` · `error.tsx`             | `Status404Page` · `Status500Page` (Retry calls `reset`)                                                              |
 
 `/` redirects to `/dashboard` and `/settings` to `/settings/profile`.
 

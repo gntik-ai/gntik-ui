@@ -17,7 +17,8 @@ export interface ComparisonPlan {
 }
 
 /** A plain value, or a value with a short note under it ("Add-on"). */
-export type ComparisonValue = boolean | string | number | null | undefined | { value: boolean | string | number | null; note?: string };
+export type ComparisonValue =
+  boolean | string | number | null | undefined | { value: boolean | string | number | null; note?: string };
 
 export interface ComparisonFeature {
   id: string;
@@ -110,7 +111,9 @@ export function ComparisonTable({
         </>
       );
     } else {
-      content = <span className="text-foreground">{typeof value === 'number' ? formatNumber(value, feature) : value}</span>;
+      content = (
+        <span className="text-foreground">{typeof value === 'number' ? formatNumber(value, feature) : value}</span>
+      );
     }
     return (
       <>
@@ -124,13 +127,20 @@ export function ComparisonTable({
     <Wrapper aria-labelledby={hasTitle ? titleId : undefined} className={cn('px-4 py-16 sm:px-6 sm:py-20', className)}>
       {(hasTitle || eyebrow || description) && (
         <div className="mx-auto mb-10 max-w-2xl text-center">
-          {eyebrow && <p className="font-mono text-[12px] font-semibold tracking-wide text-primary-text uppercase">{eyebrow}</p>}
+          {eyebrow && (
+            <p className="font-mono text-[12px] font-semibold tracking-wide text-primary-text uppercase">{eyebrow}</p>
+          )}
           {hasTitle && (
-            <Heading id={titleId} className="mt-2 text-[28px] leading-tight font-semibold tracking-tight text-balance text-foreground sm:text-[34px]">
+            <Heading
+              id={titleId}
+              className="mt-2 text-[28px] leading-tight font-semibold tracking-tight text-balance text-foreground sm:text-[34px]"
+            >
               {title}
             </Heading>
           )}
-          {description && <p className="mt-4 text-[15.5px] leading-relaxed text-pretty text-muted-foreground">{description}</p>}
+          {description && (
+            <p className="mt-4 text-[15.5px] leading-relaxed text-pretty text-muted-foreground">{description}</p>
+          )}
         </div>
       )}
       <div className="mx-auto max-w-6xl overflow-hidden rounded-xl border border-border bg-card shadow-sm">
@@ -162,12 +172,21 @@ export function ComparisonTable({
                     </span>
                     {plan.price != null && (
                       <span className="mt-2 block">
-                        <span className="text-[22px] font-semibold tracking-tight text-foreground tabular-nums">{plan.price}</span>
-                        {plan.priceNote && <span className="ms-1.5 text-[12px] font-normal text-muted-foreground">{plan.priceNote}</span>}
+                        <span className="text-[22px] font-semibold tracking-tight text-foreground tabular-nums">
+                          {plan.price}
+                        </span>
+                        {plan.priceNote && (
+                          <span className="ms-1.5 text-[12px] font-normal text-muted-foreground">{plan.priceNote}</span>
+                        )}
                       </span>
                     )}
                     {plan.cta && (
-                      <ActionButton action={plan.cta} variant={highlighted ? 'primary' : 'secondary'} size="md" className="mt-4 w-full" />
+                      <ActionButton
+                        action={plan.cta}
+                        variant={highlighted ? 'primary' : 'secondary'}
+                        size="md"
+                        className="mt-4 w-full"
+                      />
                     )}
                   </TableHead>
                 );
@@ -175,9 +194,17 @@ export function ComparisonTable({
             </TableRow>
           </TableHeader>
           {sections.map((section) => (
-            <TableBody key={section.id} data-section={section.id} className="[&>tr:last-child>td]:border-b [&>tr:last-child>th]:border-b">
+            <TableBody
+              key={section.id}
+              data-section={section.id}
+              className="[&>tr:last-child>td]:border-b [&>tr:last-child>th]:border-b"
+            >
               <TableRow className="hover:bg-transparent">
-                <TableHead scope="rowgroup" colSpan={columns} className="h-10 bg-secondary/50 text-[12px] font-semibold text-foreground">
+                <TableHead
+                  scope="rowgroup"
+                  colSpan={columns}
+                  className="h-10 bg-secondary/50 text-[12px] font-semibold text-foreground"
+                >
                   {/* The text stays in view while the table scrolls sideways. */}
                   <span className={cn(STICKY, 'bg-transparent')}>{section.title}</span>
                 </TableHead>
@@ -186,10 +213,17 @@ export function ComparisonTable({
                 <TableRow key={feature.id}>
                   <TableHead
                     scope="row"
-                    className={cn(STICKY, 'h-auto py-3 text-[13px] font-medium tracking-normal whitespace-normal text-foreground normal-case')}
+                    className={cn(
+                      STICKY,
+                      'h-auto py-3 text-[13px] font-medium tracking-normal whitespace-normal text-foreground normal-case',
+                    )}
                   >
                     {feature.label}
-                    {feature.description && <span className="mt-0.5 block text-[12px] font-normal text-muted-foreground">{feature.description}</span>}
+                    {feature.description && (
+                      <span className="mt-0.5 block text-[12px] font-normal text-muted-foreground">
+                        {feature.description}
+                      </span>
+                    )}
                   </TableHead>
                   {plans.map((plan) => (
                     <TableCell

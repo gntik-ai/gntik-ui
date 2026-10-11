@@ -32,7 +32,14 @@ describe('ConfirmDestructive', () => {
 
   it('shows the error when confirm rejects', async () => {
     const user = userEvent.setup();
-    render(<ConfirmDestructive defaultOpen triggerLabel={null} resourceName="db" onConfirm={() => Promise.reject(new Error('Project is locked'))} />);
+    render(
+      <ConfirmDestructive
+        defaultOpen
+        triggerLabel={null}
+        resourceName="db"
+        onConfirm={() => Promise.reject(new Error('Project is locked'))}
+      />,
+    );
     await user.type(await screen.findByRole('textbox'), 'db{Enter}');
     expect(await screen.findByRole('alert')).toHaveTextContent('Project is locked');
     expect(screen.getByRole('alertdialog')).toBeInTheDocument();

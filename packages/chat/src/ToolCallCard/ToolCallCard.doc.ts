@@ -13,5 +13,14 @@ export const doc: ComponentDoc = {
     ['Space', 'Expands or collapses the card (or a JSON section)'],
     ['Tab', 'Moves to the JSON sections and their scrollable code'],
   ],
-  tokens: ['card', 'border', 'secondary', 'muted-foreground', 'success-text', 'destructive', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'card',
+    'border',
+    'secondary',
+    'muted-foreground',
+    'success-text',
+    'destructive',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

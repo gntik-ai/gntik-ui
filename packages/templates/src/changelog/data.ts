@@ -59,7 +59,10 @@ export const changelogEntries: ChangelogEntry[] = [
     date: '2026-09-18',
     title: 'Stricter API key scopes',
     summary: 'New keys default to read-only; existing keys keep their scopes.',
-    changes: ['Keys created from now on start read-only.', 'Audit log entries now include the key’s last four characters.'],
+    changes: [
+      'Keys created from now on start read-only.',
+      'Audit log entries now include the key’s last four characters.',
+    ],
     tags: ['security'],
     isNew: true,
   },
@@ -69,7 +72,10 @@ export const changelogEntries: ChangelogEntry[] = [
     date: '2026-09-07',
     title: 'Fixes for usage exports',
     summary: 'CSV exports respect the selected range and time zone again.',
-    changes: ['Exports used UTC instead of the workspace time zone.', 'Large exports no longer time out after 30 seconds.'],
+    changes: [
+      'Exports used UTC instead of the workspace time zone.',
+      'Large exports no longer time out after 30 seconds.',
+    ],
     tags: ['fix'],
   },
   {
@@ -78,7 +84,10 @@ export const changelogEntries: ChangelogEntry[] = [
     date: '2026-08-25',
     title: 'Saved views for every table',
     summary: 'Save filters, sorting and columns as a view, and share it with your workspace.',
-    changes: ['Saved views on projects, deployments, members and invoices.', 'Views can be private or shared with the workspace.'],
+    changes: [
+      'Saved views on projects, deployments, members and invoices.',
+      'Views can be private or shared with the workspace.',
+    ],
     tags: ['feature'],
   },
   {
@@ -87,7 +96,10 @@ export const changelogEntries: ChangelogEntry[] = [
     date: '2026-08-04',
     title: 'Legacy webhooks are deprecated',
     summary: 'Version 1 webhooks stop on 1 December 2026. Move to signed webhooks before then.',
-    changes: ['Signed webhooks include a timestamp and an HMAC header.', 'The integrations page lists every endpoint still on version 1.'],
+    changes: [
+      'Signed webhooks include a timestamp and an HMAC header.',
+      'The integrations page lists every endpoint still on version 1.',
+    ],
     tags: ['deprecation', 'security'],
   },
 ];

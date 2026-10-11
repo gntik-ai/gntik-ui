@@ -16,11 +16,16 @@ export default function SelectBasic() {
         <SimpleSelect label="Deployment region" items={regions} value={region} onValueChange={setRegion} />
       </div>
       <div>
-        <SimpleSelect label="Billing plan" placeholder="Choose a plan…" size="sm" items={[
-          { value: 'free', label: 'Free' },
-          { value: 'team', label: 'Team' },
-          { value: 'enterprise', label: 'Enterprise' },
-        ]} />
+        <SimpleSelect
+          label="Billing plan"
+          placeholder="Choose a plan…"
+          size="sm"
+          items={[
+            { value: 'free', label: 'Free' },
+            { value: 'team', label: 'Team' },
+            { value: 'enterprise', label: 'Enterprise' },
+          ]}
+        />
       </div>
     </div>
   );

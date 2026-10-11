@@ -13,9 +13,11 @@ function fakeGeometry(el: HTMLElement, scrollHeight: number, clientHeight: numbe
 
 describe('ChatLayout', () => {
   it('renders the thread region, composer and panel landmarks', () => {
-    render(<ChatLayout composer={<textarea aria-label="Message" />} panel={<p>Info</p>} panelLabel="Details">
-      <p>Hello</p>
-    </ChatLayout>);
+    render(
+      <ChatLayout composer={<textarea aria-label="Message" />} panel={<p>Info</p>} panelLabel="Details">
+        <p>Hello</p>
+      </ChatLayout>,
+    );
     expect(screen.getByRole('region', { name: 'Conversation' })).toBeInTheDocument();
     expect(screen.getByRole('region', { name: 'Messages' })).toHaveTextContent('Hello');
     expect(screen.getByRole('complementary', { name: 'Details' })).toHaveTextContent('Info');
@@ -24,7 +26,15 @@ describe('ChatLayout', () => {
   it('the resize handle responds to ArrowLeft/ArrowRight/Home/End', async () => {
     const onWidth = vi.fn();
     const user = userEvent.setup();
-    render(<ChatLayout panel={<p>Info</p>} defaultPanelWidth={380} minPanelWidth={260} maxPanelWidth={720} onPanelWidthChange={onWidth} />);
+    render(
+      <ChatLayout
+        panel={<p>Info</p>}
+        defaultPanelWidth={380}
+        minPanelWidth={260}
+        maxPanelWidth={720}
+        onPanelWidthChange={onWidth}
+      />,
+    );
     const handle = screen.getByRole('separator', { name: 'Resize details panel' });
     expect(handle).toHaveAttribute('aria-valuenow', '380');
     handle.focus();

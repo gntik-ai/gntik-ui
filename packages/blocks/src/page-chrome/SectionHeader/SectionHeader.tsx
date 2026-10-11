@@ -32,7 +32,13 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   return (
-    <div className={cn('flex flex-wrap items-end justify-between gap-x-4 gap-y-3', bordered && 'border-b border-border pb-3', className)}>
+    <div
+      className={cn(
+        'flex flex-wrap items-end justify-between gap-x-4 gap-y-3',
+        bordered && 'border-b border-border pb-3',
+        className,
+      )}
+    >
       <div className="min-w-0">
         <div className="flex items-center gap-2.5">
           <Heading id={headingId} className="text-[17px] font-semibold tracking-tight text-foreground">
@@ -49,7 +55,14 @@ export function SectionHeader({
       {actions.length > 0 && (
         <div className="flex shrink-0 flex-wrap items-center gap-2">
           {actions.map((a) => (
-            <Button key={a.id ?? a.label} size="sm" variant={a.variant ?? 'secondary'} icon={a.icon} disabled={a.disabled} onClick={a.onClick}>
+            <Button
+              key={a.id ?? a.label}
+              size="sm"
+              variant={a.variant ?? 'secondary'}
+              icon={a.icon}
+              disabled={a.disabled}
+              onClick={a.onClick}
+            >
               {a.label}
             </Button>
           ))}

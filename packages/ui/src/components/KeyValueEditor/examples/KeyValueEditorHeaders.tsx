@@ -17,7 +17,13 @@ export default function KeyValueEditorHeaders() {
         valuePlaceholder="Value"
         defaultValue={[createKeyValueRow('Accept', 'application/json'), createKeyValueRow('accept', '')]}
       />
-      <KeyValueEditor aria-label="Labels (read-only)" readOnly allowExport={false} defaultValue={[createKeyValueRow('team', 'platform'), createKeyValueRow('tier', 'gold')]} keyPattern={null} />
+      <KeyValueEditor
+        aria-label="Labels (read-only)"
+        readOnly
+        allowExport={false}
+        defaultValue={[createKeyValueRow('team', 'platform'), createKeyValueRow('tier', 'gold')]}
+        keyPattern={null}
+      />
     </div>
   );
 }

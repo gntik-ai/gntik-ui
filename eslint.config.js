@@ -5,9 +5,13 @@ import globals from 'globals';
 
 // Brand rules (CLAUDE.md "Reglas"): token classes only — no Tailwind palette colours,
 // no `dark:` variants (themes swap tokens), no gradients, no hex colours in class strings.
-const PALETTE = 'slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|black|white';
+const PALETTE =
+  'slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|black|white';
 const BRAND_PATTERNS = [
-  [`\\b(bg|text|border|ring|outline|fill|stroke|from|via|to|shadow|divide|decoration|accent|caret)-(${PALETTE})(-\\d{2,3})?\\b`, 'Use brand token classes (bg-primary, text-muted-foreground…), not Tailwind palette colours.'],
+  [
+    `\\b(bg|text|border|ring|outline|fill|stroke|from|via|to|shadow|divide|decoration|accent|caret)-(${PALETTE})(-\\d{2,3})?\\b`,
+    'Use brand token classes (bg-primary, text-muted-foreground…), not Tailwind palette colours.',
+  ],
   ['(^|\\s)dark:', 'No dark: variants — themes swap the tokens.'],
   ['\\b(bg-(linear|radial|conic|gradient)-|from-|via-)', 'No gradients (brand rule).'],
   ['(^|[\\s\\[])#[0-9a-fA-F]{3,8}\\b', 'No hex colours — use tokens.'],
@@ -21,16 +25,39 @@ const brandRule = [
 ];
 
 export default tseslint.config(
-  { ignores: ['**/node_modules/**', '**/dist/**', '**/.next/**', '**/next-env.d.ts', 'apps/docs/public/**', 'apps/docs/legacy-index.html', '**/test/fixtures/**', 'registry.json'] },
+  {
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/.next/**',
+      '**/next-env.d.ts',
+      'apps/docs/public/**',
+      'apps/docs/legacy-index.html',
+      '**/test/fixtures/**',
+      'registry.json',
+    ],
+  },
   js.configs.recommended,
   {
-    files: ['packages/mcp/src/**/*.ts', 'packages/mcp/scripts/**/*.ts', 'packages/cli/src/**/*.ts', 'packages/cli/test/**/*.ts', 'packages/codemods/src/**/*.ts', 'packages/codemods/test/**/*.ts', 'packages/evals/src/**/*.ts', 'packages/evals/test/**/*.ts'],
+    files: [
+      'packages/mcp/src/**/*.ts',
+      'packages/mcp/scripts/**/*.ts',
+      'packages/cli/src/**/*.ts',
+      'packages/cli/test/**/*.ts',
+      'packages/codemods/src/**/*.ts',
+      'packages/codemods/test/**/*.ts',
+      'packages/evals/src/**/*.ts',
+      'packages/evals/test/**/*.ts',
+    ],
     extends: [tseslint.configs.recommended],
     languageOptions: { globals: globals.node },
   },
   {
     // Component packages: TypeScript + React hooks + brand rules.
-    files: ['packages/{ui,icons,charts,flow,editor,chat,blocks,templates}/**/*.{ts,tsx}', 'apps/{example-vite,example-next,musematic,falcone,sandbox}/**/*.{ts,tsx}'],
+    files: [
+      'packages/{ui,icons,charts,flow,editor,chat,blocks,templates}/**/*.{ts,tsx}',
+      'apps/{example-vite,example-next,musematic,falcone,sandbox}/**/*.{ts,tsx}',
+    ],
     extends: [tseslint.configs.recommended],
     plugins: { 'react-hooks': reactHooks },
     languageOptions: { globals: globals.browser },

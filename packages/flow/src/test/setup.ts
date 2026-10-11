@@ -5,7 +5,9 @@ import { afterEach } from 'vitest';
 afterEach(() => {
   cleanup();
   document.documentElement.className = '';
-  try { localStorage.clear(); } catch {}
+  try {
+    localStorage.clear();
+  } catch {}
 });
 
 // jsdom gaps that Base UI touches (positioning, animations, media queries).
@@ -44,6 +46,16 @@ if (!('DOMMatrixReadOnly' in window)) {
   };
 }
 Object.defineProperties(HTMLElement.prototype, {
-  offsetHeight: { configurable: true, get() { return 90; } },
-  offsetWidth: { configurable: true, get() { return 208; } },
+  offsetHeight: {
+    configurable: true,
+    get() {
+      return 90;
+    },
+  },
+  offsetWidth: {
+    configurable: true,
+    get() {
+      return 208;
+    },
+  },
 });

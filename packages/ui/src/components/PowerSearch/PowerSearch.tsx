@@ -163,14 +163,20 @@ export function PowerSearch<K extends string = string>({
   const removeTerm = (i: number, focusAfter: number) => {
     const t = query.terms[i];
     if (!t) return;
-    setTerms(query.terms.filter((_, j) => j !== i), labels.removed(describe(t)));
+    setTerms(
+      query.terms.filter((_, j) => j !== i),
+      labels.removed(describe(t)),
+    );
     focusChip.current = focusAfter;
   };
 
   const editTerm = (i: number) => {
     const t = query.terms[i];
     if (!t) return;
-    setTerms(query.terms.filter((_, j) => j !== i), '');
+    setTerms(
+      query.terms.filter((_, j) => j !== i),
+      '',
+    );
     if (t.type === 'text') {
       setDraft({});
       setInput(t.value);
@@ -212,8 +218,15 @@ export function PowerSearch<K extends string = string>({
   if (stage === 'field') {
     suggestions = fields
       .filter((f) => !q || f.key.toLowerCase().includes(q) || f.label?.toLowerCase().includes(q))
-      .map((f) => ({ id: `field:${f.key}`, label: fieldLabel(f), kind: 'field' as const, key: f.key, hint: f.description }));
-    if (q && allowFreeText) suggestions.push({ id: `text:${q}`, label: labels.freeText(input.trim()), kind: 'text', key: input.trim() });
+      .map((f) => ({
+        id: `field:${f.key}`,
+        label: fieldLabel(f),
+        kind: 'field' as const,
+        key: f.key,
+        hint: f.description,
+      }));
+    if (q && allowFreeText)
+      suggestions.push({ id: `text:${q}`, label: labels.freeText(input.trim()), kind: 'text', key: input.trim() });
   } else if (stage === 'operator' && field) {
     suggestions = operatorsFor(field)
       .filter((o) => !q || o.startsWith(q) || opLabels[o].toLowerCase().includes(q))
@@ -268,12 +281,21 @@ export function PowerSearch<K extends string = string>({
 
   const onChipKeyDown = (i: number) => (e: KeyboardEvent<HTMLButtonElement>) => {
     const n = query.terms.length;
-    const moves: Record<string, number> = { ArrowLeft: Math.max(i - 1, 0), ArrowRight: i + 1 >= n ? -1 : i + 1, Home: 0, End: -1, Escape: -1 };
+    const moves: Record<string, number> = {
+      ArrowLeft: Math.max(i - 1, 0),
+      ArrowRight: i + 1 >= n ? -1 : i + 1,
+      Home: 0,
+      End: -1,
+      Escape: -1,
+    };
     if (e.key in moves) {
       e.preventDefault();
       focusChip.current = moves[e.key] ?? -1;
       setAnnouncement((a) => a + '​'.slice(0, 0));
-      const el = focusChip.current < 0 ? inputRef.current : rootRef.current?.querySelector<HTMLElement>(`[data-chip-index="${focusChip.current}"]`);
+      const el =
+        focusChip.current < 0
+          ? inputRef.current
+          : rootRef.current?.querySelector<HTMLElement>(`[data-chip-index="${focusChip.current}"]`);
       focusChip.current = null;
       el?.focus();
     } else if (e.key === 'Backspace' || e.key === 'Delete') {
@@ -284,12 +306,17 @@ export function PowerSearch<K extends string = string>({
 
   const draftField = fieldLabel(field);
   return (
-    <div ref={rootRef} className={cn(s.root(), className)} data-disabled={disabled || undefined} onMouseDown={(e) => {
-      if (e.target === e.currentTarget) {
-        e.preventDefault();
-        inputRef.current?.focus();
-      }
-    }}>
+    <div
+      ref={rootRef}
+      className={cn(s.root(), className)}
+      data-disabled={disabled || undefined}
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) {
+          e.preventDefault();
+          inputRef.current?.focus();
+        }
+      }}
+    >
       <ListFilter size={15} aria-hidden className={s.icon()} />
       {query.terms.length > 0 && (
         <span role="list" aria-label={labels.terms} className={s.terms()}>
@@ -319,7 +346,11 @@ export function PowerSearch<K extends string = string>({
       {field && (
         <span className={s.draft()}>
           <span aria-hidden>{draftField}</span>
-          {draft.operator && <span aria-hidden className="opacity-75">{draft.operator}</span>}
+          {draft.operator && (
+            <span aria-hidden className="opacity-75">
+              {draft.operator}
+            </span>
+          )}
           <span id={draftId} className="sr-only">
             {`${draftField} ${draft.operator ? opLabels[draft.operator] : ''}`.trim()}
           </span>
@@ -352,9 +383,17 @@ export function PowerSearch<K extends string = string>({
           onKeyDown={onKeyDown}
         />
         <BaseCombobox.Portal>
-          <BaseCombobox.Positioner className={s.positioner()} side="bottom" align="start" sideOffset={8} anchor={rootRef}>
+          <BaseCombobox.Positioner
+            className={s.positioner()}
+            side="bottom"
+            align="start"
+            sideOffset={8}
+            anchor={rootRef}
+          >
             <BaseCombobox.Popup className={s.popup()}>
-              <BaseCombobox.Empty className={s.empty()}>{stage === 'value' ? labels.typeValue : null}</BaseCombobox.Empty>
+              <BaseCombobox.Empty className={s.empty()}>
+                {stage === 'value' ? labels.typeValue : null}
+              </BaseCombobox.Empty>
               <BaseCombobox.List className="outline-none data-empty:hidden">
                 {(item: Suggestion) => (
                   <BaseCombobox.Item key={item.id} value={item} className={s.item()}>
@@ -371,10 +410,16 @@ export function PowerSearch<K extends string = string>({
         </BaseCombobox.Portal>
       </BaseCombobox.Root>
       {query.terms.length > 0 && (
-        <button type="button" aria-label={labels.clear} className={s.clear()} disabled={disabled} onClick={() => {
-          setTerms([], labels.clear + '.');
-          inputRef.current?.focus();
-        }}>
+        <button
+          type="button"
+          aria-label={labels.clear}
+          className={s.clear()}
+          disabled={disabled}
+          onClick={() => {
+            setTerms([], labels.clear + '.');
+            inputRef.current?.focus();
+          }}
+        >
           <X size={14} aria-hidden />
         </button>
       )}

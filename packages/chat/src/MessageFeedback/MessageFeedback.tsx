@@ -135,12 +135,24 @@ export function MessageFeedback({
     <div ref={ref} role="group" aria-label={label ?? tc('chat.feedback')} className={cn(s.root, className)}>
       {copyText !== undefined && (
         <SimpleTooltip content={copied ? t('common.copied') : t('common.copy')}>
-          <IconButton size="sm" icon={copied ? Check : Copy} label={copied ? t('common.copied') : t('chat.copyMessage')} disabled={disabled} onClick={() => void copy(copyText)} />
+          <IconButton
+            size="sm"
+            icon={copied ? Check : Copy}
+            label={copied ? t('common.copied') : t('chat.copyMessage')}
+            disabled={disabled}
+            onClick={() => void copy(copyText)}
+          />
         </SimpleTooltip>
       )}
       {onRegenerate && (
         <SimpleTooltip content={tc('chat.regenerate')}>
-          <IconButton size="sm" icon={RefreshCw} label={tc('chat.regenerate')} disabled={disabled} onClick={onRegenerate} />
+          <IconButton
+            size="sm"
+            icon={RefreshCw}
+            label={tc('chat.regenerate')}
+            disabled={disabled}
+            onClick={onRegenerate}
+          />
         </SimpleTooltip>
       )}
       <SimpleTooltip content={upLabel}>
@@ -190,7 +202,13 @@ export function MessageFeedback({
               <label htmlFor={`${id}-comment`} className={s.label}>
                 {tc('chat.feedbackComment')}
               </label>
-              <Textarea id={`${id}-comment`} rows={3} value={comment} onValueChange={setComment} placeholder={tc('chat.feedbackPlaceholder')} />
+              <Textarea
+                id={`${id}-comment`}
+                rows={3}
+                value={comment}
+                onValueChange={setComment}
+                placeholder={tc('chat.feedbackPlaceholder')}
+              />
             </div>
             <div className={s.footer}>
               <Button type="button" size="sm" variant="ghost" onClick={() => setOpen(false)}>

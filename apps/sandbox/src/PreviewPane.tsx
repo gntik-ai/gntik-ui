@@ -33,7 +33,12 @@ export function PreviewPane({ code, theme, brand, device, onStatus }: PreviewPan
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
-      if (event.origin !== location.origin || event.source !== frame.current?.contentWindow || !isPreviewMessage(event.data)) return;
+      if (
+        event.origin !== location.origin ||
+        event.source !== frame.current?.contentWindow ||
+        !isPreviewMessage(event.data)
+      )
+        return;
       const msg = event.data;
       if (msg.type === 'gntik-sandbox:ready') setReadyCount((n) => n + 1);
       else if (msg.type === 'gntik-sandbox:rendered') {

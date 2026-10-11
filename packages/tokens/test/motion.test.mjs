@@ -11,7 +11,14 @@ const reduced = /@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{\s*:root\s*\{
 
 test('motion.css declares only durations and easings', () => {
   const names = new Set(decls.map(([k]) => k));
-  assert.deepEqual([...names].sort(), ['--duration-fast', '--duration-normal', '--duration-slow', '--ease-emphasized', '--ease-exit', '--ease-standard']);
+  assert.deepEqual([...names].sort(), [
+    '--duration-fast',
+    '--duration-normal',
+    '--duration-slow',
+    '--ease-emphasized',
+    '--ease-exit',
+    '--ease-standard',
+  ]);
   for (const [k, v] of decls) {
     if (k.startsWith('--duration-')) assert.match(v, /^\d+ms$/, k);
     else assert.match(v, /^cubic-bezier\(\s*[\d.]+,\s*[\d.]+,\s*[\d.]+,\s*[\d.]+\s*\)$/, k);
@@ -31,7 +38,9 @@ test('durations are ordered and collapse to 0ms under prefers-reduced-motion', (
 
 test('tailwind.css imports motion.css and bridges easings and durations', () => {
   assert.match(tw, /@import "\.\/motion\.css";/);
-  for (const e of ['standard', 'emphasized', 'exit']) assert.match(tw, new RegExp(`--ease-${e}: var\\(--ease-${e}\\);`));
-  for (const d of ['fast', 'normal', 'slow']) assert.match(tw, new RegExp(`@utility duration-${d} \\{[^}]*transition-duration: var\\(--duration-${d}\\);`));
+  for (const e of ['standard', 'emphasized', 'exit'])
+    assert.match(tw, new RegExp(`--ease-${e}: var\\(--ease-${e}\\);`));
+  for (const d of ['fast', 'normal', 'slow'])
+    assert.match(tw, new RegExp(`@utility duration-${d} \\{[^}]*transition-duration: var\\(--duration-${d}\\);`));
   assert.match(tw, /--default-transition-duration: var\(--duration-[a-z]+\);/);
 });

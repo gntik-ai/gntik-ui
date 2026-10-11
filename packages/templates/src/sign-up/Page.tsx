@@ -38,7 +38,14 @@ export default function SignUpPage({
 }: Partial<SignUpPageProps>) {
   const [ssoLoading, setSsoLoading] = useState<string | null>(null);
   return (
-    <AuthLayout fullScreen variant="split" logo={logo} brand={<BrandPanel {...brand} />} brandFooter={brandFooter} skipLinkLabel="Skip to sign-up form">
+    <AuthLayout
+      fullScreen
+      variant="split"
+      logo={logo}
+      brand={<BrandPanel {...brand} />}
+      brandFooter={brandFooter}
+      skipLinkLabel="Skip to sign-up form"
+    >
       <SignUpForm
         onSubmit={onSubmit}
         error={error}

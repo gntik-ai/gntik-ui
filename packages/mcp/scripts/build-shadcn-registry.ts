@@ -40,18 +40,46 @@ export const DEFAULT_BASE = 'https://ui.gntik.ai';
 export const TOKENS_ID = 'gntik-tokens';
 
 type Kind = 'component' | 'layout' | 'block' | 'template';
-interface KitFile { path: string; target: string }
-interface KitItem {
-  id: string; kind: Kind; name: string; package: string; group: string; status: string; description: string;
-  files: KitFile[]; dependencies: string[]; registryDependencies: string[]; docs?: string;
+interface KitFile {
+  path: string;
+  target: string;
 }
-type ShadcnType = 'registry:ui' | 'registry:block' | 'registry:component' | 'registry:lib' | 'registry:hook' | 'registry:theme';
-interface ShadcnFile { path: string; type: ShadcnType; target: string; content?: string }
+interface KitItem {
+  id: string;
+  kind: Kind;
+  name: string;
+  package: string;
+  group: string;
+  status: string;
+  description: string;
+  files: KitFile[];
+  dependencies: string[];
+  registryDependencies: string[];
+  docs?: string;
+}
+type ShadcnType =
+  'registry:ui' | 'registry:block' | 'registry:component' | 'registry:lib' | 'registry:hook' | 'registry:theme';
+interface ShadcnFile {
+  path: string;
+  type: ShadcnType;
+  target: string;
+  content?: string;
+}
 type Css = Record<string, Record<string, string>>;
 interface ShadcnItem {
-  $schema?: string; name: string; type: ShadcnType; title: string; description: string; author: string;
-  dependencies: string[]; registryDependencies: string[]; files: ShadcnFile[];
-  css?: Css; docs?: string; categories: string[]; meta: Record<string, string>;
+  $schema?: string;
+  name: string;
+  type: ShadcnType;
+  title: string;
+  description: string;
+  author: string;
+  dependencies: string[];
+  registryDependencies: string[];
+  files: ShadcnFile[];
+  css?: Css;
+  docs?: string;
+  categories: string[];
+  meta: Record<string, string>;
 }
 
 const posix = path.posix;
@@ -59,14 +87,26 @@ const CODE_EXT = /\.(tsx?|jsx?|mts|cts|mjs|cjs)$/;
 const stripExt = (p: string) => p.replace(CODE_EXT, '');
 const SPEC_RE = /(\bfrom\s*|\bimport\s*\(\s*|\bimport\s+|\brequire\s*\(\s*)(['"])([^'"\n]+)\2/g;
 const IMPLICIT = new Set(['react', 'react-dom']);
-const FONT_IMPORTS = ['@fontsource/geist', '@fontsource/geist-mono', '@fontsource/geist/500.css', '@fontsource/geist/600.css',
-  '@fontsource/geist/700.css', '@fontsource/geist-mono/500.css'];
+const FONT_IMPORTS = [
+  '@fontsource/geist',
+  '@fontsource/geist-mono',
+  '@fontsource/geist/500.css',
+  '@fontsource/geist/600.css',
+  '@fontsource/geist/700.css',
+  '@fontsource/geist-mono/500.css',
+];
 const NPMRC = '@gntik-ai:registry=https://npm.pkg.github.com';
 
 const pkgName = (spec: string) => (spec.startsWith('@') ? spec.split('/').slice(0, 2).join('/') : spec.split('/')[0]!);
 const readJson = <T>(file: string): T => JSON.parse(fs.readFileSync(file, 'utf8')) as T;
 
-interface PackageJson { name: string; version: string; exports?: Record<string, unknown>; dependencies?: Record<string, string>; peerDependencies?: Record<string, string> }
+interface PackageJson {
+  name: string;
+  version: string;
+  exports?: Record<string, unknown>;
+  dependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+}
 
 /** Workspace packages: name → package.json, and the version ranges they declare for npm deps. */
 function workspace() {
@@ -116,11 +156,15 @@ function packageRoots(items: KitItem[]) {
   return new Map([...votes].map(([pkg, v]) => [pkg, [...v].sort((a, b) => b[1] - a[1])[0]![0]]));
 }
 
-export interface BuildResult { files: Map<string, string>; warnings: string[] }
+export interface BuildResult {
+  files: Map<string, string>;
+  warnings: string[];
+}
 
 export function build(opts: { baseUrl?: string; kitRegistry?: string } = {}): BuildResult {
   const base = (opts.baseUrl ?? process.env.GNTIK_REGISTRY_BASE_URL ?? DEFAULT_BASE).replace(/\/+$/, '');
-  if (!/^https?:\/\/[^/]+/.test(base)) throw new Error(`GNTIK_REGISTRY_BASE_URL must be an absolute http(s) URL, got "${base}"`);
+  if (!/^https?:\/\/[^/]+/.test(base))
+    throw new Error(`GNTIK_REGISTRY_BASE_URL must be an absolute http(s) URL, got "${base}"`);
   const kit = readJson<{ items: KitItem[] }>(opts.kitRegistry ?? path.join(ROOT, 'kit-registry.json'));
   const { pkgs, ranges } = workspace();
   const url = (id: string) => `${base}/r/${id}.json`;
@@ -133,7 +177,8 @@ export function build(opts: { baseUrl?: string; kitRegistry?: string } = {}): Bu
     for (const file of files) {
       const key = stripExt(file.path);
       if (!m.has(key)) m.set(key, { file, viaDir: false });
-      if (posix.basename(key) === 'index' && !m.has(posix.dirname(key))) m.set(posix.dirname(key), { file, viaDir: true });
+      if (posix.basename(key) === 'index' && !m.has(posix.dirname(key)))
+        m.set(posix.dirname(key), { file, viaDir: true });
     }
     return m;
   };
@@ -161,9 +206,13 @@ export function build(opts: { baseUrl?: string; kitRegistry?: string } = {}): Bu
     name: TOKENS_ID,
     type: 'registry:theme',
     title: 'gntik-ui brand tokens',
-    description: 'Brand tokens (dark, light, high contrast) as CSS variables plus the Tailwind 4 bridge and Geist fonts. Every gntik-ui item depends on it.',
+    description:
+      'Brand tokens (dark, light, high contrast) as CSS variables plus the Tailwind 4 bridge and Geist fonts. Every gntik-ui item depends on it.',
     author: 'gntik-ai',
-    dependencies: ['@gntik-ai/tokens', ...['@fontsource/geist', '@fontsource/geist-mono'].map((d) => depSpec(d, ranges))],
+    dependencies: [
+      '@gntik-ai/tokens',
+      ...['@fontsource/geist', '@fontsource/geist-mono'].map((d) => depSpec(d, ranges)),
+    ],
     registryDependencies: [],
     files: [],
     css: Object.fromEntries([...FONT_IMPORTS, '@gntik-ai/tokens/tailwind.css'].map((s) => [`@import "${s}"`, {}])),
@@ -200,7 +249,9 @@ export function build(opts: { baseUrl?: string; kitRegistry?: string } = {}): Bu
       // Shared kit code no item owns (e.g. ui/src/doc.ts): copied along, mirrored under the package root.
       const m = /^packages\/([^/]+)\/src\/(.+)$/.exec(resolved);
       const root = m ? roots.get(m[1]!) : undefined;
-      const suffix = ['.ts', '.tsx', '/index.ts', '/index.tsx'].find((e) => fs.statSync(path.join(ROOT, resolved + e), { throwIfNoEntry: false })?.isFile());
+      const suffix = ['.ts', '.tsx', '/index.ts', '/index.tsx'].find((e) =>
+        fs.statSync(path.join(ROOT, resolved + e), { throwIfNoEntry: false })?.isFile(),
+      );
       if (m && root !== undefined && suffix && !anyOwner.has(resolved)) {
         const file = { path: resolved + suffix, target: `${root}/${m[2]}${suffix}` };
         enqueue(file);
@@ -223,14 +274,18 @@ export function build(opts: { baseUrl?: string; kitRegistry?: string } = {}): Bu
             if (ext && !hit.viaDir) to += ext;
             next = posix.relative(posix.dirname(file.target), to);
             if (!next.startsWith('.')) next = `./${next}`;
-          } else if (!['', '.ts', '.tsx', '/index.ts', '/index.tsx'].some((e) => fs.existsSync(path.join(ROOT, resolved + e)))) {
+          } else if (
+            !['', '.ts', '.tsx', '/index.ts', '/index.tsx'].some((e) => fs.existsSync(path.join(ROOT, resolved + e)))
+          ) {
             return m; // not a real module (e.g. an import inside a code sample string)
           } else {
             const dir = /^packages\/([^/]+)\//.exec(resolved)?.[1];
             const pkg = anyOwner.get(resolved)?.package ?? [...pkgs.values()].find((p) => p.dir === dir)?.name;
             if (!pkg) throw new Error(`${file.path}: cannot resolve '${spec}'`);
             next = pkg;
-            warnings.push(`${item.id}: ${file.target}: '${spec}' is kit code outside the item's dependencies; mapped to '${pkg}'.`);
+            warnings.push(
+              `${item.id}: ${file.target}: '${spec}' is kit code outside the item's dependencies; mapped to '${pkg}'.`,
+            );
           }
           return next === spec ? m : `${lead}${q}${next}${q}`;
         });
@@ -247,7 +302,9 @@ export function build(opts: { baseUrl?: string; kitRegistry?: string } = {}): Bu
       }
     }
     for (const n of IMPLICIT) npm.delete(n);
-    const kitPkgs = [...npm].filter((n) => n.startsWith('@gntik-ai/')).sort((a, b) => (a === '@gntik-ai/ui' ? -1 : b === '@gntik-ai/ui' ? 1 : a.localeCompare(b)));
+    const kitPkgs = [...npm]
+      .filter((n) => n.startsWith('@gntik-ai/'))
+      .sort((a, b) => (a === '@gntik-ai/ui' ? -1 : b === '@gntik-ai/ui' ? 1 : a.localeCompare(b)));
     // Packaged kit code is compiled; its styles.css tells Tailwind to scan it (ui first: it brings the tokens).
     const cssImports = kitPkgs.filter((n) => pkgs.get(n)?.exports?.['./styles.css']).map((n) => `${n}/styles.css`);
 
@@ -263,7 +320,12 @@ export function build(opts: { baseUrl?: string; kitRegistry?: string } = {}): Bu
       files,
       ...(cssImports.length ? { css: Object.fromEntries(cssImports.map((s) => [`@import "${s}"`, {}])) } : {}),
       categories: [item.kind, ...(item.group ? [item.group] : [])],
-      meta: { kind: item.kind, package: item.package, status: item.status, ...(item.docs ? { source: item.docs } : {}) },
+      meta: {
+        kind: item.kind,
+        package: item.package,
+        status: item.status,
+        ...(item.docs ? { source: item.docs } : {}),
+      },
     };
     write(`${item.id}.json`, shadcn);
     summaries.push(shadcn);
@@ -288,7 +350,9 @@ export function build(opts: { baseUrl?: string; kitRegistry?: string } = {}): Bu
 export function sync(dir: string, files: Map<string, string>, check: boolean): string[] {
   const existing = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.json')) : [];
   const stale = existing.filter((f) => !files.has(f));
-  const changed = [...files].filter(([f, c]) => !fs.existsSync(path.join(dir, f)) || fs.readFileSync(path.join(dir, f), 'utf8') !== c).map(([f]) => f);
+  const changed = [...files]
+    .filter(([f, c]) => !fs.existsSync(path.join(dir, f)) || fs.readFileSync(path.join(dir, f), 'utf8') !== c)
+    .map(([f]) => f);
   if (check) return [...changed, ...stale.map((f) => `${f} (stale)`)];
   fs.mkdirSync(dir, { recursive: true });
   for (const f of stale) fs.rmSync(path.join(dir, f));
@@ -300,7 +364,8 @@ const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve
 if (isMain) {
   const argv = process.argv.slice(2);
   const outIdx = argv.indexOf('--out');
-  const outDir = outIdx >= 0 && argv[outIdx + 1] ? path.resolve(argv[outIdx + 1]!) : path.join(ROOT, 'apps/docs/public/r');
+  const outDir =
+    outIdx >= 0 && argv[outIdx + 1] ? path.resolve(argv[outIdx + 1]!) : path.join(ROOT, 'apps/docs/public/r');
   const check = argv.includes('--check');
   const { files, warnings } = build();
   for (const w of warnings) console.warn(`warning: ${w}`);
@@ -308,7 +373,9 @@ if (isMain) {
   const where = path.relative(ROOT, outDir) || '.';
   if (check) {
     if (diff.length) {
-      console.error(`${where} is stale (${diff.length} file(s): ${diff.slice(0, 5).join(', ')}${diff.length > 5 ? '…' : ''}) — run \`pnpm registry\`.`);
+      console.error(
+        `${where} is stale (${diff.length} file(s): ${diff.slice(0, 5).join(', ')}${diff.length > 5 ? '…' : ''}) — run \`pnpm registry\`.`,
+      );
       process.exit(1);
     }
     console.log(`${where}: shadcn registry is up to date (${files.size} files).`);

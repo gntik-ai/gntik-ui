@@ -89,7 +89,13 @@ function ActionItem({ action }: { action: UserMenuAction }) {
     );
   }
   return (
-    <MenuItem icon={IconCmp} shortcut={action.shortcut} destructive={action.destructive} disabled={action.disabled} onClick={action.onSelect}>
+    <MenuItem
+      icon={IconCmp}
+      shortcut={action.shortcut}
+      destructive={action.destructive}
+      disabled={action.disabled}
+      onClick={action.onSelect}
+    >
       {action.label}
     </MenuItem>
   );
@@ -121,7 +127,10 @@ export function UserMenu({
   const hasEnd = showTheme || children || onSignOut;
   return (
     <Menu>
-      <MenuTrigger aria-label={triggerLabel ?? t('userMenu.label', { name: user.name })} className={cn(s.trigger(), className)}>
+      <MenuTrigger
+        aria-label={triggerLabel ?? t('userMenu.label', { name: user.name })}
+        className={cn(s.trigger(), className)}
+      >
         <Avatar src={user.avatarSrc} initials={getInitials(user.name)} size="sm" shape="rounded" />
         {showName && <span className={s.triggerName()}>{user.name}</span>}
       </MenuTrigger>
@@ -136,7 +145,9 @@ export function UserMenu({
           </div>
         </MenuGroup>
         {items.length > 0 && <MenuSeparator />}
-        {items.map((entry, i) => (entry === 'separator' ? <MenuSeparator key={`sep-${i}`} /> : <ActionItem key={entry.label} action={entry} />))}
+        {items.map((entry, i) =>
+          entry === 'separator' ? <MenuSeparator key={`sep-${i}`} /> : <ActionItem key={entry.label} action={entry} />,
+        )}
         {hasEnd && <MenuSeparator />}
         {showTheme && (
           <MenuSub>

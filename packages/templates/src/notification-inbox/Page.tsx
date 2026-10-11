@@ -113,7 +113,11 @@ export default function NotificationInboxPage(props: Partial<NotificationInboxPr
               </span>
               <span className="min-w-0 flex-1">
                 <span className="flex items-baseline gap-2">
-                  <span className={cn('min-w-0 flex-1 truncate text-[13px] text-foreground', !n.read && 'font-semibold')}>{n.title}</span>
+                  <span
+                    className={cn('min-w-0 flex-1 truncate text-[13px] text-foreground', !n.read && 'font-semibold')}
+                  >
+                    {n.title}
+                  </span>
                   <Timestamp value={n.time} tooltip={false} className="shrink-0 font-mono text-[11px]" />
                 </span>
                 <span className="mt-0.5 block truncate text-[12px] text-muted-foreground">{n.preview}</span>
@@ -146,7 +150,11 @@ export default function NotificationInboxPage(props: Partial<NotificationInboxPr
       </div>
       <div className="flex flex-wrap items-center gap-2">
         {selected.href && (
-          <Button trailingIcon={ExternalLink} render={<Link href={selected.href} tone="inherit" underline="none" />} nativeButton={false}>
+          <Button
+            trailingIcon={ExternalLink}
+            render={<Link href={selected.href} tone="inherit" underline="none" />}
+            nativeButton={false}
+          >
             Open
           </Button>
         )}
@@ -159,7 +167,14 @@ export default function NotificationInboxPage(props: Partial<NotificationInboxPr
       </div>
     </article>
   ) : (
-    <EmptyState icon={MailOpen} size="sm" titleAs="h2" className="mx-auto mt-16" title="Select a notification" description="Its details show up here." />
+    <EmptyState
+      icon={MailOpen}
+      size="sm"
+      titleAs="h2"
+      className="mx-auto mt-16"
+      title="Select a notification"
+      description="Its details show up here."
+    />
   );
 
   return (
@@ -174,7 +189,15 @@ export default function NotificationInboxPage(props: Partial<NotificationInboxPr
             status=""
             meta={[]}
             tabs={null}
-            actions={[{ label: 'Mark all as read', icon: CheckCheck, variant: 'secondary', disabled: unread === 0, onClick: markAllRead }]}
+            actions={[
+              {
+                label: 'Mark all as read',
+                icon: CheckCheck,
+                variant: 'secondary',
+                disabled: unread === 0,
+                onClick: markAllRead,
+              },
+            ]}
           />
         }
       >
@@ -197,7 +220,9 @@ export default function NotificationInboxPage(props: Partial<NotificationInboxPr
                 {FILTERS.map((f) => (
                   <Toggle key={f.value} value={f.value}>
                     {f.label}
-                    {f.value === 'unread' && unread > 0 && <span className="font-mono text-[10.5px] text-muted-foreground">{unread}</span>}
+                    {f.value === 'unread' && unread > 0 && (
+                      <span className="font-mono text-[10.5px] text-muted-foreground">{unread}</span>
+                    )}
                   </Toggle>
                 ))}
               </ToggleGroup>

@@ -27,7 +27,11 @@ describe('Section', () => {
   });
 
   it('renders without a header; variants and padding map to classes', () => {
-    render(<Section variant="muted" padding="lg" data-testid="s">Body</Section>);
+    render(
+      <Section variant="muted" padding="lg" data-testid="s">
+        Body
+      </Section>,
+    );
     const s = screen.getByTestId('s');
     expect(s.tagName).toBe('SECTION');
     expect(s).not.toHaveAttribute('aria-labelledby');
@@ -36,7 +40,12 @@ describe('Section', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><SectionSettings /><SectionVariants /></>);
+    render(
+      <>
+        <SectionSettings />
+        <SectionVariants />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

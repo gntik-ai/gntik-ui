@@ -1,7 +1,20 @@
 import { useState } from 'react';
 import { WorkspaceSwitcher, type Workspace } from '../WorkspaceSwitcher';
 
-const TEAMS = ['Acme Industries', 'Billing', 'Data Platform', 'Design Team', 'Growth', 'Infrastructure', 'Marketing Site', 'Mobile Apps', 'Partner Portal', 'Research', 'Security', 'Support'];
+const TEAMS = [
+  'Acme Industries',
+  'Billing',
+  'Data Platform',
+  'Design Team',
+  'Growth',
+  'Infrastructure',
+  'Marketing Site',
+  'Mobile Apps',
+  'Partner Portal',
+  'Research',
+  'Security',
+  'Support',
+];
 const WORKSPACES: Workspace[] = TEAMS.map((name, i) => ({
   id: name.toLowerCase().replace(/\s+/g, '-'),
   name,

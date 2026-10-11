@@ -1,8 +1,8 @@
-
 /** Mirrors a directional glyph (chevron, arrow) in right-to-left text. */
 export const RTL_FLIP = 'rtl:-scale-x-100';
 
-const DIRECTIONAL = /^(?:Chevrons?(?:Left|Right)|Arrow(?:Left|Right)\w*|Move(?:Left|Right)|Panel(?:Left|Right)\w*|Undo\d?|Redo\d?|Corner\w+(?:Left|Right)|Indent\w*|Outdent\w*)$/;
+const DIRECTIONAL =
+  /^(?:Chevrons?(?:Left|Right)|Arrow(?:Left|Right)\w*|Move(?:Left|Right)|Panel(?:Left|Right)\w*|Undo\d?|Redo\d?|Corner\w+(?:Left|Right)|Indent\w*|Outdent\w*)$/;
 
 /**
  * True for lucide icons that point along the inline axis (ChevronLeft, ArrowRight,

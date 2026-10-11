@@ -16,7 +16,10 @@ async function openGallery(at = 0) {
   return { user, opener, dialog };
 }
 
-const shown = () => within(screen.getByRole('dialog')).getAllByRole('img').find((img) => img.getAttribute('alt'));
+const shown = () =>
+  within(screen.getByRole('dialog'))
+    .getAllByRole('img')
+    .find((img) => img.getAttribute('alt'));
 const status = () => within(screen.getByRole('dialog')).getByRole('status');
 
 describe('Lightbox', () => {

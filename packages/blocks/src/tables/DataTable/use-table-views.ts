@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { newViewId, sameViewState, type DataTableView, type DataTableViewState } from './views';
 
 /** A value that is controlled when `value` is defined, otherwise kept in state. */
-export function useControllable<V>(value: V | undefined, initial: V | (() => V), onChange?: (next: V) => void): [V, (next: V) => void] {
+export function useControllable<V>(
+  value: V | undefined,
+  initial: V | (() => V),
+  onChange?: (next: V) => void,
+): [V, (next: V) => void] {
   const [inner, setInner] = useState<V>(initial);
   const current = value === undefined ? inner : value;
   const set = (next: V) => {
@@ -28,8 +32,20 @@ export interface UseTableViewsOptions {
 }
 
 /** Saved-views state machine for the DataTable: select, save as, save, rename, delete, reset. */
-export function useTableViews({ views: viewsProp, defaultViews = [], onViewsChange, activeViewId, defaultActiveViewId = null, onActiveViewChange, current, defaults, apply }: UseTableViewsOptions) {
-  const [views, setViews] = useControllable<readonly DataTableView[]>(viewsProp, defaultViews, (next) => onViewsChange?.([...next]));
+export function useTableViews({
+  views: viewsProp,
+  defaultViews = [],
+  onViewsChange,
+  activeViewId,
+  defaultActiveViewId = null,
+  onActiveViewChange,
+  current,
+  defaults,
+  apply,
+}: UseTableViewsOptions) {
+  const [views, setViews] = useControllable<readonly DataTableView[]>(viewsProp, defaultViews, (next) =>
+    onViewsChange?.([...next]),
+  );
   const [activeId, setActiveId] = useControllable<string | null>(activeViewId, defaultActiveViewId, onActiveViewChange);
   const active = views.find((v) => v.id === activeId) ?? null;
   const target = (view: DataTableView | null): DataTableViewState => ({ ...defaults, ...(view?.state ?? {}) });

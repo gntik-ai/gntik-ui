@@ -15,5 +15,16 @@ export const doc: ComponentDoc = {
     ['Enter', 'Runs the highlighted item (or selects a theme) and closes the menu'],
     ['Escape', 'Closes the menu and returns focus to the avatar'],
   ],
-  tokens: ['popover', 'border', 'primary', 'primary-foreground', 'accent', 'accent-foreground', 'secondary', 'muted-foreground', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'popover',
+    'border',
+    'primary',
+    'primary-foreground',
+    'accent',
+    'accent-foreground',
+    'secondary',
+    'muted-foreground',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

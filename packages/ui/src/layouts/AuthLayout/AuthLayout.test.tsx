@@ -26,7 +26,11 @@ describe('AuthLayout', () => {
   it('card and full-bleed have no brand panel', () => {
     const { rerender, container } = render(<AuthLayout variant="card">form</AuthLayout>);
     expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
-    rerender(<AuthLayout variant="full-bleed" fullScreen>form</AuthLayout>);
+    rerender(
+      <AuthLayout variant="full-bleed" fullScreen>
+        form
+      </AuthLayout>,
+    );
     expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
     expect(container.firstElementChild).toHaveClass('bg-chrome', 'h-dvh');
   });

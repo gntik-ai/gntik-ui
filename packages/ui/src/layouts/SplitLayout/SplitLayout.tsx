@@ -75,7 +75,13 @@ export function SplitLayout({
   return (
     <div className={cn(s.root(), className)} data-show-detail={showDetail || undefined}>
       <ResizablePanelGroup className={s.group()} autoSaveId={autoSaveId}>
-        <ResizablePanel id={`${id}-list`} defaultSize={defaultListSize} minSize={minListSize} maxSize={maxListSize} className={s.list()}>
+        <ResizablePanel
+          id={`${id}-list`}
+          defaultSize={defaultListSize}
+          minSize={minListSize}
+          maxSize={maxListSize}
+          className={s.list()}
+        >
           <section ref={listRef} tabIndex={-1} aria-label={listLabel} className={s.pane()}>
             {listHeader && <div className={s.paneHeader()}>{listHeader}</div>}
             <div className={s.paneBody()}>{list}</div>

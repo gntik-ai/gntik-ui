@@ -8,12 +8,23 @@ import path from 'node:path';
 const ROOT = path.resolve(import.meta.dirname, '../../..');
 const OUT = path.join(ROOT, 'INVENTORY.md');
 
-interface KitItem { id: string; kind: string; name: string; package: string; group: string; status: string }
+interface KitItem {
+  id: string;
+  kind: string;
+  name: string;
+  package: string;
+  group: string;
+  status: string;
+}
 
 const catalogSrc = fs.readFileSync(path.join(ROOT, 'apps/docs/src/catalog/registry.jsx'), 'utf8');
 const groups: { group: string; items: { id: string; label: string; status: string }[] }[] = [];
 for (const g of catalogSrc.matchAll(/\{\s*group:\s*'([^']+)'[\s\S]*?items:\s*\[([\s\S]*?)\]\s*\}/g)) {
-  const items = [...g[2]!.matchAll(/id:\s*'([^']+)',\s*label:\s*'([^']+)'[\s\S]*?status:\s*'([^']+)'/g)].map((m) => ({ id: m[1]!, label: m[2]!, status: m[3]! }));
+  const items = [...g[2]!.matchAll(/id:\s*'([^']+)',\s*label:\s*'([^']+)'[\s\S]*?status:\s*'([^']+)'/g)].map((m) => ({
+    id: m[1]!,
+    label: m[2]!,
+    status: m[3]!,
+  }));
   groups.push({ group: g[1]!, items });
 }
 const kit = (JSON.parse(fs.readFileSync(path.join(ROOT, 'kit-registry.json'), 'utf8')) as { items: KitItem[] }).items;
@@ -24,8 +35,16 @@ const byKind = (kind: string) => kit.filter((i) => i.kind === kind);
 const table = (items: KitItem[], key: (i: KitItem) => string) => {
   const map = new Map<string, KitItem[]>();
   for (const i of items) map.set(key(i), [...(map.get(key(i)) ?? []), i]);
-  return [...map.entries()].sort(([a], [b]) => a.localeCompare(b))
-    .map(([k, list]) => `| ${k} | ${list.map((i) => i.name).sort().join(' · ')} | ${list.length} |`).join('\n');
+  return [...map.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(
+      ([k, list]) =>
+        `| ${k} | ${list
+          .map((i) => i.name)
+          .sort()
+          .join(' · ')} | ${list.length} |`,
+    )
+    .join('\n');
 };
 
 const md = `# Gntik UI — inventory
@@ -49,7 +68,10 @@ ${table(byKind('component'), (i) => (i.package === '@gntik-ai/chat' ? 'Chat' : i
 
 ### Layouts (@gntik-ai/ui)
 
-${byKind('layout').map((i) => i.name).sort().join(' · ')}
+${byKind('layout')
+  .map((i) => i.name)
+  .sort()
+  .join(' · ')}
 
 ### Blocks (@gntik-ai/blocks)
 

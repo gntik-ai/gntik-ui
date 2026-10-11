@@ -1,7 +1,8 @@
 /** Slot classes for ModelPicker. */
 export const modelPickerStyles = {
   trigger: 'w-auto max-w-full min-w-0',
-  compactTrigger: 'h-7 w-auto max-w-56 min-w-0 gap-1 border-transparent bg-transparent ps-2 pe-1.5 shadow-none hover:bg-secondary/70 hover:border-transparent',
+  compactTrigger:
+    'h-7 w-auto max-w-56 min-w-0 gap-1 border-transparent bg-transparent ps-2 pe-1.5 shadow-none hover:bg-secondary/70 hover:border-transparent',
   triggerValue: 'flex min-w-0 items-center gap-1.5',
   triggerIcon: 'shrink-0 text-muted-foreground',
   triggerName: 'truncate font-medium',

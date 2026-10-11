@@ -38,7 +38,8 @@ export default function StackedLayoutMegaMenu() {
         >
           <h1 className="text-xl font-bold tracking-tight">Projects</h1>
           <p className="mt-1 text-[13px] text-muted-foreground">
-            The `nav` slot puts a MegaMenu in the top bar on large screens; the same items feed the drawer on small ones.
+            The `nav` slot puts a MegaMenu in the top bar on large screens; the same items feed the drawer on small
+            ones.
           </p>
         </StackedLayout>
       </div>

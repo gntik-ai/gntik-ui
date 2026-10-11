@@ -21,17 +21,19 @@ describe('Token', () => {
     expect(screen.getByRole('button', { name: 'Remove eu-west-1' })).toHaveFocus();
   });
 
-  it.each([['Enter', '{Enter}'], ['Space', ' '], ['Backspace', '{Backspace}'], ['Delete', '{Delete}']])(
-    '%s removes the token',
-    async (_, key) => {
-      const user = userEvent.setup();
-      const onRemove = vi.fn();
-      render(<Token label="staging" onRemove={onRemove} />);
-      await user.tab();
-      await user.keyboard(key);
-      expect(onRemove).toHaveBeenCalledTimes(1);
-    },
-  );
+  it.each([
+    ['Enter', '{Enter}'],
+    ['Space', ' '],
+    ['Backspace', '{Backspace}'],
+    ['Delete', '{Delete}'],
+  ])('%s removes the token', async (_, key) => {
+    const user = userEvent.setup();
+    const onRemove = vi.fn();
+    render(<Token label="staging" onRemove={onRemove} />);
+    await user.tab();
+    await user.keyboard(key);
+    expect(onRemove).toHaveBeenCalledTimes(1);
+  });
 
   it('removes a filter chip in the example', async () => {
     const user = userEvent.setup();
@@ -54,7 +56,12 @@ describe('Token', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><TokenFilters /><TokenRecipients /></>);
+    render(
+      <>
+        <TokenFilters />
+        <TokenRecipients />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

@@ -15,7 +15,10 @@ export const doc: ComponentDoc = {
     ['Enter on Exit', 'Opens the exit confirmation; Leave confirms, Stay or Escape closes it'],
     ['Tab / Enter on the Stepper', 'Moves between completed steps; Enter goes back to one'],
     ['Tab / Shift+Tab in overlay', 'Wraps inside the modal; closing returns focus to returnFocusRef or the opener'],
-    ['Next / Back in overlay', 'Moves focus to the new step heading or first control, then politely announces the step'],
+    [
+      'Next / Back in overlay',
+      'Moves focus to the new step heading or first control, then politely announces the step',
+    ],
   ],
   tokens: ['background', 'foreground', 'card', 'border', 'primary', 'muted-foreground', 'focus-ring'],
 };

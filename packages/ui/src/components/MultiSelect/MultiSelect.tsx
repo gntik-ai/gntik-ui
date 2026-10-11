@@ -69,7 +69,9 @@ export interface MultiSelectProps extends MultiSelectVariantProps {
 
 const SELECT_ALL: MultiSelectOption = { value: '\u0000select-all', label: '' };
 const matches = (o: MultiSelectOption, q: string) =>
-  o === SELECT_ALL ? q.trim() === '' : `${o.label} ${o.description ?? ''}`.toLowerCase().includes(q.trim().toLowerCase());
+  o === SELECT_ALL
+    ? q.trim() === ''
+    : `${o.label} ${o.description ?? ''}`.toLowerCase().includes(q.trim().toLowerCase());
 
 /**
  * Searchable multi-select on Base UI Combobox (multiple): selected options as removable chips
@@ -144,7 +146,11 @@ export function MultiSelect({
   const specials: SpecialItem[] = [];
   if (onCreate && query !== '' && !hasExactLabel(listed, query, (o) => o.label)) specials.push(createItem(query));
   if (loadOptions && remote.error && !remote.loading) specials.push(retryItem(input));
-  const items: Array<MultiSelectOption | SpecialItem> = [...(showSelectAll && !loadOptions ? [SELECT_ALL] : []), ...listed, ...specials];
+  const items: Array<MultiSelectOption | SpecialItem> = [
+    ...(showSelectAll && !loadOptions ? [SELECT_ALL] : []),
+    ...listed,
+    ...specials,
+  ];
   const busy = !!loadOptions && (remote.loading || !!remote.error);
   const s = multiSelectVariants({ size });
   const v = comboboxVariants({ size });
@@ -170,7 +176,11 @@ export function MultiSelect({
     }
     if (next.includes(SELECT_ALL)) {
       const enabledValues = enabled.map((o) => o.value);
-      commit(allSelected ? values.filter((x) => !enabledValues.includes(x)) : [...values, ...enabledValues.filter((x) => !values.includes(x))]);
+      commit(
+        allSelected
+          ? values.filter((x) => !enabledValues.includes(x))
+          : [...values, ...enabledValues.filter((x) => !values.includes(x))],
+      );
       return;
     }
     commit(next.map((o) => o.value));
@@ -204,7 +214,10 @@ export function MultiSelect({
           {label}
         </label>
       )}
-      <BaseCombobox.InputGroup className={cn(cb.chipsGroup(), s.group(), className)} data-invalid={invalid || undefined}>
+      <BaseCombobox.InputGroup
+        className={cn(cb.chipsGroup(), s.group(), className)}
+        data-invalid={invalid || undefined}
+      >
         <BaseCombobox.Chips className={cb.chips()}>
           {visible.map((o) => (
             <BaseCombobox.Chip key={o.value} className={cb.chip()} aria-label={o.label}>
@@ -263,7 +276,9 @@ export function MultiSelect({
                 ) : o === SELECT_ALL ? (
                   <BaseCombobox.Item key={o.value} value={o} className={cn(cb.item(), s.selectAll())}>
                     <span className={cb.itemContent()}>{allSelected ? deselectAllLabel : selectAllLabel}</span>
-                    <span className={s.check()}>{allSelected && <Check size={15} strokeWidth={2.4} aria-hidden />}</span>
+                    <span className={s.check()}>
+                      {allSelected && <Check size={15} strokeWidth={2.4} aria-hidden />}
+                    </span>
                   </BaseCombobox.Item>
                 ) : (
                   <BaseCombobox.Item key={o.value} value={o} disabled={o.disabled} className={cb.item()}>

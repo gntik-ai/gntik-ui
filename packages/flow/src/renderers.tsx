@@ -46,7 +46,12 @@ export function adaptNodeRenderers(renderers: readonly FlowNodeRenderer[]): Node
     });
     const verticalCount = Math.max(counts.left, counts.right);
     const horizontalCount = Math.max(counts.top, counts.bottom);
-    types[definition.type] = memo(function CustomNode({ id, data, selected, isConnectable }: NodeProps<FlowNode<string>>) {
+    types[definition.type] = memo(function CustomNode({
+      id,
+      data,
+      selected,
+      isConnectable,
+    }: NodeProps<FlowNode<string>>) {
       return (
         <div
           className="relative grid h-full w-full"

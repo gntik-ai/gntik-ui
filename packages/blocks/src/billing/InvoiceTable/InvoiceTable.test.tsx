@@ -11,7 +11,10 @@ describe('InvoiceTable', () => {
     expect(within(table).getAllByRole('row')).toHaveLength(sampleInvoices.length + 1);
     expect(screen.getByText('$1,584.20')).toBeInTheDocument();
     expect(screen.getByText('Overdue')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Download INV-2026-0004' })).toHaveAttribute('href', '#invoice-INV-2026-0004');
+    expect(screen.getByRole('link', { name: 'Download INV-2026-0004' })).toHaveAttribute(
+      'href',
+      '#invoice-INV-2026-0004',
+    );
     await expectNoAxeViolations(container);
   });
 

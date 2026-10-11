@@ -77,7 +77,8 @@ export function PromptEditor({
   const variables = extractPromptVariables(system, user);
   const missing = variables.filter((v) => !values[v]?.trim());
   const maxTokensNumber = Number(maxTokens);
-  const maxTokensInvalid = !Number.isInteger(maxTokensNumber) || maxTokensNumber < 1 || maxTokensNumber > maxTokensLimit;
+  const maxTokensInvalid =
+    !Number.isInteger(maxTokensNumber) || maxTokensNumber < 1 || maxTokensNumber > maxTokensLimit;
   const canRun = user.trim().length > 0 && !maxTokensInvalid && !running;
 
   const run = () => {
@@ -117,7 +118,13 @@ export function PromptEditor({
           </Field>
           <Field>
             <FieldLabel required>User prompt</FieldLabel>
-            <Textarea rows={6} value={user} onValueChange={setUser} invalid={user.trim().length === 0} className="font-mono text-[12.5px]" />
+            <Textarea
+              rows={6}
+              value={user}
+              onValueChange={setUser}
+              invalid={user.trim().length === 0}
+              className="font-mono text-[12.5px]"
+            />
             <FieldDescription>
               ~{estimateTokens(user)} tokens · use <code className="font-mono">{'{{name}}'}</code> for variables
             </FieldDescription>
@@ -125,7 +132,9 @@ export function PromptEditor({
         </div>
         <div className="flex flex-col gap-5 border-t border-border bg-secondary/20 p-4 md:border-t-0 md:border-s">
           <div>
-            <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">Variables</SubTag>
+            <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">
+              Variables
+            </SubTag>
             {variables.length === 0 ? (
               <p className="mt-2 text-[12.5px] text-muted-foreground">No variables in the prompts.</p>
             ) : (
@@ -159,7 +168,9 @@ export function PromptEditor({
             )}
           </div>
           <div className="flex flex-col gap-4">
-            <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">Parameters</SubTag>
+            <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">
+              Parameters
+            </SubTag>
             <Slider
               label="Temperature"
               showValue

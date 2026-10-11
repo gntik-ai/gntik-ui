@@ -11,8 +11,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildIndex, PATHS, serializeIndex } from './indexer.js';
 
-const root = process.env.GNTIK_UI_DIR
-  ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
+const root = process.env.GNTIK_UI_DIR ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const target = path.join(root, PATHS.registryJson);
 const next = serializeIndex(buildIndex(root));
 

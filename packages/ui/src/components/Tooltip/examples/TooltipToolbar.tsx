@@ -5,7 +5,11 @@ import { SimpleTooltip, TooltipProvider } from '../Tooltip';
 export default function TooltipToolbar() {
   return (
     <TooltipProvider>
-      <div role="toolbar" aria-label="Deployment actions" className="flex items-center gap-1.5 rounded-lg border border-border bg-card p-1.5 shadow-sm">
+      <div
+        role="toolbar"
+        aria-label="Deployment actions"
+        className="flex items-center gap-1.5 rounded-lg border border-border bg-card p-1.5 shadow-sm"
+      >
         <SimpleTooltip content="Search" kbd="⌘K">
           <IconButton icon={Search} label="Search" />
         </SimpleTooltip>

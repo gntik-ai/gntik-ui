@@ -20,7 +20,9 @@ export default function TableSelectable() {
         <TableCaption srOnly>Deployments, compact view with selection</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-10"><span className="sr-only">Select</span></TableHead>
+            <TableHead className="w-10">
+              <span className="sr-only">Select</span>
+            </TableHead>
             <TableHead>Deployment</TableHead>
             <TableHead>Region</TableHead>
             <TableHead align="right">Requests</TableHead>
@@ -40,7 +42,9 @@ export default function TableSelectable() {
               </TableCell>
               <TableCell className="font-semibold">{d.name}</TableCell>
               <TableCell className="font-mono text-[12px] text-muted-foreground">{d.region}</TableCell>
-              <TableCell align="right" className="font-mono text-[12.5px]">{count(d.requests)}</TableCell>
+              <TableCell align="right" className="font-mono text-[12.5px]">
+                {count(d.requests)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

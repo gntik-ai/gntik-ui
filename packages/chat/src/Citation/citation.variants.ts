@@ -9,7 +9,8 @@ export const citationStyles = {
   ].join(' '),
   popup: 'w-80',
   head: 'flex items-center gap-2 text-[11.5px] text-muted-foreground',
-  index: 'grid h-[18px] min-w-[18px] place-items-center rounded-md bg-secondary px-1 font-mono text-[10.5px] font-semibold text-foreground',
+  index:
+    'grid h-[18px] min-w-[18px] place-items-center rounded-md bg-secondary px-1 font-mono text-[10.5px] font-semibold text-foreground',
   title: 'mt-1.5 text-[13px] font-semibold leading-snug text-foreground',
   snippet: 'mt-1 line-clamp-4 text-[12.5px] leading-relaxed text-muted-foreground',
   open: `mt-2.5 inline-flex items-center gap-1 rounded-sm text-[12.5px] font-medium text-primary-text hover:underline ${focusRing}`,

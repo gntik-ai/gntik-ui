@@ -75,7 +75,9 @@ export function Lane({
               )}
             >
               <span className="flex items-start gap-2">
-                <span className="min-w-0 flex-1 text-[13px] leading-snug font-medium text-foreground">{card.title}</span>
+                <span className="min-w-0 flex-1 text-[13px] leading-snug font-medium text-foreground">
+                  {card.title}
+                </span>
                 <GripVertical size={14} aria-hidden className="mt-0.5 shrink-0 text-muted-foreground" />
               </span>
               <span className="flex flex-wrap items-center gap-1.5">
@@ -95,7 +97,12 @@ export function Lane({
                     <>
                       <CalendarClock size={12} aria-hidden />
                       <span className="sr-only">Due </span>
-                      <Timestamp value={card.due} format="absolute" tooltip={false} dateOptions={{ month: 'short', day: 'numeric' }} />
+                      <Timestamp
+                        value={card.due}
+                        format="absolute"
+                        tooltip={false}
+                        dateOptions={{ month: 'short', day: 'numeric' }}
+                      />
                     </>
                   )}
                 </span>

@@ -17,9 +17,17 @@ export interface DataTableHeadCellProps<T> {
  * Column header of the DataTable. Without a resize handle it is the kit TableHead; with one, the
  * sort button and the handle sit side by side (the handle never nests inside the button).
  */
-export function DataTableHeadCell<T>({ column, sortDirection, onSortChange, layout, resize }: DataTableHeadCellProps<T>) {
+export function DataTableHeadCell<T>({
+  column,
+  sortDirection,
+  onSortChange,
+  layout,
+  resize,
+}: DataTableHeadCellProps<T>) {
   const align = columnAlign(column);
-  const pinnedClass = layout?.pinned ? cn(layout.className, 'z-[11]', stickyTint(layout, { head: true }), 'bg-card') : undefined;
+  const pinnedClass = layout?.pinned
+    ? cn(layout.className, 'z-[11]', stickyTint(layout, { head: true }), 'bg-card')
+    : undefined;
   if (!resize) {
     return (
       <TableHead
@@ -36,7 +44,8 @@ export function DataTableHeadCell<T>({ column, sortDirection, onSortChange, layo
     );
   }
   const v = tableVariants({ align: align ?? 'left', active: sortDirection !== 'none' });
-  const SortIcon = sortDirection === 'ascending' ? ArrowUp : sortDirection === 'descending' ? ArrowDown : ChevronsUpDown;
+  const SortIcon =
+    sortDirection === 'ascending' ? ArrowUp : sortDirection === 'descending' ? ArrowDown : ChevronsUpDown;
   return (
     <TableHead
       align={align}
@@ -45,9 +54,19 @@ export function DataTableHeadCell<T>({ column, sortDirection, onSortChange, layo
       aria-sort={column.sortable ? sortDirection : undefined}
       data-column-id={column.id}
     >
-      <span className={cn('block min-w-0 truncate pe-2', align === 'right' && 'text-end', align === 'center' && 'text-center')}>
+      <span
+        className={cn(
+          'block min-w-0 truncate pe-2',
+          align === 'right' && 'text-end',
+          align === 'center' && 'text-center',
+        )}
+      >
         {column.sortable ? (
-          <button type="button" className={cn(v.sortButton(), 'max-w-full')} onClick={() => onSortChange(nextSortDirection(sortDirection))}>
+          <button
+            type="button"
+            className={cn(v.sortButton(), 'max-w-full')}
+            onClick={() => onSortChange(nextSortDirection(sortDirection))}
+          >
             <span className="truncate">{column.header}</span>
             <SortIcon size={13} aria-hidden className={sortDirection === 'none' ? 'opacity-40' : undefined} />
           </button>
@@ -55,7 +74,13 @@ export function DataTableHeadCell<T>({ column, sortDirection, onSortChange, layo
           column.header
         )}
       </span>
-      <ColumnResizeHandle label={column.header} width={resize.width} min={resize.min} max={resize.max} onResize={resize.onResize} />
+      <ColumnResizeHandle
+        label={column.header}
+        width={resize.width}
+        min={resize.min}
+        max={resize.max}
+        onResize={resize.onResize}
+      />
     </TableHead>
   );
 }

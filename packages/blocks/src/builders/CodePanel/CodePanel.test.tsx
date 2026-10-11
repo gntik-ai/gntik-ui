@@ -254,24 +254,27 @@ it('collects worker markers and runs consumer setup when the panel opens in diff
   expect(screen.getByRole('list', { name: 'Problems' })).toHaveTextContent('Expected integer');
 });
 
-it.each([undefined, true, false])('preserves caller-supplied problems with readOnly=%s and no diagnostics opt-in', async (readOnly) => {
-  const m = mockMonaco();
-  render(<CodePanel loader={m.loader} readOnly={readOnly} />);
-  await waitFor(() => expect(m.editor.create).toHaveBeenCalledOnce());
-  await act(async () =>
-    m.emitMarkers([
-      {
-        owner: 'typescript',
-        resource: m.resource,
-        severity: 8,
-        message: 'A model-only error',
-        startLineNumber: 1,
-        startColumn: 1,
-        endLineNumber: 1,
-        endColumn: 2,
-      },
-    ]),
-  );
-  expect(screen.getByRole('list', { name: 'Problems' }).children).toHaveLength(3);
-  expect(screen.queryByText('A model-only error')).toBeNull();
-});
+it.each([undefined, true, false])(
+  'preserves caller-supplied problems with readOnly=%s and no diagnostics opt-in',
+  async (readOnly) => {
+    const m = mockMonaco();
+    render(<CodePanel loader={m.loader} readOnly={readOnly} />);
+    await waitFor(() => expect(m.editor.create).toHaveBeenCalledOnce());
+    await act(async () =>
+      m.emitMarkers([
+        {
+          owner: 'typescript',
+          resource: m.resource,
+          severity: 8,
+          message: 'A model-only error',
+          startLineNumber: 1,
+          startColumn: 1,
+          endLineNumber: 1,
+          endColumn: 2,
+        },
+      ]),
+    );
+    expect(screen.getByRole('list', { name: 'Problems' }).children).toHaveLength(3);
+    expect(screen.queryByText('A model-only error')).toBeNull();
+  },
+);

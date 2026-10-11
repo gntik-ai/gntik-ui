@@ -79,8 +79,14 @@ test('typography, radius, shadow and motion use DTCG types', () => {
 });
 
 test('figma-variables.json: one "gntik" collection, three modes, values and aliases for every variable', () => {
-  assert.deepEqual(figma.variableCollections.map((c) => c.name), ['gntik']);
-  assert.deepEqual(figma.variableModes.map((m) => m.name), THEMES);
+  assert.deepEqual(
+    figma.variableCollections.map((c) => c.name),
+    ['gntik'],
+  );
+  assert.deepEqual(
+    figma.variableModes.map((m) => m.name),
+    THEMES,
+  );
   const ids = new Set(figma.variables.map((v) => v.id));
   assert.equal(ids.size, figma.variables.length);
   assert.equal(figma.variableModeValues.length, figma.variables.length * THEMES.length);

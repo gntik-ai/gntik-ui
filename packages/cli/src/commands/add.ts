@@ -8,7 +8,14 @@ import {
   type Context,
 } from '../context.js';
 import { CliError } from '../errors.js';
-import { CONFIG_FILE, defaultConfig, detectProject, loadConfig, type GntikConfig, type ProjectInfo } from '../project.js';
+import {
+  CONFIG_FILE,
+  defaultConfig,
+  detectProject,
+  loadConfig,
+  type GntikConfig,
+  type ProjectInfo,
+} from '../project.js';
 import { isCopyIn, type RegistryItem } from '../registry.js';
 
 export interface ProjectContext {
@@ -52,13 +59,21 @@ async function packageImport(ctx: Context, item: RegistryItem, read: (p: string)
 }
 
 export function copySection(plan: CopyPlan, conflicts: string[], ctx: Context): string[] {
-  const label = { create: ctx.flags.dryRun ? 'would create' : 'created', identical: 'unchanged', conflict: 'CONFLICT', overwrite: ctx.flags.dryRun ? 'would overwrite' : 'overwritten' };
+  const label = {
+    create: ctx.flags.dryRun ? 'would create' : 'created',
+    identical: 'unchanged',
+    conflict: 'CONFLICT',
+    overwrite: ctx.flags.dryRun ? 'would overwrite' : 'overwritten',
+  };
   const lines = plan.files.map((f) => `  ${label[f.status].padEnd(15)} ${f.target}`);
   if (plan.rewrites.length) {
     lines.push('Rewritten imports:', ...plan.rewrites.map((r) => `  ${r.file}: '${r.from}' → '${r.to}'`));
   }
   if (plan.warnings.length) lines.push('Warnings:', ...plan.warnings.map((w) => `  ${w}`));
-  if (conflicts.length) lines.push(`${conflicts.length} file(s) already exist and differ — nothing was written. Re-run with --overwrite to replace them.`);
+  if (conflicts.length)
+    lines.push(
+      `${conflicts.length} file(s) already exist and differ — nothing was written. Re-run with --overwrite to replace them.`,
+    );
   return lines;
 }
 
@@ -76,16 +91,15 @@ export async function add(ctx: Context, positionals: string[]): Promise<CommandR
   const viaPackage = packageItems.filter((i) => requested.has(i.id));
 
   const plan = await planCopy(registry, toCopy, config, ctx.cwd);
-  const { conflicts, written } = await applyCopy(plan, ctx.cwd, { overwrite: ctx.flags.overwrite, dryRun: ctx.flags.dryRun });
+  const { conflicts, written } = await applyCopy(plan, ctx.cwd, {
+    overwrite: ctx.flags.overwrite,
+    dryRun: ctx.flags.dryRun,
+  });
 
   const imports: string[] = [];
   for (const item of viaPackage) imports.push(await packageImport(ctx, item, (p) => registry.read(p)));
 
-  const wanted = [
-    ...packageItems.map((i) => i.package),
-    ...toCopy.flatMap((i) => i.dependencies),
-    ...plan.packages,
-  ];
+  const wanted = [...packageItems.map((i) => i.package), ...toCopy.flatMap((i) => i.dependencies), ...plan.packages];
   const install = conflicts.length
     ? { packages: [], dev: [], commands: [], ran: false, exitCode: null }
     : runInstall(ctx, config.packageManager, info.packageJson, wanted);
@@ -93,7 +107,13 @@ export async function add(ctx: Context, positionals: string[]): Promise<CommandR
   const data = {
     dryRun: ctx.flags.dryRun,
     configured: project.configured,
-    items: closure.map((i) => ({ id: i.id, kind: i.kind, package: i.package, mode: isCopyIn(i.kind) ? 'copy' : 'package', requested: requested.has(i.id) })),
+    items: closure.map((i) => ({
+      id: i.id,
+      kind: i.kind,
+      package: i.package,
+      mode: isCopyIn(i.kind) ? 'copy' : 'package',
+      requested: requested.has(i.id),
+    })),
     files: plan.files.map(fileSummary),
     written,
     conflicts,
@@ -108,7 +128,12 @@ export async function add(ctx: Context, positionals: string[]): Promise<CommandR
   if (imports.length) text.push('Import:', ...imports.map((l) => `  ${l}`));
   text.push(...installLines(install, ctx));
   if (conflicts.length) {
-    return { code: 4, data, text, error: new CliError('CONFLICT', `${conflicts.length} file(s) already exist: ${conflicts.join(', ')}`) };
+    return {
+      code: 4,
+      data,
+      text,
+      error: new CliError('CONFLICT', `${conflicts.length} file(s) already exist: ${conflicts.join(', ')}`),
+    };
   }
   return withInstallStatus({ code: 0, data, text }, install);
 }

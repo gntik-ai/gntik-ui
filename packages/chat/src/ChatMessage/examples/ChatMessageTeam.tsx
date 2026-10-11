@@ -6,7 +6,12 @@ export default function ChatMessageTeam() {
   return (
     <TooltipProvider>
       <div className="flex max-w-2xl flex-col gap-6">
-        <ChatMessage role="participant" author="Daniel Okafor" timestamp="10:02" copyText="Can we roll back the last release?">
+        <ChatMessage
+          role="participant"
+          author="Daniel Okafor"
+          timestamp="10:02"
+          copyText="Can we roll back the last release?"
+        >
           Can we roll back the last release? Error rates doubled after it went out.
         </ChatMessage>
         <ChatMessage role="user" author="Maria Ruiz" timestamp="10:03">

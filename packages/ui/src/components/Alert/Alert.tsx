@@ -61,8 +61,16 @@ export function Alert({
     >
       {Icon && <Icon size={18} strokeWidth={1.9} aria-hidden className={s.icon()} />}
       <div className={s.content()}>
-        {title != null && <div id={`${id}-title`} className={s.title()}>{title}</div>}
-        {body != null && <div id={`${id}-desc`} className={cn(s.description(), title != null && 'mt-1')}>{body}</div>}
+        {title != null && (
+          <div id={`${id}-title`} className={s.title()}>
+            {title}
+          </div>
+        )}
+        {body != null && (
+          <div id={`${id}-desc`} className={cn(s.description(), title != null && 'mt-1')}>
+            {body}
+          </div>
+        )}
         {actions != null && <div className={s.actions()}>{actions}</div>}
       </div>
       {onDismiss && (

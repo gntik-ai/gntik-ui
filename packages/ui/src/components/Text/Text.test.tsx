@@ -17,8 +17,12 @@ describe('Text', () => {
       <>
         <Text variant="code">npm</Text>
         <Text variant="supporting">Hint</Text>
-        <Text variant="caption" tone="destructive" as="small">Error</Text>
-        <Text variant="label" tone="success">Paid</Text>
+        <Text variant="caption" tone="destructive" as="small">
+          Error
+        </Text>
+        <Text variant="label" tone="success">
+          Paid
+        </Text>
       </>,
     );
     expect(screen.getByText('npm').tagName).toBe('CODE');
@@ -34,7 +38,9 @@ describe('Text', () => {
       <>
         <Text truncate>One</Text>
         <Text lineClamp={3}>Two</Text>
-        <Text render={<label htmlFor="x" />} variant="label">Three</Text>
+        <Text render={<label htmlFor="x" />} variant="label">
+          Three
+        </Text>
       </>,
     );
     expect(screen.getByText('One')).toHaveClass('truncate');
@@ -48,7 +54,9 @@ describe('Heading', () => {
     render(
       <>
         <Heading level={1}>Page</Heading>
-        <Heading level={4} size="display" tone="primary">Big h4</Heading>
+        <Heading level={4} size="display" tone="primary">
+          Big h4
+        </Heading>
         <Heading>Default</Heading>
       </>,
     );
@@ -59,7 +67,12 @@ describe('Heading', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><TextRoles /><TextTruncate /></>);
+    render(
+      <>
+        <TextRoles />
+        <TextTruncate />
+      </>,
+    );
     expect(screen.getByRole('heading', { level: 3 })).toHaveClass('truncate');
     await expectNoAxeViolations();
   });

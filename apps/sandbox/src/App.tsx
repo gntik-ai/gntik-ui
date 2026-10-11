@@ -38,7 +38,11 @@ export function Sandbox({ brand, onBrand }: SandboxProps) {
       void decodeShare(location.hash).then((shared) => {
         if (!alive) return;
         if (!shared) {
-          toast.add({ tone: 'warning', title: 'This link could not be opened', description: 'Its code is damaged or was made by a newer sandbox.' });
+          toast.add({
+            tone: 'warning',
+            title: 'This link could not be opened',
+            description: 'Its code is damaged or was made by a newer sandbox.',
+          });
           return;
         }
         setCode(shared.code);
@@ -84,7 +88,11 @@ export function Sandbox({ brand, onBrand }: SandboxProps) {
       await navigator.clipboard.writeText(location.href);
       setCopied(true);
     } catch {
-      toast.add({ tone: 'info', title: 'Link ready', description: 'Clipboard access was blocked: copy the link from the address bar.' });
+      toast.add({
+        tone: 'info',
+        title: 'Link ready',
+        description: 'Clipboard access was blocked: copy the link from the address bar.',
+      });
     }
   };
 
@@ -126,7 +134,11 @@ export function Sandbox({ brand, onBrand }: SandboxProps) {
             </>
           }
           list={<SourceEditor value={code} onChange={edit} />}
-          detailHeader={<span className="truncate text-[12.5px] text-muted-foreground">Imports: @gntik-ai/ui · blocks · templates · charts · icons · chat · flow</span>}
+          detailHeader={
+            <span className="truncate text-[12.5px] text-muted-foreground">
+              Imports: @gntik-ai/ui · blocks · templates · charts · icons · chat · flow
+            </span>
+          }
           detail={<PreviewPane code={code} theme={resolved} brand={brand} device={device} onStatus={setStatus} />}
         />
       </main>

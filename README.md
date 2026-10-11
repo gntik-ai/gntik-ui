@@ -81,8 +81,8 @@ components, blocks or page templates (`gntik-ui list --json` shows everything). 
    (it brings `@gntik-ai/tokens`; add `@gntik-ai/charts`, `flow`, `editor` as needed).
 2. In the global CSS, after Tailwind v4:
    ```css
-   @import "tailwindcss";
-   @import "@gntik-ai/ui/styles.css";   /* tokens + token → utility mapping + component sources */
+   @import 'tailwindcss';
+   @import '@gntik-ai/ui/styles.css'; /* tokens + token → utility mapping + component sources */
    ```
    Every token becomes a utility (`bg-primary`, `text-muted-foreground`, `bg-primary/14`).
    Brand-coloured text uses the contrast-safe aliases (`text-primary-text`, `text-warning-text`…).

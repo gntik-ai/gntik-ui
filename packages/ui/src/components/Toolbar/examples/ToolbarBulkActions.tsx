@@ -1,5 +1,14 @@
 import { Pause, RefreshCw, Trash2 } from 'lucide-react';
-import { Toolbar, ToolbarButton, ToolbarCenter, ToolbarEnd, ToolbarGroup, ToolbarLink, ToolbarSeparator, ToolbarStart } from '../Toolbar';
+import {
+  Toolbar,
+  ToolbarButton,
+  ToolbarCenter,
+  ToolbarEnd,
+  ToolbarGroup,
+  ToolbarLink,
+  ToolbarSeparator,
+  ToolbarStart,
+} from '../Toolbar';
 
 export default function ToolbarBulkActions() {
   return (

@@ -65,7 +65,12 @@ export function TokenCostCard({
         </div>
         {periods.length > 1 && (
           <CardAction>
-            <ToggleGroup aria-label="Period" size="sm" value={[period.id]} onValueChange={(v) => v[0] && setPeriodId(v[0])}>
+            <ToggleGroup
+              aria-label="Period"
+              size="sm"
+              value={[period.id]}
+              onValueChange={(v) => v[0] && setPeriodId(v[0])}
+            >
               {periods.map((p) => (
                 <Toggle key={p.id} value={p.id}>
                   {p.label}
@@ -83,14 +88,19 @@ export function TokenCostCard({
                 <span aria-hidden className={cn('size-2 rounded-sm', s.swatch)} />
                 {s.label}
               </dt>
-              <dd className="mt-1 font-mono text-[20px] font-semibold tracking-tight text-foreground" title={full.format(s.value)}>
+              <dd
+                className="mt-1 font-mono text-[20px] font-semibold tracking-tight text-foreground"
+                title={full.format(s.value)}
+              >
                 {compact.format(s.value)}
               </dd>
             </div>
           ))}
           <div className="col-span-2 sm:col-span-1">
             <dt className="text-[12px] text-muted-foreground">Cost</dt>
-            <dd className="mt-1 font-mono text-[20px] font-semibold tracking-tight text-foreground">{money.format(period.cost)}</dd>
+            <dd className="mt-1 font-mono text-[20px] font-semibold tracking-tight text-foreground">
+              {money.format(period.cost)}
+            </dd>
           </div>
         </dl>
         <div>
@@ -108,7 +118,11 @@ export function TokenCostCard({
           max={period.budget}
           valueLabel={`${money.format(period.cost)} of ${money.format(period.budget)}`}
           aria-valuetext={`${money.format(period.cost)} of ${money.format(period.budget)}`}
-          note={remaining >= 0 ? `${money.format(remaining)} left in this period` : `${money.format(-remaining)} over budget`}
+          note={
+            remaining >= 0
+              ? `${money.format(remaining)} left in this period`
+              : `${money.format(-remaining)} over budget`
+          }
         />
       </CardBody>
     </Card>

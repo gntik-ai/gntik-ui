@@ -5,7 +5,8 @@ export const meta: TemplateMeta = {
   family: 'Overview',
   priority: 'P1',
   status: 'beta',
-  description: 'Workspace home in the console shell: page header, KPI row, cost and traffic charts, recent activity and quick-action cards.',
+  description:
+    'Workspace home in the console shell: page header, KPI row, cost and traffic charts, recent activity and quick-action cards.',
   layout: 'SidebarLayout + Page',
   blocks: ['app-sidebar', 'app-topbar', 'page-header', 'kpi-row', 'chart-card', 'activity-feed'],
 };

@@ -20,7 +20,10 @@ describe('Progress', () => {
     expect(bar).not.toHaveAttribute('aria-valuenow');
     expect(bar).toHaveAttribute('data-indeterminate');
     const indicator = bar.querySelector('[data-indeterminate].bg-primary');
-    expect(indicator).toHaveClass('data-[indeterminate]:animate-pulse', 'motion-reduce:data-[indeterminate]:animate-none');
+    expect(indicator).toHaveClass(
+      'data-[indeterminate]:animate-pulse',
+      'motion-reduce:data-[indeterminate]:animate-none',
+    );
   });
 
   it('applies tone and size; accepts aria-label without a visible label', () => {

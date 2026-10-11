@@ -70,6 +70,14 @@ test('el propio catálogo pasa la validación (buttons)', async () => {
   for (const id of ['buttons', 'tables', 'modal-dialogs', 'alerts']) {
     const code = index.components[id].snippets.map((s) => s.code).join('\n');
     const r = validatePage(code);
-    assert.equal(r.errors, 0, `${id}: ${JSON.stringify(r.findings.filter((f) => f.severity === 'error'), null, 2)}`);
+    assert.equal(
+      r.errors,
+      0,
+      `${id}: ${JSON.stringify(
+        r.findings.filter((f) => f.severity === 'error'),
+        null,
+        2,
+      )}`,
+    );
   }
 });

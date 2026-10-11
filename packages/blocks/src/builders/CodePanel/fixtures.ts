@@ -65,7 +65,31 @@ resources:
 ];
 
 export const codeProblems: CodeProblem[] = [
-  { id: 'p1', severity: 'error', message: "Expected 0 arguments, but got 1.", file: 'src/handler.ts', line: 5, column: 43, source: 'tsc' },
-  { id: 'p2', severity: 'warning', message: "'req' is declared but only read once; consider a typed query parser.", file: 'src/handler.ts', line: 3, column: 31, source: 'lint' },
-  { id: 'p3', severity: 'info', message: 'replicas: 2 is below the recommended minimum of 3 for production.', file: 'deploy.yaml', line: 3, column: 1, source: 'schema' },
+  {
+    id: 'p1',
+    severity: 'error',
+    message: 'Expected 0 arguments, but got 1.',
+    file: 'src/handler.ts',
+    line: 5,
+    column: 43,
+    source: 'tsc',
+  },
+  {
+    id: 'p2',
+    severity: 'warning',
+    message: "'req' is declared but only read once; consider a typed query parser.",
+    file: 'src/handler.ts',
+    line: 3,
+    column: 31,
+    source: 'lint',
+  },
+  {
+    id: 'p3',
+    severity: 'info',
+    message: 'replicas: 2 is below the recommended minimum of 3 for production.',
+    file: 'deploy.yaml',
+    line: 3,
+    column: 1,
+    source: 'schema',
+  },
 ];

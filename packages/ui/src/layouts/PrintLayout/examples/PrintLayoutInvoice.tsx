@@ -1,5 +1,14 @@
 import { Badge } from '../../../components/Badge';
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '../../../components/Table';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../../../components/Table';
 import { Logo } from '../../../theme/Logo';
 import { PageBreak, PrintLayout } from '../PrintLayout';
 
@@ -32,7 +41,9 @@ export default function PrintLayoutInvoice() {
             <div className="text-end">
               <h1 className="text-[22px] font-semibold tracking-tight">Invoice</h1>
               <p className="font-mono text-[11.5px] text-muted-foreground">INV-2026-0042</p>
-              <Badge tone="success" size="sm" className="mt-2">Paid</Badge>
+              <Badge tone="success" size="sm" className="mt-2">
+                Paid
+              </Badge>
             </div>
           </>
         }
@@ -65,21 +76,31 @@ export default function PrintLayoutInvoice() {
             {LINES.map((l) => (
               <TableRow key={l.item}>
                 <TableCell>{l.item}</TableCell>
-                <TableCell align="right" className="font-mono text-[12px]">{l.qty}</TableCell>
-                <TableCell align="right" className="font-mono text-[12px]">{money(l.amount)}</TableCell>
+                <TableCell align="right" className="font-mono text-[12px]">
+                  {l.qty}
+                </TableCell>
+                <TableCell align="right" className="font-mono text-[12px]">
+                  {money(l.amount)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={2} className="font-semibold">Total</TableCell>
-              <TableCell align="right" className="font-mono text-[12.5px] font-semibold">{money(total)}</TableCell>
+              <TableCell colSpan={2} className="font-semibold">
+                Total
+              </TableCell>
+              <TableCell align="right" className="font-mono text-[12.5px] font-semibold">
+                {money(total)}
+              </TableCell>
             </TableRow>
           </TableFooter>
         </Table>
         <PageBreak />
         <h2 className="mb-2 text-[15px] font-semibold">Usage detail</h2>
-        <p className="text-muted-foreground">Compute is billed per vCPU-hour across all deployments in the workspace, rounded to the nearest hour.</p>
+        <p className="text-muted-foreground">
+          Compute is billed per vCPU-hour across all deployments in the workspace, rounded to the nearest hour.
+        </p>
       </PrintLayout>
     </div>
   );

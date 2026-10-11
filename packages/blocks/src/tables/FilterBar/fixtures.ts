@@ -13,6 +13,20 @@ export const DEPLOYMENT_DEFAULT_FILTERS: ActiveFilter[] = [
 
 export const DEPLOYMENT_SAVED_VIEWS: SavedView[] = [
   { value: 'all', label: 'All deployments', filters: [] },
-  { value: 'attention', label: 'Needs attention', filters: [{ field: 'status', value: 'Degraded' }, { field: 'status', value: 'Failed' }] },
-  { value: 'eu', label: 'EU regions', filters: [{ field: 'region', value: 'eu-west-1' }, { field: 'region', value: 'eu-central-1' }] },
+  {
+    value: 'attention',
+    label: 'Needs attention',
+    filters: [
+      { field: 'status', value: 'Degraded' },
+      { field: 'status', value: 'Failed' },
+    ],
+  },
+  {
+    value: 'eu',
+    label: 'EU regions',
+    filters: [
+      { field: 'region', value: 'eu-west-1' },
+      { field: 'region', value: 'eu-central-1' },
+    ],
+  },
 ];

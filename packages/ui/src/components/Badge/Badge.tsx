@@ -31,7 +31,8 @@ export function Badge({
 }: BadgeProps) {
   const { t } = useI18n();
   const s = badgeVariants({ tone, variant, size, shape });
-  const label = removeLabel ?? (typeof children === 'string' ? t('common.removeItem', { label: children }) : t('common.remove'));
+  const label =
+    removeLabel ?? (typeof children === 'string' ? t('common.removeItem', { label: children }) : t('common.remove'));
   return (
     <span className={cn(s.root(), onRemove && 'pe-1.5', className)} {...props}>
       {dot && <span aria-hidden className={s.dot()} />}

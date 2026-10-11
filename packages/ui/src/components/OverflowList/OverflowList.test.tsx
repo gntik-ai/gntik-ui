@@ -21,7 +21,11 @@ describe('OverflowList', () => {
     expect(trigger).toHaveFocus();
     await user.keyboard('{Enter}');
     const panel = await screen.findByRole('dialog', { name: '4 more' });
-    expect(within(panel).getAllByRole('listitem').map((li) => li.textContent)).toEqual(['production', 'pci', 'on-call', 'v2-migration']);
+    expect(
+      within(panel)
+        .getAllByRole('listitem')
+        .map((li) => li.textContent),
+    ).toEqual(['production', 'pci', 'on-call', 'v2-migration']);
     await user.keyboard('{Escape}');
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     expect(trigger).toHaveFocus();
@@ -55,11 +59,23 @@ describe('OverflowList', () => {
       const parent = this.parentElement;
       const i = parent ? Array.from(parent.children).indexOf(this) : 0;
       const w = this.tagName === 'SPAN' ? 40 : 50;
-      return { left: i * 60, right: i * 60 + w, width: w, top: 0, bottom: 20, height: 20, x: i * 60, y: 0, toJSON: () => ({}) } as DOMRect;
+      return {
+        left: i * 60,
+        right: i * 60 + w,
+        width: w,
+        top: 0,
+        bottom: 20,
+        height: 20,
+        x: i * 60,
+        y: 0,
+        toJSON: () => ({}),
+      } as DOMRect;
     };
     Object.defineProperty(HTMLElement.prototype, 'clientWidth', { configurable: true, get: () => 200 });
     try {
-      render(<OverflowList label="Tags" responsive items={['a', 'b', 'c', 'd', 'e', 'f']} renderItem={(t) => <b>{t}</b>} />);
+      render(
+        <OverflowList label="Tags" responsive items={['a', 'b', 'c', 'd', 'e', 'f']} renderItem={(t) => <b>{t}</b>} />,
+      );
       // 3 items end at 170px; + 10px gap + 40px trigger = 220 > 200, so 2 fit.
       await waitFor(() => expect(screen.getByRole('button', { name: '+4 more' })).toBeInTheDocument());
     } finally {

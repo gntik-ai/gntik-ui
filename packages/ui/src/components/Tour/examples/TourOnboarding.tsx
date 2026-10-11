@@ -10,9 +10,24 @@ export default function TourOnboarding() {
   const newProject = useRef<HTMLButtonElement>(null);
 
   const steps: TourStep[] = [
-    { target: '#tour-search', title: 'Find anything', content: 'Search projects, members and invoices from one place. ⌘K opens it anywhere.' },
-    { target: newProject, title: 'Create a project', content: 'Projects group deployments, members and billing. Start with one per product.', side: 'bottom', align: 'end' },
-    { target: '#tour-alerts', title: 'Stay informed', content: 'Failed deployments and invoice reminders land here.', side: 'left' },
+    {
+      target: '#tour-search',
+      title: 'Find anything',
+      content: 'Search projects, members and invoices from one place. ⌘K opens it anywhere.',
+    },
+    {
+      target: newProject,
+      title: 'Create a project',
+      content: 'Projects group deployments, members and billing. Start with one per product.',
+      side: 'bottom',
+      align: 'end',
+    },
+    {
+      target: '#tour-alerts',
+      title: 'Stay informed',
+      content: 'Failed deployments and invoice reminders land here.',
+      side: 'left',
+    },
   ];
 
   return (

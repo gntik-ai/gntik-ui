@@ -23,7 +23,7 @@ spec:
         - name: server
           image: ghcr.io/gntik-ai/gntik-ui-mcp:latest
           imagePullPolicy: Always
-          args: ["--http"]
+          args: ['--http']
           ports:
             - name: http
               containerPort: 8080
@@ -31,7 +31,7 @@ spec:
             - name: MCP_TRANSPORT
               value: http
             - name: PORT
-              value: "8080"
+              value: '8080'
             # ── Opcional: seguir el catálogo en vivo en lugar del snapshot ──
             # (borra GNTIK_UI_DIR del contenedor definiendo el repo; el clon
             #  va a /tmp, que es un emptyDir escribible)
@@ -73,7 +73,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
-              drop: ["ALL"]
+              drop: ['ALL']
           volumeMounts:
             - name: tmp
               mountPath: /tmp

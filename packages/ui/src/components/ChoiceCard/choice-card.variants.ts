@@ -16,14 +16,19 @@ const TEXT = {
 
 export const clickableCardVariants = tv({
   slots: {
-    root: [...SURFACE, 'hover:border-muted-foreground/40 hover:bg-secondary/30', 'data-disabled:opacity-60 data-disabled:hover:border-border data-disabled:hover:bg-background'],
+    root: [
+      ...SURFACE,
+      'hover:border-muted-foreground/40 hover:bg-secondary/30',
+      'data-disabled:opacity-60 data-disabled:hover:border-border data-disabled:hover:bg-background',
+    ],
     ...TEXT,
     /** The link/button; its ::after covers the card so the whole surface is clickable. */
     action: [
       'cursor-pointer text-start outline-none after:absolute after:inset-0 after:rounded-[inherit] after:content-[""]',
       'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed',
     ],
-    chevron: 'mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none group-hover/card:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover/card:-translate-x-0.5',
+    chevron:
+      'mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none group-hover/card:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover/card:-translate-x-0.5',
   },
 });
 

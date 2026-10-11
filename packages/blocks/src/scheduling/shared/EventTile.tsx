@@ -6,7 +6,15 @@ export function EventTile({ kind, className }: { kind: EventKind; className?: st
   const Glyph = kind.icon;
   const tone = TONE[kind.tone];
   return (
-    <span aria-hidden className={cn('inline-flex size-9 shrink-0 items-center justify-center rounded-lg', tone.soft, tone.icon, className)}>
+    <span
+      aria-hidden
+      className={cn(
+        'inline-flex size-9 shrink-0 items-center justify-center rounded-lg',
+        tone.soft,
+        tone.icon,
+        className,
+      )}
+    >
       <Glyph size={17} />
     </span>
   );

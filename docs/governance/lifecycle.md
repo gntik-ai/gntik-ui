@@ -11,12 +11,12 @@ earned by passing gates that CI already runs; nothing is promoted by opinion alo
 
 ## Where the stage lives
 
-| Stage | `status` in `<Name>.doc.ts` | Catalog / registry badge | Semver promise |
-| --- | --- | --- | --- |
-| lab | `'experimental'` | Lab | none: may change or disappear in any release |
-| beta | `'beta'` | Beta | breaking changes allowed in a **minor**, always with a changeset that says so |
-| stable | `'stable'` | Stable | breaking changes only in a **major**, with a codemod when mechanical |
-| deprecated | `'stable'` + `deprecated` note (see below) | Deprecated | works unchanged until the next major |
+| Stage      | `status` in `<Name>.doc.ts`                | Catalog / registry badge | Semver promise                                                                |
+| ---------- | ------------------------------------------ | ------------------------ | ----------------------------------------------------------------------------- |
+| lab        | `'experimental'`                           | Lab                      | none: may change or disappear in any release                                  |
+| beta       | `'beta'`                                   | Beta                     | breaking changes allowed in a **minor**, always with a changeset that says so |
+| stable     | `'stable'`                                 | Stable                   | breaking changes only in a **major**, with a codemod when mechanical          |
+| deprecated | `'stable'` + `deprecated` note (see below) | Deprecated               | works unchanged until the next major                                          |
 
 `ComponentDoc.status` (`packages/ui/src/doc.ts`) is the single source; `pnpm registry` copies
 it into `kit-registry.json`, which feeds the catalog, the CLI (`gntik-ui list`) and the MCP
@@ -28,20 +28,20 @@ server. Blocks and templates carry the same field in `block.meta.ts` / `template
 
 ## Gates per stage
 
-| Gate (CI job / command) | lab | beta | stable |
-| --- | :-: | :-: | :-: |
-| Folder contract (`packages/ui/CONTRIBUTING.md`): `Name.tsx`, `name.variants.ts`, `Name.doc.ts`, `examples/`, `index.ts` | yes | yes | yes |
-| Brand rules: `pnpm lint` (no palette colours, no `dark:`, no gradients, no hex) | yes | yes | yes |
-| `pnpm typecheck` (strict, `noUncheckedIndexedAccess`) | yes | yes | yes |
-| Keyboard contract test: every `doc.keyboard` row covered (`pnpm test`) | — | yes | yes |
-| `expectNoAxeViolations()` on every example (`pnpm test`) | — | yes | yes |
-| Listed in `kit-registry.json`, `pnpm registry:check` clean | — | yes | yes |
-| Catalog section with live preview + copyable code | — | yes | yes |
-| Browser a11y gate: `pnpm a11y` (axe in Chromium, all 3 themes) | — | — | yes |
-| Visual baseline recorded in CI (`[visual-update]` commit) | — | — | yes |
-| Used by at least one app (`apps/musematic`, `apps/falcone`, examples) | — | — | yes |
-| One review cycle with no API change requested ([review rubric](./review-rubric.md)) | — | — | yes |
-| Spec doc ([template](./component-spec-template.md)) linked from the PR | yes | yes | yes |
+| Gate (CI job / command)                                                                                                 | lab | beta | stable |
+| ----------------------------------------------------------------------------------------------------------------------- | :-: | :--: | :----: |
+| Folder contract (`packages/ui/CONTRIBUTING.md`): `Name.tsx`, `name.variants.ts`, `Name.doc.ts`, `examples/`, `index.ts` | yes | yes  |  yes   |
+| Brand rules: `pnpm lint` (no palette colours, no `dark:`, no gradients, no hex)                                         | yes | yes  |  yes   |
+| `pnpm typecheck` (strict, `noUncheckedIndexedAccess`)                                                                   | yes | yes  |  yes   |
+| Keyboard contract test: every `doc.keyboard` row covered (`pnpm test`)                                                  |  —  | yes  |  yes   |
+| `expectNoAxeViolations()` on every example (`pnpm test`)                                                                |  —  | yes  |  yes   |
+| Listed in `kit-registry.json`, `pnpm registry:check` clean                                                              |  —  | yes  |  yes   |
+| Catalog section with live preview + copyable code                                                                       |  —  | yes  |  yes   |
+| Browser a11y gate: `pnpm a11y` (axe in Chromium, all 3 themes)                                                          |  —  |  —   |  yes   |
+| Visual baseline recorded in CI (`[visual-update]` commit)                                                               |  —  |  —   |  yes   |
+| Used by at least one app (`apps/musematic`, `apps/falcone`, examples)                                                   |  —  |  —   |  yes   |
+| One review cycle with no API change requested ([review rubric](./review-rubric.md))                                     |  —  |  —   |  yes   |
+| Spec doc ([template](./component-spec-template.md)) linked from the PR                                                  | yes | yes  |  yes   |
 
 ## Moving between stages
 

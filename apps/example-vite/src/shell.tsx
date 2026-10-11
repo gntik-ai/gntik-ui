@@ -13,7 +13,12 @@ const go = (to: string) => () => navigate(to);
 
 /** ⌘K: every sidebar page, the projects and a few actions, all wired to the router. */
 const searchPages: CommandItem[] = navGroups.flatMap((g) =>
-  g.items.map((item) => ({ id: `page-${item.label}`, label: item.label, icon: item.icon, onSelect: go(item.href ?? '/') })),
+  g.items.map((item) => ({
+    id: `page-${item.label}`,
+    label: item.label,
+    icon: item.icon,
+    onSelect: go(item.href ?? '/'),
+  })),
 );
 const searchRecords: CommandItem[] = projects.map((p) => ({
   id: `project-${p.id}`,
@@ -25,7 +30,13 @@ const searchRecords: CommandItem[] = projects.map((p) => ({
 }));
 const searchActions: CommandItem[] = [
   { id: 'new-project', label: 'Create project', icon: FolderPlus, keywords: ['new'], onSelect: go('/projects/new') },
-  { id: 'invite', label: 'Invite member', icon: UserPlus, keywords: ['team', 'people'], onSelect: go('/settings/members') },
+  {
+    id: 'invite',
+    label: 'Invite member',
+    icon: UserPlus,
+    keywords: ['team', 'people'],
+    onSelect: go('/settings/members'),
+  },
 ];
 
 /**
@@ -40,7 +51,15 @@ export function shell(currentHref: string): ShellOptions {
     user: currentUser,
     storageKey: 'acme-sidebar',
     topbar: {
-      search: <GlobalSearch className="hidden md:inline-flex" pages={searchPages} records={searchRecords} actions={searchActions} recent={[]} />,
+      search: (
+        <GlobalSearch
+          className="hidden md:inline-flex"
+          pages={searchPages}
+          records={searchRecords}
+          actions={searchActions}
+          recent={[]}
+        />
+      ),
       notifications: topbarNotifications,
       onNotificationSelect: go('/inbox'),
       userMenuItems,

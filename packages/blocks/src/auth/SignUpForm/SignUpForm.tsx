@@ -69,19 +69,35 @@ export function SignUpForm({
         onSubmit={(e) => {
           e.preventDefault();
           setSubmitted(true);
-          if (name.trim() === '' || !EMAIL_RE.test(email.trim()) || password.length < minPasswordLength || !terms) return;
+          if (name.trim() === '' || !EMAIL_RE.test(email.trim()) || password.length < minPasswordLength || !terms)
+            return;
           void run(() => onSubmit?.({ name: name.trim(), email: email.trim(), password }));
         }}
       >
         {alert && <Alert tone="destructive" description={alert} />}
         <Field invalid={nameInvalid}>
           <FieldLabel>Full name</FieldLabel>
-          <Input leadingIcon={User} autoComplete="name" placeholder="Avery Collins" value={name} onValueChange={setName} required />
+          <Input
+            leadingIcon={User}
+            autoComplete="name"
+            placeholder="Avery Collins"
+            value={name}
+            onValueChange={setName}
+            required
+          />
           <FieldError match={nameInvalid}>Enter your name.</FieldError>
         </Field>
         <Field invalid={emailInvalid}>
           <FieldLabel>Work email</FieldLabel>
-          <Input type="email" leadingIcon={Mail} autoComplete="email" placeholder="name@company.com" value={email} onValueChange={setEmail} required />
+          <Input
+            type="email"
+            leadingIcon={Mail}
+            autoComplete="email"
+            placeholder="name@company.com"
+            value={email}
+            onValueChange={setEmail}
+            required
+          />
           <FieldError match={emailInvalid}>Enter a valid email address.</FieldError>
         </Field>
         <Field invalid={passwordInvalid}>

@@ -17,5 +17,6 @@ export const DEPLOYMENTS: Deployment[] = [
   { id: 6, name: 'image-resizer', region: 'eu-west-1', status: 'failed', requests: 1102, cost: 51.2 },
 ];
 
-export const money = (n: number) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+export const money = (n: number) =>
+  '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 export const count = (n: number) => n.toLocaleString('en-US');

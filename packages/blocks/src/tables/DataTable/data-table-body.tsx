@@ -26,10 +26,15 @@ export interface DataTableBodyProps<T> extends RowContext<T> {
 }
 
 /** One rendered line of the body: a group header or a data row. */
-export type DataTableBodyItem<T> = { kind: 'group'; group: DataTableBodyGroup<T>; open: boolean } | { kind: 'row'; row: T; groupKey?: string };
+export type DataTableBodyItem<T> =
+  { kind: 'group'; group: DataTableBodyGroup<T>; open: boolean } | { kind: 'row'; row: T; groupKey?: string };
 
 /** Flattens rows (or groups and their open rows) into the lines the body renders. */
-export function flattenBody<T>(rows: readonly T[], groups: ReadonlyArray<DataTableBodyGroup<T>> | undefined, collapsed: ReadonlySet<string> | undefined): Array<DataTableBodyItem<T>> {
+export function flattenBody<T>(
+  rows: readonly T[],
+  groups: ReadonlyArray<DataTableBodyGroup<T>> | undefined,
+  collapsed: ReadonlySet<string> | undefined,
+): Array<DataTableBodyItem<T>> {
   if (!groups) return rows.map((row) => ({ kind: 'row', row }));
   const items: Array<DataTableBodyItem<T>> = [];
   for (const group of groups) {
@@ -53,7 +58,22 @@ function Spacer({ height, span }: { height: number; span: number }) {
 
 /** Body rows, plus the loading (skeleton rows) and empty (EmptyState) states. */
 export function DataTableBody<T>(props: DataTableBodyProps<T>) {
-  const { rows, columns, selectable, selected, rowActions, loading, loadingRows, emptyState, groups, collapsedGroups, collapsibleGroups = true, onToggleGroup, onToggleGroupRows, virtual } = props;
+  const {
+    rows,
+    columns,
+    selectable,
+    selected,
+    rowActions,
+    loading,
+    loadingRows,
+    emptyState,
+    groups,
+    collapsedGroups,
+    collapsibleGroups = true,
+    onToggleGroup,
+    onToggleGroupRows,
+    virtual,
+  } = props;
   const { t } = useI18n();
   const span = columns.length + (selectable ? 1 : 0) + (rowActions ? 1 : 0);
   if (loading) {
@@ -82,14 +102,27 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
       <TableBody>
         <TableRow className="hover:bg-transparent">
           <TableCell colSpan={span} className="py-10">
-            {emptyState ?? <EmptyState icon={Inbox} size="sm" title={t('common.noResults')} description={t('table.emptyDescription')} />}
+            {emptyState ?? (
+              <EmptyState
+                icon={Inbox}
+                size="sm"
+                title={t('common.noResults')}
+                description={t('table.emptyDescription')}
+              />
+            )}
           </TableCell>
         </TableRow>
       </TableBody>
     );
   }
   const row = (r: T, extra?: { ariaRowIndex?: number; height?: number }) => (
-    <DataTableRow key={props.getRowId(r)} {...props} row={r} ariaRowIndex={extra?.ariaRowIndex} style={extra?.height ? { height: extra.height } : undefined} />
+    <DataTableRow
+      key={props.getRowId(r)}
+      {...props}
+      row={r}
+      ariaRowIndex={extra?.ariaRowIndex}
+      style={extra?.height ? { height: extra.height } : undefined}
+    />
   );
   const header = (group: DataTableBodyGroup<T>, open: boolean, extra?: { ariaRowIndex?: number; height?: number }) => (
     <GroupHeaderRow
@@ -111,7 +144,8 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
     const items = flattenBody(rows, groups, collapsedGroups);
     const { start, end, rowHeight } = virtual;
     // Consecutive items of the same group share a <tbody> (a rowgroup), as in the full render.
-    const chunks: Array<{ key: string; group?: string; items: Array<{ item: DataTableBodyItem<T>; index: number }> }> = [];
+    const chunks: Array<{ key: string; group?: string; items: Array<{ item: DataTableBodyItem<T>; index: number }> }> =
+      [];
     for (let i = start; i < Math.min(end, items.length); i++) {
       const item = items[i]!;
       const g = item.kind === 'group' ? item.group.key : item.groupKey;

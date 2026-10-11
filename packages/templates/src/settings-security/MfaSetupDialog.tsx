@@ -1,4 +1,20 @@
-import { Button, Dialog, DialogBody, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, Field, FieldDescription, FieldError, FieldLabel, OtpInput, useI18n } from '@gntik-ai/ui';
+import {
+  Button,
+  Dialog,
+  DialogBody,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  OtpInput,
+  useI18n,
+} from '@gntik-ai/ui';
 import { useState } from 'react';
 
 export interface MfaSetupDialogProps {
@@ -44,7 +60,9 @@ export function MfaSetupDialog({ open, onOpenChange, setupKey, onVerify }: MfaSe
         >
           <DialogHeader>
             <DialogTitle>Set up two-factor authentication</DialogTitle>
-            <DialogDescription>Add this account to your authenticator app, then enter the code it shows.</DialogDescription>
+            <DialogDescription>
+              Add this account to your authenticator app, then enter the code it shows.
+            </DialogDescription>
           </DialogHeader>
           <DialogBody className="flex flex-col gap-5">
             <p className="text-[12.5px] text-muted-foreground">

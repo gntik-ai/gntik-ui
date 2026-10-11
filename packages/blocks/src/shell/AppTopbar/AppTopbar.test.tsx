@@ -33,7 +33,9 @@ describe('AppTopbar', () => {
   });
 
   it('hides optional parts with null', () => {
-    const { container } = render(<AppTopbar breadcrumbs={null} environment={null} search={null} notifications={null} theme={null} user={null} />);
+    const { container } = render(
+      <AppTopbar breadcrumbs={null} environment={null} search={null} notifications={null} theme={null} user={null} />,
+    );
     expect(container.querySelectorAll('button')).toHaveLength(0);
   });
 });

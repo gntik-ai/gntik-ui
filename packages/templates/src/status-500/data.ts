@@ -4,10 +4,12 @@ export const serverErrorContent = {
   title: 'Something went wrong on our side',
   description: 'The page failed to load. Nothing you did caused this, and your data is safe.',
   panelTitle: 'The request failed',
-  panelMessage: 'An unexpected error interrupted the request. Try again; if it keeps happening, share the request ID with support.',
+  panelMessage:
+    'An unexpected error interrupted the request. Try again; if it keeps happening, share the request ID with support.',
   errorCode: 500,
   requestId: 'req_3b91e6c2f04d',
-  details: 'GET /v1/projects/web-app/overview\n500 Internal Server Error\nunhandled exception in handler (trace: 7c1e9a42)',
+  details:
+    'GET /v1/projects/web-app/overview\n500 Internal Server Error\nunhandled exception in handler (trace: 7c1e9a42)',
   homeLabel: 'Go to dashboard',
   homeHref: '/',
   statusLabel: 'System status',

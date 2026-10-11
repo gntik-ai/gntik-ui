@@ -20,7 +20,8 @@ export default function CalendarRange() {
         />
       </div>
       <p className="text-[12.5px] text-muted-foreground">
-        Invoice period: <span className="font-medium text-foreground">{formatDateRange(range, 'en-US') || 'pick a start day'}</span>
+        Invoice period:{' '}
+        <span className="font-medium text-foreground">{formatDateRange(range, 'en-US') || 'pick a start day'}</span>
       </p>
     </div>
   );

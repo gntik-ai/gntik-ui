@@ -51,7 +51,13 @@ describe('UsageAnalyticsPage', () => {
         columns={columns}
         filterFields={[{ id: 'environment', label: 'Stage', options: ['dev', 'prod'] }]}
         searchPlaceholder="Search tenants…"
-        primaryChart={{ title: 'Function calls', ranges: [{ value: 'w', label: 'Weekly' }], dataByRange: { w: [{ week: 'W1', Calls: 3 }] }, index: 'week', categories: ['Calls'] }}
+        primaryChart={{
+          title: 'Function calls',
+          ranges: [{ value: 'w', label: 'Weekly' }],
+          dataByRange: { w: [{ week: 'W1', Calls: 3 }] },
+          index: 'week',
+          categories: ['Calls'],
+        }}
         trafficRanges={[{ value: 'w', label: 'Weekly' }]}
         trafficByRange={{ w: [{ week: 'W1', Calls: 5 }] }}
         secondaryChart={{ title: 'Calls by stage', index: 'week', categories: ['Calls'] }}

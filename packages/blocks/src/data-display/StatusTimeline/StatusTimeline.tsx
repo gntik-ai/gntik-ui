@@ -85,7 +85,12 @@ export function StatusTimeline({
                   <p className="mt-0.5 text-[12.5px] text-muted-foreground">
                     {event.description}
                     {event.description && event.actor && ' '}
-                    {event.actor && <span>{`${actorLabel} `}{event.actor}</span>}
+                    {event.actor && (
+                      <span>
+                        {`${actorLabel} `}
+                        {event.actor}
+                      </span>
+                    )}
                   </p>
                 )}
               </div>
@@ -94,7 +99,13 @@ export function StatusTimeline({
         })}
       </ol>
       {(hidden > 0 || (expanded && maxVisible !== undefined && events.length > maxVisible)) && (
-        <Button variant="ghost" size="sm" className="mt-3 ms-6" aria-expanded={expanded} onClick={() => setExpanded((v) => !v)}>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="mt-3 ms-6"
+          aria-expanded={expanded}
+          onClick={() => setExpanded((v) => !v)}
+        >
           {expanded ? showFewerLabel : showEarlierLabel(hidden)}
         </Button>
       )}

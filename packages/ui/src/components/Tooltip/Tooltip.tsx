@@ -65,7 +65,10 @@ export function TooltipContent({
   );
 }
 
-export interface SimpleTooltipProps extends Pick<TooltipContentProps, 'side' | 'align' | 'kbd' | 'variant' | 'arrow' | 'className'> {
+export interface SimpleTooltipProps extends Pick<
+  TooltipContentProps,
+  'side' | 'align' | 'kbd' | 'variant' | 'arrow' | 'className'
+> {
   /** Tooltip text or content. */
   content: ReactNode;
   /** The trigger element (a single focusable element, e.g. an IconButton). */

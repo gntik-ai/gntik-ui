@@ -44,7 +44,8 @@ export interface MegaMenuProps {
 }
 
 const s = megaMenuVariants();
-const isCurrent = (l: { href?: string; current?: boolean }, currentHref?: string) => l.current ?? (!!l.href && l.href === currentHref);
+const isCurrent = (l: { href?: string; current?: boolean }, currentHref?: string) =>
+  l.current ?? (!!l.href && l.href === currentHref);
 
 /** Flattens MegaMenu items into NavItems, e.g. to feed StackedLayout `links` / MobileNav on small screens. */
 export function megaMenuNavItems(items: MegaMenuItem[]): NavItem[] {
@@ -53,11 +54,21 @@ export function megaMenuNavItems(items: MegaMenuItem[]): NavItem[] {
     label: it.label,
     href: it.href,
     current: it.current,
-    items: it.sections?.flatMap((sec) => sec.links.map((l) => ({ label: l.label, href: l.href, icon: l.icon, current: l.current }))),
+    items: it.sections?.flatMap((sec) =>
+      sec.links.map((l) => ({ label: l.label, href: l.href, icon: l.icon, current: l.current })),
+    ),
   }));
 }
 
-function PanelLink({ link, currentHref, onNavigate }: { link: MegaMenuLink; currentHref?: string; onNavigate?: MegaMenuProps['onNavigate'] }) {
+function PanelLink({
+  link,
+  currentHref,
+  onNavigate,
+}: {
+  link: MegaMenuLink;
+  currentHref?: string;
+  onNavigate?: MegaMenuProps['onNavigate'];
+}) {
   const RouterLink = useLinkComponent();
   const current = isCurrent(link, currentHref);
   const IconCmp = link.icon;
@@ -84,7 +95,15 @@ function PanelLink({ link, currentHref, onNavigate }: { link: MegaMenuLink; curr
   );
 }
 
-function Panel({ item, currentHref, onNavigate }: { item: MegaMenuItem; currentHref?: string; onNavigate?: MegaMenuProps['onNavigate'] }) {
+function Panel({
+  item,
+  currentHref,
+  onNavigate,
+}: {
+  item: MegaMenuItem;
+  currentHref?: string;
+  onNavigate?: MegaMenuProps['onNavigate'];
+}) {
   const id = useId();
   const sections = item.sections ?? [];
   const cols = { '--mega-cols': Math.min(sections.length, 3) } as CSSProperties;
@@ -113,7 +132,15 @@ function Panel({ item, currentHref, onNavigate }: { item: MegaMenuItem; currentH
   );
 }
 
-function TopLink({ item, currentHref, onNavigate }: { item: MegaMenuItem; currentHref?: string; onNavigate?: MegaMenuProps['onNavigate'] }) {
+function TopLink({
+  item,
+  currentHref,
+  onNavigate,
+}: {
+  item: MegaMenuItem;
+  currentHref?: string;
+  onNavigate?: MegaMenuProps['onNavigate'];
+}) {
   const RouterLink = useLinkComponent();
   const current = isCurrent(item, currentHref);
   return (
@@ -146,7 +173,9 @@ export function MegaMenu({ items, label = 'Main', currentHref, onNavigate, class
               <>
                 <NavigationMenu.Trigger
                   className={s.trigger()}
-                  data-current={item.sections.some((sec) => sec.links.some((l) => isCurrent(l, currentHref))) || undefined}
+                  data-current={
+                    item.sections.some((sec) => sec.links.some((l) => isCurrent(l, currentHref))) || undefined
+                  }
                 >
                   {item.label}
                   <NavigationMenu.Icon className={s.chevron()}>
@@ -162,7 +191,13 @@ export function MegaMenu({ items, label = 'Main', currentHref, onNavigate, class
         ))}
       </NavigationMenu.List>
       <NavigationMenu.Portal>
-        <NavigationMenu.Positioner className={s.positioner()} sideOffset={8} align="start" collisionPadding={16} collisionAvoidance={{ side: 'none' }}>
+        <NavigationMenu.Positioner
+          className={s.positioner()}
+          sideOffset={8}
+          align="start"
+          collisionPadding={16}
+          collisionAvoidance={{ side: 'none' }}
+        >
           <NavigationMenu.Popup className={s.popup()}>
             <NavigationMenu.Viewport className={s.viewport()} />
           </NavigationMenu.Popup>

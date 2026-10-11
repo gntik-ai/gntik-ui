@@ -28,7 +28,13 @@ export function pricingFor(model: string): { pricing: Pricing; known: boolean } 
 
 export function estimateCost(u: UsageTally, model: string): number {
   const { pricing: p } = pricingFor(model);
-  return (u.inputTokens * p.input + u.outputTokens * p.output + u.cacheReadTokens * p.cacheRead + u.cacheWriteTokens * p.cacheWrite) / 1_000_000;
+  return (
+    (u.inputTokens * p.input +
+      u.outputTokens * p.output +
+      u.cacheReadTokens * p.cacheRead +
+      u.cacheWriteTokens * p.cacheWrite) /
+    1_000_000
+  );
 }
 
 export const usd = (n: number) => `$${n.toFixed(n < 1 ? 4 : 2)}`;

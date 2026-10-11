@@ -19,5 +19,15 @@ export const doc: ComponentDoc = {
     ['Delete / Backspace (on a term)', 'Removes the term'],
     ['Escape', 'Closes the suggestions; again clears the term being built'],
   ],
-  tokens: ['background', 'border', 'foreground', 'muted-foreground', 'primary', 'primary-text', 'secondary', 'popover', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'primary',
+    'primary-text',
+    'secondary',
+    'popover',
+    'focus-ring',
+  ],
 };

@@ -1,9 +1,15 @@
 import type { Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { Badge, type BadgeProps } from '../Badge/Badge';
-import { DEFAULT_STATUSES, statusTagVariants, type StatusDefinition, type StatusTagVariantProps } from './statusTag.variants';
+import {
+  DEFAULT_STATUSES,
+  statusTagVariants,
+  type StatusDefinition,
+  type StatusTagVariantProps,
+} from './statusTag.variants';
 
-export interface StatusTagProps extends Omit<BadgeProps, 'tone' | 'dot' | 'onRemove' | 'removeLabel' | 'children'>, StatusTagVariantProps {
+export interface StatusTagProps
+  extends Omit<BadgeProps, 'tone' | 'dot' | 'onRemove' | 'removeLabel' | 'children'>, StatusTagVariantProps {
   ref?: Ref<HTMLSpanElement>;
   /** State key, looked up in `statuses` (then the generic defaults). */
   status: string;

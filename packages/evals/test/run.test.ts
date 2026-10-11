@@ -7,7 +7,9 @@ import { credentialSource, main, parseArgs } from '../src/run.js';
 
 describe('cli', () => {
   it('parses options', () => {
-    expect(parseArgs(['--dry-run', '--only', 'members,billing', '--effort=xhigh', '--model', 'm', '--no-fallback'])).toMatchObject({
+    expect(
+      parseArgs(['--dry-run', '--only', 'members,billing', '--effort=xhigh', '--model', 'm', '--no-fallback']),
+    ).toMatchObject({
       dryRun: true,
       only: ['members', 'billing'],
       effort: 'xhigh',
@@ -44,7 +46,11 @@ describe('cli', () => {
     log.mockRestore();
     const summary = fs.readFileSync(path.join(out, 'summary.md'), 'utf8');
     expect(summary).toMatch(/\| members \| submitted \| \*\*100\*\*/);
-    const rec = JSON.parse(fs.readFileSync(path.join(out, 'docs-article.json'), 'utf8')) as { outcome: string; transcript: { toolCalls: Array<{ isError: boolean }> }; usage: { requests: number } };
+    const rec = JSON.parse(fs.readFileSync(path.join(out, 'docs-article.json'), 'utf8')) as {
+      outcome: string;
+      transcript: { toolCalls: Array<{ isError: boolean }> };
+      usage: { requests: number };
+    };
     expect(rec.outcome).toBe('submitted');
     expect(rec.transcript.toolCalls[0]?.isError).toBe(true);
     expect(rec.usage.requests).toBe(3);
@@ -52,7 +58,13 @@ describe('cli', () => {
   }, 60_000);
 
   it('estimates cost at $4 / $20 / $0.20 per MTok', () => {
-    const u = { requests: 1, inputTokens: 1_000_000, outputTokens: 1_000_000, cacheReadTokens: 1_000_000, cacheWriteTokens: 0 };
+    const u = {
+      requests: 1,
+      inputTokens: 1_000_000,
+      outputTokens: 1_000_000,
+      cacheReadTokens: 1_000_000,
+      cacheWriteTokens: 0,
+    };
     expect(estimateCost(u, 'claude-opus-5-5')).toBeCloseTo(24.2);
   });
 });

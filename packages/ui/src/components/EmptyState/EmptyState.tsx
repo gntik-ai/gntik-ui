@@ -3,7 +3,8 @@ import type { HTMLAttributes, ReactNode, Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { EMPTY_STATE_ICON_SIZE, emptyStateVariants, type EmptyStateVariantProps } from './emptyState.variants';
 
-export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title'>, EmptyStateVariantProps {
+export interface EmptyStateProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title'>, EmptyStateVariantProps {
   className?: string;
   ref?: Ref<HTMLDivElement>;
   /** Neutral icon in a soft halo (a lucide icon component). */

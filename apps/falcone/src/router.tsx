@@ -41,7 +41,13 @@ export function RouterLink({ href = '', onClick, target, ...props }: ComponentPr
       {...props}
       onClick={(event) => {
         onClick?.(event);
-        if (event.defaultPrevented || !isPlainLeftClick(event) || (target && target !== '_self') || !href.startsWith('/')) return;
+        if (
+          event.defaultPrevented ||
+          !isPlainLeftClick(event) ||
+          (target && target !== '_self') ||
+          !href.startsWith('/')
+        )
+          return;
         event.preventDefault();
         navigate(href);
       }}
@@ -57,7 +63,13 @@ export function useAnchorInterception() {
       const anchor = (event.target as Element | null)?.closest?.('a[href]');
       if (!(anchor instanceof HTMLAnchorElement)) return;
       const href = anchor.getAttribute('href') ?? '';
-      if (!href.startsWith('/') || href.startsWith('//') || anchor.target === '_blank' || anchor.hasAttribute('download')) return;
+      if (
+        !href.startsWith('/') ||
+        href.startsWith('//') ||
+        anchor.target === '_blank' ||
+        anchor.hasAttribute('download')
+      )
+        return;
       event.preventDefault();
       navigate(href);
     };

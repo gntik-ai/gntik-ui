@@ -8,7 +8,14 @@ describe('parseCliArgs', () => {
     const a = parseCliArgs(['add', 'button', 'dialog', '--json', '--dry-run', '--no-install', '--cwd', 'app']);
     expect(a.command).toBe('add');
     expect(a.positionals).toEqual(['button', 'dialog']);
-    expect(a.flags).toMatchObject({ json: true, dryRun: true, install: false, cwd: 'app', overwrite: false, deps: true });
+    expect(a.flags).toMatchObject({
+      json: true,
+      dryRun: true,
+      install: false,
+      cwd: 'app',
+      overwrite: false,
+      deps: true,
+    });
   });
 
   it('accepts short flags and --limit', () => {

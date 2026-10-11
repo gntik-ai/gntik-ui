@@ -13,8 +13,12 @@ function setup(props: Partial<Parameters<typeof TransferList>[0]> = {}) {
   render(<TransferList items={items} defaultValue={['delta']} onValueChange={onValueChange} {...props} />);
   const available = screen.getByRole('listbox', { name: 'Available' });
   const selected = screen.getByRole('listbox', { name: 'Selected' });
-  const names = (lb: HTMLElement) => within(lb).queryAllByRole('option').map((o) => o.textContent);
-  const active = (lb: HTMLElement) => document.getElementById(lb.getAttribute('aria-activedescendant') ?? '')?.textContent;
+  const names = (lb: HTMLElement) =>
+    within(lb)
+      .queryAllByRole('option')
+      .map((o) => o.textContent);
+  const active = (lb: HTMLElement) =>
+    document.getElementById(lb.getAttribute('aria-activedescendant') ?? '')?.textContent;
   return { user, onValueChange, available, selected, names, active };
 }
 

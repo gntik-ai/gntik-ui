@@ -39,11 +39,41 @@ export function kindOf(event: ScheduleEvent, kinds: Record<string, EventKind>): 
 
 /** Token classes per tone. Text stays foreground on category tints (no contrast alias for them). */
 export const TONE: Record<EventTone, { dot: string; soft: string; bar: string; icon: string; badge: BadgeTone }> = {
-  primary: { dot: 'bg-primary', soft: 'bg-primary/12', bar: 'border-primary', icon: 'text-primary-text', badge: 'primary' },
-  violet: { dot: 'bg-category-violet', soft: 'bg-category-violet/14', bar: 'border-category-violet', icon: 'text-foreground', badge: 'violet' },
-  cyan: { dot: 'bg-category-cyan', soft: 'bg-category-cyan/14', bar: 'border-category-cyan', icon: 'text-foreground', badge: 'cyan' },
-  amber: { dot: 'bg-category-amber', soft: 'bg-category-amber/16', bar: 'border-category-amber', icon: 'text-foreground', badge: 'amber' },
-  neutral: { dot: 'bg-muted-foreground', soft: 'bg-secondary', bar: 'border-muted-foreground', icon: 'text-muted-foreground', badge: 'neutral' },
+  primary: {
+    dot: 'bg-primary',
+    soft: 'bg-primary/12',
+    bar: 'border-primary',
+    icon: 'text-primary-text',
+    badge: 'primary',
+  },
+  violet: {
+    dot: 'bg-category-violet',
+    soft: 'bg-category-violet/14',
+    bar: 'border-category-violet',
+    icon: 'text-foreground',
+    badge: 'violet',
+  },
+  cyan: {
+    dot: 'bg-category-cyan',
+    soft: 'bg-category-cyan/14',
+    bar: 'border-category-cyan',
+    icon: 'text-foreground',
+    badge: 'cyan',
+  },
+  amber: {
+    dot: 'bg-category-amber',
+    soft: 'bg-category-amber/16',
+    bar: 'border-category-amber',
+    icon: 'text-foreground',
+    badge: 'amber',
+  },
+  neutral: {
+    dot: 'bg-muted-foreground',
+    soft: 'bg-secondary',
+    bar: 'border-muted-foreground',
+    icon: 'text-muted-foreground',
+    badge: 'neutral',
+  },
 };
 
 /** Events grouped by local day key, each day sorted by start. */

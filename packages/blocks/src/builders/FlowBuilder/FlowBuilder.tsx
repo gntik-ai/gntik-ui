@@ -49,7 +49,10 @@ export interface FlowBuilderProps<Kind extends string = FlowNodeKind> extends Fl
    * of them) to log the real run; return nothing to log a simulated run. While a returned
    * promise is pending the Run button shows a loading state; a rejection is logged as an error.
    */
-  onRun?: (graph: { nodes: FlowNode<Kind | FlowNodeKind>[]; edges: FlowEdge[] }) => FlowRunResult | Promise<FlowRunResult>;
+  onRun?: (graph: {
+    nodes: FlowNode<Kind | FlowNodeKind>[];
+    edges: FlowEdge[];
+  }) => FlowRunResult | Promise<FlowRunResult>;
   className?: string;
 }
 

@@ -78,14 +78,22 @@ export default function VerifyEmailPage({
         title="Check your inbox"
         description={
           <>
-            We sent a verification link to <span className="font-medium text-foreground">{email}</span>. Open it on this device to finish setting up your account. The link expires in 24 hours.
+            We sent a verification link to <span className="font-medium text-foreground">{email}</span>. Open it on this
+            device to finish setting up your account. The link expires in 24 hours.
           </>
         }
       />
       <Stack gap={4}>
         {error && <Alert tone="destructive" description={error} />}
         <Stack gap={2}>
-          <Button variant="secondary" size="lg" className="w-full" loading={sending} disabled={remaining > 0} onClick={() => void resend()}>
+          <Button
+            variant="secondary"
+            size="lg"
+            className="w-full"
+            loading={sending}
+            disabled={remaining > 0}
+            onClick={() => void resend()}
+          >
             {remaining > 0 ? `Resend email in ${clock(remaining)}` : 'Resend email'}
           </Button>
           <Button variant="ghost" size="lg" className="w-full" onClick={onChangeEmail}>

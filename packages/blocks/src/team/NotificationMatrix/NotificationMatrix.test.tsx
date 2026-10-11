@@ -21,7 +21,9 @@ describe('NotificationMatrix', () => {
     expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ 'member-joined': ['push'] }));
 
     await userEvent.click(screen.getByRole('checkbox', { name: 'All channels for Member joined' }));
-    expect(onValueChange).toHaveBeenLastCalledWith(expect.objectContaining({ 'member-joined': ['email', 'in-app', 'push'] }));
+    expect(onValueChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ 'member-joined': ['email', 'in-app', 'push'] }),
+    );
 
     const emailCol = screen.getByRole('checkbox', { name: 'All events by Email' });
     await userEvent.click(emailCol);

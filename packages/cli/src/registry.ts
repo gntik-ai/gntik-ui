@@ -89,7 +89,10 @@ export class Registry {
       seen.add(id);
       const item = this.get(id);
       if (!item) {
-        throw new CliError('NOT_FOUND', from ? `Unknown registry dependency "${id}" (needed by ${from})` : `Unknown item "${id}"`);
+        throw new CliError(
+          'NOT_FOUND',
+          from ? `Unknown registry dependency "${id}" (needed by ${from})` : `Unknown item "${id}"`,
+        );
       }
       for (const dep of item.registryDependencies) visit(dep, id);
       out.push(item);

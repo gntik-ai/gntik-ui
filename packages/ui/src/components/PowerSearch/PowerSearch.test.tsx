@@ -13,7 +13,15 @@ function setup(defaultValue?: Q) {
   const user = userEvent.setup();
   const onValueChange = vi.fn<(q: Q) => void>();
   const onSubmit = vi.fn<(q: Q) => void>();
-  render(<PowerSearch aria-label="Filter" fields={deploymentFields} defaultValue={defaultValue} onValueChange={onValueChange} onSubmit={onSubmit} />);
+  render(
+    <PowerSearch
+      aria-label="Filter"
+      fields={deploymentFields}
+      defaultValue={defaultValue}
+      onValueChange={onValueChange}
+      onSubmit={onSubmit}
+    />,
+  );
   const input = screen.getByRole('combobox', { name: 'Filter' });
   const last = () => onValueChange.mock.lastCall?.[0];
   const text = () => (last() ? formatPowerSearch(last() as Q) : '');
@@ -25,7 +33,10 @@ const highlighted = () => document.querySelector('[role="option"][data-highlight
 
 describe('PowerSearch query helpers', () => {
   it('parses filters (inline and spaced), coerces types and keeps text', () => {
-    const q = parsePowerSearch('status=failed duration > 60 region:"eu-west" hello "two words" nope=1', deploymentFields);
+    const q = parsePowerSearch(
+      'status=failed duration > 60 region:"eu-west" hello "two words" nope=1',
+      deploymentFields,
+    );
     expect(q.terms).toEqual([
       { type: 'filter', field: 'status', operator: '=', value: 'failed' },
       { type: 'filter', field: 'duration', operator: '>', value: 60 },
@@ -62,7 +73,10 @@ describe('PowerSearch', () => {
     await user.keyboard('{ArrowDown}');
     await waitFor(() => expect(highlighted()).toHaveTextContent('failed'));
     await user.keyboard('{Enter}');
-    expect(last()).toEqual({ type: 'and', terms: [{ type: 'filter', field: 'status', operator: '!=', value: 'failed' }] });
+    expect(last()).toEqual({
+      type: 'and',
+      terms: [{ type: 'filter', field: 'status', operator: '!=', value: 'failed' }],
+    });
     expect(announcer()).toHaveTextContent('Added status is not failed.');
     expect(input).toHaveValue('');
   });

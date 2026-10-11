@@ -33,11 +33,27 @@ export interface MenuContentProps extends Omit<BaseMenu.Popup.Props, 'className'
 }
 
 /** The floating list (role `menu`): portal, positioner and popup. */
-export function MenuContent({ side, align = 'start', sideOffset = 8, alignOffset, className, container, children, ...props }: MenuContentProps) {
+export function MenuContent({
+  side,
+  align = 'start',
+  sideOffset = 8,
+  alignOffset,
+  className,
+  container,
+  children,
+  ...props
+}: MenuContentProps) {
   const dir = usePortalDir();
   return (
     <BaseMenu.Portal container={container}>
-      <BaseMenu.Positioner dir={dir} className={s.positioner()} side={side} align={align} sideOffset={sideOffset} alignOffset={alignOffset}>
+      <BaseMenu.Positioner
+        dir={dir}
+        className={s.positioner()}
+        side={side}
+        align={align}
+        sideOffset={sideOffset}
+        alignOffset={alignOffset}
+      >
         <BaseMenu.Popup className={cn(s.popup(), className)} {...props}>
           {children}
         </BaseMenu.Popup>
@@ -111,11 +127,17 @@ export function MenuRadioItem({ className, children, closeOnClick = true, ...pro
   );
 }
 
-export function MenuGroupLabel({ className, ...props }: Omit<BaseMenu.GroupLabel.Props, 'className'> & { className?: string }) {
+export function MenuGroupLabel({
+  className,
+  ...props
+}: Omit<BaseMenu.GroupLabel.Props, 'className'> & { className?: string }) {
   return <BaseMenu.GroupLabel className={cn(s.groupLabel(), className)} {...props} />;
 }
 
-export function MenuSeparator({ className, ...props }: Omit<BaseMenu.Separator.Props, 'className'> & { className?: string }) {
+export function MenuSeparator({
+  className,
+  ...props
+}: Omit<BaseMenu.Separator.Props, 'className'> & { className?: string }) {
   return <BaseMenu.Separator className={cn(s.separator(), className)} {...props} />;
 }
 

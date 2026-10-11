@@ -1,4 +1,13 @@
-import { Faq, FeatureGrid, PricingTable, samplePricingTiers, type FaqItem, type Feature, type PricingCycle, type PricingTier } from '@gntik-ai/blocks';
+import {
+  Faq,
+  FeatureGrid,
+  PricingTable,
+  samplePricingTiers,
+  type FaqItem,
+  type Feature,
+  type PricingCycle,
+  type PricingTier,
+} from '@gntik-ai/blocks';
 import { Section, Stack, type MegaMenuItem } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import { ComparisonTable } from './ComparisonTable';
@@ -55,7 +64,14 @@ export default function PricingPage(props: Partial<PricingProps>) {
       copyright={copyright}
     >
       <Stack gap={12}>
-        <PricingTable eyebrow="Pricing" title={title} description={description} tiers={tiers} defaultCycle={defaultCycle} onSelectTier={onSelectTier} />
+        <PricingTable
+          eyebrow="Pricing"
+          title={title}
+          description={description}
+          tiers={tiers}
+          defaultCycle={defaultCycle}
+          onSelectTier={onSelectTier}
+        />
         <FeatureGrid eyebrow="Every plan" title="Included from day one" features={features} columns={3} />
         <Section title="Compare plans" description="Limits and features side by side.">
           <ComparisonTable tiers={tiers} sections={comparison} caption="Plan comparison" />

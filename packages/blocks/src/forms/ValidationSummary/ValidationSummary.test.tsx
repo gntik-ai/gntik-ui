@@ -8,7 +8,8 @@ import { ValidationSummary, type ValidationIssue } from './ValidationSummary';
 function Demo() {
   const [name, setName] = useState('');
   const [count, setCount] = useState(0);
-  const errors: ValidationIssue[] = count > 0 && !name ? [{ fieldId: 'project-name', label: 'Project name', message: 'Enter a project name.' }] : [];
+  const errors: ValidationIssue[] =
+    count > 0 && !name ? [{ fieldId: 'project-name', label: 'Project name', message: 'Enter a project name.' }] : [];
   return (
     <form
       onSubmit={(e) => {

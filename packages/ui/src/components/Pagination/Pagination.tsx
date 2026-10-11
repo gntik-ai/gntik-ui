@@ -37,7 +37,13 @@ interface ArrowsProps {
 
 function PrevButton({ page, onPageChange, labels, className, iconSize }: Omit<ArrowsProps, 'pageCount'>) {
   return (
-    <button type="button" className={className} aria-label={labels.previous} disabled={page <= 1} onClick={() => onPageChange(page - 1)}>
+    <button
+      type="button"
+      className={className}
+      aria-label={labels.previous}
+      disabled={page <= 1}
+      onClick={() => onPageChange(page - 1)}
+    >
       <ChevronLeft size={iconSize} aria-hidden className={RTL_FLIP} />
     </button>
   );
@@ -45,7 +51,13 @@ function PrevButton({ page, onPageChange, labels, className, iconSize }: Omit<Ar
 
 function NextButton({ page, pageCount, onPageChange, labels, className, iconSize }: ArrowsProps) {
   return (
-    <button type="button" className={className} aria-label={labels.next} disabled={page >= pageCount} onClick={() => onPageChange(page + 1)}>
+    <button
+      type="button"
+      className={className}
+      aria-label={labels.next}
+      disabled={page >= pageCount}
+      onClick={() => onPageChange(page + 1)}
+    >
       <ChevronRight size={iconSize} aria-hidden className={RTL_FLIP} />
     </button>
   );
@@ -69,7 +81,16 @@ export interface PaginationProps extends PaginationVariantProps {
  * Numbered pagination: previous/next arrows, first and last page, the pages around the current
  * one and ellipses in between. Page-size agnostic: it only knows `page` and `pageCount`.
  */
-export function Pagination({ page, pageCount, onPageChange, siblingCount = 1, size, labels, className, ref }: PaginationProps) {
+export function Pagination({
+  page,
+  pageCount,
+  onPageChange,
+  siblingCount = 1,
+  size,
+  labels,
+  className,
+  ref,
+}: PaginationProps) {
   const s = paginationVariants({ size });
   const l = useLabels(labels);
   const go = (p: number) => {
@@ -103,7 +124,14 @@ export function Pagination({ page, pageCount, onPageChange, siblingCount = 1, si
           ),
         )}
         <li>
-          <NextButton page={page} pageCount={pageCount} onPageChange={go} labels={l} className={s.arrow()} iconSize={iconSize} />
+          <NextButton
+            page={page}
+            pageCount={pageCount}
+            onPageChange={go}
+            labels={l}
+            className={s.arrow()}
+            iconSize={iconSize}
+          />
         </li>
       </ul>
     </nav>
@@ -159,7 +187,14 @@ export function PaginationCompact({
       </p>
       <div className="flex items-center gap-1.5">
         <PrevButton page={page} onPageChange={go} labels={l} className={s.arrow()} iconSize={iconSize} />
-        <NextButton page={page} pageCount={pageCount} onPageChange={go} labels={l} className={s.arrow()} iconSize={iconSize} />
+        <NextButton
+          page={page}
+          pageCount={pageCount}
+          onPageChange={go}
+          labels={l}
+          className={s.arrow()}
+          iconSize={iconSize}
+        />
       </div>
     </nav>
   );

@@ -50,14 +50,13 @@ const SAMPLE_OUTPUTS: Record<string, string> = {
     '- CSV export of invoices is broken.\n- The export button keeps spinning and no file is produced.\n- Started after the last release.\nNext step: roll back the export change.',
   'reasoning-medium':
     '- Invoice CSV export hangs since the latest release.\n- The spinner suggests the export request never completes.\n- Likely a regression in the export job.\nNext step: compare export job logs before and after the release.',
-  'self-hosted-8b':
-    '- Export to CSV not working.\n- Button spins.\n- Since release.\nNext step: investigate.',
+  'self-hosted-8b': '- Export to CSV not working.\n- Button spins.\n- Since release.\nNext step: investigate.',
 };
 
 /** Sample output of a model before the first run (or for a model without a sample). */
 export function sampleOutput(model: string): PlaygroundOutput {
   const text = SAMPLE_OUTPUTS[model] ?? SAMPLE_OUTPUTS['general-small'] ?? '';
-  return { text, latencyMs: 600 + (model.length * 97) % 900, outputTokens: Math.round(text.length / 4) };
+  return { text, latencyMs: 600 + ((model.length * 97) % 900), outputTokens: Math.round(text.length / 4) };
 }
 
 /** Simulated generation: the sample output, prefixed with the resolved variables. */

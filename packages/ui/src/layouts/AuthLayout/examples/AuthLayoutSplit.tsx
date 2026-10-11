@@ -8,7 +8,11 @@ import { Link } from '../../../components/Link';
 import { PasswordInput } from '../../../components/PasswordInput';
 import { AuthLayout } from '../AuthLayout';
 
-const FEATURES = ['Every deployment reviewed and audited', 'Roles and access per project', 'Usage and spend in one place'];
+const FEATURES = [
+  'Every deployment reviewed and audited',
+  'Roles and access per project',
+  'Usage and spend in one place',
+];
 
 export default function AuthLayoutSplit() {
   const [status, setStatus] = useState('');
@@ -42,7 +46,9 @@ export default function AuthLayoutSplit() {
       >
         <p className="mb-2.5 font-mono text-[11px] tracking-[0.2em] text-primary-text uppercase">Secure access</p>
         <h1 className="text-[27px] font-semibold tracking-[-0.025em]">Sign in to your workspace</h1>
-        <p className="mt-2 mb-6 text-[14px] leading-relaxed text-muted-foreground">Use your workspace credentials to continue.</p>
+        <p className="mt-2 mb-6 text-[14px] leading-relaxed text-muted-foreground">
+          Use your workspace credentials to continue.
+        </p>
         <form
           className="flex flex-col gap-4"
           onSubmit={(e) => {

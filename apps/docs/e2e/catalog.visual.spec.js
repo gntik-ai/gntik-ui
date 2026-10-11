@@ -7,7 +7,16 @@ import fs from 'node:fs';
 const registry = JSON.parse(fs.readFileSync(new URL('../../../registry.json', import.meta.url), 'utf8'));
 
 const ids = registry.registry.map((item) => item.id);
-const THEME_SAMPLE = ['overview', 'foundations', 'app-shell', 'buttons', 'tables', 'form-layouts', 'alerts', 'area-charts'];
+const THEME_SAMPLE = [
+  'overview',
+  'foundations',
+  'app-shell',
+  'buttons',
+  'tables',
+  'form-layouts',
+  'alerts',
+  'area-charts',
+];
 // Monaco and the flow canvas draw asynchronously; give them extra time.
 const SLOW = { monaco: 4000, reactflow: 1500 };
 // Too tall for one full-page image (live examples, iframe galleries): snapshot the first viewport;
@@ -16,16 +25,22 @@ const VIEWPORT_ONLY = new Set(['ui-components', 'layouts', 'blocks', 'templates'
 
 const cases = [
   ...ids.map((id) => ({ id, theme: 'dark' })),
-  ...THEME_SAMPLE.flatMap((id) => [{ id, theme: '' }, { id, theme: 'high_contrast' }]),
+  ...THEME_SAMPLE.flatMap((id) => [
+    { id, theme: '' },
+    { id, theme: 'high_contrast' },
+  ]),
 ];
 
 for (const { id, theme } of cases) {
   const name = `${id}--${theme || 'light'}`;
   test(name, async ({ page }) => {
-    await page.addInitScript(([t, s]) => {
-      localStorage.setItem('gntik-theme', t);
-      localStorage.setItem('gntik-section', s);
-    }, [theme, id]);
+    await page.addInitScript(
+      ([t, s]) => {
+        localStorage.setItem('gntik-theme', t);
+        localStorage.setItem('gntik-section', s);
+      },
+      [theme, id],
+    );
     await page.goto(`/#${id}`);
     await page.locator('main h1').first().waitFor();
     // Let the scroll container grow so the full section lands in one image.

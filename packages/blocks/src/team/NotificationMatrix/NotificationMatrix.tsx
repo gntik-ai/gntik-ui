@@ -1,4 +1,14 @@
-import { Checkbox, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, cn } from '@gntik-ai/ui';
+import {
+  Checkbox,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  cn,
+} from '@gntik-ai/ui';
 import { useState } from 'react';
 import {
   notificationChannels,
@@ -59,7 +69,11 @@ export function NotificationMatrix({
   const state = (cells: Array<[NotificationEvent, string]>) => {
     const editable = cells.filter(([e, c]) => !e.locked?.includes(c));
     const on = editable.filter(([e, c]) => isOn(e, c)).length;
-    return { checked: editable.length > 0 && on === editable.length, indeterminate: on > 0 && on < editable.length, disabled: editable.length === 0 };
+    return {
+      checked: editable.length > 0 && on === editable.length,
+      indeterminate: on > 0 && on < editable.length,
+      disabled: editable.length === 0,
+    };
   };
 
   return (
@@ -75,7 +89,11 @@ export function NotificationMatrix({
               <TableHead key={c.id} align="center" className="w-24">
                 <div className="flex flex-col items-center gap-1.5">
                   <span>{c.label}</span>
-                  <Checkbox aria-label={`All events by ${c.label}`} {...s} onCheckedChange={(on) => setCells(cells, on)} />
+                  <Checkbox
+                    aria-label={`All events by ${c.label}`}
+                    {...s}
+                    onCheckedChange={(on) => setCells(cells, on)}
+                  />
                 </div>
               </TableHead>
             );
@@ -93,7 +111,9 @@ export function NotificationMatrix({
             <TableRow key={e.id}>
               <TableCell>
                 <div className="text-[13px] font-medium text-foreground">{e.label}</div>
-                {e.description && <div className="mt-0.5 text-[12px] leading-5 text-muted-foreground">{e.description}</div>}
+                {e.description && (
+                  <div className="mt-0.5 text-[12px] leading-5 text-muted-foreground">{e.description}</div>
+                )}
               </TableCell>
               {channels.map((c) => {
                 const locked = !!e.locked?.includes(c.id);
@@ -109,7 +129,11 @@ export function NotificationMatrix({
                 );
               })}
               <TableCell align="center">
-                <Checkbox aria-label={`All channels for ${e.label}`} {...s} onCheckedChange={(on) => setCells(cells, on)} />
+                <Checkbox
+                  aria-label={`All channels for ${e.label}`}
+                  {...s}
+                  onCheckedChange={(on) => setCells(cells, on)}
+                />
               </TableCell>
             </TableRow>
           );

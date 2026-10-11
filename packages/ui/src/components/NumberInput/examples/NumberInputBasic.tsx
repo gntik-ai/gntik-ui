@@ -16,7 +16,13 @@ export default function NumberInputBasic() {
       </Field>
       <Field>
         <FieldLabel>Monthly budget</FieldLabel>
-        <NumberInput defaultValue={1250} min={0} step={50} locale="en-US" format={{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }} />
+        <NumberInput
+          defaultValue={1250}
+          min={0}
+          step={50}
+          locale="en-US"
+          format={{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }}
+        />
       </Field>
       <NumberInput scrubLabel="Opacity (%)" defaultValue={80} min={0} max={100} unit="%" size="sm" hideSteppers />
     </div>

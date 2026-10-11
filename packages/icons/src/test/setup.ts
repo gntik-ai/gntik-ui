@@ -5,7 +5,9 @@ import { afterEach } from 'vitest';
 afterEach(() => {
   cleanup();
   document.documentElement.className = '';
-  try { localStorage.clear(); } catch {}
+  try {
+    localStorage.clear();
+  } catch {}
 });
 
 // jsdom gaps that Base UI touches (positioning, animations, media queries).

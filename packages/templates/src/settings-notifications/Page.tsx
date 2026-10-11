@@ -1,4 +1,10 @@
-import { NotificationMatrix, StickyActionBar, type NotificationChannel, type NotificationEvent, type NotificationMatrixValue } from '@gntik-ai/blocks';
+import {
+  NotificationMatrix,
+  StickyActionBar,
+  type NotificationChannel,
+  type NotificationEvent,
+  type NotificationMatrixValue,
+} from '@gntik-ai/blocks';
 import { Section } from '@gntik-ai/ui';
 import { useState } from 'react';
 import { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';
@@ -44,11 +50,22 @@ export default function SettingsNotificationsPage({
   };
 
   return (
-    <SettingsFrame page="notifications" width="wide" description="Choose how you hear about what happens in your workspace." {...frame}>
+    <SettingsFrame
+      page="notifications"
+      width="wide"
+      description="Choose how you hear about what happens in your workspace."
+      {...frame}
+    >
       <Section title="Notification preferences" description="Security alerts always reach your email.">
         <NotificationMatrix channels={channels} events={events} value={draft} onValueChange={setDraft} />
       </Section>
-      <StickyActionBar dirty={dirty} saving={saving} onSave={() => void save()} onCancel={() => setDraft(base)} aria-label="Notification changes" />
+      <StickyActionBar
+        dirty={dirty}
+        saving={saving}
+        onSave={() => void save()}
+        onCancel={() => setDraft(base)}
+        aria-label="Notification changes"
+      />
     </SettingsFrame>
   );
 }

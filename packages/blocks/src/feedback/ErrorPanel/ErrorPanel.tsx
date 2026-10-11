@@ -72,7 +72,10 @@ export function ErrorPanel({
   };
 
   return (
-    <section aria-labelledby={`${id}-title`} className={cn('rounded-lg border border-destructive/30 bg-card p-5 shadow-sm', className)}>
+    <section
+      aria-labelledby={`${id}-title`}
+      className={cn('rounded-lg border border-destructive/30 bg-card p-5 shadow-sm', className)}
+    >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
         <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-destructive/10 text-destructive-chip-text">
           <Icon size={20} aria-hidden />
@@ -83,15 +86,26 @@ export function ErrorPanel({
               {title}
             </Heading>
             {code != null && (
-              <span className="rounded bg-destructive/10 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-destructive-chip-text">{code}</span>
+              <span className="rounded bg-destructive/10 px-1.5 py-0.5 font-mono text-[11px] font-semibold text-destructive-chip-text">
+                {code}
+              </span>
             )}
           </div>
           {message != null && <p className="mt-1.5 max-w-xl text-[13px] leading-6 text-muted-foreground">{message}</p>}
           {requestId && (
             <div className="mt-3 flex items-center gap-1.5 text-[12px] text-muted-foreground">
               <span>{t('error.requestId')}</span>
-              <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11.5px] text-foreground">{requestId}</code>
-              <IconButton icon={copied ? Check : Copy} label={copied ? t('common.copied') : t('error.copyRequestId')} size="sm" variant="ghost" className="size-7" onClick={() => void copy()} />
+              <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11.5px] text-foreground">
+                {requestId}
+              </code>
+              <IconButton
+                icon={copied ? Check : Copy}
+                label={copied ? t('common.copied') : t('error.copyRequestId')}
+                size="sm"
+                variant="ghost"
+                className="size-7"
+                onClick={() => void copy()}
+              />
             </div>
           )}
           <div className="mt-4 flex flex-wrap items-center gap-2">

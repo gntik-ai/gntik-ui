@@ -80,11 +80,22 @@ describe('DocsLayout', () => {
       <>
         <h2 id="one">One</h2>
         <h2 id="two">Two</h2>
-        <Outline items={[{ id: 'one', label: 'One' }, { id: 'two', label: 'Two' }]} onActiveChange={onActiveChange} />
+        <Outline
+          items={[
+            { id: 'one', label: 'One' },
+            { id: 'two', label: 'Two' },
+          ]}
+          onActiveChange={onActiveChange}
+        />
       </>,
     );
     expect(observe).toHaveBeenCalledTimes(2);
-    act(() => callback([{ target: document.getElementById('two'), isIntersecting: true } as unknown as IntersectionObserverEntry], {} as IntersectionObserver));
+    act(() =>
+      callback(
+        [{ target: document.getElementById('two'), isIntersecting: true } as unknown as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      ),
+    );
     expect(screen.getByRole('link', { name: 'Two' })).toHaveAttribute('aria-current', 'location');
     expect(onActiveChange).toHaveBeenCalledWith('two');
     vi.unstubAllGlobals();

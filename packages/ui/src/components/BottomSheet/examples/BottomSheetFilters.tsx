@@ -8,7 +8,9 @@ const statuses = ['Running', 'Queued', 'Succeeded', 'Failed', 'Cancelled'];
 export default function BottomSheetFilters() {
   return (
     <BottomSheet snapPoints={['18rem', 1]}>
-      <BottomSheetTrigger render={<Button variant="secondary" icon={SlidersHorizontal} />}>Filter deployments</BottomSheetTrigger>
+      <BottomSheetTrigger render={<Button variant="secondary" icon={SlidersHorizontal} />}>
+        Filter deployments
+      </BottomSheetTrigger>
       <BottomSheetContent
         title="Filter deployments"
         description="Drag the handle up for more options."

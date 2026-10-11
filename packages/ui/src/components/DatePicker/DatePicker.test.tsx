@@ -16,7 +16,13 @@ function setup() {
   render(
     <Field>
       <FieldLabel>Due date</FieldLabel>
-      <DatePicker locale="en-US" weekStartsOn={1} today={today} defaultValue={new Date(2026, 2, 20)} onValueChange={onValueChange} />
+      <DatePicker
+        locale="en-US"
+        weekStartsOn={1}
+        today={today}
+        defaultValue={new Date(2026, 2, 20)}
+        onValueChange={onValueChange}
+      />
       <FieldDescription>When the invoice is due.</FieldDescription>
     </Field>,
   );
@@ -84,7 +90,16 @@ describe('DatePicker', () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();
     const { container } = render(
-      <DatePicker withTime aria-label="Publish at" locale="en-US" hourCycle={24} today={today} defaultValue={new Date(2026, 2, 20, 14, 30)} onValueChange={onValueChange} name="at" />,
+      <DatePicker
+        withTime
+        aria-label="Publish at"
+        locale="en-US"
+        hourCycle={24}
+        today={today}
+        defaultValue={new Date(2026, 2, 20, 14, 30)}
+        onValueChange={onValueChange}
+        name="at"
+      />,
     );
     const field = screen.getByRole('combobox', { name: 'Publish at' });
     expect(field).toHaveValue('Mar 20, 2026, 14:30');

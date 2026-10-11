@@ -11,5 +11,14 @@ export const doc: ComponentDoc = {
     ['Tab', 'Moves through each chip’s Retry (on error) and Remove buttons'],
     ['Enter / Space', 'Activates the focused Retry or Remove button'],
   ],
-  tokens: ['secondary', 'card', 'border', 'muted-foreground', 'primary', 'destructive', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'secondary',
+    'card',
+    'border',
+    'muted-foreground',
+    'primary',
+    'destructive',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

@@ -46,7 +46,8 @@ export interface CronError {
   message: string;
 }
 
-export type CronParseResult = { valid: true; cron: ParsedCron; error?: undefined } | { valid: false; error: CronError; cron?: undefined };
+export type CronParseResult =
+  { valid: true; cron: ParsedCron; error?: undefined } | { valid: false; error: CronError; cron?: undefined };
 
 /** A message translator, e.g. `useI18n().t`. */
 export type CronTranslate = (key: MessageKey, vars?: MessageVars) => string;
@@ -56,7 +57,11 @@ const SPECS: Record<CronFieldName, { min: number; max: number; names?: string[] 
   minute: { min: 0, max: 59 },
   hour: { min: 0, max: 23 },
   dayOfMonth: { min: 1, max: 31 },
-  month: { min: 1, max: 12, names: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'] },
+  month: {
+    min: 1,
+    max: 12,
+    names: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+  },
   dayOfWeek: { min: 0, max: 7, names: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'] },
 };
 const MACROS: Record<string, string> = {
@@ -96,7 +101,14 @@ function parseValue(token: string, field: CronFieldName): number {
   if (named >= 0) return named + (field === 'month' ? 1 : 0);
   if (!/^\d+$/.test(token)) throw new CronParseError({ code: 'invalid', field, value: token });
   const n = Number(token);
-  if (n < spec.min || n > spec.max) throw new CronParseError({ code: 'range', field, value: token, min: spec.min, max: field === 'dayOfWeek' ? 7 : spec.max });
+  if (n < spec.min || n > spec.max)
+    throw new CronParseError({
+      code: 'range',
+      field,
+      value: token,
+      min: spec.min,
+      max: field === 'dayOfWeek' ? 7 : spec.max,
+    });
   return n;
 }
 
@@ -111,7 +123,8 @@ function parseField(source: string, field: CronFieldName): CronField {
     const [rangePart = '', stepPart] = pieces;
     let step = 1;
     if (stepPart !== undefined) {
-      if (!/^\d+$/.test(stepPart) || Number(stepPart) === 0) throw new CronParseError({ code: 'step', field, value: part });
+      if (!/^\d+$/.test(stepPart) || Number(stepPart) === 0)
+        throw new CronParseError({ code: 'step', field, value: part });
       step = Number(stepPart);
     }
     let lo: number;
@@ -143,7 +156,10 @@ function parseField(source: string, field: CronFieldName): CronField {
 /** Parses a 5-field cron expression (or a macro). Never throws. */
 export function parseCron(expression: string): CronParseResult {
   const trimmed = expression.trim();
-  const fail = (detail: Omit<CronError, 'message'>): CronParseResult => ({ valid: false, error: { ...detail, message: cronErrorMessage(detail) } });
+  const fail = (detail: Omit<CronError, 'message'>): CronParseResult => ({
+    valid: false,
+    error: { ...detail, message: cronErrorMessage(detail) },
+  });
   if (!trimmed) return fail({ code: 'empty' });
   let text = trimmed;
   if (trimmed.startsWith('@')) {
@@ -154,7 +170,10 @@ export function parseCron(expression: string): CronParseResult {
   const tokens = text.split(/\s+/);
   if (tokens.length !== 5) return fail({ code: 'fieldCount', count: tokens.length });
   try {
-    const parsed = Object.fromEntries(FIELDS.map((f, i) => [f, parseField(tokens[i] ?? '', f)])) as Record<CronFieldName, CronField>;
+    const parsed = Object.fromEntries(FIELDS.map((f, i) => [f, parseField(tokens[i] ?? '', f)])) as Record<
+      CronFieldName,
+      CronField
+    >;
     return { valid: true, cron: { expression: tokens.join(' '), ...parsed } };
   } catch (e) {
     if (e instanceof CronParseError) return fail(e.detail);
@@ -203,7 +222,14 @@ function tzZone(timeZone: string): Zone {
   const parts = (ms: number) => {
     const p: Record<string, number> = {};
     for (const part of fmt.formatToParts(new Date(ms))) if (part.type !== 'literal') p[part.type] = Number(part.value);
-    return { y: p.year ?? 0, mo: (p.month ?? 1) - 1, d: p.day ?? 1, h: (p.hour ?? 0) % 24, mi: p.minute ?? 0, s: p.second ?? 0 };
+    return {
+      y: p.year ?? 0,
+      mo: (p.month ?? 1) - 1,
+      d: p.day ?? 1,
+      h: (p.hour ?? 0) % 24,
+      mi: p.minute ?? 0,
+      s: p.second ?? 0,
+    };
   };
   const offset = (ms: number) => {
     const p = parts(ms);
@@ -315,8 +341,10 @@ export function describeCron(cron: string | ParsedCron, options: DescribeCronOpt
   const locale = options.locale ?? 'en';
   const t = options.t ?? translatorFor(locale);
   const list = (items: string[]) => new Intl.ListFormat(locale, { style: 'long', type: 'conjunction' }).format(items);
-  const weekdayName = (d: number) => new Intl.DateTimeFormat(locale, { weekday: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(2023, 0, 1 + d)));
-  const monthName = (m: number) => new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(2023, m - 1, 1)));
+  const weekdayName = (d: number) =>
+    new Intl.DateTimeFormat(locale, { weekday: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(2023, 0, 1 + d)));
+  const monthName = (m: number) =>
+    new Intl.DateTimeFormat(locale, { month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(2023, m - 1, 1)));
 
   const M = c.minute.values;
   const H = c.hour.values;
@@ -337,10 +365,16 @@ export function describeCron(cron: string | ParsedCron, options: DescribeCronOpt
     base = t('cron.everyNMinutes', { count: c.minute.step });
     if (!allHours) qualifiers.push(hourQualifier());
   } else if (allHours) {
-    base = M.length === 1 && M[0] === 0 ? t('cron.everyHour') : t('cron.everyHourAt', { count: M.length, minutes: list(M.map(String)) });
+    base =
+      M.length === 1 && M[0] === 0
+        ? t('cron.everyHour')
+        : t('cron.everyHourAt', { count: M.length, minutes: list(M.map(String)) });
   } else if (c.hour.step && c.hour.step > 1 && M.length === 1) {
     const minute = M[0] ?? 0;
-    base = minute === 0 ? t('cron.everyNHours', { count: c.hour.step }) : t('cron.everyNHoursAt', { count: c.hour.step, minute });
+    base =
+      minute === 0
+        ? t('cron.everyNHours', { count: c.hour.step })
+        : t('cron.everyNHoursAt', { count: c.hour.step, minute });
   } else if (M.length * H.length <= 6) {
     times = list(H.flatMap((h) => M.map((m) => `${pad(h)}:${pad(m)}`)));
     base = t('cron.at', { times });
@@ -365,7 +399,9 @@ export function describeCron(cron: string | ParsedCron, options: DescribeCronOpt
     else if (domRestricted) base = t('cron.monthlyAt', { count: c.dayOfMonth.values.length, days: domList, times });
     else base = t('cron.dailyAt', { times });
   } else if (bothDays) {
-    qualifiers.push(eitherDay ? t('cron.or', { a: domQualifier, b: dowQualifier }) : `${domQualifier}, ${dowQualifier}`);
+    qualifiers.push(
+      eitherDay ? t('cron.or', { a: domQualifier, b: dowQualifier }) : `${domQualifier}, ${dowQualifier}`,
+    );
   } else if (domRestricted) qualifiers.push(domQualifier);
   else if (dowRestricted) qualifiers.push(dowQualifier);
 

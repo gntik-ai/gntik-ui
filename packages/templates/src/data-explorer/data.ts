@@ -30,7 +30,7 @@ export function generateExplorerRows(count = 10_000, end = Date.UTC(2026, 4, 4, 
     seed = (seed * 1_103_515_245 + 12_345) % 2_147_483_648;
     return seed / 2_147_483_648;
   };
-  const pick = <T,>(list: readonly T[]) => list[Math.floor(rand() * list.length)] as T;
+  const pick = <T>(list: readonly T[]) => list[Math.floor(rand() * list.length)] as T;
   return Array.from({ length: count }, (_, i) => {
     const status = pick(STATUSES);
     return {
@@ -51,7 +51,13 @@ export function generateExplorerRows(count = 10_000, end = Date.UTC(2026, 4, 4, 
 export const explorerRows: ExplorerRow[] = generateExplorerRows();
 
 export const explorerFields: PowerSearchField<ExplorerField>[] = [
-  { key: 'status', label: 'status', type: 'number', values: ['200', '201', '204', '304', '400', '404', '429', '500', '503'], description: 'HTTP status' },
+  {
+    key: 'status',
+    label: 'status',
+    type: 'number',
+    values: ['200', '201', '204', '304', '400', '404', '429', '500', '503'],
+    description: 'HTTP status',
+  },
   { key: 'project', label: 'project', type: 'enum', values: PROJECTS },
   { key: 'region', label: 'region', type: 'enum', values: REGIONS },
   { key: 'method', label: 'method', type: 'enum', values: ['GET', 'POST', 'PUT', 'DELETE'] },
@@ -73,7 +79,14 @@ export const explorerColumns: Array<TransferListItem & { value: ExplorerField }>
   { value: 'userAgent', label: 'Client', description: 'User agent' },
 ];
 
-export const explorerDefaultColumns: ExplorerField[] = ['timestamp', 'method', 'path', 'status', 'durationMs', 'project'];
+export const explorerDefaultColumns: ExplorerField[] = [
+  'timestamp',
+  'method',
+  'path',
+  'status',
+  'durationMs',
+  'project',
+];
 
 export const explorerBreadcrumbs: BreadcrumbItem[] = [
   { label: 'Data', href: '/data' },

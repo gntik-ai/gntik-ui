@@ -1,4 +1,14 @@
-import { Button, Link, Logo, MegaMenu, MobileNav, StackedLayout, ThemeSwitcher, megaMenuNavItems, type MegaMenuItem } from '@gntik-ai/ui';
+import {
+  Button,
+  Link,
+  Logo,
+  MegaMenu,
+  MobileNav,
+  StackedLayout,
+  ThemeSwitcher,
+  megaMenuNavItems,
+  type MegaMenuItem,
+} from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 
 export interface PublicFrameProps {
@@ -40,7 +50,14 @@ export function PublicFrame({
           <Button size="sm" render={<a href={getStartedHref} />} nativeButton={false}>
             Get started
           </Button>
-          <MobileNav className="lg:hidden" groups={[{ items: megaMenuNavItems(menu) }]} currentHref={currentHref} title="Menu" label="Primary" side="right" />
+          <MobileNav
+            className="lg:hidden"
+            groups={[{ items: megaMenuNavItems(menu) }]}
+            currentHref={currentHref}
+            title="Menu"
+            label="Primary"
+            side="right"
+          />
         </>
       }
       subnav={<MegaMenu items={menu} currentHref={currentHref} label="Primary" className="hidden lg:block" />}

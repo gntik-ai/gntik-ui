@@ -13,14 +13,14 @@ The visual reference (sizes, spacing, radii, token colours) is the legacy catalo
 
 ## Folder: `packages/ui/src/components/<Name>/`
 
-| File | Content |
-| --- | --- |
-| `<Name>.tsx` | Wrapper(s) on the Base UI part when one exists. Takes `className?: string`, merged with `cn()`. Style via Base UI data attributes (`data-checked:`, `data-open:`, `data-disabled:`, `data-highlighted:`, `data-starting-style:`…). |
-| `<name>.variants.ts` | `tv()` from `../../utils/tv`; slots for compound parts. Token classes only. |
-| `<Name>.doc.ts` | `export const doc: ComponentDoc` — name, group (Actions/Forms/Overlays/Navigation/Display/Feedback/Layout/Theme), status, description, primitive, pattern, `keyboard: [[key, behaviour]…]`, tokens. |
-| `examples/*.tsx` | Real default-exported examples, English and product-agnostic copy. The docs and MCP show them as usage. |
-| `<Name>.test.tsx` | One test per `doc.keyboard` row (userEvent) + `await expectNoAxeViolations()` (from `../../test/a11y`) on each example. |
-| `index.ts` | Re-export components, variants and `doc as <name>Doc`. |
+| File                 | Content                                                                                                                                                                                                                            |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `<Name>.tsx`         | Wrapper(s) on the Base UI part when one exists. Takes `className?: string`, merged with `cn()`. Style via Base UI data attributes (`data-checked:`, `data-open:`, `data-disabled:`, `data-highlighted:`, `data-starting-style:`…). |
+| `<name>.variants.ts` | `tv()` from `../../utils/tv`; slots for compound parts. Token classes only.                                                                                                                                                        |
+| `<Name>.doc.ts`      | `export const doc: ComponentDoc` — name, group (Actions/Forms/Overlays/Navigation/Display/Feedback/Layout/Theme), status, description, primitive, pattern, `keyboard: [[key, behaviour]…]`, tokens.                                |
+| `examples/*.tsx`     | Real default-exported examples, English and product-agnostic copy. The docs and MCP show them as usage.                                                                                                                            |
+| `<Name>.test.tsx`    | One test per `doc.keyboard` row (userEvent) + `await expectNoAxeViolations()` (from `../../test/a11y`) on each example.                                                                                                            |
+| `index.ts`           | Re-export components, variants and `doc as <name>Doc`.                                                                                                                                                                             |
 
 Layouts go in `packages/ui/src/layouts/<Name>/` with the same contract (`embedded` prop when they
 can sit inside a shell that already renders `<main>`).

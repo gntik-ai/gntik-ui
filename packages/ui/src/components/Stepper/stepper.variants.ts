@@ -8,7 +8,8 @@ export const stepperVariants = tv({
       'group flex rounded-lg text-start outline-none',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
-    indicator: 'relative z-10 grid size-8 shrink-0 place-items-center rounded-full text-[12px] font-bold transition-colors motion-reduce:transition-none',
+    indicator:
+      'relative z-10 grid size-8 shrink-0 place-items-center rounded-full text-[12px] font-bold transition-colors motion-reduce:transition-none',
     text: 'flex min-w-0 flex-col',
     label: 'text-[12.5px] font-medium whitespace-nowrap',
     description: 'text-[11.5px] leading-snug text-muted-foreground',
@@ -42,12 +43,19 @@ export const stepperVariants = tv({
     },
     status: {
       complete: { indicator: 'bg-primary text-primary-foreground', label: 'text-foreground' },
-      current: { indicator: 'bg-primary/14 text-primary-chip-text ring-2 ring-primary', label: 'font-semibold text-foreground' },
+      current: {
+        indicator: 'bg-primary/14 text-primary-chip-text ring-2 ring-primary',
+        label: 'font-semibold text-foreground',
+      },
       upcoming: { indicator: 'bg-secondary text-muted-foreground ring-1 ring-border', label: 'text-muted-foreground' },
       error: { indicator: 'bg-destructive text-destructive-foreground', label: 'text-destructive-text' },
     },
     interactive: {
-      true: { step: 'cursor-pointer', indicator: 'group-hover:bg-primary/85', label: 'group-hover:underline underline-offset-2' },
+      true: {
+        step: 'cursor-pointer',
+        indicator: 'group-hover:bg-primary/85',
+        label: 'group-hover:underline underline-offset-2',
+      },
     },
   },
   defaultVariants: { orientation: 'horizontal', status: 'upcoming' },

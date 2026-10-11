@@ -1,5 +1,15 @@
 import { Check, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { useId, useLayoutEffect, useRef, useState, type HTMLAttributes, type KeyboardEvent, type ReactNode, type Ref, type RefObject } from 'react';
+import {
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type HTMLAttributes,
+  type KeyboardEvent,
+  type ReactNode,
+  type Ref,
+  type RefObject,
+} from 'react';
 import { cn } from '../../utils/cn';
 import {
   AlertDialog,
@@ -134,10 +144,16 @@ export function WizardLayout({
   const bodyId = overlay ? `${id}-step` : mainId;
   const previousFocus = useRef<HTMLElement | null>(null);
   useLayoutEffect(() => {
-    if (overlay && open && document.activeElement instanceof HTMLElement) previousFocus.current = document.activeElement;
+    if (overlay && open && document.activeElement instanceof HTMLElement)
+      previousFocus.current = document.activeElement;
   }, [overlay, open]);
   const activeStep = { position: current + 1, total: steps.length, label: steps[current]?.label ?? '' };
-  const announcement = stepAnnouncement?.(activeStep) ?? t('wizard.stepAnnouncement', { ...activeStep, label: typeof activeStep.label === 'string' ? activeStep.label : '' });
+  const announcement =
+    stepAnnouncement?.(activeStep) ??
+    t('wizard.stepAnnouncement', {
+      ...activeStep,
+      label: typeof activeStep.label === 'string' ? activeStep.label : '',
+    });
   const cancelLabel = cancelLabelProp ?? t('common.cancel');
   const backLabel = backLabelProp ?? t('common.back');
   const nextLabel = nextLabelProp ?? t('common.next');
@@ -175,19 +191,31 @@ export function WizardLayout({
 
   const content = (
     <div className={cn(s.root(), className)} onKeyDown={overlay ? onKeyDown : handleKeyDown} {...props}>
-      {!overlay && <SkipLink targetId={bodyId} className={s.skipLink()}>
-        {skipLinkLabel}
-      </SkipLink>}
+      {!overlay && (
+        <SkipLink targetId={bodyId} className={s.skipLink()}>
+          {skipLinkLabel}
+        </SkipLink>
+      )}
       <header className={s.header()}>
         <div className={s.headerRow()}>
           {logo}
-          {overlay ? <DialogTitle className={s.title()}>{title}</DialogTitle> : <div className={s.title()}>{title}</div>}
+          {overlay ? (
+            <DialogTitle className={s.title()}>{title}</DialogTitle>
+          ) : (
+            <div className={s.title()}>{title}</div>
+          )}
           <Button variant="ghost" size="sm" icon={X} onClick={requestExit}>
             {exitLabel}
           </Button>
         </div>
         <div className={s.steps()}>
-          <Stepper className={s.stepsFull()} label={stepsLabel} steps={steps} current={current} onStepClick={onStepChange} />
+          <Stepper
+            className={s.stepsFull()}
+            label={stepsLabel}
+            steps={steps}
+            current={current}
+            onStepClick={onStepChange}
+          />
           <Stepper className={s.stepsCompact()} label={stepsSummaryLabel} steps={steps} current={current} compact />
         </div>
       </header>
@@ -197,13 +225,20 @@ export function WizardLayout({
           <div className={s.body()}>{children}</div>
         </WizardOverlayBody>
       ) : (
-        <main id={bodyId} tabIndex={-1} className={s.main()}><div className={s.body()}>{children}</div></main>
+        <main id={bodyId} tabIndex={-1} className={s.main()}>
+          <div className={s.body()}>{children}</div>
+        </main>
       )}
       {footer ?? (
         <footer className={s.footer()}>
           <div className={s.footerRow()}>
             <div className={s.footerAside()}>{footerStart}</div>
-            <Button variant="secondary" icon={ChevronLeft} disabled={!overlay && current <= 0} onClick={() => overlay && current === 0 ? requestExit() : onStepChange?.(current - 1)}>
+            <Button
+              variant="secondary"
+              icon={ChevronLeft}
+              disabled={!overlay && current <= 0}
+              onClick={() => (overlay && current === 0 ? requestExit() : onStepChange?.(current - 1))}
+            >
               {overlay && current === 0 ? cancelLabel : backLabel}
             </Button>
             <Button
@@ -239,15 +274,26 @@ export function WizardLayout({
   );
   if (!overlay) return content;
   return (
-    <Dialog open={open} disablePointerDismissal={!closeOnInteractOutside} onOpenChange={(nextOpen, details) => {
-      if (nextOpen) onOpenChange?.(true);
-      else {
-        details.cancel();
-        if (!exitOpen) requestExit();
-      }
-    }}>
-      <DialogContent aria-modal="true" showClose={false} size="xl" presentation={size === 'fullscreen' ? 'fullscreen' : 'responsive'}
-        finalFocus={() => returnFocusRef?.current ?? previousFocus.current ?? true}>{content}</DialogContent>
+    <Dialog
+      open={open}
+      disablePointerDismissal={!closeOnInteractOutside}
+      onOpenChange={(nextOpen, details) => {
+        if (nextOpen) onOpenChange?.(true);
+        else {
+          details.cancel();
+          if (!exitOpen) requestExit();
+        }
+      }}
+    >
+      <DialogContent
+        aria-modal="true"
+        showClose={false}
+        size="xl"
+        presentation={size === 'fullscreen' ? 'fullscreen' : 'responsive'}
+        finalFocus={() => returnFocusRef?.current ?? previousFocus.current ?? true}
+      >
+        {content}
+      </DialogContent>
     </Dialog>
   );
 }

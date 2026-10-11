@@ -19,6 +19,7 @@ UI files). Report findings as `path:line — rule — fix`, most severe first. F
 ## 2. Manual checklist (what lint cannot see)
 
 **Colour and tokens**
+
 - Every colour is a token class (`bg-card`, `text-muted-foreground`, `border-border`, `fill-primary`…)
   or `@gntik-ai/tokens/runtime` in JS (charts/canvas). No `style={{ color: … }}`, `rgb()`, `hsl()` literals,
   arbitrary values like `bg-[…]` with colours, or SVG `fill="#…"` (official logo artwork in a preset is the only exception).
@@ -31,17 +32,20 @@ UI files). Report findings as `path:line — rule — fix`, most severe first. F
   themes swap tokens. Check all three themes mentally: dark (default), light, high_contrast.
 
 **Links and focus**
+
 - Inline links in running text are underlined (the kit `Link` does it).
 - Focusable elements show `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring`
   (or come from a kit component that does).
 
 **Accessibility**
+
 - Correct roles and accessible names (icon-only buttons have `label`/`aria-label`; decorative icons `aria-hidden`).
 - Keyboard: every interaction reachable and operable; overlays trap and return focus; documented
   `doc.keyboard` rows are tested.
 - New examples/compositions have an `expectNoAxeViolations()` test; `motion-reduce:` on animations.
 
 **Content and structure**
+
 - English, product-agnostic copy in kit packages; product names/data only in app fixtures or presets.
 - Kit code is reused, not copied: a page restyling a kit component with ad-hoc classes, or
   re-implementing an existing block, is a finding (`list_kit query=…` to find the item).

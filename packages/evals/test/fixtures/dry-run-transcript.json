@@ -1039,12 +1039,7 @@
             "id": "toolu_dry_044",
             "name": "scaffold_page",
             "input": {
-              "blocks": [
-                "page-header",
-                "plan-card",
-                "quota-meters",
-                "invoice-table"
-              ],
+              "blocks": ["page-header", "plan-card", "quota-meters", "invoice-table"],
               "layout": "console",
               "route": "/billing",
               "name": "BillingPage"

@@ -35,7 +35,12 @@ export default function ResetPasswordPage({
         </>
       }
     >
-      <ResetPasswordForm onSubmit={onSubmit} onContinue={onContinue} error={error} minPasswordLength={minPasswordLength} />
+      <ResetPasswordForm
+        onSubmit={onSubmit}
+        onContinue={onContinue}
+        error={error}
+        minPasswordLength={minPasswordLength}
+      />
     </AuthLayout>
   );
 }

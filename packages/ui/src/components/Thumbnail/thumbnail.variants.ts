@@ -18,7 +18,8 @@ export const thumbnailVariants = tv({
       'hover:bg-secondary hover:text-foreground',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
-    retry: 'underline underline-offset-2 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-sm',
+    retry:
+      'underline underline-offset-2 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-sm',
     list: 'm-0 flex list-none flex-wrap gap-3 p-0',
   },
   variants: {
@@ -26,7 +27,12 @@ export const thumbnailVariants = tv({
       idle: { root: 'border-border' },
       uploading: { root: 'border-border' },
       done: { root: 'border-border' },
-      error: { root: 'border-destructive/50', preview: 'bg-destructive/10', icon: 'text-destructive-text', meta: 'text-destructive-text' },
+      error: {
+        root: 'border-destructive/50',
+        preview: 'bg-destructive/10',
+        icon: 'text-destructive-text',
+        meta: 'text-destructive-text',
+      },
     },
   },
   defaultVariants: { status: 'idle' },

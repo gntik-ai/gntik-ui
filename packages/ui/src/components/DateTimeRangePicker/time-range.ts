@@ -5,8 +5,7 @@ export type RelativeTimeUnit = 'minute' | 'hour' | 'day';
 
 /** A serialisable time range: relative to "now" ("last 15 minutes") or between two instants. */
 export type TimeRangeValue =
-  | { mode: 'relative'; amount: number; unit: RelativeTimeUnit }
-  | { mode: 'absolute'; start: Date; end: Date };
+  { mode: 'relative'; amount: number; unit: RelativeTimeUnit } | { mode: 'absolute'; start: Date; end: Date };
 
 export interface TimeRangePreset {
   id: string;
@@ -33,10 +32,18 @@ export function resolveTimeRange(value: TimeRangeValue, now: Date = new Date()):
   return { start: new Date(now.getTime() - value.amount * UNIT_MS[value.unit]), end: now };
 }
 
-const LAST_KEY: Record<RelativeTimeUnit, MessageKey> = { minute: 'timeRange.lastMinutes', hour: 'timeRange.lastHours', day: 'timeRange.lastDays' };
+const LAST_KEY: Record<RelativeTimeUnit, MessageKey> = {
+  minute: 'timeRange.lastMinutes',
+  hour: 'timeRange.lastHours',
+  day: 'timeRange.lastDays',
+};
 
 /** "Last 15 minutes", "Last hour"… in the translator's language. */
-export function relativeTimeRangeLabel(amount: number, unit: RelativeTimeUnit, t: (key: MessageKey, vars?: MessageVars) => string) {
+export function relativeTimeRangeLabel(
+  amount: number,
+  unit: RelativeTimeUnit,
+  t: (key: MessageKey, vars?: MessageVars) => string,
+) {
   return t(LAST_KEY[unit], { count: amount });
 }
 
@@ -50,6 +57,7 @@ export function timeRangeError(start: Date | null, end: Date | null): 'incomplet
 export function isSameTimeRange(a: TimeRangeValue | null | undefined, b: TimeRangeValue | null | undefined): boolean {
   if (!a || !b || a.mode !== b.mode) return false;
   if (a.mode === 'relative' && b.mode === 'relative') return a.amount === b.amount && a.unit === b.unit;
-  if (a.mode === 'absolute' && b.mode === 'absolute') return a.start.getTime() === b.start.getTime() && a.end.getTime() === b.end.getTime();
+  if (a.mode === 'absolute' && b.mode === 'absolute')
+    return a.start.getTime() === b.start.getTime() && a.end.getTime() === b.end.getTime();
   return false;
 }

@@ -10,8 +10,16 @@ export const DEMO_SUGGESTIONS: Suggestion[] = [
 ];
 
 export const DEMO_SOURCES: CitationSource[] = [
-  { title: 'Deployment history · web-app', url: 'https://app.example.com/projects/web-app/deployments', snippet: '12 deployments in the last 7 days, 1 rolled back.' },
-  { title: 'Rollback guide', url: 'https://docs.example.com/deployments/rollback', snippet: 'Roll back from the Deployments page or with the CLI.' },
+  {
+    title: 'Deployment history · web-app',
+    url: 'https://app.example.com/projects/web-app/deployments',
+    snippet: '12 deployments in the last 7 days, 1 rolled back.',
+  },
+  {
+    title: 'Rollback guide',
+    url: 'https://docs.example.com/deployments/rollback',
+    snippet: 'Roll back from the Deployments page or with the CLI.',
+  },
 ];
 
 export const DEMO_TOOL = {

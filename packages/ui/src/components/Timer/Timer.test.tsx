@@ -43,7 +43,15 @@ describe('Timer', () => {
 
   it('announce adds a polite region updated once per interval', () => {
     vi.useFakeTimers({ now: NOW });
-    render(<Timer start={NOW - 50_000} now={NOW} announce announceEvery={60_000} labels={{ units: { h: ' h', m: ' min', s: ' s' } }} />);
+    render(
+      <Timer
+        start={NOW - 50_000}
+        now={NOW}
+        announce
+        announceEvery={60_000}
+        labels={{ units: { h: ' h', m: ' min', s: ' s' } }}
+      />,
+    );
     const timer = screen.getByRole('timer');
     expect(timer).toHaveAttribute('aria-live', 'polite');
     expect(timer.querySelector('.sr-only')).toHaveTextContent('0 s');

@@ -13,10 +13,13 @@ const baseline = JSON.parse(fs.readFileSync(baselineFile, 'utf8'));
 for (const theme of ['dark', '', 'high_contrast']) {
   const name = theme || 'light';
   test(`ui-components a11y --${name}`, async ({ page }) => {
-    await page.addInitScript(([t]) => {
-      localStorage.setItem('gntik-theme', t);
-      localStorage.setItem('gntik-section', 'ui-components');
-    }, [theme]);
+    await page.addInitScript(
+      ([t]) => {
+        localStorage.setItem('gntik-theme', t);
+        localStorage.setItem('gntik-section', 'ui-components');
+      },
+      [theme],
+    );
     await page.goto('/#ui-components');
     await page.locator('main h1').first().waitFor();
     await page.evaluate(() => document.fonts.ready);

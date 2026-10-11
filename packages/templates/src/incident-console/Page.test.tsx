@@ -21,7 +21,9 @@ describe('IncidentConsolePage', () => {
     const onAcknowledge = vi.fn();
     const onResolve = vi.fn();
     render(<IncidentConsolePage onAcknowledge={onAcknowledge} onResolve={onResolve} />);
-    await userEvent.click(within(screen.getByRole('list', { name: 'Incidents' })).getByRole('button', { name: /api-gateway/ }));
+    await userEvent.click(
+      within(screen.getByRole('list', { name: 'Incidents' })).getByRole('button', { name: /api-gateway/ }),
+    );
     expect(screen.getByRole('heading', { level: 2, name: 'Elevated 5xx on api-gateway' })).toBeInTheDocument();
     expect(screen.getByRole('timer', { name: 'INC-2041 elapsed time' })).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Acknowledge' }));
@@ -31,7 +33,9 @@ describe('IncidentConsolePage', () => {
     expect(onResolve).toHaveBeenCalledWith('INC-2041');
     const timeline = screen.getByRole('region', { name: 'Timeline' });
     expect(within(timeline).getByText('Resolved')).toBeInTheDocument();
-    expect(within(screen.getByRole('list', { name: 'Incidents' })).queryByRole('button', { name: /api-gateway/ })).not.toBeInTheDocument();
+    expect(
+      within(screen.getByRole('list', { name: 'Incidents' })).queryByRole('button', { name: /api-gateway/ }),
+    ).not.toBeInTheDocument();
     await expectNoAxeViolations();
   });
 

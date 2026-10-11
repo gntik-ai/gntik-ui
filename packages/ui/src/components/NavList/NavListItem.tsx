@@ -13,7 +13,9 @@ const ICON_SIZE = { 0: 17, 1: 15 } as const;
 
 /** Accessible name in the rail, where the visible label and badge are hidden. */
 function railLabel(item: NavItem) {
-  return typeof item.badge === 'string' || typeof item.badge === 'number' ? `${item.label} (${item.badge})` : item.label;
+  return typeof item.badge === 'string' || typeof item.badge === 'number'
+    ? `${item.label} (${item.badge})`
+    : item.label;
 }
 
 function Badge({ item, current }: { item: NavItem; current: boolean }) {
@@ -60,7 +62,12 @@ function NavLeaf({ item, depth }: { item: NavItem; depth: number }) {
   };
   let element;
   if (item.href !== undefined) {
-    const linkProps = { ...props, href: item.href, 'aria-disabled': item.disabled || undefined, tabIndex: item.disabled ? -1 : undefined };
+    const linkProps = {
+      ...props,
+      href: item.href,
+      'aria-disabled': item.disabled || undefined,
+      tabIndex: item.disabled ? -1 : undefined,
+    };
     element = createElement(RouterLink ?? 'a', linkProps, content);
   } else {
     element = (
@@ -86,7 +93,13 @@ function NavParent({ item, depth }: { item: NavItem; depth: number }) {
   return (
     <Collapsible.Root defaultOpen={item.defaultOpen ?? navItemContainsCurrent(item, currentHref)}>
       <Collapsible.Trigger className={cn('group', depth === 0 ? cn(s.item(), s.parent()) : s.subItem(), 'w-full')}>
-        {IconCmp && <IconCmp size={ICON_SIZE[depth === 0 ? 0 : 1]} aria-hidden className={cn(s.icon(), 'text-muted-foreground')} />}
+        {IconCmp && (
+          <IconCmp
+            size={ICON_SIZE[depth === 0 ? 0 : 1]}
+            aria-hidden
+            className={cn(s.icon(), 'text-muted-foreground')}
+          />
+        )}
         <span className={s.label()}>{item.label}</span>
         <Badge item={item} current={false} />
         <ChevronDown size={14} aria-hidden className={s.parentChevron()} />
@@ -162,7 +175,8 @@ function NavRailFlyout({ item }: { item: NavItem }) {
 export function NavListEntry({ item, depth = 0 }: { item: NavItem; depth?: number }) {
   const { collapsed } = useNavListContext();
   let body: ReactNode;
-  if (item.items?.length) body = collapsed && depth === 0 ? <NavRailFlyout item={item} /> : <NavParent item={item} depth={depth} />;
+  if (item.items?.length)
+    body = collapsed && depth === 0 ? <NavRailFlyout item={item} /> : <NavParent item={item} depth={depth} />;
   else body = <NavLeaf item={item} depth={depth} />;
   return <li className="relative">{body}</li>;
 }

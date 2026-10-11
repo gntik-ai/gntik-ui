@@ -39,7 +39,13 @@ describe('ResourceDetailPage', () => {
   });
 
   it('takes the Overview card copy from props', { timeout: 15000 }, () => {
-    render(<ResourceDetailPage overviewTitle="Function settings" overviewDescription="Runtime and limits." historyTitle="Deploy history" />);
+    render(
+      <ResourceDetailPage
+        overviewTitle="Function settings"
+        overviewDescription="Runtime and limits."
+        historyTitle="Deploy history"
+      />,
+    );
     expect(screen.getByRole('heading', { level: 2, name: 'Function settings' })).toBeInTheDocument();
     expect(screen.getByText('Runtime and limits.')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: 'Deploy history' })).toBeInTheDocument();

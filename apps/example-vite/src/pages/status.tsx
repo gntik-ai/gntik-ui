@@ -10,7 +10,14 @@ export function NotFound() {
 }
 
 export function ServerError() {
-  return <Status500Page {...serverError} homeHref="/" statusHref="/status/maintenance" supportAction={{ label: 'Contact support', variant: 'ghost', href: supportHref }} />;
+  return (
+    <Status500Page
+      {...serverError}
+      homeHref="/"
+      statusHref="/status/maintenance"
+      supportAction={{ label: 'Contact support', variant: 'ghost', href: supportHref }}
+    />
+  );
 }
 
 export function Maintenance() {

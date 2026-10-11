@@ -6,8 +6,7 @@ import { useI18n } from '../../i18n/I18nProvider';
 import { NUMBER_INPUT_ICON_SIZE, numberInputVariants, type NumberInputVariantProps } from './number-input.variants';
 
 export interface NumberInputProps
-  extends Omit<NumberField.Root.Props, 'className' | 'render' | 'children' | 'style'>,
-    NumberInputVariantProps {
+  extends Omit<NumberField.Root.Props, 'className' | 'render' | 'children' | 'style'>, NumberInputVariantProps {
   /** Classes for the outer column (scrub label + field). */
   className?: string;
   /** Classes for the native <input>. */

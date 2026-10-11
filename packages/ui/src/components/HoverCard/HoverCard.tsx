@@ -18,7 +18,9 @@ export interface HoverCardTriggerProps extends Omit<BasePreviewCard.Trigger.Prop
  * (default 500 ms); it stays a normal link, so Enter still navigates.
  */
 export function HoverCardTrigger({ className, delay = 500, closeDelay = 250, ...props }: HoverCardTriggerProps) {
-  return <BasePreviewCard.Trigger delay={delay} closeDelay={closeDelay} className={cn(s.trigger(), className)} {...props} />;
+  return (
+    <BasePreviewCard.Trigger delay={delay} closeDelay={closeDelay} className={cn(s.trigger(), className)} {...props} />
+  );
 }
 
 export interface HoverCardContentProps extends Omit<BasePreviewCard.Popup.Props, 'className'> {
@@ -51,7 +53,13 @@ export function HoverCardContent({
   const dir = usePortalDir();
   return (
     <BasePreviewCard.Portal container={container}>
-      <BasePreviewCard.Positioner dir={dir} className={s.positioner()} side={side} align={align} sideOffset={sideOffset}>
+      <BasePreviewCard.Positioner
+        dir={dir}
+        className={s.positioner()}
+        side={side}
+        align={align}
+        sideOffset={sideOffset}
+      >
         <BasePreviewCard.Popup className={cn(s.popup(), className)} {...props}>
           {arrow && <BasePreviewCard.Arrow className={s.arrow()} />}
           {children}

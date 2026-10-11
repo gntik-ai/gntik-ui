@@ -11,7 +11,11 @@ export default function TextareaCounter() {
     <Field invalid={tooLong} className="max-w-xl">
       <div className="flex items-baseline justify-between">
         <FieldLabel>Deployment note</FieldLabel>
-        <span className={tooLong ? 'font-mono text-[11px] text-destructive-text' : 'font-mono text-[11px] text-muted-foreground'}>
+        <span
+          className={
+            tooLong ? 'font-mono text-[11px] text-destructive-text' : 'font-mono text-[11px] text-muted-foreground'
+          }
+        >
           {note.length}/{MAX}
         </span>
       </div>

@@ -14,7 +14,12 @@ describe('Skeleton', () => {
   });
 
   it('renders text lines with a shorter last line, and circles', () => {
-    const { container } = render(<><Skeleton shape="text" lines={3} /><Skeleton shape="circle" /></>);
+    const { container } = render(
+      <>
+        <Skeleton shape="text" lines={3} />
+        <Skeleton shape="circle" />
+      </>,
+    );
     const [text, circle] = Array.from(container.children);
     expect(text?.children).toHaveLength(3);
     expect(text?.lastElementChild).toHaveClass('w-2/3');
@@ -27,7 +32,12 @@ describe('Skeleton', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><SkeletonList /><SkeletonShapes /></>);
+    render(
+      <>
+        <SkeletonList />
+        <SkeletonShapes />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

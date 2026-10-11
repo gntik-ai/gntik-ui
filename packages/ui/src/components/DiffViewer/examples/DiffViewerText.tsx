@@ -39,5 +39,14 @@ features:
 `;
 
 export default function DiffViewerText() {
-  return <DiffViewer oldValue={before} newValue={after} oldLabel="config.yaml · v12" newLabel="config.yaml · v13" context={1} maxHeight={360} />;
+  return (
+    <DiffViewer
+      oldValue={before}
+      newValue={after}
+      oldLabel="config.yaml · v12"
+      newLabel="config.yaml · v13"
+      context={1}
+      maxHeight={360}
+    />
+  );
 }

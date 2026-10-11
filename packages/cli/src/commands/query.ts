@@ -22,7 +22,12 @@ function checkKind(kind?: string) {
 /** Fixed-width table for humans. */
 export function table(rows: string[][]): string[] {
   const widths = rows[0]?.map((_, i) => Math.max(...rows.map((r) => (r[i] ?? '').length))) ?? [];
-  return rows.map((r) => r.map((c, i) => (i === r.length - 1 ? c : c.padEnd(widths[i] ?? 0))).join('  ').trimEnd());
+  return rows.map((r) =>
+    r
+      .map((c, i) => (i === r.length - 1 ? c : c.padEnd(widths[i] ?? 0)))
+      .join('  ')
+      .trimEnd(),
+  );
 }
 
 const truncate = (s: string, n: number) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
@@ -34,7 +39,10 @@ export async function list(ctx: Context): Promise<CommandResult> {
   const items = registry.items.filter(
     (i) => (!kind || i.kind === kind) && (!group || i.group.toLowerCase() === group.toLowerCase()),
   );
-  const rows = [['ID', 'KIND', 'GROUP', 'STATUS', 'PACKAGE'], ...items.map((i) => [i.id, i.kind, i.group, i.status, i.package])];
+  const rows = [
+    ['ID', 'KIND', 'GROUP', 'STATUS', 'PACKAGE'],
+    ...items.map((i) => [i.id, i.kind, i.group, i.status, i.package]),
+  ];
   return ok(
     { registry: registry.source.base, count: items.length, items: items.map(summary) },
     items.length ? [...table(rows), '', `${items.length} item(s)`] : ['No items match.'],
@@ -94,7 +102,10 @@ export async function search(ctx: Context, positionals: string[]): Promise<Comma
     query,
   );
   if (ctx.flags.limit) results = results.slice(0, ctx.flags.limit);
-  const rows = [['ID', 'KIND', 'SCORE', 'DESCRIPTION'], ...results.map((r) => [r.item.id, r.item.kind, String(r.score), truncate(r.item.description, 60)])];
+  const rows = [
+    ['ID', 'KIND', 'SCORE', 'DESCRIPTION'],
+    ...results.map((r) => [r.item.id, r.item.kind, String(r.score), truncate(r.item.description, 60)]),
+  ];
   return ok(
     { query, count: results.length, items: results.map((r) => ({ ...summary(r.item), score: r.score })) },
     results.length ? table(rows) : [`No items match "${query}".`],
@@ -160,7 +171,11 @@ export async function docs(ctx: Context, positionals: string[]): Promise<Command
     ...item.files.map((f) => `  ${f.path} → ${f.target}`),
   ];
   if (info.keyboard.length) {
-    text.push('', 'Keyboard:', ...table([['KEY', 'BEHAVIOUR'], ...info.keyboard.map((k) => [k.key, k.behaviour])]).map((l) => `  ${l}`));
+    text.push(
+      '',
+      'Keyboard:',
+      ...table([['KEY', 'BEHAVIOUR'], ...info.keyboard.map((k) => [k.key, k.behaviour])]).map((l) => `  ${l}`),
+    );
   }
   return ok(
     {

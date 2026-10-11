@@ -45,7 +45,12 @@ export interface AccordionProps<Value = string> extends Omit<BaseAccordion.Root.
  * A stack of collapsible sections. One open at a time by default; pass `multiple` to allow several.
  * Controlled with `value` + `onValueChange` (an array of item values), or uncontrolled with `defaultValue`.
  */
-export function Accordion<Value = string>({ variant = 'flush', className, onKeyDown, ...props }: AccordionProps<Value>) {
+export function Accordion<Value = string>({
+  variant = 'flush',
+  className,
+  onKeyDown,
+  ...props
+}: AccordionProps<Value>) {
   return (
     <AccordionContext.Provider value={variant}>
       <BaseAccordion.Root<Value>

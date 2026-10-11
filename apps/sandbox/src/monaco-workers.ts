@@ -4,4 +4,6 @@ import { configureMonacoWorkers } from '@gntik-ai/editor';
 import EditorWorker from 'sandbox-monaco-worker/editor?worker';
 import TsWorker from 'sandbox-monaco-worker/typescript?worker';
 
-configureMonacoWorkers((_id, label) => (label === 'typescript' || label === 'javascript' ? new TsWorker() : new EditorWorker()));
+configureMonacoWorkers((_id, label) =>
+  label === 'typescript' || label === 'javascript' ? new TsWorker() : new EditorWorker(),
+);

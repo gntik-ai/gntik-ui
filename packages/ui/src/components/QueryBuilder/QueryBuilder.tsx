@@ -93,7 +93,10 @@ export function QueryBuilder({
     update(id, (n) => (n.type === 'condition' ? { ...n, ...patch } : n));
 
   const addTo = (group: QueryGroup, node: QueryNode) => {
-    pendingFocus.current = node.type === 'condition' ? `[data-query-node="${node.id}"] [role="combobox"]` : `[data-query-node="${node.id}"] [data-query-part="add-condition"]`;
+    pendingFocus.current =
+      node.type === 'condition'
+        ? `[data-query-node="${node.id}"] [role="combobox"]`
+        : `[data-query-node="${node.id}"] [data-query-part="add-condition"]`;
     update(group.id, (n) => (n.type === 'group' ? { ...n, children: [...n.children, node] } : n));
   };
   const remove = (parent: QueryGroup, id: string) => {
@@ -105,14 +108,24 @@ export function QueryBuilder({
     const field = fields.find((f) => f.id === c.field);
     const operators = operatorsFor(field);
     return (
-      <div role="group" aria-label={t('queryBuilder.condition', { index })} data-query-node={c.id} className={s.condition()}>
+      <div
+        role="group"
+        aria-label={t('queryBuilder.condition', { index })}
+        data-query-node={c.id}
+        className={s.condition()}
+      >
         <SimpleSelect
           aria-label={t('queryBuilder.field')}
           items={fields.map((f) => ({ value: f.id, label: f.label }))}
           value={c.field || null}
           onValueChange={(id) => {
             const nextField = fields.find((f) => f.id === id);
-            if (nextField) patchCondition(c.id, { field: nextField.id, operator: operatorsFor(nextField)[0] ?? 'eq', value: undefined });
+            if (nextField)
+              patchCondition(c.id, {
+                field: nextField.id,
+                operator: operatorsFor(nextField)[0] ?? 'eq',
+                value: undefined,
+              });
           }}
           disabled={disabled}
           size="sm"
@@ -132,7 +145,13 @@ export function QueryBuilder({
           className={s.operatorSelect()}
         />
         <div className={s.value()}>
-          <QueryValueEditor condition={c} field={field} onChange={(v: QueryValue | undefined) => patchCondition(c.id, { value: v })} disabled={disabled} locale={locale} />
+          <QueryValueEditor
+            condition={c}
+            field={field}
+            onChange={(v: QueryValue | undefined) => patchCondition(c.id, { value: v })}
+            disabled={disabled}
+            locale={locale}
+          />
         </div>
         <IconButton
           icon={X}
@@ -162,14 +181,23 @@ export function QueryBuilder({
             value={[group.combinator]}
             onValueChange={(v) => {
               const combinator = v[0];
-              if (combinator === 'and' || combinator === 'or') update(group.id, (n) => (n.type === 'group' ? { ...n, combinator } : n));
+              if (combinator === 'and' || combinator === 'or')
+                update(group.id, (n) => (n.type === 'group' ? { ...n, combinator } : n));
             }}
             disabled={disabled}
           >
             <Toggle value="and">{t('queryBuilder.and')}</Toggle>
             <Toggle value="or">{t('queryBuilder.or')}</Toggle>
           </ToggleGroup>
-          {!isRoot && <IconButton icon={X} label={t('queryBuilder.removeGroup')} size="sm" onClick={() => remove(parent, group.id)} disabled={disabled} />}
+          {!isRoot && (
+            <IconButton
+              icon={X}
+              label={t('queryBuilder.removeGroup')}
+              size="sm"
+              onClick={() => remove(parent, group.id)}
+              disabled={disabled}
+            />
+          )}
         </div>
         {group.children.length > 0 ? (
           <div className={s.list()}>
@@ -178,7 +206,9 @@ export function QueryBuilder({
                 <span aria-hidden className={s.joiner()}>
                   {i === 0 ? '' : joiner}
                 </span>
-                {child.type === 'condition' ? renderCondition(child, i + 1, group) : renderGroup(child, depth + 1, group)}
+                {child.type === 'condition'
+                  ? renderCondition(child, i + 1, group)
+                  : renderGroup(child, depth + 1, group)}
               </div>
             ))}
           </div>
@@ -186,11 +216,24 @@ export function QueryBuilder({
           isRoot && <p className={s.empty()}>{t('queryBuilder.empty')}</p>
         )}
         <div className={s.footer()}>
-          <Button variant="secondary" size="sm" icon={Plus} onClick={() => addTo(group, createQueryCondition(fields[0]))} disabled={disabled} data-query-part="add-condition">
+          <Button
+            variant="secondary"
+            size="sm"
+            icon={Plus}
+            onClick={() => addTo(group, createQueryCondition(fields[0]))}
+            disabled={disabled}
+            data-query-part="add-condition"
+          >
             {t('queryBuilder.addCondition')}
           </Button>
           {depth + 1 < maxDepth && (
-            <Button variant="ghost" size="sm" icon={FolderPlus} onClick={() => addTo(group, createQueryGroup('and', [createQueryCondition(fields[0])]))} disabled={disabled}>
+            <Button
+              variant="ghost"
+              size="sm"
+              icon={FolderPlus}
+              onClick={() => addTo(group, createQueryGroup('and', [createQueryCondition(fields[0])]))}
+              disabled={disabled}
+            >
               {t('queryBuilder.addGroup')}
             </Button>
           )}

@@ -54,7 +54,11 @@ export function CommentThread({
   const post = () => {
     if (!text) return;
     onSubmit?.(text);
-    if (appendOnSubmit) setPosted((prev) => [...prev, { id: `local-${prev.length + 1}`, author: currentUser, body: text, at: Date.now() }]);
+    if (appendOnSubmit)
+      setPosted((prev) => [
+        ...prev,
+        { id: `local-${prev.length + 1}`, author: currentUser, body: text, at: Date.now() },
+      ]);
     setDraft('');
   };
   const submit = (event: FormEvent) => {
@@ -73,7 +77,9 @@ export function CommentThread({
       <ul aria-label={`${all.length} ${all.length === 1 ? 'comment' : 'comments'}`} className="flex flex-col gap-5">
         {all.map((comment, i) => (
           <li key={comment.id} className="relative flex gap-3">
-            {i < all.length - 1 && <span aria-hidden className="absolute top-9 -bottom-5 start-[15.5px] w-px bg-border" />}
+            {i < all.length - 1 && (
+              <span aria-hidden className="absolute top-9 -bottom-5 start-[15.5px] w-px bg-border" />
+            )}
             <Avatar name={comment.author.name} src={comment.author.src} size="sm" className="relative z-10" />
             <article className="min-w-0 flex-1 rounded-lg border border-border bg-background/50 p-3">
               <header className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">

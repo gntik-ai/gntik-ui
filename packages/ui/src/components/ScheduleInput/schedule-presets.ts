@@ -12,7 +12,13 @@ export interface ScheduleParts {
   dayOfMonth: number;
 }
 
-export const DEFAULT_SCHEDULE_PARTS: ScheduleParts = { frequency: 'custom', minute: 0, hour: 9, weekdays: [1, 2, 3, 4, 5], dayOfMonth: 1 };
+export const DEFAULT_SCHEDULE_PARTS: ScheduleParts = {
+  frequency: 'custom',
+  minute: 0,
+  hour: 9,
+  weekdays: [1, 2, 3, 4, 5],
+  dayOfMonth: 1,
+};
 
 const NUM = /^\d+$/;
 
@@ -36,7 +42,7 @@ export function scheduleFromCron(expression: string): ScheduleParts {
 export function compressCronList(values: number[]): string {
   const sorted = [...new Set(values)].sort((a, b) => a - b);
   const parts: string[] = [];
-  for (let i = 0; i < sorted.length; ) {
+  for (let i = 0; i < sorted.length;) {
     let j = i;
     while (j + 1 < sorted.length && sorted[j + 1] === (sorted[j] ?? 0) + 1) j++;
     if (j - i >= 2) parts.push(`${sorted[i]}-${sorted[j]}`);

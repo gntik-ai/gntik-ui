@@ -2,7 +2,8 @@
 export const maintenanceContent = {
   code: 'Scheduled maintenance',
   title: 'We’ll be back shortly',
-  description: 'We are upgrading the database. Running services are not affected; the dashboard is read-only until 14:30 UTC.',
+  description:
+    'We are upgrading the database. Running services are not affected; the dashboard is read-only until 14:30 UTC.',
   bannerTitle: 'Maintenance in progress.',
   bannerMessage: 'Started 13:00 UTC · expected to end 14:30 UTC.',
   statusLabel: 'View status page',

@@ -16,7 +16,11 @@ const initial: KanbanColumn<Ticket>[] = [
       { id: 't2', title: 'Typo on the billing page', priority: 'Normal', owner: 'Luis' },
     ],
   },
-  { id: 'fixing', title: 'Fixing', cards: [{ id: 't3', title: 'Slow search on large teams', priority: 'High', owner: 'Mei' }] },
+  {
+    id: 'fixing',
+    title: 'Fixing',
+    cards: [{ id: 't3', title: 'Slow search on large teams', priority: 'High', owner: 'Mei' }],
+  },
   { id: 'shipped', title: 'Shipped', cards: [] },
 ];
 

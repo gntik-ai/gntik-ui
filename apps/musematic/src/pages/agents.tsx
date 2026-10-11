@@ -13,8 +13,22 @@ const agentColumns = DEPLOYMENT_COLUMNS.map((c) => ({ ...c, header: HEADERS[c.id
 
 const agentViews: SavedView[] = [
   { value: 'all', label: 'All agents', filters: [] },
-  { value: 'attention', label: 'Needs attention', filters: [{ field: 'status', value: 'Degraded' }, { field: 'status', value: 'Failed' }] },
-  { value: 'eu', label: 'EU fleets', filters: [{ field: 'region', value: 'eu-west-1' }, { field: 'region', value: 'eu-central-1' }] },
+  {
+    value: 'attention',
+    label: 'Needs attention',
+    filters: [
+      { field: 'status', value: 'Degraded' },
+      { field: 'status', value: 'Failed' },
+    ],
+  },
+  {
+    value: 'eu',
+    label: 'EU fleets',
+    filters: [
+      { field: 'region', value: 'eu-west-1' },
+      { field: 'region', value: 'eu-central-1' },
+    ],
+  },
 ];
 
 export function AgentsIndex() {
@@ -44,7 +58,10 @@ export function AgentDetail({ id }: { id: string }) {
       name={agent.name}
       description={agent.description}
       status={agent.status}
-      breadcrumbs={[{ label: 'Agents', href: '/agents' }, { label: agent.name, mono: true }]}
+      breadcrumbs={[
+        { label: 'Agents', href: '/agents' },
+        { label: agent.name, mono: true },
+      ]}
       meta={agentMeta(agent)}
       actions={[
         { label: 'View runs', icon: Activity, variant: 'secondary', onClick: () => navigate('/runs') },

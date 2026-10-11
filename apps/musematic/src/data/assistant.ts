@@ -8,9 +8,21 @@ export const assistantSuggestions: Suggestion[] = [
 ];
 
 export const assistantSources: CitationSource[] = [
-  { title: 'Fleet monitor · market-intel', url: 'https://app.musematic.ai/fleet/market-intel', snippet: 'web.fetch p95 6.9 s over the last 6 hours (SLO 4 s).' },
-  { title: 'Run trace · run_10cm', url: 'https://app.musematic.ai/runs/run_10cm', snippet: 'tool: web.fetch timed out twice before the retry succeeded.' },
-  { title: 'Tool timeouts guide', url: 'https://docs.musematic.ai/agents/tools/timeouts', snippet: 'Raise the per-tool timeout or add a cache in front of slow sources.' },
+  {
+    title: 'Fleet monitor · market-intel',
+    url: 'https://app.musematic.ai/fleet/market-intel',
+    snippet: 'web.fetch p95 6.9 s over the last 6 hours (SLO 4 s).',
+  },
+  {
+    title: 'Run trace · run_10cm',
+    url: 'https://app.musematic.ai/runs/run_10cm',
+    snippet: 'tool: web.fetch timed out twice before the retry succeeded.',
+  },
+  {
+    title: 'Tool timeouts guide',
+    url: 'https://docs.musematic.ai/agents/tools/timeouts',
+    snippet: 'Raise the per-tool timeout or add a cache in front of slow sources.',
+  },
 ];
 
 export const assistantTool = {

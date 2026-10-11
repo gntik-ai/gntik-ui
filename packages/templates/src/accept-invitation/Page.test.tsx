@@ -27,7 +27,10 @@ describe('AcceptInvitationPage', () => {
   });
 
   it('declines, and keeps the card on failure', async () => {
-    const onDecline = vi.fn().mockRejectedValueOnce(new Error('The invitation has expired.')).mockResolvedValueOnce(undefined);
+    const onDecline = vi
+      .fn()
+      .mockRejectedValueOnce(new Error('The invitation has expired.'))
+      .mockResolvedValueOnce(undefined);
     render(<AcceptInvitationPage onDecline={onDecline} />);
     await userEvent.click(screen.getByRole('button', { name: 'Decline' }));
     expect(await screen.findByText('The invitation has expired.')).toBeInTheDocument();

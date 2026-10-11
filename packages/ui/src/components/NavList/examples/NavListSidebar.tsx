@@ -1,4 +1,17 @@
-import { Activity, BarChart3, ChevronLeft, ChevronRight, CreditCard, FolderKanban, Home, KeyRound, Rocket, ScrollText, Settings, Users } from 'lucide-react';
+import {
+  Activity,
+  BarChart3,
+  ChevronLeft,
+  ChevronRight,
+  CreditCard,
+  FolderKanban,
+  Home,
+  KeyRound,
+  Rocket,
+  ScrollText,
+  Settings,
+  Users,
+} from 'lucide-react';
 import { useState } from 'react';
 import { IconButton } from '../../Button';
 import { LinkProvider } from '../../Link';
@@ -50,8 +63,15 @@ export default function NavListSidebar() {
               (collapsed ? 'w-[68px]' : 'w-[248px]')
             }
           >
-            <div className={'flex h-14 shrink-0 items-center border-b border-border ' + (collapsed ? 'justify-center' : 'justify-between px-3')}>
-              {!collapsed && <span className="ps-1 text-[14px] font-semibold tracking-tight text-foreground">Acme Cloud</span>}
+            <div
+              className={
+                'flex h-14 shrink-0 items-center border-b border-border ' +
+                (collapsed ? 'justify-center' : 'justify-between px-3')
+              }
+            >
+              {!collapsed && (
+                <span className="ps-1 text-[14px] font-semibold tracking-tight text-foreground">Acme Cloud</span>
+              )}
               <IconButton
                 size="sm"
                 icon={collapsed ? ChevronRight : ChevronLeft}
@@ -60,7 +80,13 @@ export default function NavListSidebar() {
                 onClick={() => setCollapsed((c) => !c)}
               />
             </div>
-            <NavList groups={GROUPS} currentHref={path} collapsed={collapsed} label="Workspace" className="flex-1 overflow-y-auto px-3 py-3" />
+            <NavList
+              groups={GROUPS}
+              currentHref={path}
+              collapsed={collapsed}
+              label="Workspace"
+              className="flex-1 overflow-y-auto px-3 py-3"
+            />
           </aside>
         </TooltipProvider>
       </LinkProvider>

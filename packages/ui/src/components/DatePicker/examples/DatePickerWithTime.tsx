@@ -10,7 +10,17 @@ export default function DatePickerWithTime() {
     <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
       <Field>
         <FieldLabel>Publish at</FieldLabel>
-        <DatePicker withTime value={at} onValueChange={setAt} locale="en-US" hourCycle={24} timeStep={15} today={today} min={today} name="publish-at" />
+        <DatePicker
+          withTime
+          value={at}
+          onValueChange={setAt}
+          locale="en-US"
+          hourCycle={24}
+          timeStep={15}
+          today={today}
+          min={today}
+          name="publish-at"
+        />
         <FieldDescription>Pick the day, then the time; Done closes the picker.</FieldDescription>
       </Field>
       <Field>

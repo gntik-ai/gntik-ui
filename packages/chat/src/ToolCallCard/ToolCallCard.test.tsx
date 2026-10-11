@@ -7,7 +7,9 @@ import { ToolCallCard } from './ToolCallCard';
 
 describe('ToolCallCard', () => {
   it('shows name, status and duration in its toggle', () => {
-    render(<ToolCallCard name="search_invoices" status="succeeded" durationMs={840} args={{ a: 1 }} result={{ ok: true }} />);
+    render(
+      <ToolCallCard name="search_invoices" status="succeeded" durationMs={840} args={{ a: 1 }} result={{ ok: true }} />,
+    );
     const toggle = screen.getByRole('button', { name: /search_invoices/ });
     expect(toggle).toHaveTextContent('Called');
     expect(toggle).toHaveTextContent('Succeeded');
@@ -17,7 +19,15 @@ describe('ToolCallCard', () => {
 
   it('Enter and Space expand and collapse; arguments and result render as JSON', async () => {
     const user = userEvent.setup();
-    render(<ToolCallCard name="list_deployments" status="succeeded" durationMs={2400} args={{ project: 'web-app' }} result={{ count: 3 }} />);
+    render(
+      <ToolCallCard
+        name="list_deployments"
+        status="succeeded"
+        durationMs={2400}
+        args={{ project: 'web-app' }}
+        result={{ count: 3 }}
+      />,
+    );
     const toggle = screen.getByRole('button', { name: /list_deployments/ });
     toggle.focus();
     await user.keyboard('{Enter}');

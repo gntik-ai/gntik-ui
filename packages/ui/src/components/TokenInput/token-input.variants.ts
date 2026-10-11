@@ -10,7 +10,8 @@ export const tokenInputVariants = tv({
       'data-disabled:cursor-not-allowed data-disabled:bg-secondary/50 has-[input:disabled]:cursor-not-allowed has-[input:disabled]:bg-secondary/50',
     ],
     list: 'contents',
-    input: 'min-w-24 flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed',
+    input:
+      'min-w-24 flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed',
     counter: 'ms-auto shrink-0 pe-0.5 font-mono text-[11px] text-muted-foreground tabular-nums',
     chip: [
       'inline-flex max-w-full items-center gap-1 rounded border border-transparent bg-primary/14 pe-1 ps-2 font-medium text-primary-chip-text',

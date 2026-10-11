@@ -35,7 +35,8 @@ export function matchAncestors(data: unknown, query: string, maxDepth = Infinity
       const p = joinPath(path, k);
       const type = jsonType(v);
       const primitive = type !== 'object' && type !== 'array';
-      if (String(k).toLowerCase().includes(q) || (primitive && String(v).toLowerCase().includes(q))) ancestors.forEach((a) => out.add(a));
+      if (String(k).toLowerCase().includes(q) || (primitive && String(v).toLowerCase().includes(q)))
+        ancestors.forEach((a) => out.add(a));
       if (!primitive && depth < maxDepth) walk(v, p, depth + 1, [...ancestors, p]);
     }
   };

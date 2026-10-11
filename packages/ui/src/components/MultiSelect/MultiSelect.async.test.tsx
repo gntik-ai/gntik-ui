@@ -8,7 +8,11 @@ import MultiSelectAsync from './examples/MultiSelectAsync';
 const ALL = ['Alpha', 'Beta', 'Gamma', 'Delta'].map((l) => ({ value: l.toLowerCase(), label: l }));
 const search = async (q: string) => ALL.filter((o) => o.label.toLowerCase().includes(q.toLowerCase()));
 const highlighted = () => document.querySelector('[role="option"][data-highlighted]');
-const statusText = () => screen.getAllByRole('status').map((el) => el.textContent).join(' ');
+const statusText = () =>
+  screen
+    .getAllByRole('status')
+    .map((el) => el.textContent)
+    .join(' ');
 
 function Harness(props: Partial<Parameters<typeof MultiSelect>[0]>) {
   const [value, setValue] = useState<string[]>([]);

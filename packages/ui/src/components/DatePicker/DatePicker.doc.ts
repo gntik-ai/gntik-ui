@@ -15,5 +15,16 @@ export const doc: ComponentDoc = {
     ['Escape', 'Closes the popup and returns focus to the field'],
     ['Tab', '`withTime`: from the calendar to the time segments and Done (see TimePicker for their keys)'],
   ],
-  tokens: ['background', 'border', 'foreground', 'muted-foreground', 'popover', 'primary', 'primary-text', 'secondary', 'destructive', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'popover',
+    'primary',
+    'primary-text',
+    'secondary',
+    'destructive',
+    'focus-ring',
+  ],
 };

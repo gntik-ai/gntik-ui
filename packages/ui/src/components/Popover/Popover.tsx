@@ -48,7 +48,14 @@ export function PopoverContent({
   const v = popoverVariants({ padding });
   return (
     <BasePopover.Portal container={container}>
-      <BasePopover.Positioner dir={dir} className={v.positioner()} side={side} align={align} sideOffset={sideOffset} alignOffset={alignOffset}>
+      <BasePopover.Positioner
+        dir={dir}
+        className={v.positioner()}
+        side={side}
+        align={align}
+        sideOffset={sideOffset}
+        alignOffset={alignOffset}
+      >
         <BasePopover.Popup className={cn(v.popup(), className)} {...props}>
           {arrow && <BasePopover.Arrow className={v.arrow()} />}
           {children}
@@ -58,11 +65,17 @@ export function PopoverContent({
   );
 }
 
-export function PopoverTitle({ className, ...props }: Omit<BasePopover.Title.Props, 'className'> & { className?: string }) {
+export function PopoverTitle({
+  className,
+  ...props
+}: Omit<BasePopover.Title.Props, 'className'> & { className?: string }) {
   return <BasePopover.Title className={cn(s.title(), className)} {...props} />;
 }
 
-export function PopoverDescription({ className, ...props }: Omit<BasePopover.Description.Props, 'className'> & { className?: string }) {
+export function PopoverDescription({
+  className,
+  ...props
+}: Omit<BasePopover.Description.Props, 'className'> & { className?: string }) {
   return <BasePopover.Description className={cn(s.description(), className)} {...props} />;
 }
 

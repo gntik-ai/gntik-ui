@@ -4,25 +4,43 @@ import type { Task } from '../src/battery.js';
 import { replayClient, toMessage, type ReplayStep } from '../src/replay.js';
 import type { ToolResult } from '../src/tools.js';
 
-const task: Task = { id: 'members', prompt: 'Build a members management page.', expect: { templates: ['settings-members'] } };
-const PAGE = "import { SettingsMembersPage } from '@gntik-ai/templates';\nexport default function P() { return <SettingsMembersPage />; }\n";
+const task: Task = {
+  id: 'members',
+  prompt: 'Build a members management page.',
+  expect: { templates: ['settings-members'] },
+};
+const PAGE =
+  "import { SettingsMembersPage } from '@gntik-ai/templates';\nexport default function P() { return <SettingsMembersPage />; }\n";
 let n = 0;
 const tu = (name: string, input: unknown) => ({ type: 'tool_use', id: `toolu_${++n}`, name, input });
 const usage = { input_tokens: 10, output_tokens: 5, cache_creation_input_tokens: 100, cache_read_input_tokens: 50 };
-const step = (content: unknown[], stop_reason: ReplayStep['stop_reason'] = 'tool_use'): ReplayStep => ({ stop_reason, content, usage });
+const step = (content: unknown[], stop_reason: ReplayStep['stop_reason'] = 'tool_use'): ReplayStep => ({
+  stop_reason,
+  content,
+  usage,
+});
 type Blocks = Array<{ type: string; tool_use_id?: string; is_error?: boolean; content?: unknown }>;
 
 describe('agent loop', () => {
   it('tool_use → tool_result → submit_page, with the expected request shape', async () => {
     const client = replayClient([
-      step([{ type: 'thinking', thinking: '', signature: 's' }, tu('list_kit', { kind: 'template', query: 'members' })]),
+      step([
+        { type: 'thinking', thinking: '', signature: 's' },
+        tu('list_kit', { kind: 'template', query: 'members' }),
+      ]),
       step([tu('submit_page', { filename: 'Members.tsx', code: PAGE })]),
     ]);
     const ep = await runAgent(task, client);
     expect(ep.outcome).toBe('submitted');
     expect(ep.submitted?.code).toBe(PAGE);
     expect(ep.toolCalls.map((c) => c.name)).toEqual(['list_kit', 'submit_page']);
-    expect(ep.usage).toEqual({ requests: 2, inputTokens: 20, outputTokens: 10, cacheWriteTokens: 200, cacheReadTokens: 100 });
+    expect(ep.usage).toEqual({
+      requests: 2,
+      inputTokens: 20,
+      outputTokens: 10,
+      cacheWriteTokens: 200,
+      cacheReadTokens: 100,
+    });
 
     const [first, second] = client.requests;
     expect(first).toMatchObject({
@@ -65,7 +83,10 @@ describe('agent loop', () => {
   it('stops on refusal without running the turn’s tools', async () => {
     let ran = 0;
     const client = replayClient([
-      { ...step([tu('submit_page', { filename: 'P.tsx', code: PAGE })], 'refusal'), stop_details: { type: 'refusal', category: 'cyber', explanation: 'declined' } as ReplayStep['stop_details'] },
+      {
+        ...step([tu('submit_page', { filename: 'P.tsx', code: PAGE })], 'refusal'),
+        stop_details: { type: 'refusal', category: 'cyber', explanation: 'declined' } as ReplayStep['stop_details'],
+      },
     ]);
     const ep = await runAgent(task, client, {}, () => {
       ran++;
@@ -78,7 +99,10 @@ describe('agent loop', () => {
   });
 
   it('stops on max_tokens (a tool input may be truncated)', async () => {
-    const ep = await runAgent(task, replayClient([step([tu('submit_page', { filename: 'P.tsx', code: 'export def' })], 'max_tokens')]));
+    const ep = await runAgent(
+      task,
+      replayClient([step([tu('submit_page', { filename: 'P.tsx', code: 'export def' })], 'max_tokens')]),
+    );
     expect(ep.outcome).toBe('max_tokens');
     expect(ep.toolCalls).toHaveLength(0);
   });
@@ -108,7 +132,12 @@ describe('agent loop', () => {
 
   it('honours config: model, effort, no fallback, no eager streaming', async () => {
     const client = replayClient([step([tu('submit_page', { filename: 'P.tsx', code: PAGE })])]);
-    await runAgent(task, client, { model: 'claude-sonnet-5-5', effort: 'medium', fallback: false, eagerInputStreaming: false });
+    await runAgent(task, client, {
+      model: 'claude-sonnet-5-5',
+      effort: 'medium',
+      fallback: false,
+      eagerInputStreaming: false,
+    });
     const p = client.requests[0];
     expect(p).toMatchObject({ model: 'claude-sonnet-5-5', output_config: { effort: 'medium' } });
     expect(p).not.toHaveProperty('fallbacks');
@@ -120,7 +149,12 @@ describe('agent loop', () => {
     const content = [
       { type: 'thinking', thinking: '', signature: 's' },
       { type: 'text', text: 'partial', citations: null },
-      { type: 'fallback', from: { model: 'claude-opus-5-5' }, to: { model: 'claude-opus-4-8' }, trigger: { type: 'refusal' } },
+      {
+        type: 'fallback',
+        from: { model: 'claude-opus-5-5' },
+        to: { model: 'claude-opus-4-8' },
+        trigger: { type: 'refusal' },
+      },
       tu('submit_page', { filename: 'P.tsx', code: PAGE }),
     ];
     const msg = toMessage(step(content));
@@ -143,7 +177,9 @@ describe('agent loop', () => {
     };
     expect((await runAgent(task, flaky)).outcome).toBe('submitted');
     expect(calls).toBe(2);
-    const broken: MessagesClient = { stream: () => ({ finalMessage: async () => Promise.reject(new Error('overloaded')) }) };
+    const broken: MessagesClient = {
+      stream: () => ({ finalMessage: async () => Promise.reject(new Error('overloaded')) }),
+    };
     const ep = await runAgent(task, broken);
     expect(ep.outcome).toBe('error');
     expect(ep.error).toMatch(/overloaded/);

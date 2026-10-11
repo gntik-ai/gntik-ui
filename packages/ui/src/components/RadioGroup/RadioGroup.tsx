@@ -8,8 +8,7 @@ type Variant = NonNullable<RadioGroupVariantProps['variant']>;
 const VariantContext = createContext<Variant>('plain');
 
 export interface RadioGroupProps<Value = string>
-  extends Omit<BaseRadioGroup.Props<Value>, 'className'>,
-    RadioGroupVariantProps {
+  extends Omit<BaseRadioGroup.Props<Value>, 'className'>, RadioGroupVariantProps {
   className?: string;
   ref?: Ref<HTMLDivElement>;
 }
@@ -44,7 +43,8 @@ export function Radio<Value = string>({ label, description, trailing, className,
   const s = radioGroupVariants({ variant });
   const descId = useId();
   const trailingId = useId();
-  const describedBy = [trailing != null && trailingId, description != null && descId].filter(Boolean).join(' ') || undefined;
+  const describedBy =
+    [trailing != null && trailingId, description != null && descId].filter(Boolean).join(' ') || undefined;
   const control = (
     <BaseRadio.Root<Value>
       className={cn(s.radio(), label != null && 'mt-px', label == null && className)}

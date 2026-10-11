@@ -1,5 +1,15 @@
 import { Check, Copy, Pencil } from '@gntik-ai/icons';
-import { Button, Card, CardAction, CardDescription, CardHeader, CardTitle, cn, IconButton, StatusTag } from '@gntik-ai/ui';
+import {
+  Button,
+  Card,
+  CardAction,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  cn,
+  IconButton,
+  StatusTag,
+} from '@gntik-ai/ui';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { DEPLOYMENT_DETAILS } from './fixtures';
 
@@ -96,7 +106,9 @@ export function DescriptionListCard({
               {item.status ? (
                 <StatusTag status={item.status} />
               ) : (
-                <span className={cn('min-w-0 truncate', item.mono && 'font-mono text-[12.5px]')}>{item.render ?? item.value}</span>
+                <span className={cn('min-w-0 truncate', item.mono && 'font-mono text-[12.5px]')}>
+                  {item.render ?? item.value}
+                </span>
               )}
               {item.copyable && <CopyButton item={item} onCopy={onCopy} />}
             </dd>

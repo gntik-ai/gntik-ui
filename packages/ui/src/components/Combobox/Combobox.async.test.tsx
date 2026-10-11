@@ -11,7 +11,11 @@ interface Opt {
   label: string;
 }
 const ALL: Opt[] = ['Apple', 'Apricot', 'Banana', 'Cherry'].map((l) => ({ value: l.toLowerCase(), label: l }));
-const statusText = () => screen.getAllByRole('status').map((el) => el.textContent).join(' ');
+const statusText = () =>
+  screen
+    .getAllByRole('status')
+    .map((el) => el.textContent)
+    .join(' ');
 const highlighted = () => document.querySelector('[role="option"][data-highlighted]');
 
 function deferred<T>() {
@@ -24,7 +28,13 @@ function deferred<T>() {
   return { promise, resolve, reject };
 }
 
-function AsyncHarness({ loadOptions, onValueChange }: { loadOptions: (q: string, c: { signal: AbortSignal }) => Promise<Opt[]>; onValueChange?: (v: Opt | null) => void }) {
+function AsyncHarness({
+  loadOptions,
+  onValueChange,
+}: {
+  loadOptions: (q: string, c: { signal: AbortSignal }) => Promise<Opt[]>;
+  onValueChange?: (v: Opt | null) => void;
+}) {
   return (
     <Combobox<Opt> loadOptions={loadOptions} debounceMs={20} onValueChange={onValueChange}>
       <ComboboxInput label="Fruit" />
@@ -174,7 +184,9 @@ describe('Combobox creatable (onCreate)', () => {
     render(<CreatableHarness onCreate={() => undefined} />);
     const input = screen.getByRole('combobox', { name: 'Fruit' });
     await user.type(input, 'ap');
-    await waitFor(() => expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual(['Apple', 'Apricot', 'Create “ap”']));
+    await waitFor(() =>
+      expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual(['Apple', 'Apricot', 'Create “ap”']),
+    );
     await user.type(input, 'ple');
     await waitFor(() => expect(screen.getAllByRole('option').map((o) => o.textContent)).toEqual(['Apple']));
   });

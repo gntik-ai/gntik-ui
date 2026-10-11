@@ -94,7 +94,9 @@ export function PermissionMatrix({
   const stateLabel = (state: PermissionState) => t(`permissionMatrix.${state}`);
   const stateOf = (roleId: string, permId: string): PermissionState => matrix[roleId]?.[permId] ?? 'inherited';
   const reasonOf = (role: PermissionRole, permId: string) =>
-    role.readOnly ? (role.readOnlyReason ?? t('permissionMatrix.readOnlyRole', { role: role.label })) : getDisabledReason?.(role.id, permId);
+    role.readOnly
+      ? (role.readOnlyReason ?? t('permissionMatrix.readOnlyRole', { role: role.label }))
+      : getDisabledReason?.(role.id, permId);
 
   const set = (role: PermissionRole, perm: PermissionItem, state: PermissionState) => {
     if (reasonOf(role, perm.id) || stateOf(role.id, perm.id) === state) return;
@@ -116,29 +118,36 @@ export function PermissionMatrix({
     cellRefs.current.get(`${r}:${c}`)?.focus();
   };
 
-  const onKeyDown = (row: number, col: number, role: PermissionRole, perm: PermissionItem) => (e: KeyboardEvent<HTMLButtonElement>) => {
-    const forward = dir === 'rtl' ? -1 : 1;
-    const key = e.key;
-    let handled = true;
-    if (key === 'ArrowRight') moveTo(row, col + forward);
-    else if (key === 'ArrowLeft') moveTo(row, col - forward);
-    else if (key === 'ArrowDown') moveTo(row + 1, col);
-    else if (key === 'ArrowUp') moveTo(row - 1, col);
-    else if (key === 'Home') moveTo(e.ctrlKey || e.metaKey ? 0 : row, 0);
-    else if (key === 'End') moveTo(e.ctrlKey || e.metaKey ? lastRow : row, lastCol);
-    else if (key === 'PageDown') moveTo(lastRow, col);
-    else if (key === 'PageUp') moveTo(0, col);
-    else if (!e.ctrlKey && !e.metaKey && !e.altKey && (key === 'a' || key === 'A')) set(role, perm, 'allowed');
-    else if (!e.ctrlKey && !e.metaKey && !e.altKey && (key === 'd' || key === 'D')) set(role, perm, 'denied');
-    else if (!e.ctrlKey && !e.metaKey && !e.altKey && allowInherit && (key === 'i' || key === 'I')) set(role, perm, 'inherited');
-    else handled = false;
-    if (handled) e.preventDefault();
-  };
+  const onKeyDown =
+    (row: number, col: number, role: PermissionRole, perm: PermissionItem) => (e: KeyboardEvent<HTMLButtonElement>) => {
+      const forward = dir === 'rtl' ? -1 : 1;
+      const key = e.key;
+      let handled = true;
+      if (key === 'ArrowRight') moveTo(row, col + forward);
+      else if (key === 'ArrowLeft') moveTo(row, col - forward);
+      else if (key === 'ArrowDown') moveTo(row + 1, col);
+      else if (key === 'ArrowUp') moveTo(row - 1, col);
+      else if (key === 'Home') moveTo(e.ctrlKey || e.metaKey ? 0 : row, 0);
+      else if (key === 'End') moveTo(e.ctrlKey || e.metaKey ? lastRow : row, lastCol);
+      else if (key === 'PageDown') moveTo(lastRow, col);
+      else if (key === 'PageUp') moveTo(0, col);
+      else if (!e.ctrlKey && !e.metaKey && !e.altKey && (key === 'a' || key === 'A')) set(role, perm, 'allowed');
+      else if (!e.ctrlKey && !e.metaKey && !e.altKey && (key === 'd' || key === 'D')) set(role, perm, 'denied');
+      else if (!e.ctrlKey && !e.metaKey && !e.altKey && allowInherit && (key === 'i' || key === 'I'))
+        set(role, perm, 'inherited');
+      else handled = false;
+      if (handled) e.preventDefault();
+    };
 
   const offsets = sections.map((_, i) => sections.slice(0, i).reduce((n, sec) => n + sec.permissions.length, 0));
   return (
     <div className={cn(s.root(), className)}>
-      <table role="grid" aria-label={caption ? undefined : (ariaLabel ?? t('permissionMatrix.label'))} aria-labelledby={caption ? `${uid}-caption` : undefined} className={s.table()}>
+      <table
+        role="grid"
+        aria-label={caption ? undefined : (ariaLabel ?? t('permissionMatrix.label'))}
+        aria-labelledby={caption ? `${uid}-caption` : undefined}
+        className={s.table()}
+      >
         {caption && (
           <caption id={`${uid}-caption`} className={s.caption()}>
             {caption}
@@ -179,7 +188,9 @@ export function PermissionMatrix({
                   {roles.map((role, col) => {
                     const state = stateOf(role.id, perm.id);
                     const inheritedAs = state === 'inherited' ? resolveInherited?.(role.id, perm.id) : undefined;
-                    const label = inheritedAs ? t('permissionMatrix.inheritedAs', { state: stateLabel(inheritedAs) }) : stateLabel(state);
+                    const label = inheritedAs
+                      ? t('permissionMatrix.inheritedAs', { state: stateLabel(inheritedAs) })
+                      : stateLabel(state);
                     const Icon = ICONS[state];
                     const reason = reasonOf(role, perm.id);
                     const reasonId = `${uid}-r${row}-c${col}`;
@@ -191,7 +202,11 @@ export function PermissionMatrix({
                         }}
                         type="button"
                         tabIndex={row === active.row && col === active.col ? 0 : -1}
-                        aria-label={t('permissionMatrix.cell', { permission: perm.label, role: role.label, state: label })}
+                        aria-label={t('permissionMatrix.cell', {
+                          permission: perm.label,
+                          role: role.label,
+                          state: label,
+                        })}
                         aria-disabled={reason ? true : undefined}
                         aria-describedby={reason ? reasonId : undefined}
                         data-state={state}

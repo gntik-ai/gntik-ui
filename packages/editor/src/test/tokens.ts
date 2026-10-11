@@ -2,9 +2,18 @@ import { vi } from 'vitest';
 
 /** Distinct channels per token and theme, so tests can tell themes apart. */
 const HUE: Record<string, number> = {
-  '--primary': 145, '--foreground': 10, '--muted-foreground': 20, '--border': 30, '--card': 40,
-  '--popover': 50, '--destructive': 0, '--info': 205, '--category-cyan': 190,
-  '--category-amber': 38, '--category-violet': 262, '--category-rose': 347,
+  '--primary': 145,
+  '--foreground': 10,
+  '--muted-foreground': 20,
+  '--border': 30,
+  '--card': 40,
+  '--popover': 50,
+  '--destructive': 0,
+  '--info': 205,
+  '--category-cyan': 190,
+  '--category-amber': 38,
+  '--category-violet': 262,
+  '--category-rose': 347,
 };
 const LIGHTNESS = { light: 40, dark: 60, high_contrast: 80 } as const;
 

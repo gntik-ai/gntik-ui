@@ -34,7 +34,15 @@ describe('Timestamp', () => {
   });
 
   it('absolute format uses the locale', () => {
-    render(<Timestamp value="2026-09-14T09:30:00Z" format="absolute" locale="de-DE" dateOptions={{ dateStyle: 'long', timeZone: 'UTC' }} tooltip={false} />);
+    render(
+      <Timestamp
+        value="2026-09-14T09:30:00Z"
+        format="absolute"
+        locale="de-DE"
+        dateOptions={{ dateStyle: 'long', timeZone: 'UTC' }}
+        tooltip={false}
+      />,
+    );
     expect(screen.getByText('14. September 2026').tagName).toBe('TIME');
   });
 
@@ -79,7 +87,9 @@ describe('Timestamp', () => {
 
   it('Tab focuses the timestamp and shows the full date in a tooltip; Escape hides it', async () => {
     const user = userEvent.setup();
-    render(<Timestamp value="2026-09-14T09:30:00Z" locale="en-US" tooltipOptions={{ dateStyle: 'full', timeZone: 'UTC' }} />);
+    render(
+      <Timestamp value="2026-09-14T09:30:00Z" locale="en-US" tooltipOptions={{ dateStyle: 'full', timeZone: 'UTC' }} />,
+    );
     await user.tab();
     const tip = await screen.findByRole('tooltip');
     expect(tip).toHaveTextContent('Monday, September 14, 2026');
@@ -89,7 +99,12 @@ describe('Timestamp', () => {
 
   it('examples have no axe violations (tooltip open)', async () => {
     const user = userEvent.setup();
-    render(<><TimestampActivity /><TimestampFormats /></>);
+    render(
+      <>
+        <TimestampActivity />
+        <TimestampFormats />
+      </>,
+    );
     await user.tab();
     await screen.findByRole('tooltip');
     await expectNoAxeViolations();

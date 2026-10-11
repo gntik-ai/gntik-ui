@@ -1,5 +1,14 @@
 import { cn, Input } from '@gntik-ai/ui';
-import { useCallback, useEffect, useId, useRef, useState, type FocusEvent, type KeyboardEvent, type ReactNode } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type FocusEvent,
+  type KeyboardEvent,
+  type ReactNode,
+} from 'react';
 import type { DataTableColumn } from './data-table-utils';
 
 /** One committed cell edit, as `onCellEdit` receives it. */
@@ -20,7 +29,9 @@ export interface DataTableCellEdit<T> {
  */
 export type DataTableCellEditResult = void | boolean | string;
 
-export type DataTableCellEditHandler<T> = (edit: DataTableCellEdit<T>) => DataTableCellEditResult | Promise<DataTableCellEditResult>;
+export type DataTableCellEditHandler<T> = (
+  edit: DataTableCellEdit<T>,
+) => DataTableCellEditResult | Promise<DataTableCellEditResult>;
 
 export interface EditableCellProps<T> {
   row: T;
@@ -120,7 +131,10 @@ export function EditableCell<T>({ row, rowId, rowLabel, column, onCellEdit, hint
       return;
     }
     const previous = startValue(row, column);
-    if (parsed.value === previous || (previous != null && String(previous) === String(parsed.value) && editor.type !== 'number')) {
+    if (
+      parsed.value === previous ||
+      (previous != null && String(previous) === String(parsed.value) && editor.type !== 'number')
+    ) {
       move.current = after;
       setError(null);
       setEditing(false);
@@ -242,7 +256,11 @@ export function EditableCell<T>({ row, rowId, rowLabel, column, onCellEdit, hint
         />
       )}
       {error && (
-        <p id={errorId} role="alert" className="mt-1 text-start text-[11.5px] font-medium whitespace-normal text-destructive-text">
+        <p
+          id={errorId}
+          role="alert"
+          className="mt-1 text-start text-[11.5px] font-medium whitespace-normal text-destructive-text"
+        >
           {error}
         </p>
       )}

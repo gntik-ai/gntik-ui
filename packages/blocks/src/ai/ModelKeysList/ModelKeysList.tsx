@@ -99,7 +99,9 @@ export function ModelKeysList({
     <Card className={cn('w-full', className)} aria-labelledby={titleId} role="region">
       <CardHeader divided>
         <div>
-          <CardTitle as={titleAs} id={titleId}>{title}</CardTitle>
+          <CardTitle as={titleAs} id={titleId}>
+            {title}
+          </CardTitle>
           <CardDescription>Keys are stored encrypted and only shown masked.</CardDescription>
         </div>
         {onAdd && (
@@ -111,7 +113,11 @@ export function ModelKeysList({
         )}
       </CardHeader>
       {keys.length === 0 ? (
-        <EmptyState icon={KeyRound} title="No provider keys" description="Add a key to let assistants call a model provider." />
+        <EmptyState
+          icon={KeyRound}
+          title="No provider keys"
+          description="Add a key to let assistants call a model provider."
+        />
       ) : (
         <ul aria-labelledby={titleId} className="divide-y divide-border">
           {keys.map((key) => {
@@ -119,7 +125,10 @@ export function ModelKeysList({
             const revoked = status === 'revoked';
             const busy = testing[key.id] ?? false;
             return (
-              <li key={key.id} className={cn('flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center', revoked && 'opacity-60')}>
+              <li
+                key={key.id}
+                className={cn('flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center', revoked && 'opacity-60')}
+              >
                 <div className="flex min-w-0 flex-1 items-center gap-3">
                   <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-secondary text-muted-foreground">
                     <KeyRound size={16} aria-hidden />
@@ -136,8 +145,12 @@ export function ModelKeysList({
                   </div>
                 </div>
                 <div className="flex items-center gap-3 sm:justify-end">
-                  <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[11.5px] text-foreground">{key.maskedKey}</code>
-                  {key.lastUsed && <span className="hidden text-[11.5px] text-muted-foreground md:inline">Used {key.lastUsed}</span>}
+                  <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[11.5px] text-foreground">
+                    {key.maskedKey}
+                  </code>
+                  {key.lastUsed && (
+                    <span className="hidden text-[11.5px] text-muted-foreground md:inline">Used {key.lastUsed}</span>
+                  )}
                   {!revoked && (
                     <div className="ms-auto flex items-center gap-1.5 sm:ms-0">
                       <Button
@@ -153,14 +166,17 @@ export function ModelKeysList({
                         {busy ? 'Testing…' : 'Test'}
                       </Button>
                       <AlertDialog>
-                        <AlertDialogTrigger render={<Button variant="ghost" size="sm" icon={Trash2} aria-label={`Revoke ${key.name}`} />}>
+                        <AlertDialogTrigger
+                          render={<Button variant="ghost" size="sm" icon={Trash2} aria-label={`Revoke ${key.name}`} />}
+                        >
                           Revoke
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader tone="destructive">
                             <AlertDialogTitle>Revoke “{key.name}”?</AlertDialogTitle>
                             <AlertDialogDescription>
-                              Requests that use this {key.provider} key will fail immediately. You can add a new key at any time.
+                              Requests that use this {key.provider} key will fail immediately. You can add a new key at
+                              any time.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>

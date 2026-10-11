@@ -23,7 +23,9 @@ export default function DrawerBottomSheet() {
         </DrawerHeader>
         <DrawerBody>
           <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2">
-            <span className="min-w-0 flex-1 truncate font-mono text-[12.5px] text-foreground">https://example.com/p/support-triage</span>
+            <span className="min-w-0 flex-1 truncate font-mono text-[12.5px] text-foreground">
+              https://example.com/p/support-triage
+            </span>
             <Button size="sm" variant="soft" icon={Copy}>
               Copy link
             </Button>

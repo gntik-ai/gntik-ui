@@ -14,7 +14,12 @@ describe('Alert', () => {
   });
 
   it('pairs the title with contrast-safe text tokens', () => {
-    render(<><Alert tone="warning" title="Warn" /><Alert tone="info" title="Note" /></>);
+    render(
+      <>
+        <Alert tone="warning" title="Warn" />
+        <Alert tone="info" title="Note" />
+      </>,
+    );
     expect(screen.getByText('Warn')).toHaveClass('text-warning-text');
     expect(screen.getByText('Note')).toHaveClass('text-foreground');
   });
@@ -55,7 +60,12 @@ describe('Alert', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><AlertTones /><AlertDismissible /></>);
+    render(
+      <>
+        <AlertTones />
+        <AlertDismissible />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

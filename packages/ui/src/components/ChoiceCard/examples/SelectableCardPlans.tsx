@@ -4,7 +4,13 @@ import { SelectableCard, SelectableCardGroup } from '../SelectableCard';
 const PLANS = [
   { value: 'shared', title: 'Shared', description: 'Shared CPU · cold starts', price: 'Free' },
   { value: 'dedicated', title: 'Dedicated', description: '2 vCPU · always warm', price: '$80/mo' },
-  { value: 'isolated', title: 'Isolated', description: 'Private network · no neighbours', price: '$240/mo', disabled: true },
+  {
+    value: 'isolated',
+    title: 'Isolated',
+    description: 'Private network · no neighbours',
+    price: '$240/mo',
+    disabled: true,
+  },
 ];
 
 export default function SelectableCardPlans() {

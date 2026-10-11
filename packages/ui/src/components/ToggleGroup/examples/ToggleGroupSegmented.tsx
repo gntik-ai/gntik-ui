@@ -24,7 +24,9 @@ export default function ToggleGroupSegmented() {
         <Toggle value="24h">24h</Toggle>
         <Toggle value="7d">7d</Toggle>
         <Toggle value="30d">30d</Toggle>
-        <Toggle value="90d" disabled>90d</Toggle>
+        <Toggle value="90d" disabled>
+          90d
+        </Toggle>
       </ToggleGroup>
     </div>
   );

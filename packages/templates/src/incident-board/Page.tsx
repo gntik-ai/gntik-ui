@@ -58,7 +58,8 @@ export interface IncidentBoardProps {
 }
 
 type Handlers = 'onMove' | 'onDeclare' | 'onExport';
-type BoardProps = Omit<IncidentBoardProps, 'breadcrumbs' | 'currentHref' | 'shell' | Handlers> & Partial<Pick<IncidentBoardProps, Handlers>>;
+type BoardProps = Omit<IncidentBoardProps, 'breadcrumbs' | 'currentHref' | 'shell' | Handlers> &
+  Partial<Pick<IncidentBoardProps, Handlers>>;
 
 function IncidentCard({ incident, now }: { incident: TriageIncident; now: number }) {
   return (
@@ -82,7 +83,18 @@ function IncidentCard({ incident, now }: { incident: TriageIncident; now: number
   );
 }
 
-function IncidentBoard({ title, description, defaultColumns, filterFields, defaultFilters, now, onMove, defaultOpenId, onDeclare, onExport }: BoardProps) {
+function IncidentBoard({
+  title,
+  description,
+  defaultColumns,
+  filterFields,
+  defaultFilters,
+  now,
+  onMove,
+  defaultOpenId,
+  onDeclare,
+  onExport,
+}: BoardProps) {
   const announce = useAnnounce();
   const [columns, setColumns] = useState(defaultColumns);
   const [query, setQuery] = useState('');

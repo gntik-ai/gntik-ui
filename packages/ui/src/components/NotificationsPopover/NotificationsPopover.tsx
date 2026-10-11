@@ -77,11 +77,18 @@ export function NotificationsPopover({
       : formatRelativeShort);
   const s = notificationsPopoverVariants();
   const unread = notifications.filter((n) => !n.read).length;
-  const triggerLabel = getTriggerLabel ? getTriggerLabel(unread) : unread ? t('notifications.trigger', { title, count: unread }) : title;
+  const triggerLabel = getTriggerLabel
+    ? getTriggerLabel(unread)
+    : unread
+      ? t('notifications.trigger', { title, count: unread })
+      : title;
   const reference = now ?? new Date();
   return (
     <Popover open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-      <PopoverTrigger aria-label={triggerLabel} className={cn(buttonVariants({ variant: 'secondary', iconOnly: true }), s.trigger(), className)}>
+      <PopoverTrigger
+        aria-label={triggerLabel}
+        className={cn(buttonVariants({ variant: 'secondary', iconOnly: true }), s.trigger(), className)}
+      >
         <Bell size={16} aria-hidden />
         {unread > 0 && (
           <span aria-hidden className={s.count()}>

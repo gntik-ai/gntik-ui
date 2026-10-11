@@ -30,7 +30,10 @@ export const carouselVariants = tv({
     perView: {
       1: { slide: 'basis-full' },
       2: { slide: 'basis-full sm:basis-[calc((100%-var(--carousel-gap))/2)]' },
-      3: { slide: 'basis-full sm:basis-[calc((100%-var(--carousel-gap))/2)] lg:basis-[calc((100%-2*var(--carousel-gap))/3)]' },
+      3: {
+        slide:
+          'basis-full sm:basis-[calc((100%-var(--carousel-gap))/2)] lg:basis-[calc((100%-2*var(--carousel-gap))/3)]',
+      },
       auto: { slide: 'basis-auto' },
     },
   },

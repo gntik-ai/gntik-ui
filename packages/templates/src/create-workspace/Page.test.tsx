@@ -28,7 +28,14 @@ describe('CreateWorkspacePage', () => {
     await expectNoAxeViolations(container);
     await userEvent.click(screen.getByRole('button', { name: /Create and invite/ }));
     expect(onFinish).toHaveBeenCalledWith(
-      expect.objectContaining({ name: 'Acme Labs', slug: 'acme-labs', region: 'us', plan: 'starter', invites: ['sam@example.com'], role: 'member' }),
+      expect.objectContaining({
+        name: 'Acme Labs',
+        slug: 'acme-labs',
+        region: 'us',
+        plan: 'starter',
+        invites: ['sam@example.com'],
+        role: 'member',
+      }),
     );
   });
 });

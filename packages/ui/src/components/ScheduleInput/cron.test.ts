@@ -66,13 +66,21 @@ describe('nextRuns', () => {
 
   it('lists the next runs in a time zone', () => {
     const runs = nextRuns('0 9 * * 1-5', from, 3, 'UTC');
-    expect(runs.map((d) => d.toISOString())).toEqual(['2026-03-30T09:00:00.000Z', '2026-03-31T09:00:00.000Z', '2026-04-01T09:00:00.000Z']);
+    expect(runs.map((d) => d.toISOString())).toEqual([
+      '2026-03-30T09:00:00.000Z',
+      '2026-03-31T09:00:00.000Z',
+      '2026-04-01T09:00:00.000Z',
+    ]);
   });
 
   it('follows the wall clock across a DST change and skips missing times', () => {
     // Europe/Madrid springs forward on 29 March 2026 (02:00 → 03:00, UTC+1 → UTC+2).
     const runs = nextRuns('30 9 * * *', from, 3, 'Europe/Madrid');
-    expect(runs.map((d) => d.toISOString())).toEqual(['2026-03-28T08:30:00.000Z', '2026-03-29T07:30:00.000Z', '2026-03-30T07:30:00.000Z']);
+    expect(runs.map((d) => d.toISOString())).toEqual([
+      '2026-03-28T08:30:00.000Z',
+      '2026-03-29T07:30:00.000Z',
+      '2026-03-30T07:30:00.000Z',
+    ]);
     const gap = nextRuns('30 2 * * *', from, 2, 'Europe/Madrid');
     expect(gap.map((d) => d.toISOString())).toEqual(['2026-03-28T01:30:00.000Z', '2026-03-30T00:30:00.000Z']);
   });
@@ -97,7 +105,9 @@ describe('schedule presets', () => {
     expect(scheduleFromCron('0 9 * * 1-5')).toMatchObject({ frequency: 'weekly', weekdays: [1, 2, 3, 4, 5] });
     expect(scheduleFromCron('0 6 15 * *')).toMatchObject({ frequency: 'monthly', dayOfMonth: 15 });
     expect(scheduleFromCron('*/5 * * * *').frequency).toBe('custom');
-    expect(cronFromSchedule({ frequency: 'weekly', minute: 0, hour: 8, weekdays: [5, 1, 3], dayOfMonth: 1 })).toBe('0 8 * * 1,3,5');
+    expect(cronFromSchedule({ frequency: 'weekly', minute: 0, hour: 8, weekdays: [5, 1, 3], dayOfMonth: 1 })).toBe(
+      '0 8 * * 1,3,5',
+    );
     expect(compressCronList([0, 1, 2, 3, 6])).toBe('0-3,6');
   });
 });

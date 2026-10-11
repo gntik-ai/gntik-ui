@@ -5,7 +5,12 @@ import StatusTagStates from './examples/StatusTagStates';
 
 describe('StatusTag', () => {
   it('maps generic states to a label and tone', () => {
-    render(<><StatusTag status="running" /><StatusTag status="failed" /></>);
+    render(
+      <>
+        <StatusTag status="running" />
+        <StatusTag status="failed" />
+      </>,
+    );
     expect(screen.getByText('Running')).toHaveClass('text-success-chip-text');
     expect(screen.getByText('Failed')).toHaveClass('text-destructive-chip-text');
     expect(screen.getByText('Running')).toHaveAttribute('data-status', 'running');

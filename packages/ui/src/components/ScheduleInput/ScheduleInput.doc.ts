@@ -15,5 +15,15 @@ export const doc: ComponentDoc = {
     ['ArrowUp / ArrowDown', 'In the minute, day or time fields: steps the value'],
     ['Type in the cron field', 'Re-validates, updates the summary and the next runs, and selects the preset that fits'],
   ],
-  tokens: ['background', 'border', 'card', 'foreground', 'muted-foreground', 'primary', 'secondary', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'card',
+    'foreground',
+    'muted-foreground',
+    'primary',
+    'secondary',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

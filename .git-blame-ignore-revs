@@ -1,0 +1,3 @@
+# Bulk reformat: git blame --ignore-revs-file .git-blame-ignore-revs (GitHub applies it automatically).
+# style: adopt Prettier (single quotes, 120 columns)
+4c7525b7a994029545e557711aebb0ed8e4842fd

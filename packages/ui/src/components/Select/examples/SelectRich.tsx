@@ -14,7 +14,10 @@ const environments = [
 
 function Avatar({ initials }: { initials: string }) {
   return (
-    <span aria-hidden className="grid size-[22px] shrink-0 place-items-center rounded-full bg-accent text-[9px] font-semibold text-accent-foreground">
+    <span
+      aria-hidden
+      className="grid size-[22px] shrink-0 place-items-center rounded-full bg-accent text-[9px] font-semibold text-accent-foreground"
+    >
       {initials}
     </span>
   );
@@ -29,7 +32,12 @@ export default function SelectRich() {
           <SelectTrigger>
             {(value: string) => {
               const m = members.find((x) => x.value === value);
-              return m ? (<><Avatar initials={m.initials} /><span className="truncate">{m.name}</span></>) : null;
+              return m ? (
+                <>
+                  <Avatar initials={m.initials} />
+                  <span className="truncate">{m.name}</span>
+                </>
+              ) : null;
             }}
           </SelectTrigger>
           <SelectContent>
@@ -51,7 +59,12 @@ export default function SelectRich() {
           <SelectTrigger>
             {(value: string) => {
               const e = environments.find((x) => x.value === value);
-              return e ? (<><span aria-hidden className={`size-2 shrink-0 rounded-full ${e.tone}`} />{e.label}</>) : null;
+              return e ? (
+                <>
+                  <span aria-hidden className={`size-2 shrink-0 rounded-full ${e.tone}`} />
+                  {e.label}
+                </>
+              ) : null;
             }}
           </SelectTrigger>
           <SelectContent>

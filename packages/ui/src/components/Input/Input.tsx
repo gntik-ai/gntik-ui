@@ -44,11 +44,7 @@ export function Input({
     <div className={cn(s.root(), className)} data-invalid={invalid || undefined}>
       {LeadingIcon && <LeadingIcon size={px} aria-hidden className={s.icon()} />}
       {leadingAddon != null && <span className={s.addon()}>{leadingAddon}</span>}
-      <BaseInput
-        className={cn(s.input(), inputClassName)}
-        aria-invalid={invalid || undefined}
-        {...props}
-      />
+      <BaseInput className={cn(s.input(), inputClassName)} aria-invalid={invalid || undefined} {...props} />
       {trailingAddon != null && <span className={s.addon()}>{trailingAddon}</span>}
       {TrailingIcon && <TrailingIcon size={px} aria-hidden className={s.icon()} />}
     </div>

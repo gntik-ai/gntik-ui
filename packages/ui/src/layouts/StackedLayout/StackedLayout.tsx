@@ -43,7 +43,17 @@ export interface StackedLayoutProps {
   fullScreen?: boolean;
 }
 
-function DesktopLink({ item, current, className, onNavigate }: { item: NavItem; current: boolean; className: string; onNavigate?: (item: NavItem) => void }) {
+function DesktopLink({
+  item,
+  current,
+  className,
+  onNavigate,
+}: {
+  item: NavItem;
+  current: boolean;
+  className: string;
+  onNavigate?: (item: NavItem) => void;
+}) {
   const RouterLink = useLinkComponent();
   const IconCmp = item.icon;
   const props = {
@@ -61,7 +71,12 @@ function DesktopLink({ item, current, className, onNavigate }: { item: NavItem; 
       {item.label}
     </>
   );
-  if (!item.href) return <button type="button" {...props} disabled={item.disabled}>{content}</button>;
+  if (!item.href)
+    return (
+      <button type="button" {...props} disabled={item.disabled}>
+        {content}
+      </button>
+    );
   return createElement(RouterLink ?? 'a', props, content);
 }
 

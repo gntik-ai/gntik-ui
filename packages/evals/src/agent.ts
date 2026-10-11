@@ -114,7 +114,13 @@ export interface Episode {
   error?: string;
 }
 
-export const emptyUsage = (): UsageTally => ({ requests: 0, inputTokens: 0, outputTokens: 0, cacheWriteTokens: 0, cacheReadTokens: 0 });
+export const emptyUsage = (): UsageTally => ({
+  requests: 0,
+  inputTokens: 0,
+  outputTokens: 0,
+  cacheWriteTokens: 0,
+  cacheReadTokens: 0,
+});
 
 export function addUsage(t: UsageTally, u: BetaMessage['usage'] | undefined): void {
   t.requests += 1;
@@ -144,7 +150,8 @@ export function echoable(content: BetaContentBlock[]): BetaContentBlock[] {
 }
 
 /** Errors worth one retry: the SDK failing to parse a streamed (eager) tool input. */
-const isStreamJsonError = (e: unknown) => !(e instanceof Anthropic.APIError) && e instanceof Error && /JSON/i.test(`${e.name} ${e.message}`);
+const isStreamJsonError = (e: unknown) =>
+  !(e instanceof Anthropic.APIError) && e instanceof Error && /JSON/i.test(`${e.name} ${e.message}`);
 
 export function buildParams(config: AgentConfig, messages: BetaMessageParam[]): StreamParams {
   return {
@@ -172,7 +179,16 @@ export async function runAgent(
   runTool: ToolRunner = (name, input) => defaultRunTool(name, input),
 ): Promise<Episode> {
   const config = { ...DEFAULT_CONFIG, ...partial };
-  const ep: Episode = { taskId: task.id, model: config.model, effort: config.effort, outcome: 'max_turns', turns: [], toolCalls: [], usage: emptyUsage(), fallbacks: [] };
+  const ep: Episode = {
+    taskId: task.id,
+    model: config.model,
+    effort: config.effort,
+    outcome: 'max_turns',
+    turns: [],
+    toolCalls: [],
+    usage: emptyUsage(),
+    fallbacks: [],
+  };
   const messages: BetaMessageParam[] = [{ role: 'user', content: task.prompt }];
   let nudges = 0;
   let jsonRetries = 0;
@@ -198,7 +214,10 @@ export async function runAgent(
       turn,
       stopReason: msg.stop_reason,
       model: msg.model,
-      text: msg.content.flatMap((b) => (b.type === 'text' ? [b.text] : [])).join('\n').slice(0, 500),
+      text: msg.content
+        .flatMap((b) => (b.type === 'text' ? [b.text] : []))
+        .join('\n')
+        .slice(0, 500),
       toolCalls: toolUses.map((t) => t.name),
     });
 
@@ -239,7 +258,12 @@ export async function runAgent(
         resultChars: r.content.length,
         resultExcerpt: r.content.slice(0, 200),
       });
-      results.push({ type: 'tool_result', tool_use_id: call.id, content: r.content, ...(r.isError ? { is_error: true } : {}) });
+      results.push({
+        type: 'tool_result',
+        tool_use_id: call.id,
+        content: r.content,
+        ...(r.isError ? { is_error: true } : {}),
+      });
       if (r.submitted && !ep.submitted) ep.submitted = r.submitted;
     }
     messages.push({ role: 'user', content: results });

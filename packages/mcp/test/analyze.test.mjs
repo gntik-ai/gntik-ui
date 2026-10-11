@@ -21,10 +21,23 @@ const LEGACY = `
 test('sugiere componentes del catálogo para una página Bootstrap', () => {
   const a = analyzePage(LEGACY);
   const ids = new Set(a.suggestions.map((s) => s.id));
-  for (const expected of ['buttons', 'tables', 'modal-dialogs', 'badges', 'spinners', 'pagination', 'navbars', 'page-headings', 'app-shell']) {
+  for (const expected of [
+    'buttons',
+    'tables',
+    'modal-dialogs',
+    'badges',
+    'spinners',
+    'pagination',
+    'navbars',
+    'page-headings',
+    'app-shell',
+  ]) {
     assert.ok(ids.has(expected), `falta sugerencia: ${expected} (hay: ${[...ids].join(', ')})`);
   }
-  assert.ok(a.frameworks.some((f) => f.name === 'Bootstrap'), 'detecta Bootstrap');
+  assert.ok(
+    a.frameworks.some((f) => f.name === 'Bootstrap'),
+    'detecta Bootstrap',
+  );
   assert.ok(a.styleErrors.length >= 1, 'reporta el color hardcodeado');
 });
 

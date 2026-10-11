@@ -28,7 +28,13 @@ describe('CodeEditor', () => {
     render(<CodeEditor value="a: 1" language="yaml" readOnly aria-label="Manifest" loader={m.loader} />);
     await waitFor(() => expect(m.editorApi.create).toHaveBeenCalledTimes(1));
     const opts = m.editorApi.create.mock.calls[0]?.[1];
-    expect(opts).toMatchObject({ value: 'a: 1', language: 'yaml', readOnly: true, ariaLabel: 'Manifest', theme: 'gntik-dark' });
+    expect(opts).toMatchObject({
+      value: 'a: 1',
+      language: 'yaml',
+      readOnly: true,
+      ariaLabel: 'Manifest',
+      theme: 'gntik-dark',
+    });
     expect(m.editorApi.defineTheme).toHaveBeenCalledWith('gntik-dark', expect.objectContaining({ base: 'vs-dark' }));
     expect(m.editorApi.setTheme).toHaveBeenLastCalledWith('gntik-dark');
   });

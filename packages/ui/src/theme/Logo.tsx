@@ -25,7 +25,11 @@ export function Logo({ size = 28, wordmark = false, brand, className, ...props }
     >
       {active.mark(size)}
       {wordmark && (
-        <span aria-hidden="true" className="font-sans font-bold tracking-[-0.02em] text-foreground" style={{ fontSize: Math.round(size * 0.64) }}>
+        <span
+          aria-hidden="true"
+          className="font-sans font-bold tracking-[-0.02em] text-foreground"
+          style={{ fontSize: Math.round(size * 0.64) }}
+        >
           {active.name}
           <span className="text-primary">.</span>
         </span>

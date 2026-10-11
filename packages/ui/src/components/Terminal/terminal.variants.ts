@@ -12,7 +12,8 @@ export const terminalVariants = tv({
       'flex h-7 items-center gap-1.5 rounded-md border border-border bg-background pe-1 ps-2 text-muted-foreground',
       'focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring',
     ],
-    searchInput: 'w-32 min-w-0 bg-transparent font-mono text-[11.5px] text-foreground outline-none placeholder:text-muted-foreground',
+    searchInput:
+      'w-32 min-w-0 bg-transparent font-mono text-[11.5px] text-foreground outline-none placeholder:text-muted-foreground',
     matches: 'shrink-0 font-mono text-[10.5px] text-muted-foreground tabular-nums',
     button: [
       'inline-flex h-7 min-w-7 cursor-pointer items-center justify-center gap-1.5 rounded-md px-1.5 font-mono text-[11px] text-muted-foreground transition-colors motion-reduce:transition-none',

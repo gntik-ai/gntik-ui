@@ -1,6 +1,18 @@
 import { NoResultsEmpty, PageHeader, SectionHeader } from '@gntik-ai/blocks';
 import { Search } from '@gntik-ai/icons';
-import { Checkbox, CheckboxGroup, Grid, GridItem, Input, Kbd, Link, Page, Stack, useI18n, type BreadcrumbItem } from '@gntik-ai/ui';
+import {
+  Checkbox,
+  CheckboxGroup,
+  Grid,
+  GridItem,
+  Input,
+  Kbd,
+  Link,
+  Page,
+  Stack,
+  useI18n,
+  type BreadcrumbItem,
+} from '@gntik-ai/ui';
 import { useId, useRef, useState, type KeyboardEvent } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import {
@@ -59,9 +71,13 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
 
   const matched = matchQuery(hits, query);
   const results = matched.filter((h) =>
-    (Object.keys(selection) as Array<SearchFacet['id']>).every((f) => selection[f].length === 0 || selection[f].includes(facetValue(h, f))),
+    (Object.keys(selection) as Array<SearchFacet['id']>).every(
+      (f) => selection[f].length === 0 || selection[f].includes(facetValue(h, f)),
+    ),
   );
-  const groups = searchTypeOrder.map((type) => ({ type, hits: results.filter((h) => h.type === type) })).filter((g) => g.hits.length > 0);
+  const groups = searchTypeOrder
+    .map((type) => ({ type, hits: results.filter((h) => h.type === type) }))
+    .filter((g) => g.hits.length > 0);
   const filterCount = selection.type.length + selection.owner.length;
 
   const changeQuery = (next: string) => {
@@ -78,7 +94,8 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
     const links = Array.from(resultsRef.current?.querySelectorAll<HTMLAnchorElement>('a[data-search-result]') ?? []);
     if (links.length === 0) return;
     const at = links.indexOf(document.activeElement as HTMLAnchorElement);
-    const next = move === 'first' ? 0 : move === 'last' ? links.length - 1 : Math.min(links.length - 1, Math.max(0, at + move));
+    const next =
+      move === 'first' ? 0 : move === 'last' ? links.length - 1 : Math.min(links.length - 1, Math.max(0, at + move));
     links[next]?.focus();
   };
   const onResultsKey = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -131,7 +148,10 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
             <Stack gap={6}>
               {facets.map((facet) => (
                 <div key={facet.id}>
-                  <p id={`${id}-${facet.id}`} className="mb-2.5 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase">
+                  <p
+                    id={`${id}-${facet.id}`}
+                    className="mb-2.5 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase"
+                  >
                     {facet.label}
                   </p>
                   <CheckboxGroup
@@ -161,7 +181,8 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
           </GridItem>
           <GridItem span={{ base: 1, lg: 3 }}>
             <p aria-live="polite" className="mb-4 text-[12.5px] text-muted-foreground">
-              <span className="font-mono text-foreground tabular-nums">{results.length}</span> {results.length === 1 ? 'result' : 'results'}
+              <span className="font-mono text-foreground tabular-nums">{results.length}</span>{' '}
+              {results.length === 1 ? 'result' : 'results'}
               {query.trim() && (
                 <>
                   {' '}
@@ -184,11 +205,22 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
                   const headingId = `${id}-group-${group.type}`;
                   return (
                     <section key={group.type} aria-labelledby={headingId}>
-                      <SectionHeader headingId={headingId} title={searchTypeLabels[group.type]} count={group.hits.length} description={null} actions={[]} />
+                      <SectionHeader
+                        headingId={headingId}
+                        title={searchTypeLabels[group.type]}
+                        count={group.hits.length}
+                        description={null}
+                        actions={[]}
+                      />
                       <ul aria-labelledby={headingId} className="mt-2 flex flex-col divide-y divide-border">
                         {group.hits.map((hit) => (
                           <li key={hit.id} className="py-3">
-                            <Link underline="hover" data-search-result href={hit.href} className="text-[14px] font-semibold">
+                            <Link
+                              underline="hover"
+                              data-search-result
+                              href={hit.href}
+                              className="text-[14px] font-semibold"
+                            >
                               {hit.title}
                             </Link>
                             <p className="mt-0.5 text-[13px] text-muted-foreground">{hit.snippet}</p>

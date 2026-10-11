@@ -5,7 +5,8 @@ export const meta: TemplateMeta = {
   family: 'Auth',
   priority: 'P1',
   status: 'stable',
-  description: 'Centred card second-factor step: one-time code that auto-submits, backup-code fallback, resend with countdown and a way back to sign in.',
+  description:
+    'Centred card second-factor step: one-time code that auto-submits, backup-code fallback, resend with countdown and a way back to sign in.',
   layout: 'AuthLayout',
   blocks: ['mfa-challenge'],
 };

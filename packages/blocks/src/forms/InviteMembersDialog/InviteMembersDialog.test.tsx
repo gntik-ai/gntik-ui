@@ -27,7 +27,11 @@ describe('InviteMembersDialog', () => {
 
     await userEvent.type(input, 'avery@example.com, sam@example.com,');
     await userEvent.click(screen.getByRole('button', { name: 'Send 2 invitations' }));
-    expect(onInvite).toHaveBeenCalledWith({ emails: ['avery@example.com', 'sam@example.com'], role: 'member', message: '' });
+    expect(onInvite).toHaveBeenCalledWith({
+      emails: ['avery@example.com', 'sam@example.com'],
+      role: 'member',
+      message: '',
+    });
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
   });
 });

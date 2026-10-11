@@ -1,4 +1,13 @@
-import { Select, SelectContent, SelectGroup, SelectGroupLabel, SelectItem, SelectLabel, SelectSeparator, SelectTrigger } from '../Select';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectGroupLabel,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectTrigger,
+} from '../Select';
 
 const sizes = {
   small: 'Small · 1 vCPU',

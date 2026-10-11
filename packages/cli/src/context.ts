@@ -87,7 +87,11 @@ export function installLines(report: InstallReport, ctx: Context): string[] {
 /** Turns a failed install into a non-zero result that still carries the data. */
 export function withInstallStatus(result: CommandResult, report: InstallReport): CommandResult {
   if (report.ran && report.exitCode !== 0) {
-    return { ...result, code: 1, error: new CliError('INSTALL', `Install command failed with exit code ${report.exitCode}`) };
+    return {
+      ...result,
+      code: 1,
+      error: new CliError('INSTALL', `Install command failed with exit code ${report.exitCode}`),
+    };
   }
   return result;
 }

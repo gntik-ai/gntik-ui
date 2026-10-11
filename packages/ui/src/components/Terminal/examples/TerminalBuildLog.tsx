@@ -60,7 +60,13 @@ export default function TerminalBuildLog() {
           Reset
         </Button>
       </div>
-      <Terminal ref={term} title="build · main" showLineNumbers emptyText="Press “Run build” to stream output." className="h-72" />
+      <Terminal
+        ref={term}
+        title="build · main"
+        showLineNumbers
+        emptyText="Press “Run build” to stream output."
+        className="h-72"
+      />
     </div>
   );
 }

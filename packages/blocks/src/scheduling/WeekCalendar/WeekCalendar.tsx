@@ -1,7 +1,19 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import { cn, useI18n } from '@gntik-ai/ui';
 import { CalendarHeader } from '../shared/CalendarHeader';
-import { addDays, dayKey, formatDay, formatRange, formatTime, formatWeekday, formatWeekRange, hourOf, sameDay, startOfWeek, weekDays } from '../shared/dates';
+import {
+  addDays,
+  dayKey,
+  formatDay,
+  formatRange,
+  formatTime,
+  formatWeekday,
+  formatWeekRange,
+  hourOf,
+  sameDay,
+  startOfWeek,
+  weekDays,
+} from '../shared/dates';
 import { defaultEventKinds, groupByDay, kindOf, TONE, type EventKind, type ScheduleEvent } from '../shared/events';
 import { sampleEvents, sampleToday } from '../shared/fixtures';
 
@@ -60,7 +72,13 @@ function layoutDay(list: readonly ScheduleEvent[], hourHeight: number): Placed[]
       laneEnds.push(end);
     } else laneEnds[lane] = end;
     clusterEnd = Math.max(clusterEnd, end);
-    const p: Placed = { event, top: start * hourHeight + 1, height: Math.max((end - start) * hourHeight - 2, 18), lane, lanes: 1 };
+    const p: Placed = {
+      event,
+      top: start * hourHeight + 1,
+      height: Math.max((end - start) * hourHeight - 2, 18),
+      lane,
+      lanes: 1,
+    };
     cluster.push(p);
     placed.push(p);
   }
@@ -121,7 +139,10 @@ export function WeekCalendar({
               {days.map((d) => {
                 const isToday = sameDay(d, today);
                 return (
-                  <div key={dayKey(d)} className="flex flex-col items-center justify-center border-s border-border/70 py-2 first:border-s-0">
+                  <div
+                    key={dayKey(d)}
+                    className="flex flex-col items-center justify-center border-s border-border/70 py-2 first:border-s-0"
+                  >
                     <span className="text-[11px] text-muted-foreground">{formatWeekday(d, locale)}</span>
                     <span
                       className={cn(
@@ -136,11 +157,22 @@ export function WeekCalendar({
               })}
             </div>
           </div>
-          <div ref={scrollRef} tabIndex={0} role="region" aria-labelledby={titleId} className="overflow-y-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring" style={{ maxHeight: height }}>
+          <div
+            ref={scrollRef}
+            tabIndex={0}
+            role="region"
+            aria-labelledby={titleId}
+            className="overflow-y-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring"
+            style={{ maxHeight: height }}
+          >
             <div className="relative flex" style={{ height: 24 * hourHeight }}>
               <div aria-hidden className="relative w-14 shrink-0 border-e border-border/70">
                 {HOURS.slice(1).map((h) => (
-                  <span key={h} className="absolute end-2 font-mono text-[10px] text-muted-foreground" style={{ top: h * hourHeight - 6 }}>
+                  <span
+                    key={h}
+                    className="absolute end-2 font-mono text-[10px] text-muted-foreground"
+                    style={{ top: h * hourHeight - 6 }}
+                  >
                     {pad(h)}:00
                   </span>
                 ))}
@@ -148,37 +180,61 @@ export function WeekCalendar({
               <div className="relative flex-1">
                 <div aria-hidden className="absolute inset-0">
                   {HOURS.map((h) => (
-                    <div key={h} className="border-t border-border/70 first:border-t-0" style={{ height: hourHeight }} />
+                    <div
+                      key={h}
+                      className="border-t border-border/70 first:border-t-0"
+                      style={{ height: hourHeight }}
+                    />
                   ))}
                 </div>
                 <div className="relative grid h-full grid-cols-7">
                   {days.map((d) => {
                     const list = byDay.get(dayKey(d)) ?? [];
                     return (
-                      <ul key={dayKey(d)} aria-label={formatDay(d, locale)} className="relative border-s border-border/70 first:border-s-0">
+                      <ul
+                        key={dayKey(d)}
+                        aria-label={formatDay(d, locale)}
+                        className="relative border-s border-border/70 first:border-s-0"
+                      >
                         {layoutDay(list, hourHeight).map(({ event, top, height: h, lane, lanes }) => {
                           const kind = kindOf(event, kinds);
                           const tone = TONE[kind.tone];
                           const range = formatRange(event.start, event.end, locale);
                           const body = (
                             <>
-                              <span className="block truncate text-[11px] leading-tight font-semibold text-foreground">{event.title}</span>
-                              <span className="block truncate font-mono text-[10px] text-muted-foreground">{formatTime(event.start, locale)}</span>
+                              <span className="block truncate text-[11px] leading-tight font-semibold text-foreground">
+                                {event.title}
+                              </span>
+                              <span className="block truncate font-mono text-[10px] text-muted-foreground">
+                                {formatTime(event.start, locale)}
+                              </span>
                             </>
                           );
-                          const box = cn('block h-full w-full overflow-hidden rounded-md border-s-2 px-2 py-1 text-start', tone.soft, tone.bar);
+                          const box = cn(
+                            'block h-full w-full overflow-hidden rounded-md border-s-2 px-2 py-1 text-start',
+                            tone.soft,
+                            tone.bar,
+                          );
                           return (
                             <li
                               key={event.id}
                               className="absolute px-0.5"
-                              style={{ top, height: h, insetInlineStart: `${(lane / lanes) * 100}%`, width: `${100 / lanes}%` }}
+                              style={{
+                                top,
+                                height: h,
+                                insetInlineStart: `${(lane / lanes) * 100}%`,
+                                width: `${100 / lanes}%`,
+                              }}
                             >
                               {onEventClick ? (
                                 <button
                                   type="button"
                                   aria-label={`${event.title}, ${range}${event.location ? `, ${event.location}` : ''}`}
                                   onClick={() => onEventClick(event)}
-                                  className={cn(box, 'transition-colors hover:bg-accent/40 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring motion-reduce:transition-none')}
+                                  className={cn(
+                                    box,
+                                    'transition-colors hover:bg-accent/40 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring motion-reduce:transition-none',
+                                  )}
                                 >
                                   {body}
                                 </button>
@@ -196,10 +252,16 @@ export function WeekCalendar({
                   })}
                 </div>
                 {nowVisible && (
-                  <div aria-hidden className="pointer-events-none absolute inset-x-0 z-10 flex items-center" style={{ top: hourOf(nowAt) * hourHeight }}>
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 z-10 flex items-center"
+                    style={{ top: hourOf(nowAt) * hourHeight }}
+                  >
                     <span className="-ms-1 size-2 shrink-0 rounded-full bg-primary" />
                     <span className="h-px flex-1 bg-primary" />
-                    <span className="shrink-0 rounded bg-primary px-1 font-mono text-[9px] text-primary-foreground">{t('calendar.now')}</span>
+                    <span className="shrink-0 rounded bg-primary px-1 font-mono text-[9px] text-primary-foreground">
+                      {t('calendar.now')}
+                    </span>
                   </div>
                 )}
               </div>

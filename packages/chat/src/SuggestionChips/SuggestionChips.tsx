@@ -69,7 +69,13 @@ export function SuggestionChips({
               className={layout === 'cards' ? s.card : s.chip}
               onClick={() => onSelect(prompt, item)}
             >
-              {Icon && <Icon size={layout === 'cards' ? 16 : 14} aria-hidden className={layout === 'cards' ? s.icon : 'shrink-0 text-muted-foreground'} />}
+              {Icon && (
+                <Icon
+                  size={layout === 'cards' ? 16 : 14}
+                  aria-hidden
+                  className={layout === 'cards' ? s.icon : 'shrink-0 text-muted-foreground'}
+                />
+              )}
               {layout === 'cards' ? (
                 <span className="min-w-0">
                   <span className={s.label}>{item.label}</span>

@@ -43,7 +43,9 @@ describe('SplitLayout', () => {
   it('uncontrolled: defaultShowDetail and Back work without props', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
-    const { container } = render(<SplitLayout list="list" detail="detail" defaultShowDetail onShowDetailChange={onChange} />);
+    const { container } = render(
+      <SplitLayout list="list" detail="detail" defaultShowDetail onShowDetailChange={onChange} />,
+    );
     expect(container.querySelector('[data-show-detail]')).not.toBeNull();
     await user.click(screen.getByRole('button', { name: 'Back' }));
     expect(onChange).toHaveBeenCalledWith(false);

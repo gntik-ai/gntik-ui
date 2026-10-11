@@ -10,7 +10,10 @@ export const doc: ComponentDoc = {
   pattern: 'select-only combobox',
   keyboard: [
     ['Enter / Space / ArrowDown', 'On the trigger: opens the list'],
-    ['ArrowDown / ArrowUp', 'Moves between models; a disabled one can be highlighted (its reason is read) but not selected'],
+    [
+      'ArrowDown / ArrowUp',
+      'Moves between models; a disabled one can be highlighted (its reason is read) but not selected',
+    ],
     ['Type a character', 'Jumps to the model whose name starts with it'],
     ['Enter', 'Selects the highlighted model and closes'],
     ['Escape', 'Closes without changing; focus returns to the trigger'],

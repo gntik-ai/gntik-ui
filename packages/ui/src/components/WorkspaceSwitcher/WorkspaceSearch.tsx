@@ -33,7 +33,10 @@ export function WorkspaceSearch({
   const emptyText = emptyTextProp ?? t('workspace.empty');
   const dir = usePortalDir();
   const createEntry = useMemo<Workspace>(() => ({ id: CREATE_ID, name: createLabel }), [createLabel]);
-  const items = useMemo(() => (onCreate ? [...workspaces, createEntry] : workspaces), [workspaces, onCreate, createEntry]);
+  const items = useMemo(
+    () => (onCreate ? [...workspaces, createEntry] : workspaces),
+    [workspaces, onCreate, createEntry],
+  );
   return (
     <Combobox.Root<Workspace>
       items={items}
@@ -45,7 +48,9 @@ export function WorkspaceSearch({
       }}
       itemToStringLabel={(w) => w.name}
       isItemEqualToValue={(a, b) => a.id === b.id}
-      filter={(w, query) => w.id === CREATE_ID || `${w.name} ${w.meta ?? ''}`.toLowerCase().includes(query.trim().toLowerCase())}
+      filter={(w, query) =>
+        w.id === CREATE_ID || `${w.name} ${w.meta ?? ''}`.toLowerCase().includes(query.trim().toLowerCase())
+      }
       autoHighlight
     >
       <Combobox.Trigger aria-label={triggerLabel(current, label)} className={cn(s.trigger(), className)}>
@@ -56,7 +61,11 @@ export function WorkspaceSearch({
           <Combobox.Popup className={s.searchPopup()} aria-label={label}>
             <div className={s.searchField()}>
               <Search size={15} aria-hidden className={s.searchIcon()} />
-              <Combobox.Input aria-label={searchPlaceholder.replace(/…$/, '')} placeholder={searchPlaceholder} className={s.searchInput()} />
+              <Combobox.Input
+                aria-label={searchPlaceholder.replace(/…$/, '')}
+                placeholder={searchPlaceholder}
+                className={s.searchInput()}
+              />
             </div>
             <Combobox.Empty className={s.searchEmpty()}>{emptyText}</Combobox.Empty>
             <Combobox.List className={s.searchList()}>

@@ -34,14 +34,25 @@ describe('built-in strings under <I18nProvider locale="es">', () => {
   });
 
   it('explicit labels still win over the catalog', () => {
-    render(<Pagination page={1} pageCount={3} onPageChange={noop} labels={{ nav: 'Resultados', page: (p) => `Ir a ${p}` }} />, { wrapper: es });
+    render(
+      <Pagination
+        page={1}
+        pageCount={3}
+        onPageChange={noop}
+        labels={{ nav: 'Resultados', page: (p) => `Ir a ${p}` }}
+      />,
+      { wrapper: es },
+    );
     const nav = screen.getByRole('navigation', { name: 'Resultados' });
     expect(within(nav).getByRole('button', { name: 'Ir a 3' })).toBeInTheDocument();
     expect(within(nav).getByRole('button', { name: 'Página siguiente' })).toBeInTheDocument();
   });
 
   it('Breadcrumbs: landmark and collapsed-trail button (plural)', () => {
-    const items = ['Inicio', 'Proyectos', 'web-app', 'Despliegues', 'Registros'].map((label, i) => ({ label, href: i < 4 ? `/${i}` : undefined }));
+    const items = ['Inicio', 'Proyectos', 'web-app', 'Despliegues', 'Registros'].map((label, i) => ({
+      label,
+      href: i < 4 ? `/${i}` : undefined,
+    }));
     render(<Breadcrumbs items={items} maxItems={3} />, { wrapper: es });
     const nav = screen.getByRole('navigation', { name: 'Ruta de navegación' });
     expect(within(nav).getByRole('button', { name: 'Mostrar 2 niveles más' })).toBeInTheDocument();
@@ -98,11 +109,14 @@ describe('built-in strings under <I18nProvider locale="es">', () => {
       { wrapper: es },
     );
     const group = screen.getByRole('group', { name: 'Tema' });
-    for (const name of ['Claro', 'Oscuro', 'Alto contraste', 'Sistema']) expect(within(group).getByRole('button', { name })).toBeInTheDocument();
+    for (const name of ['Claro', 'Oscuro', 'Alto contraste', 'Sistema'])
+      expect(within(group).getByRole('button', { name })).toBeInTheDocument();
   });
 
   it('Sparkline summary uses the catalog and the locale number format', () => {
     render(<Sparkline data={[1000, 1500.5]} label="Peticiones" />, { wrapper: es });
-    expect(screen.getByRole('img')).toHaveAccessibleName('Peticiones: al alza 50% de 1000 a 1500,5 en 2 puntos (mínimo 1000, máximo 1500,5)');
+    expect(screen.getByRole('img')).toHaveAccessibleName(
+      'Peticiones: al alza 50% de 1000 a 1500,5 en 2 puntos (mínimo 1000, máximo 1500,5)',
+    );
   });
 });

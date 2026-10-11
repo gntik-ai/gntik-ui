@@ -52,7 +52,8 @@ export function patchCss(text: string | null): string {
     return !!m && IMPORT_TARGETS.includes(m[1] ?? '');
   };
   const head = lines.slice(0, CSS_IMPORTS.length).map((l) => l.trim());
-  if (CSS_IMPORTS.every((l, i) => head[i] === l) && lines.slice(CSS_IMPORTS.length).every((l) => !isOurs(l))) return text ?? '';
+  if (CSS_IMPORTS.every((l, i) => head[i] === l) && lines.slice(CSS_IMPORTS.length).every((l) => !isOurs(l)))
+    return text ?? '';
   const rest = lines.filter((l) => !isOurs(l));
   while (rest.length && rest[0]?.trim() === '') rest.shift();
   return [...CSS_IMPORTS, '', ...rest].join('\n').replace(/\n*$/, '\n');
@@ -166,11 +167,15 @@ function change(file: string, before: string | null, after: string): Change {
 
 export async function init(ctx: Context): Promise<CommandResult> {
   const brand = ctx.flags.brand ?? 'gntik';
-  if (!(BRANDS as readonly string[]).includes(brand)) throw new CliError('USAGE', `--brand must be one of ${BRANDS.join(', ')}`);
+  if (!(BRANDS as readonly string[]).includes(brand))
+    throw new CliError('USAGE', `--brand must be one of ${BRANDS.join(', ')}`);
   if (!existsSync(ctx.cwd)) throw new CliError('USAGE', `Directory not found: ${ctx.cwd}`);
   const info = detectProject(ctx.cwd);
   const existing = loadConfig(ctx.cwd);
-  const config: GntikConfig = existing && !ctx.flags.overwrite ? existing : { ...defaultConfig(info, brand), ...(existing?.registry ? { registry: existing.registry } : {}) };
+  const config: GntikConfig =
+    existing && !ctx.flags.overwrite
+      ? existing
+      : { ...defaultConfig(info, brand), ...(existing?.registry ? { registry: existing.registry } : {}) };
   const cssFile = config.css;
 
   const npmrcPath = path.join(ctx.cwd, '.npmrc');
@@ -207,10 +212,19 @@ export async function init(ctx: Context): Promise<CommandResult> {
       warnings.push('Add postcss.config.mjs: export default { plugins: { "@tailwindcss/postcss": {} } };');
     }
   }
-  const install = runInstall(ctx, config.packageManager, info.packageJson, ['@gntik-ai/ui', '@gntik-ai/tokens', '@fontsource/geist', '@fontsource/geist-mono'], dev);
+  const install = runInstall(
+    ctx,
+    config.packageManager,
+    info.packageJson,
+    ['@gntik-ai/ui', '@gntik-ai/tokens', '@fontsource/geist', '@fontsource/geist-mono'],
+    dev,
+  );
   const snippet = themeSnippet(info.framework, info.entry, cssFile, config.brand);
 
-  const label = (a: ChangeAction) => (ctx.flags.dryRun ? { create: 'would create', patch: 'would patch', unchanged: 'unchanged' } : { create: 'created', patch: 'patched', unchanged: 'unchanged' })[a];
+  const label = (a: ChangeAction) =>
+    (ctx.flags.dryRun
+      ? { create: 'would create', patch: 'would patch', unchanged: 'unchanged' }
+      : { create: 'created', patch: 'patched', unchanged: 'unchanged' })[a];
   const text = [
     `Project: ${info.framework} · ${config.packageManager} · CSS ${cssFile}${info.css ? '' : ' (new)'}`,
     ...changes.map((c) => `  ${label(c.action).padEnd(13)} ${c.file}`),
@@ -224,7 +238,14 @@ export async function init(ctx: Context): Promise<CommandResult> {
   ];
   const data = {
     dryRun: ctx.flags.dryRun,
-    project: { framework: info.framework, packageManager: config.packageManager, css: cssFile, cssExisted: info.css !== null, entry: info.entry, src: info.src },
+    project: {
+      framework: info.framework,
+      packageManager: config.packageManager,
+      css: cssFile,
+      cssExisted: info.css !== null,
+      entry: info.entry,
+      src: info.src,
+    },
     config,
     changes: changes.map(({ file, action }) => ({ file, action })),
     snippet,

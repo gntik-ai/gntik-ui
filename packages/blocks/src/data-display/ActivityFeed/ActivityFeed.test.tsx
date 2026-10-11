@@ -6,9 +6,21 @@ import { ActivityFeed, groupActivityByDay, type ActivityItem } from './ActivityF
 const now = new Date(2026, 9, 3, 15, 0);
 const items: ActivityItem[] = [
   { id: '1', actor: { name: 'Ana Lopez' }, action: 'deployed', target: 'orders-api', at: new Date(2026, 9, 3, 14, 0) },
-  { id: '2', actor: { name: 'Sam Carter' }, action: 'invited', target: 'lee@example.com', at: new Date(2026, 9, 3, 9, 0) },
+  {
+    id: '2',
+    actor: { name: 'Sam Carter' },
+    action: 'invited',
+    target: 'lee@example.com',
+    at: new Date(2026, 9, 3, 9, 0),
+  },
   { id: '3', actor: { name: 'Lee Wong' }, action: 'paused', target: 'nightly-export', at: new Date(2026, 9, 2, 18, 0) },
-  { id: '4', actor: { name: 'Priya Nair' }, action: 'created the project', target: 'Checkout', at: new Date(2026, 8, 28, 10, 0) },
+  {
+    id: '4',
+    actor: { name: 'Priya Nair' },
+    action: 'created the project',
+    target: 'Checkout',
+    at: new Date(2026, 8, 28, 10, 0),
+  },
 ];
 
 describe('ActivityFeed', () => {

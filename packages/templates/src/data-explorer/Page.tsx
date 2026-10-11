@@ -30,7 +30,15 @@ import {
 } from '@gntik-ai/ui';
 import { useMemo, useState } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
-import { explorerBreadcrumbs, explorerColumns, explorerDefaultColumns, explorerFields, explorerRows, type ExplorerField, type ExplorerRow } from './data';
+import {
+  explorerBreadcrumbs,
+  explorerColumns,
+  explorerDefaultColumns,
+  explorerFields,
+  explorerRows,
+  type ExplorerField,
+  type ExplorerRow,
+} from './data';
 
 export interface DataExplorerProps {
   title: string;
@@ -81,12 +89,17 @@ export default function DataExplorerPage(props: Partial<DataExplorerProps>) {
     currentHref = '/data',
     shell,
   } = props;
-  const [query, setQuery] = useState<PowerSearchQuery<ExplorerField>>(() => defaultQuery ?? (emptyPowerSearchQuery<ExplorerField>()));
+  const [query, setQuery] = useState<PowerSearchQuery<ExplorerField>>(
+    () => defaultQuery ?? emptyPowerSearchQuery<ExplorerField>(),
+  );
   const [visible, setVisible] = useState<string[]>(defaultColumns);
   const [draftColumns, setDraftColumns] = useState<string[]>(defaultColumns);
   const [chooserOpen, setChooserOpen] = useState(false);
   const [inspected, setInspected] = useState<ExplorerRow | null>(null);
-  const filtered = useMemo(() => (query.terms.length ? rows.filter((r) => matchPowerSearch(query, r)) : rows), [rows, query]);
+  const filtered = useMemo(
+    () => (query.terms.length ? rows.filter((r) => matchPowerSearch(query, r)) : rows),
+    [rows, query],
+  );
 
   const columns: DataTableColumn<ExplorerRow>[] = visible.flatMap((id) => {
     const item = columnItems.find((c) => c.value === id);
@@ -115,7 +128,16 @@ export default function DataExplorerPage(props: Partial<DataExplorerProps>) {
         setChooserOpen(true);
       },
     },
-    ...(onExport ? [{ label: 'Export', icon: Download, variant: 'primary' as const, onClick: () => onExport(filtered, visible as ExplorerField[]) }] : []),
+    ...(onExport
+      ? [
+          {
+            label: 'Export',
+            icon: Download,
+            variant: 'primary' as const,
+            onClick: () => onExport(filtered, visible as ExplorerField[]),
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -128,8 +150,8 @@ export default function DataExplorerPage(props: Partial<DataExplorerProps>) {
             title={title}
             description={
               <>
-                Query <span className="font-mono">{dataset}</span>: type <span className="font-mono">field=value</span>, comparisons like{' '}
-                <span className="font-mono">duration&gt;500</span> or free text.
+                Query <span className="font-mono">{dataset}</span>: type <span className="font-mono">field=value</span>,
+                comparisons like <span className="font-mono">duration&gt;500</span> or free text.
               </>
             }
             status=""
@@ -139,7 +161,13 @@ export default function DataExplorerPage(props: Partial<DataExplorerProps>) {
           />
         }
       >
-        <PowerSearch<ExplorerField> aria-label={`Filter ${dataset}`} fields={fields} value={query} onValueChange={setQuery} placeholder="Filter rows…" />
+        <PowerSearch<ExplorerField>
+          aria-label={`Filter ${dataset}`}
+          fields={fields}
+          value={query}
+          onValueChange={setQuery}
+          placeholder="Filter rows…"
+        />
         <DataTable<ExplorerRow>
           caption={`${dataset} rows`}
           rows={filtered}
@@ -157,7 +185,14 @@ export default function DataExplorerPage(props: Partial<DataExplorerProps>) {
             </p>
           }
           rowActions={(r) => [{ label: 'Inspect row', icon: Braces, onSelect: () => setInspected(r) }]}
-          emptyState={<NoResultsEmpty entity="rows" query={formatPowerSearch(query)} filterCount={0} onClearSearch={() => setQuery(emptyPowerSearchQuery<ExplorerField>())} />}
+          emptyState={
+            <NoResultsEmpty
+              entity="rows"
+              query={formatPowerSearch(query)}
+              filterCount={0}
+              onClearSearch={() => setQuery(emptyPowerSearchQuery<ExplorerField>())}
+            />
+          }
         />
       </Page>
       <Dialog open={chooserOpen} onOpenChange={setChooserOpen}>
@@ -167,7 +202,14 @@ export default function DataExplorerPage(props: Partial<DataExplorerProps>) {
             <DialogDescription>Choose the visible columns and their order (Alt+↑/↓ reorders).</DialogDescription>
           </DialogHeader>
           <DialogBody>
-            <TransferList items={columnItems} value={draftColumns} onValueChange={setDraftColumns} reorderable titles={{ available: 'Hidden', selected: 'Visible' }} height={280} />
+            <TransferList
+              items={columnItems}
+              value={draftColumns}
+              onValueChange={setDraftColumns}
+              reorderable
+              titles={{ available: 'Hidden', selected: 'Visible' }}
+              height={280}
+            />
           </DialogBody>
           <DialogFooter>
             <Button variant="secondary" onClick={() => setChooserOpen(false)}>

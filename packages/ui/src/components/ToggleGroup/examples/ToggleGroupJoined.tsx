@@ -6,7 +6,12 @@ export default function ToggleGroupJoined() {
   const [view, setView] = useState(['week']);
   return (
     <div className="flex flex-col items-start gap-5">
-      <ToggleGroup aria-label="Calendar view" variant="joined" value={view} onValueChange={(v) => v.length && setView(v)}>
+      <ToggleGroup
+        aria-label="Calendar view"
+        variant="joined"
+        value={view}
+        onValueChange={(v) => v.length && setView(v)}
+      >
         <Toggle value="day">Day</Toggle>
         <Toggle value="week">Week</Toggle>
         <Toggle value="month">Month</Toggle>

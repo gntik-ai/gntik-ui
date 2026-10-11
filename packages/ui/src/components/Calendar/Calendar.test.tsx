@@ -11,7 +11,9 @@ const day = (name: string) => screen.getByRole('button', { name });
 function setup(extra: Partial<Parameters<typeof Calendar>[0]> = {}) {
   const user = userEvent.setup();
   const onValueChange = vi.fn();
-  render(<Calendar locale="en-US" weekStartsOn={1} today={today} onValueChange={onValueChange} {...(extra as object)} />);
+  render(
+    <Calendar locale="en-US" weekStartsOn={1} today={today} onValueChange={onValueChange} {...(extra as object)} />,
+  );
   return { user, onValueChange };
 }
 

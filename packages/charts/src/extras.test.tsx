@@ -1,5 +1,13 @@
 import { act, fireEvent, render, renderHook, screen, within } from '@testing-library/react';
-import { AreaChart, BarChart, ComboChart, LineChart, clampRange, useLiveSeries, usePrefersReducedMotion } from './index';
+import {
+  AreaChart,
+  BarChart,
+  ComboChart,
+  LineChart,
+  clampRange,
+  useLiveSeries,
+  usePrefersReducedMotion,
+} from './index';
 import BrushZoom from './examples/BrushZoom';
 import LiveSeries from './examples/LiveSeries';
 import ThresholdsAndAnnotations from './examples/ThresholdsAndAnnotations';
@@ -16,11 +24,73 @@ const annotations = [{ x: 'Feb', label: 'Deploy', description: 'Version 2 rolled
 
 describe('thresholds and annotations', () => {
   it.each([
-    ['LineChart', () => <LineChart aria-label="C" data={data} index="month" categories={['requests']} thresholds={thresholds} annotations={annotations} />],
-    ['AreaChart', () => <AreaChart aria-label="C" data={data} index="month" categories={['requests']} thresholds={thresholds} annotations={annotations} />],
-    ['BarChart', () => <BarChart aria-label="C" data={data} index="month" categories={['requests']} thresholds={thresholds} annotations={annotations} />],
-    ['BarChart vertical', () => <BarChart aria-label="C" layout="vertical" data={data} index="month" categories={['requests']} thresholds={thresholds} annotations={annotations} />],
-    ['ComboChart', () => <ComboChart aria-label="C" data={data} index="month" barSeries="requests" lineSeries="errors" thresholds={thresholds} annotations={annotations} />],
+    [
+      'LineChart',
+      () => (
+        <LineChart
+          aria-label="C"
+          data={data}
+          index="month"
+          categories={['requests']}
+          thresholds={thresholds}
+          annotations={annotations}
+        />
+      ),
+    ],
+    [
+      'AreaChart',
+      () => (
+        <AreaChart
+          aria-label="C"
+          data={data}
+          index="month"
+          categories={['requests']}
+          thresholds={thresholds}
+          annotations={annotations}
+        />
+      ),
+    ],
+    [
+      'BarChart',
+      () => (
+        <BarChart
+          aria-label="C"
+          data={data}
+          index="month"
+          categories={['requests']}
+          thresholds={thresholds}
+          annotations={annotations}
+        />
+      ),
+    ],
+    [
+      'BarChart vertical',
+      () => (
+        <BarChart
+          aria-label="C"
+          layout="vertical"
+          data={data}
+          index="month"
+          categories={['requests']}
+          thresholds={thresholds}
+          annotations={annotations}
+        />
+      ),
+    ],
+    [
+      'ComboChart',
+      () => (
+        <ComboChart
+          aria-label="C"
+          data={data}
+          index="month"
+          barSeries="requests"
+          lineSeries="errors"
+          thresholds={thresholds}
+          annotations={annotations}
+        />
+      ),
+    ],
   ])('%s draws labelled reference lines and lists them as text', (_, ui) => {
     const { container } = render(ui());
     // Not colour-only: a text label in the plot and a dashed stroke.
@@ -29,7 +99,9 @@ describe('thresholds and annotations', () => {
     expect(container.querySelector('[data-chart-annotation]')).toHaveTextContent('Deploy');
     const list = screen.getByRole('list', { name: 'Chart markers' });
     expect(within(list).getByText(/Threshold:/).parentElement).toHaveTextContent('Threshold: Budget (1400)');
-    expect(within(list).getByRole('button', { name: 'Marker at Feb: Deploy' })).toHaveAccessibleDescription('Version 2 rolled out.');
+    expect(within(list).getByRole('button', { name: 'Marker at Feb: Deploy' })).toHaveAccessibleDescription(
+      'Version 2 rolled out.',
+    );
   });
 
   it('opens the marker tooltip in the plot from the keyboard and closes it with Escape', () => {
@@ -84,7 +156,17 @@ describe('brush', () => {
 
   it('moves the handles from the keyboard and slices the plotted data', () => {
     const onRangeChange = vi.fn();
-    render(<LineChart aria-label="C" data={LATENCY_DAYS} index="day" categories={['p95']} brush dataTable onRangeChange={onRangeChange} />);
+    render(
+      <LineChart
+        aria-label="C"
+        data={LATENCY_DAYS}
+        index="day"
+        categories={['p95']}
+        brush
+        dataTable
+        onRangeChange={onRangeChange}
+      />,
+    );
     const start = screen.getByRole('slider', { name: 'Range start' });
     const end = screen.getByRole('slider', { name: 'Range end' });
     fireEvent.keyDown(start, { key: 'ArrowRight' });
@@ -105,19 +187,31 @@ describe('brush', () => {
   });
 
   it('follows a controlled range', () => {
-    const { rerender } = render(<BarChart aria-label="C" data={data} index="month" categories={['requests']} brush range={[1, 2]} dataTable />);
+    const { rerender } = render(
+      <BarChart aria-label="C" data={data} index="month" categories={['requests']} brush range={[1, 2]} dataTable />,
+    );
     expect(within(screen.getByRole('table')).getAllByRole('row')).toHaveLength(3);
     fireEvent.keyDown(screen.getByRole('slider', { name: 'Range end' }), { key: 'End' });
     // Controlled: stays until the parent updates.
     expect(within(screen.getByRole('table')).getAllByRole('row')).toHaveLength(3);
-    rerender(<BarChart aria-label="C" data={data} index="month" categories={['requests']} brush range={[0, 3]} dataTable />);
+    rerender(
+      <BarChart aria-label="C" data={data} index="month" categories={['requests']} brush range={[0, 3]} dataTable />,
+    );
     expect(within(screen.getByRole('table')).getAllByRole('row')).toHaveLength(5);
   });
 
   it('pans the window with the pointer', () => {
     const onRangeChange = vi.fn();
     const { container } = render(
-      <AreaChart aria-label="C" data={LATENCY_DAYS} index="day" categories={['requests']} brush defaultRange={[0, 9]} onRangeChange={onRangeChange} />,
+      <AreaChart
+        aria-label="C"
+        data={LATENCY_DAYS}
+        index="day"
+        categories={['requests']}
+        brush
+        defaultRange={[0, 9]}
+        onRangeChange={onRangeChange}
+      />,
     );
     const win = container.querySelector('[data-brush-window]')!;
     // The jsdom setup reports a 600px-wide track: 27 steps → ~22px per point.
@@ -158,7 +252,12 @@ describe('useLiveSeries', () => {
     act(() => result.current.pauseProps.onPointerLeave());
     expect(result.current.paused).toBe(true);
     const outside = document.createElement('button');
-    act(() => result.current.pauseProps.onBlur({ currentTarget: document.createElement('div'), relatedTarget: outside } as never));
+    act(() =>
+      result.current.pauseProps.onBlur({
+        currentTarget: document.createElement('div'),
+        relatedTarget: outside,
+      } as never),
+    );
     expect(result.current.paused).toBe(false);
     expect(result.current.data).toEqual([1, 2, 3]);
     expect(result.current.pending).toBe(0);
@@ -178,7 +277,12 @@ describe('useLiveSeries', () => {
 
   it('reports reduced motion from the media query', () => {
     const original = window.matchMedia;
-    window.matchMedia = ((query: string) => ({ matches: query.includes('reduce'), media: query, addEventListener: () => {}, removeEventListener: () => {} })) as never;
+    window.matchMedia = ((query: string) => ({
+      matches: query.includes('reduce'),
+      media: query,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    })) as never;
     const { result } = renderHook(() => usePrefersReducedMotion());
     expect(result.current).toBe(true);
     window.matchMedia = original;

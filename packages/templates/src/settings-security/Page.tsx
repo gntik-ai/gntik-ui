@@ -1,5 +1,15 @@
 import { FormSection, SessionsDevices, SettingsRow, type DeviceSession } from '@gntik-ai/blocks';
-import { Alert, Badge, Button, Field, FieldDescription, FieldError, FieldLabel, PasswordInput, Stack } from '@gntik-ai/ui';
+import {
+  Alert,
+  Badge,
+  Button,
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  PasswordInput,
+  Stack,
+} from '@gntik-ai/ui';
 import { useState, type FormEvent } from 'react';
 import { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';
 import { DEMO_MFA_CODE, PASSWORD_MIN_LENGTH, mfaSetupKey, sessions as defaultSessions } from './data';
@@ -120,10 +130,18 @@ export default function SettingsSecurityPage({
           </Stack>
         </FormSection>
       </form>
-      <FormSection title="Two-factor authentication" description="Ask for a one-time code from an authenticator app when you sign in." divided>
+      <FormSection
+        title="Two-factor authentication"
+        description="Ask for a one-time code from an authenticator app when you sign in."
+        divided
+      >
         <SettingsRow
           label="Authenticator app"
-          description={mfa ? 'Codes from your authenticator app are required at sign-in.' : 'Off. Turning it on opens the setup steps.'}
+          description={
+            mfa
+              ? 'Codes from your authenticator app are required at sign-in.'
+              : 'Off. Turning it on opens the setup steps.'
+          }
           checked={mfa}
           onCheckedChange={toggleMfa}
           className="pt-0"

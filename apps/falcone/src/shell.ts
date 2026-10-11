@@ -33,9 +33,28 @@ export const falconeNav: NavGroup[] = [
 ];
 
 const notifications: NotificationItem[] = [
-  { id: 'n1', title: 'report-builder failed to deploy', body: 'render-pdf ran out of memory on staging.', time: hoursAgo(9), tone: 'destructive' },
-  { id: 'n2', title: 'support-copilot breached its p95 SLO', body: 'draft-reply at 2.9 s (SLO 2 s).', time: hoursAgo(2), tone: 'warning' },
-  { id: 'n3', title: 'checkout-api promoted to prod', body: 'Release r-213 is serving 100% of traffic.', time: minutesAgo(18), tone: 'primary', read: true },
+  {
+    id: 'n1',
+    title: 'report-builder failed to deploy',
+    body: 'render-pdf ran out of memory on staging.',
+    time: hoursAgo(9),
+    tone: 'destructive',
+  },
+  {
+    id: 'n2',
+    title: 'support-copilot breached its p95 SLO',
+    body: 'draft-reply at 2.9 s (SLO 2 s).',
+    time: hoursAgo(2),
+    tone: 'warning',
+  },
+  {
+    id: 'n3',
+    title: 'checkout-api promoted to prod',
+    body: 'Release r-213 is serving 100% of traffic.',
+    time: minutesAgo(18),
+    tone: 'primary',
+    read: true,
+  },
 ];
 
 /** ConsoleShell props for a page: Falcone nav, tenants, quota meter and topbar; `currentHref` marks the nav item. */

@@ -45,7 +45,9 @@ export function isNavItemCurrent(item: NavItem, currentHref?: string): boolean {
 }
 
 export function navItemContainsCurrent(item: NavItem, currentHref?: string): boolean {
-  return (item.items ?? []).some((child) => isNavItemCurrent(child, currentHref) || navItemContainsCurrent(child, currentHref));
+  return (item.items ?? []).some(
+    (child) => isNavItemCurrent(child, currentHref) || navItemContainsCurrent(child, currentHref),
+  );
 }
 
 export const navItemKey = (item: NavItem) => item.id ?? item.href ?? item.label;

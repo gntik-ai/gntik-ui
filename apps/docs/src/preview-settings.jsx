@@ -4,8 +4,14 @@
 import { createContext, useContext } from 'react';
 import { DensityProvider, I18nProvider } from '@gntik-ai/ui';
 
-export const DENSITIES = [['comfortable', 'Comfortable'], ['compact', 'Compact']];
-export const DIRECTIONS = [['ltr', 'LTR'], ['rtl', 'RTL']];
+export const DENSITIES = [
+  ['comfortable', 'Comfortable'],
+  ['compact', 'Compact'],
+];
+export const DIRECTIONS = [
+  ['ltr', 'LTR'],
+  ['rtl', 'RTL'],
+];
 export const DEFAULT_PREVIEW = { density: 'comfortable', dir: 'ltr' };
 
 export const PreviewSettingsContext = createContext(DEFAULT_PREVIEW);
@@ -22,19 +28,24 @@ export function readSetting(key, options) {
 }
 
 export function writeSetting(key, value) {
-  try { localStorage.setItem(key, value); } catch {}
+  try {
+    localStorage.setItem(key, value);
+  } catch {}
 }
 
 /** Extra preview.html query for non-default settings (default URLs stay unchanged). */
 export const previewQuery = ({ density, dir }) =>
-  (density !== DEFAULT_PREVIEW.density ? `&density=${density}` : '') + (dir !== DEFAULT_PREVIEW.dir ? `&dir=${dir}` : '');
+  (density !== DEFAULT_PREVIEW.density ? `&density=${density}` : '') +
+  (dir !== DEFAULT_PREVIEW.dir ? `&dir=${dir}` : '');
 
 /** Wraps a live kit preview so it follows the topbar density and direction. */
 export function PreviewScope({ children }) {
   const { density, dir } = usePreviewSettings();
   return (
     <DensityProvider density={density}>
-      <I18nProvider locale="en" dir={dir}>{children}</I18nProvider>
+      <I18nProvider locale="en" dir={dir}>
+        {children}
+      </I18nProvider>
     </DensityProvider>
   );
 }

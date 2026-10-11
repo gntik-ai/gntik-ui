@@ -90,7 +90,13 @@ describe('SelectableCardGroup', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><ClickableCardList /><SelectableCardPlans /><SelectableCardRegions /></>);
+    render(
+      <>
+        <ClickableCardList />
+        <SelectableCardPlans />
+        <SelectableCardRegions />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

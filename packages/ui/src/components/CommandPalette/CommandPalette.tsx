@@ -7,7 +7,13 @@ import { cn } from '../../utils/cn';
 import { RTL_FLIP } from '../../utils/rtl';
 import { Kbd, KbdCombo } from '../Kbd';
 import { commandPaletteVariants } from './command-palette.variants';
-import { filterCommandGroups, type CommandEntry, type CommandEntryGroup, type CommandGroup, type CommandItem } from './command-filter';
+import {
+  filterCommandGroups,
+  type CommandEntry,
+  type CommandEntryGroup,
+  type CommandGroup,
+  type CommandItem,
+} from './command-filter';
 import { useCommandPaletteShortcut } from './useCommandPaletteShortcut';
 
 const s = commandPaletteVariants();
@@ -48,7 +54,11 @@ function CommandRow({ entry, onRun }: { entry: CommandEntry; onRun: (item: Comma
         <span className={v.itemLabel()}>{item.label}</span>
         {item.description && <span className={v.itemDescription()}>{item.description}</span>}
       </span>
-      {item.shortcut?.length ? <KbdCombo size="sm" keys={item.shortcut} /> : <ArrowRight size={14} aria-hidden className={cn(v.itemArrow(), RTL_FLIP)} />}
+      {item.shortcut?.length ? (
+        <KbdCombo size="sm" keys={item.shortcut} />
+      ) : (
+        <ArrowRight size={14} aria-hidden className={cn(v.itemArrow(), RTL_FLIP)} />
+      )}
     </Autocomplete.Item>
   );
 }
@@ -152,18 +162,27 @@ export function CommandPalette({
             >
               <div className={s.inputRow()}>
                 <Search size={17} aria-hidden className={s.inputIcon()} />
-                <Autocomplete.Input aria-label={placeholder.replace(/…$/, '')} aria-describedby={footer === false ? undefined : hintsId} placeholder={placeholder} className={s.input()} />
+                <Autocomplete.Input
+                  aria-label={placeholder.replace(/…$/, '')}
+                  aria-describedby={footer === false ? undefined : hintsId}
+                  placeholder={placeholder}
+                  className={s.input()}
+                />
                 <Kbd size="sm" label="Escape">
                   esc
                 </Kbd>
               </div>
               <div className={s.results()}>
-                <Autocomplete.Empty className={s.empty()}>{count === 0 && query.trim() ? emptyText(query.trim()) : null}</Autocomplete.Empty>
+                <Autocomplete.Empty className={s.empty()}>
+                  {count === 0 && query.trim() ? emptyText(query.trim()) : null}
+                </Autocomplete.Empty>
                 <Autocomplete.List className={s.list()}>
                   {(group: CommandEntryGroup) => (
                     <Autocomplete.Group key={group.value} items={group.items} className={s.group()}>
                       <Autocomplete.GroupLabel className={s.groupLabel()}>{group.value}</Autocomplete.GroupLabel>
-                      <Autocomplete.Collection>{(entry: CommandEntry) => <CommandRow key={entry.key} entry={entry} onRun={run} />}</Autocomplete.Collection>
+                      <Autocomplete.Collection>
+                        {(entry: CommandEntry) => <CommandRow key={entry.key} entry={entry} onRun={run} />}
+                      </Autocomplete.Collection>
                     </Autocomplete.Group>
                   )}
                 </Autocomplete.List>
@@ -185,7 +204,12 @@ export interface CommandPaletteTriggerProps extends Omit<Dialog.Trigger.Props, '
 }
 
 /** Search-style button that opens the palette; place it inside <CommandPalette>. */
-export function CommandPaletteTrigger({ className, keys = ['⌘', 'K'], children: childrenProp, ...props }: CommandPaletteTriggerProps) {
+export function CommandPaletteTrigger({
+  className,
+  keys = ['⌘', 'K'],
+  children: childrenProp,
+  ...props
+}: CommandPaletteTriggerProps) {
   const { t } = useI18n();
   const children = childrenProp ?? t('commandPalette.trigger');
   return (

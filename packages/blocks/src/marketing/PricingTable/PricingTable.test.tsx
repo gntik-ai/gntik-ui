@@ -70,7 +70,17 @@ describe('PricingTable', () => {
     const { container } = render(
       <>
         <h1 id="ext">Pick a plan</h1>
-        <PricingTable title={null} eyebrow={null} description={null} aria-labelledby="ext" headingLevel="h2" showCycleToggle={false} columns={1} selectable defaultValue="team" />
+        <PricingTable
+          title={null}
+          eyebrow={null}
+          description={null}
+          aria-labelledby="ext"
+          headingLevel="h2"
+          showCycleToggle={false}
+          columns={1}
+          selectable
+          defaultValue="team"
+        />
       </>,
     );
     expect(screen.getByRole('radiogroup', { name: 'Pick a plan' })).toBeInTheDocument();

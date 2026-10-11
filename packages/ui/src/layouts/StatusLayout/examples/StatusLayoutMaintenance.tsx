@@ -26,7 +26,11 @@ export default function StatusLayoutMaintenance() {
             View status page
           </Button>
         }
-        footer={<span className="font-mono">Started 13:00 UTC · <Link href="#updates">Subscribe to updates</Link></span>}
+        footer={
+          <span className="font-mono">
+            Started 13:00 UTC · <Link href="#updates">Subscribe to updates</Link>
+          </span>
+        }
       >
         <p aria-live="polite" className="h-4 text-[12.5px] text-muted-foreground">
           {checked ? 'Still in maintenance. Try again in a few minutes.' : ''}

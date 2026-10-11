@@ -5,7 +5,11 @@ import { expectNoAxeViolations } from '../test/a11y';
 import { Citation, CitationList, sourceHost } from './Citation';
 import CitationAnswer from './examples/CitationAnswer';
 
-const SOURCE = { title: 'Deployment limits', url: 'https://docs.example.com/limits', snippet: 'Up to 20 deployments a day.' };
+const SOURCE = {
+  title: 'Deployment limits',
+  url: 'https://docs.example.com/limits',
+  snippet: 'Up to 20 deployments a day.',
+};
 
 describe('Citation', () => {
   it('Enter opens the preview; Escape closes it and returns focus', async () => {

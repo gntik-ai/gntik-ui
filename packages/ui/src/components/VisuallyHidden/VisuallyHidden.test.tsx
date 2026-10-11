@@ -15,7 +15,9 @@ describe('VisuallyHidden', () => {
   it('focusable variant reveals on focus; render swaps the element', () => {
     render(
       <>
-        <VisuallyHidden focusable data-testid="f">x</VisuallyHidden>
+        <VisuallyHidden focusable data-testid="f">
+          x
+        </VisuallyHidden>
         <VisuallyHidden render={<h2 />}>Filters</VisuallyHidden>
       </>,
     );
@@ -44,7 +46,9 @@ describe('SkipLink', () => {
     const { rerender } = render(
       <>
         <SkipLink targetId="t">Skip</SkipLink>
-        <button id="t" type="button">Target</button>
+        <button id="t" type="button">
+          Target
+        </button>
       </>,
     );
     await user.click(screen.getByRole('link', { name: 'Skip' }));
@@ -52,8 +56,12 @@ describe('SkipLink', () => {
     expect(screen.getByRole('button', { name: 'Target' })).not.toHaveAttribute('tabindex');
     rerender(
       <>
-        <SkipLink targetId="t" onClick={(e) => e.preventDefault()}>Skip</SkipLink>
-        <button id="t" type="button">Target</button>
+        <SkipLink targetId="t" onClick={(e) => e.preventDefault()}>
+          Skip
+        </SkipLink>
+        <button id="t" type="button">
+          Target
+        </button>
       </>,
     );
     await user.click(screen.getByRole('link', { name: 'Skip' }));
@@ -61,7 +69,12 @@ describe('SkipLink', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><SkipLinkPage /><VisuallyHiddenLabel /></>);
+    render(
+      <>
+        <SkipLinkPage />
+        <VisuallyHiddenLabel />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

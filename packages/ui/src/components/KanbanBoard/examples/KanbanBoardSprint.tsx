@@ -31,7 +31,9 @@ export default function KanbanBoardSprint() {
         onMove={(move) => setColumns((cols) => moveKanbanCard(cols, move))}
         onCardOpen={(card) => setOpened(card.title)}
       />
-      <p className="h-4 font-mono text-[11px] text-muted-foreground">{opened ? `Opened: ${opened}` : 'Drag a card, or focus one and press Space.'}</p>
+      <p className="h-4 font-mono text-[11px] text-muted-foreground">
+        {opened ? `Opened: ${opened}` : 'Drag a card, or focus one and press Space.'}
+      </p>
     </div>
   );
 }

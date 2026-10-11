@@ -1,22 +1,14 @@
-import { AuthHeader, ErrorPanel, InlineCallout } from "@gntik-ai/blocks";
-import { Lock, SearchX } from "@gntik-ai/icons";
-import {
-  AuthLayout,
-  Button,
-  EmptyState,
-  Link,
-  Skeleton,
-  Stack,
-} from "@gntik-ai/ui";
-import { pendingActivationSample } from "./data";
+import { AuthHeader, ErrorPanel, InlineCallout } from '@gntik-ai/blocks';
+import { Lock, SearchX } from '@gntik-ai/icons';
+import { AuthLayout, Button, EmptyState, Link, Skeleton, Stack } from '@gntik-ai/ui';
+import { pendingActivationSample } from './data';
 
 /** Navigation targets are passed directly to Link; validation belongs to the consumer. */
 export type PendingActivationLink = { label: string; href: string };
 
 /** An allowed navigation link or consumer callback. */
 export type PendingActivationAction =
-  | (PendingActivationLink & { onClick?: never })
-  | { label: string; href?: never; onClick: () => void };
+  (PendingActivationLink & { onClick?: never }) | { label: string; href?: never; onClick: () => void };
 
 export interface PendingActivationPageProps {
   /** The only page-level heading, also retained in recovery states. */
@@ -28,7 +20,7 @@ export interface PendingActivationPageProps {
   /** Current approval or activation status, supplied by the consumer. */
   statusMessage?: string;
   /** Informational or warning presentation; defaults to info, never assertive. */
-  statusTone?: "info" | "warning";
+  statusTone?: 'info' | 'warning';
   /** Optional request identifier; absent references render no callout. */
   reference?: { label: string; value: string };
   /** Allowed navigation links or callback buttons, rendered in input order. */
@@ -38,7 +30,7 @@ export interface PendingActivationPageProps {
   /** Loading takes precedence over the supplied actions. */
   loading?: boolean;
   /** Recovery variant; omitted for the normal pending state. */
-  errorState?: "no-access" | "not-found" | "error";
+  errorState?: 'no-access' | 'not-found' | 'error';
   /** Recovery heading below the h1; defaults to the selected state's sample copy. */
   errorTitle?: string;
   /** Consumer explanation of the failure and how to recover. */
@@ -61,23 +53,21 @@ export default function PendingActivationPage({
   intro = pendingActivationSample.intro,
   statusTitle = pendingActivationSample.statusTitle,
   statusMessage = pendingActivationSample.statusMessage,
-  statusTone = "info",
+  statusTone = 'info',
   reference,
   actions = [],
-  actionsLabel = "Available actions",
+  actionsLabel = 'Available actions',
   loading = false,
   errorState,
   errorTitle,
   errorMessage,
   onRetry,
-  retryLabel = "Retry",
+  retryLabel = 'Retry',
   recoveryLinks = pendingActivationSample.recoveryLinks,
-  recoveryLabel = "Account recovery",
-  skipLinkLabel = "Skip to account status",
+  recoveryLabel = 'Account recovery',
+  skipLinkLabel = 'Skip to account status',
 }: PendingActivationPageProps | Record<string, never> = {}) {
-  const recovery = errorState
-    ? pendingActivationSample.recovery[errorState]
-    : undefined;
+  const recovery = errorState ? pendingActivationSample.recovery[errorState] : undefined;
   return (
     <AuthLayout fullScreen variant="card" skipLinkLabel={skipLinkLabel}>
       <AuthHeader headingLevel="h1" title={title} description={intro} />
@@ -98,7 +88,7 @@ export default function PendingActivationPage({
             dismissible={false}
           />
         )}
-        {errorState === "error" ? (
+        {errorState === 'error' ? (
           <ErrorPanel
             titleAs="h2"
             title={errorTitle ?? recovery?.title}
@@ -113,7 +103,7 @@ export default function PendingActivationPage({
         ) : errorState ? (
           <EmptyState
             titleAs="h2"
-            icon={errorState === "no-access" ? Lock : SearchX}
+            icon={errorState === 'no-access' ? Lock : SearchX}
             bordered
             className="mx-auto"
             title={errorTitle ?? recovery?.title}
@@ -124,23 +114,16 @@ export default function PendingActivationPage({
             <section aria-label={actionsLabel} aria-busy={loading}>
               <Stack gap={2}>
                 {loading
-                  ? Array.from(
-                      { length: Math.max(2, actions.length) },
-                      (_, index) => (
-                        <Skeleton key={index} className="h-10 w-full" />
-                      ),
-                    )
+                  ? Array.from({ length: Math.max(2, actions.length) }, (_, index) => (
+                      <Skeleton key={index} className="h-10 w-full" />
+                    ))
                   : actions.map((action, index) =>
                       action.href !== undefined ? (
                         <Link key={index} href={action.href}>
                           {action.label}
                         </Link>
                       ) : (
-                        <Button
-                          key={index}
-                          variant="secondary"
-                          onClick={action.onClick}
-                        >
+                        <Button key={index} variant="secondary" onClick={action.onClick}>
                           {action.label}
                         </Button>
                       ),
@@ -149,10 +132,7 @@ export default function PendingActivationPage({
             </section>
           )
         )}
-        <nav
-          aria-label={recoveryLabel}
-          className="flex flex-wrap justify-center gap-4"
-        >
+        <nav aria-label={recoveryLabel} className="flex flex-wrap justify-center gap-4">
           {recoveryLinks.map((link, index) => (
             <Link key={index} href={link.href}>
               {link.label}

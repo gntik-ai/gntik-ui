@@ -20,10 +20,40 @@ const byName = new Map(items.map((i) => [i.name, i]));
 const kit = JSON.parse(fs.readFileSync(path.join(ROOT, 'kit-registry.json'), 'utf8'));
 
 // Keys and enums of the shadcn 4.x registry-item schema (@shadcn/registry/schema, registryItemSchema).
-const ITEM_KEYS = new Set(['$schema', 'extends', 'name', 'type', 'title', 'author', 'description', 'dependencies', 'devDependencies',
-  'registryDependencies', 'files', 'tailwind', 'cssVars', 'css', 'envVars', 'meta', 'docs', 'categories']);
-const ITEM_TYPES = new Set(['registry:lib', 'registry:block', 'registry:component', 'registry:ui', 'registry:hook', 'registry:page',
-  'registry:file', 'registry:theme', 'registry:style', 'registry:item', 'registry:example', 'registry:internal']);
+const ITEM_KEYS = new Set([
+  '$schema',
+  'extends',
+  'name',
+  'type',
+  'title',
+  'author',
+  'description',
+  'dependencies',
+  'devDependencies',
+  'registryDependencies',
+  'files',
+  'tailwind',
+  'cssVars',
+  'css',
+  'envVars',
+  'meta',
+  'docs',
+  'categories',
+]);
+const ITEM_TYPES = new Set([
+  'registry:lib',
+  'registry:block',
+  'registry:component',
+  'registry:ui',
+  'registry:hook',
+  'registry:page',
+  'registry:file',
+  'registry:theme',
+  'registry:style',
+  'registry:item',
+  'registry:example',
+  'registry:internal',
+]);
 const FILE_KEYS = new Set(['path', 'content', 'type', 'target']);
 
 test('one item per kit entry plus gntik-tokens, and an index', () => {
@@ -48,7 +78,8 @@ test('items are shaped like registry-item.json', () => {
       assert.ok(ITEM_TYPES.has(f.type) && f.type !== 'registry:page' && f.type !== 'registry:file');
       assert.ok(f.target && !f.target.startsWith('/') && !f.target.includes('..'), `${item.name}: target ${f.target}`);
     }
-    if (item.css) for (const [k, v] of Object.entries(item.css)) assert.ok(/^@import "[^"]+"$/.test(k) && typeof v === 'object');
+    if (item.css)
+      for (const [k, v] of Object.entries(item.css)) assert.ok(/^@import "[^"]+"$/.test(k) && typeof v === 'object');
   }
 });
 
@@ -103,15 +134,23 @@ test('file contents are inlined and relative imports resolve to copied targets',
     return seen;
   };
   for (const item of items) {
-    const reach = [...targetsOf(item.name)].flatMap((n) => byName.get(n).files.map((f) => f.target.replace(/\.(tsx?|css)$/, '')));
+    const reach = [...targetsOf(item.name)].flatMap((n) =>
+      byName.get(n).files.map((f) => f.target.replace(/\.(tsx?|css)$/, '')),
+    );
     const available = new Set(reach.flatMap((t) => (t.endsWith('/index') ? [t, t.slice(0, -6)] : [t])));
     for (const f of item.files) {
       assert.ok(typeof f.content === 'string' && f.content.length > 0, `${item.name}: ${f.target} empty`);
       for (const m of f.content.matchAll(SPEC)) {
-        const to = path.posix.normalize(path.posix.join(path.posix.dirname(f.target), m[2].replace(/\.(tsx?|jsx?)$/, '')));
+        const to = path.posix.normalize(
+          path.posix.join(path.posix.dirname(f.target), m[2].replace(/\.(tsx?|jsx?)$/, '')),
+        );
         // Imports inside code-sample strings (fixtures) are not modules; they never resolve on disk either.
         const src = path.posix.join(path.posix.dirname(f.path), m[2].replace(/\.(tsx?|jsx?)$/, ''));
-        if (!available.has(to) && !['', '.ts', '.tsx', '.css', '/index.ts', '/index.tsx'].some((e) => fs.existsSync(path.join(ROOT, src + e)))) continue;
+        if (
+          !available.has(to) &&
+          !['', '.ts', '.tsx', '.css', '/index.ts', '/index.tsx'].some((e) => fs.existsSync(path.join(ROOT, src + e)))
+        )
+          continue;
         assert.ok(available.has(to), `${item.name}: ${f.target} imports '${m[2]}' → ${to}, not copied`);
       }
     }
@@ -160,7 +199,11 @@ test('CLI --check exits 1 when stale and 0 when fresh', () => {
   // `node --import tsx`, not the tsx CLI: the CLI opens an IPC pipe that sandboxed runners
   // (Hermes makers) refuse; the loader alone needs none.
   const loader = import.meta.resolve('tsx');
-  const run = (...args) => spawnSync(process.execPath, ['--import', loader, SCRIPT, '--out', dir, ...args], { env: { ...process.env, GNTIK_REGISTRY_BASE_URL: BASE }, encoding: 'utf8' });
+  const run = (...args) =>
+    spawnSync(process.execPath, ['--import', loader, SCRIPT, '--out', dir, ...args], {
+      env: { ...process.env, GNTIK_REGISTRY_BASE_URL: BASE },
+      encoding: 'utf8',
+    });
   try {
     assert.equal(run('--check').status, 1);
     assert.equal(run().status, 0);

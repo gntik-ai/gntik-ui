@@ -5,10 +5,16 @@ export default function TabsUnderline() {
     <Tabs defaultValue="overview">
       <TabsList aria-label="Project sections">
         <TabsTab value="overview">Overview</TabsTab>
-        <TabsTab value="deployments" count={1284}>Deployments</TabsTab>
-        <TabsTab value="members" count={3}>Members</TabsTab>
+        <TabsTab value="deployments" count={1284}>
+          Deployments
+        </TabsTab>
+        <TabsTab value="members" count={3}>
+          Members
+        </TabsTab>
         <TabsTab value="logs">Logs</TabsTab>
-        <TabsTab value="settings" disabled>Settings</TabsTab>
+        <TabsTab value="settings" disabled>
+          Settings
+        </TabsTab>
       </TabsList>
       <TabsPanel value="overview">Project health, recent activity and usage at a glance.</TabsPanel>
       <TabsPanel value="deployments">Every deployment, newest first.</TabsPanel>

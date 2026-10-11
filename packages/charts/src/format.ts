@@ -15,7 +15,8 @@ export const chartFmt = {
   /** Ratio (0–1) → percent with up to one decimal: `0.125` → `12.5%`. */
   percent: (n: number) => nf({ style: 'percent', maximumFractionDigits: 1 }).format(n),
   /** Signed ratio for deltas: `0.042` → `+4.2%`, `-0.1` → `−10%`. */
-  percentDelta: (n: number) => nf({ style: 'percent', maximumFractionDigits: 1, signDisplay: 'exceptZero' }).format(n).replace('-', '−'),
+  percentDelta: (n: number) =>
+    nf({ style: 'percent', maximumFractionDigits: 1, signDisplay: 'exceptZero' }).format(n).replace('-', '−'),
   /** Milliseconds → the two largest units: `850` → `850 ms`, `2400` → `2.4 s`, `3_723_000` → `1h 2m`. */
   duration: (n: number) => formatDuration(n),
   /** Seconds → like `duration`: `90` → `1m 30s`. */

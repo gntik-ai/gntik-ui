@@ -5,7 +5,11 @@ import { navigate } from '../router';
 const brand = {
   eyebrow: 'AI agent platform',
   headline: 'Run fleets of agents you can trust.',
-  features: ['Every run traced, span by span', 'Evaluations gate every promotion', 'Model keys, budgets and roles per workspace'],
+  features: [
+    'Every run traced, span by span',
+    'Evaluations gate every promotion',
+    'Model keys, budgets and roles per workspace',
+  ],
 };
 
 export function SignIn() {

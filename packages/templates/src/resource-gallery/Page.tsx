@@ -1,4 +1,12 @@
-import { DataTable, NoResultsEmpty, PageHeader, PageToolbar, ResourceCardGrid, type ResourceAction, type ResourceCard } from '@gntik-ai/blocks';
+import {
+  DataTable,
+  NoResultsEmpty,
+  PageHeader,
+  PageToolbar,
+  ResourceCardGrid,
+  type ResourceAction,
+  type ResourceCard,
+} from '@gntik-ai/blocks';
 import { Plus } from '@gntik-ai/icons';
 import { Page, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
 import { useState } from 'react';
@@ -49,7 +57,17 @@ export default function ResourceGalleryPage({
     <ConsoleShell currentHref="/projects" breadcrumbs={breadcrumbs} {...shell}>
       <Page
         width="wide"
-        header={<PageHeader breadcrumbs={null} title={title} description={description} status="" meta={[]} tabs={null} actions={[]} />}
+        header={
+          <PageHeader
+            breadcrumbs={null}
+            title={title}
+            description={description}
+            status=""
+            meta={[]}
+            tabs={null}
+            actions={[]}
+          />
+        }
       >
         <Stack gap={5}>
           <PageToolbar
@@ -74,7 +92,14 @@ export default function ResourceGalleryPage({
               {visible.length} of {items.length} shown
             </p>
             {visible.length === 0 ? (
-              <NoResultsEmpty entity="resources" query={query} filterCount={0} onClearSearch={() => setQuery('')} titleAs="h2" bordered />
+              <NoResultsEmpty
+                entity="resources"
+                query={query}
+                filterCount={0}
+                onClearSearch={() => setQuery('')}
+                titleAs="h2"
+                bordered
+              />
             ) : view === 'grid' ? (
               <ResourceCardGrid items={visible} label="Resources" onAction={handleAction} titleAs="h2" />
             ) : (

@@ -45,7 +45,5 @@ export const brandEdgeOptions: DefaultEdgeOptions = { type: 'smoothstep' };
 
 /** Adds an arrow to edges that have none: primary when animated (active), muted otherwise. */
 export function withBrandMarkers<E extends Edge>(edges: readonly E[], t: FlowTheme): E[] {
-  return edges.map((e) =>
-    e.markerEnd ? e : { ...e, markerEnd: flowMarker(e.animated ? t.edgeActive : t.edge) },
-  );
+  return edges.map((e) => (e.markerEnd ? e : { ...e, markerEnd: flowMarker(e.animated ? t.edgeActive : t.edge) }));
 }

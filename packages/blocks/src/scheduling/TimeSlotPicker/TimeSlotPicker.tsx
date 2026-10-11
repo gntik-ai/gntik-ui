@@ -79,7 +79,10 @@ export function TimeSlotPicker({
           {slots.map((slot) => {
             const available = slot.available !== false;
             return (
-              <label key={slot.value} className={cn('relative block', available ? 'cursor-pointer' : 'cursor-not-allowed')}>
+              <label
+                key={slot.value}
+                className={cn('relative block', available ? 'cursor-pointer' : 'cursor-not-allowed')}
+              >
                 <input
                   type="radio"
                   name={name ?? autoName}

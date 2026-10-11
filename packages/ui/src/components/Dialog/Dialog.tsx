@@ -29,7 +29,16 @@ export interface DialogContentProps extends Omit<BaseDialog.Popup.Props, 'classN
  * The modal surface: portal, backdrop, scrollable viewport and popup. Focus is trapped
  * inside, Escape and an outside press close it, and focus returns to the trigger.
  */
-export function DialogContent({ size, presentation, className, showClose = true, closeLabel: closeLabelProp, container, children, ...props }: DialogContentProps) {
+export function DialogContent({
+  size,
+  presentation,
+  className,
+  showClose = true,
+  closeLabel: closeLabelProp,
+  container,
+  children,
+  ...props
+}: DialogContentProps) {
   const { t } = useI18n();
   const closeLabel = closeLabelProp ?? t('common.close');
   const dir = usePortalDir();
@@ -55,11 +64,17 @@ export function DialogHeader({ className, ...props }: HTMLAttributes<HTMLDivElem
   return <div className={cn(s.header(), className)} {...props} />;
 }
 
-export function DialogTitle({ className, ...props }: Omit<BaseDialog.Title.Props, 'className'> & { className?: string }) {
+export function DialogTitle({
+  className,
+  ...props
+}: Omit<BaseDialog.Title.Props, 'className'> & { className?: string }) {
   return <BaseDialog.Title className={cn(s.title(), className)} {...props} />;
 }
 
-export function DialogDescription({ className, ...props }: Omit<BaseDialog.Description.Props, 'className'> & { className?: string }) {
+export function DialogDescription({
+  className,
+  ...props
+}: Omit<BaseDialog.Description.Props, 'className'> & { className?: string }) {
   return <BaseDialog.Description className={cn(s.description(), className)} {...props} />;
 }
 

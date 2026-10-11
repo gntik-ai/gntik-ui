@@ -8,10 +8,25 @@ export default function Stored() {
   const [disclosure, setDisclosure] = useState<CredentialDisclosure | null>(storedDisclosure);
   const heading = useRef<HTMLHeadingElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
-  return <>
-    <h1 ref={heading} tabIndex={-1}>Credentials</h1>
-    <Button ref={trigger} onClick={() => { void Promise.resolve(storedDisclosure).then(setDisclosure); }}>Disclose stored secret</Button>
-    <CredentialDisclosureDialog disclosure={disclosure} onClose={() => setDisclosure(null)}
-      resolveReturnFocus={() => trigger.current} fallbackFocus={() => heading.current} />
-  </>;
+  return (
+    <>
+      <h1 ref={heading} tabIndex={-1}>
+        Credentials
+      </h1>
+      <Button
+        ref={trigger}
+        onClick={() => {
+          void Promise.resolve(storedDisclosure).then(setDisclosure);
+        }}
+      >
+        Disclose stored secret
+      </Button>
+      <CredentialDisclosureDialog
+        disclosure={disclosure}
+        onClose={() => setDisclosure(null)}
+        resolveReturnFocus={() => trigger.current}
+        fallbackFocus={() => heading.current}
+      />
+    </>
+  );
 }

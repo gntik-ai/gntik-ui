@@ -1,0 +1,15 @@
+# Generated or lock files: their generators own the format (registry:check compares them).
+pnpm-lock.yaml
+**/dist/
+**/coverage/
+**/CHANGELOG.md
+registry.json
+kit-registry.json
+INVENTORY.md
+apps/docs/public/
+packages/cli/test/fixtures/
+**/.next/
+# Parsed by packages/mcp/scripts/build-inventory.ts by its text layout.
+apps/docs/src/catalog/registry.jsx
+# Token CSS is published verbatim (registry.json tokens, brand.css); keep its text stable.
+**/*.css

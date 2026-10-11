@@ -21,7 +21,10 @@ export const tokenVariants = tv({
       primary: { root: 'border-primary/35 bg-primary/10 text-primary-chip-text', leading: 'text-primary-text' },
       success: { root: 'border-success/35 bg-success/10 text-success-chip-text', leading: 'text-success-text' },
       warning: { root: 'border-warning/40 bg-warning/12 text-warning-chip-text', leading: 'text-warning-text' },
-      destructive: { root: 'border-destructive/35 bg-destructive/10 text-destructive-chip-text', leading: 'text-destructive-text' },
+      destructive: {
+        root: 'border-destructive/35 bg-destructive/10 text-destructive-chip-text',
+        leading: 'text-destructive-text',
+      },
     },
     size: {
       /** Follows `data-density` (comfortable = md). */

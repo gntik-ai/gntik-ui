@@ -20,7 +20,8 @@ export const commandPaletteVariants = tv({
     ],
     inputRow: 'flex h-[52px] shrink-0 items-center gap-2.5 border-b border-border px-4',
     inputIcon: 'shrink-0 text-muted-foreground',
-    input: 'h-full min-w-0 flex-1 bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground',
+    input:
+      'h-full min-w-0 flex-1 bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground',
     results: 'min-h-0 flex-1 overflow-y-auto overscroll-contain py-2',
     list: 'outline-none',
     group: 'px-2 pb-1.5',

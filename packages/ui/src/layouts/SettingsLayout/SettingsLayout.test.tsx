@@ -4,12 +4,26 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import SettingsLayoutWorkspace from './examples/SettingsLayoutWorkspace';
 import { SettingsLayout } from './SettingsLayout';
 
-const GROUPS = [{ label: 'Account', items: [{ id: 'profile', label: 'Profile' }, { id: 'security', label: 'Security' }, { id: 'billing', label: 'Billing' }] }];
+const GROUPS = [
+  {
+    label: 'Account',
+    items: [
+      { id: 'profile', label: 'Profile' },
+      { id: 'security', label: 'Security' },
+      { id: 'billing', label: 'Billing' },
+    ],
+  },
+];
 
 describe('SettingsLayout', () => {
   it('renders nav, title and save bar; the first section is current by default', () => {
     const { container } = render(
-      <SettingsLayout groups={GROUPS} title="Profile" description="About you" saveBar={<button type="button">Save changes</button>}>
+      <SettingsLayout
+        groups={GROUPS}
+        title="Profile"
+        description="About you"
+        saveBar={<button type="button">Save changes</button>}
+      >
         form
       </SettingsLayout>,
     );
@@ -44,7 +58,9 @@ describe('SettingsLayout', () => {
     await user.click(trigger);
     await user.click(await screen.findByRole('option', { name: 'Billing' }));
     expect(onValueChange).toHaveBeenCalledWith('billing', expect.objectContaining({ id: 'billing' }));
-    expect(within(screen.getByRole('navigation', { name: 'Settings' })).getByRole('button', { name: 'Billing' })).toHaveAttribute('aria-current', 'page');
+    expect(
+      within(screen.getByRole('navigation', { name: 'Settings' })).getByRole('button', { name: 'Billing' }),
+    ).toHaveAttribute('aria-current', 'page');
   });
 
   it('the example swaps content and tracks unsaved changes', async () => {
@@ -69,7 +85,12 @@ describe('SettingsLayout embedded', () => {
   it('renders no <main> and no skip link inside an app shell', async () => {
     const { container } = render(
       <main>
-        <SettingsLayout embedded mainId="settings-content" groups={[{ label: 'Account', items: [{ id: 'profile', label: 'Profile' }] }]} title="Settings">
+        <SettingsLayout
+          embedded
+          mainId="settings-content"
+          groups={[{ label: 'Account', items: [{ id: 'profile', label: 'Profile' }] }]}
+          title="Settings"
+        >
           <p>Content</p>
         </SettingsLayout>
       </main>,

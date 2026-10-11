@@ -14,5 +14,16 @@ export const doc: ComponentDoc = {
     ['Enter / Space', 'On a group heading or nested section: expands or collapses it'],
     ['Enter / Space (rail)', 'Opens a nested section as a flyout menu (arrow keys move, Escape closes)'],
   ],
-  tokens: ['chrome', 'accent', 'accent-foreground', 'primary', 'primary-text', 'secondary', 'border', 'muted-foreground', 'foreground', 'focus-ring'],
+  tokens: [
+    'chrome',
+    'accent',
+    'accent-foreground',
+    'primary',
+    'primary-text',
+    'secondary',
+    'border',
+    'muted-foreground',
+    'foreground',
+    'focus-ring',
+  ],
 };

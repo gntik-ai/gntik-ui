@@ -3,10 +3,34 @@ import { ToastProvider, Toaster, useToast } from '../Toast';
 import type { ToastOptions } from '../Toast';
 
 const SAMPLES: Array<{ label: string; toast: ToastOptions }> = [
-  { label: 'Success', toast: { tone: 'success', title: 'Deployment complete', description: 'support-triage is serving traffic in eu-west-1.' } },
-  { label: 'Info', toast: { tone: 'info', title: 'New version available', description: 'Projects update tonight during the maintenance window.' } },
-  { label: 'Warning', toast: { tone: 'warning', title: 'Budget at 92%', description: '$9.2k of $10k used this month.' } },
-  { label: 'Error', toast: { tone: 'destructive', title: 'Deployment failed', description: 'us-east-1 has not responded for 4 minutes.' } },
+  {
+    label: 'Success',
+    toast: {
+      tone: 'success',
+      title: 'Deployment complete',
+      description: 'support-triage is serving traffic in eu-west-1.',
+    },
+  },
+  {
+    label: 'Info',
+    toast: {
+      tone: 'info',
+      title: 'New version available',
+      description: 'Projects update tonight during the maintenance window.',
+    },
+  },
+  {
+    label: 'Warning',
+    toast: { tone: 'warning', title: 'Budget at 92%', description: '$9.2k of $10k used this month.' },
+  },
+  {
+    label: 'Error',
+    toast: {
+      tone: 'destructive',
+      title: 'Deployment failed',
+      description: 'us-east-1 has not responded for 4 minutes.',
+    },
+  },
   { label: 'Neutral', toast: { title: 'Settings saved' } },
 ];
 

@@ -52,9 +52,13 @@ export function setColumnPin(pinned: PinnedColumns, id: string, side: PinSide | 
 }
 
 /** Display order: start-pinned columns (pin order), unpinned columns (column order), end-pinned columns. */
-export function orderColumns<T>(columns: ReadonlyArray<DataTableColumn<T>>, pinned: PinnedColumns): Array<DataTableColumn<T>> {
+export function orderColumns<T>(
+  columns: ReadonlyArray<DataTableColumn<T>>,
+  pinned: PinnedColumns,
+): Array<DataTableColumn<T>> {
   const byId = new Map(columns.map((c) => [c.id, c]));
-  const pick = (ids: readonly string[] = []) => ids.map((id) => byId.get(id)).filter((c): c is DataTableColumn<T> => c != null);
+  const pick = (ids: readonly string[] = []) =>
+    ids.map((id) => byId.get(id)).filter((c): c is DataTableColumn<T> => c != null);
   const left = pick(pinned.left);
   const right = pick(pinned.right);
   const taken = new Set([...left, ...right].map((c) => c.id));
@@ -151,7 +155,10 @@ export function tableLayout<T>({
 }
 
 /** Under-content tint for sticky cells of a hovered or selected row (and the header surface). */
-export function stickyTint(layout: CellLayout | undefined, { selected = false, head = false } = {}): string | undefined {
+export function stickyTint(
+  layout: CellLayout | undefined,
+  { selected = false, head = false } = {},
+): string | undefined {
   if (!layout?.pinned) return undefined;
   const base = 'before:pointer-events-none before:absolute before:inset-0 before:-z-10';
   if (head) return `${base} before:bg-secondary/30`;

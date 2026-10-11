@@ -9,9 +9,24 @@ export const agentSteps: StepItem[] = [
 ];
 
 export const agentSources = [
-  { value: 'template', title: 'Start from a template', description: 'Support triage, research, code review… ready to adapt.', icon: LayoutTemplate },
-  { value: 'blank', title: 'Blank prompt', description: 'Write the system prompt and pick tools yourself.', icon: PenLine },
-  { value: 'import', title: 'Import an agent spec', description: 'Bring an agent.yaml from another workspace or repo.', icon: FileCode2 },
+  {
+    value: 'template',
+    title: 'Start from a template',
+    description: 'Support triage, research, code review… ready to adapt.',
+    icon: LayoutTemplate,
+  },
+  {
+    value: 'blank',
+    title: 'Blank prompt',
+    description: 'Write the system prompt and pick tools yourself.',
+    icon: PenLine,
+  },
+  {
+    value: 'import',
+    title: 'Import an agent spec',
+    description: 'Bring an agent.yaml from another workspace or repo.',
+    icon: FileCode2,
+  },
 ];
 
 export const agentRegions = [

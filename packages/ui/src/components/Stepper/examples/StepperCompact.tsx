@@ -1,6 +1,12 @@
 import { Stepper } from '../Stepper';
 
-const STEPS = [{ label: 'Account' }, { label: 'Workspace' }, { label: 'Invite members' }, { label: 'Billing' }, { label: 'Done' }];
+const STEPS = [
+  { label: 'Account' },
+  { label: 'Workspace' },
+  { label: 'Invite members' },
+  { label: 'Billing' },
+  { label: 'Done' },
+];
 
 export default function StepperCompact() {
   return (

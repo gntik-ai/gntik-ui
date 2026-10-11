@@ -11,7 +11,13 @@ export default function MultiSelectField() {
     <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
       <Field>
         <FieldLabel>Projects</FieldLabel>
-        <MultiSelect options={projects} defaultValue={['billing-api']} size="sm" showSelectAll={false} name="projects" />
+        <MultiSelect
+          options={projects}
+          defaultValue={['billing-api']}
+          size="sm"
+          showSelectAll={false}
+          name="projects"
+        />
         <FieldDescription>The member can deploy to these projects.</FieldDescription>
       </Field>
       <Field invalid>

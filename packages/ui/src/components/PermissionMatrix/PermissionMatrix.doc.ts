@@ -10,12 +10,26 @@ export const doc: ComponentDoc = {
   pattern: 'data grid (roving tabindex)',
   keyboard: [
     ['Tab', 'Enters and leaves the grid (one tab stop, on the last focused cell)'],
-    ['ArrowLeft / ArrowRight / ArrowUp / ArrowDown', 'Moves between cells (left/right mirror in RTL); section headings are skipped'],
+    [
+      'ArrowLeft / ArrowRight / ArrowUp / ArrowDown',
+      'Moves between cells (left/right mirror in RTL); section headings are skipped',
+    ],
     ['Home / End', 'First / last cell of the row'],
     ['Ctrl+Home / Ctrl+End', 'First / last cell of the grid'],
     ['PageUp / PageDown', 'First / last cell of the column'],
     ['Enter / Space', 'Cycles the cell: allowed → denied → inherited'],
     ['A / D / I', 'Sets the cell to allowed / denied / inherited'],
   ],
-  tokens: ['card', 'border', 'secondary', 'foreground', 'muted-foreground', 'success', 'success-chip-text', 'destructive', 'destructive-chip-text', 'focus-ring'],
+  tokens: [
+    'card',
+    'border',
+    'secondary',
+    'foreground',
+    'muted-foreground',
+    'success',
+    'success-chip-text',
+    'destructive',
+    'destructive-chip-text',
+    'focus-ring',
+  ],
 };

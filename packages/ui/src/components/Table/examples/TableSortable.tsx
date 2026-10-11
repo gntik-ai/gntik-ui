@@ -7,7 +7,10 @@ import { DEPLOYMENTS, count, money, type Deployment } from './data';
 type Key = 'name' | 'region' | 'requests' | 'cost';
 
 export default function TableSortable() {
-  const [sort, setSort] = useState<{ key: Key; dir: Exclude<SortDirection, 'none'> }>({ key: 'cost', dir: 'descending' });
+  const [sort, setSort] = useState<{ key: Key; dir: Exclude<SortDirection, 'none'> }>({
+    key: 'cost',
+    dir: 'descending',
+  });
   const rows = [...DEPLOYMENTS].sort((a: Deployment, b: Deployment) => {
     const va = a[sort.key];
     const vb = b[sort.key];
@@ -43,16 +46,24 @@ export default function TableSortable() {
             <TableRow key={d.id}>
               <TableCell className="font-semibold">{d.name}</TableCell>
               <TableCell className="font-mono text-[12px] text-muted-foreground">{d.region}</TableCell>
-              <TableCell><StatusTag status={d.status} /></TableCell>
-              <TableCell align="right" className="font-mono text-[12.5px]">{count(d.requests)}</TableCell>
-              <TableCell align="right" className="font-mono text-[12.5px]">{money(d.cost)}</TableCell>
+              <TableCell>
+                <StatusTag status={d.status} />
+              </TableCell>
+              <TableCell align="right" className="font-mono text-[12.5px]">
+                {count(d.requests)}
+              </TableCell>
+              <TableCell align="right" className="font-mono text-[12.5px]">
+                {money(d.cost)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell colSpan={4}>Total</TableCell>
-            <TableCell align="right" className="font-mono text-[12.5px]">{money(total)}</TableCell>
+            <TableCell align="right" className="font-mono text-[12.5px]">
+              {money(total)}
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>

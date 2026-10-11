@@ -50,7 +50,12 @@ describe('Collapsible', () => {
 
   it('examples have no axe violations (open)', async () => {
     const user = userEvent.setup();
-    render(<><CollapsibleAdvanced /><CollapsibleRow /></>);
+    render(
+      <>
+        <CollapsibleAdvanced />
+        <CollapsibleRow />
+      </>,
+    );
     await user.click(screen.getByRole('button', { name: 'Advanced settings' }));
     await expectNoAxeViolations();
   });

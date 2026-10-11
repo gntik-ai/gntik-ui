@@ -55,7 +55,10 @@ export function TransferListPane({
   const [activeValue, setActiveValue] = useState<string | null>(null);
   const q = query.trim().toLowerCase();
   const visible = q ? items.filter((it) => `${it.label} ${it.description ?? ''}`.toLowerCase().includes(q)) : items;
-  const activeIndex = Math.max(0, visible.findIndex((it) => it.value === activeValue));
+  const activeIndex = Math.max(
+    0,
+    visible.findIndex((it) => it.value === activeValue),
+  );
   const active = visible[activeIndex];
   const titleId = `${id}-title`;
   const optionId = (i: number) => `${id}-opt-${i}`;
@@ -73,7 +76,12 @@ export function TransferListPane({
     onCheckedChange(next);
   };
 
-  const targets = () => (checked.size ? items.filter((it) => checked.has(it.value)).map((it) => it.value) : active && !active.disabled ? [active.value] : []);
+  const targets = () =>
+    checked.size
+      ? items.filter((it) => checked.has(it.value)).map((it) => it.value)
+      : active && !active.disabled
+        ? [active.value]
+        : [];
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const go = (i: number) => {
@@ -115,7 +123,15 @@ export function TransferListPane({
       </div>
       {searchable && (
         <div className={s.search()}>
-          <Input size="sm" type="search" leadingIcon={Search} aria-label={searchLabel} placeholder={searchPlaceholder} value={query} onValueChange={(v: string) => setQuery(v)} />
+          <Input
+            size="sm"
+            type="search"
+            leadingIcon={Search}
+            aria-label={searchLabel}
+            placeholder={searchPlaceholder}
+            value={query}
+            onValueChange={(v: string) => setQuery(v)}
+          />
         </div>
       )}
       <div
@@ -135,7 +151,7 @@ export function TransferListPane({
             role="option"
             aria-selected={checked.has(it.value)}
             aria-disabled={it.disabled || undefined}
-            data-active={(i === activeIndex) || undefined}
+            data-active={i === activeIndex || undefined}
             className={cn('group/option', s.option())}
             onClick={() => {
               setActiveValue(it.value);
@@ -153,7 +169,11 @@ export function TransferListPane({
           </div>
         ))}
       </div>
-      {visible.length === 0 && <div className={s.empty()} style={{ height }}>{items.length ? noMatchesText : emptyText}</div>}
+      {visible.length === 0 && (
+        <div className={s.empty()} style={{ height }}>
+          {items.length ? noMatchesText : emptyText}
+        </div>
+      )}
       {footer && <div className={s.paneFoot()}>{footer}</div>}
     </section>
   );

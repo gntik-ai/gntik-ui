@@ -9,7 +9,17 @@ import ListInputHeaders from './examples/ListInputHeaders';
 function setup(props: Partial<Parameters<typeof ListInput>[0]> = {}) {
   const user = userEvent.setup();
   const onValueChange = vi.fn<(rows: ListInputRow[]) => void>();
-  render(<ListInput label="Vars" defaultValue={[{ key: 'A', value: '1' }, { key: 'B', value: '2' }]} onValueChange={onValueChange} {...props} />);
+  render(
+    <ListInput
+      label="Vars"
+      defaultValue={[
+        { key: 'A', value: '1' },
+        { key: 'B', value: '2' },
+      ]}
+      onValueChange={onValueChange}
+      {...props}
+    />,
+  );
   const pairs = () => onValueChange.mock.lastCall?.[0].map((r) => `${r.key}=${r.value}`);
   return { user, onValueChange, pairs };
 }

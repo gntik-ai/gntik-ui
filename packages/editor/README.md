@@ -45,15 +45,15 @@ Only need syntax highlighting? Return `new EditorWorker()` for every label and s
 
 ## API
 
-| Export | Purpose |
-| --- | --- |
-| `CodeEditor` | `value` / `defaultValue`, `onChange(value, event)`, `language`, `readOnly`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`. |
-| `DiffEditor` | `original`, `modified`, `language`, `readOnly` (default `true`), `sideBySide`, `onChange(modified)`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`. |
-| `defineBrandThemes(monaco)` | Registers the three brand themes from the live tokens. Call again after a theme switch (the components do). |
-| `brandThemeFor(theme?)` | `'dark' \| 'light' \| 'high_contrast'` → Monaco theme name (defaults to the active theme). |
-| `brandThemeData(theme, el?)` | The raw `IStandaloneThemeData` for one theme. |
-| `configureMonacoWorkers(getWorker)` | Sets `self.MonacoEnvironment.getWorker`. |
-| `loadMonaco`, `useMonaco`, `useBrandTheme`, `BASE_OPTIONS`, `EditorSkeleton` | Building blocks for custom Monaco surfaces. |
+| Export                                                                       | Purpose                                                                                                                                                                   |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CodeEditor`                                                                 | `value` / `defaultValue`, `onChange(value, event)`, `language`, `readOnly`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`.                          |
+| `DiffEditor`                                                                 | `original`, `modified`, `language`, `readOnly` (default `true`), `sideBySide`, `onChange(modified)`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`. |
+| `defineBrandThemes(monaco)`                                                  | Registers the three brand themes from the live tokens. Call again after a theme switch (the components do).                                                               |
+| `brandThemeFor(theme?)`                                                      | `'dark' \| 'light' \| 'high_contrast'` → Monaco theme name (defaults to the active theme).                                                                                |
+| `brandThemeData(theme, el?)`                                                 | The raw `IStandaloneThemeData` for one theme.                                                                                                                             |
+| `configureMonacoWorkers(getWorker)`                                          | Sets `self.MonacoEnvironment.getWorker`.                                                                                                                                  |
+| `loadMonaco`, `useMonaco`, `useBrandTheme`, `BASE_OPTIONS`, `EditorSkeleton` | Building blocks for custom Monaco surfaces.                                                                                                                               |
 
 ### Custom loader
 
@@ -135,7 +135,7 @@ worker, which cannot run YAML validation. The adapter requests the YAML worker t
 Monaco's current API. It only adapts the Monaco facade given to `configureMonacoYaml`.
 
 ```ts
-import type { Monaco } from "@gntik-ai/editor";
+import type { Monaco } from '@gntik-ai/editor';
 
 function yamlMonaco(monaco: Monaco): Monaco {
   return {
@@ -149,12 +149,9 @@ function yamlMonaco(monaco: Monaco): Monaco {
         keepIdleModels?: boolean;
       }) {
         const worker = Promise.resolve(
-          globalThis.MonacoEnvironment!.getWorker!(
-            "workerMain.js",
-            options.label ?? "yaml",
-          ),
+          globalThis.MonacoEnvironment!.getWorker!('workerMain.js', options.label ?? 'yaml'),
         ).then((worker) => {
-          worker.postMessage("-please-ignore-");
+          worker.postMessage('-please-ignore-');
           worker.postMessage(options.createData);
           return worker;
         });

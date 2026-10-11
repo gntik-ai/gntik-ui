@@ -29,7 +29,12 @@ describe('SsoLoginPage', () => {
   });
 
   it('shows a lookup failure', async () => {
-    render(<SsoLoginPage defaultEmail="dana@unknown.example" onSubmit={() => Promise.reject(new Error('No SSO connection for this domain.'))} />);
+    render(
+      <SsoLoginPage
+        defaultEmail="dana@unknown.example"
+        onSubmit={() => Promise.reject(new Error('No SSO connection for this domain.'))}
+      />,
+    );
     await userEvent.click(screen.getByRole('button', { name: 'Continue with SSO' }));
     expect(await screen.findByText('No SSO connection for this domain.')).toBeInTheDocument();
   });

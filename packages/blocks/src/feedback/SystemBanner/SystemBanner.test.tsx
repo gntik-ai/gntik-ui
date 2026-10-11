@@ -13,7 +13,14 @@ describe('SystemBanner', () => {
 
   it('announces incidents assertively and hides on dismiss', async () => {
     const onDismiss = vi.fn();
-    render(<SystemBanner kind="incident" title="Degraded API." message="Elevated error rates in eu-west-1." onDismiss={onDismiss} />);
+    render(
+      <SystemBanner
+        kind="incident"
+        title="Degraded API."
+        message="Elevated error rates in eu-west-1."
+        onDismiss={onDismiss}
+      />,
+    );
     expect(screen.getByRole('alert')).toHaveTextContent('Degraded API.');
     await userEvent.setup().click(screen.getByRole('button', { name: 'Dismiss banner' }));
     expect(onDismiss).toHaveBeenCalledTimes(1);

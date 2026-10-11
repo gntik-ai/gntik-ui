@@ -144,7 +144,13 @@ describe('Terminal', () => {
   });
 
   it('shows timestamps as <time> elements', () => {
-    render(<Terminal lines={[{ text: 'boot', timestamp: Date.UTC(2026, 0, 1, 8, 5, 9) }]} showTimestamps formatTimestamp={(d) => d.toISOString().slice(11, 19)} />);
+    render(
+      <Terminal
+        lines={[{ text: 'boot', timestamp: Date.UTC(2026, 0, 1, 8, 5, 9) }]}
+        showTimestamps
+        formatTimestamp={(d) => d.toISOString().slice(11, 19)}
+      />,
+    );
     const time = screen.getByText('08:05:09');
     expect(time.tagName).toBe('TIME');
     expect(time).toHaveAttribute('datetime', '2026-01-01T08:05:09.000Z');

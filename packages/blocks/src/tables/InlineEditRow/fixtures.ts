@@ -10,7 +10,13 @@ export interface EditableMember {
 
 export const EDITABLE_MEMBER_FIELDS: InlineEditField<EditableMember>[] = [
   { key: 'name', label: 'Name', required: true },
-  { key: 'email', label: 'Email', type: 'email', required: true, className: 'font-mono text-[12px] text-muted-foreground' },
+  {
+    key: 'email',
+    label: 'Email',
+    type: 'email',
+    required: true,
+    className: 'font-mono text-[12px] text-muted-foreground',
+  },
   { key: 'role', label: 'Role' },
   { key: 'seats', label: 'Seats', type: 'number', align: 'right', className: 'font-mono text-[12.5px]' },
 ];

@@ -34,14 +34,23 @@ const PIN_NONE = 'none';
  * "Columns" menu: one checkbox item per hideable column (the last visible column cannot be
  * hidden) and, when pinning is on, a submenu per visible column to pin it left, right or unpin it.
  */
-export function ColumnVisibilityMenu<T>({ columns, hidden, onToggle, label: labelProp, pinOf, onPin }: ColumnVisibilityMenuProps<T>) {
+export function ColumnVisibilityMenu<T>({
+  columns,
+  hidden,
+  onToggle,
+  label: labelProp,
+  pinOf,
+  onPin,
+}: ColumnVisibilityMenuProps<T>) {
   const { t } = useI18n();
   const label = labelProp ?? t('table.columns');
   const visibleCount = columns.filter((c) => !hidden.has(c.id)).length;
   const pinnable = onPin && pinOf ? columns.filter((c) => c.pinnable !== false && !hidden.has(c.id)) : [];
   return (
     <Menu>
-      <MenuTrigger render={<Button variant="secondary" size="sm" icon={Columns3} trailingIcon={ChevronDown} />}>{label}</MenuTrigger>
+      <MenuTrigger render={<Button variant="secondary" size="sm" icon={Columns3} trailingIcon={ChevronDown} />}>
+        {label}
+      </MenuTrigger>
       <MenuContent align="end" className="min-w-[200px]">
         <MenuGroup>
           <MenuGroupLabel>{t('table.visibleColumns')}</MenuGroupLabel>
@@ -50,7 +59,12 @@ export function ColumnVisibilityMenu<T>({ columns, hidden, onToggle, label: labe
             .map((c) => {
               const visible = !hidden.has(c.id);
               return (
-                <MenuCheckboxItem key={c.id} checked={visible} disabled={visible && visibleCount <= 1} onCheckedChange={(on) => onToggle(c.id, on)}>
+                <MenuCheckboxItem
+                  key={c.id}
+                  checked={visible}
+                  disabled={visible && visibleCount <= 1}
+                  onCheckedChange={(on) => onToggle(c.id, on)}
+                >
                   {c.header}
                 </MenuCheckboxItem>
               );
@@ -67,7 +81,11 @@ export function ColumnVisibilityMenu<T>({ columns, hidden, onToggle, label: labe
                   <MenuSub key={c.id}>
                     <MenuSubTrigger>
                       {c.header}
-                      {side && <span className="ms-auto ps-3 text-[11.5px] text-muted-foreground">{side === 'left' ? 'Left' : 'Right'}</span>}
+                      {side && (
+                        <span className="ms-auto ps-3 text-[11.5px] text-muted-foreground">
+                          {side === 'left' ? 'Left' : 'Right'}
+                        </span>
+                      )}
                     </MenuSubTrigger>
                     <MenuSubContent>
                       <MenuRadioGroup

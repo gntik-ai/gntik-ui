@@ -40,5 +40,11 @@ export function loadBattery(file = BATTERY_FILE): Task[] {
 /** Every kit id a task references (expectations + mustNot). */
 export function referencedIds(t: Task): string[] {
   const e = t.expect;
-  return [...(e.templates ?? []), ...(e.blocks ?? []), ...(e.components ?? []), ...(e.layout ? [e.layout] : []), ...(t.mustNot ?? [])];
+  return [
+    ...(e.templates ?? []),
+    ...(e.blocks ?? []),
+    ...(e.components ?? []),
+    ...(e.layout ? [e.layout] : []),
+    ...(t.mustNot ?? []),
+  ];
 }

@@ -20,7 +20,8 @@ export default function AlertDialogTones() {
           <AlertDialogHeader tone="warning">
             <AlertDialogTitle>Downgrade to the Starter plan?</AlertDialogTitle>
             <AlertDialogDescription>
-              Billing changes at the end of the cycle. Members above the Starter limit lose access until you upgrade again.
+              Billing changes at the end of the cycle. Members above the Starter limit lose access until you upgrade
+              again.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -34,7 +35,9 @@ export default function AlertDialogTones() {
         <AlertDialogContent>
           <AlertDialogHeader tone="info">
             <AlertDialogTitle>Transfer ownership?</AlertDialogTitle>
-            <AlertDialogDescription>The new owner can manage billing and remove members. You stay on as an admin.</AlertDialogDescription>
+            <AlertDialogDescription>
+              The new owner can manage billing and remove members. You stay on as an admin.
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>

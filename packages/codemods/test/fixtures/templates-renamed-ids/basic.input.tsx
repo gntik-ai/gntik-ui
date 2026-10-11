@@ -1,4 +1,9 @@
-import { FlowBuilderPage, MfaChallengePage, flowBuilderTemplateMeta, type FlowBuilderPageProps } from '@gntik-ai/templates';
+import {
+  FlowBuilderPage,
+  MfaChallengePage,
+  flowBuilderTemplateMeta,
+  type FlowBuilderPageProps,
+} from '@gntik-ai/templates';
 import { mfaChallengeTemplateMeta as mfaMeta } from '@gntik-ai/templates';
 
 const pages = { FlowBuilderPage, mfa: MfaChallengePage };
@@ -9,7 +14,9 @@ export function Routes(props: FlowBuilderPageProps) {
     <>
       <FlowBuilderPage {...props} />
       <MfaChallengePage />
-      <p>{mfaMeta.id} {title} {Object.keys(pages).length}</p>
+      <p>
+        {mfaMeta.id} {title} {Object.keys(pages).length}
+      </p>
     </>
   );
 }

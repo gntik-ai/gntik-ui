@@ -28,7 +28,12 @@ describe('EmptyState', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><EmptyStateProjects /><EmptyStateSearch /></>);
+    render(
+      <>
+        <EmptyStateProjects />
+        <EmptyStateSearch />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

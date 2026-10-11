@@ -45,7 +45,11 @@ const NOTIFICATIONS: NotificationItem[] = [
 const COMMANDS: CommandGroup[] = [
   {
     label: 'Go to',
-    items: NAV_GROUPS.flatMap((g) => g.items).map((item) => ({ id: item.href ?? item.label, label: item.label, icon: item.icon })),
+    items: NAV_GROUPS.flatMap((g) => g.items).map((item) => ({
+      id: item.href ?? item.label,
+      label: item.label,
+      icon: item.icon,
+    })),
   },
 ];
 
@@ -53,7 +57,10 @@ const COMMANDS: CommandGroup[] = [
 export function DemoTopbar({ page }: { page: string }) {
   return (
     <>
-      <Breadcrumbs className="min-w-0 flex-1" items={[{ label: 'Acme Industries', href: '/overview' }, { label: page }]} />
+      <Breadcrumbs
+        className="min-w-0 flex-1"
+        items={[{ label: 'Acme Industries', href: '/overview' }, { label: page }]}
+      />
       <CommandPalette groups={COMMANDS} shortcut={false}>
         <CommandPaletteTrigger className="hidden md:inline-flex">Search</CommandPaletteTrigger>
       </CommandPalette>

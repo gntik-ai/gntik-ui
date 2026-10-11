@@ -36,7 +36,15 @@ export interface ResourceCardGridProps {
 const COLS = { 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-3 xl:grid-cols-4' } as const;
 
 /** Responsive grid of resource cards: icon or avatar, name, status, meta figures and a row-actions MoreMenu. */
-export function ResourceCardGrid({ items = RESOURCE_CARDS, label = 'Resources', onAction, getActions, columns = 3, titleAs: TitleTag = 'h3', className }: ResourceCardGridProps) {
+export function ResourceCardGrid({
+  items = RESOURCE_CARDS,
+  label = 'Resources',
+  onAction,
+  getActions,
+  columns = 3,
+  titleAs: TitleTag = 'h3',
+  className,
+}: ResourceCardGridProps) {
   const defaults = (item: ResourceCard): Array<MoreMenuAction | 'separator'> => [
     { label: 'Open', icon: ExternalLink, onSelect: () => onAction?.('open', item) },
     { label: 'Rename', icon: Pencil, onSelect: () => onAction?.('rename', item) },
@@ -61,12 +69,16 @@ export function ResourceCardGrid({ items = RESOURCE_CARDS, label = 'Resources', 
               )}
               <div className="flex items-center gap-2">
                 {item.status && <StatusTag status={item.status} />}
-                {actions.length > 0 && <MoreMenu items={actions} label={`Actions for ${item.name}`} variant="ghost" size="sm" />}
+                {actions.length > 0 && (
+                  <MoreMenu items={actions} label={`Actions for ${item.name}`} variant="ghost" size="sm" />
+                )}
               </div>
             </div>
             <div className="mt-4 min-w-0">
               <TitleTag className="truncate text-[14px] font-semibold text-foreground">{item.name}</TitleTag>
-              {item.description && <p className="mt-0.5 truncate text-[12.5px] text-muted-foreground">{item.description}</p>}
+              {item.description && (
+                <p className="mt-0.5 truncate text-[12.5px] text-muted-foreground">{item.description}</p>
+              )}
             </div>
             {item.meta && item.meta.length > 0 && (
               <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-border pt-4">

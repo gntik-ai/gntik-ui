@@ -25,7 +25,8 @@ export const megaMenuVariants = tv({
       'flex h-full w-[calc(100vw-2rem)] flex-col gap-4 p-4 sm:w-max sm:max-w-[min(56rem,calc(100vw-2rem))] sm:flex-row',
       'transition-opacity duration-300 data-starting-style:opacity-0 data-ending-style:opacity-0 motion-reduce:transition-none',
     ],
-    columns: 'grid min-w-0 flex-1 grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-[repeat(var(--mega-cols),minmax(13rem,1fr))]',
+    columns:
+      'grid min-w-0 flex-1 grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-[repeat(var(--mega-cols),minmax(13rem,1fr))]',
     section: 'flex min-w-0 flex-col gap-1',
     sectionTitle: 'px-2.5 pb-1 font-mono text-[10.5px] font-medium tracking-wider text-muted-foreground uppercase',
     links: 'flex flex-col gap-0.5',
@@ -34,7 +35,8 @@ export const megaMenuVariants = tv({
       'hover:bg-secondary/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
       'data-active:bg-primary/10',
     ],
-    linkIcon: 'mt-0.5 grid size-7 shrink-0 place-items-center rounded-md border border-border bg-card text-muted-foreground',
+    linkIcon:
+      'mt-0.5 grid size-7 shrink-0 place-items-center rounded-md border border-border bg-card text-muted-foreground',
     linkText: 'flex min-w-0 flex-col',
     linkLabel: 'text-[13px] font-medium text-foreground',
     linkDescription: 'text-[12px] leading-[1.45] text-muted-foreground text-pretty',

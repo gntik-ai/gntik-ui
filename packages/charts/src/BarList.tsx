@@ -40,7 +40,12 @@ export function BarList<T extends object>({
   const placeholder = chartStateView(effective, { height: 160, emptyMessage, errorMessage, onRetry });
   if (placeholder)
     return (
-      <div role="figure" aria-label={ariaLabel} aria-busy={effective === 'loading' || undefined} className={cx('font-sans', className)}>
+      <div
+        role="figure"
+        aria-label={ariaLabel}
+        aria-busy={effective === 'loading' || undefined}
+        className={cx('font-sans', className)}
+      >
         {placeholder}
       </div>
     );
@@ -56,7 +61,11 @@ export function BarList<T extends object>({
         return (
           <li key={i} className="flex items-center gap-3">
             <div className="relative h-9 min-w-0 flex-1">
-              <div aria-hidden className={cx('absolute inset-y-0 left-0 rounded-md', BAR_LIST_BG[color])} style={{ width: `${pct}%` }} />
+              <div
+                aria-hidden
+                className={cx('absolute inset-y-0 left-0 rounded-md', BAR_LIST_BG[color])}
+                style={{ width: `${pct}%` }}
+              />
               <div className="relative z-10 flex h-full items-center px-2.5">
                 <span className="truncate text-[13px] text-foreground">{String(field(r, index))}</span>
               </div>

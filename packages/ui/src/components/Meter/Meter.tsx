@@ -3,7 +3,8 @@ import type { ReactNode, Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { getMeterLevel, meterVariants, type MeterThresholds, type MeterVariantProps } from './meter.variants';
 
-export interface MeterProps extends Omit<BaseMeter.Root.Props, 'className' | 'children'>, Omit<MeterVariantProps, 'level'> {
+export interface MeterProps
+  extends Omit<BaseMeter.Root.Props, 'className' | 'children'>, Omit<MeterVariantProps, 'level'> {
   className?: string;
   ref?: Ref<HTMLDivElement>;
   /** Visible label; also the accessible name. Without it, pass `aria-label`. */
@@ -47,11 +48,23 @@ export function Meter({
   const s = meterVariants({ level, size });
   const clamped = Math.min(Math.max(value, min), max);
   return (
-    <BaseMeter.Root value={clamped} min={min} max={max} data-level={level} className={cn(s.root(), className)} {...props}>
+    <BaseMeter.Root
+      value={clamped}
+      min={min}
+      max={max}
+      data-level={level}
+      className={cn(s.root(), className)}
+      {...props}
+    >
       {(label != null || !hideValue) && (
         <div className={s.header()}>
           {label != null ? <BaseMeter.Label className={s.label()}>{label}</BaseMeter.Label> : <span />}
-          {!hideValue && (valueLabel != null ? <span className={s.value()}>{valueLabel}</span> : <BaseMeter.Value className={s.value()} />)}
+          {!hideValue &&
+            (valueLabel != null ? (
+              <span className={s.value()}>{valueLabel}</span>
+            ) : (
+              <BaseMeter.Value className={s.value()} />
+            ))}
         </div>
       )}
       <BaseMeter.Track className={s.track()}>

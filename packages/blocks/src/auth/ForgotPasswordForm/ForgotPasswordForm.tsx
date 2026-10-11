@@ -117,8 +117,9 @@ export function ForgotPasswordForm({
           description={
             sentDescription === undefined ? (
               <>
-                If an account exists for <span className="font-medium text-foreground">{email.trim() || 'that address'}</span>, you will receive a link to reset your password. It
-                expires in 1 hour.
+                If an account exists for{' '}
+                <span className="font-medium text-foreground">{email.trim() || 'that address'}</span>, you will receive
+                a link to reset your password. It expires in 1 hour.
               </>
             ) : (
               sentDescription

@@ -23,7 +23,7 @@
       "path": "packages/templates/src/status-404/data.ts",
       "type": "registry:lib",
       "target": "app/templates/status-404/data.ts",
-      "content": "/** Neutral fixtures for the 404 page. */\nexport const notFoundContent = {\n  code: '404 · Not found',\n  title: 'We can’t find that page',\n  description: 'The page may have been moved or deleted, or the link is out of date. Check the address or head back to the dashboard.',\n  homeLabel: 'Go to dashboard',\n  homeHref: '/',\n  backLabel: 'Go back',\n  supportLabel: 'Contact support',\n  supportHref: '/support',\n};\n"
+      "content": "/** Neutral fixtures for the 404 page. */\nexport const notFoundContent = {\n  code: '404 · Not found',\n  title: 'We can’t find that page',\n  description:\n    'The page may have been moved or deleted, or the link is out of date. Check the address or head back to the dashboard.',\n  homeLabel: 'Go to dashboard',\n  homeHref: '/',\n  backLabel: 'Go back',\n  supportLabel: 'Contact support',\n  supportHref: '/support',\n};\n"
     }
   ],
   "css": {
