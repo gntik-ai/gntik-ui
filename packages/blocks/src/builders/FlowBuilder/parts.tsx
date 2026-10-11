@@ -15,8 +15,7 @@ import type { ConsoleEntry, PaletteItem } from './fixtures';
 /** Heading level of a panel title (one below the builder's title). */
 export type PanelHeading = 'h3' | 'h4' | 'h5';
 
-const panelTitle =
-  'px-3 pt-3 pb-2 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase';
+const panelTitle = 'px-3 pt-3 pb-2 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase';
 
 export interface NodePaletteProps {
   items: PaletteItem[];
@@ -65,14 +64,11 @@ function inspectorKind(type: string | undefined): FlowNodeKind {
 
 const TONE_ITEMS = [
   { value: 'none', label: 'No status' },
-  ...(Object.keys(FLOW_TONES) as FlowTone[]).map((t) => ({
-    value: t,
-    label: FLOW_TONES[t].label,
-  })),
+  ...(Object.keys(FLOW_TONES) as FlowTone[]).map((t) => ({ value: t, label: FLOW_TONES[t].label })),
 ];
 
-export interface NodeInspectorProps {
-  node: FlowNode | undefined;
+export interface NodeInspectorProps<Kind extends string = FlowNodeKind> {
+  node: FlowNode<Kind> | undefined;
   onChange: (id: string, patch: Partial<FlowNodeData>) => void;
   onDelete: (id: string) => void;
   /** Heading level of the panel title (default h3). */
@@ -80,7 +76,7 @@ export interface NodeInspectorProps {
 }
 
 /** Right rail: the selected node's editable fields. */
-export function NodeInspector({ node, onChange, onDelete, titleAs: TitleTag = 'h3' }: NodeInspectorProps) {
+export function NodeInspector<Kind extends string = FlowNodeKind>({ node, onChange, onDelete, titleAs: TitleTag = 'h3' }: NodeInspectorProps<Kind>) {
   const titleId = useId();
   return (
     <div className="flex h-full min-h-0 flex-col bg-card">
@@ -106,38 +102,20 @@ export function NodeInspector({ node, onChange, onDelete, titleAs: TitleTag = 'h
           </Field>
           <Field>
             <FieldLabel>Subtitle</FieldLabel>
-            <Input
-              size="sm"
-              value={node.data.subtitle ?? ''}
-              onValueChange={(v) => onChange(node.id, { subtitle: String(v) || undefined })}
-            />
+            <Input size="sm" value={node.data.subtitle ?? ''} onValueChange={(v) => onChange(node.id, { subtitle: String(v) || undefined })} />
           </Field>
           <Field>
             <FieldLabel>Meta</FieldLabel>
-            <Input
-              size="sm"
-              value={node.data.meta ?? ''}
-              onValueChange={(v) => onChange(node.id, { meta: String(v) || undefined })}
-            />
+            <Input size="sm" value={node.data.meta ?? ''} onValueChange={(v) => onChange(node.id, { meta: String(v) || undefined })} />
           </Field>
           <SimpleSelect
             label="Status"
             size="sm"
             items={TONE_ITEMS}
             value={node.data.tone ?? 'none'}
-            onValueChange={(v) =>
-              onChange(node.id, {
-                tone: v && v !== 'none' ? (v as FlowTone) : undefined,
-              })
-            }
+            onValueChange={(v) => onChange(node.id, { tone: v && v !== 'none' ? (v as FlowTone) : undefined })}
           />
-          <Button
-            variant="ghost"
-            size="sm"
-            icon={Trash2}
-            onClick={() => onDelete(node.id)}
-            className="mt-auto self-start"
-          >
+          <Button variant="ghost" size="sm" icon={Trash2} onClick={() => onDelete(node.id)} className="mt-auto self-start">
             Delete node
           </Button>
         </form>
@@ -175,12 +153,7 @@ export function RunConsole({ entries, onClear, titleAs: TitleTag = 'h3' }: RunCo
           Clear
         </Button>
       </div>
-      <div
-        role="log"
-        aria-label="Run console"
-        tabIndex={0}
-        className="flex-1 overflow-y-auto px-3 py-2 font-mono text-[11.5px] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring"
-      >
+      <div role="log" aria-label="Run console" tabIndex={0} className="flex-1 overflow-y-auto px-3 py-2 font-mono text-[11.5px] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring">
         {entries.length === 0 ? (
           <p className="font-sans text-[12.5px] text-muted-foreground">No output yet. Run the flow to see its steps.</p>
         ) : (

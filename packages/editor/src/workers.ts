@@ -13,8 +13,6 @@ interface MonacoEnvironmentLike {
  * (see README for the Vite `?worker` recipe).
  */
 export function configureMonacoWorkers(getWorker: MonacoWorkerFactory): void {
-  const scope = globalThis as unknown as {
-    MonacoEnvironment?: MonacoEnvironmentLike;
-  };
+  const scope = globalThis as unknown as { MonacoEnvironment?: MonacoEnvironmentLike };
   scope.MonacoEnvironment = { ...scope.MonacoEnvironment, getWorker };
 }

@@ -8,6 +8,14 @@ const CSP =
   "default-src 'self'; script-src 'self'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'";
 
 test('consumer YAML diagnostics come back from the yaml Worker under production CSP', async ({ page, context }) => {
+  const manifest = JSON.parse(readFileSync(new URL('../dist/.vite/manifest.json', import.meta.url), 'utf8'));
+  const monaco = Object.values(manifest).find((entry) => entry.src?.includes('monaco-editor') && entry.src.endsWith('/esm/vs/index.js'));
+  const yamlLoader = manifest['src/examples/yaml-loader.js'];
+  expect(monaco).toBeDefined();
+  expect(yamlLoader).toBeDefined();
+  const editorApi = monaco.imports.map((key) => manifest[key]).find((entry) => entry.name === 'editor.api');
+  expect(editorApi).toBeDefined();
+  const lazyChunks = [monaco.file, editorApi.file, yamlLoader.file].map((file) => `/${file}`);
   const external = [];
   const assets = [];
   context.on('request', (request) => {
@@ -56,6 +64,7 @@ test('consumer YAML diagnostics come back from the yaml Worker under production 
   await page.goto('/builders.html?item=code-panel');
   const before = assets.length;
   expect(await page.evaluate(() => window.workerEvidence)).toEqual([]);
+  for (const chunk of lazyChunks) expect(assets).not.toContain(chunk);
   expect(assets.some((url) => /yaml\.worker|editor\.worker/.test(url))).toBe(false);
   await page.getByRole('button', { name: 'Open YAML editor' }).click();
   await expect(page.getByRole('list', { name: 'Problems' })).toContainText('integer');
@@ -74,13 +83,13 @@ test('consumer YAML diagnostics come back from the yaml Worker under production 
       ),
     )
     .toBe(true);
-  // Probe the editor-worker route as well; YAML's service may be the only worker demanded by a short document.
-  await page.evaluate(() => {
-    window.MonacoEnvironment.getWorker('editor-probe', 'editorWorkerService');
-  });
+  // Diff computation makes Monaco request its editor worker through the real editor UI.
+  await page.getByRole('button', { name: 'Diff', exact: true }).click();
   await expect
     .poll(() => page.evaluate(() => window.workerEvidence.some((e) => e.label === 'editorWorkerService' && e.isWorker)))
     .toBe(true);
+  await page.getByRole('button', { name: 'Edit', exact: true }).click();
+  for (const chunk of lazyChunks) expect(assets).toContain(chunk);
   expect(assets.length).toBeGreaterThan(before);
   expect(external).toEqual([]);
   expect(await page.evaluate(() => window.cspViolations)).toEqual([]);

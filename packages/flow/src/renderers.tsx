@@ -23,6 +23,8 @@ export interface FlowNodeRenderProps {
 export interface FlowNodeRenderer {
   type: string;
   handles: readonly FlowHandle[];
+  /** Defaults to kit overlays. Consumer renderers may own accessible status and issue decorations. */
+  decorations?: 'kit' | 'consumer';
   render: (props: FlowNodeRenderProps) => ReactNode;
 }
 
@@ -37,7 +39,7 @@ const POSITIONS = {
 export function adaptNodeRenderers(renderers: readonly FlowNodeRenderer[]): NodeTypes {
   const types: NodeTypes = { ...flowNodeTypes };
   for (const definition of renderers) {
-    types[definition.type] = memo(function CustomNode({ id, data, selected, isConnectable }: NodeProps<FlowNode>) {
+    types[definition.type] = memo(function CustomNode({ id, data, selected, isConnectable }: NodeProps<FlowNode<string>>) {
       return (
         <div className="relative h-full w-full">
           {definition.handles.map((handle, index) => (
@@ -63,8 +65,16 @@ export function adaptNodeRenderers(renderers: readonly FlowNodeRenderer[]): Node
               }}
             />
           ))}
-          {data.decoration?.status && <FlowStatusBadge status={data.decoration.status} />}
-          <FlowNodeIssues issues={data.decoration?.issues} />
+          {definition.decorations !== 'consumer' && (
+            <>
+              {data.decoration?.status && (
+                <div className="pointer-events-none absolute -top-2 right-1 z-10">
+                  <FlowStatusBadge status={data.decoration.status} />
+                </div>
+              )}
+              <FlowNodeIssues issues={data.decoration?.issues} />
+            </>
+          )}
           {definition.render({
             id,
             type: definition.type,

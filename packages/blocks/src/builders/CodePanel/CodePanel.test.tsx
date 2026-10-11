@@ -254,9 +254,9 @@ it('collects worker markers and runs consumer setup when the panel opens in diff
   expect(screen.getByRole('list', { name: 'Problems' })).toHaveTextContent('Expected integer');
 });
 
-it('preserves caller-supplied problems when all diagnostics extension props are omitted', async () => {
+it.each([undefined, true, false])('preserves caller-supplied problems with readOnly=%s and no diagnostics opt-in', async (readOnly) => {
   const m = mockMonaco();
-  render(<CodePanel loader={m.loader} />);
+  render(<CodePanel loader={m.loader} readOnly={readOnly} />);
   await waitFor(() => expect(m.editor.create).toHaveBeenCalledOnce());
   await act(async () =>
     m.emitMarkers([

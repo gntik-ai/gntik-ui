@@ -3,22 +3,22 @@ import type { FlowNode, FlowTone } from '@gntik-ai/flow';
 import type { FlowValidationIssue } from './extensions';
 
 type Statuses = Readonly<Record<string, FlowTone | undefined>> | undefined;
-interface CachedNode {
-  original: FlowNode;
+interface CachedNode<Kind extends string> {
+  original: FlowNode<Kind>;
   status: FlowTone | undefined;
   issuesKey: string;
   runMode: boolean;
-  node: FlowNode;
+  node: FlowNode<Kind>;
 }
 
-function project(
-  nodes: FlowNode[],
+function project<Kind extends string>(
+  nodes: FlowNode<Kind>[],
   issues: readonly FlowValidationIssue[],
   statuses: Statuses,
   runMode: boolean,
-  previous: ReadonlyMap<string, CachedNode>,
+  previous: ReadonlyMap<string, CachedNode<Kind>>,
 ) {
-  const cache = new Map<string, CachedNode>();
+  const cache = new Map<string, CachedNode<Kind>>();
   const displayed = nodes.map((original) => {
     const nodeIssues = issues.filter((issue) => issue.nodeId === original.id);
     const issuesKey = JSON.stringify(nodeIssues);
@@ -28,7 +28,7 @@ function project(
       cache.set(original.id, old);
       return old.node;
     }
-    const node: FlowNode = {
+    const node: FlowNode<Kind> = {
       ...original,
       ...(runMode
         ? {
@@ -59,8 +59,8 @@ function project(
 }
 
 /** Derive a snapshot when inputs change; preserve other nodes' identities without mutating a render cache. */
-export function useDecoratedNodes(
-  nodes: FlowNode[],
+export function useDecoratedNodes<Kind extends string>(
+  nodes: FlowNode<Kind>[],
   issues: readonly FlowValidationIssue[],
   statuses: Statuses,
   runMode: boolean,

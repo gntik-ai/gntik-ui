@@ -45,15 +45,15 @@ Only need syntax highlighting? Return `new EditorWorker()` for every label and s
 
 ## API
 
-| Export                                                                       | Purpose                                                                                                                                                                   |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `CodeEditor`                                                                 | `value` / `defaultValue`, `onChange(value, event)`, `language`, `readOnly`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`.                          |
-| `DiffEditor`                                                                 | `original`, `modified`, `language`, `readOnly` (default `true`), `sideBySide`, `onChange(modified)`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`. |
-| `defineBrandThemes(monaco)`                                                  | Registers the three brand themes from the live tokens. Call again after a theme switch (the components do).                                                               |
-| `brandThemeFor(theme?)`                                                      | `'dark' \| 'light' \| 'high_contrast'` → Monaco theme name (defaults to the active theme).                                                                                |
-| `brandThemeData(theme, el?)`                                                 | The raw `IStandaloneThemeData` for one theme.                                                                                                                             |
-| `configureMonacoWorkers(getWorker)`                                          | Sets `self.MonacoEnvironment.getWorker`.                                                                                                                                  |
-| `loadMonaco`, `useMonaco`, `useBrandTheme`, `BASE_OPTIONS`, `EditorSkeleton` | Building blocks for custom Monaco surfaces.                                                                                                                               |
+| Export | Purpose |
+| --- | --- |
+| `CodeEditor` | `value` / `defaultValue`, `onChange(value, event)`, `language`, `readOnly`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`. |
+| `DiffEditor` | `original`, `modified`, `language`, `readOnly` (default `true`), `sideBySide`, `onChange(modified)`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`. |
+| `defineBrandThemes(monaco)` | Registers the three brand themes from the live tokens. Call again after a theme switch (the components do). |
+| `brandThemeFor(theme?)` | `'dark' \| 'light' \| 'high_contrast'` → Monaco theme name (defaults to the active theme). |
+| `brandThemeData(theme, el?)` | The raw `IStandaloneThemeData` for one theme. |
+| `configureMonacoWorkers(getWorker)` | Sets `self.MonacoEnvironment.getWorker`. |
+| `loadMonaco`, `useMonaco`, `useBrandTheme`, `BASE_OPTIONS`, `EditorSkeleton` | Building blocks for custom Monaco surfaces. |
 
 ### Custom loader
 
@@ -171,9 +171,9 @@ or CDN loaders. The kit's default `loadMonaco` is an ESM import, never a CDN req
 />
 ```
 
-Set `markers` (even an empty list), `onMonacoReady`, `onValidityChange` or `readOnly` to opt
-into model diagnostics. Omitting every extension preserves the caller-supplied Problems
-list. Collection covers both the code editor and the modified diff model.
+Set `markers` (even an empty list), `onMonacoReady`, or `onValidityChange` to opt
+into model diagnostics. `readOnly` controls editing independently. Omitting diagnostics
+extensions preserves the caller-supplied Problems list. Collection covers both the code editor and the modified diff model.
 
 `CodePanel` subscribes to the public Monaco marker API for every mounted file model and
 merges every owner's markers into its Problems list. It reserves each `markers[].owner`

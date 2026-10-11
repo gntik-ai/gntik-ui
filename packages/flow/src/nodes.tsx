@@ -6,7 +6,6 @@ import type { FlowNodeKind, FlowTone } from './tones';
 
 /** Generic node content. No domain data: title, subtitle, meta, icon and a status tone. */
 export type FlowNodeData = {
-  [key: string]: unknown;
   decoration?: FlowNodeDecoration;
   title: string;
   subtitle?: string;
@@ -18,7 +17,10 @@ export type FlowNodeData = {
   handles?: { target?: boolean; source?: boolean };
 };
 
-export type FlowNode = Node<FlowNodeData, string>;
+/** Built-in kinds by default; consumers can opt into custom type identifiers. */
+export type FlowNode<Kind extends string = FlowNodeKind> = Omit<Node<FlowNodeData, FlowNodeKind>, 'type'> & {
+  type: Kind;
+};
 
 const DEFAULT_HANDLES: Record<FlowNodeKind, { target: boolean; source: boolean }> = {
   trigger: { target: false, source: true },

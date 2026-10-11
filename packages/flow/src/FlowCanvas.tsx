@@ -15,15 +15,15 @@ import { brandEdgeOptions, flowMarker, useFlowTheme, withBrandMarkers } from './
 import { adaptNodeRenderers, type FlowNodeRenderer } from './renderers';
 import { cx, nodeToken } from './tones';
 
-export interface FlowCanvasProps<N extends Node = FlowNode, E extends Edge = Edge> extends Omit<
-  ReactFlowProps<N, E>,
-  'aria-label' | 'height' | 'width'
-> {
+export interface FlowCanvasProps<N extends Node = FlowNode, E extends Edge = Edge>
+  extends Omit<ReactFlowProps<N, E>, 'aria-label' | 'height' | 'width'> {
   /** Accessible name of the canvas region (required). */
   'aria-label': string;
   /** Canvas height (px or CSS length). */
   height?: number | string;
   showControls?: boolean;
+  /** Hide the control that toggles graph editing, while retaining zoom and fit controls. */
+  showInteractiveControls?: boolean;
   showMiniMap?: boolean;
   showBackground?: boolean;
   /** false = static diagram: no pan/zoom/connect/select (nodes still render). */
@@ -55,6 +55,7 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
   'aria-label': label,
   height = 480,
   showControls = true,
+  showInteractiveControls = true,
   showMiniMap = true,
   showBackground = true,
   interactive = true,
@@ -72,11 +73,7 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
   const customTypes = useMemo(() => (nodeRenderers ? adaptNodeRenderers(nodeRenderers) : undefined), [nodeRenderers]);
   const brandedEdges = useMemo(() => (edges ? withBrandMarkers(edges, t) : undefined), [edges, t]);
   const edgeOptions = useMemo(
-    () => ({
-      ...brandEdgeOptions,
-      markerEnd: flowMarker(t.edge),
-      ...defaultEdgeOptions,
-    }),
+    () => ({ ...brandEdgeOptions, markerEnd: flowMarker(t.edge), ...defaultEdgeOptions }),
     [t, defaultEdgeOptions],
   );
   const miniColor = useCallback((n: N) => t.color(nodeToken(n.data.tone, n.type)), [t]);
@@ -104,7 +101,7 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
         className={canvasClassName}
       >
         {showBackground && <Background variant={BackgroundVariant.Dots} gap={20} size={1} color={t.pattern} />}
-        {interactive && showControls && <Controls />}
+        {interactive && showControls && <Controls showInteractive={showInteractiveControls} />}
         {interactive && showMiniMap && (
           <MiniMap<N> pannable zoomable nodeColor={miniColor} nodeStrokeWidth={0} nodeBorderRadius={3} />
         )}

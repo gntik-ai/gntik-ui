@@ -25,9 +25,6 @@ describe('configureMonacoWorkers', () => {
     (globalThis as Scope).MonacoEnvironment = { globalAPI: false };
     const getWorker = vi.fn();
     configureMonacoWorkers(getWorker);
-    expect((globalThis as Scope).MonacoEnvironment).toEqual({
-      globalAPI: false,
-      getWorker,
-    });
+    expect((globalThis as Scope).MonacoEnvironment).toEqual({ globalAPI: false, getWorker });
   });
 });

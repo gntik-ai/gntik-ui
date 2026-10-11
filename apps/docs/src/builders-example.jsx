@@ -97,6 +97,12 @@ function Example() {
   const [loader, setLoader] = useState(null);
   const [error, setError] = useState('');
   const [selected, setSelected] = useState('');
+  const [rejection, setRejection] = useState(null);
+  const graphProps = {
+    ...flowProps,
+    validationIssues: [...flowProps.validationIssues, ...(rejection ? [rejection] : [])],
+    onConnectionRejected: setRejection,
+  };
   const openEditor = async () => {
     try {
       // The entire integration, Monaco and both worker constructors are behind this import.
@@ -120,6 +126,7 @@ function Example() {
                 path: 'flow.yaml',
                 language: 'yaml',
                 content: 'count: wrong\n',
+                original: 'count: 1\n',
               },
             ]}
             problems={[]}
@@ -139,11 +146,11 @@ function Example() {
       </main>
     );
   if (params.get('item') === 'workflow-builder')
-    return <WorkflowBuilderPage {...flowProps} onNodeSelect={setSelected} />;
+    return <WorkflowBuilderPage {...graphProps} onNodeSelect={setSelected} />;
   return (
     <main className="p-6">
       <h1 className="mb-4 text-lg font-semibold text-foreground">Flow extensions</h1>
-      <FlowBuilder {...flowProps} onNodeSelect={setSelected} />
+      <FlowBuilder {...graphProps} onNodeSelect={setSelected} />
       <p aria-live="polite">{selected && `Selected: ${selected}`}</p>
     </main>
   );

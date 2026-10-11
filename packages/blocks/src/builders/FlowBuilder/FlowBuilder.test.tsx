@@ -22,10 +22,7 @@ beforeAll(() => {
 
 function setWide(matches: boolean) {
   const original = window.matchMedia;
-  window.matchMedia = ((query: string) => ({
-    ...original(query),
-    matches,
-  })) as typeof window.matchMedia;
+  window.matchMedia = ((query: string) => ({ ...original(query), matches })) as typeof window.matchMedia;
   return () => (window.matchMedia = original);
 }
 
@@ -34,9 +31,7 @@ describe('FlowBuilder', () => {
     const restore = setWide(true);
     try {
       render(<FlowBuilder />);
-      const canvas = screen.getByRole('region', {
-        name: 'Untitled flow canvas',
-      });
+      const canvas = screen.getByRole('region', { name: 'Untitled flow canvas' });
       expect(canvas.querySelectorAll('.react-flow__node')).toHaveLength(5);
       expect(screen.getAllByRole('separator')).toHaveLength(3);
       expect(screen.getByText('Select a node to edit its fields.')).toBeInTheDocument();
@@ -49,7 +44,8 @@ describe('FlowBuilder', () => {
 
   it('adds a node from the palette, edits it in the inspector and runs the flow', async () => {
     const user = userEvent.setup();
-    const onRun = vi.fn();
+    // Existing consumers can keep callbacks typed with the default built-in FlowNode.
+    const onRun = vi.fn<(graph: { nodes: FlowNode[]; edges: FlowEdge[] }) => void>();
     render(<FlowBuilder onRun={onRun} />);
     expect(screen.queryAllByRole('separator')).toHaveLength(0); // stacked on small screens
     await user.click(screen.getByRole('button', { name: /Add Step/ }));
@@ -77,12 +73,7 @@ describe('FlowBuilder', () => {
 
   it('appends entries returned by onRun and starts from defaultConsoleEntries', async () => {
     const user = userEvent.setup();
-    const entry: ConsoleEntry = {
-      id: 'x',
-      time: '10:00:00',
-      level: 'success',
-      message: 'Deployed run',
-    };
+    const entry: ConsoleEntry = { id: 'x', time: '10:00:00', level: 'success', message: 'Deployed run' };
     render(<FlowBuilder defaultConsoleEntries={[]} onRun={() => [entry]} />);
     const log = screen.getByRole('log', { name: 'Run console' });
     expect(log).toHaveTextContent('No output yet');
@@ -102,14 +93,7 @@ describe('FlowBuilder', () => {
     const button = screen.getByRole('button', { name: 'Run' });
     await user.click(button);
     expect(button).toHaveAttribute('aria-busy', 'true');
-    resolve([
-      {
-        id: 'a',
-        time: '10:00:00',
-        level: 'info',
-        message: 'Remote run queued',
-      },
-    ]);
+    resolve([{ id: 'a', time: '10:00:00', level: 'info', message: 'Remote run queued' }]);
     const log = screen.getByRole('log', { name: 'Run console' });
     expect(await within(log).findByText('Remote run queued')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Run' }));
@@ -121,9 +105,7 @@ describe('FlowBuilder', () => {
     const onConsoleClear = vi.fn();
     const changes: ConsoleEntry[][] = [];
     function Host() {
-      const [entries, setEntries] = useState<ConsoleEntry[]>([
-        { id: 'h', time: '09:00:00', level: 'info', message: 'From host' },
-      ]);
+      const [entries, setEntries] = useState<ConsoleEntry[]>([{ id: 'h', time: '09:00:00', level: 'info', message: 'From host' }]);
       return (
         <FlowBuilder
           consoleEntries={entries}
@@ -163,12 +145,7 @@ describe('FlowBuilder', () => {
   });
 
   it('re-exports the graph types and sub-parts from the package entry', () => {
-    const node: FlowNode = {
-      id: 'n',
-      type: 'step',
-      position: { x: 0, y: 0 },
-      data: { title: 'Step' },
-    };
+    const node: FlowNode = { id: 'n', type: 'step', position: { x: 0, y: 0 }, data: { title: 'Step' } };
     const edge: FlowEdge = { id: 'e', source: 'n', target: 'n' };
     expect([node.id, edge.id]).toEqual(['n', 'e']);
     expect(typeof blocks.NodePalette).toBe('function');
@@ -189,6 +166,14 @@ function connectHandles(sourceId: string, handleId: string, targetId: string) {
   fireEvent.click(source);
   fireEvent.click(target);
 }
+
+it('preserves built-in node kinds in the public inspector props', () => {
+  const node: NonNullable<blocks.NodeInspectorProps['node']> = {
+    id: 'step', type: 'step', position: { x: 0, y: 0 }, data: { title: 'Step' },
+  };
+  const kind: import('@gntik-ai/flow').FlowNodeKind = node.type;
+  expect(kind).toBe('step');
+});
 
 it.each([
   ['branch', 'arm-0', 'branch-arm', { armIndex: 0 }],
@@ -292,7 +277,7 @@ it('rejects a connection without mapping, notifying acceptance or adding an edge
   expect(mapper).not.toHaveBeenCalled();
   await userEvent.click(screen.getByRole('button', { name: 'Run' }));
   expect(onRun.mock.calls[0]?.[0].edges).toEqual([]);
-  expect(screen.getByRole('list', { name: 'Flow problems' })).toHaveTextContent(rejection.message);
+  expect(screen.queryByRole('list', { name: 'Flow problems' })).toBeNull();
 });
 
 it('decorates invalid nodes with an icon and text and focuses a problem node', async () => {
@@ -334,7 +319,8 @@ it('run mode keeps labelled nodes selectable with live status but prevents editi
   const other = screen.getByRole('group', { name: 'Validate payload' });
   fireEvent.keyDown(other, { key: 'Enter' });
   expect(selected).toHaveBeenLastCalledWith('validate');
-  fireEvent.keyDown(other, { key: 'Delete' });
+  fireEvent.click(other);
+  await userEvent.keyboard('{Backspace}');
   expect(other).toBeInTheDocument();
   rerender(<FlowBuilder mode="run" nodeStatus={{ webhook: 'done', validate: 'paused' }} onNodeSelect={selected} />);
   expect(within(node).getByText('Done')).toBeInTheDocument();
@@ -342,9 +328,24 @@ it('run mode keeps labelled nodes selectable with live status but prevents editi
   await expectNoAxeViolations();
 });
 
+it('keeps viewport navigation available for a large run graph', () => {
+  const restore = setWide(true);
+  try {
+    render(<FlowBuilder mode="run" />);
+    const canvas = screen.getByRole('region', { name: 'Untitled flow canvas' });
+    expect(within(canvas).getByRole('button', { name: 'Zoom In' })).toBeInTheDocument();
+    expect(within(canvas).getByRole('button', { name: 'Zoom Out' })).toBeInTheDocument();
+    expect(canvas.querySelector('.react-flow__minimap')).not.toBeNull();
+    expect(canvas.querySelector('.react-flow__pane')).toHaveClass('draggable');
+    expect(screen.queryByRole('button', { name: 'Toggle Interactivity' })).toBeNull();
+  } finally {
+    restore();
+  }
+});
+
 it('updating one status does not render another node badge subtree', () => {
   const renders: Record<string, number> = {};
-  const nodes: FlowNode[] = ['one', 'two'].map((id) => ({
+  const nodes: FlowNode<string>[] = ['one', 'two'].map((id) => ({
     id,
     type: 'custom',
     position: { x: id === 'one' ? 0 : 256, y: 0 },
@@ -354,6 +355,7 @@ it('updating one status does not render another node badge subtree', () => {
     {
       type: 'custom',
       handles: [],
+      decorations: 'consumer' as const,
       render: ({ id, data }: import('@gntik-ai/flow').FlowNodeRenderProps) => (
         <Profiler
           id={id}
@@ -380,7 +382,7 @@ it('updating one status does not render another node badge subtree', () => {
     <FlowBuilder nodes={nodes} edges={[]} nodeTypes={types} mode="run" nodeStatus={{ one: 'done', two: 'paused' }} />,
   );
   expect(renders.two).toBe(before);
-  expect(screen.getAllByText('Done')).toHaveLength(2);
+  expect(screen.getAllByText('Done')).toHaveLength(1);
 });
 
 it('anchors a connection rejection to its source when the validator omits a node id', () => {
@@ -401,6 +403,36 @@ it('anchors a connection rejection to its source when the validator omits a node
   );
   connectHandles('a', 'arm', 'b');
   expect(rejected).toHaveBeenCalledExactlyOnceWith({ code: 'invalid', nodeId: 'a', message: 'Choose another target' });
+});
+
+it('lets the consumer own and clear rejection problems without duplicates', async () => {
+  function Consumer() {
+    const [issues, setIssues] = useState<import('./FlowBuilder').FlowValidationIssue[]>([]);
+    return (
+      <>
+        <FlowBuilder
+          nodes={[
+            { id: 'a', type: 'branch', position: { x: 0, y: 0 }, data: { title: 'Branch' } },
+            { id: 'b', type: 'output', position: { x: 256, y: 0 }, data: { title: 'End' } },
+          ]}
+          edges={[]}
+          nodeTypes={[
+            { type: 'branch', handles: [{ id: 'arm', kind: 'source' }], render: ({ data }) => <span>{data.title}</span> },
+          ]}
+          isValidConnection={() => ({ code: 'cycle', message: 'Cycles are not allowed' })}
+          onConnectionRejected={(issue) => setIssues([issue])}
+          validationIssues={issues}
+        />
+        <button onClick={() => setIssues([])}>Clear problems</button>
+      </>
+    );
+  }
+  render(<Consumer />);
+  connectHandles('a', 'arm', 'b');
+  expect(screen.getByRole('list', { name: 'Flow problems' }).children).toHaveLength(1);
+  await userEvent.click(screen.getByRole('button', { name: 'Clear problems' }));
+  expect(screen.queryByRole('list', { name: 'Flow problems' })).toBeNull();
+  expect(screen.queryByText('Cycles are not allowed')).toBeNull();
 });
 
 it('connects named custom handles with the keyboard', async () => {

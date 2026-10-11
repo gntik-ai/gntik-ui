@@ -13,11 +13,7 @@ type View = 'code' | 'diff';
 
 const SEVERITY: Record<ProblemSeverity, { label: string; icon: typeof CircleX; className: string }> = {
   error: { label: 'Error', icon: CircleX, className: 'text-destructive-text' },
-  warning: {
-    label: 'Warning',
-    icon: TriangleAlert,
-    className: 'text-warning-text',
-  },
+  warning: { label: 'Warning', icon: TriangleAlert, className: 'text-warning-text' },
   info: { label: 'Info', icon: Info, className: 'text-muted-foreground' },
 };
 
@@ -77,7 +73,7 @@ export function CodePanel({
   className,
 }: CodePanelProps) {
   const collectMarkers =
-    markers !== NO_MARKERS || onMonacoReady !== undefined || onValidityChange !== undefined || readOnly !== undefined;
+    markers !== NO_MARKERS || onMonacoReady !== undefined || onValidityChange !== undefined;
   const markerState = usePanelMarkers(markers, onMonacoReady, collectMarkers);
   const problems = [...suppliedProblems, ...markers, ...markerState.problems];
   const [innerActive, setInnerActive] = useState(defaultFile ?? files[0]?.path ?? '');
@@ -142,13 +138,7 @@ export function CodePanel({
             {files.map((f) => {
               const count = problems.filter((p) => p.file === f.path).length;
               return (
-                <TabsTab
-                  key={f.path}
-                  value={f.path}
-                  icon={FileCode}
-                  count={count || undefined}
-                  className="font-mono text-[12px]"
-                >
+                <TabsTab key={f.path} value={f.path} icon={FileCode} count={count || undefined} className="font-mono text-[12px]">
                   {basename(f.path)}
                 </TabsTab>
               );
@@ -203,9 +193,7 @@ export function CodePanel({
       </Tabs>
       <div className="border-t border-border">
         <div className="flex items-center gap-3 bg-secondary/35 px-3 py-2">
-          <ProblemsHeading className="text-[12px] font-semibold tracking-wide text-foreground uppercase">
-            Problems
-          </ProblemsHeading>
+          <ProblemsHeading className="text-[12px] font-semibold tracking-wide text-foreground uppercase">Problems</ProblemsHeading>
           <span className="font-mono text-[11px] text-muted-foreground">
             {errors} {errors === 1 ? 'error' : 'errors'} · {warnings} {warnings === 1 ? 'warning' : 'warnings'}
           </span>

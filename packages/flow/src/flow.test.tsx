@@ -20,11 +20,7 @@ function setTokens(vars: Record<string, string>) {
 
 beforeEach(() => {
   document.documentElement.removeAttribute('style');
-  setTokens({
-    '--primary': '145 61% 50%',
-    '--muted-foreground': '150 8% 40%',
-    '--border': '90 14% 86%',
-  });
+  setTokens({ '--primary': '145 61% 50%', '--muted-foreground': '150 8% 40%', '--border': '90 14% 86%' });
 });
 
 describe('FlowCanvas', () => {

@@ -3,8 +3,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 
-const pkg = (name, entry = 'src/index.ts') =>
-  fileURLToPath(new URL(`../../packages/${name}/${entry}`, import.meta.url));
+const pkg = (name, entry = 'src/index.ts') => fileURLToPath(new URL(`../../packages/${name}/${entry}`, import.meta.url));
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
@@ -21,15 +20,13 @@ export default defineConfig({
         find: new RegExp(`^@gntik-ai/${name}$`),
         replacement: pkg(name),
       })),
-      {
-        find: /^@gntik-ai\/icons$/,
-        replacement: pkg('icons', 'src/index.tsx'),
-      },
+      { find: /^@gntik-ai\/icons$/, replacement: pkg('icons', 'src/index.tsx') },
     ],
     dedupe: ['react', 'react-dom'],
   },
   worker: { format: 'es' },
   build: {
+    manifest: true,
     chunkSizeWarningLimit: 4000,
     rollupOptions: {
       input: {

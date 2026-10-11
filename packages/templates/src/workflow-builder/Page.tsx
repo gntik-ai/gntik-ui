@@ -6,6 +6,7 @@ import {
   type FlowBuilderProps,
   type FlowEdge,
   type FlowNode,
+  type FlowNodeKind,
   type PaletteItem,
 } from '@gntik-ai/blocks';
 import { Save, Upload } from '@gntik-ai/icons';
@@ -13,8 +14,8 @@ import { Breadcrumbs, Button, CanvasLayout, StatusTag, type BreadcrumbItem } fro
 import { useState } from 'react';
 import { flowBuilderBreadcrumbs, flowBuilderContent } from './data';
 
-export interface FlowBuilderPageProps extends Pick<
-  FlowBuilderProps,
+export interface FlowBuilderPageProps<Kind extends string = FlowNodeKind> extends Pick<
+  FlowBuilderProps<Kind>,
   | 'nodeTypes'
   | 'onConnectEdge'
   | 'onConnect'
@@ -31,11 +32,11 @@ export interface FlowBuilderPageProps extends Pick<
   /** StatusTag key next to the title (draft, active…). */
   status: string;
   /** Initial graph and palette; omitted values use the FlowBuilder block samples. */
-  nodes: FlowNode[];
+  nodes: FlowNode<Kind | FlowNodeKind>[];
   edges: FlowEdge[];
   palette: PaletteItem[];
   /** Return console entries (or a promise of them) to log the real run; nothing logs a simulated run. */
-  onRun: NonNullable<FlowBuilderProps['onRun']>;
+  onRun: NonNullable<FlowBuilderProps<Kind>['onRun']>;
   /** Run console output (controlled); report changes with `onConsoleChange`. */
   consoleEntries: ConsoleEntry[];
   /** Initial run console output (uncontrolled). */
@@ -54,7 +55,7 @@ export interface FlowBuilderPageProps extends Pick<
  * Flow builder page: CanvasLayout + the FlowBuilder block. The app imports
  * '@gntik-ai/flow/styles.css' once for the React Flow canvas.
  */
-export default function FlowBuilderPage(props: Partial<FlowBuilderPageProps>) {
+export default function FlowBuilderPage<Kind extends string = FlowNodeKind>(props: Partial<FlowBuilderPageProps<Kind>>) {
   const {
     title = flowBuilderContent.title,
     status = flowBuilderContent.status,

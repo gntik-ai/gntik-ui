@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { Play } from '@gntik-ai/icons';
-import { FlowCanvas, useFlowState, type FlowNode, type FlowNodeData } from '@gntik-ai/flow';
+import { FlowCanvas, useFlowState, type FlowNode, type FlowNodeData, type FlowNodeKind } from '@gntik-ai/flow';
 import { Button, ResizablePanel, ResizablePanelGroup, ResizeHandle, cn } from '@gntik-ai/ui';
 import {
   builderConsole,
@@ -24,9 +24,9 @@ export type { FlowNode, FlowNodeData, FlowNodeKind, FlowTone } from '@gntik-ai/f
 export type { FlowConnection, FlowConnectionRejection, FlowValidationIssue } from './extensions';
 export type { FlowNodeRenderer, FlowHandle, FlowNodeRenderProps } from '@gntik-ai/flow';
 
-export interface FlowBuilderProps extends FlowBuilderExtensions {
+export interface FlowBuilderProps<Kind extends string = FlowNodeKind> extends FlowBuilderExtensions {
   title?: string;
-  nodes?: FlowNode[];
+  nodes?: FlowNode<Kind | FlowNodeKind>[];
   edges?: FlowEdge[];
   palette?: PaletteItem[];
   /**
@@ -49,13 +49,14 @@ export interface FlowBuilderProps extends FlowBuilderExtensions {
    * of them) to log the real run; return nothing to log a simulated run. While a returned
    * promise is pending the Run button shows a loading state; a rejection is logged as an error.
    */
-  onRun?: (graph: { nodes: FlowNode[]; edges: FlowEdge[] }) => FlowRunResult | Promise<FlowRunResult>;
+  onRun?: (graph: { nodes: FlowNode<Kind | FlowNodeKind>[]; edges: FlowEdge[] }) => FlowRunResult | Promise<FlowRunResult>;
   className?: string;
 }
 
 /** What `onRun` may return: entries to append, or nothing for the simulated run. */
 export type FlowRunResult = ConsoleEntry[] | void | undefined;
 
+const NO_ISSUES: NonNullable<FlowBuilderProps['validationIssues']> = [];
 const WIDE_QUERY = '(min-width: 768px)';
 
 function subscribeWide(onChange: () => void) {
@@ -82,7 +83,7 @@ function clock() {
  * inspector for the selected node and a run console, in resizable panels. On small screens
  * the panels stack.
  */
-export function FlowBuilder({
+export function FlowBuilder<Kind extends string = FlowNodeKind>({
   title = 'Untitled flow',
   nodes: initialNodes = builderNodes,
   edges: initialEdges = builderEdges,
@@ -104,7 +105,7 @@ export function FlowBuilder({
   nodeStatus,
   onNodeSelect,
   className,
-}: FlowBuilderProps) {
+}: FlowBuilderProps<Kind>) {
   const runMode = mode === 'run';
   const root = useRef<HTMLElement>(null);
   const wide = useIsWide();
@@ -117,7 +118,7 @@ export function FlowBuilder({
     onNodesChange,
     onEdgesChange,
     onConnect: defaultConnect,
-  } = useFlowState<FlowNode, FlowEdge>(initialNodes, initialEdges);
+  } = useFlowState<FlowNode<Kind | FlowNodeKind>, FlowEdge>(initialNodes, initialEdges);
   const [innerLog, setInnerLog] = useState<ConsoleEntry[]>(defaultConsoleEntries);
   const log = consoleEntries ?? innerLog;
   const latestLog = useRef(log);
@@ -141,10 +142,7 @@ export function FlowBuilder({
       width: 208,
       height: slim ? 56 : 90,
       selected: true,
-      data: {
-        title: `New ${item.title.toLowerCase()}`,
-        subtitle: item.description,
-      },
+      data: { title: `New ${item.title.toLowerCase()}`, subtitle: item.description },
     };
     setNodes((ns) => [...ns.map((n) => (n.selected ? { ...n, selected: false } : n)), node]);
   };
@@ -167,24 +165,14 @@ export function FlowBuilder({
     const ordered = [...nodes].sort((a, b) => a.position.x - b.position.x || a.position.y - b.position.y);
     const t = clock();
     return [
-      {
-        id: `run-${n}-start`,
-        time: t,
-        level: 'info',
-        message: `Run #${n} started · ${nodes.length} nodes`,
-      },
+      { id: `run-${n}-start`, time: t, level: 'info', message: `Run #${n} started · ${nodes.length} nodes` },
       ...ordered.map<ConsoleEntry>((node, i) => ({
         id: `run-${n}-${node.id}`,
         time: t,
         level: node.data.tone === 'failed' ? 'error' : node.data.tone === 'degraded' ? 'warn' : 'success',
         message: `${node.data.title} ${node.data.tone === 'failed' ? 'failed' : 'completed'} in ${40 + ((i * 37) % 160)}ms`,
       })),
-      {
-        id: `run-${n}-end`,
-        time: t,
-        level: 'info',
-        message: `Run #${n} finished`,
-      },
+      { id: `run-${n}-end`, time: t, level: 'info', message: `Run #${n} finished` },
     ];
   };
 
@@ -199,14 +187,7 @@ export function FlowBuilder({
         added = (await result) ?? simulate(n);
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        added = [
-          {
-            id: `run-${n}-error`,
-            time: clock(),
-            level: 'error',
-            message: `Run #${n} failed: ${message}`,
-          },
-        ];
+        added = [{ id: `run-${n}-error`, time: clock(), level: 'error', message: `Run #${n} failed: ${message}` }];
       } finally {
         setRunning(false);
       }
@@ -228,10 +209,7 @@ export function FlowBuilder({
     onConnectionRejected,
   });
 
-  const issues = useMemo(
-    () => [...(validationIssues ?? []), ...connections.rejections],
-    [validationIssues, connections.rejections],
-  );
+  const issues = validationIssues ?? NO_ISSUES;
   const displayedNodes = useDecoratedNodes(nodes, issues, nodeStatus, runMode);
   const selectNode = (id: string) => {
     setNodes((ns) => ns.map((n) => ({ ...n, selected: n.id === id })));
@@ -242,7 +220,7 @@ export function FlowBuilder({
   };
 
   const canvas = (h: number | string) => (
-    <FlowCanvas<FlowNode, FlowEdge>
+    <FlowCanvas<FlowNode<Kind | FlowNodeKind>, FlowEdge>
       aria-label={`${title} canvas`}
       height={h}
       nodes={displayedNodes}
@@ -256,7 +234,7 @@ export function FlowBuilder({
         onEdgesChange(runMode ? changes.filter((change) => change.type === 'select') : changes)
       }
       nodeRenderers={nodeTypes}
-      interactive={!runMode}
+      showInteractiveControls={!runMode}
       elementsSelectable
       nodesFocusable
       nodesDraggable={!runMode}

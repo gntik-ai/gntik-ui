@@ -30,7 +30,7 @@ const nodeTypes: FlowNodeRenderer[] = [
     render: ({ data, selected }) => <NodeCard title={data.title} selected={selected} />,
   },
 ];
-const nodes: FlowNode[] = [
+const nodes: FlowNode<string>[] = [
   {
     id: 'branch',
     type: 'branch',
