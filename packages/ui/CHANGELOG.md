@@ -1,5 +1,15 @@
 # @gntik-ai/ui
 
+## 0.3.0
+
+### Minor Changes
+
+- 08c916d: Add a credential disclosure dialog with masked stored values, fresh-secret warnings, translated copy feedback and validated focus return.
+- 6af5fae: Ship a generated external theme bootstrap and document synchronous same-origin loading for strict CSP.
+- 965d2f7: Add a status heading slot and title focus refs so PageHeader can supply the only h1 on a not-found page.
+- e51af67: Add an accessible StatusTimeline empty state and localizable labels with English and Spanish defaults.
+- 618926a: Add accessible fullscreen and dialog wizard overlays, a dialog-wizard block, and an in-page create-wizard demo.
+
 ## 0.2.0
 
 ### Minor Changes

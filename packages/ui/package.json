@@ -1,6 +1,6 @@
 {
   "name": "@gntik-ai/ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "gntik-ui React components and layouts on Base UI, styled with the brand tokens.",
   "license": "MIT",
   "type": "module",
