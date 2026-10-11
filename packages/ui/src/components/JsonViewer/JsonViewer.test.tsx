@@ -1,8 +1,11 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
+import JsonViewerCapped from './examples/JsonViewerCapped';
 import JsonViewerDepth from './examples/JsonViewerDepth';
+import JsonViewerEmpty from './examples/JsonViewerEmpty';
 import JsonViewerPayload from './examples/JsonViewerPayload';
+import JsonViewerUnicodeBoundary from './examples/JsonViewerUnicodeBoundary';
 import { joinPath, matchAncestors } from './json-model';
 import { JsonViewer } from './JsonViewer';
 
@@ -15,6 +18,117 @@ function mockClipboard() {
 }
 
 describe('JsonViewer', () => {
+  it('keeps the existing tree for under-cap objects and exactly 4096-unit strings', () => {
+    const data = { a: { b: 1 } };
+    const { rerender } = render(<JsonViewer data={data} />);
+    const original = screen.getByRole('tree').textContent;
+    rerender(<JsonViewer data={data} maxDisplayChars={4096} />);
+    expect(screen.getByRole('tree').textContent).toBe(original);
+    const exact = 'a'.repeat(4094) + '😀';
+    rerender(<JsonViewer data={exact} maxDisplayChars={4096} />);
+    expect(screen.getByRole('tree').textContent).toBe('"' + exact + '"');
+    expect(screen.queryByText('Truncated')).not.toBeInTheDocument();
+    const quoted = '"'.repeat(4096);
+    rerender(<JsonViewer data={quoted} maxDisplayChars={4096} />);
+    expect(screen.getByRole('tree').textContent).toBe(JSON.stringify(quoted));
+    expect(screen.queryByText('Truncated')).not.toBeInTheDocument();
+    rerender(<JsonViewer data={'a'.repeat(4095) + '😀'} maxDisplayChars={4096} />);
+    expect(screen.queryByRole('tree')).not.toBeInTheDocument();
+    expect(screen.getByRole('region').textContent).toBe('a'.repeat(4095) + '…');
+    expect(screen.getByRole('region').textContent).not.toMatch(/[\uD800-\uDFFF]/);
+    expect(screen.getByText('Truncated')).toBeVisible();
+    rerender(<JsonViewer data={'a'.repeat(5000)} />);
+    expect(screen.getByRole('tree').textContent).toBe('"' + 'a'.repeat(5000) + '"');
+  });
+
+  it('enables copying with no tree selection and translates the full-copy hint', async () => {
+    const user = userEvent.setup();
+    const writeText = mockClipboard();
+    render(<JsonViewer data="abcdef" maxDisplayChars={4} labels={{ copyFullHint: 'Copies the entire payload' }} />);
+    expect(screen.getByText('Copies the entire payload')).toBeVisible();
+    expect(screen.getByRole('button', { name: 'Copy path' })).toBeDisabled();
+    await user.click(screen.getByRole('button', { name: 'Copy value' }));
+    expect(writeText).toHaveBeenCalledWith('abcdef');
+  });
+
+  it.each(['dark', 'light', 'high_contrast'])(
+    'has no axe violations in the capped, empty and uncapped examples (%s)',
+    async (theme) => {
+      document.documentElement.className = theme === 'light' ? '' : theme;
+      try {
+        render(
+          <>
+            <JsonViewerCapped />
+            <JsonViewerEmpty />
+            <JsonViewerUnicodeBoundary />
+            <JsonViewerDepth />
+          </>,
+        );
+        await expectNoAxeViolations();
+      } finally {
+        document.documentElement.className = '';
+      }
+    },
+  );
+
+  it.each([null, undefined, ''])('shows default or custom empty content only in capped mode (%s)', (data) => {
+    const { rerender } = render(<JsonViewer data={data} maxDisplayChars={4096} />);
+    expect(screen.getByText('—')).toHaveClass('text-muted-foreground');
+    expect(screen.queryByRole('tree')).not.toBeInTheDocument();
+    expect(screen.queryByText('Truncated')).not.toBeInTheDocument();
+    rerender(<JsonViewer data={data} maxDisplayChars={4096} emptyContent={<span>No value</span>} />);
+    expect(screen.getByText('No value')).toBeVisible();
+    expect(screen.queryByText('—')).not.toBeInTheDocument();
+    rerender(<JsonViewer data={data} emptyContent="No value" />);
+    expect(screen.getByRole('tree')).toHaveTextContent(data === '' ? '""' : 'null');
+    expect(screen.queryByText('No value')).not.toBeInTheDocument();
+  });
+
+  it('lets Tab reach the named, height-bounded fallback scroll region', async () => {
+    const user = userEvent.setup();
+    render(<JsonViewer data={'line\n'.repeat(1000)} maxDisplayChars={4096} maxHeight={160} label="Result payload" />);
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'Copy value' })).toHaveFocus();
+    await user.tab();
+    const body = screen.getByRole('region', { name: 'Result payload' });
+    expect(body).toHaveFocus();
+    expect(body).toHaveStyle({ maxHeight: '160px' });
+    expect(body).toHaveClass('overflow-auto');
+    await user.keyboard('{ArrowDown}{ArrowUp}{PageDown}');
+    expect(body).toHaveFocus();
+  });
+
+  it.each(['"abcdef"', { a: 'abcdef' }])('copies the full measured value in the truncated view (%s)', async (data) => {
+    const user = userEvent.setup();
+    const writeText = mockClipboard();
+    const { rerender } = render(<JsonViewer data={{ a: 1 }} />);
+    node(/^a:/).focus();
+    await user.keyboard('{Enter}');
+    rerender(<JsonViewer data={data} maxDisplayChars={4} />);
+    expect(screen.getByRole('button', { name: 'Copy path' })).toBeDisabled();
+    expect(screen.getByText('Copy value copies the full, untruncated value')).toBeVisible();
+    const copyValue = screen.getByRole('button', { name: 'Copy value' });
+    expect(copyValue).toBeEnabled();
+    await user.click(copyValue);
+    expect(writeText).toHaveBeenLastCalledWith(typeof data === 'string' ? '"abcdef"' : '{\n  "a": "abcdef"\n}');
+    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Copied to clipboard'));
+  });
+
+  it('shows capped pretty JSON with a visible translatable indicator instead of a tree', () => {
+    const data = { payload: 'x'.repeat(5000) };
+    const { container, rerender } = render(
+      <JsonViewer data={data} maxDisplayChars={4096} label="Result payload" search="payload" />,
+    );
+    expect(screen.queryByRole('tree')).not.toBeInTheDocument();
+    expect(container.querySelector('pre')?.textContent).toBe('{\n  "payload": "' + 'x'.repeat(4080) + '…');
+    expect(screen.getByText('Truncated')).toBeVisible();
+    expect(container.querySelector('mark')).toBeNull();
+    rerender(
+      <JsonViewer data={data} maxDisplayChars={4096} labels={{ truncated: 'Display limit reached' }} toolbar={false} />,
+    );
+    expect(screen.getByText('Display limit reached')).toBeVisible();
+  });
+
   it('builds paths and finds matches', () => {
     expect(joinPath('', 'a')).toBe('a');
     expect(joinPath('a', 0)).toBe('a[0]');

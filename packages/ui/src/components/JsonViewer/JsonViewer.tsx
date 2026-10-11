@@ -1,9 +1,10 @@
 import { Check, Copy } from 'lucide-react';
-import { useEffect, useState, type ReactNode, type Ref } from 'react';
+import { useEffect, useMemo, useState, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
+import { Badge } from '../Badge/Badge';
 import { TreeList } from '../TreeList/TreeList';
 import type { TreeNode } from '../TreeList/tree-model';
-import { entries, joinPath, jsonType, matchAncestors, pathsToDepth } from './json-model';
+import { entries, joinPath, jsonType, matchAncestors, measureJsonDisplay, pathsToDepth } from './json-model';
 import { jsonTypeClass, jsonViewerVariants } from './json-viewer.variants';
 
 export interface JsonViewerLabels {
@@ -13,6 +14,10 @@ export interface JsonViewerLabels {
   copyFailed: string;
   /** Toolbar hint before a node is selected. */
   selectHint: string;
+  /** Visible indicator when the display cap is exceeded. */
+  truncated: string;
+  /** Explains that copying capped text copies the full value. */
+  copyFullHint: string;
   /** Summary of an object / array. */
   keys: (n: number) => string;
   items: (n: number) => string;
@@ -26,6 +31,8 @@ const DEFAULT_LABELS: JsonViewerLabels = {
   copied: 'Copied to clipboard',
   copyFailed: 'Copy failed',
   selectHint: 'Select a node to copy its path or value',
+  truncated: 'Truncated',
+  copyFullHint: 'Copy value copies the full, untruncated value',
   keys: (n) => `${n} ${n === 1 ? 'key' : 'keys'}`,
   items: (n) => `${n} ${n === 1 ? 'item' : 'items'}`,
   root: '(root)',
@@ -36,18 +43,22 @@ export interface JsonViewerProps {
   ref?: Ref<HTMLDivElement>;
   /** Any JSON-serialisable value. */
   data: unknown;
-  /** Accessible name of the tree. */
+  /** Accessible name of the tree or capped text scroll region. */
   label?: string;
   /** Levels expanded on first render (default 1). */
   defaultExpandDepth?: number;
   /** Deeper containers render as a summary and do not expand. */
   maxDepth?: number;
-  /** Highlights matching keys and values and expands their ancestors. */
+  /** Highlights matching keys and values and expands their ancestors. No effect on capped text. */
   search?: string;
   /** Shows the path / copy toolbar (default true). */
   toolbar?: boolean;
   /** Max height of the scrollable body (px or CSS length). */
   maxHeight?: number | string;
+  /** Display limit in UTF-16 code units. Only finite integers >= 1 enable capped mode. */
+  maxDisplayChars?: number;
+  /** Content for null, undefined or an empty string in capped mode (default a muted dash). */
+  emptyContent?: ReactNode;
   /** Built-in strings (English defaults). */
   labels?: Partial<JsonViewerLabels>;
 }
@@ -101,12 +112,19 @@ export function JsonViewer({
   search = '',
   toolbar = true,
   maxHeight,
+  maxDisplayChars,
+  emptyContent = <span className={s.emptyValue()}>—</span>,
   labels: labelsProp,
   className,
   ref,
 }: JsonViewerProps) {
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
-  const [expanded, setExpanded] = useState(() => pathsToDepth(data, Math.min(defaultExpandDepth, maxDepth)));
+  const display = useMemo(() => measureJsonDisplay(data, maxDisplayChars), [data, maxDisplayChars]);
+  const truncated = display?.truncated ?? false;
+  const showTree = !truncated && !display?.empty;
+  const [expanded, setExpanded] = useState(() =>
+    showTree ? pathsToDepth(data, Math.min(defaultExpandDepth, maxDepth)) : [],
+  );
   const [selected, setSelected] = useState<string[]>([]);
   const [status, setStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
   const [revealed, setRevealed] = useState({ search: '', data: undefined as unknown });
@@ -114,7 +132,7 @@ export function JsonViewer({
   // Reveal matches when the query (or data) changes; the user can still collapse them afterwards.
   if (revealed.search !== search || revealed.data !== data) {
     setRevealed({ search, data });
-    const extra = [...matchAncestors(data, search, maxDepth)].filter((p) => !expanded.includes(p));
+    const extra = showTree ? [...matchAncestors(data, search, maxDepth)].filter((p) => !expanded.includes(p)) : [];
     if (extra.length) setExpanded([...expanded, ...extra]);
   }
 
@@ -141,8 +159,9 @@ export function JsonViewer({
       };
     });
   const rootType = jsonType(data);
-  const nodes: TreeNode[] =
-    rootType === 'object' || rootType === 'array'
+  const nodes: TreeNode[] = !showTree
+    ? []
+    : rootType === 'object' || rootType === 'array'
       ? build(data, '', 1)
       : [{ id: '', label: labels.root, content: <span className={s.row()}>{preview(data, labels, search)}</span> }];
 
@@ -167,7 +186,9 @@ export function JsonViewer({
       {toolbar && (
         <div className={s.toolbar()}>
           <span className={s.path()}>
-            {current !== undefined ? (
+            {truncated ? (
+              labels.copyFullHint
+            ) : current !== undefined ? (
               <span className={s.pathValue()}>{current || labels.root}</span>
             ) : (
               labels.selectHint
@@ -175,7 +196,7 @@ export function JsonViewer({
           </span>
           <button
             type="button"
-            disabled={current === undefined}
+            disabled={!showTree || current === undefined}
             onClick={() => current !== undefined && copy(current)}
             className={s.action()}
           >
@@ -184,8 +205,12 @@ export function JsonViewer({
           </button>
           <button
             type="button"
-            disabled={current === undefined}
-            onClick={() => current !== undefined && copy(JSON.stringify(values.get(current), null, 2) ?? 'null')}
+            disabled={!truncated && (!showTree || current === undefined)}
+            onClick={() =>
+              truncated && display
+                ? copy(display.text)
+                : current !== undefined && copy(JSON.stringify(values.get(current), null, 2) ?? 'null')
+            }
             className={s.action()}
           >
             {status === 'copied' ? <Check size={13} aria-hidden /> : <Copy size={13} aria-hidden />}
@@ -196,16 +221,33 @@ export function JsonViewer({
           </span>
         </div>
       )}
-      <div className={s.body()} style={maxHeight !== undefined ? { maxHeight } : undefined}>
-        <TreeList
-          aria-label={label}
-          nodes={nodes}
-          expanded={expanded}
-          onExpandedChange={setExpanded}
-          selected={selected}
-          onSelectedChange={setSelected}
-          indent={14}
-        />
+      {truncated && (
+        <div className={s.truncated()}>
+          <Badge tone="warning">{labels.truncated}</Badge>
+        </div>
+      )}
+      <div
+        className={s.body()}
+        style={maxHeight !== undefined ? { maxHeight } : undefined}
+        role={truncated ? 'region' : undefined}
+        aria-label={truncated ? label : undefined}
+        tabIndex={truncated ? 0 : undefined}
+      >
+        {display?.empty ? (
+          emptyContent
+        ) : truncated ? (
+          <pre className={s.text()}>{display?.displayText}</pre>
+        ) : (
+          <TreeList
+            aria-label={label}
+            nodes={nodes}
+            expanded={expanded}
+            onExpandedChange={setExpanded}
+            selected={selected}
+            onSelectedChange={setSelected}
+            indent={14}
+          />
+        )}
       </div>
     </div>
   );
