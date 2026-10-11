@@ -14,7 +14,7 @@ export function yamlLoader() {
       validate: true,
       schemas: [
         {
-          uri: 'https://schemas.example.invalid/workflow.json',
+          uri: 'inmemory://schemas/workflow.json',
           fileMatch: ['*'],
           schema: {
             type: 'object',

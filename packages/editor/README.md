@@ -125,8 +125,9 @@ export const yamlLoader: MonacoLoader = () => {
 };
 ```
 
-For `monaco-yaml` 5.5.1 and its `monaco-worker-manager` 2.0.1 dependency, put this
-consumer adapter in `yaml-loader.ts`. Monaco 0.57 requires a `worker` instance in
+This adapter is pinned to `monaco-yaml` 5.5.1 and its `monaco-worker-manager` 2.0.1
+dependency: it relies on their internal two-message bootstrap. Revalidate the production
+browser spec before upgrading either dependency. Put this consumer adapter in `yaml-loader.ts`. Monaco 0.57 requires a `worker` instance in
 `createWebWorker`; the older worker manager supplies `moduleId`, `label` and
 `createData` instead. Passing those options directly silently selects Monaco's generic
 worker, which cannot run YAML validation. The adapter requests the YAML worker through
@@ -169,7 +170,7 @@ function yamlMonaco(monaco: Monaco): Monaco {
 ```
 
 The running example is `apps/docs/src/examples/yaml-loader.js` and its sibling
-`yaml-monaco.js`. After building the docs, `node apps/docs/scripts/check-yaml-worker.mjs`
+`yaml-monaco.js`. After building the docs, `pnpm --filter @gntik-ai/docs test:yaml-worker`
 checks the real bundled worker's schema diagnostics without an HTTP server. The browser
 test additionally checks the Problems list and production CSP.
 
