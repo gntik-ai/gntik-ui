@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { I18nProvider } from '@gntik-ai/ui';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { DataTable, type DataTableProps } from './DataTable';
 import SingleSelectionExample from './examples/single-selection';
@@ -97,6 +98,32 @@ describe('DataTable single selection', () => {
     await user.tab();
     await user.tab();
     expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+  });
+
+  it('enters on a checked enabled radio after the first row', async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <button>Before</button>
+        <DataTable {...base} selectionMode="single" legend="Choices" defaultSelectedId="c" />
+        <button>After</button>
+      </>,
+    );
+    await user.tab();
+    await user.tab();
+    expect(screen.getByRole('radio', { name: 'Gamma' })).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(screen.getByRole('button', { name: 'Before' })).toHaveFocus();
+  });
+
+  it('translates the selection column while preserving the consumer group label', () => {
+    render(
+      <I18nProvider locale="es">
+        <DataTable {...base} selectionMode="single" legend="Choices" />
+      </I18nProvider>,
+    );
+    expect(screen.getByRole('columnheader', { name: 'Selección' })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: 'Choices' })).toBeInTheDocument();
   });
 
   it('warns about duplicate supplied names and missing group labels in development', () => {
@@ -251,6 +278,41 @@ describe('DataTable single selection', () => {
     await user.keyboard(' ');
     expect(screen.getByRole('radio', { name: 'Gamma' })).toBeChecked();
     expect(change.mock.calls).toEqual([['c']]);
+  });
+
+  it('redirects group focus to the first enabled radio without selecting, and Shift+Tab exits', async () => {
+    const user = userEvent.setup();
+    const change = vi.fn();
+    render(
+      <>
+        <button>Before</button>
+        <DataTable
+          {...base}
+          selectionMode="single"
+          legend="Choices"
+          defaultSelectedId="b"
+          isRowDisabled={(row) => row.disabled}
+          onSelectedIdChange={change}
+        />
+        <button>After</button>
+      </>,
+    );
+    // The labelled group is the browser-independent entry point when native radio
+    // tabbing excludes unchecked radios because a disabled radio remains checked.
+    const group = screen.getByRole('group', { name: 'Choices' });
+    group.focus();
+    expect(screen.getByRole('radio', { name: 'Alpha' })).toHaveFocus();
+    expect(screen.getByRole('radio', { name: 'Beta' })).toBeChecked();
+    expect(change).not.toHaveBeenCalled();
+    await user.tab({ shift: true });
+    expect(screen.getByRole('button', { name: 'Before' })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole('radio', { name: 'Alpha' })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(screen.getByRole('radio', { name: 'Alpha' })).toHaveFocus();
+    expect(change).not.toHaveBeenCalled();
   });
 
   it('skips the group when all rows are disabled and retains a checked disabled row', async () => {

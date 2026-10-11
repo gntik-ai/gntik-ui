@@ -195,6 +195,7 @@ export const es: Messages = {
   'table.pagination': 'Paginación: {noun}',
   'table.selectAllPage': 'Seleccionar todas las filas de esta página',
   'table.selectRow': 'Seleccionar {label}',
+  'table.selection': 'Selección',
   'table.actions': 'Acciones',
   'table.rowActions': 'Acciones de {label}',
   'table.emptyDescription': 'Nada coincide con los filtros actuales.',

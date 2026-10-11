@@ -5,6 +5,7 @@ const mountedNames = new Map<string, number>();
 export interface SingleSelection<T> {
   selectedId: string | null;
   inputProps: (row: T) => ComponentProps<'input'>;
+  groupProps: ComponentProps<'fieldset'>;
 }
 
 export function useSingleSelection<T>(options: {
@@ -23,6 +24,12 @@ export function useSingleSelection<T>(options: {
   const inputs = useRef(new Map<string, HTMLInputElement>());
   const enabledIds = options.rows.filter((row) => !options.isRowDisabled?.(row)).map(options.getRowId);
   const tabId = selectedId != null && enabledIds.includes(selectedId) ? selectedId : enabledIds[0];
+  // Chromium excludes every unchecked same-name radio from sequential focus when
+  // a disabled radio is checked. Enter through the fieldset in that case, then
+  // focus the first enabled input without changing the checked choice or name.
+  const redirectEntry =
+    tabId !== undefined &&
+    options.rows.some((row) => options.getRowId(row) === selectedId && options.isRowDisabled?.(row));
   const select = (id: string) => {
     if (id === selectedId) return;
     setInnerId(id);
@@ -30,6 +37,32 @@ export function useSingleSelection<T>(options: {
   };
   return {
     selectedId,
+    groupProps: redirectEntry
+      ? {
+          tabIndex: 0,
+          onFocus: (event) => {
+            if (event.target === event.currentTarget && tabId !== undefined) inputs.current.get(tabId)?.focus();
+          },
+          onPointerDown: (event) => {
+            // A click on a disabled input must not focus its tab-entry ancestor.
+            if (event.target instanceof HTMLInputElement && event.target.disabled) event.preventDefault();
+          },
+          onKeyDown: (event) => {
+            if (
+              event.key === 'Tab' &&
+              event.target instanceof HTMLInputElement &&
+              [...inputs.current.values()].includes(event.target)
+            ) {
+              // Let native Tab/Shift+Tab leave the radio without stopping on the
+              // entry fieldset again. Restore it once focus leaves the group.
+              event.currentTarget.tabIndex = -1;
+            }
+          },
+          onBlur: (event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) event.currentTarget.tabIndex = 0;
+          },
+        }
+      : {},
     inputProps: (row) => {
       const id = options.getRowId(row);
       const disabled = options.isRowDisabled?.(row) ?? false;
@@ -39,7 +72,7 @@ export function useSingleSelection<T>(options: {
         'aria-label': options.getRowLabel(row),
         checked: selectedId === id,
         disabled,
-        tabIndex: !disabled && id === tabId ? 0 : -1,
+        tabIndex: !redirectEntry && !disabled && id === tabId ? 0 : -1,
         ref: (input) => {
           if (input) inputs.current.set(id, input);
           else inputs.current.delete(id);
@@ -61,23 +94,17 @@ export function useSingleSelection<T>(options: {
   };
 }
 
-export function SelectionGroup({
+export function useSingleSelectionWarnings({
   single,
-  legend,
   selectionName,
   paginated,
-  children,
-  ...label
+  hasLabel,
 }: {
   single: boolean;
-  legend?: ReactNode;
   selectionName?: string;
   paginated?: boolean;
-  'aria-label'?: string;
-  'aria-labelledby'?: string;
-  children: ReactNode;
+  hasLabel: boolean;
 }) {
-  const hasLabel = Boolean(legend || label['aria-label']?.trim() || label['aria-labelledby']?.trim());
   useEffect(() => {
     if (single && paginated === true && process.env.NODE_ENV === 'development') {
       console.warn('DataTable single selection: paginated=true is unsupported; rendering all rows without pagination.');
@@ -101,9 +128,25 @@ export function SelectionGroup({
       else mountedNames.set(selectionName, remaining);
     };
   }, [single, selectionName]);
+}
+
+export function SelectionGroup({
+  single,
+  legend,
+  groupProps,
+  children,
+  ...label
+}: {
+  single: boolean;
+  legend?: ReactNode;
+  groupProps: ComponentProps<'fieldset'>;
+  'aria-label'?: string;
+  'aria-labelledby'?: string;
+  children: ReactNode;
+}) {
   if (!single) return <>{children}</>;
   return (
-    <fieldset className="m-0 min-w-0 border-0 p-0" {...label}>
+    <fieldset className="m-0 min-w-0 border-0 p-0" {...groupProps} {...label}>
       {legend != null && <legend className="px-3 py-2 text-sm font-medium text-foreground">{legend}</legend>}
       {children}
     </fieldset>

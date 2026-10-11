@@ -64,6 +64,8 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 export const PREVIEW_LOADERS = {
   block: {
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'data-table--single-selection': () =>
+      import('../../../packages/blocks/src/tables/DataTable/examples/single-selection'),
     'plan-card--summary-full': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryFull'),
     'plan-card--summary-minimal': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryMinimal'),
     'plan-card--summary-unassigned': () =>

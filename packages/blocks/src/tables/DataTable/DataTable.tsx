@@ -43,7 +43,7 @@ import {
 import { DensityToggle } from './density-toggle';
 import { DEPLOYMENT_COLUMNS, DEPLOYMENT_ROWS } from './fixtures';
 import { DataTableHeadCell } from './header-cell';
-import { SelectionGroup, useSingleSelection } from './single-selection';
+import { SelectionGroup, useSingleSelection, useSingleSelectionWarnings } from './single-selection';
 import { useControllable, useTableViews } from './use-table-views';
 import { useVirtualRows } from './use-virtual-rows';
 import { ViewSwitcher, type DataTableViewState } from './views';
@@ -246,9 +246,16 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     getRowId,
     getRowLabel: labelOf,
     isRowDisabled,
-    rows: loading
-      ? []
-      : pageRows.filter((row) => !effectiveGroupBy || !collapsed.has(groupKeyOf(row, effectiveGroupBy))),
+    rows:
+      !singleMode || loading
+        ? []
+        : pageRows.filter((row) => !effectiveGroupBy || !collapsed.has(groupKeyOf(row, effectiveGroupBy))),
+  });
+  useSingleSelectionWarnings({
+    single: singleMode,
+    selectionName,
+    paginated: paginatedProp,
+    hasLabel: Boolean(legend || ariaLabel?.trim() || ariaLabelledBy?.trim()),
   });
 
   const changeDensity = (next: TableDensity) => {
@@ -385,8 +392,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       <SelectionGroup
         single={singleMode}
         legend={legend}
-        selectionName={selectionName}
-        paginated={paginatedProp}
+        groupProps={singleSelection.groupProps}
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
       >
@@ -415,7 +421,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     )}
                     style={layout.lead.style}
                   >
-                    {singleMode && <span className="sr-only">Selection</span>}
+                    {singleMode && <span className="sr-only">{t('table.selection')}</span>}
                     {selectable && (
                       <Checkbox
                         aria-label={t('table.selectAllPage')}
