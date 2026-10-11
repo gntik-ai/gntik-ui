@@ -1,4 +1,11 @@
-export { KanbanBoard, moveKanbanCard, type KanbanBoardProps, type KanbanCard, type KanbanColumn, type KanbanMove } from './KanbanBoard';
+export {
+  KanbanBoard,
+  moveKanbanCard,
+  type KanbanBoardProps,
+  type KanbanCard,
+  type KanbanColumn,
+  type KanbanMove,
+} from './KanbanBoard';
 export {
   useSortable,
   previewSortable,

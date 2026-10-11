@@ -12,5 +12,15 @@ export const doc: ComponentDoc = {
     ['Enter', 'Activates the focused action'],
     ['Space', 'Activates the focused action; thumbs toggle (aria-pressed)'],
   ],
-  tokens: ['foreground', 'muted-foreground', 'secondary', 'card', 'border', 'primary', 'primary-text', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'foreground',
+    'muted-foreground',
+    'secondary',
+    'card',
+    'border',
+    'primary',
+    'primary-text',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

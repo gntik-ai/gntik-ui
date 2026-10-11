@@ -44,7 +44,11 @@ export function ConfirmDestructive({
   resourceType = 'project',
   title,
   description,
-  consequences = ['All deployments and preview URLs', 'Environment variables and secrets', 'The audit log for this project'],
+  consequences = [
+    'All deployments and preview URLs',
+    'Environment variables and secrets',
+    'The audit log for this project',
+  ],
   confirmLabel,
   triggerLabel,
   open,
@@ -87,7 +91,9 @@ export function ConfirmDestructive({
   return (
     <AlertDialog open={isOpen} onOpenChange={(next) => !pending && setOpen(next)}>
       {triggerLabel !== null && (
-        <AlertDialogTrigger render={<Button variant="destructive" icon={Trash2} />}>{triggerLabel ?? label}</AlertDialogTrigger>
+        <AlertDialogTrigger render={<Button variant="destructive" icon={Trash2} />}>
+          {triggerLabel ?? label}
+        </AlertDialogTrigger>
       )}
       <AlertDialogContent>
         <AlertDialogHeader tone="destructive">
@@ -95,7 +101,8 @@ export function ConfirmDestructive({
           <AlertDialogDescription>
             {description ?? (
               <>
-                This permanently deletes <span className="font-mono text-foreground">{resourceName}</span>. This action cannot be undone.
+                This permanently deletes <span className="font-mono text-foreground">{resourceName}</span>. This action
+                cannot be undone.
               </>
             )}
           </AlertDialogDescription>

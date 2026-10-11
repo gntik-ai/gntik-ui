@@ -2,13 +2,21 @@
   {
     "id": "members",
     "prompt": "Build a members management page.",
-    "expect": { "templates": ["settings-members"], "blocks": ["members-table", "invite-members-dialog"], "layout": "settings-layout" },
+    "expect": {
+      "templates": ["settings-members"],
+      "blocks": ["members-table", "invite-members-dialog"],
+      "layout": "settings-layout"
+    },
     "mustNot": ["data-table"]
   },
   {
     "id": "usage-dashboard",
     "prompt": "A usage analytics dashboard with a date range filter.",
-    "expect": { "templates": ["usage-analytics"], "blocks": ["date-range-filter", "chart-card"], "layout": "sidebar-layout" }
+    "expect": {
+      "templates": ["usage-analytics"],
+      "blocks": ["date-range-filter", "chart-card"],
+      "layout": "sidebar-layout"
+    }
   },
   {
     "id": "sso-sign-in",
@@ -19,7 +27,11 @@
   {
     "id": "api-keys",
     "prompt": "API keys settings page.",
-    "expect": { "templates": ["settings-api-keys"], "blocks": ["create-api-key-dialog", "confirm-destructive"], "layout": "settings-layout" }
+    "expect": {
+      "templates": ["settings-api-keys"],
+      "blocks": ["create-api-key-dialog", "confirm-destructive"],
+      "layout": "settings-layout"
+    }
   },
   {
     "id": "incident-kanban",
@@ -34,7 +46,11 @@
   {
     "id": "billing",
     "prompt": "Billing page.",
-    "expect": { "templates": ["settings-billing"], "blocks": ["plan-card", "invoice-table"], "layout": "settings-layout" }
+    "expect": {
+      "templates": ["settings-billing"],
+      "blocks": ["plan-card", "invoice-table"],
+      "layout": "settings-layout"
+    }
   },
   {
     "id": "onboarding-wizard",

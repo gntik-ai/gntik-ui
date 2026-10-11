@@ -84,7 +84,11 @@ export function readableOn(color: string, bg: string, fg: string): string {
 /** `a` mixed with `b` by `t` (0–1), per sRGB channel. */
 export function mixHex(a: string, b: string, t: number): string {
   return `#${[0, 1, 2]
-    .map((i) => Math.round(channel(a, i) * (1 - t) + channel(b, i) * t).toString(16).padStart(2, '0'))
+    .map((i) =>
+      Math.round(channel(a, i) * (1 - t) + channel(b, i) * t)
+        .toString(16)
+        .padStart(2, '0'),
+    )
     .join('')}`;
 }
 

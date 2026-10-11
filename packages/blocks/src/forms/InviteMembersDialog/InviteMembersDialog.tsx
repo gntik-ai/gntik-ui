@@ -74,7 +74,12 @@ export function InviteMembersDialog({
   const open = openProp ?? innerOpen;
 
   const invalidCount = emails.filter((e) => emailError(e)).length;
-  const emailsProblem = emails.length === 0 ? 'Add at least one email address.' : invalidCount > 0 ? `Fix ${invalidCount} invalid ${invalidCount === 1 ? 'address' : 'addresses'}.` : null;
+  const emailsProblem =
+    emails.length === 0
+      ? 'Add at least one email address.'
+      : invalidCount > 0
+        ? `Fix ${invalidCount} invalid ${invalidCount === 1 ? 'address' : 'addresses'}.`
+        : null;
   const showEmailError = submitted && emailsProblem != null;
 
   const setOpen = (next: boolean) => {
@@ -138,7 +143,11 @@ export function InviteMembersDialog({
             </Field>
             <Field>
               <FieldLabel>Role</FieldLabel>
-              <Select value={role} onValueChange={(v) => v != null && setRole(v)} items={roles.map(({ value, label }) => ({ value, label }))}>
+              <Select
+                value={role}
+                onValueChange={(v) => v != null && setRole(v)}
+                items={roles.map(({ value, label }) => ({ value, label }))}
+              >
                 <SelectTrigger className="w-full" />
                 <SelectContent>
                   {roles.map((r) => (
@@ -152,7 +161,12 @@ export function InviteMembersDialog({
             </Field>
             <Field>
               <FieldLabel>Message (optional)</FieldLabel>
-              <Textarea rows={3} value={message} onValueChange={setMessage} placeholder="Join us on the billing-dashboard project." />
+              <Textarea
+                rows={3}
+                value={message}
+                onValueChange={setMessage}
+                placeholder="Join us on the billing-dashboard project."
+              />
             </Field>
             {error && <Alert tone="destructive" title="Invitations not sent" description={error} />}
           </DialogBody>

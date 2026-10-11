@@ -66,7 +66,15 @@ export function CodeBlock({
   const lines = useMemo<ReactNode[]>(() => {
     if (highlight) return source.split('\n').map((line) => highlight(line, language));
     return tokenizeLines(source, language).map((tokens) =>
-      tokens.map((t, i) => (tokenClass[t.kind] ? <span key={i} className={tokenClass[t.kind]}>{t.value}</span> : t.value)),
+      tokens.map((t, i) =>
+        tokenClass[t.kind] ? (
+          <span key={i} className={tokenClass[t.kind]}>
+            {t.value}
+          </span>
+        ) : (
+          t.value
+        ),
+      ),
     );
   }, [source, language, highlight]);
 
@@ -90,7 +98,8 @@ export function CodeBlock({
   const { t } = useI18n();
   const gutter = `${String(lines.length).length}ch`;
   const regionLabel = label ?? filename ?? (language ? t('codeBlock.languageCode', { language }) : t('codeBlock.code'));
-  const announcement = status === 'copied' ? t('common.copiedToClipboard') : status === 'failed' ? t('common.copyFailed') : '';
+  const announcement =
+    status === 'copied' ? t('common.copiedToClipboard') : status === 'failed' ? t('common.copyFailed') : '';
 
   return (
     <div ref={ref} className={cn(s.root(), className)}>
@@ -101,7 +110,13 @@ export function CodeBlock({
         </div>
         <div className={s.actions()}>
           {wrapToggle && (
-            <button type="button" aria-label={t('codeBlock.wrap')} aria-pressed={wrap} onClick={() => setWrap((w) => !w)} className={s.button()}>
+            <button
+              type="button"
+              aria-label={t('codeBlock.wrap')}
+              aria-pressed={wrap}
+              onClick={() => setWrap((w) => !w)}
+              className={s.button()}
+            >
               <WrapText size={14} aria-hidden />
             </button>
           )}
@@ -132,7 +147,9 @@ export function CodeBlock({
                   {i + 1}
                 </span>
               )}
-              <span className={s.content()}>{content === '' || (Array.isArray(content) && content.length === 0) ? ' ' : content}</span>
+              <span className={s.content()}>
+                {content === '' || (Array.isArray(content) && content.length === 0) ? ' ' : content}
+              </span>
             </span>
           ))}
         </code>

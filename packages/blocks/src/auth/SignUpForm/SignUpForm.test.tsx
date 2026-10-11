@@ -24,6 +24,10 @@ describe('SignUpForm', () => {
     await expectNoAxeViolations(container);
     await userEvent.click(terms);
     await userEvent.click(screen.getByRole('button', { name: 'Create account' }));
-    expect(onSubmit).toHaveBeenCalledWith({ name: 'Avery Collins', email: 'avery@example.com', password: 'correct-horse-42' });
+    expect(onSubmit).toHaveBeenCalledWith({
+      name: 'Avery Collins',
+      email: 'avery@example.com',
+      password: 'correct-horse-42',
+    });
   });
 });

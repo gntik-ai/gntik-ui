@@ -100,7 +100,8 @@ export function detectProject(cwd: string): ProjectInfo {
   const src = has('src');
   const css = CSS_CANDIDATES.find(has) ?? null;
   let cssDefault = 'src/index.css';
-  let entry = ['src/main.tsx', 'src/main.jsx', 'src/main.ts', 'src/main.js', 'src/index.tsx'].find(has) ?? 'src/main.tsx';
+  let entry =
+    ['src/main.tsx', 'src/main.jsx', 'src/main.ts', 'src/main.js', 'src/index.tsx'].find(has) ?? 'src/main.tsx';
   if (framework === 'next') {
     const appDir = has('src/app') || (src && !has('app')) ? 'src/app' : 'app';
     cssDefault = `${appDir}/globals.css`;
@@ -108,7 +109,16 @@ export function detectProject(cwd: string): ProjectInfo {
   } else if (!src) {
     cssDefault = 'index.css';
   }
-  return { cwd, framework, packageManager: detectPackageManager(cwd, packageJson), css, cssDefault, src, entry, packageJson };
+  return {
+    cwd,
+    framework,
+    packageManager: detectPackageManager(cwd, packageJson),
+    css,
+    cssDefault,
+    src,
+    entry,
+    packageJson,
+  };
 }
 
 export function defaultConfig(info: ProjectInfo, brand = 'gntik'): GntikConfig {
@@ -119,7 +129,11 @@ export function defaultConfig(info: ProjectInfo, brand = 'gntik'): GntikConfig {
     packageManager: info.packageManager,
     css: info.css ?? info.cssDefault,
     brand,
-    aliases: { components: `${root}components`, blocks: `${root}components/blocks`, templates: `${root}components/templates` },
+    aliases: {
+      components: `${root}components`,
+      blocks: `${root}components/blocks`,
+      templates: `${root}components/templates`,
+    },
   };
 }
 

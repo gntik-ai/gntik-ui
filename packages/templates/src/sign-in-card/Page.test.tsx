@@ -35,10 +35,22 @@ describe('SignInCardPage', () => {
     const props = {
       ref,
       onSubmit,
-      identifier: { type: 'text' as const, autoComplete: 'username', label: 'Username', help: 'Account name', helpId: 'username-help', minLength: 3, maxLength: 120 },
+      identifier: {
+        type: 'text' as const,
+        autoComplete: 'username',
+        label: 'Username',
+        help: 'Account name',
+        helpId: 'username-help',
+        minLength: 3,
+        maxLength: 120,
+      },
       passwordHelp: 'Account password',
       passwordHelpId: 'password-help',
-      messages: { identifierRequired: 'Username is required.', identifierInvalid: 'Use three characters.', passwordRequired: 'Password is required.' },
+      messages: {
+        identifierRequired: 'Username is required.',
+        identifierInvalid: 'Use three characters.',
+        passwordRequired: 'Password is required.',
+      },
       'aria-describedby': 'form-feedback',
     };
     const { rerender } = render(<SignInCardPage {...props} />);
@@ -66,13 +78,22 @@ describe('SignInCardPage', () => {
     await userEvent.type(password, 'secret');
     expect(input).not.toHaveAttribute('aria-invalid');
     expect(password).not.toHaveAttribute('aria-invalid');
-    rerender(<SignInCardPage {...props} fieldInvalid={{ identifier: true, password: true }} feedbackId="credential-feedback" error="Credentials were not accepted." />);
+    rerender(
+      <SignInCardPage
+        {...props}
+        fieldInvalid={{ identifier: true, password: true }}
+        feedbackId="credential-feedback"
+        error="Credentials were not accepted."
+      />,
+    );
     for (const [field, helpId] of [
       [input, 'username-help'],
       [password, 'password-help'],
     ] as const) {
       expect(field).toHaveAttribute('aria-invalid', 'true');
-      expect(field.getAttribute('aria-describedby')?.split(' ')).toEqual(expect.arrayContaining([helpId, 'credential-feedback']));
+      expect(field.getAttribute('aria-describedby')?.split(' ')).toEqual(
+        expect.arrayContaining([helpId, 'credential-feedback']),
+      );
     }
     expect(screen.getByRole('form', { name: 'Sign in' })).toHaveAttribute('aria-describedby', 'form-feedback');
     input.focus();
@@ -117,10 +138,22 @@ describe('SignInCardPage accessibility matrix', () => {
                 <h1>Account access</h1>
                 <SignInCardPage
                   identifier={
-                    mode === 'username' ? { type: 'text', autoComplete: 'username', label: 'Username', help: 'Use your account name.', minLength: 3, maxLength: 120 } : undefined
+                    mode === 'username'
+                      ? {
+                          type: 'text',
+                          autoComplete: 'username',
+                          label: 'Username',
+                          help: 'Use your account name.',
+                          minLength: 3,
+                          maxLength: 120,
+                        }
+                      : undefined
                   }
                   suppressAllHeadings={suppressed}
-                  messages={{ identifierRequired: 'Account name is required.', passwordRequired: 'Password is required.' }}
+                  messages={{
+                    identifierRequired: 'Account name is required.',
+                    passwordRequired: 'Password is required.',
+                  }}
                   onSubmit={onSubmit}
                 />
               </ThemeProvider>,

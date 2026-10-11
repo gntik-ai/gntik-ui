@@ -54,7 +54,9 @@ export interface KanbanBoardProps<T extends KanbanCard = KanbanCard> extends Kan
 export function moveKanbanCard<T extends KanbanCard>(columns: KanbanColumn<T>[], move: KanbanMove): KanbanColumn<T>[] {
   const card = columns.find((c) => c.id === move.fromColumnId)?.cards.find((c) => c.id === move.cardId);
   if (!card) return columns;
-  const without = columns.map((c) => (c.id === move.fromColumnId ? { ...c, cards: c.cards.filter((x) => x.id !== move.cardId) } : c));
+  const without = columns.map((c) =>
+    c.id === move.fromColumnId ? { ...c, cards: c.cards.filter((x) => x.id !== move.cardId) } : c,
+  );
   return without.map((c) => {
     if (c.id !== move.toColumnId) return c;
     const cards = [...c.cards];
@@ -92,8 +94,14 @@ function Board<T extends KanbanCard>({
   const announce = useAnnounce();
   const id = useId();
   const slots = s({ size });
-  const containers = useMemo<SortableContainer[]>(() => columns.map((c) => ({ id: c.id, items: c.cards.map((card) => card.id) })), [columns]);
-  const cardById = useMemo(() => new Map(columns.flatMap((c) => c.cards.map((card) => [card.id, card] as const))), [columns]);
+  const containers = useMemo<SortableContainer[]>(
+    () => columns.map((c) => ({ id: c.id, items: c.cards.map((card) => card.id) })),
+    [columns],
+  );
+  const cardById = useMemo(
+    () => new Map(columns.flatMap((c) => c.cards.map((card) => [card.id, card] as const))),
+    [columns],
+  );
   const columnById = useMemo(() => new Map(columns.map((c) => [c.id, c] as const)), [columns]);
 
   const describe = (drag: SortableDrag, key: 'kanban.pickedUp' | 'kanban.moved' | 'kanban.dropped') => {
@@ -111,13 +119,25 @@ function Board<T extends KanbanCard>({
   const sortable = useSortable({
     containers,
     disabled,
-    onMove: (m) => onMove({ cardId: m.itemId, fromColumnId: m.fromContainerId, fromIndex: m.fromIndex, toColumnId: m.toContainerId, toIndex: m.toIndex }),
+    onMove: (m) =>
+      onMove({
+        cardId: m.itemId,
+        fromColumnId: m.fromContainerId,
+        fromIndex: m.fromIndex,
+        toColumnId: m.toContainerId,
+        toIndex: m.toIndex,
+      }),
     onDragStart: (drag) => announce(describe(drag, 'kanban.pickedUp')),
     onDragOver: (drag) => announce(describe(drag, 'kanban.moved')),
     onDragEnd: (drag) => announce(describe(drag, 'kanban.dropped')),
     onDragCancel: (drag) => {
       const card = cardById.get(drag.itemId);
-      announce(t('kanban.cancelled', { card: card ? getCardLabel(card) : drag.itemId, column: columnById.get(drag.origin.containerId)?.title ?? drag.origin.containerId }));
+      announce(
+        t('kanban.cancelled', {
+          card: card ? getCardLabel(card) : drag.itemId,
+          column: columnById.get(drag.origin.containerId)?.title ?? drag.origin.containerId,
+        }),
+      );
     },
   });
 
@@ -133,7 +153,12 @@ function Board<T extends KanbanCard>({
         const headingId = `${id}-${list.id}`;
         const count = list.items.length;
         return (
-          <section key={list.id} aria-labelledby={headingId} className={slots.column()} {...sortable.getContainerProps(list.id)}>
+          <section
+            key={list.id}
+            aria-labelledby={headingId}
+            className={slots.column()}
+            {...sortable.getContainerProps(list.id)}
+          >
             <div className={slots.header()}>
               {createElement(
                 `h${headingLevel}`,

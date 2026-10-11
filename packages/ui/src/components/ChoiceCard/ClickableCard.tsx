@@ -53,7 +53,13 @@ export function ClickableCard({
         {title}
       </a>
     ) : (
-      <button type="button" onClick={onClick} disabled={disabled} aria-describedby={describedBy} className={cn(s.action(), s.title())}>
+      <button
+        type="button"
+        onClick={onClick}
+        disabled={disabled}
+        aria-describedby={describedBy}
+        className={cn(s.action(), s.title())}
+      >
         {title}
       </button>
     );

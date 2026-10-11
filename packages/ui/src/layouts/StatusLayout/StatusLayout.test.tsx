@@ -19,7 +19,11 @@ describe('StatusLayout', () => {
   it('the primary action comes first in tab order', async () => {
     const user = userEvent.setup();
     render(
-      <StatusLayout title="Forbidden" primaryAction={<button type="button">Request access</button>} secondaryAction={<button type="button">Switch workspace</button>} />,
+      <StatusLayout
+        title="Forbidden"
+        primaryAction={<button type="button">Request access</button>}
+        secondaryAction={<button type="button">Switch workspace</button>}
+      />,
     );
     await user.tab();
     expect(screen.getByRole('link', { name: 'Skip to content' })).toHaveFocus();

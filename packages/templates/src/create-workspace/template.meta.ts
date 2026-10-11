@@ -5,7 +5,8 @@ export const meta: TemplateMeta = {
   family: 'Onboarding',
   priority: 'P2',
   status: 'beta',
-  description: 'Workspace onboarding wizard: name with address preview, data region and plan as selectable cards, and inline team invitations with email chips and a role.',
+  description:
+    'Workspace onboarding wizard: name with address preview, data region and plan as selectable cards, and inline team invitations with email chips and a role.',
   layout: 'WizardLayout',
   blocks: [],
 };

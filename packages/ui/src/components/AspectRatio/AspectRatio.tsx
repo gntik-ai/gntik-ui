@@ -14,7 +14,16 @@ export interface AspectRatioProps extends Omit<useRender.ComponentProps<'div'>, 
 }
 
 /** Fixed-ratio box for media: direct children (img, video, iframe, a placeholder) fill it. */
-export function AspectRatio({ ratio = 16 / 9, radius, surface, className, style, render, ref, ...props }: AspectRatioProps) {
+export function AspectRatio({
+  ratio = 16 / 9,
+  radius,
+  surface,
+  className,
+  style,
+  render,
+  ref,
+  ...props
+}: AspectRatioProps) {
   return useRender({
     defaultTagName: 'div',
     render,

@@ -19,10 +19,30 @@ export const alertVariants = tv({
   },
   variants: {
     tone: {
-      info: { root: 'border-info/25 bg-info/10', icon: 'text-info', title: 'text-foreground', dismiss: 'text-muted-foreground hover:text-foreground' },
-      success: { root: 'border-success/25 bg-success/10', icon: 'text-success-text', title: 'text-success-text', dismiss: 'text-success-text' },
-      warning: { root: 'border-warning/30 bg-warning/10', icon: 'text-warning-text', title: 'text-warning-text', dismiss: 'text-warning-text' },
-      destructive: { root: 'border-destructive/30 bg-destructive/10', icon: 'text-destructive-text', title: 'text-destructive-text', dismiss: 'text-destructive-text' },
+      info: {
+        root: 'border-info/25 bg-info/10',
+        icon: 'text-info',
+        title: 'text-foreground',
+        dismiss: 'text-muted-foreground hover:text-foreground',
+      },
+      success: {
+        root: 'border-success/25 bg-success/10',
+        icon: 'text-success-text',
+        title: 'text-success-text',
+        dismiss: 'text-success-text',
+      },
+      warning: {
+        root: 'border-warning/30 bg-warning/10',
+        icon: 'text-warning-text',
+        title: 'text-warning-text',
+        dismiss: 'text-warning-text',
+      },
+      destructive: {
+        root: 'border-destructive/30 bg-destructive/10',
+        icon: 'text-destructive-text',
+        title: 'text-destructive-text',
+        dismiss: 'text-destructive-text',
+      },
     },
   },
   defaultVariants: { tone: 'info' },

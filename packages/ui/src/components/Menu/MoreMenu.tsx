@@ -25,27 +25,36 @@ export interface MoreMenuProps {
 }
 
 /** Row-actions shorthand: an icon button with a "more" glyph that opens a menu built from `items`. */
-export function MoreMenu({ items, label: labelProp, variant = 'secondary', size = 'md', align = 'end', className }: MoreMenuProps) {
+export function MoreMenu({
+  items,
+  label: labelProp,
+  variant = 'secondary',
+  size = 'md',
+  align = 'end',
+  className,
+}: MoreMenuProps) {
   const { t } = useI18n();
   const label = labelProp ?? t('common.moreActions');
   return (
     <Menu>
-      <MenuTrigger render={<IconButton icon={MoreHorizontal} label={label} variant={variant} size={size} className={className} />} />
+      <MenuTrigger
+        render={<IconButton icon={MoreHorizontal} label={label} variant={variant} size={size} className={className} />}
+      />
       <MenuContent align={align}>
         {items.map((item, i) =>
           item === 'separator' ? (
             <MenuSeparator key={`sep-${i}`} />
           ) : (
             <MenuItem
-                key={item.label}
-                icon={item.icon}
-                shortcut={item.shortcut}
-                destructive={item.destructive}
-                disabled={item.disabled}
-                onClick={item.onSelect}
-              >
-                {item.label}
-              </MenuItem>
+              key={item.label}
+              icon={item.icon}
+              shortcut={item.shortcut}
+              destructive={item.destructive}
+              disabled={item.disabled}
+              onClick={item.onSelect}
+            >
+              {item.label}
+            </MenuItem>
           ),
         )}
       </MenuContent>

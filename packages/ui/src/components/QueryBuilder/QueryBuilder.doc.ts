@@ -9,9 +9,15 @@ export const doc: ComponentDoc = {
   primitive: 'Select, MultiSelect, Input, NumberInput, DatePicker, ToggleGroup, Button',
   pattern: 'nested groups of form controls',
   keyboard: [
-    ['Tab / Shift+Tab', 'Moves through each condition\'s field, operator, value and remove button, then the group\'s buttons'],
-    ['Enter / Space', 'On Add condition / Add group: adds it and focuses its first field; on a remove button: removes it and focuses Add condition'],
-    ['ArrowLeft / ArrowRight', 'In a group\'s AND / OR switch: moves between the options (Enter / Space picks)'],
+    [
+      'Tab / Shift+Tab',
+      "Moves through each condition's field, operator, value and remove button, then the group's buttons",
+    ],
+    [
+      'Enter / Space',
+      'On Add condition / Add group: adds it and focuses its first field; on a remove button: removes it and focuses Add condition',
+    ],
+    ['ArrowLeft / ArrowRight', "In a group's AND / OR switch: moves between the options (Enter / Space picks)"],
     ['Enter / Space / ArrowDown', 'On a field, operator or enum value: opens its list (see Select)'],
   ],
   tokens: ['card', 'secondary', 'border', 'foreground', 'muted-foreground', 'primary', 'focus-ring'],

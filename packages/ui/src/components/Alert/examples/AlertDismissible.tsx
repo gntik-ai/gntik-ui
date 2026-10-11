@@ -20,7 +20,9 @@ export default function AlertDismissible() {
       actions={
         <>
           <Button size="sm">Add payment method</Button>
-          <Button size="sm" variant="ghost">View plans</Button>
+          <Button size="sm" variant="ghost">
+            View plans
+          </Button>
         </>
       }
       className="max-w-2xl"

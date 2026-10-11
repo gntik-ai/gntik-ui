@@ -17,9 +17,21 @@ export const assistantSuggestions: Suggestion[] = [
 ];
 
 export const assistantSources: CitationSource[] = [
-  { title: 'Deployment history · web-app', url: 'https://app.example.com/projects/web-app/deployments', snippet: '14 deployments in the last 7 days, 1 rolled back.' },
-  { title: 'Rollback guide', url: 'https://docs.example.com/deployments/rollback', snippet: 'Roll back from the Deployments page or with the CLI.' },
-  { title: 'Health checks', url: 'https://docs.example.com/deployments/health-checks', snippet: 'A deployment is promoted only after every region reports healthy.' },
+  {
+    title: 'Deployment history · web-app',
+    url: 'https://app.example.com/projects/web-app/deployments',
+    snippet: '14 deployments in the last 7 days, 1 rolled back.',
+  },
+  {
+    title: 'Rollback guide',
+    url: 'https://docs.example.com/deployments/rollback',
+    snippet: 'Roll back from the Deployments page or with the CLI.',
+  },
+  {
+    title: 'Health checks',
+    url: 'https://docs.example.com/deployments/health-checks',
+    snippet: 'A deployment is promoted only after every region reports healthy.',
+  },
 ];
 
 export const assistantTool: AssistantTool = {
@@ -46,7 +58,10 @@ deploy pin --project web-app --version v3.2.0
 
 The [rollback guide](https://docs.example.com/deployments/rollback) has the full steps.`;
 
-export const assistantBreadcrumbs: BreadcrumbItem[] = [{ label: 'Acme Industries', href: '/overview' }, { label: 'Assistant' }];
+export const assistantBreadcrumbs: BreadcrumbItem[] = [
+  { label: 'Acme Industries', href: '/overview' },
+  { label: 'Assistant' },
+];
 
 /** Splits text into small chunks to imitate token streaming. */
 export function chunkReply(text: string, size = 6): string[] {

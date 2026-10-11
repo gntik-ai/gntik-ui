@@ -19,7 +19,9 @@ describe('TypingIndicator', () => {
 
   it('dots stop animating under reduced motion', () => {
     const { container } = render(<TypingIndicator />);
-    container.querySelectorAll('[aria-hidden] > span').forEach((d) => expect(d.className).toContain('motion-reduce:animate-none'));
+    container
+      .querySelectorAll('[aria-hidden] > span')
+      .forEach((d) => expect(d.className).toContain('motion-reduce:animate-none'));
   });
 
   it('is a status region only when asked to announce', () => {

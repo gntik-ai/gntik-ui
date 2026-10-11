@@ -16,7 +16,12 @@ export default function TransferListColumns() {
   const [visible, setVisible] = useState(['name', 'status', 'updated']);
   return (
     <div className="flex max-w-3xl flex-col gap-3">
-      <TransferList items={columns} value={visible} onValueChange={setVisible} titles={{ available: 'Hidden columns', selected: 'Visible columns' }} />
+      <TransferList
+        items={columns}
+        value={visible}
+        onValueChange={setVisible}
+        titles={{ available: 'Hidden columns', selected: 'Visible columns' }}
+      />
       <p className="text-[12px] text-muted-foreground">Table order: {visible.join(' · ')}</p>
     </div>
   );

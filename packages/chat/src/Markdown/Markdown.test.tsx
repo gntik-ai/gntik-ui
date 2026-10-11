@@ -9,7 +9,11 @@ import { Markdown, repairStreamingMarkdown, safeUrl } from './Markdown';
 describe('Markdown safety', () => {
   it('never renders raw HTML', () => {
     const { container } = render(
-      <Markdown>{'Hello <script>alert(1)</script> <img src=x onerror="alert(2)"> <b>bold</b>\n\n<iframe src="https://evil.example"></iframe>'}</Markdown>,
+      <Markdown>
+        {
+          'Hello <script>alert(1)</script> <img src=x onerror="alert(2)"> <b>bold</b>\n\n<iframe src="https://evil.example"></iframe>'
+        }
+      </Markdown>,
     );
     expect(container.querySelector('script')).toBeNull();
     expect(container.querySelector('img')).toBeNull();
@@ -20,7 +24,11 @@ describe('Markdown safety', () => {
 
   it('strips javascript:, data: and vbscript: links', () => {
     const { container } = render(
-      <Markdown>{'[a](javascript:alert(1)) [b](JaVaScRiPt:alert(1)) [c](data:text/html;base64,PHNjcmlwdD4=) [d](vbscript:x) <javascript:alert(1)>'}</Markdown>,
+      <Markdown>
+        {
+          '[a](javascript:alert(1)) [b](JaVaScRiPt:alert(1)) [c](data:text/html;base64,PHNjcmlwdD4=) [d](vbscript:x) <javascript:alert(1)>'
+        }
+      </Markdown>,
     );
     for (const a of Array.from(container.querySelectorAll('a'))) {
       const href = a.getAttribute('href') ?? '';
@@ -41,7 +49,10 @@ describe('Markdown safety', () => {
   it('renders images as links instead of loading them', () => {
     render(<Markdown>{'![usage chart](https://example.com/chart.png)'}</Markdown>);
     expect(screen.queryByRole('img')).toBeNull();
-    expect(screen.getByRole('link', { name: /Image: usage chart/ })).toHaveAttribute('href', 'https://example.com/chart.png');
+    expect(screen.getByRole('link', { name: /Image: usage chart/ })).toHaveAttribute(
+      'href',
+      'https://example.com/chart.png',
+    );
   });
 
   it('marks external links and opens them in a new tab', () => {

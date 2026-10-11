@@ -22,7 +22,19 @@ export interface PowerSearchChipProps {
 }
 
 /** One committed term. The body is reachable with ArrowLeft from the input (roving), not Tab. */
-export function PowerSearchChip({ field, operator, value, description, removeLabel, editHint, index, disabled, onKeyDown, onEdit, onRemove }: PowerSearchChipProps) {
+export function PowerSearchChip({
+  field,
+  operator,
+  value,
+  description,
+  removeLabel,
+  editHint,
+  index,
+  disabled,
+  onKeyDown,
+  onEdit,
+  onRemove,
+}: PowerSearchChipProps) {
   return (
     <span role="listitem" className={cn(s.chip(), !field && s.chipText())}>
       <button
@@ -40,7 +52,14 @@ export function PowerSearchChip({ field, operator, value, description, removeLab
         {operator && <span className={s.chipOp()}>{operator}</span>}
         <span className="truncate">{value}</span>
       </button>
-      <button type="button" tabIndex={-1} aria-label={removeLabel} disabled={disabled} className={s.chipRemove()} onClick={onRemove}>
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-label={removeLabel}
+        disabled={disabled}
+        className={s.chipRemove()}
+        onClick={onRemove}
+      >
         <X size={11} strokeWidth={2.4} aria-hidden />
       </button>
     </span>

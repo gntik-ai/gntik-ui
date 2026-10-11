@@ -81,7 +81,13 @@ export function PaginationFooter({
           </span>{' '}
           {t('pagination.of')} <span className="font-mono text-foreground">{fmt(total)}</span>
         </p>
-        <Pagination page={page} pageCount={pageCount} onPageChange={goTo} size="sm" labels={{ nav: t('table.pagination', { noun }) }} />
+        <Pagination
+          page={page}
+          pageCount={pageCount}
+          onPageChange={goTo}
+          size="sm"
+          labels={{ nav: t('table.pagination', { noun }) }}
+        />
       </div>
     </div>
   );

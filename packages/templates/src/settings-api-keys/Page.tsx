@@ -1,4 +1,13 @@
-import { ConfirmDestructive, CreateApiKeyDialog, DataTable, generateDemoSecret, type ApiKeyExpiry, type ApiKeyScope, type CreateApiKeyInput, type DataTableColumn } from '@gntik-ai/blocks';
+import {
+  ConfirmDestructive,
+  CreateApiKeyDialog,
+  DataTable,
+  generateDemoSecret,
+  type ApiKeyExpiry,
+  type ApiKeyScope,
+  type CreateApiKeyInput,
+  type DataTableColumn,
+} from '@gntik-ai/blocks';
 import { KeyRound, Plus, Trash2 } from '@gntik-ai/icons';
 import { Badge, EmptyState, Timestamp } from '@gntik-ai/ui';
 import { useState } from 'react';
@@ -42,7 +51,13 @@ const COLUMNS: DataTableColumn<ApiKey>[] = [
       </div>
     ),
   },
-  { id: 'created', header: 'Created', accessor: (k) => k.createdAt, sortable: true, cell: (k) => <Timestamp value={k.createdAt} tooltip={false} /> },
+  {
+    id: 'created',
+    header: 'Created',
+    accessor: (k) => k.createdAt,
+    sortable: true,
+    cell: (k) => <Timestamp value={k.createdAt} tooltip={false} />,
+  },
   {
     id: 'lastUsed',
     header: 'Last used',
@@ -72,7 +87,15 @@ export default function SettingsApiKeysPage({
   const create = async (input: CreateApiKeyInput) => {
     const secret = await onCreate(input);
     setCreated((list) => [
-      { id: `new-${list.length}-${input.name}`, name: input.name, prefix: secret.slice(0, 12), scopes: input.scopes, createdAt: new Date().toISOString(), lastUsedAt: null, createdBy: 'You' },
+      {
+        id: `new-${list.length}-${input.name}`,
+        name: input.name,
+        prefix: secret.slice(0, 12),
+        scopes: input.scopes,
+        createdAt: new Date().toISOString(),
+        lastUsedAt: null,
+        createdBy: 'You',
+      },
       ...list,
     ]);
     return secret;
@@ -110,9 +133,22 @@ export default function SettingsApiKeysPage({
             },
           },
         ]}
-        emptyState={<EmptyState icon={KeyRound} title="No API keys" description="Create a key to call the API from scripts and services." />}
+        emptyState={
+          <EmptyState
+            icon={KeyRound}
+            title="No API keys"
+            description="Create a key to call the API from scripts and services."
+          />
+        }
       />
-      <CreateApiKeyDialog trigger={null} open={createOpen} onOpenChange={setCreateOpen} scopes={scopes} expiries={expiries} onCreate={create} />
+      <CreateApiKeyDialog
+        trigger={null}
+        open={createOpen}
+        onOpenChange={setCreateOpen}
+        scopes={scopes}
+        expiries={expiries}
+        onCreate={create}
+      />
       {revoking && (
         <ConfirmDestructive
           key={revoking.id}
@@ -123,7 +159,10 @@ export default function SettingsApiKeysPage({
           resourceType="API key"
           title="Revoke API key?"
           confirmLabel="Revoke key"
-          consequences={['Requests signed with this key start failing immediately', 'Scripts and services using it must get a new key']}
+          consequences={[
+            'Requests signed with this key start failing immediately',
+            'Scripts and services using it must get a new key',
+          ]}
           onConfirm={revoke}
         />
       )}

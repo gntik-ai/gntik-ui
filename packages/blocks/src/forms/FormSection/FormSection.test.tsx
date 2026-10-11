@@ -15,7 +15,11 @@ describe('FormSection', () => {
   it('renders custom fields and actions', async () => {
     const onSave = vi.fn();
     render(
-      <FormSection title="Profile" description="How you appear to others." actions={<Button onClick={onSave}>Save</Button>}>
+      <FormSection
+        title="Profile"
+        description="How you appear to others."
+        actions={<Button onClick={onSave}>Save</Button>}
+      >
         <Field>
           <FieldLabel>Display name</FieldLabel>
           <Input />

@@ -15,7 +15,16 @@ export interface FalconeFunction {
   errorRate: number;
 }
 
-type Seed = [name: string, projectId: string, runtime: Runtime, stage: Stage, status: FalconeFunction['status'], inv: number, p95: number, err: number];
+type Seed = [
+  name: string,
+  projectId: string,
+  runtime: Runtime,
+  stage: Stage,
+  status: FalconeFunction['status'],
+  inv: number,
+  p95: number,
+  err: number,
+];
 
 const SEEDS: Seed[] = [
   ['create-order', 'checkout-api', 'node22', 'prod', 'running', 412_880, 164, 0.0018],

@@ -67,7 +67,12 @@ describe('Breadcrumbs', () => {
 
   it('examples have no axe violations (collapsed and expanded)', async () => {
     const user = userEvent.setup();
-    render(<><BreadcrumbsBasic /><BreadcrumbsCollapsed /></>);
+    render(
+      <>
+        <BreadcrumbsBasic />
+        <BreadcrumbsCollapsed />
+      </>,
+    );
     await expectNoAxeViolations();
     await user.click(screen.getByRole('button', { name: 'Show 2 more levels' }));
     await expectNoAxeViolations();

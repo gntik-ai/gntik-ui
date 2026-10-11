@@ -1,7 +1,16 @@
 import { Plus } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { cn } from '../../utils/cn';
-import { Menu, MenuContent, MenuGroupLabel, MenuItem, MenuRadioGroup, MenuRadioItem, MenuSeparator, MenuTrigger } from '../Menu';
+import {
+  Menu,
+  MenuContent,
+  MenuGroupLabel,
+  MenuItem,
+  MenuRadioGroup,
+  MenuRadioItem,
+  MenuSeparator,
+  MenuTrigger,
+} from '../Menu';
 import { workspaceSwitcherVariants } from './workspace-switcher.variants';
 import { triggerLabel, WorkspaceOptionBody, WorkspaceTriggerContent, type Workspace } from './parts';
 import { useI18n } from '../../i18n/I18nProvider';

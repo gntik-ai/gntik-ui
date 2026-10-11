@@ -31,7 +31,10 @@ export interface ComboboxAsyncProps<Value> {
   errorText?: ReactNode | ((error: unknown) => ReactNode);
 }
 
-export type ComboboxProps<Value, Multiple extends boolean | undefined = false> = BaseCombobox.Root.Props<Value, Multiple> &
+export type ComboboxProps<Value, Multiple extends boolean | undefined = false> = BaseCombobox.Root.Props<
+  Value,
+  Multiple
+> &
   ComboboxAsyncProps<Value>;
 
 interface ComboboxEnhancement {
@@ -108,14 +111,19 @@ function EnhancedCombobox<Multiple extends boolean | undefined>({
   const open = openProp ?? innerOpen;
   const keepOpen = useRef(false);
 
-  const toLabel = (item: unknown) => (isSpecialItem(item) ? item.label : itemToStringLabel ? itemToStringLabel(item) : defaultItemLabel(item));
+  const toLabel = (item: unknown) =>
+    isSpecialItem(item) ? item.label : itemToStringLabel ? itemToStringLabel(item) : defaultItemLabel(item);
   const typed = input.trim();
   const selectedLabel = !multiple && value != null ? toLabel(value).trim() : null;
   // A single selection fills the input with its label: that is not a search.
   const query = selectedLabel !== null && selectedLabel === typed ? '' : typed;
 
   const remote = useAsyncOptions<unknown>(loadOptions, query, { debounceMs, enabled: open });
-  const base: readonly unknown[] = loadOptions ? (remote.error ? [] : remote.items) : ((items as readonly unknown[] | undefined) ?? []);
+  const base: readonly unknown[] = loadOptions
+    ? remote.error
+      ? []
+      : remote.items
+    : ((items as readonly unknown[] | undefined) ?? []);
   const specials: SpecialItem[] = [];
   if (onCreate && query !== '' && !hasExactLabel(base, typed, toLabel)) specials.push(createItem(typed));
   if (loadOptions && remote.error && !remote.loading) specials.push(retryItem(input));
@@ -177,13 +185,19 @@ function EnhancedCombobox<Multiple extends boolean | undefined>({
         }}
         itemToStringLabel={toLabel}
         isItemEqualToValue={(a: unknown, b: unknown) =>
-          isSpecialItem(a) || isSpecialItem(b) ? a === b : isItemEqualToValue ? isItemEqualToValue(a, b) : Object.is(a, b)
+          isSpecialItem(a) || isSpecialItem(b)
+            ? a === b
+            : isItemEqualToValue
+              ? isItemEqualToValue(a, b)
+              : Object.is(a, b)
         }
         filter={
           loadOptions
             ? null
             : (item: unknown, q: string, toString?: (item: unknown) => string) =>
-                isSpecialItem(item) || filter === null || (filter ? filter(item, q, toString) : core.contains(item, q, toString))
+                isSpecialItem(item) ||
+                filter === null ||
+                (filter ? filter(item, q, toString) : core.contains(item, q, toString))
         }
       />
     </EnhancementContext.Provider>

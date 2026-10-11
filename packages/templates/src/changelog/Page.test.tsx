@@ -21,7 +21,9 @@ describe('ChangelogPage', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Security' }));
     expect(onTagsChange).toHaveBeenLastCalledWith(['security']);
     const list = screen.getByRole('list', { name: 'Releases' });
-    expect(within(list).getAllByRole('article')).toHaveLength(changelogEntries.filter((e) => e.tags.includes('security')).length);
+    expect(within(list).getAllByRole('article')).toHaveLength(
+      changelogEntries.filter((e) => e.tags.includes('security')).length,
+    );
     expect(screen.getByText('2 releases')).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Show all' }));
     expect(screen.getByText(`${changelogEntries.length} releases`)).toBeInTheDocument();

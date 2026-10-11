@@ -1,4 +1,16 @@
-import { Alert, Button, Checkbox, Field, FieldDescription, FieldError, FieldLabel, Input, Link, PasswordInput, cn } from '@gntik-ai/ui';
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  Input,
+  Link,
+  PasswordInput,
+  cn,
+} from '@gntik-ai/ui';
 import { Lock, Mail } from '@gntik-ai/icons';
 import { useImperativeHandle, useRef, useState, type MouseEvent, type ReactNode, type Ref } from 'react';
 import { SsoButtons } from '../SsoButtons/SsoButtons';
@@ -133,7 +145,14 @@ export function SignInForm({
             passwordInput.current?.focus();
             return;
           }
-          void run(() => onSubmit?.({ email: email.trim(), ...(identifier?.type === 'text' ? { identifier: email.trim() } : {}), password, remember }));
+          void run(() =>
+            onSubmit?.({
+              email: email.trim(),
+              ...(identifier?.type === 'text' ? { identifier: email.trim() } : {}),
+              password,
+              remember,
+            }),
+          );
         }}
       >
         {alert && <Alert id={feedbackId} tone="destructive" description={alert} />}

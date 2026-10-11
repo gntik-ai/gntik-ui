@@ -11,7 +11,16 @@ export default function DatePickerBasic() {
     <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
       <Field>
         <FieldLabel>Release date</FieldLabel>
-        <DatePicker value={release} onValueChange={setRelease} locale="en-US" weekStartsOn={1} today={today} min={today} isDateDisabled={isWeekend} name="release" />
+        <DatePicker
+          value={release}
+          onValueChange={setRelease}
+          locale="en-US"
+          weekStartsOn={1}
+          today={today}
+          min={today}
+          isDateDisabled={isWeekend}
+          name="release"
+        />
         <FieldDescription>Releases ship on weekdays only.</FieldDescription>
       </Field>
       <Field invalid>

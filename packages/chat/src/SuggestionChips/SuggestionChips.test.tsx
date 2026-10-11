@@ -13,13 +13,19 @@ describe('SuggestionChips', () => {
       <SuggestionChips
         heading="Try asking"
         onSelect={onSelect}
-        suggestions={[{ label: 'Find unpaid invoices', prompt: 'List unpaid invoices from last month' }, 'Export as CSV']}
+        suggestions={[
+          { label: 'Find unpaid invoices', prompt: 'List unpaid invoices from last month' },
+          'Export as CSV',
+        ]}
       />,
     );
     expect(screen.getByRole('group', { name: 'Try asking' })).toBeInTheDocument();
     await user.tab();
     await user.keyboard('{Enter}');
-    expect(onSelect).toHaveBeenLastCalledWith('List unpaid invoices from last month', expect.objectContaining({ label: 'Find unpaid invoices' }));
+    expect(onSelect).toHaveBeenLastCalledWith(
+      'List unpaid invoices from last month',
+      expect.objectContaining({ label: 'Find unpaid invoices' }),
+    );
     await user.tab();
     expect(screen.getByRole('button', { name: 'Export as CSV' })).toHaveFocus();
     await user.keyboard(' ');

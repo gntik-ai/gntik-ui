@@ -9,14 +9,29 @@ export const publicMenu: MegaMenuItem[] = [
       {
         title: 'Build',
         links: [
-          { label: 'Projects', href: '/product/projects', icon: FolderKanban, description: 'Every project, its environments and owners.' },
-          { label: 'Deployments', href: '/product/deployments', icon: Rocket, description: 'Previews, rollbacks and deploy gates.' },
+          {
+            label: 'Projects',
+            href: '/product/projects',
+            icon: FolderKanban,
+            description: 'Every project, its environments and owners.',
+          },
+          {
+            label: 'Deployments',
+            href: '/product/deployments',
+            icon: Rocket,
+            description: 'Previews, rollbacks and deploy gates.',
+          },
         ],
       },
       {
         title: 'Operate',
         links: [
-          { label: 'Analytics', href: '/product/analytics', icon: BarChart3, description: 'Usage, latency and error budgets.' },
+          {
+            label: 'Analytics',
+            href: '/product/analytics',
+            icon: BarChart3,
+            description: 'Usage, latency and error budgets.',
+          },
           { label: 'Security', href: '/product/security', icon: Shield, description: 'SSO, roles and audit logs.' },
         ],
       },
@@ -87,4 +102,3 @@ export const comparisonSections: ComparisonSection[] = [
     ],
   },
 ];
-

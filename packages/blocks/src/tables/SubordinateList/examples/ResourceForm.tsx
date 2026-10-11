@@ -43,7 +43,13 @@ export default function ResourceFormExample({ state = 'default' }: { state?: Exa
         }}
       >
         <Stack gap={8}>
-          <FormSection title="General" description="Settings for this resource." actions={null} headingLevel="h2" divided={false}>
+          <FormSection
+            title="General"
+            description="Settings for this resource."
+            actions={null}
+            headingLevel="h2"
+            divided={false}
+          >
             <Field>
               <FieldLabel>Resource name</FieldLabel>
               <Input value={name} onValueChange={setName} />
@@ -110,7 +116,12 @@ export default function ResourceFormExample({ state = 'default' }: { state?: Exa
               />
             }
           />
-          <StickyActionBar dirty={name !== savedName} saving={false} onSave={() => setSavedName(name)} onCancel={() => setName(savedName)} />
+          <StickyActionBar
+            dirty={name !== savedName}
+            saving={false}
+            onSave={() => setSavedName(name)}
+            onCancel={() => setName(savedName)}
+          />
         </Stack>
       </form>
     </Page>

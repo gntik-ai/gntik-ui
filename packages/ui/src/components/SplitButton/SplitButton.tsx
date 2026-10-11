@@ -72,13 +72,32 @@ export function SplitButton({
   const s = splitButtonVariants({ variant: variant ?? 'primary' });
   return (
     <div ref={ref} role="group" aria-label={groupLabel} className={cn(s.root(), className)} data-variant={variant}>
-      <Button {...buttonProps} variant={variant} size={size} disabled={disabled} loading={loading} className={cn(s.action(), buttonClassName)}>
+      <Button
+        {...buttonProps}
+        variant={variant}
+        size={size}
+        disabled={disabled}
+        loading={loading}
+        className={cn(s.action(), buttonClassName)}
+      >
         {children}
       </Button>
-      <Menu open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange ? (next) => onOpenChange(next) : undefined}>
+      <Menu
+        open={open}
+        defaultOpen={defaultOpen}
+        onOpenChange={onOpenChange ? (next) => onOpenChange(next) : undefined}
+      >
         <MenuTrigger
           disabled={disabled || menuDisabled}
-          render={<IconButton icon={ChevronDown} label={menuLabel ?? t('splitButton.more')} variant={variant} size={size} className={s.trigger()} />}
+          render={
+            <IconButton
+              icon={ChevronDown}
+              label={menuLabel ?? t('splitButton.more')}
+              variant={variant}
+              size={size}
+              className={s.trigger()}
+            />
+          }
         />
         <MenuContent side={side} align={align}>
           {actions.map((action, i) => (
@@ -95,7 +114,13 @@ function SplitButtonMenuItem({ action, first }: { action: SplitButtonAction; fir
   return (
     <>
       {action.separator && !first && <MenuSeparator />}
-      <MenuItem icon={action.icon} shortcut={action.shortcut} destructive={action.destructive} disabled={action.disabled} onClick={action.onSelect}>
+      <MenuItem
+        icon={action.icon}
+        shortcut={action.shortcut}
+        destructive={action.destructive}
+        disabled={action.disabled}
+        onClick={action.onSelect}
+      >
         {action.label}
       </MenuItem>
     </>

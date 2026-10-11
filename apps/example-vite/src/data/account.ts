@@ -1,4 +1,13 @@
-import { memberRoles, type BillingPlan, type Invitation, type Invoice, type Member, type PaymentMethod, type Profile, type Quota } from '@gntik-ai/blocks';
+import {
+  memberRoles,
+  type BillingPlan,
+  type Invitation,
+  type Invoice,
+  type Member,
+  type PaymentMethod,
+  type Profile,
+  type Quota,
+} from '@gntik-ai/blocks';
 import { Building2, CalendarDays, Mail, MapPin } from '@gntik-ai/icons';
 import type { SettingsMembersPage, SettingsProfilePage } from '@gntik-ai/templates';
 import type { ItemOf, PropOf } from './types';
@@ -37,8 +46,22 @@ export const members: Member[] = [
 ];
 
 export const invitations: Invitation[] = [
-  { id: 'i1', email: 'morgan@acme.example', role: 'Member', invitedBy: 'Priya Shah', invitedAt: inDays(-1), expiresAt: inDays(6) },
-  { id: 'i2', email: 'taylor@acme.example', role: 'Viewer', invitedBy: 'Alex Rivera', invitedAt: inDays(-8), expiresAt: inDays(-1) },
+  {
+    id: 'i1',
+    email: 'morgan@acme.example',
+    role: 'Member',
+    invitedBy: 'Priya Shah',
+    invitedAt: inDays(-1),
+    expiresAt: inDays(6),
+  },
+  {
+    id: 'i2',
+    email: 'taylor@acme.example',
+    role: 'Viewer',
+    invitedBy: 'Alex Rivera',
+    invitedAt: inDays(-8),
+    expiresAt: inDays(-1),
+  },
 ];
 
 export const roles = memberRoles;
@@ -70,7 +93,15 @@ export const quotas: Quota[] = [
   { id: 'seats', label: 'Seats', used: 4, limit: 10, projected: 5, unit: 'seats' },
 ];
 
-export const paymentMethod: PaymentMethod = { brand: 'Visa', last4: '4242', expMonth: 4, expYear: 2029, holder: 'Acme Inc.', isDefault: true, status: 'valid' };
+export const paymentMethod: PaymentMethod = {
+  brand: 'Visa',
+  last4: '4242',
+  expMonth: 4,
+  expYear: 2029,
+  holder: 'Acme Inc.',
+  isDefault: true,
+  status: 'valid',
+};
 
 export const invoices: Invoice[] = [
   { id: 'inv9', number: 'INV-2026-0009', date: '2026-09-01', amount: 49, status: 'paid' },

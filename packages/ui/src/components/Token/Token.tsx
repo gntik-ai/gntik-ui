@@ -5,7 +5,8 @@ import { cn } from '../../utils/cn';
 import { tokenVariants, type TokenVariantProps } from './token.variants';
 
 export interface TokenProps
-  extends Omit<HTMLAttributes<HTMLSpanElement>, 'className' | 'children' | 'prefix'>,
+  extends
+    Omit<HTMLAttributes<HTMLSpanElement>, 'className' | 'children' | 'prefix'>,
     Omit<TokenVariantProps, 'removable'> {
   className?: string;
   ref?: Ref<HTMLSpanElement>;
@@ -40,7 +41,9 @@ export function Token({
 }: TokenProps) {
   const { t } = useI18n();
   const s = tokenVariants({ tone, size, removable: onRemove != null });
-  const name = removeLabel ?? (typeof label === 'string' || typeof label === 'number' ? t('common.removeItem', { label }) : t('common.remove'));
+  const name =
+    removeLabel ??
+    (typeof label === 'string' || typeof label === 'number' ? t('common.removeItem', { label }) : t('common.remove'));
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (disabled || !onRemove) return;
     if (event.key === 'Backspace' || event.key === 'Delete') {

@@ -44,7 +44,11 @@ export function Button({
       className={cn(buttonVariants({ variant, size, iconOnly }), className)}
       {...props}
     >
-      {loading ? <Spinner size={px} /> : LeadingIcon && <LeadingIcon size={px} aria-hidden className={rtlIconClass(LeadingIcon)} />}
+      {loading ? (
+        <Spinner size={px} />
+      ) : (
+        LeadingIcon && <LeadingIcon size={px} aria-hidden className={rtlIconClass(LeadingIcon)} />
+      )}
       {children}
       {!loading && TrailingIcon && <TrailingIcon size={px} aria-hidden className={rtlIconClass(TrailingIcon)} />}
     </BaseButton>
@@ -58,7 +62,15 @@ export interface IconButtonProps extends Omit<ButtonProps, 'icon' | 'trailingIco
 }
 
 /** Square, icon-only button. `label` becomes its accessible name. */
-export function IconButton({ icon: IconCmp, label, size = 'auto', variant = 'ghost', loading, className, ...props }: IconButtonProps) {
+export function IconButton({
+  icon: IconCmp,
+  label,
+  size = 'auto',
+  variant = 'ghost',
+  loading,
+  className,
+  ...props
+}: IconButtonProps) {
   const px = buttonIconSize(size, useDensity());
   return (
     <Button

@@ -16,23 +16,35 @@ const layoutExamples = kit.items
   .flatMap((i) => {
     const dir = new URL(`../../../${i.docs.slice(0, i.docs.lastIndexOf('/'))}/examples/`, import.meta.url);
     const kebab = (s) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-    return fs.readdirSync(dir).filter((f) => f.endsWith('.tsx')).map((f) => `${i.id}--${kebab(f.slice(0, -4))}`);
+    return fs
+      .readdirSync(dir)
+      .filter((f) => f.endsWith('.tsx'))
+      .map((f) => `${i.id}--${kebab(f.slice(0, -4))}`);
   });
 
 const cases = [
-  ...kit.items.filter((i) => i.kind === 'template').flatMap((i) => ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: i.id, theme }))),
+  ...kit.items
+    .filter((i) => i.kind === 'template')
+    .flatMap((i) => ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: i.id, theme }))),
   ...['full', 'minimal', 'loading', 'minimal-loading'].flatMap((fixture) =>
     ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: `public-hub--${fixture}`, theme })),
   ),
   ...kit.items.filter((i) => i.kind === 'block').map((i) => ({ kind: 'block', id: i.id, theme: 'dark' })),
-  ...['subordinate-list', 'subordinate-list--loading', 'subordinate-list--empty', 'subordinate-list--error'].flatMap((id) =>
-    ['dark', 'light', 'high_contrast'].filter((theme) => id !== 'subordinate-list' || theme !== 'dark').map((theme) => ({ kind: 'block', id, theme })),
+  ...['subordinate-list', 'subordinate-list--loading', 'subordinate-list--empty', 'subordinate-list--error'].flatMap(
+    (id) =>
+      ['dark', 'light', 'high_contrast']
+        .filter((theme) => id !== 'subordinate-list' || theme !== 'dark')
+        .map((theme) => ({ kind: 'block', id, theme })),
   ),
   ...layoutExamples.map((id) => ({ kind: 'layout', id, theme: 'dark' })),
   ...['light', 'high_contrast'].map((theme) => ({ kind: 'layout', id: 'status-layout--status-layout-heading', theme })),
   ...['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: 'status-404--page-header', theme })),
   ...['stored', 'fresh'].flatMap((variant) =>
-    ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'block', id: `credential-disclosure-dialog--${variant}`, theme })),
+    ['dark', 'light', 'high_contrast'].map((theme) => ({
+      kind: 'block',
+      id: `credential-disclosure-dialog--${variant}`,
+      theme,
+    })),
   ),
 ];
 
@@ -55,7 +67,9 @@ for (const { kind, id, theme } of cases) {
       await page.keyboard.press('Shift+Tab');
       await expect(page.getByRole('button', { name: 'Close', exact: true })).toBeFocused();
       await page.keyboard.press('Tab');
-      await expect.poll(() => page.getByRole('dialog').evaluate((dialog) => dialog.contains(document.activeElement))).toBe(true);
+      await expect
+        .poll(() => page.getByRole('dialog').evaluate((dialog) => dialog.contains(document.activeElement)))
+        .toBe(true);
     }
     await page.waitForTimeout(kind === 'template' ? 900 : 500);
     await page.addScriptTag({ content: AXE });

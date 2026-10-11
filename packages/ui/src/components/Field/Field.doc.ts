@@ -4,7 +4,8 @@ export const doc: ComponentDoc = {
   name: 'Field',
   group: 'Forms',
   status: 'stable',
-  description: 'Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name.',
+  description:
+    'Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name.',
   primitive: '@base-ui/react/field, @base-ui/react/fieldset',
   pattern: 'form field (label + description + error), fieldset/legend',
   keyboard: [

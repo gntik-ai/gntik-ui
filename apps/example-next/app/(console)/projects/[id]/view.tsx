@@ -16,7 +16,10 @@ export function ProjectView({ id, now }: { id: string; now: number }) {
       name={project.name}
       description={project.description}
       status={project.status}
-      breadcrumbs={[{ label: 'Projects', href: '/projects' }, { label: project.name, mono: true }]}
+      breadcrumbs={[
+        { label: 'Projects', href: '/projects' },
+        { label: project.name, mono: true },
+      ]}
       meta={[
         { label: 'Region', value: project.region, icon: Globe, mono: true },
         { label: 'Owner', value: project.owner, icon: User },
@@ -32,8 +35,20 @@ export function ProjectView({ id, now }: { id: string; now: number }) {
       events={projectEventsAt(now)}
       activity={activityAt(now)}
       dangerActions={[
-        { id: 'pause', title: 'Pause project', description: 'Stops serving traffic until you resume it.', actionLabel: 'Pause', destructive: false },
-        { id: 'delete', title: 'Delete project', description: `Permanently deletes ${project.name}. This cannot be undone.`, actionLabel: 'Delete project', confirmText: project.name },
+        {
+          id: 'pause',
+          title: 'Pause project',
+          description: 'Stops serving traffic until you resume it.',
+          actionLabel: 'Pause',
+          destructive: false,
+        },
+        {
+          id: 'delete',
+          title: 'Delete project',
+          description: `Permanently deletes ${project.name}. This cannot be undone.`,
+          actionLabel: 'Delete project',
+          confirmText: project.name,
+        },
       ]}
       onDangerAction={(action) => {
         if (action === 'delete') router.push('/projects');

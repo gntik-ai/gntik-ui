@@ -1,4 +1,13 @@
-import { Badge, Select, SelectContent, SelectGroup, SelectGroupLabel, SelectItem, SelectTrigger, cn } from '@gntik-ai/ui';
+import {
+  Badge,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectGroupLabel,
+  SelectItem,
+  SelectTrigger,
+  cn,
+} from '@gntik-ai/ui';
 import { Sparkles } from 'lucide-react';
 import type { Ref } from 'react';
 import { useChatI18n, type ChatMessageKey } from '../utils/i18n';
@@ -125,7 +134,9 @@ export function ModelPicker({
                       ))}
                       {m.contextWindow !== undefined && (
                         <Badge size="sm" tone="neutral" variant="outline">
-                          {tc('chat.contextWindow', { size: formatNumber(m.contextWindow, { notation: 'compact', maximumFractionDigits: 1 }) })}
+                          {tc('chat.contextWindow', {
+                            size: formatNumber(m.contextWindow, { notation: 'compact', maximumFractionDigits: 1 }),
+                          })}
                         </Badge>
                       )}
                     </span>

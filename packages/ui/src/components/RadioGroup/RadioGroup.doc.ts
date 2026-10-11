@@ -4,7 +4,8 @@ export const doc: ComponentDoc = {
   name: 'RadioGroup',
   group: 'Forms',
   status: 'stable',
-  description: 'Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants.',
+  description:
+    'Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants.',
   primitive: '@base-ui/react/radio-group, @base-ui/react/radio',
   pattern: 'radio group',
   keyboard: [
@@ -13,5 +14,14 @@ export const doc: ComponentDoc = {
     ['Arrow Up / Arrow Left', 'Moves to the previous radio and selects it (wraps)'],
     ['Space', 'Selects the focused radio if it is not already selected'],
   ],
-  tokens: ['background', 'border', 'primary', 'primary-foreground', 'foreground', 'muted-foreground', 'destructive', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'primary',
+    'primary-foreground',
+    'foreground',
+    'muted-foreground',
+    'destructive',
+    'focus-ring',
+  ],
 };

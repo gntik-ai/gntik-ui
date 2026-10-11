@@ -16,5 +16,15 @@ export const doc: ComponentDoc = {
     ['Enter', 'Moves the checked options (or the active one) to the other list'],
     ['Alt+ArrowUp / Alt+ArrowDown', 'Selected list: moves the checked options (or the active one) up / down'],
   ],
-  tokens: ['card', 'border', 'background', 'foreground', 'muted-foreground', 'primary', 'primary-foreground', 'secondary', 'focus-ring'],
+  tokens: [
+    'card',
+    'border',
+    'background',
+    'foreground',
+    'muted-foreground',
+    'primary',
+    'primary-foreground',
+    'secondary',
+    'focus-ring',
+  ],
 };

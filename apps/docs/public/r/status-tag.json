@@ -16,13 +16,13 @@
       "path": "packages/ui/src/components/StatusTag/StatusTag.tsx",
       "type": "registry:ui",
       "target": "components/ui/status-tag/StatusTag.tsx",
-      "content": "import type { Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { Badge, type BadgeProps } from '../badge/Badge';\nimport { DEFAULT_STATUSES, statusTagVariants, type StatusDefinition, type StatusTagVariantProps } from './statusTag.variants';\n\nexport interface StatusTagProps extends Omit<BadgeProps, 'tone' | 'dot' | 'onRemove' | 'removeLabel' | 'children'>, StatusTagVariantProps {\n  ref?: Ref<HTMLSpanElement>;\n  /** State key, looked up in `statuses` (then the generic defaults). */\n  status: string;\n  /** Extra or overriding state → { label, tone } entries. */\n  statuses?: Record<string, StatusDefinition>;\n  /** Overrides the mapped label. */\n  label?: string;\n}\n\n/**\n * State pill with a dot. The state → tone mapping is a dictionary prop, merged over a small\n * set of generic states; unknown states fall back to a neutral tag showing the raw key.\n */\nexport function StatusTag({ status, statuses, label, uppercase, className, ...props }: StatusTagProps) {\n  const def = statuses?.[status] ?? DEFAULT_STATUSES[status];\n  const tone = def?.tone ?? 'neutral';\n  return (\n    <Badge tone={tone} dot data-status={status} className={cn(statusTagVariants({ uppercase }), className)} {...props}>\n      {label ?? def?.label ?? status}\n    </Badge>\n  );\n}\n"
+      "content": "import type { Ref } from 'react';\nimport { cn } from '../../utils/cn';\nimport { Badge, type BadgeProps } from '../badge/Badge';\nimport {\n  DEFAULT_STATUSES,\n  statusTagVariants,\n  type StatusDefinition,\n  type StatusTagVariantProps,\n} from './statusTag.variants';\n\nexport interface StatusTagProps\n  extends Omit<BadgeProps, 'tone' | 'dot' | 'onRemove' | 'removeLabel' | 'children'>, StatusTagVariantProps {\n  ref?: Ref<HTMLSpanElement>;\n  /** State key, looked up in `statuses` (then the generic defaults). */\n  status: string;\n  /** Extra or overriding state → { label, tone } entries. */\n  statuses?: Record<string, StatusDefinition>;\n  /** Overrides the mapped label. */\n  label?: string;\n}\n\n/**\n * State pill with a dot. The state → tone mapping is a dictionary prop, merged over a small\n * set of generic states; unknown states fall back to a neutral tag showing the raw key.\n */\nexport function StatusTag({ status, statuses, label, uppercase, className, ...props }: StatusTagProps) {\n  const def = statuses?.[status] ?? DEFAULT_STATUSES[status];\n  const tone = def?.tone ?? 'neutral';\n  return (\n    <Badge tone={tone} dot data-status={status} className={cn(statusTagVariants({ uppercase }), className)} {...props}>\n      {label ?? def?.label ?? status}\n    </Badge>\n  );\n}\n"
     },
     {
       "path": "packages/ui/src/components/StatusTag/index.ts",
       "type": "registry:ui",
       "target": "components/ui/status-tag/index.ts",
-      "content": "export { StatusTag, type StatusTagProps } from './StatusTag';\nexport { statusTagVariants, DEFAULT_STATUSES, type StatusDefinition, type StatusTagVariantProps } from './statusTag.variants';\nexport { doc as statusTagDoc } from './StatusTag.doc';\n"
+      "content": "export { StatusTag, type StatusTagProps } from './StatusTag';\nexport {\n  statusTagVariants,\n  DEFAULT_STATUSES,\n  type StatusDefinition,\n  type StatusTagVariantProps,\n} from './statusTag.variants';\nexport { doc as statusTagDoc } from './StatusTag.doc';\n"
     },
     {
       "path": "packages/ui/src/components/StatusTag/statusTag.variants.ts",
@@ -34,7 +34,7 @@
       "path": "packages/ui/src/components/StatusTag/StatusTag.doc.ts",
       "type": "registry:ui",
       "target": "components/ui/status-tag/StatusTag.doc.ts",
-      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'StatusTag',\n  group: 'Display',\n  status: 'stable',\n  description: 'State pill with a dot (running, queued, paused, failed, draft…). The state → tone mapping is a prop-driven dictionary merged over generic defaults, so products add their own states without touching the component.',\n  tokens: ['success', 'success-text', 'info', 'warning', 'warning-text', 'destructive', 'destructive-text', 'muted-foreground'],\n};\n"
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'StatusTag',\n  group: 'Display',\n  status: 'stable',\n  description:\n    'State pill with a dot (running, queued, paused, failed, draft…). The state → tone mapping is a prop-driven dictionary merged over generic defaults, so products add their own states without touching the component.',\n  tokens: [\n    'success',\n    'success-text',\n    'info',\n    'warning',\n    'warning-text',\n    'destructive',\n    'destructive-text',\n    'muted-foreground',\n  ],\n};\n"
     }
   ],
   "categories": [

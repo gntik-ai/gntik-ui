@@ -11,7 +11,8 @@ describe('BoardPage', () => {
     render(<BoardPage />);
     expect(screen.getByRole('main')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 1, name: 'Sprint board' })).toBeInTheDocument();
-    for (const c of boardColumns) expect(within(lane(c.title)).getAllByRole('button')).toHaveLength(boardState[c.id]!.length);
+    for (const c of boardColumns)
+      expect(within(lane(c.title)).getAllByRole('button')).toHaveLength(boardState[c.id]!.length);
     await expectNoAxeViolations();
   });
 
@@ -22,20 +23,26 @@ describe('BoardPage', () => {
     card.focus();
     await userEvent.keyboard(' ');
     expect(card).toHaveAttribute('aria-pressed', 'true');
-    expect(screen.getByText(/Picked up Rotate staging database credentials in Backlog, position 1 of 3/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Picked up Rotate staging database credentials in Backlog, position 1 of 3/),
+    ).toBeInTheDocument();
     await userEvent.keyboard('{ArrowRight}');
     const moved = within(lane('In progress')).getByRole('button', { name: /Rotate staging/ });
     expect(moved).toHaveFocus();
     expect(screen.getByText('Moved to In progress, position 1 of 3.')).toBeInTheDocument();
     await userEvent.keyboard('{ArrowDown} ');
     expect(onMove).toHaveBeenCalledWith('T-101', 'in-progress', 1);
-    expect(screen.getByText(/Dropped Rotate staging database credentials in In progress, position 2 of 3/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Dropped Rotate staging database credentials in In progress, position 2 of 3/),
+    ).toBeInTheDocument();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('Escape returns a picked-up card to where it was', { timeout: 15000 }, async () => {
     render(<BoardPage />);
-    within(lane('In review')).getByRole('button', { name: /audit log export/ }).focus();
+    within(lane('In review'))
+      .getByRole('button', { name: /audit log export/ })
+      .focus();
     await userEvent.keyboard(' {ArrowRight}{Escape}');
     expect(within(lane('In review')).getByRole('button', { name: /audit log export/ })).toHaveFocus();
     expect(screen.getByText(/Cancelled\./)).toBeInTheDocument();

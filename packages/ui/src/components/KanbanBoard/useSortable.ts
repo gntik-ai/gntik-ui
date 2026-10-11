@@ -1,4 +1,13 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
+} from 'react';
 import { useI18n } from '../../i18n/I18nProvider';
 
 /** A list of sortable items (a column, a lane, a single list). */
@@ -86,7 +95,10 @@ function findPosition(containers: SortableContainer[], itemId: string): Sortable
 }
 
 /** Applies a drag to the containers: removes the item from its origin, inserts it at `over`. */
-export function previewSortable(containers: SortableContainer[], drag: Pick<SortableDrag, 'itemId' | 'over'> | null): SortableContainer[] {
+export function previewSortable(
+  containers: SortableContainer[],
+  drag: Pick<SortableDrag, 'itemId' | 'over'> | null,
+): SortableContainer[] {
   if (!drag) return containers;
   const without = containers.map((c) => ({ id: c.id, items: c.items.filter((id) => id !== drag.itemId) }));
   return without.map((c) => {
@@ -97,7 +109,8 @@ export function previewSortable(containers: SortableContainer[], drag: Pick<Sort
   });
 }
 
-const samePosition = (a: SortablePosition, b: SortablePosition) => a.containerId === b.containerId && a.index === b.index;
+const samePosition = (a: SortablePosition, b: SortablePosition) =>
+  a.containerId === b.containerId && a.index === b.index;
 
 /**
  * Sortable lists with pointer and keyboard dragging, no dependencies. Space picks an item up,
@@ -180,7 +193,8 @@ export function useSortable({
     lastKeyboardItem.current = focusTarget;
     if (!id) return;
     const el = itemEls.current.get(id);
-    if (el && document.activeElement !== el && (focusTarget || !el.contains(document.activeElement))) el.focus({ preventScroll: false });
+    if (el && document.activeElement !== el && (focusTarget || !el.contains(document.activeElement)))
+      el.focus({ preventScroll: false });
   });
 
   /** Position under the pointer: container by x (nearest if outside all), index by item midpoints. */
@@ -212,7 +226,11 @@ export function useSortable({
     (itemId: string, event: ReactPointerEvent<HTMLElement>) => {
       if (disabled || event.button !== 0 || !event.isPrimary || latest.current.drag) return;
       const target = event.target as HTMLElement;
-      if (target !== event.currentTarget && target.closest('a, button, input, select, textarea, [contenteditable="true"]')) return;
+      if (
+        target !== event.currentTarget &&
+        target.closest('a, button, input, select, textarea, [contenteditable="true"]')
+      )
+        return;
       pointerCleanup.current?.();
       const startX = event.clientX;
       const startY = event.clientY;
@@ -299,7 +317,7 @@ export function useSortable({
       if (current.itemId !== itemId || current.mode !== 'keyboard') return;
       const lists = latest.current.preview;
       const ci = lists.findIndex((c) => c.id === current.over.containerId);
-      const lengthOf = (i: number) => (lists[i]?.items.filter((id) => id !== itemId).length ?? 0);
+      const lengthOf = (i: number) => lists[i]?.items.filter((id) => id !== itemId).length ?? 0;
       const across = (step: number) => {
         const ni = Math.min(Math.max(ci + step, 0), lists.length - 1);
         const next = lists[ni];

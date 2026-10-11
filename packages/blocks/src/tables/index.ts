@@ -16,7 +16,12 @@ export {
   type PinSide,
 } from './DataTable/column-sizing';
 export { ColumnResizeHandle, type ColumnResizeHandleProps } from './DataTable/resize-handle';
-export { EditableCell, type DataTableCellEdit, type DataTableCellEditResult, type DataTableCellEditHandler } from './DataTable/editable-cell';
+export {
+  EditableCell,
+  type DataTableCellEdit,
+  type DataTableCellEditResult,
+  type DataTableCellEditHandler,
+} from './DataTable/editable-cell';
 export {
   ViewSwitcher as DataTableViewSwitcher,
   sameViewState,

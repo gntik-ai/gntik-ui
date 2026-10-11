@@ -2,7 +2,16 @@ import { Menu as MenuIcon } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
 import { IconButton } from '../Button';
-import { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger, type DrawerSide } from '../Drawer';
+import {
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  type DrawerSide,
+} from '../Drawer';
 import { NavList, type NavGroup, type NavItem } from '../NavList';
 import { useI18n } from '../../i18n/I18nProvider';
 import { mobileNavVariants } from './mobile-nav.variants';

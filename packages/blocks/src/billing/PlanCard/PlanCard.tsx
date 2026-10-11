@@ -123,7 +123,10 @@ function BillingPlanCard({
         </div>
       </div>
       {plan.features && plan.features.length > 0 && (
-        <ul aria-label={`${plan.name} plan features`} className="mt-5 grid gap-x-6 gap-y-2 border-t border-border pt-5 sm:grid-cols-2">
+        <ul
+          aria-label={`${plan.name} plan features`}
+          className="mt-5 grid gap-x-6 gap-y-2 border-t border-border pt-5 sm:grid-cols-2"
+        >
           {plan.features.map((f) => (
             <li key={f} className="flex items-start gap-2 text-[13px] text-foreground">
               <Check size={15} aria-hidden className="mt-0.5 shrink-0 text-primary-text" />

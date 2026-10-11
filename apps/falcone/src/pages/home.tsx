@@ -36,7 +36,13 @@ export function Home() {
         categories: ['Compute', 'LLM tokens', 'Egress'],
         valueFormatter: chartFmt.usd,
       }}
-      secondaryChart={{ title: 'Invocations', description: 'Invocations and errors per day', index: 'day', categories: ['Invocations', 'Errors'], valueFormatter: chartFmt.compact }}
+      secondaryChart={{
+        title: 'Invocations',
+        description: 'Invocations and errors per day',
+        index: 'day',
+        categories: ['Invocations', 'Errors'],
+        valueFormatter: chartFmt.compact,
+      }}
       requestsByRange={invocationsByRange}
       requestRanges={invocationRanges}
       activity={homeActivity}

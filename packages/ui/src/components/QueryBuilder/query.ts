@@ -48,7 +48,8 @@ export interface QueryField {
  * A condition's value: text, number, boolean, an option list (`in` / `notIn`), a `[from, to]`
  * pair (`between`) or null. Dates are `YYYY-MM-DD` strings.
  */
-export type QueryValue = string | number | boolean | string[] | [number | null, number | null] | [string, string] | null;
+export type QueryValue =
+  string | number | boolean | string[] | [number | null, number | null] | [string, string] | null;
 
 export interface QueryCondition {
   type: 'condition';
@@ -77,7 +78,8 @@ export const QUERY_OPERATORS: Record<QueryFieldType, QueryOperator[]> = {
   boolean: ['isTrue', 'isFalse'],
 };
 
-export const operatorsFor = (field: QueryField | undefined): QueryOperator[] => (field ? (field.operators ?? QUERY_OPERATORS[field.type]) : []);
+export const operatorsFor = (field: QueryField | undefined): QueryOperator[] =>
+  field ? (field.operators ?? QUERY_OPERATORS[field.type]) : [];
 
 /** How many values an operator takes: none, one, a `[from, to]` pair, or a list. */
 export function operatorArity(op: QueryOperator): 'none' | 'one' | 'pair' | 'list' {
@@ -104,7 +106,8 @@ export function isConditionComplete(c: QueryCondition): boolean {
   if (!c.field) return false;
   if (arity === 'none') return true;
   const v = c.value;
-  if (arity === 'pair') return Array.isArray(v) && v.length === 2 && v.every((x) => x !== '' && x !== null && x !== undefined);
+  if (arity === 'pair')
+    return Array.isArray(v) && v.length === 2 && v.every((x) => x !== '' && x !== null && x !== undefined);
   if (arity === 'list') return Array.isArray(v) && v.length > 0;
   return v !== undefined && v !== null && v !== '';
 }
@@ -127,7 +130,10 @@ export interface QueryToStringOptions {
 export function queryToString(tree: QueryNode, options: QueryToStringOptions = {}): string {
   const lang = (options.locale ?? 'en').split(/[-_]/)[0]?.toLowerCase() ?? 'en';
   const messages: Messages = (catalogs as Record<string, Messages | undefined>)[lang] ?? en;
-  const t = options.t ?? ((key: MessageKey, vars?: Record<string, string | number>) => interpolate(messages[key] ?? en[key], vars, options.locale ?? 'en'));
+  const t =
+    options.t ??
+    ((key: MessageKey, vars?: Record<string, string | number>) =>
+      interpolate(messages[key] ?? en[key], vars, options.locale ?? 'en'));
   const fieldOf = (id: string) => options.fields?.find((f) => f.id === id);
 
   const literal = (field: QueryField | undefined, v: unknown): string => {
@@ -146,8 +152,10 @@ export function queryToString(tree: QueryNode, options: QueryToStringOptions = {
       const arity = operatorArity(node.operator);
       const v = node.value;
       if (arity === 'none') return head;
-      if (arity === 'pair' && Array.isArray(v)) return `${head} ${t('queryBuilder.between', { from: literal(field, v[0]), to: literal(field, v[1]) })}`;
-      if (arity === 'list' && Array.isArray(v)) return `${head} ${(v as unknown[]).map((x) => literal(field, x)).join(', ')}`;
+      if (arity === 'pair' && Array.isArray(v))
+        return `${head} ${t('queryBuilder.between', { from: literal(field, v[0]), to: literal(field, v[1]) })}`;
+      if (arity === 'list' && Array.isArray(v))
+        return `${head} ${(v as unknown[]).map((x) => literal(field, x)).join(', ')}`;
       return `${head} ${literal(field, v)}`;
     }
     const parts = node.children.map((c) => visit(c, true)).filter(Boolean);
@@ -164,7 +172,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
 /** `YYYY-MM-DD` of a Date (local) or of a date/datetime string; null otherwise. */
 function dayKey(v: unknown): string | null {
-  if (v instanceof Date) return Number.isNaN(v.getTime()) ? null : `${v.getFullYear()}-${pad(v.getMonth() + 1)}-${pad(v.getDate())}`;
+  if (v instanceof Date)
+    return Number.isNaN(v.getTime()) ? null : `${v.getFullYear()}-${pad(v.getMonth() + 1)}-${pad(v.getDate())}`;
   if (typeof v === 'string' && DAY.test(v)) return v.slice(0, 10);
   return null;
 }
@@ -255,5 +264,7 @@ export function evaluateQuery(tree: QueryNode, record: Record<string, unknown>, 
   }
   const relevant = tree.children.filter(hasCompleteCondition);
   if (!relevant.length) return true;
-  return tree.combinator === 'and' ? relevant.every((c) => evaluateQuery(c, record, fields)) : relevant.some((c) => evaluateQuery(c, record, fields));
+  return tree.combinator === 'and'
+    ? relevant.every((c) => evaluateQuery(c, record, fields))
+    : relevant.some((c) => evaluateQuery(c, record, fields));
 }

@@ -17,7 +17,14 @@ export const membersAt = (now: number): Member[] => [
 ];
 
 export const invitationsAt = (now: number): Invitation[] => [
-  { id: 'i1', email: 'robin@example.com', role: 'Member', invitedBy: 'Alex Morgan', invitedAt: inDays(now, -1), expiresAt: inDays(now, 6) },
+  {
+    id: 'i1',
+    email: 'robin@example.com',
+    role: 'Member',
+    invitedBy: 'Alex Morgan',
+    invitedAt: inDays(now, -1),
+    expiresAt: inDays(now, 6),
+  },
 ];
 
 export const profile: Profile = {

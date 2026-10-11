@@ -87,7 +87,11 @@ export const formatDate = (d: Date, locale?: string, options: Intl.DateTimeForma
   new Intl.DateTimeFormat(locale, options).format(d);
 
 /** "Mar 2 – 9, 2026" via Intl.formatRange; an open range shows only its start. */
-export function formatDateRange(range: DateRange, locale?: string, options: Intl.DateTimeFormatOptions = { dateStyle: 'medium' }) {
+export function formatDateRange(
+  range: DateRange,
+  locale?: string,
+  options: Intl.DateTimeFormatOptions = { dateStyle: 'medium' },
+) {
   const fmt = new Intl.DateTimeFormat(locale, options);
   if (!range.start) return '';
   if (!range.end) return `${fmt.format(range.start)} –`;

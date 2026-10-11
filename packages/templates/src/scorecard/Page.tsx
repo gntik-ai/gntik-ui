@@ -1,7 +1,21 @@
 import { CommentThread, KpiRow, PageHeader, type CommentAuthor, type ThreadComment } from '@gntik-ai/blocks';
 import { RadarChart } from '@gntik-ai/charts';
 import { Download } from '@gntik-ai/icons';
-import { Card, CardBody, CardDescription, CardHeader, CardTitle, Grid, HStack, Page, Section, SimpleSelect, Stack, Text, type BreadcrumbItem } from '@gntik-ai/ui';
+import {
+  Card,
+  CardBody,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Grid,
+  HStack,
+  Page,
+  Section,
+  SimpleSelect,
+  Stack,
+  Text,
+  type BreadcrumbItem,
+} from '@gntik-ai/ui';
 import { useState } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import {
@@ -96,7 +110,10 @@ export default function ScorecardPage(props: Partial<ScorecardProps>) {
           <KpiRow items={periodKpis(metrics, periods, index)} label={`Key metrics, ${period}`} showTrends={false} />
           <Grid cols={{ base: 1, xl: 3 }} gap={6} align="start">
             <Stack gap={6} className="min-w-0 xl:col-span-2">
-              <Section title="Targets" description="Attainment against this period’s targets; trend shows every quarter up to the selected one.">
+              <Section
+                title="Targets"
+                description="Attainment against this period’s targets; trend shows every quarter up to the selected one."
+              >
                 <TargetsTable metrics={metrics} periods={periods} index={index} />
               </Section>
               <Card>
@@ -105,7 +122,15 @@ export default function ScorecardPage(props: Partial<ScorecardProps>) {
                   <CardDescription>Scores out of 100{previous ? `, ${period} vs. ${previous}` : ''}.</CardDescription>
                 </CardHeader>
                 <CardBody>
-                  <RadarChart<RadarPoint> data={radar} index="dimension" categories={compared} max={100} height={300} aria-label={`Health by dimension, ${compared.join(' vs. ')}`} dataTable />
+                  <RadarChart<RadarPoint>
+                    data={radar}
+                    index="dimension"
+                    categories={compared}
+                    max={100}
+                    height={300}
+                    aria-label={`Health by dimension, ${compared.join(' vs. ')}`}
+                    dataTable
+                  />
                 </CardBody>
               </Card>
             </Stack>
@@ -116,7 +141,14 @@ export default function ScorecardPage(props: Partial<ScorecardProps>) {
                   <CardDescription>Notes from the review, newest last.</CardDescription>
                 </CardHeader>
                 <CardBody>
-                  <CommentThread comments={comments} currentUser={currentUser} onSubmit={onComment} label="Scorecard commentary" placeholder="Add a note for this period…" submitLabel="Post note" />
+                  <CommentThread
+                    comments={comments}
+                    currentUser={currentUser}
+                    onSubmit={onComment}
+                    label="Scorecard commentary"
+                    placeholder="Add a note for this period…"
+                    submitLabel="Post note"
+                  />
                 </CardBody>
               </Card>
             </aside>

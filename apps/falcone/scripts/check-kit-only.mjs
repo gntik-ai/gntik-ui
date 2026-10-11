@@ -50,7 +50,8 @@ function walk(dir) {
 }
 
 const violations = [];
-const report = (file, line, message) => violations.push(`${relative(appDir, file)}${line ? `:${line}` : ''}  ${message}`);
+const report = (file, line, message) =>
+  violations.push(`${relative(appDir, file)}${line ? `:${line}` : ''}  ${message}`);
 const lineOf = (text, index) => text.slice(0, index).split('\n').length;
 
 const files = walk(srcDir);
@@ -75,8 +76,10 @@ for (const file of files) {
     for (const m of text.matchAll(re)) {
       const spec = m[1];
       const line = lineOf(text, m.index);
-      if (!ALLOWED_IMPORT.test(spec)) report(file, line, `import of "${spec}" (only react, react-dom, @gntik-ai/* and relative paths)`);
-      else if (spec.endsWith('.css') && resolve(dirname(file), spec) !== indexCss) report(file, line, `CSS import "${spec}" (only src/index.css)`);
+      if (!ALLOWED_IMPORT.test(spec))
+        report(file, line, `import of "${spec}" (only react, react-dom, @gntik-ai/* and relative paths)`);
+      else if (spec.endsWith('.css') && resolve(dirname(file), spec) !== indexCss)
+        report(file, line, `CSS import "${spec}" (only src/index.css)`);
     }
   }
 }
@@ -89,7 +92,8 @@ try {
     if (!line) return;
     const m = /^@import\s+["']([^"']+)["']\s*;$/.exec(line);
     if (!m) report(indexCss, i + 1, `not an @import line: ${line}`);
-    else if (!ALLOWED_CSS_IMPORT.test(m[1])) report(indexCss, i + 1, `@import of "${m[1]}" (only tailwindcss, @gntik-ai/*/…css and Geist fonts)`);
+    else if (!ALLOWED_CSS_IMPORT.test(m[1]))
+      report(indexCss, i + 1, `@import of "${m[1]}" (only tailwindcss, @gntik-ai/*/…css and Geist fonts)`);
   });
 } catch {
   report(indexCss, 0, 'missing');
@@ -99,4 +103,6 @@ if (violations.length) {
   console.error(`check-kit-only: ${violations.length} violation(s)\n  ${violations.join('\n  ')}`);
   process.exit(1);
 }
-console.log(`check-kit-only: OK — ${codeFiles} source files, kit-only (no className/style, no colour literals, imports limited to react, react-dom, @gntik-ai/* and relative paths).`);
+console.log(
+  `check-kit-only: OK — ${codeFiles} source files, kit-only (no className/style, no colour literals, imports limited to react, react-dom, @gntik-ai/* and relative paths).`,
+);

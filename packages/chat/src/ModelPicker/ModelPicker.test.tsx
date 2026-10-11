@@ -39,25 +39,31 @@ describe('ModelPicker', () => {
     expect(trigger).not.toHaveTextContent('Hosted');
   });
 
-  it.each([['{Enter}'], [' '], ['{ArrowDown}']])('opens with %s; groups by provider with capability badges', async (key) => {
-    const user = userEvent.setup();
-    render(<Controlled />);
-    await user.tab();
-    await user.keyboard(key);
-    const listbox = await screen.findByRole('listbox');
-    const groups = within(listbox).getAllByRole('group');
-    expect(groups.map((g) => g.getAttribute('aria-labelledby') && document.getElementById(g.getAttribute('aria-labelledby')!)?.textContent)).toEqual([
-      'Hosted',
-      'Self-hosted',
-    ]);
-    const balanced = screen.getByRole('option', { name: /Balanced/ });
-    expect(balanced).toHaveTextContent('Vision');
-    expect(balanced).toHaveTextContent('Tools');
-    expect(balanced).toHaveTextContent('200K context');
-    const deep = screen.getByRole('option', { name: /Deep reasoning/ });
-    expect(deep).toHaveAttribute('aria-disabled', 'true');
-    expect(deep).toHaveTextContent('Needs an upgraded plan');
-  });
+  it.each([['{Enter}'], [' '], ['{ArrowDown}']])(
+    'opens with %s; groups by provider with capability badges',
+    async (key) => {
+      const user = userEvent.setup();
+      render(<Controlled />);
+      await user.tab();
+      await user.keyboard(key);
+      const listbox = await screen.findByRole('listbox');
+      const groups = within(listbox).getAllByRole('group');
+      expect(
+        groups.map(
+          (g) =>
+            g.getAttribute('aria-labelledby') &&
+            document.getElementById(g.getAttribute('aria-labelledby')!)?.textContent,
+        ),
+      ).toEqual(['Hosted', 'Self-hosted']);
+      const balanced = screen.getByRole('option', { name: /Balanced/ });
+      expect(balanced).toHaveTextContent('Vision');
+      expect(balanced).toHaveTextContent('Tools');
+      expect(balanced).toHaveTextContent('200K context');
+      const deep = screen.getByRole('option', { name: /Deep reasoning/ });
+      expect(deep).toHaveAttribute('aria-disabled', 'true');
+      expect(deep).toHaveTextContent('Needs an upgraded plan');
+    },
+  );
 
   it('ArrowDown / ArrowUp move; a disabled model is readable but Enter does not pick it; Enter selects and closes', async () => {
     const spy = vi.fn();

@@ -10,7 +10,17 @@ const now = new Date(Date.UTC(2026, 2, 27, 10, 0)); // Friday
 function setup(props: Partial<ScheduleInputProps> = {}) {
   const user = userEvent.setup();
   const onValueChange = vi.fn();
-  render(<ScheduleInput aria-label="Schedule" locale="en-US" timeZone="UTC" now={now} previewCount={3} onValueChange={onValueChange} {...props} />);
+  render(
+    <ScheduleInput
+      aria-label="Schedule"
+      locale="en-US"
+      timeZone="UTC"
+      now={now}
+      previewCount={3}
+      onValueChange={onValueChange}
+      {...props}
+    />,
+  );
   const field = screen.getByRole('textbox', { name: 'Cron expression' });
   return { user, onValueChange, field };
 }
@@ -20,11 +30,16 @@ describe('ScheduleInput', () => {
     const { field } = setup();
     expect(field).toHaveValue('0 9 * * 1-5');
     expect(screen.getByRole('button', { name: 'Weekly' })).toHaveAttribute('aria-pressed', 'true');
-    for (const day of ['Monday', 'Friday']) expect(screen.getByRole('button', { name: day })).toHaveAttribute('aria-pressed', 'true');
+    for (const day of ['Monday', 'Friday'])
+      expect(screen.getByRole('button', { name: day })).toHaveAttribute('aria-pressed', 'true');
     expect(screen.getByRole('button', { name: 'Sunday' })).toHaveAttribute('aria-pressed', 'false');
     expect(screen.getByText('Every weekday at 09:00')).toBeInTheDocument();
     const runs = within(screen.getByRole('list', { name: 'Next runs (UTC)' })).getAllByRole('listitem');
-    expect(runs.map((r) => r.textContent)).toEqual(['Mon, Mar 30, 2026, 09:00', 'Tue, Mar 31, 2026, 09:00', 'Wed, Apr 1, 2026, 09:00']);
+    expect(runs.map((r) => r.textContent)).toEqual([
+      'Mon, Mar 30, 2026, 09:00',
+      'Tue, Mar 31, 2026, 09:00',
+      'Wed, Apr 1, 2026, 09:00',
+    ]);
   });
 
   it('ArrowRight + Enter picks another frequency, which rewrites the expression', async () => {

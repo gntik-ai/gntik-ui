@@ -32,8 +32,18 @@ import {
   type WizardValues,
 } from './data';
 
-export interface CreateWizardProps extends Pick<WizardLayoutProps,
-  'mode' | 'size' | 'open' | 'onOpenChange' | 'description' | 'returnFocusRef' | 'closeOnInteractOutside' | 'stepAnnouncement' | 'pendingLabel'> {
+export interface CreateWizardProps extends Pick<
+  WizardLayoutProps,
+  | 'mode'
+  | 'size'
+  | 'open'
+  | 'onOpenChange'
+  | 'description'
+  | 'returnFocusRef'
+  | 'closeOnInteractOutside'
+  | 'stepAnnouncement'
+  | 'pendingLabel'
+> {
   /** Step-local errors or empty states, rendered within the scrollable step body. */
   stepFeedback?: (current: number) => ReactNode;
   /** Flow name in the top bar. */
@@ -83,7 +93,8 @@ export default function CreateWizardPage({
   const [touched, setTouched] = useState(false);
   const [finishing, setFinishing] = useState(false);
   const [status, setStatus] = useState('');
-  const set = <K extends keyof WizardValues>(key: K, value: WizardValues[K]) => setValues((v) => ({ ...v, [key]: value }));
+  const set = <K extends keyof WizardValues>(key: K, value: WizardValues[K]) =>
+    setValues((v) => ({ ...v, [key]: value }));
 
   const nameValid = PROJECT_NAME_RE.test(values.name);
   const nameError = touched && !nameValid ? (values.name ? copy.nameInvalid : copy.nameRequired) : undefined;
@@ -131,7 +142,13 @@ export default function CreateWizardPage({
             </StepIntro>
             <Field invalid={nameError != null}>
               <FieldLabel required>{copy.nameLabel}</FieldLabel>
-              <Input required value={values.name} onValueChange={(v) => set('name', v)} onBlur={() => setTouched(true)} placeholder={copy.namePlaceholder} />
+              <Input
+                required
+                value={values.name}
+                onValueChange={(v) => set('name', v)}
+                onBlur={() => setTouched(true)}
+                placeholder={copy.namePlaceholder}
+              />
               <FieldDescription>{copy.nameHint}</FieldDescription>
               <FieldError match={nameError != null}>{nameError}</FieldError>
             </Field>
@@ -148,10 +165,23 @@ export default function CreateWizardPage({
             <StepIntro id={`${id}-source`} title={copy.sourceTitle}>
               {copy.sourceIntro}
             </StepIntro>
-            <SelectableCardGroup aria-labelledby={`${id}-source`} value={values.source} onValueChange={(v) => set('source', v)} columns={1}>
+            <SelectableCardGroup
+              aria-labelledby={`${id}-source`}
+              value={values.source}
+              onValueChange={(v) => set('source', v)}
+              columns={1}
+            >
               {sources.map((s) => {
                 const Icon = s.icon;
-                return <SelectableCard key={s.value} value={s.value} title={s.title} description={s.description} icon={<Icon size={18} aria-hidden />} />;
+                return (
+                  <SelectableCard
+                    key={s.value}
+                    value={s.value}
+                    title={s.title}
+                    description={s.description}
+                    icon={<Icon size={18} aria-hidden />}
+                  />
+                );
               })}
             </SelectableCardGroup>
           </Stack>

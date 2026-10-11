@@ -2,7 +2,13 @@ import { PageHeader, type PageChromeAction } from '@gntik-ai/blocks';
 import { SettingsLayout, type SettingsLayoutProps } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
-import { settingsBreadcrumbs, settingsNav, settingsTitle, type SettingsNavExtraItem, type SettingsPageId } from './settings-nav';
+import {
+  settingsBreadcrumbs,
+  settingsNav,
+  settingsTitle,
+  type SettingsNavExtraItem,
+  type SettingsPageId,
+} from './settings-nav';
 
 /** Props every settings template accepts for the frame around its content. */
 export interface SettingsFrameOptions {
@@ -37,7 +43,18 @@ export interface SettingsFrameProps extends SettingsFrameOptions {
  * the nine-page section nav plus any `extraNavItems` (current page selected) and a PageHeader as the layout header.
  * SettingsLayout is `embedded`: ConsoleShell already owns <main> and the skip link.
  */
-export function SettingsFrame({ page, title, description, actions = [], width, basePath, onNavigate, extraNavItems, shell, children }: SettingsFrameProps) {
+export function SettingsFrame({
+  page,
+  title,
+  description,
+  actions = [],
+  width,
+  basePath,
+  onNavigate,
+  extraNavItems,
+  shell,
+  children,
+}: SettingsFrameProps) {
   const label = extraNavItems?.find((i) => i.id === page)?.label ?? settingsTitle(page);
   return (
     <ConsoleShell currentHref="/settings" breadcrumbs={settingsBreadcrumbs(page, label)} {...shell}>
@@ -48,7 +65,17 @@ export function SettingsFrame({ page, title, description, actions = [], width, b
         onValueChange={(key) => onNavigate?.(key)}
         mainId="settings-content"
         width={width}
-        header={<PageHeader breadcrumbs={null} title={title ?? label} description={description} status="" meta={[]} tabs={null} actions={actions} />}
+        header={
+          <PageHeader
+            breadcrumbs={null}
+            title={title ?? label}
+            description={description}
+            status=""
+            meta={[]}
+            tabs={null}
+            actions={actions}
+          />
+        }
       >
         {children}
       </SettingsLayout>

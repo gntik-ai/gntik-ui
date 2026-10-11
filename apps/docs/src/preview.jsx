@@ -16,15 +16,23 @@ const theme = ['dark', 'light', 'high_contrast'].includes(params.get('theme')) ?
 const padded = params.get('pad') !== '0';
 const density = params.get('density') === 'compact' ? 'compact' : 'comfortable';
 const dir = params.get('dir') === 'rtl' ? 'rtl' : 'ltr';
-const authPreview = ['sign-in-form', 'forgot-password-form', 'sign-in-card', 'forgot-password'].includes(id.split('--')[0]);
-const authHeadingProps = authPreview && params.get('headings') === 'suppressed' ? { headingLevel: null, suppressAllHeadings: true } : {};
+const authPreview = ['sign-in-form', 'forgot-password-form', 'sign-in-card', 'forgot-password'].includes(
+  id.split('--')[0],
+);
+const authHeadingProps =
+  authPreview && params.get('headings') === 'suppressed' ? { headingLevel: null, suppressAllHeadings: true } : {};
 
 function Preview() {
   const Comp = useMemo(() => {
     const load = PREVIEW_LOADERS[kind]?.[id];
     return load ? lazy(load) : null;
   }, []);
-  if (!Comp) return <p className="p-6 text-[13px] text-muted-foreground">Nothing to preview for {kind} “{id}”.</p>;
+  if (!Comp)
+    return (
+      <p className="p-6 text-[13px] text-muted-foreground">
+        Nothing to preview for {kind} “{id}”.
+      </p>
+    );
   return (
     <Suspense fallback={<p className="p-6 text-[13px] text-muted-foreground">Loading…</p>}>
       <Comp {...authHeadingProps} />
@@ -34,7 +42,11 @@ function Preview() {
 
 // Report the content height so block viewers can size their iframe to fit.
 if (window.parent !== window) {
-  const post = () => window.parent.postMessage({ type: 'gntik-preview-height', id, kind, height: document.documentElement.scrollHeight }, '*');
+  const post = () =>
+    window.parent.postMessage(
+      { type: 'gntik-preview-height', id, kind, height: document.documentElement.scrollHeight },
+      '*',
+    );
   new ResizeObserver(post).observe(document.body);
 }
 

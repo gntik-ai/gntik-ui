@@ -14,7 +14,20 @@ export const doc: ComponentDoc = {
     ['Enter', 'Selects the highlighted option (adds a chip in multi-select)'],
     ['Escape', 'Closes the popup, keeping focus in the input'],
     ['Backspace', 'Multi-select, empty input: removes the last chip'],
-    ['Enter on “Create …” / “Retry”', 'Creates an item from the typed text (onCreate) / loads the options again after an error'],
+    [
+      'Enter on “Create …” / “Retry”',
+      'Creates an item from the typed text (onCreate) / loads the options again after an error',
+    ],
   ],
-  tokens: ['background', 'border', 'popover', 'popover-foreground', 'primary', 'primary-text', 'secondary', 'muted-foreground', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'popover',
+    'popover-foreground',
+    'primary',
+    'primary-text',
+    'secondary',
+    'muted-foreground',
+    'focus-ring',
+  ],
 };

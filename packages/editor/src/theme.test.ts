@@ -2,12 +2,30 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { tokenHex } from '@gntik-ai/tokens/runtime';
-import { BRAND_THEMES, brandThemeData, brandThemeFor, contrastRatio, defineBrandThemes, mixHex, readableOn } from './theme';
+import {
+  BRAND_THEMES,
+  brandThemeData,
+  brandThemeFor,
+  contrastRatio,
+  defineBrandThemes,
+  mixHex,
+  readableOn,
+} from './theme';
 import { mockTokens } from './test/tokens';
 
 const TOKENS = [
-  'primary', 'foreground', 'muted-foreground', 'border', 'card', 'popover', 'destructive', 'info',
-  'category-cyan', 'category-amber', 'category-violet', 'category-rose',
+  'primary',
+  'foreground',
+  'muted-foreground',
+  'border',
+  'card',
+  'popover',
+  'destructive',
+  'info',
+  'category-cyan',
+  'category-amber',
+  'category-violet',
+  'category-rose',
 ];
 
 describe('brand themes', () => {
@@ -79,7 +97,9 @@ describe('readableOn', () => {
     const f = (n: number) => {
       const k = (n + h / 30) % 12;
       const v = l - sat * Math.min(l, 1 - l) * Math.max(-1, Math.min(k - 3, 9 - k, 1));
-      return Math.round(v * 255).toString(16).padStart(2, '0');
+      return Math.round(v * 255)
+        .toString(16)
+        .padStart(2, '0');
     };
     return `#${f(0)}${f(8)}${f(4)}`;
   };

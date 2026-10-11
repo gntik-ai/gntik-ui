@@ -14,7 +14,14 @@ export default function MultiSelectBasic() {
   const [value, setValue] = useState(['us-east', 'eu-west', 'eu-central', 'ap-south']);
   return (
     <div className="w-full max-w-sm">
-      <MultiSelect label="Deployment regions" options={regions} value={value} onValueChange={setValue} maxVisibleChips={2} placeholder="Search regions…" />
+      <MultiSelect
+        label="Deployment regions"
+        options={regions}
+        value={value}
+        onValueChange={setValue}
+        maxVisibleChips={2}
+        placeholder="Search regions…"
+      />
       <p className="mt-2 text-[12px] text-muted-foreground">
         {value.length} of {regions.length} regions selected. South America is not available on this plan.
       </p>

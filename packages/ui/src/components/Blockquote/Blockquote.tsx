@@ -23,13 +23,29 @@ export interface BlockquoteProps extends Omit<HTMLAttributes<HTMLElement>, 'clas
  * Quoted content with its attribution: a `<figure>` holding the `<blockquote>` and a
  * `<figcaption>` whose `<cite>` names the source (linked when `cite` is a URL).
  */
-export function Blockquote({ variant = 'default', className, children, source, sourceDetail, cite, avatar, showMark, ...props }: BlockquoteProps) {
+export function Blockquote({
+  variant = 'default',
+  className,
+  children,
+  source,
+  sourceDetail,
+  cite,
+  avatar,
+  showMark,
+  ...props
+}: BlockquoteProps) {
   const s = blockquoteVariants({ variant });
   const mark = showMark ?? variant !== 'default';
   const hasCaption = source != null || sourceDetail != null;
   return (
     <figure className={cn(s.root(), className)} {...props}>
-      {mark && <Quote size={variant === 'pull' ? 22 : 18} aria-hidden className={cn(s.mark(), variant === 'pull' ? 'mx-auto mb-3' : 'mb-2.5')} />}
+      {mark && (
+        <Quote
+          size={variant === 'pull' ? 22 : 18}
+          aria-hidden
+          className={cn(s.mark(), variant === 'pull' ? 'mx-auto mb-3' : 'mb-2.5')}
+        />
+      )}
       <blockquote cite={cite} className={s.quote()}>
         {children}
       </blockquote>

@@ -56,12 +56,28 @@ export default function ShellTopnavPage({
         onNavigate?.(item);
       }}
       mobileTitle="Navigation"
-      actions={<AppTopbar breadcrumbs={null} environment={null} notifications={notifications} user={user} onSignOut={onSignOut} />}
+      actions={
+        <AppTopbar
+          breadcrumbs={null}
+          environment={null}
+          notifications={notifications}
+          user={user}
+          onSignOut={onSignOut}
+        />
+      }
       footer={footer}
     >
       {/* PageHeader renders a <header>: inside <main> it is not a second banner landmark. */}
       <Stack gap={6}>
-        <PageHeader breadcrumbs={null} title={title} description={description} status="" meta={[]} actions={[]} tabs={null} />
+        <PageHeader
+          breadcrumbs={null}
+          title={title}
+          description={description}
+          status=""
+          meta={[]}
+          actions={[]}
+          tabs={null}
+        />
         {children ?? (
           <FirstRunEmpty
             titleAs="h2"

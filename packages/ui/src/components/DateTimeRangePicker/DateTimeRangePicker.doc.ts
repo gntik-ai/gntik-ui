@@ -11,10 +11,27 @@ export const doc: ComponentDoc = {
   keyboard: [
     ['Enter / Space', 'On the field: opens the popup with focus on the active preset'],
     ['Tab / Shift+Tab', 'Moves through presets, the mode switch, the editors and Apply'],
-    ['Enter / Space', 'On a preset: applies it and closes; on Custom range: switches to absolute mode and focuses the calendar'],
+    [
+      'Enter / Space',
+      'On a preset: applies it and closes; on Custom range: switches to absolute mode and focuses the calendar',
+    ],
     ['ArrowLeft / ArrowRight', 'In the mode switch: moves between Relative and Absolute'],
-    ['Arrow keys / PageUp / PageDown', 'In the calendar: move between days (see Calendar); in the time fields: spin (see TimePicker)'],
+    [
+      'Arrow keys / PageUp / PageDown',
+      'In the calendar: move between days (see Calendar); in the time fields: spin (see TimePicker)',
+    ],
     ['Escape', 'Closes the popup without applying and returns focus to the field'],
   ],
-  tokens: ['background', 'border', 'foreground', 'muted-foreground', 'popover', 'primary', 'primary-chip-text', 'secondary', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'popover',
+    'primary',
+    'primary-chip-text',
+    'secondary',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

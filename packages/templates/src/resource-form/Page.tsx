@@ -41,7 +41,11 @@ export interface ResourceFormProps {
 }
 
 const same = (a: ResourceFormValues, b: ResourceFormValues) =>
-  a.name === b.name && a.description === b.description && a.region === b.region && a.billingEmail === b.billingEmail && a.sendInvoices === b.sendInvoices;
+  a.name === b.name &&
+  a.description === b.description &&
+  a.region === b.region &&
+  a.billingEmail === b.billingEmail &&
+  a.sendInvoices === b.sendInvoices;
 
 /** Edit (or create) form: two-column FormSections, an error summary after submit, and a sticky save bar. */
 export default function ResourceFormPage({
@@ -60,7 +64,8 @@ export default function ResourceFormPage({
   const [saving, setSaving] = useState(false);
   const errors = submitCount > 0 ? validateResourceForm(values) : [];
   const errorFor = (fieldId: string) => errors.find((e) => e.fieldId === fieldId)?.message;
-  const set = <K extends keyof ResourceFormValues>(key: K, value: ResourceFormValues[K]) => setValues((v) => ({ ...v, [key]: value }));
+  const set = <K extends keyof ResourceFormValues>(key: K, value: ResourceFormValues[K]) =>
+    setValues((v) => ({ ...v, [key]: value }));
 
   const save = async () => {
     setSubmitCount((n) => n + 1);
@@ -81,7 +86,19 @@ export default function ResourceFormPage({
 
   return (
     <ConsoleShell currentHref="/projects" breadcrumbs={breadcrumbs} {...shell}>
-      <Page header={<PageHeader breadcrumbs={null} title={title} description={description} status="" meta={[]} actions={[]} tabs={null} />}>
+      <Page
+        header={
+          <PageHeader
+            breadcrumbs={null}
+            title={title}
+            description={description}
+            status=""
+            meta={[]}
+            actions={[]}
+            tabs={null}
+          />
+        }
+      >
         <form
           noValidate
           aria-label={title}
@@ -106,10 +123,18 @@ export default function ResourceFormPage({
                 </Field>
               </Stack>
             </FormSection>
-            <FormSection divided title="Region" description="Where the project's services run. It cannot be changed later.">
+            <FormSection
+              divided
+              title="Region"
+              description="Where the project's services run. It cannot be changed later."
+            >
               <Field invalid={regionError != null}>
                 <FieldLabel required>Region</FieldLabel>
-                <Select value={values.region || null} onValueChange={(v) => set('region', v ?? '')} items={regions.map(({ value, label }) => ({ value, label }))}>
+                <Select
+                  value={values.region || null}
+                  onValueChange={(v) => set('region', v ?? '')}
+                  items={regions.map(({ value, label }) => ({ value, label }))}
+                >
                   <SelectTrigger id={FIELD_IDS.region} className="w-full sm:max-w-sm" placeholder="Choose a region" />
                   <SelectContent>
                     {regions.map((r) => (
@@ -126,7 +151,13 @@ export default function ResourceFormPage({
               <Stack gap={4}>
                 <Field invalid={emailError != null}>
                   <FieldLabel required>Billing email</FieldLabel>
-                  <Input id={FIELD_IDS.billingEmail} type="email" required value={values.billingEmail} onValueChange={(v) => set('billingEmail', v)} />
+                  <Input
+                    id={FIELD_IDS.billingEmail}
+                    type="email"
+                    required
+                    value={values.billingEmail}
+                    onValueChange={(v) => set('billingEmail', v)}
+                  />
                   <FieldError match={emailError != null}>{emailError}</FieldError>
                 </Field>
                 <Checkbox

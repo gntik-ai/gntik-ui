@@ -12,7 +12,8 @@ export const checkboxVariants = tv({
     ],
     indicator: 'flex items-center justify-center data-unchecked:hidden',
     item: 'grid grid-cols-[auto_1fr] items-start gap-x-3 gap-y-0.5',
-    label: 'col-span-2 grid cursor-pointer grid-cols-subgrid items-start has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-70',
+    label:
+      'col-span-2 grid cursor-pointer grid-cols-subgrid items-start has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-70',
     labelText: 'text-[13px] leading-5 font-medium text-foreground select-none',
     description: 'col-start-2 text-[12.5px] leading-5 text-muted-foreground text-pretty',
     group: 'flex flex-col',
@@ -20,7 +21,10 @@ export const checkboxVariants = tv({
   variants: {
     variant: {
       plain: { group: 'gap-2.5' },
-      list: { group: 'divide-y divide-border/60 overflow-hidden rounded-md border border-border bg-background/40 *:px-4 *:py-3.5' },
+      list: {
+        group:
+          'divide-y divide-border/60 overflow-hidden rounded-md border border-border bg-background/40 *:px-4 *:py-3.5',
+      },
     },
   },
   defaultVariants: { variant: 'plain' },

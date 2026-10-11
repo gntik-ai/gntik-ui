@@ -23,7 +23,13 @@ export default function JsonViewerPayload() {
   const [query, setQuery] = useState('');
   return (
     <div className="grid w-full max-w-lg gap-3">
-      <Input aria-label="Search keys and values" placeholder="Search keys and values" leadingIcon={Search} value={query} onChange={(e) => setQuery(e.target.value)} />
+      <Input
+        aria-label="Search keys and values"
+        placeholder="Search keys and values"
+        leadingIcon={Search}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
       <JsonViewer label="Deployment payload" data={PAYLOAD} search={query} maxHeight={320} />
     </div>
   );

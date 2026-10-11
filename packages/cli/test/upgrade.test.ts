@@ -37,11 +37,17 @@ export async function runCodemods(options) {
 }
 `;
 
-async function projectWithCodemods(deps: Record<string, string> = { '@gntik-ai/ui': '^0.1.0', '@gntik-ai/templates': '~0.1.3', react: '^19.0.0' }) {
+async function projectWithCodemods(
+  deps: Record<string, string> = { '@gntik-ai/ui': '^0.1.0', '@gntik-ai/templates': '~0.1.3', react: '^19.0.0' },
+) {
   return tempProject({
     'package.json': JSON.stringify({ name: 'app', dependencies: deps }),
     'pnpm-lock.yaml': 'lockfileVersion: 9\n',
-    'node_modules/@gntik-ai/codemods/package.json': JSON.stringify({ name: '@gntik-ai/codemods', type: 'module', exports: { '.': './index.js' } }),
+    'node_modules/@gntik-ai/codemods/package.json': JSON.stringify({
+      name: '@gntik-ai/codemods',
+      type: 'module',
+      exports: { '.': './index.js' },
+    }),
     'node_modules/@gntik-ai/codemods/index.js': FAKE_MODULE,
   });
 }
@@ -56,7 +62,12 @@ describe('upgrade', () => {
     const cwd = await tempProject({ 'package.json': '{"name":"x"}', 'package-lock.json': '{}' });
     const r = await cli(['upgrade', '--json', '--cwd', cwd]);
     expect(r.code).toBe(1);
-    expect(r.json).toMatchObject({ ok: false, command: 'upgrade', codemods: { installed: false, install: 'npm install -D @gntik-ai/codemods' }, error: { code: 'CODEMODS' } });
+    expect(r.json).toMatchObject({
+      ok: false,
+      command: 'upgrade',
+      codemods: { installed: false, install: 'npm install -D @gntik-ai/codemods' },
+      error: { code: 'CODEMODS' },
+    });
     const pnpm = await tempProject({ 'package.json': '{"name":"x"}', 'pnpm-lock.yaml': '' });
     const t = await cli(['upgrade', '--cwd', pnpm]);
     expect(t.stdout).toContain('pnpm add -D @gntik-ai/codemods');
@@ -67,7 +78,20 @@ describe('upgrade', () => {
     const cwd = await projectWithCodemods();
     const r = await cli(['upgrade', '--json', '--cwd', cwd]);
     expect(r.code).toBe(0);
-    expect(Object.keys(r.json)).toEqual(['ok', 'command', 'dryRun', 'from', 'to', 'codemods', 'transforms', 'scanned', 'files', 'changed', 'reports', 'errors']);
+    expect(Object.keys(r.json)).toEqual([
+      'ok',
+      'command',
+      'dryRun',
+      'from',
+      'to',
+      'codemods',
+      'transforms',
+      'scanned',
+      'files',
+      'changed',
+      'reports',
+      'errors',
+    ]);
     expect(r.json).toMatchObject({
       ok: true,
       dryRun: true,
@@ -80,8 +104,23 @@ describe('upgrade', () => {
       errors: [],
     });
     expect(r.json.files.map((f: { file: string }) => f.file)).toEqual(['src/a.tsx', 'src/z.tsx']);
-    expect(Object.keys(r.json.transforms[0])).toEqual(['id', 'package', 'fromVersion', 'toVersion', 'reportOnly', 'description']);
-    expect(calls().select).toEqual([{ from: { '@gntik-ai/templates': '0.1.3', '@gntik-ai/ui': '0.1.0' }, to: 'latest', only: undefined, skip: [], force: false }]);
+    expect(Object.keys(r.json.transforms[0])).toEqual([
+      'id',
+      'package',
+      'fromVersion',
+      'toVersion',
+      'reportOnly',
+      'description',
+    ]);
+    expect(calls().select).toEqual([
+      {
+        from: { '@gntik-ai/templates': '0.1.3', '@gntik-ai/ui': '0.1.0' },
+        to: 'latest',
+        only: undefined,
+        skip: [],
+        force: false,
+      },
+    ]);
     expect(calls().run).toEqual([{ cwd, transforms: ['rename-a', 'report-b'], dry: true, files: undefined }]);
   });
 
@@ -96,10 +135,32 @@ describe('upgrade', () => {
 
   it('--apply, --codemod, --skip-codemod, --from/--to and paths reach the module', async () => {
     const cwd = await projectWithCodemods();
-    const r = await cli(['upgrade', 'src', 'app/page.tsx', '--apply', '--codemod', 'rename-a,report-b', '--skip-codemod', 'report-b', '--from', '0.1.0', '--to', '0.2.0', '--json', '--cwd', cwd]);
+    const r = await cli([
+      'upgrade',
+      'src',
+      'app/page.tsx',
+      '--apply',
+      '--codemod',
+      'rename-a,report-b',
+      '--skip-codemod',
+      'report-b',
+      '--from',
+      '0.1.0',
+      '--to',
+      '0.2.0',
+      '--json',
+      '--cwd',
+      cwd,
+    ]);
     expect(r.code).toBe(0);
     expect(r.json.dryRun).toBe(false);
-    expect(calls().select[0]).toEqual({ from: '0.1.0', to: '0.2.0', only: ['rename-a', 'report-b'], skip: ['report-b'], force: true });
+    expect(calls().select[0]).toEqual({
+      from: '0.1.0',
+      to: '0.2.0',
+      only: ['rename-a', 'report-b'],
+      skip: ['report-b'],
+      force: true,
+    });
     expect(calls().run[0]).toEqual({ cwd, transforms: ['rename-a'], dry: false, files: ['src', 'app/page.tsx'] });
     expect((await cli(['upgrade', '--apply', '--cwd', cwd])).stdout).toContain('Modified 1 file(s):');
   });
@@ -110,7 +171,10 @@ describe('upgrade', () => {
     expect(none.json).toMatchObject({ ok: true, transforms: [], scanned: 0, changed: [] });
     expect(calls().run).toEqual([]);
     const list = await cli(['upgrade', '--list', '--skip-codemod', 'report-b', '--json', '--cwd', cwd]);
-    expect(list.json.transforms.map((t: { id: string; selected: boolean }) => [t.id, t.selected])).toEqual([['rename-a', true], ['report-b', false]]);
+    expect(list.json.transforms.map((t: { id: string; selected: boolean }) => [t.id, t.selected])).toEqual([
+      ['rename-a', true],
+      ['report-b', false],
+    ]);
     expect(calls().run).toEqual([]);
     expect((await cli(['upgrade', '--list', '--cwd', cwd])).stdout).toMatch(/ID\s+PACKAGE\s+VERSIONS\s+SELECTED/);
   });
@@ -129,31 +193,49 @@ describe('upgrade', () => {
     expect((await cli(['upgrade', '--from', 'next', '--cwd', cwd])).code).toBe(2);
     expect((await cli(['upgrade', '--apply', '--dry-run', '--cwd', cwd])).code).toBe(2);
     expect((await cli(['list', '--apply'])).code).toBe(2);
-    calls().result = { scanned: 1, files: [{ file: 'src/bad.tsx', status: 'error', transforms: [], reports: [], error: 'Unexpected token' }] };
+    calls().result = {
+      scanned: 1,
+      files: [{ file: 'src/bad.tsx', status: 'error', transforms: [], reports: [], error: 'Unexpected token' }],
+    };
     const r = await cli(['upgrade', '--json', '--cwd', cwd]);
     expect(r.code).toBe(1);
-    expect(r.json).toMatchObject({ ok: false, errors: [{ file: 'src/bad.tsx', message: 'Unexpected token' }], error: { code: 'ERROR' } });
+    expect(r.json).toMatchObject({
+      ok: false,
+      errors: [{ file: 'src/bad.tsx', message: 'Unexpected token' }],
+      error: { code: 'ERROR' },
+    });
   });
 
   it('declaredVersions and repeatable flags', () => {
-    expect(declaredVersions({ dependencies: { '@gntik-ai/ui': '^0.3.1', '@gntik-ai/codemods': '0.1.0', lodash: '1.0.0' }, devDependencies: { '@gntik-ai/cli': 'file:../cli' } })).toEqual({ '@gntik-ai/ui': '0.3.1' });
+    expect(
+      declaredVersions({
+        dependencies: { '@gntik-ai/ui': '^0.3.1', '@gntik-ai/codemods': '0.1.0', lodash: '1.0.0' },
+        devDependencies: { '@gntik-ai/cli': 'file:../cli' },
+      }),
+    ).toEqual({ '@gntik-ai/ui': '0.3.1' });
     expect(parseCliArgs(['upgrade', '--codemod', 'a,b', '--codemod', 'c']).flags.codemods).toEqual(['a', 'b', 'c']);
   });
 });
 
 const CODEMODS_PKG = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../codemods');
-describe.skipIf(!existsSync(path.join(CODEMODS_PKG, 'dist/index.js')))('upgrade with the real @gntik-ai/codemods', () => {
-  it('migrates a project end to end', async () => {
-    const cwd = await tempProject({
-      'package.json': JSON.stringify({ name: 'app', dependencies: { '@gntik-ai/templates': '^0.1.0' } }),
-      'src/App.tsx': "import { MfaChallengePage } from '@gntik-ai/templates';\n\nexport const App = () => <MfaChallengePage />;\n",
+describe.skipIf(!existsSync(path.join(CODEMODS_PKG, 'dist/index.js')))(
+  'upgrade with the real @gntik-ai/codemods',
+  () => {
+    it('migrates a project end to end', async () => {
+      const cwd = await tempProject({
+        'package.json': JSON.stringify({ name: 'app', dependencies: { '@gntik-ai/templates': '^0.1.0' } }),
+        'src/App.tsx':
+          "import { MfaChallengePage } from '@gntik-ai/templates';\n\nexport const App = () => <MfaChallengePage />;\n",
+      });
+      await mkdir(path.join(cwd, 'node_modules/@gntik-ai'), { recursive: true });
+      await symlink(CODEMODS_PKG, path.join(cwd, 'node_modules/@gntik-ai/codemods'), 'dir');
+      const dry = await cli(['upgrade', '--json', '--cwd', cwd]);
+      expect(dry.json).toMatchObject({ ok: true, changed: ['src/App.tsx'] });
+      const applied = await cli(['upgrade', '--apply', '--json', '--cwd', cwd]);
+      expect(applied.code).toBe(0);
+      expect(await readFile(path.join(cwd, 'src/App.tsx'), 'utf8')).toBe(
+        "import { MfaPage } from '@gntik-ai/templates';\n\nexport const App = () => <MfaPage />;\n",
+      );
     });
-    await mkdir(path.join(cwd, 'node_modules/@gntik-ai'), { recursive: true });
-    await symlink(CODEMODS_PKG, path.join(cwd, 'node_modules/@gntik-ai/codemods'), 'dir');
-    const dry = await cli(['upgrade', '--json', '--cwd', cwd]);
-    expect(dry.json).toMatchObject({ ok: true, changed: ['src/App.tsx'] });
-    const applied = await cli(['upgrade', '--apply', '--json', '--cwd', cwd]);
-    expect(applied.code).toBe(0);
-    expect(await readFile(path.join(cwd, 'src/App.tsx'), 'utf8')).toBe("import { MfaPage } from '@gntik-ai/templates';\n\nexport const App = () => <MfaPage />;\n");
-  });
-});
+  },
+);

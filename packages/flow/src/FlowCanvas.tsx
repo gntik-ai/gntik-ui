@@ -15,8 +15,10 @@ import { brandEdgeOptions, flowMarker, useFlowTheme, withBrandMarkers } from './
 import { adaptNodeRenderers, type FlowNodeRenderer } from './renderers';
 import { cx, nodeToken } from './tones';
 
-export interface FlowCanvasProps<N extends Node = FlowNode, E extends Edge = Edge>
-  extends Omit<ReactFlowProps<N, E>, 'aria-label' | 'height' | 'width'> {
+export interface FlowCanvasProps<N extends Node = FlowNode, E extends Edge = Edge> extends Omit<
+  ReactFlowProps<N, E>,
+  'aria-label' | 'height' | 'width'
+> {
   /** Accessible name of the canvas region (required). */
   'aria-label': string;
   /** Canvas height (px or CSS length). */

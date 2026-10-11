@@ -14,7 +14,17 @@ export function ProjectsView() {
       breadcrumbs={[{ label: 'Dashboard', href: '/dashboard' }, { label: 'Projects' }]}
       rows={projects}
       columns={projectColumns}
-      savedViews={[{ value: 'all', label: 'All projects', filters: [] }, { value: 'attention', label: 'Needs attention', filters: [{ field: 'status', value: 'Degraded' }, { field: 'status', value: 'Failed' }] }]}
+      savedViews={[
+        { value: 'all', label: 'All projects', filters: [] },
+        {
+          value: 'attention',
+          label: 'Needs attention',
+          filters: [
+            { field: 'status', value: 'Degraded' },
+            { field: 'status', value: 'Failed' },
+          ],
+        },
+      ]}
       noun={['project', 'projects']}
       createLabel="New project"
       onOpen={(row) => router.push(`/projects/${row.id}`)}

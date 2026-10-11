@@ -39,7 +39,7 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
           registry-url: https://npm.pkg.github.com
-          scope: "@gntik-ai"
+          scope: '@gntik-ai'
       - if: steps.pending.outputs.count != '0'
         run: pnpm install --frozen-lockfile
       - name: Snapshot versions

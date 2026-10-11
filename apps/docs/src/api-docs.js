@@ -4,11 +4,22 @@
 // destructuring and tv() defaultVariants, and variant options from *.variants.ts.
 // Pure parsing over `?raw` imports — a new folder shows up with no registration.
 
-const componentDocs = import.meta.glob('../../../packages/ui/src/components/*/*.doc.ts', { eager: true, import: 'doc' });
+const componentDocs = import.meta.glob('../../../packages/ui/src/components/*/*.doc.ts', {
+  eager: true,
+  import: 'doc',
+});
 const layoutDocs = import.meta.glob('../../../packages/ui/src/layouts/*/*.doc.ts', { eager: true, import: 'doc' });
 const sources = {
-  ...import.meta.glob('../../../packages/ui/src/components/*/*.{ts,tsx}', { eager: true, query: '?raw', import: 'default' }),
-  ...import.meta.glob('../../../packages/ui/src/layouts/*/*.{ts,tsx}', { eager: true, query: '?raw', import: 'default' }),
+  ...import.meta.glob('../../../packages/ui/src/components/*/*.{ts,tsx}', {
+    eager: true,
+    query: '?raw',
+    import: 'default',
+  }),
+  ...import.meta.glob('../../../packages/ui/src/layouts/*/*.{ts,tsx}', {
+    eager: true,
+    query: '?raw',
+    import: 'default',
+  }),
 };
 
 const OPEN = { '{': '}', '(': ')', '[': ']', '<': '>' };
@@ -19,12 +30,29 @@ function matchClose(src, start) {
   let depth = 0;
   for (let i = start; i < src.length; i++) {
     const ch = src[i];
-    if (ch === '/' && src[i + 1] === '*') { i = src.indexOf('*/', i + 2) + 1; if (i === 0) return src.length; continue; }
-    if (ch === '/' && src[i + 1] === '/') { i = src.indexOf('\n', i); if (i < 0) return src.length; continue; }
-    if (ch === "'" || ch === '"' || ch === '`') { i = skipString(src, i); continue; }
-    if (ch === '=' && src[i + 1] === '>') { i++; continue; } // arrow, not a closing angle
+    if (ch === '/' && src[i + 1] === '*') {
+      i = src.indexOf('*/', i + 2) + 1;
+      if (i === 0) return src.length;
+      continue;
+    }
+    if (ch === '/' && src[i + 1] === '/') {
+      i = src.indexOf('\n', i);
+      if (i < 0) return src.length;
+      continue;
+    }
+    if (ch === "'" || ch === '"' || ch === '`') {
+      i = skipString(src, i);
+      continue;
+    }
+    if (ch === '=' && src[i + 1] === '>') {
+      i++;
+      continue;
+    } // arrow, not a closing angle
     if (ch in OPEN) depth++;
-    else if (CLOSE.has(ch)) { depth--; if (depth === 0) return i + 1; }
+    else if (CLOSE.has(ch)) {
+      depth--;
+      if (depth === 0) return i + 1;
+    }
   }
   return src.length;
 }
@@ -32,7 +60,10 @@ function matchClose(src, start) {
 function skipString(src, i) {
   const q = src[i];
   for (let j = i + 1; j < src.length; j++) {
-    if (src[j] === '\\') { j++; continue; }
+    if (src[j] === '\\') {
+      j++;
+      continue;
+    }
     if (src[j] === q) return j;
   }
   return src.length;
@@ -45,13 +76,30 @@ function splitTop(body, seps) {
   let last = 0;
   for (let i = 0; i < body.length; i++) {
     const ch = body[i];
-    if (ch === '/' && body[i + 1] === '*') { const e = body.indexOf('*/', i + 2); i = e < 0 ? body.length : e + 1; continue; }
-    if (ch === '/' && body[i + 1] === '/') { const e = body.indexOf('\n', i); i = e < 0 ? body.length : e - 1; continue; }
-    if (ch === "'" || ch === '"' || ch === '`') { i = skipString(body, i); continue; }
-    if (ch === '=' && body[i + 1] === '>') { i++; continue; }
+    if (ch === '/' && body[i + 1] === '*') {
+      const e = body.indexOf('*/', i + 2);
+      i = e < 0 ? body.length : e + 1;
+      continue;
+    }
+    if (ch === '/' && body[i + 1] === '/') {
+      const e = body.indexOf('\n', i);
+      i = e < 0 ? body.length : e - 1;
+      continue;
+    }
+    if (ch === "'" || ch === '"' || ch === '`') {
+      i = skipString(body, i);
+      continue;
+    }
+    if (ch === '=' && body[i + 1] === '>') {
+      i++;
+      continue;
+    }
     if (ch in OPEN) depth++;
     else if (CLOSE.has(ch)) depth--;
-    else if (depth === 0 && seps.includes(ch)) { parts.push(body.slice(last, i)); last = i + 1; }
+    else if (depth === 0 && seps.includes(ch)) {
+      parts.push(body.slice(last, i));
+      last = i + 1;
+    }
   }
   parts.push(body.slice(last));
   return parts;
@@ -116,13 +164,16 @@ function parseVariants(src) {
     calls[m[1]] = { variants, defaults };
   }
   const byType = {};
-  for (const m of src.matchAll(/export type (\w+)\s*=\s*VariantProps<typeof (\w+)>/g)) if (calls[m[2]]) byType[m[1]] = calls[m[2]];
+  for (const m of src.matchAll(/export type (\w+)\s*=\s*VariantProps<typeof (\w+)>/g))
+    if (calls[m[2]]) byType[m[1]] = calls[m[2]];
   return byType;
 }
 
 /** Defaults written in the component's parameter destructuring: `({ size = 'auto', … })`. */
 function parseDefaults(src, componentName) {
-  const re = new RegExp(`export (?:function ${componentName}\\s*(?:<[^(]*>)?\\(|const ${componentName}\\s*=\\s*(?:forwardRef[^(]*\\(\\s*)?(?:function\\s*\\w*)?\\s*\\()`);
+  const re = new RegExp(
+    `export (?:function ${componentName}\\s*(?:<[^(]*>)?\\(|const ${componentName}\\s*=\\s*(?:forwardRef[^(]*\\(\\s*)?(?:function\\s*\\w*)?\\s*\\()`,
+  );
   const m = re.exec(src);
   if (!m) return {};
   const open = src.indexOf('{', m.index + m[0].length - 1);
@@ -150,7 +201,14 @@ function parseBases(clause, variantTypes) {
       for (const [name, options] of Object.entries(variants)) {
         if (omitted.includes(name)) continue;
         const isBool = options.every((o) => o === 'true' || o === 'false');
-        variantProps.push({ name, required: false, type: isBool ? 'boolean' : options.map((o) => `'${o}'`).join(' | '), default: defaults[name], description: '', variant: true });
+        variantProps.push({
+          name,
+          required: false,
+          type: isBool ? 'boolean' : options.map((o) => `'${o}'`).join(' | '),
+          default: defaults[name],
+          description: '',
+          variant: true,
+        });
       }
     } else bases.push(omitted.length ? `${base} (without ${omitted.join(', ')})` : base);
   }
@@ -193,7 +251,12 @@ function parsePropsTypes(src, variantTypes) {
     }
     const { bases, variantProps } = parseBases(clause, variantTypes);
     const own = new Set(members.map((p) => p.name));
-    out.push({ name, component: name.replace(/Props$/, ''), props: [...members, ...variantProps.filter((v) => !own.has(v.name))], bases });
+    out.push({
+      name,
+      component: name.replace(/Props$/, ''),
+      props: [...members, ...variantProps.filter((v) => !own.has(v.name))],
+      bases,
+    });
   }
   return out;
 }
@@ -207,7 +270,10 @@ function buildApi(docPath, doc) {
   const key = folderKey(docPath);
   const files = Object.keys(sources).filter((p) => folderKey(p) === key);
   const isCode = (p) => !/\.(test|doc|stories)\.tsx?$|\/index\.ts$|\.variants\.ts$/.test(p);
-  const variantTypes = Object.assign({}, ...files.filter((p) => p.endsWith('.variants.ts')).map((p) => parseVariants(sources[p])));
+  const variantTypes = Object.assign(
+    {},
+    ...files.filter((p) => p.endsWith('.variants.ts')).map((p) => parseVariants(sources[p])),
+  );
   const types = files.filter(isCode).flatMap((p) => {
     const src = sources[p];
     return parsePropsTypes(src, variantTypes).map((t) => {
@@ -215,7 +281,10 @@ function buildApi(docPath, doc) {
       const variantDefaults = Object.assign({}, ...Object.values(variantTypes).map((v) => v.defaults));
       return {
         ...t,
-        props: t.props.map((p) => ({ ...p, default: p.jsdocDefault ?? defaults[p.name] ?? p.default ?? (p.variant ? variantDefaults[p.name] : undefined) })),
+        props: t.props.map((p) => ({
+          ...p,
+          default: p.jsdocDefault ?? defaults[p.name] ?? p.default ?? (p.variant ? variantDefaults[p.name] : undefined),
+        })),
       };
     });
   });
@@ -225,8 +294,12 @@ function buildApi(docPath, doc) {
   return { ...doc, folder: key.split('/')[1], kind: key.split('/')[0], propTypes: types };
 }
 
-export const COMPONENT_API = Object.fromEntries(Object.entries(componentDocs).map(([p, d]) => [folderKey(p).split('/')[1], buildApi(p, d)]));
-export const LAYOUT_API = Object.fromEntries(Object.entries(layoutDocs).map(([p, d]) => [folderKey(p).split('/')[1], buildApi(p, d)]));
+export const COMPONENT_API = Object.fromEntries(
+  Object.entries(componentDocs).map(([p, d]) => [folderKey(p).split('/')[1], buildApi(p, d)]),
+);
+export const LAYOUT_API = Object.fromEntries(
+  Object.entries(layoutDocs).map(([p, d]) => [folderKey(p).split('/')[1], buildApi(p, d)]),
+);
 
 // Exposed for tests and quick inspection from the console.
 export const __parse = { parsePropsTypes, parseVariants, parseDefaults, parseMembers };

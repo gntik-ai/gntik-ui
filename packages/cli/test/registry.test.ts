@@ -16,12 +16,23 @@ describe('registry', () => {
 
   it('resolves URL sources', async () => {
     const r = await resolveSource('https://example.com/kit', '/');
-    expect(r).toEqual({ source: { type: 'url', base: 'https://example.com/kit/' }, file: 'https://example.com/kit/kit-registry.json' });
+    expect(r).toEqual({
+      source: { type: 'url', base: 'https://example.com/kit/' },
+      file: 'https://example.com/kit/kit-registry.json',
+    });
   });
 
   it('resolves registryDependencies recursively, dependencies first', async () => {
     const reg = await loadRegistry(FIXTURES, '/');
-    expect(reg.closure(['dashboard']).map((i) => i.id)).toEqual(['stat-card', 'ui-utils', 'spinner', 'button', 'stats-row', 'app-shell', 'dashboard']);
+    expect(reg.closure(['dashboard']).map((i) => i.id)).toEqual([
+      'stat-card',
+      'ui-utils',
+      'spinner',
+      'button',
+      'stats-row',
+      'app-shell',
+      'dashboard',
+    ]);
     expect(() => reg.closure(['nope'])).toThrow(/Unknown item/);
   });
 
@@ -41,7 +52,11 @@ describe('list / search / docs', () => {
   });
 
   it('list filters by kind and group; table output for humans', async () => {
-    expect((await cli(['list', '--json', '--kind', 'block', '--registry', FIXTURES])).json.items.map((i: { id: string }) => i.id)).toEqual(['stat-card', 'stats-row']);
+    expect(
+      (await cli(['list', '--json', '--kind', 'block', '--registry', FIXTURES])).json.items.map(
+        (i: { id: string }) => i.id,
+      ),
+    ).toEqual(['stat-card', 'stats-row']);
     expect((await cli(['list', '--json', '--group', 'overlays', '--registry', FIXTURES])).json.count).toBe(1);
     const t = await cli(['list', '--registry', FIXTURES]);
     expect(t.stdout).toMatch(/^ID\s+KIND\s+GROUP/);

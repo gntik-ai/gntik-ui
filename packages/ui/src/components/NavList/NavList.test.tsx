@@ -15,7 +15,19 @@ const GROUPS: NavGroup[] = [
       { label: 'Deployments', href: '/deployments', icon: Rocket, badge: 3 },
     ],
   },
-  { label: 'Admin', items: [{ label: 'Settings', icon: Settings, items: [{ label: 'General', href: '/settings/general' }, { label: 'Billing', href: '/settings/billing' }] }] },
+  {
+    label: 'Admin',
+    items: [
+      {
+        label: 'Settings',
+        icon: Settings,
+        items: [
+          { label: 'General', href: '/settings/general' },
+          { label: 'Billing', href: '/settings/billing' },
+        ],
+      },
+    ],
+  },
 ];
 
 describe('NavList', () => {

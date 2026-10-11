@@ -5,7 +5,11 @@ import { createElement } from 'react';
 
 export const galleryItems: ResourceCard[] = RESOURCE_CARDS;
 
-export const galleryBreadcrumbs: BreadcrumbItem[] = [{ label: 'Overview', href: '/overview' }, { label: 'Projects', href: '/projects' }, { label: 'Resources' }];
+export const galleryBreadcrumbs: BreadcrumbItem[] = [
+  { label: 'Overview', href: '/overview' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Resources' },
+];
 
 export const galleryViews: PageToolbarView[] = [
   { value: 'grid', label: 'Grid view', icon: LayoutGrid },
@@ -16,8 +20,20 @@ export const galleryViews: PageToolbarView[] = [
 export const galleryColumns: DataTableColumn<ResourceCard>[] = [
   { id: 'name', header: 'Name', accessor: (r) => r.name, sortable: true, hideable: false, className: 'font-semibold' },
   { id: 'description', header: 'Description', accessor: (r) => r.description, className: 'text-muted-foreground' },
-  { id: 'status', header: 'Status', accessor: (r) => r.status, cell: (r) => (r.status ? createElement(StatusTag, { status: r.status }) : null), sortable: true },
-  { id: 'cost', header: 'Cost 30d', accessor: (r) => r.meta?.find((m) => m.label === 'Cost 30d')?.value, align: 'right', className: 'font-mono text-[12.5px]' },
+  {
+    id: 'status',
+    header: 'Status',
+    accessor: (r) => r.status,
+    cell: (r) => (r.status ? createElement(StatusTag, { status: r.status }) : null),
+    sortable: true,
+  },
+  {
+    id: 'cost',
+    header: 'Cost 30d',
+    accessor: (r) => r.meta?.find((m) => m.label === 'Cost 30d')?.value,
+    align: 'right',
+    className: 'font-mono text-[12.5px]',
+  },
 ];
 
 /** Case-insensitive search over name and description. */

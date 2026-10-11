@@ -48,10 +48,24 @@ describe('CHART_COLORS', () => {
 
 describe('cartesian charts', () => {
   it.each([
-    ['AreaChart', () => <AreaChart aria-label="Requests" data={data} index="month" categories={['requests', 'errors']} />],
-    ['BarChart', () => <BarChart aria-label="Requests" data={data} index="month" categories={['requests', 'errors']} />],
-    ['LineChart', () => <LineChart aria-label="Requests" data={data} index="month" categories={['requests', 'errors']} startEndOnly />],
-    ['ComboChart', () => <ComboChart aria-label="Requests" data={data} index="month" barSeries="requests" lineSeries="errors" />],
+    [
+      'AreaChart',
+      () => <AreaChart aria-label="Requests" data={data} index="month" categories={['requests', 'errors']} />,
+    ],
+    [
+      'BarChart',
+      () => <BarChart aria-label="Requests" data={data} index="month" categories={['requests', 'errors']} />,
+    ],
+    [
+      'LineChart',
+      () => (
+        <LineChart aria-label="Requests" data={data} index="month" categories={['requests', 'errors']} startEndOnly />
+      ),
+    ],
+    [
+      'ComboChart',
+      () => <ComboChart aria-label="Requests" data={data} index="month" barSeries="requests" lineSeries="errors" />,
+    ],
   ])('%s renders an accessible figure with an SVG surface', (_, ui) => {
     const { container } = render(ui());
     expect(screen.getByRole('figure', { name: 'Requests' })).toBeInTheDocument();
@@ -106,7 +120,12 @@ describe('BarList', () => {
 describe('ChartTooltip', () => {
   it('renders formatted rows and nothing when inactive', () => {
     const { rerender, container } = render(
-      <ChartTooltip active label="Jan" payload={[{ name: 'cost', value: 1234, color: 'red' }]} valueFormatter={chartFmt.usd} />,
+      <ChartTooltip
+        active
+        label="Jan"
+        payload={[{ name: 'cost', value: 1234, color: 'red' }]}
+        valueFormatter={chartFmt.usd}
+      />,
     );
     expect(screen.getByText('Jan')).toBeInTheDocument();
     expect(screen.getByText('$1,234')).toBeInTheDocument();

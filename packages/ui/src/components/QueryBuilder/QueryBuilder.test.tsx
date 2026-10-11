@@ -73,7 +73,11 @@ describe('QueryBuilder', () => {
     const { user, last } = setup({ maxDepth: 2 });
     await user.click(screen.getByRole('button', { name: 'Add group' }));
     const group = screen.getByRole('group', { name: 'Condition group' });
-    expect(last()?.children[0]).toMatchObject({ type: 'group', combinator: 'and', children: [expect.objectContaining({ type: 'condition' })] });
+    expect(last()?.children[0]).toMatchObject({
+      type: 'group',
+      combinator: 'and',
+      children: [expect.objectContaining({ type: 'condition' })],
+    });
     expect(within(group).queryByRole('button', { name: 'Add group' })).not.toBeInTheDocument();
     await user.click(within(group).getByRole('button', { name: 'Remove condition 1' }));
     await waitFor(() => expect(within(group).getByRole('button', { name: 'Add condition' })).toHaveFocus());
@@ -88,7 +92,12 @@ describe('QueryBuilder', () => {
         aria-label="Filter"
         fields={deploymentFields}
         showPreview
-        defaultValue={{ type: 'group', id: 'r', combinator: 'and', children: [{ type: 'condition', id: 'a', field: 'public', operator: 'isTrue' }] }}
+        defaultValue={{
+          type: 'group',
+          id: 'r',
+          combinator: 'and',
+          children: [{ type: 'condition', id: 'a', field: 'public', operator: 'isTrue' }],
+        }}
       />,
     );
     expect(within(screen.getByRole('group', { name: 'Condition 1' })).queryByRole('textbox')).not.toBeInTheDocument();

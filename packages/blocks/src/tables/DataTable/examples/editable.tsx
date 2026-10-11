@@ -5,10 +5,21 @@ import type { DataTableColumn } from '../data-table-utils';
 import { DEPLOYMENT_ROWS, type DeploymentRow } from '../fixtures';
 
 const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
-const STATUS_OPTIONS = ['running', 'queued', 'paused', 'degraded', 'failed'].map((s) => ({ value: s, label: s[0]!.toUpperCase() + s.slice(1) }));
+const STATUS_OPTIONS = ['running', 'queued', 'paused', 'degraded', 'failed'].map((s) => ({
+  value: s,
+  label: s[0]!.toUpperCase() + s.slice(1),
+}));
 
 const COLUMNS: Array<DataTableColumn<DeploymentRow>> = [
-  { id: 'name', header: 'Deployment', accessor: (r) => r.name, sortable: true, hideable: false, className: 'font-semibold', editable: true },
+  {
+    id: 'name',
+    header: 'Deployment',
+    accessor: (r) => r.name,
+    sortable: true,
+    hideable: false,
+    className: 'font-semibold',
+    editable: true,
+  },
   { id: 'region', header: 'Region', accessor: (r) => r.region, variant: 'mono' },
   {
     id: 'status',

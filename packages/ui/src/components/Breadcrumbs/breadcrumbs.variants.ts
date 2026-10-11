@@ -7,7 +7,10 @@ export const breadcrumbsVariants = tv({
     root: 'min-w-0',
     list: 'flex flex-wrap items-center gap-2.5 text-[13px]',
     item: 'inline-flex min-w-0 items-center gap-2.5',
-    link: ['truncate rounded-sm text-muted-foreground no-underline transition-colors hover:text-foreground hover:no-underline', focusRing],
+    link: [
+      'truncate rounded-sm text-muted-foreground no-underline transition-colors hover:text-foreground hover:no-underline',
+      focusRing,
+    ],
     iconLink: [
       'grid size-7 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground',
       focusRing,

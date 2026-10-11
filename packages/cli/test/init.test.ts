@@ -12,7 +12,13 @@ describe('init', () => {
     const dir = await viteProject();
     const r = await cli(['init', '--json', '--dry-run', '--cwd', dir]);
     expect(r.code).toBe(0);
-    expect(r.json.project).toMatchObject({ framework: 'vite', packageManager: 'pnpm', css: 'src/index.css', cssExisted: true, entry: 'src/main.tsx' });
+    expect(r.json.project).toMatchObject({
+      framework: 'vite',
+      packageManager: 'pnpm',
+      css: 'src/index.css',
+      cssExisted: true,
+      entry: 'src/main.tsx',
+    });
     expect(r.json.changes).toEqual([
       { file: '.npmrc', action: 'create' },
       { file: 'src/index.css', action: 'patch' },
@@ -57,7 +63,13 @@ describe('init', () => {
     const dir = await nextProject();
     const r = await cli(['init', '--json', '--no-install', '--cwd', dir]);
     expect(r.code).toBe(0);
-    expect(r.json.project).toMatchObject({ framework: 'next', packageManager: 'npm', css: 'app/globals.css', entry: 'app/layout.tsx', src: false });
+    expect(r.json.project).toMatchObject({
+      framework: 'next',
+      packageManager: 'npm',
+      css: 'app/globals.css',
+      entry: 'app/layout.tsx',
+      src: false,
+    });
     expect(await read(dir, '.npmrc')).toBe(`save-exact=true\n${SCOPE_LINE}\n`);
     const css = await read(dir, 'app/globals.css');
     expect(css.match(/@import "tailwindcss";/g)).toHaveLength(1);
@@ -67,14 +79,22 @@ describe('init', () => {
     expect(layout.code).toContain('suppressHydrationWarning');
     expect(layout.code).toContain("import './globals.css';");
     expect(r.json.snippet[0].code).toContain('themeScript()');
-    expect(r.json.install).toMatchObject({ commands: ['npm install @fontsource/geist @fontsource/geist-mono @gntik-ai/tokens @gntik-ai/ui'], ran: false });
+    expect(r.json.install).toMatchObject({
+      commands: ['npm install @fontsource/geist @fontsource/geist-mono @gntik-ai/tokens @gntik-ai/ui'],
+      ran: false,
+    });
     expect(r.execs).toEqual([]);
   });
 
   it('generic project without a CSS entry creates one', async () => {
     const dir = await tempProject({ 'package.json': '{"name":"x"}', 'src/main.tsx': '' });
     const r = await cli(['init', '--json', '--no-install', '--cwd', dir]);
-    expect(r.json.project).toMatchObject({ framework: 'generic', packageManager: 'npm', css: 'src/index.css', cssExisted: false });
+    expect(r.json.project).toMatchObject({
+      framework: 'generic',
+      packageManager: 'npm',
+      css: 'src/index.css',
+      cssExisted: false,
+    });
     expect(await read(dir, 'src/index.css')).toBe(`${CSS_IMPORTS.join('\n')}\n`);
   });
 

@@ -11,11 +11,27 @@ export interface DialogWizardProps extends Omit<WizardLayoutProps, 'mode' | 'ste
 }
 
 /** Modal variant of create-wizard for a flow over its parent page. State stays consumer-owned. */
-export function DialogWizard({ steps, current = 0, size = 'dialog', stepError, reviewStep, children, title, ...props }: DialogWizardProps) {
+export function DialogWizard({
+  steps,
+  current = 0,
+  size = 'dialog',
+  stepError,
+  reviewStep,
+  children,
+  title,
+  ...props
+}: DialogWizardProps) {
   const { t } = useI18n();
   const items = steps ?? [{ label: t('wizard.details') }, { label: t('wizard.review') }];
   return (
-    <WizardLayout {...props} mode="overlay" size={size} steps={items} current={current} title={title ?? t('wizard.title')}>
+    <WizardLayout
+      {...props}
+      mode="overlay"
+      size={size}
+      steps={items}
+      current={current}
+      title={title ?? t('wizard.title')}
+    >
       {stepError}
       {current >= items.length - 1 && reviewStep != null ? reviewStep : children}
     </WizardLayout>

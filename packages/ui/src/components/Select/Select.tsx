@@ -13,11 +13,15 @@ const s = selectVariants();
 export const Select = BaseSelect.Root;
 
 /** Visible label; automatically labels the trigger. */
-export function SelectLabel({ className, ...props }: Omit<BaseSelect.Label.Props, 'className'> & { className?: string }) {
+export function SelectLabel({
+  className,
+  ...props
+}: Omit<BaseSelect.Label.Props, 'className'> & { className?: string }) {
   return <BaseSelect.Label className={cn(s.label(), className)} {...props} />;
 }
 
-export interface SelectTriggerProps extends Omit<BaseSelect.Trigger.Props, 'className' | 'children'>, SelectVariantProps {
+export interface SelectTriggerProps
+  extends Omit<BaseSelect.Trigger.Props, 'className' | 'children'>, SelectVariantProps {
   className?: string;
   ref?: Ref<HTMLButtonElement>;
   /** Shown while nothing is selected. */
@@ -70,7 +74,8 @@ export function SelectContent({
   const dir = usePortalDir();
   return (
     <BaseSelect.Portal container={container}>
-      <BaseSelect.Positioner dir={dir}
+      <BaseSelect.Positioner
+        dir={dir}
         className={s.positioner()}
         alignItemWithTrigger={alignItemWithTrigger}
         side={side}
@@ -104,11 +109,17 @@ export function SelectItem({ className, children, ...props }: SelectItemProps) {
 
 export const SelectGroup = BaseSelect.Group;
 
-export function SelectGroupLabel({ className, ...props }: Omit<BaseSelect.GroupLabel.Props, 'className'> & { className?: string }) {
+export function SelectGroupLabel({
+  className,
+  ...props
+}: Omit<BaseSelect.GroupLabel.Props, 'className'> & { className?: string }) {
   return <BaseSelect.GroupLabel className={cn(s.groupLabel(), className)} {...props} />;
 }
 
-export function SelectSeparator({ className, ...props }: Omit<BaseSelect.Separator.Props, 'className'> & { className?: string }) {
+export function SelectSeparator({
+  className,
+  ...props
+}: Omit<BaseSelect.Separator.Props, 'className'> & { className?: string }) {
   return <BaseSelect.Separator className={cn(s.separator(), className)} {...props} />;
 }
 
@@ -119,8 +130,7 @@ export interface SimpleSelectItem<V extends string = string> {
 }
 
 export interface SimpleSelectProps<V extends string = string>
-  extends Omit<BaseSelect.Root.Props<V, false>, 'items' | 'multiple' | 'children'>,
-    SelectVariantProps {
+  extends Omit<BaseSelect.Root.Props<V, false>, 'items' | 'multiple' | 'children'>, SelectVariantProps {
   /** The options. With `loadOptions`, the ones known up front (e.g. the selected value's label). */
   items?: ReadonlyArray<SimpleSelectItem<V>>;
   /**
@@ -165,7 +175,9 @@ export function SimpleSelect<V extends string = string>({
   const [open, setOpen] = useState(props.defaultOpen ?? false);
   const remote = useAsyncOptions(loadOptions, '', { enabled: props.open ?? open, debounceMs: 0 });
   const known = itemsProp ?? [];
-  const items = loadOptions ? [...known.filter((k) => !remote.items.some((r) => r.value === k.value)), ...remote.items] : known;
+  const items = loadOptions
+    ? [...known.filter((k) => !remote.items.some((r) => r.value === k.value)), ...remote.items]
+    : known;
   const sv = selectVariants();
 
   let status: ReactNode = null;
@@ -205,7 +217,13 @@ export function SimpleSelect<V extends string = string>({
       {...props}
     >
       {label && <SelectLabel>{label}</SelectLabel>}
-      <SelectTrigger ref={triggerRef} size={size} className={className} placeholder={placeholder} aria-label={ariaLabel} />
+      <SelectTrigger
+        ref={triggerRef}
+        size={size}
+        className={className}
+        placeholder={placeholder}
+        aria-label={ariaLabel}
+      />
       <SelectContent status={status} aria-busy={(loadOptions && remote.loading) || undefined}>
         {items.map((item) => (
           <SelectItem key={item.value} value={item.value} disabled={item.disabled}>

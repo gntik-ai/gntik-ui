@@ -20,7 +20,8 @@ export const datePickerVariants = tv({
     /** `withTime`: label, TimePicker and Done under the calendar. */
     timeRow: 'flex items-center gap-2 border-t border-border p-3',
     timeLabel: 'shrink-0 text-[12px] font-medium text-muted-foreground',
-    presets: 'flex shrink-0 flex-row flex-wrap gap-1 border-b border-border p-2 sm:w-36 sm:flex-col sm:flex-nowrap sm:border-e sm:border-b-0',
+    presets:
+      'flex shrink-0 flex-row flex-wrap gap-1 border-b border-border p-2 sm:w-36 sm:flex-col sm:flex-nowrap sm:border-e sm:border-b-0',
     preset: [
       'rounded-[6px] px-2.5 py-1.5 text-start text-[12.5px] text-foreground transition-colors motion-reduce:transition-none',
       'hover:bg-secondary/70 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring',

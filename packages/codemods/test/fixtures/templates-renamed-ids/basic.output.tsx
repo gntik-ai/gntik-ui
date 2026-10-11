@@ -1,4 +1,9 @@
-import { WorkflowBuilderPage, MfaPage, workflowBuilderTemplateMeta, type FlowBuilderPageProps } from '@gntik-ai/templates';
+import {
+  WorkflowBuilderPage,
+  MfaPage,
+  workflowBuilderTemplateMeta,
+  type FlowBuilderPageProps,
+} from '@gntik-ai/templates';
 import { mfaTemplateMeta as mfaMeta } from '@gntik-ai/templates';
 
 const pages = { FlowBuilderPage: WorkflowBuilderPage, mfa: MfaPage };
@@ -9,7 +14,9 @@ export function Routes(props: FlowBuilderPageProps) {
     <>
       <WorkflowBuilderPage {...props} />
       <MfaPage />
-      <p>{mfaMeta.id} {title} {Object.keys(pages).length}</p>
+      <p>
+        {mfaMeta.id} {title} {Object.keys(pages).length}
+      </p>
     </>
   );
 }

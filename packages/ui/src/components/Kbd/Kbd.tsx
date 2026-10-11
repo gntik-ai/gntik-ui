@@ -65,7 +65,11 @@ export function KbdCombo({ keys, size, separator, className, ...props }: KbdComb
     <kbd className={cn(s.combo(), className)} {...props}>
       {keys.map((k, i) => (
         <Fragment key={`${k}-${i}`}>
-          {i > 0 && separator != null && <span aria-hidden className={s.plus()}>{separator}</span>}
+          {i > 0 && separator != null && (
+            <span aria-hidden className={s.plus()}>
+              {separator}
+            </span>
+          )}
           <Kbd size={size}>{k}</Kbd>
         </Fragment>
       ))}

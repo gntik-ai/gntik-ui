@@ -70,8 +70,24 @@ export function QueryValueEditor({ condition, field, onChange, disabled, locale 
       };
       return (
         <>
-          <NumberInput aria-label={t('queryBuilder.valueFrom')} value={asNumber(pair[0])} onValueChange={(n) => set(0, n)} disabled={disabled} size="sm" hideSteppers className="w-28" />
-          <NumberInput aria-label={t('queryBuilder.valueTo')} value={asNumber(pair[1])} onValueChange={(n) => set(1, n)} disabled={disabled} size="sm" hideSteppers className="w-28" />
+          <NumberInput
+            aria-label={t('queryBuilder.valueFrom')}
+            value={asNumber(pair[0])}
+            onValueChange={(n) => set(0, n)}
+            disabled={disabled}
+            size="sm"
+            hideSteppers
+            className="w-28"
+          />
+          <NumberInput
+            aria-label={t('queryBuilder.valueTo')}
+            value={asNumber(pair[1])}
+            onValueChange={(n) => set(1, n)}
+            disabled={disabled}
+            size="sm"
+            hideSteppers
+            className="w-28"
+          />
         </>
       );
     }
@@ -91,14 +107,33 @@ export function QueryValueEditor({ condition, field, onChange, disabled, locale 
   if (field.type === 'date') {
     if (arity === 'pair') {
       const set = (i: 0 | 1, d: Date | null) => {
-        const next: [string, string] = [typeof pair[0] === 'string' ? pair[0] : '', typeof pair[1] === 'string' ? pair[1] : ''];
+        const next: [string, string] = [
+          typeof pair[0] === 'string' ? pair[0] : '',
+          typeof pair[1] === 'string' ? pair[1] : '',
+        ];
         next[i] = d ? toISODate(d) : '';
         onChange(next[0] || next[1] ? next : undefined);
       };
       return (
         <>
-          <DatePicker aria-label={t('queryBuilder.valueFrom')} value={fromISO(pair[0])} onValueChange={(d) => set(0, d)} locale={locale} disabled={disabled} size="sm" className="w-44" />
-          <DatePicker aria-label={t('queryBuilder.valueTo')} value={fromISO(pair[1])} onValueChange={(d) => set(1, d)} locale={locale} disabled={disabled} size="sm" className="w-44" />
+          <DatePicker
+            aria-label={t('queryBuilder.valueFrom')}
+            value={fromISO(pair[0])}
+            onValueChange={(d) => set(0, d)}
+            locale={locale}
+            disabled={disabled}
+            size="sm"
+            className="w-44"
+          />
+          <DatePicker
+            aria-label={t('queryBuilder.valueTo')}
+            value={fromISO(pair[1])}
+            onValueChange={(d) => set(1, d)}
+            locale={locale}
+            disabled={disabled}
+            size="sm"
+            className="w-44"
+          />
         </>
       );
     }

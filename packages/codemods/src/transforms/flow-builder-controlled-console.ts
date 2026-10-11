@@ -13,7 +13,8 @@ export const meta: CodemodMeta = {
 };
 
 /** @gntik-ai/blocks, or a copied block (`…/FlowBuilder`, `…/builders`). */
-const isFlowBuilderSource = (source: string) => source === '@gntik-ai/blocks' || /(^|\/)(FlowBuilder|builders)(\/index)?$/.test(source);
+const isFlowBuilderSource = (source: string) =>
+  source === '@gntik-ai/blocks' || /(^|\/)(FlowBuilder|builders)(\/index)?$/.test(source);
 
 export function transform(file: FileInfo, api: API): string | null {
   const j = api.jscodeshift;
@@ -26,7 +27,9 @@ export function transform(file: FileInfo, api: API): string | null {
     const name = jsxName(el);
     if (!name || !names.has(name) || !hasAttribute(el, 'consoleEntries') || hasAttribute(el, 'onConsoleChange')) return;
     if (hasSpread(el)) {
-      api.report(`line ${line(el)}: <${name} consoleEntries> with spread props was left as is; if the spread does not pass onConsoleChange, rename consoleEntries to defaultConsoleEntries.`);
+      api.report(
+        `line ${line(el)}: <${name} consoleEntries> with spread props was left as is; if the spread does not pass onConsoleChange, rename consoleEntries to defaultConsoleEntries.`,
+      );
       return;
     }
     for (const attr of el.attributes ?? []) {

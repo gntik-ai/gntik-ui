@@ -58,7 +58,16 @@ export function SubordinateList<T>({
   const { locale, t } = useI18n();
   return (
     <section aria-labelledby={headingId} aria-busy={loading} className="space-y-4">
-      <SectionHeader title={title} as={headingLevel} count={count} description={null} actions={[]} bordered={true} headingId={headingId} className="" />
+      <SectionHeader
+        title={title}
+        as={headingLevel}
+        count={count}
+        description={null}
+        actions={[]}
+        bordered={true}
+        headingId={headingId}
+        className=""
+      />
       {error !== null ? (
         <ErrorPanel
           icon={ServerCrash}

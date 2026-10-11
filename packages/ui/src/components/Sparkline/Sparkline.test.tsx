@@ -7,7 +7,9 @@ import SparklineVariants from './examples/SparklineVariants';
 describe('Sparkline', () => {
   it('is an image named with a summary of the trend', () => {
     render(<Sparkline data={[100, 90, 120, 110]} label="Requests" />);
-    expect(screen.getByRole('img', { name: 'Requests: trending up 10% from 100 to 110 over 4 points (low 90, high 120)' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('img', { name: 'Requests: trending up 10% from 100 to 110 over 4 points (low 90, high 120)' }),
+    ).toBeInTheDocument();
   });
 
   it('aria-label overrides the generated summary', () => {
@@ -19,11 +21,15 @@ describe('Sparkline', () => {
     expect(describeTrend([])).toBe('Trend: no data');
     expect(describeTrend([5])).toBe('Trend: 5');
     expect(describeTrend([3, 3])).toContain('flat from 3 to 3');
-    expect(describeTrend([200, 150], 'Cost', (v) => `$${v}`)).toBe('Cost: trending down 25% from $200 to $150 over 2 points (low $150, high $200)');
+    expect(describeTrend([200, 150], 'Cost', (v) => `$${v}`)).toBe(
+      'Cost: trending down 25% from $200 to $150 over 2 points (low $150, high $200)',
+    );
   });
 
   it('line variant draws the line, area fill and markers with token classes', () => {
-    const { container } = render(<Sparkline data={[1, 4, 2, 5]} area markers={['min', 'max', 'last']} tone="success" />);
+    const { container } = render(
+      <Sparkline data={[1, 4, 2, 5]} area markers={['min', 'max', 'last']} tone="success" />,
+    );
     const paths = container.querySelectorAll('path');
     expect(paths).toHaveLength(2);
     expect(paths[0]).toHaveClass('fill-success/14');
@@ -41,7 +47,12 @@ describe('Sparkline', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><SparklineStats /><SparklineVariants /></>);
+    render(
+      <>
+        <SparklineStats />
+        <SparklineVariants />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

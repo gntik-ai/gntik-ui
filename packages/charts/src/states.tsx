@@ -80,9 +80,19 @@ export interface ChartErrorProps {
 }
 
 /** Error placeholder with an optional retry action. */
-export function ChartError({ height = 240, children = 'The chart could not be loaded.', onRetry, className }: ChartErrorProps) {
+export function ChartError({
+  height = 240,
+  children = 'The chart could not be loaded.',
+  onRetry,
+  className,
+}: ChartErrorProps) {
   return (
-    <div role="alert" data-chart-state="error" className={cx(stateBox, 'border-destructive/40', className)} style={{ height }}>
+    <div
+      role="alert"
+      data-chart-state="error"
+      className={cx(stateBox, 'border-destructive/40', className)}
+      style={{ height }}
+    >
       <p className="text-[13px] text-destructive-text">{children}</p>
       {onRetry && (
         <button

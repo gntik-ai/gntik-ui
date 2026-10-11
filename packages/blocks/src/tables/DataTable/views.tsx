@@ -58,7 +58,12 @@ export function sameViewState(a: DataTableViewState, b: DataTableViewState): boo
 
 /** A new view id that does not collide with `views`. */
 export function newViewId(name: string, views: readonly DataTableView[]): string {
-  const base = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'view';
+  const base =
+    name
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '') || 'view';
   let id = base;
   for (let i = 2; views.some((v) => v.id === id); i++) id = `${base}-${i}`;
   return id;
@@ -80,7 +85,17 @@ export interface ViewSwitcherProps {
 const DEFAULT_VALUE = '__default__';
 
 /** "Views" menu: switch between saved views, save the current table as a view, rename, delete, reset. */
-export function ViewSwitcher({ views, activeId, dirty, onSelect, onSaveAs, onSave, onRename, onDelete, onReset }: ViewSwitcherProps) {
+export function ViewSwitcher({
+  views,
+  activeId,
+  dirty,
+  onSelect,
+  onSaveAs,
+  onSave,
+  onRename,
+  onDelete,
+  onReset,
+}: ViewSwitcherProps) {
   const inputId = useId();
   const active = views.find((v) => v.id === activeId) ?? null;
   const [dialog, setDialog] = useState<'create' | 'rename' | null>(null);
@@ -104,14 +119,18 @@ export function ViewSwitcher({ views, activeId, dirty, onSelect, onSaveAs, onSav
           {dirty && (
             <>
               {' '}
-              <span aria-hidden className="size-1.5 rounded-full bg-primary" /> <span className="sr-only">(modified)</span>
+              <span aria-hidden className="size-1.5 rounded-full bg-primary" />{' '}
+              <span className="sr-only">(modified)</span>
             </>
           )}
         </MenuTrigger>
         <MenuContent align="end" className="min-w-[220px]">
           <MenuGroup>
             <MenuGroupLabel>Views</MenuGroupLabel>
-            <MenuRadioGroup value={activeId ?? DEFAULT_VALUE} onValueChange={(v: unknown) => onSelect(v === DEFAULT_VALUE ? null : String(v))}>
+            <MenuRadioGroup
+              value={activeId ?? DEFAULT_VALUE}
+              onValueChange={(v: unknown) => onSelect(v === DEFAULT_VALUE ? null : String(v))}
+            >
               <MenuRadioItem value={DEFAULT_VALUE}>Default view</MenuRadioItem>
               {views.map((v) => (
                 <MenuRadioItem key={v.id} value={v.id}>

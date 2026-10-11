@@ -65,7 +65,7 @@ export const RULES: RuleDef[] = [
     find: (line) =>
       allIdx(line, /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b/, (idx, l) => {
         const before = l.slice(Math.max(0, idx - 8), idx);
-        if (/[\w&]$/.test(before)) return false;              // &#39; · id_#…
+        if (/[\w&]$/.test(before)) return false; // &#39; · id_#…
         if (/(?:url\(|href=["'])$/.test(before)) return false; // url(#id) · href="#"
         return true;
       }),
@@ -91,7 +91,10 @@ export const RULES: RuleDef[] = [
     severity: 'error',
     message: 'Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens',
     find: (line) =>
-      allIdx(line, /\b(?:bg|text|border|ring|fill|stroke|shadow|outline|decoration|from|via|to)-\[(?:#|rgba?\(|hsla?\(|oklch\()/),
+      allIdx(
+        line,
+        /\b(?:bg|text|border|ring|fill|stroke|shadow|outline|decoration|from|via|to)-\[(?:#|rgba?\(|hsla?\(|oklch\()/,
+      ),
   },
   {
     id: 'gradient',
@@ -99,13 +102,9 @@ export const RULES: RuleDef[] = [
     message: 'Degradado — la marca es sobria: sin degradados de color',
     find: (line) => {
       const out = allIdx(line, /\bbg-gradient-to-[trbl]{1,2}\b/);
-      out.push(
-        ...allIdx(line, /(?:^|[^-\w])(?:linear|radial|conic)-gradient\(/, () => true),
-      );
+      out.push(...allIdx(line, /(?:^|[^-\w])(?:linear|radial|conic)-gradient\(/, () => true));
       // trama del catálogo permitida: repeating-*-gradient con tokens var(--…)
-      out.push(
-        ...allIdx(line, /repeating-(?:linear|radial|conic)-gradient\(/, (_i, l) => !l.includes('var(--')),
-      );
+      out.push(...allIdx(line, /repeating-(?:linear|radial|conic)-gradient\(/, (_i, l) => !l.includes('var(--')));
       return out;
     },
   },
@@ -173,8 +172,7 @@ export function validatePage(source: string, opts: ValidateOptions = {}): Valida
     }
   });
 
-  const tokensUsed =
-    (source.match(TOKEN_CLASS_RE) ?? []).length + (source.match(/hsl\(var\(--/g) ?? []).length;
+  const tokensUsed = (source.match(TOKEN_CLASS_RE) ?? []).length + (source.match(/hsl\(var\(--/g) ?? []).length;
 
   if (!allow.has('no-tokens') && tokensUsed === 0 && lines.length > 15) {
     findings.push({

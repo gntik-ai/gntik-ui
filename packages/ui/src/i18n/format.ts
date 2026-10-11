@@ -114,7 +114,11 @@ export interface I18nFormatters {
 }
 
 export function createFormatters(locale: string, messages: Messages): I18nFormatters {
-  function formatRelativeTime(value: number, unit: Intl.RelativeTimeFormatUnit, options?: Intl.RelativeTimeFormatOptions): string;
+  function formatRelativeTime(
+    value: number,
+    unit: Intl.RelativeTimeFormatUnit,
+    options?: Intl.RelativeTimeFormatOptions,
+  ): string;
   function formatRelativeTime(value: Date, now?: Date | number, options?: Intl.RelativeTimeFormatOptions): string;
   function formatRelativeTime(
     value: number | Date,
@@ -123,7 +127,8 @@ export function createFormatters(locale: string, messages: Messages): I18nFormat
   ): string {
     const rtf = new Intl.RelativeTimeFormat(locale, options);
     if (typeof value === 'number' && typeof unitOrNow === 'string') return rtf.format(value, unitOrNow);
-    const now = unitOrNow instanceof Date ? unitOrNow.getTime() : typeof unitOrNow === 'number' ? unitOrNow : Date.now();
+    const now =
+      unitOrNow instanceof Date ? unitOrNow.getTime() : typeof unitOrNow === 'number' ? unitOrNow : Date.now();
     const seconds = Math.round((toDate(value).getTime() - now) / 1000);
     const [unit, size] = RELATIVE_UNITS.find(([, s]) => Math.abs(seconds) >= s) ?? ['second', 1];
     return rtf.format(Math.round(seconds / size), unit);
@@ -131,9 +136,12 @@ export function createFormatters(locale: string, messages: Messages): I18nFormat
   return {
     t: (key, vars) => interpolate(messages[key] ?? key, vars, locale),
     formatNumber: (value, options) => new Intl.NumberFormat(locale, options).format(value),
-    formatCurrency: (value, currency, options) => new Intl.NumberFormat(locale, { style: 'currency', currency, ...options }).format(value),
-    formatDate: (value, options = { dateStyle: 'medium' }) => new Intl.DateTimeFormat(locale, options).format(toDate(value)),
+    formatCurrency: (value, currency, options) =>
+      new Intl.NumberFormat(locale, { style: 'currency', currency, ...options }).format(value),
+    formatDate: (value, options = { dateStyle: 'medium' }) =>
+      new Intl.DateTimeFormat(locale, options).format(toDate(value)),
     formatRelativeTime,
-    formatList: (items, options = { style: 'long', type: 'conjunction' }) => new Intl.ListFormat(locale, options).format(items),
+    formatList: (items, options = { style: 'long', type: 'conjunction' }) =>
+      new Intl.ListFormat(locale, options).format(items),
   };
 }

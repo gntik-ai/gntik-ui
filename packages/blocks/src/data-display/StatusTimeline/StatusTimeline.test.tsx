@@ -111,7 +111,9 @@ describe('StatusTimeline', () => {
   });
 
   it('shows an accessible empty state without events, sample copy or a toggle', () => {
-    const { container } = render(<StatusTimeline events={[]} label="Historial" emptyLabel="Sin historial de estado" maxVisible={2} />);
+    const { container } = render(
+      <StatusTimeline events={[]} label="Historial" emptyLabel="Sin historial de estado" maxVisible={2} />,
+    );
     expect(screen.getAllByText('Sin historial de estado')).toHaveLength(1);
     const region = screen.getByRole('region', { name: 'Historial' });
     expect(

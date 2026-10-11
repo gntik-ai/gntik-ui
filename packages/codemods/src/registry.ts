@@ -6,7 +6,12 @@ import { codemod as templatesRenamedIds } from './transforms/templates-renamed-i
 import type { Codemod, CodemodMeta } from './types.js';
 
 /** Every transform, in the order they run (oldest breaking change first). */
-export const codemods: readonly Codemod[] = [templatesRenamedIds, flowBuilderControlledConsole, chipTextAliases, linkUnderlineDefault];
+export const codemods: readonly Codemod[] = [
+  templatesRenamedIds,
+  flowBuilderControlledConsole,
+  chipTextAliases,
+  linkUnderlineDefault,
+];
 
 /** Metadata of every transform (what `gntik-ui upgrade --list` prints). */
 export const transforms: readonly CodemodMeta[] = codemods.map((c) => c.meta);
@@ -50,8 +55,12 @@ export function appliesTo(meta: CodemodMeta, from: string | null, to: string | u
 /** The transforms an upgrade needs, in run order. Throws on unknown ids or invalid versions. */
 export function selectTransforms(options: SelectOptions = {}): CodemodMeta[] {
   const known = new Set(transforms.map((t) => t.id));
-  for (const id of [...(options.only ?? []), ...(options.skip ?? [])]) if (!known.has(id)) throw new Error(`Unknown codemod "${id}"`);
-  for (const v of [typeof options.from === 'string' ? options.from : undefined, options.to === 'latest' ? undefined : options.to]) {
+  for (const id of [...(options.only ?? []), ...(options.skip ?? [])])
+    if (!known.has(id)) throw new Error(`Unknown codemod "${id}"`);
+  for (const v of [
+    typeof options.from === 'string' ? options.from : undefined,
+    options.to === 'latest' ? undefined : options.to,
+  ]) {
     if (v !== undefined && !isVersion(v)) throw new Error(`Invalid version "${v}"`);
   }
   const skip = new Set(options.skip ?? []);

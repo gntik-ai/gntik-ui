@@ -1,4 +1,14 @@
-import { AreaChart, BarChart, Heatmap, LineChart, chartFmt, type ChartColor, type ChartStateProps, type HeatmapProps, type ValueFormatter } from '@gntik-ai/charts';
+import {
+  AreaChart,
+  BarChart,
+  Heatmap,
+  LineChart,
+  chartFmt,
+  type ChartColor,
+  type ChartStateProps,
+  type HeatmapProps,
+  type ValueFormatter,
+} from '@gntik-ai/charts';
 import { Card, CardAction, CardDescription, CardHeader, CardTitle, cn, Toggle, ToggleGroup } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
 import { TrendDelta, type KpiDelta } from '../shared/TrendDelta';
@@ -13,7 +23,10 @@ export interface ChartCardRange {
 }
 
 /** Heatmap-only options of a ChartCard with `kind="heatmap"`. */
-export type ChartCardHeatmapOptions = Pick<HeatmapProps<object>, 'scale' | 'domain' | 'steps' | 'showValues' | 'rowHeader'>;
+export type ChartCardHeatmapOptions = Pick<
+  HeatmapProps<object>,
+  'scale' | 'domain' | 'steps' | 'showValues' | 'rowHeader'
+>;
 
 export interface ChartCardProps<T extends object> extends ChartStateProps {
   title?: string;
@@ -92,7 +105,17 @@ export function ChartCard<T extends object = CostPoint>({
   const data = (active && dataByRange[active.value]) ?? [];
   const chartLabel = `${title}${active ? `, ${active.label}` : ''}`;
   const states = { state, emptyMessage, errorMessage, onRetry, dataTable };
-  const common = { data, index, categories, colors, valueFormatter, showLegend, height, 'aria-label': chartLabel, ...states };
+  const common = {
+    data,
+    index,
+    categories,
+    colors,
+    valueFormatter,
+    showLegend,
+    height,
+    'aria-label': chartLabel,
+    ...states,
+  };
   return (
     <Card className={className}>
       <CardHeader className="pb-2">
@@ -123,7 +146,9 @@ export function ChartCard<T extends object = CostPoint>({
       </CardHeader>
       {active?.summary && (
         <p className="flex flex-wrap items-baseline gap-x-2 px-5" aria-live="polite">
-          <span className="text-[24px] font-semibold tracking-tight text-foreground tabular-nums">{active.summary.value}</span>
+          <span className="text-[24px] font-semibold tracking-tight text-foreground tabular-nums">
+            {active.summary.value}
+          </span>
           {active.summary.delta && <TrendDelta {...active.summary.delta} />}
         </p>
       )}

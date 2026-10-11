@@ -34,10 +34,11 @@ interface StatusLayoutBaseProps extends Omit<HTMLAttributes<HTMLDivElement>, 'cl
   fullScreen?: boolean;
 }
 
-export type StatusLayoutProps = StatusLayoutBaseProps & (
-  | { /** The message, rendered as the page h1 when the slot is empty. */ title: ReactNode; heading?: null }
-  | { /** Replaces the built-in title; supply exactly one h1. */ heading: NonNullable<ReactNode>; title?: never }
-);
+export type StatusLayoutProps = StatusLayoutBaseProps &
+  (
+    | { /** The message, rendered as the page h1 when the slot is empty. */ title: ReactNode; heading?: null }
+    | { /** Replaces the built-in title; supply exactly one h1. */ heading: NonNullable<ReactNode>; title?: never }
+  );
 
 /**
  * Full-page status (404 · 403 · 500 · maintenance): a centred message with an illustration or
@@ -90,7 +91,9 @@ export function StatusLayout({
           {heading != null ? (
             <div className={s.heading()}>{heading}</div>
           ) : (
-            <h1 ref={titleRef} tabIndex={titleRef != null ? -1 : undefined} className={s.title()}>{title}</h1>
+            <h1 ref={titleRef} tabIndex={titleRef != null ? -1 : undefined} className={s.title()}>
+              {title}
+            </h1>
           )}
           {description != null && <p className={s.description()}>{description}</p>}
           {(primaryAction != null || secondaryAction != null) && (

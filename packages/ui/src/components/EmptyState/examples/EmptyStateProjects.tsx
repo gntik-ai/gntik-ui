@@ -9,7 +9,11 @@ export default function EmptyStateProjects() {
       title="No projects yet"
       description="Create your first project to start deploying, inviting members and tracking usage."
       primaryAction={<Button icon={Plus}>New project</Button>}
-      secondaryAction={<Button variant="secondary" icon={Upload}>Import</Button>}
+      secondaryAction={
+        <Button variant="secondary" icon={Upload}>
+          Import
+        </Button>
+      }
     />
   );
 }

@@ -38,7 +38,9 @@ export function SandboxToolbar(p: SandboxToolbarProps) {
     <header className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 border-b border-border bg-chrome px-4 py-2.5">
       <div className="flex items-center gap-2.5">
         <Logo size={24} wordmark />
-        <span className="rounded-md border border-border px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground">sandbox</span>
+        <span className="rounded-md border border-border px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground">
+          sandbox
+        </span>
       </div>
       <SimpleSelect
         aria-label="Example"
@@ -65,7 +67,12 @@ export function SandboxToolbar(p: SandboxToolbarProps) {
           onValueChange={(v) => v && p.onBrand(v)}
           className="w-36"
         />
-        <ToggleGroup aria-label="Preview width" size="sm" value={[p.device]} onValueChange={(v) => single(v, p.onDevice)}>
+        <ToggleGroup
+          aria-label="Preview width"
+          size="sm"
+          value={[p.device]}
+          onValueChange={(v) => single(v, p.onDevice)}
+        >
           {DEVICES.map((d) => (
             <Toggle key={d.value} value={d.value} iconOnly aria-label={d.label}>
               <d.icon size={15} aria-hidden />

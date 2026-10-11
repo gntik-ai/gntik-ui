@@ -15,7 +15,14 @@ export interface UploadItem {
 export const uploadItems: UploadItem[] = [
   { id: 'f1', name: 'service-config.yaml', size: 4_300, progress: 100, status: 'done' },
   { id: 'f2', name: 'events-export.jsonl', size: 1_679_000, progress: 64, status: 'uploading' },
-  { id: 'f3', name: 'db-snapshot.bin', size: 2_540_000_000, progress: 0, status: 'error', error: 'File type not accepted' },
+  {
+    id: 'f3',
+    name: 'db-snapshot.bin',
+    size: 2_540_000_000,
+    progress: 0,
+    status: 'error',
+    error: 'File type not accepted',
+  },
 ];
 
 /** Demo uploader: reports progress in steps and resolves after ~1.5 s. */
@@ -53,5 +60,7 @@ export function acceptsFile(file: { name: string; type: string }, accept: string
     .split(',')
     .map((a) => a.trim().toLowerCase())
     .filter(Boolean)
-    .some((a) => (a.startsWith('.') ? name.endsWith(a) : a.endsWith('/*') ? type.startsWith(a.slice(0, -1)) : type === a));
+    .some((a) =>
+      a.startsWith('.') ? name.endsWith(a) : a.endsWith('/*') ? type.startsWith(a.slice(0, -1)) : type === a,
+    );
 }

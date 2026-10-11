@@ -87,7 +87,9 @@ export default function PromptPlaygroundPage(props: Partial<PromptPlaygroundProp
   const [diff, setDiff] = useState(false);
   const [status, setStatus] = useState('');
 
-  const shared = Object.fromEntries((rows ?? variables).filter((r) => r.key.trim() && r.value.trim()).map((r) => [r.key.trim(), r.value]));
+  const shared = Object.fromEntries(
+    (rows ?? variables).filter((r) => r.key.trim() && r.value.trim()).map((r) => [r.key.trim(), r.value]),
+  );
   const modelItems = models.map((m) => ({ value: m.id, label: m.label }));
   const labelOf = (id: string) => models.find((m) => m.id === id)?.label ?? id;
   const baseline = columns[0];
@@ -124,8 +126,17 @@ export default function PromptPlaygroundPage(props: Partial<PromptPlaygroundProp
         paletteLabel="Variables"
         palette={
           <Stack gap={2}>
-            <p className="text-[12px] text-muted-foreground">Shared by every model column. Paste KEY=value lines to add several.</p>
-            <ListInput label="Prompt variables" defaultValue={variables} onValueChange={setRows} uniqueKeys keyPlaceholder="name" valuePlaceholder="value" />
+            <p className="text-[12px] text-muted-foreground">
+              Shared by every model column. Paste KEY=value lines to add several.
+            </p>
+            <ListInput
+              label="Prompt variables"
+              defaultValue={variables}
+              onValueChange={setRows}
+              uniqueKeys
+              keyPlaceholder="name"
+              valuePlaceholder="value"
+            />
           </Stack>
         }
         header={
@@ -156,9 +167,17 @@ export default function PromptPlaygroundPage(props: Partial<PromptPlaygroundProp
             <Section
               title="Outputs"
               headingLevel="h2"
-              description={diff && baseline ? `Changes against ${labelOf(baseline.model)}.` : 'Each column runs the same prompt.'}
+              description={
+                diff && baseline ? `Changes against ${labelOf(baseline.model)}.` : 'Each column runs the same prompt.'
+              }
               actions={
-                <Button size="sm" variant="secondary" icon={Plus} disabled={columns.length >= MAX_COLUMNS} onClick={addColumn}>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  icon={Plus}
+                  disabled={columns.length >= MAX_COLUMNS}
+                  onClick={addColumn}
+                >
                   Add model
                 </Button>
               }
@@ -173,7 +192,12 @@ export default function PromptPlaygroundPage(props: Partial<PromptPlaygroundProp
                     title={`Column ${i + 1}: ${labelOf(c.model)}`}
                     actions={
                       columns.length > 2 && (
-                        <IconButton size="sm" icon={X} label={`Remove column ${i + 1}`} onClick={() => setColumns((cols) => cols.filter((x) => x.id !== c.id))} />
+                        <IconButton
+                          size="sm"
+                          icon={X}
+                          label={`Remove column ${i + 1}`}
+                          onClick={() => setColumns((cols) => cols.filter((x) => x.id !== c.id))}
+                        />
                       )
                     }
                   >
@@ -183,12 +207,16 @@ export default function PromptPlaygroundPage(props: Partial<PromptPlaygroundProp
                         size="sm"
                         items={modelItems}
                         value={c.model}
-                        onValueChange={(model) => model && setColumns((cols) => cols.map((x) => (x.id === c.id ? { id: x.id, model } : x)))}
+                        onValueChange={(model) =>
+                          model && setColumns((cols) => cols.map((x) => (x.id === c.id ? { id: x.id, model } : x)))
+                        }
                       />
                       {c.error ? (
                         <p className="text-[12.5px] text-destructive-text">{c.error}</p>
                       ) : !c.output ? (
-                        <p className="text-[12.5px] text-muted-foreground">Run the prompt to see this model&apos;s answer.</p>
+                        <p className="text-[12.5px] text-muted-foreground">
+                          Run the prompt to see this model&apos;s answer.
+                        </p>
                       ) : diff && i > 0 && baseline?.output ? (
                         <DiffEditor
                           original={baseline.output.text}
@@ -199,7 +227,9 @@ export default function PromptPlaygroundPage(props: Partial<PromptPlaygroundProp
                           loader={loader}
                         />
                       ) : (
-                        <p className="text-[13px] leading-relaxed whitespace-pre-wrap text-foreground">{c.output.text}</p>
+                        <p className="text-[13px] leading-relaxed whitespace-pre-wrap text-foreground">
+                          {c.output.text}
+                        </p>
                       )}
                       {c.output && (
                         <HStack gap={2} wrap>

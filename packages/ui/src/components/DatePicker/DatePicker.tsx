@@ -9,7 +9,10 @@ import { DateTrigger } from './DateTrigger';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
 
-type CalendarPassThrough = Pick<CalendarSingleProps, 'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'today'>;
+type CalendarPassThrough = Pick<
+  CalendarSingleProps,
+  'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'today'
+>;
 
 export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantProps {
   value?: Date | null;
@@ -110,7 +113,11 @@ export function DatePicker({
     ...(hourCycle ? { hourCycle: hourCycle === 12 ? 'h12' : 'h23' } : {}),
   };
   const text = date ? formatDate(date, locale, withTime ? timeFormat : formatOptions) : '';
-  const hidden = date ? (withTime ? `${toISODate(date)}T${formatTimeOfDay(timeOfDay(date), withSeconds)}` : toISODate(date)) : '';
+  const hidden = date
+    ? withTime
+      ? `${toISODate(date)}T${formatTimeOfDay(timeOfDay(date), withSeconds)}`
+      : toISODate(date)
+    : '';
   const s = datePickerVariants({ size });
 
   return (
@@ -127,7 +134,13 @@ export function DatePicker({
         aria-describedby={ariaDescribedBy}
       />
       {name && <input type="hidden" name={name} value={hidden} />}
-      <PopoverContent aria-label={t('datePicker.choose')} align="start" sideOffset={6} padding="none" initialFocus={() => focusCalendarDay(calendarRef.current)}>
+      <PopoverContent
+        aria-label={t('datePicker.choose')}
+        align="start"
+        sideOffset={6}
+        padding="none"
+        initialFocus={() => focusCalendarDay(calendarRef.current)}
+      >
         <Calendar
           ref={calendarRef}
           aria-label={t('datePicker.choose')}

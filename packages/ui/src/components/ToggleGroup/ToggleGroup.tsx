@@ -37,9 +37,7 @@ export function Toggle({ size, iconOnly, className, type = 'button', ...props }:
   );
 }
 
-export interface ToggleGroupProps
-  extends Omit<BaseToggleGroup.Props<string>, 'className'>,
-    ToggleGroupVariantProps {
+export interface ToggleGroupProps extends Omit<BaseToggleGroup.Props<string>, 'className'>, ToggleGroupVariantProps {
   className?: string;
   ref?: Ref<HTMLDivElement>;
   /** Item size, passed down to every Toggle. `auto` (default) follows the density. */

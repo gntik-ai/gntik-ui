@@ -7,5 +7,13 @@ export const meta: TemplateMeta = {
   status: 'beta',
   description: 'Current plan with billing cycle, quota meters, the default payment method and invoice history.',
   layout: 'SettingsLayout',
-  blocks: ['app-sidebar', 'app-topbar', 'page-header', 'plan-card', 'quota-meters', 'payment-method-card', 'invoice-table'],
+  blocks: [
+    'app-sidebar',
+    'app-topbar',
+    'page-header',
+    'plan-card',
+    'quota-meters',
+    'payment-method-card',
+    'invoice-table',
+  ],
 };

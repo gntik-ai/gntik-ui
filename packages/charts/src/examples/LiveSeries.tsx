@@ -8,7 +8,10 @@ interface Sample {
   rps: number;
 }
 
-const sample = (i: number): Sample => ({ t: `${String(Math.floor(i / 60) % 60).padStart(2, '0')}:${String(i % 60).padStart(2, '0')}`, rps: 420 + Math.round(80 * Math.sin(i / 4) + ((i * 37) % 23)) });
+const sample = (i: number): Sample => ({
+  t: `${String(Math.floor(i / 60) % 60).padStart(2, '0')}:${String(i % 60).padStart(2, '0')}`,
+  rps: 420 + Math.round(80 * Math.sin(i / 4) + ((i * 37) % 23)),
+});
 
 /**
  * Requests per second, one point a second over a 30-point window. Updates freeze while the

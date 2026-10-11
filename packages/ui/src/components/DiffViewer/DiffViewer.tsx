@@ -77,8 +77,14 @@ export function DiffViewer({
   }, [oldValue, newValue, format, ignoreWhitespace, ignoreCase]);
   const view = useMemo(() => pairLines(lines, wordDiff).lines, [lines, wordDiff]);
   const stats = useMemo(() => diffStats(lines), [lines]);
-  const hidden = useMemo(() => collapsibleRanges(lines, context).filter(([start]) => !expanded.has(start)), [lines, context, expanded]);
-  const items = useMemo(() => (mode === 'split' ? splitItems(view, hidden) : unifiedItems(view, hidden)), [mode, view, hidden]);
+  const hidden = useMemo(
+    () => collapsibleRanges(lines, context).filter(([start]) => !expanded.has(start)),
+    [lines, context, expanded],
+  );
+  const items = useMemo(
+    () => (mode === 'split' ? splitItems(view, hidden) : unifiedItems(view, hidden)),
+    [mode, view, hidden],
+  );
 
   const digits = String(Math.max(1, ...lines.map((l) => Math.max(l.oldLine ?? 0, l.newLine ?? 0)))).length;
   const numberStyle = { minWidth: `calc(${digits}ch + 1rem)` };
@@ -94,7 +100,11 @@ export function DiffViewer({
   };
 
   const srPrefix = (line: ViewLine) =>
-    line.type === 'added' ? t('diff.addedLine', { line: line.newLine ?? '' }) : line.type === 'removed' ? t('diff.removedLine', { line: line.oldLine ?? '' }) : '';
+    line.type === 'added'
+      ? t('diff.addedLine', { line: line.newLine ?? '' })
+      : line.type === 'removed'
+        ? t('diff.removedLine', { line: line.oldLine ?? '' })
+        : '';
 
   const code = (line: ViewLine) => {
     const v = diffViewerVariants({ type: line.type });
@@ -137,7 +147,11 @@ export function DiffViewer({
     if (!line) return <div className={cn(s.half(), s.empty())} />;
     const type = line.type;
     return (
-      <div className={diffViewerVariants({ type }).half()} data-type={type} aria-hidden={side === 'new' && type === 'unchanged' ? true : undefined}>
+      <div
+        className={diffViewerVariants({ type }).half()}
+        data-type={type}
+        aria-hidden={side === 'new' && type === 'unchanged' ? true : undefined}
+      >
         {number(side === 'old' ? line.oldLine : line.newLine, line)}
         {marker(line)}
         {code(line)}
@@ -177,7 +191,12 @@ export function DiffViewer({
           </span>
         </div>
         {showModeToggle && (
-          <ToggleGroup aria-label={t('diff.view')} size="sm" value={[mode]} onValueChange={(v) => v[0] && setMode(v[0] as DiffMode)}>
+          <ToggleGroup
+            aria-label={t('diff.view')}
+            size="sm"
+            value={[mode]}
+            onValueChange={(v) => v[0] && setMode(v[0] as DiffMode)}
+          >
             <Toggle value="unified">{t('diff.unified')}</Toggle>
             <Toggle value="split">{t('diff.split')}</Toggle>
           </ToggleGroup>
@@ -209,7 +228,13 @@ export function DiffViewer({
             const start = Number(item.key.slice(1));
             return (
               <div key={item.key} className={s.collapsed()}>
-                <Button variant="ghost" size="sm" icon={ChevronsUpDown} className="h-6 font-sans text-[12px]" onClick={() => expand(start)}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  icon={ChevronsUpDown}
+                  className="h-6 font-sans text-[12px]"
+                  onClick={() => expand(start)}
+                >
                   {t('diff.expand', { count: item.count })}
                 </Button>
               </div>
@@ -218,7 +243,11 @@ export function DiffViewer({
           if (item.line) {
             const line = item.line;
             return (
-              <div key={item.key} className={cn(s.row(), s.unifiedRow(), diffViewerVariants({ type: line.type }).row())} data-type={line.type}>
+              <div
+                key={item.key}
+                className={cn(s.row(), s.unifiedRow(), diffViewerVariants({ type: line.type }).row())}
+                data-type={line.type}
+              >
                 {number(line.oldLine, line)}
                 {number(line.newLine, line)}
                 {marker(line)}

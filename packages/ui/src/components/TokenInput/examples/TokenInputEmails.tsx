@@ -22,7 +22,9 @@ export default function TokenInputEmails() {
           listLabel="Invitees"
         />
         <FieldDescription>
-          {invalid > 0 ? `Fix ${invalid} invalid address${invalid > 1 ? 'es' : ''} before sending.` : 'Press Enter or comma to add. Paste a list to add several.'}
+          {invalid > 0
+            ? `Fix ${invalid} invalid address${invalid > 1 ? 'es' : ''} before sending.`
+            : 'Press Enter or comma to add. Paste a list to add several.'}
         </FieldDescription>
       </Field>
     </div>

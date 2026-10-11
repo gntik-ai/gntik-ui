@@ -54,14 +54,42 @@ export const TOOL_SCHEMAS = {
   list_kit: schema({
     kind: { type: 'string', enum: KIT_KINDS, description: 'component | layout | block | template' },
     group: { type: 'string', description: 'Group/family, e.g. "Forms", "tables", "Settings"' },
-    query: { type: 'string', description: 'Keywords; every term must match id, name, group or description (e.g. "members", "date range")' },
+    query: {
+      type: 'string',
+      description: 'Keywords; every term must match id, name, group or description (e.g. "members", "date range")',
+    },
   }),
-  get_component: schema({ id: { type: 'string', description: 'Component or layout id from list_kit, e.g. "dialog", "settings-layout"' }, include_source: includeSource }, ['id']),
-  get_block: schema({ id: { type: 'string', description: 'Block id from list_kit, e.g. "kpi-row", "data-table"' }, include_source: includeSource }, ['id']),
-  get_template: schema({ id: { type: 'string', description: 'Template id from list_kit, e.g. "settings-members"' }, include_source: includeSource }, ['id']),
+  get_component: schema(
+    {
+      id: { type: 'string', description: 'Component or layout id from list_kit, e.g. "dialog", "settings-layout"' },
+      include_source: includeSource,
+    },
+    ['id'],
+  ),
+  get_block: schema(
+    {
+      id: { type: 'string', description: 'Block id from list_kit, e.g. "kpi-row", "data-table"' },
+      include_source: includeSource,
+    },
+    ['id'],
+  ),
+  get_template: schema(
+    {
+      id: { type: 'string', description: 'Template id from list_kit, e.g. "settings-members"' },
+      include_source: includeSource,
+    },
+    ['id'],
+  ),
   scaffold_page: schema({
-    template: { type: 'string', description: 'Template id: the page renders it (shell prop wired for console templates)' },
-    blocks: { type: 'array', items: { type: 'string' }, description: 'Block ids in page order (used when no template fits)' },
+    template: {
+      type: 'string',
+      description: 'Template id: the page renders it (shell prop wired for console templates)',
+    },
+    blocks: {
+      type: 'array',
+      items: { type: 'string' },
+      description: 'Block ids in page order (used when no template fits)',
+    },
     layout: { type: 'string', enum: PAGE_LAYOUTS, description: 'Layout for `blocks` (default: console)' },
     name: { type: 'string', description: 'Component name of the page (PascalCase)' },
     route: { type: 'string', description: 'Route, e.g. "/settings/members"' },
@@ -82,13 +110,16 @@ export const TOOL_NAMES = Object.keys(TOOL_SCHEMAS) as ToolName[];
 const DESCRIPTIONS: Record<ToolName, string> = {
   list_kit:
     'Lists installable gntik-ui kit items (components, layouts, blocks, page templates) with one-line descriptions. Filter by kind, group and/or query. Start here.',
-  get_component: 'A kit component or layout: package, export name, keyboard contract, tokens, a usage example and (optionally) its source.',
-  get_block: 'A page block from @gntik-ai/blocks: export name, components it composes, usage snippet and (optionally) its source.',
+  get_component:
+    'A kit component or layout: package, export name, keyboard contract, tokens, a usage example and (optionally) its source.',
+  get_block:
+    'A page block from @gntik-ai/blocks: export name, components it composes, usage snippet and (optionally) its source.',
   get_template:
     'A page template from @gntik-ai/templates: layout, blocks, whether it renders in ConsoleShell (takes a `shell` prop), usage and (optionally) its source.',
   scaffold_page:
     'Returns a ready-to-use TSX page built from the kit: either `template` (preferred when one fits) or `blocks` + `layout`.',
-  validate_page: 'Checks a TSX page against the brand rules (hex/rgb colours, Tailwind palette classes, gradients, glow, dark: variants, fonts). 0 errors = pass.',
+  validate_page:
+    'Checks a TSX page against the brand rules (hex/rgb colours, Tailwind palette classes, gradients, glow, dark: variants, fonts). 0 errors = pass.',
   submit_page: 'Submits the finished page. Call it exactly once, last, with the complete file. Ends the task.',
 };
 
@@ -125,9 +156,11 @@ export function validateInput(name: string, input: unknown): string[] {
     }
     if (value === undefined || value === null) continue;
     if (prop.type === 'array') {
-      if (!Array.isArray(value) || value.some((v) => typeof v !== 'string')) errors.push(`"${key}" must be an array of strings`);
+      if (!Array.isArray(value) || value.some((v) => typeof v !== 'string'))
+        errors.push(`"${key}" must be an array of strings`);
     } else if (typeof value !== prop.type) errors.push(`"${key}" must be a ${prop.type}`);
-    else if (prop.enum && !prop.enum.includes(value as string)) errors.push(`"${key}" must be one of ${prop.enum.join(', ')}`);
+    else if (prop.enum && !prop.enum.includes(value as string))
+      errors.push(`"${key}" must be one of ${prop.enum.join(', ')}`);
   }
   return errors;
 }
@@ -142,7 +175,9 @@ export interface ToolResult {
 }
 
 const cap = (text: string) =>
-  text.length > MAX_TOOL_OUTPUT ? `${text.slice(0, MAX_TOOL_OUTPUT)}\n\n…[truncated at ${MAX_TOOL_OUTPUT} characters]` : text;
+  text.length > MAX_TOOL_OUTPUT
+    ? `${text.slice(0, MAX_TOOL_OUTPUT)}\n\n…[truncated at ${MAX_TOOL_OUTPUT} characters]`
+    : text;
 const ok = (content: string): ToolResult => ({ content: cap(content), isError: false });
 const fail = (content: string): ToolResult => ({ content, isError: true });
 const str = (v: unknown) => (typeof v === 'string' ? v : undefined);
@@ -161,13 +196,19 @@ function getItem(k: KitRegistry, input: Record<string, unknown>, kinds: readonly
 /** Runs one tool call. Never throws: failures come back as is_error results. */
 export function runTool(name: string, rawInput: unknown, root = REPO_ROOT): ToolResult {
   const problems = validateInput(name, rawInput);
-  if (problems.length) return fail(`Invalid input for ${name}: ${problems.join('; ')}. Raw input: ${JSON.stringify(rawInput)}`);
+  if (problems.length)
+    return fail(`Invalid input for ${name}: ${problems.join('; ')}. Raw input: ${JSON.stringify(rawInput)}`);
   const input = rawInput as Record<string, unknown>;
   try {
     const k = kit(root);
     switch (name as ToolName) {
       case 'list_kit':
-        return ok(mdKitList(filterKit(k.items, { kind: str(input.kind), group: str(input.group), query: str(input.query) }), k.items.length));
+        return ok(
+          mdKitList(
+            filterKit(k.items, { kind: str(input.kind), group: str(input.group), query: str(input.query) }),
+            k.items.length,
+          ),
+        );
       case 'get_component':
         return getItem(k, input, ['component', 'layout'], 'component or layout');
       case 'get_block':
@@ -186,13 +227,23 @@ export function runTool(name: string, rawInput: unknown, root = REPO_ROOT): Tool
       }
       case 'validate_page': {
         const r = validatePage(str(input.code) ?? '');
-        return ok(JSON.stringify({ ok: r.ok, errors: r.errors, warnings: r.warnings, tokensUsed: r.tokensUsed, findings: r.findings }, null, 2));
+        return ok(
+          JSON.stringify(
+            { ok: r.ok, errors: r.errors, warnings: r.warnings, tokensUsed: r.tokensUsed, findings: r.findings },
+            null,
+            2,
+          ),
+        );
       }
       case 'submit_page': {
         const filename = str(input.filename) ?? 'Page.tsx';
         const code = str(input.code) ?? '';
         if (!code.trim()) return fail('submit_page needs the complete page source in `code`.');
-        return { content: `Received ${filename} (${code.split('\n').length} lines). Task complete.`, isError: false, submitted: { filename, code } };
+        return {
+          content: `Received ${filename} (${code.split('\n').length} lines). Task complete.`,
+          isError: false,
+          submitted: { filename, code },
+        };
       }
     }
   } catch (e) {

@@ -39,7 +39,19 @@ test('cobertura: la gran mayoría de componentes tienen snippets', () => {
     .filter((r) => r.status === 'done' && (index.components[r.id]?.snippets.length ?? 0) === 0)
     .map((r) => r.id)
     // Informational sections, galleries and tools: no snippets of their own
-    .filter((id) => !['overview', 'foundations', 'install', 'theme-builder', 'ui-components', 'layouts', 'blocks', 'templates'].includes(id));
+    .filter(
+      (id) =>
+        ![
+          'overview',
+          'foundations',
+          'install',
+          'theme-builder',
+          'ui-components',
+          'layouts',
+          'blocks',
+          'templates',
+        ].includes(id),
+    );
   assert.ok(noCode.length <= 5, `componentes done sin snippets: ${noCode.join(', ')}`);
 });
 
@@ -57,7 +69,10 @@ test('tailwind config extraída de index.html', () => {
 
 test('docs y blocks', () => {
   assert.ok(index.rulesMd?.includes('Reglas'), 'sección de reglas del CLAUDE.md');
-  assert.ok(index.blocks.some((b) => b.name === 'Shell'), 'blocks/Shell.html listado');
+  assert.ok(
+    index.blocks.some((b) => b.name === 'Shell'),
+    'blocks/Shell.html listado',
+  );
   assert.ok(index.components['app-shell'].snippets.length >= 1, 'app-shell con código');
 });
 

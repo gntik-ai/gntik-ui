@@ -2,7 +2,7 @@ import { cn } from './cn';
 
 const tones = {
   ok: 'bg-success/14 text-success-chip-text ring-1',
-  warn: "rounded bg-warning/12 hover:text-warning-chip-text",
+  warn: 'rounded bg-warning/12 hover:text-warning-chip-text',
   plain: 'text-primary-text underline',
   mixed: 'bg-primary/14 text-destructive-text',
 };

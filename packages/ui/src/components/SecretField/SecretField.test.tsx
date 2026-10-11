@@ -28,7 +28,12 @@ describe('SecretField', () => {
   it('uses caller reveal, hide, copy and success announcement labels', async () => {
     const user = userEvent.setup();
     const writeText = mockClipboard();
-    renderField({ showLabel: 'Reveal value', hideLabel: 'Mask value', copyLabel: 'Save value', copiedAnnouncement: 'Value saved' });
+    renderField({
+      showLabel: 'Reveal value',
+      hideLabel: 'Mask value',
+      copyLabel: 'Save value',
+      copiedAnnouncement: 'Value saved',
+    });
     await user.click(screen.getByRole('button', { name: 'Reveal value' }));
     expect(screen.getByRole('button', { name: 'Mask value' })).toHaveAttribute('aria-pressed', 'true');
     await user.click(screen.getByRole('button', { name: 'Save value' }));
@@ -76,7 +81,9 @@ describe('SecretField', () => {
     expect(screen.getByRole('button', { name: 'Copy secret' })).toHaveFocus();
     await user.keyboard('{Enter}');
     expect(writeText).toHaveBeenCalledWith(SECRET);
-    await waitFor(() => expect(screen.getAllByRole('status').some((el) => el.textContent === 'Secret copied to clipboard')).toBe(true));
+    await waitFor(() =>
+      expect(screen.getAllByRole('status').some((el) => el.textContent === 'Secret copied to clipboard')).toBe(true),
+    );
   });
 
   it('Rotate opens a confirmation; Escape cancels and returns focus', async () => {
@@ -102,7 +109,9 @@ describe('SecretField', () => {
     const dialog = await screen.findByRole('alertdialog');
     await user.click(within(dialog).getByRole('button', { name: 'Rotate secret' }));
     expect(onRotate).toHaveBeenCalledTimes(1);
-    await waitFor(() => expect(screen.getAllByRole('status').some((el) => el.textContent === 'Secret rotated')).toBe(true));
+    await waitFor(() =>
+      expect(screen.getAllByRole('status').some((el) => el.textContent === 'Secret rotated')).toBe(true),
+    );
   });
 
   it('without confirmation, Rotate runs directly', async () => {

@@ -61,7 +61,9 @@ describe('Stepper', () => {
   it('compact mode shows "Step N of M"', () => {
     render(<StepperCompact />);
     expect(screen.getByText('Step 2 of 5')).toBeInTheDocument();
-    expect(screen.getByRole('navigation', { name: 'Onboarding' }).querySelector('[aria-current="step"]')).toHaveTextContent('Workspace');
+    expect(
+      screen.getByRole('navigation', { name: 'Onboarding' }).querySelector('[aria-current="step"]'),
+    ).toHaveTextContent('Workspace');
   });
 
   it('examples have no axe violations', async () => {

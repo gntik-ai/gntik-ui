@@ -9,10 +9,14 @@ export default function PageWidths() {
   const [width, setWidth] = useState<Width>('default');
   return (
     <div className="grid gap-3">
-      <ToggleGroup aria-label="Page width" value={[width]} onValueChange={(v) => {
+      <ToggleGroup
+        aria-label="Page width"
+        value={[width]}
+        onValueChange={(v) => {
           const next = WIDTHS.find((w) => w === v[0]);
           if (next) setWidth(next);
-        }}>
+        }}
+      >
         {WIDTHS.map((w) => (
           <Toggle key={w} value={w}>
             {w}

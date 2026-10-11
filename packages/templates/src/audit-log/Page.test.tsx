@@ -30,11 +30,22 @@ describe('AuditLogPage', () => {
     await userEvent.keyboard('{Escape}');
 
     await userEvent.click(screen.getAllByRole('button', { name: 'Export CSV' })[0]!);
-    expect(onExport).toHaveBeenCalledWith([expect.objectContaining({ id: 'evt_9f21' }), expect.objectContaining({ id: 'evt_9ec0' })]);
+    expect(onExport).toHaveBeenCalledWith([
+      expect.objectContaining({ id: 'evt_9f21' }),
+      expect.objectContaining({ id: 'evt_9ec0' }),
+    ]);
   });
 
   it('filters by field (OR within, AND across) and writes CSV', () => {
-    const rows = filterAuditEvents(auditEvents, '', [{ field: 'result', value: 'failed' }, { field: 'result', value: 'denied' }], ALL);
+    const rows = filterAuditEvents(
+      auditEvents,
+      '',
+      [
+        { field: 'result', value: 'failed' },
+        { field: 'result', value: 'denied' },
+      ],
+      ALL,
+    );
     expect(rows.map((e) => e.id)).toEqual(['evt_9f0a', 'evt_9ef3']);
     expect(auditEventsToCsv(rows).split('\n')[0]).toBe('time,actor,email,action,resource,target,ip,result');
   });

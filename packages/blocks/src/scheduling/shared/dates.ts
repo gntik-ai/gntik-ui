@@ -65,27 +65,34 @@ const fmt = (locale: string | undefined, opts: Intl.DateTimeFormatOptions) => {
 };
 
 /** "09:30". */
-export const formatTime = (d: Date, locale?: string) => fmt(locale, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d);
+export const formatTime = (d: Date, locale?: string) =>
+  fmt(locale, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d);
 /** "09:30–10:00". */
-export const formatRange = (start: Date, end: Date, locale?: string) => `${formatTime(start, locale)}–${formatTime(end, locale)}`;
+export const formatRange = (start: Date, end: Date, locale?: string) =>
+  `${formatTime(start, locale)}–${formatTime(end, locale)}`;
 /** "Wednesday, April 15, 2026". */
-export const formatFullDate = (d: Date, locale?: string) => fmt(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).format(d);
+export const formatFullDate = (d: Date, locale?: string) =>
+  fmt(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).format(d);
 /** "Wednesday, April 15". */
-export const formatDay = (d: Date, locale?: string) => fmt(locale, { weekday: 'long', month: 'long', day: 'numeric' }).format(d);
+export const formatDay = (d: Date, locale?: string) =>
+  fmt(locale, { weekday: 'long', month: 'long', day: 'numeric' }).format(d);
 /** "April 2026". */
 export const formatMonth = (d: Date, locale?: string) => fmt(locale, { month: 'long', year: 'numeric' }).format(d);
 /** "Apr 15". */
 export const formatShort = (d: Date, locale?: string) => fmt(locale, { month: 'short', day: 'numeric' }).format(d);
 /** "Wed". */
-export const formatWeekday = (d: Date, locale?: string, weekday: 'short' | 'long' = 'short') => fmt(locale, { weekday }).format(d);
+export const formatWeekday = (d: Date, locale?: string, weekday: 'short' | 'long' = 'short') =>
+  fmt(locale, { weekday }).format(d);
 
 /** "Apr 13 – 19, 2026" (or across months / years). */
 export function formatWeekRange(days: readonly Date[], locale?: string): string {
   const first = days[0];
   const last = days[days.length - 1];
   if (!first || !last) return '';
-  if (locale && !locale.toLowerCase().startsWith('en')) return fmt(locale, { month: 'short', day: 'numeric', year: 'numeric' }).formatRange(first, last);
+  if (locale && !locale.toLowerCase().startsWith('en'))
+    return fmt(locale, { month: 'short', day: 'numeric', year: 'numeric' }).formatRange(first, last);
   if (sameMonth(first, last)) return `${formatShort(first)} – ${last.getDate()}, ${last.getFullYear()}`;
-  if (first.getFullYear() === last.getFullYear()) return `${formatShort(first)} – ${formatShort(last)}, ${last.getFullYear()}`;
+  if (first.getFullYear() === last.getFullYear())
+    return `${formatShort(first)} – ${formatShort(last)}, ${last.getFullYear()}`;
   return `${formatShort(first)}, ${first.getFullYear()} – ${formatShort(last)}, ${last.getFullYear()}`;
 }

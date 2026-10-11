@@ -25,7 +25,13 @@ export function Evaluations() {
       >
         <Stack gap={6}>
           {evaluationSuites.map((suite) => (
-            <EvaluationScorecard key={suite.id} title={suite.title} baselineLabel={suite.baselineLabel} metrics={evalMetrics} rows={suite.rows} />
+            <EvaluationScorecard
+              key={suite.id}
+              title={suite.title}
+              baselineLabel={suite.baselineLabel}
+              metrics={evalMetrics}
+              rows={suite.rows}
+            />
           ))}
         </Stack>
       </Page>

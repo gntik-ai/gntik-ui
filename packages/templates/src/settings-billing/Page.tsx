@@ -1,7 +1,22 @@
-import { InvoiceTable, PaymentMethodCard, PlanCard, QuotaMeters, type BillingCycle, type BillingPlan, type Invoice, type PaymentMethod, type Quota } from '@gntik-ai/blocks';
+import {
+  InvoiceTable,
+  PaymentMethodCard,
+  PlanCard,
+  QuotaMeters,
+  type BillingCycle,
+  type BillingPlan,
+  type Invoice,
+  type PaymentMethod,
+  type Quota,
+} from '@gntik-ai/blocks';
 import { Section } from '@gntik-ai/ui';
 import { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';
-import { invoices as defaultInvoices, paymentMethod as defaultPaymentMethod, plan as defaultPlan, quotas as defaultQuotas } from './data';
+import {
+  invoices as defaultInvoices,
+  paymentMethod as defaultPaymentMethod,
+  plan as defaultPlan,
+  quotas as defaultQuotas,
+} from './data';
 
 export interface SettingsBillingProps extends SettingsFrameOptions {
   plan: BillingPlan;
@@ -32,12 +47,22 @@ export default function SettingsBillingPage({
   ...frame
 }: Partial<SettingsBillingProps>) {
   return (
-    <SettingsFrame page="billing" width="wide" description="Your plan, usage this cycle, payment method and invoices." {...frame}>
+    <SettingsFrame
+      page="billing"
+      width="wide"
+      description="Your plan, usage this cycle, payment method and invoices."
+      {...frame}
+    >
       <PlanCard titleAs="h2" plan={plan} onUpgrade={onUpgrade} onManage={onManagePlan} onCycleChange={onCycleChange} />
       <Section title="Usage" description="Resets at the start of each billing cycle.">
         <QuotaMeters quotas={quotas} title="Plan quotas" />
       </Section>
-      <PaymentMethodCard titleAs="h2" method={paymentMethod} description="Charged on the first day of each cycle." onUpdate={onUpdatePaymentMethod} />
+      <PaymentMethodCard
+        titleAs="h2"
+        method={paymentMethod}
+        description="Charged on the first day of each cycle."
+        onUpdate={onUpdatePaymentMethod}
+      />
       <Section title="Invoices">
         <InvoiceTable invoices={invoices} currency={currency} onDownload={onDownloadInvoice} />
       </Section>

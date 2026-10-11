@@ -25,10 +25,21 @@ export interface EnvironmentBadgeProps {
 }
 
 /** Environment + region chip for the topbar or a page header: "production · eu-west". */
-export function EnvironmentBadge({ environment = 'production', region = 'eu-west', tone, srLabel = 'Environment:', className }: EnvironmentBadgeProps) {
+export function EnvironmentBadge({
+  environment = 'production',
+  region = 'eu-west',
+  tone,
+  srLabel = 'Environment:',
+  className,
+}: EnvironmentBadgeProps) {
   const resolved = tone ?? environmentTones[environment.toLowerCase()] ?? 'neutral';
   return (
-    <Badge tone={resolved} dot data-environment={environment} className={cn('font-mono text-[10.5px] whitespace-nowrap', className)}>
+    <Badge
+      tone={resolved}
+      dot
+      data-environment={environment}
+      className={cn('font-mono text-[10.5px] whitespace-nowrap', className)}
+    >
       <span className="sr-only">{srLabel} </span>
       {environment}
       {region && (

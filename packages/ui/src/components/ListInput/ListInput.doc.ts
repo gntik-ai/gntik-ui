@@ -15,5 +15,14 @@ export const doc: ComponentDoc = {
     ['Paste', 'Multi-line or KEY=value text is split into rows'],
     ['Enter / Space on a remove button', 'Removes the row and focuses the next one'],
   ],
-  tokens: ['background', 'border', 'foreground', 'muted-foreground', 'destructive', 'destructive-text', 'secondary', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'destructive',
+    'destructive-text',
+    'secondary',
+    'focus-ring',
+  ],
 };

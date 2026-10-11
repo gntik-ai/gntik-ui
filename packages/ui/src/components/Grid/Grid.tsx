@@ -48,8 +48,19 @@ export interface GridProps extends Omit<useRender.ComponentProps<'div'>, 'classN
 }
 
 const ROW_GAP: Record<SpaceScale, string> = {
-  0: 'gap-y-0', 1: 'gap-y-1', 2: 'gap-y-2', 3: 'gap-y-3', 4: 'gap-y-4', 5: 'gap-y-5', 6: 'gap-y-6',
-  7: 'gap-y-7', 8: 'gap-y-8', 9: 'gap-y-9', 10: 'gap-y-10', 11: 'gap-y-11', 12: 'gap-y-12',
+  0: 'gap-y-0',
+  1: 'gap-y-1',
+  2: 'gap-y-2',
+  3: 'gap-y-3',
+  4: 'gap-y-4',
+  5: 'gap-y-5',
+  6: 'gap-y-6',
+  7: 'gap-y-7',
+  8: 'gap-y-8',
+  9: 'gap-y-9',
+  10: 'gap-y-10',
+  11: 'gap-y-11',
+  12: 'gap-y-12',
 };
 
 /** CSS grid with a responsive column count or an auto-fill minimum child width. */

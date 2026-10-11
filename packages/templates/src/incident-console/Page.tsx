@@ -86,7 +86,14 @@ export default function IncidentConsolePage(props: Partial<IncidentConsoleProps>
               resolvedAt: status === 'resolved' ? at : i.resolvedAt,
               assignee: i.assignee === 'unassigned' ? currentUser : i.assignee,
               events: [
-                { id: `${status}-${at}`, status, tone: status === 'resolved' ? 'success' : 'warning', title: statusLabels[status], at, actor: currentUser },
+                {
+                  id: `${status}-${at}`,
+                  status,
+                  tone: status === 'resolved' ? 'success' : 'warning',
+                  title: statusLabels[status],
+                  at,
+                  actor: currentUser,
+                },
                 ...i.events,
               ],
             }
@@ -99,7 +106,13 @@ export default function IncidentConsolePage(props: Partial<IncidentConsoleProps>
 
   const list =
     visible.length === 0 ? (
-      <EmptyState icon={SearchX} size="sm" className="mx-auto mt-8" title="No incidents match" description="Change or clear the filters." />
+      <EmptyState
+        icon={SearchX}
+        size="sm"
+        className="mx-auto mt-8"
+        title="No incidents match"
+        description="Change or clear the filters."
+      />
     ) : (
       <ul aria-label="Incidents" className="flex flex-col gap-0.5 p-2">
         {visible.map((i) => (
@@ -124,7 +137,12 @@ export default function IncidentConsolePage(props: Partial<IncidentConsoleProps>
                 <span aria-hidden>·</span>
                 <span className="min-w-0 flex-1 truncate">{i.service}</span>
                 <span>{statusLabels[i.status]}</span>
-                <Timer start={i.startedAt} status={i.status === 'resolved' ? 'stopped' : 'running'} end={i.resolvedAt} format="compact" />
+                <Timer
+                  start={i.startedAt}
+                  status={i.status === 'resolved' ? 'stopped' : 'running'}
+                  end={i.resolvedAt}
+                  format="compact"
+                />
               </span>
             </button>
           </li>
@@ -137,7 +155,17 @@ export default function IncidentConsolePage(props: Partial<IncidentConsoleProps>
       <Stack gap={3}>
         <HStack gap={2} wrap>
           <Badge tone={severityTones[selected.severity]}>{severityLabels[selected.severity]}</Badge>
-          <Badge tone={selected.status === 'resolved' ? 'success' : selected.status === 'acknowledged' ? 'warning' : 'destructive'} variant="outline" dot>
+          <Badge
+            tone={
+              selected.status === 'resolved'
+                ? 'success'
+                : selected.status === 'acknowledged'
+                  ? 'warning'
+                  : 'destructive'
+            }
+            variant="outline"
+            dot
+          >
             {statusLabels[selected.status]}
           </Badge>
           <Text as="span" variant="caption" tone="muted" className="font-mono">
@@ -164,10 +192,19 @@ export default function IncidentConsolePage(props: Partial<IncidentConsoleProps>
           />
         </HStack>
         <HStack gap={2} wrap>
-          <Button variant="secondary" icon={Hand} disabled={selected.status !== 'triggered'} onClick={() => transition(selected.id, 'acknowledged')}>
+          <Button
+            variant="secondary"
+            icon={Hand}
+            disabled={selected.status !== 'triggered'}
+            onClick={() => transition(selected.id, 'acknowledged')}
+          >
             Acknowledge
           </Button>
-          <Button icon={CircleCheck} disabled={selected.status === 'resolved'} onClick={() => transition(selected.id, 'resolved')}>
+          <Button
+            icon={CircleCheck}
+            disabled={selected.status === 'resolved'}
+            onClick={() => transition(selected.id, 'resolved')}
+          >
             Resolve
           </Button>
         </HStack>
@@ -180,7 +217,14 @@ export default function IncidentConsolePage(props: Partial<IncidentConsoleProps>
       </section>
     </article>
   ) : (
-    <EmptyState icon={BellRing} size="sm" titleAs="h2" className="mx-auto mt-16" title="Select an incident" description="Its timeline and actions show up here." />
+    <EmptyState
+      icon={BellRing}
+      size="sm"
+      titleAs="h2"
+      className="mx-auto mt-16"
+      title="Select an incident"
+      description="Its timeline and actions show up here."
+    />
   );
 
   return (
@@ -208,7 +252,13 @@ export default function IncidentConsolePage(props: Partial<IncidentConsoleProps>
             defaultListSize={42}
             listHeader={
               <Stack gap={2} className="w-full">
-                <PowerSearch<IncidentField> aria-label="Filter incidents" fields={fields} value={query} onValueChange={setQuery} allowFreeText />
+                <PowerSearch<IncidentField>
+                  aria-label="Filter incidents"
+                  fields={fields}
+                  value={query}
+                  onValueChange={setQuery}
+                  allowFreeText
+                />
                 <Text as="span" variant="caption" tone="muted" aria-live="polite">
                   {visible.length === 1 ? '1 incident' : `${visible.length} incidents`}
                 </Text>

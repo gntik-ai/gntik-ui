@@ -7,7 +7,8 @@ export interface SchemaIssue {
   code?: string;
 }
 
-type SafeParseResult<Out> = { success: true; data: Out } | { success: false; error: { issues: readonly SchemaIssue[] } };
+type SafeParseResult<Out> =
+  { success: true; data: Out } | { success: false; error: { issues: readonly SchemaIssue[] } };
 
 /** Anything with zod's `safeParseAsync` / `safeParse` shape (a zod schema, or an adapter). */
 export interface ParseableSchema<Out> {

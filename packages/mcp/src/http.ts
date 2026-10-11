@@ -25,7 +25,9 @@ export function startHttp(ctx: ServerContext, port: number): Promise<HttpServer>
         res.json({ ready: true, loadedAt: index.loadedAt, gitHead: index.gitHead, ...index.stats });
         return;
       }
-    } catch { /* not ready */ }
+    } catch {
+      /* not ready */
+    }
     res.status(503).json({ ready: false });
   });
 

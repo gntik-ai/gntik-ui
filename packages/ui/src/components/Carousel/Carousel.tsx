@@ -1,5 +1,14 @@
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
-import { Children, useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
+import {
+  Children,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+  type ReactNode,
+} from 'react';
 import { cn } from '../../utils/cn';
 import { carouselVariants, type CarouselVariantProps } from './carousel.variants';
 
@@ -49,7 +58,8 @@ export interface CarouselProps extends CarouselVariantProps {
   className?: string;
 }
 
-const prefersReducedMotion = () => typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 /**
  * Scroll-snap media strip (APG carousel pattern): a labelled region with
@@ -187,10 +197,24 @@ export function Carousel({
         )}
         {title != null && <div className={s.title()}>{title}</div>}
         <div className={s.controls()}>
-          <button type="button" className={s.control()} aria-label={labels.previous} aria-controls={`${id}-viewport`} disabled={atStart} onClick={() => goTo(current - 1)}>
+          <button
+            type="button"
+            className={s.control()}
+            aria-label={labels.previous}
+            aria-controls={`${id}-viewport`}
+            disabled={atStart}
+            onClick={() => goTo(current - 1)}
+          >
             <ChevronLeft size={15} aria-hidden className="rtl:-scale-x-100" />
           </button>
-          <button type="button" className={s.control()} aria-label={labels.next} aria-controls={`${id}-viewport`} disabled={atEnd} onClick={() => goTo(current + 1)}>
+          <button
+            type="button"
+            className={s.control()}
+            aria-label={labels.next}
+            aria-controls={`${id}-viewport`}
+            disabled={atEnd}
+            onClick={() => goTo(current + 1)}
+          >
             <ChevronRight size={15} aria-hidden className="rtl:-scale-x-100" />
           </button>
         </div>

@@ -48,7 +48,12 @@ export function Citation({ index, source, delay = 200, className }: CitationProp
   const href = safeSourceUrl(source.url);
   return (
     <Popover>
-      <PopoverTrigger openOnHover delay={delay} aria-label={t('chat.source', { index, title: source.title })} className={cn(s.trigger, className)}>
+      <PopoverTrigger
+        openOnHover
+        delay={delay}
+        aria-label={t('chat.source', { index, title: source.title })}
+        className={cn(s.trigger, className)}
+      >
         {index}
       </PopoverTrigger>
       <PopoverContent side="top" align="start" className={s.popup}>

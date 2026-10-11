@@ -30,7 +30,12 @@ describe('StatusDot', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><StatusDotTones /><StatusDotInline /></>);
+    render(
+      <>
+        <StatusDotTones />
+        <StatusDotInline />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

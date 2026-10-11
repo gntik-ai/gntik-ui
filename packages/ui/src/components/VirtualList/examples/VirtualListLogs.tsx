@@ -10,7 +10,11 @@ const logs = Array.from({ length: 5000 }, (_, i) => ({
   message: `deploy-gate: checked deployment #${4100 + i} for open incidents`,
 }));
 
-const levelClass = { info: 'text-muted-foreground', warn: 'text-warning-text', error: 'text-destructive-text' } as const;
+const levelClass = {
+  info: 'text-muted-foreground',
+  warn: 'text-warning-text',
+  error: 'text-destructive-text',
+} as const;
 
 export default function VirtualListLogs() {
   const list = useRef<VirtualListHandle>(null);
@@ -18,9 +22,14 @@ export default function VirtualListLogs() {
     <div className="flex max-w-2xl flex-col gap-2">
       <div className="flex items-center gap-2">
         <h3 id="logs-title" className="flex-1 text-[13px] font-semibold text-foreground">
-          Deployment log <span className="font-normal text-muted-foreground">· {logs.length.toLocaleString('en-US')} lines</span>
+          Deployment log{' '}
+          <span className="font-normal text-muted-foreground">· {logs.length.toLocaleString('en-US')} lines</span>
         </h3>
-        <Button size="sm" variant="secondary" onClick={() => list.current?.scrollToIndex(logs.length - 1, { focus: true })}>
+        <Button
+          size="sm"
+          variant="secondary"
+          onClick={() => list.current?.scrollToIndex(logs.length - 1, { focus: true })}
+        >
           Jump to latest
         </Button>
       </div>

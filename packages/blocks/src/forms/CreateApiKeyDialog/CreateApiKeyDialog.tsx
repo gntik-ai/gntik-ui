@@ -111,7 +111,9 @@ export function CreateApiKeyDialog({
           <>
             <DialogHeader>
               <DialogTitle>Create API key</DialogTitle>
-              <DialogDescription>Keys act on behalf of this workspace. Grant only the scopes the integration needs.</DialogDescription>
+              <DialogDescription>
+                Keys act on behalf of this workspace. Grant only the scopes the integration needs.
+              </DialogDescription>
             </DialogHeader>
             <form
               noValidate
@@ -123,13 +125,27 @@ export function CreateApiKeyDialog({
               <DialogBody className="grid gap-5">
                 <Field invalid={nameInvalid}>
                   <FieldLabel required>Name</FieldLabel>
-                  <Input value={name} onValueChange={setName} placeholder="ci-deployments" required autoComplete="off" />
+                  <Input
+                    value={name}
+                    onValueChange={setName}
+                    placeholder="ci-deployments"
+                    required
+                    autoComplete="off"
+                  />
                   <FieldError match={nameInvalid}>Give the key a name.</FieldError>
                 </Field>
-                <Fieldset render={<CheckboxGroup value={selected} onValueChange={setSelected} />} aria-invalid={scopesInvalid || undefined}>
+                <Fieldset
+                  render={<CheckboxGroup value={selected} onValueChange={setSelected} />}
+                  aria-invalid={scopesInvalid || undefined}
+                >
                   <FieldsetLegend>Scopes</FieldsetLegend>
                   {scopes.map((s) => (
-                    <Checkbox key={s.value} value={s.value} label={<span className="font-mono">{s.label}</span>} description={s.description} />
+                    <Checkbox
+                      key={s.value}
+                      value={s.value}
+                      label={<span className="font-mono">{s.label}</span>}
+                      description={s.description}
+                    />
                   ))}
                   {scopesInvalid && <p className="text-[12.5px] text-destructive-text">Select at least one scope.</p>}
                 </Fieldset>
@@ -163,7 +179,11 @@ export function CreateApiKeyDialog({
               <DialogDescription>Store it in your secrets manager. Use it as a bearer token.</DialogDescription>
             </DialogHeader>
             <DialogBody className="grid gap-4">
-              <Alert tone="warning" title="Copy this key now" description="For your security it is shown only once. If you lose it, revoke it and create a new one." />
+              <Alert
+                tone="warning"
+                title="Copy this key now"
+                description="For your security it is shown only once. If you lose it, revoke it and create a new one."
+              />
               <CodeBlock code={secret} label="New API key" wrapToggle={false} defaultWrap />
             </DialogBody>
             <DialogFooter>

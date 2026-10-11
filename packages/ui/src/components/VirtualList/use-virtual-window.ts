@@ -28,7 +28,13 @@ export interface VirtualWindow {
 }
 
 /** The rendered window [start, end] for a scroll position, viewport height and overscan. */
-export function useVirtualWindow(count: number, sizeOf: (index: number) => number, scrollTop: number, viewportHeight: number, overscan: number): VirtualWindow {
+export function useVirtualWindow(
+  count: number,
+  sizeOf: (index: number) => number,
+  scrollTop: number,
+  viewportHeight: number,
+  overscan: number,
+): VirtualWindow {
   const offsets = useMemo(() => computeOffsets(count, sizeOf), [count, sizeOf]);
   if (count === 0) return { offsets, start: 0, end: -1, total: 0 };
   const first = rowAt(offsets, scrollTop);

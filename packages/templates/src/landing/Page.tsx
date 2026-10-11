@@ -1,4 +1,14 @@
-import { Faq, FeatureGrid, Hero, PricingTable, type FaqItem, type Feature, type MarketingAction, type PricingCycle, type PricingTier } from '@gntik-ai/blocks';
+import {
+  Faq,
+  FeatureGrid,
+  Hero,
+  PricingTable,
+  type FaqItem,
+  type Feature,
+  type MarketingAction,
+  type PricingCycle,
+  type PricingTier,
+} from '@gntik-ai/blocks';
 import { Button, Link, Logo, StackedLayout, ThemeSwitcher, type NavItem } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import { landingCopyright, landingFooterLinks, landingLinks } from './data';
@@ -79,7 +89,13 @@ export default function LandingPage(props: Partial<LandingProps>) {
         </div>
       }
     >
-      <Hero title={heroTitle} description={heroDescription} primaryAction={heroPrimaryAction} secondaryAction={heroSecondaryAction} media={heroMedia} />
+      <Hero
+        title={heroTitle}
+        description={heroDescription}
+        primaryAction={heroPrimaryAction}
+        secondaryAction={heroSecondaryAction}
+        media={heroMedia}
+      />
       <div id="features" className="scroll-mt-20">
         <FeatureGrid features={features} />
       </div>

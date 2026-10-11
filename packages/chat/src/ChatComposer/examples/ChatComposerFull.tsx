@@ -40,7 +40,8 @@ export default function ChatComposerFull() {
   const attach = (picked: File[]) => {
     const added = picked.map((p) => {
       const id = `file-${++seq}`;
-      const previewUrl = p.type.startsWith('image/') && typeof URL.createObjectURL === 'function' ? URL.createObjectURL(p) : undefined;
+      const previewUrl =
+        p.type.startsWith('image/') && typeof URL.createObjectURL === 'function' ? URL.createObjectURL(p) : undefined;
       if (previewUrl) urls.current.push(previewUrl);
       return { id, name: p.name, size: p.size, type: p.type, previewUrl, progress: 0 };
     });

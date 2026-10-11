@@ -20,13 +20,56 @@ export interface FlowToneStyle {
 }
 
 export const FLOW_TONES: Record<FlowTone, FlowToneStyle> = {
-  running: { label: 'Running', pill: 'bg-primary/14 text-primary-text', dot: 'bg-primary', border: 'border-primary/60', token: '--primary', march: true },
-  degraded: { label: 'Degraded', pill: 'bg-warning/16 text-warning-text', dot: 'bg-warning', border: 'border-warning/65', token: '--warning' },
-  failed: { label: 'Failed', pill: 'bg-destructive/15 text-destructive-text', dot: 'bg-destructive', border: 'border-destructive/65', token: '--destructive' },
-  paused: { label: 'Paused', pill: 'bg-muted-foreground/16 text-muted-foreground', dot: 'bg-muted-foreground', border: null, token: '--muted-foreground' },
-  done: { label: 'Done', pill: 'bg-primary/14 text-primary-text', dot: 'bg-primary', border: 'border-primary/70', token: '--primary' },
-  handoff: { label: 'Handoff', pill: 'bg-category-violet/16 text-foreground', dot: 'bg-category-violet', border: 'border-category-violet', token: '--category-violet' },
-  review: { label: 'Review', pill: 'bg-category-rose/16 text-foreground', dot: 'bg-category-rose', border: 'border-category-rose', token: '--category-rose' },
+  running: {
+    label: 'Running',
+    pill: 'bg-primary/14 text-primary-text',
+    dot: 'bg-primary',
+    border: 'border-primary/60',
+    token: '--primary',
+    march: true,
+  },
+  degraded: {
+    label: 'Degraded',
+    pill: 'bg-warning/16 text-warning-text',
+    dot: 'bg-warning',
+    border: 'border-warning/65',
+    token: '--warning',
+  },
+  failed: {
+    label: 'Failed',
+    pill: 'bg-destructive/15 text-destructive-text',
+    dot: 'bg-destructive',
+    border: 'border-destructive/65',
+    token: '--destructive',
+  },
+  paused: {
+    label: 'Paused',
+    pill: 'bg-muted-foreground/16 text-muted-foreground',
+    dot: 'bg-muted-foreground',
+    border: null,
+    token: '--muted-foreground',
+  },
+  done: {
+    label: 'Done',
+    pill: 'bg-primary/14 text-primary-text',
+    dot: 'bg-primary',
+    border: 'border-primary/70',
+    token: '--primary',
+  },
+  handoff: {
+    label: 'Handoff',
+    pill: 'bg-category-violet/16 text-foreground',
+    dot: 'bg-category-violet',
+    border: 'border-category-violet',
+    token: '--category-violet',
+  },
+  review: {
+    label: 'Review',
+    pill: 'bg-category-rose/16 text-foreground',
+    dot: 'bg-category-rose',
+    border: 'border-category-rose',
+    token: '--category-rose',
+  },
 };
 
 /** Icon chip per node kind. */

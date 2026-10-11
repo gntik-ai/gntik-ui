@@ -13,5 +13,15 @@ export const doc: ComponentDoc = {
     ['Tab / Shift+Tab', 'Moves focus out of the toolbar (one Tab stop)'],
     ['Enter / Space', 'Activates the focused button'],
   ],
-  tokens: ['border', 'secondary', 'card', 'background', 'primary', 'primary-text', 'muted-foreground', 'foreground', 'focus-ring'],
+  tokens: [
+    'border',
+    'secondary',
+    'card',
+    'background',
+    'primary',
+    'primary-text',
+    'muted-foreground',
+    'foreground',
+    'focus-ring',
+  ],
 };

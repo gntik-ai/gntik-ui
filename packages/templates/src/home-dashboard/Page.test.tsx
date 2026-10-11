@@ -24,10 +24,22 @@ describe('HomeDashboardPage', () => {
   });
 
   it('renders product charts from props', { timeout: 15000 }, () => {
-    const signups = { '7d': [{ week: 'W1', Signups: 10, Trials: 4 }, { week: 'W2', Signups: 14, Trials: 6 }] };
+    const signups = {
+      '7d': [
+        { week: 'W1', Signups: 10, Trials: 4 },
+        { week: 'W2', Signups: 14, Trials: 6 },
+      ],
+    };
     render(
       <HomeDashboardPage
-        primaryChart={{ title: 'Signups', description: 'New accounts', ranges: [{ value: '7d', label: '7d' }], dataByRange: signups, index: 'week', categories: ['Signups', 'Trials'] }}
+        primaryChart={{
+          title: 'Signups',
+          description: 'New accounts',
+          ranges: [{ value: '7d', label: '7d' }],
+          dataByRange: signups,
+          index: 'week',
+          categories: ['Signups', 'Trials'],
+        }}
         secondaryChart={{ title: 'Agent runs', categories: ['Requests'] }}
       />,
     );

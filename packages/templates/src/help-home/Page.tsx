@@ -128,7 +128,13 @@ export default function HelpHomePage(props: Partial<HelpHomeProps>) {
             {searching ? (results.length === 1 ? '1 article' : `${results.length} articles`) : ''}
           </Text>
           {results.length === 0 ? (
-            <EmptyState icon={Search} size="sm" titleAs="h3" title="No articles match" description="Try fewer words, or contact support." />
+            <EmptyState
+              icon={Search}
+              size="sm"
+              titleAs="h3"
+              title="No articles match"
+              description="Try fewer words, or contact support."
+            />
           ) : (
             <ul className="divide-y divide-border rounded-xl border border-border">
               {results.map((a) => (

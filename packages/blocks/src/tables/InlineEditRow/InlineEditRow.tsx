@@ -1,5 +1,17 @@
 import { Check, Pencil, X } from '@gntik-ai/icons';
-import { cn, IconButton, Input, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, useI18n } from '@gntik-ai/ui';
+import {
+  cn,
+  IconButton,
+  Input,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  useI18n,
+} from '@gntik-ai/ui';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { EDITABLE_MEMBER_FIELDS, EDITABLE_MEMBERS, type EditableMember } from './fixtures';
 
@@ -36,7 +48,14 @@ const read = <T extends object>(row: T, key: string): Editable => {
  * A table row that switches into edit mode: inputs replace the cells, with Save and Cancel.
  * Enter saves, Escape cancels; focus moves to the first input and back to Edit afterwards.
  */
-export function InlineEditRow<T extends object>({ row, fields, onSave, onCancel, rowLabel, defaultEditing = false }: InlineEditRowProps<T>) {
+export function InlineEditRow<T extends object>({
+  row,
+  fields,
+  onSave,
+  onCancel,
+  rowLabel,
+  defaultEditing = false,
+}: InlineEditRowProps<T>) {
   const { t } = useI18n();
   const [editing, setEditing] = useState(defaultEditing);
   const [draft, setDraft] = useState<Record<string, string>>({});
@@ -112,11 +131,25 @@ export function InlineEditRow<T extends object>({ row, fields, onSave, onCancel,
       <TableCell align="right" className="w-24 py-1.5 whitespace-nowrap">
         {editing ? (
           <span className="inline-flex gap-1">
-            <IconButton icon={Check} label={t('common.save')} size="sm" variant="soft" onClick={save} disabled={fields.some(invalid)} />
+            <IconButton
+              icon={Check}
+              label={t('common.save')}
+              size="sm"
+              variant="soft"
+              onClick={save}
+              disabled={fields.some(invalid)}
+            />
             <IconButton icon={X} label={t('common.cancel')} size="sm" variant="ghost" onClick={cancel} />
           </span>
         ) : (
-          <IconButton ref={editRef} icon={Pencil} label={t('table.editRow', { label })} size="sm" variant="ghost" onClick={start} />
+          <IconButton
+            ref={editRef}
+            icon={Pencil}
+            label={t('table.editRow', { label })}
+            size="sm"
+            variant="ghost"
+            onClick={start}
+          />
         )}
       </TableCell>
     </TableRow>

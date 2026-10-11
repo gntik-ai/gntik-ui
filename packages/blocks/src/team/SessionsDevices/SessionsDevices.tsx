@@ -40,7 +40,10 @@ export function SessionsDevices({
   };
 
   return (
-    <section aria-labelledby={`${id}-title`} className={cn('rounded-lg border border-border bg-card shadow-sm', className)}>
+    <section
+      aria-labelledby={`${id}-title`}
+      className={cn('rounded-lg border border-border bg-card shadow-sm', className)}
+    >
       <div className="flex flex-col gap-3 border-b border-border px-5 py-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <Heading id={`${id}-title`} className="text-[14px] font-semibold tracking-tight text-foreground">
@@ -67,7 +70,12 @@ export function SessionsDevices({
           const KindIcon = KIND_ICON[s.kind];
           return (
             <li key={s.id} className="flex items-center gap-3 px-5 py-3.5">
-              <span className={cn('grid size-9 shrink-0 place-items-center rounded-md', s.current ? 'bg-primary/14 text-primary-chip-text' : 'bg-secondary text-muted-foreground')}>
+              <span
+                className={cn(
+                  'grid size-9 shrink-0 place-items-center rounded-md',
+                  s.current ? 'bg-primary/14 text-primary-chip-text' : 'bg-secondary text-muted-foreground',
+                )}
+              >
                 <KindIcon size={17} aria-hidden />
               </span>
               <div className="min-w-0 flex-1">
@@ -84,7 +92,9 @@ export function SessionsDevices({
                   {s.ip && <span className="hidden font-mono sm:inline"> · {s.ip}</span>}
                 </div>
                 <div className="text-[12px] text-muted-foreground">
-                  {s.current ? 'Active now' : (
+                  {s.current ? (
+                    'Active now'
+                  ) : (
                     <>
                       Last seen <Timestamp value={s.lastSeen} tooltip={false} />
                     </>

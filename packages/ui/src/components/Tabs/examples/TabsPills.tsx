@@ -15,7 +15,9 @@ export default function TabsPills() {
       <Tabs variant="pills" value={range} onValueChange={(v) => setRange(String(v))}>
         <TabsList aria-label="Time range">
           {RANGES.map(([value, label]) => (
-            <TabsTab key={value} value={value}>{label}</TabsTab>
+            <TabsTab key={value} value={value}>
+              {label}
+            </TabsTab>
           ))}
         </TabsList>
         {RANGES.map(([value, label]) => (

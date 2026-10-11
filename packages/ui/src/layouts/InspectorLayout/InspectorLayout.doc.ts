@@ -9,7 +9,10 @@ export const doc: ComponentDoc = {
   primitive: '@base-ui/react/drawer (small screens)',
   pattern: 'disclosure (toggle → complementary panel) + toggle button (pin)',
   keyboard: [
-    ['Enter / Space', 'On the panel toggle: opens or closes the panel (aria-expanded); an overlaying panel takes focus'],
+    [
+      'Enter / Space',
+      'On the panel toggle: opens or closes the panel (aria-expanded); an overlaying panel takes focus',
+    ],
     ['Enter / Space', 'On Pin panel: docks or un-docks the panel (aria-pressed)'],
     ['Escape', 'Closes the unpinned panel and returns focus to the toggle'],
     ['Escape', 'Small screens: closes the bottom drawer'],

@@ -10,7 +10,14 @@ export * from './i18n';
 export { DensityProvider, useDensity, type Density, type DensityProviderProps } from './density';
 
 // Theme
-export { ThemeProvider, useTheme, themeScript, type ThemeMode, type ResolvedTheme, type ThemeProviderProps } from './theme/ThemeProvider';
+export {
+  ThemeProvider,
+  useTheme,
+  themeScript,
+  type ThemeMode,
+  type ResolvedTheme,
+  type ThemeProviderProps,
+} from './theme/ThemeProvider';
 export { Logo, type LogoProps } from './theme/Logo';
 export { presets, gntikPreset, musematicPreset, falconePreset, type BrandPreset } from './theme/presets';
 

@@ -28,7 +28,8 @@ export const kanbanBoardVariants = tv({
     cardTitle: 'text-[13px] font-medium leading-5',
     cardDescription: 'mt-1 text-[12px] leading-5 text-muted-foreground',
     cardMeta: 'mt-2 flex flex-wrap items-center gap-2 font-mono text-[11px] text-muted-foreground',
-    empty: 'list-none rounded-lg border border-dashed border-border px-3 py-4 text-center text-[12px] text-muted-foreground',
+    empty:
+      'list-none rounded-lg border border-dashed border-border px-3 py-4 text-center text-[12px] text-muted-foreground',
   },
   variants: {
     size: {

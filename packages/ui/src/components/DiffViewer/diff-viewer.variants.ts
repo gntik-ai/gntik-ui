@@ -29,8 +29,20 @@ export const diffViewerVariants = tv({
   variants: {
     type: {
       unchanged: {},
-      added: { row: 'bg-success/10', half: 'bg-success/10', number: 'bg-success/15', marker: 'text-success-text', word: 'bg-success/30' },
-      removed: { row: 'bg-destructive/10', half: 'bg-destructive/10', number: 'bg-destructive/15', marker: 'text-destructive-text', word: 'bg-destructive/30' },
+      added: {
+        row: 'bg-success/10',
+        half: 'bg-success/10',
+        number: 'bg-success/15',
+        marker: 'text-success-text',
+        word: 'bg-success/30',
+      },
+      removed: {
+        row: 'bg-destructive/10',
+        half: 'bg-destructive/10',
+        number: 'bg-destructive/15',
+        marker: 'text-destructive-text',
+        word: 'bg-destructive/30',
+      },
     },
   },
   defaultVariants: { type: 'unchanged' },

@@ -2,7 +2,11 @@ import { Skeleton } from '../Skeleton';
 
 export default function SkeletonList() {
   return (
-    <div role="status" aria-label="Loading members" className="max-w-xl overflow-hidden rounded-lg border border-border bg-card">
+    <div
+      role="status"
+      aria-label="Loading members"
+      className="max-w-xl overflow-hidden rounded-lg border border-border bg-card"
+    >
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <Skeleton className="h-3.5 w-28" />
         <Skeleton className="h-7 w-20" />

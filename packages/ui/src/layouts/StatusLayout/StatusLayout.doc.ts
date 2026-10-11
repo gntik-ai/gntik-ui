@@ -9,7 +9,20 @@ export const doc: ComponentDoc = {
   pattern: 'landmarks (header, main, footer) + skip link',
   keyboard: [
     ['Tab', 'Skip link, header links, then the primary action first and the secondary action next, then the footer'],
-    ['Programmatic focus', 'titleRef.current.focus() focuses the built-in h1; for a heading slot, use the heading node’s own ref (PageHeader titleRef). Neither h1 is a Tab stop'],
+    [
+      'Programmatic focus',
+      'titleRef.current.focus() focuses the built-in h1; for a heading slot, use the heading node’s own ref (PageHeader titleRef). Neither h1 is a Tab stop',
+    ],
   ],
-  tokens: ['background', 'foreground', 'secondary', 'border', 'muted-foreground', 'primary-text', 'warning-text', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'background',
+    'foreground',
+    'secondary',
+    'border',
+    'muted-foreground',
+    'primary-text',
+    'warning-text',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

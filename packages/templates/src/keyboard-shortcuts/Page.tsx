@@ -39,7 +39,19 @@ export default function KeyboardShortcutsPage(props: Partial<KeyboardShortcutsPr
   } = props;
   return (
     <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref} {...shell}>
-      <Page header={<PageHeader breadcrumbs={null} title={title} description={description} status="" meta={[]} tabs={null} actions={[]} />}>
+      <Page
+        header={
+          <PageHeader
+            breadcrumbs={null}
+            title={title}
+            description={description}
+            status=""
+            meta={[]}
+            tabs={null}
+            actions={[]}
+          />
+        }
+      >
         <ShortcutSheet groups={groups} />
       </Page>
     </ConsoleShell>

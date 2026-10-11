@@ -29,7 +29,14 @@ function isMenuKey(event: KeyboardEvent<HTMLDivElement>) {
  * The area that opens the menu: right click, long press (touch) or, when focused,
  * Shift+F10 / the ContextMenu key. Focusable by default (`tabIndex={0}`).
  */
-export function ContextMenuTrigger({ className, tabIndex = 0, hint = 'Press Shift+F10 for actions', onKeyDown, children, ...props }: ContextMenuTriggerProps) {
+export function ContextMenuTrigger({
+  className,
+  tabIndex = 0,
+  hint = 'Press Shift+F10 for actions',
+  onKeyDown,
+  children,
+  ...props
+}: ContextMenuTriggerProps) {
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     onKeyDown?.(event as Parameters<NonNullable<typeof onKeyDown>>[0]);
     if (event.defaultPrevented || !isMenuKey(event)) return;
@@ -48,7 +55,12 @@ export function ContextMenuTrigger({ className, tabIndex = 0, hint = 'Press Shif
     );
   }
   return (
-    <BaseContextMenu.Trigger className={cn(s.trigger(), className)} tabIndex={tabIndex} onKeyDown={handleKeyDown} {...props}>
+    <BaseContextMenu.Trigger
+      className={cn(s.trigger(), className)}
+      tabIndex={tabIndex}
+      onKeyDown={handleKeyDown}
+      {...props}
+    >
       {children}
       {hint && <span className="sr-only"> ({hint})</span>}
     </BaseContextMenu.Trigger>

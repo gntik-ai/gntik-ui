@@ -7,7 +7,9 @@ import TableSortable from './examples/TableSortable';
 import TableSelectable from './examples/TableSelectable';
 
 const firstColumn = () =>
-  within(screen.getAllByRole('rowgroup')[1]!).getAllByRole('row').map((r) => within(r).getAllByRole('cell')[0]!.textContent);
+  within(screen.getAllByRole('rowgroup')[1]!)
+    .getAllByRole('row')
+    .map((r) => within(r).getAllByRole('cell')[0]!.textContent);
 
 describe('Table', () => {
   it('cycles none → ascending ⇄ descending', () => {
@@ -57,7 +59,9 @@ describe('Table', () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead sortable sortDirection="ascending" onSortChange={onSortChange}>Name</TableHead>
+            <TableHead sortable sortDirection="ascending" onSortChange={onSortChange}>
+              Name
+            </TableHead>
           </TableRow>
         </TableHeader>
       </Table>,
@@ -85,7 +89,9 @@ describe('Table', () => {
     render(
       <Table>
         <TableBody>
-          <TableRow><TableCell align="right">42</TableCell></TableRow>
+          <TableRow>
+            <TableCell align="right">42</TableCell>
+          </TableRow>
         </TableBody>
       </Table>,
     );
@@ -93,7 +99,12 @@ describe('Table', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><TableSortable /><TableSelectable /></>);
+    render(
+      <>
+        <TableSortable />
+        <TableSelectable />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

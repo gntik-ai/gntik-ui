@@ -26,10 +26,7 @@ export interface Config {
   syncMinutes: number;
 }
 
-export function resolveConfig(
-  argv: string[] = process.argv.slice(2),
-  env: NodeJS.ProcessEnv = process.env,
-): Config {
+export function resolveConfig(argv: string[] = process.argv.slice(2), env: NodeJS.ProcessEnv = process.env): Config {
   let transport: 'stdio' | 'http' = env.MCP_TRANSPORT === 'http' ? 'http' : 'stdio';
   if (argv.includes('--http')) transport = 'http';
   if (argv.includes('--stdio')) transport = 'stdio';

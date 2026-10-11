@@ -1,6 +1,17 @@
 import { Badge } from '../Badge';
 
-const TONES = ['neutral', 'primary', 'success', 'warning', 'destructive', 'info', 'violet', 'cyan', 'amber', 'rose'] as const;
+const TONES = [
+  'neutral',
+  'primary',
+  'success',
+  'warning',
+  'destructive',
+  'info',
+  'violet',
+  'cyan',
+  'amber',
+  'rose',
+] as const;
 
 export default function BadgeTones() {
   return (
@@ -15,10 +26,16 @@ export default function BadgeTones() {
         </div>
       ))}
       <div className="flex flex-wrap items-center gap-2">
-        <Badge tone="primary" size="sm">sm</Badge>
+        <Badge tone="primary" size="sm">
+          sm
+        </Badge>
         <Badge tone="primary">md</Badge>
-        <Badge tone="primary" size="lg">lg</Badge>
-        <Badge tone="primary" size="lg" shape="pill">pill</Badge>
+        <Badge tone="primary" size="lg">
+          lg
+        </Badge>
+        <Badge tone="primary" size="lg" shape="pill">
+          pill
+        </Badge>
       </div>
     </div>
   );

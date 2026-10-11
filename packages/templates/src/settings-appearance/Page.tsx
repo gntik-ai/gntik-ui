@@ -29,11 +29,19 @@ export default function SettingsAppearancePage({
   const [language, setLanguage] = useState(initialLanguage);
 
   return (
-    <SettingsFrame page="appearance" description="How the interface looks on this device. Saved automatically." {...frame}>
+    <SettingsFrame
+      page="appearance"
+      description="How the interface looks on this device. Saved automatically."
+      {...frame}
+    >
       <Section title="Display" divided>
         <SettingsRow
           label="Theme"
-          description={mode === 'system' ? `Follows your system setting (now ${THEME_LABELS[resolved]}).` : 'Dark is the default. High contrast strengthens borders and text.'}
+          description={
+            mode === 'system'
+              ? `Follows your system setting (now ${THEME_LABELS[resolved]}).`
+              : 'Dark is the default. High contrast strengthens borders and text.'
+          }
           control={<ThemeSwitcher label="Theme" />}
         />
         <SettingsRow

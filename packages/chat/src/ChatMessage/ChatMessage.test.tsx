@@ -81,7 +81,11 @@ describe('ChatMessage', () => {
   });
 
   it('streaming plain text ends with a decorative caret that goes away when done', () => {
-    const { container, rerender } = render(<ChatMessage role="user" streaming>Partial answ</ChatMessage>);
+    const { container, rerender } = render(
+      <ChatMessage role="user" streaming>
+        Partial answ
+      </ChatMessage>,
+    );
     const caret = container.querySelector('[data-slot="streaming-caret"]');
     expect(caret).toHaveAttribute('aria-hidden', 'true');
     expect(caret?.className).toContain('motion-reduce:animate-none');
@@ -92,7 +96,11 @@ describe('ChatMessage', () => {
   });
 
   it('system notes have no avatar and no actions', () => {
-    render(<ChatMessage role="system" copyText="x">Conversation started</ChatMessage>);
+    render(
+      <ChatMessage role="system" copyText="x">
+        Conversation started
+      </ChatMessage>,
+    );
     expect(screen.queryByRole('group')).toBeNull();
     expect(screen.getByRole('article', { name: 'System' })).toHaveTextContent('Conversation started');
   });

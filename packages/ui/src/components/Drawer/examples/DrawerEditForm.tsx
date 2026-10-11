@@ -50,8 +50,12 @@ export default function DrawerEditForm() {
             </label>
             <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-card px-3.5 py-3">
               <div>
-                <div id="retries-label" className="text-[12.5px] font-medium text-foreground">Automatic retries</div>
-                <div className="mt-0.5 text-[11.5px] leading-4 text-muted-foreground">Retry failed deployments three times with backoff.</div>
+                <div id="retries-label" className="text-[12.5px] font-medium text-foreground">
+                  Automatic retries
+                </div>
+                <div className="mt-0.5 text-[11.5px] leading-4 text-muted-foreground">
+                  Retry failed deployments three times with backoff.
+                </div>
               </div>
               <Switch aria-labelledby="retries-label" checked={retries} onCheckedChange={setRetries} />
             </div>

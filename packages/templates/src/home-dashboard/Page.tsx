@@ -94,7 +94,17 @@ export default function HomeDashboardPage<P extends object = CostPoint, S extend
     <ConsoleShell currentHref="/overview" breadcrumbs={breadcrumbs} {...shell}>
       <Page
         width="wide"
-        header={<PageHeader breadcrumbs={null} title={title} description={description} status="" meta={[]} tabs={null} actions={actions} />}
+        header={
+          <PageHeader
+            breadcrumbs={null}
+            title={title}
+            description={description}
+            status=""
+            meta={[]}
+            tabs={null}
+            actions={actions}
+          />
+        }
       >
         <Stack gap={6}>
           <KpiRow items={kpis} />

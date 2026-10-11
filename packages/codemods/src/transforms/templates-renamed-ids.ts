@@ -23,11 +23,29 @@ const SOURCE = '@gntik-ai/templates';
 
 /** True for identifier positions that are not a reference to a binding (`a.name`, `{ name: x }` keys). */
 function isNonReference(path: ASTPath<Identifier | JSXIdentifier>): boolean {
-  const parent = path.parent?.node as { type: string; property?: unknown; key?: unknown; computed?: boolean; shorthand?: boolean; name?: unknown } | undefined;
+  const parent = path.parent?.node as
+    | { type: string; property?: unknown; key?: unknown; computed?: boolean; shorthand?: boolean; name?: unknown }
+    | undefined;
   if (!parent) return false;
   const node = path.node;
-  if ((parent.type === 'MemberExpression' || parent.type === 'OptionalMemberExpression' || parent.type === 'JSXMemberExpression') && parent.property === node && !parent.computed) return true;
-  if ((parent.type === 'ObjectProperty' || parent.type === 'Property' || parent.type === 'ClassProperty' || parent.type === 'ObjectMethod' || parent.type === 'TSPropertySignature') && parent.key === node && !parent.computed) return true;
+  if (
+    (parent.type === 'MemberExpression' ||
+      parent.type === 'OptionalMemberExpression' ||
+      parent.type === 'JSXMemberExpression') &&
+    parent.property === node &&
+    !parent.computed
+  )
+    return true;
+  if (
+    (parent.type === 'ObjectProperty' ||
+      parent.type === 'Property' ||
+      parent.type === 'ClassProperty' ||
+      parent.type === 'ObjectMethod' ||
+      parent.type === 'TSPropertySignature') &&
+    parent.key === node &&
+    !parent.computed
+  )
+    return true;
   if (parent.type === 'JSXAttribute' && parent.name === node) return true;
   if (parent.type === 'ImportSpecifier' || parent.type === 'ExportSpecifier') return true;
   return false;
@@ -81,7 +99,8 @@ export function transform(file: FileInfo, api: API): string | null {
       if (!to || isNonReference(p)) return;
       const parent = p.parent?.node as { type: string; shorthand?: boolean; value?: unknown } | undefined;
       // `{ FlowBuilderPage }` keeps its key: `{ FlowBuilderPage: WorkflowBuilderPage }`.
-      if (parent && (parent.type === 'ObjectProperty' || parent.type === 'Property') && parent.shorthand) parent.shorthand = false;
+      if (parent && (parent.type === 'ObjectProperty' || parent.type === 'Property') && parent.shorthand)
+        parent.shorthand = false;
       p.node.name = to;
     };
     root.find(j.Identifier).forEach(rename);

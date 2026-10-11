@@ -24,7 +24,12 @@ const focusField = (fieldId: string) => {
  * Error summary for long forms: lists every problem with a link that moves focus to the field.
  * After a failed submit it takes focus, so screen readers announce it.
  */
-export function ValidationSummary({ errors = validationIssues, submitCount = 0, title, className }: ValidationSummaryProps) {
+export function ValidationSummary({
+  errors = validationIssues,
+  submitCount = 0,
+  title,
+  className,
+}: ValidationSummaryProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const hasErrors = errors.length > 0;
 
@@ -33,9 +38,20 @@ export function ValidationSummary({ errors = validationIssues, submitCount = 0, 
   }, [submitCount, hasErrors]);
 
   if (!hasErrors) return null;
-  const heading = title ?? `There ${errors.length === 1 ? 'is 1 problem' : `are ${errors.length} problems`} with this form`;
+  const heading =
+    title ?? `There ${errors.length === 1 ? 'is 1 problem' : `are ${errors.length} problems`} with this form`;
   return (
-    <Alert ref={ref} tabIndex={-1} role="region" tone="destructive" title={heading} className={cn('focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring', className)}>
+    <Alert
+      ref={ref}
+      tabIndex={-1}
+      role="region"
+      tone="destructive"
+      title={heading}
+      className={cn(
+        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+        className,
+      )}
+    >
       <ul className="mt-1 list-disc space-y-1 ps-4">
         {errors.map((e) => (
           <li key={e.fieldId}>

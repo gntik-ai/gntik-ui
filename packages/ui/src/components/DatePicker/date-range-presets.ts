@@ -1,4 +1,12 @@
-import { addDays, addMonths, endOfMonth, isSameDay, startOfDay, startOfMonth, type DateRange } from '../Calendar/calendar-utils';
+import {
+  addDays,
+  addMonths,
+  endOfMonth,
+  isSameDay,
+  startOfDay,
+  startOfMonth,
+  type DateRange,
+} from '../Calendar/calendar-utils';
 
 export interface DateRangePreset {
   id: string;

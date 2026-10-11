@@ -42,7 +42,11 @@ export const editorFiles: CodeFile[] = [
 }
 `,
   },
-  { path: 'src/db.ts', language: 'typescript', content: `export const db = { projects: { list: async (_opts?: unknown) => [] as unknown[] } };\n` },
+  {
+    path: 'src/db.ts',
+    language: 'typescript',
+    content: `export const db = { projects: { list: async (_opts?: unknown) => [] as unknown[] } };\n`,
+  },
   {
     path: 'config/deploy.yaml',
     language: 'yaml',
@@ -52,13 +56,41 @@ replicas: 2
 `,
   },
   { path: 'config/settings.json', language: 'json', content: `{\n  "timeoutMs": 30000,\n  "retries": 3\n}\n` },
-  { path: 'README.md', language: 'markdown', content: `# projects-api\n\nLists the projects of a workspace, paginated.\n` },
+  {
+    path: 'README.md',
+    language: 'markdown',
+    content: `# projects-api\n\nLists the projects of a workspace, paginated.\n`,
+  },
 ];
 
 export const editorProblems: CodeProblem[] = [
-  { id: 'p1', severity: 'error', message: "Property 'page' does not exist on the list options type.", file: 'src/handler.ts', line: 6, column: 45, source: 'tsc' },
-  { id: 'p2', severity: 'warning', message: 'pageSize is not clamped; very large pages are possible.', file: 'src/query.ts', line: 3, column: 42, source: 'lint' },
-  { id: 'p3', severity: 'info', message: 'replicas: 2 is below the recommended minimum of 3 for production.', file: 'config/deploy.yaml', line: 3, column: 1, source: 'schema' },
+  {
+    id: 'p1',
+    severity: 'error',
+    message: "Property 'page' does not exist on the list options type.",
+    file: 'src/handler.ts',
+    line: 6,
+    column: 45,
+    source: 'tsc',
+  },
+  {
+    id: 'p2',
+    severity: 'warning',
+    message: 'pageSize is not clamped; very large pages are possible.',
+    file: 'src/query.ts',
+    line: 3,
+    column: 42,
+    source: 'lint',
+  },
+  {
+    id: 'p3',
+    severity: 'info',
+    message: 'replicas: 2 is below the recommended minimum of 3 for production.',
+    file: 'config/deploy.yaml',
+    line: 3,
+    column: 1,
+    source: 'schema',
+  },
 ];
 
 export const editorDefaultOpen = ['src/handler.ts', 'src/query.ts'];
@@ -85,7 +117,13 @@ export function filesToTree(paths: readonly string[]): TreeNode[] {
   const build = (dir: Dir, prefix: string): TreeNode[] => [
     ...[...dir.dirs.entries()]
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([name, sub]) => ({ id: `${prefix}${name}/`, label: name, icon: Folder, openIcon: FolderOpen, children: build(sub, `${prefix}${name}/`) })),
+      .map(([name, sub]) => ({
+        id: `${prefix}${name}/`,
+        label: name,
+        icon: Folder,
+        openIcon: FolderOpen,
+        children: build(sub, `${prefix}${name}/`),
+      })),
     ...[...dir.files].sort().map((path) => ({ id: path, label: path.split('/').pop() ?? path, icon: iconFor(path) })),
   ];
   return build(root, '');

@@ -45,11 +45,51 @@ export const evaluationMetrics: EvalMetric[] = [
 ];
 
 export const evaluationRows: EvalRow[] = [
-  { id: 'support-faq', dataset: 'support-faq', samples: 240, passed: 221, baselinePassed: 214, scores: { accuracy: 0.93, faithfulness: 0.91, relevance: 0.89, latency: 1420 }, baseline: { accuracy: 0.9, faithfulness: 0.9, relevance: 0.88, latency: 1510 } },
-  { id: 'billing-questions', dataset: 'billing-questions', samples: 120, passed: 97, baselinePassed: 106, scores: { accuracy: 0.84, faithfulness: 0.86, relevance: 0.82, latency: 1650 }, baseline: { accuracy: 0.89, faithfulness: 0.87, relevance: 0.83, latency: 1600 } },
-  { id: 'product-docs', dataset: 'product-docs', samples: 310, passed: 284, baselinePassed: 281, scores: { accuracy: 0.92, faithfulness: 0.88, relevance: 0.9, latency: 1880 }, baseline: { accuracy: 0.91, faithfulness: 0.88, relevance: 0.9, latency: 1700 } },
-  { id: 'edge-cases', dataset: 'edge-cases', samples: 80, passed: 58, baselinePassed: 55, scores: { accuracy: 0.76, faithfulness: 0.75, relevance: 0.81, latency: 2210 }, baseline: { accuracy: 0.73, faithfulness: 0.78, relevance: 0.8, latency: 2250 } },
-  { id: 'multilingual', dataset: 'multilingual', samples: 150, passed: 132, baselinePassed: 131, scores: { accuracy: 0.88, faithfulness: 0.85, relevance: 0.86, latency: 1540 }, baseline: { accuracy: 0.88, faithfulness: 0.86, relevance: 0.85, latency: 1530 } },
+  {
+    id: 'support-faq',
+    dataset: 'support-faq',
+    samples: 240,
+    passed: 221,
+    baselinePassed: 214,
+    scores: { accuracy: 0.93, faithfulness: 0.91, relevance: 0.89, latency: 1420 },
+    baseline: { accuracy: 0.9, faithfulness: 0.9, relevance: 0.88, latency: 1510 },
+  },
+  {
+    id: 'billing-questions',
+    dataset: 'billing-questions',
+    samples: 120,
+    passed: 97,
+    baselinePassed: 106,
+    scores: { accuracy: 0.84, faithfulness: 0.86, relevance: 0.82, latency: 1650 },
+    baseline: { accuracy: 0.89, faithfulness: 0.87, relevance: 0.83, latency: 1600 },
+  },
+  {
+    id: 'product-docs',
+    dataset: 'product-docs',
+    samples: 310,
+    passed: 284,
+    baselinePassed: 281,
+    scores: { accuracy: 0.92, faithfulness: 0.88, relevance: 0.9, latency: 1880 },
+    baseline: { accuracy: 0.91, faithfulness: 0.88, relevance: 0.9, latency: 1700 },
+  },
+  {
+    id: 'edge-cases',
+    dataset: 'edge-cases',
+    samples: 80,
+    passed: 58,
+    baselinePassed: 55,
+    scores: { accuracy: 0.76, faithfulness: 0.75, relevance: 0.81, latency: 2210 },
+    baseline: { accuracy: 0.73, faithfulness: 0.78, relevance: 0.8, latency: 2250 },
+  },
+  {
+    id: 'multilingual',
+    dataset: 'multilingual',
+    samples: 150,
+    passed: 132,
+    baselinePassed: 131,
+    scores: { accuracy: 0.88, faithfulness: 0.85, relevance: 0.86, latency: 1540 },
+    baseline: { accuracy: 0.88, faithfulness: 0.86, relevance: 0.85, latency: 1530 },
+  },
 ];
 
 export const evaluationSamples: EvalSample[] = [
@@ -110,13 +150,26 @@ export const evaluationSamples: EvalSample[] = [
 ];
 
 /** Metrics (and pass rates) worse than baseline by more than their tolerance, worst first. */
-export function findRegressions(rows: readonly EvalRow[], metrics: readonly EvalMetric[], passRateTolerance = 0.02): EvalRegression[] {
+export function findRegressions(
+  rows: readonly EvalRow[],
+  metrics: readonly EvalMetric[],
+  passRateTolerance = 0.02,
+): EvalRegression[] {
   const out: EvalRegression[] = [];
   for (const row of rows) {
     const rate = row.samples ? row.passed / row.samples : 0;
     const baseRate = row.samples ? row.baselinePassed / row.samples : 0;
     if (baseRate - rate > passRateTolerance) {
-      out.push({ id: `${row.id}:pass-rate`, dataset: row.dataset, metric: 'pass-rate', metricLabel: 'Pass rate', format: 'percent', baseline: baseRate, current: rate, delta: rate - baseRate });
+      out.push({
+        id: `${row.id}:pass-rate`,
+        dataset: row.dataset,
+        metric: 'pass-rate',
+        metricLabel: 'Pass rate',
+        format: 'percent',
+        baseline: baseRate,
+        current: rate,
+        delta: rate - baseRate,
+      });
     }
     for (const m of metrics) {
       const current = row.scores[m.id];
@@ -124,7 +177,16 @@ export function findRegressions(rows: readonly EvalRow[], metrics: readonly Eval
       if (current === undefined || baseline === undefined) continue;
       const worse = (m.higherIsBetter ?? true) ? baseline - current : current - baseline;
       if (worse > (m.tolerance ?? 0)) {
-        out.push({ id: `${row.id}:${m.id}`, dataset: row.dataset, metric: m.id, metricLabel: m.label, format: m.format ?? 'number', baseline, current, delta: current - baseline });
+        out.push({
+          id: `${row.id}:${m.id}`,
+          dataset: row.dataset,
+          metric: m.id,
+          metricLabel: m.label,
+          format: m.format ?? 'number',
+          baseline,
+          current,
+          delta: current - baseline,
+        });
       }
     }
   }

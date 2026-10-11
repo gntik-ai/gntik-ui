@@ -13,15 +13,15 @@ npx @gntik-ai/cli add button dialog
 
 ## Commands
 
-| Command | What it does |
-| --- | --- |
-| `init [--brand gntik\|musematic]` | Detects framework (Vite `vite.config.*`, Next `next.config.*`, else generic), package manager (lockfile, walking up; then `packageManager`) and CSS entry (`src/index.css`, `src/styles.css`, `app/globals.css`, …). Adds the scope line to `.npmrc`, puts `@import "tailwindcss"`, the Geist fonts and `@import "@gntik-ai/ui/styles.css"` at the top of the CSS entry, writes `gntik-ui.json`, prints the ThemeProvider + `themeScript` wiring (Next: `providers.tsx` + `layout.tsx` with `suppressHydrationWarning`; Vite: `main.tsx` + a `transformIndexHtml` plugin) and installs `@gntik-ai/ui @gntik-ai/tokens @fontsource/geist @fontsource/geist-mono` (+ Tailwind v4 as dev deps when missing). |
-| `add <id...>` | Components/layouts: installs their package if missing and prints the import line. Blocks/templates: copies them and their `registryDependencies` (recursively) into the configured dirs, rewriting imports. |
-| `eject <id> [--no-deps]` | Copies a component's source (plus doc file and, unless `--no-deps`, its registry dependencies) into the components dir, and lists the imports in your code to switch to the local copy. |
-| `list [--kind k] [--group g]` | Table, or JSON. |
-| `search <query> [--kind k] [--limit n]` | Fuzzy match on id, name, group and description; every term must match. |
-| `docs <id>` | Description, status, package, files, dependencies, and the keyboard table parsed from the item's `*.doc.ts`. |
-| `upgrade [paths...]` | Runs the `@gntik-ai/codemods` transforms for the breaking changes between two versions. Dry run unless `--apply`. See [Upgrading](#upgrading). |
+| Command                                 | What it does                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `init [--brand gntik\|musematic]`       | Detects framework (Vite `vite.config.*`, Next `next.config.*`, else generic), package manager (lockfile, walking up; then `packageManager`) and CSS entry (`src/index.css`, `src/styles.css`, `app/globals.css`, …). Adds the scope line to `.npmrc`, puts `@import "tailwindcss"`, the Geist fonts and `@import "@gntik-ai/ui/styles.css"` at the top of the CSS entry, writes `gntik-ui.json`, prints the ThemeProvider + `themeScript` wiring (Next: `providers.tsx` + `layout.tsx` with `suppressHydrationWarning`; Vite: `main.tsx` + a `transformIndexHtml` plugin) and installs `@gntik-ai/ui @gntik-ai/tokens @fontsource/geist @fontsource/geist-mono` (+ Tailwind v4 as dev deps when missing). |
+| `add <id...>`                           | Components/layouts: installs their package if missing and prints the import line. Blocks/templates: copies them and their `registryDependencies` (recursively) into the configured dirs, rewriting imports.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `eject <id> [--no-deps]`                | Copies a component's source (plus doc file and, unless `--no-deps`, its registry dependencies) into the components dir, and lists the imports in your code to switch to the local copy.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `list [--kind k] [--group g]`           | Table, or JSON.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `search <query> [--kind k] [--limit n]` | Fuzzy match on id, name, group and description; every term must match.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `docs <id>`                             | Description, status, package, files, dependencies, and the keyboard table parsed from the item's `*.doc.ts`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `upgrade [paths...]`                    | Runs the `@gntik-ai/codemods` transforms for the breaking changes between two versions. Dry run unless `--apply`. See [Upgrading](#upgrading).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
 Options: `--json`, `--cwd <dir>`, `--registry <dir|file|url>`, `--dry-run` (init/add/eject/upgrade),
 `--overwrite`, `--no-install`, `--yes` (accepted; the CLI never prompts), `--help`, `--version`.
@@ -40,8 +40,16 @@ Targets in the registry (`components/…`, `blocks/…`, `templates/…`) map th
 
 ```json
 {
-  "version": 1, "framework": "vite", "packageManager": "pnpm", "css": "src/index.css", "brand": "gntik",
-  "aliases": { "components": "src/components", "blocks": "src/components/blocks", "templates": "src/components/templates" }
+  "version": 1,
+  "framework": "vite",
+  "packageManager": "pnpm",
+  "css": "src/index.css",
+  "brand": "gntik",
+  "aliases": {
+    "components": "src/components",
+    "blocks": "src/components/blocks",
+    "templates": "src/components/templates"
+  }
 }
 ```
 
@@ -71,12 +79,12 @@ versions; `--skip-codemod <id>` leaves some out. Paths limit the run to files/di
 whole project is scanned without `node_modules`, `dist`, `build`, `.next`, … Report-only codemods
 (`link-underline-default`) never write; their findings are `reports`.
 
-| Codemod | Package | What it does |
-| --- | --- | --- |
-| `templates-renamed-ids` | templates | `FlowBuilderPage` → `WorkflowBuilderPage`, `MfaChallengePage` → `MfaPage`, `flowBuilderTemplateMeta` → `workflowBuilderTemplateMeta`, `mfaChallengeTemplateMeta` → `mfaTemplateMeta` (imports, references, re-exports). |
-| `flow-builder-controlled-console` | blocks | `<FlowBuilder consoleEntries={x}>` without `onConsoleChange` → `defaultConsoleEntries={x}` (spread props: reported, left alone). |
-| `chip-text-aliases` | tokens | In a class string/template with `bg-<tone>/NN` and `text-<tone>-text` (primary, success, warning, destructive) → `text-<tone>-chip-text`. |
-| `link-underline-default` | ui | Report only: `<Link>` from `@gntik-ai/ui` without `underline` (now underlined by default). |
+| Codemod                           | Package   | What it does                                                                                                                                                                                                            |
+| --------------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `templates-renamed-ids`           | templates | `FlowBuilderPage` → `WorkflowBuilderPage`, `MfaChallengePage` → `MfaPage`, `flowBuilderTemplateMeta` → `workflowBuilderTemplateMeta`, `mfaChallengeTemplateMeta` → `mfaTemplateMeta` (imports, references, re-exports). |
+| `flow-builder-controlled-console` | blocks    | `<FlowBuilder consoleEntries={x}>` without `onConsoleChange` → `defaultConsoleEntries={x}` (spread props: reported, left alone).                                                                                        |
+| `chip-text-aliases`               | tokens    | In a class string/template with `bg-<tone>/NN` and `text-<tone>-text` (primary, success, warning, destructive) → `text-<tone>-chip-text`.                                                                               |
+| `link-underline-default`          | ui        | Report only: `<Link>` from `@gntik-ai/ui` without `underline` (now underlined by default).                                                                                                                              |
 
 ## Exit codes
 

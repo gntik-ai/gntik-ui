@@ -27,7 +27,13 @@ export const homeQuickActions: QuickAction[] = [
   { id: 'deploy', title: 'Deploy a service', description: 'Ship a new build from a branch or tag.', icon: Rocket },
   { id: 'invite', title: 'Invite members', description: 'Add teammates and pick their role.', icon: UserPlus },
   { id: 'api-key', title: 'Create an API key', description: 'Scoped keys for CI and integrations.', icon: KeyRound },
-  { id: 'docs', title: 'Read the docs', description: 'Guides, API reference and examples.', icon: BookOpen, href: '#docs' },
+  {
+    id: 'docs',
+    title: 'Read the docs',
+    description: 'Guides, API reference and examples.',
+    icon: BookOpen,
+    href: '#docs',
+  },
 ];
 
 const DAYS7 = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -47,6 +53,14 @@ export const homeRequestsByRange: Record<string, RequestPoint[]> = {
 };
 
 export const homeRequestRanges: ChartCardRange[] = [
-  { value: '7d', label: '7d', summary: { value: '271,480', delta: { value: '+12.4%', direction: 'up', sentiment: 'positive' } } },
-  { value: '30d', label: '30d', summary: { value: '1.08M', delta: { value: '+6.0%', direction: 'up', sentiment: 'positive' } } },
+  {
+    value: '7d',
+    label: '7d',
+    summary: { value: '271,480', delta: { value: '+12.4%', direction: 'up', sentiment: 'positive' } },
+  },
+  {
+    value: '30d',
+    label: '30d',
+    summary: { value: '1.08M', delta: { value: '+6.0%', direction: 'up', sentiment: 'positive' } },
+  },
 ];

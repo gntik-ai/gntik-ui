@@ -51,7 +51,11 @@ export function FormSection({
   return (
     <section
       aria-labelledby={title != null ? `${id}-title` : undefined}
-      className={cn('grid grid-cols-1 gap-x-10 gap-y-5 md:grid-cols-3', divided && 'border-t border-border pt-8', className)}
+      className={cn(
+        'grid grid-cols-1 gap-x-10 gap-y-5 md:grid-cols-3',
+        divided && 'border-t border-border pt-8',
+        className,
+      )}
       {...props}
     >
       <div className="min-w-0">
@@ -60,7 +64,9 @@ export function FormSection({
             {title}
           </Heading>
         )}
-        {description != null && <p className="mt-1 text-[13px] leading-6 text-pretty text-muted-foreground">{description}</p>}
+        {description != null && (
+          <p className="mt-1 text-[13px] leading-6 text-pretty text-muted-foreground">{description}</p>
+        )}
       </div>
       <div className="min-w-0 md:col-span-2">
         {children ?? <SampleFields />}

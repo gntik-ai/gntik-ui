@@ -14,7 +14,8 @@ export interface TreeListLabels {
 
 const DEFAULT_LABELS: TreeListLabels = { loading: 'Loading…', error: 'Could not load items.', retry: 'Retry' };
 
-export interface TreeListProps extends UseTreeListOptions, Omit<HTMLAttributes<HTMLUListElement>, 'className' | 'children' | 'onSelect'> {
+export interface TreeListProps
+  extends UseTreeListOptions, Omit<HTMLAttributes<HTMLUListElement>, 'className' | 'children' | 'onSelect'> {
   className?: string;
   ref?: Ref<HTMLUListElement>;
   /** Called on Enter or double click of a node (e.g. open a file). */
@@ -50,7 +51,17 @@ export function TreeList({
   ...props
 }: TreeListProps) {
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
-  const tree = useTreeList({ nodes, expanded, defaultExpanded, onExpandedChange, selectionMode, selected, defaultSelected, onSelectedChange, loadChildren });
+  const tree = useTreeList({
+    nodes,
+    expanded,
+    defaultExpanded,
+    onExpandedChange,
+    selectionMode,
+    selected,
+    defaultSelected,
+    onSelectedChange,
+    loadChildren,
+  });
   const items = useRef(new Map<string, HTMLLIElement>());
   const typeahead = useRef({ text: '', at: 0 });
   const baseId = useId();
@@ -71,7 +82,8 @@ export function TreeList({
     if (event.defaultPrevented || !current) return;
     const { node } = current;
     const rtl = getComputedStyle(event.currentTarget).direction === 'rtl';
-    const key = rtl && event.key === 'ArrowLeft' ? 'ArrowRight' : rtl && event.key === 'ArrowRight' ? 'ArrowLeft' : event.key;
+    const key =
+      rtl && event.key === 'ArrowLeft' ? 'ArrowRight' : rtl && event.key === 'ArrowRight' ? 'ArrowLeft' : event.key;
     const move = (target: VisibleNode | undefined) => {
       event.preventDefault();
       focus(target?.node.id);
@@ -170,7 +182,14 @@ export function TreeList({
           }}
           className={s.item()}
         >
-          <div data-row id={v.rowId} className={v2.row()} style={pad} onClick={(e) => handleClick(e, v)} onDoubleClick={() => onAction && !node.disabled && onAction(node)}>
+          <div
+            data-row
+            id={v.rowId}
+            className={v2.row()}
+            style={pad}
+            onClick={(e) => handleClick(e, v)}
+            onDoubleClick={() => onAction && !node.disabled && onAction(node)}
+          >
             <span data-chevron aria-hidden className={v2.chevron()}>
               {v.branch && <ChevronRight size={14} />}
             </span>
@@ -192,7 +211,11 @@ export function TreeList({
                 </li>
               )}
               {!kids && childState?.status === 'error' && (
-                <li role="none" className={cn(s.status(), 'text-destructive-text')} style={{ paddingInlineStart: `${v.level * indent + 6}px` }}>
+                <li
+                  role="none"
+                  className={cn(s.status(), 'text-destructive-text')}
+                  style={{ paddingInlineStart: `${v.level * indent + 6}px` }}
+                >
                   {labels.error}
                   <button
                     type="button"
@@ -214,7 +237,13 @@ export function TreeList({
     });
 
   return (
-    <ul role="tree" aria-multiselectable={multi || undefined} className={cn(s.root(), className)} onKeyDown={handleKeyDown} {...props}>
+    <ul
+      role="tree"
+      aria-multiselectable={multi || undefined}
+      className={cn(s.root(), className)}
+      onKeyDown={handleKeyDown}
+      {...props}
+    >
       {renderLevel(nodes)}
     </ul>
   );

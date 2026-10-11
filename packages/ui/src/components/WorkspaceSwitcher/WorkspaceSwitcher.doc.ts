@@ -15,5 +15,17 @@ export const doc: ComponentDoc = {
     ['Enter', 'Switches to the highlighted workspace (or runs Create workspace) and closes'],
     ['Escape', 'Closes the list and returns focus to the trigger'],
   ],
-  tokens: ['card', 'border', 'secondary', 'popover', 'primary', 'primary-foreground', 'primary-text', 'accent', 'accent-foreground', 'muted-foreground', 'focus-ring'],
+  tokens: [
+    'card',
+    'border',
+    'secondary',
+    'popover',
+    'primary',
+    'primary-foreground',
+    'primary-text',
+    'accent',
+    'accent-foreground',
+    'muted-foreground',
+    'focus-ring',
+  ],
 };

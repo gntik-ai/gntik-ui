@@ -7,7 +7,12 @@ import { filesToTree } from './data';
 
 /** Minimal Monaco stand-in (same approach as the CodePanel block tests). */
 function mockMonaco() {
-  const model = (value: string) => ({ getValue: () => value, setValue: vi.fn(), onDidChangeContent: () => ({ dispose: vi.fn() }), dispose: vi.fn() });
+  const model = (value: string) => ({
+    getValue: () => value,
+    setValue: vi.fn(),
+    onDidChangeContent: () => ({ dispose: vi.fn() }),
+    dispose: vi.fn(),
+  });
   const editor = {
     defineTheme: vi.fn(),
     setTheme: vi.fn(),
@@ -29,7 +34,13 @@ function mockMonaco() {
         focus: vi.fn(),
       };
     }),
-    createDiffEditor: vi.fn(() => ({ setModel: vi.fn(), getModel: () => null, updateOptions: vi.fn(), layout: vi.fn(), dispose: vi.fn() })),
+    createDiffEditor: vi.fn(() => ({
+      setModel: vi.fn(),
+      getModel: () => null,
+      updateOptions: vi.fn(),
+      layout: vi.fn(),
+      dispose: vi.fn(),
+    })),
   };
   return { editor, loader: (() => Promise.resolve({ editor })) as unknown as MonacoLoader };
 }

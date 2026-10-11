@@ -16,5 +16,16 @@ export const doc: ComponentDoc = {
     ['Type a character', 'Typeahead: highlights the next option starting with it'],
     ['Escape, then Enter / ArrowDown', 'After a failed async load: closing and reopening the popup retries'],
   ],
-  tokens: ['background', 'border', 'popover', 'popover-foreground', 'primary', 'primary-text', 'secondary', 'muted-foreground', 'ring', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'popover',
+    'popover-foreground',
+    'primary',
+    'primary-text',
+    'secondary',
+    'muted-foreground',
+    'ring',
+    'focus-ring',
+  ],
 };

@@ -20,7 +20,10 @@ describe('SessionsDevices', () => {
     expect(onRevoke).toHaveBeenCalledWith(expect.objectContaining({ id: 's2' }));
     expect(screen.getByRole('status')).toHaveTextContent('Signed out of Pixel 8.');
     await userEvent.click(screen.getByRole('button', { name: 'Sign out other sessions' }));
-    expect(onRevokeOthers).toHaveBeenCalledWith([expect.objectContaining({ id: 's3' }), expect.objectContaining({ id: 's4' })]);
+    expect(onRevokeOthers).toHaveBeenCalledWith([
+      expect.objectContaining({ id: 's3' }),
+      expect.objectContaining({ id: 's4' }),
+    ]);
     expect(screen.getAllByRole('listitem')).toHaveLength(1);
     expect(screen.getByRole('button', { name: 'Sign out other sessions' })).toBeDisabled();
   });

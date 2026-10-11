@@ -155,7 +155,9 @@ export function Toaster({ className, closeLabel: closeLabelProp, container }: To
             <BaseToast.Root key={t.id} toast={t} className={v.root()}>
               <BaseToast.Content className={v.content()}>
                 {(IconCmp || tone === 'loading') && (
-                  <span className={v.icon()}>{IconCmp ? <IconCmp size={16} aria-hidden /> : <Spinner size={15} />}</span>
+                  <span className={v.icon()}>
+                    {IconCmp ? <IconCmp size={16} aria-hidden /> : <Spinner size={15} />}
+                  </span>
                 )}
                 <div className={v.text()}>
                   <BaseToast.Title className={v.title()} />

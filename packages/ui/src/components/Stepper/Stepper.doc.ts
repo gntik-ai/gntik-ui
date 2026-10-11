@@ -11,5 +11,16 @@ export const doc: ComponentDoc = {
     ['Tab', 'Moves between clickable (completed) steps; other steps are not focusable'],
     ['Enter / Space', 'Activates the focused completed step (onStepClick)'],
   ],
-  tokens: ['primary', 'primary-foreground', 'primary-text', 'secondary', 'border', 'destructive', 'destructive-foreground', 'destructive-text', 'muted-foreground', 'focus-ring'],
+  tokens: [
+    'primary',
+    'primary-foreground',
+    'primary-text',
+    'secondary',
+    'border',
+    'destructive',
+    'destructive-foreground',
+    'destructive-text',
+    'muted-foreground',
+    'focus-ring',
+  ],
 };

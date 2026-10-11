@@ -15,7 +15,10 @@ function mockClipboard(impl: (text: string) => Promise<void> = () => Promise.res
 describe('CodeBlock', () => {
   afterEach(() => vi.useRealTimers());
 
-  it.each([['Enter', '{Enter}'], ['Space', ' ']])('%s on the copy button copies the code and announces it', async (_, key) => {
+  it.each([
+    ['Enter', '{Enter}'],
+    ['Space', ' '],
+  ])('%s on the copy button copies the code and announces it', async (_, key) => {
     const user = userEvent.setup();
     const writeText = mockClipboard();
     render(<CodeBlock language="bash" code={'pnpm add @gntik-ai/ui\n'} wrapToggle={false} />);
@@ -93,14 +96,26 @@ describe('CodeBlock', () => {
   });
 
   it('tokenizes json, bash and css', () => {
-    expect(tokenize('{"a": true}', 'json').map((t) => t.kind)).toEqual(['punctuation', 'property', 'punctuation', 'plain', 'number', 'punctuation']);
+    expect(tokenize('{"a": true}', 'json').map((t) => t.kind)).toEqual([
+      'punctuation',
+      'property',
+      'punctuation',
+      'plain',
+      'number',
+      'punctuation',
+    ]);
     expect(tokenize('npm i --save', 'bash')[0]).toEqual({ kind: 'function', value: 'npm' });
     expect(tokenize('a { color: red; }', 'css').find((t) => t.value === 'color')?.kind).toBe('property');
     expect(tokenize('hello', 'unknown')).toEqual([{ kind: 'plain', value: 'hello' }]);
   });
 
   it('examples have no axe violations', async () => {
-    render(<><CodeBlockFile /><CodeBlockSnippets /></>);
+    render(
+      <>
+        <CodeBlockFile />
+        <CodeBlockSnippets />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

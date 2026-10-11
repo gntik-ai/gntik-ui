@@ -13,7 +13,13 @@ const second = DEPLOYMENT_ROWS[1]!;
 const editColumns: Array<DataTableColumn<DeploymentRow>> = [
   { id: 'name', header: 'Deployment', accessor: (r) => r.name, editable: true },
   { id: 'region', header: 'Region', accessor: (r) => r.region },
-  { id: 'cost', header: 'Cost', accessor: (r) => r.cost, editable: (r) => r.status !== 'failed', editor: { type: 'number', min: 0, max: 1000 } },
+  {
+    id: 'cost',
+    header: 'Cost',
+    accessor: (r) => r.cost,
+    editable: (r) => r.status !== 'failed',
+    editor: { type: 'number', min: 0, max: 1000 },
+  },
 ];
 const rows = DEPLOYMENT_ROWS.slice(0, 3);
 const cell = (text: string) => screen.getByRole('button', { name: text });
@@ -31,7 +37,13 @@ describe('DataTable inline editing', () => {
     expect(input).toHaveFocus();
     await user.clear(input);
     await user.type(input, 'renamed{Enter}');
-    expect(onCellEdit).toHaveBeenCalledWith({ row: first, rowId: first.id, columnId: 'name', value: 'renamed', previous: first.name });
+    expect(onCellEdit).toHaveBeenCalledWith({
+      row: first,
+      rowId: first.id,
+      columnId: 'name',
+      value: 'renamed',
+      previous: first.name,
+    });
     await waitFor(() => expect(cell(first.name)).toHaveFocus());
   });
 
@@ -53,14 +65,18 @@ describe('DataTable inline editing', () => {
     render(<DataTable rows={rows} columns={editColumns} paginated={false} onCellEdit={onCellEdit} />);
     cell(first.name).focus();
     await user.keyboard('{Enter}{End}-v2{Tab}');
-    expect(onCellEdit).toHaveBeenLastCalledWith(expect.objectContaining({ columnId: 'name', value: `${first.name}-v2` }));
+    expect(onCellEdit).toHaveBeenLastCalledWith(
+      expect.objectContaining({ columnId: 'name', value: `${first.name}-v2` }),
+    );
     await waitFor(() => expect(cell(String(first.cost))).toHaveFocus());
   });
 
   it('shows a rejection inline and keeps editing', async () => {
     const user = userEvent.setup();
     const onCellEdit = vi.fn(async () => 'That name is taken.');
-    const { container } = render(<DataTable rows={rows} columns={editColumns} paginated={false} onCellEdit={onCellEdit} />);
+    const { container } = render(
+      <DataTable rows={rows} columns={editColumns} paginated={false} onCellEdit={onCellEdit} />,
+    );
     cell(first.name).focus();
     await user.keyboard(`{Enter}{Control>}a{/Control}${second.name}{Enter}`);
     const alert = await screen.findByRole('alert');
@@ -118,8 +134,16 @@ describe('DataTable inline editing', () => {
 
 describe('DataTable saved views', () => {
   const views: DataTableView[] = [
-    { id: 'expensive', name: 'Most expensive', state: { sort: { columnId: 'cost', direction: 'descending' }, hiddenColumns: ['region', 'updated'] } },
-    { id: 'grouped', name: 'By region', state: { groupBy: 'region', pinnedColumns: { left: ['name'] }, filters: { q: 'api' } } },
+    {
+      id: 'expensive',
+      name: 'Most expensive',
+      state: { sort: { columnId: 'cost', direction: 'descending' }, hiddenColumns: ['region', 'updated'] },
+    },
+    {
+      id: 'grouped',
+      name: 'By region',
+      state: { groupBy: 'region', pinnedColumns: { left: ['name'] }, filters: { q: 'api' } },
+    },
   ];
 
   it('switches views from the menu', async () => {
@@ -128,7 +152,13 @@ describe('DataTable saved views', () => {
     const onFiltersChange = vi.fn();
     const onGroupByChange = vi.fn();
     const { container } = render(
-      <DataTable defaultViews={views} onActiveViewChange={onActiveViewChange} onFiltersChange={onFiltersChange} onGroupByChange={onGroupByChange} paginated={false} />,
+      <DataTable
+        defaultViews={views}
+        onActiveViewChange={onActiveViewChange}
+        onFiltersChange={onFiltersChange}
+        onGroupByChange={onGroupByChange}
+        paginated={false}
+      />,
     );
     await user.click(screen.getByRole('button', { name: 'Default view' }));
     await user.click(await screen.findByRole('menuitemradio', { name: 'Most expensive' }));
@@ -176,7 +206,11 @@ describe('DataTable saved views', () => {
     await user.type(within(dialog).getByRole('textbox', { name: 'View name' }), 'Wide region{Enter}');
     const saved = onViewsChange.mock.lastCall?.[0] as DataTableView[];
     expect(saved).toHaveLength(3);
-    expect(saved[2]).toMatchObject({ id: 'wide-region', name: 'Wide region', state: { columnWidths: { region: 170 } } });
+    expect(saved[2]).toMatchObject({
+      id: 'wide-region',
+      name: 'Wide region',
+      state: { columnWidths: { region: 170 } },
+    });
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
     await user.click(screen.getByRole('button', { name: 'Wide region' }));
     await user.click(await screen.findByRole('menuitem', { name: 'Rename view…' }));
@@ -199,7 +233,9 @@ describe('DataTable saved views', () => {
     await user.click(screen.getByRole('button', { name: 'Default view' }));
     await user.click(await screen.findByRole('menuitemradio', { name: 'Needs attention' }));
     const failedCount = DEPLOYMENT_ROWS.filter((r) => r.status === 'failed').length;
-    await waitFor(() => expect(within(screen.getAllByRole('rowgroup')[1]!).getAllByRole('row')).toHaveLength(failedCount));
+    await waitFor(() =>
+      expect(within(screen.getAllByRole('rowgroup')[1]!).getAllByRole('row')).toHaveLength(failedCount),
+    );
     await user.click(screen.getByRole('button', { name: 'Needs attention' }));
     await user.click(await screen.findByRole('menuitemradio', { name: 'Default view' }));
     await waitFor(() => expect(within(screen.getAllByRole('rowgroup')[1]!).getAllByRole('row')).toHaveLength(10));

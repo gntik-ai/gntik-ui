@@ -128,9 +128,16 @@ export function DateTimeRangePicker({
   const s = datePickerVariants({ size });
   const v = dateTimeRangePickerVariants();
 
-  const unitLabel: Record<RelativeTimeUnit, string> = { minute: t('timeRange.minutes'), hour: t('timeRange.hours'), day: t('timeRange.days') };
+  const unitLabel: Record<RelativeTimeUnit, string> = {
+    minute: t('timeRange.minutes'),
+    hour: t('timeRange.hours'),
+    day: t('timeRange.days'),
+  };
   const presetLabel = (p: TimeRangePreset) => p.label ?? relativeTimeRangeLabel(p.amount, p.unit, t);
-  const activePreset = range?.mode === 'relative' ? presets.find((p) => isSameTimeRange(range, { mode: 'relative', amount: p.amount, unit: p.unit })) : undefined;
+  const activePreset =
+    range?.mode === 'relative'
+      ? presets.find((p) => isSameTimeRange(range, { mode: 'relative', amount: p.amount, unit: p.unit }))
+      : undefined;
 
   const text = !range
     ? ''
@@ -202,13 +209,23 @@ export function DateTimeRangePicker({
         align="start"
         sideOffset={6}
         padding="none"
-        initialFocus={() => presetsRef.current?.querySelector<HTMLElement>('[aria-pressed="true"]') ?? presetsRef.current?.querySelector<HTMLElement>('button') ?? true}
+        initialFocus={() =>
+          presetsRef.current?.querySelector<HTMLElement>('[aria-pressed="true"]') ??
+          presetsRef.current?.querySelector<HTMLElement>('button') ??
+          true
+        }
       >
         <div className={s.panel()}>
           {presets.length > 0 && (
             <div ref={presetsRef} role="group" aria-label={t('timeRange.presets')} className={s.presets()}>
               {presets.map((p) => (
-                <button key={p.id} type="button" aria-pressed={activePreset?.id === p.id} className={s.preset()} onClick={() => apply({ mode: 'relative', amount: p.amount, unit: p.unit })}>
+                <button
+                  key={p.id}
+                  type="button"
+                  aria-pressed={activePreset?.id === p.id}
+                  className={s.preset()}
+                  onClick={() => apply({ mode: 'relative', amount: p.amount, unit: p.unit })}
+                >
                   {presetLabel(p)}
                 </button>
               ))}
@@ -329,4 +346,3 @@ export function DateTimeRangePicker({
     </Popover>
   );
 }
-

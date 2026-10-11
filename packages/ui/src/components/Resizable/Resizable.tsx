@@ -312,7 +312,8 @@ export function ResizeHandle({
   }
 
   const min = a ? (a.collapsible ? a.collapsedSize : a.minSize) : 0;
-  const max = a && b ? Math.min(a.maxSize, sizeA + (sizes[i + 1] ?? 0) - (b.collapsible ? b.collapsedSize : b.minSize)) : 100;
+  const max =
+    a && b ? Math.min(a.maxSize, sizeA + (sizes[i + 1] ?? 0) - (b.collapsible ? b.collapsedSize : b.minSize)) : 100;
   const Grip = horizontal ? GripVertical : GripHorizontal;
   return (
     <div

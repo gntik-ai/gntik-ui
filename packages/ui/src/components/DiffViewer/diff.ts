@@ -132,7 +132,11 @@ export function splitLines(text: string): string[] {
  * Line diff of two texts. Within each changed block, removed lines come before added ones.
  * Pure: safe to call on the server or in a worker.
  */
-export function diffLines(oldText: string, newText: string, { ignoreWhitespace = false, ignoreCase = false }: DiffLinesOptions = {}): DiffLine[] {
+export function diffLines(
+  oldText: string,
+  newText: string,
+  { ignoreWhitespace = false, ignoreCase = false }: DiffLinesOptions = {},
+): DiffLine[] {
   const a = splitLines(oldText);
   const b = splitLines(newText);
   const normalise = (s: string) => {

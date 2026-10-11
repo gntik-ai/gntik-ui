@@ -74,12 +74,21 @@ export function DonutChart<T extends object>({
   const placeholder = chartStateView(effective, { height, emptyMessage, errorMessage, onRetry });
   if (placeholder)
     return (
-      <div role="figure" aria-label={name} aria-busy={effective === 'loading' || undefined} className={cx('w-full font-sans', className)}>
+      <div
+        role="figure"
+        aria-label={name}
+        aria-busy={effective === 'loading' || undefined}
+        className={cx('w-full font-sans', className)}
+      >
         {placeholder}
       </div>
     );
   return (
-    <div role="figure" aria-label={name} className={cx('flex flex-col items-center gap-6 font-sans sm:flex-row', className)}>
+    <div
+      role="figure"
+      aria-label={name}
+      className={cx('flex flex-col items-center gap-6 font-sans sm:flex-row', className)}
+    >
       <div className="relative shrink-0" style={{ width: height, height }}>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart accessibilityLayer title={title} desc={description}>
@@ -101,7 +110,9 @@ export function DonutChart<T extends object>({
         </ResponsiveContainer>
         {isDonut && centerLabel && (
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-            <div className="font-mono text-[20px] font-semibold tabular-nums text-foreground">{valueFormatter(total)}</div>
+            <div className="font-mono text-[20px] font-semibold tabular-nums text-foreground">
+              {valueFormatter(total)}
+            </div>
             <div className="mt-0.5 text-[11px] text-muted-foreground">{centerLabel}</div>
           </div>
         )}
@@ -142,7 +153,11 @@ export function DonutChart<T extends object>({
         </div>
       )}
       {dataTable && (
-        <ChartDataTable caption={name} columns={[index, category]} rows={slices.map((sl) => [sl.name, valueFormatter(sl.value)])} />
+        <ChartDataTable
+          caption={name}
+          columns={[index, category]}
+          rows={slices.map((sl) => [sl.name, valueFormatter(sl.value)])}
+        />
       )}
     </div>
   );

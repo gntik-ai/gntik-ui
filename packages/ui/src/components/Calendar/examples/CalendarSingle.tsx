@@ -22,8 +22,11 @@ export default function CalendarSingle() {
         />
       </div>
       <p className="text-[12.5px] text-muted-foreground">
-        Deploy on <span className="font-medium text-foreground">{date ? formatDate(date, 'en-US', { dateStyle: 'full' }) : '—'}</span>.
-        Weekends and past days are unavailable.
+        Deploy on{' '}
+        <span className="font-medium text-foreground">
+          {date ? formatDate(date, 'en-US', { dateStyle: 'full' }) : '—'}
+        </span>
+        . Weekends and past days are unavailable.
       </p>
     </div>
   );

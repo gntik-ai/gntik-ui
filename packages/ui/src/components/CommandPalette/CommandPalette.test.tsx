@@ -19,21 +19,28 @@ const highlighted = (dialog: HTMLElement) => dialog.querySelector('[role="option
 
 describe('CommandPalette', () => {
   it('ranks prefix > word start > subsequence and searches keywords', () => {
-    expect(scoreCommand({ id: 'a', label: 'Projects' }, 'pro')).toBeGreaterThan(scoreCommand({ id: 'b', label: 'Create project' }, 'pro'));
+    expect(scoreCommand({ id: 'a', label: 'Projects' }, 'pro')).toBeGreaterThan(
+      scoreCommand({ id: 'b', label: 'Create project' }, 'pro'),
+    );
     expect(scoreCommand({ id: 'a', label: 'Create project' }, 'crp')).toBeGreaterThan(0);
     expect(scoreCommand({ id: 'a', label: 'Billing', keywords: ['invoices'] }, 'invoice')).toBeGreaterThan(0);
     expect(scoreCommand({ id: 'a', label: 'Billing' }, 'xyz')).toBe(-1);
-    const groups = filterCommandGroups([{ label: 'G', items: [{ id: 'a', label: 'Analytics' }] }], '', [{ id: 'a', label: 'Analytics' }]);
+    const groups = filterCommandGroups([{ label: 'G', items: [{ id: 'a', label: 'Analytics' }] }], '', [
+      { id: 'a', label: 'Analytics' },
+    ]);
     expect(groups.map((g) => g.value)).toEqual(['Recent', 'G']);
   });
 
-  it.each([['{Meta>}k{/Meta}'], ['{Control>}k{/Control}']])('%s opens the palette with groups and recent items', async (combo) => {
-    const { dialog } = await openWithShortcut(combo);
-    expect(within(dialog).getByText('Recent')).toBeInTheDocument();
-    expect(within(dialog).getByText('Actions')).toBeInTheDocument();
-    expect(options(dialog)).toHaveLength(12);
-    expect(highlighted(dialog)).toHaveTextContent('web-frontend');
-  });
+  it.each([['{Meta>}k{/Meta}'], ['{Control>}k{/Control}']])(
+    '%s opens the palette with groups and recent items',
+    async (combo) => {
+      const { dialog } = await openWithShortcut(combo);
+      expect(within(dialog).getByText('Recent')).toBeInTheDocument();
+      expect(within(dialog).getByText('Actions')).toBeInTheDocument();
+      expect(options(dialog)).toHaveLength(12);
+      expect(highlighted(dialog)).toHaveTextContent('web-frontend');
+    },
+  );
 
   it('the trigger button opens it too', async () => {
     const user = userEvent.setup();

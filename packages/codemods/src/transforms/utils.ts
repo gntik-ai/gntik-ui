@@ -1,13 +1,19 @@
 import type { Collection, JSCodeshift, JSXOpeningElement } from 'jscodeshift';
 
 /** Local names bound to `imported` from any of the given sources (`import { imported as local }`). */
-export function importedLocals(j: JSCodeshift, root: Collection, sources: (source: string) => boolean, imported: string): Set<string> {
+export function importedLocals(
+  j: JSCodeshift,
+  root: Collection,
+  sources: (source: string) => boolean,
+  imported: string,
+): Set<string> {
   const names = new Set<string>();
   root.find(j.ImportDeclaration).forEach((p) => {
     const source = p.node.source.value;
     if (typeof source !== 'string' || !sources(source)) return;
     for (const s of p.node.specifiers ?? []) {
-      if (s.type === 'ImportSpecifier' && nameOf(s.imported) === imported) names.add(s.local ? nameOf(s.local) : imported);
+      if (s.type === 'ImportSpecifier' && nameOf(s.imported) === imported)
+        names.add(s.local ? nameOf(s.local) : imported);
     }
   });
   return names;
@@ -19,7 +25,9 @@ export function jsxName(el: JSXOpeningElement): string | null {
 }
 
 export function hasAttribute(el: JSXOpeningElement, name: string): boolean {
-  return (el.attributes ?? []).some((a) => a.type === 'JSXAttribute' && a.name.type === 'JSXIdentifier' && a.name.name === name);
+  return (el.attributes ?? []).some(
+    (a) => a.type === 'JSXAttribute' && a.name.type === 'JSXIdentifier' && a.name.name === name,
+  );
 }
 
 export function hasSpread(el: JSXOpeningElement): boolean {

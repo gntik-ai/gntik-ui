@@ -113,7 +113,12 @@ export function SidebarLayout({
   const collapseLabel = collapseLabelProp ?? t('nav.collapseSidebar');
   const expandLabel = expandLabelProp ?? t('nav.expandSidebar');
   const sidebarId = useId();
-  const [collapsed, setCollapsed] = usePersistedCollapse(collapsedProp, defaultCollapsed, storageKey, onCollapsedChange);
+  const [collapsed, setCollapsed] = usePersistedCollapse(
+    collapsedProp,
+    defaultCollapsed,
+    storageKey,
+    onCollapsedChange,
+  );
   const [drawerState, setDrawerState] = useState(false);
   const drawerOpen = drawerOpenProp ?? drawerState;
   const setDrawerOpen = (open: boolean) => {
@@ -140,7 +145,13 @@ export function SidebarLayout({
         <SkipLink targetId={mainId} className={s.skip()}>
           {skipLinkLabel}
         </SkipLink>
-        <aside id={sidebarId} aria-label={sidebarLabel} data-state={state} inert={hidden || undefined} className={s.sidebar()}>
+        <aside
+          id={sidebarId}
+          aria-label={sidebarLabel}
+          data-state={state}
+          inert={hidden || undefined}
+          className={s.sidebar()}
+        >
           {sidebarHeader && <div className={s.sidebarHeader()}>{renderSlot(sidebarHeader, desktop)}</div>}
           <div className={s.sidebarBody()}>{renderSlot(sidebar, desktop)}</div>
           {sidebarFooter && <div className={s.sidebarFooter()}>{renderSlot(sidebarFooter, desktop)}</div>}

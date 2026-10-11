@@ -1,11 +1,45 @@
-import { Checkbox, cn, DensityProvider, Table, TableCaption, TableHead, TableHeader, TableRow, type TableDensity, useDensity, useI18n } from '@gntik-ai/ui';
+import {
+  Checkbox,
+  cn,
+  DensityProvider,
+  Table,
+  TableCaption,
+  TableHead,
+  TableHeader,
+  TableRow,
+  type TableDensity,
+  useDensity,
+  useI18n,
+} from '@gntik-ai/ui';
 import { useId, useRef, useState } from 'react';
 import { PaginationFooter } from '../PaginationFooter/PaginationFooter';
 import { ColumnVisibilityMenu } from './column-menu';
-import { clampColumnWidth, columnWidthOf, orderColumns, pinSideOf, setColumnPin, stickyTint, tableLayout, widthBounds, type ColumnWidths, type PinnedColumns } from './column-sizing';
+import {
+  clampColumnWidth,
+  columnWidthOf,
+  orderColumns,
+  pinSideOf,
+  setColumnPin,
+  stickyTint,
+  tableLayout,
+  widthBounds,
+  type ColumnWidths,
+  type PinnedColumns,
+} from './column-sizing';
 import { DataTableBody, flattenBody, type DataTableBodyGroup } from './data-table-body';
 import type { DataTableProps } from './data-table-props';
-import { groupKeyOf, groupRows, paginate, selectionState, sortRows, toggleAll, toggleOne, type DataTableColumn, type DataTableGroupBy, type SortState } from './data-table-utils';
+import {
+  groupKeyOf,
+  groupRows,
+  paginate,
+  selectionState,
+  sortRows,
+  toggleAll,
+  toggleOne,
+  type DataTableColumn,
+  type DataTableGroupBy,
+  type SortState,
+} from './data-table-utils';
 import { DensityToggle } from './density-toggle';
 import { DEPLOYMENT_COLUMNS, DEPLOYMENT_ROWS } from './fixtures';
 import { DataTableHeadCell } from './header-cell';
@@ -96,7 +130,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const editHintId = useId();
   const tableRef = useRef<HTMLTableElement>(null);
   // A view active at mount seeds the initial state.
-  const [initialView] = useState(() => (viewsProp ?? defaultViews ?? []).find((v) => v.id === (activeViewId ?? defaultActiveViewId)));
+  const [initialView] = useState(() =>
+    (viewsProp ?? defaultViews ?? []).find((v) => v.id === (activeViewId ?? defaultActiveViewId)),
+  );
   const [initialFilters] = useState(() => filters);
   const seed = initialView?.state ?? {};
   const defaultHidden = columns.filter((c) => c.defaultHidden).map((c) => c.id);
@@ -105,16 +141,29 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const [innerSelected, setInnerSelected] = useState<ReadonlySet<string>>(() => new Set(defaultSelectedIds));
   const [innerDensity, setInnerDensity] = useState<TableDensity | null>(defaultDensity ?? null);
   const contextDensity = useDensity();
-  const [hiddenList, setHiddenList] = useControllable<readonly string[]>(hiddenProp, () => seed.hiddenColumns ?? defaultHidden, (ids) => onHiddenColumnsChange?.([...ids]));
-  const [widths, setWidths] = useControllable<ColumnWidths>(widthsProp, () => seed.columnWidths ?? defaultColumnWidths, (w) => onColumnWidthsChange?.({ ...w }));
-  const [pinned, setPinned] = useControllable<PinnedColumns>(pinnedProp, () => seed.pinnedColumns ?? defaultPinnedColumns, onPinnedColumnsChange);
+  const [hiddenList, setHiddenList] = useControllable<readonly string[]>(
+    hiddenProp,
+    () => seed.hiddenColumns ?? defaultHidden,
+    (ids) => onHiddenColumnsChange?.([...ids]),
+  );
+  const [widths, setWidths] = useControllable<ColumnWidths>(
+    widthsProp,
+    () => seed.columnWidths ?? defaultColumnWidths,
+    (w) => onColumnWidthsChange?.({ ...w }),
+  );
+  const [pinned, setPinned] = useControllable<PinnedColumns>(
+    pinnedProp,
+    () => seed.pinnedColumns ?? defaultPinnedColumns,
+    onPinnedColumnsChange,
+  );
   // `undefined`: follow the groupBy prop; a string or null: set by a saved view.
   const [groupOverride, setGroupOverride] = useState<string | null | undefined>(seed.groupBy);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(defaultPageSize);
 
   const hidden: ReadonlySet<string> = new Set(hiddenList);
-  const effectiveGroupBy: DataTableGroupBy<T> | undefined = groupOverride === undefined ? groupBy : ((groupOverride ?? undefined) as DataTableGroupBy<T> | undefined);
+  const effectiveGroupBy: DataTableGroupBy<T> | undefined =
+    groupOverride === undefined ? groupBy : ((groupOverride ?? undefined) as DataTableGroupBy<T> | undefined);
   const sort = sortProp === undefined ? innerSort : sortProp;
   const selected: ReadonlySet<string> = selectedIds ? new Set(selectedIds) : innerSelected;
   const density = densityProp ?? innerDensity ?? contextDensity;
@@ -138,7 +187,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const sorted = allGroups ? allGroups.flatMap((g) => g.rows) : sortedRows;
   const pageRows = paginated ? paginate(sorted, page, pageSize) : sorted;
   // Rows in collapsed groups are hidden, so select-all leaves them alone.
-  const pageIds = (effectiveGroupBy ? pageRows.filter((row) => !collapsed.has(groupKeyOf(row, effectiveGroupBy))) : pageRows).map(getRowId);
+  const pageIds = (
+    effectiveGroupBy ? pageRows.filter((row) => !collapsed.has(groupKeyOf(row, effectiveGroupBy))) : pageRows
+  ).map(getRowId);
   const header = selectionState(pageIds, selected);
   const selectedList = rows.map(getRowId).filter((id) => selected.has(id));
 
@@ -178,8 +229,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     setInnerDensity(next);
     onDensityChange?.(next);
   };
-  const toggleColumn = (id: string, visible: boolean) => setHiddenList(visible ? hiddenList.filter((c) => c !== id) : [...hiddenList, id]);
-  const resizeColumn = (column: DataTableColumn<T>, width: number) => setWidths({ ...widths, [column.id]: clampColumnWidth(column, width) });
+  const toggleColumn = (id: string, visible: boolean) =>
+    setHiddenList(visible ? hiddenList.filter((c) => c !== id) : [...hiddenList, id]);
+  const resizeColumn = (column: DataTableColumn<T>, width: number) =>
+    setWidths({ ...widths, [column.id]: clampColumnWidth(column, width) });
 
   // Saved views.
   const groupName = (g: DataTableGroupBy<T> | undefined): string | null => (typeof g === 'string' ? g : null);
@@ -225,7 +278,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   });
   const showViews = showViewSwitcher ?? (viewsProp != null || defaultViews != null || onViewsChange != null);
 
-  const pinning = showPinMenu ?? (pinnedProp != null || defaultPinnedColumns !== EMPTY_PINNED || onPinnedColumnsChange != null);
+  const pinning =
+    showPinMenu ?? (pinnedProp != null || defaultPinnedColumns !== EMPTY_PINNED || onPinnedColumnsChange != null);
   const layout = tableLayout({
     columns: visibleColumns,
     widths,
@@ -318,7 +372,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             <TableRow className="hover:bg-transparent" aria-rowindex={virtual ? 1 : undefined}>
               {selectable && (
                 <TableHead
-                  className={cn('w-10 pe-0', layout.lead.className, layout.lead.pinned && 'z-[11] bg-card', stickyTint(layout.lead, { head: true }))}
+                  className={cn(
+                    'w-10 pe-0',
+                    layout.lead.className,
+                    layout.lead.pinned && 'z-[11] bg-card',
+                    stickyTint(layout.lead, { head: true }),
+                  )}
                   style={layout.lead.style}
                 >
                   <Checkbox
@@ -339,13 +398,27 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     layout={layout.columns.get(c.id)}
                     sortDirection={sort?.columnId === c.id ? sort.direction : 'none'}
                     onSortChange={(dir) => changeSort(c.id, dir)}
-                    resize={resizable && c.resizable !== false ? { width: columnWidthOf(c, widths), min: bounds.min, max: bounds.max, onResize: (w) => resizeColumn(c, w) } : undefined}
+                    resize={
+                      resizable && c.resizable !== false
+                        ? {
+                            width: columnWidthOf(c, widths),
+                            min: bounds.min,
+                            max: bounds.max,
+                            onResize: (w) => resizeColumn(c, w),
+                          }
+                        : undefined
+                    }
                   />
                 );
               })}
               {rowActions && (
                 <TableHead
-                  className={cn('w-12', layout.trail.className, layout.trail.pinned && 'z-[11] bg-card', stickyTint(layout.trail, { head: true }))}
+                  className={cn(
+                    'w-12',
+                    layout.trail.className,
+                    layout.trail.pinned && 'z-[11] bg-card',
+                    stickyTint(layout.trail, { head: true }),
+                  )}
                   style={layout.trail.style}
                 >
                   <span className="sr-only">{t('table.actions')}</span>

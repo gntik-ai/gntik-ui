@@ -15,5 +15,15 @@ export const doc: ComponentDoc = {
     ['Enter / Space', 'On the secret toggle: masks or unmasks the value (aria-pressed)'],
     ['Ctrl / ⌘ + V', 'In a key field, multi-line KEY=value text is imported as rows'],
   ],
-  tokens: ['background', 'border', 'card', 'foreground', 'muted-foreground', 'secondary', 'destructive', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'card',
+    'foreground',
+    'muted-foreground',
+    'secondary',
+    'destructive',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

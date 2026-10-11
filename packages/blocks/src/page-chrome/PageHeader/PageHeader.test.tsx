@@ -9,7 +9,20 @@ describe('PageHeader', () => {
     const user = userEvent.setup();
     const titleRef = createRef<HTMLHeadingElement>();
     const { rerender } = render(
-      <><PageHeader title="Not found" titleRef={titleRef} as="div" breadcrumbs={null} description={null} status="" meta={[]} actions={[]} tabs={null} /><button>Go home</button></>,
+      <>
+        <PageHeader
+          title="Not found"
+          titleRef={titleRef}
+          as="div"
+          breadcrumbs={null}
+          description={null}
+          status=""
+          meta={[]}
+          actions={[]}
+          tabs={null}
+        />
+        <button>Go home</button>
+      </>,
     );
     const title = screen.getByRole('heading', { level: 1, name: 'Not found' });
     expect(title).toHaveAttribute('tabindex', '-1');
@@ -37,7 +50,10 @@ describe('PageHeader', () => {
     render(
       <PageHeader
         breadcrumbs={null}
-        actions={[{ label: 'Export', variant: 'secondary' }, { label: 'Create', onClick: onCreate }]}
+        actions={[
+          { label: 'Export', variant: 'secondary' },
+          { label: 'Create', onClick: onCreate },
+        ]}
         onTabChange={onTabChange}
       />,
     );

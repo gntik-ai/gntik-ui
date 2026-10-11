@@ -9,7 +9,11 @@ export default function TokenRecipients() {
   const [people, setPeople] = useState(PEOPLE);
   return (
     <div className="flex max-w-md flex-col gap-3">
-      <div className="flex flex-wrap items-center gap-1.5 rounded-md border border-border bg-background p-1.5" aria-label="Recipients" role="group">
+      <div
+        className="flex flex-wrap items-center gap-1.5 rounded-md border border-border bg-background p-1.5"
+        aria-label="Recipients"
+        role="group"
+      >
         {people.map((name) => (
           <Token
             key={name}

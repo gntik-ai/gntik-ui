@@ -41,7 +41,8 @@ const pairing = fs.readFileSync(new URL('../src/pairing.css', import.meta.url), 
 
 function luminance(hslChannels) {
   const [h, s, l] = hslChannels.split(/\s+/).map((v) => parseFloat(v));
-  const S = s / 100, L = l / 100;
+  const S = s / 100,
+    L = l / 100;
   const a = S * Math.min(L, 1 - L);
   const f = (n) => {
     const k = (n + h / 30) % 12;
@@ -92,20 +93,33 @@ test('runtime tokenHex converts brand HSL like the browser', async () => {
 // Chip text sits on its tone's tint (bg-<tone>/10 … /20) over the background, card or popover.
 function hslToRgb(ch) {
   const [h, s, l] = ch.split(/\s+/).map((v) => parseFloat(v));
-  const S = s / 100, L = l / 100, a = S * Math.min(L, 1 - L);
-  const f = (n) => { const k = (n + h / 30) % 12; return L - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)); };
+  const S = s / 100,
+    L = l / 100,
+    a = S * Math.min(L, 1 - L);
+  const f = (n) => {
+    const k = (n + h / 30) % 12;
+    return L - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+  };
   return [f(0), f(8), f(4)];
 }
 const lum = ([r, g, b]) => {
   const lin = (c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
   return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
 };
-const rgbRatio = (x, y) => { const [p, q] = [lum(x), lum(y)].sort((m, n) => n - m); return (p + 0.05) / (q + 0.05); };
+const rgbRatio = (x, y) => {
+  const [p, q] = [lum(x), lum(y)].sort((m, n) => n - m);
+  return (p + 0.05) / (q + 0.05);
+};
 
 test('chip text aliases meet WCAG AA on their tint in every theme', () => {
   const brand = parse(css);
   const aliases = parse(pairing);
-  const TONE = { '--primary-chip-text': '--primary', '--success-chip-text': '--success', '--warning-chip-text': '--warning', '--destructive-chip-text': '--destructive' };
+  const TONE = {
+    '--primary-chip-text': '--primary',
+    '--success-chip-text': '--success',
+    '--warning-chip-text': '--warning',
+    '--destructive-chip-text': '--destructive',
+  };
   for (const theme of [':root', '.dark', '.high_contrast']) {
     const tokens = { ...brand[':root'], ...brand[theme] };
     for (const [alias, tone] of Object.entries(TONE)) {

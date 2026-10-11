@@ -2,7 +2,18 @@
 export interface TemplateMeta {
   /** Display name, e.g. "Home dashboard". */
   name: string;
-  family: 'Shells' | 'Auth' | 'Onboarding' | 'Overview' | 'Resources' | 'Work' | 'Settings' | 'System' | 'AI' | 'Builders' | 'Help';
+  family:
+    | 'Shells'
+    | 'Auth'
+    | 'Onboarding'
+    | 'Overview'
+    | 'Resources'
+    | 'Work'
+    | 'Settings'
+    | 'System'
+    | 'AI'
+    | 'Builders'
+    | 'Help';
   priority: 'P1' | 'P2' | 'P3';
   status: 'stable' | 'beta' | 'experimental';
   description: string;

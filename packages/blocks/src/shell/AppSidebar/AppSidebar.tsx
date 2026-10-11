@@ -14,7 +14,13 @@ import {
   type Workspace,
 } from '@gntik-ai/ui';
 import { useState } from 'react';
-import { appSidebarNavGroups, appSidebarUsage, appSidebarUser, appSidebarWorkspaces, type AppSidebarUsage } from './fixtures';
+import {
+  appSidebarNavGroups,
+  appSidebarUsage,
+  appSidebarUser,
+  appSidebarWorkspaces,
+  type AppSidebarUsage,
+} from './fixtures';
 
 export interface AppSidebarHeaderProps {
   /** Icon rail: shows only the brand mark. */
@@ -65,8 +71,24 @@ export interface AppSidebarNavProps {
 }
 
 /** Sidebar body: the NavList (icon rail with tooltips when collapsed). */
-export function AppSidebarNav({ groups = appSidebarNavGroups, currentHref = '/projects', collapsed = false, label = 'Main', onNavigate, className }: AppSidebarNavProps) {
-  return <NavList groups={groups} currentHref={currentHref} collapsed={collapsed} label={label} onNavigate={onNavigate} className={className} />;
+export function AppSidebarNav({
+  groups = appSidebarNavGroups,
+  currentHref = '/projects',
+  collapsed = false,
+  label = 'Main',
+  onNavigate,
+  className,
+}: AppSidebarNavProps) {
+  return (
+    <NavList
+      groups={groups}
+      currentHref={currentHref}
+      collapsed={collapsed}
+      label={label}
+      onNavigate={onNavigate}
+      className={className}
+    />
+  );
 }
 
 export interface AppSidebarFooterProps {
@@ -98,7 +120,14 @@ export function AppSidebarFooter({
     <div className={cn('flex flex-col gap-1.5', collapsed && 'items-center', className)}>
       {usage && !collapsed && (
         <div className="rounded-[10px] border border-border bg-card p-2.5">
-          <Meter size="sm" label={usage.label} value={usage.value} max={usage.max} valueLabel={usage.valueLabel} aria-valuetext={usage.valueLabel} />
+          <Meter
+            size="sm"
+            label={usage.label}
+            value={usage.value}
+            max={usage.max}
+            valueLabel={usage.valueLabel}
+            aria-valuetext={usage.valueLabel}
+          />
         </div>
       )}
       {helpHref && (
@@ -116,12 +145,24 @@ export function AppSidebarFooter({
           {!collapsed && helpLabel}
         </Link>
       )}
-      {user && <UserMenu user={user} items={userMenuItems} onSignOut={onSignOut} showName={!collapsed} className={collapsed ? undefined : 'w-full justify-start'} />}
+      {user && (
+        <UserMenu
+          user={user}
+          items={userMenuItems}
+          onSignOut={onSignOut}
+          showName={!collapsed}
+          className={collapsed ? undefined : 'w-full justify-start'}
+        />
+      )}
     </div>
   );
 }
 
-export interface AppSidebarProps extends AppSidebarHeaderProps, Omit<AppSidebarNavProps, 'className' | 'groups' | 'label'>, Omit<AppSidebarFooterProps, 'className'> {
+export interface AppSidebarProps
+  extends
+    AppSidebarHeaderProps,
+    Omit<AppSidebarNavProps, 'className' | 'groups' | 'label'>,
+    Omit<AppSidebarFooterProps, 'className'> {
   navGroups?: NavGroup[];
   navLabel?: string;
 }
@@ -161,7 +202,13 @@ export function AppSidebar({
         />
       </div>
       <div className={cn('min-h-0 flex-1 overflow-y-auto pt-1 pb-3', collapsed ? 'px-2' : 'px-3')}>
-        <AppSidebarNav groups={navGroups} label={navLabel} currentHref={currentHref} collapsed={collapsed} onNavigate={onNavigate} />
+        <AppSidebarNav
+          groups={navGroups}
+          label={navLabel}
+          currentHref={currentHref}
+          collapsed={collapsed}
+          onNavigate={onNavigate}
+        />
       </div>
       <div className={cn('shrink-0 border-t border-border/60 p-2.5', collapsed && 'px-2')}>
         <AppSidebarFooter

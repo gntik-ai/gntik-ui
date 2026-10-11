@@ -26,7 +26,17 @@ function mockLayout() {
       top = 50 + index * 100;
       height = 80;
     }
-    return { x: left, y: top, left, top, width: 280, height, right: left + 280, bottom: top + height, toJSON: () => ({}) } as DOMRect;
+    return {
+      x: left,
+      y: top,
+      left,
+      top,
+      width: 280,
+      height,
+      right: left + 280,
+      bottom: top + height,
+      toJSON: () => ({}),
+    } as DOMRect;
   });
 }
 
@@ -77,7 +87,14 @@ describe('KanbanBoard', () => {
     const onMove = vi.fn();
     const columns: KanbanColumn[] = [
       { id: 'a', title: 'A', cards: [{ id: '1', title: 'One' }] },
-      { id: 'b', title: 'B', cards: [{ id: '2', title: 'Two' }, { id: '3', title: 'Three' }] },
+      {
+        id: 'b',
+        title: 'B',
+        cards: [
+          { id: '2', title: 'Two' },
+          { id: '3', title: 'Three' },
+        ],
+      },
     ];
     render(<KanbanBoard columns={columns} onMove={onMove} />);
     card(/Three/).focus();
@@ -143,7 +160,14 @@ describe('KanbanBoard', () => {
     const layout = mockLayout();
     render(<KanbanBoardSprint />);
     const c = card(/Rotate API keys/);
-    fireEvent.pointerDown(c, { button: 0, isPrimary: true, pointerId: 1, pointerType: 'mouse', clientX: 20, clientY: 60 });
+    fireEvent.pointerDown(c, {
+      button: 0,
+      isPrimary: true,
+      pointerId: 1,
+      pointerType: 'mouse',
+      clientX: 20,
+      clientY: 60,
+    });
     fireEvent.pointerMove(window, { pointerId: 1, clientX: 22, clientY: 61 });
     expect(c).toHaveAttribute('aria-pressed', 'false');
     fireEvent.pointerMove(window, { pointerId: 1, clientX: 320, clientY: 160 });
@@ -165,7 +189,14 @@ describe('KanbanBoard', () => {
       { id: 'b', title: 'B', cards: [] },
     ];
     render(<KanbanBoard columns={columns} onMove={onMove} />);
-    fireEvent.pointerDown(card(/One/), { button: 0, isPrimary: true, pointerId: 2, pointerType: 'mouse', clientX: 20, clientY: 60 });
+    fireEvent.pointerDown(card(/One/), {
+      button: 0,
+      isPrimary: true,
+      pointerId: 2,
+      pointerType: 'mouse',
+      clientX: 20,
+      clientY: 60,
+    });
     fireEvent.pointerMove(window, { pointerId: 2, clientX: 330, clientY: 60 });
     fireEvent.keyDown(window, { key: 'Escape' });
     fireEvent.pointerUp(window, { pointerId: 2 });
@@ -210,15 +241,31 @@ describe('KanbanBoard', () => {
 
   it('moveKanbanCard and previewSortable apply a move immutably', () => {
     const columns: KanbanColumn[] = [
-      { id: 'a', title: 'A', cards: [{ id: '1', title: 'One' }, { id: '2', title: 'Two' }] },
+      {
+        id: 'a',
+        title: 'A',
+        cards: [
+          { id: '1', title: 'One' },
+          { id: '2', title: 'Two' },
+        ],
+      },
       { id: 'b', title: 'B', cards: [{ id: '3', title: 'Three' }] },
     ];
     const next = moveKanbanCard(columns, { cardId: '1', fromColumnId: 'a', fromIndex: 0, toColumnId: 'b', toIndex: 1 });
     expect(next.map((c) => c.cards.map((x) => x.id))).toEqual([['2'], ['3', '1']]);
     expect(columns[0]?.cards).toHaveLength(2);
-    const within1 = moveKanbanCard(columns, { cardId: '1', fromColumnId: 'a', fromIndex: 0, toColumnId: 'a', toIndex: 1 });
+    const within1 = moveKanbanCard(columns, {
+      cardId: '1',
+      fromColumnId: 'a',
+      fromIndex: 0,
+      toColumnId: 'a',
+      toIndex: 1,
+    });
     expect(within1[0]?.cards.map((x) => x.id)).toEqual(['2', '1']);
-    expect(previewSortable([{ id: 'a', items: ['1', '2'] }], { itemId: '2', over: { containerId: 'a', index: 0 } })[0]?.items).toEqual(['2', '1']);
+    expect(
+      previewSortable([{ id: 'a', items: ['1', '2'] }], { itemId: '2', over: { containerId: 'a', index: 0 } })[0]
+        ?.items,
+    ).toEqual(['2', '1']);
   });
 
   it('examples have no axe violations', async () => {

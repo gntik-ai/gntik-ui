@@ -14,7 +14,12 @@ export default function KeyValueEditorEnv() {
   const [valid, setValid] = useState(true);
   return (
     <div className="flex max-w-2xl flex-col gap-3">
-      <KeyValueEditor aria-label="Environment variables" value={rows} onChange={setRows} onValidityChange={(ok) => setValid(ok)} />
+      <KeyValueEditor
+        aria-label="Environment variables"
+        value={rows}
+        onChange={setRows}
+        onValidityChange={(ok) => setValid(ok)}
+      />
       <p className="text-[12.5px] text-muted-foreground">
         {rows.filter((r) => r.key).length} variables · {valid ? 'ready to save' : 'fix the highlighted rows to save'}
       </p>

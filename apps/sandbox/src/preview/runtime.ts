@@ -72,13 +72,20 @@ export function evaluate(compiled: string): ComponentType {
   const module: { exports: Record<string, unknown> } = { exports: {} };
   try {
     // The sandbox exists to run code the user typed, in its own frame.
-    const run = new Function('require', 'module', 'exports', compiled) as (r: typeof sandboxRequire, m: typeof module, e: Record<string, unknown>) => void;
+    const run = new Function('require', 'module', 'exports', compiled) as (
+      r: typeof sandboxRequire,
+      m: typeof module,
+      e: Record<string, unknown>,
+    ) => void;
     run(sandboxRequire, module, module.exports);
   } catch (e) {
     throw new SandboxFailure({ kind: 'runtime', ...errorText(e) });
   }
   const component = module.exports.default;
-  if (typeof component !== 'function' && !(typeof component === 'object' && component !== null && '$$typeof' in component)) {
+  if (
+    typeof component !== 'function' &&
+    !(typeof component === 'object' && component !== null && '$$typeof' in component)
+  ) {
     throw new SandboxFailure({
       kind: 'runtime',
       message: 'The file has no default export to render. Add `export default function App() { … }`.',

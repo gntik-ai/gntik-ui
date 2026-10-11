@@ -15,7 +15,9 @@ function Basic({ onChange }: { onChange?: (v: unknown) => void }) {
         <TabsTab value="c">Gamma</TabsTab>
       </TabsList>
       <TabsPanel value="a">Alpha panel</TabsPanel>
-      <TabsPanel value="b">Beta panel <button type="button">Inside</button></TabsPanel>
+      <TabsPanel value="b">
+        Beta panel <button type="button">Inside</button>
+      </TabsPanel>
       <TabsPanel value="c">Gamma panel</TabsPanel>
     </Tabs>
   );
@@ -94,7 +96,13 @@ describe('Tabs', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><TabsUnderline /><TabsPills /><TabsWithIcons /></>);
+    render(
+      <>
+        <TabsUnderline />
+        <TabsPills />
+        <TabsWithIcons />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

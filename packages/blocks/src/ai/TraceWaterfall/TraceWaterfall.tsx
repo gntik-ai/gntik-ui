@@ -65,7 +65,8 @@ function flatten(spans: TraceSpan[], collapsed: Set<string>): Row[] {
   return rows;
 }
 
-const statusSuffix = (span: TraceSpan) => (span.status === 'error' ? ', error' : span.status === 'running' ? ', running' : '');
+const statusSuffix = (span: TraceSpan) =>
+  span.status === 'error' ? ', error' : span.status === 'running' ? ', running' : '';
 
 /**
  * Trace waterfall: span tree + duration bars on a shared time axis + an optional details pane for
@@ -89,7 +90,9 @@ export function TraceWaterfall({
   const SubTag = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
   const titleId = useId();
   const [collapsed, setCollapsed] = useState(() => new Set(defaultCollapsed));
-  const [innerSelected, setInnerSelected] = useState<string | undefined>(defaultSelectedId ?? spans.find((s) => !s.parentId)?.id);
+  const [innerSelected, setInnerSelected] = useState<string | undefined>(
+    defaultSelectedId ?? spans.find((s) => !s.parentId)?.id,
+  );
   const [focusId, setFocusId] = useState<string | undefined>(undefined);
   const buttons = useRef(new Map<string, HTMLButtonElement>());
   const rows = useMemo(() => flatten(spans, collapsed), [spans, collapsed]);
@@ -99,7 +102,10 @@ export function TraceWaterfall({
   const errors = spans.filter((s) => s.status === 'error').length;
   const running = spans.filter((s) => s.status === 'running').length;
   // Roving tab stop: the focused span, else the selected one, else the first row.
-  const tabStop = rows.find((r) => r.span.id === focusId)?.span.id ?? rows.find((r) => r.span.id === selectedId)?.span.id ?? rows[0]?.span.id;
+  const tabStop =
+    rows.find((r) => r.span.id === focusId)?.span.id ??
+    rows.find((r) => r.span.id === selectedId)?.span.id ??
+    rows[0]?.span.id;
 
   const setOpen = (id: string, open: boolean) =>
     setCollapsed((prev) => {
@@ -169,13 +175,19 @@ export function TraceWaterfall({
             </Badge>
           )}
         </header>
-        <div aria-hidden className="grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] border-b border-border px-3 py-1.5 font-mono text-[10.5px] text-muted-foreground">
+        <div
+          aria-hidden
+          className="grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] border-b border-border px-3 py-1.5 font-mono text-[10.5px] text-muted-foreground"
+        >
           <span>Span</span>
           <span className="relative h-3.5">
             {[0, 0.25, 0.5, 0.75, 1].map((f) => (
               <span
                 key={f}
-                className={cn('absolute top-0', f === 1 ? '-translate-x-full rtl:translate-x-full' : f > 0 && '-translate-x-1/2 rtl:translate-x-1/2')}
+                className={cn(
+                  'absolute top-0',
+                  f === 1 ? '-translate-x-full rtl:translate-x-full' : f > 0 && '-translate-x-1/2 rtl:translate-x-1/2',
+                )}
                 style={{ insetInlineStart: `${f * 100}%` }}
               >
                 {formatSpanDuration(total * f)}
@@ -203,7 +215,14 @@ export function TraceWaterfall({
                     className="absolute top-1/2 z-10 grid size-6 -translate-y-1/2 place-items-center rounded text-muted-foreground hover:bg-secondary hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
                     style={{ insetInlineStart: indent - 4 }}
                   >
-                    <ChevronRight size={13} aria-hidden className={cn('transition-transform motion-reduce:transition-none', open ? 'rotate-90' : 'rtl:-scale-x-100')} />
+                    <ChevronRight
+                      size={13}
+                      aria-hidden
+                      className={cn(
+                        'transition-transform motion-reduce:transition-none',
+                        open ? 'rotate-90' : 'rtl:-scale-x-100',
+                      )}
+                    />
                   </button>
                 )}
                 <button
@@ -233,7 +252,12 @@ export function TraceWaterfall({
                         isRunning ? 'border-[1.5px] border-foreground bg-transparent' : bar,
                       )}
                     />
-                    <span className={cn('truncate text-[12.5px]', span.status === 'error' ? 'text-destructive-text' : 'text-foreground')}>
+                    <span
+                      className={cn(
+                        'truncate text-[12.5px]',
+                        span.status === 'error' ? 'text-destructive-text' : 'text-foreground',
+                      )}
+                    >
                       {span.name}
                     </span>
                   </span>
@@ -245,14 +269,23 @@ export function TraceWaterfall({
                         'absolute top-1/2 h-2.5 min-w-0.5 -translate-y-1/2',
                         bar,
                         // In progress: an open (square, outlined) end and a soft pulse that stops under reduced motion.
-                        isRunning ? 'animate-pulse rounded-s-sm border-e-2 border-foreground opacity-70 motion-reduce:animate-none' : 'rounded-sm',
+                        isRunning
+                          ? 'animate-pulse rounded-s-sm border-e-2 border-foreground opacity-70 motion-reduce:animate-none'
+                          : 'rounded-sm',
                       )}
-                      style={{ insetInlineStart: `${(span.start / total) * 100}%`, width: `${(span.duration / total) * 100}%` }}
+                      style={{
+                        insetInlineStart: `${(span.start / total) * 100}%`,
+                        width: `${(span.duration / total) * 100}%`,
+                      }}
                     />
                     <span
                       aria-hidden
                       className="absolute top-1/2 -translate-y-1/2 ps-1.5 font-mono text-[10.5px] whitespace-nowrap text-muted-foreground"
-                      style={span.start + span.duration > total * 0.8 ? { insetInlineEnd: `${(1 - span.start / total) * 100}%`, paddingInlineEnd: 6 } : { insetInlineStart: `${((span.start + span.duration) / total) * 100}%` }}
+                      style={
+                        span.start + span.duration > total * 0.8
+                          ? { insetInlineEnd: `${(1 - span.start / total) * 100}%`, paddingInlineEnd: 6 }
+                          : { insetInlineStart: `${((span.start + span.duration) / total) * 100}%` }
+                      }
                     >
                       {label}
                     </span>
@@ -264,7 +297,10 @@ export function TraceWaterfall({
         </ol>
       </div>
       {showDetails && (
-        <aside aria-label="Span details" className="border-t border-border bg-secondary/20 p-4 lg:border-t-0 lg:border-s">
+        <aside
+          aria-label="Span details"
+          className="border-t border-border bg-secondary/20 p-4 lg:border-t-0 lg:border-s"
+        >
           {selected ? (
             renderDetails ? (
               renderDetails(selected)

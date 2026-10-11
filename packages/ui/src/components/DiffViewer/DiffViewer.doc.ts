@@ -15,5 +15,16 @@ export const doc: ComponentDoc = {
     ['Enter / Space', 'On "Expand N lines": reveals the hidden lines and focuses the diff region'],
     ['ArrowUp / ArrowDown', 'In the focused region: scrolls the diff'],
   ],
-  tokens: ['card', 'border', 'foreground', 'muted-foreground', 'secondary', 'success', 'success-text', 'destructive', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'card',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'secondary',
+    'success',
+    'success-text',
+    'destructive',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

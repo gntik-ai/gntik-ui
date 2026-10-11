@@ -4,7 +4,10 @@ import type { ComponentProps, Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { textareaVariants, type TextareaVariantProps } from './textarea.variants';
 
-type NativeTextareaProps = Omit<ComponentProps<'textarea'>, 'className' | 'ref' | 'value' | 'defaultValue' | 'onChange'>;
+type NativeTextareaProps = Omit<
+  ComponentProps<'textarea'>,
+  'className' | 'ref' | 'value' | 'defaultValue' | 'onChange'
+>;
 
 export interface TextareaProps extends NativeTextareaProps, TextareaVariantProps {
   className?: string;

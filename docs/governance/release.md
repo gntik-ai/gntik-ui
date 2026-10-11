@@ -11,12 +11,12 @@ workflow: `.github/workflows/release.yml`.
    (`docs`, examples, `musematic`, `mcp`) are ignored.
 2. Bump rules (pre-1.0 the minor plays the role of the major):
 
-   | Change | 0.x | ≥ 1.0 |
-   | --- | --- | --- |
-   | Fix, docs, internal refactor | patch | patch |
-   | New component, prop, token, block | minor | minor |
+   | Change                                                                     | 0.x                        | ≥ 1.0 |
+   | -------------------------------------------------------------------------- | -------------------------- | ----- |
+   | Fix, docs, internal refactor                                               | patch                      | patch |
+   | New component, prop, token, block                                          | minor                      | minor |
    | Breaking change (renamed/removed prop, changed default, new required peer) | minor + `BREAKING:` prefix | major |
-   | Deprecation | minor | minor |
+   | Deprecation                                                                | minor                      | minor |
 
 3. `@gntik-ai/ui`, `icons`, `charts`, `flow`, `editor`, `chat`, `blocks`, `templates` and `cli`
    are **linked**: they share the highest version bump in a release. `@gntik-ai/tokens` and
@@ -71,5 +71,5 @@ transforms whose version range the upgrade crosses; `gntik-ui upgrade --list` sh
 - The catalog and registry show the Deprecated badge and list the replacement first.
 - When the replacement is mechanical, the codemod ships with the deprecation, not with the
   removal, so teams can migrate early.
-- Tokens: colour values in `brand.css` are frozen and never deprecated; a token *name* is
+- Tokens: colour values in `brand.css` are frozen and never deprecated; a token _name_ is
   deprecated by aliasing it to its replacement in `pairing.css` for a full major.

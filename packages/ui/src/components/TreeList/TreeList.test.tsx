@@ -85,7 +85,9 @@ describe('TreeList', () => {
     let resolve: (nodes: TreeNode[]) => void = () => {};
     const loader = vi.fn(() => new Promise<TreeNode[]>((r) => (resolve = r)));
     const user = userEvent.setup();
-    render(<TreeList aria-label="Lazy" nodes={[{ id: 'a', label: 'Remote', hasChildren: true }]} loadChildren={loader} />);
+    render(
+      <TreeList aria-label="Lazy" nodes={[{ id: 'a', label: 'Remote', hasChildren: true }]} loadChildren={loader} />,
+    );
     await user.tab();
     await user.keyboard('{ArrowRight}');
     const remote = item('Remote');

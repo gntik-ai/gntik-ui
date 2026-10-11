@@ -3,7 +3,15 @@ import type { TrafficPoint, UsageRow } from '@gntik-ai/templates';
 
 // The template's breakdown has fixed environments: Falcone's prod → Production, staging → Staging,
 // dev → Preview. The tenant is carried in the project label (the table has no tenant column).
-type Seed = [tenant: string, project: string, env: UsageRow['environment'], region: string, invocations: number, errorRate: number, cost: number];
+type Seed = [
+  tenant: string,
+  project: string,
+  env: UsageRow['environment'],
+  region: string,
+  invocations: number,
+  errorRate: number,
+  cost: number,
+];
 
 const SEEDS: Seed[] = [
   ['Northwind Labs', 'ingest-pipeline', 'Production', 'eu-central-1', 4_902_118, 0.08, 2_207.4],
@@ -21,20 +29,29 @@ const SEEDS: Seed[] = [
 ];
 
 /** Metered usage per tenant, project and stage over the selected range. */
-export const usageRows: UsageRow[] = SEEDS.map(([tenant, project, environment, region, requests, errorRate, cost], i) => ({
-  id: `use_${i + 1}`,
-  project: `${tenant} / ${project}`,
-  environment,
-  region,
-  requests,
-  errorRate,
-  cost,
-}));
+export const usageRows: UsageRow[] = SEEDS.map(
+  ([tenant, project, environment, region, requests, errorRate, cost], i) => ({
+    id: `use_${i + 1}`,
+    project: `${tenant} / ${project}`,
+    environment,
+    region,
+    requests,
+    errorRate,
+    cost,
+  }),
+);
 
 export const usageViews: SavedView[] = [
   { value: 'all', label: 'All tenants', filters: [] },
   { value: 'prod', label: 'prod only', filters: [{ field: 'environment', value: 'Production' }] },
-  { value: 'eu', label: 'EU regions', filters: [{ field: 'region', value: 'eu-west-1' }, { field: 'region', value: 'eu-central-1' }] },
+  {
+    value: 'eu',
+    label: 'EU regions',
+    filters: [
+      { field: 'region', value: 'eu-west-1' },
+      { field: 'region', value: 'eu-central-1' },
+    ],
+  },
 ];
 
 const DAYS7 = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -48,8 +65,19 @@ const traffic = (labels: string[], base: number): TrafficPoint[] =>
   }));
 
 /** Invocations per stage, per range. */
-export const trafficByRange: Record<string, TrafficPoint[]> = { '7d': traffic(DAYS7, 10_200_000), '30d': traffic(DAYS30, 9_800_000) };
+export const trafficByRange: Record<string, TrafficPoint[]> = {
+  '7d': traffic(DAYS7, 10_200_000),
+  '30d': traffic(DAYS30, 9_800_000),
+};
 export const trafficRanges: ChartCardRange[] = [
-  { value: '7d', label: '7d', summary: { value: '76.1M', delta: { value: '+6.4%', direction: 'up', sentiment: 'positive' } } },
-  { value: '30d', label: '30d', summary: { value: '311M', delta: { value: '+4.2%', direction: 'up', sentiment: 'positive' } } },
+  {
+    value: '7d',
+    label: '7d',
+    summary: { value: '76.1M', delta: { value: '+6.4%', direction: 'up', sentiment: 'positive' } },
+  },
+  {
+    value: '30d',
+    label: '30d',
+    summary: { value: '311M', delta: { value: '+4.2%', direction: 'up', sentiment: 'positive' } },
+  },
 ];

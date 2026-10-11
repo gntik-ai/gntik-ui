@@ -42,7 +42,9 @@ describe('FlowBuilderPage', () => {
 
   it('passes a controlled console through to the builder', { timeout: 15000 }, async () => {
     function Host() {
-      const [entries, setEntries] = useState<ConsoleEntry[]>([{ id: 'h', time: '09:00:00', level: 'info', message: 'Connected to runner' }]);
+      const [entries, setEntries] = useState<ConsoleEntry[]>([
+        { id: 'h', time: '09:00:00', level: 'info', message: 'Connected to runner' },
+      ]);
       return (
         <FlowBuilderPage
           consoleEntries={entries}

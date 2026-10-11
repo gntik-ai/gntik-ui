@@ -15,14 +15,18 @@ export const statusLayoutVariants = tv({
     description: 'mt-2 text-[14px] leading-relaxed text-pretty text-muted-foreground',
     actions: 'mt-7 flex flex-wrap items-center justify-center gap-2.5',
     extra: 'mt-6 w-full',
-    footer: 'flex shrink-0 flex-wrap items-center justify-center gap-x-4 gap-y-1 px-5 py-4 text-[12.5px] text-muted-foreground',
+    footer:
+      'flex shrink-0 flex-wrap items-center justify-center gap-x-4 gap-y-1 px-5 py-4 text-[12.5px] text-muted-foreground',
   },
   variants: {
     tone: {
       neutral: { code: 'text-muted-foreground' },
       primary: { code: 'text-primary-text', iconHalo: 'bg-primary/14 text-primary-chip-text ring-primary/30' },
       warning: { code: 'text-warning-text', iconHalo: 'bg-warning/14 text-warning-chip-text ring-warning/30' },
-      destructive: { code: 'text-destructive-text', iconHalo: 'bg-destructive/14 text-destructive-chip-text ring-destructive/30' },
+      destructive: {
+        code: 'text-destructive-text',
+        iconHalo: 'bg-destructive/14 text-destructive-chip-text ring-destructive/30',
+      },
     },
     fullScreen: {
       true: { root: 'h-dvh' },

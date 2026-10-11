@@ -11,17 +11,17 @@ components on Base UI, layouts, page blocks and page templates over one token la
 (musematic, Falcone…) are **presets** (name + logo + assets) plus example apps; their
 domain data lives in fixtures, never in components. pnpm monorepo, Node 24, pnpm 11.
 
-| Package | What |
-| --- | --- |
-| `@gntik-ai/tokens` | The brand: `brand.css` (3 themes), Tailwind v4 bridge, `pairing.css` contrast aliases, `runtime` adapter for JS-side colours |
-| `@gntik-ai/ui` | Components + layouts (`src/layouts`) on Base UI, `ThemeProvider`, `themeScript`, `Logo`, brand presets |
-| `@gntik-ai/blocks` | Page-level blocks (`src/<family>/<Name>/`, `block.meta.ts`) |
-| `@gntik-ai/templates` | Full pages (`src/<id>/Page.tsx`, `template.meta.ts`); console pages share `ConsoleShell` |
-| `@gntik-ai/chat` · `icons` · `charts` · `flow` · `editor` | AI chat pack · lucide + `Icon` · Recharts · @xyflow/react · Monaco |
-| `@gntik-ai/cli` | `gntik-ui init · add · eject · list · search · docs` (`--json`) |
-| `packages/mcp` | MCP server (private, Docker image) |
-| `apps/docs` | The catalog (Vite); `preview.html?kind=block\|layout\|template&id=…` renders one item |
-| `apps/example-vite`, `apps/example-next`, `apps/musematic`, `apps/falcone` | Products built only from the kit |
+| Package                                                                    | What                                                                                                                         |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `@gntik-ai/tokens`                                                         | The brand: `brand.css` (3 themes), Tailwind v4 bridge, `pairing.css` contrast aliases, `runtime` adapter for JS-side colours |
+| `@gntik-ai/ui`                                                             | Components + layouts (`src/layouts`) on Base UI, `ThemeProvider`, `themeScript`, `Logo`, brand presets                       |
+| `@gntik-ai/blocks`                                                         | Page-level blocks (`src/<family>/<Name>/`, `block.meta.ts`)                                                                  |
+| `@gntik-ai/templates`                                                      | Full pages (`src/<id>/Page.tsx`, `template.meta.ts`); console pages share `ConsoleShell`                                     |
+| `@gntik-ai/chat` · `icons` · `charts` · `flow` · `editor`                  | AI chat pack · lucide + `Icon` · Recharts · @xyflow/react · Monaco                                                           |
+| `@gntik-ai/cli`                                                            | `gntik-ui init · add · eject · list · search · docs` (`--json`)                                                              |
+| `packages/mcp`                                                             | MCP server (private, Docker image)                                                                                           |
+| `apps/docs`                                                                | The catalog (Vite); `preview.html?kind=block\|layout\|template&id=…` renders one item                                        |
+| `apps/example-vite`, `apps/example-next`, `apps/musematic`, `apps/falcone` | Products built only from the kit                                                                                             |
 
 ## Decisions (fixed — do not revert without asking the owner)
 
@@ -79,16 +79,18 @@ Theme wiring (once per app):
 // main.tsx
 import { ThemeProvider } from '@gntik-ai/ui';
 import { acmePreset } from './brand'; // scaffold_preset name="Acme"
-<ThemeProvider brand={acmePreset}><App /></ThemeProvider>
+<ThemeProvider brand={acmePreset}>
+  <App />
+</ThemeProvider>;
 ```
 
 ```css
 /* global CSS */
-@import "tailwindcss";
-@import "@fontsource/geist";
-@import "@fontsource/geist-mono";
-@import "@gntik-ai/ui/styles.css";
-@import "@gntik-ai/templates/styles.css"; /* when using blocks/templates */
+@import 'tailwindcss';
+@import '@fontsource/geist';
+@import '@fontsource/geist-mono';
+@import '@gntik-ai/ui/styles.css';
+@import '@gntik-ai/templates/styles.css'; /* when using blocks/templates */
 ```
 
 SSR (Next.js): inline `themeScript` in `<head>` so the first paint has the right theme class

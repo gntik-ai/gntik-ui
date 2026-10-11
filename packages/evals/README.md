@@ -19,13 +19,13 @@ test/fixtures/         dry-run transcript + good/bad pages for the scorer
 
 ## What the battery measures
 
-| Dimension | Weight | How | Score |
-| --- | ---: | --- | --- |
-| **brand** | 25 | `validate_page` (the MCP brand validator: hex/rgb/hsl, Tailwind palette, gradients, glow, `dark:`, fonts). Its `no-tokens` warning is ignored: a page made only of kit components has no classes of its own. | 0 errors = pass; 1 − 0.05 per warning (at least 0.7). Any error = 0 |
-| **kitOnly** | 20 | The rules of `apps/musematic/scripts/check-kit-only.mjs`: imports only from `react`, `react-dom`, `@gntik-ai/*` or relative paths; no hex / CSS colour-function literals; no CSS imports in the page. `className=` / `style=` (own styling) is a soft penalty. | Hard violation = 0; else 1 − 0.1 per own-styling use (at least 0.5) |
-| **typecheck** | 25 | The page is written to `.work/<task>/Page.tsx` with a tsconfig whose `paths` resolve `@gntik-ai/*` to each package's published `dist/*.d.ts` (from its `exports`) and `react` to `packages/ui/node_modules/@types`; then `tsc --noEmit` (strict, `noUncheckedIndexedAccess`, `jsx: react-jsx`). | 0 errors = 1, else 0 |
-| **composition** | 20 | Recall of the expected ids. An id counts when its export (resolved with `exportNamesOf` from the MCP kit module) is imported from its package **and** referenced. A used template also counts its `template.meta.ts` blocks and layout; a ConsoleShell (direct or via a console template) counts `sidebar-layout`, `app-sidebar`, `app-topbar`. `templates` are alternatives (any one satisfies that part); every block, component and the layout are one part each. | hits / parts, − 0.25 per `mustNot` id used |
-| **efficiency** | 10 | Tool calls in the episode (including `submit_page`). | 1 up to 6 calls, linear to 0 at 20 |
+| Dimension       | Weight | How                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Score                                                               |
+| --------------- | -----: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| **brand**       |     25 | `validate_page` (the MCP brand validator: hex/rgb/hsl, Tailwind palette, gradients, glow, `dark:`, fonts). Its `no-tokens` warning is ignored: a page made only of kit components has no classes of its own.                                                                                                                                                                                                                                                         | 0 errors = pass; 1 − 0.05 per warning (at least 0.7). Any error = 0 |
+| **kitOnly**     |     20 | The rules of `apps/musematic/scripts/check-kit-only.mjs`: imports only from `react`, `react-dom`, `@gntik-ai/*` or relative paths; no hex / CSS colour-function literals; no CSS imports in the page. `className=` / `style=` (own styling) is a soft penalty.                                                                                                                                                                                                       | Hard violation = 0; else 1 − 0.1 per own-styling use (at least 0.5) |
+| **typecheck**   |     25 | The page is written to `.work/<task>/Page.tsx` with a tsconfig whose `paths` resolve `@gntik-ai/*` to each package's published `dist/*.d.ts` (from its `exports`) and `react` to `packages/ui/node_modules/@types`; then `tsc --noEmit` (strict, `noUncheckedIndexedAccess`, `jsx: react-jsx`).                                                                                                                                                                      | 0 errors = 1, else 0                                                |
+| **composition** |     20 | Recall of the expected ids. An id counts when its export (resolved with `exportNamesOf` from the MCP kit module) is imported from its package **and** referenced. A used template also counts its `template.meta.ts` blocks and layout; a ConsoleShell (direct or via a console template) counts `sidebar-layout`, `app-sidebar`, `app-topbar`. `templates` are alternatives (any one satisfies that part); every block, component and the layout are one part each. | hits / parts, − 0.25 per `mustNot` id used                          |
+| **efficiency**  |     10 | Tool calls in the episode (including `submit_page`).                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 up to 6 calls, linear to 0 at 20                                  |
 
 **Total** = Σ weight × score, 0–100. An episode that never calls `submit_page` (refusal,
 `max_tokens`, 20 turns, or it stopped) scores 0. Per-dimension details (findings, tsc errors,
@@ -93,9 +93,12 @@ first, look at `usage` in their JSON, and only then run the full battery.
 
 1. Append a task to `prompts/battery.json`:
    ```json
-   { "id": "team-calendar", "prompt": "A team calendar with a week view.",
+   {
+     "id": "team-calendar",
+     "prompt": "A team calendar with a week view.",
      "expect": { "blocks": ["week-calendar"], "layout": "sidebar-layout" },
-     "mustNot": ["data-table"] }
+     "mustNot": ["data-table"]
+   }
    ```
    Keep the prompt product-agnostic (a test rejects product names). Every id must exist in
    `kit-registry.json` with the right kind (`templates` → template, `blocks` → block, `components`

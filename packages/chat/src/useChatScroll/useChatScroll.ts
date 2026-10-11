@@ -78,7 +78,8 @@ export function useChatScroll({ threshold = 48 }: UseChatScrollOptions = {}): Us
       if (!scrollEl) return;
       pinned.current = true;
       setIsAtBottom(true);
-      const reduce = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reduce =
+        typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (typeof scrollEl.scrollTo === 'function') {
         scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: reduce ? 'auto' : behavior });
       } else {

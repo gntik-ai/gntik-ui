@@ -9,5 +9,13 @@ export {
   type BrandThemeName,
   type MonacoThemeApi,
 } from './theme';
-export { BASE_OPTIONS, loadMonaco, useBrandTheme, useMonaco, type Monaco, type MonacoLoader, type MonacoState } from './loader';
+export {
+  BASE_OPTIONS,
+  loadMonaco,
+  useBrandTheme,
+  useMonaco,
+  type Monaco,
+  type MonacoLoader,
+  type MonacoState,
+} from './loader';
 export { configureMonacoWorkers, type MonacoWorkerFactory } from './workers';

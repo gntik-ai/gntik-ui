@@ -21,7 +21,8 @@ export const tourVariants = tv({
     ],
     dots: 'flex items-center gap-1',
     dot: 'size-1.5 rounded-full bg-border data-current:bg-primary',
-    highlight: 'pointer-events-none fixed z-40 rounded-lg outline-2 outline-offset-4 outline-focus-ring transition-[top,left,width,height] duration-200 motion-reduce:transition-none',
+    highlight:
+      'pointer-events-none fixed z-40 rounded-lg outline-2 outline-offset-4 outline-focus-ring transition-[top,left,width,height] duration-200 motion-reduce:transition-none',
   },
 });
 

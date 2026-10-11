@@ -32,13 +32,18 @@ export default function ThumbnailUploads() {
   useEffect(() => {
     if (!uploading) return;
     const id = window.setInterval(() => {
-      setItems((list) => list.map((i) => (i.progress !== undefined && i.progress < 100 ? { ...i, progress: Math.min(100, i.progress + 13) } : i)));
+      setItems((list) =>
+        list.map((i) =>
+          i.progress !== undefined && i.progress < 100 ? { ...i, progress: Math.min(100, i.progress + 13) } : i,
+        ),
+      );
     }, 400);
     return () => window.clearInterval(id);
   }, [uploading]);
 
   const remove = (id: string) => setItems((list) => list.filter((i) => i.id !== id));
-  const retry = (id: string) => setItems((list) => list.map((i) => (i.id === id ? { ...i, error: undefined, size: 18_200_000, progress: 0 } : i)));
+  const retry = (id: string) =>
+    setItems((list) => list.map((i) => (i.id === id ? { ...i, error: undefined, size: 18_200_000, progress: 0 } : i)));
 
   return (
     <ThumbnailList aria-label="Attachments">

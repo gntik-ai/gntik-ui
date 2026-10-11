@@ -55,7 +55,9 @@ export interface FlowBuilderPageProps<Kind extends string = FlowNodeKind> extend
  * Flow builder page: CanvasLayout + the FlowBuilder block. The app imports
  * '@gntik-ai/flow/styles.css' once for the React Flow canvas.
  */
-export default function FlowBuilderPage<Kind extends string = FlowNodeKind>(props: Partial<FlowBuilderPageProps<Kind>>) {
+export default function FlowBuilderPage<Kind extends string = FlowNodeKind>(
+  props: Partial<FlowBuilderPageProps<Kind>>,
+) {
   const {
     title = flowBuilderContent.title,
     status = flowBuilderContent.status,

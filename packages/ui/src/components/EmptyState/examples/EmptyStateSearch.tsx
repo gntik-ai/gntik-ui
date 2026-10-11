@@ -10,7 +10,11 @@ export default function EmptyStateSearch() {
       icon={SearchX}
       title="No members match “ops”"
       description="Check the spelling or clear the filters."
-      primaryAction={<Button variant="secondary" size="sm">Clear filters</Button>}
+      primaryAction={
+        <Button variant="secondary" size="sm">
+          Clear filters
+        </Button>
+      }
     />
   );
 }

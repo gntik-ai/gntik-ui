@@ -15,7 +15,11 @@ describe('PrintLayout', () => {
   });
 
   it('size and margin set the page and the @page rule', () => {
-    const { container, rerender } = render(<PrintLayout size="letter" margin="wide">Body</PrintLayout>);
+    const { container, rerender } = render(
+      <PrintLayout size="letter" margin="wide">
+        Body
+      </PrintLayout>,
+    );
     expect(screen.getByRole('article')).toHaveClass('w-[8.5in]', 'p-[28mm]');
     expect(container.querySelector('style')).toHaveTextContent('@page { size: letter; margin: 28mm; }');
     rerender(<PrintLayout pageRule={false}>Body</PrintLayout>);

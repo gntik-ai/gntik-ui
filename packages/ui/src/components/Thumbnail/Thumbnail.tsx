@@ -82,9 +82,20 @@ export function Thumbnail({
   const pct = progress == null ? undefined : Math.max(0, Math.min(100, Math.round(progress)));
 
   return (
-    <figure aria-labelledby={nameId} className={cn(s.root(), className)} data-status={status} aria-busy={uploading || undefined} {...props}>
+    <figure
+      aria-labelledby={nameId}
+      className={cn(s.root(), className)}
+      data-status={status}
+      aria-busy={uploading || undefined}
+      {...props}
+    >
       <div className={s.preview()}>
-        {preview ?? (src && !error ? <img src={src} alt="" className={s.image()} /> : <Icon size={26} strokeWidth={1.6} aria-hidden className={s.icon()} />)}
+        {preview ??
+          (src && !error ? (
+            <img src={src} alt="" className={s.image()} />
+          ) : (
+            <Icon size={26} strokeWidth={1.6} aria-hidden className={s.icon()} />
+          ))}
         {!src && !preview && !error && ext && (
           <span aria-hidden className={s.ext()}>
             {ext}
@@ -100,7 +111,10 @@ export function Thumbnail({
             aria-valuenow={pct}
             className={s.progress()}
           >
-            <span className={cn(s.progressBar(), pct === undefined && 'w-2/5 animate-pulse motion-reduce:animate-none')} style={pct === undefined ? undefined : { width: `${pct}%` }} />
+            <span
+              className={cn(s.progressBar(), pct === undefined && 'w-2/5 animate-pulse motion-reduce:animate-none')}
+              style={pct === undefined ? undefined : { width: `${pct}%` }}
+            />
           </div>
         )}
       </div>

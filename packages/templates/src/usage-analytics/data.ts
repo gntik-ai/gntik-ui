@@ -22,7 +22,16 @@ export interface TrafficPoint {
 
 export const usageBreadcrumbs: BreadcrumbItem[] = [{ label: 'Overview', href: '/overview' }, { label: 'Analytics' }];
 
-const PROJECTS = ['orders-api', 'billing-sync', 'search-index', 'auth-gateway', 'media-resizer', 'webhooks', 'reports', 'checkout-web'];
+const PROJECTS = [
+  'orders-api',
+  'billing-sync',
+  'search-index',
+  'auth-gateway',
+  'media-resizer',
+  'webhooks',
+  'reports',
+  'checkout-web',
+];
 const ENVS = ['Production', 'Production', 'Staging', 'Preview'];
 const REGIONS = ['eu-west-1', 'us-east-1', 'ap-south-1', 'eu-central-1'];
 
@@ -45,7 +54,14 @@ export const usageFilterFields: FilterField[] = [
 export const usageSavedViews: SavedView[] = [
   { value: 'all', label: 'All usage', filters: [] },
   { value: 'production', label: 'Production only', filters: [{ field: 'environment', value: 'Production' }] },
-  { value: 'eu', label: 'EU regions', filters: [{ field: 'region', value: 'eu-west-1' }, { field: 'region', value: 'eu-central-1' }] },
+  {
+    value: 'eu',
+    label: 'EU regions',
+    filters: [
+      { field: 'region', value: 'eu-west-1' },
+      { field: 'region', value: 'eu-central-1' },
+    ],
+  },
 ];
 
 /**
@@ -70,12 +86,49 @@ const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD
 const count = new Intl.NumberFormat('en-US');
 
 export const usageColumns: DataTableColumn<UsageRow>[] = [
-  { id: 'project', header: 'Project', accessor: (r) => r.project, sortable: true, hideable: false, className: 'font-semibold' },
+  {
+    id: 'project',
+    header: 'Project',
+    accessor: (r) => r.project,
+    sortable: true,
+    hideable: false,
+    className: 'font-semibold',
+  },
   { id: 'environment', header: 'Environment', accessor: (r) => r.environment, sortable: true },
-  { id: 'region', header: 'Region', accessor: (r) => r.region, sortable: true, className: 'font-mono text-[12px] text-muted-foreground' },
-  { id: 'requests', header: 'Requests', accessor: (r) => r.requests, cell: (r) => count.format(r.requests), sortable: true, align: 'right', className: 'font-mono text-[12.5px]' },
-  { id: 'errors', header: 'Error rate', accessor: (r) => r.errorRate, cell: (r) => `${r.errorRate.toFixed(2)}%`, sortable: true, align: 'right', className: 'font-mono text-[12.5px]' },
-  { id: 'cost', header: 'Cost', accessor: (r) => r.cost, cell: (r) => money.format(r.cost), sortable: true, align: 'right', className: 'font-mono text-[12.5px]' },
+  {
+    id: 'region',
+    header: 'Region',
+    accessor: (r) => r.region,
+    sortable: true,
+    className: 'font-mono text-[12px] text-muted-foreground',
+  },
+  {
+    id: 'requests',
+    header: 'Requests',
+    accessor: (r) => r.requests,
+    cell: (r) => count.format(r.requests),
+    sortable: true,
+    align: 'right',
+    className: 'font-mono text-[12.5px]',
+  },
+  {
+    id: 'errors',
+    header: 'Error rate',
+    accessor: (r) => r.errorRate,
+    cell: (r) => `${r.errorRate.toFixed(2)}%`,
+    sortable: true,
+    align: 'right',
+    className: 'font-mono text-[12.5px]',
+  },
+  {
+    id: 'cost',
+    header: 'Cost',
+    accessor: (r) => r.cost,
+    cell: (r) => money.format(r.cost),
+    sortable: true,
+    align: 'right',
+    className: 'font-mono text-[12.5px]',
+  },
 ];
 
 const DAYS7 = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -95,6 +148,14 @@ export const trafficByRange: Record<string, TrafficPoint[]> = {
 };
 
 export const trafficRanges: ChartCardRange[] = [
-  { value: '7d', label: '7d', summary: { value: '241,906', delta: { value: '+8.2%', direction: 'up', sentiment: 'positive' } } },
-  { value: '30d', label: '30d', summary: { value: '1.02M', delta: { value: '+3.5%', direction: 'up', sentiment: 'positive' } } },
+  {
+    value: '7d',
+    label: '7d',
+    summary: { value: '241,906', delta: { value: '+8.2%', direction: 'up', sentiment: 'positive' } },
+  },
+  {
+    value: '30d',
+    label: '30d',
+    summary: { value: '1.02M', delta: { value: '+3.5%', direction: 'up', sentiment: 'positive' } },
+  },
 ];

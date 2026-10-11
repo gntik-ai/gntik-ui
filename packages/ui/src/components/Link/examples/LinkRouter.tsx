@@ -15,7 +15,9 @@ export default function LinkRouter() {
       <nav aria-label="Project" className="flex gap-4 text-[13px]">
         <Link href="/projects">Projects</Link>
         <Link href="/projects/new">New project</Link>
-        <Link href="https://status.example.com" external>Status page</Link>
+        <Link href="https://status.example.com" external>
+          Status page
+        </Link>
       </nav>
     </LinkProvider>
   );

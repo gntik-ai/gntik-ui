@@ -1,4 +1,14 @@
-import { Badge, Button, Card, CardAction, CardDescription, CardHeader, CardTitle, cn, type BadgeTone } from '@gntik-ai/ui';
+import {
+  Badge,
+  Button,
+  Card,
+  CardAction,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  cn,
+  type BadgeTone,
+} from '@gntik-ai/ui';
 import { CreditCard } from '@gntik-ai/icons';
 import { samplePaymentMethod } from './fixtures';
 

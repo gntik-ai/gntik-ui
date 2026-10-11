@@ -87,7 +87,10 @@ describe('Select', () => {
     render(<SelectBasic />);
     await user.click(screen.getByRole('combobox', { name: 'Deployment region' }));
     expect(await screen.findByRole('option', { name: 'EU West · Frankfurt' })).toHaveAttribute('aria-selected', 'true');
-    expect(screen.getByRole('option', { name: 'AP South · Singapore (soon)' })).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByRole('option', { name: 'AP South · Singapore (soon)' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
   it.each([

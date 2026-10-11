@@ -23,7 +23,15 @@ const compact = block('\\[data-density="compact"\\]');
 test('both densities declare the same keys', () => {
   assert.ok(Object.keys(comfortable).length >= 10);
   assert.deepEqual(Object.keys(compact).sort(), Object.keys(comfortable).sort());
-  for (const k of ['--control-h-sm', '--control-h-md', '--control-h-lg', '--control-px-md', '--row-h', '--cell-py', '--gap-tight']) {
+  for (const k of [
+    '--control-h-sm',
+    '--control-h-md',
+    '--control-h-lg',
+    '--control-px-md',
+    '--row-h',
+    '--cell-py',
+    '--gap-tight',
+  ]) {
     assert.ok(k in comfortable, k);
   }
 });
@@ -41,10 +49,21 @@ test('control heights are ordered sm < md < lg in each density', () => {
 
 test('comfortable equals the original kit sizes', () => {
   const original = {
-    '--control-h-sm': '2rem', '--control-h-md': '2.25rem', '--control-h-lg': '2.75rem',
-    '--control-px-sm': '0.75rem', '--control-px-md': '0.875rem', '--control-px-lg': '1.25rem',
-    '--field-px': '0.75rem', '--gap-tight': '0.625rem', '--item-h': '2.125rem', '--tab-h': '2.5rem',
-    '--chip-h': '1.375rem', '--token-h': '1.75rem', '--row-h': '2.5rem', '--cell-py': '0.75rem', '--bar-py': '0.625rem',
+    '--control-h-sm': '2rem',
+    '--control-h-md': '2.25rem',
+    '--control-h-lg': '2.75rem',
+    '--control-px-sm': '0.75rem',
+    '--control-px-md': '0.875rem',
+    '--control-px-lg': '1.25rem',
+    '--field-px': '0.75rem',
+    '--gap-tight': '0.625rem',
+    '--item-h': '2.125rem',
+    '--tab-h': '2.5rem',
+    '--chip-h': '1.375rem',
+    '--token-h': '1.75rem',
+    '--row-h': '2.5rem',
+    '--cell-py': '0.75rem',
+    '--bar-py': '0.625rem',
   };
   assert.deepEqual(comfortable, original);
 });

@@ -4,7 +4,8 @@ export const doc: ComponentDoc = {
   name: 'Table',
   group: 'Display',
   status: 'stable',
-  description: 'Styled semantic table parts: Table, TableHeader, TableBody, TableFooter, TableRow (selected state), TableHead (optional sort button with aria-sort), TableCell and TableCaption. Compact or comfortable density and an optional sticky header.',
+  description:
+    'Styled semantic table parts: Table, TableHeader, TableBody, TableFooter, TableRow (selected state), TableHead (optional sort button with aria-sort), TableCell and TableCaption. Compact or comfortable density and an optional sticky header.',
   pattern: 'table (sortable columns)',
   keyboard: [
     ['Tab', 'Moves focus between sortable column headers and interactive cells'],

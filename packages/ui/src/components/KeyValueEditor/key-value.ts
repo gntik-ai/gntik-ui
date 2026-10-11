@@ -33,7 +33,10 @@ export interface ValidateKeyValueOptions {
  * Per-row errors, keyed by row id. Fully empty rows are ignored; the first row with a key wins
  * and later rows with the same key are marked `duplicate`.
  */
-export function validateKeyValueRows(rows: readonly KeyValueRow[], { keyPattern = ENV_KEY_PATTERN, requireValue = false, caseInsensitive = false }: ValidateKeyValueOptions = {}): KeyValueErrors {
+export function validateKeyValueRows(
+  rows: readonly KeyValueRow[],
+  { keyPattern = ENV_KEY_PATTERN, requireValue = false, caseInsensitive = false }: ValidateKeyValueOptions = {},
+): KeyValueErrors {
   const errors: KeyValueErrors = {};
   const seen = new Set<string>();
   for (const row of rows) {
@@ -66,7 +69,9 @@ function unquote(raw: string): string {
     }
     if (end > 0) {
       const inner = raw.slice(1, end);
-      return quote === '"' ? inner.replace(/\\([nrt"\\])/g, (_, c: string) => ({ n: '\n', r: '\r', t: '\t' })[c] ?? c) : inner;
+      return quote === '"'
+        ? inner.replace(/\\([nrt"\\])/g, (_, c: string) => ({ n: '\n', r: '\r', t: '\t' })[c] ?? c)
+        : inner;
     }
   }
   // Unquoted: an inline comment starts at " #".
@@ -99,7 +104,9 @@ export function serializeEnv(rows: ReadonlyArray<Pick<KeyValueRow, 'key' | 'valu
     .filter((row) => row.key.trim())
     .map(({ key, value }) => {
       const needsQuotes = /[\s#"'=\\]/.test(value);
-      const v = needsQuotes ? `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t')}"` : value;
+      const v = needsQuotes
+        ? `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t')}"`
+        : value;
       return `${key.trim()}=${v}`;
     })
     .join('\n');
@@ -109,7 +116,10 @@ export function serializeEnv(rows: ReadonlyArray<Pick<KeyValueRow, 'key' | 'valu
  * Merges parsed pairs into rows: existing keys get the new value, new keys are appended, and
  * empty placeholder rows are dropped. Returns the rows and how many pairs were applied.
  */
-export function mergeEnvRows(rows: readonly KeyValueRow[], pairs: ReadonlyArray<{ key: string; value: string }>): KeyValueRow[] {
+export function mergeEnvRows(
+  rows: readonly KeyValueRow[],
+  pairs: ReadonlyArray<{ key: string; value: string }>,
+): KeyValueRow[] {
   const next = rows.filter((row) => row.key.trim() || row.value).map((row) => ({ ...row }));
   for (const { key, value } of pairs) {
     const existing = next.find((row) => row.key.trim() === key);

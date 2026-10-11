@@ -22,7 +22,17 @@ describe('CopyButton', () => {
     const user = userEvent.setup();
     mockClipboard(() => Promise.reject(new Error('denied')));
     Object.defineProperty(document, 'execCommand', { value: () => false, configurable: true });
-    render(<LiveAnnouncer><CopyButton value="synthetic" display="label" failureLabel="Select manually" failureAnnouncement="Select and copy the value manually." failurePoliteness="polite" /></LiveAnnouncer>);
+    render(
+      <LiveAnnouncer>
+        <CopyButton
+          value="synthetic"
+          display="label"
+          failureLabel="Select manually"
+          failureAnnouncement="Select and copy the value manually."
+          failurePoliteness="polite"
+        />
+      </LiveAnnouncer>,
+    );
     await user.click(screen.getByRole('button', { name: 'Copy' }));
     expect(await screen.findByRole('button', { name: 'Select manually' })).toBeInTheDocument();
     expect(screen.getByRole('status')).toHaveAttribute('aria-live', 'polite');
@@ -34,7 +44,11 @@ describe('CopyButton', () => {
     const user = userEvent.setup();
     removeClipboard();
     Object.defineProperty(document, 'execCommand', { value: () => false, configurable: true });
-    render(<LiveAnnouncer><CopyButton value="synthetic" /></LiveAnnouncer>);
+    render(
+      <LiveAnnouncer>
+        <CopyButton value="synthetic" />
+      </LiveAnnouncer>,
+    );
     await user.click(screen.getByRole('button', { name: 'Copy' }));
     await waitFor(() => expect(document.querySelector('[aria-live="assertive"]')).toHaveTextContent('Copy failed'));
     expect(screen.getByRole('status')).toBeEmptyDOMElement();
@@ -44,7 +58,10 @@ describe('CopyButton', () => {
     vi.restoreAllMocks();
   });
 
-  it.each([['Enter', '{Enter}'], ['Space', ' ']])('%s copies the value and announces it politely', async (_, key) => {
+  it.each([
+    ['Enter', '{Enter}'],
+    ['Space', ' '],
+  ])('%s copies the value and announces it politely', async (_, key) => {
     const user = userEvent.setup();
     const writeText = mockClipboard();
     const onCopy = vi.fn();
@@ -94,7 +111,9 @@ describe('CopyButton', () => {
       </LiveAnnouncer>,
     );
     await user.click(screen.getByRole('button', { name: 'Copy' }));
-    await waitFor(() => expect(container.querySelector('[data-live-announcer="polite"]')).toHaveTextContent('Token copied'));
+    await waitFor(() =>
+      expect(container.querySelector('[data-live-announcer="polite"]')).toHaveTextContent('Token copied'),
+    );
     expect(screen.getAllByRole('status')).toHaveLength(1);
   });
 

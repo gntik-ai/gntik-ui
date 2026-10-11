@@ -1,7 +1,14 @@
 import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
 import { ExternalLink } from 'lucide-react';
-import { createContext, createElement, useContext, type ComponentType, type ComponentPropsWithRef, type ReactNode } from 'react';
+import {
+  createContext,
+  createElement,
+  useContext,
+  type ComponentType,
+  type ComponentPropsWithRef,
+  type ReactNode,
+} from 'react';
 import { cn } from '../../utils/cn';
 import { useI18n } from '../../i18n/I18nProvider';
 import { linkVariants, type LinkVariantProps } from './link.variants';

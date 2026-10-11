@@ -82,11 +82,18 @@ export function scoreCommand(item: CommandItem, query: string): number {
  * Builds the visible groups: with an empty query, recent items first then every group as given;
  * otherwise only matching items, best first within each group, and empty groups dropped.
  */
-export function filterCommandGroups(groups: CommandGroup[], query: string, recent: CommandItem[] = [], recentLabel = 'Recent'): CommandEntryGroup[] {
+export function filterCommandGroups(
+  groups: CommandGroup[],
+  query: string,
+  recent: CommandItem[] = [],
+  recentLabel = 'Recent',
+): CommandEntryGroup[] {
   const toEntries = (items: CommandItem[], prefix = '') => items.map((item) => ({ key: prefix + item.id, item }));
   if (!query.trim()) {
     const all = groups.map((g) => ({ value: g.label, items: toEntries(g.items) }));
-    return [...(recent.length ? [{ value: recentLabel, items: toEntries(recent, 'recent:') }] : []), ...all].filter((g) => g.items.length);
+    return [...(recent.length ? [{ value: recentLabel, items: toEntries(recent, 'recent:') }] : []), ...all].filter(
+      (g) => g.items.length,
+    );
   }
   return groups
     .map((g) => ({

@@ -17,7 +17,14 @@ import {
 } from '@gntik-ai/ui';
 import { useId, useState } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
-import { changelogBreadcrumbs, changelogEntries, changelogTagLabels, changelogTagTones, type ChangelogEntry, type ChangelogTag } from './data';
+import {
+  changelogBreadcrumbs,
+  changelogEntries,
+  changelogTagLabels,
+  changelogTagTones,
+  type ChangelogEntry,
+  type ChangelogTag,
+} from './data';
 
 export interface ChangelogProps {
   title: string;
@@ -51,7 +58,9 @@ export default function ChangelogPage(props: Partial<ChangelogProps>) {
   } = props;
   const [tags, setTags] = useState<ChangelogTag[]>(defaultTags);
   const countId = useId();
-  const tagsInUse = (Object.keys(changelogTagLabels) as ChangelogTag[]).filter((t) => entries.some((e) => e.tags.includes(t)));
+  const tagsInUse = (Object.keys(changelogTagLabels) as ChangelogTag[]).filter((t) =>
+    entries.some((e) => e.tags.includes(t)),
+  );
   const visible = tags.length === 0 ? entries : entries.filter((e) => e.tags.some((t) => tags.includes(t)));
 
   const changeTags = (next: string[]) => {
@@ -77,7 +86,14 @@ export default function ChangelogPage(props: Partial<ChangelogProps>) {
       >
         <Stack gap={8}>
           <HStack gap={3} wrap>
-            <ToggleGroup aria-label="Filter by tag" aria-describedby={countId} size="sm" multiple value={tags} onValueChange={changeTags}>
+            <ToggleGroup
+              aria-label="Filter by tag"
+              aria-describedby={countId}
+              size="sm"
+              multiple
+              value={tags}
+              onValueChange={changeTags}
+            >
               {tagsInUse.map((t) => (
                 <Toggle key={t} value={t}>
                   {changelogTagLabels[t]}
@@ -94,13 +110,24 @@ export default function ChangelogPage(props: Partial<ChangelogProps>) {
             </Text>
           </HStack>
           {visible.length === 0 ? (
-            <EmptyState size="sm" titleAs="h2" title="No releases with these tags" description="Pick another tag or show every release." />
+            <EmptyState
+              size="sm"
+              titleAs="h2"
+              title="No releases with these tags"
+              description="Pick another tag or show every release."
+            />
           ) : (
             <ol aria-label="Releases" className="flex flex-col divide-y divide-border">
               {visible.map((e) => (
                 <li key={e.id} className="grid gap-3 py-7 first:pt-0 md:grid-cols-[10rem_1fr] md:gap-8">
                   <Stack gap={1}>
-                    <Timestamp value={e.date} format="absolute" tooltip={false} dateOptions={{ dateStyle: 'medium' }} className="text-[13px] font-medium text-foreground" />
+                    <Timestamp
+                      value={e.date}
+                      format="absolute"
+                      tooltip={false}
+                      dateOptions={{ dateStyle: 'medium' }}
+                      className="text-[13px] font-medium text-foreground"
+                    />
                     <Text as="span" variant="caption" tone="muted" className="font-mono">
                       v{e.version}
                     </Text>

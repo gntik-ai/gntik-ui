@@ -22,7 +22,9 @@ export function transform(file: FileInfo, api: API): null {
     const name = jsxName(el);
     if (!name || !names.has(name) || hasAttribute(el, 'underline')) return;
     const spread = hasSpread(el) ? ' (spread props may set it)' : '';
-    api.report(`line ${line(el)}: <${name}> without underline now renders underlined${spread}; keep it for inline links, pass underline="hover" or "none" for standalone ones.`);
+    api.report(
+      `line ${line(el)}: <${name}> without underline now renders underlined${spread}; keep it for inline links, pass underline="hover" or "none" for standalone ones.`,
+    );
   });
   return null;
 }

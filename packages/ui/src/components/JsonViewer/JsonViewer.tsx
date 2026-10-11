@@ -78,7 +78,11 @@ function preview(value: unknown, labels: JsonViewerLabels, query: string): React
   const type = jsonType(value);
   if (type === 'object' || type === 'array') {
     const n = entries(value).length;
-    return <span className={jsonTypeClass.summary}>{type === 'array' ? `[ ] ${labels.items(n)}` : `{ } ${labels.keys(n)}`}</span>;
+    return (
+      <span className={jsonTypeClass.summary}>
+        {type === 'array' ? `[ ] ${labels.items(n)}` : `{ } ${labels.keys(n)}`}
+      </span>
+    );
   }
   const text = type === 'string' ? JSON.stringify(value) : String(value ?? null);
   return <span className={jsonTypeClass[type]}>{highlight(text, query)}</span>;
@@ -126,7 +130,9 @@ export function JsonViewer({
         label: keyText,
         content: (
           <span className={s.row()}>
-            <span className={typeof key === 'number' ? jsonTypeClass.punctuation : jsonTypeClass.key}>{highlight(keyText, search)}</span>
+            <span className={typeof key === 'number' ? jsonTypeClass.punctuation : jsonTypeClass.key}>
+              {highlight(keyText, search)}
+            </span>
             <span className={jsonTypeClass.punctuation}>: </span>
             {preview(v, labels, search)}
           </span>
@@ -160,8 +166,19 @@ export function JsonViewer({
     <div ref={ref} className={cn(s.root(), className)}>
       {toolbar && (
         <div className={s.toolbar()}>
-          <span className={s.path()}>{current !== undefined ? <span className={s.pathValue()}>{current || labels.root}</span> : labels.selectHint}</span>
-          <button type="button" disabled={current === undefined} onClick={() => current !== undefined && copy(current)} className={s.action()}>
+          <span className={s.path()}>
+            {current !== undefined ? (
+              <span className={s.pathValue()}>{current || labels.root}</span>
+            ) : (
+              labels.selectHint
+            )}
+          </span>
+          <button
+            type="button"
+            disabled={current === undefined}
+            onClick={() => current !== undefined && copy(current)}
+            className={s.action()}
+          >
             <Copy size={13} aria-hidden />
             {labels.copyPath}
           </button>
@@ -180,7 +197,15 @@ export function JsonViewer({
         </div>
       )}
       <div className={s.body()} style={maxHeight !== undefined ? { maxHeight } : undefined}>
-        <TreeList aria-label={label} nodes={nodes} expanded={expanded} onExpandedChange={setExpanded} selected={selected} onSelectedChange={setSelected} indent={14} />
+        <TreeList
+          aria-label={label}
+          nodes={nodes}
+          expanded={expanded}
+          onExpandedChange={setExpanded}
+          selected={selected}
+          onSelectedChange={setSelected}
+          indent={14}
+        />
       </div>
     </div>
   );

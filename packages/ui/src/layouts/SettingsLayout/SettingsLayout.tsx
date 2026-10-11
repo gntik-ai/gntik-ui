@@ -14,11 +14,16 @@ function flattenLeaves(items: NavItem[]): NavItem[] {
 
 function markCurrent(items: NavItem[], value: string | undefined): NavItem[] {
   return items.map((item) =>
-    item.items?.length ? { ...item, items: markCurrent(item.items, value) } : { ...item, current: item.current ?? navItemKey(item) === value },
+    item.items?.length
+      ? { ...item, items: markCurrent(item.items, value) }
+      : { ...item, current: item.current ?? navItemKey(item) === value },
   );
 }
 
-export interface SettingsLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'title' | 'defaultValue'> {
+export interface SettingsLayoutProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'className' | 'title' | 'defaultValue'
+> {
   className?: string;
   ref?: Ref<HTMLDivElement>;
   /** Section navigation (NavList groups). Items are keyed by `id`, then `href`, then `label`. */

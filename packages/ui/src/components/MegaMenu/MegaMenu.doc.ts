@@ -14,5 +14,15 @@ export const doc: ComponentDoc = {
     ['ArrowRight / ArrowLeft', 'Moves between top-level items'],
     ['Escape', 'Closes the panel and returns focus to its trigger'],
   ],
-  tokens: ['popover', 'popover-foreground', 'border', 'accent', 'accent-foreground', 'secondary', 'primary', 'muted-foreground', 'focus-ring'],
+  tokens: [
+    'popover',
+    'popover-foreground',
+    'border',
+    'accent',
+    'accent-foreground',
+    'secondary',
+    'primary',
+    'muted-foreground',
+    'focus-ring',
+  ],
 };

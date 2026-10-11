@@ -70,7 +70,10 @@ export function valueOptions(field: PowerSearchField): PowerSearchValueOption[] 
   return (field.values ?? []).map((v) => (typeof v === 'string' ? { value: v } : v));
 }
 
-export function findField<K extends string>(fields: readonly PowerSearchField<K>[], name: string): PowerSearchField<K> | undefined {
+export function findField<K extends string>(
+  fields: readonly PowerSearchField<K>[],
+  name: string,
+): PowerSearchField<K> | undefined {
   const n = name.toLowerCase();
   return fields.find((f) => f.key.toLowerCase() === n) ?? fields.find((f) => f.label?.toLowerCase() === n);
 }
@@ -84,7 +87,9 @@ export function coerceValue(field: PowerSearchField, raw: string): string | numb
     return Number.isFinite(n) ? n : null;
   }
   if (field.type === 'enum') {
-    const hit = valueOptions(field).find((o) => o.value.toLowerCase() === v.toLowerCase() || o.label?.toLowerCase() === v.toLowerCase());
+    const hit = valueOptions(field).find(
+      (o) => o.value.toLowerCase() === v.toLowerCase() || o.label?.toLowerCase() === v.toLowerCase(),
+    );
     return hit ? hit.value : null;
   }
   return v;
@@ -94,7 +99,9 @@ const quote = (v: string) => (/[\s"]/.test(v) || v === '' ? `"${v.replace(/"/g, 
 
 /** Serialises the AST: `status = failed region != eu "free text"`. */
 export function formatPowerSearch(query: PowerSearchQuery): string {
-  return query.terms.map((t) => (t.type === 'text' ? quote(t.value) : `${t.field} ${t.operator} ${quote(String(t.value))}`)).join(' ');
+  return query.terms
+    .map((t) => (t.type === 'text' ? quote(t.value) : `${t.field} ${t.operator} ${quote(String(t.value))}`))
+    .join(' ');
 }
 
 /** Splits on whitespace, keeping quoted runs together (quotes removed, \" unescaped). */
@@ -110,7 +117,10 @@ const OP_RE = /^(!=|>=|<=|!~|=|>|<|~|:)$/;
 const INLINE_RE = /^([\w.-]+)(!=|>=|<=|!~|=|>|<|~|:)(.*)$/;
 
 /** Parses one `field<op>value` string (spaces optional, `:` means `=`), or null. */
-export function parsePowerSearchFilter<K extends string>(text: string, fields: readonly PowerSearchField<K>[]): PowerSearchFilter<K> | null {
+export function parsePowerSearchFilter<K extends string>(
+  text: string,
+  fields: readonly PowerSearchField<K>[],
+): PowerSearchFilter<K> | null {
   const m = text.trim().match(/^([\w.-]+)\s*(!=|>=|<=|!~|=|>|<|~|:)\s*(.+)$/);
   if (!m) return null;
   const field = findField(fields, m[1] ?? '');
@@ -121,7 +131,10 @@ export function parsePowerSearchFilter<K extends string>(text: string, fields: r
 }
 
 /** Parses a whole query string into the AST; unknown fields and loose words become text terms. */
-export function parsePowerSearch<K extends string>(input: string, fields: readonly PowerSearchField<K>[]): PowerSearchQuery<K> {
+export function parsePowerSearch<K extends string>(
+  input: string,
+  fields: readonly PowerSearchField<K>[],
+): PowerSearchQuery<K> {
   const tokens = tokenize(input);
   const terms: PowerSearchTerm<K>[] = [];
   for (let i = 0; i < tokens.length; i++) {
@@ -155,19 +168,44 @@ function compare(actual: unknown, op: PowerSearchOperator, expected: string | nu
   if (typeof expected === 'number') {
     const a = Number(actual);
     if (!Number.isFinite(a)) return false;
-    return { '=': a === expected, '!=': a !== expected, '>': a > expected, '>=': a >= expected, '<': a < expected, '<=': a <= expected, '~': String(a).includes(String(expected)), '!~': !String(a).includes(String(expected)) }[op];
+    return {
+      '=': a === expected,
+      '!=': a !== expected,
+      '>': a > expected,
+      '>=': a >= expected,
+      '<': a < expected,
+      '<=': a <= expected,
+      '~': String(a).includes(String(expected)),
+      '!~': !String(a).includes(String(expected)),
+    }[op];
   }
   const a = String(actual ?? '').toLowerCase();
   const e = expected.toLowerCase();
-  return { '=': a === e, '!=': a !== e, '>': a > e, '>=': a >= e, '<': a < e, '<=': a <= e, '~': a.includes(e), '!~': !a.includes(e) }[op];
+  return {
+    '=': a === e,
+    '!=': a !== e,
+    '>': a > e,
+    '>=': a >= e,
+    '<': a < e,
+    '<=': a <= e,
+    '~': a.includes(e),
+    '!~': !a.includes(e),
+  }[op];
 }
 
 /** Client-side matcher for the AST: filters compare `record[field]`, text terms search every value. */
-export function matchPowerSearch<K extends string>(query: PowerSearchQuery<K>, record: Partial<Record<K, unknown>>): boolean {
+export function matchPowerSearch<K extends string>(
+  query: PowerSearchQuery<K>,
+  record: Partial<Record<K, unknown>>,
+): boolean {
   return query.terms.every((t) => {
     if (t.type === 'text') {
       const needle = t.value.toLowerCase();
-      return Object.values(record).some((v) => String(v ?? '').toLowerCase().includes(needle));
+      return Object.values(record).some((v) =>
+        String(v ?? '')
+          .toLowerCase()
+          .includes(needle),
+      );
     }
     return compare(record[t.field], t.operator, t.value);
   });

@@ -11,7 +11,7 @@ export const doc: ComponentDoc = {
   keyboard: [
     ['Tab (first stop)', 'Reveals the skip link; Enter moves focus to <main>'],
     ['Tab', 'Moves through the navbar links (the current one has aria-current="page") and actions'],
-    ['Enter (nav slot)', 'In the `nav` slot: follows the slot component\'s own contract (e.g. MegaMenu opens a panel)'],
+    ['Enter (nav slot)', "In the `nav` slot: follows the slot component's own contract (e.g. MegaMenu opens a panel)"],
     ['Enter / Space', 'On the menu button (small screens): opens the navigation drawer'],
     ['Escape', 'Closes the navigation drawer and returns focus to the menu button'],
   ],

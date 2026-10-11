@@ -16,7 +16,12 @@ describe('BulkActionBar', () => {
     const onClear = vi.fn();
     const onArchive = vi.fn();
     const { rerender } = render(
-      <BulkActionBar selectedCount={1} noun={['member', 'members']} onClear={onClear} actions={[{ label: 'Archive', onClick: onArchive }]} />,
+      <BulkActionBar
+        selectedCount={1}
+        noun={['member', 'members']}
+        onClear={onClear}
+        actions={[{ label: 'Archive', onClick: onArchive }]}
+      />,
     );
     expect(screen.getByRole('status')).toHaveTextContent('1 member selected');
     await user.click(screen.getByRole('button', { name: 'Archive' }));

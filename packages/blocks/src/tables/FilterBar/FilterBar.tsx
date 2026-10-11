@@ -148,7 +148,11 @@ export function FilterBar({
                     {field.options.map((option) => {
                       const filter = { field: field.id, value: option };
                       return (
-                        <MenuCheckboxItem key={option} checked={filters.some((f) => same(f, filter))} onCheckedChange={(on) => toggle(filter, on)}>
+                        <MenuCheckboxItem
+                          key={option}
+                          checked={filters.some((f) => same(f, filter))}
+                          onCheckedChange={(on) => toggle(filter, on)}
+                        >
                           {option}
                         </MenuCheckboxItem>
                       );
@@ -161,7 +165,8 @@ export function FilterBar({
         </div>
         {resultCount !== undefined && (
           <p className="text-[12.5px] text-muted-foreground sm:ms-auto" aria-live="polite">
-            <span className="font-mono text-foreground tabular-nums">{resultCount.toLocaleString('en-US')}</span> {resultCount === 1 ? 'result' : 'results'}
+            <span className="font-mono text-foreground tabular-nums">{resultCount.toLocaleString('en-US')}</span>{' '}
+            {resultCount === 1 ? 'result' : 'results'}
           </p>
         )}
       </div>

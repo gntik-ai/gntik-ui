@@ -31,7 +31,8 @@ const props: SubordinateListProps<Row> = {
 
 // The public prop contract: every omitted input must be a type error.
 function requiredProps(input: SubordinateListProps<Row>) {
-  const { title, headingLevel, count, columns, rows, getRowId, pagination, loading, error, onRetry, emptyState } = input;
+  const { title, headingLevel, count, columns, rows, getRowId, pagination, loading, error, onRetry, emptyState } =
+    input;
   // @ts-expect-error title is required
   <SubordinateList
     headingLevel={headingLevel}
@@ -190,32 +191,35 @@ describe('SubordinateList', () => {
   });
 
   for (const theme of ['dark', 'light', 'high_contrast']) {
-    it.each(['default', 'loading', 'empty', 'error'] as const)(`has no axe violations in ${theme} / %s`, async (state) => {
-      document.documentElement.className = theme;
-      const { container } = render(
-        <SubordinateList
-          {...props}
-          loading={state === 'loading'}
-          rows={state === 'empty' ? [] : rows}
-          error={
-            state === 'error'
-              ? {
-                  title: 'History unavailable',
-                  message: 'Please retry.',
-                  code: null,
-                }
-              : null
-          }
-          pagination={{
-            limit: 10,
-            offset: 0,
-            total: state === 'empty' ? 0 : 37,
-            onPageChange: () => {},
-          }}
-        />,
-      );
-      await expectNoAxeViolations(container);
-    });
+    it.each(['default', 'loading', 'empty', 'error'] as const)(
+      `has no axe violations in ${theme} / %s`,
+      async (state) => {
+        document.documentElement.className = theme;
+        const { container } = render(
+          <SubordinateList
+            {...props}
+            loading={state === 'loading'}
+            rows={state === 'empty' ? [] : rows}
+            error={
+              state === 'error'
+                ? {
+                    title: 'History unavailable',
+                    message: 'Please retry.',
+                    code: null,
+                  }
+                : null
+            }
+            pagination={{
+              limit: 10,
+              offset: 0,
+              total: state === 'empty' ? 0 : 37,
+              onPageChange: () => {},
+            }}
+          />,
+        );
+        await expectNoAxeViolations(container);
+      },
+    );
   }
 
   it.each(['en', 'es'])('shows only the supplied error and retries the failing section once in %s', async (locale) => {
@@ -270,7 +274,13 @@ describe('SubordinateList', () => {
   });
 
   it('replaces the table and pagination with a busy TableSkeleton while loading', () => {
-    render(<SubordinateList {...props} loading={true} pagination={{ limit: 10, offset: 0, total: 37, onPageChange: () => {} }} />);
+    render(
+      <SubordinateList
+        {...props}
+        loading={true}
+        pagination={{ limit: 10, offset: 0, total: 37, onPageChange: () => {} }}
+      />,
+    );
     expect(screen.getByRole('region', { name: 'History' })).toHaveAttribute('aria-busy', 'true');
     expect(screen.getByRole('status')).toHaveTextContent('Loading table');
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
@@ -287,7 +297,9 @@ describe('SubordinateList', () => {
   it('renders every supplied row with server pagination and translates page 2 to offset 10', async () => {
     const user = userEvent.setup();
     const onPageChange = vi.fn();
-    const { rerender } = render(<SubordinateList {...props} pagination={{ limit: 10, offset: 0, total: 37, onPageChange }} />);
+    const { rerender } = render(
+      <SubordinateList {...props} pagination={{ limit: 10, offset: 0, total: 37, onPageChange }} />,
+    );
     expect(screen.getAllByRole('row')).toHaveLength(13);
     expect(screen.getByRole('region', { name: 'History' })).toHaveTextContent('1–10 of 37');
     expect(screen.getByRole('navigation', { name: 'History pagination' })).toBeVisible();
@@ -321,16 +333,19 @@ describe('SubordinateList', () => {
     }
   });
 
-  it.each(['h2', 'h3'] as const)('labels the section with its %s heading and shows count 0 without fixture actions or description', (headingLevel) => {
-    render(<SubordinateList {...props} headingLevel={headingLevel} count={0} />);
-    const region = screen.getByRole('region', { name: 'History' });
-    const heading = within(region).getByRole('heading', {
-      name: 'History',
-      level: headingLevel === 'h2' ? 2 : 3,
-    });
-    expect(region).toHaveAttribute('aria-labelledby', heading.id);
-    expect(within(region).getByText('0')).toBeVisible();
-    expect(within(region).queryByRole('button')).not.toBeInTheDocument();
-    expect(region).not.toHaveTextContent(/Add policy|Guardrails|deployments/i);
-  });
+  it.each(['h2', 'h3'] as const)(
+    'labels the section with its %s heading and shows count 0 without fixture actions or description',
+    (headingLevel) => {
+      render(<SubordinateList {...props} headingLevel={headingLevel} count={0} />);
+      const region = screen.getByRole('region', { name: 'History' });
+      const heading = within(region).getByRole('heading', {
+        name: 'History',
+        level: headingLevel === 'h2' ? 2 : 3,
+      });
+      expect(region).toHaveAttribute('aria-labelledby', heading.id);
+      expect(within(region).getByText('0')).toBeVisible();
+      expect(within(region).queryByRole('button')).not.toBeInTheDocument();
+      expect(region).not.toHaveTextContent(/Add policy|Guardrails|deployments/i);
+    },
+  );
 });

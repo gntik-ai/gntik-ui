@@ -5,7 +5,9 @@ import { afterEach } from 'vitest';
 afterEach(() => {
   cleanup();
   document.documentElement.className = '';
-  try { localStorage.clear(); } catch {}
+  try {
+    localStorage.clear();
+  } catch {}
 });
 
 // jsdom gaps that Base UI touches (positioning, animations, media queries).
@@ -35,5 +37,15 @@ if (!Element.prototype.getAnimations) {
 
 // Recharts' ResponsiveContainer measures its parent; jsdom reports 0×0, so give it a size.
 Element.prototype.getBoundingClientRect = function getBoundingClientRect() {
-  return { x: 0, y: 0, top: 0, left: 0, right: 600, bottom: 300, width: 600, height: 300, toJSON: () => ({}) } as DOMRect;
+  return {
+    x: 0,
+    y: 0,
+    top: 0,
+    left: 0,
+    right: 600,
+    bottom: 300,
+    width: 600,
+    height: 300,
+    toJSON: () => ({}),
+  } as DOMRect;
 };

@@ -9,8 +9,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-  KIT_KINDS, REPO_BLOB, docInfoOf, exportNameOf, firstSentence, loadKit, usageOf, usesConsoleShell,
-  type KitItem, type KitKind,
+  KIT_KINDS,
+  REPO_BLOB,
+  docInfoOf,
+  exportNameOf,
+  firstSentence,
+  loadKit,
+  usageOf,
+  usesConsoleShell,
+  type KitItem,
+  type KitKind,
 } from '../src/kit.js';
 
 const ROOT = path.resolve(import.meta.dirname, '../../..');
@@ -21,11 +29,18 @@ if (!kit.items.length) {
   process.exit(1);
 }
 
-const TITLES: Record<KitKind, string> = { component: 'Components', layout: 'Layouts', block: 'Blocks', template: 'Templates' };
+const TITLES: Record<KitKind, string> = {
+  component: 'Components',
+  layout: 'Layouts',
+  block: 'Blocks',
+  template: 'Templates',
+};
 const link = (rel: string) => `${REPO_BLOB}${rel}`;
 const docLink = (i: KitItem) => link(i.docs ?? i.files[0]?.path ?? 'kit-registry.json');
 const ofKind = (kind: KitKind) =>
-  kit.items.filter((i) => i.kind === kind).sort((a, b) => a.group.localeCompare(b.group) || a.name.localeCompare(b.name));
+  kit.items
+    .filter((i) => i.kind === kind)
+    .sort((a, b) => a.group.localeCompare(b.group) || a.name.localeCompare(b.name));
 const count = (kind: KitKind) => ofKind(kind).length;
 
 const HEADER = [
@@ -47,16 +62,23 @@ const DOCS = [
   `- [MCP server](${link('packages/mcp/README.md')}): list_kit, get_component, get_block, get_template, scaffold_page, scaffold_preset and validate_page`,
 ].join('\n');
 
-const oneLine = (i: KitItem) => `- [${i.name}](${docLink(i)}): ${firstSentence(i.description)} (${[i.group, i.package].filter(Boolean).join(', ')}; id \`${i.id}\`)`;
+const oneLine = (i: KitItem) =>
+  `- [${i.name}](${docLink(i)}): ${firstSentence(i.description)} (${[i.group, i.package].filter(Boolean).join(', ')}; id \`${i.id}\`)`;
 
 function llms(): string {
   const sections = KIT_KINDS.map((k) => [`## ${TITLES[k]}`, '', ...ofKind(k).map(oneLine)].join('\n'));
-  return [
-    HEADER,
-    DOCS,
-    ...sections,
-    ['## Optional', '', '- [llms-full.txt](/llms-full.txt): every item with its full description, keyboard contract, tokens and a usage snippet'].join('\n'),
-  ].join('\n\n') + '\n';
+  return (
+    [
+      HEADER,
+      DOCS,
+      ...sections,
+      [
+        '## Optional',
+        '',
+        '- [llms-full.txt](/llms-full.txt): every item with its full description, keyboard contract, tokens and a usage snippet',
+      ].join('\n'),
+    ].join('\n\n') + '\n'
+  );
 }
 
 function full(item: KitItem): string {
@@ -72,10 +94,13 @@ function full(item: KitItem): string {
   if (item.kind === 'template') {
     if (info.layout) facts.push(`- Layout: ${info.layout}`);
     if (info.blocks.length) facts.push(`- Blocks: ${info.blocks.join(', ')}`);
-    facts.push(`- Console shell: ${usesConsoleShell(ROOT, item) ? 'yes (pass the product frame through the `shell` prop)' : 'no'}`);
+    facts.push(
+      `- Console shell: ${usesConsoleShell(ROOT, item) ? 'yes (pass the product frame through the `shell` prop)' : 'no'}`,
+    );
   }
   if (item.registryDependencies.length) facts.push(`- Registry dependencies: ${item.registryDependencies.join(', ')}`);
-  if (item.kind === 'block' || item.kind === 'template') facts.push(`- Preview: /preview.html?kind=${item.kind}&id=${item.id}`);
+  if (item.kind === 'block' || item.kind === 'template')
+    facts.push(`- Preview: /preview.html?kind=${item.kind}&id=${item.id}`);
   facts.push(
     item.kind === 'block' || item.kind === 'template'
       ? `- Install: import from \`${item.package}\`, or copy the source with \`gntik-ui add ${item.id}\``
@@ -83,7 +108,14 @@ function full(item: KitItem): string {
   );
   const out = [`### ${item.name} (\`${item.id}\`)`, '', item.description, '', ...facts];
   if (info.keyboard.length) {
-    out.push('', 'Keyboard:', '', '| Key | Behaviour |', '| --- | --- |', ...info.keyboard.map(([k, b]) => `| ${k} | ${b} |`));
+    out.push(
+      '',
+      'Keyboard:',
+      '',
+      '| Key | Behaviour |',
+      '| --- | --- |',
+      ...info.keyboard.map(([k, b]) => `| ${k} | ${b} |`),
+    );
   }
   if (info.tokens.length) out.push('', `Tokens: ${info.tokens.join(', ')}`);
   const usage = usageOf(ROOT, item);
@@ -114,5 +146,7 @@ if (process.argv.includes('--check')) {
 } else {
   fs.mkdirSync(OUT_DIR, { recursive: true });
   for (const [file, text] of outputs) fs.writeFileSync(path.join(OUT_DIR, file), text);
-  console.log(`llms.txt (${Buffer.byteLength(outputs[0]![1])} B) and llms-full.txt (${Buffer.byteLength(outputs[1]![1])} B) written: ${kit.items.length} items.`);
+  console.log(
+    `llms.txt (${Buffer.byteLength(outputs[0]![1])} B) and llms-full.txt (${Buffer.byteLength(outputs[1]![1])} B) written: ${kit.items.length} items.`,
+  );
 }

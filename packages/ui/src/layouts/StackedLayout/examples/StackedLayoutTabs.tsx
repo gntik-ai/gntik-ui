@@ -39,7 +39,12 @@ export default function StackedLayoutTabs() {
             onNavigate={(item) => item.href && setCurrent(item.href)}
             actions={
               <>
-                <CommandPalette groups={[{ label: 'Go to', items: LINKS.map((l) => ({ id: l.label, label: l.label, icon: l.icon })) }]} shortcut={false}>
+                <CommandPalette
+                  groups={[
+                    { label: 'Go to', items: LINKS.map((l) => ({ id: l.label, label: l.label, icon: l.icon })) },
+                  ]}
+                  shortcut={false}
+                >
                   <CommandPaletteTrigger className="hidden sm:inline-flex">Search</CommandPaletteTrigger>
                 </CommandPalette>
                 <NotificationsPopover notifications={[]} />

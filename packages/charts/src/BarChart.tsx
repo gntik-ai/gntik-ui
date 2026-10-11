@@ -2,7 +2,15 @@ import { Bar, BarChart as RBarChart, CartesianGrid, Tooltip, XAxis, YAxis } from
 import { ChartLegend, useHiddenSeries } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
 import { formatAny, identity } from './format';
-import { accessibleName, cartesianTable, axisProps, CHART_MARGIN, ChartFrame, type BaseChartProps, type DataKey } from './shared';
+import {
+  accessibleName,
+  cartesianTable,
+  axisProps,
+  CHART_MARGIN,
+  ChartFrame,
+  type BaseChartProps,
+  type DataKey,
+} from './shared';
 import { resolveState } from './states';
 import { useCartesianExtras, type CartesianExtrasProps } from './cartesian-extras';
 import { CHART_COLORS, seriesColor, useChartTheme } from './theme';
@@ -52,7 +60,12 @@ export function BarChart<T extends object>({
   const col = (i: number) => seriesColor(t, colors, i);
   const legend = categories.map((c, i) => ({ key: c, label: c, color: col(i) }));
   const vertical = layout === 'vertical';
-  const x = useCartesianExtras(data, index, { thresholds, annotations, brush, range, defaultRange, onRangeChange, animate }, { valueFormatter, previewKey: categories[0], vertical });
+  const x = useCartesianExtras(
+    data,
+    index,
+    { thresholds, annotations, brush, range, defaultRange, onRangeChange, animate },
+    { valueFormatter, previewKey: categories[0], vertical },
+  );
   const radius: Radius = stacked ? 0 : vertical ? [0, 3, 3, 0] : [3, 3, 0, 0];
   const name = accessibleName('Bar chart', ariaLabel, title, categories);
   return (

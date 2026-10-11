@@ -7,13 +7,24 @@ import BadgeRemovable from './examples/BadgeRemovable';
 
 describe('Badge', () => {
   it('renders its label with tone classes and merges className', () => {
-    render(<Badge tone="success" className="ms-2">Healthy</Badge>);
+    render(
+      <Badge tone="success" className="ms-2">
+        Healthy
+      </Badge>,
+    );
     const badge = screen.getByText('Healthy');
     expect(badge).toHaveClass('bg-success/15', 'text-success-chip-text', 'ms-2');
   });
 
   it('uses text-foreground (not the raw tone) for info and category tones', () => {
-    render(<><Badge tone="info">Queued</Badge><Badge tone="violet" variant="outline">Design</Badge></>);
+    render(
+      <>
+        <Badge tone="info">Queued</Badge>
+        <Badge tone="violet" variant="outline">
+          Design
+        </Badge>
+      </>,
+    );
     expect(screen.getByText('Queued')).toHaveClass('text-foreground');
     expect(screen.getByText('Design')).toHaveClass('text-foreground', 'border-category-violet/45');
   });
@@ -37,14 +48,23 @@ describe('Badge', () => {
   it('Space activates the remove button', async () => {
     const user = userEvent.setup();
     const onRemove = vi.fn();
-    render(<Badge onRemove={onRemove} removeLabel="Remove filter">region</Badge>);
+    render(
+      <Badge onRemove={onRemove} removeLabel="Remove filter">
+        region
+      </Badge>,
+    );
     await user.tab();
     await user.keyboard(' ');
     expect(onRemove).toHaveBeenCalledTimes(1);
   });
 
   it('examples have no axe violations', async () => {
-    render(<><BadgeTones /><BadgeRemovable /></>);
+    render(
+      <>
+        <BadgeTones />
+        <BadgeRemovable />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

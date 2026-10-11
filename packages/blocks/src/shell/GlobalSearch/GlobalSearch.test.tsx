@@ -16,7 +16,8 @@ describe('GlobalSearch', () => {
     render(<GlobalSearch onSelect={onSelect} />);
     await user.keyboard('{Meta>}k{/Meta}');
     const dialog = await screen.findByRole('dialog', { name: 'Global search' });
-    for (const heading of ['Recent', 'Pages', 'Records', 'Actions']) expect(within(dialog).getByText(heading)).toBeInTheDocument();
+    for (const heading of ['Recent', 'Pages', 'Records', 'Actions'])
+      expect(within(dialog).getByText(heading)).toBeInTheDocument();
     await expectNoAxeViolations();
     await user.keyboard('INV-2041');
     await user.keyboard('{Enter}');

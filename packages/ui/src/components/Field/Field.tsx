@@ -103,6 +103,9 @@ export function FieldsetLegend({ className, ...props }: FieldsetLegendProps) {
 }
 
 /** Supporting text under a legend. */
-export function FieldsetDescription({ className, ...props }: HTMLAttributes<HTMLParagraphElement> & { children?: ReactNode }) {
+export function FieldsetDescription({
+  className,
+  ...props
+}: HTMLAttributes<HTMLParagraphElement> & { children?: ReactNode }) {
   return <p className={cn(s.legendDescription(), className)} {...props} />;
 }

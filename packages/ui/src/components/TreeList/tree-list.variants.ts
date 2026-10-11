@@ -12,7 +12,8 @@ export const treeListVariants = tv({
       'flex h-8 cursor-default items-center gap-1.5 rounded-md pe-2 text-foreground transition-colors select-none',
       'hover:bg-secondary/70',
     ],
-    chevron: 'grid size-4 shrink-0 place-items-center text-muted-foreground transition-transform duration-150 motion-reduce:transition-none rtl:-scale-x-100',
+    chevron:
+      'grid size-4 shrink-0 place-items-center text-muted-foreground transition-transform duration-150 motion-reduce:transition-none rtl:-scale-x-100',
     icon: 'shrink-0 text-muted-foreground',
     label: 'min-w-0 flex-1 truncate text-start',
     meta: 'shrink-0 font-mono text-[11px] text-muted-foreground',
@@ -21,7 +22,11 @@ export const treeListVariants = tv({
   },
   variants: {
     selected: {
-      true: { row: 'bg-primary/14 text-primary-chip-text hover:bg-primary/18', icon: 'text-primary-chip-text', check: 'border-primary bg-primary' },
+      true: {
+        row: 'bg-primary/14 text-primary-chip-text hover:bg-primary/18',
+        icon: 'text-primary-chip-text',
+        check: 'border-primary bg-primary',
+      },
     },
     expanded: { true: { chevron: 'rotate-90 rtl:-rotate-90' } },
     disabled: { true: { row: 'pointer-events-none opacity-50' } },

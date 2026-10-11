@@ -148,7 +148,8 @@ export const en = {
   'stepper.error': 'error',
   'sparkline.noData': '{label}: no data',
   'sparkline.single': '{label}: {value}',
-  'sparkline.summary': '{label}: {direction}{change} from {first} to {last} over {count} points (low {min}, high {max})',
+  'sparkline.summary':
+    '{label}: {direction}{change} from {first} to {last} over {count} points (low {min}, high {max})',
   'sparkline.up': 'trending up',
   'sparkline.down': 'trending down',
   'sparkline.flat': 'flat',
@@ -279,7 +280,8 @@ export const en = {
   // Kanban board
   'kanban.label': 'Board',
   'kanban.roleDescription': 'draggable card',
-  'kanban.instructions': 'Press Space to pick up the card. Use the arrow keys to move it, Space or Enter to drop it, Escape to cancel.',
+  'kanban.instructions':
+    'Press Space to pick up the card. Use the arrow keys to move it, Space or Enter to drop it, Escape to cancel.',
   'kanban.pickedUp': 'Picked up {card}. Position {position} of {total} in {column}.',
   'kanban.moved': '{card} moved to position {position} of {total} in {column}.',
   'kanban.dropped': '{card} dropped at position {position} of {total} in {column}.',
@@ -384,7 +386,8 @@ export const en = {
   'secret.hidden': 'Value hidden',
   'secret.rotate': 'Rotate',
   'secret.rotateTitle': 'Rotate this secret?',
-  'secret.rotateDescription': 'A new value is generated and the current one stops working. Anything still using it fails until it is updated.',
+  'secret.rotateDescription':
+    'A new value is generated and the current one stops working. Anything still using it fails until it is updated.',
   'secret.rotateConfirm': 'Rotate secret',
   'secret.rotated': 'Secret rotated',
   'secret.rotateFailed': 'Rotation failed',

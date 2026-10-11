@@ -1,5 +1,13 @@
 import { Avatar as BaseAvatar } from '@base-ui/react/avatar';
-import { Children, createContext, isValidElement, useContext, type HTMLAttributes, type ReactNode, type Ref } from 'react';
+import {
+  Children,
+  createContext,
+  isValidElement,
+  useContext,
+  type HTMLAttributes,
+  type ReactNode,
+  type Ref,
+} from 'react';
 import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { avatarVariants, type AvatarSize, type AvatarStatus, type AvatarVariantProps } from './avatar.variants';
@@ -11,10 +19,14 @@ const STATUS_LABEL: Record<AvatarStatus, string> = { online: 'online', idle: 'id
 /** First letters of the first two words, upper-cased ("Maria Ruiz" → "MR"). */
 export function getInitials(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  return parts.slice(0, 2).map((p) => p.charAt(0).toUpperCase()).join('');
+  return parts
+    .slice(0, 2)
+    .map((p) => p.charAt(0).toUpperCase())
+    .join('');
 }
 
-export interface AvatarProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'className'>, Omit<AvatarVariantProps, 'ring'> {
+export interface AvatarProps
+  extends Omit<HTMLAttributes<HTMLSpanElement>, 'className'>, Omit<AvatarVariantProps, 'ring'> {
   className?: string;
   ref?: Ref<HTMLSpanElement>;
   /** Image URL. While it loads, or if it fails, the initials show instead. */
@@ -61,7 +73,9 @@ export function Avatar({
       {...props}
     >
       <BaseAvatar.Root className={s.root()}>
-        <BaseAvatar.Fallback className={s.fallback()}>{fallback ?? initials ?? (name ? getInitials(name) : null)}</BaseAvatar.Fallback>
+        <BaseAvatar.Fallback className={s.fallback()}>
+          {fallback ?? initials ?? (name ? getInitials(name) : null)}
+        </BaseAvatar.Fallback>
         {src && <BaseAvatar.Image src={src} alt="" className={s.image()} />}
       </BaseAvatar.Root>
       {status && <span className={s.status()} data-status={status} />}

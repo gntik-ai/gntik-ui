@@ -1,7 +1,15 @@
 import { useEffect, useRef, useLayoutEffect } from 'react';
 import type { editor } from 'monaco-editor';
 import { EditorFrame } from './EditorFrame';
-import { BASE_OPTIONS, kickLayout, loadMonaco, useBrandTheme, useMonaco, type Monaco, type MonacoLoader } from './loader';
+import {
+  BASE_OPTIONS,
+  kickLayout,
+  loadMonaco,
+  useBrandTheme,
+  useMonaco,
+  type Monaco,
+  type MonacoLoader,
+} from './loader';
 import { brandThemeFor } from './theme';
 
 export interface CodeEditorProps {

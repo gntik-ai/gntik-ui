@@ -14,7 +14,10 @@ export interface MaskOptions {
  * The masked form of a secret: optional visible prefix / suffix around a fixed run of `•`.
  * Prefix and suffix are only shown while they leave at least half of the value hidden.
  */
-export function maskSecret(value: string, { visiblePrefix = 0, visibleSuffix = 0, maskLength = 16 }: MaskOptions = {}): string {
+export function maskSecret(
+  value: string,
+  { visiblePrefix = 0, visibleSuffix = 0, maskLength = 16 }: MaskOptions = {},
+): string {
   if (!value) return '';
   const shown = visiblePrefix + visibleSuffix;
   const safe = shown > 0 && shown * 2 <= value.length;

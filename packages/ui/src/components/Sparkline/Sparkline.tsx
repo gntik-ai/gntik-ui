@@ -7,7 +7,8 @@ import { sparklineVariants, type SparklineVariantProps } from './sparkline.varia
 
 export type SparklineMarker = 'min' | 'max' | 'last';
 
-export interface SparklineProps extends Omit<SVGAttributes<SVGSVGElement>, 'className' | 'width' | 'height'>, SparklineVariantProps {
+export interface SparklineProps
+  extends Omit<SVGAttributes<SVGSVGElement>, 'className' | 'width' | 'height'>, SparklineVariantProps {
   className?: string;
   ref?: Ref<SVGSVGElement>;
   /** The series, oldest first. */
@@ -51,7 +52,16 @@ export function describeTrend(
   const pct = first !== 0 ? Math.round(((last - first) / Math.abs(first)) * 100) : null;
   const direction = t(last > first ? 'sparkline.up' : last < first ? 'sparkline.down' : 'sparkline.flat');
   const change = pct !== null && last !== first ? ` ${i18n.formatNumber(Math.abs(pct))}%` : '';
-  return t('sparkline.summary', { label: name, direction, change, first: fmt(first), last: fmt(last), count: data.length, min: fmt(min), max: fmt(max) });
+  return t('sparkline.summary', {
+    label: name,
+    direction,
+    change,
+    first: fmt(first),
+    last: fmt(last),
+    count: data.length,
+    min: fmt(min),
+    max: fmt(max),
+  });
 }
 
 /**
@@ -104,7 +114,17 @@ export function Sparkline({
     return svg(
       data.map((v, i) => {
         const h = Math.max(1, ((v - lo) / span) * (height - 1));
-        return <rect key={i} className={s.bar()} x={i * slot + gap / 2} y={height - h} width={Math.max(1, slot - gap)} height={h} rx={1} />;
+        return (
+          <rect
+            key={i}
+            className={s.bar()}
+            x={i * slot + gap / 2}
+            y={height - h}
+            width={Math.max(1, slot - gap)}
+            height={h}
+            rx={1}
+          />
+        );
       }),
     );
   }
@@ -116,7 +136,8 @@ export function Sparkline({
   const path = points.map(([px, py], i) => `${i ? 'L' : 'M'}${px.toFixed(2)} ${py.toFixed(2)}`).join(' ');
   const first = points[0];
   const lastPoint = points[points.length - 1];
-  const areaPath = first && lastPoint ? `${path} L${lastPoint[0].toFixed(2)} ${height} L${first[0].toFixed(2)} ${height} Z` : '';
+  const areaPath =
+    first && lastPoint ? `${path} L${lastPoint[0].toFixed(2)} ${height} L${first[0].toFixed(2)} ${height} Z` : '';
   const markerAt = (kind: SparklineMarker) => {
     const index = kind === 'last' ? n - 1 : data.indexOf(kind === 'min' ? min : max);
     const point = points[index];

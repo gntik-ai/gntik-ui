@@ -15,7 +15,9 @@ describe('TraceWaterfall', () => {
     expect(screen.getByText('1 error')).toBeInTheDocument();
     const details = screen.getByRole('complementary', { name: 'Span details' });
     expect(within(details).getByRole('heading', { name: 'POST /v1/answer' })).toBeInTheDocument();
-    const bar = screen.getByRole('button', { name: /^generate answer/ }).querySelector('[style*="width"]') as HTMLElement;
+    const bar = screen
+      .getByRole('button', { name: /^generate answer/ })
+      .querySelector('[style*="width"]') as HTMLElement;
     expect(bar.style.insetInlineStart).toBe(`${(440 / 2450) * 100}%`);
     await expectNoAxeViolations();
   });
@@ -72,7 +74,11 @@ describe('TraceWaterfall', () => {
     await user.keyboard('{Home}');
     expect(root).toHaveFocus();
     // Only one span button is in the tab order.
-    expect(within(spanList()).getAllByRole('button').filter((b) => b.tabIndex === 0)).toHaveLength(1);
+    expect(
+      within(spanList())
+        .getAllByRole('button')
+        .filter((b) => b.tabIndex === 0),
+    ).toHaveLength(1);
   });
 
   it('supports controlled selection and running spans (not colour-only)', async () => {
@@ -106,6 +112,8 @@ describe('TraceWaterfall', () => {
     await expectNoAxeViolations();
     unmount();
     render(<TraceWaterfall renderDetails={(span) => <p>Custom {span.id}</p>} />);
-    expect(within(screen.getByRole('complementary', { name: 'Span details' })).getByText('Custom s1')).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('complementary', { name: 'Span details' })).getByText('Custom s1'),
+    ).toBeInTheDocument();
   });
 });

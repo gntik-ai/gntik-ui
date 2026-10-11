@@ -48,7 +48,11 @@ export function FirstRunEmpty({
       primaryAction={<Button onClick={onAction}>{actionLabel}</Button>}
       secondaryAction={
         secondary ? (
-          <Link underline="hover" href={secondary.href} className="inline-flex h-9 items-center px-2 text-[13px] font-semibold">
+          <Link
+            underline="hover"
+            href={secondary.href}
+            className="inline-flex h-9 items-center px-2 text-[13px] font-semibold"
+          >
             {secondary.label}
           </Link>
         ) : undefined
@@ -100,7 +104,15 @@ export function NoResultsEmpty({
       titleAs={titleAs}
       bordered={bordered}
       className={cn('mx-auto', className)}
-      title={query ? <>No {entity} match “<span className="font-mono">{query}</span>”</> : `No ${entity} found`}
+      title={
+        query ? (
+          <>
+            No {entity} match “<span className="font-mono">{query}</span>”
+          </>
+        ) : (
+          `No ${entity} found`
+        )
+      }
       description={`Check the spelling or try a broader search${filters}.`}
       primaryAction={
         filterCount > 0 ? (

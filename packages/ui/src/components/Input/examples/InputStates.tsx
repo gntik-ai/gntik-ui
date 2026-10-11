@@ -8,7 +8,9 @@ export default function InputStates() {
       <Field invalid>
         <FieldLabel>Email</FieldLabel>
         <Input defaultValue="member@example" trailingIcon={CircleAlert} />
-        <FieldError match hideIcon>Enter a valid work email.</FieldError>
+        <FieldError match hideIcon>
+          Enter a valid work email.
+        </FieldError>
       </Field>
       <Field>
         <FieldLabel>Deployment</FieldLabel>

@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { PermissionMatrix, type PermissionMatrixValue, type PermissionRole, type PermissionSection } from '../PermissionMatrix';
+import {
+  PermissionMatrix,
+  type PermissionMatrixValue,
+  type PermissionRole,
+  type PermissionSection,
+} from '../PermissionMatrix';
 
 const roles: PermissionRole[] = [
   { id: 'owner', label: 'Owner', readOnly: true, readOnlyReason: 'Owners always have every permission.' },
@@ -28,12 +33,25 @@ const sections: PermissionSection[] = [
   },
 ];
 
-const all = (state: 'allowed' | 'denied') => Object.fromEntries(sections.flatMap((s) => s.permissions.map((p) => [p.id, state])));
+const all = (state: 'allowed' | 'denied') =>
+  Object.fromEntries(sections.flatMap((s) => s.permissions.map((p) => [p.id, state])));
 
 const initial: PermissionMatrixValue = {
   owner: all('allowed'),
-  admin: { 'projects.read': 'allowed', 'projects.write': 'allowed', 'projects.delete': 'allowed', 'billing.read': 'allowed', 'billing.manage': 'denied' },
-  member: { 'projects.read': 'allowed', 'projects.write': 'allowed', 'projects.delete': 'denied', 'billing.read': 'denied', 'billing.manage': 'denied' },
+  admin: {
+    'projects.read': 'allowed',
+    'projects.write': 'allowed',
+    'projects.delete': 'allowed',
+    'billing.read': 'allowed',
+    'billing.manage': 'denied',
+  },
+  member: {
+    'projects.read': 'allowed',
+    'projects.write': 'allowed',
+    'projects.delete': 'denied',
+    'billing.read': 'denied',
+    'billing.manage': 'denied',
+  },
   viewer: { 'projects.write': 'denied' },
 };
 
@@ -46,8 +64,12 @@ export default function PermissionMatrixBasic() {
       sections={sections}
       value={value}
       onChange={setValue}
-      resolveInherited={(roleId, permissionId) => (roleId === 'viewer' ? (value.member?.[permissionId] === 'denied' ? 'denied' : 'allowed') : undefined)}
-      getDisabledReason={(roleId, permissionId) => (roleId === 'member' && permissionId === 'billing.manage' ? 'Only admins can manage payment methods.' : undefined)}
+      resolveInherited={(roleId, permissionId) =>
+        roleId === 'viewer' ? (value.member?.[permissionId] === 'denied' ? 'denied' : 'allowed') : undefined
+      }
+      getDisabledReason={(roleId, permissionId) =>
+        roleId === 'member' && permissionId === 'billing.manage' ? 'Only admins can manage payment methods.' : undefined
+      }
     />
   );
 }

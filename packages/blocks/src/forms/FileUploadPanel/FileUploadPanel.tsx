@@ -51,9 +51,18 @@ export function FileUploadPanel({
   const [items, setItems] = useState<UploadItem[]>(defaultFiles);
   const [dragging, setDragging] = useState(false);
   const [announcement, setAnnouncement] = useState('');
-  const hintText = hint ?? t('upload.hint', { types: accept.split(',').map((a) => a.replace('.', '').toUpperCase()).join(' · '), size: formatBytes(maxSize) });
+  const hintText =
+    hint ??
+    t('upload.hint', {
+      types: accept
+        .split(',')
+        .map((a) => a.replace('.', '').toUpperCase())
+        .join(' · '),
+      size: formatBytes(maxSize),
+    });
 
-  const patch = (itemId: string, next: Partial<UploadItem>) => setItems((list) => list.map((x) => (x.id === itemId ? { ...x, ...next } : x)));
+  const patch = (itemId: string, next: Partial<UploadItem>) =>
+    setItems((list) => list.map((x) => (x.id === itemId ? { ...x, ...next } : x)));
 
   const start = (itemId: string, file: File) => {
     patch(itemId, { status: 'uploading', progress: 0, error: undefined });
@@ -76,8 +85,19 @@ export function FileUploadPanel({
     const kept: Record<string, File> = {};
     for (const file of files) {
       const itemId = nextId();
-      const error = !acceptsFile(file, accept) ? t('upload.typeRejected') : file.size > maxSize ? t('upload.tooLarge', { size: formatBytes(maxSize) }) : undefined;
-      added.push({ id: itemId, name: file.name, size: file.size, progress: 0, status: error ? 'error' : 'uploading', error });
+      const error = !acceptsFile(file, accept)
+        ? t('upload.typeRejected')
+        : file.size > maxSize
+          ? t('upload.tooLarge', { size: formatBytes(maxSize) })
+          : undefined;
+      added.push({
+        id: itemId,
+        name: file.name,
+        size: file.size,
+        progress: 0,
+        status: error ? 'error' : 'uploading',
+        error,
+      });
       if (!error) {
         kept[itemId] = file;
         toStart.push([itemId, file]);
@@ -86,7 +106,11 @@ export function FileUploadPanel({
     setItems((current) => (multiple ? [...current, ...added] : added));
     setSources((current) => ({ ...current, ...kept }));
     const rejected = added.filter((a) => a.error).length;
-    setAnnouncement([t('upload.added', { count: added.length - rejected }), rejected ? t('upload.rejected', { count: rejected }) : ''].filter(Boolean).join(' '));
+    setAnnouncement(
+      [t('upload.added', { count: added.length - rejected }), rejected ? t('upload.rejected', { count: rejected }) : '']
+        .filter(Boolean)
+        .join(' '),
+    );
     for (const [itemId, file] of toStart) start(itemId, file);
   };
 
@@ -131,7 +155,14 @@ export function FileUploadPanel({
           <Upload size={22} aria-hidden />
         </div>
         <p className="mt-4 text-[13.5px] text-foreground">{t('upload.drop')}</p>
-        <Button variant="secondary" size="sm" className="mt-2" disabled={disabled} onClick={() => inputRef.current?.click()} aria-describedby={`${id}-hint`}>
+        <Button
+          variant="secondary"
+          size="sm"
+          className="mt-2"
+          disabled={disabled}
+          onClick={() => inputRef.current?.click()}
+          aria-describedby={`${id}-hint`}
+        >
           {t('upload.browse')}
         </Button>
         <p id={`${id}-hint`} className="mt-3 font-mono text-[11.5px] text-muted-foreground">
@@ -170,21 +201,43 @@ function FileRow({ item, onRemove, onRetry }: { item: UploadItem; onRemove: () =
   const done = item.status === 'done';
   return (
     <li className="flex items-center gap-3 rounded-lg border border-border bg-card px-3.5 py-2.5 shadow-sm">
-      <span className={cn('grid size-9 shrink-0 place-items-center rounded-md', err ? 'bg-destructive/12 text-destructive-chip-text' : done ? 'bg-primary/14 text-primary-chip-text' : 'bg-secondary text-muted-foreground')}>
+      <span
+        className={cn(
+          'grid size-9 shrink-0 place-items-center rounded-md',
+          err
+            ? 'bg-destructive/12 text-destructive-chip-text'
+            : done
+              ? 'bg-primary/14 text-primary-chip-text'
+              : 'bg-secondary text-muted-foreground',
+        )}
+      >
         {err ? <CircleAlert size={17} aria-hidden /> : <FileText size={17} aria-hidden />}
       </span>
       <div className="min-w-0 flex-1">
         <div className="truncate text-[13px] font-medium text-foreground">{item.name}</div>
         {item.status === 'uploading' ? (
-          <Progress value={item.progress} size="sm" aria-label={t('upload.uploading', { name: item.name })} className="mt-1.5" />
+          <Progress
+            value={item.progress}
+            size="sm"
+            aria-label={t('upload.uploading', { name: item.name })}
+            className="mt-1.5"
+          />
         ) : (
           <div className={cn('mt-0.5 font-mono text-[11px]', err ? 'text-destructive-text' : 'text-muted-foreground')}>
-            {err ? t('upload.notUploaded', { error: item.error ?? t('upload.failed') }) : t('upload.uploaded', { size: formatBytes(item.size) })}
+            {err
+              ? t('upload.notUploaded', { error: item.error ?? t('upload.failed') })
+              : t('upload.uploaded', { size: formatBytes(item.size) })}
           </div>
         )}
       </div>
-      {item.status === 'uploading' && <span className="shrink-0 font-mono text-[10.5px] text-muted-foreground tabular-nums">{Math.round(item.progress)}%</span>}
-      {err && onRetry && <IconButton icon={RotateCcw} size="sm" label={t('upload.retry', { name: item.name })} onClick={onRetry} />}
+      {item.status === 'uploading' && (
+        <span className="shrink-0 font-mono text-[10.5px] text-muted-foreground tabular-nums">
+          {Math.round(item.progress)}%
+        </span>
+      )}
+      {err && onRetry && (
+        <IconButton icon={RotateCcw} size="sm" label={t('upload.retry', { name: item.name })} onClick={onRetry} />
+      )}
       <IconButton icon={X} size="sm" label={t('common.removeItem', { label: item.name })} onClick={onRemove} />
     </li>
   );

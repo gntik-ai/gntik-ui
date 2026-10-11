@@ -1,4 +1,15 @@
-import { BarChart3, CreditCard, Download, FolderKanban, FolderPlus, Home, Rocket, Settings, UserPlus, Users } from 'lucide-react';
+import {
+  BarChart3,
+  CreditCard,
+  Download,
+  FolderKanban,
+  FolderPlus,
+  Home,
+  Rocket,
+  Settings,
+  UserPlus,
+  Users,
+} from 'lucide-react';
 import { useState } from 'react';
 import { CommandPalette, CommandPaletteTrigger } from '../CommandPalette';
 import type { CommandGroup, CommandItem } from '../command-filter';
@@ -10,9 +21,29 @@ export default function CommandPaletteBasic() {
     {
       label: 'Actions',
       items: [
-        { id: 'new-project', label: 'Create project', icon: FolderPlus, shortcut: ['⌘', 'N'], keywords: ['new'], onSelect: go('Create project') },
-        { id: 'deploy', label: 'Deploy to production', icon: Rocket, shortcut: ['⌘', 'D'], description: 'Promote the latest build of the current project', onSelect: go('Deploy to production') },
-        { id: 'invite', label: 'Invite member', icon: UserPlus, keywords: ['team', 'people'], onSelect: go('Invite member') },
+        {
+          id: 'new-project',
+          label: 'Create project',
+          icon: FolderPlus,
+          shortcut: ['⌘', 'N'],
+          keywords: ['new'],
+          onSelect: go('Create project'),
+        },
+        {
+          id: 'deploy',
+          label: 'Deploy to production',
+          icon: Rocket,
+          shortcut: ['⌘', 'D'],
+          description: 'Promote the latest build of the current project',
+          onSelect: go('Deploy to production'),
+        },
+        {
+          id: 'invite',
+          label: 'Invite member',
+          icon: UserPlus,
+          keywords: ['team', 'people'],
+          onSelect: go('Invite member'),
+        },
         { id: 'export', label: 'Export usage (CSV)', icon: Download, onSelect: go('Export usage (CSV)') },
       ],
     },
@@ -29,8 +60,22 @@ export default function CommandPaletteBasic() {
     },
   ];
   const recent: CommandItem[] = [
-    { id: 'web-frontend', label: 'web-frontend', icon: FolderKanban, mono: true, description: 'Project', onSelect: go('web-frontend') },
-    { id: 'billing-api', label: 'billing-api', icon: FolderKanban, mono: true, description: 'Project', onSelect: go('billing-api') },
+    {
+      id: 'web-frontend',
+      label: 'web-frontend',
+      icon: FolderKanban,
+      mono: true,
+      description: 'Project',
+      onSelect: go('web-frontend'),
+    },
+    {
+      id: 'billing-api',
+      label: 'billing-api',
+      icon: FolderKanban,
+      mono: true,
+      description: 'Project',
+      onSelect: go('billing-api'),
+    },
   ];
   return (
     <div className="flex flex-col items-center gap-3 text-center">

@@ -19,7 +19,10 @@ export const separatorVariants = tv({
     labelStyle: {
       plain: { label: 'text-[12.5px] text-muted-foreground' },
       kicker: { label: 'font-mono text-[10.5px] tracking-[0.14em] text-muted-foreground uppercase' },
-      pill: { label: 'inline-flex h-[22px] items-center rounded-full bg-secondary px-2.5 font-mono text-[10.5px] font-semibold text-muted-foreground' },
+      pill: {
+        label:
+          'inline-flex h-[22px] items-center rounded-full bg-secondary px-2.5 font-mono text-[10.5px] font-semibold text-muted-foreground',
+      },
     },
   },
   compoundVariants: [

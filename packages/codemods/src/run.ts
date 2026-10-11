@@ -5,7 +5,18 @@ import { codemods, getCodemod } from './registry.js';
 import type { Codemod, CodemodMeta } from './types.js';
 
 export const SOURCE_EXTENSIONS = ['.tsx', '.ts', '.jsx', '.js', '.mjs', '.cjs', '.mts', '.cts'];
-const IGNORED_DIRS = new Set(['node_modules', 'dist', 'build', 'out', 'coverage', '.git', '.next', '.turbo', '.vercel', '.cache']);
+const IGNORED_DIRS = new Set([
+  'node_modules',
+  'dist',
+  'build',
+  'out',
+  'coverage',
+  '.git',
+  '.next',
+  '.turbo',
+  '.vercel',
+  '.cache',
+]);
 
 export interface CodemodReport {
   transform: string;
@@ -76,7 +87,11 @@ export async function collectFiles(cwd: string, files?: string[]): Promise<strin
 const REPORT_LINE = /^line (\d+): ([\s\S]*)$/;
 
 /** Applies codemods to one source text. Returns the new text (or the same text) and the reports. */
-export function applyCodemods(source: string, filePath: string, list: Codemod[]): { output: string; transforms: string[]; reports: CodemodReport[] } {
+export function applyCodemods(
+  source: string,
+  filePath: string,
+  list: Codemod[],
+): { output: string; transforms: string[]; reports: CodemodReport[] } {
   const j = jscodeshift.withParser(parserFor(filePath));
   let output = source;
   const applied: string[] = [];
@@ -124,9 +139,16 @@ export async function runCodemods(options: RunOptions): Promise<RunResult> {
         outputs[rel] = output;
         if (!dry) await writeFile(abs, output);
       }
-      if (modified || reports.length) results.push({ file: rel, status: modified ? 'modified' : 'unchanged', transforms, reports });
+      if (modified || reports.length)
+        results.push({ file: rel, status: modified ? 'modified' : 'unchanged', transforms, reports });
     } catch (e) {
-      results.push({ file: rel, status: 'error', transforms: [], reports: [], error: (e as Error).message ?? String(e) });
+      results.push({
+        file: rel,
+        status: 'error',
+        transforms: [],
+        reports: [],
+        error: (e as Error).message ?? String(e),
+      });
     }
   }
   return { dry, transforms: list.map((c) => c.meta), scanned: files.length, files: results, outputs };

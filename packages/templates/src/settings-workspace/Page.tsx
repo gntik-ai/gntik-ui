@@ -2,7 +2,14 @@ import { DangerZone, FileUploadPanel, FormSection, StickyActionBar, type DangerZ
 import { Field, FieldDescription, FieldError, FieldLabel, Input, SimpleSelect, Stack } from '@gntik-ai/ui';
 import { useState } from 'react';
 import { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';
-import { SLUG_RE, regions as defaultRegions, workspaceDangerActions, workspaceValues, type RegionOption, type WorkspaceValues } from './data';
+import {
+  SLUG_RE,
+  regions as defaultRegions,
+  workspaceDangerActions,
+  workspaceValues,
+  type RegionOption,
+  type WorkspaceValues,
+} from './data';
 
 export interface SettingsWorkspaceProps extends SettingsFrameOptions {
   values: WorkspaceValues;
@@ -57,17 +64,43 @@ export default function SettingsWorkspacePage({
             </Field>
             <Field invalid={slugInvalid}>
               <FieldLabel>URL slug</FieldLabel>
-              <Input value={draft.slug} onValueChange={set('slug')} leadingAddon={urlPrefix} inputClassName="font-mono" />
+              <Input
+                value={draft.slug}
+                onValueChange={set('slug')}
+                leadingAddon={urlPrefix}
+                inputClassName="font-mono"
+              />
               <FieldDescription>Lowercase letters, numbers and dashes.</FieldDescription>
               <FieldError match={slugInvalid}>Use lowercase letters, numbers and single dashes.</FieldError>
             </Field>
           </div>
         </FormSection>
-        <FormSection title="Logo" description="Shown in the sidebar and in emails. Square PNG or SVG, at least 256 px." divided>
-          <FileUploadPanel label="Workspace logo" accept=".png,.svg,.jpg" maxSize={2 * 1024 * 1024} multiple={false} defaultFiles={[]} onUpload={onLogoUpload} />
+        <FormSection
+          title="Logo"
+          description="Shown in the sidebar and in emails. Square PNG or SVG, at least 256 px."
+          divided
+        >
+          <FileUploadPanel
+            label="Workspace logo"
+            accept=".png,.svg,.jpg"
+            maxSize={2 * 1024 * 1024}
+            multiple={false}
+            defaultFiles={[]}
+            onUpload={onLogoUpload}
+          />
         </FormSection>
-        <FormSection title="Data region" description="Where projects, logs and backups are stored. Moving regions is done by support." divided>
-          <SimpleSelect label="Region" items={regions} value={draft.region} onValueChange={set('region')} className="w-full sm:w-80" />
+        <FormSection
+          title="Data region"
+          description="Where projects, logs and backups are stored. Moving regions is done by support."
+          divided
+        >
+          <SimpleSelect
+            label="Region"
+            items={regions}
+            value={draft.region}
+            onValueChange={set('region')}
+            className="w-full sm:w-80"
+          />
         </FormSection>
       </Stack>
       <DangerZone
@@ -75,7 +108,13 @@ export default function SettingsWorkspacePage({
         actions={dangerActions ?? workspaceDangerActions(base.slug)}
         onConfirm={onDangerAction}
       />
-      <StickyActionBar dirty={dirty} saving={saving} onSave={() => void save()} onCancel={() => setDraft(base)} aria-label="Workspace changes" />
+      <StickyActionBar
+        dirty={dirty}
+        saving={saving}
+        onSave={() => void save()}
+        onCancel={() => setDraft(base)}
+        aria-label="Workspace changes"
+      />
     </SettingsFrame>
   );
 }

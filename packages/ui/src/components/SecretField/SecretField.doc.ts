@@ -15,5 +15,14 @@ export const doc: ComponentDoc = {
     ['Enter / Space', 'On Rotate: opens the confirmation (focus moves into it)'],
     ['Escape', 'Closes the confirmation without rotating; focus returns to Rotate'],
   ],
-  tokens: ['background', 'border', 'secondary', 'foreground', 'muted-foreground', 'primary-text', 'warning', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'secondary',
+    'foreground',
+    'muted-foreground',
+    'primary-text',
+    'warning',
+    'focus-ring',
+  ],
 };

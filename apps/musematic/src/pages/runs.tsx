@@ -1,4 +1,11 @@
-import { DEPLOYMENT_COLUMNS, DescriptionListCard, PageHeader, TokenCostCard, TraceWaterfall, type SavedView } from '@gntik-ai/blocks';
+import {
+  DEPLOYMENT_COLUMNS,
+  DescriptionListCard,
+  PageHeader,
+  TokenCostCard,
+  TraceWaterfall,
+  type SavedView,
+} from '@gntik-ai/blocks';
 import { Bot, Clock, Cpu, RotateCw, Zap } from '@gntik-ai/icons';
 import { ConsoleShell, ResourceIndexPage } from '@gntik-ai/templates';
 import { Grid, GridItem, Page, Stack } from '@gntik-ai/ui';
@@ -12,7 +19,14 @@ const runColumns = DEPLOYMENT_COLUMNS.map((c) => ({ ...c, header: HEADERS[c.id] 
 
 const runViews: SavedView[] = [
   { value: 'all', label: 'All runs', filters: [] },
-  { value: 'failing', label: 'Failed or retrying', filters: [{ field: 'status', value: 'Failed' }, { field: 'status', value: 'Degraded' }] },
+  {
+    value: 'failing',
+    label: 'Failed or retrying',
+    filters: [
+      { field: 'status', value: 'Failed' },
+      { field: 'status', value: 'Degraded' },
+    ],
+  },
   { value: 'approval', label: 'Awaiting approval', filters: [{ field: 'status', value: 'Paused' }] },
 ];
 
@@ -41,7 +55,13 @@ export function RunTrace({ id }: { id: string }) {
   const run = findRun(id);
   if (!run) return <NotFound />;
   return (
-    <ConsoleShell {...shellFor('/runs')} breadcrumbs={[{ label: 'Runs', href: '/runs' }, { label: run.id, mono: true }]}>
+    <ConsoleShell
+      {...shellFor('/runs')}
+      breadcrumbs={[
+        { label: 'Runs', href: '/runs' },
+        { label: run.id, mono: true },
+      ]}
+    >
       <Page
         width="wide"
         header={
@@ -54,11 +74,20 @@ export function RunTrace({ id }: { id: string }) {
               { label: 'Agent', value: run.agentName, icon: Bot, mono: true },
               { label: 'Model', value: run.model, icon: Cpu, mono: true },
               { label: 'Duration', value: ms(run.durationMs), icon: Zap, mono: true },
-              { label: 'Started', value: run.startedAt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }), icon: Clock },
+              {
+                label: 'Started',
+                value: run.startedAt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+                icon: Clock,
+              },
             ]}
             tabs={null}
             actions={[
-              { label: 'Open agent', icon: Bot, variant: 'secondary', onClick: () => navigate(`/agents/${run.agentId}`) },
+              {
+                label: 'Open agent',
+                icon: Bot,
+                variant: 'secondary',
+                onClick: () => navigate(`/agents/${run.agentId}`),
+              },
               { label: 'Re-run', icon: RotateCw, variant: 'primary' },
             ]}
           />
@@ -69,7 +98,12 @@ export function RunTrace({ id }: { id: string }) {
             <TraceWaterfall key={run.id} spans={run.spans} title="Trace" />
           </GridItem>
           <Stack gap={6}>
-            <TokenCostCard periods={runUsage(run)} currency="USD" title="Tokens and cost" description={`${run.model} · budget per run`} />
+            <TokenCostCard
+              periods={runUsage(run)}
+              currency="USD"
+              title="Tokens and cost"
+              description={`${run.model} · budget per run`}
+            />
             <DescriptionListCard
               title="Run"
               description="How this run started and where it ran."

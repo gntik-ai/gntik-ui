@@ -22,7 +22,10 @@ const call = async (name, args = {}) => {
 const fenced = (md) => /```tsx\n([\s\S]*?)\n```/.exec(md)?.[1] ?? '';
 
 before(async () => {
-  const server = buildServer({ getIndex: () => index, sync: async () => ({ root: ROOT, source: 'dir', stats: index.stats }) });
+  const server = buildServer({
+    getIndex: () => index,
+    sync: async () => ({ root: ROOT, source: 'dir', stats: index.stats }),
+  });
   const [a, b] = InMemoryTransport.createLinkedPair();
   await server.connect(a);
   await client.connect(b);
@@ -44,17 +47,27 @@ test('get_adoption_guide: documents the synchronous external file for strict CSP
 
 test('kit: registry loads every kind', () => {
   for (const kind of ['component', 'layout', 'block', 'template']) {
-    assert.ok(kit.items.some((i) => i.kind === kind), `kit has ${kind}s`);
+    assert.ok(
+      kit.items.some((i) => i.kind === kind),
+      `kit has ${kind}s`,
+    );
   }
   assert.equal(kit.byId.get('button')?.package, '@gntik-ai/ui');
 });
 
 test('kit: doc parsing reads keyboard, tokens, uses and template blocks', () => {
-  const info = parseDocInfo(`export const doc = { name: 'X', primitive: '@base-ui/react/x', keyboard: [['Enter', 'Opens [it]'], ["Esc", 'Closes']], tokens: ['primary', 'border'] };`);
+  const info = parseDocInfo(
+    `export const doc = { name: 'X', primitive: '@base-ui/react/x', keyboard: [['Enter', 'Opens [it]'], ["Esc", 'Closes']], tokens: ['primary', 'border'] };`,
+  );
   assert.equal(info.primitive, '@base-ui/react/x');
-  assert.deepEqual(info.keyboard, [['Enter', 'Opens [it]'], ['Esc', 'Closes']]);
+  assert.deepEqual(info.keyboard, [
+    ['Enter', 'Opens [it]'],
+    ['Esc', 'Closes'],
+  ]);
   assert.deepEqual(info.tokens, ['primary', 'border']);
-  const tpl = parseDocInfo(`export const meta = { layout: 'SidebarLayout + Page', blocks: ['kpi-row', 'chart-card'], uses: [] };`);
+  const tpl = parseDocInfo(
+    `export const meta = { layout: 'SidebarLayout + Page', blocks: ['kpi-row', 'chart-card'], uses: [] };`,
+  );
   assert.equal(tpl.layout, 'SidebarLayout + Page');
   assert.deepEqual(tpl.blocks, ['kpi-row', 'chart-card']);
 });
@@ -62,7 +75,11 @@ test('kit: doc parsing reads keyboard, tokens, uses and template blocks', () => 
 test('kit: export names, required props and example import rewriting', () => {
   assert.equal(exportNameOf(ROOT, kit.byId.get('home-dashboard')), 'HomeDashboardPage');
   assert.equal(exportNameOf(ROOT, kit.byId.get('kpi-row')), 'KpiRow');
-  assert.equal(exportNameOf(ROOT, kit.byId.get('inline-edit-row')), 'InlineEditTable', 'a block whose main export needs props falls back to a bare one');
+  assert.equal(
+    exportNameOf(ROOT, kit.byId.get('inline-edit-row')),
+    'InlineEditTable',
+    'a block whose main export needs props falls back to a bare one',
+  );
   assert.ok(hasRequiredProps('export interface AProps {\n  row: T;\n  b?: string;\n}', 'A'));
   assert.ok(!hasRequiredProps('export interface AProps {\n  b?: string;\n  /** x: y */\n}', 'A'));
   assert.equal(
@@ -79,7 +96,10 @@ test('list_kit: filters by kind, group and query', async () => {
   assert.match(settings, /`settings-members`/);
   assert.doesNotMatch(settings, /`sign-in`/);
   const q = filterKit(kit.items, { query: 'sign in' });
-  assert.ok(q.some((i) => i.id === 'sign-in'), 'query matches');
+  assert.ok(
+    q.some((i) => i.id === 'sign-in'),
+    'query matches',
+  );
   assert.match(await call('list_kit', { query: 'zzzz-nothing' }), /No kit items match/);
 });
 
@@ -154,14 +174,31 @@ test('public-hub: Auth template lists its composition, props, keyboard and examp
   assert.equal(item.group, 'Auth');
   const documentation = await call('get_template', { id: 'public-hub', include_source: false });
   for (const text of [
-    '**Layout:** AuthLayout', '`page-header`', 'instead of landing',
-    '**ARIA pattern:**', '## Keyboard', '| Tab / Shift+Tab |', '| Enter |',
-    'PublicHubPage', 'Skip to main content',
-  ]) assert.ok(documentation.includes(text), `catalogue includes ${text}`);
+    '**Layout:** AuthLayout',
+    '`page-header`',
+    'instead of landing',
+    '**ARIA pattern:**',
+    '## Keyboard',
+    '| Tab / Shift+Tab |',
+    '| Enter |',
+    'PublicHubPage',
+    'Skip to main content',
+  ])
+    assert.ok(documentation.includes(text), `catalogue includes ${text}`);
   for (const prop of [
-    'eyebrow', 'title', 'description', 'cards', 'primaryAction', 'secondaryAction',
-    'tertiaryLink', 'footer', 'loading', 'logo', 'loadingLabel',
-  ]) assert.ok(documentation.includes(`| ${prop} |`), `documents ${prop}`);
+    'eyebrow',
+    'title',
+    'description',
+    'cards',
+    'primaryAction',
+    'secondaryAction',
+    'tertiaryLink',
+    'footer',
+    'loading',
+    'logo',
+    'loadingLabel',
+  ])
+    assert.ok(documentation.includes(`| ${prop} |`), `documents ${prop}`);
   for (const theme of ['dark', 'light', 'high_contrast']) {
     assert.ok(documentation.includes(`defaultMode="${theme}"`), `example for ${theme}`);
   }
@@ -233,7 +270,11 @@ test('scaffold_preset: monogram and converted SVG with token colours', async () 
   assert.match(svg.code, /className="fill-primary"/);
   assert.doesNotMatch(svg.code, /#33CE73|<title>|class=|st0/);
   assert.equal(validatePage(svg.code).errors, 0, 'tokenised artwork passes the brand validator');
-  const kept = scaffoldPreset({ name: 'Orbit', svg: '<svg viewBox="0 0 8 8"><circle r="4" fill="#33CE73"/></svg>', colors: 'keep' });
+  const kept = scaffoldPreset({
+    name: 'Orbit',
+    svg: '<svg viewBox="0 0 8 8"><circle r="4" fill="#33CE73"/></svg>',
+    colors: 'keep',
+  });
   assert.match(kept.code, /fill="#33CE73"/);
   assert.ok(kept.notes.some((n) => /colours kept/i.test(n)));
   assert.equal(svgToJsx('<g stroke-linecap="round"></g>'), '<g strokeLinecap="round" />');

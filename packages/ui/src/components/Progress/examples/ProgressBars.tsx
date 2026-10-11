@@ -12,8 +12,12 @@ export default function ProgressBars() {
       <Progress label="Waiting for a runner" value={null} size="sm" />
       <Progress aria-label="Upload" value={58} tone="warning" />
       <div className="flex gap-2">
-        <Button size="sm" variant="secondary" onClick={() => setValue((v) => Math.max(0, v - 10))}>Back</Button>
-        <Button size="sm" onClick={() => setValue((v) => Math.min(100, v + 10))}>Advance</Button>
+        <Button size="sm" variant="secondary" onClick={() => setValue((v) => Math.max(0, v - 10))}>
+          Back
+        </Button>
+        <Button size="sm" onClick={() => setValue((v) => Math.min(100, v + 10))}>
+          Advance
+        </Button>
       </div>
     </div>
   );

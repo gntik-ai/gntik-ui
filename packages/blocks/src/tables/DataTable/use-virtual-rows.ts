@@ -20,7 +20,13 @@ export interface UseVirtualRowsOptions {
 }
 
 /** Computes a virtual window from the table container's scroll position. */
-export function windowFor(count: number, scrollTop: number, viewport: number, rowHeight: number, overscan: number): VirtualWindow {
+export function windowFor(
+  count: number,
+  scrollTop: number,
+  viewport: number,
+  rowHeight: number,
+  overscan: number,
+): VirtualWindow {
   const h = Math.max(1, rowHeight);
   const first = Math.floor(Math.max(0, scrollTop) / h);
   const visible = Math.ceil(viewport / h) + 1;
@@ -33,7 +39,14 @@ export function windowFor(count: number, scrollTop: number, viewport: number, ro
  * Row virtualization for the DataTable: listens to the scroll container of the table and returns
  * the window of items to render, or `undefined` when disabled.
  */
-export function useVirtualRows({ enabled, count, rowHeight, tableRef, viewportHeight, overscan = 8 }: UseVirtualRowsOptions): VirtualWindow | undefined {
+export function useVirtualRows({
+  enabled,
+  count,
+  rowHeight,
+  tableRef,
+  viewportHeight,
+  overscan = 8,
+}: UseVirtualRowsOptions): VirtualWindow | undefined {
   const [scroll, setScroll] = useState({ top: 0, height: viewportHeight });
 
   useEffect(() => {
@@ -49,7 +62,10 @@ export function useVirtualRows({ enabled, count, rowHeight, tableRef, viewportHe
     };
     const schedule = () => {
       if (frame) return;
-      frame = typeof requestAnimationFrame === 'function' ? requestAnimationFrame(read) : (setTimeout(read, 0) as unknown as number);
+      frame =
+        typeof requestAnimationFrame === 'function'
+          ? requestAnimationFrame(read)
+          : (setTimeout(read, 0) as unknown as number);
     };
     el.addEventListener('scroll', schedule, { passive: true });
     const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(schedule);

@@ -66,7 +66,9 @@ describe('Toast actions', () => {
     expect(screen.getByRole('dialog', { name: 'Saved draft' })).toBeInTheDocument();
     await user.click(document.body);
     fireEvent.blur(document.activeElement ?? document.body);
-    await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Saved draft' })).not.toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Saved draft' })).not.toBeInTheDocument(), {
+      timeout: 2000,
+    });
   });
 
   it('pauses auto-dismiss while hovered', async () => {
@@ -99,7 +101,10 @@ describe('toast.promise', () => {
     const user = userEvent.setup();
     render(
       <ToastProvider>
-        <PromiseTrigger task={() => d.promise} options={{ loading: 'Saving…', success: (r) => `Saved ${r.n} rows`, error: 'Failed' }} />
+        <PromiseTrigger
+          task={() => d.promise}
+          options={{ loading: 'Saving…', success: (r) => `Saved ${r.n} rows`, error: 'Failed' }}
+        />
         <Toaster />
       </ToastProvider>,
     );
@@ -119,7 +124,11 @@ describe('toast.promise', () => {
       <ToastProvider>
         <PromiseTrigger
           task={() => d.promise}
-          options={{ loading: { title: 'Deploying…' }, success: 'Done', error: (e) => ({ title: 'Deploy failed', description: String((e as Error).message) }) }}
+          options={{
+            loading: { title: 'Deploying…' },
+            success: 'Done',
+            error: (e) => ({ title: 'Deploy failed', description: String((e as Error).message) }),
+          }}
         />
         <Toaster />
       </ToastProvider>,

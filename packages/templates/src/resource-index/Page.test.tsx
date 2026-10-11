@@ -57,31 +57,49 @@ describe('ResourceIndexPage', () => {
     { id: 'state', header: 'State', accessor: (r) => r.state },
   ];
 
-  it('is generic over the row type: columns, filter fields and statuses come from props', { timeout: 15000 }, async () => {
-    render(
-      <ResourceIndexPage<Agent>
-        title="Agents"
-        noun={['agent', 'agents']}
-        rows={agents}
-        columns={agentColumns}
-        filterFields={[{ id: 'state', label: 'State', options: ['Active', 'Draft', 'Retired'] }]}
-        savedViews={[{ value: 'all', label: 'All agents', filters: [] }]}
-      />,
-    );
-    const table = screen.getByRole('table', { name: 'Agents' });
-    expect(within(table).getAllByRole('row')).toHaveLength(4);
-    await userEvent.type(screen.getByRole('searchbox', { name: 'Search' }), 'summ');
-    expect(within(table).getAllByRole('row')).toHaveLength(2);
-  });
+  it(
+    'is generic over the row type: columns, filter fields and statuses come from props',
+    { timeout: 15000 },
+    async () => {
+      render(
+        <ResourceIndexPage<Agent>
+          title="Agents"
+          noun={['agent', 'agents']}
+          rows={agents}
+          columns={agentColumns}
+          filterFields={[{ id: 'state', label: 'State', options: ['Active', 'Draft', 'Retired'] }]}
+          savedViews={[{ value: 'all', label: 'All agents', filters: [] }]}
+        />,
+      );
+      const table = screen.getByRole('table', { name: 'Agents' });
+      expect(within(table).getAllByRole('row')).toHaveLength(4);
+      await userEvent.type(screen.getByRole('searchbox', { name: 'Search' }), 'summ');
+      expect(within(table).getAllByRole('row')).toHaveLength(2);
+    },
+  );
 
   it('links the name cell through the LinkProvider and reports row clicks', { timeout: 15000 }, async () => {
     const onRowClick = vi.fn();
     const RouterLink = ({ href, ...props }: ComponentPropsWithRef<'a'>) => (
-      <a data-router="" href={href} {...props} onClick={(e) => { e.preventDefault(); props.onClick?.(e); }} />
+      <a
+        data-router=""
+        href={href}
+        {...props}
+        onClick={(e) => {
+          e.preventDefault();
+          props.onClick?.(e);
+        }}
+      />
     );
     const { container } = render(
       <LinkProvider component={RouterLink}>
-        <ResourceIndexPage<Agent> title="Agents" rows={agents} columns={agentColumns} getRowHref={(r) => `/agents/${r.id}`} onRowClick={onRowClick} />
+        <ResourceIndexPage<Agent>
+          title="Agents"
+          rows={agents}
+          columns={agentColumns}
+          getRowHref={(r) => `/agents/${r.id}`}
+          onRowClick={onRowClick}
+        />
       </LinkProvider>,
     );
     const link = screen.getByRole('link', { name: 'triage-bot' });

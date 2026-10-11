@@ -27,8 +27,12 @@ describe('Button', () => {
     const onClick = vi.fn();
     render(
       <>
-        <Button disabled onClick={onClick}>Off</Button>
-        <Button loading onClick={onClick}>Busy</Button>
+        <Button disabled onClick={onClick}>
+          Off
+        </Button>
+        <Button loading onClick={onClick}>
+          Busy
+        </Button>
       </>,
     );
     await user.click(screen.getByRole('button', { name: 'Off' }));
@@ -46,14 +50,23 @@ describe('Button', () => {
   });
 
   it('applies variant classes and merges className', () => {
-    render(<Button variant="soft" className="px-8">Soft</Button>);
+    render(
+      <Button variant="soft" className="px-8">
+        Soft
+      </Button>,
+    );
     const btn = screen.getByRole('button', { name: 'Soft' });
     expect(btn).toHaveClass('text-primary-chip-text', 'px-8');
     expect(btn).not.toHaveClass('px-control');
   });
 
   it('examples have no axe violations', async () => {
-    render(<><ButtonVariants /><ButtonStates /></>);
+    render(
+      <>
+        <ButtonVariants />
+        <ButtonStates />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

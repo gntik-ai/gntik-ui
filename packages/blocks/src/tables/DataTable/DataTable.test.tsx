@@ -3,7 +3,15 @@ import userEvent from '@testing-library/user-event';
 import { DensityProvider } from '@gntik-ai/ui';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { DataTable } from './DataTable';
-import { compareValues, groupRows, paginate, selectionState, sortRows, toggleAll, type DataTableColumn } from './data-table-utils';
+import {
+  compareValues,
+  groupRows,
+  paginate,
+  selectionState,
+  sortRows,
+  toggleAll,
+  type DataTableColumn,
+} from './data-table-utils';
 import GroupedDataTable from './examples/grouped';
 import { DEPLOYMENT_COLUMNS, DEPLOYMENT_ROWS } from './fixtures';
 
@@ -35,7 +43,9 @@ describe('DataTable', () => {
   it('selects rows, with select-all and indeterminate', async () => {
     const user = userEvent.setup();
     const onSelectionChange = vi.fn();
-    render(<DataTable onSelectionChange={onSelectionChange} bulkActions={() => <button type="button">Pause</button>} />);
+    render(
+      <DataTable onSelectionChange={onSelectionChange} bulkActions={() => <button type="button">Pause</button>} />,
+    );
     const all = screen.getByRole('checkbox', { name: 'Select all rows on this page' });
     await user.click(screen.getByRole('checkbox', { name: `Select ${DEPLOYMENT_ROWS[0]!.name}` }));
     expect(all).toHaveAttribute('aria-checked', 'mixed');
@@ -55,7 +65,13 @@ describe('DataTable', () => {
     await user.click(screen.getByRole('checkbox', { name: `Select ${DEPLOYMENT_ROWS[0]!.name}` }));
     expect(screen.queryByText('1 selected')).toBeNull();
     expect(screen.getByText('Filters here')).toBeInTheDocument();
-    rerender(<DataTable selectionSummary={false} toolbar={<span>Filters here</span>} bulkActions={() => <button type="button">Pause</button>} />);
+    rerender(
+      <DataTable
+        selectionSummary={false}
+        toolbar={<span>Filters here</span>}
+        bulkActions={() => <button type="button">Pause</button>}
+      />,
+    );
     expect(screen.queryByText('1 selected')).toBeNull();
     expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
   });
@@ -68,7 +84,13 @@ describe('DataTable', () => {
       { id: 'note', header: 'Note', accessor: (r) => r.note, variant: 'muted' },
       { id: 'cost', header: 'Cost', accessor: (r) => r.cost, variant: 'numeric', className: 'font-semibold' },
     ];
-    render(<DataTable<Row> rows={[{ id: 'a', name: 'api', region: 'eu-west-1', note: 'Paused', cost: 12 }]} columns={columns} selectable={false} />);
+    render(
+      <DataTable<Row>
+        rows={[{ id: 'a', name: 'api', region: 'eu-west-1', note: 'Paused', cost: 12 }]}
+        columns={columns}
+        selectable={false}
+      />,
+    );
     expect(screen.getByText('api').closest('td')).not.toHaveClass('font-mono');
     expect(screen.getByText('eu-west-1').closest('td')).toHaveClass('font-mono');
     expect(screen.getByText('Paused').closest('td')).toHaveClass('text-muted-foreground');
@@ -130,8 +152,18 @@ describe('data-table-utils', () => {
   ];
 
   it('sorts with nulls last in both directions', () => {
-    expect(sortRows(rows, cols, { columnId: 'n', direction: 'ascending' }).map((r) => r.id)).toEqual(['c', 'd', 'a', 'b']);
-    expect(sortRows(rows, cols, { columnId: 'n', direction: 'descending' }).map((r) => r.id)).toEqual(['a', 'd', 'c', 'b']);
+    expect(sortRows(rows, cols, { columnId: 'n', direction: 'ascending' }).map((r) => r.id)).toEqual([
+      'c',
+      'd',
+      'a',
+      'b',
+    ]);
+    expect(sortRows(rows, cols, { columnId: 'n', direction: 'descending' }).map((r) => r.id)).toEqual([
+      'a',
+      'd',
+      'c',
+      'b',
+    ]);
     expect(sortRows(rows, cols, null)).toEqual(rows);
     expect(compareValues('item 2', 'item 10')).toBeLessThan(0);
   });
@@ -214,11 +246,19 @@ describe('DataTable groupBy', () => {
     expect(screen.getByRole('table')).toHaveAttribute('data-density', 'compact');
     for (const g of screen.getAllByRole('rowgroup').slice(1)) expect(within(g).getAllByRole('row')).toHaveLength(1);
     // Rows in collapsed groups are not part of select-all.
-    expect(screen.getByRole('checkbox', { name: 'Select all rows on this page' })).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByRole('checkbox', { name: 'Select all rows on this page' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
   it('groupRows keeps first-appearance order and in-group order', () => {
-    const rows = [{ g: 'b', n: 1 }, { g: 'a', n: 2 }, { g: 'b', n: 3 }, { g: null, n: 4 }];
+    const rows = [
+      { g: 'b', n: 1 },
+      { g: 'a', n: 2 },
+      { g: 'b', n: 3 },
+      { g: null, n: 4 },
+    ];
     expect(groupRows(rows, 'g')).toEqual([
       { key: 'b', rows: [rows[0], rows[2]] },
       { key: 'a', rows: [rows[1]] },

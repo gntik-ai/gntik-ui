@@ -14,7 +14,8 @@ export interface Workspace {
 const s = workspaceSwitcherVariants();
 
 /** Trigger name: the current workspace first (matches the visible text), then the action. */
-export const triggerLabel = (current: Workspace | undefined, label: string) => (current ? `${current.name}, ${label}` : label);
+export const triggerLabel = (current: Workspace | undefined, label: string) =>
+  current ? `${current.name}, ${label}` : label;
 
 export function WorkspaceLogo({ workspace, current }: { workspace: Workspace; current?: boolean }) {
   return (

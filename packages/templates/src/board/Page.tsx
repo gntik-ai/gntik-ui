@@ -20,7 +20,18 @@ import {
 } from '@gntik-ai/ui';
 import { useId, useState } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
-import { boardBreadcrumbs, boardCards, boardColumns, boardState, locate, priorityLabels, priorityTones, type BoardCard, type BoardColumn, type BoardState } from './data';
+import {
+  boardBreadcrumbs,
+  boardCards,
+  boardColumns,
+  boardState,
+  locate,
+  priorityLabels,
+  priorityTones,
+  type BoardCard,
+  type BoardColumn,
+  type BoardState,
+} from './data';
 import { Lane } from './Lane';
 import { useBoard } from './useBoard';
 
@@ -65,10 +76,21 @@ export default function BoardPage(props: Partial<BoardProps>) {
       <Page
         width="full"
         header={
-          <PageHeader breadcrumbs={null} title={title} description={description} status="" meta={[]} tabs={null} actions={[{ label: 'New card', icon: Plus, onClick: onCreate }]} />
+          <PageHeader
+            breadcrumbs={null}
+            title={title}
+            description={description}
+            status=""
+            meta={[]}
+            tabs={null}
+            actions={[{ label: 'New card', icon: Plus, onClick: onCreate }]}
+          />
         }
       >
-        <VisuallyHidden id={`${ids}-help`}>Press Space to pick up the card, arrow keys to move it, Space to drop and Escape to cancel. Enter opens the details.</VisuallyHidden>
+        <VisuallyHidden id={`${ids}-help`}>
+          Press Space to pick up the card, arrow keys to move it, Space to drop and Escape to cancel. Enter opens the
+          details.
+        </VisuallyHidden>
         <VisuallyHidden aria-live="assertive" aria-atomic="true">
           {board.announcement}
         </VisuallyHidden>
@@ -132,7 +154,18 @@ export default function BoardPage(props: Partial<BoardProps>) {
                       {open.assignee}
                     </dd>
                     <dt className="text-muted-foreground">Due</dt>
-                    <dd className="text-foreground">{open.due ? <Timestamp value={open.due} format="absolute" tooltip={false} dateOptions={{ dateStyle: 'medium' }} /> : 'No due date'}</dd>
+                    <dd className="text-foreground">
+                      {open.due ? (
+                        <Timestamp
+                          value={open.due}
+                          format="absolute"
+                          tooltip={false}
+                          dateOptions={{ dateStyle: 'medium' }}
+                        />
+                      ) : (
+                        'No due date'
+                      )}
+                    </dd>
                   </dl>
                 </Stack>
               </DrawerBody>

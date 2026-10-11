@@ -12,10 +12,37 @@ const functionColumns: DataTableColumn<FalconeFunction>[] = [
   { id: 'project', header: 'Project', accessor: (f) => f.projectId, sortable: true },
   { id: 'stage', header: 'Stage', accessor: (f) => f.stage, sortable: true },
   { id: 'runtime', header: 'Runtime', accessor: (f) => f.runtime, sortable: true },
-  { id: 'status', header: 'Status', accessor: (f) => f.status, cell: (f) => <StatusTag status={f.status} />, sortable: true },
-  { id: 'invocations', header: 'Invocations · 24h', accessor: (f) => f.invocations24h, cell: (f) => count.format(f.invocations24h), sortable: true, align: 'right' },
-  { id: 'p95', header: 'p95', accessor: (f) => f.p95Ms, cell: (f) => `${count.format(f.p95Ms)} ms`, sortable: true, align: 'right' },
-  { id: 'errors', header: 'Errors', accessor: (f) => f.errorRate, cell: (f) => `${(f.errorRate * 100).toFixed(2)}%`, sortable: true, align: 'right' },
+  {
+    id: 'status',
+    header: 'Status',
+    accessor: (f) => f.status,
+    cell: (f) => <StatusTag status={f.status} />,
+    sortable: true,
+  },
+  {
+    id: 'invocations',
+    header: 'Invocations · 24h',
+    accessor: (f) => f.invocations24h,
+    cell: (f) => count.format(f.invocations24h),
+    sortable: true,
+    align: 'right',
+  },
+  {
+    id: 'p95',
+    header: 'p95',
+    accessor: (f) => f.p95Ms,
+    cell: (f) => `${count.format(f.p95Ms)} ms`,
+    sortable: true,
+    align: 'right',
+  },
+  {
+    id: 'errors',
+    header: 'Errors',
+    accessor: (f) => f.errorRate,
+    cell: (f) => `${(f.errorRate * 100).toFixed(2)}%`,
+    sortable: true,
+    align: 'right',
+  },
 ];
 
 const functionFilters: FilterField[] = [
@@ -27,7 +54,14 @@ const functionFilters: FilterField[] = [
 const functionViews: SavedView[] = [
   { value: 'all', label: 'All functions', filters: [] },
   { value: 'prod', label: 'prod', filters: [{ field: 'stage', value: 'prod' }] },
-  { value: 'attention', label: 'Needs attention', filters: [{ field: 'status', value: 'Degraded' }, { field: 'status', value: 'Failed' }] },
+  {
+    value: 'attention',
+    label: 'Needs attention',
+    filters: [
+      { field: 'status', value: 'Degraded' },
+      { field: 'status', value: 'Failed' },
+    ],
+  },
 ];
 
 /** Functions across every project; the project cell links to the project detail. */

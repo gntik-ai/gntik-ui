@@ -24,6 +24,8 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Format
+        run: pnpm format:check
       # Packages consume each other's built dist (chat/blocks/templates → ui), so build first
       # (pnpm -r build runs in dependency order).
       - name: Build

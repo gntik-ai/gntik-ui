@@ -144,13 +144,25 @@ export function Lightbox({
             </span>
             {!isVideo && (
               <>
-                <button type="button" className={s.control()} aria-label={labels.zoomOut} disabled={zoom <= 1} onClick={() => setZoom(zoom - 0.5)}>
+                <button
+                  type="button"
+                  className={s.control()}
+                  aria-label={labels.zoomOut}
+                  disabled={zoom <= 1}
+                  onClick={() => setZoom(zoom - 0.5)}
+                >
                   <ZoomOut size={16} aria-hidden />
                 </button>
                 <span className={s.zoomValue()} aria-hidden>
                   {Math.round(zoom * 100)}%
                 </span>
-                <button type="button" className={s.control()} aria-label={labels.zoomIn} disabled={zoom >= maxZoom} onClick={() => setZoom(zoom + 0.5)}>
+                <button
+                  type="button"
+                  className={s.control()}
+                  aria-label={labels.zoomIn}
+                  disabled={zoom >= maxZoom}
+                  onClick={() => setZoom(zoom + 0.5)}
+                >
                   <ZoomIn size={16} aria-hidden />
                 </button>
               </>
@@ -161,7 +173,13 @@ export function Lightbox({
           </div>
           <div className={s.stageWrap()}>
             {total > 1 && (
-              <button type="button" className={cn(s.nav(), s.prev())} aria-label={labels.previous} disabled={atStart} onClick={() => go(current - 1)}>
+              <button
+                type="button"
+                className={cn(s.nav(), s.prev())}
+                aria-label={labels.previous}
+                disabled={atStart}
+                onClick={() => go(current - 1)}
+              >
                 <ChevronLeft size={18} aria-hidden className="rtl:-scale-x-100" />
               </button>
             )}
@@ -169,7 +187,15 @@ export function Lightbox({
               <div className={s.stage()} onDoubleClick={() => !isVideo && setZoom(zoom > 1 ? 1 : 2)}>
                 {item &&
                   (isVideo ? (
-                    <video key={item.src} src={item.src} poster={item.poster} controls aria-label={item.alt} className={s.media()} style={{ maxHeight: '100%' }}>
+                    <video
+                      key={item.src}
+                      src={item.src}
+                      poster={item.poster}
+                      controls
+                      aria-label={item.alt}
+                      className={s.media()}
+                      style={{ maxHeight: '100%' }}
+                    >
                       {item.captions && <track kind="captions" src={item.captions} default />}
                     </video>
                   ) : (
@@ -179,14 +205,24 @@ export function Lightbox({
                       alt={item.alt}
                       draggable={false}
                       className={s.media()}
-                      style={{ height: zoom > 1 ? `${zoom * 100}%` : undefined, maxHeight: zoom > 1 ? 'none' : '100%', maxWidth: zoom > 1 ? 'none' : '100%' }}
+                      style={{
+                        height: zoom > 1 ? `${zoom * 100}%` : undefined,
+                        maxHeight: zoom > 1 ? 'none' : '100%',
+                        maxWidth: zoom > 1 ? 'none' : '100%',
+                      }}
                     />
                   ))}
               </div>
               {item?.caption != null && <figcaption className={s.caption()}>{item.caption}</figcaption>}
             </figure>
             {total > 1 && (
-              <button type="button" className={cn(s.nav(), s.next())} aria-label={labels.next} disabled={atEnd} onClick={() => go(current + 1)}>
+              <button
+                type="button"
+                className={cn(s.nav(), s.next())}
+                aria-label={labels.next}
+                disabled={atEnd}
+                onClick={() => go(current + 1)}
+              >
                 <ChevronRight size={18} aria-hidden className="rtl:-scale-x-100" />
               </button>
             )}
@@ -196,7 +232,14 @@ export function Lightbox({
               {items.map((it, i) => {
                 const thumb = it.thumbnail ?? (it.type === 'video' ? it.poster : it.src);
                 return (
-                  <button key={`${it.src}-${i}`} type="button" className={s.thumb()} aria-label={labels.thumbnail(i, it.alt)} aria-current={i === current} onClick={() => go(i)}>
+                  <button
+                    key={`${it.src}-${i}`}
+                    type="button"
+                    className={s.thumb()}
+                    aria-label={labels.thumbnail(i, it.alt)}
+                    aria-current={i === current}
+                    onClick={() => go(i)}
+                  >
                     {thumb && <img src={thumb} alt="" className={s.thumbImg()} />}
                     {it.type === 'video' && (
                       <span className={s.thumbBadge()} aria-hidden>

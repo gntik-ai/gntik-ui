@@ -9,15 +9,44 @@ it('creates through an overlay of a mounted list, with step-local error and empt
   const onFinish = vi.fn();
   function List() {
     const [open, setOpen] = useState(false);
-    return <>
-      <main><h1>Projects</h1><input aria-label="Filter projects" defaultValue="Keep me" />
-        <button onClick={() => setOpen(true)}>New project</button></main>
-      <CreateWizardPage mode="overlay" open={open} onOpenChange={setOpen} description="Configure a project"
-        onFinish={(values) => { onFinish(values); setOpen(false); }}
-        stepFeedback={(step) => step === 1 ? <ErrorPanel title="Source unavailable" message="Try again" requestId="" details="" secondaryAction={null} />
-          : step === 2 ? <FirstRunEmpty title="No environments" description="Create one later" actionLabel="Continue setup" secondary={null} steps={[]} /> : null}
-      />
-    </>;
+    return (
+      <>
+        <main>
+          <h1>Projects</h1>
+          <input aria-label="Filter projects" defaultValue="Keep me" />
+          <button onClick={() => setOpen(true)}>New project</button>
+        </main>
+        <CreateWizardPage
+          mode="overlay"
+          open={open}
+          onOpenChange={setOpen}
+          description="Configure a project"
+          onFinish={(values) => {
+            onFinish(values);
+            setOpen(false);
+          }}
+          stepFeedback={(step) =>
+            step === 1 ? (
+              <ErrorPanel
+                title="Source unavailable"
+                message="Try again"
+                requestId=""
+                details=""
+                secondaryAction={null}
+              />
+            ) : step === 2 ? (
+              <FirstRunEmpty
+                title="No environments"
+                description="Create one later"
+                actionLabel="Continue setup"
+                secondary={null}
+                steps={[]}
+              />
+            ) : null
+          }
+        />
+      </>
+    );
   }
   render(<List />);
   const filter = screen.getByRole('textbox', { name: 'Filter projects' });

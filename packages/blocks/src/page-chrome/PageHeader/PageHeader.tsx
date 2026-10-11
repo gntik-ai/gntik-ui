@@ -97,10 +97,18 @@ export function PageHeader({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-            <h1 ref={titleRef} tabIndex={titleRef != null ? -1 : undefined} className="min-w-0 truncate text-2xl font-bold tracking-tight text-foreground">{title}</h1>
+            <h1
+              ref={titleRef}
+              tabIndex={titleRef != null ? -1 : undefined}
+              className="min-w-0 truncate text-2xl font-bold tracking-tight text-foreground"
+            >
+              {title}
+            </h1>
             {status && <StatusTag status={status} statuses={statuses} />}
           </div>
-          {description != null && <p className="mt-1.5 max-w-2xl text-[13px] leading-6 text-muted-foreground">{description}</p>}
+          {description != null && (
+            <p className="mt-1.5 max-w-2xl text-[13px] leading-6 text-muted-foreground">{description}</p>
+          )}
           {meta.length > 0 && (
             <dl className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12.5px] text-muted-foreground">
               {meta.map(({ label, value, icon: Icon, mono }) => (

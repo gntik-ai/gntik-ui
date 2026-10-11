@@ -8,7 +8,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
     // Inlines the theme script in <head> so the stored theme applies before first paint.
-    { name: 'gntik-theme', transformIndexHtml: () => [{ tag: 'script', children: themeScript(), injectTo: 'head-prepend' }] },
+    {
+      name: 'gntik-theme',
+      transformIndexHtml: () => [{ tag: 'script', children: themeScript(), injectTo: 'head-prepend' }],
+    },
   ],
   // One React for the app and the kit packages (workspace links).
   resolve: { dedupe: ['react', 'react-dom'] },

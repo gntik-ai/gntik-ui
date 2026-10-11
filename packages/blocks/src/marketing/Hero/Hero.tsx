@@ -31,7 +31,11 @@ export function HeroScreenshotPlaceholder({ className }: { className?: string })
       <div className="flex">
         <div className="hidden w-36 shrink-0 space-y-2 border-e border-border bg-secondary/30 p-3 sm:block">
           {[70, 55, 80, 60, 45].map((w, i) => (
-            <div key={i} className={cn('h-2 rounded-full', i === 0 ? 'bg-primary/60' : 'bg-muted-foreground/20')} style={{ width: `${w}%` }} />
+            <div
+              key={i}
+              className={cn('h-2 rounded-full', i === 0 ? 'bg-primary/60' : 'bg-muted-foreground/20')}
+              style={{ width: `${w}%` }}
+            />
           ))}
         </div>
         <div className="min-w-0 flex-1 space-y-4 p-4">
@@ -85,7 +89,11 @@ export function Hero({
         <Heading className="mt-5 text-[36px] leading-[1.1] font-semibold tracking-tight text-balance text-foreground sm:text-[48px]">
           {title}
         </Heading>
-        {description && <p className="mt-5 max-w-2xl text-[16px] leading-relaxed text-pretty text-muted-foreground sm:text-[17px]">{description}</p>}
+        {description && (
+          <p className="mt-5 max-w-2xl text-[16px] leading-relaxed text-pretty text-muted-foreground sm:text-[17px]">
+            {description}
+          </p>
+        )}
         {(primaryAction || secondaryAction) && (
           <div className={cn('mt-8 flex flex-wrap items-center gap-3', !split && 'justify-center')}>
             {primaryAction && <ActionButton action={primaryAction} variant="primary" />}

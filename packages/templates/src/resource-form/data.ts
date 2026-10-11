@@ -46,8 +46,18 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function validateResourceForm(v: ResourceFormValues): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   if (!v.name.trim()) issues.push({ fieldId: FIELD_IDS.name, label: 'Project name', message: 'Enter a project name.' });
-  else if (!NAME_RE.test(v.name)) issues.push({ fieldId: FIELD_IDS.name, label: 'Project name', message: 'Use lowercase letters, numbers and dashes.' });
+  else if (!NAME_RE.test(v.name))
+    issues.push({
+      fieldId: FIELD_IDS.name,
+      label: 'Project name',
+      message: 'Use lowercase letters, numbers and dashes.',
+    });
   if (!v.region) issues.push({ fieldId: FIELD_IDS.region, label: 'Region', message: 'Choose a region.' });
-  if (!EMAIL_RE.test(v.billingEmail)) issues.push({ fieldId: FIELD_IDS.billingEmail, label: 'Billing email', message: 'Enter a valid email address, like name@company.com.' });
+  if (!EMAIL_RE.test(v.billingEmail))
+    issues.push({
+      fieldId: FIELD_IDS.billingEmail,
+      label: 'Billing email',
+      message: 'Enter a valid email address, like name@company.com.',
+    });
   return issues;
 }

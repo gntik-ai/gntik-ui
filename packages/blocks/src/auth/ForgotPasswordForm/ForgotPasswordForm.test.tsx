@@ -7,7 +7,9 @@ import { ForgotPasswordForm, type ForgotPasswordFormRef } from './ForgotPassword
 
 describe('ForgotPasswordForm', () => {
   it('can hide or replace inbox copy and both resend actions', () => {
-    const { rerender } = render(<ForgotPasswordForm defaultSent sentTitle={null} sentDescription={null} sentStatus={null} resendActions={null} />);
+    const { rerender } = render(
+      <ForgotPasswordForm defaultSent sentTitle={null} sentDescription={null} sentStatus={null} resendActions={null} />,
+    );
     expect(screen.queryByText('Check your email')).not.toBeInTheDocument();
     expect(screen.queryByText(/If an account exists/)).not.toBeInTheDocument();
     expect(screen.queryByText('Reset link sent.')).not.toBeInTheDocument();
@@ -27,13 +29,23 @@ describe('ForgotPasswordForm', () => {
   });
 
   it('configures request and sent copy and heading levels, including suppression', () => {
-    const { container, rerender } = render(<ForgotPasswordForm title="Recover access" description="Enter your account name." headingLevel="h2" />);
+    const { container, rerender } = render(
+      <ForgotPasswordForm title="Recover access" description="Enter your account name." headingLevel="h2" />,
+    );
     expect(screen.getByRole('heading', { level: 2, name: 'Recover access' })).toBeInTheDocument();
     expect(screen.getByText('Enter your account name.')).toBeInTheDocument();
     rerender(<ForgotPasswordForm headingLevel={null} aria-label="Recover access" />);
     expect(container.querySelector('h1,h2,h3,h4,h5,h6,[role="heading"]')).toBeNull();
     expect(screen.getByRole('form', { name: 'Recover access' })).toBeInTheDocument();
-    rerender(<ForgotPasswordForm key="sent" defaultSent sentTitle="Request received" sentDescription="If eligible, you will receive instructions." headingLevel="h2" />);
+    rerender(
+      <ForgotPasswordForm
+        key="sent"
+        defaultSent
+        sentTitle="Request received"
+        sentDescription="If eligible, you will receive instructions."
+        headingLevel="h2"
+      />,
+    );
     expect(screen.getByRole('heading', { level: 2, name: 'Request received' })).toBeInTheDocument();
     expect(screen.getByText('If eligible, you will receive instructions.')).toBeInTheDocument();
     rerender(<ForgotPasswordForm key="sent" headingLevel={null} />);
@@ -54,8 +66,13 @@ describe('ForgotPasswordForm', () => {
     );
     const input = screen.getByLabelText('Email');
     expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(input.getAttribute('aria-describedby')?.split(' ')).toEqual(expect.arrayContaining(['email-help', 'recovery-feedback']));
-    expect(screen.getByRole('form', { name: 'Reset password request' })).toHaveAttribute('aria-describedby', 'form-feedback');
+    expect(input.getAttribute('aria-describedby')?.split(' ')).toEqual(
+      expect.arrayContaining(['email-help', 'recovery-feedback']),
+    );
+    expect(screen.getByRole('form', { name: 'Reset password request' })).toHaveAttribute(
+      'aria-describedby',
+      'form-feedback',
+    );
     expect(screen.getByRole('alert')).toHaveAttribute('id', 'recovery-feedback');
     ref.current?.focus('identifier');
     expect(input).toHaveFocus();
@@ -79,7 +96,9 @@ describe('ForgotPasswordForm', () => {
     const error = screen.getByText('Username is required.').closest('[role="alert"]');
     expect(error).toBeInTheDocument();
     expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(input.getAttribute('aria-describedby')?.split(' ')).toEqual(expect.arrayContaining(['recovery-help', error?.id]));
+    expect(input.getAttribute('aria-describedby')?.split(' ')).toEqual(
+      expect.arrayContaining(['recovery-help', error?.id]),
+    );
     await userEvent.type(input, 'ab');
     expect(screen.getByText('Username is too short.')).toBeInTheDocument();
     await userEvent.type(input, 'c');
@@ -91,7 +110,14 @@ describe('ForgotPasswordForm', () => {
     const onSubmit = vi.fn();
     render(
       <ForgotPasswordForm
-        identifier={{ type: 'text', autoComplete: 'username', label: 'Username or email', help: 'Use your account name or email.', placeholder: 'Account name', maxLength: 255 }}
+        identifier={{
+          type: 'text',
+          autoComplete: 'username',
+          label: 'Username or email',
+          help: 'Use your account name or email.',
+          placeholder: 'Account name',
+          maxLength: 255,
+        }}
         onSubmit={onSubmit}
       />,
     );
@@ -139,11 +165,23 @@ describe('ForgotPasswordForm accessibility matrix', () => {
                 <h1>Account access</h1>
                 <ForgotPasswordForm
                   identifier={
-                    mode === 'username' ? { type: 'text', autoComplete: 'username', label: 'Username', help: 'Use your account name.', minLength: 3, maxLength: 255 } : undefined
+                    mode === 'username'
+                      ? {
+                          type: 'text',
+                          autoComplete: 'username',
+                          label: 'Username',
+                          help: 'Use your account name.',
+                          minLength: 3,
+                          maxLength: 255,
+                        }
+                      : undefined
                   }
                   headingLevel={suppressed ? null : undefined}
                   defaultSent={state === 'sent'}
-                  messages={{ identifierRequired: 'Account name is required.', passwordRequired: 'Password is required.' }}
+                  messages={{
+                    identifierRequired: 'Account name is required.',
+                    passwordRequired: 'Password is required.',
+                  }}
                   onSubmit={onSubmit}
                 />
               </ThemeProvider>,

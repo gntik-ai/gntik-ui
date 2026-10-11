@@ -4,7 +4,9 @@ import Status404Page from '../Page';
 
 export default function Status404PageHeader() {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  useEffect(() => { titleRef.current?.focus(); }, []);
+  useEffect(() => {
+    titleRef.current?.focus();
+  }, []);
 
   return (
     <Status404Page

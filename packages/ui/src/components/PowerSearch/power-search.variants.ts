@@ -18,9 +18,12 @@ export const powerSearchVariants = tv({
     chipBody: 'flex h-full min-w-0 items-center gap-1 truncate ps-2 pe-1 outline-none',
     chipField: 'font-semibold',
     chipOp: 'opacity-75',
-    chipRemove: 'me-0.5 grid size-4 shrink-0 place-items-center rounded transition-colors hover:bg-primary/20 motion-reduce:transition-none',
-    draft: 'inline-flex h-6 items-center gap-1 rounded border border-dashed border-primary/50 px-1.5 font-mono text-[11.5px] text-primary-text',
-    input: 'h-6 min-w-32 flex-1 bg-transparent px-1 text-[13px] text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed',
+    chipRemove:
+      'me-0.5 grid size-4 shrink-0 place-items-center rounded transition-colors hover:bg-primary/20 motion-reduce:transition-none',
+    draft:
+      'inline-flex h-6 items-center gap-1 rounded border border-dashed border-primary/50 px-1.5 font-mono text-[11.5px] text-primary-text',
+    input:
+      'h-6 min-w-32 flex-1 bg-transparent px-1 text-[13px] text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed',
     clear: [
       'ms-auto grid size-6 shrink-0 place-items-center rounded text-muted-foreground transition-colors hover:text-foreground',
       'focus-visible:outline-2 focus-visible:outline-focus-ring',

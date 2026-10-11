@@ -20,26 +20,26 @@ pnpm --filter @gntik-ai/example-vite preview   # serves dist/ (SPA fallback for 
 
 ## Layout
 
-| File | Role |
-| --- | --- |
-| `src/App.tsx` | Route table + `LinkProvider` (kit links navigate client-side) |
+| File             | Role                                                                                                                   |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `src/App.tsx`    | Route table + `LinkProvider` (kit links navigate client-side)                                                          |
 | `src/router.tsx` | ~60-line history router (`usePath`, `navigate`, `RouterLink`, `matchPath`) — swap for React Router when you outgrow it |
-| `src/shell.tsx` | The console frame every signed-in page shares: nav, workspaces, user, ⌘K, notifications |
-| `src/pages/*` | One small wrapper per route: a template + data + callbacks |
-| `src/data/*` | All product data (Acme workspace, projects, inbox, search, members, billing, status copy). Replace with your API |
+| `src/shell.tsx`  | The console frame every signed-in page shares: nav, workspaces, user, ⌘K, notifications                                |
+| `src/pages/*`    | One small wrapper per route: a template + data + callbacks                                                             |
+| `src/data/*`     | All product data (Acme workspace, projects, inbox, search, members, billing, status copy). Replace with your API       |
 
 ## Routes
 
-| Route | Template |
-| --- | --- |
-| `/sign-in` · `/sign-up` · `/forgot-password` | SignIn · SignUp · ForgotPassword |
-| `/` | HomeDashboard |
-| `/projects` · `/projects/:id` · `/projects/new` | ResourceIndex · ResourceDetail · CreateWizard |
-| `/inbox` · `/search` | NotificationInbox · SearchResults |
-| `/settings/{profile,members,billing,appearance}` | SettingsProfile · SettingsMembers · SettingsBilling · SettingsAppearance (with Acme data) |
-| `/settings/{security,notifications,workspace,api-keys,integrations}` | the rest of the settings nav, on template sample data |
-| `/onboarding` | CreateWorkspace |
-| `/status/{403,404,500,maintenance}` and any unknown path | Status403 · Status404 · Status500 · StatusMaintenance |
+| Route                                                                | Template                                                                                  |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `/sign-in` · `/sign-up` · `/forgot-password`                         | SignIn · SignUp · ForgotPassword                                                          |
+| `/`                                                                  | HomeDashboard                                                                             |
+| `/projects` · `/projects/:id` · `/projects/new`                      | ResourceIndex · ResourceDetail · CreateWizard                                             |
+| `/inbox` · `/search`                                                 | NotificationInbox · SearchResults                                                         |
+| `/settings/{profile,members,billing,appearance}`                     | SettingsProfile · SettingsMembers · SettingsBilling · SettingsAppearance (with Acme data) |
+| `/settings/{security,notifications,workspace,api-keys,integrations}` | the rest of the settings nav, on template sample data                                     |
+| `/onboarding`                                                        | CreateWorkspace                                                                           |
+| `/status/{403,404,500,maintenance}` and any unknown path             | Status403 · Status404 · Status500 · StatusMaintenance                                     |
 
 Auth and forms are simulated (a short delay, then navigate). Replace the favicon placeholder in
 `index.html` with your product mark.

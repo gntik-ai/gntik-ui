@@ -28,7 +28,11 @@ function NavGroupSection({ group }: { group: NavGroup }) {
   const labelId = useId();
   const s = navListVariants();
   const list = (
-    <ul className={s.list()} aria-labelledby={group.label && !collapsed ? labelId : undefined} aria-label={group.label && collapsed ? group.label : undefined}>
+    <ul
+      className={s.list()}
+      aria-labelledby={group.label && !collapsed ? labelId : undefined}
+      aria-label={group.label && collapsed ? group.label : undefined}
+    >
       {group.items.map((item) => (
         <NavListEntry key={navItemKey(item)} item={item} />
       ))}
@@ -75,7 +79,15 @@ function NavGroupSection({ group }: { group: NavGroup }) {
  * nested collapsible sub-items. The current page gets aria-current="page". `collapsed` turns it
  * into an icon rail with tooltips. Links render through LinkProvider, so client routers work.
  */
-export function NavList({ groups, currentHref, collapsed = false, label: labelProp, onNavigate, className, ...props }: NavListProps) {
+export function NavList({
+  groups,
+  currentHref,
+  collapsed = false,
+  label: labelProp,
+  onNavigate,
+  className,
+  ...props
+}: NavListProps) {
   const { t } = useI18n();
   const label = labelProp ?? t('common.main');
   const s = navListVariants();

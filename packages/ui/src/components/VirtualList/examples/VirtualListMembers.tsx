@@ -5,7 +5,12 @@ const first = ['Ada', 'Grace', 'Linus', 'Margaret', 'Ken', 'Barbara', 'Dennis', 
 const last = ['Hopper', 'Lovelace', 'Hamilton', 'Liskov', 'Thompson', 'Allen', 'Ritchie', 'Torvalds'];
 const members = Array.from({ length: 1200 }, (_, i) => {
   const name = `${first[i % first.length]} ${last[(i * 3) % last.length]}`;
-  return { id: `m${i}`, name, email: `${name.toLowerCase().replace(' ', '.')}${i}@example.com`, note: i % 4 === 0 ? 'Owner of 3 projects · invited 2 days ago' : '' };
+  return {
+    id: `m${i}`,
+    name,
+    email: `${name.toLowerCase().replace(' ', '.')}${i}@example.com`,
+    note: i % 4 === 0 ? 'Owner of 3 projects · invited 2 days ago' : '',
+  };
 });
 
 export default function VirtualListMembers() {

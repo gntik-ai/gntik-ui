@@ -66,7 +66,10 @@ function previewPath(values: readonly number[]): string {
   const max = Math.max(...values);
   const span = max - min || 1;
   return values
-    .map((val, i) => `${i === 0 ? 'M' : 'L'}${((i / (values.length - 1)) * 100).toFixed(2)},${(36 - ((val - min) / span) * 32).toFixed(2)}`)
+    .map(
+      (val, i) =>
+        `${i === 0 ? 'M' : 'L'}${((i / (values.length - 1)) * 100).toFixed(2)},${(36 - ((val - min) / span) * 32).toFixed(2)}`,
+    )
     .join(' ');
 }
 
@@ -74,7 +77,15 @@ function previewPath(values: readonly number[]): string {
  * Range brush under a time-series chart: two keyboard-accessible handles (`role="slider"`,
  * Arrow keys ±1, PageUp/PageDown ±10%, Home/End) and a draggable window to pan.
  */
-export function ChartBrush({ length, range, onRangeChange, labelOf, preview, label = 'Zoom range', className }: ChartBrushProps) {
+export function ChartBrush({
+  length,
+  range,
+  onRangeChange,
+  labelOf,
+  preview,
+  label = 'Zoom range',
+  className,
+}: ChartBrushProps) {
   const track = useRef<HTMLDivElement>(null);
   const drag = useRef<{ kind: 'start' | 'end' | 'window'; originIndex: number; originRange: ChartRange } | null>(null);
   const last = Math.max(1, length - 1);
@@ -160,7 +171,14 @@ export function ChartBrush({ length, range, onRangeChange, labelOf, preview, lab
       <div ref={track} className="relative mx-1.5 h-10 rounded-md border border-border bg-secondary/30">
         {path && (
           <svg aria-hidden viewBox="0 0 100 40" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
-            <path d={path} fill="none" stroke="hsl(var(--muted-foreground))" strokeOpacity={0.6} strokeWidth={1} vectorEffect="non-scaling-stroke" />
+            <path
+              d={path}
+              fill="none"
+              stroke="hsl(var(--muted-foreground))"
+              strokeOpacity={0.6}
+              strokeWidth={1}
+              vectorEffect="non-scaling-stroke"
+            />
           </svg>
         )}
         <div

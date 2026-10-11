@@ -15,12 +15,26 @@ export interface CalendarHeaderProps {
 }
 
 /** Title + previous / today / next navigation + caller actions. */
-export function CalendarHeader({ titleId, title, subtitle, prevLabel, nextLabel, onPrev, onNext, onToday, actions }: CalendarHeaderProps) {
+export function CalendarHeader({
+  titleId,
+  title,
+  subtitle,
+  prevLabel,
+  nextLabel,
+  onPrev,
+  onNext,
+  onToday,
+  actions,
+}: CalendarHeaderProps) {
   const { t } = useI18n();
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-5">
       <div className="min-w-0">
-        <h3 id={titleId} aria-live="polite" className="truncate text-[15px] font-semibold tracking-tight text-foreground">
+        <h3
+          id={titleId}
+          aria-live="polite"
+          className="truncate text-[15px] font-semibold tracking-tight text-foreground"
+        >
           {title}
         </h3>
         {subtitle && <p className="mt-0.5 truncate font-mono text-[11px] text-muted-foreground">{subtitle}</p>}

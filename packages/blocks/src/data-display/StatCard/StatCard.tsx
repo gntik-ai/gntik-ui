@@ -89,7 +89,9 @@ export function StatCard({
         {active && (
           <>
             <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1" aria-live="polite">
-              <span className="text-[26px] font-semibold tracking-tight text-foreground tabular-nums">{active.stat}</span>
+              <span className="text-[26px] font-semibold tracking-tight text-foreground tabular-nums">
+                {active.stat}
+              </span>
               {active.delta && <TrendDelta {...active.delta} />}
             </p>
             {active.delta?.note && <p className="mt-1 text-[12px] text-muted-foreground">{active.delta.note}</p>}
@@ -110,12 +112,22 @@ export function StatCard({
       {action && (
         <div className="border-t border-border px-5 py-3">
           {action.href ? (
-            <Link underline="hover" href={action.href} className="inline-flex items-center gap-1 text-[12.5px] font-semibold">
+            <Link
+              underline="hover"
+              href={action.href}
+              className="inline-flex items-center gap-1 text-[12.5px] font-semibold"
+            >
               {action.label}
               <ArrowRight size={14} aria-hidden className="rtl:-scale-x-100" />
             </Link>
           ) : (
-            <Button variant="ghost" size="sm" trailingIcon={ArrowRight} className="-mx-2 text-primary-text hover:text-primary-text" onClick={action.onClick}>
+            <Button
+              variant="ghost"
+              size="sm"
+              trailingIcon={ArrowRight}
+              className="-mx-2 text-primary-text hover:text-primary-text"
+              onClick={action.onClick}
+            >
               {action.label}
             </Button>
           )}

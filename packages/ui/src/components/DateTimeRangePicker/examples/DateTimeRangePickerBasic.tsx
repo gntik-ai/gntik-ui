@@ -11,7 +11,14 @@ export default function DateTimeRangePickerBasic() {
     <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
       <Field>
         <FieldLabel>Log window</FieldLabel>
-        <DateTimeRangePicker value={range} onValueChange={setRange} locale="en-US" hourCycle={24} now={now} name="window" />
+        <DateTimeRangePicker
+          value={range}
+          onValueChange={setRange}
+          locale="en-US"
+          hourCycle={24}
+          now={now}
+          name="window"
+        />
         <FieldDescription>Relative ranges end now; custom ranges are absolute.</FieldDescription>
       </Field>
       <Field>

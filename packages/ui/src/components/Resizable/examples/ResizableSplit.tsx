@@ -9,7 +9,9 @@ export default function ResizableSplit() {
         </ResizablePanel>
         <ResizeHandle aria-label="Resize draft and preview" />
         <ResizablePanel minSize={20}>
-          <div className="flex h-full items-center justify-center bg-secondary/40 text-[13px] text-muted-foreground">Preview</div>
+          <div className="flex h-full items-center justify-center bg-secondary/40 text-[13px] text-muted-foreground">
+            Preview
+          </div>
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>

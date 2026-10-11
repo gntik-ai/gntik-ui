@@ -21,7 +21,7 @@
       "path": "packages/ui/src/components/LiveAnnouncer/index.ts",
       "type": "registry:ui",
       "target": "components/ui/live-announcer/index.ts",
-      "content": "export { LiveAnnouncer, useAnnounce, useHasLiveAnnouncer, type LiveAnnouncerProps, type Announce, type AnnouncePoliteness } from './LiveAnnouncer';\nexport { liveAnnouncerVariants, type LiveAnnouncerVariantProps } from './live-announcer.variants';\nexport { doc as liveAnnouncerDoc } from './LiveAnnouncer.doc';\n"
+      "content": "export {\n  LiveAnnouncer,\n  useAnnounce,\n  useHasLiveAnnouncer,\n  type LiveAnnouncerProps,\n  type Announce,\n  type AnnouncePoliteness,\n} from './LiveAnnouncer';\nexport { liveAnnouncerVariants, type LiveAnnouncerVariantProps } from './live-announcer.variants';\nexport { doc as liveAnnouncerDoc } from './LiveAnnouncer.doc';\n"
     },
     {
       "path": "packages/ui/src/components/LiveAnnouncer/live-announcer.variants.ts",

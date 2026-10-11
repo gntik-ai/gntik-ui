@@ -2,7 +2,14 @@ import type { ChatModel } from './ModelPicker';
 
 /** Generic, product-agnostic models for examples and the demo. */
 export const DEMO_MODELS: ChatModel[] = [
-  { id: 'swift', name: 'Swift', provider: 'Hosted', description: 'Fast answers for everyday questions.', capabilities: ['tools'], contextWindow: 128_000 },
+  {
+    id: 'swift',
+    name: 'Swift',
+    provider: 'Hosted',
+    description: 'Fast answers for everyday questions.',
+    capabilities: ['tools'],
+    contextWindow: 128_000,
+  },
   {
     id: 'balanced',
     name: 'Balanced',
@@ -21,6 +28,18 @@ export const DEMO_MODELS: ChatModel[] = [
     disabled: true,
     disabledReason: 'Needs an upgraded plan',
   },
-  { id: 'local-small', name: 'Local small', provider: 'Self-hosted', description: 'Runs in your own cluster.', contextWindow: 32_000 },
-  { id: 'local-vision', name: 'Local vision', provider: 'Self-hosted', capabilities: ['vision'], contextWindow: 64_000 },
+  {
+    id: 'local-small',
+    name: 'Local small',
+    provider: 'Self-hosted',
+    description: 'Runs in your own cluster.',
+    contextWindow: 32_000,
+  },
+  {
+    id: 'local-vision',
+    name: 'Local vision',
+    provider: 'Self-hosted',
+    capabilities: ['vision'],
+    contextWindow: 64_000,
+  },
 ];

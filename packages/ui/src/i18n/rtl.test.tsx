@@ -11,7 +11,8 @@ import { expectNoAxeViolations } from '../test/a11y';
 import { isDirectionalIcon, RTL_FLIP } from '../utils/rtl';
 import { I18nProvider } from './I18nProvider';
 
-const PHYSICAL = /(?<=[\s"'`:])-?(?:ml|mr|pl|pr|left|right)-(?!1\/2\b)[\w.[\]/-]+|(?<=[\s"'`:])(?:border|rounded)-(?:l|r|tl|tr|bl|br)\b|\btext-(?:left|right)\b/;
+const PHYSICAL =
+  /(?<=[\s"'`:])-?(?:ml|mr|pl|pr|left|right)-(?!1\/2\b)[\w.[\]/-]+|(?<=[\s"'`:])(?:border|rounded)-(?:l|r|tl|tr|bl|br)\b|\btext-(?:left|right)\b/;
 
 /** Source files of a component folder must use logical (start/end) utilities only. */
 function expectLogicalSource(...files: string[]) {
@@ -59,13 +60,20 @@ describe('RTL rendering', () => {
   });
 
   it('Breadcrumbs: chevron separators mirror; the trail order stays in DOM order', () => {
-    render(<Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/p' }, { label: 'web-app' }]} />, { wrapper: rtl });
+    render(
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/p' }, { label: 'web-app' }]} />,
+      { wrapper: rtl },
+    );
     const nav = screen.getByRole('navigation', { name: 'Breadcrumb' });
     expect(nav.closest('[dir]')).toHaveAttribute('dir', 'rtl');
     const separators = nav.querySelectorAll('[aria-hidden] > svg');
     expect(separators).toHaveLength(2);
     separators.forEach((svg) => expect(svg).toHaveClass(RTL_FLIP));
-    expect(within(nav).getAllByRole('listitem').map((li) => li.textContent)).toEqual(['Home', 'Projects', 'web-app']);
+    expect(
+      within(nav)
+        .getAllByRole('listitem')
+        .map((li) => li.textContent),
+    ).toEqual(['Home', 'Projects', 'web-app']);
     expectLogicalSource('components/Breadcrumbs/Breadcrumbs.tsx', 'components/Breadcrumbs/breadcrumbs.variants.ts');
   });
 

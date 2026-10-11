@@ -5,7 +5,8 @@ export const overflowListVariants = tv({
     root: 'relative min-w-0',
     list: 'm-0 flex list-none flex-nowrap items-center p-0',
     item: 'shrink-0',
-    measure: 'invisible pointer-events-none absolute start-0 top-0 flex h-0 w-max flex-nowrap items-center overflow-hidden',
+    measure:
+      'invisible pointer-events-none absolute start-0 top-0 flex h-0 w-max flex-nowrap items-center overflow-hidden',
     trigger: [
       'inline-flex shrink-0 items-center justify-center font-medium text-muted-foreground transition-colors select-none',
       'hover:bg-secondary hover:text-foreground data-popup-open:bg-secondary data-popup-open:text-foreground',

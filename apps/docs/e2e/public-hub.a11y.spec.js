@@ -45,7 +45,9 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
           expect(box.y).toBeGreaterThanOrEqual(0);
           expect(box.bottom).toBeLessThanOrEqual(900);
         }
-        expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+        expect(
+          await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth),
+        ).toBe(true);
         expect(await page.getByRole('main').evaluate((main) => main.scrollWidth <= main.clientWidth)).toBe(true);
         expect(await region.evaluate((section) => section.scrollWidth <= section.clientWidth)).toBe(true);
 
@@ -105,7 +107,9 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
         }
         const domOrder = await region.evaluate((section) => {
           const elements = [...section.querySelectorAll('header h1, header p, ul, a, [role="separator"], :scope > p')];
-          return elements.map((element) => element.getAttribute('role') === 'separator' ? 'separator' : element.tagName.toLowerCase());
+          return elements.map((element) =>
+            element.getAttribute('role') === 'separator' ? 'separator' : element.tagName.toLowerCase(),
+          );
         });
         expect(domOrder).toEqual(full ? ['h1', 'p', 'ul', 'a', 'a', 'a', 'separator', 'p'] : ['h1', 'a']);
         if (!full) {

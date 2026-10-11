@@ -112,7 +112,9 @@ describe('PublicHubPage', () => {
         expect(within(region).queryByText(full[optional])).not.toBeInTheDocument();
       }
       if (optional === 'footer') expect(within(region).queryByRole('separator')).not.toBeInTheDocument();
-      const emptyWrappers = [...region.querySelectorAll('div:empty, ul:empty, li:empty')].filter((element) => element.getAttribute('role') !== 'separator');
+      const emptyWrappers = [...region.querySelectorAll('div:empty, ul:empty, li:empty')].filter(
+        (element) => element.getAttribute('role') !== 'separator',
+      );
       expect(emptyWrappers).toHaveLength(0);
     });
   }

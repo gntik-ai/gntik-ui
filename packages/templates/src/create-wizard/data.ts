@@ -29,9 +29,24 @@ export const wizardSteps: StepItem[] = [
 ];
 
 export const wizardSources: SourceOption[] = [
-  { value: 'repository', title: 'Import a repository', description: 'Build and deploy from a Git branch on every push.', icon: GitBranch },
-  { value: 'template', title: 'Start from a template', description: 'A ready-made service you can change later.', icon: LayoutTemplate },
-  { value: 'empty', title: 'Empty project', description: 'No code yet; connect a source when you are ready.', icon: Code2 },
+  {
+    value: 'repository',
+    title: 'Import a repository',
+    description: 'Build and deploy from a Git branch on every push.',
+    icon: GitBranch,
+  },
+  {
+    value: 'template',
+    title: 'Start from a template',
+    description: 'A ready-made service you can change later.',
+    icon: LayoutTemplate,
+  },
+  {
+    value: 'empty',
+    title: 'Empty project',
+    description: 'No code yet; connect a source when you are ready.',
+    icon: Code2,
+  },
 ];
 
 export const wizardRegions: WizardRegion[] = [

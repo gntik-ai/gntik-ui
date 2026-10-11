@@ -57,7 +57,15 @@ export interface DrawerContentProps extends Omit<BaseDrawer.Popup.Props, 'classN
  * Focus is trapped inside, Escape, an outside press or a swipe close it, and focus returns
  * to the trigger. Lay out the inside with DrawerHeader, DrawerBody and DrawerFooter.
  */
-export function DrawerContent({ size, className, showClose = true, closeLabel, container, children, ...props }: DrawerContentProps) {
+export function DrawerContent({
+  size,
+  className,
+  showClose = true,
+  closeLabel,
+  container,
+  children,
+  ...props
+}: DrawerContentProps) {
   const dir = usePortalDir();
   const { t } = useI18n();
   const side = useContext(SideContext);
@@ -85,11 +93,17 @@ export function DrawerHeader({ className, ...props }: HTMLAttributes<HTMLDivElem
   return <div className={cn(s.header(), className)} {...props} />;
 }
 
-export function DrawerTitle({ className, ...props }: Omit<BaseDrawer.Title.Props, 'className'> & { className?: string }) {
+export function DrawerTitle({
+  className,
+  ...props
+}: Omit<BaseDrawer.Title.Props, 'className'> & { className?: string }) {
   return <BaseDrawer.Title className={cn(s.title(), className)} {...props} />;
 }
 
-export function DrawerDescription({ className, ...props }: Omit<BaseDrawer.Description.Props, 'className'> & { className?: string }) {
+export function DrawerDescription({
+  className,
+  ...props
+}: Omit<BaseDrawer.Description.Props, 'className'> & { className?: string }) {
   return <BaseDrawer.Description className={cn(s.description(), className)} {...props} />;
 }
 

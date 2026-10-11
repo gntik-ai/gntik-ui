@@ -45,7 +45,10 @@ export function PendingInvitations({
   };
 
   return (
-    <section aria-labelledby={`${id}-title`} className={cn('rounded-lg border border-border bg-card shadow-sm', className)}>
+    <section
+      aria-labelledby={`${id}-title`}
+      className={cn('rounded-lg border border-border bg-card shadow-sm', className)}
+    >
       <div className="flex items-center gap-2 border-b border-border px-5 py-3.5">
         <Heading id={`${id}-title`} className="text-[14px] font-semibold tracking-tight text-foreground">
           {title}
@@ -53,7 +56,13 @@ export function PendingInvitations({
         <Badge size="sm">{rows.length}</Badge>
       </div>
       {rows.length === 0 ? (
-        <EmptyState size="sm" icon={Mail} title="No pending invitations" description="Invitations you send appear here until they are accepted." className="mx-auto" />
+        <EmptyState
+          size="sm"
+          icon={Mail}
+          title="No pending invitations"
+          description="Invitations you send appear here until they are accepted."
+          className="mx-auto"
+        />
       ) : (
         <ul className="divide-y divide-border">
           {rows.map((inv) => {
@@ -69,7 +78,14 @@ export function PendingInvitations({
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="truncate text-[13px] font-medium text-foreground">{inv.email}</span>
                       <Badge size="sm">{inv.role}</Badge>
-                      {expired && !wasSent && <StatusTag status="expired" label="Expired" statuses={{ expired: { label: 'Expired', tone: 'warning' } }} size="sm" />}
+                      {expired && !wasSent && (
+                        <StatusTag
+                          status="expired"
+                          label="Expired"
+                          statuses={{ expired: { label: 'Expired', tone: 'warning' } }}
+                          size="sm"
+                        />
+                      )}
                     </div>
                     <div className="mt-0.5 text-[12px] text-muted-foreground">
                       {inv.invitedBy ? `Invited by ${inv.invitedBy} · ` : 'Invited '}

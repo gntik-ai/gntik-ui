@@ -1,5 +1,14 @@
 import { ChevronRight, MoreHorizontal } from 'lucide-react';
-import { Fragment, useEffect, useRef, useState, type ComponentType, type ReactElement, type ReactNode, type Ref } from 'react';
+import {
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
+} from 'react';
 import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { RTL_FLIP } from '../../utils/rtl';
@@ -91,7 +100,11 @@ export function Breadcrumbs({
     if (isLast || item.href == null) {
       return (
         <span
-          className={cn(item.hideLabel ? s.iconLink() : s.current(), !isLast && 'font-normal text-muted-foreground', Icon && !item.hideLabel && 'inline-flex items-center gap-1.5')}
+          className={cn(
+            item.hideLabel ? s.iconLink() : s.current(),
+            !isLast && 'font-normal text-muted-foreground',
+            Icon && !item.hideLabel && 'inline-flex items-center gap-1.5',
+          )}
           aria-current={isLast ? 'page' : undefined}
         >
           {content}
@@ -104,7 +117,11 @@ export function Breadcrumbs({
         render={item.render}
         tone="muted"
         underline="none"
-        className={cn(item.hideLabel ? s.iconLink() : s.link(), 'font-normal', Icon && !item.hideLabel && 'inline-flex items-center gap-1.5')}
+        className={cn(
+          item.hideLabel ? s.iconLink() : s.link(),
+          'font-normal',
+          Icon && !item.hideLabel && 'inline-flex items-center gap-1.5',
+        )}
       >
         {content}
       </Link>

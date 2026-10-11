@@ -11,5 +11,14 @@ export const doc: ComponentDoc = {
     ['Tab', 'Skip link first, then the form fields in order, then the footer links'],
     ['Enter on the skip link', 'Moves focus to the form region'],
   ],
-  tokens: ['background', 'chrome', 'card', 'card-foreground', 'border', 'muted-foreground', 'primary-text', 'focus-ring'],
+  tokens: [
+    'background',
+    'chrome',
+    'card',
+    'card-foreground',
+    'border',
+    'muted-foreground',
+    'primary-text',
+    'focus-ring',
+  ],
 };

@@ -24,7 +24,7 @@
       "path": "packages/templates/src/status-maintenance/data.ts",
       "type": "registry:lib",
       "target": "app/templates/status-maintenance/data.ts",
-      "content": "/** Neutral fixtures for the maintenance page. */\nexport const maintenanceContent = {\n  code: 'Scheduled maintenance',\n  title: 'We’ll be back shortly',\n  description: 'We are upgrading the database. Running services are not affected; the dashboard is read-only until 14:30 UTC.',\n  bannerTitle: 'Maintenance in progress.',\n  bannerMessage: 'Started 13:00 UTC · expected to end 14:30 UTC.',\n  statusLabel: 'View status page',\n  statusHref: '/status',\n  subscribeLabel: 'Subscribe to updates',\n  subscribeHref: '/status/subscribe',\n  stillDown: 'Still in maintenance. Try again in a few minutes.',\n};\n"
+      "content": "/** Neutral fixtures for the maintenance page. */\nexport const maintenanceContent = {\n  code: 'Scheduled maintenance',\n  title: 'We’ll be back shortly',\n  description:\n    'We are upgrading the database. Running services are not affected; the dashboard is read-only until 14:30 UTC.',\n  bannerTitle: 'Maintenance in progress.',\n  bannerMessage: 'Started 13:00 UTC · expected to end 14:30 UTC.',\n  statusLabel: 'View status page',\n  statusHref: '/status',\n  subscribeLabel: 'Subscribe to updates',\n  subscribeHref: '/status/subscribe',\n  stillDown: 'Still in maintenance. Try again in a few minutes.',\n};\n"
     }
   ],
   "css": {

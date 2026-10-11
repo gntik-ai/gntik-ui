@@ -69,7 +69,9 @@ describe('Field', () => {
         <FieldsetAddress />
       </>,
     );
-    expect(screen.getByRole('textbox', { name: /Work email/ })).toHaveAccessibleDescription('Enter a valid work email.');
+    expect(screen.getByRole('textbox', { name: /Work email/ })).toHaveAccessibleDescription(
+      'Enter a valid work email.',
+    );
     await expectNoAxeViolations();
   });
 });

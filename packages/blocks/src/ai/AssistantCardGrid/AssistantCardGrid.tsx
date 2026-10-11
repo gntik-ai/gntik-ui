@@ -59,7 +59,13 @@ export function AssistantCardGrid({
           title="No assistants yet"
           titleAs={TitleTag === 'h2' ? 'h3' : 'h4'}
           description="Create an assistant to automate a task with a model."
-          primaryAction={onCreate ? <Button size="sm" icon={Plus} onClick={onCreate}>New assistant</Button> : undefined}
+          primaryAction={
+            onCreate ? (
+              <Button size="sm" icon={Plus} onClick={onCreate}>
+                New assistant
+              </Button>
+            ) : undefined
+          }
         />
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">

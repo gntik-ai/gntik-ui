@@ -3,7 +3,11 @@ import { PromptEditor } from '../PromptEditor';
 
 /** The page owns the variable values, e.g. to fill them from a selected dataset row. */
 export default function ControlledVariablesPromptEditor() {
-  const [variables, setVariables] = useState<Record<string, string>>({ company: 'Acme', language: 'English', ticket: '' });
+  const [variables, setVariables] = useState<Record<string, string>>({
+    company: 'Acme',
+    language: 'English',
+    ticket: '',
+  });
   return (
     <div className="flex flex-col gap-2">
       <button

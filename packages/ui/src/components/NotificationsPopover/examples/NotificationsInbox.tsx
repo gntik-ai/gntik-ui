@@ -6,10 +6,29 @@ const MIN = 60_000;
 const NOW = Date.now();
 
 const INITIAL: NotificationItem[] = [
-  { id: 'n1', tone: 'warning', title: 'api-gateway reached 97% of its monthly budget', body: 'Requests are throttled to 1/min until the limit is raised.', time: NOW - 2 * MIN },
-  { id: 'n2', tone: 'primary', title: 'Deployment web-frontend (build 418) succeeded', body: 'Promoted to production by Dana Whitfield.', time: NOW - 18 * MIN },
+  {
+    id: 'n1',
+    tone: 'warning',
+    title: 'api-gateway reached 97% of its monthly budget',
+    body: 'Requests are throttled to 1/min until the limit is raised.',
+    time: NOW - 2 * MIN,
+  },
+  {
+    id: 'n2',
+    tone: 'primary',
+    title: 'Deployment web-frontend (build 418) succeeded',
+    body: 'Promoted to production by Dana Whitfield.',
+    time: NOW - 18 * MIN,
+  },
   { id: 'n3', tone: 'info', title: 'Sam Patel invited you to Data Platform', time: NOW - 65 * MIN },
-  { id: 'n4', tone: 'destructive', title: 'Invoice INV-2041 payment failed', body: 'Update the card on file to avoid interruption.', time: NOW - 26 * 60 * MIN, read: true },
+  {
+    id: 'n4',
+    tone: 'destructive',
+    title: 'Invoice INV-2041 payment failed',
+    body: 'Update the card on file to avoid interruption.',
+    time: NOW - 26 * 60 * MIN,
+    read: true,
+  },
 ];
 
 export default function NotificationsInbox() {

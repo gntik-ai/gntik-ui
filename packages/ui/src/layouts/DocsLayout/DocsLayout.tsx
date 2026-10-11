@@ -85,7 +85,9 @@ export function DocsLayout({
           </div>
         </MainTag>
         {(hasToc || aside != null) && (
-          <div className={s.toc()}>{aside ?? (hasToc && <Outline items={toc} label={tocLabel} scrollRootRef={mainRef} />)}</div>
+          <div className={s.toc()}>
+            {aside ?? (hasToc && <Outline items={toc} label={tocLabel} scrollRootRef={mainRef} />)}
+          </div>
         )}
       </div>
     </div>

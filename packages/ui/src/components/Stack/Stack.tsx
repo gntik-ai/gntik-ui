@@ -5,8 +5,21 @@ import { GAP_CLASSES, centerVariants, stackVariants, type SpaceScale, type Stack
 
 /** Block-level tags a layout primitive may render as (use `render` for anything else). */
 export type LayoutElement =
-  | 'div' | 'section' | 'article' | 'aside' | 'header' | 'footer' | 'main' | 'nav'
-  | 'ul' | 'ol' | 'li' | 'form' | 'fieldset' | 'span' | 'dl';
+  | 'div'
+  | 'section'
+  | 'article'
+  | 'aside'
+  | 'header'
+  | 'footer'
+  | 'main'
+  | 'nav'
+  | 'ul'
+  | 'ol'
+  | 'li'
+  | 'form'
+  | 'fieldset'
+  | 'span'
+  | 'dl';
 
 export interface StackProps extends Omit<useRender.ComponentProps<'div'>, 'className'> {
   className?: string;

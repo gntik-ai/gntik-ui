@@ -70,7 +70,9 @@ export function ProfileHeader({
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2.5">
-          <Heading className="truncate text-[22px] font-semibold tracking-tight text-foreground">{profile.name}</Heading>
+          <Heading className="truncate text-[22px] font-semibold tracking-tight text-foreground">
+            {profile.name}
+          </Heading>
           {profile.role && (
             <Badge tone="primary" size="lg">
               {profile.role}

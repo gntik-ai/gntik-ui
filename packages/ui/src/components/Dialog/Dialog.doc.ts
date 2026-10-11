@@ -4,7 +4,8 @@ export const doc: ComponentDoc = {
   name: 'Dialog',
   group: 'Overlays',
   status: 'stable',
-  description: 'Modal window for focused tasks: forms, details, confirmations. Compound parts (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose) in four sizes.',
+  description:
+    'Modal window for focused tasks: forms, details, confirmations. Compound parts (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose) in four sizes.',
   primitive: '@base-ui/react/dialog',
   pattern: 'dialog (modal)',
   keyboard: [

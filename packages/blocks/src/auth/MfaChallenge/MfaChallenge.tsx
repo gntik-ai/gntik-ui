@@ -89,7 +89,11 @@ export function MfaChallenge({
 
   return (
     <div className={cn(authFormClass, className)}>
-      <AuthHeader eyebrow={eyebrow} title={method === 'backup' ? 'Use a backup code' : title} description={description} />
+      <AuthHeader
+        eyebrow={eyebrow}
+        title={method === 'backup' ? 'Use a backup code' : title}
+        description={description}
+      />
       <form
         noValidate
         aria-label="Verify your identity"
@@ -103,13 +107,28 @@ export function MfaChallenge({
         {method === 'code' ? (
           <Field invalid={invalid}>
             <FieldLabel>Verification code</FieldLabel>
-            <OtpInput length={length} value={code} onValueChange={setCode} onComplete={verify} invalid={invalid} groupSize={length / 2} disabled={busy} />
+            <OtpInput
+              length={length}
+              value={code}
+              onValueChange={setCode}
+              onComplete={verify}
+              invalid={invalid}
+              groupSize={length / 2}
+              disabled={busy}
+            />
             <FieldError match={invalid}>Enter all {length} digits.</FieldError>
           </Field>
         ) : (
           <Field invalid={invalid}>
             <FieldLabel>Backup code</FieldLabel>
-            <Input value={backup} onValueChange={setBackup} placeholder="xxxx-xxxx" autoComplete="one-time-code" spellCheck={false} inputClassName="font-mono tracking-wider" />
+            <Input
+              value={backup}
+              onValueChange={setBackup}
+              placeholder="xxxx-xxxx"
+              autoComplete="one-time-code"
+              spellCheck={false}
+              inputClassName="font-mono tracking-wider"
+            />
             <FieldDescription>Backup codes are 8 characters, with or without the dash.</FieldDescription>
             <FieldError match={invalid}>Enter a backup code.</FieldError>
           </Field>

@@ -24,10 +24,5 @@
     "version": false,
     "tag": false
   },
-  "ignore": [
-    "@gntik-ai/docs",
-    "@gntik-ai/example-vite",
-    "@gntik-ai/example-next",
-    "@gntik-ai/musematic"
-  ]
+  "ignore": ["@gntik-ai/docs", "@gntik-ai/example-vite", "@gntik-ai/example-next", "@gntik-ai/musematic"]
 }

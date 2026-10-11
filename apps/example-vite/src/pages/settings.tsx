@@ -10,7 +10,18 @@ import {
   SettingsWorkspacePage,
 } from '@gntik-ai/templates';
 import type { ComponentType } from 'react';
-import { invitations, invoices, members, paymentMethod, permissions, plan, profile, profileValues, quotas, roles } from '../data/account';
+import {
+  invitations,
+  invoices,
+  members,
+  paymentMethod,
+  permissions,
+  plan,
+  profile,
+  profileValues,
+  quotas,
+  roles,
+} from '../data/account';
 import { shell } from '../shell';
 import { NotFound } from './status';
 
@@ -19,8 +30,25 @@ const frame = (currentHref = '/settings') => ({ basePath: '/settings', shell: sh
 
 const pages: Record<string, ComponentType> = {
   profile: () => <SettingsProfilePage profile={profile} values={profileValues} {...frame()} />,
-  members: () => <SettingsMembersPage members={members} invitations={invitations} roles={roles} permissions={permissions} currentUserId="u1" {...frame('/settings/members')} />,
-  billing: () => <SettingsBillingPage plan={plan} quotas={quotas} paymentMethod={paymentMethod} invoices={invoices} {...frame('/settings/billing')} />,
+  members: () => (
+    <SettingsMembersPage
+      members={members}
+      invitations={invitations}
+      roles={roles}
+      permissions={permissions}
+      currentUserId="u1"
+      {...frame('/settings/members')}
+    />
+  ),
+  billing: () => (
+    <SettingsBillingPage
+      plan={plan}
+      quotas={quotas}
+      paymentMethod={paymentMethod}
+      invoices={invoices}
+      {...frame('/settings/billing')}
+    />
+  ),
   appearance: () => <SettingsAppearancePage {...frame()} />,
   // The rest of the settings nav, on the templates' neutral sample data until the product wires them.
   security: () => <SettingsSecurityPage {...frame()} />,

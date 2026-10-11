@@ -2,7 +2,12 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { I18nProvider } from '../../i18n/I18nProvider';
-import { PermissionMatrix, type PermissionMatrixProps, type PermissionRole, type PermissionSection } from './PermissionMatrix';
+import {
+  PermissionMatrix,
+  type PermissionMatrixProps,
+  type PermissionRole,
+  type PermissionSection,
+} from './PermissionMatrix';
 import PermissionMatrixBasic from './examples/PermissionMatrixBasic';
 
 const roles: PermissionRole[] = [
@@ -11,7 +16,14 @@ const roles: PermissionRole[] = [
   { id: 'viewer', label: 'Viewer' },
 ];
 const sections: PermissionSection[] = [
-  { id: 'p', label: 'Projects', permissions: [{ id: 'read', label: 'Read' }, { id: 'write', label: 'Write' }] },
+  {
+    id: 'p',
+    label: 'Projects',
+    permissions: [
+      { id: 'read', label: 'Read' },
+      { id: 'write', label: 'Write' },
+    ],
+  },
   { id: 'b', label: 'Billing', permissions: [{ id: 'invoices', label: 'Invoices' }] },
 ];
 
@@ -23,9 +35,14 @@ function setup(props: Partial<PermissionMatrixProps> = {}) {
       aria-label="Roles"
       roles={roles}
       sections={sections}
-      defaultValue={{ owner: { read: 'allowed', write: 'allowed', invoices: 'allowed' }, admin: { read: 'allowed', write: 'denied' } }}
+      defaultValue={{
+        owner: { read: 'allowed', write: 'allowed', invoices: 'allowed' },
+        admin: { read: 'allowed', write: 'denied' },
+      }}
       resolveInherited={(roleId) => (roleId === 'viewer' ? 'allowed' : undefined)}
-      getDisabledReason={(roleId, permId) => (roleId === 'admin' && permId === 'invoices' ? 'Billing is managed by the owner.' : undefined)}
+      getDisabledReason={(roleId, permId) =>
+        roleId === 'admin' && permId === 'invoices' ? 'Billing is managed by the owner.' : undefined
+      }
       onChange={onChange}
       {...props}
     />,
@@ -82,9 +99,17 @@ describe('PermissionMatrix', () => {
     const { user, cell, onChange } = setup();
     cell('Read', 'Admin').focus();
     await user.keyboard('{Enter}');
-    expect(onChange).toHaveBeenLastCalledWith(expect.objectContaining({ admin: { read: 'denied', write: 'denied' } }), { roleId: 'admin', permissionId: 'read', state: 'denied' });
+    expect(onChange).toHaveBeenLastCalledWith(expect.objectContaining({ admin: { read: 'denied', write: 'denied' } }), {
+      roleId: 'admin',
+      permissionId: 'read',
+      state: 'denied',
+    });
     await user.keyboard(' ');
-    expect(onChange).toHaveBeenLastCalledWith(expect.anything(), { roleId: 'admin', permissionId: 'read', state: 'inherited' });
+    expect(onChange).toHaveBeenLastCalledWith(expect.anything(), {
+      roleId: 'admin',
+      permissionId: 'read',
+      state: 'inherited',
+    });
     expect(cell('Read', 'Admin')).toHaveTextContent('Inherited');
     await user.keyboard('a');
     expect(cell('Read', 'Admin')).toHaveTextContent('Allowed');

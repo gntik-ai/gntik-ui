@@ -24,7 +24,9 @@ async function main(): Promise<void> {
     gitHead: await gitHead(resolved.root),
   });
   log(`design system: ${resolved.root} (${resolved.source})${index.gitHead ? ` · HEAD ${index.gitHead}` : ''}`);
-  log(`index: ${index.stats.components} catalog entries · ${index.stats.snippets} snippets · ${index.stats.tokens} tokens`);
+  log(
+    `index: ${index.stats.components} catalog entries · ${index.stats.snippets} snippets · ${index.stats.tokens} tokens`,
+  );
 
   const ctx: ServerContext = {
     getIndex: () => index,

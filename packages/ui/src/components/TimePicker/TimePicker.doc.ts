@@ -17,5 +17,15 @@ export const doc: ComponentDoc = {
     ['ArrowLeft / ArrowRight', 'Moves to the previous / next segment'],
     ['Backspace / Delete', 'Clears the segment (the value becomes null)'],
   ],
-  tokens: ['background', 'border', 'foreground', 'muted-foreground', 'primary', 'primary-chip-text', 'secondary', 'destructive', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'primary',
+    'primary-chip-text',
+    'secondary',
+    'destructive',
+    'focus-ring',
+  ],
 };

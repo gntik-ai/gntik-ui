@@ -1,4 +1,14 @@
-import { Activity, BarChart3, CreditCard, FolderKanban, Home, KeyRound, Rocket, Settings, Users } from '@gntik-ai/icons';
+import {
+  Activity,
+  BarChart3,
+  CreditCard,
+  FolderKanban,
+  Home,
+  KeyRound,
+  Rocket,
+  Settings,
+  Users,
+} from '@gntik-ai/icons';
 import type { NavGroup, UserMenuUser, Workspace } from '@gntik-ai/ui';
 
 export const appSidebarNavGroups: NavGroup[] = [
@@ -38,6 +48,11 @@ export interface AppSidebarUsage {
   valueLabel?: string;
 }
 
-export const appSidebarUsage: AppSidebarUsage = { label: 'Monthly requests', value: 8200, max: 10000, valueLabel: '8.2k / 10k' };
+export const appSidebarUsage: AppSidebarUsage = {
+  label: 'Monthly requests',
+  value: 8200,
+  max: 10000,
+  valueLabel: '8.2k / 10k',
+};
 
 export const appSidebarUser: UserMenuUser = { name: 'Dana Whitfield', email: 'dana@example.com' };

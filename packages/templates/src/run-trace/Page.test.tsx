@@ -6,7 +6,8 @@ import RunTracePage from './Page';
 // Dock the inspector as on a large screen (jsdom matches no media query).
 const originalMatchMedia = window.matchMedia;
 beforeAll(() => {
-  window.matchMedia = (query: string) => ({ ...originalMatchMedia(query), matches: query.includes('min-width') }) as MediaQueryList;
+  window.matchMedia = (query: string) =>
+    ({ ...originalMatchMedia(query), matches: query.includes('min-width') }) as MediaQueryList;
 });
 afterAll(() => {
   window.matchMedia = originalMatchMedia;
@@ -40,7 +41,12 @@ describe('RunTracePage', () => {
 
   it('closes the inspector and shows actions only when handlers are given', { timeout: 15000 }, async () => {
     const onRerun = vi.fn();
-    render(<RunTracePage onRerun={onRerun} run={{ id: 'run_1', name: 'Nightly eval', status: 'succeeded', model: 'm', environment: 'staging' }} />);
+    render(
+      <RunTracePage
+        onRerun={onRerun}
+        run={{ id: 'run_1', name: 'Nightly eval', status: 'succeeded', model: 'm', environment: 'staging' }}
+      />,
+    );
     expect(screen.queryByRole('button', { name: 'Cancel run' })).toBeNull();
     await userEvent.click(screen.getAllByRole('button', { name: 'Re-run' })[0]!);
     expect(onRerun).toHaveBeenCalledOnce();

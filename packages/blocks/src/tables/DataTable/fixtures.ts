@@ -12,9 +12,31 @@ export interface DeploymentRow {
   updatedAt: Date;
 }
 
-const NAMES = ['orders-api', 'billing-sync', 'invoice-worker', 'search-index', 'auth-gateway', 'media-resizer', 'nightly-export', 'webhooks', 'reports', 'notifications', 'checkout-web', 'audit-log'];
+const NAMES = [
+  'orders-api',
+  'billing-sync',
+  'invoice-worker',
+  'search-index',
+  'auth-gateway',
+  'media-resizer',
+  'nightly-export',
+  'webhooks',
+  'reports',
+  'notifications',
+  'checkout-web',
+  'audit-log',
+];
 const REGIONS = ['eu-west-1', 'us-east-1', 'ap-south-1', 'eu-central-1'];
-const STATUSES: DeploymentRow['status'][] = ['running', 'running', 'running', 'queued', 'paused', 'degraded', 'running', 'failed'];
+const STATUSES: DeploymentRow['status'][] = [
+  'running',
+  'running',
+  'running',
+  'queued',
+  'paused',
+  'degraded',
+  'running',
+  'failed',
+];
 const BASE = Date.UTC(2026, 8, 30, 12, 0, 0);
 
 const SUFFIXES = ['', '-staging', '-canary', '-preview'];
@@ -44,10 +66,54 @@ const count = new Intl.NumberFormat('en-US');
 
 /** Columns for DEPLOYMENT_ROWS. */
 export const DEPLOYMENT_COLUMNS: DataTableColumn<DeploymentRow>[] = [
-  { id: 'name', header: 'Deployment', accessor: (r) => r.name, sortable: true, hideable: false, className: 'font-semibold' },
-  { id: 'region', header: 'Region', accessor: (r) => r.region, sortable: true, className: 'font-mono text-[12px] text-muted-foreground' },
-  { id: 'status', header: 'Status', accessor: (r) => r.status, cell: (r) => createElement(StatusTag, { status: r.status }), sortable: true },
-  { id: 'requests', header: 'Requests', accessor: (r) => r.requests, cell: (r) => count.format(r.requests), sortable: true, align: 'right', className: 'font-mono text-[12.5px]' },
-  { id: 'cost', header: 'Cost', accessor: (r) => r.cost, cell: (r) => money.format(r.cost), sortable: true, align: 'right', className: 'font-mono text-[12.5px]' },
-  { id: 'updated', header: 'Updated', accessor: (r) => r.updatedAt, cell: (r) => r.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), sortable: true, align: 'right', defaultHidden: true, className: 'text-[12px] text-muted-foreground' },
+  {
+    id: 'name',
+    header: 'Deployment',
+    accessor: (r) => r.name,
+    sortable: true,
+    hideable: false,
+    className: 'font-semibold',
+  },
+  {
+    id: 'region',
+    header: 'Region',
+    accessor: (r) => r.region,
+    sortable: true,
+    className: 'font-mono text-[12px] text-muted-foreground',
+  },
+  {
+    id: 'status',
+    header: 'Status',
+    accessor: (r) => r.status,
+    cell: (r) => createElement(StatusTag, { status: r.status }),
+    sortable: true,
+  },
+  {
+    id: 'requests',
+    header: 'Requests',
+    accessor: (r) => r.requests,
+    cell: (r) => count.format(r.requests),
+    sortable: true,
+    align: 'right',
+    className: 'font-mono text-[12.5px]',
+  },
+  {
+    id: 'cost',
+    header: 'Cost',
+    accessor: (r) => r.cost,
+    cell: (r) => money.format(r.cost),
+    sortable: true,
+    align: 'right',
+    className: 'font-mono text-[12.5px]',
+  },
+  {
+    id: 'updated',
+    header: 'Updated',
+    accessor: (r) => r.updatedAt,
+    cell: (r) => r.updatedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    sortable: true,
+    align: 'right',
+    defaultHidden: true,
+    className: 'text-[12px] text-muted-foreground',
+  },
 ];

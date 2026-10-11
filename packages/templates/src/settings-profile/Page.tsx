@@ -1,7 +1,14 @@
 import { FormSection, ProfileHeader, StickyActionBar, type Profile } from '@gntik-ai/blocks';
 import { Field, FieldDescription, FieldLabel, Input, SimpleSelect, Stack } from '@gntik-ai/ui';
 import { useState } from 'react';
-import { locales as defaultLocales, profile as defaultProfile, profileValues, timeZones as defaultTimeZones, type ProfileFormValues, type SelectOption } from './data';
+import {
+  locales as defaultLocales,
+  profile as defaultProfile,
+  profileValues,
+  timeZones as defaultTimeZones,
+  type ProfileFormValues,
+  type SelectOption,
+} from './data';
 import { SettingsFrame, type SettingsFrameOptions } from './SettingsFrame';
 
 export interface SettingsProfileProps extends SettingsFrameOptions {
@@ -29,7 +36,8 @@ export default function SettingsProfilePage({
   const [draft, setDraft] = useState(saved);
   const [saving, setSaving] = useState(false);
   const dirty = (Object.keys(draft) as Array<keyof ProfileFormValues>).some((k) => draft[k] !== base[k]);
-  const set = (key: keyof ProfileFormValues) => (value: string | null) => setDraft((d) => ({ ...d, [key]: value ?? '' }));
+  const set = (key: keyof ProfileFormValues) => (value: string | null) =>
+    setDraft((d) => ({ ...d, [key]: value ?? '' }));
 
   const save = async () => {
     setSaving(true);
@@ -43,9 +51,18 @@ export default function SettingsProfilePage({
 
   return (
     <SettingsFrame page="profile" description="How other members see you across the workspace." {...frame}>
-      <ProfileHeader profile={{ ...profile, name: base.name }} headingLevel="h2" onEdit={null} onAvatarChange={onAvatarChange} />
+      <ProfileHeader
+        profile={{ ...profile, name: base.name }}
+        headingLevel="h2"
+        onEdit={null}
+        onAvatarChange={onAvatarChange}
+      />
       <Stack gap={8}>
-        <FormSection title="Personal details" description="Your name and email are visible to everyone in the workspace." divided>
+        <FormSection
+          title="Personal details"
+          description="Your name and email are visible to everyone in the workspace."
+          divided
+        >
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field>
               <FieldLabel>Full name</FieldLabel>
@@ -60,12 +77,30 @@ export default function SettingsProfilePage({
         </FormSection>
         <FormSection title="Language and region" description="Used for dates, numbers and email digests." divided>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <SimpleSelect label="Locale" items={locales} value={draft.locale} onValueChange={set('locale')} className="w-full" />
-            <SimpleSelect label="Time zone" items={timeZones} value={draft.timeZone} onValueChange={set('timeZone')} className="w-full" />
+            <SimpleSelect
+              label="Locale"
+              items={locales}
+              value={draft.locale}
+              onValueChange={set('locale')}
+              className="w-full"
+            />
+            <SimpleSelect
+              label="Time zone"
+              items={timeZones}
+              value={draft.timeZone}
+              onValueChange={set('timeZone')}
+              className="w-full"
+            />
           </div>
         </FormSection>
       </Stack>
-      <StickyActionBar dirty={dirty} saving={saving} onSave={() => void save()} onCancel={() => setDraft(base)} aria-label="Profile changes" />
+      <StickyActionBar
+        dirty={dirty}
+        saving={saving}
+        onSave={() => void save()}
+        onCancel={() => setDraft(base)}
+        aria-label="Profile changes"
+      />
     </SettingsFrame>
   );
 }

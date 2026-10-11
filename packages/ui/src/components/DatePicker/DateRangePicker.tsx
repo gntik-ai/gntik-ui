@@ -9,7 +9,10 @@ import { DEFAULT_DATE_RANGE_PRESETS, matchPreset, type DateRangePreset } from '.
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
 
-type CalendarPassThrough = Pick<CalendarRangeProps, 'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'numberOfMonths'>;
+type CalendarPassThrough = Pick<
+  CalendarRangeProps,
+  'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'numberOfMonths'
+>;
 
 export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVariantProps {
   value?: DateRange;
@@ -82,7 +85,9 @@ export function DateRangePicker({
   const range = value ?? inner;
   const open = openProp ?? innerOpen;
   const s = datePickerVariants({ size });
-  const active = customActive ? presets.find((p) => !p.range) : (matchPreset(presets, draft, today) ?? (draft.start ? presets.find((p) => !p.range) : undefined));
+  const active = customActive
+    ? presets.find((p) => !p.range)
+    : (matchPreset(presets, draft, today) ?? (draft.start ? presets.find((p) => !p.range) : undefined));
 
   const setOpen = (next: boolean) => {
     if (next) {
@@ -128,12 +133,24 @@ export function DateRangePicker({
           <input type="hidden" name={`${name}-end`} value={range.end ? toISODate(range.end) : ''} />
         </>
       )}
-      <PopoverContent aria-label={t('datePicker.chooseRange')} align="start" sideOffset={6} padding="none" initialFocus={() => focusCalendarDay(calendarRef.current)}>
+      <PopoverContent
+        aria-label={t('datePicker.chooseRange')}
+        align="start"
+        sideOffset={6}
+        padding="none"
+        initialFocus={() => focusCalendarDay(calendarRef.current)}
+      >
         <div className={s.panel()}>
           {presets.length > 0 && (
             <div role="group" aria-label={t('datePicker.presets')} className={s.presets()}>
               {presets.map((p) => (
-                <button key={p.id} type="button" aria-pressed={active?.id === p.id} className={cn(s.preset())} onClick={() => pickPreset(p)}>
+                <button
+                  key={p.id}
+                  type="button"
+                  aria-pressed={active?.id === p.id}
+                  className={cn(s.preset())}
+                  onClick={() => pickPreset(p)}
+                >
                   {p.label}
                 </button>
               ))}
@@ -150,7 +167,11 @@ export function DateRangePicker({
               if (r.start && r.end) apply(r);
             }}
             numberOfMonths={numberOfMonths}
-            defaultMonth={draft.end && numberOfMonths === 2 ? new Date(draft.end.getFullYear(), draft.end.getMonth() - 1, 1) : undefined}
+            defaultMonth={
+              draft.end && numberOfMonths === 2
+                ? new Date(draft.end.getFullYear(), draft.end.getMonth() - 1, 1)
+                : undefined
+            }
             locale={locale}
             weekStartsOn={weekStartsOn}
             min={min}

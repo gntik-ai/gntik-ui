@@ -61,7 +61,12 @@ export function SelectableCardGroup(props: SelectableCardGroupProps) {
     const { value, defaultValue, onValueChange } = props;
     return (
       <TypeContext.Provider value="checkbox">
-        <BaseCheckboxGroup {...shared} value={value} defaultValue={defaultValue} onValueChange={(v) => onValueChange?.(v)} />
+        <BaseCheckboxGroup
+          {...shared}
+          value={value}
+          defaultValue={defaultValue}
+          onValueChange={(v) => onValueChange?.(v)}
+        />
       </TypeContext.Provider>
     );
   }

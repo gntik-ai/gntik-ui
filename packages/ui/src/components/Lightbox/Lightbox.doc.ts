@@ -17,5 +17,15 @@ export const doc: ComponentDoc = {
     ['Enter / Space on a thumbnail', 'Shows that item'],
     ['Escape', 'Closes the viewer and returns focus'],
   ],
-  tokens: ['background', 'chrome', 'card', 'border', 'foreground', 'muted-foreground', 'primary', 'secondary', 'focus-ring'],
+  tokens: [
+    'background',
+    'chrome',
+    'card',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'primary',
+    'secondary',
+    'focus-ring',
+  ],
 };

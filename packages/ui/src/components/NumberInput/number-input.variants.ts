@@ -7,7 +7,8 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const numberInputVariants = tv({
   slots: {
     root: 'flex min-w-0 flex-col gap-1.5',
-    scrub: 'inline-flex w-fit cursor-ew-resize text-[12px] font-medium text-muted-foreground select-none hover:text-foreground',
+    scrub:
+      'inline-flex w-fit cursor-ew-resize text-[12px] font-medium text-muted-foreground select-none hover:text-foreground',
     scrubCursor: 'text-foreground drop-shadow-sm',
     group: [
       'flex w-full min-w-0 items-stretch overflow-hidden rounded-md border border-border bg-background text-foreground shadow-sm transition-colors motion-reduce:transition-none',
@@ -33,7 +34,12 @@ export const numberInputVariants = tv({
   variants: {
     size: {
       /** Follows `data-density` (comfortable = md). */
-      auto: { group: 'h-control text-[13px]', input: 'px-field text-[13px]', unit: 'pe-3 text-[12.5px]', stepper: 'w-control' },
+      auto: {
+        group: 'h-control text-[13px]',
+        input: 'px-field text-[13px]',
+        unit: 'pe-3 text-[12.5px]',
+        stepper: 'w-control',
+      },
       sm: { group: 'h-8 text-[12px]', input: 'px-2.5 text-[12px]', unit: 'pe-2.5 text-[12px]', stepper: 'w-8' },
       md: { group: 'h-9 text-[13px]', input: 'px-3 text-[13px]', unit: 'pe-3 text-[12.5px]', stepper: 'w-9' },
     },

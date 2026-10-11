@@ -23,7 +23,9 @@ export function tintedTones(classes: string): Set<string> {
 /** Rewrites `text-<tone>-text` to `text-<tone>-chip-text` for the given tones (variant prefixes kept). */
 export function rewriteChipText(classes: string, tones: Set<string>): string {
   if (!tones.size) return classes;
-  return classes.replace(TEXT, (all, lead: string, prefix: string, tone: string) => (tones.has(tone) ? `${lead}${prefix}text-${tone}-chip-text` : all));
+  return classes.replace(TEXT, (all, lead: string, prefix: string, tone: string) =>
+    tones.has(tone) ? `${lead}${prefix}text-${tone}-chip-text` : all,
+  );
 }
 
 interface Ranged {

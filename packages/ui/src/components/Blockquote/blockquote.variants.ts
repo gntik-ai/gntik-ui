@@ -19,7 +19,11 @@ export const blockquoteVariants = tv({
       /** A card for testimonials and feedback. */
       card: { root: 'rounded-xl border border-border bg-card p-5 shadow-sm', quote: 'text-[14px] leading-6' },
       /** Large, centred pull quote for editorial pages. */
-      pull: { root: 'mx-auto max-w-2xl text-center', quote: 'text-[19px] leading-8 font-medium tracking-tight', caption: 'justify-center' },
+      pull: {
+        root: 'mx-auto max-w-2xl text-center',
+        quote: 'text-[19px] leading-8 font-medium tracking-tight',
+        caption: 'justify-center',
+      },
     },
   },
   defaultVariants: { variant: 'default' },

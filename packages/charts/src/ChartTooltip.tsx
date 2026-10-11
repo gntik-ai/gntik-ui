@@ -56,11 +56,7 @@ export function ChartTooltip({
           return (
             <div key={`${name}-${i}`} className="flex items-center justify-between gap-5">
               <span className="flex min-w-0 items-center gap-2">
-                <span
-                  aria-hidden
-                  className="h-2.5 w-2.5 shrink-0 rounded-[3px]"
-                  style={{ background: swatchOf(p) }}
-                />
+                <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-[3px]" style={{ background: swatchOf(p) }} />
                 <span className="truncate text-[12px] text-muted-foreground">{name}</span>
               </span>
               <span className="font-mono text-[12px] font-semibold tabular-nums text-foreground">

@@ -154,7 +154,11 @@ export { meta as verifyEmailTemplateMeta } from './verify-email/template.meta';
 export type { VerifyEmailPageProps } from './verify-email/Page';
 export { default as PendingActivationPage } from './pending-activation/Page';
 export { meta as pendingActivationTemplateMeta } from './pending-activation/template.meta';
-export type { PendingActivationPageProps, PendingActivationAction, PendingActivationLink } from './pending-activation/Page';
+export type {
+  PendingActivationPageProps,
+  PendingActivationAction,
+  PendingActivationLink,
+} from './pending-activation/Page';
 
 // P3 — AI and builders
 export { default as RunTracePage } from './run-trace/Page';
@@ -232,5 +236,11 @@ export type { ContactTopic, ContactValues, Office } from './contact/data';
 export { default as IncidentBoardPage } from './incident-board/Page';
 export { meta as incidentBoardTemplateMeta } from './incident-board/template.meta';
 export type { IncidentBoardProps } from './incident-board/Page';
-export { applyVisibleMove, formatAge as formatIncidentAge, type TriageIncident, type TriageSeverity, type TriageStage } from './incident-board/data';
+export {
+  applyVisibleMove,
+  formatAge as formatIncidentAge,
+  type TriageIncident,
+  type TriageSeverity,
+  type TriageStage,
+} from './incident-board/data';
 export type { SignatureHeader } from './docs-article/data';

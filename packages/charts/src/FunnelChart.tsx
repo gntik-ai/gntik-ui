@@ -115,7 +115,12 @@ export function FunnelChart<T extends object>({
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
           <div className="min-w-0 flex-1" style={{ height }}>
             <ResponsiveContainer width="100%" height="100%">
-              <RFunnelChart margin={{ top: 4, right: 4, bottom: 4, left: 4 }} accessibilityLayer title={title} desc={description}>
+              <RFunnelChart
+                margin={{ top: 4, right: 4, bottom: 4, left: 4 }}
+                accessibilityLayer
+                title={title}
+                desc={description}
+              >
                 <Funnel
                   data={stages}
                   dataKey="value"
@@ -132,7 +137,10 @@ export function FunnelChart<T extends object>({
           {showStages && (
             <ol aria-label="Stages" className="flex w-full flex-col gap-2 sm:w-64">
               {stages.map((s, i) => (
-                <li key={s.name} className="flex items-center justify-between gap-3 border-b border-border pb-2 last:border-b-0">
+                <li
+                  key={s.name}
+                  className="flex items-center justify-between gap-3 border-b border-border pb-2 last:border-b-0"
+                >
                   <span className="flex min-w-0 items-center gap-2">
                     <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-[3px]" style={{ background: s.fill }} />
                     <span className="truncate text-[12.5px] text-foreground">{s.name}</span>

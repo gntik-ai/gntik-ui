@@ -7,11 +7,19 @@ import {
   type AppSidebarHeaderProps,
   type AppTopbarProps,
 } from '@gntik-ai/blocks';
-import { SidebarLayout, type BreadcrumbItem, type NavGroup, type SidebarLayoutProps, type UserMenuUser, type Workspace } from '@gntik-ai/ui';
+import {
+  SidebarLayout,
+  type BreadcrumbItem,
+  type NavGroup,
+  type SidebarLayoutProps,
+  type UserMenuUser,
+  type Workspace,
+} from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 
 export interface ConsoleShellProps
-  extends Pick<AppSidebarHeaderProps, 'currentWorkspaceId' | 'onWorkspaceChange' | 'onCreateWorkspace'>,
+  extends
+    Pick<AppSidebarHeaderProps, 'currentWorkspaceId' | 'onWorkspaceChange' | 'onCreateWorkspace'>,
     Pick<AppSidebarFooterProps, 'usage' | 'helpHref' | 'helpLabel' | 'userMenuItems' | 'onSignOut'>,
     Pick<SidebarLayoutProps, 'sidebarLabel' | 'collapseMode'> {
   /** Page content (usually a <Page>). */

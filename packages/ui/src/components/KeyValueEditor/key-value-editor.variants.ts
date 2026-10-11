@@ -3,7 +3,8 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const keyValueEditorVariants = tv({
   slots: {
     root: 'flex min-w-0 flex-col gap-3',
-    header: 'grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)_auto] items-end gap-2 px-0.5 font-mono text-[10.5px] tracking-[0.1em] text-muted-foreground uppercase',
+    header:
+      'grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)_auto] items-end gap-2 px-0.5 font-mono text-[10.5px] tracking-[0.1em] text-muted-foreground uppercase',
     headerSpacer: 'w-[4.25rem]',
     list: 'flex flex-col gap-2',
     row: 'grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)_auto] items-start gap-2',

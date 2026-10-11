@@ -54,7 +54,13 @@ export interface AlertDialogHeaderProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /** Icon tile + text column holding AlertDialogTitle and AlertDialogDescription. */
-export function AlertDialogHeader({ tone = 'destructive', icon, className, children, ...props }: AlertDialogHeaderProps) {
+export function AlertDialogHeader({
+  tone = 'destructive',
+  icon,
+  className,
+  children,
+  ...props
+}: AlertDialogHeaderProps) {
   const IconCmp = icon === undefined ? TONE_ICON[tone] : icon;
   return (
     <div className={cn(s.header(), className)} {...props}>
@@ -68,11 +74,17 @@ export function AlertDialogHeader({ tone = 'destructive', icon, className, child
   );
 }
 
-export function AlertDialogTitle({ className, ...props }: Omit<BaseAlertDialog.Title.Props, 'className'> & { className?: string }) {
+export function AlertDialogTitle({
+  className,
+  ...props
+}: Omit<BaseAlertDialog.Title.Props, 'className'> & { className?: string }) {
   return <BaseAlertDialog.Title className={cn(s.title(), className)} {...props} />;
 }
 
-export function AlertDialogDescription({ className, ...props }: Omit<BaseAlertDialog.Description.Props, 'className'> & { className?: string }) {
+export function AlertDialogDescription({
+  className,
+  ...props
+}: Omit<BaseAlertDialog.Description.Props, 'className'> & { className?: string }) {
   return <BaseAlertDialog.Description className={cn(s.description(), className)} {...props} />;
 }
 
@@ -91,11 +103,27 @@ export interface AlertDialogActionProps extends Omit<BaseAlertDialog.Close.Props
 }
 
 /** The confirming action: runs `onClick`, then closes the dialog. */
-export function AlertDialogAction({ variant = 'destructive', size, icon, className, ...props }: AlertDialogActionProps) {
-  return <BaseAlertDialog.Close render={<Button variant={variant} size={size} icon={icon} className={className} />} {...props} />;
+export function AlertDialogAction({
+  variant = 'destructive',
+  size,
+  icon,
+  className,
+  ...props
+}: AlertDialogActionProps) {
+  return (
+    <BaseAlertDialog.Close
+      render={<Button variant={variant} size={size} icon={icon} className={className} />}
+      {...props}
+    />
+  );
 }
 
 /** The neutral way out. Closes the dialog without side effects. */
 export function AlertDialogCancel({ variant = 'ghost', size, icon, className, ...props }: AlertDialogActionProps) {
-  return <BaseAlertDialog.Close render={<Button variant={variant} size={size} icon={icon} className={className} />} {...props} />;
+  return (
+    <BaseAlertDialog.Close
+      render={<Button variant={variant} size={size} icon={icon} className={className} />}
+      {...props}
+    />
+  );
 }

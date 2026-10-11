@@ -17,7 +17,9 @@ const permissions: Permission[] = [
 ];
 
 export default function ComboboxMultiple() {
-  const [value, setValue] = useState<Permission[]>(permissions.filter((p) => p.value === 'projects-read' || p.value === 'deploy'));
+  const [value, setValue] = useState<Permission[]>(
+    permissions.filter((p) => p.value === 'projects-read' || p.value === 'deploy'),
+  );
   return (
     <div className="w-full max-w-sm">
       <Combobox items={permissions} multiple value={value} onValueChange={setValue}>

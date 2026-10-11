@@ -53,27 +53,48 @@ export function parseArgs(argv: string[]): CliOptions {
       return v;
     };
     switch (flag) {
-      case '--dry-run': o.dryRun = true; break;
-      case '--confirm-spend': o.confirmSpend = true; break;
-      case '--only': o.only = value().split(',').map((s) => s.trim()).filter(Boolean); break;
-      case '--model': o.model = value(); break;
+      case '--dry-run':
+        o.dryRun = true;
+        break;
+      case '--confirm-spend':
+        o.confirmSpend = true;
+        break;
+      case '--only':
+        o.only = value()
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean);
+        break;
+      case '--model':
+        o.model = value();
+        break;
       case '--effort': {
         const e = value() as Effort;
         if (!EFFORTS.includes(e)) throw new Error(`--effort must be one of ${EFFORTS.join(', ')}`);
         o.effort = e;
         break;
       }
-      case '--out': o.out = value(); break;
+      case '--out':
+        o.out = value();
+        break;
       case '--max-turns': {
         const n = Number(value());
         if (!Number.isInteger(n) || n < 1) throw new Error('--max-turns must be a positive integer');
         o.maxTurns = n;
         break;
       }
-      case '--no-fallback': o.fallback = false; break;
-      case '--no-eager': o.eager = false; break;
-      case '-h': case '--help': o.help = true; break;
-      default: throw new Error(`unknown option ${a}`);
+      case '--no-fallback':
+        o.fallback = false;
+        break;
+      case '--no-eager':
+        o.eager = false;
+        break;
+      case '-h':
+      case '--help':
+        o.help = true;
+        break;
+      default:
+        throw new Error(`unknown option ${a}`);
     }
   }
   return o;
@@ -84,7 +105,12 @@ export function credentialSource(env: NodeJS.ProcessEnv = process.env, home = os
   if (env.ANTHROPIC_API_KEY) return 'ANTHROPIC_API_KEY';
   if (env.ANTHROPIC_AUTH_TOKEN) return 'ANTHROPIC_AUTH_TOKEN';
   if (env.ANTHROPIC_PROFILE) return `ANTHROPIC_PROFILE=${env.ANTHROPIC_PROFILE}`;
-  if (env.ANTHROPIC_FEDERATION_RULE_ID && env.ANTHROPIC_ORGANIZATION_ID && env.ANTHROPIC_SERVICE_ACCOUNT_ID && (env.ANTHROPIC_IDENTITY_TOKEN_FILE || env.ANTHROPIC_IDENTITY_TOKEN)) {
+  if (
+    env.ANTHROPIC_FEDERATION_RULE_ID &&
+    env.ANTHROPIC_ORGANIZATION_ID &&
+    env.ANTHROPIC_SERVICE_ACCOUNT_ID &&
+    (env.ANTHROPIC_IDENTITY_TOKEN_FILE || env.ANTHROPIC_IDENTITY_TOKEN)
+  ) {
     return 'workload identity federation';
   }
   const dir = path.join(env.XDG_CONFIG_HOME || path.join(home, '.config'), 'anthropic');
@@ -108,7 +134,10 @@ export interface TaskResult {
 const DIMS = Object.keys(WEIGHTS) as Dimension[];
 const pct = (n: number) => `${Math.round(n * 100)}%`;
 
-export function summaryMarkdown(results: TaskResult[], meta: { mode: string; model: string; effort: Effort; started: string }): string {
+export function summaryMarkdown(
+  results: TaskResult[],
+  meta: { mode: string; model: string; effort: Effort; started: string },
+): string {
   const rows = results.map(({ task, episode: e, scores: s, costUsd }) => {
     const d = s.dimensions;
     return `| ${task.id} | ${e.outcome} | **${s.total}** | ${pct(d.brand.score)} | ${pct(d.kitOnly.score)} | ${d.typecheck.pass ? 'pass' : 'fail'} | ${pct(d.composition.score)} | ${e.toolCalls.length} | ${e.usage.inputTokens + e.usage.cacheReadTokens + e.usage.cacheWriteTokens} / ${e.usage.outputTokens} | ${usd(costUsd)} |`;
@@ -137,7 +166,15 @@ function writeResults(dir: string, results: TaskResult[], summary: string): void
   fs.mkdirSync(dir, { recursive: true });
   for (const r of results) {
     const { submitted, ...episode } = r.episode;
-    const record = { task: r.task, outcome: r.episode.outcome, scores: r.scores, usage: r.episode.usage, costUsd: r.costUsd, transcript: episode, submitted: submitted ?? null };
+    const record = {
+      task: r.task,
+      outcome: r.episode.outcome,
+      scores: r.scores,
+      usage: r.episode.usage,
+      costUsd: r.costUsd,
+      transcript: episode,
+      submitted: submitted ?? null,
+    };
     fs.writeFileSync(path.join(dir, `${r.task.id}.json`), `${JSON.stringify(record, null, 2)}\n`);
     if (submitted) fs.writeFileSync(path.join(dir, `${r.task.id}.tsx`), submitted.code);
   }
@@ -183,30 +220,46 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   const fixture = opts.dryRun ? loadFixture() : undefined;
   let makeClient: (task: Task) => MessagesClient | undefined;
   if (fixture) {
-    makeClient = (task) => (fixture.tasks[task.id] ? replayClient(fixture.tasks[task.id] ?? [], opts.model) : undefined);
+    makeClient = (task) =>
+      fixture.tasks[task.id] ? replayClient(fixture.tasks[task.id] ?? [], opts.model) : undefined;
   } else {
     const source = credentialSource();
     if (!source || !opts.confirmSpend) {
       console.error(
         [
           'Refusing to run against the Claude API.',
-          source ? `Credential found (${source}).` : 'No credential found (ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, an `ant auth login` profile or WIF variables).',
-          opts.confirmSpend ? '' : 'A real run spends money: pass --confirm-spend to proceed (or --dry-run to replay the fixture).',
-        ].filter(Boolean).join('\n'),
+          source
+            ? `Credential found (${source}).`
+            : 'No credential found (ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, an `ant auth login` profile or WIF variables).',
+          opts.confirmSpend
+            ? ''
+            : 'A real run spends money: pass --confirm-spend to proceed (or --dry-run to replay the fixture).',
+        ]
+          .filter(Boolean)
+          .join('\n'),
       );
       return 2;
     }
-    if (!pricingFor(opts.model).known) console.warn(`No pricing for ${opts.model}; cost estimates use ${DEFAULT_CONFIG.model} prices.`);
+    if (!pricingFor(opts.model).known)
+      console.warn(`No pricing for ${opts.model}; cost estimates use ${DEFAULT_CONFIG.model} prices.`);
     const anthropic = new Anthropic();
     const client: MessagesClient = { stream: (params) => anthropic.beta.messages.stream(params) };
     makeClient = () => client;
   }
 
-  const config: Partial<AgentConfig> = { model: opts.model, effort: opts.effort, maxTurns: opts.maxTurns, fallback: opts.fallback, eagerInputStreaming: opts.eager };
+  const config: Partial<AgentConfig> = {
+    model: opts.model,
+    effort: opts.effort,
+    maxTurns: opts.maxTurns,
+    fallback: opts.fallback,
+    eagerInputStreaming: opts.eager,
+  };
   const started = new Date().toISOString();
   const outDir = path.resolve(opts.out ?? path.join(EVALS_ROOT, 'results', started.replace(/[:.]/g, '-')));
   const results: TaskResult[] = [];
-  console.log(`${opts.dryRun ? 'Dry run (fixture replay, no API calls)' : 'REAL run'} · ${opts.model} · effort ${opts.effort} · ${tasks.length} task(s)`);
+  console.log(
+    `${opts.dryRun ? 'Dry run (fixture replay, no API calls)' : 'REAL run'} · ${opts.model} · effort ${opts.effort} · ${tasks.length} task(s)`,
+  );
 
   for (const task of tasks) {
     const client = makeClient(task);
@@ -224,21 +277,34 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
     );
   }
 
-  const summary = summaryMarkdown(results, { mode: opts.dryRun ? 'dry-run' : 'real', model: opts.model, effort: opts.effort, started });
+  const summary = summaryMarkdown(results, {
+    mode: opts.dryRun ? 'dry-run' : 'real',
+    model: opts.model,
+    effort: opts.effort,
+    started,
+  });
   writeResults(outDir, results, summary);
   const mean = results.length ? results.reduce((s, r) => s + r.scores.total, 0) / results.length : 0;
   const cost = results.reduce((s, r) => s + r.costUsd, 0);
-  const usage = results.reduce((s, r) => s + r.episode.usage.inputTokens + r.episode.usage.cacheReadTokens + r.episode.usage.cacheWriteTokens, 0);
+  const usage = results.reduce(
+    (s, r) => s + r.episode.usage.inputTokens + r.episode.usage.cacheReadTokens + r.episode.usage.cacheWriteTokens,
+    0,
+  );
   const output = results.reduce((s, r) => s + r.episode.usage.outputTokens, 0);
-  console.log(`\nMean score ${mean.toFixed(1)}/100 · ${usage} input (incl. cache) / ${output} output tokens · estimated cost ${usd(cost)}${opts.dryRun ? ' (synthetic usage)' : ''}`);
+  console.log(
+    `\nMean score ${mean.toFixed(1)}/100 · ${usage} input (incl. cache) / ${output} output tokens · estimated cost ${usd(cost)}${opts.dryRun ? ' (synthetic usage)' : ''}`,
+  );
   const shown = path.relative(process.cwd(), outDir);
   console.log(`Results: ${shown && !shown.startsWith('..') ? shown : outDir}/summary.md`);
   return 0;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().then((code) => process.exit(code), (e: unknown) => {
-    console.error(e);
-    process.exit(1);
-  });
+  main().then(
+    (code) => process.exit(code),
+    (e: unknown) => {
+      console.error(e);
+      process.exit(1);
+    },
+  );
 }

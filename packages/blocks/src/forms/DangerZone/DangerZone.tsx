@@ -32,19 +32,29 @@ export function DangerZone({
   const [open, setOpen] = useState(false);
 
   return (
-    <section aria-labelledby={`${id}-title`} className={cn('rounded-lg border border-destructive/35 bg-card shadow-sm', className)}>
+    <section
+      aria-labelledby={`${id}-title`}
+      className={cn('rounded-lg border border-destructive/35 bg-card shadow-sm', className)}
+    >
       <div className="border-b border-destructive/20 px-6 py-4">
         <Heading id={`${id}-title`} className="text-[15px] font-semibold tracking-tight text-destructive-text">
           {title}
         </Heading>
-        {description != null && <p className="mt-1 text-[13px] leading-6 text-pretty text-muted-foreground">{description}</p>}
+        {description != null && (
+          <p className="mt-1 text-[13px] leading-6 text-pretty text-muted-foreground">{description}</p>
+        )}
       </div>
       <ul className="divide-y divide-border">
         {actions.map((action) => (
-          <li key={action.id} className="flex flex-col gap-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+          <li
+            key={action.id}
+            className="flex flex-col gap-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+          >
             <div className="min-w-0">
               <div className="text-[13.5px] font-semibold text-foreground">{action.title}</div>
-              <p className="mt-0.5 max-w-xl text-[12.5px] leading-5 text-pretty text-muted-foreground">{action.description}</p>
+              <p className="mt-0.5 max-w-xl text-[12.5px] leading-5 text-pretty text-muted-foreground">
+                {action.description}
+              </p>
             </div>
             <Button
               variant={action.destructive === false ? 'secondary' : 'destructive'}

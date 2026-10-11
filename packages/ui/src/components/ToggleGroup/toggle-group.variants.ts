@@ -7,7 +7,8 @@ export const toggleGroupVariants = tv({
       /** Pill container; the pressed item lifts onto bg-secondary. */
       segmented: 'items-center gap-0.5 rounded-lg border border-border bg-card p-0.5 shadow-sm',
       /** Buttons sharing borders; rounding only on the container. */
-      joined: 'overflow-hidden rounded-lg border border-border bg-card shadow-sm divide-x divide-border data-[orientation=vertical]:divide-x-0 data-[orientation=vertical]:divide-y',
+      joined:
+        'overflow-hidden rounded-lg border border-border bg-card shadow-sm divide-x divide-border data-[orientation=vertical]:divide-x-0 data-[orientation=vertical]:divide-y',
     },
   },
   defaultVariants: { variant: 'segmented' },
@@ -23,7 +24,8 @@ export const toggleVariants = tv({
   variants: {
     variant: {
       /** Standalone pressed button. */
-      standalone: 'rounded-lg border border-border bg-card shadow-sm hover:bg-secondary/50 data-pressed:border-primary/40',
+      standalone:
+        'rounded-lg border border-border bg-card shadow-sm hover:bg-secondary/50 data-pressed:border-primary/40',
       segmented: 'rounded-md data-pressed:shadow-sm',
       joined: 'hover:bg-secondary/50',
     },

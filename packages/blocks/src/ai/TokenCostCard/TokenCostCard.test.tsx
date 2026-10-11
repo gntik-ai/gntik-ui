@@ -24,7 +24,12 @@ describe('TokenCostCard', () => {
   });
 
   it('reports overspend and hides the switch for a single period', () => {
-    render(<TokenCostCard periods={[{ id: 'm', label: 'Month', inputTokens: 10, outputTokens: 0, cost: 60, budget: 50 }]} currency="EUR" />);
+    render(
+      <TokenCostCard
+        periods={[{ id: 'm', label: 'Month', inputTokens: 10, outputTokens: 0, cost: 60, budget: 50 }]}
+        currency="EUR"
+      />,
+    );
     expect(screen.queryByRole('group', { name: 'Period' })).not.toBeInTheDocument();
     expect(screen.getByText('€10.00 over budget')).toBeInTheDocument();
   });

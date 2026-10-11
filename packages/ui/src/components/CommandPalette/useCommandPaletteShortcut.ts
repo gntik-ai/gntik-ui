@@ -7,7 +7,10 @@ export interface CommandPaletteShortcutOptions {
 }
 
 /** Calls `onTrigger` on ⌘K / Ctrl+K anywhere in the document (and prevents the browser default). */
-export function useCommandPaletteShortcut(onTrigger: () => void, { key = 'k', enabled = true }: CommandPaletteShortcutOptions = {}) {
+export function useCommandPaletteShortcut(
+  onTrigger: () => void,
+  { key = 'k', enabled = true }: CommandPaletteShortcutOptions = {},
+) {
   const handler = useRef(onTrigger);
   useEffect(() => {
     handler.current = onTrigger;
@@ -15,7 +18,12 @@ export function useCommandPaletteShortcut(onTrigger: () => void, { key = 'k', en
   useEffect(() => {
     if (!enabled) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && !event.altKey && !event.shiftKey && event.key.toLowerCase() === key.toLowerCase()) {
+      if (
+        (event.metaKey || event.ctrlKey) &&
+        !event.altKey &&
+        !event.shiftKey &&
+        event.key.toLowerCase() === key.toLowerCase()
+      ) {
         event.preventDefault();
         handler.current();
       }

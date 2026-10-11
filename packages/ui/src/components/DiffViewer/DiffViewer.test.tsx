@@ -36,8 +36,18 @@ describe('diffLines', () => {
     const out = diffLines(a, b);
     expect(out.filter((l) => l.type === 'unchanged')).toHaveLength(4);
     // Rebuilding both sides from the script gives the inputs back.
-    expect(out.filter((l) => l.type !== 'added').map((l) => l.text).join('\n')).toBe(a);
-    expect(out.filter((l) => l.type !== 'removed').map((l) => l.text).join('\n')).toBe(b);
+    expect(
+      out
+        .filter((l) => l.type !== 'added')
+        .map((l) => l.text)
+        .join('\n'),
+    ).toBe(a);
+    expect(
+      out
+        .filter((l) => l.type !== 'removed')
+        .map((l) => l.text)
+        .join('\n'),
+    ).toBe(b);
   });
 
   it('can ignore whitespace and case', () => {
@@ -47,12 +57,20 @@ describe('diffLines', () => {
 
   it('diffWords marks only the changed words', () => {
     const { old, new: next } = diffWords('port: 8080', 'port: 8443');
-    expect(old).toEqual([{ text: 'port: ', changed: false }, { text: '8080', changed: true }]);
-    expect(next).toEqual([{ text: 'port: ', changed: false }, { text: '8443', changed: true }]);
+    expect(old).toEqual([
+      { text: 'port: ', changed: false },
+      { text: '8080', changed: true },
+    ]);
+    expect(next).toEqual([
+      { text: 'port: ', changed: false },
+      { text: '8443', changed: true },
+    ]);
   });
 
   it('JSON is compared with stable key order', () => {
-    expect(stableStringify({ b: 1, a: { d: 2, c: [{ z: 1, y: 2 }] } })).toBe('{\n  "a": {\n    "c": [\n      {\n        "y": 2,\n        "z": 1\n      }\n    ],\n    "d": 2\n  },\n  "b": 1\n}');
+    expect(stableStringify({ b: 1, a: { d: 2, c: [{ z: 1, y: 2 }] } })).toBe(
+      '{\n  "a": {\n    "c": [\n      {\n        "y": 2,\n        "z": 1\n      }\n    ],\n    "d": 2\n  },\n  "b": 1\n}',
+    );
     expect(diffStats(diffJson({ a: 1, b: 2 }, '{"b":2,"a":1}'))).toEqual({ added: 0, removed: 0 });
   });
 
@@ -109,7 +127,9 @@ describe('DiffViewer', () => {
   });
 
   it('split view puts removed lines left and added lines right', () => {
-    const { container } = render(<DiffViewer mode="split" oldValue={'x\nold'} newValue={'x\nnew'} oldLabel="before.txt" newLabel="after.txt" />);
+    const { container } = render(
+      <DiffViewer mode="split" oldValue={'x\nold'} newValue={'x\nnew'} oldLabel="before.txt" newLabel="after.txt" />,
+    );
     const row = container.querySelector('[data-type="changed"]')!;
     const [left, right] = row.children;
     expect(left).toHaveAttribute('data-type', 'removed');
@@ -119,7 +139,9 @@ describe('DiffViewer', () => {
 
   it('Enter / Space on "Expand N lines" reveals the run and focuses the region', async () => {
     const user = userEvent.setup();
-    render(<DiffViewer oldValue={lines(20)} newValue={lines(20).replace('line 10', 'line ten')} showModeToggle={false} />);
+    render(
+      <DiffViewer oldValue={lines(20)} newValue={lines(20).replace('line 10', 'line ten')} showModeToggle={false} />,
+    );
     const region = screen.getByRole('region', { name: 'Diff' });
     expect(within(region).queryByText('line 1')).not.toBeInTheDocument();
     const first = screen.getByRole('button', { name: 'Expand 6 lines' });

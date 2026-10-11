@@ -46,7 +46,12 @@ describe('Avatar', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><AvatarSizes /><AvatarGroupMembers /></>);
+    render(
+      <>
+        <AvatarSizes />
+        <AvatarGroupMembers />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

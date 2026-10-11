@@ -18,7 +18,10 @@ describe('WorkspaceSwitcher (menu)', () => {
   it.each([['{Enter}'], [' '], ['{ArrowDown}']])('opens with %s and marks the current workspace', async (key) => {
     const { menu, trigger } = await open(key);
     expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    expect(within(menu).getByRole('menuitemradio', { name: /Acme Industries/ })).toHaveAttribute('aria-checked', 'true');
+    expect(within(menu).getByRole('menuitemradio', { name: /Acme Industries/ })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
     expect(within(menu).getByRole('menuitemradio', { name: /Design Team/ })).toHaveAttribute('aria-checked', 'false');
   });
 

@@ -32,7 +32,10 @@ interface SheetContextValue {
 
 const SheetContext = createContext<SheetContextValue | null>(null);
 
-export interface BottomSheetProps extends Omit<BaseDrawer.Root.Props, 'swipeDirection' | 'snapPoints' | 'snapPoint' | 'defaultSnapPoint' | 'onSnapPointChange'> {
+export interface BottomSheetProps extends Omit<
+  BaseDrawer.Root.Props,
+  'swipeDirection' | 'snapPoints' | 'snapPoint' | 'defaultSnapPoint' | 'onSnapPointChange'
+> {
   /**
    * Heights the sheet rests at, smallest first: 0–1 is a fraction of the viewport, larger
    * numbers are px, strings take px/rem. The last one should be the expanded height (1).
@@ -98,13 +101,23 @@ function SheetHandle() {
   if (!ctx) return null;
   const { snapPoints, snap, setSnap, labels } = ctx;
   const n = snapPoints.length;
-  const at = Math.max(0, snapPoints.findIndex((p) => p === snap));
+  const at = Math.max(
+    0,
+    snapPoints.findIndex((p) => p === snap),
+  );
   const to = (i: number) => {
     const next = snapPoints[Math.min(Math.max(i, 0), n - 1)];
     if (next !== undefined && next !== snap) setSnap(next);
   };
   const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
-    const keys: Record<string, number> = { ArrowUp: at + 1, ArrowDown: at - 1, Home: 0, End: n - 1, PageUp: n - 1, PageDown: 0 };
+    const keys: Record<string, number> = {
+      ArrowUp: at + 1,
+      ArrowDown: at - 1,
+      Home: 0,
+      End: n - 1,
+      PageUp: n - 1,
+      PageDown: 0,
+    };
     const target = keys[e.key];
     if (target === undefined) return;
     e.preventDefault();
@@ -147,7 +160,16 @@ export interface BottomSheetContentProps extends Omit<BaseDrawer.Popup.Props, 'c
  * The sheet: portal, backdrop, viewport and popup with the keyboard-accessible handle, an
  * optional header (title, description), scrollable content and a fixed footer.
  */
-export function BottomSheetContent({ className, title, description, footer, showClose = true, container, children, ...props }: BottomSheetContentProps) {
+export function BottomSheetContent({
+  className,
+  title,
+  description,
+  footer,
+  showClose = true,
+  container,
+  children,
+  ...props
+}: BottomSheetContentProps) {
   const ctx = useContext(SheetContext);
   const s = bottomSheetVariants();
   return (
@@ -159,7 +181,9 @@ export function BottomSheetContent({ className, title, description, footer, show
           {(title != null || description != null) && (
             <div className={s.header()}>
               {title != null && <BaseDrawer.Title className={s.title()}>{title}</BaseDrawer.Title>}
-              {description != null && <BaseDrawer.Description className={s.description()}>{description}</BaseDrawer.Description>}
+              {description != null && (
+                <BaseDrawer.Description className={s.description()}>{description}</BaseDrawer.Description>
+              )}
             </div>
           )}
           <BaseDrawer.Content className={s.content()}>{children}</BaseDrawer.Content>

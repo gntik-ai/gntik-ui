@@ -38,7 +38,8 @@ export async function run(argv: string[], opts: RunOptions = {}): Promise<number
   const wantsJson = argv.includes('--json');
   let command: string | null = null;
   const fail = (err: CliError) => {
-    if (wantsJson) stdout(`${JSON.stringify({ ok: false, command, error: { code: err.code, message: err.message } }, null, 2)}\n`);
+    if (wantsJson)
+      stdout(`${JSON.stringify({ ok: false, command, error: { code: err.code, message: err.message } }, null, 2)}\n`);
     else stderr(`gntik-ui: ${err.message}\n`);
     return err.exitCode;
   };
@@ -51,7 +52,8 @@ export async function run(argv: string[], opts: RunOptions = {}): Promise<number
       return 0;
     }
     if (flags.help || !args.command) {
-      if (!flags.help && args.positionals.length) throw new CliError('USAGE', `Unknown command "${args.positionals[0]}"`);
+      if (!flags.help && args.positionals.length)
+        throw new CliError('USAGE', `Unknown command "${args.positionals[0]}"`);
       const help = HELP[args.command ?? 'main'];
       stdout(flags.json ? `${JSON.stringify({ ok: true, command: command ?? 'help', help })}\n` : `${help}\n`);
       return flags.help ? 0 : 2;

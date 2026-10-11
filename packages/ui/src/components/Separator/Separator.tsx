@@ -34,11 +34,12 @@ export function Separator({
     <div className={cn(s.labelled(), className)}>
       {labelPosition !== 'start' && <BaseSeparator orientation="horizontal" className={line} {...props} />}
       <span className={s.label()}>{label}</span>
-      {labelPosition !== 'end' && (
-        labelPosition === 'start'
-          ? <BaseSeparator orientation="horizontal" className={line} {...props} />
-          : <span aria-hidden className={line} />
-      )}
+      {labelPosition !== 'end' &&
+        (labelPosition === 'start' ? (
+          <BaseSeparator orientation="horizontal" className={line} {...props} />
+        ) : (
+          <span aria-hidden className={line} />
+        ))}
     </div>
   );
 }

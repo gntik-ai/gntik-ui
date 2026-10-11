@@ -123,7 +123,9 @@ describe('TimePicker', () => {
   });
 
   it('min / max mark out-of-range values invalid; the hidden input submits the value', () => {
-    const { container } = render(<TimePicker aria-label="At" hourCycle={24} defaultValue="07:00" min="08:00" name="at" />);
+    const { container } = render(
+      <TimePicker aria-label="At" hourCycle={24} defaultValue="07:00" min="08:00" name="at" />,
+    );
     expect(screen.getByRole('spinbutton', { name: 'Hours' })).toHaveAttribute('aria-invalid', 'true');
     expect(container.querySelector('input[name="at"]')).toHaveValue('07:00');
   });

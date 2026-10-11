@@ -8,7 +8,9 @@ describe('AgendaList', () => {
     const { container } = render(<AgendaList />);
     expect(screen.getByRole('heading', { name: 'Today · Wednesday, April 15' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Tomorrow · Thursday, April 16' })).toBeInTheDocument();
-    expect(within(screen.getByRole('list', { name: 'Today · Wednesday, April 15' })).getAllByRole('listitem')).toHaveLength(9);
+    expect(
+      within(screen.getByRole('list', { name: 'Today · Wednesday, April 15' })).getAllByRole('listitem'),
+    ).toHaveLength(9);
     expect(screen.queryByRole('heading', { name: /April 22/ })).not.toBeInTheDocument();
     await expectNoAxeViolations(container);
   });

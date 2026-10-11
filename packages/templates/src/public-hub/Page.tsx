@@ -83,7 +83,11 @@ export default function PublicHubPage({
           {loading ? (
             <Skeleton className="h-9 w-32" />
           ) : (
-            <Button nativeButton={false} role="link" render={<a href={primaryAction.href} onClick={primaryAction.onClick} />}>
+            <Button
+              nativeButton={false}
+              role="link"
+              render={<a href={primaryAction.href} onClick={primaryAction.onClick} />}
+            >
               {primaryAction.label}
             </Button>
           )}

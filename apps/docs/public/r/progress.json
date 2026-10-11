@@ -35,7 +35,7 @@
       "path": "packages/ui/src/components/Progress/Progress.doc.ts",
       "type": "registry:ui",
       "target": "components/ui/progress/Progress.doc.ts",
-      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Progress',\n  group: 'Feedback',\n  status: 'stable',\n  description: 'Progress bar for a running task: optional label and formatted value, four tones (primary, success, warning, destructive), three heights, and an indeterminate state (value null) that stops pulsing under reduced motion.',\n  primitive: '@base-ui/react/progress',\n  pattern: 'progressbar',\n  tokens: ['primary', 'success', 'success-text', 'warning', 'warning-text', 'destructive', 'destructive-text', 'secondary', 'foreground'],\n};\n"
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Progress',\n  group: 'Feedback',\n  status: 'stable',\n  description:\n    'Progress bar for a running task: optional label and formatted value, four tones (primary, success, warning, destructive), three heights, and an indeterminate state (value null) that stops pulsing under reduced motion.',\n  primitive: '@base-ui/react/progress',\n  pattern: 'progressbar',\n  tokens: [\n    'primary',\n    'success',\n    'success-text',\n    'warning',\n    'warning-text',\n    'destructive',\n    'destructive-text',\n    'secondary',\n    'foreground',\n  ],\n};\n"
     },
     {
       "path": "packages/ui/src/doc.ts",

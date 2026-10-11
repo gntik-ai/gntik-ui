@@ -55,14 +55,20 @@ const fieldValue = (e: AuditEvent, field: string) =>
   field === 'actor' ? e.actor.name : field === 'resource' ? e.resource : field === 'result' ? e.result : '';
 
 /** Applies the search text, the filter chips (OR within a field, AND across fields) and the date range. */
-export function filterAuditEvents(events: readonly AuditEvent[], query: string, filters: readonly ActiveFilter[], range: DateRange) {
+export function filterAuditEvents(
+  events: readonly AuditEvent[],
+  query: string,
+  filters: readonly ActiveFilter[],
+  range: DateRange,
+) {
   const q = query.trim().toLowerCase();
   const fields = [...new Set(filters.map((f) => f.field))];
   const from = range.start ? startOfDay(range.start).getTime() : -Infinity;
   const to = range.end ? startOfDay(range.end).getTime() + DAY : Infinity;
   return events.filter((e) => {
     if (q && ![e.actor.name, e.actor.email, e.action, e.target].some((v) => v.toLowerCase().includes(q))) return false;
-    if (!fields.every((field) => filters.some((f) => f.field === field && f.value === fieldValue(e, field)))) return false;
+    if (!fields.every((field) => filters.some((f) => f.field === field && f.value === fieldValue(e, field))))
+      return false;
     const t = e.at.getTime();
     return t >= from && t < to;
   });
@@ -73,7 +79,16 @@ const csvCell = (v: string) => (/[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` 
 /** CSV of the events (time, actor, action, resource, target, ip, result). */
 export function auditEventsToCsv(events: readonly AuditEvent[]) {
   const head = ['time', 'actor', 'email', 'action', 'resource', 'target', 'ip', 'result'];
-  const rows = events.map((e) => [e.at.toISOString(), e.actor.name, e.actor.email, e.action, e.resource, e.target, e.ip, e.result]);
+  const rows = events.map((e) => [
+    e.at.toISOString(),
+    e.actor.name,
+    e.actor.email,
+    e.action,
+    e.resource,
+    e.target,
+    e.ip,
+    e.result,
+  ]);
   return [head, ...rows].map((r) => r.map(csvCell).join(',')).join('\n');
 }
 
@@ -138,8 +153,19 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
       sortable: true,
     },
     { id: 'action', header: 'Action', accessor: (e) => e.action, sortable: true, className: 'font-mono text-[12px]' },
-    { id: 'target', header: 'Target', accessor: (e) => e.target, cell: (e) => <span className="font-medium">{e.target}</span> },
-    { id: 'ip', header: 'IP address', accessor: (e) => e.ip, defaultHidden: true, className: 'font-mono text-[12px] text-muted-foreground' },
+    {
+      id: 'target',
+      header: 'Target',
+      accessor: (e) => e.target,
+      cell: (e) => <span className="font-medium">{e.target}</span>,
+    },
+    {
+      id: 'ip',
+      header: 'IP address',
+      accessor: (e) => e.ip,
+      defaultHidden: true,
+      className: 'font-mono text-[12px] text-muted-foreground',
+    },
     {
       id: 'result',
       header: 'Result',
@@ -153,7 +179,13 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
       align: 'right',
       cell: (e) =>
         e.diff ? (
-          <Button size="sm" variant="ghost" icon={FileDiff} aria-label={`View changes for ${e.action} on ${e.target}`} onClick={() => setDiffEvent(e)}>
+          <Button
+            size="sm"
+            variant="ghost"
+            icon={FileDiff}
+            aria-label={`View changes for ${e.action} on ${e.target}`}
+            onClick={() => setDiffEvent(e)}
+          >
             Diff
           </Button>
         ) : (
@@ -174,7 +206,15 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
             status=""
             meta={[]}
             tabs={null}
-            actions={[{ label: 'Export CSV', icon: Download, variant: 'secondary', disabled: rows.length === 0, onClick: () => onExport(rows) }]}
+            actions={[
+              {
+                label: 'Export CSV',
+                icon: Download,
+                variant: 'secondary',
+                disabled: rows.length === 0,
+                onClick: () => onExport(rows),
+              },
+            ]}
           />
         }
       >
@@ -201,7 +241,13 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
           defaultSort={{ columnId: 'at', direction: 'descending' }}
           defaultDensity="compact"
           emptyState={
-            <NoResultsEmpty entity="events" query={query} filterCount={filters.length} onClearFilters={() => setFilters([])} onClearSearch={() => setQuery('')} />
+            <NoResultsEmpty
+              entity="events"
+              query={query}
+              filterCount={filters.length}
+              onClearFilters={() => setFilters([])}
+              onClearSearch={() => setQuery('')}
+            />
           }
         />
       </Page>
@@ -224,7 +270,9 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
                   language="diff"
                   filename={`${diffEvent.id}.diff`}
                   label={`Changes for ${diffEvent.action}`}
-                  highlightLines={(diffEvent.diff ?? '').split('\n').flatMap((l, i) => (l.startsWith('+') ? [i + 1] : []))}
+                  highlightLines={(diffEvent.diff ?? '')
+                    .split('\n')
+                    .flatMap((l, i) => (l.startsWith('+') ? [i + 1] : []))}
                 />
               </DrawerBody>
             </>

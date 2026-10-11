@@ -16,7 +16,8 @@ export interface TimerLabels {
 
 const DEFAULT_LABELS: TimerLabels = { paused: 'Paused', stopped: 'Stopped', units: { h: 'h', m: 'm', s: 's' } };
 
-export interface TimerProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'className' | 'children'>, Pick<TimerVariantProps, 'size'> {
+export interface TimerProps
+  extends Omit<HTMLAttributes<HTMLSpanElement>, 'className' | 'children'>, Pick<TimerVariantProps, 'size'> {
   className?: string;
   ref?: Ref<HTMLSpanElement>;
   /** When the current run started: a Date, an ISO string or epoch ms. */
@@ -88,7 +89,14 @@ export function Timer({
   const s = timerVariants({ size, status });
 
   return (
-    <span role="timer" aria-live={announce ? 'polite' : 'off'} aria-atomic className={cn(s.root(), className)} data-status={status} {...props}>
+    <span
+      role="timer"
+      aria-live={announce ? 'polite' : 'off'}
+      aria-atomic
+      className={cn(s.root(), className)}
+      data-status={status}
+      {...props}
+    >
       {showStatus && <span aria-hidden className={s.dot()} />}
       <time dateTime={toIsoDuration(elapsed)} aria-hidden={announce || undefined}>
         {text}

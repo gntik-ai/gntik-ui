@@ -22,12 +22,14 @@ export const workspaceSwitcherVariants = tv({
     searchPopup: [listboxPopup, 'w-[280px] p-0'],
     searchField: 'flex items-center gap-2 border-b border-border px-3',
     searchIcon: 'shrink-0 text-muted-foreground',
-    searchInput: 'h-10 w-full min-w-0 bg-transparent text-[13px] text-foreground outline-none placeholder:text-muted-foreground',
+    searchInput:
+      'h-10 w-full min-w-0 bg-transparent text-[13px] text-foreground outline-none placeholder:text-muted-foreground',
     searchList: 'max-h-[300px] overflow-y-auto p-1.5 outline-none',
     searchItem: [listboxItem, 'h-11 px-2'],
     searchIndicator: 'ms-auto flex shrink-0 text-primary-text',
     searchEmpty: 'px-3 py-4 text-center text-[12.5px] text-muted-foreground empty:hidden',
-    createIcon: 'grid size-[30px] shrink-0 place-items-center rounded-md border border-dashed border-border text-muted-foreground',
+    createIcon:
+      'grid size-[30px] shrink-0 place-items-center rounded-md border border-dashed border-border text-muted-foreground',
   },
 });
 

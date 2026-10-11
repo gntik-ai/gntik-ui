@@ -22,7 +22,14 @@ export default function OverflowListMembers() {
       renderItem={(m) => <Avatar name={m.name} tone={m.tone} size="sm" className="rounded-full ring-2 ring-card" />}
       renderOverflowItem={(m) => (
         <>
-          <Avatar tone={m.tone} size="xs" initials={m.name.split(' ').map((p) => p[0]).join('')} />
+          <Avatar
+            tone={m.tone}
+            size="xs"
+            initials={m.name
+              .split(' ')
+              .map((p) => p[0])
+              .join('')}
+          />
           <span>{m.name}</span>
         </>
       )}

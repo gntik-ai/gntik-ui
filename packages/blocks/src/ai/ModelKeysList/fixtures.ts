@@ -16,7 +16,29 @@ export interface ModelKey {
 }
 
 export const modelKeys: ModelKey[] = [
-  { id: 'k1', name: 'Production', provider: 'Provider A', maskedKey: 'pa-…4f2a', status: 'connected', lastUsed: '3 min ago' },
-  { id: 'k2', name: 'Gateway', provider: 'openai-compatible', endpoint: 'https://llm-gateway.internal/v1', maskedKey: 'sk-…9c01', status: 'untested' },
-  { id: 'k3', name: 'On-prem cluster', provider: 'self-hosted', endpoint: 'http://10.0.4.12:8000/v1', maskedKey: 'tok-…77de', status: 'failing', lastUsed: '2 days ago' },
+  {
+    id: 'k1',
+    name: 'Production',
+    provider: 'Provider A',
+    maskedKey: 'pa-…4f2a',
+    status: 'connected',
+    lastUsed: '3 min ago',
+  },
+  {
+    id: 'k2',
+    name: 'Gateway',
+    provider: 'openai-compatible',
+    endpoint: 'https://llm-gateway.internal/v1',
+    maskedKey: 'sk-…9c01',
+    status: 'untested',
+  },
+  {
+    id: 'k3',
+    name: 'On-prem cluster',
+    provider: 'self-hosted',
+    endpoint: 'http://10.0.4.12:8000/v1',
+    maskedKey: 'tok-…77de',
+    status: 'failing',
+    lastUsed: '2 days ago',
+  },
 ];

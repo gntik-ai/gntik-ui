@@ -18,12 +18,14 @@ export const tooltipVariants = tv({
     variant: {
       /** Short label: inverted solid chip. */
       solid: {
-        popup: 'flex items-center rounded-md bg-foreground px-2.5 py-1.5 text-[12px] font-medium whitespace-nowrap text-background shadow-md',
+        popup:
+          'flex items-center rounded-md bg-foreground px-2.5 py-1.5 text-[12px] font-medium whitespace-nowrap text-background shadow-md',
         arrow: 'bg-foreground',
       },
       /** Multi-line content on the popover surface. */
       rich: {
-        popup: 'w-64 rounded-lg border border-border bg-popover p-3 text-start text-[12.5px] leading-5 text-popover-foreground shadow-lg',
+        popup:
+          'w-64 rounded-lg border border-border bg-popover p-3 text-start text-[12.5px] leading-5 text-popover-foreground shadow-lg',
         arrow: [
           'border-border bg-popover',
           'data-[side=top]:border-e data-[side=top]:border-b data-[side=bottom]:border-t data-[side=bottom]:border-s',

@@ -2,7 +2,8 @@
  * Minimal, dependency-free tokenizer for the default CodeBlock colouring. It is deliberately
  * small: good enough for docs snippets in ts/tsx/js/json/bash/css, not a full grammar.
  */
-export type TokenKind = 'plain' | 'keyword' | 'string' | 'number' | 'comment' | 'type' | 'function' | 'property' | 'punctuation' | 'muted';
+export type TokenKind =
+  'plain' | 'keyword' | 'string' | 'number' | 'comment' | 'type' | 'function' | 'property' | 'punctuation' | 'muted';
 
 export interface CodeToken {
   kind: TokenKind;
@@ -20,7 +21,10 @@ const JS: Rule[] = [
   ['comment', /\/\/[^\n]*|\/\*[\s\S]*?(?:\*\/|$)/y],
   ['string', STRINGS],
   ['keyword', new RegExp(`\\b(?:${JS_KEYWORDS})\\b`, 'y')],
-  ['number', /\b(?:true|false|null|undefined|NaN|Infinity)\b|\b(?:0[xX][\da-fA-F_]+|\d[\d_]*(?:\.\d+)?(?:[eE][+-]?\d+)?n?)\b/y],
+  [
+    'number',
+    /\b(?:true|false|null|undefined|NaN|Infinity)\b|\b(?:0[xX][\da-fA-F_]+|\d[\d_]*(?:\.\d+)?(?:[eE][+-]?\d+)?n?)\b/y,
+  ],
   ['type', /\b[A-Z][\w$]*/y],
   ['function', /[a-zA-Z_$][\w$]*(?=\s*\()/y],
   ['property', /(?<=\s)[a-zA-Z_$][\w$-]*(?==[{"'])/y],
@@ -59,9 +63,21 @@ const CSS: Rule[] = [
 ];
 
 const LANGS: Record<string, Rule[]> = {
-  ts: JS, tsx: JS, js: JS, jsx: JS, typescript: JS, javascript: JS, mjs: JS, cjs: JS,
-  json: JSON_RULES, jsonc: JS,
-  bash: BASH, sh: BASH, shell: BASH, zsh: BASH, console: BASH,
+  ts: JS,
+  tsx: JS,
+  js: JS,
+  jsx: JS,
+  typescript: JS,
+  javascript: JS,
+  mjs: JS,
+  cjs: JS,
+  json: JSON_RULES,
+  jsonc: JS,
+  bash: BASH,
+  sh: BASH,
+  shell: BASH,
+  zsh: BASH,
+  console: BASH,
   css: CSS,
 };
 

@@ -13,5 +13,15 @@ export const doc: ComponentDoc = {
     ['Enter on a table of contents link', 'Scrolls to the heading and moves focus to it'],
     ['Enter / Space on "On this page"', 'Small screens: expands or collapses the table of contents'],
   ],
-  tokens: ['background', 'foreground', 'chrome', 'card', 'border', 'primary', 'primary-text', 'muted-foreground', 'focus-ring'],
+  tokens: [
+    'background',
+    'foreground',
+    'chrome',
+    'card',
+    'border',
+    'primary',
+    'primary-text',
+    'muted-foreground',
+    'focus-ring',
+  ],
 };

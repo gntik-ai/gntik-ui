@@ -69,7 +69,16 @@ describe('Tour', () => {
   it('Skip ends the tour', async () => {
     const onFinish = vi.fn();
     const user = userEvent.setup();
-    render(<Tour defaultOpen steps={[{ target: '#nowhere', title: 'Centred' }, { target: '#nowhere', title: 'Two' }]} onFinish={onFinish} />);
+    render(
+      <Tour
+        defaultOpen
+        steps={[
+          { target: '#nowhere', title: 'Centred' },
+          { target: '#nowhere', title: 'Two' },
+        ]}
+        onFinish={onFinish}
+      />,
+    );
     await user.click(await screen.findByRole('button', { name: 'Skip tour' }));
     expect(onFinish).toHaveBeenCalledWith(false);
   });

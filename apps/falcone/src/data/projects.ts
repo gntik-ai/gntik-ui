@@ -143,4 +143,5 @@ export const projects: Project[] = [
 export const findProject = (id: string) => projects.find((p) => p.id === id);
 
 /** MCP server endpoint of a project's production stage. */
-export const mcpEndpoint = (p: Project) => `https://mcp.falcone.dev/${p.tenant.toLowerCase().replace(/\s+/g, '-')}/${p.id}`;
+export const mcpEndpoint = (p: Project) =>
+  `https://mcp.falcone.dev/${p.tenant.toLowerCase().replace(/\s+/g, '-')}/${p.id}`;

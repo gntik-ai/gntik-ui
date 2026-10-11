@@ -39,7 +39,9 @@ const EQUIVALENT: Record<string, [string, string]> = {
 
 const densityCss = readFileSync(resolve(import.meta.dirname, '../../../tokens/src/density.css'), 'utf8');
 const comfortableBlock = /:root,\s*\[data-density="comfortable"\]\s*\{([^}]*)\}/.exec(densityCss)?.[1] ?? '';
-const comfortable = Object.fromEntries([...comfortableBlock.matchAll(/(--[\w-]+)\s*:\s*([\d.]+)rem/g)].map(([, k, v]) => [k, Number(v)]));
+const comfortable = Object.fromEntries(
+  [...comfortableBlock.matchAll(/(--[\w-]+)\s*:\s*([\d.]+)rem/g)].map(([, k, v]) => [k, Number(v)]),
+);
 
 /** rem value of a Tailwind sizing class: `h-9` → 2.25 (0.25rem steps), `h-[34px]` → 2.125. */
 function remOf(cls: string): number {
@@ -49,7 +51,11 @@ function remOf(cls: string): number {
 }
 
 /** A default (density-driven) class string as it reads in comfortable: each utility swapped for its original. */
-const asComfortable = (classes: string | undefined) => (classes ?? '').split(' ').map((c) => EQUIVALENT[c]?.[1] ?? c).join(' ');
+const asComfortable = (classes: string | undefined) =>
+  (classes ?? '')
+    .split(' ')
+    .map((c) => EQUIVALENT[c]?.[1] ?? c)
+    .join(' ');
 
 describe('density tokens ↔ classes', () => {
   it('each density utility equals its original class in comfortable', () => {
@@ -60,15 +66,27 @@ describe('density tokens ↔ classes', () => {
 
   it('default (auto) sizes read exactly as md in comfortable', () => {
     expect(asComfortable(buttonVariants())).toBe(buttonVariants({ size: 'md' }));
-    expect(asComfortable(buttonVariants({ iconOnly: true, variant: 'ghost' }))).toBe(buttonVariants({ size: 'md', iconOnly: true, variant: 'ghost' }));
-    for (const fn of [inputVariants, selectVariants, numberInputVariants, datePickerVariants, paginationVariants, badgeVariants, tokenVariants] as const) {
+    expect(asComfortable(buttonVariants({ iconOnly: true, variant: 'ghost' }))).toBe(
+      buttonVariants({ size: 'md', iconOnly: true, variant: 'ghost' }),
+    );
+    for (const fn of [
+      inputVariants,
+      selectVariants,
+      numberInputVariants,
+      datePickerVariants,
+      paginationVariants,
+      badgeVariants,
+      tokenVariants,
+    ] as const) {
       const auto = fn() as unknown as Record<string, () => string>;
       const md = fn({ size: 'md' }) as unknown as Record<string, () => string>;
       for (const slot of Object.keys(auto)) expect(asComfortable(auto[slot]!()), slot).toBe(md[slot]!() ?? '');
     }
     for (const variant of ['standalone', 'segmented', 'joined'] as const) {
       for (const iconOnly of [false, true]) {
-        expect(asComfortable(toggleVariants({ variant, iconOnly }))).toBe(toggleVariants({ variant, iconOnly, size: 'md' }));
+        expect(asComfortable(toggleVariants({ variant, iconOnly }))).toBe(
+          toggleVariants({ variant, iconOnly, size: 'md' }),
+        );
       }
     }
   });
@@ -105,14 +123,26 @@ describe('DensityProvider', () => {
 
   it('sets data-density on <html> with applyTo="document" and restores it on unmount', () => {
     document.documentElement.setAttribute('data-density', 'comfortable');
-    const { unmount, rerender } = render(<DensityProvider density="compact" applyTo="document">x</DensityProvider>);
+    const { unmount, rerender } = render(
+      <DensityProvider density="compact" applyTo="document">
+        x
+      </DensityProvider>,
+    );
     expect(document.documentElement).toHaveAttribute('data-density', 'compact');
-    rerender(<DensityProvider density="comfortable" applyTo="document">x</DensityProvider>);
+    rerender(
+      <DensityProvider density="comfortable" applyTo="document">
+        x
+      </DensityProvider>,
+    );
     expect(document.documentElement).toHaveAttribute('data-density', 'comfortable');
     unmount();
     expect(document.documentElement).toHaveAttribute('data-density', 'comfortable');
     document.documentElement.removeAttribute('data-density');
-    render(<DensityProvider density="compact" applyTo="document">y</DensityProvider>).unmount();
+    render(
+      <DensityProvider density="compact" applyTo="document">
+        y
+      </DensityProvider>,
+    ).unmount();
     expect(document.documentElement).not.toHaveAttribute('data-density');
   });
 
@@ -142,7 +172,11 @@ describe('components follow the density', () => {
     expect(screen.getByRole('button', { name: 'Large' })).toHaveClass('h-11', 'px-5');
     expect(screen.getByRole('button', { name: 'Large' })).not.toHaveClass('h-control');
     expect(screen.getByRole('button', { name: 'More' })).toHaveClass('size-control', 'px-0');
-    expect(screen.getByRole('textbox', { name: 'Search' }).parentElement).toHaveClass('h-control', 'px-field', 'gap-tight');
+    expect(screen.getByRole('textbox', { name: 'Search' }).parentElement).toHaveClass(
+      'h-control',
+      'px-field',
+      'gap-tight',
+    );
     expect(screen.getByText('Beta').closest('span')?.className).toMatch(/\bh-chip\b/);
   });
 

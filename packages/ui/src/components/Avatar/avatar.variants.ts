@@ -7,7 +7,8 @@ export const avatarVariants = tv({
     image: 'absolute inset-0 size-full object-cover data-[error]:invisible data-[loading]:invisible',
     fallback: 'absolute inset-0 grid place-items-center leading-none',
     status: 'absolute -end-0.5 -bottom-0.5 rounded-full ring-2 ring-card',
-    overflow: 'relative inline-flex shrink-0 items-center justify-center rounded-full bg-secondary font-semibold text-muted-foreground ring-2 ring-card',
+    overflow:
+      'relative inline-flex shrink-0 items-center justify-center rounded-full bg-secondary font-semibold text-muted-foreground ring-2 ring-card',
   },
   variants: {
     size: {

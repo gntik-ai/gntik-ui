@@ -4,7 +4,12 @@ import { useEffect, useState, type RefObject } from 'react';
  * How many leading items fit in `container`, measuring an off-screen copy in `measure` whose
  * last child is the "+N" trigger template. `undefined` until measured (or when disabled).
  */
-export function useFitCount(enabled: boolean, container: RefObject<HTMLElement | null>, measure: RefObject<HTMLElement | null>, count: number) {
+export function useFitCount(
+  enabled: boolean,
+  container: RefObject<HTMLElement | null>,
+  measure: RefObject<HTMLElement | null>,
+  count: number,
+) {
   const [fit, setFit] = useState<number | undefined>(undefined);
 
   useEffect(() => {

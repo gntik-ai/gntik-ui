@@ -19,7 +19,9 @@ describe('MessagingPage', () => {
   it('opens a thread with attachments and sends a message', { timeout: 15000 }, async () => {
     const onSend = vi.fn();
     render(<MessagingPage onSend={onSend} />);
-    await userEvent.click(within(screen.getByRole('list', { name: 'Conversations' })).getByRole('button', { name: /Release 2\.14/ }));
+    await userEvent.click(
+      within(screen.getByRole('list', { name: 'Conversations' })).getByRole('button', { name: /Release 2\.14/ }),
+    );
     const log = screen.getByRole('log', { name: 'Messages in Release 2.14' });
     expect(within(log).getAllByRole('article')).toHaveLength(4);
     expect(within(log).getByText('rollback-runbook.pdf')).toBeInTheDocument();

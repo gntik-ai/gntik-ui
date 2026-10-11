@@ -14,7 +14,13 @@ export default function SplitButtonBasic() {
         actions={[
           { label: 'Schedule deploy', icon: CalendarClock, onSelect: () => setLast('Deploy scheduled') },
           { label: 'Export manifest', icon: FileDown, onSelect: () => setLast('Manifest exported') },
-          { label: 'Discard draft', icon: Trash2, destructive: true, separator: true, onSelect: () => setLast('Draft discarded') },
+          {
+            label: 'Discard draft',
+            icon: Trash2,
+            destructive: true,
+            separator: true,
+            onSelect: () => setLast('Draft discarded'),
+          },
         ]}
       >
         Deploy

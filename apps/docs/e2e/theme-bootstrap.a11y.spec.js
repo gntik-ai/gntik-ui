@@ -13,7 +13,8 @@ const axe = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 async function serve(page, { stored = null, variant = 'external' } = {}) {
   const errors = [];
   page.on('console', (message) => {
-    if (message.type() === 'error' && /content security policy|script-src/i.test(message.text())) errors.push(message.text());
+    if (message.type() === 'error' && /content security policy|script-src/i.test(message.text()))
+      errors.push(message.text());
   });
   await page.addInitScript((value) => {
     localStorage.clear();
@@ -22,10 +23,13 @@ async function serve(page, { stored = null, variant = 'external' } = {}) {
   await page.route('**/theme-fixture/**', async (route) => {
     const file = new URL(route.request().url()).pathname.split('/').pop();
     if (file === 'index.html') {
-      const body = variant === 'external' ? fixture : fixture.replace(
-        '<script src="/theme-fixture/theme-bootstrap.js"></script>',
-        `<script>${themeScript()}</script>`,
-      );
+      const body =
+        variant === 'external'
+          ? fixture
+          : fixture.replace(
+              '<script src="/theme-fixture/theme-bootstrap.js"></script>',
+              `<script>${themeScript()}</script>`,
+            );
       await route.fulfill({
         contentType: 'text/html',
         headers: variant === 'inline-baseline' ? {} : { 'Content-Security-Policy': "script-src 'self'" },
@@ -33,8 +37,10 @@ async function serve(page, { stored = null, variant = 'external' } = {}) {
       });
     } else if (file === 'styles.css') {
       const assets = new URL('../dist/assets/', import.meta.url);
-      const body = readdirSync(assets).filter((name) => name.endsWith('.css'))
-        .map((name) => readFileSync(new URL(name, assets), 'utf8')).join('\n');
+      const body = readdirSync(assets)
+        .filter((name) => name.endsWith('.css'))
+        .map((name) => readFileSync(new URL(name, assets), 'utf8'))
+        .join('\n');
       await route.fulfill({ contentType: 'text/css', body });
     } else {
       const scripts = { 'theme-bootstrap.js': bootstrap, 'theme-probe.js': probe, 'axe.js': axe };
@@ -69,7 +75,12 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
   test(`external theme bootstrap before body and paint, CSP and axe --${theme}`, async ({ page, context }) => {
     const errors = await serve(page, { stored: theme });
     const expected = { classes: theme === 'light' ? '' : theme, colorScheme: theme === 'light' ? 'light' : 'dark' };
-    expect(await themeState(page)).toEqual({ head: { ...expected, bodyPresent: false, painted: false }, body: expected, final: expected, violations: [] });
+    expect(await themeState(page)).toEqual({
+      head: { ...expected, bodyPresent: false, painted: false },
+      body: expected,
+      final: expected,
+      violations: [],
+    });
     expect(errors).toEqual([]);
     const placement = await page.evaluate(() => {
       const script = document.querySelector('script[src="/theme-fixture/theme-bootstrap.js"]');
@@ -83,14 +94,26 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
         probeNext: script.nextElementSibling?.getAttribute('data-phase'),
       };
     });
-    expect(placement).toEqual({ head: true, async: false, defer: false, type: null, beforeStyles: true, probeNext: 'head' });
+    expect(placement).toEqual({
+      head: true,
+      async: false,
+      defer: false,
+      type: null,
+      beforeStyles: true,
+      probeNext: 'head',
+    });
     const externalViolations = await scan(page);
     expect(errors).toEqual([]);
     expect((await themeState(page)).violations).toEqual([]);
     const baselinePage = await context.newPage();
     try {
       await serve(baselinePage, { stored: theme, variant: 'inline-baseline' });
-      expect(await themeState(baselinePage)).toEqual({ head: { ...expected, bodyPresent: false, painted: false }, body: expected, final: expected, violations: [] });
+      expect(await themeState(baselinePage)).toEqual({
+        head: { ...expected, bodyPresent: false, painted: false },
+        body: expected,
+        final: expected,
+        violations: [],
+      });
       const baselineViolations = await scan(baselinePage);
       expect(externalViolations).toEqual(baselineViolations);
       expect(externalViolations).toEqual([]);
@@ -101,16 +124,49 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
 }
 
 for (const scenario of [
-  { name: 'missing preference keeps the dark default', stored: null, contrast: 'more', colorScheme: 'light', classes: 'dark', scheme: 'dark' },
-  { name: 'system contrast takes precedence over light', stored: 'system', contrast: 'more', colorScheme: 'light', classes: 'high_contrast', scheme: 'dark' },
-  { name: 'system light', stored: 'system', contrast: 'no-preference', colorScheme: 'light', classes: '', scheme: 'light' },
-  { name: 'system dark', stored: 'system', contrast: 'no-preference', colorScheme: 'dark', classes: 'dark', scheme: 'dark' },
+  {
+    name: 'missing preference keeps the dark default',
+    stored: null,
+    contrast: 'more',
+    colorScheme: 'light',
+    classes: 'dark',
+    scheme: 'dark',
+  },
+  {
+    name: 'system contrast takes precedence over light',
+    stored: 'system',
+    contrast: 'more',
+    colorScheme: 'light',
+    classes: 'high_contrast',
+    scheme: 'dark',
+  },
+  {
+    name: 'system light',
+    stored: 'system',
+    contrast: 'no-preference',
+    colorScheme: 'light',
+    classes: '',
+    scheme: 'light',
+  },
+  {
+    name: 'system dark',
+    stored: 'system',
+    contrast: 'no-preference',
+    colorScheme: 'dark',
+    classes: 'dark',
+    scheme: 'dark',
+  },
 ]) {
   test(`external theme bootstrap ${scenario.name}`, async ({ page }) => {
     await page.emulateMedia({ contrast: scenario.contrast, colorScheme: scenario.colorScheme });
     const errors = await serve(page, { stored: scenario.stored });
     const expected = { classes: scenario.classes, colorScheme: scenario.scheme };
-    expect(await themeState(page)).toEqual({ head: { ...expected, bodyPresent: false, painted: false }, body: expected, final: expected, violations: [] });
+    expect(await themeState(page)).toEqual({
+      head: { ...expected, bodyPresent: false, painted: false },
+      body: expected,
+      final: expected,
+      violations: [],
+    });
     expect(errors).toEqual([]);
   });
 }

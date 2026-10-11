@@ -21,7 +21,16 @@ describe('ForgotPasswordPage', () => {
     rerender(
       <>
         <h1>Account recovery</h1>
-        <ForgotPasswordPage key="sent" defaultSent suppressAllHeadings footer={null} sentTitle={null} sentDescription={null} sentStatus={null} resendActions={null} />
+        <ForgotPasswordPage
+          key="sent"
+          defaultSent
+          suppressAllHeadings
+          footer={null}
+          sentTitle={null}
+          sentDescription={null}
+          sentStatus={null}
+          resendActions={null}
+        />
       </>,
     );
     expect(container.querySelectorAll('h1')).toHaveLength(1);
@@ -30,7 +39,15 @@ describe('ForgotPasswordPage', () => {
     expect(screen.queryByText(/If an account exists/)).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Resend link' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Use a different email' })).not.toBeInTheDocument();
-    rerender(<ForgotPasswordPage key="request" title="Recover access" description="Enter your account name." headingLevel="h2" footer="Account support" />);
+    rerender(
+      <ForgotPasswordPage
+        key="request"
+        title="Recover access"
+        description="Enter your account name."
+        headingLevel="h2"
+        footer="Account support"
+      />,
+    );
     expect(screen.getByRole('heading', { level: 2, name: 'Recover access' })).toBeInTheDocument();
     expect(screen.getByText('Enter your account name.')).toBeInTheDocument();
     expect(screen.getByText('Account support')).toBeInTheDocument();
@@ -72,16 +89,30 @@ describe('ForgotPasswordPage', () => {
     expect(onSubmit).not.toHaveBeenCalled();
     const error = screen.getByText('Identifier is required.').closest('[role="alert"]');
     expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(input.getAttribute('aria-describedby')?.split(' ')).toEqual(expect.arrayContaining(['recovery-help', error?.id]));
+    expect(input.getAttribute('aria-describedby')?.split(' ')).toEqual(
+      expect.arrayContaining(['recovery-help', error?.id]),
+    );
     await userEvent.type(input, 'ab');
     expect(screen.getByText('Use three characters.')).toBeInTheDocument();
     await userEvent.type(input, 'c');
     expect(input).not.toHaveAttribute('aria-invalid');
     expect(input).toHaveAccessibleDescription('Account name or email');
-    rerender(<ForgotPasswordPage {...props} fieldInvalid={{ identifier: true }} feedbackId="recovery-feedback" error="Request could not be completed." />);
+    rerender(
+      <ForgotPasswordPage
+        {...props}
+        fieldInvalid={{ identifier: true }}
+        feedbackId="recovery-feedback"
+        error="Request could not be completed."
+      />,
+    );
     expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(input.getAttribute('aria-describedby')?.split(' ')).toEqual(expect.arrayContaining(['recovery-help', 'recovery-feedback']));
-    expect(screen.getByRole('form', { name: 'Reset password request' })).toHaveAttribute('aria-describedby', 'form-feedback');
+    expect(input.getAttribute('aria-describedby')?.split(' ')).toEqual(
+      expect.arrayContaining(['recovery-help', 'recovery-feedback']),
+    );
+    expect(screen.getByRole('form', { name: 'Reset password request' })).toHaveAttribute(
+      'aria-describedby',
+      'form-feedback',
+    );
     screen.getByRole('button', { name: 'Send reset link' }).focus();
     ref.current?.focus('identifier');
     expect(input).toHaveFocus();
@@ -124,11 +155,23 @@ describe('ForgotPasswordPage accessibility matrix', () => {
                 <h1>Account access</h1>
                 <ForgotPasswordPage
                   identifier={
-                    mode === 'username' ? { type: 'text', autoComplete: 'username', label: 'Username', help: 'Use your account name.', minLength: 3, maxLength: 255 } : undefined
+                    mode === 'username'
+                      ? {
+                          type: 'text',
+                          autoComplete: 'username',
+                          label: 'Username',
+                          help: 'Use your account name.',
+                          minLength: 3,
+                          maxLength: 255,
+                        }
+                      : undefined
                   }
                   suppressAllHeadings={suppressed}
                   defaultSent={state === 'sent'}
-                  messages={{ identifierRequired: 'Account name is required.', passwordRequired: 'Password is required.' }}
+                  messages={{
+                    identifierRequired: 'Account name is required.',
+                    passwordRequired: 'Password is required.',
+                  }}
                   onSubmit={onSubmit}
                 />
               </ThemeProvider>,

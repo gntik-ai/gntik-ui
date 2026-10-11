@@ -37,7 +37,13 @@ export function ShortcutSheet({ groups, headingLevel = 2, columns = 2, autoFocus
         </Text>
       </Stack>
       {visible.length === 0 ? (
-        <EmptyState icon={Keyboard} size="sm" titleAs={headingLevel === 2 ? 'h2' : 'h3'} title="No shortcuts match" description="Try another word, such as “save” or “go to”." />
+        <EmptyState
+          icon={Keyboard}
+          size="sm"
+          titleAs={headingLevel === 2 ? 'h2' : 'h3'}
+          title="No shortcuts match"
+          description="Try another word, such as “save” or “go to”."
+        />
       ) : (
         <Grid cols={{ base: 1, md: columns }} gap={6}>
           {visible.map((g) => (

@@ -2,7 +2,14 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { expectNoAxeViolations } from '../../test/a11y';
-import { createKeyValueRow, mergeEnvRows, parseEnv, serializeEnv, validateKeyValueRows, type KeyValueRow } from './key-value';
+import {
+  createKeyValueRow,
+  mergeEnvRows,
+  parseEnv,
+  serializeEnv,
+  validateKeyValueRows,
+  type KeyValueRow,
+} from './key-value';
 import { KeyValueEditor } from './KeyValueEditor';
 import KeyValueEditorEnv from './examples/KeyValueEditorEnv';
 import KeyValueEditorHeaders from './examples/KeyValueEditorHeaders';
@@ -69,18 +76,31 @@ describe('KeyValueEditor', () => {
 
   it('validates duplicates, pattern, required key and value with linked messages', async () => {
     const onValidityChange = vi.fn();
-    render(<KeyValueEditor requireValue defaultValue={rowsOf(['A', '1'], ['A', '2'], ['9X', '3'], ['', '4'], ['B', ''])} onValidityChange={onValidityChange} />);
+    render(
+      <KeyValueEditor
+        requireValue
+        defaultValue={rowsOf(['A', '1'], ['A', '2'], ['9X', '3'], ['', '4'], ['B', ''])}
+        onValidityChange={onValidityChange}
+      />,
+    );
     expect(screen.getByRole('textbox', { name: 'Key, row 1' })).not.toHaveAttribute('aria-invalid');
     expect(screen.getByRole('textbox', { name: 'Key, row 2' })).toHaveAccessibleDescription('Duplicate key');
     expect(screen.getByRole('textbox', { name: 'Key, row 2' })).toHaveAttribute('aria-invalid', 'true');
-    expect(screen.getByRole('textbox', { name: 'Key, row 3' })).toHaveAccessibleDescription(/letters, digits and underscores/);
+    expect(screen.getByRole('textbox', { name: 'Key, row 3' })).toHaveAccessibleDescription(
+      /letters, digits and underscores/,
+    );
     expect(screen.getByRole('textbox', { name: 'Key, row 4' })).toHaveAccessibleDescription('Key is required');
     expect(screen.getByRole('textbox', { name: 'Value, row 5' })).toHaveAccessibleDescription('Value is required');
     await waitFor(() => expect(onValidityChange).toHaveBeenCalledWith(false, expect.any(Object)));
   });
 
   it('runs a custom validate', () => {
-    render(<KeyValueEditor defaultValue={rowsOf(['PORT', 'abc'])} validate={(row) => (row.key === 'PORT' && !/^\d+$/.test(row.value) ? 'Must be a number' : undefined)} />);
+    render(
+      <KeyValueEditor
+        defaultValue={rowsOf(['PORT', 'abc'])}
+        validate={(row) => (row.key === 'PORT' && !/^\d+$/.test(row.value) ? 'Must be a number' : undefined)}
+      />,
+    );
     expect(screen.getByRole('textbox', { name: 'Value, row 1' })).toHaveAccessibleDescription('Must be a number');
   });
 
@@ -96,7 +116,10 @@ describe('KeyValueEditor', () => {
     await user.click(area);
     await user.paste('# comment\nA=new\nexport B="two words"\n');
     await user.click(screen.getByRole('button', { name: 'Add variables' }));
-    expect(onChange).toHaveBeenLastCalledWith([expect.objectContaining({ key: 'A', value: 'new' }), expect.objectContaining({ key: 'B', value: 'two words' })]);
+    expect(onChange).toHaveBeenLastCalledWith([
+      expect.objectContaining({ key: 'A', value: 'new' }),
+      expect.objectContaining({ key: 'B', value: 'two words' }),
+    ]);
     expect(screen.getByRole('status')).toHaveTextContent('2 variables imported');
     await waitFor(() => expect(paste).toHaveFocus());
   });
@@ -143,16 +166,30 @@ describe('KeyValueEditor', () => {
   });
 
   it('pure helpers: parse, serialize, merge, validate', () => {
-    expect(parseEnv("# c\n\nexport A=1\nB = 'q #x'\nC=\"l1\\nl2\"\nD=v # trailing\nnoeq\n=bad")).toEqual([
+    expect(parseEnv('# c\n\nexport A=1\nB = \'q #x\'\nC="l1\\nl2"\nD=v # trailing\nnoeq\n=bad')).toEqual([
       { key: 'A', value: '1' },
       { key: 'B', value: 'q #x' },
       { key: 'C', value: 'l1\nl2' },
       { key: 'D', value: 'v' },
     ]);
-    expect(serializeEnv([{ key: 'A', value: '1' }, { key: '', value: 'x' }, { key: 'C', value: 'l1\nl2' }])).toBe('A=1\nC="l1\\nl2"');
-    expect(parseEnv(serializeEnv([{ key: 'Q', value: 'say "hi" # now' }]))).toEqual([{ key: 'Q', value: 'say "hi" # now' }]);
-    const merged = mergeEnvRows(rowsOf(['A', '1'], ['', '']), [{ key: 'A', value: '2' }, { key: 'B', value: '3' }]);
-    expect(merged.map((r) => [r.key, r.value])).toEqual([['A', '2'], ['B', '3']]);
+    expect(
+      serializeEnv([
+        { key: 'A', value: '1' },
+        { key: '', value: 'x' },
+        { key: 'C', value: 'l1\nl2' },
+      ]),
+    ).toBe('A=1\nC="l1\\nl2"');
+    expect(parseEnv(serializeEnv([{ key: 'Q', value: 'say "hi" # now' }]))).toEqual([
+      { key: 'Q', value: 'say "hi" # now' },
+    ]);
+    const merged = mergeEnvRows(rowsOf(['A', '1'], ['', '']), [
+      { key: 'A', value: '2' },
+      { key: 'B', value: '3' },
+    ]);
+    expect(merged.map((r) => [r.key, r.value])).toEqual([
+      ['A', '2'],
+      ['B', '3'],
+    ]);
     const rows = rowsOf(['a', '1'], ['A', '2']);
     expect(validateKeyValueRows(rows)).toEqual({});
     expect(validateKeyValueRows(rows, { caseInsensitive: true })).toEqual({ [rows[1]!.id]: { key: 'duplicate' } });

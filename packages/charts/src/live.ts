@@ -8,7 +8,8 @@ function subscribeReduced(onChange: () => void) {
   mq.addEventListener?.('change', onChange);
   return () => mq.removeEventListener?.('change', onChange);
 }
-const getReduced = () => (typeof window !== 'undefined' && window.matchMedia ? window.matchMedia(REDUCED_QUERY).matches : false);
+const getReduced = () =>
+  typeof window !== 'undefined' && window.matchMedia ? window.matchMedia(REDUCED_QUERY).matches : false;
 
 /** `true` when the user asks for reduced motion (false on the server). */
 export function usePrefersReducedMotion(): boolean {
@@ -96,7 +97,11 @@ function reducer<T>(state: LiveState<T>, action: LiveAction<T>): LiveState<T> {
  * manual pause. Render with `animate={!reducedMotion}` for smooth transitions only when the
  * user has not asked for reduced motion.
  */
-export function useLiveSeries<T>({ initial = [], windowSize = 60, pauseOnInteraction = true }: UseLiveSeriesOptions<T> = {}): LiveSeries<T> {
+export function useLiveSeries<T>({
+  initial = [],
+  windowSize = 60,
+  pauseOnInteraction = true,
+}: UseLiveSeriesOptions<T> = {}): LiveSeries<T> {
   const size = Math.max(1, Math.floor(windowSize));
   const [state, dispatch] = useReducer(reducer<T>, initial, (init): LiveState<T> => ({
     live: init.slice(-size),
@@ -108,7 +113,8 @@ export function useLiveSeries<T>({ initial = [], windowSize = 60, pauseOnInterac
   }));
   const reducedMotion = usePrefersReducedMotion();
   const append = useCallback(
-    (points: T | readonly T[]) => dispatch({ type: 'append', points: Array.isArray(points) ? (points as readonly T[]) : [points as T], size }),
+    (points: T | readonly T[]) =>
+      dispatch({ type: 'append', points: Array.isArray(points) ? (points as readonly T[]) : [points as T], size }),
     [size],
   );
   const reset = useCallback((points: readonly T[] = []) => dispatch({ type: 'reset', points, size }), [size]);

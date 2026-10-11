@@ -113,8 +113,12 @@ export function Calendar(props: CalendarProps) {
   const [today] = useState(() => startOfDay(todayProp ?? new Date()));
   const todayDate = todayProp ? startOfDay(todayProp) : today;
 
-  const [innerSingle, setInnerSingle] = useState<Date | null>(() => (props.mode === 'range' ? null : (props.defaultValue ?? null)));
-  const [innerRange, setInnerRange] = useState<DateRange>(() => (props.mode === 'range' ? (props.defaultValue ?? EMPTY_RANGE) : EMPTY_RANGE));
+  const [innerSingle, setInnerSingle] = useState<Date | null>(() =>
+    props.mode === 'range' ? null : (props.defaultValue ?? null),
+  );
+  const [innerRange, setInnerRange] = useState<DateRange>(() =>
+    props.mode === 'range' ? (props.defaultValue ?? EMPTY_RANGE) : EMPTY_RANGE,
+  );
   const single = props.mode === 'range' ? null : props.value !== undefined ? props.value : innerSingle;
   const range = props.mode === 'range' ? (props.value ?? innerRange) : EMPTY_RANGE;
   const anchor = (isRange ? range.start : single) ?? todayDate;
@@ -136,7 +140,8 @@ export function Calendar(props: CalendarProps) {
     (!!min && compareDay(d, min) < 0) || (!!max && compareDay(d, max) > 0) || !!isDateDisabled?.(d);
 
   // The one day in the tab order: the focused day if visible, else selection, today, or day 1.
-  const tabbable = [focused, isRange ? range.start : single, todayDate].find((d): d is Date => !!d && isVisible(d)) ?? visibleMonth;
+  const tabbable =
+    [focused, isRange ? range.start : single, todayDate].find((d): d is Date => !!d && isVisible(d)) ?? visibleMonth;
 
   useEffect(() => {
     if (!focusPending.current) return;
@@ -195,7 +200,10 @@ export function Calendar(props: CalendarProps) {
   const previewRange = isRange && range.start && !range.end && preview ? normalizeRange(range.start, preview) : null;
   const shownRange = range.start && range.end ? range : previewRange;
   const inRange = (d: Date) =>
-    !!shownRange?.start && !!shownRange.end && compareDay(d, shownRange.start) >= 0 && compareDay(d, shownRange.end) <= 0;
+    !!shownRange?.start &&
+    !!shownRange.end &&
+    compareDay(d, shownRange.start) >= 0 &&
+    compareDay(d, shownRange.end) <= 0;
 
   const firstMonth = months[0] ?? visibleMonth;
   const lastMonth = months[months.length - 1] ?? visibleMonth;
@@ -210,14 +218,25 @@ export function Calendar(props: CalendarProps) {
   };
 
   return (
-    <div ref={setRefs} role="group" aria-label={props['aria-label'] ?? t('calendar.label')} className={cn(s.root(), className)}>
+    <div
+      ref={setRefs}
+      role="group"
+      aria-label={props['aria-label'] ?? t('calendar.label')}
+      className={cn(s.root(), className)}
+    >
       {months.map((m, mi) => {
         const headingId = `${baseId}-m${mi}`;
         return (
           <div key={toISODate(m)} className={s.month()}>
             <div className={s.header()}>
               {mi === 0 ? (
-                <button type="button" aria-label={previousMonthLabel} disabled={prevDisabled} className={s.nav()} onClick={() => setMonth(addMonths(visibleMonth, -1))}>
+                <button
+                  type="button"
+                  aria-label={previousMonthLabel}
+                  disabled={prevDisabled}
+                  className={s.nav()}
+                  onClick={() => setMonth(addMonths(visibleMonth, -1))}
+                >
                   <ChevronLeft size={16} aria-hidden className={RTL_FLIP} />
                 </button>
               ) : (
@@ -227,7 +246,13 @@ export function Calendar(props: CalendarProps) {
                 {formatMonth(m, locale)}
               </h2>
               {mi === months.length - 1 ? (
-                <button type="button" aria-label={nextMonthLabel} disabled={nextDisabled} className={s.nav()} onClick={() => setMonth(addMonths(visibleMonth, 1))}>
+                <button
+                  type="button"
+                  aria-label={nextMonthLabel}
+                  disabled={nextDisabled}
+                  className={s.nav()}
+                  onClick={() => setMonth(addMonths(visibleMonth, 1))}
+                >
                   <ChevronRight size={16} aria-hidden className={RTL_FLIP} />
                 </button>
               ) : (
@@ -263,7 +288,9 @@ export function Calendar(props: CalendarProps) {
                         );
                       }
                       const disabled = isDisabled(d);
-                      const selected = isRange ? isSameDay(d, range.start) || isSameDay(d, range.end) : isSameDay(d, single);
+                      const selected = isRange
+                        ? isSameDay(d, range.start) || isSameDay(d, range.end)
+                        : isSameDay(d, single);
                       const within = isRange && inRange(d);
                       const rangeStart = within && isSameDay(d, shownRange?.start);
                       const rangeEnd = within && isSameDay(d, shownRange?.end);

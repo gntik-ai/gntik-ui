@@ -2,7 +2,13 @@ import { FirstRunEmpty, PageHeader } from '@gntik-ai/blocks';
 import { Page, type BreadcrumbItem, type NavGroup, type UserMenuUser, type Workspace } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
-import { shellSidebarBreadcrumbs, shellSidebarCopy, shellSidebarNav, shellSidebarUser, shellSidebarWorkspaces } from './data';
+import {
+  shellSidebarBreadcrumbs,
+  shellSidebarCopy,
+  shellSidebarNav,
+  shellSidebarUser,
+  shellSidebarWorkspaces,
+} from './data';
 
 export interface ShellSidebarPageProps {
   nav: NavGroup[];
@@ -42,8 +48,27 @@ export default function ShellSidebarPage({
   shell,
 }: Partial<ShellSidebarPageProps>) {
   return (
-    <ConsoleShell nav={nav} currentHref={currentHref} breadcrumbs={breadcrumbs} workspaces={workspaces} user={user} {...shell}>
-      <Page header={<PageHeader breadcrumbs={null} title={title} description={description} status="" meta={[]} actions={[]} tabs={null} />}>
+    <ConsoleShell
+      nav={nav}
+      currentHref={currentHref}
+      breadcrumbs={breadcrumbs}
+      workspaces={workspaces}
+      user={user}
+      {...shell}
+    >
+      <Page
+        header={
+          <PageHeader
+            breadcrumbs={null}
+            title={title}
+            description={description}
+            status=""
+            meta={[]}
+            actions={[]}
+            tabs={null}
+          />
+        }
+      >
         {children ?? (
           <FirstRunEmpty
             titleAs="h2"

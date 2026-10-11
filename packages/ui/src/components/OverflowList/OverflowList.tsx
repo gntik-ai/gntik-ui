@@ -16,7 +16,8 @@ const DEFAULT_LABELS: OverflowListLabels = {
   title: (n) => `${n} more`,
 };
 
-export interface OverflowListProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'>, OverflowListVariantProps {
+export interface OverflowListProps<T>
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'>, OverflowListVariantProps {
   className?: string;
   ref?: Ref<HTMLDivElement>;
   items: readonly T[];
@@ -73,10 +74,18 @@ export function OverflowList<T>({
         {hidden.length > 0 && (
           <li className={s.item()}>
             <Popover>
-              <PopoverTrigger className={s.trigger()} aria-label={variant === 'avatar' ? labels.more(hidden.length) : undefined}>
+              <PopoverTrigger
+                className={s.trigger()}
+                aria-label={variant === 'avatar' ? labels.more(hidden.length) : undefined}
+              >
                 {triggerText(hidden.length)}
               </PopoverTrigger>
-              <PopoverContent padding="none" align="start" aria-label={labels.title(hidden.length)} className={s.popup()}>
+              <PopoverContent
+                padding="none"
+                align="start"
+                aria-label={labels.title(hidden.length)}
+                className={s.popup()}
+              >
                 <div aria-hidden className={s.popupTitle()}>
                   {labels.title(hidden.length)}
                 </div>

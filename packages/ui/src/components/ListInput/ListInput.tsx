@@ -103,7 +103,10 @@ export function ListInput({
 }: ListInputProps) {
   const labels = { ...defaultLabels, ...labelsProp };
   const [inner, setInner] = useState<ListInputRow[]>(() => {
-    const rows = (defaultValue ?? []).map((r) => ({ ...createListInputRow(r.key, r.value), ...(r.id ? { id: r.id } : {}) }));
+    const rows = (defaultValue ?? []).map((r) => ({
+      ...createListInputRow(r.key, r.value),
+      ...(r.id ? { id: r.id } : {}),
+    }));
     return rows.length ? rows : [createListInputRow()];
   });
   const rows = value ?? inner;
@@ -142,7 +145,8 @@ export function ListInput({
     return { key: custom.key ?? dup, value: custom.value };
   };
 
-  const update = (id: string, patch: Partial<ListInputPair>) => commit(rows.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+  const update = (id: string, patch: Partial<ListInputPair>) =>
+    commit(rows.map((r) => (r.id === id ? { ...r, ...patch } : r)));
 
   const add = (after?: number, pairs: ListInputPair[] = [{ key: '', value: '' }]) => {
     const room = maxRows == null ? pairs.length : Math.max(0, maxRows - rows.length);
@@ -152,7 +156,10 @@ export function ListInput({
     }
     const created = pairs.slice(0, room).map((p) => createListInputRow(p.key, p.value));
     const at = after == null ? rows.length : after + 1;
-    commit([...rows.slice(0, at), ...created, ...rows.slice(at)], labels.added(created.length) + (created.length < pairs.length ? ` ${labels.limit(maxRows ?? 0)}` : ''));
+    commit(
+      [...rows.slice(0, at), ...created, ...rows.slice(at)],
+      labels.added(created.length) + (created.length < pairs.length ? ` ${labels.limit(maxRows ?? 0)}` : ''),
+    );
     const first = created[0];
     if (first) pendingFocus.current = { id: first.id, field: pairs.length > 1 ? 'value' : 'key' };
   };
@@ -275,11 +282,29 @@ export function ListInput({
                 <div className={s.actions()}>
                   {reorderable && (
                     <>
-                      <IconButton size="sm" icon={ArrowUp} label={labels.moveUp(n)} disabled={disabled || i === 0} onClick={() => move(i, -1, 'key')} />
-                      <IconButton size="sm" icon={ArrowDown} label={labels.moveDown(n)} disabled={disabled || i === rows.length - 1} onClick={() => move(i, 1, 'key')} />
+                      <IconButton
+                        size="sm"
+                        icon={ArrowUp}
+                        label={labels.moveUp(n)}
+                        disabled={disabled || i === 0}
+                        onClick={() => move(i, -1, 'key')}
+                      />
+                      <IconButton
+                        size="sm"
+                        icon={ArrowDown}
+                        label={labels.moveDown(n)}
+                        disabled={disabled || i === rows.length - 1}
+                        onClick={() => move(i, 1, 'key')}
+                      />
                     </>
                   )}
-                  <IconButton size="sm" icon={Trash2} label={labels.remove(n)} disabled={disabled} onClick={() => remove(i)} />
+                  <IconButton
+                    size="sm"
+                    icon={Trash2}
+                    label={labels.remove(n)}
+                    disabled={disabled}
+                    onClick={() => remove(i)}
+                  />
                 </div>
               </div>
               {errs.key && (
@@ -297,7 +322,14 @@ export function ListInput({
         })}
       </ul>
       <div className={s.footer()}>
-        <Button size="sm" variant="secondary" icon={Plus} data-list-input-add="" disabled={disabled || full} onClick={() => add()}>
+        <Button
+          size="sm"
+          variant="secondary"
+          icon={Plus}
+          data-list-input-add=""
+          disabled={disabled || full}
+          onClick={() => add()}
+        >
           {labels.add}
         </Button>
         <span className={s.hint()}>{full ? labels.limit(maxRows ?? 0) : labels.pasteHint}</span>

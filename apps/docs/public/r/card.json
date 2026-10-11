@@ -33,7 +33,7 @@
       "path": "packages/ui/src/components/Card/Card.doc.ts",
       "type": "registry:ui",
       "target": "components/ui/card/Card.doc.ts",
-      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Card',\n  group: 'Layout',\n  status: 'stable',\n  description: 'The base content surface: border, token radius, generous padding and a flat shadow. Parts: Card, CardHeader (optionally divided), CardTitle, CardDescription, CardAction (header right slot), CardBody and CardFooter. Variants: default, well and outline.',\n  tokens: ['card', 'card-foreground', 'border', 'secondary', 'muted-foreground', 'shadow-sm', 'radius-xl'],\n};\n"
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Card',\n  group: 'Layout',\n  status: 'stable',\n  description:\n    'The base content surface: border, token radius, generous padding and a flat shadow. Parts: Card, CardHeader (optionally divided), CardTitle, CardDescription, CardAction (header right slot), CardBody and CardFooter. Variants: default, well and outline.',\n  tokens: ['card', 'card-foreground', 'border', 'secondary', 'muted-foreground', 'shadow-sm', 'radius-xl'],\n};\n"
     },
     {
       "path": "packages/ui/src/doc.ts",

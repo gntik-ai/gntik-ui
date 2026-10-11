@@ -32,7 +32,9 @@ describe('DataTable column resize', () => {
     expect(head(/Region/)).toHaveStyle({ width: '640px' });
     expect(screen.getByRole('table')).toHaveClass('table-fixed');
     // The sort button and the handle are siblings, never nested.
-    expect(within(head(/Cost/)).getByRole('button', { name: /Cost/ })).not.toContainElement(screen.getByRole('separator', { name: 'Resize Cost column' }));
+    expect(within(head(/Cost/)).getByRole('button', { name: /Cost/ })).not.toContainElement(
+      screen.getByRole('separator', { name: 'Resize Cost column' }),
+    );
     await expectNoAxeViolations(container);
   });
 
@@ -101,11 +103,22 @@ describe('DataTable column pinning', () => {
 
   it('computes layout helpers', () => {
     expect(setColumnPin({ left: ['a'] }, 'a', 'right')).toEqual({ left: [], right: ['a'] });
-    const cols = [{ id: 'a', header: 'A' }, { id: 'b', header: 'B', width: 100 }, { id: 'c', header: 'C' }];
+    const cols = [
+      { id: 'a', header: 'A' },
+      { id: 'b', header: 'B', width: 100 },
+      { id: 'c', header: 'C' },
+    ];
     expect(orderColumns(cols, { left: ['c'], right: ['a'] }).map((c) => c.id)).toEqual(['c', 'b', 'a']);
     const auto = tableLayout({ columns: cols, widths: {}, pinned: {}, sized: false, lead: true, trail: false });
     expect(auto.tableClassName).toBeUndefined();
-    const l = tableLayout({ columns: cols, widths: { a: 90 }, pinned: { left: ['b', 'c'] }, sized: false, lead: true, trail: true });
+    const l = tableLayout({
+      columns: cols,
+      widths: { a: 90 },
+      pinned: { left: ['b', 'c'] },
+      sized: false,
+      lead: true,
+      trail: true,
+    });
     expect(l.columns.get('b')?.style).toMatchObject({ width: 100, insetInlineStart: 40 });
     expect(l.columns.get('c')?.style).toMatchObject({ insetInlineStart: 140 });
     expect(l.columns.get('c')?.className).toContain('border-e');
@@ -124,7 +137,9 @@ describe('DataTable virtualization', () => {
     expect(rendered.length).toBeLessThan(60);
     expect(rendered[0]).toHaveAttribute('aria-rowindex', '2');
     expect(screen.getAllByRole('row')[0]).toHaveAttribute('aria-rowindex', '1');
-    expect(container.querySelector('[data-virtual-spacer] td')).toHaveStyle({ height: `${(5000 - rendered.length) * 44}px` });
+    expect(container.querySelector('[data-virtual-spacer] td')).toHaveStyle({
+      height: `${(5000 - rendered.length) * 44}px`,
+    });
     await expectNoAxeViolations(container);
   });
 
@@ -135,7 +150,11 @@ describe('DataTable virtualization', () => {
       scroller.scrollTop = 44 * 500;
       fireEvent.scroll(scroller);
     });
-    await waitFor(() => expect(container.querySelector('tbody:not([data-virtual-spacer]) tr')?.getAttribute('aria-rowindex')).toBe(String(500 - 8 + 2)));
+    await waitFor(() =>
+      expect(container.querySelector('tbody:not([data-virtual-spacer]) tr')?.getAttribute('aria-rowindex')).toBe(
+        String(500 - 8 + 2),
+      ),
+    );
   });
 
   it('select-all covers every row, not only the rendered ones', async () => {

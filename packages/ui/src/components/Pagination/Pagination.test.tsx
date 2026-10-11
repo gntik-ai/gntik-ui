@@ -82,7 +82,12 @@ describe('Pagination', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><PaginationNumbered /><PaginationTableFooter /></>);
+    render(
+      <>
+        <PaginationNumbered />
+        <PaginationTableFooter />
+      </>,
+    );
     await expectNoAxeViolations();
   });
 });

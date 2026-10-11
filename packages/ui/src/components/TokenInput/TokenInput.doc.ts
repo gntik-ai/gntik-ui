@@ -15,5 +15,16 @@ export const doc: ComponentDoc = {
     ['Paste', 'Splits the clipboard on separators and new lines into chips'],
     ['Tab to a chip button, Enter', 'Removes that chip'],
   ],
-  tokens: ['background', 'border', 'foreground', 'muted-foreground', 'primary', 'primary-text', 'destructive', 'destructive-text', 'secondary', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'primary',
+    'primary-text',
+    'destructive',
+    'destructive-text',
+    'secondary',
+    'focus-ring',
+  ],
 };

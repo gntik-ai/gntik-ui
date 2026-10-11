@@ -8,5 +8,13 @@ const ROWS = generateDeployments(5_000);
  * aria-rowindex keep the full count). Select-all still covers every row.
  */
 export default function VirtualizedDataTable() {
-  return <DataTable<DeploymentRow> caption="All deployments" rows={ROWS} columns={DEPLOYMENT_COLUMNS} paginated={false} virtualContainerClassName="max-h-[28rem]" />;
+  return (
+    <DataTable<DeploymentRow>
+      caption="All deployments"
+      rows={ROWS}
+      columns={DEPLOYMENT_COLUMNS}
+      paginated={false}
+      virtualContainerClassName="max-h-[28rem]"
+    />
+  );
 }

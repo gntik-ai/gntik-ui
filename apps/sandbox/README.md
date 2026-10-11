@@ -14,14 +14,14 @@ changing it), like any product would.
 
 ## How it works
 
-| Piece | File |
-| --- | --- |
-| Shell: toolbar, editor, split layout (`SplitLayout`), toasts | `src/main.tsx`, `src/App.tsx`, `src/SandboxToolbar.tsx` |
-| Editor: `@gntik-ai/editor` `CodeEditor` (Monaco) on a `file:///sandbox/App.tsx` model | `src/SourceEditor.tsx`, `src/monaco-workers.ts` |
-| Preview frame: compiles, evaluates and renders the code | `preview.html`, `src/preview/main.tsx` |
-| Compiler + module shim | `src/preview/runtime.ts` |
-| Share links | `src/share.ts` |
-| Example gallery | `src/examples/*.ts` |
+| Piece                                                                                 | File                                                    |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| Shell: toolbar, editor, split layout (`SplitLayout`), toasts                          | `src/main.tsx`, `src/App.tsx`, `src/SandboxToolbar.tsx` |
+| Editor: `@gntik-ai/editor` `CodeEditor` (Monaco) on a `file:///sandbox/App.tsx` model | `src/SourceEditor.tsx`, `src/monaco-workers.ts`         |
+| Preview frame: compiles, evaluates and renders the code                               | `preview.html`, `src/preview/main.tsx`                  |
+| Compiler + module shim                                                                | `src/preview/runtime.ts`                                |
+| Share links                                                                           | `src/share.ts`                                          |
+| Example gallery                                                                       | `src/examples/*.ts`                                     |
 
 - **Compile.** [sucrase](https://github.com/alangpierce/sucrase) with the `typescript`, `jsx`
   (automatic runtime) and `imports` transforms: types are stripped (not checked), JSX becomes

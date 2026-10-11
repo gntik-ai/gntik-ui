@@ -14,5 +14,14 @@ export const doc: ComponentDoc = {
     ['Home / End', 'Sets the value to min / max (when defined)'],
     ['Click on label', 'Inside a Field, focuses the input'],
   ],
-  tokens: ['background', 'border', 'foreground', 'muted-foreground', 'primary', 'destructive', 'secondary', 'focus-ring'],
+  tokens: [
+    'background',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'primary',
+    'destructive',
+    'secondary',
+    'focus-ring',
+  ],
 };

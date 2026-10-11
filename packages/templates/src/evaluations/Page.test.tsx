@@ -19,7 +19,9 @@ describe('EvaluationsPage', () => {
   it('opens the samples of a regressed dataset, failures first', { timeout: 15000 }, async () => {
     render(<EvaluationsPage />);
     const table = screen.getByRole('table', { name: 'Regressions' });
-    const row = within(table).getAllByRole('row').find((r) => r.textContent?.includes('billing-questions'));
+    const row = within(table)
+      .getAllByRole('row')
+      .find((r) => r.textContent?.includes('billing-questions'));
     await userEvent.click(within(row!).getByRole('button', { name: /actions/i }));
     await userEvent.click(await screen.findByRole('menuitem', { name: 'View samples' }));
     const dialog = await screen.findByRole('dialog');

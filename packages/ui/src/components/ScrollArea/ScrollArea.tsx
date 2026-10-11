@@ -49,7 +49,9 @@ export function ScrollArea({
         className={cn(s.viewport(), viewportClassName)}
         {...(labelled ? { role: 'region', 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledBy } : {})}
       >
-        <BaseScrollArea.Content className={cn(s.content(), orientation !== 'vertical' && 'min-w-fit', contentClassName)}>
+        <BaseScrollArea.Content
+          className={cn(s.content(), orientation !== 'vertical' && 'min-w-fit', contentClassName)}
+        >
           {children}
         </BaseScrollArea.Content>
       </BaseScrollArea.Viewport>

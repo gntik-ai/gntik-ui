@@ -15,7 +15,13 @@ export default function SelectableCardRegions() {
       </p>
       <SelectableCardGroup type="checkbox" aria-labelledby="regions-label" defaultValue={['us-east']} columns={3}>
         {REGIONS.map((r) => (
-          <SelectableCard key={r.value} value={r.value} title={r.title} description={r.description} icon={<Globe aria-hidden />} />
+          <SelectableCard
+            key={r.value}
+            value={r.value}
+            title={r.title}
+            description={r.description}
+            icon={<Globe aria-hidden />}
+          />
         ))}
       </SelectableCardGroup>
     </div>

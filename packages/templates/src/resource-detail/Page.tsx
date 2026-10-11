@@ -112,7 +112,17 @@ export default function ResourceDetailPage({
     <ConsoleShell currentHref="/deployments" breadcrumbs={breadcrumbs} {...shell}>
       <Page
         width="wide"
-        header={<PageHeader breadcrumbs={null} title={name} description={description} status={status} meta={meta} actions={actions} tabs={null} />}
+        header={
+          <PageHeader
+            breadcrumbs={null}
+            title={name}
+            description={description}
+            status={status}
+            meta={meta}
+            actions={actions}
+            tabs={null}
+          />
+        }
       >
         <Tabs
           value={tab}
@@ -147,7 +157,12 @@ export default function ResourceDetailPage({
           </TabsPanel>
 
           <TabsPanel value="activity">
-            <Section variant="card" padding="md" title="Activity" description="Changes made to this resource by people and automations.">
+            <Section
+              variant="card"
+              padding="md"
+              title="Activity"
+              description="Changes made to this resource by people and automations."
+            >
               <ActivityFeed items={activity} label="Activity, newest first" />
             </Section>
           </TabsPanel>
@@ -179,17 +194,29 @@ export default function ResourceDetailPage({
                   <Stack gap={4}>
                     <Field>
                       <FieldLabel required>Name</FieldLabel>
-                      <Input required value={settings.name} onValueChange={(v) => setSettings((s) => ({ ...s, name: v }))} />
+                      <Input
+                        required
+                        value={settings.name}
+                        onValueChange={(v) => setSettings((s) => ({ ...s, name: v }))}
+                      />
                       <FieldDescription>Lowercase letters, numbers and dashes.</FieldDescription>
                     </Field>
                     <Field>
                       <FieldLabel>Description</FieldLabel>
-                      <Textarea rows={3} value={settings.description} onValueChange={(v) => setSettings((s) => ({ ...s, description: v }))} />
+                      <Textarea
+                        rows={3}
+                        value={settings.description}
+                        onValueChange={(v) => setSettings((s) => ({ ...s, description: v }))}
+                      />
                     </Field>
                   </Stack>
                 </FormSection>
               </form>
-              <DangerZone description="These actions affect everyone who uses this resource." actions={dangerActions} onConfirm={onDangerAction} />
+              <DangerZone
+                description="These actions affect everyone who uses this resource."
+                actions={dangerActions}
+                onConfirm={onDangerAction}
+              />
             </Stack>
           </TabsPanel>
         </Tabs>

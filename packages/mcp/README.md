@@ -14,28 +14,28 @@ Claude Code ──http───► gntik-ui-mcp (k8s) ───► snapshot pack
 
 **Kit (`kit-registry.json`)**
 
-| Tool | What it does |
-|---|---|
-| `list_kit` | Components, layouts, blocks and templates; filter by `kind`, `group` and a `query` (all terms must match). |
-| `get_component` | A kit component/layout: metadata, keyboard table, tokens, deps, a usage example (imports rewritten to packages) and the full source. Catalog-only ids (`buttons`, `tables`…) return the catalog entry. |
-| `get_block` | A block: metadata, components it composes, deps, usage and source. |
-| `get_template` | A page template: layout, blocks, whether it renders in `ConsoleShell`, deps, usage and source. |
-| `scaffold_page` | A ready-to-paste TSX page: `template=<id>` (with the `shell` prop wired for console templates) or `blocks=[…]` + `layout` (`console` · `page` · `auth-layout` · `stacked-layout` · `docs-layout` · `canvas-layout` · `print-layout`). |
-| `scaffold_preset` | A `BrandPreset` module (name + logo mark) like `packages/ui/src/theme/presets.tsx`; optional SVG converted to JSX with its colours mapped to token classes. Colours never change. |
+| Tool              | What it does                                                                                                                                                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `list_kit`        | Components, layouts, blocks and templates; filter by `kind`, `group` and a `query` (all terms must match).                                                                                                                            |
+| `get_component`   | A kit component/layout: metadata, keyboard table, tokens, deps, a usage example (imports rewritten to packages) and the full source. Catalog-only ids (`buttons`, `tables`…) return the catalog entry.                                |
+| `get_block`       | A block: metadata, components it composes, deps, usage and source.                                                                                                                                                                    |
+| `get_template`    | A page template: layout, blocks, whether it renders in `ConsoleShell`, deps, usage and source.                                                                                                                                        |
+| `scaffold_page`   | A ready-to-paste TSX page: `template=<id>` (with the `shell` prop wired for console templates) or `blocks=[…]` + `layout` (`console` · `page` · `auth-layout` · `stacked-layout` · `docs-layout` · `canvas-layout` · `print-layout`). |
+| `scaffold_preset` | A `BrandPreset` module (name + logo mark) like `packages/ui/src/theme/presets.tsx`; optional SVG converted to JSX with its colours mapped to token classes. Colours never change.                                                     |
 
 **Design system and rebuilds**
 
-| Tool | What it does |
-|---|---|
-| `overview` | Brand, inventory, rules and the recommended flows. Call it first. |
-| `list_components` / `search_components` | Catalog inventory / keyword search. |
-| `get_app_shell` | The catalog chrome (sidebar + topbar + header), optionally with `blocks/Shell.html`. |
-| `get_tokens` | `brand.css` per theme, as css or json. |
-| `get_adoption_guide` | Wiring a product: tokens, Tailwind v4 bridge, themes, Geist. |
-| `get_rules` | Hard rules + exactly what the validator checks. |
-| `analyze_page` | Legacy page → suggested entries + detected frameworks + violations. |
-| `validate_page` | Checks a page (hex, Tailwind palette, gradients, glow, `dark:`, fonts). |
-| `sync_design_system` | Re-indexes (git pull when the server cloned the repo itself). |
+| Tool                                    | What it does                                                                         |
+| --------------------------------------- | ------------------------------------------------------------------------------------ |
+| `overview`                              | Brand, inventory, rules and the recommended flows. Call it first.                    |
+| `list_components` / `search_components` | Catalog inventory / keyword search.                                                  |
+| `get_app_shell`                         | The catalog chrome (sidebar + topbar + header), optionally with `blocks/Shell.html`. |
+| `get_tokens`                            | `brand.css` per theme, as css or json.                                               |
+| `get_adoption_guide`                    | Wiring a product: tokens, Tailwind v4 bridge, themes, Geist.                         |
+| `get_rules`                             | Hard rules + exactly what the validator checks.                                      |
+| `analyze_page`                          | Legacy page → suggested entries + detected frameworks + violations.                  |
+| `validate_page`                         | Checks a page (hex, Tailwind palette, gradients, glow, `dark:`, fonts).              |
+| `sync_design_system`                    | Re-indexes (git pull when the server cloned the repo itself).                        |
 
 **Prompts:** `/mcp__gntik-ui__remaquetar` (rebuild one page) and
 `/mcp__gntik-ui__preparar_producto` (initial product wiring) — names kept for compatibility.
@@ -52,8 +52,8 @@ pnpm install && pnpm --filter @gntik-ai/gntik-ui-mcp build
 claude mcp add gntik-ui -- node /path/to/gntik-ui/packages/mcp/dist/index.js --stdio
 ```
 
-Then ask in natural language — *"build the members settings page with gntik-ui"* (→ `list_kit` →
-`scaffold_page` → `validate_page`) or *"rebuild src/pages/Fleet.tsx on the design system"*
+Then ask in natural language — _"build the members settings page with gntik-ui"_ (→ `list_kit` →
+`scaffold_page` → `validate_page`) or _"rebuild src/pages/Fleet.tsx on the design system"_
 (→ `analyze_page` → `get_component` → `validate_page`). In this repo, the skills in
 `.claude/skills/` (`build-page`, `add-component`, `brand-review`) drive the same tools.
 
@@ -81,16 +81,16 @@ docker run --rm -p 8080:8080 gntik-ui-mcp
 
 ## Configuration
 
-| Variable | Default | Description |
-|---|---|---|
-| `MCP_TRANSPORT` | `stdio` | `stdio` \| `http` (flags `--stdio` / `--http` win) |
-| `PORT` | `8080` | HTTP port |
-| `GNTIK_UI_DIR` | autodetect `../` | Local gntik-ui checkout |
-| `GNTIK_UI_REPO` | — | Git URL of the repo (when there is no checkout) |
-| `GNTIK_UI_REF` | `main` | Branch/tag to follow |
-| `GNTIK_UI_TOKEN` / `GITHUB_TOKEN` | — | Token for a private repo |
-| `GNTIK_UI_CACHE` | `$TMPDIR/gntik-ui-mcp` | Directory of the server's own clone |
-| `GNTIK_UI_SYNC_MINUTES` | `0` (off) | Auto-sync of the server's own clone |
+| Variable                          | Default                | Description                                        |
+| --------------------------------- | ---------------------- | -------------------------------------------------- |
+| `MCP_TRANSPORT`                   | `stdio`                | `stdio` \| `http` (flags `--stdio` / `--http` win) |
+| `PORT`                            | `8080`                 | HTTP port                                          |
+| `GNTIK_UI_DIR`                    | autodetect `../`       | Local gntik-ui checkout                            |
+| `GNTIK_UI_REPO`                   | —                      | Git URL of the repo (when there is no checkout)    |
+| `GNTIK_UI_REF`                    | `main`                 | Branch/tag to follow                               |
+| `GNTIK_UI_TOKEN` / `GITHUB_TOKEN` | —                      | Token for a private repo                           |
+| `GNTIK_UI_CACHE`                  | `$TMPDIR/gntik-ui-mcp` | Directory of the server's own clone                |
+| `GNTIK_UI_SYNC_MINUTES`           | `0` (off)              | Auto-sync of the server's own clone                |
 
 The server **never** runs `git pull` on a user's local checkout, only on the clone it manages.
 

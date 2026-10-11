@@ -92,7 +92,12 @@ describe('Toolbar', () => {
   });
 
   it('examples have no axe violations', async () => {
-    render(<><ToolbarTable /><ToolbarBulkActions /></>);
+    render(
+      <>
+        <ToolbarTable />
+        <ToolbarBulkActions />
+      </>,
+    );
     expect(screen.getByRole('link', { name: 'View members' })).toBeInTheDocument();
     await expectNoAxeViolations();
   });

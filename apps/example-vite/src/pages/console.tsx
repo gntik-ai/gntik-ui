@@ -59,7 +59,14 @@ export function Projects() {
       columns={projectColumns}
       savedViews={[
         { value: 'all', label: 'All projects', filters: [] },
-        { value: 'attention', label: 'Needs attention', filters: [{ field: 'status', value: 'Degraded' }, { field: 'status', value: 'Failed' }] },
+        {
+          value: 'attention',
+          label: 'Needs attention',
+          filters: [
+            { field: 'status', value: 'Degraded' },
+            { field: 'status', value: 'Failed' },
+          ],
+        },
       ]}
       noun={['project', 'projects']}
       createLabel="New project"
@@ -78,7 +85,10 @@ export function ProjectDetail({ id }: { id: string }) {
       name={project.name}
       description={project.description}
       status={project.status}
-      breadcrumbs={[{ label: 'Projects', href: '/projects' }, { label: project.name, mono: true }]}
+      breadcrumbs={[
+        { label: 'Projects', href: '/projects' },
+        { label: project.name, mono: true },
+      ]}
       meta={projectMeta(project)}
       details={projectDetails(project)}
       events={projectEvents(project)}
@@ -106,11 +116,25 @@ export function NewProject() {
 }
 
 export function Inbox() {
-  return <NotificationInboxPage notifications={notifications} breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Inbox' }]} currentHref="/inbox" />;
+  return (
+    <NotificationInboxPage
+      notifications={notifications}
+      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Inbox' }]}
+      currentHref="/inbox"
+    />
+  );
 }
 
 export function Search() {
-  return <SearchResultsPage hits={searchHits} facets={searchFacets} defaultQuery="api" breadcrumbs={[{ label: 'Acme Inc.', href: '/' }, { label: 'Search' }]} currentHref="/search" />;
+  return (
+    <SearchResultsPage
+      hits={searchHits}
+      facets={searchFacets}
+      defaultQuery="api"
+      breadcrumbs={[{ label: 'Acme Inc.', href: '/' }, { label: 'Search' }]}
+      currentHref="/search"
+    />
+  );
 }
 
 export function Onboarding() {

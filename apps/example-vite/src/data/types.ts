@@ -7,4 +7,5 @@ import type { ComponentProps, JSXElementConstructor } from 'react';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Page = JSXElementConstructor<any>;
 export type PropOf<P extends Page, K extends keyof ComponentProps<P>> = NonNullable<ComponentProps<P>[K]>;
-export type ItemOf<P extends Page, K extends keyof ComponentProps<P>> = PropOf<P, K> extends ReadonlyArray<infer T> ? T : never;
+export type ItemOf<P extends Page, K extends keyof ComponentProps<P>> =
+  PropOf<P, K> extends ReadonlyArray<infer T> ? T : never;

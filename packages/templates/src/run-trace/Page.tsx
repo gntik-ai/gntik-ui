@@ -1,9 +1,40 @@
-import { LogViewer, PageHeader, TokenCostCard, TraceWaterfall, formatSpanDuration, type LogLine, type TokenUsagePeriod, type TraceSpan } from '@gntik-ai/blocks';
+import {
+  LogViewer,
+  PageHeader,
+  TokenCostCard,
+  TraceWaterfall,
+  formatSpanDuration,
+  type LogLine,
+  type TokenUsagePeriod,
+  type TraceSpan,
+} from '@gntik-ai/blocks';
 import { RotateCcw, Square } from '@gntik-ai/icons';
-import { Badge, Grid, HStack, InspectorLayout, InspectorToggle, JsonViewer, Page, Stack, StatusTag, Timer, Timestamp, type BreadcrumbItem } from '@gntik-ai/ui';
+import {
+  Badge,
+  Grid,
+  HStack,
+  InspectorLayout,
+  InspectorToggle,
+  JsonViewer,
+  Page,
+  Stack,
+  StatusTag,
+  Timer,
+  Timestamp,
+  type BreadcrumbItem,
+} from '@gntik-ai/ui';
 import { useState } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
-import { traceBreadcrumbs, traceLogs, traceRun, traceSpanDetails, traceSpans, traceUsage, type SpanDetail, type TraceRun } from './data';
+import {
+  traceBreadcrumbs,
+  traceLogs,
+  traceRun,
+  traceSpanDetails,
+  traceSpans,
+  traceUsage,
+  type SpanDetail,
+  type TraceRun,
+} from './data';
 
 export interface RunTraceProps {
   /** The run: name, status, start time, model, environment. Omit `startedAt` to start "now". */
@@ -27,7 +58,15 @@ export interface RunTraceProps {
   shell: Omit<ConsoleShellProps, 'children'>;
 }
 
-function SpanPanel({ span, detail, runStart }: { span: TraceSpan | undefined; detail: SpanDetail | undefined; runStart: number }) {
+function SpanPanel({
+  span,
+  detail,
+  runStart,
+}: {
+  span: TraceSpan | undefined;
+  detail: SpanDetail | undefined;
+  runStart: number;
+}) {
   if (!span) return <p className="text-[13px] text-muted-foreground">Select a span to see its inputs and outputs.</p>;
   const running = detail?.running ?? false;
   return (
@@ -64,15 +103,29 @@ function SpanPanel({ span, detail, runStart }: { span: TraceSpan | undefined; de
         {detail?.input === undefined ? (
           <p className="text-[12.5px] text-muted-foreground">No input recorded.</p>
         ) : (
-          <JsonViewer key={`${span.id}-in`} data={detail.input} label={`${span.name} input`} defaultExpandDepth={2} maxHeight={240} />
+          <JsonViewer
+            key={`${span.id}-in`}
+            data={detail.input}
+            label={`${span.name} input`}
+            defaultExpandDepth={2}
+            maxHeight={240}
+          />
         )}
       </section>
       <section aria-label="Output">
         <h3 className="mb-2 text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">Output</h3>
         {detail?.output === undefined ? (
-          <p className="text-[12.5px] text-muted-foreground">{running ? 'Waiting for the span to finish…' : 'No output recorded.'}</p>
+          <p className="text-[12.5px] text-muted-foreground">
+            {running ? 'Waiting for the span to finish…' : 'No output recorded.'}
+          </p>
         ) : (
-          <JsonViewer key={`${span.id}-out`} data={detail.output} label={`${span.name} output`} defaultExpandDepth={2} maxHeight={240} />
+          <JsonViewer
+            key={`${span.id}-out`}
+            data={detail.output}
+            label={`${span.name} output`}
+            defaultExpandDepth={2}
+            maxHeight={240}
+          />
         )}
       </section>
     </Stack>
@@ -105,13 +158,17 @@ export default function RunTracePage(props: Partial<RunTraceProps>) {
   const [fallbackStart] = useState(() => Date.now() - extent);
   const runStart = run.startedAt ? new Date(run.startedAt).getTime() : fallbackStart;
   const firstRunning = spans.find((s) => spanDetails[s.id]?.running && s.parentId);
-  const [selectedId, setSelectedId] = useState(defaultSelectedId ?? firstRunning?.id ?? spans.find((s) => !s.parentId)?.id);
+  const [selectedId, setSelectedId] = useState(
+    defaultSelectedId ?? firstRunning?.id ?? spans.find((s) => !s.parentId)?.id,
+  );
   const [inspectorOpen, setInspectorOpen] = useState(true);
   const selected = spans.find((s) => s.id === selectedId);
   const isRunning = run.status === 'running';
 
   const actions = [
-    ...(onCancel && isRunning ? [{ label: 'Cancel run', icon: Square, variant: 'secondary' as const, onClick: onCancel }] : []),
+    ...(onCancel && isRunning
+      ? [{ label: 'Cancel run', icon: Square, variant: 'secondary' as const, onClick: onCancel }]
+      : []),
     ...(onRerun ? [{ label: 'Re-run', icon: RotateCcw, variant: 'primary' as const, onClick: onRerun }] : []),
   ];
 
@@ -122,7 +179,9 @@ export default function RunTracePage(props: Partial<RunTraceProps>) {
         panelWidth={360}
         open={inspectorOpen}
         onOpenChange={setInspectorOpen}
-        panel={<SpanPanel span={selected} detail={selectedId ? spanDetails[selectedId] : undefined} runStart={runStart} />}
+        panel={
+          <SpanPanel span={selected} detail={selectedId ? spanDetails[selectedId] : undefined} runStart={runStart} />
+        }
       >
         <Page
           width="wide"
@@ -136,7 +195,11 @@ export default function RunTracePage(props: Partial<RunTraceProps>) {
                 { label: 'Started', value: <Timestamp value={new Date(runStart)} /> },
                 {
                   label: isRunning ? 'Elapsed' : 'Duration',
-                  value: isRunning ? <Timer start={runStart} format="compact" showStatus={false} aria-label="Run elapsed time" /> : formatSpanDuration(extent),
+                  value: isRunning ? (
+                    <Timer start={runStart} format="compact" showStatus={false} aria-label="Run elapsed time" />
+                  ) : (
+                    formatSpanDuration(extent)
+                  ),
                 },
                 { label: 'Model', value: run.model, mono: true },
                 { label: 'Environment', value: run.environment },
@@ -161,7 +224,13 @@ export default function RunTracePage(props: Partial<RunTraceProps>) {
             <InspectorToggle label="Toggle span inspector" />
           </HStack>
           <Grid cols={{ base: 1, lg: 3 }} gap={4}>
-            <TokenCostCard titleAs="h2" title="Tokens and cost" description={`${run.model} · this run`} periods={usage} currency={currency} />
+            <TokenCostCard
+              titleAs="h2"
+              title="Tokens and cost"
+              description={`${run.model} · this run`}
+              periods={usage}
+              currency={currency}
+            />
             <div className="min-w-0 lg:col-span-2">
               <LogViewer titleAs="h2" title="Run log" lines={logs} height={260} defaultFollow />
             </div>

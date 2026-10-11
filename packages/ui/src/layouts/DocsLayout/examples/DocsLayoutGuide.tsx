@@ -39,7 +39,9 @@ export default function DocsLayoutGuide() {
         header={
           <>
             <Logo size={22} wordmark />
-            <Badge tone="neutral" size="sm">Docs</Badge>
+            <Badge tone="neutral" size="sm">
+              Docs
+            </Badge>
           </>
         }
         nav={<NavList label="Documentation" groups={NAV} />}
@@ -58,14 +60,31 @@ export default function DocsLayoutGuide() {
         <p className="font-mono text-[11px] tracking-[0.18em] text-primary-text uppercase">Get started</p>
         <h1 className="mt-2 text-[28px] font-bold tracking-[-0.02em]">Deploy a project</h1>
         <p className={`mt-3 ${PARAGRAPH}`}>Go from a repository to a running deployment in a few minutes.</p>
-        <h2 id="deploy-prerequisites" className={H2}>Prerequisites</h2>
-        <p className={PARAGRAPH}>A workspace where you are an owner or a member with deploy rights, and a repository with a build script.</p>
-        <h2 id="deploy-configure" className={H2}>Configure the project</h2>
-        <p className={PARAGRAPH}>Pick the region closest to your users. Builds run in the same region, so caches stay warm between deployments.</p>
-        <h3 id="deploy-variables" className="mt-6 mb-2 scroll-mt-6 text-[15px] font-semibold text-foreground">Environment variables</h3>
-        <p className={PARAGRAPH}>Secrets are encrypted at rest and only exposed to the build and runtime of the environment they belong to.</p>
-        <h2 id="deploy-ship" className={H2}>Ship it</h2>
-        <p className={PARAGRAPH}>Push to the default branch. Each push creates a deployment with its own preview URL; promote it when the checks pass.</p>
+        <h2 id="deploy-prerequisites" className={H2}>
+          Prerequisites
+        </h2>
+        <p className={PARAGRAPH}>
+          A workspace where you are an owner or a member with deploy rights, and a repository with a build script.
+        </p>
+        <h2 id="deploy-configure" className={H2}>
+          Configure the project
+        </h2>
+        <p className={PARAGRAPH}>
+          Pick the region closest to your users. Builds run in the same region, so caches stay warm between deployments.
+        </p>
+        <h3 id="deploy-variables" className="mt-6 mb-2 scroll-mt-6 text-[15px] font-semibold text-foreground">
+          Environment variables
+        </h3>
+        <p className={PARAGRAPH}>
+          Secrets are encrypted at rest and only exposed to the build and runtime of the environment they belong to.
+        </p>
+        <h2 id="deploy-ship" className={H2}>
+          Ship it
+        </h2>
+        <p className={PARAGRAPH}>
+          Push to the default branch. Each push creates a deployment with its own preview URL; promote it when the
+          checks pass.
+        </p>
       </DocsLayout>
     </div>
   );

@@ -15,7 +15,9 @@ export default function OtpInputBasic() {
           onComplete={(code) => setStatus(code === '123456' ? 'ok' : 'error')}
         />
         {status === 'ok' ? (
-          <p role="status" className="text-[12px] text-success-text">Code verified. Your device is trusted.</p>
+          <p role="status" className="text-[12px] text-success-text">
+            Code verified. Your device is trusted.
+          </p>
         ) : (
           <FieldDescription>Enter the 6-digit code we sent to your authenticator app.</FieldDescription>
         )}

@@ -51,7 +51,9 @@ describe('SignInForm', () => {
     for (const label of ['Email', 'Password']) {
       const input = screen.getByLabelText(label);
       expect(input).toHaveAttribute('aria-invalid', 'true');
-      expect(input.getAttribute('aria-describedby')?.split(' ')).toEqual(expect.arrayContaining([label === 'Email' ? 'email-help' : 'password-help', 'credential-feedback']));
+      expect(input.getAttribute('aria-describedby')?.split(' ')).toEqual(
+        expect.arrayContaining([label === 'Email' ? 'email-help' : 'password-help', 'credential-feedback']),
+      );
     }
     expect(screen.getByRole('alert')).toHaveAttribute('id', 'credential-feedback');
     ref.current?.focus('password');
@@ -71,7 +73,11 @@ describe('SignInForm', () => {
         identifier={{ type: 'text', label: 'Username', help: 'Account name', helpId: 'username-help', minLength: 3 }}
         passwordHelp="Account password"
         passwordHelpId="password-help"
-        messages={{ identifierRequired: 'Username is required.', identifierInvalid: 'Use at least three characters.', passwordRequired: 'Password is required.' }}
+        messages={{
+          identifierRequired: 'Username is required.',
+          identifierInvalid: 'Use at least three characters.',
+          passwordRequired: 'Password is required.',
+        }}
         onSubmit={onSubmit}
         sso={null}
       />,
@@ -109,7 +115,14 @@ describe('SignInForm', () => {
     const onSubmit = vi.fn();
     render(
       <SignInForm
-        identifier={{ type: 'text', autoComplete: 'username', label: 'Username', help: 'Use your account name.', minLength: 3, maxLength: 120 }}
+        identifier={{
+          type: 'text',
+          autoComplete: 'username',
+          label: 'Username',
+          help: 'Use your account name.',
+          minLength: 3,
+          maxLength: 120,
+        }}
         onSubmit={onSubmit}
         sso={null}
       />,
@@ -123,7 +136,12 @@ describe('SignInForm', () => {
     await userEvent.type(input, '  avery  ');
     await userEvent.type(screen.getByLabelText('Password'), 'hunter22');
     await userEvent.click(screen.getByRole('button', { name: 'Sign in' }));
-    expect(onSubmit).toHaveBeenCalledWith({ email: 'avery', identifier: 'avery', password: 'hunter22', remember: true });
+    expect(onSubmit).toHaveBeenCalledWith({
+      email: 'avery',
+      identifier: 'avery',
+      password: 'hunter22',
+      remember: true,
+    });
   });
 
   it('renders with SSO by default', async () => {
@@ -160,10 +178,22 @@ describe('SignInForm accessibility matrix', () => {
                 <h1>Account access</h1>
                 <SignInForm
                   identifier={
-                    mode === 'username' ? { type: 'text', autoComplete: 'username', label: 'Username', help: 'Use your account name.', minLength: 3, maxLength: 120 } : undefined
+                    mode === 'username'
+                      ? {
+                          type: 'text',
+                          autoComplete: 'username',
+                          label: 'Username',
+                          help: 'Use your account name.',
+                          minLength: 3,
+                          maxLength: 120,
+                        }
+                      : undefined
                   }
                   headingLevel={suppressed ? null : undefined}
-                  messages={{ identifierRequired: 'Account name is required.', passwordRequired: 'Password is required.' }}
+                  messages={{
+                    identifierRequired: 'Account name is required.',
+                    passwordRequired: 'Password is required.',
+                  }}
                   onSubmit={onSubmit}
                 />
               </ThemeProvider>,

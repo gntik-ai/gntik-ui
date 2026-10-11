@@ -14,7 +14,15 @@ import {
 import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { ansiClassName, parseAnsiState, type AnsiSegment, type AnsiStyle } from './ansi';
-import { appendChunk, EMPTY_BUFFER, toBufferLine, trimBuffer, type BufferLine, type TerminalBuffer, type TerminalLine } from './buffer';
+import {
+  appendChunk,
+  EMPTY_BUFFER,
+  toBufferLine,
+  trimBuffer,
+  type BufferLine,
+  type TerminalBuffer,
+  type TerminalLine,
+} from './buffer';
 import { terminalVariants } from './terminal.variants';
 
 export type { TerminalLine } from './buffer';
@@ -86,7 +94,13 @@ function parseLines(lines: readonly BufferLine[]) {
 }
 
 /** Segments of one line with the search matches cut out as `<mark>`s. */
-function renderSegments(segments: AnsiSegment[], matches: Match[], currentKey: string | null, markClass: string, lineIndex: number) {
+function renderSegments(
+  segments: AnsiSegment[],
+  matches: Match[],
+  currentKey: string | null,
+  markClass: string,
+  lineIndex: number,
+) {
   if (!matches.length) {
     return segments.map((seg, i) => {
       const cls = ansiClassName(seg);
@@ -110,16 +124,31 @@ function renderSegments(segments: AnsiSegment[], matches: Match[], currentKey: s
       if (m.end <= cursor || m.start >= segEnd) continue;
       const from = Math.max(m.start, cursor);
       const to = Math.min(m.end, segEnd);
-      if (from > cursor) out.push(<span key={`${i}-${cursor}`} className={cls}>{seg.text.slice(cursor - segStart, from - segStart)}</span>);
+      if (from > cursor)
+        out.push(
+          <span key={`${i}-${cursor}`} className={cls}>
+            {seg.text.slice(cursor - segStart, from - segStart)}
+          </span>,
+        );
       const key = `${lineIndex}:${m.start}`;
       out.push(
-        <mark key={`${i}-m${from}`} className={cn(markClass, cls)} data-current={key === currentKey || undefined} data-match={key}>
+        <mark
+          key={`${i}-m${from}`}
+          className={cn(markClass, cls)}
+          data-current={key === currentKey || undefined}
+          data-match={key}
+        >
           {seg.text.slice(from - segStart, to - segStart)}
         </mark>,
       );
       cursor = to;
     }
-    if (cursor < segEnd) out.push(<span key={`${i}-${cursor}`} className={cls}>{seg.text.slice(cursor - segStart)}</span>);
+    if (cursor < segEnd)
+      out.push(
+        <span key={`${i}-${cursor}`} className={cls}>
+          {seg.text.slice(cursor - segStart)}
+        </span>,
+      );
     offset = segEnd;
   });
   return out;
@@ -156,7 +185,10 @@ export function Terminal({
     trimBuffer({ ...EMPTY_BUFFER, lines: (defaultLines ?? []).map(toBufferLine) }, maxLines),
   );
   const buffer = useMemo<TerminalBuffer>(
-    () => (linesProp ? trimBuffer({ ...EMPTY_BUFFER, lines: linesProp.map(toBufferLine) }, maxLines) : trimBuffer(inner, maxLines)),
+    () =>
+      linesProp
+        ? trimBuffer({ ...EMPTY_BUFFER, lines: linesProp.map(toBufferLine) }, maxLines)
+        : trimBuffer(inner, maxLines),
     [linesProp, inner, maxLines],
   );
   const [innerWrap, setInnerWrap] = useState(defaultWrap);
@@ -222,7 +254,8 @@ export function Terminal({
   useEffect(() => {
     if (!currentKey) return;
     const mark = viewportRef.current?.querySelector(`[data-match="${currentKey}"]`);
-    if (mark && 'scrollIntoView' in mark && typeof mark.scrollIntoView === 'function') mark.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    if (mark && 'scrollIntoView' in mark && typeof mark.scrollIntoView === 'function')
+      mark.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }, [currentKey]);
 
   useEffect(() => {
@@ -301,11 +334,17 @@ export function Terminal({
   const digits = String(Math.max(total, 1)).length;
   const timeFormat = useMemo(() => {
     if (formatTimestamp) return formatTimestamp;
-    const fmt = new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+    const fmt = new Intl.DateTimeFormat(locale, {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    });
     return (d: Date) => fmt.format(d);
   }, [formatTimestamp, locale]);
   const ariaLive = live === true ? 'polite' : live || 'off';
-  const announcement = copyStatus === 'copied' ? t('common.copiedToClipboard') : copyStatus === 'failed' ? t('common.copyFailed') : '';
+  const announcement =
+    copyStatus === 'copied' ? t('common.copiedToClipboard') : copyStatus === 'failed' ? t('common.copyFailed') : '';
 
   return (
     <div className={cn(s.root(), className)} onKeyDown={onRootKeyDown}>
@@ -332,19 +371,39 @@ export function Terminal({
                 />
                 {query.trim() && (
                   <span className={s.matches()} aria-live="polite">
-                    {matches.length ? t('terminal.matches', { current: currentIndex + 1, total: matches.length }) : t('terminal.noMatches')}
+                    {matches.length
+                      ? t('terminal.matches', { current: currentIndex + 1, total: matches.length })
+                      : t('terminal.noMatches')}
                   </span>
                 )}
-                <button type="button" className={s.button()} aria-label={t('terminal.previousMatch')} disabled={!matches.length} onClick={() => step(-1)}>
+                <button
+                  type="button"
+                  className={s.button()}
+                  aria-label={t('terminal.previousMatch')}
+                  disabled={!matches.length}
+                  onClick={() => step(-1)}
+                >
                   <ChevronUp size={13} aria-hidden />
                 </button>
-                <button type="button" className={s.button()} aria-label={t('terminal.nextMatch')} disabled={!matches.length} onClick={() => step(1)}>
+                <button
+                  type="button"
+                  className={s.button()}
+                  aria-label={t('terminal.nextMatch')}
+                  disabled={!matches.length}
+                  onClick={() => step(1)}
+                >
                   <ChevronDown size={13} aria-hidden />
                 </button>
               </div>
             )}
             {wrapToggle && (
-              <button type="button" className={s.button()} aria-label={t('terminal.wrap')} aria-pressed={wrap} onClick={toggleWrap}>
+              <button
+                type="button"
+                className={s.button()}
+                aria-label={t('terminal.wrap')}
+                aria-pressed={wrap}
+                onClick={toggleWrap}
+              >
                 <WrapText size={14} aria-hidden />
               </button>
             )}
@@ -391,7 +450,9 @@ export function Terminal({
                       {timeFormat(new Date(line.timestamp))}
                     </time>
                   )}
-                  <span className={s.content()}>{segments.length ? renderSegments(segments, lineMatches, currentKey, s.mark(), index) : '​'}</span>
+                  <span className={s.content()}>
+                    {segments.length ? renderSegments(segments, lineMatches, currentKey, s.mark(), index) : '​'}
+                  </span>
                 </div>
               );
             })}

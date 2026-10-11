@@ -3,9 +3,24 @@ import type { PowerSearchField } from '../power-search-query';
 export type DeploymentField = 'status' | 'project' | 'region' | 'duration' | 'author';
 
 export const deploymentFields: PowerSearchField<DeploymentField>[] = [
-  { key: 'status', label: 'status', type: 'enum', values: ['running', 'succeeded', 'failed', 'cancelled'], description: 'Deployment result' },
+  {
+    key: 'status',
+    label: 'status',
+    type: 'enum',
+    values: ['running', 'succeeded', 'failed', 'cancelled'],
+    description: 'Deployment result',
+  },
   { key: 'project', label: 'project', values: ['support-triage', 'invoice-sync', 'usage-reports', 'deploy-gate'] },
-  { key: 'region', label: 'region', type: 'enum', values: [{ value: 'eu-west', label: 'EU West' }, { value: 'us-east', label: 'US East' }, { value: 'ap-south', label: 'AP South' }] },
+  {
+    key: 'region',
+    label: 'region',
+    type: 'enum',
+    values: [
+      { value: 'eu-west', label: 'EU West' },
+      { value: 'us-east', label: 'US East' },
+      { value: 'ap-south', label: 'AP South' },
+    ],
+  },
   { key: 'duration', label: 'duration', type: 'number', description: 'Seconds' },
   { key: 'author', label: 'author', values: ['ada', 'grace', 'linus'] },
 ];

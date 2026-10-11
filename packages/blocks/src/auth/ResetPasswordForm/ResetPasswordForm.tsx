@@ -15,7 +15,14 @@ export interface ResetPasswordFormProps {
 }
 
 /** New password + confirmation with length and mismatch validation, then a success state. */
-export function ResetPasswordForm({ onSubmit, error: errorProp, minPasswordLength = 8, onContinue, eyebrow = 'Account recovery', className }: ResetPasswordFormProps) {
+export function ResetPasswordForm({
+  onSubmit,
+  error: errorProp,
+  minPasswordLength = 8,
+  onContinue,
+  eyebrow = 'Account recovery',
+  className,
+}: ResetPasswordFormProps) {
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [confirmTouched, setConfirmTouched] = useState(false);
@@ -34,7 +41,11 @@ export function ResetPasswordForm({ onSubmit, error: errorProp, minPasswordLengt
         <span className="mb-5 grid size-11 place-items-center rounded-xl bg-success/14 text-success-chip-text">
           <CircleCheck size={20} aria-hidden />
         </span>
-        <AuthHeader eyebrow={eyebrow} title="Password updated" description="You can now sign in with your new password. Other sessions were signed out." />
+        <AuthHeader
+          eyebrow={eyebrow}
+          title="Password updated"
+          description="You can now sign in with your new password. Other sessions were signed out."
+        />
         <div role="status" className="sr-only">
           Password updated.
         </div>
@@ -47,7 +58,11 @@ export function ResetPasswordForm({ onSubmit, error: errorProp, minPasswordLengt
 
   return (
     <div className={cn(authFormClass, className)}>
-      <AuthHeader eyebrow={eyebrow} title="Set a new password" description={`Use at least ${minPasswordLength} characters. Avoid passwords you use elsewhere.`} />
+      <AuthHeader
+        eyebrow={eyebrow}
+        title="Set a new password"
+        description={`Use at least ${minPasswordLength} characters. Avoid passwords you use elsewhere.`}
+      />
       <form
         noValidate
         aria-label="Set a new password"
@@ -67,7 +82,13 @@ export function ResetPasswordForm({ onSubmit, error: errorProp, minPasswordLengt
         </Field>
         <Field invalid={confirmInvalid}>
           <FieldLabel>Confirm password</FieldLabel>
-          <PasswordInput autoComplete="new-password" value={confirm} onValueChange={setConfirm} onBlur={() => setConfirmTouched(true)} required />
+          <PasswordInput
+            autoComplete="new-password"
+            value={confirm}
+            onValueChange={setConfirm}
+            onBlur={() => setConfirmTouched(true)}
+            required
+          />
           <FieldError match={confirmInvalid}>Passwords don't match.</FieldError>
         </Field>
         <Button type="submit" size="lg" loading={loading} className="mt-2 w-full">

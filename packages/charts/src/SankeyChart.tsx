@@ -42,7 +42,10 @@ interface ResolvedLink {
 }
 
 /** Turns name-or-index links into the index links Recharts expects; drops unknown endpoints and non-positive values. */
-export function resolveSankeyLinks(nodes: readonly SankeyNodeDatum[], links: readonly SankeyLinkDatum[]): ResolvedLink[] {
+export function resolveSankeyLinks(
+  nodes: readonly SankeyNodeDatum[],
+  links: readonly SankeyLinkDatum[],
+): ResolvedLink[] {
   const byName = new Map(nodes.map((n, i) => [n.name, i]));
   const idx = (ref: string | number) =>
     typeof ref === 'number' ? (ref >= 0 && ref < nodes.length ? ref : undefined) : byName.get(ref);
@@ -135,7 +138,11 @@ export function SankeyChart({
           <ChartDataTable
             caption={name}
             columns={['From', 'To', 'Value']}
-            rows={resolved.map((l) => [nodes[l.source]?.name ?? '', nodes[l.target]?.name ?? '', valueFormatter(l.value)])}
+            rows={resolved.map((l) => [
+              nodes[l.source]?.name ?? '',
+              nodes[l.target]?.name ?? '',
+              valueFormatter(l.value),
+            ])}
           />
         )
       }

@@ -6,6 +6,10 @@ export { ssoProviders as signUpSsoProviders };
 export const signUpBrand = {
   eyebrow: 'Free for small teams',
   headline: 'Your whole team, one workspace.',
-  features: ['Invite teammates with roles from day one', 'Projects, environments and deployments together', 'Usage-based plans, no card to start'],
+  features: [
+    'Invite teammates with roles from day one',
+    'Projects, environments and deployments together',
+    'Usage-based plans, no card to start',
+  ],
   footer: 'SOC 2 · encrypted at rest · audited access',
 };

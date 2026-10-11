@@ -6,7 +6,10 @@ import { otpInputVariants, type OtpInputVariantProps } from './otp-input.variant
 
 export interface OtpInputProps
   extends
-    Omit<OTPField.Root.Props, 'className' | 'render' | 'children' | 'length' | 'validationType' | 'onValueComplete' | 'style'>,
+    Omit<
+      OTPField.Root.Props,
+      'className' | 'render' | 'children' | 'length' | 'validationType' | 'onValueComplete' | 'style'
+    >,
     OtpInputVariantProps {
   className?: string;
   ref?: Ref<HTMLDivElement>;

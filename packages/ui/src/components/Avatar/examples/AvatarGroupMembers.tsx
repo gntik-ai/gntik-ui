@@ -14,10 +14,14 @@ export default function AvatarGroupMembers() {
   return (
     <div className="flex flex-wrap items-center gap-8">
       <AvatarGroup label="Project members" max={4}>
-        {MEMBERS.map((m) => <Avatar key={m.name} name={m.name} tone={m.tone} />)}
+        {MEMBERS.map((m) => (
+          <Avatar key={m.name} name={m.name} tone={m.tone} />
+        ))}
       </AvatarGroup>
       <AvatarGroup label="Reviewers" size="sm" max={5}>
-        {MEMBERS.map((m) => <Avatar key={m.name} name={m.name} tone={m.tone} />)}
+        {MEMBERS.map((m) => (
+          <Avatar key={m.name} name={m.name} tone={m.tone} />
+        ))}
       </AvatarGroup>
     </div>
   );

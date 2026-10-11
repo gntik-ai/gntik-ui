@@ -17,7 +17,8 @@ export const shellTopnavCopy = {
   title: 'Projects',
   description: 'Services, environments and deployments, grouped by project.',
   emptyTitle: 'Create your first project',
-  emptyDescription: 'Projects group your services, environments and deployments. Start one from a repository in a couple of minutes.',
+  emptyDescription:
+    'Projects group your services, environments and deployments. Start one from a repository in a couple of minutes.',
   emptyActionLabel: 'New project',
   emptySteps: firstRunSteps,
   footer: '© 2026 Acme Industries · Status · Privacy',

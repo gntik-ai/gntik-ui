@@ -22,7 +22,11 @@ export default function NavListSettings() {
     {
       label: 'Organization',
       items: [
-        { label: 'Workspace', icon: Building2, items: [item('general', 'General'), item('members', 'Members'), item('roles', 'Roles')] },
+        {
+          label: 'Workspace',
+          icon: Building2,
+          items: [item('general', 'General'), item('members', 'Members'), item('roles', 'Roles')],
+        },
         { label: 'Billing', icon: CreditCard, items: [item('plan', 'Plan'), item('invoices', 'Invoices')] },
         item('integrations', 'Integrations', { icon: Plug, disabled: true }),
       ],

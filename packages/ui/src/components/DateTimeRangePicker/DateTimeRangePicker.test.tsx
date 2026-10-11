@@ -10,7 +10,16 @@ const now = new Date(2026, 2, 11, 12, 0);
 function setup(props: Partial<DateTimeRangePickerProps> = {}) {
   const user = userEvent.setup();
   const onValueChange = vi.fn();
-  render(<DateTimeRangePicker aria-label="Window" locale="en-US" hourCycle={24} now={now} onValueChange={onValueChange} {...props} />);
+  render(
+    <DateTimeRangePicker
+      aria-label="Window"
+      locale="en-US"
+      hourCycle={24}
+      now={now}
+      onValueChange={onValueChange}
+      {...props}
+    />,
+  );
   return { user, onValueChange, field: screen.getByRole('combobox', { name: 'Window' }) };
 }
 
@@ -57,13 +66,19 @@ describe('DateTimeRangePicker', () => {
     expect(apply).toBeDisabled();
     await user.click(within(dialog).getByRole('button', { name: 'Tuesday, March 10, 2026' }));
     await user.click(within(dialog).getByRole('button', { name: 'Tuesday, March 10, 2026' }));
-    const startHours = within(within(dialog).getByRole('group', { name: 'Start time' })).getByRole('spinbutton', { name: 'Hours' });
-    const endHours = within(within(dialog).getByRole('group', { name: 'End time' })).getByRole('spinbutton', { name: 'Hours' });
+    const startHours = within(within(dialog).getByRole('group', { name: 'Start time' })).getByRole('spinbutton', {
+      name: 'Hours',
+    });
+    const endHours = within(within(dialog).getByRole('group', { name: 'End time' })).getByRole('spinbutton', {
+      name: 'Hours',
+    });
     await user.click(startHours);
     await user.keyboard('18');
     await user.click(endHours);
     await user.keyboard('09');
-    await user.click(within(within(dialog).getByRole('group', { name: 'End time' })).getByRole('spinbutton', { name: 'Minutes' }));
+    await user.click(
+      within(within(dialog).getByRole('group', { name: 'End time' })).getByRole('spinbutton', { name: 'Minutes' }),
+    );
     await user.keyboard('00');
     expect(within(dialog).getByText('The end must be after the start.')).toBeInTheDocument();
     expect(apply).toBeDisabled();
@@ -71,7 +86,11 @@ describe('DateTimeRangePicker', () => {
     await user.keyboard('20');
     expect(within(dialog).queryByText('The end must be after the start.')).not.toBeInTheDocument();
     await user.click(apply);
-    expect(onValueChange).toHaveBeenLastCalledWith({ mode: 'absolute', start: new Date(2026, 2, 10, 18, 0), end: new Date(2026, 2, 10, 20, 0) });
+    expect(onValueChange).toHaveBeenLastCalledWith({
+      mode: 'absolute',
+      start: new Date(2026, 2, 10, 18, 0),
+      end: new Date(2026, 2, 10, 20, 0),
+    });
     expect((field as HTMLInputElement).value).toMatch(/^Mar 10, 2026, 18:00\s–\s20:00$/);
   });
 
@@ -81,7 +100,9 @@ describe('DateTimeRangePicker', () => {
     const dialog = await screen.findByRole('dialog');
     await user.click(within(dialog).getByRole('button', { name: 'Custom range' }));
     expect(within(dialog).getByRole('button', { name: 'Absolute' })).toHaveAttribute('aria-pressed', 'true');
-    await waitFor(() => expect(within(dialog).getByRole('button', { name: 'Wednesday, March 11, 2026' })).toHaveFocus());
+    await waitFor(() =>
+      expect(within(dialog).getByRole('button', { name: 'Wednesday, March 11, 2026' })).toHaveFocus(),
+    );
     await user.keyboard('{ArrowLeft}');
     expect(within(dialog).getByRole('button', { name: 'Tuesday, March 10, 2026' })).toHaveFocus();
     await user.keyboard('{Escape}');

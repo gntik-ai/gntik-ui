@@ -1,9 +1,23 @@
-import { InviteMembersDialog, MembersTable, PendingInvitations, type Invitation, type InvitePayload, type Member, type RoleOption } from '@gntik-ai/blocks';
+import {
+  InviteMembersDialog,
+  MembersTable,
+  PendingInvitations,
+  type Invitation,
+  type InvitePayload,
+  type Member,
+  type RoleOption,
+} from '@gntik-ai/blocks';
 import { Check, Minus, UserPlus } from '@gntik-ai/icons';
 import { Section, Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@gntik-ai/ui';
 import { useState } from 'react';
 import { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';
-import { invitations as defaultInvitations, members as defaultMembers, rolePermissions as defaultPermissions, roles as defaultRoles, type RolePermission } from './data';
+import {
+  invitations as defaultInvitations,
+  members as defaultMembers,
+  rolePermissions as defaultPermissions,
+  roles as defaultRoles,
+  type RolePermission,
+} from './data';
 
 export interface SettingsMembersProps extends SettingsFrameOptions {
   members: Member[];
@@ -43,7 +57,13 @@ export default function SettingsMembersPage({
     await onInvite?.(payload);
     const now = new Date().toISOString();
     setSent((list) => [
-      ...payload.emails.map((email, i) => ({ id: `new-${list.length + i}-${email}`, email, role: roleLabel(payload.role), invitedBy: 'You', invitedAt: now })),
+      ...payload.emails.map((email, i) => ({
+        id: `new-${list.length + i}-${email}`,
+        email,
+        role: roleLabel(payload.role),
+        invitedBy: 'You',
+        invitedAt: now,
+      })),
       ...list,
     ]);
   };
@@ -57,9 +77,19 @@ export default function SettingsMembersPage({
       {...frame}
     >
       <Section title="Members" description={`${members.length} people have access to this workspace.`}>
-        <MembersTable members={members} roles={roles} currentUserId={currentUserId} onRoleChange={onRoleChange} onRemove={onRemove} />
+        <MembersTable
+          members={members}
+          roles={roles}
+          currentUserId={currentUserId}
+          onRoleChange={onRoleChange}
+          onRemove={onRemove}
+        />
       </Section>
-      <PendingInvitations invitations={[...sent, ...invitations]} onResend={onResendInvitation} onRevoke={onRevokeInvitation} />
+      <PendingInvitations
+        invitations={[...sent, ...invitations]}
+        onResend={onResendInvitation}
+        onRevoke={onRevokeInvitation}
+      />
       <Section title="Roles" description="What each role can do. Owners can change any member's role.">
         <Table className="min-w-[560px]">
           <TableCaption srOnly>Permissions by role</TableCaption>
@@ -84,7 +114,11 @@ export default function SettingsMembersPage({
                   const Glyph = allowed ? Check : Minus;
                   return (
                     <TableCell key={r.value} align="center">
-                      <Glyph size={15} aria-hidden className={allowed ? 'mx-auto text-primary-text' : 'mx-auto text-muted-foreground'} />
+                      <Glyph
+                        size={15}
+                        aria-hidden
+                        className={allowed ? 'mx-auto text-primary-text' : 'mx-auto text-muted-foreground'}
+                      />
                       <span className="sr-only">{allowed ? 'Allowed' : 'Not allowed'}</span>
                     </TableCell>
                   );
@@ -94,7 +128,13 @@ export default function SettingsMembersPage({
           </TableBody>
         </Table>
       </Section>
-      <InviteMembersDialog trigger={null} open={inviteOpen} onOpenChange={setInviteOpen} roles={roles} onInvite={invite} />
+      <InviteMembersDialog
+        trigger={null}
+        open={inviteOpen}
+        onOpenChange={setInviteOpen}
+        roles={roles}
+        onInvite={invite}
+      />
     </SettingsFrame>
   );
 }

@@ -18,7 +18,16 @@ export interface AttachmentListProps {
 }
 
 /** A labelled list of AttachmentChips. Renders nothing when empty. */
-export function AttachmentList({ attachments, variant = 'chip', onRemove, onRetry, disabled, label, className, ref }: AttachmentListProps) {
+export function AttachmentList({
+  attachments,
+  variant = 'chip',
+  onRemove,
+  onRetry,
+  disabled,
+  label,
+  className,
+  ref,
+}: AttachmentListProps) {
   const { t } = useChatI18n();
   if (attachments.length === 0) return null;
   return (

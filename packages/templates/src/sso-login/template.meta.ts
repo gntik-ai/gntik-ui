@@ -5,7 +5,8 @@ export const meta: TemplateMeta = {
   family: 'Auth',
   priority: 'P2',
   status: 'beta',
-  description: 'Centred card SSO entry: work email lookup, then a "Redirecting to your identity provider" state with cancel and a password fallback.',
+  description:
+    'Centred card SSO entry: work email lookup, then a "Redirecting to your identity provider" state with cancel and a password fallback.',
   layout: 'AuthLayout',
   blocks: [],
 };

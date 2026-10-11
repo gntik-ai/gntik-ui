@@ -8,7 +8,8 @@ const control = [
 
 export const lightboxVariants = tv({
   slots: {
-    backdrop: 'fixed inset-0 z-50 bg-background/95 transition-opacity duration-200 motion-reduce:transition-none data-starting-style:opacity-0 data-ending-style:opacity-0',
+    backdrop:
+      'fixed inset-0 z-50 bg-background/95 transition-opacity duration-200 motion-reduce:transition-none data-starting-style:opacity-0 data-ending-style:opacity-0',
     popup: [
       'fixed inset-0 z-50 flex flex-col text-foreground outline-none',
       'transition-opacity duration-200 motion-reduce:transition-none data-starting-style:opacity-0 data-ending-style:opacity-0',

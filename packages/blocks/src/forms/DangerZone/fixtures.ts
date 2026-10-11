@@ -28,7 +28,8 @@ export const dangerZoneActions: DangerZoneAction[] = [
   {
     id: 'delete',
     title: 'Delete project',
-    description: 'Permanently deletes billing-dashboard, its deployments, secrets and audit log. This cannot be undone.',
+    description:
+      'Permanently deletes billing-dashboard, its deployments, secrets and audit log. This cannot be undone.',
     actionLabel: 'Delete project',
     confirmText: 'billing-dashboard',
   },

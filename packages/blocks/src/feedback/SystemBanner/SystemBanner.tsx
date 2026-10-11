@@ -54,7 +54,11 @@ export function SystemBanner({
     <div
       role={kind === 'incident' ? 'alert' : 'status'}
       data-kind={kind}
-      className={cn('flex w-full flex-col gap-2.5 border-b px-4 py-2.5 sm:flex-row sm:items-center sm:gap-4 sm:px-6', k.root, className)}
+      className={cn(
+        'flex w-full flex-col gap-2.5 border-b px-4 py-2.5 sm:flex-row sm:items-center sm:gap-4 sm:px-6',
+        k.root,
+        className,
+      )}
     >
       <div className="flex min-w-0 flex-1 items-start gap-3 sm:items-center">
         <Icon size={17} strokeWidth={1.9} aria-hidden className={cn('mt-0.5 shrink-0 sm:mt-0', ICON_TONE[kind])} />
@@ -71,7 +75,13 @@ export function SystemBanner({
                 {action.label}
               </Link>
             ) : (
-              <Button size="sm" variant={action.variant ?? 'secondary'} icon={action.icon} disabled={action.disabled} onClick={action.onClick}>
+              <Button
+                size="sm"
+                variant={action.variant ?? 'secondary'}
+                icon={action.icon}
+                disabled={action.disabled}
+                onClick={action.onClick}
+              >
                 {action.label}
               </Button>
             ))}

@@ -24,7 +24,13 @@ export default function ClickableCardList() {
         description="Export every invoice of this year as a ZIP."
         chevron={false}
       />
-      <ClickableCard href="/archive" icon={<FolderKanban aria-hidden />} title="Archived projects" description="Available on the Business plan." disabled />
+      <ClickableCard
+        href="/archive"
+        icon={<FolderKanban aria-hidden />}
+        title="Archived projects"
+        description="Available on the Business plan."
+        disabled
+      />
     </div>
   );
 }

@@ -32,7 +32,11 @@ export function Checkbox({ label, description, className, ...props }: CheckboxPr
         className={s.indicator()}
         render={(indicatorProps, state) => (
           <span {...indicatorProps}>
-            {state.indeterminate ? <Minus size={13} strokeWidth={2.6} aria-hidden /> : <Check size={13} strokeWidth={2.6} aria-hidden />}
+            {state.indeterminate ? (
+              <Minus size={13} strokeWidth={2.6} aria-hidden />
+            ) : (
+              <Check size={13} strokeWidth={2.6} aria-hidden />
+            )}
           </span>
         )}
       />

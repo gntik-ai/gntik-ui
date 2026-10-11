@@ -1,5 +1,16 @@
 import { PageHeader } from '@gntik-ai/blocks';
-import { Alert, Checkbox, ClickableCard, Grid, GridItem, Page, Progress, Section, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
+import {
+  Alert,
+  Checkbox,
+  ClickableCard,
+  Grid,
+  GridItem,
+  Page,
+  Progress,
+  Section,
+  Stack,
+  type BreadcrumbItem,
+} from '@gntik-ai/ui';
 import { useState } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import { docLinks, setupInitialDone, setupTasks, startBreadcrumbs, type DocLink, type SetupTask } from './data';
@@ -42,13 +53,40 @@ export default function GettingStartedPage({
 
   return (
     <ConsoleShell currentHref="/overview" breadcrumbs={breadcrumbs} {...shell}>
-      <Page header={<PageHeader breadcrumbs={null} title={title} description={description} status="" meta={[]} actions={[]} tabs={null} />}>
+      <Page
+        header={
+          <PageHeader
+            breadcrumbs={null}
+            title={title}
+            description={description}
+            status=""
+            meta={[]}
+            actions={[]}
+            tabs={null}
+          />
+        }
+      >
         <Grid cols={{ base: 1, lg: 3 }} gap={6} align="start">
           <GridItem span={{ base: 1, lg: 2 }}>
-            <Section variant="card" padding="lg" divided title="Setup checklist" description={`${count} of ${tasks.length} steps complete`}>
-              <Progress value={percent} label="Setup progress" showValue tone={count === tasks.length ? 'success' : undefined} />
+            <Section
+              variant="card"
+              padding="lg"
+              divided
+              title="Setup checklist"
+              description={`${count} of ${tasks.length} steps complete`}
+            >
+              <Progress
+                value={percent}
+                label="Setup progress"
+                showValue
+                tone={count === tasks.length ? 'success' : undefined}
+              />
               {count === tasks.length && (
-                <Alert tone="success" title="You’re all set" description="Your workspace is ready. Explore the docs to go further." />
+                <Alert
+                  tone="success"
+                  title="You’re all set"
+                  description="Your workspace is ready. Explore the docs to go further."
+                />
               )}
               <Stack gap={4}>
                 {tasks.map((task) => (

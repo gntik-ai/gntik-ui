@@ -147,7 +147,11 @@ export function docInfoOf(root: string, item: KitItem): DocInfo {
 
 /* ── export names + usage ─────────────────────────────────────────────────── */
 
-const pascal = (id: string) => id.split(/[-_\s]+/).map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
+const pascal = (id: string) =>
+  id
+    .split(/[-_\s]+/)
+    .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+    .join('');
 const itemDir = (item: KitItem) => (item.docs ? path.posix.dirname(item.docs) : undefined);
 
 /** True when `export interface <name>Props` declares a member without `?` (it cannot render bare). */
@@ -216,13 +220,21 @@ export interface Usage {
 export function usageOf(root: string, item: KitItem): Usage {
   const dir = itemDir(item);
   const name = exportNameOf(root, item);
-  const requiredBlock = item.kind === 'block' && dir
-    && hasRequiredProps(readRepoFile(root, `${dir}/${path.posix.basename(dir)}.tsx`) ?? '', name);
+  const requiredBlock =
+    item.kind === 'block' &&
+    dir &&
+    hasRequiredProps(readRepoFile(root, `${dir}/${path.posix.basename(dir)}.tsx`) ?? '', name);
   if ((item.kind === 'component' || item.kind === 'layout' || requiredBlock) && dir) {
     const exDir = path.join(root, dir, 'examples');
-    const first = fs.existsSync(exDir) ? fs.readdirSync(exDir).filter((f) => f.endsWith('.tsx')).sort()[0] : undefined;
+    const first = fs.existsSync(exDir)
+      ? fs
+          .readdirSync(exDir)
+          .filter((f) => f.endsWith('.tsx'))
+          .sort()[0]
+      : undefined;
     const code = first ? readRepoFile(root, `${dir}/examples/${first}`) : undefined;
-    if (first && code) return { source: 'example', file: `${dir}/examples/${first}`, code: toPackageImports(code, item.package) };
+    if (first && code)
+      return { source: 'example', file: `${dir}/examples/${first}`, code: toPackageImports(code, item.package) };
   }
   if (item.kind === 'template') {
     const shell = usesConsoleShell(root, item);
@@ -288,10 +300,16 @@ export function filterKit(items: KitItem[], f: KitFilter): KitItem[] {
 
 /** Closest ids for a "did you mean" hint. */
 export function nearIds(kit: KitRegistry, id: string, kind?: KitKind, n = 5): string[] {
-  const parts = id.toLowerCase().split(/[-_\s]+/).filter((p) => p.length > 1);
+  const parts = id
+    .toLowerCase()
+    .split(/[-_\s]+/)
+    .filter((p) => p.length > 1);
   const pool = kit.items.filter((i) => !kind || i.kind === kind);
   return pool
-    .map((i) => ({ id: i.id, score: parts.reduce((s, p) => s + (i.id.includes(p) || i.name.toLowerCase().includes(p) ? 1 : 0), 0) }))
+    .map((i) => ({
+      id: i.id,
+      score: parts.reduce((s, p) => s + (i.id.includes(p) || i.name.toLowerCase().includes(p) ? 1 : 0), 0),
+    }))
     .filter((r) => r.score > 0)
     .sort((a, b) => b.score - a.score || a.id.localeCompare(b.id))
     .slice(0, n)

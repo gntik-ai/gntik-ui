@@ -194,7 +194,13 @@ export default function SplitButtonBasic() {
         actions={[
           { label: 'Schedule deploy', icon: CalendarClock, onSelect: () => setLast('Deploy scheduled') },
           { label: 'Export manifest', icon: FileDown, onSelect: () => setLast('Manifest exported') },
-          { label: 'Discard draft', icon: Trash2, destructive: true, separator: true, onSelect: () => setLast('Draft discarded') },
+          {
+            label: 'Discard draft',
+            icon: Trash2,
+            destructive: true,
+            separator: true,
+            onSelect: () => setLast('Draft discarded'),
+          },
         ]}
       >
         Deploy
@@ -247,7 +253,12 @@ export default function SuggestionChipsZeroState() {
           { label: 'Explain an error', description: 'Paste a log line and get a likely cause', icon: FileSearch },
         ]}
       />
-      <SuggestionChips layout="chips" label="Follow-up suggestions" onSelect={setPicked} suggestions={['Show only failed ones', 'Compare with last week', 'Export as CSV']} />
+      <SuggestionChips
+        layout="chips"
+        label="Follow-up suggestions"
+        onSelect={setPicked}
+        suggestions={['Show only failed ones', 'Compare with last week', 'Export as CSV']}
+      />
       <p className="text-[12.5px] text-muted-foreground" aria-live="polite">
         {picked ? `Selected: ${picked}` : 'Pick a suggestion.'}
       </p>
@@ -289,7 +300,12 @@ export default function ToggleGroupJoined() {
   const [view, setView] = useState(['week']);
   return (
     <div className="flex flex-col items-start gap-5">
-      <ToggleGroup aria-label="Calendar view" variant="joined" value={view} onValueChange={(v) => v.length && setView(v)}>
+      <ToggleGroup
+        aria-label="Calendar view"
+        variant="joined"
+        value={view}
+        onValueChange={(v) => v.length && setView(v)}
+      >
         <Toggle value="day">Day</Toggle>
         <Toggle value="week">Week</Toggle>
         <Toggle value="month">Month</Toggle>
@@ -335,7 +351,16 @@ Usage:
 
 ```tsx
 import { Pause, RefreshCw, Trash2 } from '@gntik-ai/icons';
-import { Toolbar, ToolbarButton, ToolbarCenter, ToolbarEnd, ToolbarGroup, ToolbarLink, ToolbarSeparator, ToolbarStart } from '@gntik-ai/ui';
+import {
+  Toolbar,
+  ToolbarButton,
+  ToolbarCenter,
+  ToolbarEnd,
+  ToolbarGroup,
+  ToolbarLink,
+  ToolbarSeparator,
+  ToolbarStart,
+} from '@gntik-ai/ui';
 
 export default function ToolbarBulkActions() {
   return (
@@ -497,10 +522,14 @@ export default function AvatarGroupMembers() {
   return (
     <div className="flex flex-wrap items-center gap-8">
       <AvatarGroup label="Project members" max={4}>
-        {MEMBERS.map((m) => <Avatar key={m.name} name={m.name} tone={m.tone} />)}
+        {MEMBERS.map((m) => (
+          <Avatar key={m.name} name={m.name} tone={m.tone} />
+        ))}
       </AvatarGroup>
       <AvatarGroup label="Reviewers" size="sm" max={5}>
-        {MEMBERS.map((m) => <Avatar key={m.name} name={m.name} tone={m.tone} />)}
+        {MEMBERS.map((m) => (
+          <Avatar key={m.name} name={m.name} tone={m.tone} />
+        ))}
       </AvatarGroup>
     </div>
   );
@@ -598,7 +627,11 @@ export default function BlockquoteProse() {
   return (
     <div className="max-w-xl space-y-3 text-[13.5px] leading-6 text-muted-foreground">
       <p>The postmortem closed with one recommendation for every team that runs scheduled deployments:</p>
-      <Blockquote source="Incident review" sourceDetail="Platform reliability, Q3" cite="https://example.com/reviews/q3">
+      <Blockquote
+        source="Incident review"
+        sourceDetail="Platform reliability, Q3"
+        cite="https://example.com/reviews/q3"
+      >
         Treat the rollback path as a feature. If it has never run in production, it does not exist.
       </Blockquote>
     </div>
@@ -642,7 +675,10 @@ export default function CarouselAutoplay() {
   return (
     <Carousel label="Tips" title="Tips" autoplay={6000} className="max-w-md">
       {tips.map((tip) => (
-        <div key={tip} className="flex h-28 items-center rounded-xl border border-border bg-secondary/40 px-5 text-[13.5px] leading-6 text-foreground">
+        <div
+          key={tip}
+          className="flex h-28 items-center rounded-xl border border-border bg-secondary/40 px-5 text-[13.5px] leading-6 text-foreground"
+        >
           {tip}
         </div>
       ))}
@@ -844,7 +880,10 @@ export default function CollapsibleAdvanced() {
       <CollapsibleTrigger>Advanced settings</CollapsibleTrigger>
       <CollapsiblePanel>
         <label className="flex items-center gap-2 text-foreground">
-          <input type="checkbox" className="size-4 accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring" />
+          <input
+            type="checkbox"
+            className="size-4 accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+          />
           Keep build cache between deployments
         </label>
       </CollapsiblePanel>
@@ -883,10 +922,25 @@ import { DiffViewer } from '@gntik-ai/ui';
 
 const previous = { name: 'ingest-worker', replicas: 2, env: { LOG_LEVEL: 'info', REGION: 'eu-west' }, ports: [8080] };
 // Same keys in a different order: only real changes show up.
-const next = { ports: [8080, 9090], env: { REGION: 'eu-west', LOG_LEVEL: 'debug' }, replicas: 3, name: 'ingest-worker' };
+const next = {
+  ports: [8080, 9090],
+  env: { REGION: 'eu-west', LOG_LEVEL: 'debug' },
+  replicas: 3,
+  name: 'ingest-worker',
+};
 
 export default function DiffViewerJson() {
-  return <DiffViewer format="json" oldValue={previous} newValue={next} defaultMode="split" oldLabel="Revision 41" newLabel="Revision 42" aria-label="Revision changes" />;
+  return (
+    <DiffViewer
+      format="json"
+      oldValue={previous}
+      newValue={next}
+      defaultMode="split"
+      oldLabel="Revision 41"
+      newLabel="Revision 42"
+      aria-label="Revision changes"
+    />
+  );
 }
 ```
 
@@ -920,11 +974,27 @@ import { JsonViewer } from '@gntik-ai/ui';
 
 const EVENT = {
   type: 'invoice.paid',
-  data: { invoice: { id: 'inv_2041', total: 1290, lines: [{ sku: 'seat', qty: 12 }], customer: { id: 'cus_77', address: { country: 'ES' } } } },
+  data: {
+    invoice: {
+      id: 'inv_2041',
+      total: 1290,
+      lines: [{ sku: 'seat', qty: 12 }],
+      customer: { id: 'cus_77', address: { country: 'ES' } },
+    },
+  },
 };
 
 export default function JsonViewerDepth() {
-  return <JsonViewer label="Webhook event" data={EVENT} defaultExpandDepth={3} maxDepth={3} toolbar={false} className="w-full max-w-lg" />;
+  return (
+    <JsonViewer
+      label="Webhook event"
+      data={EVENT}
+      defaultExpandDepth={3}
+      maxDepth={3}
+      toolbar={false}
+      className="w-full max-w-lg"
+    />
+  );
 }
 ```
 
@@ -973,7 +1043,11 @@ const initial: KanbanColumn<Ticket>[] = [
       { id: 't2', title: 'Typo on the billing page', priority: 'Normal', owner: 'Luis' },
     ],
   },
-  { id: 'fixing', title: 'Fixing', cards: [{ id: 't3', title: 'Slow search on large teams', priority: 'High', owner: 'Mei' }] },
+  {
+    id: 'fixing',
+    title: 'Fixing',
+    cards: [{ id: 't3', title: 'Slow search on large teams', priority: 'High', owner: 'Mei' }],
+  },
   { id: 'shipped', title: 'Shipped', cards: [] },
 ];
 
@@ -1021,14 +1095,26 @@ export default function KbdShortcuts() {
   return (
     <div className="grid gap-5">
       <div className="flex flex-wrap items-center gap-4 text-[13px] text-muted-foreground">
-        <span className="inline-flex items-center gap-2">Search <KbdCombo keys={['⌘', 'K']} /></span>
-        <span className="inline-flex items-center gap-2">New project <KbdCombo keys={['Ctrl', 'Shift', 'N']} separator="+" /></span>
-        <span className="inline-flex items-center gap-2">Close <Kbd>esc</Kbd></span>
+        <span className="inline-flex items-center gap-2">
+          Search <KbdCombo keys={['⌘', 'K']} />
+        </span>
+        <span className="inline-flex items-center gap-2">
+          New project <KbdCombo keys={['Ctrl', 'Shift', 'N']} separator="+" />
+        </span>
+        <span className="inline-flex items-center gap-2">
+          Close <Kbd>esc</Kbd>
+        </span>
       </div>
       <div className="flex flex-wrap items-center gap-4 text-[11px] text-muted-foreground">
-        <span className="inline-flex items-center gap-1.5"><Kbd size="sm">↑↓</Kbd>navigate</span>
-        <span className="inline-flex items-center gap-1.5"><Kbd size="sm">↵</Kbd>select</span>
-        <span className="inline-flex items-center gap-1.5"><Kbd size="lg">Tab</Kbd>next field</span>
+        <span className="inline-flex items-center gap-1.5">
+          <Kbd size="sm">↑↓</Kbd>navigate
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <Kbd size="sm">↵</Kbd>select
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <Kbd size="lg">Tab</Kbd>next field
+        </span>
       </div>
     </div>
   );
@@ -1124,7 +1210,13 @@ const LABELS = ['backend', 'billing', 'eu-west-1', 'production', 'pci', 'on-call
 export default function OverflowListLabels() {
   return (
     <div className="grid w-full max-w-md gap-6">
-      <OverflowList label="Project labels" items={LABELS} max={3} renderItem={(l) => <Badge variant="outline">{l}</Badge>} renderOverflowItem={(l) => l} />
+      <OverflowList
+        label="Project labels"
+        items={LABELS}
+        max={3}
+        renderItem={(l) => <Badge variant="outline">{l}</Badge>}
+        renderOverflowItem={(l) => l}
+      />
       <div className="w-full resize-x overflow-hidden rounded-lg border border-dashed border-border p-3">
         <OverflowList
           label="Responsive labels"
@@ -1157,9 +1249,33 @@ Usage:
 import { Sparkline } from '@gntik-ai/ui';
 
 const STATS = [
-  { label: 'Requests', value: '48.2k', delta: '+12%', good: true, data: [31, 34, 33, 38, 36, 41, 40, 44, 43, 46, 45, 48], area: true, tone: 'primary' },
-  { label: 'p95 latency', value: '182 ms', delta: '−8%', good: true, data: [214, 220, 205, 210, 198, 201, 195, 190, 192, 186, 184, 182], area: false, tone: 'primary' },
-  { label: 'Error rate', value: '1.4%', delta: '+0.6 pt', good: false, data: [0.6, 0.7, 0.6, 0.8, 0.9, 0.8, 1.1, 1.0, 1.2, 1.3, 1.2, 1.4], area: false, tone: 'destructive' },
+  {
+    label: 'Requests',
+    value: '48.2k',
+    delta: '+12%',
+    good: true,
+    data: [31, 34, 33, 38, 36, 41, 40, 44, 43, 46, 45, 48],
+    area: true,
+    tone: 'primary',
+  },
+  {
+    label: 'p95 latency',
+    value: '182 ms',
+    delta: '−8%',
+    good: true,
+    data: [214, 220, 205, 210, 198, 201, 195, 190, 192, 186, 184, 182],
+    area: false,
+    tone: 'primary',
+  },
+  {
+    label: 'Error rate',
+    value: '1.4%',
+    delta: '+0.6 pt',
+    good: false,
+    data: [0.6, 0.7, 0.6, 0.8, 0.9, 0.8, 1.1, 1.0, 1.2, 1.3, 1.2, 1.4],
+    area: false,
+    tone: 'destructive',
+  },
 ] as const;
 
 export default function SparklineStats() {
@@ -1170,9 +1286,26 @@ export default function SparklineStats() {
           <p className="text-[12px] text-muted-foreground">{stat.label}</p>
           <p className="mt-1 flex items-baseline gap-2">
             <span className="text-[22px] font-semibold tracking-tight text-foreground">{stat.value}</span>
-            <span className={stat.good ? 'text-[12px] font-medium text-success-text' : 'text-[12px] font-medium text-destructive-text'}>{stat.delta}</span>
+            <span
+              className={
+                stat.good
+                  ? 'text-[12px] font-medium text-success-text'
+                  : 'text-[12px] font-medium text-destructive-text'
+              }
+            >
+              {stat.delta}
+            </span>
           </p>
-          <Sparkline className="mt-3" width={180} height={40} data={stat.data} area={stat.area} tone={stat.tone} label={stat.label} markers={['last']} />
+          <Sparkline
+            className="mt-3"
+            width={180}
+            height={40}
+            data={stat.data}
+            area={stat.area}
+            tone={stat.tone}
+            label={stat.label}
+            markers={['last']}
+          />
         </div>
       ))}
     </div>
@@ -1305,7 +1438,9 @@ export default function TableSelectable() {
         <TableCaption srOnly>Deployments, compact view with selection</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-10"><span className="sr-only">Select</span></TableHead>
+            <TableHead className="w-10">
+              <span className="sr-only">Select</span>
+            </TableHead>
             <TableHead>Deployment</TableHead>
             <TableHead>Region</TableHead>
             <TableHead align="right">Requests</TableHead>
@@ -1325,7 +1460,9 @@ export default function TableSelectable() {
               </TableCell>
               <TableCell className="font-semibold">{d.name}</TableCell>
               <TableCell className="font-mono text-[12px] text-muted-foreground">{d.region}</TableCell>
-              <TableCell align="right" className="font-mono text-[12.5px]">{count(d.requests)}</TableCell>
+              <TableCell align="right" className="font-mono text-[12.5px]">
+                {count(d.requests)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -1424,7 +1561,13 @@ export default function TerminalBuildLog() {
           Reset
         </Button>
       </div>
-      <Terminal ref={term} title="build · main" showLineNumbers emptyText="Press “Run build” to stream output." className="h-72" />
+      <Terminal
+        ref={term}
+        title="build · main"
+        showLineNumbers
+        emptyText="Press “Run build” to stream output."
+        className="h-72"
+      />
     </div>
   );
 }
@@ -1453,17 +1596,25 @@ export default function TextRoles() {
       <Text variant="display">2.4k</Text>
       <Heading level={2}>Project overview</Heading>
       <Text>
-        Deployments roll out region by region. Run <Text variant="code">deploy --canary</Text> to ship to a
-        single region first.
+        Deployments roll out region by region. Run <Text variant="code">deploy --canary</Text> to ship to a single
+        region first.
       </Text>
       <Text variant="label">Billing email</Text>
       <Text variant="supporting">Invoices and receipts are sent to this address.</Text>
       <Text variant="caption">Updated 3 minutes ago</Text>
       <div className="flex flex-wrap gap-4">
-        <Text variant="label" tone="primary">Active</Text>
-        <Text variant="label" tone="success">Paid</Text>
-        <Text variant="label" tone="warning">Due soon</Text>
-        <Text variant="label" tone="destructive">Overdue</Text>
+        <Text variant="label" tone="primary">
+          Active
+        </Text>
+        <Text variant="label" tone="success">
+          Paid
+        </Text>
+        <Text variant="label" tone="warning">
+          Due soon
+        </Text>
+        <Text variant="label" tone="destructive">
+          Overdue
+        </Text>
       </div>
     </div>
   );
@@ -1526,13 +1677,18 @@ export default function ThumbnailUploads() {
   useEffect(() => {
     if (!uploading) return;
     const id = window.setInterval(() => {
-      setItems((list) => list.map((i) => (i.progress !== undefined && i.progress < 100 ? { ...i, progress: Math.min(100, i.progress + 13) } : i)));
+      setItems((list) =>
+        list.map((i) =>
+          i.progress !== undefined && i.progress < 100 ? { ...i, progress: Math.min(100, i.progress + 13) } : i,
+        ),
+      );
     }, 400);
     return () => window.clearInterval(id);
   }, [uploading]);
 
   const remove = (id: string) => setItems((list) => list.filter((i) => i.id !== id));
-  const retry = (id: string) => setItems((list) => list.map((i) => (i.id === id ? { ...i, error: undefined, size: 18_200_000, progress: 0 } : i)));
+  const retry = (id: string) =>
+    setItems((list) => list.map((i) => (i.id === id ? { ...i, error: undefined, size: 18_200_000, progress: 0 } : i)));
 
   return (
     <ThumbnailList aria-label="Attachments">
@@ -1589,7 +1745,10 @@ export default function TimerStates() {
   return (
     <ul className="grid w-full max-w-sm gap-2">
       {JOBS.map((job) => (
-        <li key={job.name} className="flex items-center justify-between gap-4 rounded-lg border border-border bg-card px-3.5 py-2.5">
+        <li
+          key={job.name}
+          className="flex items-center justify-between gap-4 rounded-lg border border-border bg-card px-3.5 py-2.5"
+        >
           <span className="text-[13px] font-medium text-foreground">{job.name}</span>
           <Timer start={job.start} status={job.status} end={'end' in job ? job.end : undefined} format="compact" />
         </li>
@@ -1633,7 +1792,11 @@ export default function TimestampActivity() {
   const events = [
     { id: 1, text: 'Maria Ruiz deployed api-gateway to production', at: now - 3 * MINUTE },
     { id: 2, text: 'Invoice INV-2041 was paid', at: now - 2 * 60 * MINUTE },
-    { id: 3, text: 'Daniel Okafor joined the Platform project', at: new Date(now - 3 * 24 * 60 * MINUTE).toISOString() },
+    {
+      id: 3,
+      text: 'Daniel Okafor joined the Platform project',
+      at: new Date(now - 3 * 24 * 60 * MINUTE).toISOString(),
+    },
   ];
   return (
     <TooltipProvider>
@@ -1796,7 +1959,11 @@ const logs = Array.from({ length: 5000 }, (_, i) => ({
   message: `deploy-gate: checked deployment #${4100 + i} for open incidents`,
 }));
 
-const levelClass = { info: 'text-muted-foreground', warn: 'text-warning-text', error: 'text-destructive-text' } as const;
+const levelClass = {
+  info: 'text-muted-foreground',
+  warn: 'text-warning-text',
+  error: 'text-destructive-text',
+} as const;
 
 export default function VirtualListLogs() {
   const list = useRef<VirtualListHandle>(null);
@@ -1804,9 +1971,14 @@ export default function VirtualListLogs() {
     <div className="flex max-w-2xl flex-col gap-2">
       <div className="flex items-center gap-2">
         <h3 id="logs-title" className="flex-1 text-[13px] font-semibold text-foreground">
-          Deployment log <span className="font-normal text-muted-foreground">· {logs.length.toLocaleString('en-US')} lines</span>
+          Deployment log{' '}
+          <span className="font-normal text-muted-foreground">· {logs.length.toLocaleString('en-US')} lines</span>
         </h3>
-        <Button size="sm" variant="secondary" onClick={() => list.current?.scrollToIndex(logs.length - 1, { focus: true })}>
+        <Button
+          size="sm"
+          variant="secondary"
+          onClick={() => list.current?.scrollToIndex(logs.length - 1, { focus: true })}
+        >
           Jump to latest
         </Button>
       </div>
@@ -1876,7 +2048,9 @@ export default function AlertDismissible() {
       actions={
         <>
           <Button size="sm">Add payment method</Button>
-          <Button size="sm" variant="ghost">View plans</Button>
+          <Button size="sm" variant="ghost">
+            View plans
+          </Button>
         </>
       }
       className="max-w-2xl"
@@ -1910,7 +2084,11 @@ export default function EmptyStateProjects() {
       title="No projects yet"
       description="Create your first project to start deploying, inviting members and tracking usage."
       primaryAction={<Button icon={Plus}>New project</Button>}
-      secondaryAction={<Button variant="secondary" icon={Upload}>Import</Button>}
+      secondaryAction={
+        <Button variant="secondary" icon={Upload}>
+          Import
+        </Button>
+      }
     />
   );
 }
@@ -1984,8 +2162,22 @@ export default function MeterHealth() {
   return (
     <div className="grid max-w-md gap-5">
       <Meter label="Uptime score" value={92} higherIsBetter valueLabel="92 / 100" aria-valuetext="92 of 100" />
-      <Meter label="Test coverage" value={46} higherIsBetter valueLabel="46%" note="Target is 70%" thresholds={{ warning: 70, destructive: 30 }} />
-      <Meter label="Error budget left" value={12} higherIsBetter valueLabel="12% left" aria-valuetext="12 percent left" note="Freeze risky deploys" />
+      <Meter
+        label="Test coverage"
+        value={46}
+        higherIsBetter
+        valueLabel="46%"
+        note="Target is 70%"
+        thresholds={{ warning: 70, destructive: 30 }}
+      />
+      <Meter
+        label="Error budget left"
+        value={12}
+        higherIsBetter
+        valueLabel="12% left"
+        aria-valuetext="12 percent left"
+        note="Freeze risky deploys"
+      />
     </div>
   );
 }
@@ -2021,8 +2213,12 @@ export default function ProgressBars() {
       <Progress label="Waiting for a runner" value={null} size="sm" />
       <Progress aria-label="Upload" value={58} tone="warning" />
       <div className="flex gap-2">
-        <Button size="sm" variant="secondary" onClick={() => setValue((v) => Math.max(0, v - 10))}>Back</Button>
-        <Button size="sm" onClick={() => setValue((v) => Math.min(100, v + 10))}>Advance</Button>
+        <Button size="sm" variant="secondary" onClick={() => setValue((v) => Math.max(0, v - 10))}>
+          Back
+        </Button>
+        <Button size="sm" onClick={() => setValue((v) => Math.min(100, v + 10))}>
+          Advance
+        </Button>
       </div>
     </div>
   );
@@ -2047,7 +2243,11 @@ import { Skeleton } from '@gntik-ai/ui';
 
 export default function SkeletonList() {
   return (
-    <div role="status" aria-label="Loading members" className="max-w-xl overflow-hidden rounded-lg border border-border bg-card">
+    <div
+      role="status"
+      aria-label="Loading members"
+      className="max-w-xl overflow-hidden rounded-lg border border-border bg-card"
+    >
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <Skeleton className="h-3.5 w-28" />
         <Skeleton className="h-7 w-20" />
@@ -2222,7 +2422,8 @@ export default function CalendarRange() {
         />
       </div>
       <p className="text-[12.5px] text-muted-foreground">
-        Invoice period: <span className="font-medium text-foreground">{formatDateRange(range, 'en-US') || 'pick a start day'}</span>
+        Invoice period:{' '}
+        <span className="font-medium text-foreground">{formatDateRange(range, 'en-US') || 'pick a start day'}</span>
       </p>
     </div>
   );
@@ -2295,7 +2496,8 @@ export default function ChatComposerFull() {
   const attach = (picked: File[]) => {
     const added = picked.map((p) => {
       const id = `file-${++seq}`;
-      const previewUrl = p.type.startsWith('image/') && typeof URL.createObjectURL === 'function' ? URL.createObjectURL(p) : undefined;
+      const previewUrl =
+        p.type.startsWith('image/') && typeof URL.createObjectURL === 'function' ? URL.createObjectURL(p) : undefined;
       if (previewUrl) urls.current.push(previewUrl);
       return { id, name: p.name, size: p.size, type: p.type, previewUrl, progress: 0 };
     });
@@ -2440,7 +2642,13 @@ export default function ClickableCardList() {
         description="Export every invoice of this year as a ZIP."
         chevron={false}
       />
-      <ClickableCard href="/archive" icon={<FolderKanban aria-hidden />} title="Archived projects" description="Available on the Business plan." disabled />
+      <ClickableCard
+        href="/archive"
+        icon={<FolderKanban aria-hidden />}
+        title="Archived projects"
+        description="Available on the Business plan."
+        disabled
+      />
     </div>
   );
 }
@@ -2566,7 +2774,16 @@ export default function DatePickerBasic() {
     <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
       <Field>
         <FieldLabel>Release date</FieldLabel>
-        <DatePicker value={release} onValueChange={setRelease} locale="en-US" weekStartsOn={1} today={today} min={today} isDateDisabled={isWeekend} name="release" />
+        <DatePicker
+          value={release}
+          onValueChange={setRelease}
+          locale="en-US"
+          weekStartsOn={1}
+          today={today}
+          min={today}
+          isDateDisabled={isWeekend}
+          name="release"
+        />
         <FieldDescription>Releases ship on weekdays only.</FieldDescription>
       </Field>
       <Field invalid>
@@ -2624,7 +2841,14 @@ export default function DateTimeRangePickerBasic() {
     <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
       <Field>
         <FieldLabel>Log window</FieldLabel>
-        <DateTimeRangePicker value={range} onValueChange={setRange} locale="en-US" hourCycle={24} now={now} name="window" />
+        <DateTimeRangePicker
+          value={range}
+          onValueChange={setRange}
+          locale="en-US"
+          hourCycle={24}
+          now={now}
+          name="window"
+        />
         <FieldDescription>Relative ranges end now; custom ranges are absolute.</FieldDescription>
       </Field>
       <Field>
@@ -2807,7 +3031,12 @@ export default function KeyValueEditorEnv() {
   const [valid, setValid] = useState(true);
   return (
     <div className="flex max-w-2xl flex-col gap-3">
-      <KeyValueEditor aria-label="Environment variables" value={rows} onChange={setRows} onValidityChange={(ok) => setValid(ok)} />
+      <KeyValueEditor
+        aria-label="Environment variables"
+        value={rows}
+        onChange={setRows}
+        onValidityChange={(ok) => setValid(ok)}
+      />
       <p className="text-[12.5px] text-muted-foreground">
         {rows.filter((r) => r.key).length} variables · {valid ? 'ready to save' : 'fix the highlighted rows to save'}
       </p>
@@ -3026,7 +3255,13 @@ export default function NumberInputBasic() {
       </Field>
       <Field>
         <FieldLabel>Monthly budget</FieldLabel>
-        <NumberInput defaultValue={1250} min={0} step={50} locale="en-US" format={{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }} />
+        <NumberInput
+          defaultValue={1250}
+          min={0}
+          step={50}
+          locale="en-US"
+          format={{ style: 'currency', currency: 'USD', maximumFractionDigits: 0 }}
+        />
       </Field>
       <NumberInput scrubLabel="Opacity (%)" defaultValue={80} min={0} max={100} unit="%" size="sm" hideSteppers />
     </div>
@@ -3076,7 +3311,9 @@ export default function OtpInputBasic() {
           onComplete={(code) => setStatus(code === '123456' ? 'ok' : 'error')}
         />
         {status === 'ok' ? (
-          <p role="status" className="text-[12px] text-success-text">Code verified. Your device is trusted.</p>
+          <p role="status" className="text-[12px] text-success-text">
+            Code verified. Your device is trusted.
+          </p>
         ) : (
           <FieldDescription>Enter the 6-digit code we sent to your authenticator app.</FieldDescription>
         )}
@@ -3164,7 +3401,12 @@ Usage:
 
 ```tsx
 import { useState } from 'react';
-import { PermissionMatrix, type PermissionMatrixValue, type PermissionRole, type PermissionSection } from '@gntik-ai/ui';
+import {
+  PermissionMatrix,
+  type PermissionMatrixValue,
+  type PermissionRole,
+  type PermissionSection,
+} from '@gntik-ai/ui';
 
 const roles: PermissionRole[] = [
   { id: 'owner', label: 'Owner', readOnly: true, readOnlyReason: 'Owners always have every permission.' },
@@ -3193,12 +3435,25 @@ const sections: PermissionSection[] = [
   },
 ];
 
-const all = (state: 'allowed' | 'denied') => Object.fromEntries(sections.flatMap((s) => s.permissions.map((p) => [p.id, state])));
+const all = (state: 'allowed' | 'denied') =>
+  Object.fromEntries(sections.flatMap((s) => s.permissions.map((p) => [p.id, state])));
 
 const initial: PermissionMatrixValue = {
   owner: all('allowed'),
-  admin: { 'projects.read': 'allowed', 'projects.write': 'allowed', 'projects.delete': 'allowed', 'billing.read': 'allowed', 'billing.manage': 'denied' },
-  member: { 'projects.read': 'allowed', 'projects.write': 'allowed', 'projects.delete': 'denied', 'billing.read': 'denied', 'billing.manage': 'denied' },
+  admin: {
+    'projects.read': 'allowed',
+    'projects.write': 'allowed',
+    'projects.delete': 'allowed',
+    'billing.read': 'allowed',
+    'billing.manage': 'denied',
+  },
+  member: {
+    'projects.read': 'allowed',
+    'projects.write': 'allowed',
+    'projects.delete': 'denied',
+    'billing.read': 'denied',
+    'billing.manage': 'denied',
+  },
   viewer: { 'projects.write': 'denied' },
 };
 
@@ -3211,8 +3466,12 @@ export default function PermissionMatrixBasic() {
       sections={sections}
       value={value}
       onChange={setValue}
-      resolveInherited={(roleId, permissionId) => (roleId === 'viewer' ? (value.member?.[permissionId] === 'denied' ? 'denied' : 'allowed') : undefined)}
-      getDisabledReason={(roleId, permissionId) => (roleId === 'member' && permissionId === 'billing.manage' ? 'Only admins can manage payment methods.' : undefined)}
+      resolveInherited={(roleId, permissionId) =>
+        roleId === 'viewer' ? (value.member?.[permissionId] === 'denied' ? 'denied' : 'allowed') : undefined
+      }
+      getDisabledReason={(roleId, permissionId) =>
+        roleId === 'member' && permissionId === 'billing.manage' ? 'Only admins can manage payment methods.' : undefined
+      }
     />
   );
 }
@@ -3254,13 +3513,18 @@ import { formatPowerSearch, matchPowerSearch, parsePowerSearch, type PowerSearch
 import { deploymentFields, deployments, type DeploymentField } from '@gntik-ai/ui';
 
 export default function PowerSearchDeployments() {
-  const [query, setQuery] = useState<PowerSearchQuery<DeploymentField>>(() => parsePowerSearch('status=failed', deploymentFields));
+  const [query, setQuery] = useState<PowerSearchQuery<DeploymentField>>(() =>
+    parsePowerSearch('status=failed', deploymentFields),
+  );
   const rows = deployments.filter((d) => matchPowerSearch(query, d));
   return (
     <div className="flex max-w-2xl flex-col gap-3">
       <PowerSearch aria-label="Filter deployments" fields={deploymentFields} value={query} onValueChange={setQuery} />
       <p className="font-mono text-[11.5px] text-muted-foreground">{formatPowerSearch(query) || 'No filters'}</p>
-      <ul aria-label="Matching deployments" className="divide-y divide-border rounded-lg border border-border bg-card text-[12.5px]">
+      <ul
+        aria-label="Matching deployments"
+        className="divide-y divide-border rounded-lg border border-border bg-card text-[12.5px]"
+      >
         {rows.map((d) => (
           <li key={d.id} className="flex items-center gap-3 px-3 py-2">
             <span className="font-mono text-muted-foreground">{d.id}</span>
@@ -3307,7 +3571,17 @@ import { deploymentFields, deploymentQuery } from '@gntik-ai/ui';
 
 export default function QueryBuilderBasic() {
   const [query, setQuery] = useState(deploymentQuery);
-  return <QueryBuilder aria-label="Deployment filter" fields={deploymentFields} value={query} onChange={setQuery} locale="en-US" showPreview className="max-w-4xl" />;
+  return (
+    <QueryBuilder
+      aria-label="Deployment filter"
+      fields={deploymentFields}
+      value={query}
+      onChange={setQuery}
+      locale="en-US"
+      showPreview
+      className="max-w-4xl"
+    />
+  );
 }
 ```
 
@@ -3342,7 +3616,13 @@ import { Radio, RadioGroup } from '@gntik-ai/ui';
 const PLANS = [
   { value: 'shared', label: 'Shared', description: 'Shared CPU · cold starts', price: 'Free' },
   { value: 'dedicated', label: 'Dedicated', description: '2 vCPU · always warm', price: '$80/mo' },
-  { value: 'isolated', label: 'Isolated', description: 'Private network · no neighbours', price: '$240/mo', disabled: true },
+  {
+    value: 'isolated',
+    label: 'Isolated',
+    description: 'Private network · no neighbours',
+    price: '$240/mo',
+    disabled: true,
+  },
 ];
 
 export default function RadioGroupCards() {
@@ -3350,7 +3630,14 @@ export default function RadioGroupCards() {
     <Fieldset className="max-w-lg" render={<RadioGroup variant="card" defaultValue="dedicated" name="plan" />}>
       <FieldsetLegend>Deployment plan</FieldsetLegend>
       {PLANS.map((p) => (
-        <Radio key={p.value} value={p.value} label={p.label} description={p.description} trailing={p.price} disabled={p.disabled} />
+        <Radio
+          key={p.value}
+          value={p.value}
+          label={p.label}
+          description={p.description}
+          trailing={p.price}
+          disabled={p.disabled}
+        />
       ))}
     </Fieldset>
   );
@@ -3392,7 +3679,15 @@ export default function ScheduleInputBasic() {
   const [cron, setCron] = useState('0 9 * * 1-5');
   return (
     <div className="flex max-w-xl flex-col gap-6">
-      <ScheduleInput aria-label="Report schedule" value={cron} onValueChange={setCron} timeZone="Europe/Madrid" locale="en-US" now={now} name="schedule" />
+      <ScheduleInput
+        aria-label="Report schedule"
+        value={cron}
+        onValueChange={setCron}
+        timeZone="Europe/Madrid"
+        locale="en-US"
+        now={now}
+        name="schedule"
+      />
     </div>
   );
 }
@@ -3436,7 +3731,13 @@ export default function SecretFieldBasic() {
     <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
       <Field>
         <FieldLabel>API key</FieldLabel>
-        <SecretField value="sk_live_51Hc8xQ2eZvKYlo2C9a7d" visiblePrefix={8} visibleSuffix={4} createdAt={now - 12 * DAY} lastUsedAt={now - 2 * 3600 * 1000} />
+        <SecretField
+          value="sk_live_51Hc8xQ2eZvKYlo2C9a7d"
+          visiblePrefix={8}
+          visibleSuffix={4}
+          createdAt={now - 12 * DAY}
+          lastUsedAt={now - 2 * 3600 * 1000}
+        />
       </Field>
       <Field>
         <FieldLabel>Webhook signing secret</FieldLabel>
@@ -3770,7 +4071,9 @@ export default function TokenInputEmails() {
           listLabel="Invitees"
         />
         <FieldDescription>
-          {invalid > 0 ? `Fix ${invalid} invalid address${invalid > 1 ? 'es' : ''} before sending.` : 'Press Enter or comma to add. Paste a list to add several.'}
+          {invalid > 0
+            ? `Fix ${invalid} invalid address${invalid > 1 ? 'es' : ''} before sending.`
+            : 'Press Enter or comma to add. Paste a list to add several.'}
         </FieldDescription>
       </Field>
     </div>
@@ -3823,7 +4126,12 @@ export default function TransferListColumns() {
   const [visible, setVisible] = useState(['name', 'status', 'updated']);
   return (
     <div className="flex max-w-3xl flex-col gap-3">
-      <TransferList items={columns} value={visible} onValueChange={setVisible} titles={{ available: 'Hidden columns', selected: 'Visible columns' }} />
+      <TransferList
+        items={columns}
+        value={visible}
+        onValueChange={setVisible}
+        titles={{ available: 'Hidden columns', selected: 'Visible columns' }}
+      />
       <p className="text-[12px] text-muted-foreground">Table order: {visible.join(' · ')}</p>
     </div>
   );
@@ -4017,7 +4325,10 @@ export default function GridAutoFill() {
   return (
     <Grid as="ul" minChildWidth="12rem" gap={3} aria-label="Projects">
       {PROJECTS.map((p) => (
-        <li key={p} className="rounded-lg border border-border bg-card px-4 py-3 text-[13px] font-medium text-foreground">
+        <li
+          key={p}
+          className="rounded-lg border border-border bg-card px-4 py-3 text-[13px] font-medium text-foreground"
+        >
           {p}
         </li>
       ))}
@@ -4061,7 +4372,9 @@ export default function ResizableSplit() {
         </ResizablePanel>
         <ResizeHandle aria-label="Resize draft and preview" />
         <ResizablePanel minSize={20}>
-          <div className="flex h-full items-center justify-center bg-secondary/40 text-[13px] text-muted-foreground">Preview</div>
+          <div className="flex h-full items-center justify-center bg-secondary/40 text-[13px] text-muted-foreground">
+            Preview
+          </div>
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
@@ -4152,7 +4465,11 @@ export default function SectionSettings() {
       divided
       title="Notifications"
       description="Choose what reaches your inbox."
-      actions={<Button variant="secondary" size="sm">Reset</Button>}
+      actions={
+        <Button variant="secondary" size="sm">
+          Reset
+        </Button>
+      }
       className="max-w-[560px]"
     >
       {ROWS.map(([label, hint]) => (
@@ -4269,9 +4586,15 @@ export default function SkipLinkPage() {
     <div className="relative max-w-[560px] overflow-hidden rounded-xl border border-border bg-background">
       <SkipLink targetId="skip-link-demo-main" className="focus:absolute" />
       <nav aria-label="Primary" className="flex gap-1 border-b border-border px-4 py-2">
-        <Button variant="ghost" size="sm">Projects</Button>
-        <Button variant="ghost" size="sm">Members</Button>
-        <Button variant="ghost" size="sm">Billing</Button>
+        <Button variant="ghost" size="sm">
+          Projects
+        </Button>
+        <Button variant="ghost" size="sm">
+          Members
+        </Button>
+        <Button variant="ghost" size="sm">
+          Billing
+        </Button>
       </nav>
       <div id="skip-link-demo-main" className="px-4 py-5 text-[13px] text-muted-foreground focus:outline-none">
         Press Tab inside this preview: the skip link appears first and jumps straight here.
@@ -4361,7 +4684,9 @@ export default function LinkRouter() {
       <nav aria-label="Project" className="flex gap-4 text-[13px]">
         <Link href="/projects">Projects</Link>
         <Link href="/projects/new">New project</Link>
-        <Link href="https://status.example.com" external>Status page</Link>
+        <Link href="https://status.example.com" external>
+          Status page
+        </Link>
       </nav>
     </LinkProvider>
   );
@@ -4533,7 +4858,11 @@ export default function NavListSettings() {
     {
       label: 'Organization',
       items: [
-        { label: 'Workspace', icon: Building2, items: [item('general', 'General'), item('members', 'Members'), item('roles', 'Roles')] },
+        {
+          label: 'Workspace',
+          icon: Building2,
+          items: [item('general', 'General'), item('members', 'Members'), item('roles', 'Roles')],
+        },
         { label: 'Billing', icon: CreditCard, items: [item('plan', 'Plan'), item('invoices', 'Invoices')] },
         item('integrations', 'Integrations', { icon: Plug, disabled: true }),
       ],
@@ -4598,7 +4927,13 @@ Usage:
 ```tsx
 import { Stepper } from '@gntik-ai/ui';
 
-const STEPS = [{ label: 'Account' }, { label: 'Workspace' }, { label: 'Invite members' }, { label: 'Billing' }, { label: 'Done' }];
+const STEPS = [
+  { label: 'Account' },
+  { label: 'Workspace' },
+  { label: 'Invite members' },
+  { label: 'Billing' },
+  { label: 'Done' },
+];
 
 export default function StepperCompact() {
   return (
@@ -4651,7 +4986,9 @@ export default function TabsPills() {
       <Tabs variant="pills" value={range} onValueChange={(v) => setRange(String(v))}>
         <TabsList aria-label="Time range">
           {RANGES.map(([value, label]) => (
-            <TabsTab key={value} value={value}>{label}</TabsTab>
+            <TabsTab key={value} value={value}>
+              {label}
+            </TabsTab>
           ))}
         </TabsList>
         {RANGES.map(([value, label]) => (
@@ -5036,7 +5373,18 @@ Tokens: popover, popover-foreground, background, border, accent, accent-foregrou
 Usage:
 
 ```tsx
-import { BarChart3, CreditCard, Download, FolderKanban, FolderPlus, Home, Rocket, Settings, UserPlus, Users } from '@gntik-ai/icons';
+import {
+  BarChart3,
+  CreditCard,
+  Download,
+  FolderKanban,
+  FolderPlus,
+  Home,
+  Rocket,
+  Settings,
+  UserPlus,
+  Users,
+} from '@gntik-ai/icons';
 import { useState } from 'react';
 import { CommandPalette, CommandPaletteTrigger } from '@gntik-ai/ui';
 import type { CommandGroup, CommandItem } from '@gntik-ai/ui';
@@ -5048,9 +5396,29 @@ export default function CommandPaletteBasic() {
     {
       label: 'Actions',
       items: [
-        { id: 'new-project', label: 'Create project', icon: FolderPlus, shortcut: ['⌘', 'N'], keywords: ['new'], onSelect: go('Create project') },
-        { id: 'deploy', label: 'Deploy to production', icon: Rocket, shortcut: ['⌘', 'D'], description: 'Promote the latest build of the current project', onSelect: go('Deploy to production') },
-        { id: 'invite', label: 'Invite member', icon: UserPlus, keywords: ['team', 'people'], onSelect: go('Invite member') },
+        {
+          id: 'new-project',
+          label: 'Create project',
+          icon: FolderPlus,
+          shortcut: ['⌘', 'N'],
+          keywords: ['new'],
+          onSelect: go('Create project'),
+        },
+        {
+          id: 'deploy',
+          label: 'Deploy to production',
+          icon: Rocket,
+          shortcut: ['⌘', 'D'],
+          description: 'Promote the latest build of the current project',
+          onSelect: go('Deploy to production'),
+        },
+        {
+          id: 'invite',
+          label: 'Invite member',
+          icon: UserPlus,
+          keywords: ['team', 'people'],
+          onSelect: go('Invite member'),
+        },
         { id: 'export', label: 'Export usage (CSV)', icon: Download, onSelect: go('Export usage (CSV)') },
       ],
     },
@@ -5067,8 +5435,22 @@ export default function CommandPaletteBasic() {
     },
   ];
   const recent: CommandItem[] = [
-    { id: 'web-frontend', label: 'web-frontend', icon: FolderKanban, mono: true, description: 'Project', onSelect: go('web-frontend') },
-    { id: 'billing-api', label: 'billing-api', icon: FolderKanban, mono: true, description: 'Project', onSelect: go('billing-api') },
+    {
+      id: 'web-frontend',
+      label: 'web-frontend',
+      icon: FolderKanban,
+      mono: true,
+      description: 'Project',
+      onSelect: go('web-frontend'),
+    },
+    {
+      id: 'billing-api',
+      label: 'billing-api',
+      icon: FolderKanban,
+      mono: true,
+      description: 'Project',
+      onSelect: go('billing-api'),
+    },
   ];
   return (
     <div className="flex flex-col items-center gap-3 text-center">
@@ -5289,7 +5671,9 @@ export default function DrawerBottomSheet() {
         </DrawerHeader>
         <DrawerBody>
           <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2">
-            <span className="min-w-0 flex-1 truncate font-mono text-[12.5px] text-foreground">https://example.com/p/support-triage</span>
+            <span className="min-w-0 flex-1 truncate font-mono text-[12.5px] text-foreground">
+              https://example.com/p/support-triage
+            </span>
             <Button size="sm" variant="soft" icon={Copy}>
               Copy link
             </Button>
@@ -5402,7 +5786,11 @@ export default function InfoTipLabel() {
           Logs older than this are deleted every night. Longer retention counts towards your storage quota.
         </InfoTip>
       </div>
-      <select id="retention" defaultValue="30" className="h-9 w-48 rounded-md border border-border bg-background px-2.5 text-[13px] text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring">
+      <select
+        id="retention"
+        defaultValue="30"
+        className="h-9 w-48 rounded-md border border-border bg-background px-2.5 text-[13px] text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+      >
         <option value="7">7 days</option>
         <option value="30">30 days</option>
         <option value="90">90 days</option>
@@ -5657,7 +6045,9 @@ export default function TooltipRich() {
         <TooltipTrigger render={<Button variant="secondary" />}>Seats: 18 of 20</TooltipTrigger>
         <TooltipContent variant="rich" side="right">
           <div className="text-[12.5px] font-semibold text-foreground">Seats almost full</div>
-          <p className="mt-1 text-muted-foreground">Two seats left on this plan. Billing admins can add more from Settings.</p>
+          <p className="mt-1 text-muted-foreground">
+            Two seats left on this plan. Billing admins can add more from Settings.
+          </p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -5702,9 +6092,24 @@ export default function TourOnboarding() {
   const newProject = useRef<HTMLButtonElement>(null);
 
   const steps: TourStep[] = [
-    { target: '#tour-search', title: 'Find anything', content: 'Search projects, members and invoices from one place. ⌘K opens it anywhere.' },
-    { target: newProject, title: 'Create a project', content: 'Projects group deployments, members and billing. Start with one per product.', side: 'bottom', align: 'end' },
-    { target: '#tour-alerts', title: 'Stay informed', content: 'Failed deployments and invoice reminders land here.', side: 'left' },
+    {
+      target: '#tour-search',
+      title: 'Find anything',
+      content: 'Search projects, members and invoices from one place. ⌘K opens it anywhere.',
+    },
+    {
+      target: newProject,
+      title: 'Create a project',
+      content: 'Projects group deployments, members and billing. Start with one per product.',
+      side: 'bottom',
+      align: 'end',
+    },
+    {
+      target: '#tour-alerts',
+      title: 'Stay informed',
+      content: 'Failed deployments and invoice reminders land here.',
+      side: 'left',
+    },
   ];
 
   return (
@@ -5954,10 +6359,16 @@ export default function CanvasLayoutFlowEditor() {
         header={
           <>
             <span className="truncate text-[13px] font-semibold">billing-sync</span>
-            <Badge tone="neutral" size="sm">Draft</Badge>
+            <Badge tone="neutral" size="sm">
+              Draft
+            </Badge>
             <div className="ms-auto flex items-center gap-1.5">
-              <Button size="sm" variant="secondary" icon={Save}>Save</Button>
-              <Button size="sm" icon={Play}>Run</Button>
+              <Button size="sm" variant="secondary" icon={Save}>
+                Save
+              </Button>
+              <Button size="sm" icon={Play}>
+                Run
+              </Button>
             </div>
           </>
         }
@@ -5988,7 +6399,9 @@ export default function CanvasLayoutFlowEditor() {
         inspector={
           node ? (
             <div className="grid gap-4">
-              <p className="font-mono text-[11px] text-muted-foreground">{node.kind} · {node.id}</p>
+              <p className="font-mono text-[11px] text-muted-foreground">
+                {node.kind} · {node.id}
+              </p>
               <Field>
                 <FieldLabel>Name</FieldLabel>
                 <Input key={node.id} size="sm" defaultValue={node.label} />
@@ -6029,7 +6442,9 @@ export default function CanvasLayoutFlowEditor() {
               style={{ left: n.x, top: n.y }}
               className="absolute w-40 rounded-lg border border-border bg-card px-3 py-2 text-start shadow-sm transition-colors aria-pressed:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transition-none"
             >
-              <span className="block font-mono text-[10px] tracking-wide text-muted-foreground uppercase">{n.kind}</span>
+              <span className="block font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
+                {n.kind}
+              </span>
               <span className="block text-[12.5px] font-medium">{n.label}</span>
             </button>
           ))}
@@ -6105,7 +6520,9 @@ export default function DocsLayoutGuide() {
         header={
           <>
             <Logo size={22} wordmark />
-            <Badge tone="neutral" size="sm">Docs</Badge>
+            <Badge tone="neutral" size="sm">
+              Docs
+            </Badge>
           </>
         }
         nav={<NavList label="Documentation" groups={NAV} />}
@@ -6124,14 +6541,31 @@ export default function DocsLayoutGuide() {
         <p className="font-mono text-[11px] tracking-[0.18em] text-primary-text uppercase">Get started</p>
         <h1 className="mt-2 text-[28px] font-bold tracking-[-0.02em]">Deploy a project</h1>
         <p className={`mt-3 ${PARAGRAPH}`}>Go from a repository to a running deployment in a few minutes.</p>
-        <h2 id="deploy-prerequisites" className={H2}>Prerequisites</h2>
-        <p className={PARAGRAPH}>A workspace where you are an owner or a member with deploy rights, and a repository with a build script.</p>
-        <h2 id="deploy-configure" className={H2}>Configure the project</h2>
-        <p className={PARAGRAPH}>Pick the region closest to your users. Builds run in the same region, so caches stay warm between deployments.</p>
-        <h3 id="deploy-variables" className="mt-6 mb-2 scroll-mt-6 text-[15px] font-semibold text-foreground">Environment variables</h3>
-        <p className={PARAGRAPH}>Secrets are encrypted at rest and only exposed to the build and runtime of the environment they belong to.</p>
-        <h2 id="deploy-ship" className={H2}>Ship it</h2>
-        <p className={PARAGRAPH}>Push to the default branch. Each push creates a deployment with its own preview URL; promote it when the checks pass.</p>
+        <h2 id="deploy-prerequisites" className={H2}>
+          Prerequisites
+        </h2>
+        <p className={PARAGRAPH}>
+          A workspace where you are an owner or a member with deploy rights, and a repository with a build script.
+        </p>
+        <h2 id="deploy-configure" className={H2}>
+          Configure the project
+        </h2>
+        <p className={PARAGRAPH}>
+          Pick the region closest to your users. Builds run in the same region, so caches stay warm between deployments.
+        </p>
+        <h3 id="deploy-variables" className="mt-6 mb-2 scroll-mt-6 text-[15px] font-semibold text-foreground">
+          Environment variables
+        </h3>
+        <p className={PARAGRAPH}>
+          Secrets are encrypted at rest and only exposed to the build and runtime of the environment they belong to.
+        </p>
+        <h2 id="deploy-ship" className={H2}>
+          Ship it
+        </h2>
+        <p className={PARAGRAPH}>
+          Push to the default branch. Each push creates a deployment with its own preview URL; promote it when the
+          checks pass.
+        </p>
       </DocsLayout>
     </div>
   );
@@ -6246,7 +6680,11 @@ export default function PageSettings() {
         width="narrow"
         title="Project settings"
         description="General configuration of web-frontend."
-        actions={<Button variant="secondary" icon={Plus}>Add domain</Button>}
+        actions={
+          <Button variant="secondary" icon={Plus}>
+            Add domain
+          </Button>
+        }
         actionBar={
           <>
             <span aria-live="polite" className="me-auto text-[12px] text-muted-foreground">
@@ -6260,7 +6698,11 @@ export default function PageSettings() {
         }
       >
         {['General', 'Domains', 'Environment variables', 'Danger zone'].map((section) => (
-          <section key={section} aria-labelledby={`page-example-${section}`} className="rounded-[10px] border border-border bg-card p-4">
+          <section
+            key={section}
+            aria-labelledby={`page-example-${section}`}
+            className="rounded-[10px] border border-border bg-card p-4"
+          >
             <h2 id={`page-example-${section}`} className="text-[14px] font-semibold">
               {section}
             </h2>
@@ -6295,7 +6737,16 @@ Usage:
 
 ```tsx
 import { Badge } from '@gntik-ai/ui';
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@gntik-ai/ui';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@gntik-ai/ui';
 import { Logo } from '@gntik-ai/ui';
 import { PageBreak, PrintLayout } from '@gntik-ai/ui';
 
@@ -6328,7 +6779,9 @@ export default function PrintLayoutInvoice() {
             <div className="text-end">
               <h1 className="text-[22px] font-semibold tracking-tight">Invoice</h1>
               <p className="font-mono text-[11.5px] text-muted-foreground">INV-2026-0042</p>
-              <Badge tone="success" size="sm" className="mt-2">Paid</Badge>
+              <Badge tone="success" size="sm" className="mt-2">
+                Paid
+              </Badge>
             </div>
           </>
         }
@@ -6361,21 +6814,31 @@ export default function PrintLayoutInvoice() {
             {LINES.map((l) => (
               <TableRow key={l.item}>
                 <TableCell>{l.item}</TableCell>
-                <TableCell align="right" className="font-mono text-[12px]">{l.qty}</TableCell>
-                <TableCell align="right" className="font-mono text-[12px]">{money(l.amount)}</TableCell>
+                <TableCell align="right" className="font-mono text-[12px]">
+                  {l.qty}
+                </TableCell>
+                <TableCell align="right" className="font-mono text-[12px]">
+                  {money(l.amount)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={2} className="font-semibold">Total</TableCell>
-              <TableCell align="right" className="font-mono text-[12.5px] font-semibold">{money(total)}</TableCell>
+              <TableCell colSpan={2} className="font-semibold">
+                Total
+              </TableCell>
+              <TableCell align="right" className="font-mono text-[12.5px] font-semibold">
+                {money(total)}
+              </TableCell>
             </TableRow>
           </TableFooter>
         </Table>
         <PageBreak />
         <h2 className="mb-2 text-[15px] font-semibold">Usage detail</h2>
-        <p className="text-muted-foreground">Compute is billed per vCPU-hour across all deployments in the workspace, rounded to the nearest hour.</p>
+        <p className="text-muted-foreground">
+          Compute is billed per vCPU-hour across all deployments in the workspace, rounded to the nearest hour.
+        </p>
       </PrintLayout>
     </div>
   );
@@ -6571,11 +7034,22 @@ export default function SidebarLayoutApp() {
                   collapsed ? (
                     <Logo size={26} />
                   ) : (
-                    <WorkspaceSwitcher className="w-full" workspaces={WORKSPACES} currentId={workspace} onSelect={(w) => setWorkspace(w.id)} />
+                    <WorkspaceSwitcher
+                      className="w-full"
+                      workspaces={WORKSPACES}
+                      currentId={workspace}
+                      onSelect={(w) => setWorkspace(w.id)}
+                    />
                   )
                 }
                 sidebar={({ collapsed, closeDrawer }) => (
-                  <NavList groups={NAV_GROUPS} currentHref={path} collapsed={collapsed} label="Workspace" onNavigate={closeDrawer} />
+                  <NavList
+                    groups={NAV_GROUPS}
+                    currentHref={path}
+                    collapsed={collapsed}
+                    label="Workspace"
+                    onNavigate={closeDrawer}
+                  />
                 )}
                 sidebarFooter={({ collapsed }) =>
                   collapsed ? null : (
@@ -6594,12 +7068,14 @@ export default function SidebarLayoutApp() {
                   <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
                   <p className="mt-1 text-[13px] text-muted-foreground">12 projects · 3 environments · eu-west</p>
                   <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                    {['web-frontend', 'billing-api', 'auth-service', 'search-indexer', 'media-worker', 'reports'].map((name) => (
-                      <div key={name} className="rounded-[10px] border border-border bg-card p-4">
-                        <div className="font-mono text-[13px] font-semibold">{name}</div>
-                        <div className="mt-1 text-[12px] text-muted-foreground">Deployed 2h ago</div>
-                      </div>
-                    ))}
+                    {['web-frontend', 'billing-api', 'auth-service', 'search-indexer', 'media-worker', 'reports'].map(
+                      (name) => (
+                        <div key={name} className="rounded-[10px] border border-border bg-card p-4">
+                          <div className="font-mono text-[13px] font-semibold">{name}</div>
+                          <div className="mt-1 text-[12px] text-muted-foreground">Deployed 2h ago</div>
+                        </div>
+                      ),
+                    )}
                   </div>
                 </div>
               </SidebarLayout>
@@ -6775,7 +7251,8 @@ export default function StackedLayoutMegaMenu() {
         >
           <h1 className="text-xl font-bold tracking-tight">Projects</h1>
           <p className="mt-1 text-[13px] text-muted-foreground">
-            The `nav` slot puts a MegaMenu in the top bar on large screens; the same items feed the drawer on small ones.
+            The `nav` slot puts a MegaMenu in the top bar on large screens; the same items feed the drawer on small
+            ones.
           </p>
         </StackedLayout>
       </div>
@@ -6812,16 +7289,30 @@ import { StatusLayout } from '@gntik-ai/ui';
 
 export default function StatusLayoutHeading() {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  useEffect(() => { titleRef.current?.focus(); }, []);
+  useEffect(() => {
+    titleRef.current?.focus();
+  }, []);
 
   return (
     <StatusLayout
       fullScreen
       code="404 · Not found"
-      heading={<h1 ref={titleRef} tabIndex={-1} className="text-2xl font-semibold text-foreground">Page not found</h1>}
+      heading={
+        <h1 ref={titleRef} tabIndex={-1} className="text-2xl font-semibold text-foreground">
+          Page not found
+        </h1>
+      }
       description="Check the address or head back to the dashboard."
-      primaryAction={<Button render={<a href="#dashboard" />} nativeButton={false}>Go to dashboard</Button>}
-      secondaryAction={<Button variant="secondary" onClick={() => window.history.back()}>Go back</Button>}
+      primaryAction={
+        <Button render={<a href="#dashboard" />} nativeButton={false}>
+          Go to dashboard
+        </Button>
+      }
+      secondaryAction={
+        <Button variant="secondary" onClick={() => window.history.back()}>
+          Go back
+        </Button>
+      }
     />
   );
 }
@@ -6885,7 +7376,9 @@ export default function WizardLayoutNewProject() {
       >
         {step === 0 && (
           <section aria-labelledby="wizard-details" className="grid gap-5">
-            <h1 id="wizard-details" className="text-[20px] font-semibold tracking-tight">Project details</h1>
+            <h1 id="wizard-details" className="text-[20px] font-semibold tracking-tight">
+              Project details
+            </h1>
             <Field>
               <FieldLabel required>Project name</FieldLabel>
               <Input value={name} onValueChange={setName} />
@@ -6895,7 +7388,9 @@ export default function WizardLayoutNewProject() {
         )}
         {step === 1 && (
           <section aria-labelledby="wizard-region" className="grid gap-5">
-            <h1 id="wizard-region" className="text-[20px] font-semibold tracking-tight">Where should it run?</h1>
+            <h1 id="wizard-region" className="text-[20px] font-semibold tracking-tight">
+              Where should it run?
+            </h1>
             <RadioGroup aria-labelledby="wizard-region" defaultValue="eu-west">
               <Radio value="eu-west" label="EU West · Frankfurt" />
               <Radio value="us-east" label="US East · Virginia" />
@@ -6904,7 +7399,9 @@ export default function WizardLayoutNewProject() {
         )}
         {step === 2 && (
           <section aria-labelledby="wizard-members" className="grid gap-5">
-            <h1 id="wizard-members" className="text-[20px] font-semibold tracking-tight">Invite members</h1>
+            <h1 id="wizard-members" className="text-[20px] font-semibold tracking-tight">
+              Invite members
+            </h1>
             <Field>
               <FieldLabel>Emails</FieldLabel>
               <Input placeholder="name@example.com, …" />
@@ -6914,7 +7411,9 @@ export default function WizardLayoutNewProject() {
         )}
         {step === 3 && (
           <section aria-labelledby="wizard-review" className="grid gap-3">
-            <h1 id="wizard-review" className="text-[20px] font-semibold tracking-tight">Review</h1>
+            <h1 id="wizard-review" className="text-[20px] font-semibold tracking-tight">
+              Review
+            </h1>
             <p className="text-[13.5px] text-muted-foreground">
               <span className="font-medium text-foreground">{name}</span> will be created in EU West with 1 member.
             </p>
@@ -7712,12 +8211,27 @@ export default function Fresh() {
   const [disclosure, setDisclosure] = useState<CredentialDisclosure | null>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
-  return <>
-    <h1 ref={heading} tabIndex={-1}>Credentials</h1>
-    <Button ref={trigger} onClick={() => { void Promise.resolve({ ...freshDisclosure }).then(setDisclosure); }}>Disclose fresh secret</Button>
-    <CredentialDisclosureDialog disclosure={disclosure} onClose={() => setDisclosure(null)}
-      resolveReturnFocus={() => trigger.current} fallbackFocus={() => heading.current} />
-  </>;
+  return (
+    <>
+      <h1 ref={heading} tabIndex={-1}>
+        Credentials
+      </h1>
+      <Button
+        ref={trigger}
+        onClick={() => {
+          void Promise.resolve({ ...freshDisclosure }).then(setDisclosure);
+        }}
+      >
+        Disclose fresh secret
+      </Button>
+      <CredentialDisclosureDialog
+        disclosure={disclosure}
+        onClose={() => setDisclosure(null)}
+        resolveReturnFocus={() => trigger.current}
+        fallbackFocus={() => heading.current}
+      />
+    </>
+  );
 }
 ```
 
@@ -8351,7 +8865,13 @@ export default function ResourceFormExample({ state = 'default' }: { state?: Exa
         }}
       >
         <Stack gap={8}>
-          <FormSection title="General" description="Settings for this resource." actions={null} headingLevel="h2" divided={false}>
+          <FormSection
+            title="General"
+            description="Settings for this resource."
+            actions={null}
+            headingLevel="h2"
+            divided={false}
+          >
             <Field>
               <FieldLabel>Resource name</FieldLabel>
               <Input value={name} onValueChange={setName} />
@@ -8418,7 +8938,12 @@ export default function ResourceFormExample({ state = 'default' }: { state?: Exa
               />
             }
           />
-          <StickyActionBar dirty={name !== savedName} saving={false} onSave={() => setSavedName(name)} onCancel={() => setName(savedName)} />
+          <StickyActionBar
+            dirty={name !== savedName}
+            saving={false}
+            onSave={() => setSavedName(name)}
+            onCancel={() => setName(savedName)}
+          />
         </Stack>
       </form>
     </Page>

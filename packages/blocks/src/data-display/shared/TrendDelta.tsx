@@ -21,7 +21,11 @@ const SENTIMENT_CLASS: Record<DeltaSentiment, string> = {
 };
 
 const DIRECTION_TEXT: Record<DeltaDirection, string> = { up: 'Increased by', down: 'Decreased by', flat: 'Unchanged:' };
-const SENTIMENT_TEXT: Record<DeltaSentiment, string> = { positive: 'favourable', negative: 'unfavourable', neutral: '' };
+const SENTIMENT_TEXT: Record<DeltaSentiment, string> = {
+  positive: 'favourable',
+  negative: 'unfavourable',
+  neutral: '',
+};
 
 export interface TrendDeltaProps extends KpiDelta {
   className?: string;
@@ -32,11 +36,17 @@ export interface TrendDeltaProps extends KpiDelta {
  * Screen readers get the direction and sentiment in words.
  */
 export function TrendDelta({ value, direction, sentiment, className }: TrendDeltaProps) {
-  const sr = [DIRECTION_TEXT[direction], value, SENTIMENT_TEXT[sentiment] && `(${SENTIMENT_TEXT[sentiment]})`].filter(Boolean).join(' ');
+  const sr = [DIRECTION_TEXT[direction], value, SENTIMENT_TEXT[sentiment] && `(${SENTIMENT_TEXT[sentiment]})`]
+    .filter(Boolean)
+    .join(' ');
   return (
     <span
       data-sentiment={sentiment}
-      className={cn('inline-flex items-center gap-1 font-mono text-[12px] font-medium tabular-nums', SENTIMENT_CLASS[sentiment], className)}
+      className={cn(
+        'inline-flex items-center gap-1 font-mono text-[12px] font-medium tabular-nums',
+        SENTIMENT_CLASS[sentiment],
+        className,
+      )}
     >
       <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden className="shrink-0">
         {direction === 'up' && <path d="M5 1.5 9 8.5H1z" fill="currentColor" />}

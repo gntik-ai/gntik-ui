@@ -12,7 +12,10 @@ export default function TimerStates() {
   return (
     <ul className="grid w-full max-w-sm gap-2">
       {JOBS.map((job) => (
-        <li key={job.name} className="flex items-center justify-between gap-4 rounded-lg border border-border bg-card px-3.5 py-2.5">
+        <li
+          key={job.name}
+          className="flex items-center justify-between gap-4 rounded-lg border border-border bg-card px-3.5 py-2.5"
+        >
           <span className="text-[13px] font-medium text-foreground">{job.name}</span>
           <Timer start={job.start} status={job.status} end={'end' in job ? job.end : undefined} format="compact" />
         </li>

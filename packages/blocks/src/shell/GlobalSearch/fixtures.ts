@@ -1,4 +1,15 @@
-import { BarChart3, CreditCard, FileText, FolderKanban, FolderPlus, Home, Rocket, Settings, UserPlus, Users } from '@gntik-ai/icons';
+import {
+  BarChart3,
+  CreditCard,
+  FileText,
+  FolderKanban,
+  FolderPlus,
+  Home,
+  Rocket,
+  Settings,
+  UserPlus,
+  Users,
+} from '@gntik-ai/icons';
 import type { CommandItem } from '@gntik-ai/ui';
 
 export const globalSearchPages: CommandItem[] = [
@@ -12,15 +23,38 @@ export const globalSearchPages: CommandItem[] = [
 ];
 
 export const globalSearchRecords: CommandItem[] = [
-  { id: 'record-web-frontend', label: 'web-frontend', icon: FolderKanban, mono: true, description: 'Project · eu-west' },
+  {
+    id: 'record-web-frontend',
+    label: 'web-frontend',
+    icon: FolderKanban,
+    mono: true,
+    description: 'Project · eu-west',
+  },
   { id: 'record-billing-api', label: 'billing-api', icon: FolderKanban, mono: true, description: 'Project · us-east' },
-  { id: 'record-inv-2041', label: 'INV-2041', icon: FileText, mono: true, description: 'Invoice · Orbit Freight · overdue' },
-  { id: 'record-dana', label: 'Dana Whitfield', icon: Users, description: 'Member · Owner', keywords: ['dana@example.com'] },
+  {
+    id: 'record-inv-2041',
+    label: 'INV-2041',
+    icon: FileText,
+    mono: true,
+    description: 'Invoice · Orbit Freight · overdue',
+  },
+  {
+    id: 'record-dana',
+    label: 'Dana Whitfield',
+    icon: Users,
+    description: 'Member · Owner',
+    keywords: ['dana@example.com'],
+  },
 ];
 
 export const globalSearchActions: CommandItem[] = [
   { id: 'action-new-project', label: 'Create project', icon: FolderPlus, shortcut: ['⌘', 'N'], keywords: ['new'] },
-  { id: 'action-deploy', label: 'Deploy to production', icon: Rocket, description: 'Promote the latest build of the current project' },
+  {
+    id: 'action-deploy',
+    label: 'Deploy to production',
+    icon: Rocket,
+    description: 'Promote the latest build of the current project',
+  },
   { id: 'action-invite', label: 'Invite member', icon: UserPlus, keywords: ['team', 'people'] },
 ];
 

@@ -11,5 +11,15 @@ export const doc: ComponentDoc = {
     ['Tab', 'Moves to the remove button (and retry, in the error state) of each tile'],
     ['Enter / Space', 'Activates remove or retry'],
   ],
-  tokens: ['card', 'border', 'secondary', 'muted-foreground', 'foreground', 'primary', 'destructive', 'destructive-text', 'focus-ring'],
+  tokens: [
+    'card',
+    'border',
+    'secondary',
+    'muted-foreground',
+    'foreground',
+    'primary',
+    'destructive',
+    'destructive-text',
+    'focus-ring',
+  ],
 };

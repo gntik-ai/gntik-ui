@@ -16,7 +16,13 @@ describe('InlineCallout', () => {
     const onRetry = vi.fn();
     const onDismiss = vi.fn();
     render(
-      <InlineCallout tone="destructive" title="Sync failed" actions={[{ label: 'Retry', onClick: onRetry }]} dismissible onDismiss={onDismiss} />,
+      <InlineCallout
+        tone="destructive"
+        title="Sync failed"
+        actions={[{ label: 'Retry', onClick: onRetry }]}
+        dismissible
+        onDismiss={onDismiss}
+      />,
     );
     await user.click(screen.getByRole('button', { name: 'Retry' }));
     expect(onRetry).toHaveBeenCalledTimes(1);

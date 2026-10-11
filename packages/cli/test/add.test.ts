@@ -56,16 +56,30 @@ describe('add', () => {
     expect(row).toContain("import { StatCard } from '../stat-card/StatCard';");
     const page = await read(dir, 'src/components/templates/dashboard/DashboardPage.tsx');
     expect(page).toContain("import { StatsRow } from '../../blocks/stats-row';");
-    expect(r.json.items.find((i: { id: string }) => i.id === 'button')).toMatchObject({ mode: 'package', requested: false });
+    expect(r.json.items.find((i: { id: string }) => i.id === 'button')).toMatchObject({
+      mode: 'package',
+      requested: false,
+    });
     expect(r.json.install.packages).toEqual(['@gntik-ai/ui', 'lucide-react']);
-    expect(r.json.rewrites).toContainEqual({ file: 'src/components/blocks/stats-row/StatsRow.tsx', from: '../../../../ui/src/components/Button', to: '@gntik-ai/ui' });
+    expect(r.json.rewrites).toContainEqual({
+      file: 'src/components/blocks/stats-row/StatsRow.tsx',
+      from: '../../../../ui/src/components/Button',
+      to: '@gntik-ai/ui',
+    });
   });
 
   it('honours the aliases in gntik-ui.json', async () => {
     const dir = await viteProject();
     await writeFile(
       path.join(dir, 'gntik-ui.json'),
-      JSON.stringify({ version: 1, framework: 'vite', packageManager: 'pnpm', css: 'src/index.css', brand: 'gntik', aliases: { components: 'src/ui', blocks: 'src/sections', templates: 'src/pages' } }),
+      JSON.stringify({
+        version: 1,
+        framework: 'vite',
+        packageManager: 'pnpm',
+        css: 'src/index.css',
+        brand: 'gntik',
+        aliases: { components: 'src/ui', blocks: 'src/sections', templates: 'src/pages' },
+      }),
     );
     const r = await cli(['add', 'dashboard', '--json', '--no-install', '--cwd', dir, '--registry', FIXTURES]);
     expect(r.json.configured).toBe(true);
@@ -79,11 +93,26 @@ describe('add', () => {
     await writeFile(path.join(dir, 'src/components/blocks/stat-card/StatCard.tsx'), '// mine\n');
     const r = await cli(['add', 'stats-row', '--json', '--no-install', '--cwd', dir, '--registry', FIXTURES]);
     expect(r.code).toBe(4);
-    expect(r.json).toMatchObject({ ok: false, conflicts: ['src/components/blocks/stat-card/StatCard.tsx'], written: [], error: { code: 'CONFLICT' } });
+    expect(r.json).toMatchObject({
+      ok: false,
+      conflicts: ['src/components/blocks/stat-card/StatCard.tsx'],
+      written: [],
+      error: { code: 'CONFLICT' },
+    });
     expect(existsSync(path.join(dir, 'src/components/blocks/stats-row'))).toBe(false);
     expect(await read(dir, 'src/components/blocks/stat-card/StatCard.tsx')).toBe('// mine\n');
 
-    const o = await cli(['add', 'stats-row', '--json', '--no-install', '--overwrite', '--cwd', dir, '--registry', FIXTURES]);
+    const o = await cli([
+      'add',
+      'stats-row',
+      '--json',
+      '--no-install',
+      '--overwrite',
+      '--cwd',
+      dir,
+      '--registry',
+      FIXTURES,
+    ]);
     expect(o.code).toBe(0);
     expect(o.json.files[0].status).toBe('overwrite');
     expect(await read(dir, 'src/components/blocks/stat-card/StatCard.tsx')).toContain('export function StatCard');
@@ -94,7 +123,9 @@ describe('add', () => {
 
   it('unknown ids exit 3; failed installs exit 1', async () => {
     const dir = await viteProject();
-    expect((await cli(['add', 'nope', '--json', '--cwd', dir, '--registry', FIXTURES])).json.error.code).toBe('NOT_FOUND');
+    expect((await cli(['add', 'nope', '--json', '--cwd', dir, '--registry', FIXTURES])).json.error.code).toBe(
+      'NOT_FOUND',
+    );
     const failed = await cli(['add', 'button', '--json', '--cwd', dir, '--registry', FIXTURES], { execCode: 1 });
     expect(failed.code).toBe(1);
     expect(failed.json.error.code).toBe('INSTALL');

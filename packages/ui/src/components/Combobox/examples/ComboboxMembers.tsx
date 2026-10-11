@@ -23,7 +23,10 @@ export default function ComboboxMembers() {
         <ComboboxContent emptyText="No members found.">
           {(m: Member) => (
             <ComboboxItem key={m.value} value={m}>
-              <span aria-hidden className="grid size-[22px] shrink-0 place-items-center rounded-full bg-accent text-[9px] font-semibold text-accent-foreground">
+              <span
+                aria-hidden
+                className="grid size-[22px] shrink-0 place-items-center rounded-full bg-accent text-[9px] font-semibold text-accent-foreground"
+              >
                 {m.initials}
               </span>
               <span className="flex min-w-0 flex-col leading-tight">

@@ -34,7 +34,11 @@ export function withTimeOfDay(date: Date, t: TimeOfDay): Date {
 }
 
 /** The time of day of a date (local time). */
-export const timeOfDay = (date: Date): TimeOfDay => ({ hours: date.getHours(), minutes: date.getMinutes(), seconds: date.getSeconds() });
+export const timeOfDay = (date: Date): TimeOfDay => ({
+  hours: date.getHours(),
+  minutes: date.getMinutes(),
+  seconds: date.getSeconds(),
+});
 
 /** 12 or 24: the clock a locale uses by default (Intl). */
 export function localeHourCycle(locale?: string): 12 | 24 {
@@ -50,7 +54,9 @@ export function localeHourCycle(locale?: string): 12 | 24 {
 export function dayPeriodLabels(locale?: string): [am: string, pm: string] {
   const label = (hour: number, fallback: string) => {
     try {
-      const parts = new Intl.DateTimeFormat(locale, { hour: 'numeric', hourCycle: 'h12' }).formatToParts(new Date(2000, 0, 1, hour));
+      const parts = new Intl.DateTimeFormat(locale, { hour: 'numeric', hourCycle: 'h12' }).formatToParts(
+        new Date(2000, 0, 1, hour),
+      );
       return parts.find((p) => p.type === 'dayPeriod')?.value ?? fallback;
     } catch {
       return fallback;

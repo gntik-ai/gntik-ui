@@ -37,7 +37,12 @@ export function numField<T extends object>(d: T, key: string): number {
   return typeof v === 'number' ? v : 0;
 }
 
-export function accessibleName(kind: string, explicit: string | undefined, title: string | undefined, series: readonly string[]): string {
+export function accessibleName(
+  kind: string,
+  explicit: string | undefined,
+  title: string | undefined,
+  series: readonly string[],
+): string {
   return explicit ?? title ?? (series.length ? `${kind}: ${series.join(', ')}` : kind);
 }
 
@@ -70,10 +75,29 @@ export interface ChartFrameProps extends Pick<ChartStateProps, 'emptyMessage' | 
 }
 
 /** Figure wrapper: accessible name, optional legend above, responsive plot area, state placeholders. */
-export function ChartFrame({ label, height, legend, className, state = 'ready', table, footer, figureProps, emptyMessage, errorMessage, onRetry, children }: ChartFrameProps) {
+export function ChartFrame({
+  label,
+  height,
+  legend,
+  className,
+  state = 'ready',
+  table,
+  footer,
+  figureProps,
+  emptyMessage,
+  errorMessage,
+  onRetry,
+  children,
+}: ChartFrameProps) {
   const placeholder = chartStateView(state, { height, emptyMessage, errorMessage, onRetry });
   return (
-    <div {...figureProps} role="figure" aria-label={label} aria-busy={state === 'loading' || undefined} className={cx('w-full font-sans', className)}>
+    <div
+      {...figureProps}
+      role="figure"
+      aria-label={label}
+      aria-busy={state === 'loading' || undefined}
+      className={cx('w-full font-sans', className)}
+    >
       {placeholder ?? (
         <>
           {legend}

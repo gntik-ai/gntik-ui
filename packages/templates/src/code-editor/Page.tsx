@@ -128,7 +128,14 @@ export default function CodeEditorPage(props: Partial<CodeEditorPageProps>) {
       paletteLabel="Files"
       palette={
         <ContextMenu>
-          <ContextMenuTrigger tabIndex={-1} role="group" aria-label="Project files" hint="Shift+F10 opens file actions" onContextMenu={pickTarget} className="block border-0 bg-transparent p-0">
+          <ContextMenuTrigger
+            tabIndex={-1}
+            role="group"
+            aria-label="Project files"
+            hint="Shift+F10 opens file actions"
+            onContextMenu={pickTarget}
+            className="block border-0 bg-transparent p-0"
+          >
             <TreeList
               aria-label="Files"
               nodes={filesToTree(files.map((f) => f.path))}
@@ -145,7 +152,11 @@ export default function CodeEditorPage(props: Partial<CodeEditorPageProps>) {
             <MenuItem icon={Copy} disabled={!menuFile} onClick={() => menuFile && void copyPath(menuFile)}>
               Copy path
             </MenuItem>
-            <MenuItem icon={X} disabled={!menuFile || !open.includes(menuFile)} onClick={() => menuFile && closeFile(menuFile)}>
+            <MenuItem
+              icon={X}
+              disabled={!menuFile || !open.includes(menuFile)}
+              onClick={() => menuFile && closeFile(menuFile)}
+            >
               Close tab
             </MenuItem>
             <MenuSeparator />

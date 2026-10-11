@@ -6,7 +6,8 @@ export const doc: ComponentDoc = {
   status: 'beta',
   description:
     'Columns of cards you reorder within a column and move across columns by pointer drag or keyboard. Controlled (`columns` + `onMove`, with `moveKanbanCard` to apply a move); every pick-up, move, drop and cancel is announced through a LiveAnnouncer. Built on the dependency-free `useSortable` hook (pointer + keyboard, press-and-hold on touch). Cards lift with a border and shadow only; nothing animates under reduced motion. Density-aware card padding (`size: "auto"`).',
-  pattern: 'Sortable lists (cards as buttons with aria-roledescription, aria-pressed while moving, aria-describedby instructions) + aria-live announcements',
+  pattern:
+    'Sortable lists (cards as buttons with aria-roledescription, aria-pressed while moving, aria-describedby instructions) + aria-live announcements',
   keyboard: [
     ['Tab', 'Moves between cards (column by column)'],
     ['Space', 'Picks up the focused card; on a picked-up card, drops it'],

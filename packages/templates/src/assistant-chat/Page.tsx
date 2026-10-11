@@ -117,11 +117,16 @@ export default function AssistantChatPage(props: Partial<AssistantChatProps>) {
     const pieces = chunkReply(reply);
     const startAt = tool.durationMs;
     later(() => patch(toolId, (t) => ({ ...t, tool: { status: 'succeeded', durationMs: tool.durationMs } })), startAt);
-    pieces.forEach((piece, i) => later(() => patch(replyId, (t) => ({ ...t, text: t.text + piece })), startAt + (i + 1) * tickMs));
-    later(() => {
-      patch(replyId, (t) => ({ ...t, streaming: false, sources: true }));
-      setStreaming(false);
-    }, startAt + (pieces.length + 1) * tickMs);
+    pieces.forEach((piece, i) =>
+      later(() => patch(replyId, (t) => ({ ...t, text: t.text + piece })), startAt + (i + 1) * tickMs),
+    );
+    later(
+      () => {
+        patch(replyId, (t) => ({ ...t, streaming: false, sources: true }));
+        setStreaming(false);
+      },
+      startAt + (pieces.length + 1) * tickMs,
+    );
   };
 
   const send = (text: string) => {
@@ -134,7 +139,11 @@ export default function AssistantChatPage(props: Partial<AssistantChatProps>) {
     clearTimers();
     setTurns((ts) =>
       ts.map((t) =>
-        t.streaming ? { ...t, streaming: false } : t.tool?.status === 'running' ? { ...t, tool: { status: 'failed', durationMs: 0 } } : t,
+        t.streaming
+          ? { ...t, streaming: false }
+          : t.tool?.status === 'running'
+            ? { ...t, tool: { status: 'failed', durationMs: 0 } }
+            : t,
       ),
     );
     setStreaming(false);
@@ -170,20 +179,34 @@ export default function AssistantChatPage(props: Partial<AssistantChatProps>) {
             status=""
             meta={[]}
             tabs={null}
-            actions={[{ label: 'New conversation', icon: SquarePen, variant: 'secondary', disabled: turns.length === 0, onClick: newConversation }]}
+            actions={[
+              {
+                label: 'New conversation',
+                icon: SquarePen,
+                variant: 'secondary',
+                disabled: turns.length === 0,
+                onClick: newConversation,
+              },
+            ]}
           />
         }
       >
         <TooltipProvider>
           <div className="h-[680px] min-h-0 overflow-hidden rounded-xl border border-border">
             <ChatLayout
-              header={<h2 className="px-4 py-3 text-[13px] font-semibold text-foreground">{turns.length === 0 ? 'New conversation' : 'Conversation'}</h2>}
+              header={
+                <h2 className="px-4 py-3 text-[13px] font-semibold text-foreground">
+                  {turns.length === 0 ? 'New conversation' : 'Conversation'}
+                </h2>
+              }
               panel={
                 withPanel ? (
                   <div className="flex flex-col gap-4 p-4 text-[13px]">
                     <div>
                       <h2 className="font-semibold text-foreground">Details</h2>
-                      <p className="mt-1 text-muted-foreground">Read access to projects, deployments, invoices and members in this workspace.</p>
+                      <p className="mt-1 text-muted-foreground">
+                        Read access to projects, deployments, invoices and members in this workspace.
+                      </p>
                     </div>
                     <CitationList sources={sources} heading="Context sources" />
                   </div>
@@ -193,7 +216,9 @@ export default function AssistantChatPage(props: Partial<AssistantChatProps>) {
             >
               {turns.length === 0 && (
                 <div className="flex flex-col gap-5 pt-10">
-                  <h3 className="text-center text-[20px] font-semibold tracking-tight text-foreground">How can I help?</h3>
+                  <h3 className="text-center text-[20px] font-semibold tracking-tight text-foreground">
+                    How can I help?
+                  </h3>
                   <SuggestionChips suggestions={suggestions} onSelect={send} />
                 </div>
               )}

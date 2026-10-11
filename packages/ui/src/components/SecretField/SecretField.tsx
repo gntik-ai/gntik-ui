@@ -24,7 +24,8 @@ import { secretFieldVariants } from './secret-field.variants';
 type DateInput = Date | number | string;
 
 export interface SecretFieldProps
-  extends Omit<InputProps, 'value' | 'defaultValue' | 'type' | 'readOnly' | 'trailingAddon' | 'title' | 'onValueChange'>,
+  extends
+    Omit<InputProps, 'value' | 'defaultValue' | 'type' | 'readOnly' | 'trailingAddon' | 'title' | 'onValueChange'>,
     MaskOptions {
   ref?: Ref<HTMLInputElement>;
   /** The secret. While hidden and read-only it is not rendered into the DOM at all. */
@@ -68,7 +69,9 @@ export interface SecretFieldProps
  */
 export function SecretField(props: SecretFieldProps) {
   // Without an announcer above, provide one so this field and its CopyButton share one status region.
-  return useHasLiveAnnouncer() ? <SecretFieldInner {...props} /> : (
+  return useHasLiveAnnouncer() ? (
+    <SecretFieldInner {...props} />
+  ) : (
     <LiveAnnouncer>
       <SecretFieldInner {...props} />
     </LiveAnnouncer>
@@ -121,7 +124,6 @@ function SecretFieldInner({
     onRevealedChange?.(!revealed);
   };
 
-
   const rotate = async () => {
     if (!onRotate) return;
     setRotating(true);
@@ -163,7 +165,7 @@ function SecretFieldInner({
                 size="sm"
                 className={s.toggle()}
                 icon={revealed ? EyeOff : Eye}
-                label={revealed ? hideLabel ?? t('secret.hide') : showLabel ?? t('secret.show')}
+                label={revealed ? (hideLabel ?? t('secret.hide')) : (showLabel ?? t('secret.show'))}
                 aria-pressed={revealed}
                 disabled={disabled}
                 onClick={toggle}
@@ -206,7 +208,14 @@ function SecretFieldInner({
               </AlertDialogContent>
             </AlertDialog>
           ) : (
-            <Button variant="secondary" size={size} icon={RefreshCw} loading={rotating} disabled={disabled} onClick={rotate}>
+            <Button
+              variant="secondary"
+              size={size}
+              icon={RefreshCw}
+              loading={rotating}
+              disabled={disabled}
+              onClick={rotate}
+            >
               {rotateText}
             </Button>
           ))}
@@ -225,7 +234,13 @@ function SecretFieldInner({
           )}
           {lastUsedAt !== undefined && (
             <span className={s.metaItem()}>
-              {lastUsedAt === null ? t('secret.neverUsed') : <>{t('secret.lastUsed')} <Timestamp value={lastUsedAt} tooltip={false} /></>}
+              {lastUsedAt === null ? (
+                t('secret.neverUsed')
+              ) : (
+                <>
+                  {t('secret.lastUsed')} <Timestamp value={lastUsedAt} tooltip={false} />
+                </>
+              )}
             </span>
           )}
         </p>

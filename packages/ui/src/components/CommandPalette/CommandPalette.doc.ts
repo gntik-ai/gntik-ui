@@ -15,5 +15,17 @@ export const doc: ComponentDoc = {
     ['Enter', 'Runs the highlighted command and closes the palette'],
     ['Escape', 'Closes the palette and returns focus'],
   ],
-  tokens: ['popover', 'popover-foreground', 'background', 'border', 'accent', 'accent-foreground', 'primary-text', 'muted-foreground', 'card', 'ring', 'focus-ring'],
+  tokens: [
+    'popover',
+    'popover-foreground',
+    'background',
+    'border',
+    'accent',
+    'accent-foreground',
+    'primary-text',
+    'muted-foreground',
+    'card',
+    'ring',
+    'focus-ring',
+  ],
 };

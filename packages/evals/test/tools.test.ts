@@ -8,12 +8,25 @@ describe('tool definitions', () => {
   it('are strict JSON schemas with additionalProperties false', () => {
     const defs = toolDefinitions({ eagerInputStreaming: true });
     expect(defs.map((d) => d.name)).toEqual(TOOL_NAMES);
-    expect(TOOL_NAMES).toEqual(['list_kit', 'get_component', 'get_block', 'get_template', 'scaffold_page', 'validate_page', 'submit_page']);
+    expect(TOOL_NAMES).toEqual([
+      'list_kit',
+      'get_component',
+      'get_block',
+      'get_template',
+      'scaffold_page',
+      'validate_page',
+      'submit_page',
+    ]);
     for (const d of defs) {
       expect(d.strict).toBe(true);
       expect(d.eager_input_streaming).toBe(true);
       expect(d.description).toBeTruthy();
-      const s = d.input_schema as { type: string; additionalProperties: boolean; required: string[]; properties: Record<string, unknown> };
+      const s = d.input_schema as {
+        type: string;
+        additionalProperties: boolean;
+        required: string[];
+        properties: Record<string, unknown>;
+      };
       expect(s.type).toBe('object');
       expect(s.additionalProperties).toBe(false);
       for (const r of s.required) expect(Object.keys(s.properties)).toContain(r);
@@ -49,7 +62,9 @@ describe('tools', () => {
     expect(t.isError).toBe(false);
     expect(t.content).toMatch(/SettingsMembersPage/);
     expect(t.content).not.toMatch(/### packages\/templates\/src\/settings-members\/Page\.tsx/);
-    expect(runTool('get_template', { id: 'settings-members', include_source: true }).content).toMatch(/### packages\/templates\/src\/settings-members\/Page\.tsx/);
+    expect(runTool('get_template', { id: 'settings-members', include_source: true }).content).toMatch(
+      /### packages\/templates\/src\/settings-members\/Page\.tsx/,
+    );
     expect(runTool('get_component', { id: 'docs-layout' }).content).toMatch(/DocsLayout/);
     expect(runTool('get_block', { id: 'kpi-row' }).content).toMatch(/KpiRow/);
     const missing = runTool('get_component', { id: 'docs-page' });
@@ -59,7 +74,10 @@ describe('tools', () => {
   });
 
   it('scaffold_page output passes validate_page', () => {
-    for (const input of [{ template: 'settings-members', route: '/settings/members' }, { blocks: ['page-header', 'kpi-row', 'data-table'], layout: 'console' }]) {
+    for (const input of [
+      { template: 'settings-members', route: '/settings/members' },
+      { blocks: ['page-header', 'kpi-row', 'data-table'], layout: 'console' },
+    ]) {
       const r = runTool('scaffold_page', input);
       expect(r.isError).toBe(false);
       const code = codeOf(r.content);
@@ -73,7 +91,10 @@ describe('tools', () => {
   });
 
   it('validate_page reports brand errors', () => {
-    const v = JSON.parse(runTool('validate_page', { code: '<div className="bg-red-500" />' }).content) as { ok: boolean; findings: Array<{ rule: string }> };
+    const v = JSON.parse(runTool('validate_page', { code: '<div className="bg-red-500" />' }).content) as {
+      ok: boolean;
+      findings: Array<{ rule: string }>;
+    };
     expect(v.ok).toBe(false);
     expect(v.findings.map((f) => f.rule)).toContain('palette-class');
   });
