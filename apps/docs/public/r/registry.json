@@ -5223,13 +5223,14 @@
       "name": "json-viewer",
       "type": "registry:ui",
       "title": "JsonViewer",
-      "description": "Collapsible JSON inspector built on TreeList: objects and arrays expand, values are coloured by type with contrast-safe text tokens (keys primary-text, strings warning-text, numbers destructive-text, booleans foreground, null muted), `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value.",
+      "description": "Collapsible JSON inspector built on TreeList: objects and arrays expand, values use contrast-safe type tokens, `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value. Optional `maxDisplayChars` (finite integer >= 1) measures UTF-16 units: strings as-is, other values as two-space JSON. Over-cap values become read-only text with an ellipsis (dropping a trailing high surrogate) and a warning Badge labelled by `labels.truncated`. Search has no effect in this fallback; Copy value copies the full measured text, as explained by `labels.copyFullHint`, and Copy path is disabled. `maxHeight` bounds the scrollable body. Only in capped mode, null, undefined and empty strings show `emptyContent` (default a muted dash). Leaving the cap unset preserves existing behavior. The cap limits rendering, not serialization cost.",
       "author": "gntik-ai",
       "dependencies": [
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/badge.json",
         "https://ui.gntik.ai/r/tree-list.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
@@ -5268,11 +5269,6 @@
           "path": "packages/ui/src/components/JsonViewer/JsonViewer.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/json-viewer/JsonViewer.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
         }
       ]
     },

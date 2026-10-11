@@ -2,6 +2,19 @@ export type JsonValue = string | number | boolean | null | JsonValue[] | { [key:
 
 export type JsonType = 'string' | 'number' | 'boolean' | 'null' | 'object' | 'array';
 
+/** Measures strings as-is and other JSON values with two-space indentation. */
+export function measureJsonDisplay(value: unknown, maxDisplayChars?: number) {
+  if (maxDisplayChars === undefined || !Number.isInteger(maxDisplayChars) || maxDisplayChars < 1) return;
+  const empty = value === null || value === undefined || value === '';
+  if (empty) return { text: '', displayText: '', truncated: false, empty: true };
+  const text = typeof value === 'string' ? value : (JSON.stringify(value, null, 2) ?? '');
+  const truncated = text.length > maxDisplayChars;
+  let cut = text.slice(0, maxDisplayChars);
+  const last = cut.charCodeAt(cut.length - 1);
+  if (last >= 0xd800 && last <= 0xdbff) cut = cut.slice(0, -1);
+  return { text, displayText: truncated ? `${cut}…` : text, truncated, empty };
+}
+
 export function jsonType(value: unknown): JsonType {
   if (value === null || value === undefined) return 'null';
   if (Array.isArray(value)) return 'array';
