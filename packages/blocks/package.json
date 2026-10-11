@@ -1,6 +1,6 @@
 {
   "name": "@gntik-ai/blocks",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "gntik-ui blocks: page chrome, data display, tables, forms, feedback, billing, team and builder sections composed from @gntik-ai/ui.",
   "license": "MIT",
   "type": "module",
