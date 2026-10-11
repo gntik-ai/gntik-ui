@@ -1297,11 +1297,15 @@
       "package": "@gntik-ai/blocks",
       "group": "billing",
       "status": "beta",
-      "description": "Current plan header: name, status, price per cycle with a monthly/annual toggle, renewal date, included features and upgrade/manage actions.",
+      "description": "Default billing header retains sample plan, Active status fallback, required monthly price and renewal, monthly/annual per-month pricing and built-in Manage/Upgrade actions. Opt-in variant=\"summary\" uses only consumer data: optional name or emptyLabel, statusLabel, price totals (including zero), cycle, renewal, features and action slots; no sample fallback. See README.md for props, ARIA, keyboard and examples.\n\n| Prop | Contract |\n| --- | --- |\n| variant | billing (default) \\| summary |\n| billing plan | BillingPlan: name, priceMonthly and renewsOn required; status, priceAnnual, currency, summary and features optional. Omitted plan uses samplePlan. |\n| summary plan | SummaryPlan: all optional: name, statusLabel, statusTone, priceMonthly, priceAnnual, currency, cycle, renewsOn, features. Prices are supplied cycle totals, never multiplied or discounted. |\n| emptyLabel | Summary only: consumer label used when the name is absent. |\n| actions | Summary only: ReactNode slot of kit Buttons or native links, absent by default. |\n| defaultCycle / onCycleChange | Initial monthly (default) or annual selection and cycle callback. |\n| titleAs / className | h2 \\| h3 (default) \\| h4; additional token-backed classes. |\n| onUpgrade / onManage / upgradeLabel / manageLabel | Billing only: existing action handlers and labels; both buttons always render. |\n\nExamples:\n- [summary-full](/preview.html?kind=block&id=plan-card--summary-full)\n- [summary-minimal](/preview.html?kind=block&id=plan-card--summary-minimal)\n- [summary-unassigned](/preview.html?kind=block&id=plan-card--summary-unassigned)\n- [summary-unassigned-no-label](/preview.html?kind=block&id=plan-card--summary-unassigned-no-label)\n- [summary-price-only](/preview.html?kind=block&id=plan-card--summary-price-only)\n- [summary-zero-price](/preview.html?kind=block&id=plan-card--summary-zero-price)\n- [summary-renewal-only](/preview.html?kind=block&id=plan-card--summary-renewal-only)\n- [summary-features-only](/preview.html?kind=block&id=plan-card--summary-features-only)\n- [summary-actions-only](/preview.html?kind=block&id=plan-card--summary-actions-only)",
       "files": [
         {
           "path": "packages/blocks/src/billing/PlanCard/PlanCard.tsx",
           "target": "components/blocks/billing/plan-card/PlanCard.tsx"
+        },
+        {
+          "path": "packages/blocks/src/billing/PlanCard/PlanSummary.tsx",
+          "target": "components/blocks/billing/plan-card/PlanSummary.tsx"
         },
         {
           "path": "packages/blocks/src/billing/PlanCard/fixtures.ts",
@@ -1318,6 +1322,34 @@
       ],
       "registryDependencies": [],
       "docs": "packages/blocks/src/billing/PlanCard/block.meta.ts"
+    },
+    {
+      "id": "plan-definition-card",
+      "kind": "block",
+      "name": "Plan definition card",
+      "package": "@gntik-ai/blocks",
+      "group": "billing",
+      "status": "beta",
+      "description": "Administrative plan definition without billing fields: name, slug, optional description, labelled draft/active/deprecated/archived status, enabled/disabled capabilities, quotas, assigned tenants and formatted update date. Compact and full densities, consumer action slots and statusLabels overrides. See README.md for props, ARIA, keyboard and examples.\n\n| Prop | Contract |\n| --- | --- |\n| plan | PlanDefinition: name, slug, status, tenantCount and updatedAt required; optional description, capabilities (Record<string, boolean>) and quotas (Record<string, string \\| number>). Omitted plan uses the neutral definition fixture. |\n| density | compact \\| full (default); both show all supplied definition data. |\n| statusLabels | Partial<Record<draft \\| active \\| deprecated \\| archived, string>> overrides English lifecycle labels. |\n| actions | ReactNode slot of kit Buttons or native links; absent by default. |\n| titleAs / className | h2 \\| h3 (default) \\| h4; additional token-backed classes. |\n\nExamples:\n- [compact](/preview.html?kind=block&id=plan-definition-card--compact)\n- [full](/preview.html?kind=block&id=plan-definition-card--full)",
+      "files": [
+        {
+          "path": "packages/blocks/src/billing/PlanDefinitionCard/PlanDefinitionCard.tsx",
+          "target": "components/blocks/billing/plan-definition-card/PlanDefinitionCard.tsx"
+        },
+        {
+          "path": "packages/blocks/src/billing/PlanDefinitionCard/fixtures.ts",
+          "target": "components/blocks/billing/plan-definition-card/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/billing/format.ts",
+          "target": "components/blocks/billing/format.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/blocks/src/billing/PlanDefinitionCard/block.meta.ts"
     },
     {
       "id": "pricing-table",

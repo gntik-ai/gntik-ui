@@ -1,0 +1,23 @@
+# Plan card
+
+`PlanCard` defaults to the existing billing header. Opt into `variant="summary"` for consumer-only data with independently optional regions. Import the component and types from `@gntik-ai/blocks`.
+
+| Props                           | Billing (default)                                                                                                     | Summary                                                                                                         |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `plan`                          | `BillingPlan`; omitted uses `samplePlan`                                                                              | `SummaryPlan`; omitted renders no sample values                                                                 |
+| Plan name                       | Required; adds “plan” to the heading                                                                                  | Optional, shown verbatim; missing name uses `emptyLabel`                                                        |
+| Status                          | Optional enum; falls back to Active                                                                                   | Optional `statusLabel` and `statusTone`; no default label                                                       |
+| Prices                          | Required `priceMonthly`; optional `priceAnnual` is a discounted monthly amount                                        | Optional `priceMonthly` and `priceAnnual` are complete cycle totals; zero is valid                              |
+| `currency`                      | Defaults to USD                                                                                                       | Formatting defaults to USD only when a price is supplied                                                        |
+| Cycle                           | Always renders billing copy; annual total is monthly amount × 12                                                      | Optional `plan.cycle` renders cycle copy; toggle only when both prices are supplied, with no savings arithmetic |
+| `renewsOn`                      | Required; always shows formatted renewal                                                                              | Optional; absent means no renewal line                                                                          |
+| `features`                      | Optional nonempty array renders a list                                                                                | Optional nonempty array renders a list                                                                          |
+| Actions                         | Always renders Manage and Upgrade plan buttons; `onManage`, `onUpgrade`, `manageLabel`, `upgradeLabel` customize them | Optional `actions: ReactNode` slot of kit Buttons or native links; no default actions                           |
+| `defaultCycle`, `onCycleChange` | Initial cycle (monthly by default), selection callback                                                                | Same; applies to the optional toggle                                                                            |
+| `titleAs`, `className`          | h2/h3/h4 (default h3), token-backed classes                                                                           | Same                                                                                                            |
+
+Billing also supports optional `plan.summary` after renewal. Summary never imports sample data. With neither a name nor an `emptyLabel`, summary renders no heading and warns only in development.
+
+ARIA and keyboard: a heading at the consumer's requested level, a visibly labelled status badge, a named features list, and native consumer actions. The cycle group is named “Billing cycle”; toggles expose `aria-pressed`. Tab/Shift+Tab visit controls; arrow keys/Home/End navigate the toggle; Enter/Space activate buttons and toggles; Enter activates links. With fewer than two prices the toggle is absent from both DOM and tab order. Axe tests cover dark, light and high_contrast; browser tests also check contrast.
+
+Preview IDs: `plan-card--summary-full`, `--summary-minimal`, `--summary-unassigned`, `--summary-unassigned-no-label`, `--summary-price-only`, `--summary-zero-price`, `--summary-renewal-only`, `--summary-features-only`, `--summary-actions-only`. Examples use English copy; translated values belong to consumers.

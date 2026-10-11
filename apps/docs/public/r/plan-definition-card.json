@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "plan-definition-card",
+  "type": "registry:block",
+  "title": "Plan definition card",
+  "description": "Administrative plan definition without billing fields: name, slug, optional description, labelled draft/active/deprecated/archived status, enabled/disabled capabilities, quotas, assigned tenants and formatted update date. Compact and full densities, consumer action slots and statusLabels overrides. See README.md for props, ARIA, keyboard and examples.\n\n| Prop | Contract |\n| --- | --- |\n| plan | PlanDefinition: name, slug, status, tenantCount and updatedAt required; optional description, capabilities (Record<string, boolean>) and quotas (Record<string, string \\| number>). Omitted plan uses the neutral definition fixture. |\n| density | compact \\| full (default); both show all supplied definition data. |\n| statusLabels | Partial<Record<draft \\| active \\| deprecated \\| archived, string>> overrides English lifecycle labels. |\n| actions | ReactNode slot of kit Buttons or native links; absent by default. |\n| titleAs / className | h2 \\| h3 (default) \\| h4; additional token-backed classes. |\n\nExamples:\n- [compact](/preview.html?kind=block&id=plan-definition-card--compact)\n- [full](/preview.html?kind=block&id=plan-definition-card--full)",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/billing/PlanDefinitionCard/PlanDefinitionCard.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/billing/plan-definition-card/PlanDefinitionCard.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { Badge, Card, cn, type BadgeTone } from \"@gntik-ai/ui\";\nimport { formatDate, type DateInput } from \"../format\";\nimport { samplePlanDefinition } from \"./fixtures\";\n\nexport type PlanDefinitionStatus =\n  \"draft\" | \"active\" | \"deprecated\" | \"archived\";\n\nexport interface PlanDefinition {\n  name: string;\n  slug: string;\n  description?: string;\n  status: PlanDefinitionStatus;\n  capabilities?: Record<string, boolean>;\n  quotas?: Record<string, string | number>;\n  tenantCount: number;\n  updatedAt: DateInput;\n}\n\nexport interface PlanDefinitionCardProps {\n  plan?: PlanDefinition;\n  density?: \"compact\" | \"full\";\n  /** Consumer-supplied kit Buttons or native links; no billing actions. */\n  actions?: ReactNode;\n  statusLabels?: Partial<Record<PlanDefinitionStatus, string>>;\n  titleAs?: \"h2\" | \"h3\" | \"h4\";\n  className?: string;\n}\n\nconst STATUS: Record<PlanDefinitionStatus, { label: string; tone: BadgeTone }> =\n  {\n    draft: { label: \"Draft\", tone: \"info\" },\n    active: { label: \"Active\", tone: \"success\" },\n    deprecated: { label: \"Deprecated\", tone: \"warning\" },\n    archived: { label: \"Archived\", tone: \"neutral\" },\n  };\n\n/** Administrative plan information, with no commercial fields or actions. */\nexport function PlanDefinitionCard({\n  plan = samplePlanDefinition,\n  density = \"full\",\n  actions,\n  statusLabels,\n  titleAs: TitleTag = \"h3\",\n  className,\n}: PlanDefinitionCardProps) {\n  const status = STATUS[plan.status];\n  return (\n    <Card className={cn(density === \"compact\" ? \"p-4\" : \"p-6\", className)}>\n      <div className=\"flex flex-wrap items-center gap-2\">\n        <TitleTag className=\"text-lg font-semibold text-foreground\">\n          {plan.name}\n        </TitleTag>\n        <Badge tone={status.tone} dot>\n          {statusLabels?.[plan.status] ?? status.label}\n        </Badge>\n      </div>\n      <p className=\"mt-1 font-mono text-sm text-muted-foreground\">\n        {plan.slug}\n      </p>\n      {plan.description && (\n        <p className=\"mt-2 text-sm text-foreground\">{plan.description}</p>\n      )}\n      {plan.capabilities && Object.keys(plan.capabilities).length > 0 && (\n        <ul\n          aria-label=\"Capabilities\"\n          className={cn(\n            \"mt-4 grid gap-2 text-sm\",\n            density === \"full\" && \"sm:grid-cols-2\",\n          )}\n        >\n          {Object.entries(plan.capabilities).map(([name, enabled]) => (\n            <li\n              key={name}\n              className=\"flex flex-wrap items-center justify-between gap-2\"\n            >\n              <span className=\"text-foreground\">{name}</span>\n              <span className=\"text-muted-foreground\">\n                {enabled ? \"Enabled\" : \"Disabled\"}\n              </span>\n            </li>\n          ))}\n        </ul>\n      )}\n      <dl\n        className={cn(\n          \"mt-4 grid gap-3 text-sm\",\n          density === \"full\" && \"sm:grid-cols-2\",\n        )}\n      >\n        {plan.quotas &&\n          Object.entries(plan.quotas).map(([key, value]) => (\n            <div key={key}>\n              <dt className=\"text-muted-foreground\">{key}</dt>\n              <dd className=\"font-medium text-foreground\">{value}</dd>\n            </div>\n          ))}\n        <div>\n          <dt className=\"text-muted-foreground\">Assigned tenants</dt>\n          <dd className=\"font-medium text-foreground tabular-nums\">\n            {plan.tenantCount}\n          </dd>\n        </div>\n        <div>\n          <dt className=\"text-muted-foreground\">Updated</dt>\n          <dd className=\"text-foreground\">{formatDate(plan.updatedAt)}</dd>\n        </div>\n      </dl>\n      {actions && (\n        <div className=\"mt-4 flex flex-wrap items-center gap-2\">{actions}</div>\n      )}\n    </Card>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/PlanDefinitionCard/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/plan-definition-card/fixtures.ts",
+      "content": "import type { PlanDefinition } from \"./PlanDefinitionCard\";\n\nexport const samplePlanDefinition: PlanDefinition = {\n  name: \"Workspace\",\n  slug: \"workspace\",\n  description: \"Shared capabilities and quotas for a workspace.\",\n  status: \"active\",\n  capabilities: { Search: true, Export: false },\n  quotas: { Requests: 10000, Storage: \"20 GB\" },\n  tenantCount: 4,\n  updatedAt: \"2027-01-01\",\n};\n"
+    },
+    {
+      "path": "packages/blocks/src/billing/format.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/billing/format.ts",
+      "content": "/** Shared formatting for the billing blocks (en-US, Intl). */\n\n/** A calendar date: a `Date` or an ISO `YYYY-MM-DD` string (read as a local date, no UTC shift). */\nexport type DateInput = Date | string;\n\nexport function toDate(value: DateInput): Date {\n  if (value instanceof Date) return value;\n  const m = /^(\\d{4})-(\\d{2})-(\\d{2})$/.exec(value);\n  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));\n  return new Date(value);\n}\n\nconst dateFmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });\nconst shortDateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });\n\n/** \"June 1, 2026\". */\nexport function formatDate(value: DateInput): string {\n  return dateFmt.format(toDate(value));\n}\n\n/** \"Jun 1, 2026\". */\nexport function formatShortDate(value: DateInput): string {\n  return shortDateFmt.format(toDate(value));\n}\n\n/** Money with the currency symbol: \"$1,620.00\" (or no decimals with `whole`). */\nexport function formatMoney(amount: number, currency = 'USD', whole = false): string {\n  return new Intl.NumberFormat('en-US', {\n    style: 'currency',\n    currency,\n    minimumFractionDigits: whole ? 0 : 2,\n    maximumFractionDigits: whole ? 0 : 2,\n  }).format(amount);\n}\n\n/** Grouped number, compact above a million: \"412,800\", \"78.4M\". */\nexport function formatQuantity(value: number): string {\n  if (Math.abs(value) >= 1_000_000) {\n    return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value);\n  }\n  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 }).format(value);\n}\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "billing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/billing/PlanDefinitionCard/block.meta.ts"
+  }
+}

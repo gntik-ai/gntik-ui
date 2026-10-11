@@ -1,6 +1,9 @@
 export * from './PlanCard/PlanCard';
 export { meta as planCardMeta } from './PlanCard/block.meta';
 export { samplePlan } from './PlanCard/fixtures';
+export * from './PlanDefinitionCard/PlanDefinitionCard';
+export { meta as planDefinitionCardMeta } from './PlanDefinitionCard/block.meta';
+export { samplePlanDefinition } from './PlanDefinitionCard/fixtures';
 export * from './QuotaMeters/QuotaMeters';
 export { meta as quotaMetersMeta } from './QuotaMeters/block.meta';
 export { sampleQuotas } from './QuotaMeters/fixtures';

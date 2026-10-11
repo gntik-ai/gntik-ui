@@ -9,6 +9,7 @@ import { TraceWaterfall } from '../ai/TraceWaterfall/TraceWaterfall';
 import { CostBreakdown } from '../billing/CostBreakdown/CostBreakdown';
 import { PaymentMethodCard } from '../billing/PaymentMethodCard/PaymentMethodCard';
 import { PlanCard } from '../billing/PlanCard/PlanCard';
+import { PlanDefinitionCard } from '../billing/PlanDefinitionCard/PlanDefinitionCard';
 import { QuotaMeters } from '../billing/QuotaMeters/QuotaMeters';
 import { SpendVsBudget } from '../billing/SpendVsBudget/SpendVsBudget';
 import { LogViewer } from '../builders/LogViewer/LogViewer';
@@ -28,6 +29,8 @@ const cases: Array<[string, (as: 'h2' | 'h4') => ReactElement]> = [
   ['StatCard', (as) => <StatCard titleAs={as} />],
   ['ResourceCardGrid', (as) => <ResourceCardGrid titleAs={as} />],
   ['PlanCard', (as) => <PlanCard titleAs={as} />],
+  ['PlanCard summary', (as) => <PlanCard variant="summary" plan={{ name: 'Fixture Plan' }} titleAs={as} />],
+  ['PlanDefinitionCard', (as) => <PlanDefinitionCard titleAs={as} />],
   ['QuotaMeters', (as) => <QuotaMeters titleAs={as} />],
   ['CostBreakdown', (as) => <CostBreakdown titleAs={as} />],
   ['SpendVsBudget', (as) => <SpendVsBudget titleAs={as} />],
