@@ -12,10 +12,13 @@ import {
 } from '@xyflow/react';
 import { flowNodeTypes, type FlowNode } from './nodes';
 import { brandEdgeOptions, flowMarker, useFlowTheme, withBrandMarkers } from './theme';
+import { adaptNodeRenderers, type FlowNodeRenderer } from './renderers';
 import { cx, nodeToken } from './tones';
 
-export interface FlowCanvasProps<N extends Node = FlowNode, E extends Edge = Edge>
-  extends Omit<ReactFlowProps<N, E>, 'aria-label' | 'height' | 'width'> {
+export interface FlowCanvasProps<N extends Node = FlowNode, E extends Edge = Edge> extends Omit<
+  ReactFlowProps<N, E>,
+  'aria-label' | 'height' | 'width'
+> {
   /** Accessible name of the canvas region (required). */
   'aria-label': string;
   /** Canvas height (px or CSS length). */
@@ -27,6 +30,8 @@ export interface FlowCanvasProps<N extends Node = FlowNode, E extends Edge = Edg
   interactive?: boolean;
   /** Class for the inner `.react-flow` element (`className` goes on the wrapper). */
   canvasClassName?: string;
+  /** Kit-owned custom node renderers with named handles. */
+  nodeRenderers?: readonly FlowNodeRenderer[];
 }
 
 const STATIC_PROPS = {
@@ -56,6 +61,7 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
   className,
   canvasClassName,
   nodeTypes,
+  nodeRenderers,
   edges,
   defaultEdgeOptions,
   proOptions,
@@ -63,9 +69,14 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
   ...rest
 }: FlowCanvasProps<N, E>) {
   const t = useFlowTheme();
+  const customTypes = useMemo(() => (nodeRenderers ? adaptNodeRenderers(nodeRenderers) : undefined), [nodeRenderers]);
   const brandedEdges = useMemo(() => (edges ? withBrandMarkers(edges, t) : undefined), [edges, t]);
   const edgeOptions = useMemo(
-    () => ({ ...brandEdgeOptions, markerEnd: flowMarker(t.edge), ...defaultEdgeOptions }),
+    () => ({
+      ...brandEdgeOptions,
+      markerEnd: flowMarker(t.edge),
+      ...defaultEdgeOptions,
+    }),
     [t, defaultEdgeOptions],
   );
   const miniColor = useCallback((n: N) => t.color(nodeToken(n.data.tone, n.type)), [t]);
@@ -78,7 +89,7 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
       style={{ height }}
     >
       <ReactFlow<N, E>
-        nodeTypes={nodeTypes ?? (flowNodeTypes as NodeTypes)}
+        nodeTypes={customTypes ?? nodeTypes ?? (flowNodeTypes as NodeTypes)}
         edges={brandedEdges}
         defaultEdgeOptions={edgeOptions}
         fitView

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { MonacoLoader } from '@gntik-ai/editor';
 import { expectNoAxeViolations } from '../../test/a11y';
@@ -7,9 +7,43 @@ import ControlledCodePanel from './examples/controlled';
 
 /** Minimal Monaco stand-in (same approach as the @gntik-ai/editor tests). */
 function mockMonaco() {
-  const created: Array<{ value: string; language?: string; revealLineInCenter: ReturnType<typeof vi.fn> }> = [];
-  const model = (value: string) => ({ getValue: () => value, setValue: vi.fn(), onDidChangeContent: () => ({ dispose: vi.fn() }), dispose: vi.fn() });
+  const created: Array<{
+    value: string;
+    language?: string;
+    revealLineInCenter: ReturnType<typeof vi.fn>;
+  }> = [];
+  const markerListeners = new Set<() => void>();
+  let modelMarkers: Array<{
+    owner: string;
+    resource: { toString: () => string };
+    severity: number;
+    message: string;
+    startLineNumber: number;
+    startColumn: number;
+    endLineNumber: number;
+    endColumn: number;
+  }> = [];
+  const resource = { toString: () => 'inmemory://test/1' };
+  const model = (value: string) => ({
+    uri: resource,
+    getValue: () => value,
+    setValue: vi.fn(),
+    onDidChangeContent: () => ({ dispose: vi.fn() }),
+    dispose: vi.fn(),
+  });
   const editor = {
+    getModelMarkers: vi.fn(() => modelMarkers),
+    onDidChangeMarkers: (listener: () => void) => {
+      markerListeners.add(listener);
+      return { dispose: () => markerListeners.delete(listener) };
+    },
+    setModelMarkers: vi.fn((_model: unknown, owner: string, markers: typeof modelMarkers) => {
+      modelMarkers = [
+        ...modelMarkers.filter((m) => m.owner !== owner),
+        ...markers.map((m) => ({ ...m, owner, resource })),
+      ];
+      markerListeners.forEach((listener) => listener());
+    }),
     defineTheme: vi.fn(),
     setTheme: vi.fn(),
     setModelLanguage: vi.fn(),
@@ -34,10 +68,31 @@ function mockMonaco() {
       created.push(ed);
       return ed;
     }),
-    createDiffEditor: vi.fn(() => ({ setModel: vi.fn(), getModel: () => null, updateOptions: vi.fn(), layout: vi.fn(), dispose: vi.fn() })),
+    createDiffEditor: vi.fn(() => ({
+      setModel: vi.fn(),
+      getModel: () => null,
+      getModifiedEditor: () => ({
+        getModel: () => model('count: wrong'),
+        setPosition: vi.fn(),
+        revealLineInCenter: vi.fn(),
+        focus: vi.fn(),
+      }),
+      updateOptions: vi.fn(),
+      layout: vi.fn(),
+      dispose: vi.fn(),
+    })),
   };
   const loader = (() => Promise.resolve({ editor })) as unknown as MonacoLoader;
-  return { editor, loader, created };
+  return {
+    editor,
+    loader,
+    created,
+    resource,
+    emitMarkers: (markers: typeof modelMarkers) => {
+      modelMarkers = markers;
+      markerListeners.forEach((listener) => listener());
+    },
+  };
 }
 
 describe('CodePanel', () => {
@@ -76,7 +131,9 @@ describe('CodePanel', () => {
     const user = userEvent.setup();
     const m = mockMonaco();
     const onActiveFileChange = vi.fn();
-    const { rerender } = render(<CodePanel loader={m.loader} activeFile="deploy.yaml" onActiveFileChange={onActiveFileChange} />);
+    const { rerender } = render(
+      <CodePanel loader={m.loader} activeFile="deploy.yaml" onActiveFileChange={onActiveFileChange} />,
+    );
     expect(screen.getByRole('tab', { name: /deploy\.yaml/ })).toHaveAttribute('aria-selected', 'true');
     await user.click(screen.getByRole('tab', { name: /settings\.json/ }));
     expect(onActiveFileChange).toHaveBeenLastCalledWith('settings.json');
@@ -98,4 +155,123 @@ describe('CodePanel', () => {
     expect(screen.getByRole('tab', { name: /deploy\.yaml/ })).toHaveAttribute('aria-selected', 'true');
     await expectNoAxeViolations();
   });
+});
+
+it('merges markers from all Monaco owners and consumer markers and reports only validity transitions', async () => {
+  const m = mockMonaco();
+  const validity = vi.fn();
+  const ready = vi.fn();
+  const files = [{ path: 'flow.yaml', language: 'yaml', content: 'count: wrong' }];
+  const semantic = [
+    {
+      id: 'semantic',
+      owner: 'semantic-worker',
+      file: 'flow.yaml',
+      line: 1,
+      severity: 'warning' as const,
+      message: 'Missing terminal step',
+    },
+  ];
+  const { rerender, unmount } = render(
+    <CodePanel
+      loader={m.loader}
+      files={files}
+      problems={[]}
+      markers={semantic}
+      onValidityChange={validity}
+      onMonacoReady={ready}
+      readOnly
+    />,
+  );
+  await waitFor(() => expect(m.editor.create).toHaveBeenCalledOnce());
+  expect(m.editor.create).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ readOnly: true }));
+  await waitFor(() => expect(ready).toHaveBeenCalledOnce());
+  expect(screen.getByRole('list', { name: 'Problems' })).toHaveTextContent('Missing terminal step');
+  validity.mockClear();
+  const error = {
+    owner: 'yaml',
+    resource: m.resource,
+    severity: 8,
+    message: 'Expected integer',
+    startLineNumber: 1,
+    startColumn: 8,
+    endLineNumber: 1,
+    endColumn: 13,
+  };
+  act(() => m.emitMarkers([error, { ...error, owner: 'other-worker', message: 'Invalid reference' }]));
+  expect(screen.getByRole('list', { name: 'Problems' })).toHaveTextContent('Expected integer');
+  expect(screen.getByRole('list', { name: 'Problems' })).toHaveTextContent('Invalid reference');
+  expect(validity).toHaveBeenCalledExactlyOnceWith(false);
+  act(() => m.emitMarkers([error]));
+  expect(validity).toHaveBeenCalledTimes(1);
+  act(() => m.emitMarkers([]));
+  expect(validity).toHaveBeenLastCalledWith(true);
+  expect(validity).toHaveBeenCalledTimes(2);
+  rerender(
+    <CodePanel
+      loader={m.loader}
+      files={files}
+      problems={[]}
+      markers={[]}
+      onValidityChange={validity}
+      onMonacoReady={ready}
+      readOnly
+    />,
+  );
+  expect(screen.getByText('No problems detected.')).toBeInTheDocument();
+  unmount();
+  expect(m.editor.setModelMarkers).toHaveBeenLastCalledWith(expect.anything(), 'semantic-worker', []);
+});
+
+it('collects worker markers and runs consumer setup when the panel opens in diff view', async () => {
+  const m = mockMonaco();
+  const ready = vi.fn();
+  render(
+    <CodePanel
+      loader={m.loader}
+      files={[{ path: 'flow.yaml', language: 'yaml', content: 'count: wrong', original: 'count: 1' }]}
+      problems={[]}
+      defaultView="diff"
+      onMonacoReady={ready}
+    />,
+  );
+  await waitFor(() => expect(m.editor.createDiffEditor).toHaveBeenCalledOnce());
+  await waitFor(() => expect(ready).toHaveBeenCalledOnce());
+  act(() =>
+    m.emitMarkers([
+      {
+        owner: 'yaml',
+        resource: m.resource,
+        severity: 8,
+        message: 'Expected integer',
+        startLineNumber: 1,
+        startColumn: 8,
+        endLineNumber: 1,
+        endColumn: 13,
+      },
+    ]),
+  );
+  expect(screen.getByRole('list', { name: 'Problems' })).toHaveTextContent('Expected integer');
+});
+
+it('preserves caller-supplied problems when all diagnostics extension props are omitted', async () => {
+  const m = mockMonaco();
+  render(<CodePanel loader={m.loader} />);
+  await waitFor(() => expect(m.editor.create).toHaveBeenCalledOnce());
+  await act(async () =>
+    m.emitMarkers([
+      {
+        owner: 'typescript',
+        resource: m.resource,
+        severity: 8,
+        message: 'A model-only error',
+        startLineNumber: 1,
+        startColumn: 1,
+        endLineNumber: 1,
+        endColumn: 2,
+      },
+    ]),
+  );
+  expect(screen.getByRole('list', { name: 'Problems' }).children).toHaveLength(3);
+  expect(screen.queryByText('A model-only error')).toBeNull();
 });

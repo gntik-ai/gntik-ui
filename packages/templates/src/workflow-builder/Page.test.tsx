@@ -42,12 +42,28 @@ describe('FlowBuilderPage', () => {
 
   it('passes a controlled console through to the builder', { timeout: 15000 }, async () => {
     function Host() {
-      const [entries, setEntries] = useState<ConsoleEntry[]>([{ id: 'h', time: '09:00:00', level: 'info', message: 'Connected to runner' }]);
+      const [entries, setEntries] = useState<ConsoleEntry[]>([
+        {
+          id: 'h',
+          time: '09:00:00',
+          level: 'info',
+          message: 'Connected to runner',
+        },
+      ]);
       return (
         <FlowBuilderPage
           consoleEntries={entries}
           onConsoleChange={setEntries}
-          onRun={() => Promise.resolve([{ id: 'r', time: '09:00:01', level: 'success', message: 'Remote run ok' }])}
+          onRun={() =>
+            Promise.resolve([
+              {
+                id: 'r',
+                time: '09:00:01',
+                level: 'success',
+                message: 'Remote run ok',
+              },
+            ])
+          }
         />
       );
     }
@@ -58,4 +74,37 @@ describe('FlowBuilderPage', () => {
     expect(await within(log).findByText('Remote run ok')).toBeInTheDocument();
     expect(log).toHaveTextContent('Connected to runner');
   });
+});
+
+it('passes run mode, status, validation and selection through and hides save and publish', async () => {
+  const selected = vi.fn();
+  render(
+    <FlowBuilderPage
+      mode="run"
+      nodeStatus={{ webhook: 'running' }}
+      onNodeSelect={selected}
+      validationIssues={[{ code: 'test', nodeId: 'webhook', message: 'Input needs review' }]}
+      codePanel={{
+        files: [],
+        problems: [
+          {
+            id: 'semantic',
+            file: 'flow.yaml',
+            line: 1,
+            severity: 'error',
+            message: 'Invalid document',
+          },
+        ],
+      }}
+    />,
+  );
+  expect(screen.queryByRole('button', { name: 'Save' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Publish' })).toBeNull();
+  const node = screen.getByRole('group', { name: 'Webhook' });
+  expect(within(node).getByText('Running')).toBeInTheDocument();
+  expect(within(node).getByText('Input needs review')).toBeInTheDocument();
+  await userEvent.click(node);
+  expect(selected).toHaveBeenCalledWith('webhook');
+  expect(screen.getByRole('region', { name: 'Code panel' })).toHaveTextContent('Invalid document');
+  await expectNoAxeViolations();
 });

@@ -26,11 +26,11 @@ each bundler resolves workers differently — so wire them once at app start-up.
 ```ts
 // src/monaco-workers.ts — import this once, before any editor renders.
 import { configureMonacoWorkers } from '@gntik-ai/editor';
-import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
-import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
-import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
-import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import EditorWorker from 'monaco-editor/editor/editor.worker?worker';
+import JsonWorker from 'monaco-editor/languages/features/json/json.worker?worker';
+import CssWorker from 'monaco-editor/languages/features/css/css.worker?worker';
+import HtmlWorker from 'monaco-editor/languages/features/html/html.worker?worker';
+import TsWorker from 'monaco-editor/languages/features/typescript/ts.worker?worker';
 
 configureMonacoWorkers((_id, label) => {
   if (label === 'json') return new JsonWorker();
@@ -45,15 +45,15 @@ Only need syntax highlighting? Return `new EditorWorker()` for every label and s
 
 ## API
 
-| Export | Purpose |
-| --- | --- |
-| `CodeEditor` | `value` / `defaultValue`, `onChange(value, event)`, `language`, `readOnly`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`. |
-| `DiffEditor` | `original`, `modified`, `language`, `readOnly` (default `true`), `sideBySide`, `onChange(modified)`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`. |
-| `defineBrandThemes(monaco)` | Registers the three brand themes from the live tokens. Call again after a theme switch (the components do). |
-| `brandThemeFor(theme?)` | `'dark' \| 'light' \| 'high_contrast'` → Monaco theme name (defaults to the active theme). |
-| `brandThemeData(theme, el?)` | The raw `IStandaloneThemeData` for one theme. |
-| `configureMonacoWorkers(getWorker)` | Sets `self.MonacoEnvironment.getWorker`. |
-| `loadMonaco`, `useMonaco`, `useBrandTheme`, `BASE_OPTIONS`, `EditorSkeleton` | Building blocks for custom Monaco surfaces. |
+| Export                                                                       | Purpose                                                                                                                                                                   |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CodeEditor`                                                                 | `value` / `defaultValue`, `onChange(value, event)`, `language`, `readOnly`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`.                          |
+| `DiffEditor`                                                                 | `original`, `modified`, `language`, `readOnly` (default `true`), `sideBySide`, `onChange(modified)`, `height`, `aria-label`, `options`, `className`, `loader`, `onMount`. |
+| `defineBrandThemes(monaco)`                                                  | Registers the three brand themes from the live tokens. Call again after a theme switch (the components do).                                                               |
+| `brandThemeFor(theme?)`                                                      | `'dark' \| 'light' \| 'high_contrast'` → Monaco theme name (defaults to the active theme).                                                                                |
+| `brandThemeData(theme, el?)`                                                 | The raw `IStandaloneThemeData` for one theme.                                                                                                                             |
+| `configureMonacoWorkers(getWorker)`                                          | Sets `self.MonacoEnvironment.getWorker`.                                                                                                                                  |
+| `loadMonaco`, `useMonaco`, `useBrandTheme`, `BASE_OPTIONS`, `EditorSkeleton` | Building blocks for custom Monaco surfaces.                                                                                                                               |
 
 ### Custom loader
 
@@ -76,3 +76,121 @@ Keep the loader identity stable (module scope or `useCallback`); a new function 
 - `monaco.editor.setTheme` is global: every Monaco instance on the page shares one theme.
 - Light tokens live on `:root`, so `gntik-light` is only exact while light is active; the
   components redefine all themes on every switch, so the active theme is always correct.
+
+## Consumer-injected YAML diagnostics (Monaco 0.57)
+
+The kit does not depend on `monaco-yaml` and never imports a worker. Install a compatible
+`monaco-yaml` in the consumer (the docs example uses 5.5.1 with `monaco-editor` 0.57.0).
+The integration lives behind a stable lazy loader. Do not import these worker constructors
+from your app entry if you want to defer their chunks until the editor opens.
+
+```ts
+// yaml-workers.ts: loaded only by yaml-loader.ts
+import { configureMonacoWorkers } from '@gntik-ai/editor';
+import EditorWorker from 'monaco-editor/editor/editor.worker?worker';
+import YamlWorker from 'monaco-yaml/yaml.worker?worker';
+
+configureMonacoWorkers((_id, label) => {
+  if (label === 'yaml') return new YamlWorker();
+  return new EditorWorker();
+});
+```
+
+```ts
+// yaml-loader.ts: keep this module's loader identity stable
+import type { MonacoLoader } from '@gntik-ai/editor';
+let configured: ReturnType<MonacoLoader> | undefined;
+export const yamlLoader: MonacoLoader = () => {
+  configured ??= Promise.all([import('./yaml-workers'), import('monaco-editor'), import('monaco-yaml')]).then(
+    ([, monaco, { configureMonacoYaml }]) => {
+      configureMonacoYaml(monaco, {
+        enableSchemaRequest: false,
+        validate: true,
+        schemas: [
+          {
+            uri: 'inmemory://schemas/workflow.json',
+            fileMatch: ['*'],
+            schema: {
+              type: 'object',
+              required: ['count'],
+              properties: { count: { type: 'integer' } },
+            },
+          },
+        ],
+      });
+      return monaco;
+    },
+  );
+  return configured;
+};
+```
+
+Monaco 0.57 exports shorter public subpaths. `monaco-worker-manager` 2.0.1, used by
+`monaco-yaml` 5.5.1, still imports the legacy `monaco-editor/esm/vs/` path. Keep the alias
+in the consumer Vite config for that dependency, including worker builds:
+
+```ts
+import { fileURLToPath } from 'node:url';
+export default {
+  resolve: {
+    alias: [
+      {
+        find: /^monaco-editor\/esm\/vs\//,
+        replacement: fileURLToPath(new URL('./node_modules/monaco-editor/esm/vs/', import.meta.url)),
+      },
+    ],
+  },
+  worker: { format: 'es' },
+};
+```
+
+Vite's `?worker` constructors load module workers from bundled same-origin assets. Serve
+production with `script-src 'self'; worker-src 'self' blob:; connect-src 'self'`. Monaco
+also needs its generated inline styles (`style-src 'self' 'unsafe-inline'`); fonts and
+stylesheets must be bundled on the same origin. Always supply the schema inline and set
+`enableSchemaRequest: false`. Do not configure remote `$ref` dependencies, schema stores,
+or CDN loaders. The kit's default `loadMonaco` is an ESM import, never a CDN request.
+
+```tsx
+<CodePanel
+  files={[{ path: 'flow.yaml', language: 'yaml', content: 'count: wrong\n' }]}
+  problems={[]}
+  loader={yamlLoader}
+  markers={[
+    {
+      id: 'semantic',
+      owner: 'semantic-worker',
+      file: 'flow.yaml',
+      line: 1,
+      severity: 'warning',
+      message: 'Review the terminal step.',
+    },
+  ]}
+  readOnly={runMode}
+  onValidityChange={(valid) => setCanSave(valid)}
+/>
+```
+
+Set `markers` (even an empty list), `onMonacoReady`, `onValidityChange` or `readOnly` to opt
+into model diagnostics. Omitting every extension preserves the caller-supplied Problems
+list. Collection covers both the code editor and the modified diff model.
+
+`CodePanel` subscribes to the public Monaco marker API for every mounted file model and
+merges every owner's markers into its Problems list. It reserves each `markers[].owner`
+for that consumer marker group, writes those line markers to the model, and clears them
+when removed or unmounted. Consumer markers also appear for files not yet opened. Keep
+owners distinct from `yaml`; owner groups supplied through `markers` replace that group's
+model diagnostics, so they are listed once.
+
+`onMonacoReady(monaco)` is an alternative setup hook for already-loaded consumer services;
+it runs once per Monaco instance in the panel and may return a disposer. Prefer the loader
+for language registration before editor creation. Validity is based on the merged error
+count: no notification for an initially clean panel, `false` when errors become nonzero,
+and `true` when the last error clears. Warnings do not change validity. `readOnly` reaches
+both CodeEditor and DiffEditor; leaving it undefined preserves each editor's defaults.
+
+The production docs example is `/builders.html?item=code-panel&mode=edit&theme=dark`.
+`apps/docs/e2e/builders.a11y.spec.js` checks Worker response evidence for `getWorker('yaml')`,
+inline-schema errors alongside consumer markers, no CSP violations or external requests,
+and axe in dark, light and high_contrast for the code panel, flow builder and workflow page
+in edit and run modes. Build the docs before running that Playwright file.

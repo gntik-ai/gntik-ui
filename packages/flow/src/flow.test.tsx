@@ -1,7 +1,15 @@
 import { act, render, renderHook, screen, waitFor, within } from '@testing-library/react';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { FLOW_TONES, NodeCard, flowNodeTypes, useFlowTheme, withBrandMarkers, type FlowTone } from './index';
+import {
+  FLOW_TONES,
+  FlowCanvas,
+  NodeCard,
+  flowNodeTypes,
+  useFlowTheme,
+  withBrandMarkers,
+  type FlowTone,
+} from './index';
 import NodeTypesStrip from './examples/NodeTypesStrip';
 import PipelineCanvas from './examples/PipelineCanvas';
 import { pipelineEdges } from './examples/pipeline';
@@ -12,7 +20,11 @@ function setTokens(vars: Record<string, string>) {
 
 beforeEach(() => {
   document.documentElement.removeAttribute('style');
-  setTokens({ '--primary': '145 61% 50%', '--muted-foreground': '150 8% 40%', '--border': '90 14% 86%' });
+  setTokens({
+    '--primary': '145 61% 50%',
+    '--muted-foreground': '150 8% 40%',
+    '--border': '90 14% 86%',
+  });
 });
 
 describe('FlowCanvas', () => {
@@ -71,7 +83,10 @@ describe('token adapter wiring', () => {
 
   it('withBrandMarkers colours arrows by edge state and keeps explicit markers', () => {
     const { result } = renderHook(() => useFlowTheme());
-    const out = withBrandMarkers([...pipelineEdges, { id: 'x', source: 'a', target: 'b', markerEnd: 'custom' }], result.current);
+    const out = withBrandMarkers(
+      [...pipelineEdges, { id: 'x', source: 'a', target: 'b', markerEnd: 'custom' }],
+      result.current,
+    );
     expect(out[0]?.markerEnd).toMatchObject({ color: 'hsl(145 61% 50%)' });
     expect(out[2]?.markerEnd).toMatchObject({ color: 'hsl(150 8% 40%)' });
     expect(out.at(-1)?.markerEnd).toBe('custom');
@@ -93,4 +108,54 @@ describe('styles.css', () => {
     for (const d of decls) expect(d).not.toMatch(/#[0-9a-f]{3,8}\b|rgba?\(/i);
     expect(css).toMatch(/\.high_contrast \.gu-flow/);
   });
+});
+
+// Public canvas seam: consumers register kit contracts, never React Flow renderers.
+it('renders a custom branch node with named handles', () => {
+  render(
+    <FlowCanvas
+      aria-label="Custom graph"
+      nodes={[
+        {
+          id: 'branch',
+          type: 'branch',
+          position: { x: 0, y: 0 },
+          data: { title: 'Branch' },
+        },
+      ]}
+      nodeRenderers={[
+        {
+          type: 'branch',
+          handles: [
+            { id: 'input', kind: 'target' },
+            { id: 'arm-0', kind: 'source', label: 'First arm' },
+          ],
+          render: ({ data }) => <span>{data.title}</span>,
+        },
+      ]}
+    />,
+  );
+  const canvas = screen.getByRole('region', { name: 'Custom graph' });
+  expect(within(canvas).getByText('Branch')).toBeInTheDocument();
+  expect(canvas.querySelector('[data-handleid="arm-0"]')).toHaveAttribute('aria-label', 'First arm');
+  expect(canvas.querySelector('[data-handleid="input"]')).not.toBeNull();
+});
+
+it('places a top handle along the top edge rather than shifting it down inside the node', () => {
+  render(
+    <FlowCanvas
+      aria-label="Top handle graph"
+      nodes={[{ id: 'custom', type: 'custom', position: { x: 0, y: 0 }, data: { title: 'Custom' } }]}
+      nodeRenderers={[
+        {
+          type: 'custom',
+          handles: [{ id: 'out', kind: 'source', position: 'top' }],
+          render: ({ data }) => <span>{data.title}</span>,
+        },
+      ]}
+    />,
+  );
+  const handle = screen.getByRole('region', { name: 'Top handle graph' }).querySelector('[data-handleid="out"]');
+  expect(handle).toHaveAttribute('data-handlepos', 'top');
+  expect(handle).toHaveStyle({ left: '50%' });
 });

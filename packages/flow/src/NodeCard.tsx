@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { FlowStatusBadge } from './decorations';
 import { KindGlyph } from './glyphs';
 import { cx, FLOW_TONES, KIND_CHIP, type FlowNodeKind, type FlowTone } from './tones';
 
@@ -27,8 +28,19 @@ export function NodeCard({ kind = 'step', icon, title, subtitle, meta, tone, sel
   return (
     <div className={cx('relative h-full w-full min-w-52', className)} data-tone={tone}>
       {running && (
-        <svg aria-hidden="true" width="100%" height="100%" className="gu-flow-run-frame pointer-events-none absolute inset-0 z-10">
-          <rect className="gu-flow-run fill-none stroke-primary" strokeWidth={2} strokeLinecap="round" pathLength={100} strokeDasharray="22 78" />
+        <svg
+          aria-hidden="true"
+          width="100%"
+          height="100%"
+          className="gu-flow-run-frame pointer-events-none absolute inset-0 z-10"
+        >
+          <rect
+            className="gu-flow-run fill-none stroke-primary"
+            strokeWidth={2}
+            strokeLinecap="round"
+            pathLength={100}
+            strokeDasharray="22 78"
+          />
         </svg>
       )}
       <div className={cx('flex h-full w-full flex-col overflow-hidden rounded-lg bg-card transition-shadow', border)}>
@@ -44,12 +56,7 @@ export function NodeCard({ kind = 'step', icon, title, subtitle, meta, tone, sel
         {(meta || t) && (
           <div className="flex items-center justify-between gap-2 border-t border-border/70 bg-secondary/25 px-3 py-2">
             {meta ? <span className="truncate font-mono text-[10px] text-muted-foreground">{meta}</span> : <span />}
-            {t && (
-              <span className={cx('inline-flex h-[18px] shrink-0 items-center gap-1 rounded px-1.5 font-mono text-[9.5px] font-semibold', t.pill)}>
-                <span aria-hidden className={cx('h-1.5 w-1.5 rounded-full', t.dot, running && 'animate-pulse motion-reduce:animate-none')} />
-                {t.label}
-              </span>
-            )}
+            {t && <FlowStatusBadge status={tone!} />}
           </div>
         )}
       </div>

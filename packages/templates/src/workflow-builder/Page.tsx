@@ -1,10 +1,32 @@
-import { FlowBuilder, type ConsoleEntry, type FlowBuilderProps, type FlowEdge, type FlowNode, type PaletteItem } from '@gntik-ai/blocks';
+import {
+  CodePanel,
+  type CodePanelProps,
+  FlowBuilder,
+  type ConsoleEntry,
+  type FlowBuilderProps,
+  type FlowEdge,
+  type FlowNode,
+  type PaletteItem,
+} from '@gntik-ai/blocks';
 import { Save, Upload } from '@gntik-ai/icons';
 import { Breadcrumbs, Button, CanvasLayout, StatusTag, type BreadcrumbItem } from '@gntik-ai/ui';
 import { useState } from 'react';
 import { flowBuilderBreadcrumbs, flowBuilderContent } from './data';
 
-export interface FlowBuilderPageProps {
+export interface FlowBuilderPageProps extends Pick<
+  FlowBuilderProps,
+  | 'nodeTypes'
+  | 'onConnectEdge'
+  | 'onConnect'
+  | 'isValidConnection'
+  | 'onConnectionRejected'
+  | 'validationIssues'
+  | 'mode'
+  | 'nodeStatus'
+  | 'onNodeSelect'
+> {
+  /** Optional companion code panel; run mode forces readOnly. */
+  codePanel?: CodePanelProps;
   title: string;
   /** StatusTag key next to the title (draft, active…). */
   status: string;
@@ -46,6 +68,16 @@ export default function FlowBuilderPage(props: Partial<FlowBuilderPageProps>) {
     onConsoleClear,
     onSave,
     onPublish,
+    nodeTypes,
+    onConnectEdge,
+    onConnect,
+    isValidConnection,
+    onConnectionRejected,
+    validationIssues,
+    mode,
+    nodeStatus,
+    onNodeSelect,
+    codePanel,
     breadcrumbs = flowBuilderBreadcrumbs,
     height = 640,
     fullScreen = true,
@@ -74,18 +106,22 @@ export default function FlowBuilderPage(props: Partial<FlowBuilderPageProps>) {
             <Breadcrumbs items={breadcrumbs} className="hidden min-w-0 md:flex" />
             <h1 className="truncate text-[14px] font-semibold text-foreground">{title}</h1>
             <StatusTag status={status} />
-            <p aria-live="polite" className="hidden text-[12px] text-muted-foreground sm:block">
-              {savedNote}
-            </p>
+            {mode !== 'run' && (
+              <p aria-live="polite" className="hidden text-[12px] text-muted-foreground sm:block">
+                {savedNote}
+              </p>
+            )}
           </div>
-          <div className="flex shrink-0 items-center gap-2">
-            <Button size="sm" variant="secondary" icon={Save} loading={saving} onClick={() => void save()}>
-              Save
-            </Button>
-            <Button size="sm" icon={Upload} onClick={onPublish}>
-              Publish
-            </Button>
-          </div>
+          {mode !== 'run' && (
+            <div className="flex shrink-0 items-center gap-2">
+              <Button size="sm" variant="secondary" icon={Save} loading={saving} onClick={() => void save()}>
+                Save
+              </Button>
+              <Button size="sm" icon={Upload} onClick={onPublish}>
+                Publish
+              </Button>
+            </div>
+          )}
         </>
       }
     >
@@ -101,7 +137,23 @@ export default function FlowBuilderPage(props: Partial<FlowBuilderPageProps>) {
           onConsoleChange={onConsoleChange}
           onConsoleClear={onConsoleClear}
           height={height}
+          nodeTypes={nodeTypes}
+          onConnectEdge={onConnectEdge}
+          onConnect={onConnect}
+          isValidConnection={isValidConnection}
+          onConnectionRejected={onConnectionRejected}
+          validationIssues={validationIssues}
+          mode={mode}
+          nodeStatus={nodeStatus}
+          onNodeSelect={onNodeSelect}
         />
+        {codePanel && (
+          <CodePanel
+            {...codePanel}
+            headingLevel={codePanel.headingLevel ?? 2}
+            readOnly={mode === 'run' ? true : codePanel.readOnly}
+          />
+        )}
       </div>
     </CanvasLayout>
   );

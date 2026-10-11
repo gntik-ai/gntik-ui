@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { Play } from '@gntik-ai/icons';
 import { FlowCanvas, useFlowState, type FlowNode, type FlowNodeData } from '@gntik-ai/flow';
 import { Button, ResizablePanel, ResizablePanelGroup, ResizeHandle, cn } from '@gntik-ai/ui';
@@ -11,13 +11,20 @@ import {
   type FlowEdge,
   type PaletteItem,
 } from './fixtures';
+import type { FlowBuilderExtensions } from './extensions';
+import { useDecoratedNodes } from './decorated-nodes';
+import { useConnections } from './connections';
+import { FlowProblems } from './problems';
 import { NodeInspector, NodePalette, RunConsole } from './parts';
 
 export type { ConsoleEntry, FlowEdge, PaletteItem } from './fixtures';
 /** Graph types re-exported so apps can type nodes without depending on @gntik-ai/flow. */
 export type { FlowNode, FlowNodeData, FlowNodeKind, FlowTone } from '@gntik-ai/flow';
 
-export interface FlowBuilderProps {
+export type { FlowConnection, FlowConnectionRejection, FlowValidationIssue } from './extensions';
+export type { FlowNodeRenderer, FlowHandle, FlowNodeRenderProps } from '@gntik-ai/flow';
+
+export interface FlowBuilderProps extends FlowBuilderExtensions {
   title?: string;
   nodes?: FlowNode[];
   edges?: FlowEdge[];
@@ -87,14 +94,30 @@ export function FlowBuilder({
   titleAs: TitleTag = 'h2',
   height = 600,
   onRun,
+  nodeTypes,
+  onConnectEdge,
+  onConnect: onConnected,
+  isValidConnection,
+  onConnectionRejected,
+  validationIssues,
+  mode = 'edit',
+  nodeStatus,
+  onNodeSelect,
   className,
 }: FlowBuilderProps) {
+  const runMode = mode === 'run';
+  const root = useRef<HTMLElement>(null);
   const wide = useIsWide();
   const panelAs = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
-  const { nodes, edges, setNodes, setEdges, onNodesChange, onEdgesChange, onConnect } = useFlowState<FlowNode, FlowEdge>(
-    initialNodes,
-    initialEdges,
-  );
+  const {
+    nodes,
+    edges,
+    setNodes,
+    setEdges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect: defaultConnect,
+  } = useFlowState<FlowNode, FlowEdge>(initialNodes, initialEdges);
   const [innerLog, setInnerLog] = useState<ConsoleEntry[]>(defaultConsoleEntries);
   const log = consoleEntries ?? innerLog;
   const latestLog = useRef(log);
@@ -118,7 +141,10 @@ export function FlowBuilder({
       width: 208,
       height: slim ? 56 : 90,
       selected: true,
-      data: { title: `New ${item.title.toLowerCase()}`, subtitle: item.description },
+      data: {
+        title: `New ${item.title.toLowerCase()}`,
+        subtitle: item.description,
+      },
     };
     setNodes((ns) => [...ns.map((n) => (n.selected ? { ...n, selected: false } : n)), node]);
   };
@@ -141,14 +167,24 @@ export function FlowBuilder({
     const ordered = [...nodes].sort((a, b) => a.position.x - b.position.x || a.position.y - b.position.y);
     const t = clock();
     return [
-      { id: `run-${n}-start`, time: t, level: 'info', message: `Run #${n} started · ${nodes.length} nodes` },
+      {
+        id: `run-${n}-start`,
+        time: t,
+        level: 'info',
+        message: `Run #${n} started · ${nodes.length} nodes`,
+      },
       ...ordered.map<ConsoleEntry>((node, i) => ({
         id: `run-${n}-${node.id}`,
         time: t,
         level: node.data.tone === 'failed' ? 'error' : node.data.tone === 'degraded' ? 'warn' : 'success',
         message: `${node.data.title} ${node.data.tone === 'failed' ? 'failed' : 'completed'} in ${40 + ((i * 37) % 160)}ms`,
       })),
-      { id: `run-${n}-end`, time: t, level: 'info', message: `Run #${n} finished` },
+      {
+        id: `run-${n}-end`,
+        time: t,
+        level: 'info',
+        message: `Run #${n} finished`,
+      },
     ];
   };
 
@@ -163,7 +199,14 @@ export function FlowBuilder({
         added = (await result) ?? simulate(n);
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        added = [{ id: `run-${n}-error`, time: clock(), level: 'error', message: `Run #${n} failed: ${message}` }];
+        added = [
+          {
+            id: `run-${n}-error`,
+            time: clock(),
+            level: 'error',
+            message: `Run #${n} failed: ${message}`,
+          },
+        ];
       } finally {
         setRunning(false);
       }
@@ -178,24 +221,88 @@ export function FlowBuilder({
     commitLog([]);
   };
 
+  const connections = useConnections(nodes, setEdges, defaultConnect, {
+    onConnect: onConnected,
+    onConnectEdge,
+    isValidConnection,
+    onConnectionRejected,
+  });
+
+  const issues = useMemo(
+    () => [...(validationIssues ?? []), ...connections.rejections],
+    [validationIssues, connections.rejections],
+  );
+  const displayedNodes = useDecoratedNodes(nodes, issues, nodeStatus, runMode);
+  const selectNode = (id: string) => {
+    setNodes((ns) => ns.map((n) => ({ ...n, selected: n.id === id })));
+    // Focus only within this builder; graph ids may repeat across independent canvases.
+    const element = root.current?.querySelector<HTMLElement>(`.react-flow__node[data-id="${CSS.escape(id)}"]`);
+    element?.focus();
+    onNodeSelect?.(id);
+  };
+
   const canvas = (h: number | string) => (
     <FlowCanvas<FlowNode, FlowEdge>
       aria-label={`${title} canvas`}
       height={h}
-      nodes={nodes}
+      nodes={displayedNodes}
       edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
+      onNodesChange={(changes) =>
+        onNodesChange(
+          runMode ? changes.filter((change) => change.type === 'select' || change.type === 'dimensions') : changes,
+        )
+      }
+      onEdgesChange={(changes) =>
+        onEdgesChange(runMode ? changes.filter((change) => change.type === 'select') : changes)
+      }
+      nodeRenderers={nodeTypes}
+      interactive={!runMode}
+      elementsSelectable
+      nodesFocusable
+      nodesDraggable={!runMode}
+      nodesConnectable={!runMode}
+      deleteKeyCode={runMode ? null : 'Backspace'}
+      onNodeClick={(_, node) => onNodeSelect?.(node.id)}
+      onKeyDown={(event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        const element = (event.target as HTMLElement).closest('.react-flow__node');
+        const id = element?.getAttribute('data-id');
+        if (id) onNodeSelect?.(id);
+      }}
+      ariaLabelConfig={
+        runMode
+          ? {
+              'node.a11yDescription.default': 'Press enter or space to select a node.',
+            }
+          : undefined
+      }
+      onConnect={runMode ? undefined : connections.connect}
+      isValidConnection={runMode ? () => false : connections.validate}
+      onConnectStart={connections.reset}
+      onClickConnectStart={connections.reset}
+      onConnectEnd={(_, state) => (state.toNode ? connections.finish() : connections.reset())}
+      onClickConnectEnd={connections.finish}
       showMiniMap={wide}
     />
   );
   const palettePanel = <NodePalette items={palette} onAdd={addNode} titleAs={panelAs} />;
   const inspector = <NodeInspector node={selected} onChange={updateNode} onDelete={deleteNode} titleAs={panelAs} />;
-  const consolePanel = <RunConsole entries={log} onClear={clearLog} titleAs={panelAs} />;
+  const consolePanel = (
+    <div className="flex h-full min-h-0 flex-col">
+      <FlowProblems issues={issues} onSelect={selectNode} titleAs={panelAs} />
+      <RunConsole entries={log} onClear={clearLog} titleAs={panelAs} />
+    </div>
+  );
 
   let body: ReactNode;
-  if (wide) {
+  if (runMode) {
+    body = (
+      <div className="flex flex-col divide-y divide-border">
+        {canvas(wide ? height - 180 : 360)}
+        <div className="h-40">{consolePanel}</div>
+      </div>
+    );
+  } else if (wide) {
     body = (
       <ResizablePanelGroup direction="vertical" style={{ height }}>
         <ResizablePanel defaultSize={72} minSize={40}>
@@ -231,7 +338,11 @@ export function FlowBuilder({
   }
 
   return (
-    <section aria-label={title} className={cn('overflow-hidden rounded-lg border border-border bg-card shadow-sm', className)}>
+    <section
+      ref={root}
+      aria-label={title}
+      className={cn('overflow-hidden rounded-lg border border-border bg-card shadow-sm', className)}
+    >
       <header className="flex items-center justify-between gap-3 border-b border-border bg-secondary/35 px-3 py-2">
         <div className="min-w-0">
           <TitleTag className="truncate text-[13.5px] font-semibold text-foreground">{title}</TitleTag>
@@ -239,9 +350,11 @@ export function FlowBuilder({
             {nodes.length} nodes · {edges.length} edges
           </p>
         </div>
-        <Button size="sm" icon={Play} loading={running} onClick={() => void run()}>
-          Run
-        </Button>
+        {!runMode && (
+          <Button size="sm" icon={Play} loading={running} onClick={() => void run()}>
+            Run
+          </Button>
+        )}
       </header>
       {body}
     </section>

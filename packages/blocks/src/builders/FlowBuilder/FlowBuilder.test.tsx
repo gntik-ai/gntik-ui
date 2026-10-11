@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { Profiler, useState } from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { FlowStatusBadge } from '@gntik-ai/flow';
 import { expectNoAxeViolations } from '../../test/a11y';
 import * as blocks from '../../index';
 import { FlowBuilder, type ConsoleEntry, type FlowEdge, type FlowNode } from './FlowBuilder';
@@ -21,7 +22,10 @@ beforeAll(() => {
 
 function setWide(matches: boolean) {
   const original = window.matchMedia;
-  window.matchMedia = ((query: string) => ({ ...original(query), matches })) as typeof window.matchMedia;
+  window.matchMedia = ((query: string) => ({
+    ...original(query),
+    matches,
+  })) as typeof window.matchMedia;
   return () => (window.matchMedia = original);
 }
 
@@ -30,7 +34,9 @@ describe('FlowBuilder', () => {
     const restore = setWide(true);
     try {
       render(<FlowBuilder />);
-      const canvas = screen.getByRole('region', { name: 'Untitled flow canvas' });
+      const canvas = screen.getByRole('region', {
+        name: 'Untitled flow canvas',
+      });
       expect(canvas.querySelectorAll('.react-flow__node')).toHaveLength(5);
       expect(screen.getAllByRole('separator')).toHaveLength(3);
       expect(screen.getByText('Select a node to edit its fields.')).toBeInTheDocument();
@@ -55,7 +61,12 @@ describe('FlowBuilder', () => {
     expect(within(canvas).getByText('Enrich record')).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Run' }));
-    expect(onRun).toHaveBeenCalledWith(expect.objectContaining({ nodes: expect.any(Array), edges: expect.any(Array) }));
+    expect(onRun).toHaveBeenCalledWith(
+      expect.objectContaining({
+        nodes: expect.any(Array),
+        edges: expect.any(Array),
+      }),
+    );
     const log = screen.getByRole('log', { name: 'Run console' });
     expect(log).toHaveTextContent('Run #1 started · 6 nodes');
     expect(log).toHaveTextContent(/Enrich record completed/);
@@ -66,7 +77,12 @@ describe('FlowBuilder', () => {
 
   it('appends entries returned by onRun and starts from defaultConsoleEntries', async () => {
     const user = userEvent.setup();
-    const entry: ConsoleEntry = { id: 'x', time: '10:00:00', level: 'success', message: 'Deployed run' };
+    const entry: ConsoleEntry = {
+      id: 'x',
+      time: '10:00:00',
+      level: 'success',
+      message: 'Deployed run',
+    };
     render(<FlowBuilder defaultConsoleEntries={[]} onRun={() => [entry]} />);
     const log = screen.getByRole('log', { name: 'Run console' });
     expect(log).toHaveTextContent('No output yet');
@@ -86,7 +102,14 @@ describe('FlowBuilder', () => {
     const button = screen.getByRole('button', { name: 'Run' });
     await user.click(button);
     expect(button).toHaveAttribute('aria-busy', 'true');
-    resolve([{ id: 'a', time: '10:00:00', level: 'info', message: 'Remote run queued' }]);
+    resolve([
+      {
+        id: 'a',
+        time: '10:00:00',
+        level: 'info',
+        message: 'Remote run queued',
+      },
+    ]);
     const log = screen.getByRole('log', { name: 'Run console' });
     expect(await within(log).findByText('Remote run queued')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Run' }));
@@ -98,7 +121,9 @@ describe('FlowBuilder', () => {
     const onConsoleClear = vi.fn();
     const changes: ConsoleEntry[][] = [];
     function Host() {
-      const [entries, setEntries] = useState<ConsoleEntry[]>([{ id: 'h', time: '09:00:00', level: 'info', message: 'From host' }]);
+      const [entries, setEntries] = useState<ConsoleEntry[]>([
+        { id: 'h', time: '09:00:00', level: 'info', message: 'From host' },
+      ]);
       return (
         <FlowBuilder
           consoleEntries={entries}
@@ -138,11 +163,277 @@ describe('FlowBuilder', () => {
   });
 
   it('re-exports the graph types and sub-parts from the package entry', () => {
-    const node: FlowNode = { id: 'n', type: 'step', position: { x: 0, y: 0 }, data: { title: 'Step' } };
+    const node: FlowNode = {
+      id: 'n',
+      type: 'step',
+      position: { x: 0, y: 0 },
+      data: { title: 'Step' },
+    };
     const edge: FlowEdge = { id: 'e', source: 'n', target: 'n' };
     expect([node.id, edge.id]).toEqual(['n', 'e']);
     expect(typeof blocks.NodePalette).toBe('function');
     expect(typeof blocks.NodeInspector).toBe('function');
     expect(typeof blocks.RunConsole).toBe('function');
   });
+});
+
+function connectHandles(sourceId: string, handleId: string, targetId: string) {
+  const source = document.querySelector(`[data-nodeid="${sourceId}"][data-handleid="${handleId}"]`);
+  const target = document.querySelector(`[data-nodeid="${targetId}"].target`);
+  if (!source || !target) throw new Error('Named connection handles missing');
+  // jsdom has no hit testing: the browser boundary returns the handle under the pointer.
+  Object.defineProperty(document, 'elementFromPoint', {
+    configurable: true,
+    value: () => target,
+  });
+  fireEvent.click(source);
+  fireEvent.click(target);
+}
+
+it.each([
+  ['branch', 'arm-0', 'branch-arm', { armIndex: 0 }],
+  ['parallel', 'branch', 'parallel', { branch: 'first' }],
+  ['sequence', 'next', 'sequence', { step: 1 }],
+] as const)('maps a %s named handle to the consumer edge type and data', async (type, handle, edgeType, data) => {
+  const onRun = vi.fn();
+  const mapper = vi.fn(() => ({ type: edgeType, data }));
+  render(
+    <FlowBuilder
+      edges={[]}
+      nodes={[
+        {
+          id: 'source',
+          type,
+          position: { x: 0, y: 0 },
+          data: { title: 'Source' },
+        },
+        {
+          id: 'target',
+          type: 'output',
+          position: { x: 256, y: 0 },
+          data: { title: 'Target' },
+        },
+      ]}
+      nodeTypes={[
+        {
+          type,
+          handles: [{ id: handle, kind: 'source' }],
+          render: ({ data }) => <span>{data.title}</span>,
+        },
+      ]}
+      onConnectEdge={mapper}
+      onRun={onRun}
+    />,
+  );
+  connectHandles('source', handle, 'target');
+  await userEvent.click(screen.getByRole('button', { name: 'Run' }));
+  expect(mapper).toHaveBeenCalledWith({
+    source: 'source',
+    target: 'target',
+    sourceHandle: handle,
+    targetHandle: null,
+    sourceType: type,
+    targetType: 'output',
+  });
+  expect(onRun.mock.calls[0]?.[0].edges).toEqual([
+    expect.objectContaining({
+      source: 'source',
+      target: 'target',
+      type: edgeType,
+      data,
+    }),
+  ]);
+});
+
+it('rejects a connection without mapping, notifying acceptance or adding an edge', async () => {
+  const rejection = {
+    code: 'cycle',
+    nodeId: 'a',
+    message: 'Cycles are not allowed',
+  };
+  const rejected = vi.fn();
+  const accepted = vi.fn();
+  const mapper = vi.fn();
+  const onRun = vi.fn();
+  render(
+    <FlowBuilder
+      nodes={[
+        {
+          id: 'a',
+          type: 'branch',
+          position: { x: 0, y: 0 },
+          data: { title: 'Branch' },
+        },
+        {
+          id: 'b',
+          type: 'output',
+          position: { x: 256, y: 0 },
+          data: { title: 'End' },
+        },
+      ]}
+      edges={[]}
+      nodeTypes={[
+        {
+          type: 'branch',
+          handles: [{ id: 'arm', kind: 'source' }],
+          render: ({ data }) => <span>{data.title}</span>,
+        },
+      ]}
+      isValidConnection={() => rejection}
+      onConnectionRejected={rejected}
+      onConnect={accepted}
+      onConnectEdge={mapper}
+      onRun={onRun}
+    />,
+  );
+  connectHandles('a', 'arm', 'b');
+  expect(rejected).toHaveBeenCalledExactlyOnceWith(rejection);
+  expect(accepted).not.toHaveBeenCalled();
+  expect(mapper).not.toHaveBeenCalled();
+  await userEvent.click(screen.getByRole('button', { name: 'Run' }));
+  expect(onRun.mock.calls[0]?.[0].edges).toEqual([]);
+  expect(screen.getByRole('list', { name: 'Flow problems' })).toHaveTextContent(rejection.message);
+});
+
+it('decorates invalid nodes with an icon and text and focuses a problem node', async () => {
+  render(
+    <FlowBuilder
+      validationIssues={[
+        { code: 'required', nodeId: 'validate', message: 'Schema is required' },
+        { code: 'empty-flow', message: 'Add a terminal step' },
+      ]}
+    />,
+  );
+  const node = screen.getByTestId('rf__node-validate');
+  expect(within(node).getByText('Schema is required')).toBeInTheDocument();
+  expect(node.querySelector('svg[aria-hidden]')).not.toBeNull();
+  const problems = screen.getByRole('list', { name: 'Flow problems' });
+  expect(within(problems).getByText(/Add a terminal step/).tagName).toBe('SPAN');
+  await userEvent.click(within(problems).getByRole('button', { name: /Schema is required/ }));
+  expect(node).toHaveClass('selected');
+  expect(node).toHaveFocus();
+  expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Validate payload');
+});
+
+it('run mode keeps labelled nodes selectable with live status but prevents editing', async () => {
+  const selected = vi.fn();
+  const { rerender } = render(
+    <FlowBuilder mode="run" nodeStatus={{ webhook: 'running', validate: 'paused' }} onNodeSelect={selected} />,
+  );
+  expect(screen.queryByRole('button', { name: /Add Step/ })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Run' })).toBeNull();
+  const node = screen.getByRole('group', { name: 'Webhook' });
+  expect(node).toHaveAttribute('tabindex', '0');
+  expect(node).not.toHaveClass('draggable');
+  expect(node.querySelector('.connectable')).toBeNull();
+  expect(within(node).getByText('Running')).toBeInTheDocument();
+  fireEvent.click(node);
+  expect(selected).toHaveBeenLastCalledWith('webhook');
+  expect(screen.queryByRole('textbox', { name: 'Title' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Delete node' })).toBeNull();
+  const other = screen.getByRole('group', { name: 'Validate payload' });
+  fireEvent.keyDown(other, { key: 'Enter' });
+  expect(selected).toHaveBeenLastCalledWith('validate');
+  fireEvent.keyDown(other, { key: 'Delete' });
+  expect(other).toBeInTheDocument();
+  rerender(<FlowBuilder mode="run" nodeStatus={{ webhook: 'done', validate: 'paused' }} onNodeSelect={selected} />);
+  expect(within(node).getByText('Done')).toBeInTheDocument();
+  expect(within(other).getByText('Paused')).toBeInTheDocument();
+  await expectNoAxeViolations();
+});
+
+it('updating one status does not render another node badge subtree', () => {
+  const renders: Record<string, number> = {};
+  const nodes: FlowNode[] = ['one', 'two'].map((id) => ({
+    id,
+    type: 'custom',
+    position: { x: id === 'one' ? 0 : 256, y: 0 },
+    data: { title: id },
+  }));
+  const types = [
+    {
+      type: 'custom',
+      handles: [],
+      render: ({ id, data }: import('@gntik-ai/flow').FlowNodeRenderProps) => (
+        <Profiler
+          id={id}
+          onRender={(id) => {
+            renders[id] = (renders[id] ?? 0) + 1;
+          }}
+        >
+          <FlowStatusBadge status={data.decoration?.status ?? 'paused'} />
+        </Profiler>
+      ),
+    },
+  ];
+  const { rerender } = render(
+    <FlowBuilder
+      nodes={nodes}
+      edges={[]}
+      nodeTypes={types}
+      mode="run"
+      nodeStatus={{ one: 'running', two: 'paused' }}
+    />,
+  );
+  const before = renders.two;
+  rerender(
+    <FlowBuilder nodes={nodes} edges={[]} nodeTypes={types} mode="run" nodeStatus={{ one: 'done', two: 'paused' }} />,
+  );
+  expect(renders.two).toBe(before);
+  expect(screen.getAllByText('Done')).toHaveLength(2);
+});
+
+it('anchors a connection rejection to its source when the validator omits a node id', () => {
+  const rejected = vi.fn();
+  render(
+    <FlowBuilder
+      nodes={[
+        { id: 'a', type: 'branch', position: { x: 0, y: 0 }, data: { title: 'Branch' } },
+        { id: 'b', type: 'output', position: { x: 256, y: 0 }, data: { title: 'End' } },
+      ]}
+      edges={[]}
+      nodeTypes={[
+        { type: 'branch', handles: [{ id: 'arm', kind: 'source' }], render: ({ data }) => <span>{data.title}</span> },
+      ]}
+      isValidConnection={() => ({ code: 'invalid', message: 'Choose another target' })}
+      onConnectionRejected={rejected}
+    />,
+  );
+  connectHandles('a', 'arm', 'b');
+  expect(rejected).toHaveBeenCalledExactlyOnceWith({ code: 'invalid', nodeId: 'a', message: 'Choose another target' });
+});
+
+it('connects named custom handles with the keyboard', async () => {
+  const onRun = vi.fn();
+  render(
+    <FlowBuilder
+      nodes={[
+        { id: 'a', type: 'custom', width: 208, height: 90, position: { x: 0, y: 0 }, data: { title: 'Source' } },
+        { id: 'b', type: 'custom', width: 208, height: 90, position: { x: 256, y: 0 }, data: { title: 'Target' } },
+      ]}
+      edges={[]}
+      nodeTypes={[
+        {
+          type: 'custom',
+          handles: [
+            { id: 'input', kind: 'target', label: 'Input' },
+            { id: 'next', kind: 'source', label: 'Next' },
+          ],
+          render: ({ data }) => <span>{data.title}</span>,
+        },
+      ]}
+      onRun={onRun}
+    />,
+  );
+  const source = within(screen.getByTestId('rf__node-a')).getByRole('button', { name: 'Next' });
+  const target = within(screen.getByTestId('rf__node-b')).getByRole('button', { name: 'Input' });
+  Object.defineProperty(document, 'elementFromPoint', { configurable: true, value: () => target });
+  expect(source).toHaveAttribute('tabindex', '0');
+  fireEvent.keyDown(source, { key: 'Enter' });
+  fireEvent.keyDown(target, { key: ' ' });
+  await userEvent.click(screen.getByRole('button', { name: 'Run' }));
+  expect(onRun.mock.calls[0]?.[0].edges).toEqual([
+    expect.objectContaining({ source: 'a', target: 'b', sourceHandle: 'next', targetHandle: 'input' }),
+  ]);
+  await expectNoAxeViolations();
 });

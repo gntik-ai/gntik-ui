@@ -1,10 +1,13 @@
 import type { ReactNode } from 'react';
 import { Handle, Position, type Node, type NodeProps, type NodeTypes } from '@xyflow/react';
+import { FlowNodeIssues, type FlowNodeDecoration } from './decorations';
 import { NodeCard } from './NodeCard';
 import type { FlowNodeKind, FlowTone } from './tones';
 
 /** Generic node content. No domain data: title, subtitle, meta, icon and a status tone. */
 export type FlowNodeData = {
+  [key: string]: unknown;
+  decoration?: FlowNodeDecoration;
   title: string;
   subtitle?: string;
   meta?: string;
@@ -15,7 +18,7 @@ export type FlowNodeData = {
   handles?: { target?: boolean; source?: boolean };
 };
 
-export type FlowNode = Node<FlowNodeData, FlowNodeKind>;
+export type FlowNode = Node<FlowNodeData, string>;
 
 const DEFAULT_HANDLES: Record<FlowNodeKind, { target: boolean; source: boolean }> = {
   trigger: { target: false, source: true },
@@ -38,9 +41,10 @@ function makeNode(kind: FlowNodeKind) {
           subtitle={data.subtitle}
           meta={data.meta}
           icon={data.icon}
-          tone={data.tone}
+          tone={data.decoration?.status ?? data.tone}
           selected={selected}
         />
+        <FlowNodeIssues issues={data.decoration?.issues} />
         {handles.source && (
           <Handle type="source" position={sourcePosition ?? Position.Right} isConnectable={isConnectable} />
         )}
