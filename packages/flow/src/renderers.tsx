@@ -39,15 +39,29 @@ const POSITIONS = {
 export function adaptNodeRenderers(renderers: readonly FlowNodeRenderer[]): NodeTypes {
   const types: NodeTypes = { ...flowNodeTypes };
   for (const definition of renderers) {
+    const counts = { left: 0, right: 0, top: 0, bottom: 0 };
+    const handles = definition.handles.map((handle) => {
+      const position = handle.position ?? (handle.kind === 'target' ? 'left' : 'right');
+      return { ...handle, position, index: ++counts[position] };
+    });
+    const verticalCount = Math.max(counts.left, counts.right);
+    const horizontalCount = Math.max(counts.top, counts.bottom);
     types[definition.type] = memo(function CustomNode({ id, data, selected, isConnectable }: NodeProps<FlowNode<string>>) {
       return (
-        <div className="relative h-full w-full">
-          {definition.handles.map((handle, index) => (
+        <div
+          className="relative grid h-full w-full"
+          style={{
+            minHeight: verticalCount ? (verticalCount + 1) * 32 : undefined,
+            minWidth: horizontalCount ? (horizontalCount + 1) * 32 : undefined,
+          }}
+        >
+          {handles.map((handle) => (
             <Handle
               key={`${handle.kind}-${handle.id}`}
+              className="gu-flow-custom-handle"
               id={handle.id}
               type={handle.kind}
-              position={POSITIONS[handle.position ?? (handle.kind === 'target' ? 'left' : 'right')]}
+              position={POSITIONS[handle.position]}
               isConnectable={isConnectable}
               aria-label={handle.label ?? handle.id}
               role="button"
@@ -61,7 +75,7 @@ export function adaptNodeRenderers(renderers: readonly FlowNodeRenderer[]): Node
               }}
               style={{
                 [handle.position === 'top' || handle.position === 'bottom' ? 'left' : 'top']:
-                  `${((index + 1) / (definition.handles.length + 1)) * 100}%`,
+                  `${(handle.index / (counts[handle.position] + 1)) * 100}%`,
               }}
             />
           ))}

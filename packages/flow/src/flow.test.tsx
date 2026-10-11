@@ -155,3 +155,30 @@ it('places a top handle along the top edge rather than shifting it down inside t
   expect(handle).toHaveAttribute('data-handlepos', 'top');
   expect(handle).toHaveStyle({ left: '50%' });
 });
+
+it('spaces named handles on each side with room for separate pointer targets', () => {
+  render(
+    <FlowCanvas
+      aria-label="Branch handles"
+      nodes={[{ id: 'branch', type: 'branch', position: { x: 0, y: 0 }, data: { title: 'Branch' } }]}
+      nodeRenderers={[
+        {
+          type: 'branch',
+          handles: [
+            { id: 'input', kind: 'target' },
+            { id: 'first', kind: 'source' },
+            { id: 'second', kind: 'source' },
+          ],
+          render: ({ data }) => <NodeCard title={data.title} />,
+        },
+      ]}
+    />,
+  );
+  // jsdom does not measure React Flow nodes, so they remain hidden before layout.
+  const canvas = screen.getByRole('region', { name: 'Branch handles' });
+  const input = canvas.querySelector('[data-handleid="input"]')!;
+  expect(input).toHaveStyle({ top: '50%' });
+  expect(canvas.querySelector('[data-handleid="first"]')).toHaveStyle({ top: '33.33333333333333%' });
+  expect(canvas.querySelector('[data-handleid="second"]')).toHaveStyle({ top: '66.66666666666666%' });
+  expect(input.parentElement).toHaveStyle({ minHeight: '96px' });
+});

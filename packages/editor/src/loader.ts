@@ -63,6 +63,9 @@ export function useBrandTheme(monaco: Monaco | null): void {
 /** Brand defaults shared by both editors (Geist Mono, flat chrome, no overview ruler). */
 export const BASE_OPTIONS = {
   automaticLayout: true,
+  // Keep the labelled input focusable before the first click in Chromium.
+  // Monaco 0.57's native EditContext can expose a zero-size textbox instead.
+  editContext: false,
   fontFamily: 'Geist Mono, ui-monospace, SFMono-Regular, Menlo, monospace',
   fontSize: 13,
   lineHeight: 21,
