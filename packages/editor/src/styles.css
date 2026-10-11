@@ -1,2 +1,10 @@
 /* @gntik-ai/editor — lets Tailwind v4 see this package's classes. Import after "@gntik-ai/ui/styles.css". */
 @source "../dist";
+
+/* Keep the labelled input available to pointer users above the editor surface.
+   Leave Monaco's visible IME composition layer in control of its own stacking. */
+[data-slot="editor"] .monaco-editor .inputarea:not(.ime-input) {
+  min-width: 1px;
+  min-height: 1px;
+  z-index: 1;
+}

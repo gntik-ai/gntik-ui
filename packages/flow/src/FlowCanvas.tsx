@@ -12,6 +12,7 @@ import {
 } from '@xyflow/react';
 import { flowNodeTypes, type FlowNode } from './nodes';
 import { brandEdgeOptions, flowMarker, useFlowTheme, withBrandMarkers } from './theme';
+import { adaptNodeRenderers, type FlowNodeRenderer } from './renderers';
 import { cx, nodeToken } from './tones';
 
 export interface FlowCanvasProps<N extends Node = FlowNode, E extends Edge = Edge>
@@ -21,12 +22,16 @@ export interface FlowCanvasProps<N extends Node = FlowNode, E extends Edge = Edg
   /** Canvas height (px or CSS length). */
   height?: number | string;
   showControls?: boolean;
+  /** Hide the control that toggles graph editing, while retaining zoom and fit controls. */
+  showInteractiveControls?: boolean;
   showMiniMap?: boolean;
   showBackground?: boolean;
   /** false = static diagram: no pan/zoom/connect/select (nodes still render). */
   interactive?: boolean;
   /** Class for the inner `.react-flow` element (`className` goes on the wrapper). */
   canvasClassName?: string;
+  /** Kit-owned custom node renderers with named handles. */
+  nodeRenderers?: readonly FlowNodeRenderer[];
 }
 
 const STATIC_PROPS = {
@@ -50,12 +55,14 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
   'aria-label': label,
   height = 480,
   showControls = true,
+  showInteractiveControls = true,
   showMiniMap = true,
   showBackground = true,
   interactive = true,
   className,
   canvasClassName,
   nodeTypes,
+  nodeRenderers,
   edges,
   defaultEdgeOptions,
   proOptions,
@@ -63,6 +70,7 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
   ...rest
 }: FlowCanvasProps<N, E>) {
   const t = useFlowTheme();
+  const customTypes = useMemo(() => (nodeRenderers ? adaptNodeRenderers(nodeRenderers) : undefined), [nodeRenderers]);
   const brandedEdges = useMemo(() => (edges ? withBrandMarkers(edges, t) : undefined), [edges, t]);
   const edgeOptions = useMemo(
     () => ({ ...brandEdgeOptions, markerEnd: flowMarker(t.edge), ...defaultEdgeOptions }),
@@ -78,7 +86,7 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
       style={{ height }}
     >
       <ReactFlow<N, E>
-        nodeTypes={nodeTypes ?? (flowNodeTypes as NodeTypes)}
+        nodeTypes={customTypes ?? nodeTypes ?? (flowNodeTypes as NodeTypes)}
         edges={brandedEdges}
         defaultEdgeOptions={edgeOptions}
         fitView
@@ -93,7 +101,7 @@ export function FlowCanvas<N extends Node = FlowNode, E extends Edge = Edge>({
         className={canvasClassName}
       >
         {showBackground && <Background variant={BackgroundVariant.Dots} gap={20} size={1} color={t.pattern} />}
-        {interactive && showControls && <Controls />}
+        {interactive && showControls && <Controls showInteractive={showInteractiveControls} />}
         {interactive && showMiniMap && (
           <MiniMap<N> pannable zoomable nodeColor={miniColor} nodeStrokeWidth={0} nodeBorderRadius={3} />
         )}

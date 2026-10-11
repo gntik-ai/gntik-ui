@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../test/a11y';
 import { useState } from 'react';
@@ -58,4 +58,38 @@ describe('FlowBuilderPage', () => {
     expect(await within(log).findByText('Remote run ok')).toBeInTheDocument();
     expect(log).toHaveTextContent('Connected to runner');
   });
+});
+
+it('passes run mode, status, validation and selection through and hides save and publish', async () => {
+  const selected = vi.fn();
+  render(
+    <FlowBuilderPage
+      mode="run"
+      nodeStatus={{ webhook: 'running' }}
+      onNodeSelect={selected}
+      validationIssues={[{ code: 'test', nodeId: 'webhook', message: 'Input needs review' }]}
+      codePanel={{
+        files: [],
+        problems: [
+          {
+            id: 'semantic',
+            file: 'flow.yaml',
+            line: 1,
+            severity: 'error',
+            message: 'Invalid document',
+          },
+        ],
+      }}
+    />,
+  );
+  expect(screen.queryByRole('button', { name: 'Save' })).toBeNull();
+  expect(screen.queryByRole('button', { name: 'Publish' })).toBeNull();
+  const node = screen.getByRole('group', { name: 'Webhook' });
+  expect(within(node).getByText('Running')).toBeInTheDocument();
+  expect(within(node).getByText('Input needs review')).toBeInTheDocument();
+  // Test node selection at the click seam; jsdom cannot supply d3's native Window for a pan gesture.
+  fireEvent.click(node);
+  expect(selected).toHaveBeenCalledWith('webhook');
+  expect(screen.getByRole('region', { name: 'Code panel' })).toHaveTextContent('Invalid document');
+  await expectNoAxeViolations();
 });

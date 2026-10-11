@@ -11,7 +11,8 @@
     "preview": "vite preview --port 4173 --strictPort",
     "visual": "playwright test catalog.visual",
     "visual:update": "playwright test catalog.visual --update-snapshots=changed",
-    "a11y": "playwright test a11y"
+    "a11y": "playwright test a11y",
+    "test:yaml-worker": "node scripts/check-yaml-worker.mjs"
   },
   "dependencies": {
     "@fontsource/geist": "^5.3.0",
@@ -28,6 +29,7 @@
     "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.0",
+    "monaco-yaml": "^5.4.0",
     "tailwindcss": "^4.3.3",
     "vite": "^8.3.0"
   }

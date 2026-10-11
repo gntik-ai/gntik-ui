@@ -10,6 +10,7 @@
 @import "@fontsource/geist-mono/600.css";
 @import "@xyflow/react/dist/style.css";
 @import "../../../packages/flow/src/styles.css";
+@import "../../../packages/editor/src/styles.css";
 
 @source "./catalog";
 @source "../../../packages/ui/src";

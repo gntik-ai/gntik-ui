@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { Play } from '@gntik-ai/icons';
-import { FlowCanvas, useFlowState, type FlowNode, type FlowNodeData } from '@gntik-ai/flow';
+import { FlowCanvas, useFlowState, type FlowNode, type FlowNodeData, type FlowNodeKind } from '@gntik-ai/flow';
 import { Button, ResizablePanel, ResizablePanelGroup, ResizeHandle, cn } from '@gntik-ai/ui';
 import {
   builderConsole,
@@ -11,15 +11,22 @@ import {
   type FlowEdge,
   type PaletteItem,
 } from './fixtures';
+import type { FlowBuilderExtensions } from './extensions';
+import { useDecoratedNodes } from './decorated-nodes';
+import { useConnections } from './connections';
+import { FlowProblems } from './problems';
 import { NodeInspector, NodePalette, RunConsole } from './parts';
 
 export type { ConsoleEntry, FlowEdge, PaletteItem } from './fixtures';
 /** Graph types re-exported so apps can type nodes without depending on @gntik-ai/flow. */
 export type { FlowNode, FlowNodeData, FlowNodeKind, FlowTone } from '@gntik-ai/flow';
 
-export interface FlowBuilderProps {
+export type { FlowConnection, FlowConnectionRejection, FlowValidationIssue } from './extensions';
+export type { FlowNodeRenderer, FlowHandle, FlowNodeRenderProps } from '@gntik-ai/flow';
+
+export interface FlowBuilderProps<Kind extends string = FlowNodeKind> extends FlowBuilderExtensions {
   title?: string;
-  nodes?: FlowNode[];
+  nodes?: FlowNode<Kind | FlowNodeKind>[];
   edges?: FlowEdge[];
   palette?: PaletteItem[];
   /**
@@ -42,13 +49,14 @@ export interface FlowBuilderProps {
    * of them) to log the real run; return nothing to log a simulated run. While a returned
    * promise is pending the Run button shows a loading state; a rejection is logged as an error.
    */
-  onRun?: (graph: { nodes: FlowNode[]; edges: FlowEdge[] }) => FlowRunResult | Promise<FlowRunResult>;
+  onRun?: (graph: { nodes: FlowNode<Kind | FlowNodeKind>[]; edges: FlowEdge[] }) => FlowRunResult | Promise<FlowRunResult>;
   className?: string;
 }
 
 /** What `onRun` may return: entries to append, or nothing for the simulated run. */
 export type FlowRunResult = ConsoleEntry[] | void | undefined;
 
+const NO_ISSUES: NonNullable<FlowBuilderProps['validationIssues']> = [];
 const WIDE_QUERY = '(min-width: 768px)';
 
 function subscribeWide(onChange: () => void) {
@@ -75,7 +83,7 @@ function clock() {
  * inspector for the selected node and a run console, in resizable panels. On small screens
  * the panels stack.
  */
-export function FlowBuilder({
+export function FlowBuilder<Kind extends string = FlowNodeKind>({
   title = 'Untitled flow',
   nodes: initialNodes = builderNodes,
   edges: initialEdges = builderEdges,
@@ -87,14 +95,30 @@ export function FlowBuilder({
   titleAs: TitleTag = 'h2',
   height = 600,
   onRun,
+  nodeTypes,
+  onConnectEdge,
+  onConnect: onConnected,
+  isValidConnection,
+  onConnectionRejected,
+  validationIssues,
+  mode = 'edit',
+  nodeStatus,
+  onNodeSelect,
   className,
-}: FlowBuilderProps) {
+}: FlowBuilderProps<Kind>) {
+  const runMode = mode === 'run';
+  const root = useRef<HTMLElement>(null);
   const wide = useIsWide();
   const panelAs = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
-  const { nodes, edges, setNodes, setEdges, onNodesChange, onEdgesChange, onConnect } = useFlowState<FlowNode, FlowEdge>(
-    initialNodes,
-    initialEdges,
-  );
+  const {
+    nodes,
+    edges,
+    setNodes,
+    setEdges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect: defaultConnect,
+  } = useFlowState<FlowNode<Kind | FlowNodeKind>, FlowEdge>(initialNodes, initialEdges);
   const [innerLog, setInnerLog] = useState<ConsoleEntry[]>(defaultConsoleEntries);
   const log = consoleEntries ?? innerLog;
   const latestLog = useRef(log);
@@ -178,24 +202,85 @@ export function FlowBuilder({
     commitLog([]);
   };
 
+  const connections = useConnections(nodes, setEdges, defaultConnect, {
+    onConnect: onConnected,
+    onConnectEdge,
+    isValidConnection,
+    onConnectionRejected,
+  });
+
+  const issues = validationIssues ?? NO_ISSUES;
+  const displayedNodes = useDecoratedNodes(nodes, issues, nodeStatus, runMode);
+  const selectNode = (id: string) => {
+    setNodes((ns) => ns.map((n) => ({ ...n, selected: n.id === id })));
+    // Focus only within this builder; graph ids may repeat across independent canvases.
+    const element = root.current?.querySelector<HTMLElement>(`.react-flow__node[data-id="${CSS.escape(id)}"]`);
+    element?.focus();
+    onNodeSelect?.(id);
+  };
+
   const canvas = (h: number | string) => (
-    <FlowCanvas<FlowNode, FlowEdge>
+    <FlowCanvas<FlowNode<Kind | FlowNodeKind>, FlowEdge>
       aria-label={`${title} canvas`}
       height={h}
-      nodes={nodes}
+      nodes={displayedNodes}
       edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
+      onNodesChange={(changes) =>
+        onNodesChange(
+          runMode ? changes.filter((change) => change.type === 'select' || change.type === 'dimensions') : changes,
+        )
+      }
+      onEdgesChange={(changes) =>
+        onEdgesChange(runMode ? changes.filter((change) => change.type === 'select') : changes)
+      }
+      nodeRenderers={nodeTypes}
+      showInteractiveControls={!runMode}
+      elementsSelectable
+      nodesFocusable
+      nodesDraggable={!runMode}
+      nodesConnectable={!runMode}
+      deleteKeyCode={runMode ? null : 'Backspace'}
+      onNodeClick={(_, node) => onNodeSelect?.(node.id)}
+      onKeyDown={(event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        const element = (event.target as HTMLElement).closest('.react-flow__node');
+        const id = element?.getAttribute('data-id');
+        if (id) onNodeSelect?.(id);
+      }}
+      ariaLabelConfig={
+        runMode
+          ? {
+              'node.a11yDescription.default': 'Press enter or space to select a node.',
+            }
+          : undefined
+      }
+      onConnect={runMode ? undefined : connections.connect}
+      isValidConnection={runMode ? () => false : connections.validate}
+      onConnectStart={connections.reset}
+      onClickConnectStart={connections.reset}
+      onConnectEnd={(_, state) => (state.toNode ? connections.finish() : connections.reset())}
+      onClickConnectEnd={connections.finish}
       showMiniMap={wide}
     />
   );
   const palettePanel = <NodePalette items={palette} onAdd={addNode} titleAs={panelAs} />;
   const inspector = <NodeInspector node={selected} onChange={updateNode} onDelete={deleteNode} titleAs={panelAs} />;
-  const consolePanel = <RunConsole entries={log} onClear={clearLog} titleAs={panelAs} />;
+  const consolePanel = (
+    <div className="flex h-full min-h-0 flex-col">
+      <FlowProblems issues={issues} onSelect={selectNode} titleAs={panelAs} />
+      <RunConsole entries={log} onClear={clearLog} titleAs={panelAs} />
+    </div>
+  );
 
   let body: ReactNode;
-  if (wide) {
+  if (runMode) {
+    body = (
+      <div className="flex flex-col divide-y divide-border">
+        {canvas(wide ? height - 180 : 360)}
+        <div className="h-40">{consolePanel}</div>
+      </div>
+    );
+  } else if (wide) {
     body = (
       <ResizablePanelGroup direction="vertical" style={{ height }}>
         <ResizablePanel defaultSize={72} minSize={40}>
@@ -231,7 +316,11 @@ export function FlowBuilder({
   }
 
   return (
-    <section aria-label={title} className={cn('overflow-hidden rounded-lg border border-border bg-card shadow-sm', className)}>
+    <section
+      ref={root}
+      aria-label={title}
+      className={cn('overflow-hidden rounded-lg border border-border bg-card shadow-sm', className)}
+    >
       <header className="flex items-center justify-between gap-3 border-b border-border bg-secondary/35 px-3 py-2">
         <div className="min-w-0">
           <TitleTag className="truncate text-[13.5px] font-semibold text-foreground">{title}</TitleTag>
@@ -239,9 +328,11 @@ export function FlowBuilder({
             {nodes.length} nodes · {edges.length} edges
           </p>
         </div>
-        <Button size="sm" icon={Play} loading={running} onClick={() => void run()}>
-          Run
-        </Button>
+        {!runMode && (
+          <Button size="sm" icon={Play} loading={running} onClick={() => void run()}>
+            Run
+          </Button>
+        )}
       </header>
       {body}
     </section>

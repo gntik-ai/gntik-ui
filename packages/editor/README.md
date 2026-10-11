@@ -26,11 +26,11 @@ each bundler resolves workers differently — so wire them once at app start-up.
 ```ts
 // src/monaco-workers.ts — import this once, before any editor renders.
 import { configureMonacoWorkers } from '@gntik-ai/editor';
-import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
-import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
-import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
-import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import EditorWorker from 'monaco-editor/editor/editor.worker?worker';
+import JsonWorker from 'monaco-editor/languages/features/json/json.worker?worker';
+import CssWorker from 'monaco-editor/languages/features/css/css.worker?worker';
+import HtmlWorker from 'monaco-editor/languages/features/html/html.worker?worker';
+import TsWorker from 'monaco-editor/languages/features/typescript/ts.worker?worker';
 
 configureMonacoWorkers((_id, label) => {
   if (label === 'json') return new JsonWorker();
@@ -76,3 +76,176 @@ Keep the loader identity stable (module scope or `useCallback`); a new function 
 - `monaco.editor.setTheme` is global: every Monaco instance on the page shares one theme.
 - Light tokens live on `:root`, so `gntik-light` is only exact while light is active; the
   components redefine all themes on every switch, so the active theme is always correct.
+
+## Consumer-injected YAML diagnostics (Monaco 0.57)
+
+The kit does not depend on `monaco-yaml` and never imports a worker. Install a compatible
+`monaco-yaml` in the consumer (the docs example uses 5.5.1 with `monaco-editor` 0.57.0).
+The integration lives behind a stable lazy loader. Do not import these worker constructors
+from your app entry if you want to defer their chunks until the editor opens.
+
+```ts
+// yaml-workers.ts: loaded only by yaml-loader.ts
+import { configureMonacoWorkers } from '@gntik-ai/editor';
+import EditorWorker from 'monaco-editor/editor/editor.worker?worker';
+import YamlWorker from 'monaco-yaml/yaml.worker?worker';
+
+configureMonacoWorkers((_id, label) => {
+  if (label === 'yaml') return new YamlWorker();
+  return new EditorWorker();
+});
+```
+
+```ts
+// yaml-loader.ts: keep this module's loader identity stable
+import type { MonacoLoader } from '@gntik-ai/editor';
+let configured: ReturnType<MonacoLoader> | undefined;
+export const yamlLoader: MonacoLoader = () => {
+  configured ??= Promise.all([import('./yaml-workers'), import('monaco-editor'), import('monaco-yaml')]).then(
+    ([, monaco, { configureMonacoYaml }]) => {
+      configureMonacoYaml(yamlMonaco(monaco), {
+        enableSchemaRequest: false,
+        validate: true,
+        schemas: [
+          {
+            uri: 'inmemory://schemas/workflow.json',
+            fileMatch: ['*'],
+            schema: {
+              type: 'object',
+              required: ['count'],
+              properties: { count: { type: 'integer' } },
+            },
+          },
+        ],
+      });
+      return monaco;
+    },
+  );
+  return configured;
+};
+```
+
+This adapter is pinned to `monaco-yaml` 5.5.1 and its `monaco-worker-manager` 2.0.1
+dependency: it relies on their internal two-message bootstrap. Revalidate the production
+browser spec before upgrading either dependency. Put this consumer adapter in `yaml-loader.ts`. Monaco 0.57 requires a `worker` instance in
+`createWebWorker`; the older worker manager supplies `moduleId`, `label` and
+`createData` instead. Passing those options directly silently selects Monaco's generic
+worker, which cannot run YAML validation. The adapter requests the YAML worker through
+`getWorker`, initializes its legacy bootstrap with the schema options, and passes it to
+Monaco's current API. It only adapts the Monaco facade given to `configureMonacoYaml`.
+
+```ts
+import type { Monaco } from "@gntik-ai/editor";
+
+function yamlMonaco(monaco: Monaco): Monaco {
+  return {
+    ...monaco,
+    editor: {
+      ...monaco.editor,
+      createWebWorker<T extends object>(options: {
+        createData?: unknown;
+        label?: string;
+        host?: Parameters<Monaco['editor']['createWebWorker']>[0]['host'];
+        keepIdleModels?: boolean;
+      }) {
+        const worker = Promise.resolve(
+          globalThis.MonacoEnvironment!.getWorker!(
+            "workerMain.js",
+            options.label ?? "yaml",
+          ),
+        ).then((worker) => {
+          worker.postMessage("-please-ignore-");
+          worker.postMessage(options.createData);
+          return worker;
+        });
+        return monaco.editor.createWebWorker<T>({
+          worker,
+          host: options.host,
+          keepIdleModels: options.keepIdleModels,
+        });
+      },
+    },
+  };
+}
+```
+
+The running example is `apps/docs/src/examples/yaml-loader.js` and its sibling
+`yaml-monaco.js`. After building the docs, `pnpm --filter @gntik-ai/docs test:yaml-worker`
+checks the real bundled worker's schema diagnostics without an HTTP server. The browser
+test additionally checks the Problems list and production CSP.
+
+Monaco 0.57 exports shorter public subpaths. `monaco-worker-manager` 2.0.1, used by
+`monaco-yaml` 5.5.1, still imports the legacy `monaco-editor/esm/vs/` path. Keep the alias
+in the consumer Vite config for that dependency, including worker builds:
+
+```ts
+import { fileURLToPath } from 'node:url';
+export default {
+  resolve: {
+    alias: [
+      {
+        find: /^monaco-editor\/esm\/vs\//,
+        replacement: fileURLToPath(new URL('./node_modules/monaco-editor/esm/vs/', import.meta.url)),
+      },
+    ],
+  },
+  worker: { format: 'es' },
+  build: { assetsInlineLimit: 0 },
+};
+```
+
+Vite's `?worker` constructors load module workers from bundled same-origin assets. Serve
+production with `script-src 'self'; worker-src 'self' blob:; connect-src 'self'`. Monaco
+also needs its generated inline styles (`style-src 'self' 'unsafe-inline'`); fonts and
+stylesheets must be bundled on the same origin. Always supply the schema inline and set
+`enableSchemaRequest: false`. Do not configure remote `$ref` dependencies, schema stores,
+or CDN loaders. The kit's default `loadMonaco` is an ESM import, never a CDN request.
+
+With `font-src 'self'`, set `build.assetsInlineLimit: 0` so Vite emits small fonts as
+same-origin files instead of CSP-blocked data URLs. After building the docs, run
+`node --test --test-isolation=none apps/docs/scripts/check-csp-fonts.test.mjs` to check
+the emitted font sources without a browser.
+
+```tsx
+<CodePanel
+  files={[{ path: 'flow.yaml', language: 'yaml', content: 'count: wrong\n' }]}
+  problems={[]}
+  loader={yamlLoader}
+  markers={[
+    {
+      id: 'semantic',
+      owner: 'semantic-worker',
+      file: 'flow.yaml',
+      line: 1,
+      severity: 'warning',
+      message: 'Review the terminal step.',
+    },
+  ]}
+  readOnly={runMode}
+  onValidityChange={(valid) => setCanSave(valid)}
+/>
+```
+
+Set `markers` (even an empty list), `onMonacoReady`, or `onValidityChange` to opt
+into model diagnostics. `readOnly` controls editing independently. Omitting diagnostics
+extensions preserves the caller-supplied Problems list. Collection covers both the code editor and the modified diff model.
+
+`CodePanel` subscribes to the public Monaco marker API for every mounted file model and
+merges every owner's markers into its Problems list. It reserves each `markers[].owner`
+for that consumer marker group, writes those line markers to the model, and clears them
+when removed or unmounted. Consumer markers also appear for files not yet opened. Keep
+owners distinct from `yaml`; owner groups supplied through `markers` replace that group's
+model diagnostics, so they are listed once.
+
+`onMonacoReady(monaco)` is an alternative setup hook for already-loaded consumer services;
+it runs once per Monaco instance in the panel and may return a disposer. Prefer the loader
+for language registration before editor creation. Validity is based on the merged error
+count: no notification for an initially clean panel, `false` when errors become nonzero,
+and `true` when the last error clears. Warnings do not change validity. `readOnly` reaches
+both CodeEditor and DiffEditor; leaving it undefined preserves each editor's defaults.
+
+The production docs example is `/builders.html?item=code-panel&mode=edit&theme=dark`.
+`apps/docs/e2e/builders.a11y.spec.js` checks Worker response evidence for `getWorker('yaml')`,
+inline-schema errors alongside consumer markers, no CSP violations or external requests,
+and axe in dark, light and high_contrast for the code panel, flow builder and workflow page
+in edit and run modes. Build the docs before running that Playwright file.

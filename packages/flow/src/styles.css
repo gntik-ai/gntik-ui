@@ -83,6 +83,27 @@
 .gu-flow .react-flow__handle.connectingfrom,
 .gu-flow .react-flow__handle.valid { background: hsl(var(--primary)); border-color: hsl(var(--primary)); }
 
+/* Named handles retain the small dot inside a separate 32px pointer target.
+   Custom renderers reserve space per side so adjacent targets do not overlap. */
+.gu-flow .react-flow__handle.gu-flow-custom-handle {
+  width: 32px; height: 32px; border: none; background: transparent; z-index: 1;
+}
+.gu-flow .gu-flow-custom-handle:focus-visible {
+  outline: 2px solid hsl(var(--focus-ring)); outline-offset: 2px;
+}
+.gu-flow .gu-flow-custom-handle::after {
+  content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 9px; height: 9px; border-radius: 9999px; pointer-events: none;
+  background: var(--xy-handle-background-color); border: 1.5px solid var(--xy-handle-border-color);
+  transition: background-color 0.12s, border-color 0.12s;
+}
+.gu-flow .gu-flow-custom-handle:hover::after,
+.gu-flow .gu-flow-custom-handle.connectingto::after,
+.gu-flow .gu-flow-custom-handle.connectingfrom::after,
+.gu-flow .gu-flow-custom-handle.valid::after {
+  background: var(--xy-connectionline-stroke); border-color: var(--xy-connectionline-stroke);
+}
+
 /* Nodes: the brand card draws its own border/ring; reset the built-in node boxes
    (default/input/output/group) so a custom type named like one never gets the white box. */
 .gu-flow .react-flow__node { font-family: var(--font-sans); }

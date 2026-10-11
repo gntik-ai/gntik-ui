@@ -1,6 +1,14 @@
 import { useId } from 'react';
 import { MousePointerClick, Plus, Trash2 } from '@gntik-ai/icons';
-import { FLOW_TONES, KIND_CHIP, KindGlyph, type FlowNode, type FlowNodeData, type FlowTone } from '@gntik-ai/flow';
+import {
+  FLOW_TONES,
+  KIND_CHIP,
+  KindGlyph,
+  type FlowNode,
+  type FlowNodeData,
+  type FlowTone,
+  type FlowNodeKind,
+} from '@gntik-ai/flow';
 import { Button, Field, FieldLabel, Input, SimpleSelect, cn } from '@gntik-ai/ui';
 import type { ConsoleEntry, PaletteItem } from './fixtures';
 
@@ -50,13 +58,17 @@ export function NodePalette({ items, onAdd, titleAs: TitleTag = 'h3' }: NodePale
   );
 }
 
+function inspectorKind(type: string | undefined): FlowNodeKind {
+  return type === 'trigger' || type === 'router' || type === 'output' ? type : 'step';
+}
+
 const TONE_ITEMS = [
   { value: 'none', label: 'No status' },
   ...(Object.keys(FLOW_TONES) as FlowTone[]).map((t) => ({ value: t, label: FLOW_TONES[t].label })),
 ];
 
-export interface NodeInspectorProps {
-  node: FlowNode | undefined;
+export interface NodeInspectorProps<Kind extends string = FlowNodeKind> {
+  node: FlowNode<Kind> | undefined;
   onChange: (id: string, patch: Partial<FlowNodeData>) => void;
   onDelete: (id: string) => void;
   /** Heading level of the panel title (default h3). */
@@ -64,7 +76,7 @@ export interface NodeInspectorProps {
 }
 
 /** Right rail: the selected node's editable fields. */
-export function NodeInspector({ node, onChange, onDelete, titleAs: TitleTag = 'h3' }: NodeInspectorProps) {
+export function NodeInspector<Kind extends string = FlowNodeKind>({ node, onChange, onDelete, titleAs: TitleTag = 'h3' }: NodeInspectorProps<Kind>) {
   const titleId = useId();
   return (
     <div className="flex h-full min-h-0 flex-col bg-card">
@@ -78,8 +90,8 @@ export function NodeInspector({ node, onChange, onDelete, titleAs: TitleTag = 'h
           className="flex flex-1 flex-col gap-3 overflow-y-auto px-3 pb-3"
         >
           <p className="flex items-center gap-2 text-[12px] text-muted-foreground">
-            <span className={cn('grid size-5 place-items-center rounded', KIND_CHIP[node.type ?? 'step'])}>
-              <KindGlyph kind={node.type ?? 'step'} size={11} />
+            <span className={cn('grid size-5 place-items-center rounded', KIND_CHIP[inspectorKind(node.type)])}>
+              <KindGlyph kind={inspectorKind(node.type)} size={11} />
             </span>
             <span className="capitalize">{node.type}</span>
             <span className="font-mono text-[11px]">· {node.id}</span>

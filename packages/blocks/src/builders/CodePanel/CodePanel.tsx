@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react';
 import { CircleX, FileCode, Info, TriangleAlert } from '@gntik-ai/icons';
-import { CodeEditor, DiffEditor, type CodeEditorProps, type MonacoLoader } from '@gntik-ai/editor';
+import { CodeEditor, DiffEditor, type CodeEditorProps, type MonacoLoader, type Monaco } from '@gntik-ai/editor';
 import { Tabs, TabsList, TabsPanel, TabsTab, Toggle, ToggleGroup, cn } from '@gntik-ai/ui';
+import { NO_MARKERS, usePanelMarkers, useValidity, type CodePanelMarker, type MonacoReady } from './markers';
 import { codeFiles, codeProblems, type CodeFile, type CodeProblem, type ProblemSeverity } from './fixtures';
 
+export type { CodePanelMarker, MonacoReady } from './markers';
 export type { CodeFile, CodeProblem, ProblemSeverity } from './fixtures';
 
 type CodeEditorInstance = Parameters<NonNullable<CodeEditorProps['onMount']>>[0];
@@ -17,6 +19,12 @@ const SEVERITY: Record<ProblemSeverity, { label: string; icon: typeof CircleX; c
 
 export interface CodePanelProps {
   files?: CodeFile[];
+  readOnly?: boolean;
+  markers?: readonly CodePanelMarker[];
+  /** Fires when the merged error count crosses zero (warnings do not invalidate). */
+  onValidityChange?: (valid: boolean) => void;
+  /** Configure consumer language services; optionally return their cleanup function. */
+  onMonacoReady?: MonacoReady;
   problems?: CodeProblem[];
   /** Path of the file opened first (uncontrolled; defaults to the first file). */
   defaultFile?: string;
@@ -48,7 +56,11 @@ function basename(path: string) {
  */
 export function CodePanel({
   files = codeFiles,
-  problems = codeProblems,
+  problems: suppliedProblems = codeProblems,
+  readOnly,
+  markers = NO_MARKERS,
+  onValidityChange,
+  onMonacoReady,
   defaultFile,
   activeFile: activeProp,
   onActiveFileChange,
@@ -60,6 +72,10 @@ export function CodePanel({
   loader,
   className,
 }: CodePanelProps) {
+  const collectMarkers =
+    markers !== NO_MARKERS || onMonacoReady !== undefined || onValidityChange !== undefined;
+  const markerState = usePanelMarkers(markers, onMonacoReady, collectMarkers);
+  const problems = [...suppliedProblems, ...markers, ...markerState.problems];
   const [innerActive, setInnerActive] = useState(defaultFile ?? files[0]?.path ?? '');
   const active = activeProp ?? innerActive;
   const setActive = (path: string) => {
@@ -77,6 +93,7 @@ export function CodePanel({
   const canDiff = currentFile?.original !== undefined;
   const effectiveView: View = canDiff ? view : 'code';
   const errors = problems.filter((p) => p.severity === 'error').length;
+  useValidity(errors, onValidityChange);
   const warnings = problems.filter((p) => p.severity === 'warning').length;
 
   const reveal = (ed: CodeEditorInstance, problem: CodeProblem) => {
@@ -98,7 +115,8 @@ export function CodePanel({
     else pending.current = problem;
   };
 
-  const onMount = (path: string) => (ed: CodeEditorInstance) => {
+  const onMount = (path: string) => (ed: CodeEditorInstance, monaco: Monaco) => {
+    markerState.mount(path, ed, monaco);
     editors.current.set(path, ed);
     const p = pending.current;
     if (p && p.file === path) {
@@ -149,6 +167,11 @@ export function CodePanel({
                 height={height}
                 aria-label={`${f.path} changes`}
                 loader={loader}
+                readOnly={readOnly}
+                onMount={(diff, monaco) => {
+                  const editor = diff.getModifiedEditor?.();
+                  if (editor) onMount(f.path)(editor, monaco);
+                }}
               />
             ) : (
               <CodeEditor
@@ -157,6 +180,7 @@ export function CodePanel({
                 height={height}
                 aria-label={f.path}
                 loader={loader}
+                readOnly={readOnly}
                 onMount={onMount(f.path)}
                 onChange={(v) => {
                   setValues((prev) => ({ ...prev, [f.path]: v }));
