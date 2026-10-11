@@ -190,6 +190,7 @@ export default {
     ],
   },
   worker: { format: 'es' },
+  build: { assetsInlineLimit: 0 },
 };
 ```
 
@@ -199,6 +200,11 @@ also needs its generated inline styles (`style-src 'self' 'unsafe-inline'`); fon
 stylesheets must be bundled on the same origin. Always supply the schema inline and set
 `enableSchemaRequest: false`. Do not configure remote `$ref` dependencies, schema stores,
 or CDN loaders. The kit's default `loadMonaco` is an ESM import, never a CDN request.
+
+With `font-src 'self'`, set `build.assetsInlineLimit: 0` so Vite emits small fonts as
+same-origin files instead of CSP-blocked data URLs. After building the docs, run
+`node --test --test-isolation=none apps/docs/scripts/check-csp-fonts.test.mjs` to check
+the emitted font sources without a browser.
 
 ```tsx
 <CodePanel

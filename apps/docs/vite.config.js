@@ -26,6 +26,8 @@ export default defineConfig({
   },
   worker: { format: 'es' },
   build: {
+    // Keep small fonts as same-origin files: data URLs violate font-src 'self'.
+    assetsInlineLimit: 0,
     manifest: true,
     chunkSizeWarningLimit: 4000,
     rollupOptions: {
