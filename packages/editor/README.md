@@ -103,7 +103,7 @@ let configured: ReturnType<MonacoLoader> | undefined;
 export const yamlLoader: MonacoLoader = () => {
   configured ??= Promise.all([import('./yaml-workers'), import('monaco-editor'), import('monaco-yaml')]).then(
     ([, monaco, { configureMonacoYaml }]) => {
-      configureMonacoYaml(monaco, {
+      configureMonacoYaml(yamlMonaco(monaco), {
         enableSchemaRequest: false,
         validate: true,
         schemas: [
@@ -124,6 +124,54 @@ export const yamlLoader: MonacoLoader = () => {
   return configured;
 };
 ```
+
+For `monaco-yaml` 5.5.1 and its `monaco-worker-manager` 2.0.1 dependency, put this
+consumer adapter in `yaml-loader.ts`. Monaco 0.57 requires a `worker` instance in
+`createWebWorker`; the older worker manager supplies `moduleId`, `label` and
+`createData` instead. Passing those options directly silently selects Monaco's generic
+worker, which cannot run YAML validation. The adapter requests the YAML worker through
+`getWorker`, initializes its legacy bootstrap with the schema options, and passes it to
+Monaco's current API. It only adapts the Monaco facade given to `configureMonacoYaml`.
+
+```ts
+import type { Monaco } from "@gntik-ai/editor";
+
+function yamlMonaco(monaco: Monaco): Monaco {
+  return {
+    ...monaco,
+    editor: {
+      ...monaco.editor,
+      createWebWorker<T extends object>(options: {
+        createData?: unknown;
+        label?: string;
+        host?: Parameters<Monaco['editor']['createWebWorker']>[0]['host'];
+        keepIdleModels?: boolean;
+      }) {
+        const worker = Promise.resolve(
+          globalThis.MonacoEnvironment!.getWorker!(
+            "workerMain.js",
+            options.label ?? "yaml",
+          ),
+        ).then((worker) => {
+          worker.postMessage("-please-ignore-");
+          worker.postMessage(options.createData);
+          return worker;
+        });
+        return monaco.editor.createWebWorker<T>({
+          worker,
+          host: options.host,
+          keepIdleModels: options.keepIdleModels,
+        });
+      },
+    },
+  };
+}
+```
+
+The running example is `apps/docs/src/examples/yaml-loader.js` and its sibling
+`yaml-monaco.js`. After building the docs, `node apps/docs/scripts/check-yaml-worker.mjs`
+checks the real bundled worker's schema diagnostics without an HTTP server. The browser
+test additionally checks the Problems list and production CSP.
 
 Monaco 0.57 exports shorter public subpaths. `monaco-worker-manager` 2.0.1, used by
 `monaco-yaml` 5.5.1, still imports the legacy `monaco-editor/esm/vs/` path. Keep the alias
