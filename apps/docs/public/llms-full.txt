@@ -6837,7 +6837,7 @@ export default function PrintLayoutInvoice() {
 
 ### SettingsLayout (`settings-layout`)
 
-Settings shell: section nav (NavList groups) on the left · a content column with the page title and form sections · a sticky save bar slot (Discard · Save changes). The current section is controllable with `value` / `onValueChange`; `href` items navigate as links and still report the change. Below `lg` the nav becomes a Select at the top of the page. Fills its container; `fullScreen` switches to `h-dvh`.
+Settings shell: section nav (NavList groups) on the left · a content column with the page title and form sections · a sticky save bar slot (Discard · Save changes). Set saveBar='none' to remove the bar wrapper and its reserved space. Omitted or null slots render no wrapper; empty strings and fragments retain their empty wrapper. The current section is controllable with `value` / `onValueChange`; `href` items navigate as links and still report the change. Below `lg` the nav becomes a Select at the top of the page. Fills its container; `fullScreen` switches to `h-dvh`.
 
 - Package: `@gntik-ai/ui` · export `SettingsLayout` · group Layout · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/layouts/SettingsLayout/SettingsLayout.doc.ts
@@ -6850,7 +6850,7 @@ Keyboard:
 
 | Key | Behaviour |
 | --- | --- |
-| Tab | Skip link, then the section nav items, then the content and the save bar |
+| Tab | Skip link, then the section nav items, then interactive content and the save bar; saveBar='none' has no bar focus stops |
 | Enter | Opens the focused section (aria-current="page" moves to it) |
 | Enter / Space / ↓ on the section Select | Small screens: opens the list; arrows move, Enter picks a section |
 
@@ -10150,12 +10150,12 @@ export default function Route() {
 
 ### Profile settings (`settings-profile`)
 
-Personal profile: avatar header, name and email, locale and time zone, with a sticky save bar.
+Personal profile defaults to mode='editable': avatar header, name and email, locale and time zone, with a sticky save bar. Opt into mode='read-only' for an initials avatar without upload or Edit actions, identity and optional context description lists, and optional ordered roles badges. identity/context accept { id, label, value, mono } rows; value may be a link. contextFallback supplies missing-value text; emptyRolesMessage supplies the empty roles state. Omitted roles/context hide their sections. Read-only mode passes saveBar='none' through SettingsFrame and has no profile form controls, copy buttons or save actions; the responsive section navigation remains available.
 
 - Package: `@gntik-ai/templates` · export `SettingsProfilePage` · group Settings · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/settings-profile/template.meta.ts
 - Layout: SettingsLayout
-- Blocks: app-sidebar, app-topbar, page-header, profile-header, form-section, sticky-action-bar
+- Blocks: app-sidebar, app-topbar, page-header, profile-header, form-section, sticky-action-bar, description-list-card, section-header
 - Console shell: no
 - Preview: /preview.html?kind=template&id=settings-profile
 - Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add settings-profile`

@@ -9758,7 +9758,7 @@
       "name": "settings-layout",
       "type": "registry:block",
       "title": "SettingsLayout",
-      "description": "Settings shell: section nav (NavList groups) on the left · a content column with the page title and form sections · a sticky save bar slot (Discard · Save changes). The current section is controllable with `value` / `onValueChange`; `href` items navigate as links and still report the change. Below `lg` the nav becomes a Select at the top of the page. Fills its container; `fullScreen` switches to `h-dvh`.",
+      "description": "Settings shell: section nav (NavList groups) on the left · a content column with the page title and form sections · a sticky save bar slot (Discard · Save changes). Set saveBar='none' to remove the bar wrapper and its reserved space. Omitted or null slots render no wrapper; empty strings and fragments retain their empty wrapper. The current section is controllable with `value` / `onValueChange`; `href` items navigate as links and still report the change. Below `lg` the nav becomes a Select at the top of the page. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0"
@@ -9915,7 +9915,7 @@
       "name": "settings-profile",
       "type": "registry:block",
       "title": "Profile settings",
-      "description": "Personal profile: avatar header, name and email, locale and time zone, with a sticky save bar.",
+      "description": "Personal profile defaults to mode='editable': avatar header, name and email, locale and time zone, with a sticky save bar. Opt into mode='read-only' for an initials avatar without upload or Edit actions, identity and optional context description lists, and optional ordered roles badges. identity/context accept { id, label, value, mono } rows; value may be a link. contextFallback supplies missing-value text; emptyRolesMessage supplies the empty roles state. Omitted roles/context hide their sections. Read-only mode passes saveBar='none' through SettingsFrame and has no profile form controls, copy buttons or save actions; the responsive section navigation remains available.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",
@@ -9944,6 +9944,11 @@
           "path": "packages/templates/src/settings-profile/Page.tsx",
           "type": "registry:component",
           "target": "app/templates/settings-profile/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/settings-profile/ReadOnlyProfile.tsx",
+          "type": "registry:component",
+          "target": "app/templates/settings-profile/ReadOnlyProfile.tsx"
         },
         {
           "path": "packages/templates/src/settings-profile/SettingsFrame.tsx",

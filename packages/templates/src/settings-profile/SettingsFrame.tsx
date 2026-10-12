@@ -35,6 +35,8 @@ export interface SettingsFrameProps extends SettingsFrameOptions {
   /** Header actions (PageHeader). */
   actions?: PageChromeAction[];
   width?: SettingsLayoutProps['width'];
+  /** Passes through to SettingsLayout; 'none' explicitly removes the save-bar wrapper. */
+  saveBar?: SettingsLayoutProps['saveBar'];
   children: ReactNode;
 }
 
@@ -49,6 +51,7 @@ export function SettingsFrame({
   description,
   actions = [],
   width,
+  saveBar,
   basePath,
   onNavigate,
   extraNavItems,
@@ -65,6 +68,7 @@ export function SettingsFrame({
         onValueChange={(key) => onNavigate?.(key)}
         mainId="settings-content"
         width={width}
+        saveBar={saveBar}
         header={
           <PageHeader
             breadcrumbs={null}

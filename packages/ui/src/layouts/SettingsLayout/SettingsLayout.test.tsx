@@ -16,6 +16,19 @@ const GROUPS = [
 ];
 
 describe('SettingsLayout', () => {
+  it("fixture (e): saveBar='none' removes the wrapper while retaining header and children", () => {
+    render(
+      <SettingsLayout groups={GROUPS} title="Profile" saveBar="none">
+        <p>Identity</p>
+      </SettingsLayout>,
+    );
+    const main = screen.getByRole('main');
+    expect(main.children).toHaveLength(1);
+    expect(main).not.toHaveTextContent('none');
+    expect(within(main).getByRole('heading', { name: 'Profile' })).toBeInTheDocument();
+    expect(within(main).getByText('Identity')).toBeInTheDocument();
+  });
+
   it('renders nav, title and save bar; the first section is current by default', () => {
     const { container } = render(
       <SettingsLayout
