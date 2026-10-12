@@ -401,7 +401,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             stickyHeader={virtualOn}
             containerClassName={virtualOn ? virtualContainerClassName : undefined}
             containerLabel={virtualOn ? caption : undefined}
-            className={layout.tableClassName}
+            // Keep single-mode resize handles inside their cells. Overflow at the
+            // final column would add a scroll-container stop before the header.
+            className={cn(
+              layout.tableClassName,
+              singleMode && '[&_[data-column-resizer]]:end-0 [&_[data-column-resizer]]:justify-end',
+            )}
             style={layout.tableStyle}
             data-virtualized={virtualOn || undefined}
           >
