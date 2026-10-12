@@ -6,7 +6,7 @@ import { profileDOM } from './__tests__/dom';
 
 it('fixture (b): explicit editable mode equals the unchanged fixture (a)', () => {
   const { container } = render(<SettingsProfilePage mode="editable" />);
-  expect(profileDOM(container)).toEqual(readFileSync('src/settings-profile/fixtures/editable.html', 'utf8'));
+  expect(profileDOM(container)).toEqual(readFileSync('src/settings-profile/fixtures/editable.snap', 'utf8'));
   expect(screen.getByRole('button', { name: 'Discard' })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Save changes' })).toBeInTheDocument();
 });

@@ -5,5 +5,5 @@ import { profileDOM } from './__tests__/dom';
 
 it('preserves fixture (a): the default editable profile DOM', async () => {
   const { container } = render(<SettingsProfilePage />);
-  await expect(profileDOM(container)).toMatchFileSnapshot('./fixtures/editable.html');
+  await expect(profileDOM(container)).toMatchFileSnapshot('./fixtures/editable.snap');
 });

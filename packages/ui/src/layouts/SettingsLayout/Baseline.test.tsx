@@ -19,5 +19,5 @@ it.each([
     if (!ids.has(id)) ids.set(id, `_r_${ids.size}_`);
     return ids.get(id)!;
   });
-  await expect(dom).toMatchFileSnapshot(`./fixtures/${name}.html`);
+  await expect(dom).toMatchFileSnapshot(`./fixtures/${name}.snap`);
 });
