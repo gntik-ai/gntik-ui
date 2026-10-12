@@ -10,6 +10,7 @@ import {
   type DataTableColumn,
 } from './data-table-utils';
 import { EditableCell, isCellEditable, type DataTableCellEditHandler } from './editable-cell';
+import type { SingleSelection } from './single-selection';
 
 /** A group as the body renders it: its rows on the current page plus header data. */
 export interface DataTableBodyGroup<T> {
@@ -31,6 +32,7 @@ export interface RowContext<T> {
   getRowLabel: (row: T) => string;
   selectable: boolean;
   selected: ReadonlySet<string>;
+  singleSelection?: SingleSelection<T>;
   onToggleRow: (id: string) => void;
   rowActions?: (row: T) => Array<MoreMenuAction | 'separator'>;
   layout?: TableLayout;
@@ -53,6 +55,7 @@ export function DataTableRow<T>({
   getRowLabel,
   selectable,
   selected,
+  singleSelection,
   onToggleRow,
   rowActions,
   layout,
@@ -63,18 +66,28 @@ export function DataTableRow<T>({
 }: DataTableRowProps<T>) {
   const { t } = useI18n();
   const id = getRowId(row);
-  const isSelected = selected.has(id);
+  const selectionColumn = selectable || singleSelection != null;
+  const isSelected = singleSelection ? singleSelection.selectedId === id : selected.has(id);
   const label = getRowLabel(row);
-  const tint = (l: TableLayout['lead'] | undefined) => stickyTint(l, { selected: selectable && isSelected });
+  const tint = (l: TableLayout['lead'] | undefined) => stickyTint(l, { selected: selectionColumn && isSelected });
   return (
-    <TableRow selected={selectable && isSelected} aria-rowindex={ariaRowIndex} data-row-id={id} style={style}>
-      {selectable && (
+    <TableRow selected={selectionColumn && isSelected} aria-rowindex={ariaRowIndex} data-row-id={id} style={style}>
+      {selectionColumn && (
         <TableCell className={cn('w-10 pe-0', layout?.lead.className, tint(layout?.lead))} style={layout?.lead.style}>
-          <Checkbox
-            aria-label={t('table.selectRow', { label })}
-            checked={isSelected}
-            onCheckedChange={() => onToggleRow(id)}
-          />
+          {singleSelection ? (
+            <span {...singleSelection.entryProps(row)} className="inline-flex">
+              <input
+                {...singleSelection.inputProps(row)}
+                className="size-4 accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring disabled:cursor-not-allowed"
+              />
+            </span>
+          ) : (
+            <Checkbox
+              aria-label={t('table.selectRow', { label })}
+              checked={isSelected}
+              onCheckedChange={() => onToggleRow(id)}
+            />
+          )}
         </TableCell>
       )}
       {columns.map((c) => {

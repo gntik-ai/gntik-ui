@@ -208,6 +208,7 @@ export const en = {
   'table.pagination': '{noun} pagination',
   'table.selectAllPage': 'Select all rows on this page',
   'table.selectRow': 'Select {label}',
+  'table.selection': 'Selection',
   'table.actions': 'Actions',
   'table.rowActions': 'Actions for {label}',
   'table.emptyDescription': 'Nothing matches the current filters.',

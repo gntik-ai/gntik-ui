@@ -62,6 +62,7 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
     rows,
     columns,
     selectable,
+    singleSelection,
     selected,
     rowActions,
     loading,
@@ -75,13 +76,14 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
     virtual,
   } = props;
   const { t } = useI18n();
-  const span = columns.length + (selectable ? 1 : 0) + (rowActions ? 1 : 0);
+  const selectionColumn = selectable || singleSelection != null;
+  const span = columns.length + (selectionColumn ? 1 : 0) + (rowActions ? 1 : 0);
   if (loading) {
     return (
       <TableBody>
         {Array.from({ length: loadingRows }, (_, i) => (
           <TableRow key={`loading-${i}`}>
-            {selectable && (
+            {selectionColumn && (
               <TableCell className="w-10">
                 <Skeleton className="size-4 rounded-[4px]" />
               </TableCell>

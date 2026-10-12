@@ -5,12 +5,12 @@ import type { DataTableColumn, DataTableGroupBy, SortState } from './data-table-
 import type { DataTableCellEditHandler } from './editable-cell';
 import type { DataTableView } from './views';
 
-export interface DataTableProps<T> {
+interface DataTableCommonProps<T> {
   rows?: readonly T[];
   columns?: ReadonlyArray<DataTableColumn<T>>;
   /** Stable row id (defaults to `row.id`). */
   getRowId?: (row: T) => string;
-  /** Row name for checkbox and menu labels (defaults to the first column's value). */
+  /** Row name for selection and menu labels (defaults to the first column's value). */
   getRowLabel?: (row: T) => string;
   /** Table name (screen-reader caption unless `showCaption`). */
   caption?: string;
@@ -18,6 +18,12 @@ export interface DataTableProps<T> {
 
   /** Row selection with a select-all header checkbox (current page). */
   selectable?: boolean;
+  /** Native radio name in single mode. Supplied names must be unique per page. */
+  selectionName?: string;
+  selectedId?: string | null;
+  defaultSelectedId?: string | null;
+  onSelectedIdChange?: (id: string) => void;
+  isRowDisabled?: (row: T) => boolean;
   selectedIds?: readonly string[];
   defaultSelectedIds?: readonly string[];
   onSelectionChange?: (ids: string[]) => void;
@@ -38,8 +44,6 @@ export interface DataTableProps<T> {
   /** Rows arrive sorted (server side): headers still toggle, rows are not re-sorted. */
   manualSorting?: boolean;
 
-  /** Client-side pagination; false shows every row. */
-  paginated?: boolean;
   defaultPageSize?: number;
   pageSizeOptions?: readonly number[];
 
@@ -131,3 +135,22 @@ export interface DataTableProps<T> {
   toolbar?: ReactNode;
   className?: string;
 }
+
+export type DataTableProps<T> = DataTableCommonProps<T> &
+  (
+    | {
+        selectionMode: 'single';
+        paginated?: false;
+        /** Consumer-supplied accessible group label; the kit adds no default. */
+        legend?: ReactNode;
+        'aria-label'?: string;
+        'aria-labelledby'?: string;
+      }
+    | {
+        selectionMode?: 'none' | 'multiple';
+        paginated?: boolean;
+        legend?: never;
+        'aria-label'?: never;
+        'aria-labelledby'?: never;
+      }
+  );
