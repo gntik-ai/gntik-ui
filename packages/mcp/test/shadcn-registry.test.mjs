@@ -99,7 +99,8 @@ test('gntik-tokens brings the token package, fonts and CSS imports; every item d
   assert.equal(tokens.type, 'registry:theme');
   assert.ok(tokens.dependencies.includes('@gntik-ai/tokens'));
   assert.ok('@import "@gntik-ai/tokens/tailwind.css"' in tokens.css);
-  assert.ok(tokens.docs.includes('@gntik-ai:registry=https://npm.pkg.github.com'));
+  assert.match(tokens.docs, /npmjs\.org/);
+  assert.doesNotMatch(tokens.docs, /@gntik-ai:registry|\.npmrc|GitHub Packages|\btoken\b/);
   for (const item of items) {
     if (item.name === gen.TOKENS_ID) continue;
     assert.equal(item.registryDependencies[0], `${BASE}/r/${gen.TOKENS_ID}.json`, item.name);

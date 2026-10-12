@@ -24,7 +24,7 @@
         "@import \"@fontsource/geist-mono/500.css\"": {},
         "@import \"@gntik-ai/tokens/tailwind.css\"": {}
       },
-      "docs": "gntik-ui packages are published to GitHub Packages: add `@gntik-ai:registry=https://npm.pkg.github.com` to .npmrc (with a token that can read packages). The theme class goes on <html>: \"dark\" (default), \"\" (light) or \"high_contrast\". If the app was set up with `shadcn init`, remove its :root/.dark variables and @theme block from the CSS file: @gntik-ai/tokens/tailwind.css defines them.",
+      "docs": "gntik-ui packages are published publicly on npmjs.org. The theme class goes on <html>: \"dark\" (default), \"\" (light) or \"high_contrast\". If the app was set up with `shadcn init`, remove its :root/.dark variables and @theme block from the CSS file: @gntik-ai/tokens/tailwind.css defines them.",
       "categories": [
         "theme"
       ],

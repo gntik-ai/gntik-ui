@@ -95,7 +95,6 @@ const FONT_IMPORTS = [
   '@fontsource/geist/700.css',
   '@fontsource/geist-mono/500.css',
 ];
-const NPMRC = '@gntik-ai:registry=https://npm.pkg.github.com';
 
 const pkgName = (spec: string) => (spec.startsWith('@') ? spec.split('/').slice(0, 2).join('/') : spec.split('/')[0]!);
 const readJson = <T>(file: string): T => JSON.parse(fs.readFileSync(file, 'utf8')) as T;
@@ -124,7 +123,7 @@ function workspace() {
   return { pkgs, ranges };
 }
 
-/** shadcn dependency spec: kit packages bare (resolved through the user's .npmrc scope), others with their range. */
+/** shadcn dependency spec: kit packages bare (resolved from npmjs.org), others with their range. */
 function depSpec(name: string, ranges: Map<string, string>) {
   if (name.startsWith('@gntik-ai/')) return name;
   const r = ranges.get(name);
@@ -216,7 +215,7 @@ export function build(opts: { baseUrl?: string; kitRegistry?: string } = {}): Bu
     registryDependencies: [],
     files: [],
     css: Object.fromEntries([...FONT_IMPORTS, '@gntik-ai/tokens/tailwind.css'].map((s) => [`@import "${s}"`, {}])),
-    docs: `gntik-ui packages are published to GitHub Packages: add \`${NPMRC}\` to .npmrc (with a token that can read packages). The theme class goes on <html>: "dark" (default), "" (light) or "high_contrast". If the app was set up with \`shadcn init\`, remove its :root/.dark variables and @theme block from the CSS file: @gntik-ai/tokens/tailwind.css defines them.`,
+    docs: `gntik-ui packages are published publicly on npmjs.org. The theme class goes on <html>: "dark" (default), "" (light) or "high_contrast". If the app was set up with \`shadcn init\`, remove its :root/.dark variables and @theme block from the CSS file: @gntik-ai/tokens/tailwind.css defines them.`,
     categories: ['theme'],
     meta: { package: '@gntik-ai/tokens', version: tokensPkg.version },
   };

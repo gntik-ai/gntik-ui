@@ -5,7 +5,6 @@ import { installLines, runInstall, withInstallStatus, type CommandResult, type C
 import { CliError } from '../errors.js';
 import {
   CONFIG_FILE,
-  NPM_REGISTRY,
   SCOPE,
   defaultConfig,
   detectProject,
@@ -16,7 +15,6 @@ import {
 } from '../project.js';
 
 export const BRANDS = ['gntik', 'musematic', 'falcone'] as const;
-export const SCOPE_LINE = `${SCOPE}:registry=${NPM_REGISTRY}`;
 export const CSS_IMPORTS = [
   '@import "tailwindcss";',
   '@import "@fontsource/geist";',
@@ -30,15 +28,6 @@ export interface Change {
   file: string;
   action: ChangeAction;
   content: string;
-}
-
-/** Ensures the scope line is in .npmrc. */
-export function patchNpmrc(text: string | null): string {
-  const lines = text === null ? [] : text.split(/\r?\n/);
-  if (lines.some((l) => l.trim().replace(/\s+/g, '') === SCOPE_LINE)) return text ?? '';
-  const kept = lines.filter((l) => !l.trim().startsWith(`${SCOPE}:registry`));
-  while (kept.length && kept[kept.length - 1] === '') kept.pop();
-  return [...kept, SCOPE_LINE, ''].join('\n');
 }
 
 /**
@@ -178,15 +167,12 @@ export async function init(ctx: Context): Promise<CommandResult> {
       : { ...defaultConfig(info, brand), ...(existing?.registry ? { registry: existing.registry } : {}) };
   const cssFile = config.css;
 
-  const npmrcPath = path.join(ctx.cwd, '.npmrc');
   const cssPath = path.join(ctx.cwd, cssFile);
   const cfgPath = path.join(ctx.cwd, CONFIG_FILE);
-  const npmrcBefore = await readOrNull(npmrcPath);
   const cssBefore = await readOrNull(cssPath);
   const cfgBefore = await readOrNull(cfgPath);
   const cfgText = `${JSON.stringify(config, null, 2)}\n`;
   const changes: Change[] = [
-    change('.npmrc', npmrcBefore, patchNpmrc(npmrcBefore)),
     change(cssFile, cssBefore, patchCss(cssBefore)),
     change(CONFIG_FILE, cfgBefore, cfgBefore !== null && !ctx.flags.overwrite ? cfgBefore : cfgText),
   ];
@@ -200,6 +186,10 @@ export async function init(ctx: Context): Promise<CommandResult> {
   }
 
   const warnings: string[] = [];
+  const npmrc = await readOrNull(path.join(ctx.cwd, '.npmrc'));
+  if (npmrc?.split(/\r?\n/).some((line) => line.trim().startsWith(`${SCOPE}:registry`))) {
+    warnings.push('New @gntik-ai versions are on npmjs.org; remove the @gntik-ai:registry line from .npmrc.');
+  }
   if (cssBefore && /@tailwind\s+(base|components|utilities)/.test(cssBefore)) {
     warnings.push(`${cssFile} has Tailwind v3 directives (@tailwind …); the kit needs Tailwind v4 — remove them.`);
   }
@@ -234,7 +224,6 @@ export async function init(ctx: Context): Promise<CommandResult> {
     ...snippet.flatMap((s) => ['', `// ${s.file}`, ...s.code.trimEnd().split('\n')]),
     '',
     ...installLines(install, ctx),
-    'GitHub Packages needs a token with read:packages: //npm.pkg.github.com/:_authToken=… in your user ~/.npmrc.',
   ];
   const data = {
     dryRun: ctx.flags.dryRun,

@@ -1,6 +1,6 @@
 # Releasing
 
-Packages publish to GitHub Packages (`@gntik-ai/*`, restricted) through
+Packages publish to npmjs.org (`@gntik-ai/*`, public) through
 [Changesets](https://github.com/changesets/changesets). Config: `.changeset/config.json`;
 workflow: `.github/workflows/release.yml`.
 

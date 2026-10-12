@@ -17,7 +17,7 @@ export const HELP: Record<'main' | CommandName, string> = {
 Usage: gntik-ui <command> [options]
 
 Commands:
-  init               Set up a project (.npmrc, CSS imports, gntik-ui.json, packages)
+  init               Set up a project (CSS imports, gntik-ui.json, packages)
   add <id...>        Add components/layouts (npm) or copy blocks/templates into the project
   eject <id>         Copy a component's source into the project so the team owns it
   list               List registry items (--kind, --group)
@@ -29,7 +29,6 @@ ${GLOBAL}`,
   init: `Usage: gntik-ui init [--brand gntik|musematic|falcone] [--dry-run] [--no-install] [--overwrite]
 
 Detects the framework (Vite, Next, generic), package manager and CSS entry, then:
-  - adds "@gntik-ai:registry=https://npm.pkg.github.com" to .npmrc
   - puts @import "tailwindcss", the Geist fonts and "@gntik-ai/ui/styles.css" at the top of the CSS entry
   - writes gntik-ui.json (aliases for components, blocks, templates; brand preset); kept if present
     unless --overwrite

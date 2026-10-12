@@ -18,7 +18,6 @@ const KINDS = [
   { id: 'template', label: 'Templates' },
 ];
 const ITEMS = [...kitRegistry.items].sort((a, b) => a.id.localeCompare(b.id));
-const NPMRC = '@gntik-ai:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}';
 
 const pascal = (s) =>
   s
@@ -53,7 +52,7 @@ function commandsFor(item) {
   const pkgs = kitPackages(item);
   const copied = item.kind === 'block' || item.kind === 'template';
   return {
-    cli: `# once per app: .npmrc, CSS imports, theme wiring, gntik-ui.json
+    cli: `# once per app: CSS imports, theme wiring, gntik-ui.json
 npx @gntik-ai/cli init
 
 npx @gntik-ai/cli add ${item.id}`,
@@ -197,7 +196,7 @@ function InstallSection() {
         kicker="Get started"
         title="Install"
         status="done"
-        intro={`Three ways to bring any of the ${ITEMS.length} kit items into a React 19 + Tailwind 4 app. Pick an item and the commands below update. All three need read access to the @gntik-ai packages on GitHub Packages.`}
+        intro={`Three ways to bring any of the ${ITEMS.length} kit items into a React 19 + Tailwind 4 app. Pick an item and the commands below update. The @gntik-ai packages are public on npmjs.org.`}
       />
 
       <ItemPicker selected={item} onSelect={setItem} />
@@ -205,10 +204,10 @@ function InstallSection() {
 
       <Method
         n="00"
-        title="Registry access"
-        desc="The @gntik-ai packages are published to GitHub Packages. Add this .npmrc next to package.json, with a token that can read packages."
+        title="Install packages"
+        desc="The @gntik-ai packages are public on npmjs.org. Install the kit directly with your package manager."
       >
-        <CodeBlock code={NPMRC} lang="ini" open />
+        <CodeBlock code="pnpm add @gntik-ai/ui" lang="sh" open />
       </Method>
 
       <Method
