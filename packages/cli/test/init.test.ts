@@ -20,6 +20,11 @@ describe('init', () => {
     const dir = await viteProject();
     const r = await cli(['init', '--json', '--dry-run', '--cwd', dir]);
     expect(r.code).toBe(0);
+    expect(r.stdout).not.toMatch(/\.npmrc|read:packages|\btoken\b/i);
+    const text = await cli(['init', '--dry-run', '--cwd', dir]);
+    expect(text.code).toBe(0);
+    expect(text.stdout).not.toMatch(/\.npmrc|read:packages|\btoken\b/i);
+    expect(existsSync(path.join(dir, '.npmrc'))).toBe(false);
     expect(r.json.project).toMatchObject({
       framework: 'vite',
       packageManager: 'pnpm',

@@ -7,4 +7,4 @@ pnpm changeset          # pick packages, bump type, write a one-line summary
 ```
 
 On merge to `main`, the Release workflow opens a "Version packages" PR (bumps versions and
-writes CHANGELOG.md). Merging that PR publishes the new versions to GitHub Packages.
+writes CHANGELOG.md). Merging that PR publishes the new versions to npmjs.org.

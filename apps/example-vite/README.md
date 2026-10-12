@@ -12,7 +12,7 @@ pnpm --filter @gntik-ai/example-vite preview   # serves dist/ (SPA fallback for 
 
 ## What `gntik-ui init` set up (and this app keeps)
 
-- `gntik-ui.json` (framework, CSS entry, brand, aliases) and `.npmrc` (`@gntik-ai` → GitHub Packages).
+- `gntik-ui.json` (framework, CSS entry, brand, aliases).
 - `src/index.css`: Tailwind, Geist + Geist Mono, `@gntik-ai/ui/styles.css`, plus the extra Geist
   weights and `@gntik-ai/templates/styles.css` (blocks, charts, chat… sources) for the templates.
 - `src/main.tsx`: `<ThemeProvider brand={gntikPreset}>` (dark by default, persisted).
