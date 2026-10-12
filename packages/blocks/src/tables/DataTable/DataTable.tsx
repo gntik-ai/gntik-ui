@@ -392,7 +392,6 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       <SelectionGroup
         single={singleMode}
         legend={legend}
-        groupProps={singleSelection.groupProps}
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
       >

@@ -75,10 +75,12 @@ export function DataTableRow<T>({
       {selectionColumn && (
         <TableCell className={cn('w-10 pe-0', layout?.lead.className, tint(layout?.lead))} style={layout?.lead.style}>
           {singleSelection ? (
-            <input
-              {...singleSelection.inputProps(row)}
-              className="size-4 accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring disabled:cursor-not-allowed"
-            />
+            <span {...singleSelection.entryProps(row)} className="inline-flex">
+              <input
+                {...singleSelection.inputProps(row)}
+                className="size-4 accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring disabled:cursor-not-allowed"
+              />
+            </span>
           ) : (
             <Checkbox
               aria-label={t('table.selectRow', { label })}

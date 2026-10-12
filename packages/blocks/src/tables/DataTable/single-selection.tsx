@@ -5,7 +5,7 @@ const mountedNames = new Map<string, number>();
 export interface SingleSelection<T> {
   selectedId: string | null;
   inputProps: (row: T) => ComponentProps<'input'>;
-  groupProps: ComponentProps<'fieldset'>;
+  entryProps: (row: T) => ComponentProps<'span'>;
 }
 
 export function useSingleSelection<T>(options: {
@@ -22,11 +22,12 @@ export function useSingleSelection<T>(options: {
   const [innerId, setInnerId] = useState(options.defaultSelectedId ?? null);
   const selectedId = options.selectedId === undefined ? innerId : options.selectedId;
   const inputs = useRef(new Map<string, HTMLInputElement>());
+  const entry = useRef<HTMLSpanElement>(null);
   const enabledIds = options.rows.filter((row) => !options.isRowDisabled?.(row)).map(options.getRowId);
   const tabId = selectedId != null && enabledIds.includes(selectedId) ? selectedId : enabledIds[0];
   // Chromium excludes every unchecked same-name radio from sequential focus when
-  // a disabled radio is checked. Enter through the fieldset in that case, then
-  // focus the first enabled input without changing the checked choice or name.
+  // a disabled radio is checked. Put the fallback tab stop beside the first
+  // enabled radio so other table controls retain their normal Tab order.
   const redirectEntry =
     tabId !== undefined &&
     options.rows.some((row) => options.getRowId(row) === selectedId && options.isRowDisabled?.(row));
@@ -37,32 +38,25 @@ export function useSingleSelection<T>(options: {
   };
   return {
     selectedId,
-    groupProps: redirectEntry
-      ? {
-          tabIndex: 0,
-          onFocus: (event) => {
-            if (event.target === event.currentTarget && tabId !== undefined) inputs.current.get(tabId)?.focus();
-          },
-          onPointerDown: (event) => {
-            // A click on a disabled input must not focus its tab-entry ancestor.
-            if (event.target instanceof HTMLInputElement && event.target.disabled) event.preventDefault();
-          },
-          onKeyDown: (event) => {
-            if (
-              event.key === 'Tab' &&
-              event.target instanceof HTMLInputElement &&
-              [...inputs.current.values()].includes(event.target)
-            ) {
-              // Let native Tab/Shift+Tab leave the radio without stopping on the
-              // entry fieldset again. Restore it once focus leaves the group.
-              event.currentTarget.tabIndex = -1;
-            }
-          },
-          onBlur: (event) => {
-            if (!event.currentTarget.contains(event.relatedTarget)) event.currentTarget.tabIndex = 0;
-          },
-        }
-      : {},
+    entryProps: (row) =>
+      redirectEntry && options.getRowId(row) === tabId
+        ? {
+            ref: entry,
+            tabIndex: 0,
+            onFocus: (event) => {
+              if (event.target === event.currentTarget && tabId !== undefined)
+                inputs.current.get(tabId)?.focus({ preventScroll: true });
+            },
+            onPointerDown: (event) => {
+              // Only keyboard entry redirects focus; clicking the wrapper's blank
+              // space must not focus it or interfere with native radio clicks.
+              if (event.target === event.currentTarget) event.preventDefault();
+            },
+            onBlur: (event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) event.currentTarget.tabIndex = 0;
+            },
+          }
+        : {},
     inputProps: (row) => {
       const id = options.getRowId(row);
       const disabled = options.isRowDisabled?.(row) ?? false;
@@ -72,7 +66,7 @@ export function useSingleSelection<T>(options: {
         'aria-label': options.getRowLabel(row),
         checked: selectedId === id,
         disabled,
-        tabIndex: !redirectEntry && !disabled && id === tabId ? 0 : -1,
+        tabIndex: !disabled && id === tabId ? 0 : -1,
         ref: (input) => {
           if (input) inputs.current.set(id, input);
           else inputs.current.delete(id);
@@ -81,6 +75,9 @@ export function useSingleSelection<T>(options: {
           if (!disabled) select(id);
         },
         onKeyDown: (event) => {
+          // Avoid a second stop on the entry wrapper when leaving its radio.
+          // Its blur handler restores keyboard entry after focus has left.
+          if (event.key === 'Tab' && entry.current) entry.current.tabIndex = -1;
           const direction = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[event.key];
           if (direction == null || disabled || enabledIds.length === 0) return;
           event.preventDefault();
@@ -133,20 +130,18 @@ export function useSingleSelectionWarnings({
 export function SelectionGroup({
   single,
   legend,
-  groupProps,
   children,
   ...label
 }: {
   single: boolean;
   legend?: ReactNode;
-  groupProps: ComponentProps<'fieldset'>;
   'aria-label'?: string;
   'aria-labelledby'?: string;
   children: ReactNode;
 }) {
   if (!single) return <>{children}</>;
   return (
-    <fieldset className="m-0 min-w-0 border-0 p-0" {...groupProps} {...label}>
+    <fieldset className="m-0 min-w-0 border-0 p-0" {...label}>
       {legend != null && <legend className="px-3 py-2 text-sm font-medium text-foreground">{legend}</legend>}
       {children}
     </fieldset>

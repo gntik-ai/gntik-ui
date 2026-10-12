@@ -12,7 +12,9 @@ const versions = [
   { id: 'v2', name: 'Version 2', eligible: false },
   { id: 'v1', name: 'Version 1', eligible: true },
 ];
-const versionColumns = [{ id: 'name', header: 'Version', accessor: (row: (typeof versions)[number]) => row.name }];
+const versionColumns = [
+  { id: 'name', header: 'Version', accessor: (row: (typeof versions)[number]) => row.name, sortable: true },
+];
 
 /** Supplied selectionName values must be unique per page; omitted names are instance-unique. */
 export default function SingleSelectionExample() {
@@ -42,6 +44,9 @@ export default function SingleSelectionExample() {
         selectedId={selectedId}
         onSelectedIdChange={setSelectedId}
         isRowDisabled={(row) => !row.eligible}
+        resizable
+        groupBy={() => 'Version history'}
+        collapsibleGroups
         showColumnMenu={false}
         showDensityToggle={false}
       />

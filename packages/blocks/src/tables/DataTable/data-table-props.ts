@@ -20,10 +20,6 @@ interface DataTableCommonProps<T> {
   selectable?: boolean;
   /** Native radio name in single mode. Supplied names must be unique per page. */
   selectionName?: string;
-  /** Consumer-supplied accessible group label in single mode; the kit adds no default. */
-  legend?: ReactNode;
-  'aria-label'?: string;
-  'aria-labelledby'?: string;
   selectedId?: string | null;
   defaultSelectedId?: string | null;
   onSelectedIdChange?: (id: string) => void;
@@ -141,4 +137,20 @@ interface DataTableCommonProps<T> {
 }
 
 export type DataTableProps<T> = DataTableCommonProps<T> &
-  ({ selectionMode: 'single'; paginated?: false } | { selectionMode?: 'none' | 'multiple'; paginated?: boolean });
+  (
+    | {
+        selectionMode: 'single';
+        paginated?: false;
+        /** Consumer-supplied accessible group label; the kit adds no default. */
+        legend?: ReactNode;
+        'aria-label'?: string;
+        'aria-labelledby'?: string;
+      }
+    | {
+        selectionMode?: 'none' | 'multiple';
+        paginated?: boolean;
+        legend?: never;
+        'aria-label'?: never;
+        'aria-labelledby'?: never;
+      }
+  );

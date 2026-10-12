@@ -30,13 +30,28 @@ test('Tab reaches the first enabled radio when the checked version is disabled, 
   await expect(checked).toBeDisabled();
   await items.getByRole('radio', { name: 'Item A' }).focus();
   await page.keyboard.press('Tab');
+  await expect(versions.getByRole('button', { name: 'Version', exact: true })).toBeFocused();
+  await page.keyboard.press('Tab');
+  const resize = versions.getByRole('separator', { name: 'Resize Version column' });
+  await expect(resize).toBeFocused();
+  const width = Number(await resize.getAttribute('aria-valuenow'));
+  await page.keyboard.press('ArrowRight');
+  await expect(resize).toBeFocused();
+  await expect(resize).toHaveAttribute('aria-valuenow', String(width + 10));
+  await expect(checked).toBeChecked();
+  await page.keyboard.press('Tab');
+  const collapse = versions.getByRole('button', { name: /Version history/ });
+  await expect(collapse).toBeFocused();
+  await page.keyboard.press('ArrowDown');
+  await expect(collapse).toBeFocused();
+  await page.keyboard.press('Tab');
   await expect(firstEnabled).toBeFocused();
   await expect(checked).toBeChecked();
   await expect(firstEnabled).not.toBeChecked();
   await expect(checked).toHaveAttribute('name', 'example-version-choice');
   await expect(firstEnabled).toHaveAttribute('name', 'example-version-choice');
   await page.keyboard.press('Shift+Tab');
-  await expect(items.getByRole('radio', { name: 'Item A' })).toBeFocused();
+  await expect(collapse).toBeFocused();
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
   await expect(page.getByRole('button', { name: 'After tables' })).toBeFocused();
@@ -60,6 +75,16 @@ test('Tab enters on a checked enabled radio after the first row', async ({ page 
   await expect(selected).toBeChecked();
   await page.keyboard.press('Shift+Tab');
   await expect(page.getByRole('button', { name: 'Before tables' })).toBeFocused();
+});
+
+test('pressing version text does not redirect pointer focus to a radio', async ({ page }) => {
+  const versions = page.getByRole('group', { name: 'Available versions' });
+  const text = versions.getByText('Version 2', { exact: true });
+  const firstEnabled = versions.getByRole('radio', { name: 'Version 3' });
+  await page.getByRole('button', { name: 'Before tables' }).focus();
+  await text.click();
+  await expect(firstEnabled).not.toBeFocused();
+  await expect(versions.getByRole('radio', { name: 'Version 2' })).toBeChecked();
 });
 
 for (const theme of ['dark', 'light', 'high_contrast']) {

@@ -13,6 +13,16 @@ const rows = [
 const columns = [{ id: 'name', header: 'Name', accessor: (row: (typeof rows)[number]) => row.name }];
 const base = { rows, columns, showColumnMenu: false, showDensityToggle: false };
 
+// @ts-expect-error Group labels belong to single selection, not checkbox selection.
+const multipleLegend: DataTableProps<(typeof rows)[number]> = { selectionMode: 'multiple', legend: 'Choices' };
+// @ts-expect-error An ungrouped table cannot silently discard a radio-group label.
+const noneLabel: DataTableProps<(typeof rows)[number]> = { selectionMode: 'none', 'aria-label': 'Choices' };
+// @ts-expect-error The default checkbox mode does not provide a labelled radio group.
+const defaultLabelledBy: DataTableProps<(typeof rows)[number]> = { 'aria-labelledby': 'choices-label' };
+void multipleLegend;
+void noneLabel;
+void defaultLabelledBy;
+
 describe('DataTable single selection', () => {
   it('provides a non-paginated list and a versions example with a checked disabled version', async () => {
     const { container } = render(<SingleSelectionExample />);
@@ -151,11 +161,16 @@ describe('DataTable single selection', () => {
 
   it('rejects pagination in types and warns while rendering all rows if the type check is bypassed', () => {
     // @ts-expect-error Single selection cannot be paginated.
-    const invalid: DataTableProps<(typeof rows)[number]> = { ...base, selectionMode: 'single', paginated: true };
+    const invalid: DataTableProps<(typeof rows)[number]> = {
+      ...base,
+      selectionMode: 'single',
+      paginated: true,
+      legend: 'Items',
+    };
     vi.stubEnv('NODE_ENV', 'development');
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     try {
-      render(<DataTable {...invalid} legend="Items" defaultPageSize={1} virtualize={true} />);
+      render(<DataTable {...invalid} defaultPageSize={1} virtualize={true} />);
       expect(warn).toHaveBeenCalledWith(expect.stringContaining('paginated'));
       expect(screen.getAllByRole('radio')).toHaveLength(3);
       expect(screen.queryByRole('navigation')).toBeNull();
@@ -280,7 +295,7 @@ describe('DataTable single selection', () => {
     expect(change.mock.calls).toEqual([['c']]);
   });
 
-  it('redirects group focus to the first enabled radio without selecting, and Shift+Tab exits', async () => {
+  it('enters on the first enabled radio without selecting, and Shift+Tab exits', async () => {
     const user = userEvent.setup();
     const change = vi.fn();
     render(
@@ -297,11 +312,10 @@ describe('DataTable single selection', () => {
         <button>After</button>
       </>,
     );
-    // The labelled group is the browser-independent entry point when native radio
-    // tabbing excludes unchecked radios because a disabled radio remains checked.
-    const group = screen.getByRole('group', { name: 'Choices' });
-    group.focus();
+    await user.tab();
+    await user.tab();
     expect(screen.getByRole('radio', { name: 'Alpha' })).toHaveFocus();
+    expect(screen.getByRole('radio', { name: 'Alpha' })).toHaveAttribute('tabindex', '0');
     expect(screen.getByRole('radio', { name: 'Beta' })).toBeChecked();
     expect(change).not.toHaveBeenCalled();
     await user.tab({ shift: true });
@@ -313,6 +327,57 @@ describe('DataTable single selection', () => {
     await user.tab({ shift: true });
     expect(screen.getByRole('radio', { name: 'Alpha' })).toHaveFocus();
     expect(change).not.toHaveBeenCalled();
+  });
+
+  it('preserves forward Tab order through headers and group controls with a checked disabled row', async () => {
+    const user = userEvent.setup();
+    const change = vi.fn();
+    render(
+      <>
+        <button>Before</button>
+        <DataTable
+          {...base}
+          columns={[{ ...columns[0]!, sortable: true }]}
+          selectionMode="single"
+          legend="Choices"
+          defaultSelectedId="b"
+          isRowDisabled={(row) => row.disabled}
+          onSelectedIdChange={change}
+          resizable
+          groupBy={() => 'Items'}
+          collapsibleGroups
+        />
+        <button>After</button>
+      </>,
+    );
+    await user.tab();
+    await user.tab();
+    expect(screen.getByRole('button', { name: /Name/ })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole('separator', { name: /Name/ })).toHaveFocus();
+    const resize = screen.getByRole('separator', { name: /Name/ });
+    const width = Number(resize.getAttribute('aria-valuenow'));
+    await user.keyboard('{ArrowRight}');
+    expect(resize).toHaveFocus();
+    expect(resize).toHaveAttribute('aria-valuenow', String(width + 10));
+    expect(change).not.toHaveBeenCalled();
+    await user.tab();
+    const collapse = screen.getByRole('button', { name: /Items/ });
+    expect(collapse).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole('radio', { name: 'Alpha' })).toHaveFocus();
+    expect(screen.getByRole('radio', { name: 'Beta' })).toBeChecked();
+    expect(change).not.toHaveBeenCalled();
+    await user.tab({ shift: true });
+    expect(collapse).toHaveFocus();
+    await user.keyboard('{ArrowDown}');
+    expect(collapse).toHaveFocus();
+    expect(change).not.toHaveBeenCalled();
+    await user.tab();
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(screen.getByRole('radio', { name: 'Alpha' })).toHaveFocus();
   });
 
   it('skips the group when all rows are disabled and retains a checked disabled row', async () => {
@@ -340,6 +405,30 @@ describe('DataTable single selection', () => {
     await user.tab();
     await user.tab();
     expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+    expect(change).not.toHaveBeenCalled();
+  });
+
+  it('does not move pointer focus to a radio when pressing cell text with a checked disabled row', async () => {
+    const user = userEvent.setup();
+    const change = vi.fn();
+    render(
+      <>
+        <button>Before</button>
+        <DataTable
+          {...base}
+          selectionMode="single"
+          legend="Choices"
+          defaultSelectedId="b"
+          isRowDisabled={(row) => row.disabled}
+          onSelectedIdChange={change}
+        />
+      </>,
+    );
+    await user.click(screen.getByRole('button', { name: 'Before' }));
+    await user.pointer({ target: screen.getByText('Beta', { selector: 'td' }), keys: '[MouseLeft>]' });
+    for (const radio of screen.getAllByRole('radio')) expect(radio).not.toHaveFocus();
+    await user.pointer({ keys: '[/MouseLeft]' });
+    expect(screen.getByRole('radio', { name: 'Beta' })).toBeChecked();
     expect(change).not.toHaveBeenCalled();
   });
 
