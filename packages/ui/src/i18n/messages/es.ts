@@ -191,6 +191,10 @@ export const es: Messages = {
   'calendar.emptyTitle': 'Nada programado',
   'calendar.emptyDescription': 'No hay trabajo programado en este periodo.',
   'table.rows': 'Filas',
+  'table.collectionNoun': '{count, plural, one {elemento} other {elementos}}',
+  'table.visibleCount': '{noun}:',
+  'table.truncatedNote':
+    '{count, plural, one {Solo se muestra el primer {formattedCount} {noun}; hay más.} other {Solo se muestran los primeros {formattedCount} {noun}; hay más.}}',
   'table.rowsPerPage': 'Filas por página',
   'table.pagination': 'Paginación: {noun}',
   'table.selectAllPage': 'Seleccionar todas las filas de esta página',

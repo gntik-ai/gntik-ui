@@ -140,6 +140,22 @@ test('get_block: metadata, composed components, deps and source', async () => {
   assert.match(await call('get_block', { id: 'kpi' }), /Did you mean .*kpi-row/);
 });
 
+test('truncated-collection-footer: discoverable non-interactive lower-bound and count-only recipes', async () => {
+  assert.match(await call('list_kit', { kind: 'block' }), /`truncated-collection-footer`/);
+  const item = kit.byId.get('truncated-collection-footer');
+  assert.equal(item.kind, 'block');
+  assert.equal(item.group, 'tables');
+  assert.equal(item.status, 'beta');
+  const md = await call('get_block', { id: 'truncated-collection-footer' });
+  assert.match(md, /lower bound/);
+  assert.match(md, /paginated=\{false\}/);
+  assert.match(md, /aria-describedby/);
+  assert.match(md, /hasMore=\{false\}/);
+  assert.match(md, /from '@gntik-ai\/blocks'/);
+  assert.match(md, /visibleCount=\{37\}/);
+  assert.match(md, /TruncatedCollectionFooterProps/);
+});
+
 test('subordinate-list: catalogue supplies its required props and resource-form composition example', async () => {
   assert.match(await call('list_kit', { kind: 'block' }), /`subordinate-list`/);
   const md = await call('get_block', { id: 'subordinate-list' });
