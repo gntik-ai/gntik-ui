@@ -255,7 +255,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     single: singleMode,
     selectionName,
     paginated: paginatedProp,
-    hasLabel: Boolean(legend || ariaLabel?.trim() || ariaLabelledBy?.trim()),
+    hasLabel:
+      Boolean(legend || ariaLabel?.trim() || ariaLabelledBy?.trim()) ||
+      typeof legend === 'number' ||
+      typeof legend === 'bigint',
   });
 
   const changeDensity = (next: TableDensity) => {
@@ -389,12 +392,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
         </span>
       )}
       {/* The toggle drives a density context for the table: its rows and the controls inside them. */}
-      <SelectionGroup
-        single={singleMode}
-        legend={legend}
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledBy}
-      >
+      <SelectionGroup single={singleMode} legend={legend} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
         <DensityProvider density={density}>
           <Table
             ref={tableRef}

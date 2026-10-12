@@ -159,6 +159,19 @@ describe('DataTable single selection', () => {
     }
   });
 
+  it('accepts a numeric zero legend as the consumer group label without warning', () => {
+    vi.stubEnv('NODE_ENV', 'development');
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      render(<DataTable {...base} selectionMode="single" legend={0} />);
+      expect(screen.getByRole('group', { name: '0' })).toBeInTheDocument();
+      expect(warn).not.toHaveBeenCalled();
+    } finally {
+      warn.mockRestore();
+      vi.unstubAllEnvs();
+    }
+  });
+
   it('rejects pagination in types and warns while rendering all rows if the type check is bypassed', () => {
     // @ts-expect-error Single selection cannot be paginated.
     const invalid: DataTableProps<(typeof rows)[number]> = {
