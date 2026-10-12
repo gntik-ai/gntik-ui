@@ -162,6 +162,30 @@ describe('ChartCard ranges', () => {
     expect(selected).toHaveFocus();
   });
 
+  it('returns keyboard focus to the selected range after a pointer release outside the group', async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <ChartCard showLegend={false} />
+        <button type="button">Outside</button>
+      </>,
+    );
+    const outside = screen.getByRole('button', { name: 'Outside' });
+    const selected = screen.getByRole('button', { name: '7d' });
+    const other = screen.getByRole('button', { name: '90d' });
+    await user.pointer({ keys: '[MouseLeft>]', target: other });
+    expect(other).toHaveFocus();
+    await user.pointer({ keys: '[/MouseLeft]', target: outside });
+    expect(selected).toHaveAttribute('aria-pressed', 'true');
+    await user.tab();
+    expect(outside).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(selected).toHaveFocus();
+    await user.keyboard(' ');
+    expect(selected).toHaveAttribute('aria-pressed', 'true');
+    expect(other).toHaveAttribute('aria-pressed', 'false');
+  });
+
   it.each(['dark', 'light', 'high_contrast'])(
     'has no axe violations for default, custom and hidden ranges in %s',
     async (theme) => {

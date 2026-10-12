@@ -150,6 +150,11 @@ export function ChartCard<T extends object = CostPoint>({
               onPointerCancel={() => {
                 pointerDown.current = false;
               }}
+              onBlur={(event) => {
+                // Pointer release can happen outside this group; restore keyboard entry when focus leaves.
+                if (event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)) return;
+                pointerDown.current = false;
+              }}
               onFocus={(event) => {
                 // Base UI roves focus from the first item; enter this single-selection group at the pressed option.
                 // Pointer entry must keep focus on the option being activated.
