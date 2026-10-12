@@ -91,6 +91,7 @@ export type { SettingsNotificationsProps } from './settings-notifications/Page';
 export { default as SettingsProfilePage } from './settings-profile/Page';
 export { meta as settingsProfileTemplateMeta } from './settings-profile/template.meta';
 export type { SettingsProfileProps } from './settings-profile/Page';
+export type { ProfileDetail } from './settings-profile/ReadOnlyProfile';
 export type { ProfileFormValues, SelectOption } from './settings-profile/data';
 export { SettingsFrame, type SettingsFrameOptions, type SettingsFrameProps } from './settings-profile/SettingsFrame';
 export {

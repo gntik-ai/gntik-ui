@@ -10,8 +10,11 @@ import {
   type SelectOption,
 } from './data';
 import { SettingsFrame, type SettingsFrameOptions } from './SettingsFrame';
+import { ReadOnlyProfile, type ReadOnlyProfileOptions } from './ReadOnlyProfile';
 
-export interface SettingsProfileProps extends SettingsFrameOptions {
+export interface SettingsProfileProps extends SettingsFrameOptions, ReadOnlyProfileOptions {
+  /** Defaults to 'editable'; 'read-only' shows details without form controls or save actions. */
+  mode?: 'editable' | 'read-only';
   profile: Profile;
   /** Saved form values. */
   values: ProfileFormValues;
@@ -24,6 +27,30 @@ export interface SettingsProfileProps extends SettingsFrameOptions {
 
 /** Profile settings: ProfileHeader, personal and regional FormSections, StickyActionBar. */
 export default function SettingsProfilePage({
+  mode = 'editable',
+  identity,
+  context,
+  contextFallback,
+  roles,
+  emptyRolesMessage,
+  ...props
+}: Partial<SettingsProfileProps>) {
+  if (mode === 'read-only') {
+    return (
+      <ReadOnlyProfile
+        {...props}
+        identity={identity}
+        context={context}
+        contextFallback={contextFallback}
+        roles={roles}
+        emptyRolesMessage={emptyRolesMessage}
+      />
+    );
+  }
+  return <EditableProfile {...props} />;
+}
+
+function EditableProfile({
   profile = defaultProfile,
   values: saved = profileValues,
   locales = defaultLocales,

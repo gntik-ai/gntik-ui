@@ -105,6 +105,7 @@ export const PREVIEW_LOADERS = {
   },
   template: {
     ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
+    'settings-profile--read-only': () => import('../../../packages/templates/src/settings-profile/examples/ReadOnly'),
     'resource-detail--runtime-with-transition': () =>
       import('../../../packages/templates/src/resource-detail/examples/runtime-with-transition'),
     'resource-detail--runtime-without-transition': () =>

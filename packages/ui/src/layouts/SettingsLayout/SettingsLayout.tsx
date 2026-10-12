@@ -43,7 +43,7 @@ export interface SettingsLayoutProps extends Omit<
   header?: ReactNode;
   /** Form sections of the current page. */
   children?: ReactNode;
-  /** Sticky bar at the bottom of the content (Discard · Save changes). */
+  /** Sticky bar at the bottom of the content (Discard · Save changes). 'none' removes its wrapper. */
   saveBar?: ReactNode;
   /** Max width of the content column. */
   width?: SettingsLayoutVariantProps['width'];
@@ -138,7 +138,7 @@ export function SettingsLayout({
             ))}
           {children}
         </div>
-        {saveBar != null && <div className={s.saveBar()}>{saveBar}</div>}
+        {saveBar != null && saveBar !== 'none' && <div className={s.saveBar()}>{saveBar}</div>}
       </MainTag>
     </div>
   );

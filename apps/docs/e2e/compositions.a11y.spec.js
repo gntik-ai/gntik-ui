@@ -23,6 +23,11 @@ const layoutExamples = kit.items
   });
 
 const cases = [
+  ...['dark', 'light', 'high_contrast'].map((theme) => ({
+    kind: 'template',
+    id: 'settings-profile--read-only',
+    theme,
+  })),
   ...kit.items
     .filter((i) => i.kind === 'template')
     .flatMap((i) => ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: i.id, theme }))),
@@ -66,6 +71,39 @@ for (const { kind, id, theme } of cases) {
   test(name, async ({ page }) => {
     await page.goto(`/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}`);
     await page.locator('#root > *').first().waitFor();
+    if (id === 'settings-profile--read-only') {
+      const content = page.locator('#settings-content');
+      await expect(content.getByRole('textbox')).toHaveCount(0);
+      await expect(content.getByRole('combobox')).toHaveCount(0);
+      await expect(content.locator('input')).toHaveCount(0);
+      await expect(content.getByRole('button')).toHaveCount(0);
+      await expect(content.locator('.sticky')).toHaveCount(0);
+      await expect(content.locator('dl')).toHaveCount(2);
+      await expect(content.getByText('Nothing selected', { exact: true })).toBeVisible();
+      await expect(content.getByRole('region', { name: 'Roles' }).getByRole('listitem')).toHaveText([
+        'Viewer',
+        'Auditor',
+      ]);
+      const nav = page.getByRole('navigation', { name: 'Settings', exact: true });
+      await nav.getByRole('button', { name: /^Profile/ }).focus();
+      for (const label of [
+        'Security',
+        'Notifications',
+        'Appearance',
+        'Workspace',
+        'Members',
+        'Billing',
+        'API keys',
+        'Integrations',
+      ]) {
+        await page.keyboard.press('Tab');
+        await expect(nav.getByRole('button', { name: new RegExp(`^${label}`) })).toBeFocused();
+      }
+      await page.keyboard.press('Tab');
+      await expect(content.getByRole('link', { name: 'Contact support' })).toBeFocused();
+      await page.keyboard.press('Tab');
+      await expect.poll(() => content.evaluate((element) => element.contains(document.activeElement))).toBe(false);
+    }
     if (id.startsWith('resource-detail--')) {
       await expect(page.getByRole('tablist', { name: 'Resource sections' }).getByRole('tab')).toHaveCount(1);
       await expect(page.getByRole('tab', { name: 'Overview' })).toHaveAttribute('aria-selected', 'true');
