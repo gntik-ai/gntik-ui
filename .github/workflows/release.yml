@@ -11,7 +11,8 @@ concurrency: release-${{ github.ref }}
 permissions:
   contents: write
   pull-requests: write
-  packages: write
+  # npm provenance: the publish is signed with this workflow's OIDC identity.
+  id-token: write
 
 jobs:
   release:
@@ -23,7 +24,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: pnpm
-          registry-url: https://npm.pkg.github.com
+          registry-url: https://registry.npmjs.org
           scope: '@gntik-ai'
       - run: pnpm install --frozen-lockfile
       - name: Version PR or publish
@@ -33,4 +34,7 @@ jobs:
           publish-script: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # @gntik-ai/* publish publicly to npmjs.org (gntik-ui#71); GITHUB_TOKEN only
+          # opens the Version Packages PR.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PNPM_CONFIG_PROVENANCE: 'true'
