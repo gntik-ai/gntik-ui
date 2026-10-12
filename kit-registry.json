@@ -172,7 +172,7 @@
       "package": "@gntik-ai/blocks",
       "group": "data-display",
       "status": "beta",
-      "description": "A Card with title, optional headline and delta, a 7d/30d/90d range toggle and an area, line, bar or heatmap chart with its legend (the heatmap colour scale), sized to the card and with loading, empty and error states.",
+      "description": "A Card with chart and legend: default 7d/30d/90d or custom ranges via ranges, controlled range/onRangeChange, and showRangeToggle={false} when a toolbar owns the range (pass its window as range). Supports title, optional headline and delta, area/line/bar/heatmap charts, and loading, empty and error states. Supply matching dataByRange keys and use defaultRange for initial uncontrolled selection; the toolbar is the only range control when the toggle is hidden. Unknown range/defaultRange keys fall back to the first option for selection, data and label, with a development-only warning.",
       "files": [
         {
           "path": "packages/blocks/src/data-display/ChartCard/ChartCard.tsx",
