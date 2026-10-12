@@ -46,6 +46,19 @@ import {
 export type ResourceDetailTab = 'overview' | 'activity' | 'settings';
 
 export interface ResourceDetailProps {
+  /**
+   * Optional boolean, default false. Shows only the keyboard-accessible Overview tab in
+   * the "Resource sections" tablist, using explicit resource props without sample defaults.
+   * Ignores activity, events, dangerActions, defaultTab, onSaveSettings and onDangerAction.
+   * Explicit actions and onEditDetails are still honored. ConsoleShell defaults are unchanged.
+   */
+  readOnly?: boolean;
+  /**
+   * Optional readonly StatusEvent[], default undefined; used only when readOnly is true.
+   * Omitted: no history card. Empty: named StatusTimeline empty state. Populated: exactly
+   * the supplied events, without fabricated actors. Editable mode continues to use events.
+   */
+  history?: readonly StatusEvent[];
   name: string;
   description: string;
   /** StatusTag key next to the title. */
@@ -78,35 +91,46 @@ const TABS: Array<{ value: ResourceDetailTab; label: string }> = [
   { value: 'settings', label: 'Settings' },
 ];
 
-/** Resource detail: header with status and actions, then Overview / Activity / Settings tabs. */
-export default function ResourceDetailPage({
-  name = detailResource.name,
-  description = detailResource.description,
-  status = detailResource.status,
-  breadcrumbs = detailBreadcrumbs,
-  meta = detailMeta,
-  actions = [
-    { label: 'View logs', icon: FileText, variant: 'secondary' },
-    { label: 'Redeploy', icon: RotateCw, variant: 'primary' },
-  ],
-  details = detailItems,
-  overviewTitle = 'Configuration',
-  overviewDescription = 'Settings of this resource.',
-  historyTitle = 'Status history',
-  events = detailEvents,
-  activity = detailActivity,
-  dangerActions = detailDangerActions,
-  defaultTab = 'overview',
-  onTabChange,
-  onEditDetails,
-  onSaveSettings,
-  onDangerAction,
-  shell,
-}: Partial<ResourceDetailProps>) {
+/** Resource detail: editable tabs by default, or explicit-only Overview when readOnly is true. */
+export default function ResourceDetailPage(props: Partial<ResourceDetailProps>) {
+  const readOnly = props.readOnly ?? false;
+  const {
+    name = readOnly ? '' : detailResource.name,
+    description = readOnly ? '' : detailResource.description,
+    status = readOnly ? '' : detailResource.status,
+    breadcrumbs = readOnly ? [] : detailBreadcrumbs,
+    meta: metaProp,
+    actions: actionsProp,
+    details: detailsProp,
+    overviewTitle = 'Configuration',
+    overviewDescription = readOnly ? '' : 'Settings of this resource.',
+    historyTitle = 'Status history',
+    events = readOnly ? [] : detailEvents,
+    activity = readOnly ? [] : detailActivity,
+    dangerActions = readOnly ? [] : detailDangerActions,
+    defaultTab = 'overview',
+    onTabChange,
+    onEditDetails,
+    onSaveSettings,
+    onDangerAction,
+    shell,
+  } = props;
+  const meta = metaProp ?? (readOnly ? [] : detailMeta);
+  const actions: PageChromeAction[] =
+    actionsProp ??
+    (readOnly
+      ? []
+      : [
+          { label: 'View logs', icon: FileText, variant: 'secondary' },
+          { label: 'Redeploy', icon: RotateCw, variant: 'primary' },
+        ]);
+  const details = detailsProp ?? (readOnly ? [] : detailItems);
+  const historyEvents = readOnly ? props.history : events;
   const [tab, setTab] = useState<ResourceDetailTab>(defaultTab);
   const [settings, setSettings] = useState<ResourceSettings>({ name, description });
   const [saved, setSaved] = useState<ResourceSettings>({ name, description });
   const dirty = settings.name !== saved.name || settings.description !== saved.description;
+  const tabs = readOnly ? TABS.filter((t) => t.value === 'overview') : TABS;
 
   return (
     <ConsoleShell currentHref="/deployments" breadcrumbs={breadcrumbs} {...shell}>
@@ -125,15 +149,15 @@ export default function ResourceDetailPage({
         }
       >
         <Tabs
-          value={tab}
+          value={readOnly ? 'overview' : tab}
           onValueChange={(v) => {
-            const next = TABS.find((t) => t.value === v)?.value ?? 'overview';
+            const next = tabs.find((t) => t.value === v)?.value ?? 'overview';
             setTab(next);
             onTabChange?.(next);
           }}
         >
           <TabsList aria-label="Resource sections">
-            {TABS.map((t) => (
+            {tabs.map((t) => (
               <TabsTab key={t.value} value={t.value}>
                 {t.label}
               </TabsTab>
@@ -141,84 +165,96 @@ export default function ResourceDetailPage({
           </TabsList>
 
           <TabsPanel value="overview">
-            <Grid cols={{ base: 1, lg: 5 }} gap={6} align="start">
+            <Grid cols={historyEvents === undefined ? 1 : { base: 1, lg: 5 }} gap={6} align="start">
               <DescriptionListCard
-                className="lg:col-span-3"
+                className={historyEvents === undefined ? undefined : 'lg:col-span-3'}
                 titleAs="h2"
                 title={overviewTitle}
                 description={overviewDescription}
                 items={details}
                 onEdit={onEditDetails}
               />
-              <Section variant="card" padding="md" title={historyTitle} className="lg:col-span-2">
-                <StatusTimeline events={events} maxVisible={4} />
-              </Section>
+              {historyEvents !== undefined && (
+                <Section
+                  role={readOnly ? 'group' : undefined}
+                  variant="card"
+                  padding="md"
+                  title={historyTitle}
+                  className="lg:col-span-2"
+                >
+                  <StatusTimeline events={historyEvents} maxVisible={readOnly ? undefined : 4} />
+                </Section>
+              )}
             </Grid>
           </TabsPanel>
 
-          <TabsPanel value="activity">
-            <Section
-              variant="card"
-              padding="md"
-              title="Activity"
-              description="Changes made to this resource by people and automations."
-            >
-              <ActivityFeed items={activity} label="Activity, newest first" />
-            </Section>
-          </TabsPanel>
-
-          <TabsPanel value="settings">
-            <Stack gap={8}>
-              <form
-                noValidate
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSaved(settings);
-                  onSaveSettings?.(settings);
-                }}
+          {!readOnly && (
+            <TabsPanel value="activity">
+              <Section
+                variant="card"
+                padding="md"
+                title="Activity"
+                description="Changes made to this resource by people and automations."
               >
-                <FormSection
-                  title="General"
-                  description="Name and description shown across the console."
-                  actions={
-                    <>
-                      <Button variant="ghost" disabled={!dirty} onClick={() => setSettings(saved)}>
-                        Discard
-                      </Button>
-                      <Button type="submit" disabled={!dirty}>
-                        Save changes
-                      </Button>
-                    </>
-                  }
+                <ActivityFeed items={activity} label="Activity, newest first" />
+              </Section>
+            </TabsPanel>
+          )}
+
+          {!readOnly && (
+            <TabsPanel value="settings">
+              <Stack gap={8}>
+                <form
+                  noValidate
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setSaved(settings);
+                    onSaveSettings?.(settings);
+                  }}
                 >
-                  <Stack gap={4}>
-                    <Field>
-                      <FieldLabel required>Name</FieldLabel>
-                      <Input
-                        required
-                        value={settings.name}
-                        onValueChange={(v) => setSettings((s) => ({ ...s, name: v }))}
-                      />
-                      <FieldDescription>Lowercase letters, numbers and dashes.</FieldDescription>
-                    </Field>
-                    <Field>
-                      <FieldLabel>Description</FieldLabel>
-                      <Textarea
-                        rows={3}
-                        value={settings.description}
-                        onValueChange={(v) => setSettings((s) => ({ ...s, description: v }))}
-                      />
-                    </Field>
-                  </Stack>
-                </FormSection>
-              </form>
-              <DangerZone
-                description="These actions affect everyone who uses this resource."
-                actions={dangerActions}
-                onConfirm={onDangerAction}
-              />
-            </Stack>
-          </TabsPanel>
+                  <FormSection
+                    title="General"
+                    description="Name and description shown across the console."
+                    actions={
+                      <>
+                        <Button variant="ghost" disabled={!dirty} onClick={() => setSettings(saved)}>
+                          Discard
+                        </Button>
+                        <Button type="submit" disabled={!dirty}>
+                          Save changes
+                        </Button>
+                      </>
+                    }
+                  >
+                    <Stack gap={4}>
+                      <Field>
+                        <FieldLabel required>Name</FieldLabel>
+                        <Input
+                          required
+                          value={settings.name}
+                          onValueChange={(v) => setSettings((s) => ({ ...s, name: v }))}
+                        />
+                        <FieldDescription>Lowercase letters, numbers and dashes.</FieldDescription>
+                      </Field>
+                      <Field>
+                        <FieldLabel>Description</FieldLabel>
+                        <Textarea
+                          rows={3}
+                          value={settings.description}
+                          onValueChange={(v) => setSettings((s) => ({ ...s, description: v }))}
+                        />
+                      </Field>
+                    </Stack>
+                  </FormSection>
+                </form>
+                <DangerZone
+                  description="These actions affect everyone who uses this resource."
+                  actions={dangerActions}
+                  onConfirm={onDangerAction}
+                />
+              </Stack>
+            </TabsPanel>
+          )}
         </Tabs>
       </Page>
     </ConsoleShell>
