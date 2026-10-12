@@ -1,5 +1,20 @@
 # @gntik-ai/ui
 
+## 0.5.0
+
+### Minor Changes
+
+- 4992a03: Add optional JsonViewer display caps with Unicode-safe text fallback, truncation labels, full-value copying and capped empty content.
+- 0f55d7b: Add read-only profile settings with identity, context and roles; reserve SettingsLayout saveBar='none' as an explicit wrapper opt-out (the literal previously rendered as text).
+- 80c9d78: Add a non-interactive truncated collection footer with localized exact counts, lower-bound counts and truncation notes.
+
+### Patch Changes
+
+- 5fe9e8e: Publish all packages publicly on npmjs.org; projects should remove any old @gntik-ai:registry line from .npmrc to resolve new versions.
+- 7e634c7: Add opt-in single row selection to non-paginated DataTable with native radios, accessible labels including numeric legends, keyboard navigation that preserves table controls and pointer focus, disabled choices, a localized selection column and resize handles that avoid unnecessary scroll-container tab stops.
+- Updated dependencies [5fe9e8e]
+  - @gntik-ai/tokens@0.2.1
+
 ## 0.3.0
 
 ### Minor Changes

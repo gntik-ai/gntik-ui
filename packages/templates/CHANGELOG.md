@@ -1,5 +1,32 @@
 # @gntik-ai/templates
 
+## 0.5.0
+
+### Minor Changes
+
+- 497aa09: Add a controlled live event stream template with subscription states, bounded quiet logs, selectable rows and a pinnable JSON inspector.
+- 0f55d7b: Add read-only profile settings with identity, context and roles; reserve SettingsLayout saveBar='none' as an explicit wrapper opt-out (the literal previously rendered as text).
+- 390081a: Add an opt-in read-only resource detail page with explicit data and controlled status history.
+
+### Patch Changes
+
+- 5fe9e8e: Publish all packages publicly on npmjs.org; projects should remove any old @gntik-ai:registry line from .npmrc to resolve new versions.
+- Updated dependencies [f28226e]
+- Updated dependencies [4992a03]
+- Updated dependencies [497aa09]
+- Updated dependencies [5fe9e8e]
+- Updated dependencies [0f55d7b]
+- Updated dependencies [7e634c7]
+- Updated dependencies [80c9d78]
+  - @gntik-ai/blocks@0.5.0
+  - @gntik-ai/ui@0.5.0
+  - @gntik-ai/charts@0.5.0
+  - @gntik-ai/chat@0.5.0
+  - @gntik-ai/editor@0.5.0
+  - @gntik-ai/flow@0.5.0
+  - @gntik-ai/icons@0.5.0
+  - @gntik-ai/tokens@0.2.1
+
 ## 0.4.0
 
 ### Minor Changes
