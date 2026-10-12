@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { ChartCard } from './ChartCard';
@@ -57,8 +57,8 @@ describe('ChartCard ranges', () => {
     expect(screen.queryByRole('button', { name: '90d' })).toBeNull();
     expect(screen.getByRole('figure', { name: 'Requests, 24h' })).toBeInTheDocument();
     await user.click(screen.getByRole('combobox', { name: 'Page window' }));
-    expect(screen.getAllByRole('option').map((option) => option.textContent)).toEqual(['24h', '7d', '30d']);
-    await user.click(screen.getByRole('option', { name: '7d' }));
+    expect((await screen.findAllByRole('option')).map((option) => option.textContent)).toEqual(['24h', '7d', '30d']);
+    await user.click(await screen.findByRole('option', { name: '7d' }));
     expect(screen.getByRole('figure', { name: 'Requests, 7d' })).toBeInTheDocument();
     expect(screen.getByText('8,680 requests')).toBeInTheDocument();
   });
@@ -162,6 +162,21 @@ describe('ChartCard ranges', () => {
     expect(selected).toHaveFocus();
   });
 
+  it('preserves an arrow-focused option when focus returns without Tab', async () => {
+    const user = userEvent.setup();
+    render(<ChartCard {...custom} defaultRange="7d" />);
+    await user.tab();
+    await user.keyboard('{ArrowRight}');
+    const focused = screen.getByRole('button', { name: '30d' });
+    expect(focused).toHaveFocus();
+    act(() => {
+      focused.blur();
+      focused.focus();
+    });
+    expect(focused).toHaveFocus();
+    expect(screen.getByRole('button', { name: '7d' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
   it('returns keyboard focus to the selected range after a pointer release outside the group', async () => {
     const user = userEvent.setup();
     render(
@@ -189,15 +204,20 @@ describe('ChartCard ranges', () => {
   it.each(['dark', 'light', 'high_contrast'])(
     'has no axe violations for default, custom and hidden ranges in %s',
     async (theme) => {
+      const previousTheme = document.documentElement.className;
       document.documentElement.className = theme;
-      for (const variant of [
-        <ChartCard />,
-        <ChartCard {...custom} />,
-        <ChartCard {...custom} range="24h" showRangeToggle={false} />,
-      ]) {
-        const { container, unmount } = render(variant);
-        await expectNoAxeViolations(container);
-        unmount();
+      try {
+        for (const variant of [
+          <ChartCard />,
+          <ChartCard {...custom} />,
+          <ChartCard {...custom} range="24h" showRangeToggle={false} />,
+        ]) {
+          const { container, unmount } = render(variant);
+          await expectNoAxeViolations(container);
+          unmount();
+        }
+      } finally {
+        document.documentElement.className = previousTheme;
       }
     },
   );

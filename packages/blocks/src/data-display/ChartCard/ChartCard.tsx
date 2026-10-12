@@ -106,7 +106,23 @@ export function ChartCard<T extends object = CostPoint>({
   onRetry,
   dataTable,
 }: ChartCardProps<T>) {
-  const pointerDown = useRef(false);
+  const tabEntry = useRef(false);
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      tabEntry.current = event.key === 'Tab';
+    };
+    const clearTabEntry = () => {
+      tabEntry.current = false;
+    };
+    document.addEventListener('keydown', onKeyDown, true);
+    document.addEventListener('keyup', clearTabEntry, true);
+    window.addEventListener('blur', clearTabEntry);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown, true);
+      document.removeEventListener('keyup', clearTabEntry, true);
+      window.removeEventListener('blur', clearTabEntry);
+    };
+  }, []);
   const [inner, setInner] = useState(defaultRange ?? ranges[0]?.value ?? '');
   const current = rangeProp ?? inner;
   const matched = ranges.find((r) => r.value === current);
@@ -141,24 +157,9 @@ export function ChartCard<T extends object = CostPoint>({
               aria-label={`${title} range`}
               size="sm"
               value={active ? [active.value] : []}
-              onPointerDown={() => {
-                pointerDown.current = true;
-              }}
-              onPointerUp={() => {
-                pointerDown.current = false;
-              }}
-              onPointerCancel={() => {
-                pointerDown.current = false;
-              }}
-              onBlur={(event) => {
-                // Pointer release can happen outside this group; restore keyboard entry when focus leaves.
-                if (event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)) return;
-                pointerDown.current = false;
-              }}
               onFocus={(event) => {
-                // Base UI roves focus from the first item; enter this single-selection group at the pressed option.
-                // Pointer entry must keep focus on the option being activated.
-                if (pointerDown.current) return;
+                // Tab enters at the pressed option; pointer and restored focus stay on their original option.
+                if (!tabEntry.current) return;
                 if (event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)) return;
                 const selected = event.currentTarget.querySelector<HTMLButtonElement>('[aria-pressed="true"]');
                 selected?.focus();
