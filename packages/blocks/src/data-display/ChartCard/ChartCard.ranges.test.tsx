@@ -139,6 +139,29 @@ describe('ChartCard ranges', () => {
     expect(group).not.toContainElement(document.activeElement as HTMLElement);
   });
 
+  it('keeps pointer focus on the clicked range for subsequent keyboard selection', async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <button type="button">Outside</button>
+        <ChartCard />
+      </>,
+    );
+    const outside = screen.getByRole('button', { name: 'Outside' });
+    const selected = screen.getByRole('button', { name: '90d' });
+    await user.click(outside);
+    await user.click(selected);
+    expect(selected).toHaveFocus();
+    expect(selected).toHaveAttribute('aria-pressed', 'true');
+    await user.keyboard(' ');
+    expect(selected).toHaveFocus();
+    expect(selected).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: '7d' })).toHaveAttribute('aria-pressed', 'false');
+    await user.click(outside);
+    await user.tab();
+    expect(selected).toHaveFocus();
+  });
+
   it.each(['dark', 'light', 'high_contrast'])(
     'has no axe violations for default, custom and hidden ranges in %s',
     async (theme) => {

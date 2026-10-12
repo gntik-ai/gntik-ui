@@ -10,7 +10,7 @@ import {
   type ValueFormatter,
 } from '@gntik-ai/charts';
 import { Card, CardAction, CardDescription, CardHeader, CardTitle, cn, Toggle, ToggleGroup } from '@gntik-ai/ui';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { TrendDelta, type KpiDelta } from '../shared/TrendDelta';
 import { COST_BY_RANGE, COST_RANGES, type CostPoint } from './fixtures';
 
@@ -106,6 +106,7 @@ export function ChartCard<T extends object = CostPoint>({
   onRetry,
   dataTable,
 }: ChartCardProps<T>) {
+  const pointerDown = useRef(false);
   const [inner, setInner] = useState(defaultRange ?? ranges[0]?.value ?? '');
   const current = rangeProp ?? inner;
   const matched = ranges.find((r) => r.value === current);
@@ -140,8 +141,19 @@ export function ChartCard<T extends object = CostPoint>({
               aria-label={`${title} range`}
               size="sm"
               value={active ? [active.value] : []}
+              onPointerDown={() => {
+                pointerDown.current = true;
+              }}
+              onPointerUp={() => {
+                pointerDown.current = false;
+              }}
+              onPointerCancel={() => {
+                pointerDown.current = false;
+              }}
               onFocus={(event) => {
                 // Base UI roves focus from the first item; enter this single-selection group at the pressed option.
+                // Pointer entry must keep focus on the option being activated.
+                if (pointerDown.current) return;
                 if (event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)) return;
                 const selected = event.currentTarget.querySelector<HTMLButtonElement>('[aria-pressed="true"]');
                 selected?.focus();

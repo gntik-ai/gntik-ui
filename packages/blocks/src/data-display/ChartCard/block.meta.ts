@@ -5,6 +5,6 @@ export const meta: BlockMeta = {
   family: 'data-display',
   status: 'beta',
   description:
-    'A Card with title, optional headline and delta, an area, line, bar or heatmap chart with legend and loading, empty and error states, default 7d/30d/90d or ordered custom ranges via ranges, controlled range/onRangeChange, and showRangeToggle={false} when a page toolbar owns the range (pass the page window as range so the toolbar is the only range control). Uncontrolled selection starts at defaultRange or the first option; unknown range/defaultRange keys fall back to the first option for selection, data and label, with a development-only warning. Supply matching dataByRange keys and range labels; see examples/custom-ranges.tsx and examples/toolbar-owned-range.tsx.',
+    'A Card with chart and legend: default 7d/30d/90d or custom ranges via ranges, controlled range/onRangeChange, and showRangeToggle={false} when a toolbar owns the range (pass its window as range). Supports title, optional headline and delta, area/line/bar/heatmap charts, and loading, empty and error states. Supply matching dataByRange keys and use defaultRange for initial uncontrolled selection; the toolbar is the only range control when the toggle is hidden. Unknown range/defaultRange keys fall back to the first option for selection, data and label, with a development-only warning.',
   uses: ['Card', 'ToggleGroup', 'AreaChart', 'LineChart', 'BarChart', 'Heatmap', 'ChartLegend'],
 };
