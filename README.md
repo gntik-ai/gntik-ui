@@ -40,7 +40,7 @@ gntik-ui/
 │  ├─ codemods/             @gntik-ai/codemods: jscodeshift transforms behind `gntik-ui upgrade`
 │  ├─ evals/                agent evals: can an agent build pages with the kit only? (private)
 │  └─ mcp/                  MCP server for Claude Code (container image, private)
-├─ .changeset/              release notes; Release workflow publishes to GitHub Packages
+├─ .changeset/              release notes; Release workflow publishes to npmjs.org
 │                           (canary workflow publishes snapshot builds)
 ├─ docs/governance/         lifecycle, release policy, review rubric, spec template
 ├─ AGENTS.md · .claude/     instructions and skills for coding agents (build-page,
@@ -72,12 +72,11 @@ pnpm changeset        # describe a change to a published package
 Docs and catalog: **https://ui.gntik.ai**. Any item also installs with the shadcn CLI:
 `npx shadcn@latest add https://ui.gntik.ai/r/button.json` (index at `/r/registry.json`).
 
-Fastest path: `npx @gntik-ai/cli init` in a Vite or Next app (writes `.npmrc`, CSS imports,
+Fastest path: `npx @gntik-ai/cli init` in a Vite or Next app (writes CSS imports,
 `gntik-ui.json` and the theme wiring, installs the packages), then `gntik-ui add <id>` for
 components, blocks or page templates (`gntik-ui list --json` shows everything). By hand:
 
-1. Install from GitHub Packages (scope `@gntik-ai`):
-   `.npmrc` → `@gntik-ai:registry=https://npm.pkg.github.com`, then `pnpm add @gntik-ai/ui`
+1. Install from public npm: `pnpm add @gntik-ai/ui`
    (it brings `@gntik-ai/tokens`; add `@gntik-ai/charts`, `flow`, `editor` as needed).
 2. In the global CSS, after Tailwind v4:
    ```css

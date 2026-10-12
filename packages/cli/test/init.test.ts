@@ -1,13 +1,21 @@
 import { existsSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { CSS_IMPORTS, patchCss, patchNpmrc, SCOPE_LINE } from '../src/commands/init.js';
+import { CSS_IMPORTS, patchCss } from '../src/commands/init.js';
 import { cli, nextProject, tempProject, viteProject } from './helpers.js';
 
 const read = (dir: string, f: string) => readFile(path.join(dir, f), 'utf8');
 
 describe('init', () => {
+  it('help describes setup without registry configuration', async () => {
+    for (const args of [['--help'], ['init', '--help']]) {
+      const r = await cli(args);
+      expect(r.code).toBe(0);
+      expect(r.stdout).not.toMatch(/\.npmrc|read:packages/);
+    }
+  });
+
   it('Vite --dry-run: detects the project and writes nothing', async () => {
     const dir = await viteProject();
     const r = await cli(['init', '--json', '--dry-run', '--cwd', dir]);
@@ -20,7 +28,6 @@ describe('init', () => {
       entry: 'src/main.tsx',
     });
     expect(r.json.changes).toEqual([
-      { file: '.npmrc', action: 'create' },
       { file: 'src/index.css', action: 'patch' },
       { file: 'gntik-ui.json', action: 'create' },
     ]);
@@ -35,11 +42,15 @@ describe('init', () => {
     expect(r.json.snippet[0].code).toContain('<ThemeProvider brand={gntikPreset}>');
   });
 
-  it('Vite: writes .npmrc, CSS imports and config, then installs', async () => {
+  it('Vite: writes CSS imports and config without registry setup, then installs', async () => {
     const dir = await viteProject();
     const r = await cli(['init', '--json', '--brand', 'musematic', '--cwd', dir]);
     expect(r.code).toBe(0);
-    expect(await read(dir, '.npmrc')).toBe(`${SCOPE_LINE}\n`);
+    expect(existsSync(path.join(dir, '.npmrc'))).toBe(false);
+    expect(r.stdout).not.toMatch(/\.npmrc|read:packages|\btoken\b/i);
+    const text = await cli(['init', '--no-install', '--cwd', dir]);
+    expect(text.code).toBe(0);
+    expect(text.stdout).not.toMatch(/\.npmrc|read:packages|\btoken\b/i);
     expect(await read(dir, 'src/index.css')).toBe(`${CSS_IMPORTS.join('\n')}\n\nbody { margin: 0; }\n`);
     expect(JSON.parse(await read(dir, 'gntik-ui.json'))).toEqual({
       version: 1,
@@ -70,7 +81,8 @@ describe('init', () => {
       entry: 'app/layout.tsx',
       src: false,
     });
-    expect(await read(dir, '.npmrc')).toBe(`save-exact=true\n${SCOPE_LINE}\n`);
+    expect(await readFile(path.join(dir, '.npmrc'))).toEqual(Buffer.from('save-exact=true\n'));
+    expect(r.json.changes.map((c: { file: string }) => c.file)).not.toContain('.npmrc');
     const css = await read(dir, 'app/globals.css');
     expect(css.match(/@import "tailwindcss";/g)).toHaveLength(1);
     expect(css).toContain(':root { --x: 1; }');
@@ -84,6 +96,27 @@ describe('init', () => {
       ran: false,
     });
     expect(r.execs).toEqual([]);
+  });
+
+  it.each([false, true])('preserves a scope override and warns once (dry-run: %s)', async (dryRun) => {
+    const dir = await viteProject();
+    const before =
+      'save-exact=true\r\n@gntik-ai:registry=https://old.example.test/\r\n@gntik-ai:registry=https://mirror.example.test/';
+    await writeFile(path.join(dir, '.npmrc'), before);
+    const flags = ['--no-install', '--cwd', dir, ...(dryRun ? ['--dry-run'] : [])];
+    const r = await cli(['init', '--json', ...flags]);
+    expect(r.code).toBe(0);
+    expect(await readFile(path.join(dir, '.npmrc'))).toEqual(Buffer.from(before));
+    expect(r.json.changes.map((c: { file: string }) => c.file)).not.toContain('.npmrc');
+    expect(r.json.warnings).toEqual([
+      'New @gntik-ai versions are on npmjs.org; remove the @gntik-ai:registry line from .npmrc.',
+    ]);
+    expect(r.stdout).not.toContain('read:packages');
+    const text = await cli(['init', ...flags]);
+    expect(text.code).toBe(0);
+    expect(text.stdout.match(/Warning: New @gntik-ai versions/g)).toHaveLength(1);
+    expect(text.stdout).not.toContain('read:packages');
+    expect(await readFile(path.join(dir, '.npmrc'))).toEqual(Buffer.from(before));
   });
 
   it('generic project without a CSS entry creates one', async () => {
@@ -103,11 +136,9 @@ describe('init', () => {
     expect((await cli(['init', '--brand', 'acme', '--json', '--cwd', dir])).code).toBe(2);
   });
 
-  it('patchCss / patchNpmrc are idempotent and move existing imports', () => {
+  it('patchCss is idempotent and moves existing imports', () => {
     const once = patchCss('@import "@gntik-ai/ui/styles.css";\n@import "tailwindcss";\n.a{}\n');
     expect(once).toBe(`${CSS_IMPORTS.join('\n')}\n\n.a{}\n`);
     expect(patchCss(once)).toBe(once);
-    expect(patchNpmrc(`${SCOPE_LINE}\n`)).toBe(`${SCOPE_LINE}\n`);
-    expect(patchNpmrc('@gntik-ai:registry=https://old\n')).toBe(`${SCOPE_LINE}\n`);
   });
 });

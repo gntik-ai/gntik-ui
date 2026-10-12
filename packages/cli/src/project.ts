@@ -8,7 +8,6 @@ export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
 
 export const CONFIG_FILE = 'gntik-ui.json';
 export const SCOPE = '@gntik-ai';
-export const NPM_REGISTRY = 'https://npm.pkg.github.com';
 
 export interface GntikConfig {
   version: 1;
