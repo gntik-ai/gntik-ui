@@ -162,6 +162,9 @@ export type {
 } from './pending-activation/Page';
 
 // P3 — AI and builders
+export { default as LiveEventStreamPage } from './live-event-stream/Page';
+export { meta as liveEventStreamTemplateMeta } from './live-event-stream/template.meta';
+export type { LiveEventStreamProps, LiveEventStreamStatus, LiveEvent } from './live-event-stream/Page';
 export { default as RunTracePage } from './run-trace/Page';
 export { meta as runTraceTemplateMeta } from './run-trace/template.meta';
 export type { RunTraceProps } from './run-trace/Page';

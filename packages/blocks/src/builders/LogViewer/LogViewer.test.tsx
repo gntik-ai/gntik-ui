@@ -7,6 +7,60 @@ import { makeLogLines } from './fixtures';
 const renderedLines = () => document.querySelectorAll('[data-slot="log-line"]');
 
 describe('LogViewer', () => {
+  it('follows the bottom, stops after scrolling up more than a row and resumes on demand', async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(<LogViewer lines={makeLogLines(100)} height={240} rowHeight={24} />);
+    const log = screen.getByRole('log');
+    expect(log.scrollTop).toBe(2160);
+    rerender(<LogViewer lines={makeLogLines(101)} height={240} rowHeight={24} />);
+    expect(log.scrollTop).toBe(2184);
+    log.scrollTop = 2135;
+    fireEvent.scroll(log);
+    expect(screen.getByRole('switch', { name: 'Follow' })).not.toBeChecked();
+    rerender(<LogViewer lines={makeLogLines(102)} height={240} rowHeight={24} />);
+    expect(log.scrollTop).toBe(2135);
+    expect(log).toHaveAttribute('aria-live', 'off');
+    await user.click(screen.getByRole('switch', { name: 'Follow' }));
+    expect(log.scrollTop).toBe(2208);
+    expect(log).toHaveAttribute('aria-live', 'polite');
+  });
+
+  it('can suppress event announcements while preserving the default live behavior', () => {
+    const { rerender } = render(<LogViewer lines={makeLogLines(2)} />);
+    expect(screen.getByRole('log')).toHaveAttribute('aria-live', 'polite');
+    expect(screen.queryByRole('button', { name: /^Inspect event/ })).toBeNull();
+    rerender(<LogViewer lines={makeLogLines(3)} announceLines={false} />);
+    expect(screen.getByRole('log')).toHaveAttribute('aria-live', 'off');
+    expect(screen.getByRole('switch', { name: 'Follow' })).toBeChecked();
+  });
+
+  it('offers keyboard and mouse selection independently of copying', async () => {
+    const user = userEvent.setup();
+    const lines = makeLogLines(2).map((line, index) => ({ ...line, timestamp: `12:00:0${index}.000` }));
+    const onSelectLine = vi.fn();
+    const onCopyLine = vi.fn();
+    render(
+      <LogViewer lines={lines} onSelectLine={onSelectLine} selectedLineId={lines[0]!.id} onCopyLine={onCopyLine} />,
+    );
+    const first = screen.getByRole('button', { name: 'Inspect event 12:00:00.000' });
+    expect(first).toHaveAttribute('aria-pressed', 'true');
+    const second = screen.getByRole('button', { name: 'Inspect event 12:00:01.000' });
+    expect(second).toHaveAttribute('aria-pressed', 'false');
+    await user.click(second);
+    expect(onSelectLine).toHaveBeenLastCalledWith(lines[1]);
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'Copy line 12:00:01.000' })).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(second).toHaveFocus();
+    await user.keyboard('{Enter}');
+    await user.keyboard(' ');
+    expect(onSelectLine).toHaveBeenCalledTimes(3);
+    await user.click(screen.getByRole('button', { name: 'Copy line 12:00:00.000' }));
+    expect(onCopyLine).toHaveBeenCalledWith(lines[0]);
+    expect(onSelectLine).toHaveBeenCalledTimes(3);
+    await expectNoAxeViolations();
+  });
+
   it('renders only a window of rows, pinned to the tail while following', async () => {
     render(<LogViewer />);
     const log = screen.getByRole('log', { name: 'Logs' });

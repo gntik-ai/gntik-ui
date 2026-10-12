@@ -105,6 +105,14 @@ export const PREVIEW_LOADERS = {
   },
   template: {
     ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
+    'live-event-stream--connecting': () =>
+      import('../../../packages/templates/src/live-event-stream/examples/Connecting'),
+    'live-event-stream--live-empty': () =>
+      import('../../../packages/templates/src/live-event-stream/examples/LiveEmpty'),
+    'live-event-stream--live-with-events': () =>
+      import('../../../packages/templates/src/live-event-stream/examples/LiveWithEvents'),
+    'live-event-stream--error': () => import('../../../packages/templates/src/live-event-stream/examples/Error'),
+    'live-event-stream--stopped': () => import('../../../packages/templates/src/live-event-stream/examples/Stopped'),
     'settings-profile--read-only': () => import('../../../packages/templates/src/settings-profile/examples/ReadOnly'),
     'resource-detail--runtime-with-transition': () =>
       import('../../../packages/templates/src/resource-detail/examples/runtime-with-transition'),

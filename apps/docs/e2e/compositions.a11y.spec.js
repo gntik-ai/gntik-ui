@@ -23,6 +23,9 @@ const layoutExamples = kit.items
   });
 
 const cases = [
+  ...['connecting', 'live-empty', 'live-with-events', 'error', 'stopped'].flatMap((state) =>
+    ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: `live-event-stream--${state}`, theme })),
+  ),
   ...['dark', 'light', 'high_contrast'].map((theme) => ({
     kind: 'template',
     id: 'settings-profile--read-only',
@@ -71,6 +74,36 @@ for (const { kind, id, theme } of cases) {
   test(name, async ({ page }) => {
     await page.goto(`/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}`);
     await page.locator('#root > *').first().waitFor();
+    if (id.startsWith('live-event-stream')) {
+      await expect(page.getByRole('heading', { level: 1, name: 'Live event stream' })).toHaveCount(1);
+      await expect(page.getByRole('timer')).toHaveCount(0);
+      await expect(page.locator('[aria-live="polite"]')).toHaveCount(1);
+      if (id === 'live-event-stream--connecting') {
+        await expect(page.getByRole('region', { name: 'Events' })).toHaveAttribute('aria-busy', 'true');
+        await expect(page.getByRole('button', { name: 'Subscribe', exact: true })).toBeDisabled();
+      } else {
+        await expect(page.getByRole('log', { name: 'Events' })).toHaveAttribute('aria-live', 'off');
+      }
+      if (id === 'live-event-stream--live-with-events') {
+        const rows = page.getByRole('button', { name: /^Inspect event/ });
+        await rows.first().focus();
+        await page.keyboard.press('Enter');
+        const panel = page.getByRole('complementary', { name: 'Event inspector' });
+        await expect(panel.getByRole('tree', { name: 'Event payload' })).toContainText('Sample record');
+        await expect(panel).toBeFocused();
+        await page.keyboard.press('Escape');
+        await expect(panel).toHaveCount(0);
+        await expect(page.getByRole('button', { name: 'Toggle event inspector' })).toBeFocused();
+        await rows.first().click();
+        await panel.getByRole('button', { name: 'Pin panel' }).click();
+        await rows.nth(1).click();
+        await expect(rows.nth(1)).toHaveAttribute('aria-pressed', 'true');
+        await expect(panel.getByRole('tree', { name: 'Event payload' })).toContainText('Updated record');
+        await panel.focus();
+        await page.keyboard.press('Escape');
+        await expect(panel).toBeVisible();
+      }
+    }
     if (id === 'settings-profile--read-only') {
       const content = page.locator('#settings-content');
       await expect(content.getByRole('textbox')).toHaveCount(0);

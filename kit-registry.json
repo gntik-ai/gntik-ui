@@ -8095,6 +8095,35 @@
       "docs": "packages/templates/src/landing/template.meta.ts"
     },
     {
+      "id": "live-event-stream",
+      "kind": "template",
+      "name": "Live event stream",
+      "package": "@gntik-ai/templates",
+      "group": "Builders",
+      "status": "experimental",
+      "description": "Controlled subscription form inside FormSection, a visible StatusDot connection indicator, a quiet role=log stream with LogViewer windowing, search, follow-tail and copy, and a pinnable JSON inspector on InspectorLayout. No fetching or transport; no trace waterfall, token cost or timer.\n\n## Props\n\nLiveEventStreamPage accepts Partial<LiveEventStreamProps>; omitted props use generic fixtures.\n\n| Prop | Type | Default / behavior |\n| --- | --- | --- |\n| title | string | Live event stream; PageHeader h1 |\n| description | string | Subscribe to a source and inspect the events it emits. |\n| form | ReactNode | Non-sensitive Source field inside FormSection; sensitive fields must use the kit PasswordInput |\n| status | idle / connecting / live / error / stopped | idle; fully controlled |\n| events | LiveEvent[] | Empty fixture; unique id, timestamp, type, optional summary and unknown payload; oldest first |\n| maxEvents | number | 500; nonnegative integer; retains newest entries, evicts oldest; invalid values use 500 |\n| eventTypes | string[] | created, updated, deleted; multiple ToggleGroup, initially all enabled; unlisted types remain visible |\n| countAnnouncement | string | Omitted; optional count text throttled by the consumer, never inferred from events.length |\n| onSubscribe | () => void | Subscribe callback in idle, stopped and error; disabled while connecting |\n| onStop | () => void | Stop callback while live |\n| onSelectEvent | (event: LiveEvent) => void | Mouse or keyboard selection callback |\n| error | string | Generic subscription error; ErrorPanel shown when status=error, inside role=alert |\n| validationMessage | string | Omitted; destructive InlineCallout |\n| shell | Omit<ConsoleShellProps, 'children'> | ConsoleShell fixture defaults; explicit consumer navigation, workspace, user and topbar slots |\n\nStatus mapping: idle = neutral Not subscribed; connecting = info Connecting with pulse; live = success Live with pulse; error = destructive Error; stopped = warning Stopped. Subscribe is shown in idle/connecting/error/stopped and is disabled for connecting; live shows Stop. Idle has No events yet, live-empty has Listening for events, connecting replaces the log with decorative skeletons, and stopped keeps supplied buffered events visible.\n\n## ARIA pattern\n\nPageHeader h1 and labelled FormSection. One polite atomic live region announces connection status and explicit consumer-throttled count text only. LogViewer uses announceLines=false: role=log and aria-live=off; event additions are silent. Connecting uses an aria-busy section. Stream errors use ErrorPanel inside role=alert; validation uses InlineCallout. Inspect buttons have the name Inspect event <timestamp> and aria-pressed. InspectorLayout owns the complementary landmark on desktop, Drawer on small screens, docking, pinning and focus return. Pinning does not freeze the payload: subsequent selection updates it; eviction preserves the last inspected payload with the note This event is no longer in the buffer.\n\n## Keyboard table\n\n| Key | Behavior |\n| --- | --- |\n| Tab / Shift+Tab | Form fields, Subscribe/Stop, filters, search, Follow, row inspect/copy and panel controls |\n| Enter / Space | Activate buttons; select an event; toggle Follow and pinning |\n| Arrow keys | Navigate ToggleGroups and the JsonViewer tree |\n| Escape | From unpinned panel or toggle, close and return focus to inspector toggle; pinned panel ignores Escape, Close panel closes it |\n\nFollow pins the bottom, where the newest row is added. Scrolling up by more than one row turns Follow off and preserves the viewport offset; switching Follow on returns to the bottom.\n\n## Themes and examples\n\nDark (default), light and high_contrast use only kit tokens. Connecting/live pulses stop under prefers-reduced-motion. State previews: live-event-stream--connecting, --live-empty, --live-with-events, --error and --stopped. Every state and the default template are covered by axe in all three themes.",
+      "files": [
+        {
+          "path": "packages/templates/src/live-event-stream/Page.tsx",
+          "target": "app/templates/live-event-stream/Page.tsx"
+        },
+        {
+          "path": "packages/templates/src/live-event-stream/data.ts",
+          "target": "app/templates/live-event-stream/data.ts"
+        },
+        {
+          "path": "packages/templates/src/shared/ConsoleShell.tsx",
+          "target": "app/templates/shared/ConsoleShell.tsx"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/blocks",
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/templates/src/live-event-stream/template.meta.ts"
+    },
+    {
       "id": "messaging",
       "kind": "template",
       "name": "Messaging",

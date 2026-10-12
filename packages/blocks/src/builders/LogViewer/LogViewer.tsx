@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode, type UIEvent } from 'react';
-import { Check, Copy, Search } from '@gntik-ai/icons';
+import { Check, Copy, Eye, Search } from '@gntik-ai/icons';
 import { IconButton, Input, Switch, Toggle, ToggleGroup, cn } from '@gntik-ai/ui';
 import { logLines as defaultLines, type LogLevel, type LogLine } from './fixtures';
 
@@ -31,6 +31,12 @@ export interface LogViewerProps {
   defaultFollow?: boolean;
   /** Called after a line is copied. */
   onCopyLine?: (line: LogLine) => void;
+  /** Enables an inspect button and mouse selection on each visible row. */
+  onSelectLine?: (line: LogLine) => void;
+  /** Selected inspect button, exposed through aria-pressed. */
+  selectedLineId?: string;
+  /** Announce appended lines while following (default true). False keeps aria-live off. */
+  announceLines?: boolean;
   /** Heading level of the title, to fit the page outline (default h3). */
   titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
@@ -76,6 +82,9 @@ export function LogViewer({
   defaultLevels = LOG_LEVELS,
   defaultFollow = true,
   onCopyLine,
+  onSelectLine,
+  selectedLineId,
+  announceLines = true,
   titleAs: TitleTag = 'h3',
   className,
 }: LogViewerProps) {
@@ -171,7 +180,7 @@ export function LogViewer({
         ref={viewport}
         role="log"
         aria-label={title}
-        aria-live={follow ? 'polite' : 'off'}
+        aria-live={announceLines && follow ? 'polite' : 'off'}
         tabIndex={0}
         onScroll={onScroll}
         className="relative overflow-auto bg-background font-mono text-[12px] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring"
@@ -189,6 +198,7 @@ export function LogViewer({
                 <div
                   key={line.id}
                   data-slot="log-line"
+                  onClick={onSelectLine ? () => onSelectLine(line) : undefined}
                   className="group absolute inset-x-0 flex items-center gap-2.5 px-3 hover:bg-secondary/50"
                   style={{ top: (start + i) * rowHeight, height: rowHeight }}
                 >
@@ -209,11 +219,27 @@ export function LogViewer({
                   <span className="min-w-0 flex-1 truncate text-foreground">
                     {highlight(line.message, query.trim())}
                   </span>
+                  {onSelectLine && (
+                    <IconButton
+                      size="sm"
+                      icon={Eye}
+                      label={`Inspect event ${line.timestamp}`}
+                      aria-pressed={line.id === selectedLineId}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onSelectLine(line);
+                      }}
+                      className="size-6 shrink-0"
+                    />
+                  )}
                   <IconButton
                     size="sm"
                     icon={copied === line.id ? Check : Copy}
                     label={copied === line.id ? 'Copied' : `Copy line ${line.timestamp}`}
-                    onClick={() => copy(line)}
+                    onClick={(event) => {
+                      if (onSelectLine) event.stopPropagation();
+                      copy(line);
+                    }}
                     className="size-6 shrink-0 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
                   />
                 </div>
