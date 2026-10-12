@@ -95,6 +95,10 @@ export const PREVIEW_LOADERS = {
     'credential-disclosure-dialog--response-gating': () =>
       import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/ResponseGating'),
     'subordinate-list': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/ResourceForm'),
+    'truncated-collection-footer': () =>
+      import('../../../packages/blocks/src/tables/TruncatedCollectionFooter/examples/exact'),
+    'truncated-collection-footer--has-more': () =>
+      import('../../../packages/blocks/src/tables/TruncatedCollectionFooter/examples/has-more'),
     'subordinate-list--loading': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/loading'),
     'subordinate-list--empty': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/empty'),
     'subordinate-list--error': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/error'),

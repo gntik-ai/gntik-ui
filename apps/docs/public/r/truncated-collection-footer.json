@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "truncated-collection-footer",
+  "type": "registry:block",
+  "title": "Truncated collection footer",
+  "description": "Presentation-only summary of a loaded first cursor page without a total or pager. N+ is a lower bound when hasMore is true; the note explains that more items exist. Compose below data-table (DataTable with paginated={false}). First-page recipe: use hasMore={true} for N+ plus a note, and supply noteId so a consumer table can reference it with aria-describedby. DataTable does not forward aria-describedby; its named containing region can reference the note instead. Count-only recipe: use hasMore={false} for the visible count without a note. PageToolbar has no count prop; this block carries the count. No navigation or focusable elements. Every visible string is overridable through noun, summaryLabel, formatCount and truncationNote; ReactNode overrides must remain plain text without interactive or hidden content. The i18n provider supplies translated defaults; locale overrides number formatting. Required inputs are visibleCount and hasMore, with meaningful runtime defaults for the JavaScript catalogue preview.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/tables/TruncatedCollectionFooter/TruncatedCollectionFooter.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/tables/truncated-collection-footer/TruncatedCollectionFooter.tsx",
+      "content": "import { cn, useI18n } from '@gntik-ai/ui';\nimport type { ReactNode } from 'react';\nimport { TRUNCATED_COLLECTION_PREVIEW } from './fixtures';\n\nexport interface TruncatedCollectionFooterProps {\n  /** Number of records already loaded; never an estimated total. */\n  visibleCount: number;\n  /** More records exist beyond this first page, making the count a lower bound. */\n  hasMore: boolean;\n  /** Localized noun used in the default summary label and note. */\n  noun?: string;\n  /** Number-formatting locale; translated defaults come from I18nProvider. */\n  locale?: string;\n  /** Plain text label before the count; null hides it. */\n  summaryLabel?: ReactNode;\n  /** Replaces the entire count, including the lower-bound marker. Return plain text nodes. */\n  formatCount?: (count: number, hasMore: boolean) => ReactNode;\n  /** Plain text note or formatter, rendered only when hasMore is true. */\n  truncationNote?: ((count: number) => ReactNode) | ReactNode;\n  /** Id of the note for a consumer's aria-describedby reference. */\n  noteId?: string;\n  className?: string;\n}\n\n/** Static first-page summary with no total, navigation, focus stops or live region. */\nexport function TruncatedCollectionFooter({\n  visibleCount = TRUNCATED_COLLECTION_PREVIEW.visibleCount,\n  hasMore = TRUNCATED_COLLECTION_PREVIEW.hasMore,\n  noun: nounProp,\n  locale: localeProp,\n  summaryLabel,\n  formatCount,\n  truncationNote,\n  noteId,\n  className,\n}: TruncatedCollectionFooterProps) {\n  const { t, locale: providerLocale } = useI18n();\n  const locale = localeProp ?? providerLocale;\n  const noun = nounProp ?? t('table.collectionNoun', { count: visibleCount });\n  const formattedCount = visibleCount.toLocaleString(locale);\n  return (\n    <div className={cn('flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between', className)}>\n      <p className=\"text-[12.5px] text-muted-foreground tabular-nums\">\n        {summaryLabel === undefined ? t('table.visibleCount', { noun }) : summaryLabel}{' '}\n        <span className=\"font-mono text-foreground\">\n          {formatCount ? formatCount(visibleCount, hasMore) : `${formattedCount}${hasMore ? '+' : ''}`}\n        </span>\n      </p>\n      {hasMore && (\n        <p id={noteId} className=\"text-[12.5px] text-muted-foreground\">\n          {typeof truncationNote === 'function'\n            ? truncationNote(visibleCount)\n            : truncationNote === undefined\n              ? t('table.truncatedNote', { count: visibleCount, formattedCount, noun })\n              : truncationNote}\n        </p>\n      )}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/tables/TruncatedCollectionFooter/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/tables/truncated-collection-footer/fixtures.ts",
+      "content": "/** Meaningful runtime defaults for the JavaScript catalogue preview. */\nexport const TRUNCATED_COLLECTION_PREVIEW = { visibleCount: 37, hasMore: false } as const;\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "tables"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/tables/TruncatedCollectionFooter/block.meta.ts"
+  }
+}

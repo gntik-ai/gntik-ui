@@ -204,6 +204,10 @@ export const en = {
   'calendar.emptyTitle': 'Nothing scheduled',
   'calendar.emptyDescription': 'There is no scheduled work in this period.',
   'table.rows': 'Rows',
+  'table.collectionNoun': '{count, plural, one {item} other {items}}',
+  'table.visibleCount': '{noun}:',
+  'table.truncatedNote':
+    '{count, plural, one {Only the first {formattedCount} {noun} is shown; more exist.} other {Only the first {formattedCount} {noun} are shown; more exist.}}',
   'table.rowsPerPage': 'Rows per page',
   'table.pagination': '{noun} pagination',
   'table.selectAllPage': 'Select all rows on this page',

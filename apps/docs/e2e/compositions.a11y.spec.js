@@ -58,6 +58,11 @@ const cases = [
         .map((theme) => ({ kind: 'block', id, theme })),
   ),
   ...layoutExamples.map((id) => ({ kind: 'layout', id, theme: 'dark' })),
+  ...['truncated-collection-footer', 'truncated-collection-footer--has-more'].flatMap((id) =>
+    ['dark', 'light', 'high_contrast']
+      .filter((theme) => id !== 'truncated-collection-footer' || theme !== 'dark')
+      .map((theme) => ({ kind: 'block', id, theme })),
+  ),
   ...['light', 'high_contrast'].map((theme) => ({ kind: 'layout', id: 'status-layout--status-layout-heading', theme })),
   ...['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: 'status-404--page-header', theme })),
   ...['stored', 'fresh'].flatMap((variant) =>
@@ -74,6 +79,23 @@ for (const { kind, id, theme } of cases) {
   test(name, async ({ page }) => {
     await page.goto(`/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}`);
     await page.locator('#root > *').first().waitFor();
+    if (id.startsWith('truncated-collection-footer')) {
+      const hasMore = id.endsWith('--has-more');
+      const count = page.getByText(hasMore ? '100+' : '37', { exact: true });
+      await expect(count).toBeVisible();
+      const footer = count.locator('..').locator('..');
+      await expect(page.locator('#records-truncation-note')).toHaveCount(hasMore ? 1 : 0);
+      if (hasMore) {
+        await expect(page.locator('#records-truncation-note')).toHaveText(
+          'Only the first 100 records are shown; more exist.',
+        );
+      }
+      await expect(footer.locator('[aria-hidden], [aria-live], [tabindex]')).toHaveCount(0);
+      await expect(footer.locator('button, a, input, select, textarea')).toHaveCount(0);
+      await expect(footer.getByRole('navigation')).toHaveCount(0);
+      await page.keyboard.press('Tab');
+      await expect.poll(() => page.evaluate(() => document.activeElement === document.body)).toBe(true);
+    }
     if (id.startsWith('live-event-stream')) {
       await expect(page.getByRole('heading', { level: 1, name: 'Live event stream' })).toHaveCount(1);
       await expect(page.getByRole('timer')).toHaveCount(0);

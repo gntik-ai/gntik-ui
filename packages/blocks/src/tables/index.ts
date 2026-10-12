@@ -36,6 +36,8 @@ export { meta as filterBarMeta } from './FilterBar/block.meta';
 export { DEPLOYMENT_DEFAULT_FILTERS, DEPLOYMENT_FILTER_FIELDS, DEPLOYMENT_SAVED_VIEWS } from './FilterBar/fixtures';
 export * from './PaginationFooter/PaginationFooter';
 export { meta as paginationFooterMeta } from './PaginationFooter/block.meta';
+export * from './TruncatedCollectionFooter/TruncatedCollectionFooter';
+export { meta as truncatedCollectionFooterMeta } from './TruncatedCollectionFooter/block.meta';
 export * from './InlineEditRow/InlineEditRow';
 export { meta as inlineEditRowMeta } from './InlineEditRow/block.meta';
 export { EDITABLE_MEMBER_FIELDS, EDITABLE_MEMBERS, type EditableMember } from './InlineEditRow/fixtures';
