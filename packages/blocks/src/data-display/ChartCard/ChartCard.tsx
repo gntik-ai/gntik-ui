@@ -10,7 +10,7 @@ import {
   type ValueFormatter,
 } from '@gntik-ai/charts';
 import { Card, CardAction, CardDescription, CardHeader, CardTitle, cn, Toggle, ToggleGroup } from '@gntik-ai/ui';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { TrendDelta, type KpiDelta } from '../shared/TrendDelta';
 import { COST_BY_RANGE, COST_RANGES, type CostPoint } from './fixtures';
 
@@ -31,6 +31,7 @@ export type ChartCardHeatmapOptions = Pick<
 export interface ChartCardProps<T extends object> extends ChartStateProps {
   title?: string;
   description?: string;
+  /** Ordered options; defaults to 7d/30d/90d. Unknown range keys fall back to the first option. */
   ranges?: readonly ChartCardRange[];
   /** Chart rows per range key. */
   dataByRange?: Readonly<Record<string, readonly T[]>>;
@@ -50,9 +51,13 @@ export interface ChartCardProps<T extends object> extends ChartStateProps {
   colors?: readonly ChartColor[];
   valueFormatter?: ValueFormatter;
   showLegend?: boolean;
+  /** Hide the range control when a page toolbar owns the controlled `range`. */
+  showRangeToggle?: boolean;
   /** Plot height in px (heatmap: the grid, column labels included). */
   height?: number;
+  /** Initial uncontrolled selection; defaults to the first option. */
   defaultRange?: string;
+  /** Controlled selection. Changes are requested through `onRangeChange` until this prop updates. */
   range?: string;
   onRangeChange?: (range: string) => void;
   /** Extra header control (e.g. a MoreMenu), after the range toggle. */
@@ -68,8 +73,9 @@ const DEFAULT_CATEGORIES = ['Compute', 'Storage', 'Network'] as const;
 const DEFAULT_COLORS: readonly ChartColor[] = ['primary', 'violet', 'cyan'];
 
 /**
- * Chart in a Card: title, optional headline value + delta, a 7d/30d/90d range ToggleGroup, and an
+ * Chart in a Card: title, optional headline value + delta, a configurable range ToggleGroup, and an
  * @gntik-ai/charts area, line, bar or heatmap chart with its legend (heatmap: its colour scale).
+ * Defaults to 7d/30d/90d; hide the toggle when a toolbar owns the controlled range.
  * The chart states (`state`, `emptyMessage`, `errorMessage`, `onRetry`) and `dataTable` pass through.
  */
 export function ChartCard<T extends object = CostPoint>({
@@ -85,6 +91,7 @@ export function ChartCard<T extends object = CostPoint>({
   colors = DEFAULT_COLORS,
   valueFormatter = chartFmt.usd,
   showLegend = true,
+  showRangeToggle = true,
   height = 240,
   defaultRange,
   range: rangeProp,
@@ -101,7 +108,13 @@ export function ChartCard<T extends object = CostPoint>({
 }: ChartCardProps<T>) {
   const [inner, setInner] = useState(defaultRange ?? ranges[0]?.value ?? '');
   const current = rangeProp ?? inner;
-  const active = ranges.find((r) => r.value === current) ?? ranges[0];
+  const matched = ranges.find((r) => r.value === current);
+  const active = matched ?? ranges[0];
+  useEffect(() => {
+    if (!matched && ranges.length > 0 && process.env.NODE_ENV === 'development') {
+      console.warn('ChartCard: range/defaultRange is not in ranges; falling back to the first option.');
+    }
+  }, [current, matched, ranges.length]);
   const data = (active && dataByRange[active.value]) ?? [];
   const chartLabel = `${title}${active ? `, ${active.label}` : ''}`;
   const states = { state, emptyMessage, errorMessage, onRetry, dataTable };
@@ -122,15 +135,21 @@ export function ChartCard<T extends object = CostPoint>({
         <CardTitle as={titleAs}>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
         <CardAction className="flex items-center gap-2">
-          {ranges.length > 1 && (
+          {showRangeToggle && ranges.length > 1 && (
             <ToggleGroup
               aria-label={`${title} range`}
               size="sm"
-              value={[current]}
+              value={active ? [active.value] : []}
+              onFocus={(event) => {
+                // Base UI roves focus from the first item; enter this single-selection group at the pressed option.
+                if (event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)) return;
+                const selected = event.currentTarget.querySelector<HTMLButtonElement>('[aria-pressed="true"]');
+                selected?.focus();
+              }}
               onValueChange={(v) => {
                 const next = v[0];
                 if (!next) return;
-                setInner(next);
+                if (rangeProp === undefined) setInner(next);
                 onRangeChange?.(next);
               }}
             >
