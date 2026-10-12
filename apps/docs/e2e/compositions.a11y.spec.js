@@ -29,6 +29,19 @@ const cases = [
   ...['full', 'minimal', 'loading', 'minimal-loading'].flatMap((fixture) =>
     ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: `public-hub--${fixture}`, theme })),
   ),
+  ...[
+    'runtime-with-transition',
+    'runtime-without-transition',
+    'realtime-configuration',
+    'postgres-table-detail',
+  ].flatMap((fixture) =>
+    ['dark', 'light', 'high_contrast'].map((theme) => ({
+      kind: 'template',
+      id: `resource-detail--${fixture}`,
+      theme,
+    })),
+  ),
+  ...['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'block', id: 'status-timeline--empty', theme })),
   ...kit.items.filter((i) => i.kind === 'block').map((i) => ({ kind: 'block', id: i.id, theme: 'dark' })),
   ...['subordinate-list', 'subordinate-list--loading', 'subordinate-list--empty', 'subordinate-list--error'].flatMap(
     (id) =>
@@ -53,6 +66,35 @@ for (const { kind, id, theme } of cases) {
   test(name, async ({ page }) => {
     await page.goto(`/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}`);
     await page.locator('#root > *').first().waitFor();
+    if (id.startsWith('resource-detail--')) {
+      await expect(page.getByRole('tablist', { name: 'Resource sections' }).getByRole('tab')).toHaveCount(1);
+      await expect(page.getByRole('tab', { name: 'Overview' })).toHaveAttribute('aria-selected', 'true');
+      await expect(page.getByRole('tab', { name: 'Activity' })).toHaveCount(0);
+      await expect(page.getByRole('tab', { name: 'Settings' })).toHaveCount(0);
+      await page.getByRole('heading', { level: 1 }).click();
+      await page.keyboard.press('Tab');
+      await expect(page.getByRole('tab', { name: 'Overview' })).toBeFocused();
+      if (id === 'resource-detail--runtime-with-transition') {
+        const history = page.getByRole('list', { name: 'Status history' });
+        await expect(history.getByRole('listitem')).toHaveCount(1);
+        await expect(history.getByText('Ready', { exact: true })).toBeVisible();
+        await expect(history.locator('time')).toHaveCount(1);
+        await expect(history).not.toContainText('by ');
+      } else if (id === 'resource-detail--runtime-without-transition') {
+        await expect(page.getByRole('region', { name: 'Status history' })).toContainText('No status history');
+        await expect(page.getByRole('listitem')).toHaveCount(0);
+        await expect(page.locator('time')).toHaveCount(0);
+      } else {
+        await expect(page.getByRole('heading', { name: 'Status history' })).toHaveCount(0);
+        await expect(page.getByRole('list', { name: 'Status history' })).toHaveCount(0);
+        await expect(page.getByRole('region', { name: 'Status history' })).toHaveCount(0);
+      }
+    }
+    if (id === 'status-timeline--empty') {
+      await expect(page.getByRole('region', { name: 'Status history' })).toContainText('No status changes yet');
+      await expect(page.getByRole('listitem')).toHaveCount(0);
+      await expect(page.locator('time')).toHaveCount(0);
+    }
     if (id === 'status-layout--status-layout-heading' || id === 'status-404--page-header') {
       await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
       await expect(page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeFocused();

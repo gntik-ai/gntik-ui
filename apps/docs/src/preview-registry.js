@@ -105,6 +105,14 @@ export const PREVIEW_LOADERS = {
   },
   template: {
     ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
+    'resource-detail--runtime-with-transition': () =>
+      import('../../../packages/templates/src/resource-detail/examples/runtime-with-transition'),
+    'resource-detail--runtime-without-transition': () =>
+      import('../../../packages/templates/src/resource-detail/examples/runtime-without-transition'),
+    'resource-detail--realtime-configuration': () =>
+      import('../../../packages/templates/src/resource-detail/examples/realtime-configuration'),
+    'resource-detail--postgres-table-detail': () =>
+      import('../../../packages/templates/src/resource-detail/examples/postgres-table-detail'),
     'create-wizard--overlay': () => import('../../../packages/templates/src/create-wizard/examples/Overlay'),
     'status-404--page-header': () => import('../../../packages/templates/src/status-404/examples/PageHeader'),
     'sign-in-card--username': () => import('../../../packages/templates/src/sign-in-card/examples/Username'),
