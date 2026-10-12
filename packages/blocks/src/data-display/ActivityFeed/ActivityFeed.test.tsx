@@ -3,6 +3,16 @@ import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { ActivityFeed, groupActivityByDay, type ActivityItem } from './ActivityFeed';
 
+// The default feed's fixtures are relative to Date.now() at load time and the newest item is
+// 12 minutes old, so for 12 minutes after midnight there is no Today group. Pin the clock
+// (Date only; timers stay real) before the fixtures load.
+vi.hoisted(() => {
+  vi.useFakeTimers({ now: new Date(2026, 9, 3, 15, 0), toFake: ['Date'] });
+});
+afterAll(() => {
+  vi.useRealTimers();
+});
+
 const now = new Date(2026, 9, 3, 15, 0);
 const items: ActivityItem[] = [
   { id: '1', actor: { name: 'Ana Lopez' }, action: 'deployed', target: 'orders-api', at: new Date(2026, 9, 3, 14, 0) },
