@@ -60,11 +60,7 @@ for (const theme of ['dark', 'light', 'high_contrast'])
             }
           }, SELECT_LISTBOX_79);
           expect(violations).toEqual([]);
-          // The normal a11y job scans all states without requiring new image files.
-          // The dedicated config compares external immutable-baseline artifacts.
-          const visual = test.info().config.configFile?.endsWith('playwright.table-labels.config.js');
-          if (mode === 'default' && visual)
-            await expect(page).toHaveScreenshot(`issue30-${block}-${state}-${theme}.png`);
+          if (mode === 'default') await expect(page).toHaveScreenshot(`issue30-${block}-${state}-${theme}.png`);
         };
         const click = async (role, name) => page.getByRole(role, { name, exact: true }).click();
         await checkpoint('initial');
@@ -89,6 +85,7 @@ for (const theme of ['dark', 'light', 'high_contrast'])
           await click('menuitemcheckbox', 'B');
           await checkpoint('checked');
           await page.keyboard.press('Escape');
+          await expect(page.getByRole('menu')).toHaveCount(0);
           await page.getByRole('button', { name: f.removeFilter('Kind', 'B'), exact: true }).focus();
           await checkpoint('remove-focused');
           await page.keyboard.press('Enter');
@@ -108,6 +105,7 @@ for (const theme of ['dark', 'light', 'high_contrast'])
           await checkpoint('pin-submenu');
           await click('menuitemradio', t.columnMenu.pinLeft);
           await page.keyboard.press('Escape');
+          await expect(page.getByRole('menu')).toHaveCount(0);
           await checkpoint('pinned');
           await click('button', t.density.compact);
           await checkpoint('compact');
@@ -122,21 +120,25 @@ for (const theme of ['dark', 'light', 'high_contrast'])
           await click('menuitem', t.views.saveAs);
           await checkpoint('save-dialog');
           await click('button', t.views.cancel);
+          await expect(page.getByRole('dialog')).toHaveCount(0);
           await checkpoint('save-cancelled');
           await openViews();
           await click('menuitem', t.views.saveAs);
           await page.getByRole('textbox', { name: t.views.name }).fill('New choice');
           await click('button', t.views.save);
+          await expect(page.getByRole('dialog')).toHaveCount(0);
           await checkpoint('saved');
           await openViews();
           await click('menuitem', t.views.renameView);
           await checkpoint('rename-dialog');
           await click('button', t.views.cancel);
+          await expect(page.getByRole('dialog')).toHaveCount(0);
           await checkpoint('rename-cancelled');
           await openViews();
           await click('menuitem', t.views.renameView);
           await page.getByRole('textbox', { name: t.views.name }).fill('Renamed');
           await click('button', t.views.rename);
+          await expect(page.getByRole('dialog')).toHaveCount(0);
           await checkpoint('renamed');
           await click('button', 'Name');
           await checkpoint('modified');

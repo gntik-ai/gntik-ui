@@ -17,6 +17,11 @@ FilterBar's older `searchLabel` and `placeholder` props still work; the correspo
 keys win when both are supplied. Caller headers, option labels, view names, page numbers,
 row names, caption and noun remain caller content.
 
+Cell values are caller content too. The existing default cell formatter displays raw booleans
+as `Yes`/`No`; these are outside the block chrome labels contract. Return translated text from
+the column's `accessor`, or provide a `cell` renderer, to control boolean text (and date or
+missing-value formatting). For example, `accessor: (row) => row.enabled ? 'Enabled' : 'Disabled'`.
+
 Formatters receive raw numbers and caller strings, and return the entire message. They can
 use `Intl.PluralRules` and number formatting themselves. `rangeSummary` and `resultCount`
 replace the entire live region; `selection.selectedCount` replaces the entire toolbar
@@ -53,20 +58,25 @@ The only axe exception is the named `SELECT_LISTBOX_79` entry for
 [gntik-ai/gntik-ui#79](https://github.com/gntik-ai/gntik-ui/issues/79). It filters only that
 Select listbox node from `aria-input-field-name`, preserving other nodes and rules.
 
-Capture visual artifacts from a workspace checkout of the immutable base, with the same
-`table-labels.html`, `src/table-labels.jsx`, browser specs, test fixtures and Vite entry copied
-into that checkout. Use the same installed dependencies and Chromium version, without the
-npm registry. Build only the docs app, then run from `apps/docs`:
+The production docs build excludes the browser fixture and its en/es test labels. A separate
+`vite.table-labels.config.js` builds only the test site. After building the production docs,
+run from `apps/docs` with the installed toolchain and Chromium:
 
 ```sh
-TABLE_LABELS_SNAPSHOT_DIR=/tmp/issue30-baseline pnpm exec playwright test --config playwright.table-labels.config.js --grep 'default/' --update-snapshots=all
+pnpm test:table-labels
 ```
 
-Run the changed checkout against those artifacts (never update them on the changed source):
+`scripts/check-table-labels.mjs` extracts the blocks source at the immutable base into a
+temporary workspace, builds the fixed fixture against it, and captures every default state
+in all three themes. It then builds the same fixture against current source and compares
+against those screenshots with updates disabled. Both builds share the installed dependencies,
+fonts, UI source (unchanged by this ChangeSet) and Chromium version; no npm registry is used.
+For shallow CI checkouts, the runner fetches only that exact public commit into a temporary
+Git repository with credential helpers disabled. Neither the branch nor the worktree changes.
 
-```sh
-TABLE_LABELS_SNAPSHOT_DIR=/tmp/issue30-baseline pnpm exec playwright test --config playwright.table-labels.config.js --update-snapshots=none
-```
-
-The sandbox lacks Chromium, so baseline screenshot capture and browser validation are deferred
-to the PR runner. Screenshot files stay outside the repository and are never committed.
+The existing required `pnpm a11y` command runs this comparison after the catalog axe suite,
+so PR CI enforces the screenshot criterion and real browser axe checks, including contrast,
+at every matrix state. jsdom axe checks exclude contrast because jsdom has no layout engine.
+The production build exclusion also has an emitted-asset regression test in that command.
+Screenshot files remain temporary and are never committed. The sandbox lacks Chromium;
+the PR runner provides the browser evidence.

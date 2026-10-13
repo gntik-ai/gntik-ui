@@ -96,6 +96,7 @@ for (const locale of ['en', 'es'])
       record('filters.menu-open');
       await user.click(await screen.findByRole('menuitemcheckbox', { name: 'B' }));
       await user.keyboard('{Escape}');
+      await waitFor(() => expect(screen.queryByRole('menu')).toBeNull());
       record('filters.checked');
       const remove = screen.getByRole('button', {
         name: locale === 'es' ? 'Quitar filtro Kind: B' : 'Remove filter Kind: B',

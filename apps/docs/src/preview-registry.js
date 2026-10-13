@@ -3,7 +3,10 @@
 // examples are default exports.
 const kebab = (s) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
-const blockModules = import.meta.glob('../../../packages/blocks/src/*/*/*.tsx');
+const blockModules = import.meta.glob([
+  '../../../packages/blocks/src/*/*/*.tsx',
+  '!../../../packages/blocks/src/**/*.test.tsx',
+]);
 const blockMetas = import.meta.glob('../../../packages/blocks/src/*/*/block.meta.ts', { eager: true, import: 'meta' });
 const templateModules = import.meta.glob('../../../packages/templates/src/*/Page.tsx');
 const templateMetas = import.meta.glob('../../../packages/templates/src/*/template.meta.ts', {
@@ -15,7 +18,10 @@ const layoutDocs = import.meta.glob('../../../packages/ui/src/layouts/*/*.doc.ts
 const sourcesRaw = {
   ...import.meta.glob('../../../packages/templates/src/*/examples/*.tsx', { query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/blocks/src/*/*/examples/*.tsx', { query: '?raw', import: 'default' }),
-  ...import.meta.glob('../../../packages/blocks/src/*/*/*.tsx', { query: '?raw', import: 'default' }),
+  ...import.meta.glob(['../../../packages/blocks/src/*/*/*.tsx', '!../../../packages/blocks/src/**/*.test.tsx'], {
+    query: '?raw',
+    import: 'default',
+  }),
   ...import.meta.glob('../../../packages/templates/src/*/Page.tsx', { query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/ui/src/layouts/*/examples/*.tsx', { query: '?raw', import: 'default' }),
 };
