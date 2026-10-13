@@ -175,7 +175,10 @@ export function SignUpForm({
         }}
       >
         {alert && <Alert tone="destructive" description={alert} />}
-        {fields !== undefined && submitted && <ValidationSummary errors={summaryErrors} submitCount={submitCount} />}
+        {fields !== undefined && submitted && (
+          // Destructive text needs an untinted surface to meet contrast in the light theme.
+          <ValidationSummary errors={summaryErrors} submitCount={submitCount} className="bg-background" />
+        )}
         {fields !== undefined ? (
           fields.map((field) => {
             const message = authSignUpFieldError(fieldValue(field.id), field);
