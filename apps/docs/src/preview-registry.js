@@ -103,6 +103,12 @@ export const PREVIEW_LOADERS = {
     'subordinate-list--empty': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/empty'),
     'subordinate-list--error': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/error'),
     'status-timeline--empty': () => import('../../../packages/blocks/src/data-display/StatusTimeline/examples/Empty'),
+    'sign-up-form--custom-fields': () => import('../../../packages/blocks/src/auth/SignUpForm/examples/CustomFields'),
+    'sign-up-form--no-terms': () => import('../../../packages/blocks/src/auth/SignUpForm/examples/NoTerms'),
+    'sign-up-form--unavailable': () => import('../../../packages/blocks/src/auth/SignUpForm/examples/Unavailable'),
+    'sign-up-form--loading': () => import('../../../packages/blocks/src/auth/SignUpForm/examples/Loading'),
+    'sign-up-form--submitting': () => import('../../../packages/blocks/src/auth/SignUpForm/examples/Submitting'),
+    'sign-up-form--error': () => import('../../../packages/blocks/src/auth/SignUpForm/examples/Error'),
     'sign-in-form--username': () => import('../../../packages/blocks/src/auth/SignInForm/examples/Username'),
     'forgot-password-form--username-or-email': () =>
       import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),

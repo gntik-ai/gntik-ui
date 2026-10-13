@@ -111,3 +111,37 @@ export function authIdentifierError(value: string, config?: AuthIdentifierConfig
     return messages?.identifierInvalid ?? fallback;
   return null;
 }
+
+/** Ordered text/email fields collected before the sign-up password. Ids must be unique. */
+export interface AuthSignUpField {
+  id: string;
+  label: string;
+  placeholder?: string;
+  help?: ReactNode;
+  required?: boolean;
+  type?: 'text' | 'email';
+  autoComplete?: string;
+  /** Consumer copy for kit-owned validation. */
+  messages?: { required?: string; invalid?: string };
+}
+
+export function authSignUpFieldError(value: string, field: AuthSignUpField) {
+  const trimmed = value.trim();
+  if (!trimmed) return field.required ? (field.messages?.required ?? `Enter ${field.label}.`) : null;
+  if (field.type === 'email' && !EMAIL_RE.test(trimmed))
+    return field.messages?.invalid ?? 'Enter a valid email address.';
+  return null;
+}
+
+/** Consumer-owned copy and optional action when account creation is unavailable. */
+export interface AuthUnavailableState {
+  title: ReactNode;
+  message: ReactNode;
+  action?: ReactNode;
+}
+
+/** Kit-owned sign-up validation with consumer-owned copy. */
+export interface AuthSignUpValidationMessages {
+  passwordTooShort?: (minimum: number) => string;
+  termsRequired?: string;
+}
