@@ -52,6 +52,43 @@ const fields = [
 ];
 
 describe('SignUpForm configured fields', () => {
+  it('blocks whitespace-only required fields independently of password and consent, and refocuses the summary on retry', async () => {
+    const onSubmit = vi.fn();
+    render(
+      <SignUpForm
+        fields={[
+          {
+            id: 'username',
+            label: 'Username',
+            required: true,
+            help: 'Choose an account name.',
+            messages: { required: 'An account name is required.' },
+          },
+          { id: 'workspace', label: 'Workspace identifier' },
+        ]}
+        terms={false}
+        sso={null}
+        onSubmit={onSubmit}
+      />,
+    );
+    await userEvent.type(screen.getByLabelText('Username'), '   ');
+    await userEvent.type(screen.getByLabelText('Password'), 'correct-horse-42');
+    await userEvent.click(screen.getByRole('button', { name: 'Create account' }));
+    expect(onSubmit).not.toHaveBeenCalled();
+    const summary = screen.getByRole('region', { name: 'There is 1 problem with this form' });
+    expect(summary).toHaveFocus();
+    await userEvent.tab();
+    expect(within(summary).getByRole('link', { name: 'Username: An account name is required.' })).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByLabelText('Username')).toHaveFocus();
+    expect(screen.getByLabelText('Username')).toHaveAccessibleDescription(
+      'Choose an account name. An account name is required.',
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Create account' }));
+    expect(summary).toHaveFocus();
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
   it('renders ordered fields, links all errors to inputs, and submits trimmed values with an empty optional field', async () => {
     const onSubmit = vi.fn();
     const { container } = render(<SignUpForm fields={fields} onSubmit={onSubmit} sso={null} />);
@@ -211,6 +248,31 @@ it('validates non-empty optional email and uses consumer-supplied messages', asy
   await userEvent.click(within(summary).getByRole('link', { name: 'Password: Password needs 8 characters.' }));
   expect(screen.getByLabelText('Password')).toHaveFocus();
   expect(onSubmit).not.toHaveBeenCalled();
+});
+
+it('keeps password help, strength and error descriptions linked and focuses consent from the summary', async () => {
+  render(<SignUpForm fields={[]} passwordHelp="Choose at least 8 characters to secure your account." sso={null} />);
+  const password = screen.getByLabelText('Password');
+  await userEvent.type(password, 'Abc1!xy');
+  await userEvent.click(screen.getByRole('button', { name: 'Create account' }));
+  expect(password).toHaveAccessibleDescription(
+    'Strength: Too weak Choose at least 8 characters to secure your account. Use at least 8 characters.',
+  );
+  const summary = screen.getByRole('region');
+  await userEvent.click(within(summary).getByRole('link', { name: 'Password: Use at least 8 characters.' }));
+  expect(password).toHaveFocus();
+  await userEvent.click(screen.getByRole('button', { name: 'Show password' }));
+  expect(password).toHaveAttribute('type', 'text');
+  expect(password).toHaveAttribute('aria-invalid', 'true');
+  expect(password).toHaveAccessibleDescription(
+    'Strength: Too weak Choose at least 8 characters to secure your account. Use at least 8 characters.',
+  );
+  await userEvent.click(within(summary).getByRole('link', { name: 'Terms: Accept the terms to continue.' }));
+  expect(screen.getByRole('checkbox')).toHaveFocus();
+  expect(screen.getByRole('checkbox')).toHaveAccessibleDescription('Accept the terms to continue.');
+  await userEvent.keyboard(' ');
+  expect(screen.getByRole('checkbox')).toBeChecked();
+  expect(within(summary).queryByRole('link', { name: 'Terms: Accept the terms to continue.' })).not.toBeInTheDocument();
 });
 
 it('treats field ids as consumer keys, including names inherited by ordinary objects', async () => {
