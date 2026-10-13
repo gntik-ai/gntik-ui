@@ -14,6 +14,8 @@ export default defineConfig({
   webServer: {
     ...base.webServer,
     command: `pnpm exec vite preview --outDir ${quotedSite} --port 4173 --strictPort`,
+    // This test site has no index.html; probe the fixture rather than the root's 404.
+    url: 'http://localhost:4173/table-labels.html',
     reuseExistingServer: false,
   },
 });
