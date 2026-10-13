@@ -1,5 +1,7 @@
 import { cn, Pagination, SimpleSelect, useI18n } from '@gntik-ai/ui';
 import { useState } from 'react';
+import { usePaginationFooterLabels, type PaginationFooterLabels } from './labels';
+export type { PaginationFooterLabels } from './labels';
 
 export interface PaginationFooterProps {
   /** Total number of rows. */
@@ -16,6 +18,7 @@ export interface PaginationFooterProps {
   /** What the rows are, for the accessible names ("Deployments"). */
   noun?: string;
   locale?: string;
+  labels?: PaginationFooterLabels;
   className?: string;
 }
 
@@ -31,9 +34,11 @@ export function PaginationFooter({
   pageSizeOptions = [10, 25, 50, 100],
   noun: nounProp,
   locale: localeProp,
+  labels,
   className,
 }: PaginationFooterProps) {
   const { t, locale: providerLocale } = useI18n();
+  const l = usePaginationFooterLabels(labels);
   const locale = localeProp ?? providerLocale;
   const noun = nounProp ?? t('table.rows');
   const [innerPage, setInnerPage] = useState(defaultPage);
@@ -63,10 +68,10 @@ export function PaginationFooter({
     <div className={cn('flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between', className)}>
       <div className="flex items-center gap-2.5">
         <span className="text-[12.5px] text-muted-foreground" aria-hidden>
-          {t('table.rowsPerPage')}
+          {l.rowsPerPage}
         </span>
         <SimpleSelect
-          aria-label={t('table.rowsPerPage')}
+          aria-label={l.rowsPerPage}
           size="sm"
           className="w-[76px] font-mono"
           value={String(pageSize)}
@@ -76,17 +81,23 @@ export function PaginationFooter({
       </div>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <p className="text-[12.5px] text-muted-foreground tabular-nums" aria-live="polite">
-          <span className="font-mono text-foreground">
-            {fmt(from)}–{fmt(to)}
-          </span>{' '}
-          {t('pagination.of')} <span className="font-mono text-foreground">{fmt(total)}</span>
+          {labels?.rangeSummary ? (
+            labels.rangeSummary(from, to, total)
+          ) : (
+            <>
+              <span className="font-mono text-foreground">
+                {fmt(from)}–{fmt(to)}
+              </span>{' '}
+              {t('pagination.of')} <span className="font-mono text-foreground">{fmt(total)}</span>
+            </>
+          )}
         </p>
         <Pagination
           page={page}
           pageCount={pageCount}
           onPageChange={goTo}
           size="sm"
-          labels={{ nav: t('table.pagination', { noun }) }}
+          labels={{ nav: l.pagination(noun), previous: l.previous, next: l.next, page: l.page }}
         />
       </div>
     </div>

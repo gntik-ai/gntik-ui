@@ -36,6 +36,7 @@ export default defineConfig({
         main: fileURLToPath(new URL('./index.html', import.meta.url)),
         builders: fileURLToPath(new URL('./builders.html', import.meta.url)),
         preview: fileURLToPath(new URL('./preview.html', import.meta.url)),
+        tableLabels: fileURLToPath(new URL('./table-labels.html', import.meta.url)),
       },
     },
   },

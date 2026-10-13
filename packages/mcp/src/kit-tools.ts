@@ -111,7 +111,7 @@ export function mdKitList(items: KitItem[], total: number): string {
       of
         .map(
           (i) =>
-            `- \`${i.id}\` — **${i.name}** (${i.group || '—'} · ${i.status} · ${i.package}): ${firstSentence(i.description)}`,
+            `- \`${i.id}\` — **${i.name}** (${i.group || '—'} · ${i.status} · ${i.package}): ${firstSentence(i.description)}${i.labels?.length ? `\n  Labels: ${i.labels.map(({ key, type, state }) => `${key}: ${type} — ${state}`).join('; ')}` : ''}`,
         )
         .join('\n'),
     );

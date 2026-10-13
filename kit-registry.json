@@ -415,7 +415,269 @@
       "package": "@gntik-ai/blocks",
       "group": "tables",
       "status": "beta",
-      "description": "Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate by default (selectionMode=\"multiple\"), selectionMode=\"none\" to hide selection, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination, optional row groups (groupBy) with rowgroup header rows, counts, keyboard-accessible collapse buttons and group selection; column resize (pointer drag or a focusable role=\"separator\" handle with arrow keys, min/max widths, controlled columnWidths), column pinning to either edge with sticky cells (column menu or pinnedColumns), row virtualization for large datasets (aria-rowcount/aria-rowindex, works with selection and grouping), inline cell editing (text, number and select editors; Enter/F2 to edit, Enter/Tab to commit, Escape to cancel, onCellEdit can reject with an inline error) and saved views (filters, sort, visible columns, widths, pinning and grouping) with a view switcher to save as, rename, delete and reset. Opt-in selectionMode=\"single\" uses native radios in a labelled fieldset (never paginated or virtualized; paginated defaults to false and paginated=true is a type error). Single mode uses selectedId/onSelectedIdChange or defaultSelectedId; isRowDisabled skips unavailable rows and preserves a checked disabled choice without callbacks. Supply legend, aria-label or aria-labelledby for the group and getRowLabel for each radio (otherwise the first column labels it). selectionName is used verbatim and must be unique per page; omitted names use an instance-unique useId name, and duplicate supplied names or missing group labels warn in development. Tab enters once on the checked enabled row or first enabled row; arrows wrap and skip disabled rows, Space selects, Shift+Tab exits, and all-disabled groups have no tab stop. No select-all, group checkboxes, bulk actions or selection summary appear in single mode. Examples in examples/single-selection.tsx: an uncontrolled non-paginated list with legend=\"Available items\" and a controlled versions table with legend=\"Available versions\", selectedId=\"v2\" and a checked disabled version.",
+      "description": "Optional labels keys: columnMenu.trigger: string — initial and column menu open: menu trigger; columnMenu.visibleColumns: string — column menu open: checkbox group heading; columnMenu.pinColumns: string — pinning enabled and column menu open: submenu group heading; columnMenu.pinSide: (side: \"left\" | \"right\") => string — pinned column menu: side marker beside caller header; columnMenu.pinLeft: string — pin submenu open: left radio item; columnMenu.pinRight: string — pin submenu open: right radio item; columnMenu.unpinned: string — pin submenu open: unpinned radio item; density.label: string — density toggle visible: group name; density.comfortable: string — each density value: comfortable toggle name; density.compact: string — each density value: compact toggle name; views.defaultView: string — no active view and views menu open: trigger / default radio item; views.modified: string — table state changed: sr-only marker in trigger; views.heading: string — views menu open: radio group heading; views.saveChanges: string — views menu open: save current item; views.saveAs: string — views menu open: save-as item; views.renameView: string — views menu open: rename item; views.deleteView: string — views menu open: immediate delete item (no confirmation dialog); views.resetChanges: string — views menu open: reset item; views.saveTitle: string — save-as dialog: title / accessible name; views.renameTitle: string — rename dialog: title / accessible name; views.name: string — save-as and rename dialogs: input label; views.cancel: string — save-as and rename dialogs: cancel button; views.save: string — save-as dialog: submit button; views.rename: string — rename dialog: submit button; views.close: string — save-as and rename dialogs: close icon button name; selection.heading: string — single selection: sr-only column heading; selection.selectAll: string — multiple selection: select-all checkbox name; selection.selectRow: (label: string) => string — multiple selection: row checkbox name; label is caller row content; selection.selectedCount: (count: number) => string — rows selected: whole polite toolbar live region; actions.heading: string — row actions enabled: sr-only column heading; actions.rowActions: (label: string) => string — row actions enabled: row menu trigger name; loading: (caption: string) => string — loading: whole role=status message; receives unmodified caller caption; editHint: string — editable cells: shared sr-only accessible description; grouping.noGroup: string — grouped rows with missing value: group name; grouping.groupRowCount: (count: number) => string — grouped rows: whole row count; includes count and pluralisation; grouping.selectGroup: (groupName: string) => string — grouped multiple selection: group checkbox name; empty.title: string — empty rows without caller emptyState: title; empty.description: string — empty rows without caller emptyState: description; resize.column: (header: string) => string — resizable column: separator name; resize.value: (width: number) => string — resizable column and after resize: separator aria-valuetext; edit.label: (header: string, rowLabel: string) => string — inline editor open: input / select name; edit.invalidNumber: string — non-finite numeric draft validation: inline alert; edit.minimum: (min: number) => string — numeric draft below minimum: inline alert; edit.maximum: (max: number) => string — numeric draft above maximum: inline alert; edit.saveError: string — edit rejected with false or thrown non-Error: inline alert; scrollContainer: string — overflowing or virtualized table: focusable scroll region name; pagination.rowsPerPage: string — initial and select open: caption and combobox name; pagination.rangeSummary: (from: number, to: number, total: number) => string — initial, page changed and size changed: whole polite live region; pagination.pagination: (noun: string) => string — all pagination states: navigation name; noun is caller content; pagination.previous: string — all pagination states: previous button name; pagination.next: string — all pagination states: next button name; pagination.page: (page: number) => string — all pagination states: numbered button name; visible page number is caller data. Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate by default (selectionMode=\"multiple\"), selectionMode=\"none\" to hide selection, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination, optional row groups (groupBy) with rowgroup header rows, counts, keyboard-accessible collapse buttons and group selection; column resize (pointer drag or a focusable role=\"separator\" handle with arrow keys, min/max widths, controlled columnWidths), column pinning to either edge with sticky cells (column menu or pinnedColumns), row virtualization for large datasets (aria-rowcount/aria-rowindex, works with selection and grouping), inline cell editing (text, number and select editors; Enter/F2 to edit, Enter/Tab to commit, Escape to cancel, onCellEdit can reject with an inline error) and saved views (filters, sort, visible columns, widths, pinning and grouping) with a view switcher to save as, rename, delete and reset. Opt-in selectionMode=\"single\" uses native radios in a labelled fieldset (never paginated or virtualized; paginated defaults to false and paginated=true is a type error). Single mode uses selectedId/onSelectedIdChange or defaultSelectedId; isRowDisabled skips unavailable rows and preserves a checked disabled choice without callbacks. Supply legend, aria-label or aria-labelledby for the group and getRowLabel for each radio (otherwise the first column labels it). selectionName is used verbatim and must be unique per page; omitted names use an instance-unique useId name, and duplicate supplied names or missing group labels warn in development. Tab enters once on the checked enabled row or first enabled row; arrows wrap and skip disabled rows, Space selects, Shift+Tab exits, and all-disabled groups have no tab stop. No select-all, group checkboxes, bulk actions or selection summary appear in single mode. Examples in examples/single-selection.tsx: an uncontrolled non-paginated list with legend=\"Available items\" and a controlled versions table with legend=\"Available versions\", selectedId=\"v2\" and a checked disabled version.",
+      "labels": [
+        {
+          "key": "columnMenu.trigger",
+          "type": "string",
+          "state": "initial and column menu open: menu trigger"
+        },
+        {
+          "key": "columnMenu.visibleColumns",
+          "type": "string",
+          "state": "column menu open: checkbox group heading"
+        },
+        {
+          "key": "columnMenu.pinColumns",
+          "type": "string",
+          "state": "pinning enabled and column menu open: submenu group heading"
+        },
+        {
+          "key": "columnMenu.pinSide",
+          "type": "(side: \"left\" | \"right\") => string",
+          "state": "pinned column menu: side marker beside caller header"
+        },
+        {
+          "key": "columnMenu.pinLeft",
+          "type": "string",
+          "state": "pin submenu open: left radio item"
+        },
+        {
+          "key": "columnMenu.pinRight",
+          "type": "string",
+          "state": "pin submenu open: right radio item"
+        },
+        {
+          "key": "columnMenu.unpinned",
+          "type": "string",
+          "state": "pin submenu open: unpinned radio item"
+        },
+        {
+          "key": "density.label",
+          "type": "string",
+          "state": "density toggle visible: group name"
+        },
+        {
+          "key": "density.comfortable",
+          "type": "string",
+          "state": "each density value: comfortable toggle name"
+        },
+        {
+          "key": "density.compact",
+          "type": "string",
+          "state": "each density value: compact toggle name"
+        },
+        {
+          "key": "views.defaultView",
+          "type": "string",
+          "state": "no active view and views menu open: trigger / default radio item"
+        },
+        {
+          "key": "views.modified",
+          "type": "string",
+          "state": "table state changed: sr-only marker in trigger"
+        },
+        {
+          "key": "views.heading",
+          "type": "string",
+          "state": "views menu open: radio group heading"
+        },
+        {
+          "key": "views.saveChanges",
+          "type": "string",
+          "state": "views menu open: save current item"
+        },
+        {
+          "key": "views.saveAs",
+          "type": "string",
+          "state": "views menu open: save-as item"
+        },
+        {
+          "key": "views.renameView",
+          "type": "string",
+          "state": "views menu open: rename item"
+        },
+        {
+          "key": "views.deleteView",
+          "type": "string",
+          "state": "views menu open: immediate delete item (no confirmation dialog)"
+        },
+        {
+          "key": "views.resetChanges",
+          "type": "string",
+          "state": "views menu open: reset item"
+        },
+        {
+          "key": "views.saveTitle",
+          "type": "string",
+          "state": "save-as dialog: title / accessible name"
+        },
+        {
+          "key": "views.renameTitle",
+          "type": "string",
+          "state": "rename dialog: title / accessible name"
+        },
+        {
+          "key": "views.name",
+          "type": "string",
+          "state": "save-as and rename dialogs: input label"
+        },
+        {
+          "key": "views.cancel",
+          "type": "string",
+          "state": "save-as and rename dialogs: cancel button"
+        },
+        {
+          "key": "views.save",
+          "type": "string",
+          "state": "save-as dialog: submit button"
+        },
+        {
+          "key": "views.rename",
+          "type": "string",
+          "state": "rename dialog: submit button"
+        },
+        {
+          "key": "views.close",
+          "type": "string",
+          "state": "save-as and rename dialogs: close icon button name"
+        },
+        {
+          "key": "selection.heading",
+          "type": "string",
+          "state": "single selection: sr-only column heading"
+        },
+        {
+          "key": "selection.selectAll",
+          "type": "string",
+          "state": "multiple selection: select-all checkbox name"
+        },
+        {
+          "key": "selection.selectRow",
+          "type": "(label: string) => string",
+          "state": "multiple selection: row checkbox name; label is caller row content"
+        },
+        {
+          "key": "selection.selectedCount",
+          "type": "(count: number) => string",
+          "state": "rows selected: whole polite toolbar live region"
+        },
+        {
+          "key": "actions.heading",
+          "type": "string",
+          "state": "row actions enabled: sr-only column heading"
+        },
+        {
+          "key": "actions.rowActions",
+          "type": "(label: string) => string",
+          "state": "row actions enabled: row menu trigger name"
+        },
+        {
+          "key": "loading",
+          "type": "(caption: string) => string",
+          "state": "loading: whole role=status message; receives unmodified caller caption"
+        },
+        {
+          "key": "editHint",
+          "type": "string",
+          "state": "editable cells: shared sr-only accessible description"
+        },
+        {
+          "key": "grouping.noGroup",
+          "type": "string",
+          "state": "grouped rows with missing value: group name"
+        },
+        {
+          "key": "grouping.groupRowCount",
+          "type": "(count: number) => string",
+          "state": "grouped rows: whole row count; includes count and pluralisation"
+        },
+        {
+          "key": "grouping.selectGroup",
+          "type": "(groupName: string) => string",
+          "state": "grouped multiple selection: group checkbox name"
+        },
+        {
+          "key": "empty.title",
+          "type": "string",
+          "state": "empty rows without caller emptyState: title"
+        },
+        {
+          "key": "empty.description",
+          "type": "string",
+          "state": "empty rows without caller emptyState: description"
+        },
+        {
+          "key": "resize.column",
+          "type": "(header: string) => string",
+          "state": "resizable column: separator name"
+        },
+        {
+          "key": "resize.value",
+          "type": "(width: number) => string",
+          "state": "resizable column and after resize: separator aria-valuetext"
+        },
+        {
+          "key": "edit.label",
+          "type": "(header: string, rowLabel: string) => string",
+          "state": "inline editor open: input / select name"
+        },
+        {
+          "key": "edit.invalidNumber",
+          "type": "string",
+          "state": "non-finite numeric draft validation: inline alert"
+        },
+        {
+          "key": "edit.minimum",
+          "type": "(min: number) => string",
+          "state": "numeric draft below minimum: inline alert"
+        },
+        {
+          "key": "edit.maximum",
+          "type": "(max: number) => string",
+          "state": "numeric draft above maximum: inline alert"
+        },
+        {
+          "key": "edit.saveError",
+          "type": "string",
+          "state": "edit rejected with false or thrown non-Error: inline alert"
+        },
+        {
+          "key": "scrollContainer",
+          "type": "string",
+          "state": "overflowing or virtualized table: focusable scroll region name"
+        },
+        {
+          "key": "pagination.rowsPerPage",
+          "type": "string",
+          "state": "initial and select open: caption and combobox name"
+        },
+        {
+          "key": "pagination.rangeSummary",
+          "type": "(from: number, to: number, total: number) => string",
+          "state": "initial, page changed and size changed: whole polite live region"
+        },
+        {
+          "key": "pagination.pagination",
+          "type": "(noun: string) => string",
+          "state": "all pagination states: navigation name; noun is caller content"
+        },
+        {
+          "key": "pagination.previous",
+          "type": "string",
+          "state": "all pagination states: previous button name"
+        },
+        {
+          "key": "pagination.next",
+          "type": "string",
+          "state": "all pagination states: next button name"
+        },
+        {
+          "key": "pagination.page",
+          "type": "(page: number) => string",
+          "state": "all pagination states: numbered button name; visible page number is caller data"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/tables/DataTable/DataTable.tsx",
@@ -460,6 +722,10 @@
         {
           "path": "packages/blocks/src/tables/DataTable/header-cell.tsx",
           "target": "components/blocks/tables/data-table/header-cell.tsx"
+        },
+        {
+          "path": "packages/blocks/src/tables/DataTable/labels.ts",
+          "target": "components/blocks/tables/data-table/labels.ts"
         },
         {
           "path": "packages/blocks/src/tables/DataTable/resize-handle.tsx",
@@ -737,7 +1003,64 @@
       "package": "@gntik-ai/blocks",
       "group": "tables",
       "status": "beta",
-      "description": "Search Input, saved views Select, an Add filter Menu with multi-select per field, removable filter chips and Clear all.",
+      "description": "Optional labels keys: region: string — all states: search landmark name; search: string — all states: searchbox name; placeholder: string — empty query: searchbox placeholder; savedView: string — saved views present: combobox name; savedViews: string — no saved view selected: combobox placeholder; addFilter: string — initial and menu open: Add filter trigger; activeFilters: string — filter chips or query present: list name; filters: string — filter chips or query present: visible chip heading; clearAll: string — filter chips or query present: clear button; removeFilter: (field: string, value: string) => string — chip shown and remove focused: remove button name; arguments are caller field / option labels; resultCount: (count: number) => string — resultCount supplied (one or many): whole polite live region. Search Input, saved views Select, an Add filter Menu with multi-select per field, removable filter chips and Clear all.",
+      "labels": [
+        {
+          "key": "region",
+          "type": "string",
+          "state": "all states: search landmark name"
+        },
+        {
+          "key": "search",
+          "type": "string",
+          "state": "all states: searchbox name"
+        },
+        {
+          "key": "placeholder",
+          "type": "string",
+          "state": "empty query: searchbox placeholder"
+        },
+        {
+          "key": "savedView",
+          "type": "string",
+          "state": "saved views present: combobox name"
+        },
+        {
+          "key": "savedViews",
+          "type": "string",
+          "state": "no saved view selected: combobox placeholder"
+        },
+        {
+          "key": "addFilter",
+          "type": "string",
+          "state": "initial and menu open: Add filter trigger"
+        },
+        {
+          "key": "activeFilters",
+          "type": "string",
+          "state": "filter chips or query present: list name"
+        },
+        {
+          "key": "filters",
+          "type": "string",
+          "state": "filter chips or query present: visible chip heading"
+        },
+        {
+          "key": "clearAll",
+          "type": "string",
+          "state": "filter chips or query present: clear button"
+        },
+        {
+          "key": "removeFilter",
+          "type": "(field: string, value: string) => string",
+          "state": "chip shown and remove focused: remove button name; arguments are caller field / option labels"
+        },
+        {
+          "key": "resultCount",
+          "type": "(count: number) => string",
+          "state": "resultCount supplied (one or many): whole polite live region"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/tables/FilterBar/FilterBar.tsx",
@@ -746,6 +1069,10 @@
         {
           "path": "packages/blocks/src/tables/FilterBar/fixtures.ts",
           "target": "components/blocks/tables/filter-bar/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/tables/FilterBar/labels.ts",
+          "target": "components/blocks/tables/filter-bar/labels.ts"
         }
       ],
       "dependencies": [
@@ -1255,11 +1582,47 @@
       "package": "@gntik-ai/blocks",
       "group": "tables",
       "status": "beta",
-      "description": "Table footer with a rows-per-page Select, a \"1–10 of 97\" summary and numbered Pagination; controlled or uncontrolled.",
+      "description": "Optional labels keys: rowsPerPage: string — initial and select open: caption and combobox name; rangeSummary: (from: number, to: number, total: number) => string — initial, page changed and size changed: whole polite live region; pagination: (noun: string) => string — all pagination states: navigation name; noun is caller content; previous: string — all pagination states: previous button name; next: string — all pagination states: next button name; page: (page: number) => string — all pagination states: numbered button name; visible page number is caller data. Table footer with a rows-per-page Select, a \"1–10 of 97\" summary and numbered Pagination; controlled or uncontrolled.",
+      "labels": [
+        {
+          "key": "rowsPerPage",
+          "type": "string",
+          "state": "initial and select open: caption and combobox name"
+        },
+        {
+          "key": "rangeSummary",
+          "type": "(from: number, to: number, total: number) => string",
+          "state": "initial, page changed and size changed: whole polite live region"
+        },
+        {
+          "key": "pagination",
+          "type": "(noun: string) => string",
+          "state": "all pagination states: navigation name; noun is caller content"
+        },
+        {
+          "key": "previous",
+          "type": "string",
+          "state": "all pagination states: previous button name"
+        },
+        {
+          "key": "next",
+          "type": "string",
+          "state": "all pagination states: next button name"
+        },
+        {
+          "key": "page",
+          "type": "(page: number) => string",
+          "state": "all pagination states: numbered button name; visible page number is caller data"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/tables/PaginationFooter/PaginationFooter.tsx",
           "target": "components/blocks/tables/pagination-footer/PaginationFooter.tsx"
+        },
+        {
+          "path": "packages/blocks/src/tables/PaginationFooter/labels.ts",
+          "target": "components/blocks/tables/pagination-footer/labels.ts"
         }
       ],
       "dependencies": [

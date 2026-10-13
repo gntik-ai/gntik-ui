@@ -20,4 +20,6 @@ export interface BlockMeta {
   description: string;
   /** @gntik-ai/ui (and other kit) components it composes, for docs and agents. */
   uses: string[];
+  /** Per-block label keys, signatures and the interaction surfaces they replace. */
+  labels?: ReadonlyArray<{ key: string; type: string; state: string }>;
 }

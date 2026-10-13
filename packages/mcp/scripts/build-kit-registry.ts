@@ -14,6 +14,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import type { KitItem } from '../src/kit';
 
 const ROOT = path.resolve(import.meta.dirname, '../../..');
 const OUT = path.join(ROOT, 'kit-registry.json');
@@ -26,6 +27,7 @@ interface Meta {
   description?: string;
   family?: string;
   title?: string;
+  labels?: KitItem['labels'];
 }
 interface Item {
   id: string;
@@ -39,6 +41,7 @@ interface Item {
   dependencies: string[];
   registryDependencies: string[];
   docs?: string;
+  labels?: KitItem['labels'];
 }
 
 const kebab = (s: string) =>
@@ -236,6 +239,7 @@ async function build() {
       group: meta.group ?? meta.family ?? '',
       status: meta.status ?? 'stable',
       description: meta.description ?? '',
+      ...(meta.labels ? { labels: meta.labels } : {}),
       files: files.map((f) => ({
         path: rel(f),
         target: f.startsWith(s.dir + path.sep)

@@ -1,0 +1,22 @@
+{
+  "source_sha": "dde54ce4a82f122f5c0c10bc6e8e300f72484c8c",
+  "package": "@gntik-ai/blocks",
+  "version": "0.5.0",
+  "fixtures": {
+    "dde54ce-en-dark.jsonl": "af43b3f106e110372c6b7cefcd9fc1f6b98eb1869f911d44c42b9dec62586e9b",
+    "dde54ce-en-high_contrast.jsonl": "af43b3f106e110372c6b7cefcd9fc1f6b98eb1869f911d44c42b9dec62586e9b",
+    "dde54ce-en-light.jsonl": "af43b3f106e110372c6b7cefcd9fc1f6b98eb1869f911d44c42b9dec62586e9b",
+    "dde54ce-es-dark.jsonl": "cacd12738d18373aa3e37b24a899e12bdae2b93d75d55355ec1c4260168597d2",
+    "dde54ce-es-high_contrast.jsonl": "cacd12738d18373aa3e37b24a899e12bdae2b93d75d55355ec1c4260168597d2",
+    "dde54ce-es-light.jsonl": "cacd12738d18373aa3e37b24a899e12bdae2b93d75d55355ec1c4260168597d2",
+    "dde54ce-filters-dark.jsonl": "301fa35e5640cdde325926d0d00baa59bbb327b14de0aca9d2f69dda764d6a5d",
+    "dde54ce-filters-high_contrast.jsonl": "301fa35e5640cdde325926d0d00baa59bbb327b14de0aca9d2f69dda764d6a5d",
+    "dde54ce-filters-light.jsonl": "301fa35e5640cdde325926d0d00baa59bbb327b14de0aca9d2f69dda764d6a5d",
+    "dde54ce-pagination-dark.jsonl": "e434dbf0abf1bef29326d08880c92a205086b07dc07442cc6b435b502ccdde71",
+    "dde54ce-pagination-high_contrast.jsonl": "e434dbf0abf1bef29326d08880c92a205086b07dc07442cc6b435b502ccdde71",
+    "dde54ce-pagination-light.jsonl": "e434dbf0abf1bef29326d08880c92a205086b07dc07442cc6b435b502ccdde71",
+    "dde54ce-table-dark.jsonl": "25a7d301f24828d6907d054d94acb136e15c989da58165937858e2f321672cd1",
+    "dde54ce-table-high_contrast.jsonl": "25a7d301f24828d6907d054d94acb136e15c989da58165937858e2f321672cd1",
+    "dde54ce-table-light.jsonl": "25a7d301f24828d6907d054d94acb136e15c989da58165937858e2f321672cd1"
+  }
+}

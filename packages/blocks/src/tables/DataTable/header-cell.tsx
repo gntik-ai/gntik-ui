@@ -2,9 +2,11 @@ import { ArrowDown, ArrowUp, ChevronsUpDown } from '@gntik-ai/icons';
 import { cn, nextSortDirection, TableHead, tableVariants, type SortDirection } from '@gntik-ai/ui';
 import { stickyTint, type CellLayout } from './column-sizing';
 import { columnAlign, type DataTableColumn } from './data-table-utils';
+import type { ResizeLabels } from './labels';
 import { ColumnResizeHandle } from './resize-handle';
 
 export interface DataTableHeadCellProps<T> {
+  resizeLabels?: ResizeLabels;
   column: DataTableColumn<T>;
   sortDirection: SortDirection;
   onSortChange: (direction: Exclude<SortDirection, 'none'>) => void;
@@ -19,6 +21,7 @@ export interface DataTableHeadCellProps<T> {
  */
 export function DataTableHeadCell<T>({
   column,
+  resizeLabels,
   sortDirection,
   onSortChange,
   layout,
@@ -76,6 +79,7 @@ export function DataTableHeadCell<T>({
       </span>
       <ColumnResizeHandle
         label={column.header}
+        labels={resizeLabels}
         width={resize.width}
         min={resize.min}
         max={resize.max}

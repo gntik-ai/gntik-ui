@@ -1,8 +1,9 @@
 import { Inbox } from '@gntik-ai/icons';
-import { cn, EmptyState, Skeleton, TableBody, TableCell, TableRow, useI18n } from '@gntik-ai/ui';
+import { cn, EmptyState, Skeleton, TableBody, TableCell, TableRow } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import { columnAlign } from './data-table-utils';
 import { DataTableRow, GroupHeaderRow, type DataTableBodyGroup, type RowContext } from './data-table-row';
+import { useTableContentLabels } from './labels';
 import type { VirtualWindow } from './use-virtual-rows';
 
 export type { DataTableBodyGroup } from './data-table-row';
@@ -75,7 +76,7 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
     onToggleGroupRows,
     virtual,
   } = props;
-  const { t } = useI18n();
+  const l = useTableContentLabels(props.labels);
   const selectionColumn = selectable || singleSelection != null;
   const span = columns.length + (selectionColumn ? 1 : 0) + (rowActions ? 1 : 0);
   if (loading) {
@@ -105,12 +106,7 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
         <TableRow className="hover:bg-transparent">
           <TableCell colSpan={span} className="py-10">
             {emptyState ?? (
-              <EmptyState
-                icon={Inbox}
-                size="sm"
-                title={t('common.noResults')}
-                description={t('table.emptyDescription')}
-              />
+              <EmptyState icon={Inbox} size="sm" title={l.empty.title} description={l.empty.description} />
             )}
           </TableCell>
         </TableRow>
@@ -130,6 +126,7 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
     <GroupHeaderRow
       key={`group-${group.key}`}
       group={group}
+      labels={props.labels}
       open={open}
       selectable={selectable}
       selected={selected}

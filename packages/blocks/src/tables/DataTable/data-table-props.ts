@@ -4,6 +4,7 @@ import type { ColumnWidths, PinnedColumns } from './column-sizing';
 import type { DataTableColumn, DataTableGroupBy, SortState } from './data-table-utils';
 import type { DataTableCellEditHandler } from './editable-cell';
 import type { DataTableView } from './views';
+import type { DataTableLabels } from './labels';
 
 interface DataTableCommonProps<T> {
   rows?: readonly T[];
@@ -133,6 +134,7 @@ interface DataTableCommonProps<T> {
 
   /** Left side of the toolbar (title, search, FilterBar…). */
   toolbar?: ReactNode;
+  labels?: DataTableLabels;
   className?: string;
 }
 

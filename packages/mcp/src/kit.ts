@@ -33,6 +33,7 @@ export interface KitItem {
   dependencies: string[];
   registryDependencies: string[];
   docs?: string;
+  labels?: ReadonlyArray<{ key: string; type: string; state: string }>;
 }
 
 export interface KitRegistry {
