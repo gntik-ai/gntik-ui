@@ -16,6 +16,7 @@ it('exempts only the #79 Select listbox node and preserves other nodes and rules
     </>,
   );
   await userEvent.click(screen.getByRole('combobox', { name: 'Choice' }));
+  await screen.findByRole('option', { name: 'A' });
   const listboxes = screen.getAllByRole('listbox');
   const select = listboxes.find((element) => element.classList.contains('outline-none'))!;
   expect(select.matches(SELECT_LISTBOX_79.selector)).toBe(true);

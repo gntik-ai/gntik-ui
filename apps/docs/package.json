@@ -11,8 +11,8 @@
     "preview": "vite preview --port 4173 --strictPort",
     "visual": "playwright test catalog.visual",
     "visual:update": "playwright test catalog.visual --update-snapshots=changed",
-    "a11y": "node --test test/table-labels-build.test.mjs && playwright test a11y && node scripts/check-table-labels.mjs",
-    "test:table-labels": "node scripts/check-table-labels.mjs",
+    "a11y": "node --test test/table-labels-build.test.mjs && playwright test a11y && pnpm test:table-labels",
+    "test:table-labels": "node --test test/table-labels-server.test.mjs && node scripts/check-table-labels.mjs",
     "test:yaml-worker": "node scripts/check-yaml-worker.mjs"
   },
   "dependencies": {
