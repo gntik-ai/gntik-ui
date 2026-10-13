@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { PaginationFooter } from './PaginationFooter';
-import { paginationLabels } from '../__tests__/labels-fixtures';
+import { defaultPaginationFooterLabels, paginationLabels } from '../__tests__/labels-fixtures';
 import { assertInventory, baseline, checkAxe, themes } from '../__tests__/matrix';
 
 for (const mode of ['default', 'en', 'es'] as const)
@@ -13,7 +13,7 @@ for (const mode of ['default', 'en', 'es'] as const)
       const observe = () => {
         if (mode === 'default') states.push(baseline());
       };
-      const l = paginationLabels[mode === 'es' ? 'es' : 'en'];
+      const l = mode === 'default' ? defaultPaginationFooterLabels : paginationLabels[mode];
       const rangeSummary = vi.fn(l.rangeSummary);
       const onPageChange = vi.fn();
       const onPageSizeChange = vi.fn();

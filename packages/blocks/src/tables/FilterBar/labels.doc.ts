@@ -15,4 +15,3 @@ export const labelDocs = [
   ],
   ['resultCount', '(count: number) => string', 'resultCount supplied (one or many): whole polite live region'],
 ] as const;
-export const labelDescription = `Optional labels keys: ${labelDocs.map(([key, type, state]) => `${key}: ${type} — ${state}`).join('; ')}.`;

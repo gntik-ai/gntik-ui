@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FilterBar } from './FilterBar';
-import { filterLabels } from '../__tests__/labels-fixtures';
+import { defaultFilterBarLabels, filterLabels } from '../__tests__/labels-fixtures';
 import { assertInventory, baseline, checkAxe, themes } from '../__tests__/matrix';
 
 for (const mode of ['default', 'en', 'es'] as const)
@@ -13,7 +13,7 @@ for (const mode of ['default', 'en', 'es'] as const)
       const observe = () => {
         if (mode === 'default') states.push(baseline());
       };
-      const l = filterLabels[mode === 'es' ? 'es' : 'en'];
+      const l = mode === 'default' ? defaultFilterBarLabels : filterLabels[mode];
       const resultCount = vi.fn(l.resultCount);
       const removeFilter = vi.fn(l.removeFilter);
       const onFiltersChange = vi.fn();
@@ -47,7 +47,9 @@ for (const mode of ['default', 'en', 'es'] as const)
             .filter(
               (element) =>
                 element.parentElement?.hasAttribute('data-token-remove') ||
-                element.getAttribute('aria-label')?.startsWith(mode === 'es' ? 'Quitar ' : 'Remove filter '),
+                element
+                  .getAttribute('aria-label')
+                  ?.startsWith(mode === 'es' ? 'Quitar ' : mode === 'en' ? 'Custom Remove filter ' : 'Remove filter '),
             )) {
             const value = button.getAttribute('aria-label')?.endsWith('B') ? 'B' : 'A';
             expect(button).toHaveAccessibleName(l.removeFilter('Kind', value));

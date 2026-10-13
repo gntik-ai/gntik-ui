@@ -3,7 +3,7 @@
   "name": "pagination-footer",
   "type": "registry:block",
   "title": "Pagination footer",
-  "description": "Optional labels keys: rowsPerPage: string — initial and select open: caption and combobox name; rangeSummary: (from: number, to: number, total: number) => string — initial, page changed and size changed: whole polite live region; pagination: (noun: string) => string — all pagination states: navigation name; noun is caller content; previous: string — all pagination states: previous button name; next: string — all pagination states: next button name; page: (page: number) => string — all pagination states: numbered button name; visible page number is caller data. Table footer with a rows-per-page Select, a \"1–10 of 97\" summary and numbered Pagination; controlled or uncontrolled.",
+  "description": "Table footer with a rows-per-page Select, a \"1–10 of 97\" summary and numbered Pagination; controlled or uncontrolled.",
   "author": "gntik-ai",
   "dependencies": [
     "@gntik-ai/ui"

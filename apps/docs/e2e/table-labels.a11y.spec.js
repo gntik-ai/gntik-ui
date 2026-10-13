@@ -3,6 +3,9 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { SELECT_LISTBOX_79 } from '../../../packages/blocks/src/tables/__tests__/select-allowlist';
 import {
+  defaultPaginationFooterLabels,
+  defaultFilterBarLabels,
+  defaultDataTableLabels,
   paginationLabels,
   filterLabels,
   tableLabels,
@@ -16,9 +19,9 @@ for (const theme of ['dark', 'light', 'high_contrast'])
     for (const block of ['pagination', 'filters', 'table']) {
       test(`${block} matrix ${mode}/${theme}`, async ({ page }) => {
         const locale = mode === 'es' ? 'es' : 'en';
-        const p = paginationLabels[locale];
-        const f = filterLabels[locale];
-        const t = tableLabels[locale];
+        const p = mode === 'default' ? defaultPaginationFooterLabels : paginationLabels[locale];
+        const f = mode === 'default' ? defaultFilterBarLabels : filterLabels[locale];
+        const t = mode === 'default' ? defaultDataTableLabels : tableLabels[locale];
         const url = `/table-labels.html?block=${block}&theme=${theme}&mode=${mode}`;
         await page.goto(url);
         await page.evaluate(() => document.fonts.ready);
@@ -111,7 +114,9 @@ for (const theme of ['dark', 'light', 'high_contrast'])
           await click('button', t.density.comfortable);
           await checkpoint('comfortable');
           const openViews = async () =>
-            page.getByRole('button', { name: /^(Default view|Vista inicial|New choice|Renamed)/ }).click();
+            page
+              .getByRole('button', { name: /^(Default view|Custom Default view|Vista inicial|New choice|Renamed)/ })
+              .click();
           await openViews();
           await checkpoint('views-open');
           await click('menuitem', t.views.saveAs);

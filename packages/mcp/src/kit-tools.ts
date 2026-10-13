@@ -63,6 +63,8 @@ export function mdKitItem(root: string, item: KitItem, opts: KitItemOptions = {}
   meta.push(`**Registry dependencies:** ${item.registryDependencies.map((d) => `\`${d}\``).join(', ') || '—'}`);
   if (item.docs) meta.push(`**Docs file:** [${item.docs}](${REPO_BLOB}${item.docs})`);
   out.push(meta.join('  \n'));
+  if (item.labels?.length)
+    out.push('## Labels', ...item.labels.map(({ key, type, state }) => `- ${key}: ${type} — ${state}`));
   if (info.keyboard.length) {
     out.push(
       '## Keyboard',

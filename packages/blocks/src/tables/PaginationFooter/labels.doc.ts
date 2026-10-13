@@ -15,4 +15,3 @@ export const labelDocs = [
     'all pagination states: numbered button name; visible page number is caller data',
   ],
 ] as const;
-export const labelDescription = `Optional labels keys: ${labelDocs.map(([key, type, state]) => `${key}: ${type} — ${state}`).join('; ')}.`;

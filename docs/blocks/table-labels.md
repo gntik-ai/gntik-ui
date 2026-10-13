@@ -3,7 +3,8 @@
 `PaginationFooter`, `FilterBar` and `DataTable` export optional, typed `labels` props from
 `@gntik-ai/blocks`: `PaginationFooterLabels`, `FilterBarLabels` and `DataTableLabels`.
 Each key and its signature and interaction state is listed in the block's `labels.doc.ts`,
-its metadata description (`list_kit` and `get_block`), and the generated kit registry / llms docs:
+its structured `labels` metadata (`list_kit` and `get_block`), and the generated kit registry
+and `llms-full.txt` Labels sections. Catalog summaries keep the existing block descriptions:
 
 - [PaginationFooter keys](../../packages/blocks/src/tables/PaginationFooter/labels.doc.ts)
 - [FilterBar keys](../../packages/blocks/src/tables/FilterBar/labels.doc.ts)

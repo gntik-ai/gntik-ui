@@ -57,4 +57,3 @@ export const labelDocs = [
   ['scrollContainer', 'string', 'overflowing or virtualized table: focusable scroll region name'],
   ...paginationDocs.map(([key, type, state]) => [`pagination.${key}`, type, state] as const),
 ] as const;
-export const labelDescription = `Optional labels keys: ${labelDocs.map(([key, type, state]) => `${key}: ${type} — ${state}`).join('; ')}.`;

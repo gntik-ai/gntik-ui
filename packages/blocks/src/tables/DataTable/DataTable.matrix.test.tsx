@@ -2,7 +2,7 @@ import { render, screen, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DataTable } from './DataTable';
 import type { DataTableColumn } from './data-table-utils';
-import { tableLabels } from '../__tests__/labels-fixtures';
+import { defaultDataTableLabels, tableLabels } from '../__tests__/labels-fixtures';
 import { assertInventory, baseline, checkAxe, themes } from '../__tests__/matrix';
 
 interface Row {
@@ -42,7 +42,7 @@ for (const mode of ['default', 'en', 'es'] as const)
       const observe = () => {
         if (mode === 'default') states.push(baseline());
       };
-      const l = tableLabels[mode === 'es' ? 'es' : 'en'];
+      const l = mode === 'default' ? defaultDataTableLabels : tableLabels[mode];
       const selectedCount = vi.fn(l.selection.selectedCount);
       const groupRowCount = vi.fn(l.grouping.groupRowCount);
       const selectGroup = vi.fn(l.grouping.selectGroup);
@@ -146,7 +146,9 @@ for (const mode of ['default', 'en', 'es'] as const)
       };
       const openViews = async () => {
         await user.click(
-          screen.getByRole('button', { name: /^(Default view|Vista inicial|Choice A|New choice|Renamed)/ }),
+          screen.getByRole('button', {
+            name: /^(Default view|Custom Default view|Vista inicial|Choice A|New choice|Renamed)/,
+          }),
         );
         await screen.findByRole('menuitem', { name: l.views.saveAs });
       };

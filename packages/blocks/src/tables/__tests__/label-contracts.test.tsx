@@ -21,9 +21,10 @@ it.each([
   ['DataTable', tableMeta, tableLabels.en],
 ] as const)('%s documents every key, type and interaction state for kit consumers', (_name, meta, labels) => {
   for (const [key, type] of entries(labels)) {
-    expect(meta.description).toContain(`${key}: ${type === 'function' ? '(' : 'string'}`);
+    const entry = meta.labels?.find((label) => label.key === key);
+    expect(entry?.type).toMatch(type === 'function' ? /^\(/ : /^string$/);
     // Each inventory entry must name its state, including entries forwarded to pagination.
-    expect(meta.description).toMatch(new RegExp(`${key.replaceAll('.', '\\.')}:[^;]+ — [^;]+`));
+    expect(entry?.state).toMatch(/\S/);
   }
 });
 
