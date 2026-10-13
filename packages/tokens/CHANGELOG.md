@@ -1,5 +1,11 @@
 # @gntik-ai/tokens
 
+## 0.2.1
+
+### Patch Changes
+
+- 5fe9e8e: Publish all packages publicly on npmjs.org; projects should remove any old @gntik-ai:registry line from .npmrc to resolve new versions.
+
 ## 0.2.0
 
 ### Minor Changes
