@@ -1,5 +1,18 @@
 # @gntik-ai/chat
 
+## 0.5.0
+
+### Patch Changes
+
+- 5fe9e8e: Publish all packages publicly on npmjs.org; projects should remove any old @gntik-ai:registry line from .npmrc to resolve new versions.
+- Updated dependencies [4992a03]
+- Updated dependencies [5fe9e8e]
+- Updated dependencies [0f55d7b]
+- Updated dependencies [7e634c7]
+- Updated dependencies [80c9d78]
+  - @gntik-ai/ui@0.5.0
+  - @gntik-ai/tokens@0.2.1
+
 ## 0.3.0
 
 ### Patch Changes

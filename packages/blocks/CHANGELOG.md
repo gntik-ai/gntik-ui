@@ -1,5 +1,29 @@
 # @gntik-ai/blocks
 
+## 0.5.0
+
+### Minor Changes
+
+- f28226e: Add optional hidden range controls to ChartCard, preserve keyboard focus after pointer releases outside its range controls, and document custom ranges and toolbar-owned controlled selection.
+- 497aa09: Add a controlled live event stream template with subscription states, bounded quiet logs, selectable rows and a pinnable JSON inspector.
+- 7e634c7: Add opt-in single row selection to non-paginated DataTable with native radios, accessible labels including numeric legends, keyboard navigation that preserves table controls and pointer focus, disabled choices, a localized selection column and resize handles that avoid unnecessary scroll-container tab stops.
+- 80c9d78: Add a non-interactive truncated collection footer with localized exact counts, lower-bound counts and truncation notes.
+
+### Patch Changes
+
+- 5fe9e8e: Publish all packages publicly on npmjs.org; projects should remove any old @gntik-ai:registry line from .npmrc to resolve new versions.
+- Updated dependencies [4992a03]
+- Updated dependencies [5fe9e8e]
+- Updated dependencies [0f55d7b]
+- Updated dependencies [7e634c7]
+- Updated dependencies [80c9d78]
+  - @gntik-ai/ui@0.5.0
+  - @gntik-ai/charts@0.5.0
+  - @gntik-ai/editor@0.5.0
+  - @gntik-ai/flow@0.5.0
+  - @gntik-ai/icons@0.5.0
+  - @gntik-ai/tokens@0.2.1
+
 ## 0.4.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@gntik-ai/editor",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Monaco code editor themed by the gntik-ui brand tokens (dark, light, high contrast).",
   "license": "MIT",
   "type": "module",
