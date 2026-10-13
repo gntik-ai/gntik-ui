@@ -251,7 +251,9 @@ it('validates non-empty optional email and uses consumer-supplied messages', asy
 });
 
 it('keeps password help, strength and error descriptions linked and focuses consent from the summary', async () => {
-  render(<SignUpForm fields={[]} passwordHelp="Choose at least 8 characters to secure your account." sso={null} />);
+  const { container } = render(
+    <SignUpForm fields={[]} passwordHelp="Choose at least 8 characters to secure your account." sso={null} />,
+  );
   const password = screen.getByLabelText('Password');
   await userEvent.type(password, 'Abc1!xy');
   await userEvent.click(screen.getByRole('button', { name: 'Create account' }));
@@ -267,7 +269,12 @@ it('keeps password help, strength and error descriptions linked and focuses cons
   expect(password).toHaveAccessibleDescription(
     'Strength: Too weak Choose at least 8 characters to secure your account. Use at least 8 characters.',
   );
-  await userEvent.click(within(summary).getByRole('link', { name: 'Terms: Accept the terms to continue.' }));
+  const termsLink = within(summary).getByRole('link', { name: 'Terms: Accept the terms to continue.' });
+  const termsTarget = termsLink.getAttribute('href')!.slice(1);
+  expect(document.getElementById(termsTarget)).toBe(screen.getByRole('checkbox'));
+  expect(container.querySelectorAll(`[id="${termsTarget}"]`)).toHaveLength(1);
+  termsLink.focus();
+  await userEvent.keyboard('{Enter}');
   expect(screen.getByRole('checkbox')).toHaveFocus();
   expect(screen.getByRole('checkbox')).toHaveAccessibleDescription('Accept the terms to continue.');
   await userEvent.keyboard(' ');

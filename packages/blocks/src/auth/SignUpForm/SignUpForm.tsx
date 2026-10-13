@@ -246,7 +246,7 @@ export function SignUpForm({
         {termsProp !== false && (
           <div>
             <Checkbox
-              id={fields !== undefined ? termsId : undefined}
+              render={fields !== undefined ? <span id={termsId} /> : undefined}
               checked={terms}
               onCheckedChange={setTerms}
               aria-invalid={termsInvalid || undefined}
