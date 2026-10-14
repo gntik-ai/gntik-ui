@@ -95,7 +95,7 @@ export function DataTableRow<T>({
       )}
       {columns.map((c) => {
         const cl = layout?.columns.get(c.id);
-        const content = c.cell ? c.cell(row) : formatCell(c.accessor?.(row));
+        const content = c.cell ? c.cell(row) : formatCell(c.accessor?.(row), l.status);
         const editable = onCellEdit && editHintId && isCellEditable(c, row);
         return (
           <TableCell

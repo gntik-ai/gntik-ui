@@ -21,13 +21,14 @@ const callback =
     window.callbackCalls.push({ key, args });
   };
 const rows = [
-  { id: 'a', name: 'Alpha', region: 'East' },
-  { id: 'b', name: 'Beta', region: 'East' },
-  { id: 'c', name: 'Gamma', region: '' },
+  { id: 'a', name: 'Alpha', region: 'East', enabled: true },
+  { id: 'b', name: 'Beta', region: 'East', enabled: false },
+  { id: 'c', name: 'Gamma', region: '', enabled: true },
 ];
 const columns = [
   { id: 'name', header: 'Name', accessor: (row) => row.name, sortable: true, editable: true },
   { id: 'region', header: 'Region', accessor: (row) => row.region },
+  { id: 'enabled', header: 'Enabled', accessor: (row) => row.enabled },
 ];
 function Fixture() {
   const [loading, setLoading] = useState(false);

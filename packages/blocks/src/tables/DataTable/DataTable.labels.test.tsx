@@ -13,6 +13,48 @@ const columns = [
 ];
 
 describe('DataTable labels at the rendered block boundary', () => {
+  it('keeps the caller caption as the virtualized viewport name despite a scrollable override', () => {
+    render(
+      <DataTable
+        rows={rows}
+        columns={columns}
+        caption="Caller caption"
+        virtualize
+        paginated={false}
+        labels={{ status: { scrollable: 'Custom scrolling name' } }}
+      />,
+    );
+    expect(screen.getByRole('region', { name: 'Caller caption' })).toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: 'Custom scrolling name' })).not.toBeInTheDocument();
+  });
+
+  it('replaces boolean accessor text while preserving partial defaults and caller cell renderers', () => {
+    const booleanRows = [
+      { id: 'true', enabled: true },
+      { id: 'false', enabled: false },
+    ];
+    const booleanColumns = [
+      { id: 'enabled', header: 'Enabled', accessor: (row: (typeof booleanRows)[number]) => row.enabled },
+      { id: 'custom', header: 'Custom', cell: () => 'Caller value' },
+    ];
+    const { rerender } = render(
+      <I18nProvider locale="es">
+        <DataTable rows={booleanRows} columns={booleanColumns} labels={{ status: { yes: '<sí>', no: '<no>' } }} />
+      </I18nProvider>,
+    );
+    expect(screen.getByRole('cell', { name: '<sí>' })).toHaveTextContent('<sí>');
+    expect(screen.getByRole('cell', { name: '<no>' })).toHaveTextContent('<no>');
+    expect(screen.getAllByRole('cell', { name: 'Caller value' })).toHaveLength(2);
+    rerender(
+      <DataTable rows={booleanRows} columns={booleanColumns} labels={{ status: { yes: '<sí>', no: undefined } }} />,
+    );
+    expect(screen.getByRole('cell', { name: '<sí>' })).toHaveTextContent('<sí>');
+    expect(screen.getByRole('cell', { name: 'No' })).toHaveTextContent('No');
+    rerender(<DataTable rows={booleanRows} columns={booleanColumns} />);
+    expect(screen.getByRole('cell', { name: 'Yes' })).toHaveTextContent('Yes');
+    expect(screen.getByRole('cell', { name: 'No' })).toHaveTextContent('No');
+  });
+
   it('retains provider and English fallbacks for explicitly undefined nested keys', async () => {
     const user = userEvent.setup();
     render(

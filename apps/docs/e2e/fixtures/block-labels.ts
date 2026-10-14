@@ -82,6 +82,8 @@ export function labelFixture(locale: 'en' | 'es', record: (call: FormatterCall) 
       emptyTitle: es ? 'Sin registros' : 'No records',
       emptyDescription: es ? 'No hay coincidencias' : 'No matching records',
       noGroup: es ? 'Sin grupo' : 'Ungrouped',
+      yes: es ? 'Verdadero' : 'True value',
+      no: es ? 'Falso' : 'False value',
       groupCount: (count: number) => format('groupCount', count),
       groupRows: (count: number) => format('groupRows', count),
       scrollable: es ? 'Tabla desplazable' : 'Table viewport',

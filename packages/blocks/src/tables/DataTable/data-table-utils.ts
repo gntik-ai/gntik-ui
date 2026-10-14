@@ -148,10 +148,10 @@ export function toggleOne(id: string, selected: ReadonlySet<string>): Set<string
 }
 
 /** Default cell text for a raw value. */
-export function formatCell(value: CellValue): ReactNode {
+export function formatCell(value: CellValue, labels = { yes: 'Yes', no: 'No' }): ReactNode {
   if (value == null) return '—';
   if (value instanceof Date) return value.toLocaleDateString();
-  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (typeof value === 'boolean') return value ? labels.yes : labels.no;
   return value;
 }
 

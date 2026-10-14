@@ -59,10 +59,15 @@ export interface DataTableStatusLabels {
   emptyTitle?: string;
   emptyDescription?: string;
   noGroup?: string;
+  /** Default cell text for a true boolean accessor value; caller cell renderers take precedence. */
+  yes?: string;
+  /** Default cell text for a false boolean accessor value; caller cell renderers take precedence. */
+  no?: string;
   /** Raw total rows in the group; returns the text inside the count badge. */
   groupCount?: (count: number) => string;
   /** Total rows in the group; returns only the noun after the count badge. */
   groupRows?: (count: number) => string;
+  /** Non-virtualized scroll container name; virtualized containers use the effective caption. */
   scrollable?: string;
   editHint?: string;
   /** Caller column header and row label, unchanged. */
@@ -129,6 +134,8 @@ export const dataTableDefaults = {
     emptyTitle: 'No results',
     emptyDescription: 'Nothing matches the current filters.',
     noGroup: 'No group',
+    yes: 'Yes',
+    no: 'No',
     groupCount: (count: number) => String(count),
     groupRows: (count: number): string => (count === 1 ? 'row' : 'rows'),
     scrollable: 'Scrollable table',

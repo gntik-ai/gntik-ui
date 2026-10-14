@@ -89,7 +89,7 @@ async function collect(page) {
         callerText:
           Boolean(el.closest('#fixture-controls')) ||
           (el.matches('caption') && el.textContent === 'Caller records') ||
-          (Boolean(el.closest('[data-column-id]')) && ['Name', 'Region'].includes(el.textContent)) ||
+          (Boolean(el.closest('[data-column-id]')) && ['Name', 'Region', 'Enabled'].includes(el.textContent)) ||
           (Boolean(el.closest('[data-row-id]')) &&
             ['Alpha', 'Beta', 'Gamma', 'East', 'Inspect'].includes(el.textContent)) ||
           (Boolean(el.closest('[data-group-header]')) && el.textContent === 'East') ||
@@ -243,6 +243,16 @@ async function tableState(page, labels, locale, selected = false) {
     await labelled(page, 'checkbox', `${prefix(locale)}[row:${row}]`);
     await labelled(page, 'button', `${prefix(locale)}[rowActions:${row}]`);
   }
+  for (const [id, text] of [
+    ['a', l.status.yes],
+    ['b', l.status.no],
+    ['c', l.status.yes],
+  ]) {
+    await surface(page.locator(`[data-row-id="${id}"]`).getByRole('cell', { name: text, exact: true }), {
+      name: text,
+      text,
+    });
+  }
   for (const [name, count] of [
     ['East', 2],
     [l.status.noGroup, 1],
@@ -258,7 +268,7 @@ async function tableState(page, labels, locale, selected = false) {
   }
   const edit = named(page, 'button', 'Alpha'); // caller cell text, with built-in edit description
   await surface(edit, { name: 'Alpha', text: 'Alpha', description: l.status.editHint });
-  for (const column of ['Name', 'Region']) {
+  for (const column of ['Name', 'Region', 'Enabled']) {
     const resizer = named(page, 'separator', `${prefix(locale)}[resize:${column}]`);
     if (await resizer.count())
       await labelled(page, 'separator', `${prefix(locale)}[resize:${column}]`, {
@@ -452,6 +462,8 @@ const englishDefaults = [
   'Actions',
   'Press Enter or F2 to edit.',
   'No group',
+  'Yes',
+  'No',
   'row',
   'rows',
   'No results',
