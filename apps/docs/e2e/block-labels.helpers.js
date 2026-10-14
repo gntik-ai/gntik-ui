@@ -9,7 +9,8 @@ const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 export const SELECT_LISTBOX_NAME_79 = {
   issue: 'gntik-ai/gntik-ui#79',
   rule: 'aria-input-field-name',
-  selector: '.bg-popover > [role="listbox"].outline-none',
+  selector: '.bg-popover[role="presentation"] > [role="listbox"].outline-none[id]',
+  trigger: '[role="combobox"][aria-haspopup="listbox"][aria-controls]',
 };
 
 export async function closed(page, role) {
@@ -35,6 +36,47 @@ export async function openedDialog(page) {
     .toBe(0);
 }
 
+// Exercise focus movement at each baseline state without submitting or toggling a value.
+// Stay inside an open popup so the probe does not close it before the checkpoint.
+export async function keyboardAtState(page) {
+  const originalFocus = await page.evaluateHandle(() => document.activeElement);
+  const menu = page.getByRole('menu');
+  const list = page.getByRole('listbox');
+  const dialog = page.getByRole('dialog');
+  let first;
+  let keys;
+  if (await menu.count()) {
+    first = menu.last().locator('[role^="menuitem"]:not([aria-disabled="true"])').first();
+    keys = ['ArrowDown', 'ArrowUp'];
+  } else if (await list.count()) {
+    first = list.getByRole('option').first();
+    keys = ['ArrowDown', 'ArrowUp'];
+  } else {
+    const scope = (await dialog.count()) ? dialog : page.locator('#root');
+    first = scope.locator('input:not([type="hidden"]):not([disabled]), button:not([disabled])').first();
+    keys = ['Tab', 'Shift+Tab'];
+  }
+  const focus = () =>
+    page.evaluate(() => {
+      const el = document.activeElement;
+      return [el.tagName, el.getAttribute('role'), el.getAttribute('aria-label'), el.textContent, el.tabIndex];
+    });
+  const trace = [await focus()];
+  try {
+    await first.focus();
+    trace.push(await focus());
+    for (const key of keys) {
+      await page.keyboard.press(key);
+      trace.push(await focus());
+    }
+  } finally {
+    await originalFocus.evaluate((el) => el.focus({ preventScroll: true }));
+    await originalFocus.dispose();
+  }
+  trace.push(await focus());
+  return trace;
+}
+
 export async function axeViolations(page) {
   await page.addScriptTag({ content: AXE });
   return page.evaluate(async (allow) => {
@@ -43,7 +85,13 @@ export async function axeViolations(page) {
     return result.violations.flatMap((violation) => {
       const nodes = violation.nodes.filter((node) => {
         if (violation.id !== allow.rule || node.target.length !== 1 || typeof node.target[0] !== 'string') return true;
-        return !document.querySelector(node.target[0])?.matches(allow.selector);
+        const list = document.querySelector(node.target[0]);
+        const isSelectList =
+          list?.matches(allow.selector) &&
+          [...document.querySelectorAll(allow.trigger)].some(
+            (trigger) => trigger.getAttribute('aria-controls') === list.id,
+          );
+        return !isSelectList;
       });
       return nodes.length ? [{ id: violation.id, nodes: nodes.map((node) => node.target) }] : [];
     });
@@ -170,6 +218,17 @@ const ENGLISH_DEFAULTS = [
 ];
 
 export async function checkCopy(page, expected, language) {
+  for (const { key, selector, surface, values, background } of expected.elements) {
+    if (background && surface === 'name') continue;
+    const nodes = page.locator(selector);
+    await expect(nodes, `${key}: ${selector}`).toHaveCount(values.length);
+    for (const [index, value] of values.entries()) {
+      const node = nodes.nth(index);
+      if (surface === 'name') await expect(node, key).toHaveAccessibleName(value);
+      else if (surface === 'text') await expect(node, key).toHaveText(value);
+      else await expect(node, key).toHaveAttribute(surface, value);
+    }
+  }
   const evidence = await surfaces(page);
   const strings = [
     ...evidence.text,
@@ -181,7 +240,7 @@ export async function checkCopy(page, expected, language) {
     ),
   ];
   // Expected values are a state/element table, including explicit caller and composed names.
-  const allowed = new Set(expected);
+  const allowed = new Set(expected.strings);
   for (const string of strings) expect(allowed.has(string), `Unexpected ${language} surface: ${string}`).toBe(true);
   if (language === 'es') {
     for (const string of strings) {

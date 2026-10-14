@@ -21,8 +21,15 @@ export interface KitFile {
   target: string;
 }
 
+/** Serialized per-instance label documentation, shared by registry generation and consumption. */
+export interface BlockLabelMeta {
+  key: string;
+  type: string;
+  state: string;
+}
+
 export interface KitItem {
-  labels?: Array<{ key: string; type: string; state: string }>;
+  labels?: BlockLabelMeta[];
   id: string;
   kind: KitKind;
   name: string;

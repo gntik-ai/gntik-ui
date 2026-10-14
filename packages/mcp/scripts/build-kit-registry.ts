@@ -14,13 +14,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import type { BlockLabelMeta } from '../src/kit.js';
 
 const ROOT = path.resolve(import.meta.dirname, '../../..');
 const OUT = path.join(ROOT, 'kit-registry.json');
 
 type Kind = 'component' | 'layout' | 'block' | 'template';
 interface Meta {
-  labels?: Array<{ key: string; type: string; state: string }>;
+  labels?: BlockLabelMeta[];
   name: string;
   group?: string;
   status?: string;
@@ -29,7 +30,7 @@ interface Meta {
   title?: string;
 }
 interface Item {
-  labels?: Array<{ key: string; type: string; state: string }>;
+  labels?: BlockLabelMeta[];
   id: string;
   kind: Kind;
   name: string;
