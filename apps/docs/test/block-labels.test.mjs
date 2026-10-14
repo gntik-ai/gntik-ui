@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import test from 'node:test';
 import { axeViolations } from '../e2e/block-labels.helpers.js';
@@ -7,6 +8,28 @@ import { fixtureLabels } from '../src/block-labels-copy.js';
 
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
 const { JSDOM, VirtualConsole } = require('jsdom');
+const fixturePage = readFileSync(new URL('../block-labels.html', import.meta.url), 'utf8');
+
+test('copy tables cover caller headings in the complete fixture document', () => {
+  const dom = new JSDOM(fixturePage);
+  try {
+    const headings = [...dom.window.document.querySelectorAll('main > h1, main > h2')];
+    assert.deepEqual(
+      headings.map((node) => node.textContent),
+      ['Records', 'Items'],
+    );
+    for (const block of ['pagination', 'filter', 'table']) {
+      for (const language of ['en', 'es']) {
+        const expected = expectedTable(block, language, 'initial');
+        for (const heading of headings) {
+          assert.ok(expected.strings.includes(heading.textContent), `${block}/${language}: ${heading.textContent}`);
+        }
+      }
+    }
+  } finally {
+    dom.window.close();
+  }
+});
 
 // The DOM is the browser boundary: run the same injected axe build and filtering as Playwright.
 async function audit(html) {
@@ -115,7 +138,7 @@ test('element tables match the rendered public blocks and fixture states', async
             }
           : {};
       const html = renderToStaticMarkup(React.createElement(Component, { ...props, ...filterProps, labels }));
-      const dom = new JSDOM(`<div id="root">${html}</div>`);
+      const dom = new JSDOM(fixturePage.replace('<div id="root"></div>', `<div id="root">${html}</div>`));
       try {
         for (const { key, selector, surface, values } of expectedTable(block, language, state).elements) {
           const actual = [...dom.window.document.querySelectorAll(selector)].map((node) => {

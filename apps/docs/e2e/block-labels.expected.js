@@ -116,6 +116,9 @@ export function expectedTable(block, language, state) {
   const add = (key, selector, surface, ...values) => elements.push({ key, selector, surface, values });
   const name = (key, selector, ...values) => add(key, selector, 'name', ...values);
   const text = (key, selector, ...values) => add(key, selector, 'text', ...values);
+  // Caller-owned fixture headings are collected alongside block chrome in every state.
+  text('caller:fixtureHeadings', 'main > h1, main > h2', 'Records', 'Items');
+  name('caller:fixtureHeadings', 'main > h1, main > h2', 'Records', 'Items');
   const pagination = (summary, size, pages, options, captionSelector) => {
     text('rowsPerPage', captionSelector, l.rowsPerPage);
     name('rowsPerPageLabel', '#root [role="combobox"]', l.rowsPerPageLabel);
