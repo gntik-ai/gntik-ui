@@ -1,0 +1,52 @@
+import type { PaginationFooterLabels } from '../PaginationFooter/PaginationFooter';
+
+/** Per-instance table chrome, including the composed PaginationFooter. Caller data stays caller-owned. */
+export interface DataTableLabels extends PaginationFooterLabels {
+  selectionCount: (count: number) => string;
+  columns: string;
+  visibleColumns: string;
+  pinColumns: string;
+  pinnedLeft: string;
+  pinnedRight: string;
+  pinLeft: string;
+  pinRight: string;
+  unpinned: string;
+  density: string;
+  comfortable: string;
+  compact: string;
+  resizeColumn: (label: string) => string;
+  columnWidth: (width: number) => string;
+  defaultView: string;
+  defaultViewOption: string;
+  modified: string;
+  views: string;
+  saveChanges: string;
+  saveAs: string;
+  renameView: string;
+  deleteView: string;
+  resetChanges: string;
+  saveViewTitle: string;
+  renameViewTitle: string;
+  viewName: string;
+  cancel: string;
+  saveView: string;
+  rename: string;
+  closeDialog: string;
+  selection: string;
+  selectAll: string;
+  selectRow: (label: string) => string;
+  selectGroup: (group: string) => string;
+  groupRows: (count: number) => string;
+  noGroup: string;
+  actions: string;
+  rowActions: (label: string) => string;
+  emptyTitle: string;
+  emptyDescription: string;
+  loading: (caption: string) => string;
+  editHint: string;
+  editLabel: (column: string, row: string) => string;
+  editError: string;
+  enterNumber: string;
+  minimumValue: (min: number) => string;
+  maximumValue: (max: number) => string;
+}

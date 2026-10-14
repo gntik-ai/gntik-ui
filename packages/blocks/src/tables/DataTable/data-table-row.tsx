@@ -10,6 +10,7 @@ import {
   type DataTableColumn,
 } from './data-table-utils';
 import { EditableCell, isCellEditable, type DataTableCellEditHandler } from './editable-cell';
+import type { DataTableLabels } from './labels';
 import type { SingleSelection } from './single-selection';
 
 /** A group as the body renders it: its rows on the current page plus header data. */
@@ -27,6 +28,7 @@ export interface DataTableBodyGroup<T> {
 
 /** Row rendering shared by the plain, grouped and virtualized bodies. */
 export interface RowContext<T> {
+  labels?: Partial<DataTableLabels>;
   columns: ReadonlyArray<DataTableColumn<T>>;
   getRowId: (row: T) => string;
   getRowLabel: (row: T) => string;
@@ -49,6 +51,7 @@ export interface DataTableRowProps<T> extends RowContext<T> {
 }
 
 export function DataTableRow<T>({
+  labels,
   row,
   columns,
   getRowId,
@@ -83,7 +86,7 @@ export function DataTableRow<T>({
             </span>
           ) : (
             <Checkbox
-              aria-label={t('table.selectRow', { label })}
+              aria-label={labels?.selectRow?.(label) ?? t('table.selectRow', { label })}
               checked={isSelected}
               onCheckedChange={() => onToggleRow(id)}
             />
@@ -110,6 +113,7 @@ export function DataTableRow<T>({
           >
             {editable ? (
               <EditableCell
+                labels={labels}
                 row={row}
                 rowId={id}
                 rowLabel={label}
@@ -131,7 +135,12 @@ export function DataTableRow<T>({
           className={cn('w-12 py-0', layout?.trail.className, tint(layout?.trail))}
           style={layout?.trail.style}
         >
-          <MoreMenu items={rowActions(row)} label={t('table.rowActions', { label })} variant="ghost" size="sm" />
+          <MoreMenu
+            items={rowActions(row)}
+            label={labels?.rowActions?.(label) ?? t('table.rowActions', { label })}
+            variant="ghost"
+            size="sm"
+          />
         </TableCell>
       )}
     </TableRow>
@@ -142,6 +151,7 @@ export const groupHeadClass =
   'h-9 bg-secondary/50 text-[12.5px] font-semibold tracking-normal normal-case text-foreground';
 
 export interface GroupHeaderRowProps<T> {
+  labels?: Partial<DataTableLabels>;
   group: DataTableBodyGroup<T>;
   open: boolean;
   selectable: boolean;
@@ -157,6 +167,7 @@ export interface GroupHeaderRowProps<T> {
 
 /** The header row of a group: group checkbox, collapse button, label and count. */
 export function GroupHeaderRow<T>({
+  labels,
   group,
   open,
   selectable,
@@ -177,7 +188,7 @@ export function GroupHeaderRow<T>({
       <span className="rounded-full bg-secondary px-1.5 font-mono text-[11px] font-medium text-muted-foreground tabular-nums">
         {count}
       </span>{' '}
-      <span className="sr-only">{count === 1 ? 'row' : 'rows'}</span>
+      <span className="sr-only">{labels?.groupRows?.(count) ?? (count === 1 ? 'row' : 'rows')}</span>
     </>
   );
   return (
@@ -185,7 +196,7 @@ export function GroupHeaderRow<T>({
       {selectable && (
         <TableCell className={cn('w-10 pe-0', groupHeadClass)}>
           <Checkbox
-            aria-label={t('table.selectRow', { label: `all in ${group.name}` })}
+            aria-label={labels?.selectGroup?.(group.name) ?? t('table.selectRow', { label: `all in ${group.name}` })}
             checked={state.checked}
             indeterminate={state.indeterminate}
             disabled={count === 0}

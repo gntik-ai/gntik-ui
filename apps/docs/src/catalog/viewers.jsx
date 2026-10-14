@@ -7,6 +7,7 @@
    API reference.
    ============================================================================ */
 import { useEffect, useMemo, useState } from 'react';
+import { Table, TableCaption, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@gntik-ai/ui';
 import { CATALOG, loadSource } from '../preview-registry.js';
 import { previewQuery, usePreviewSettings } from '../preview-settings.jsx';
 
@@ -175,6 +176,33 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
               {it.uses?.length > 0 && (
                 <p className="mb-3 text-[11.5px] text-muted-foreground">Uses: {it.uses.join(' · ')}</p>
               )}
+              {it.labels?.length > 0 && (
+                <div className="my-4">
+                  <p className="mb-2 text-[12.5px] text-muted-foreground">
+                    Pass a partial labels object. Each key overrides its existing default or provider translation.
+                    Formatters receive raw arguments and render their result verbatim. Caller content stays unchanged.
+                  </p>
+                  <Table>
+                    <TableCaption>{it.title} labels: key, type and interaction state</TableCaption>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Key</TableHead>
+                        <TableHead>Type</TableHead>
+                        <TableHead>State / surface</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {it.labels.map(({ key, type, state }) => (
+                        <TableRow key={key}>
+                          <TableCell className="font-mono">{key}</TableCell>
+                          <TableCell className="font-mono">{type}</TableCell>
+                          <TableCell>{state}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
               {kind === 'template' && it.id === 'create-wizard' && (
                 <>
@@ -227,6 +255,7 @@ function BlocksSection() {
           title: b.meta.name,
           description: b.meta.description,
           uses: b.meta.uses,
+          labels: b.meta.labels,
           file: b.file,
           family: b.family,
         })),

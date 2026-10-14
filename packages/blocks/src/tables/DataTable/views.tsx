@@ -21,6 +21,7 @@ import {
 } from '@gntik-ai/ui';
 import { useId, useState } from 'react';
 import type { ColumnWidths, PinnedColumns } from './column-sizing';
+import type { DataTableLabels } from './labels';
 import type { SortState } from './data-table-utils';
 
 /** What a saved view captures. Every field is optional: a missing field keeps the table's default. */
@@ -70,6 +71,7 @@ export function newViewId(name: string, views: readonly DataTableView[]): string
 }
 
 export interface ViewSwitcherProps {
+  labels?: Partial<DataTableLabels>;
   views: readonly DataTableView[];
   activeId: string | null;
   /** The table differs from the active view (or from the defaults when none is active). */
@@ -86,6 +88,7 @@ const DEFAULT_VALUE = '__default__';
 
 /** "Views" menu: switch between saved views, save the current table as a view, rename, delete, reset. */
 export function ViewSwitcher({
+  labels,
   views,
   activeId,
   dirty,
@@ -115,23 +118,23 @@ export function ViewSwitcher({
     <>
       <Menu>
         <MenuTrigger render={<Button variant="secondary" size="sm" icon={Bookmark} trailingIcon={ChevronDown} />}>
-          <span className="max-w-40 truncate">{active ? active.name : 'Default view'}</span>
+          <span className="max-w-40 truncate">{active ? active.name : (labels?.defaultView ?? 'Default view')}</span>
           {dirty && (
             <>
               {' '}
               <span aria-hidden className="size-1.5 rounded-full bg-primary" />{' '}
-              <span className="sr-only">(modified)</span>
+              <span className="sr-only">{labels?.modified ?? '(modified)'}</span>
             </>
           )}
         </MenuTrigger>
         <MenuContent align="end" className="min-w-[220px]">
           <MenuGroup>
-            <MenuGroupLabel>Views</MenuGroupLabel>
+            <MenuGroupLabel>{labels?.views ?? 'Views'}</MenuGroupLabel>
             <MenuRadioGroup
               value={activeId ?? DEFAULT_VALUE}
               onValueChange={(v: unknown) => onSelect(v === DEFAULT_VALUE ? null : String(v))}
             >
-              <MenuRadioItem value={DEFAULT_VALUE}>Default view</MenuRadioItem>
+              <MenuRadioItem value={DEFAULT_VALUE}>{labels?.defaultViewOption ?? 'Default view'}</MenuRadioItem>
               {views.map((v) => (
                 <MenuRadioItem key={v.id} value={v.id}>
                   {v.name}
@@ -141,22 +144,22 @@ export function ViewSwitcher({
           </MenuGroup>
           <MenuSeparator />
           <MenuItem disabled={!active || !dirty} onClick={onSave}>
-            Save changes
+            {labels?.saveChanges ?? 'Save changes'}
           </MenuItem>
-          <MenuItem onClick={() => open('create')}>Save as new view…</MenuItem>
+          <MenuItem onClick={() => open('create')}>{labels?.saveAs ?? 'Save as new view…'}</MenuItem>
           <MenuItem disabled={!active} onClick={() => open('rename')}>
-            Rename view…
+            {labels?.renameView ?? 'Rename view…'}
           </MenuItem>
           <MenuItem disabled={!active} onClick={() => active && onDelete(active.id)}>
-            Delete view
+            {labels?.deleteView ?? 'Delete view'}
           </MenuItem>
           <MenuItem disabled={!dirty} onClick={onReset}>
-            Reset changes
+            {labels?.resetChanges ?? 'Reset changes'}
           </MenuItem>
         </MenuContent>
       </Menu>
       <Dialog open={dialog != null} onOpenChange={(o) => !o && setDialog(null)}>
-        <DialogContent size="sm">
+        <DialogContent size="sm" closeLabel={labels?.closeDialog}>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -164,18 +167,22 @@ export function ViewSwitcher({
             }}
           >
             <DialogHeader>
-              <DialogTitle>{dialog === 'rename' ? 'Rename view' : 'Save view'}</DialogTitle>
+              <DialogTitle>
+                {dialog === 'rename'
+                  ? (labels?.renameViewTitle ?? 'Rename view')
+                  : (labels?.saveViewTitle ?? 'Save view')}
+              </DialogTitle>
             </DialogHeader>
             <DialogBody>
               <label htmlFor={inputId} className="mb-1.5 block text-[12.5px] font-medium text-foreground">
-                View name
+                {labels?.viewName ?? 'View name'}
               </label>
               <Input id={inputId} value={name} onChange={(e) => setName(e.target.value)} autoComplete="off" required />
             </DialogBody>
             <DialogFooter>
-              <DialogClose render={<Button variant="ghost" />}>Cancel</DialogClose>
+              <DialogClose render={<Button variant="ghost" />}>{labels?.cancel ?? 'Cancel'}</DialogClose>
               <Button type="submit" disabled={!name.trim()}>
-                {dialog === 'rename' ? 'Rename' : 'Save view'}
+                {dialog === 'rename' ? (labels?.rename ?? 'Rename') : (labels?.saveView ?? 'Save view')}
               </Button>
             </DialogFooter>
           </form>

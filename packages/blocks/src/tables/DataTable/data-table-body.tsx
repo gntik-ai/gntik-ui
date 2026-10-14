@@ -108,8 +108,8 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
               <EmptyState
                 icon={Inbox}
                 size="sm"
-                title={t('common.noResults')}
-                description={t('table.emptyDescription')}
+                title={props.labels?.emptyTitle ?? t('common.noResults')}
+                description={props.labels?.emptyDescription ?? t('table.emptyDescription')}
               />
             )}
           </TableCell>
@@ -130,6 +130,7 @@ export function DataTableBody<T>(props: DataTableBodyProps<T>) {
     <GroupHeaderRow
       key={`group-${group.key}`}
       group={group}
+      labels={props.labels}
       open={open}
       selectable={selectable}
       selected={selected}

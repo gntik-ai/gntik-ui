@@ -48,6 +48,7 @@ import { useControllable, useTableViews } from './use-table-views';
 import { useVirtualRows } from './use-virtual-rows';
 import { ViewSwitcher, type DataTableViewState } from './views';
 
+export type { DataTableLabels } from './labels';
 export type { DataTableProps } from './data-table-props';
 
 const defaultRowId = (row: unknown): string => {
@@ -135,6 +136,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   onFiltersChange,
   toolbar,
   className,
+  labels,
 }: DataTableProps<T>) {
   const { t } = useI18n();
   const singleMode = selectionMode === 'single';
@@ -224,7 +226,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     setInnerCollapsed(next);
     onCollapsedGroupsChange?.([...next]);
   };
-  const nameOf = (key: string) => key || 'No group';
+  const nameOf = (key: string) => key || (labels?.noGroup ?? 'No group');
   const bodyGroups: Array<DataTableBodyGroup<T>> | undefined =
     effectiveGroupBy && allGroups
       ? allGroups
@@ -349,7 +351,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
               <>
                 {selectionSummary && (
                   <span className="text-[12.5px] font-semibold text-foreground" aria-live="polite">
-                    {selectedList.length} selected
+                    {labels?.selectionCount ? (
+                      labels.selectionCount(selectedList.length)
+                    ) : (
+                      <>{selectedList.length} selected</>
+                    )}
                   </span>
                 )}
                 {selectionSummary && bulkActions && <span aria-hidden className="h-4 w-px bg-border" />}
@@ -362,6 +368,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           <div className="flex items-center gap-2">
             {showViews && (
               <ViewSwitcher
+                labels={labels}
                 views={viewsApi.views}
                 activeId={viewsApi.activeId}
                 dirty={viewsApi.dirty}
@@ -373,9 +380,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                 onReset={viewsApi.reset}
               />
             )}
-            {showDensityToggle && <DensityToggle value={density} onChange={changeDensity} />}
+            {showDensityToggle && <DensityToggle labels={labels} value={density} onChange={changeDensity} />}
             {showColumnMenu && (
               <ColumnVisibilityMenu
+                labels={labels}
                 columns={columns}
                 hidden={hidden}
                 onToggle={toggleColumn}
@@ -388,7 +396,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       )}
       {anyEditable && (
         <span id={editHintId} className="sr-only">
-          Press Enter or F2 to edit.
+          {labels?.editHint ?? 'Press Enter or F2 to edit.'}
         </span>
       )}
       {/* The toggle drives a density context for the table: its rows and the controls inside them. */}
@@ -423,10 +431,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     )}
                     style={layout.lead.style}
                   >
-                    {singleMode && <span className="sr-only">{t('table.selection')}</span>}
+                    {singleMode && <span className="sr-only">{labels?.selection ?? t('table.selection')}</span>}
                     {selectable && (
                       <Checkbox
-                        aria-label={t('table.selectAllPage')}
+                        aria-label={labels?.selectAll ?? t('table.selectAllPage')}
                         checked={header.checked}
                         indeterminate={header.indeterminate}
                         disabled={loading || pageIds.length === 0}
@@ -439,6 +447,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                   const bounds = widthBounds(c);
                   return (
                     <DataTableHeadCell
+                      labels={labels}
                       key={c.id}
                       column={c}
                       layout={layout.columns.get(c.id)}
@@ -467,12 +476,13 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     )}
                     style={layout.trail.style}
                   >
-                    <span className="sr-only">{t('table.actions')}</span>
+                    <span className="sr-only">{labels?.actions ?? t('table.actions')}</span>
                   </TableHead>
                 )}
               </TableRow>
             </TableHeader>
             <DataTableBody
+              labels={labels}
               rows={pageRows}
               columns={visibleColumns}
               getRowId={getRowId}
@@ -500,11 +510,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
       </SelectionGroup>
       {loading && (
         <p role="status" className="sr-only">
-          Loading {caption.toLowerCase()}…
+          {labels?.loading ? labels.loading(caption) : <>Loading {caption.toLowerCase()}…</>}
         </p>
       )}
       {paginated && !loading && rows.length > 0 && (
         <PaginationFooter
+          labels={labels}
           className="border-t border-border px-4 py-3"
           total={rows.length}
           page={page}

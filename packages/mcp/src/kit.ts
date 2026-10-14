@@ -22,6 +22,7 @@ export interface KitFile {
 }
 
 export interface KitItem {
+  labels?: Array<{ key: string; type: string; state: string }>;
   id: string;
   kind: KitKind;
   name: string;
@@ -326,4 +327,16 @@ export function firstSentence(text: string): string {
     if (out.length >= 40) break;
   }
   return out || clean;
+}
+
+/** Public copy contract shared by list_kit, get_block and generated language-model docs. */
+export function labelsTable(item: KitItem): string {
+  if (!item.labels?.length) return '';
+  return [
+    'Labels (optional Partial per instance; explicit keys override provider translations and defaults):',
+    '',
+    '| Key | Type | State / surface |',
+    '| --- | --- | --- |',
+    ...item.labels.map(({ key, type, state }) => `| \`${key}\` | \`${type}\` | ${state} |`),
+  ].join('\n');
 }

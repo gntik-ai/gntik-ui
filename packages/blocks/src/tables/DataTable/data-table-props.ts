@@ -3,9 +3,12 @@ import type { ReactNode } from 'react';
 import type { ColumnWidths, PinnedColumns } from './column-sizing';
 import type { DataTableColumn, DataTableGroupBy, SortState } from './data-table-utils';
 import type { DataTableCellEditHandler } from './editable-cell';
+import type { DataTableLabels } from './labels';
 import type { DataTableView } from './views';
 
 interface DataTableCommonProps<T> {
+  /** Per-key overrides; omitted keys keep existing defaults and provider translations. */
+  labels?: Partial<DataTableLabels>;
   rows?: readonly T[];
   columns?: ReadonlyArray<DataTableColumn<T>>;
   /** Stable row id (defaults to `row.id`). */

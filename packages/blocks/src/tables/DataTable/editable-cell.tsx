@@ -9,6 +9,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
+import type { DataTableLabels } from './labels';
 import type { DataTableColumn } from './data-table-utils';
 
 /** One committed cell edit, as `onCellEdit` receives it. */
@@ -34,6 +35,7 @@ export type DataTableCellEditHandler<T> = (
 ) => DataTableCellEditResult | Promise<DataTableCellEditResult>;
 
 export interface EditableCellProps<T> {
+  labels?: Partial<DataTableLabels>;
   row: T;
   rowId: string;
   rowLabel: string;
@@ -72,7 +74,16 @@ function focusSibling(from: HTMLElement | null, dir: 'next' | 'prev') {
  * edits); while editing, an input or a select: Enter or Tab commits, Escape cancels. `onCellEdit`
  * can reject the value with a message, shown inline under the editor.
  */
-export function EditableCell<T>({ row, rowId, rowLabel, column, onCellEdit, hintId, children }: EditableCellProps<T>) {
+export function EditableCell<T>({
+  row,
+  rowId,
+  rowLabel,
+  column,
+  onCellEdit,
+  hintId,
+  children,
+  labels,
+}: EditableCellProps<T>) {
   const errorId = useId();
   const editor = column.editor ?? { type: 'text' as const };
   const [editing, setEditing] = useState(false);
@@ -116,9 +127,11 @@ export function EditableCell<T>({ row, rowId, rowLabel, column, onCellEdit, hint
     const text = draft.trim();
     if (text === '') return { ok: true, value: null };
     const n = Number(text);
-    if (!Number.isFinite(n)) return { ok: false, message: 'Enter a number.' };
-    if (editor.min != null && n < editor.min) return { ok: false, message: `Enter ${editor.min} or more.` };
-    if (editor.max != null && n > editor.max) return { ok: false, message: `Enter ${editor.max} or less.` };
+    if (!Number.isFinite(n)) return { ok: false, message: labels?.enterNumber ?? 'Enter a number.' };
+    if (editor.min != null && n < editor.min)
+      return { ok: false, message: labels?.minimumValue?.(editor.min) ?? `Enter ${editor.min} or more.` };
+    if (editor.max != null && n > editor.max)
+      return { ok: false, message: labels?.maximumValue?.(editor.max) ?? `Enter ${editor.max} or less.` };
     return { ok: true, value: n };
   };
 
@@ -146,11 +159,11 @@ export function EditableCell<T>({ row, rowId, rowLabel, column, onCellEdit, hint
     try {
       result = await onCellEdit({ row, rowId, columnId: column.id, value: parsed.value, previous });
     } catch (err) {
-      result = err instanceof Error && err.message ? err.message : GENERIC_ERROR;
+      result = err instanceof Error && err.message ? err.message : (labels?.editError ?? GENERIC_ERROR);
     }
     busy.current = false;
     setPending(false);
-    if (result === false) result = GENERIC_ERROR;
+    if (result === false) result = labels?.editError ?? GENERIC_ERROR;
     if (typeof result === 'string') {
       setError(result);
       if (after) field.current?.focus();
@@ -205,7 +218,7 @@ export function EditableCell<T>({ row, rowId, rowLabel, column, onCellEdit, hint
     );
   }
 
-  const label = `${column.header} for ${rowLabel}`;
+  const label = labels?.editLabel?.(column.header, rowLabel) ?? `${column.header} for ${rowLabel}`;
   const common = {
     'aria-label': label,
     'aria-invalid': error ? true : undefined,

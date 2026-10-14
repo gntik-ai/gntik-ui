@@ -1,7 +1,10 @@
 import { cn } from '@gntik-ai/ui';
 import { useRef, type KeyboardEvent, type PointerEvent } from 'react';
 
+import type { DataTableLabels } from './labels';
+
 export interface ColumnResizeHandleProps {
+  labels?: Partial<DataTableLabels>;
   /** Column name for the accessible label ("Resize Region column"). */
   label: string;
   width: number;
@@ -20,7 +23,7 @@ const BIG_STEP = 50;
  * aria-valuenow/min/max (the width in px). Drag it with a pointer; from the keyboard,
  * ArrowLeft/ArrowRight change the width by 10px (Shift: 50px), Home/End jump to the limits.
  */
-export function ColumnResizeHandle({ label, width, min, max, onResize, onResizeEnd }: ColumnResizeHandleProps) {
+export function ColumnResizeHandle({ label, width, min, max, onResize, onResizeEnd, labels }: ColumnResizeHandleProps) {
   const drag = useRef<{ x: number; width: number; dir: 1 | -1 } | null>(null);
   const clamp = (w: number) => Math.round(Math.min(max, Math.max(min, w)));
 
@@ -63,11 +66,11 @@ export function ColumnResizeHandle({ label, width, min, max, onResize, onResizeE
       role="separator"
       tabIndex={0}
       aria-orientation="vertical"
-      aria-label={`Resize ${label} column`}
+      aria-label={labels?.resizeColumn?.(label) ?? `Resize ${label} column`}
       aria-valuenow={width}
       aria-valuemin={min}
       aria-valuemax={max}
-      aria-valuetext={`${width} pixels`}
+      aria-valuetext={labels?.columnWidth?.(width) ?? `${width} pixels`}
       data-column-resizer=""
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}

@@ -20,6 +20,7 @@ const OUT = path.join(ROOT, 'kit-registry.json');
 
 type Kind = 'component' | 'layout' | 'block' | 'template';
 interface Meta {
+  labels?: Array<{ key: string; type: string; state: string }>;
   name: string;
   group?: string;
   status?: string;
@@ -28,6 +29,7 @@ interface Meta {
   title?: string;
 }
 interface Item {
+  labels?: Array<{ key: string; type: string; state: string }>;
   id: string;
   kind: Kind;
   name: string;
@@ -236,6 +238,7 @@ async function build() {
       group: meta.group ?? meta.family ?? '',
       status: meta.status ?? 'stable',
       description: meta.description ?? '',
+      ...(meta.labels ? { labels: meta.labels } : {}),
       files: files.map((f) => ({
         path: rel(f),
         target: f.startsWith(s.dir + path.sep)

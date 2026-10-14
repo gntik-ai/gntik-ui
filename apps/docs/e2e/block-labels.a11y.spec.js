@@ -1,0 +1,529 @@
+import { test, expect } from '@playwright/test';
+import fs from 'node:fs';
+import path from 'node:path';
+import { copy } from '../src/block-labels-copy.js';
+import { axeViolations, closed, openedDialog, surfaces, checkCopy, formatterCalled } from './block-labels.helpers.js';
+
+const themes = ['dark', 'light', 'high_contrast'];
+const defaults = {
+  rowsPerPage: 'Rows per page',
+  rowsPerPageLabel: 'Rows per page',
+  previous: 'Previous page',
+  next: 'Next page',
+  searchLandmark: 'Filters',
+  searchLabel: 'Search',
+  searchPlaceholder: 'Search by name…',
+  savedViewLabel: 'Saved view',
+  savedViewPlaceholder: 'Saved views',
+  addFilter: 'Add filter',
+  activeFilters: 'Active filters',
+  filters: 'Filters',
+  clearAll: 'Clear all',
+  columns: 'Columns',
+  visibleColumns: 'Visible columns',
+  pinColumns: 'Pin columns',
+  pinnedLeft: 'Left',
+  pinnedRight: 'Right',
+  pinLeft: 'Pin left',
+  pinRight: 'Pin right',
+  unpinned: 'Unpinned',
+  density: 'Row density',
+  comfortable: 'Comfortable rows',
+  compact: 'Compact rows',
+  defaultView: 'Default view',
+  defaultViewOption: 'Default view',
+  modified: '(modified)',
+  views: 'Views',
+  saveChanges: 'Save changes',
+  saveAs: 'Save as new view…',
+  renameView: 'Rename view…',
+  deleteView: 'Delete view',
+  resetChanges: 'Reset changes',
+  saveViewTitle: 'Save view',
+  renameViewTitle: 'Rename view',
+  viewName: 'View name',
+  cancel: 'Cancel',
+  saveView: 'Save view',
+  rename: 'Rename',
+  closeDialog: 'Close',
+};
+
+// Explicit expected tables: caller content and formatter results are not derived from block code.
+const ranges = {
+  en: {
+    initial: 'Range 1|10|97',
+    next: 'Range 11|20|97',
+    previous: 'Range 1|10|97',
+    numbered: 'Range 21|30|97',
+    open: 'Range 21|30|97',
+    resized: 'Range 1|25|97',
+  },
+  es: {
+    initial: 'Rango 1|10|97',
+    next: 'Rango 11|20|97',
+    previous: 'Rango 1|10|97',
+    numbered: 'Rango 21|30|97',
+    open: 'Rango 21|30|97',
+    resized: 'Rango 1|25|97',
+  },
+};
+const results = {
+  en: {
+    initial: 'Found 12',
+    menu: 'Found 12',
+    selected: 'Found 11',
+    focused: 'Found 11',
+    removed: 'Found 12',
+    clear: 'Found 12',
+    views: 'Found 12',
+    applied: 'Found 11',
+  },
+  es: {
+    initial: 'Encontrados 12',
+    menu: 'Encontrados 12',
+    selected: 'Encontrados 11',
+    focused: 'Encontrados 11',
+    removed: 'Encontrados 12',
+    clear: 'Encontrados 12',
+    views: 'Encontrados 12',
+    applied: 'Encontrados 11',
+  },
+};
+const caller = [
+  'Items',
+  'Records',
+  'Status',
+  'Ready',
+  'Failed',
+  'Saved',
+  'Snapshot',
+  'Renamed',
+  'Alpha',
+  'Beta',
+  'Name',
+  'Region',
+  'Quantity',
+  'West',
+  'East',
+  'Inspect',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  '25',
+  '50',
+  '100',
+  '97',
+  'polite',
+];
+const numericArgs = {
+  initial: [1, 10, 97],
+  next: [11, 20, 97],
+  previous: [1, 10, 97],
+  numbered: [21, 30, 97],
+  open: [21, 30, 97],
+  resized: [1, 25, 97],
+};
+
+async function load(page, block, mode, theme, variant = 'normal') {
+  await page.goto(`/block-labels.html?block=${block}&mode=${mode}&theme=${theme}&variant=${variant}`);
+  await expect(page.locator('#root > div')).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+}
+
+function expectedTable(block, language, state) {
+  const l = copy[language];
+  const es = language === 'es';
+  // Each composite is spelled out at its public element; caller values have separate entries.
+  const common = [...Object.values(l), ...caller];
+  if (block === 'pagination')
+    return [
+      ...common,
+      ranges[language][state],
+      es ? 'Páginas de Items' : 'Pages for Items',
+      ...['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'].map((n) => `${es ? 'Ir a' : 'Go to'} ${n}`),
+    ];
+  if (block === 'filter')
+    return [...common, results[language][state], 'Status:', es ? 'Quitar Status|Ready' : 'Drop Status|Ready'];
+  return [
+    ...common,
+    `${l.defaultView} ${l.modified}`,
+    `Saved ${l.modified}`,
+    `Snapshot ${l.modified}`,
+    `Renamed ${l.modified}`,
+    `Name${l.pinnedLeft}`,
+    `Name${l.pinnedRight}`,
+    `Region${l.pinnedLeft}`,
+    `Region${l.pinnedRight}`,
+    es ? 'Elegidos 1' : 'Chosen 1',
+    es ? 'Rango 1|2|2' : 'Range 1|2|2',
+    es ? 'Páginas de Items' : 'Pages for Items',
+    es ? 'Ir a 1' : 'Go to 1',
+    es ? 'Elegir Alpha' : 'Choose Alpha',
+    es ? 'Elegir Beta' : 'Choose Beta',
+    es ? 'Opciones de Alpha' : 'Options for Alpha',
+    es ? 'Opciones de Beta' : 'Options for Beta',
+    es ? 'Ancho de Name' : 'Width for Name',
+    es ? 'Ancho de Region' : 'Width for Region',
+    es ? 'Ancho de Quantity' : 'Width for Quantity',
+    es ? '200 píxeles' : '200 pixels wide',
+    es ? '210 píxeles' : '210 pixels wide',
+    es ? '160 píxeles' : '160 pixels wide',
+    es ? '120 píxeles' : '120 pixels wide',
+    es ? 'Elegir grupo Sin grupo' : 'Choose group Ungrouped',
+    es ? 'filas: 2' : 'records: 2',
+    es ? 'Sin grupo 2 filas: 2' : 'Ungrouped 2 records: 2',
+    es ? 'Cargando Items' : 'Fetching Items',
+    es ? 'Name de Alpha' : 'Name on Alpha',
+    es ? 'Quantity de Alpha' : 'Quantity on Alpha',
+    es ? 'Mínimo 1' : 'Minimum 1',
+    es ? 'Máximo 10' : 'Maximum 10',
+  ];
+}
+
+async function translatedCheckpoint(page, block, language, state) {
+  await checkCopy(page, expectedTable(block, language, state), language);
+  expect(await axeViolations(page)).toEqual([]);
+}
+
+// Closed-popup checkpoints use closed() in both phases; menu-to-dialog actions use openedDialog().
+async function paginationMatrix(page, l, checkpoint, language) {
+  const pageName = (n) => (language ? `${language === 'es' ? 'Ir a' : 'Go to'} ${n}` : `Page ${n}`);
+  await checkpoint('initial');
+  await page.getByRole('button', { name: l.next, exact: true }).click();
+  await checkpoint('next');
+  await page.getByRole('button', { name: l.previous, exact: true }).click();
+  await checkpoint('previous');
+  await page.getByRole('button', { name: pageName(3), exact: true }).click();
+  await checkpoint('numbered');
+  await page.getByRole('combobox', { name: l.rowsPerPageLabel, exact: true }).click();
+  await checkpoint('open');
+  await page.getByRole('option', { name: '25', exact: true }).click();
+  await closed(page, 'listbox');
+  await checkpoint('resized');
+}
+
+async function filterMatrix(page, l, checkpoint, language) {
+  const remove = language ? `${language === 'es' ? 'Quitar' : 'Drop'} Status|Ready` : 'Remove filter Status: Ready';
+  await checkpoint('initial');
+  await page.getByRole('button', { name: l.addFilter, exact: true }).click();
+  await checkpoint('menu');
+  await page.getByRole('menuitemcheckbox', { name: 'Ready', exact: true }).click();
+  await page.keyboard.press('Escape');
+  await closed(page, 'menu');
+  await checkpoint('selected');
+  await page.getByRole('button', { name: remove, exact: true }).focus();
+  await checkpoint('focused');
+  await page.keyboard.press('Delete');
+  await checkpoint('removed');
+  await page.getByRole('searchbox', { name: l.searchLabel, exact: true }).fill('Alpha');
+  await page.getByRole('button', { name: l.clearAll, exact: true }).click();
+  await checkpoint('clear');
+  await page.getByRole('combobox', { name: l.savedViewLabel, exact: true }).click();
+  await checkpoint('views');
+  await page.getByRole('option', { name: 'Saved', exact: true }).click();
+  await closed(page, 'listbox');
+  await checkpoint('applied');
+}
+
+async function tableMatrix(page, l, checkpoint, language) {
+  const select = language ? `${language === 'es' ? 'Elegir' : 'Choose'} Alpha` : 'Select Alpha';
+  const resize = language ? `${language === 'es' ? 'Ancho de' : 'Width for'} Name` : 'Resize Name column';
+  const views = () =>
+    page
+      .locator('button[aria-haspopup="menu"]')
+      .filter({ hasText: /^(Default view|Original view|Vista original|Saved|Snapshot|Renamed)/ });
+  const menu = async () => {
+    await views().click();
+    await expect(page.getByRole('menu')).toBeVisible();
+  };
+  await checkpoint('initial');
+  await page.getByRole('button', { name: l.columns, exact: true }).click();
+  await checkpoint('columns');
+  await page.getByRole('menuitemcheckbox', { name: 'Region', exact: true }).click();
+  await checkpoint('toggled');
+  await page.getByRole('menuitem', { name: 'Name', exact: true }).hover();
+  await expect(page.getByRole('menuitemradio', { name: l.pinLeft, exact: true })).toBeVisible();
+  await checkpoint('pin-options');
+  await page.getByRole('menuitemradio', { name: l.pinLeft, exact: true }).click();
+  await closed(page, 'menu');
+  await checkpoint('pinned');
+  // Open again to collect the pinned suffix and both other pin options.
+  await page.getByRole('button', { name: l.columns, exact: true }).click();
+  await page.getByRole('menuitem', { name: `Name${l.pinnedLeft}`, exact: true }).hover();
+  await page.getByRole('menuitemradio', { name: l.pinRight, exact: true }).click();
+  await closed(page, 'menu');
+  await checkpoint('pinned-right');
+  await page.getByRole('button', { name: l.columns, exact: true }).click();
+  await page.getByRole('menuitem', { name: `Name${l.pinnedRight}`, exact: true }).hover();
+  await checkpoint('right-suffix');
+  await page.getByRole('menuitemradio', { name: l.unpinned, exact: true }).click();
+  await closed(page, 'menu');
+  await checkpoint('unpinned');
+  await page.getByRole('separator', { name: resize, exact: true }).focus();
+  await page.keyboard.press('ArrowRight');
+  await checkpoint('resized');
+  await page.getByRole('button', { name: l.compact, exact: true }).click();
+  await checkpoint('compact');
+  await page.getByRole('button', { name: l.comfortable, exact: true }).click();
+  await checkpoint('comfortable');
+  await page.getByRole('checkbox', { name: select, exact: true }).click();
+  await checkpoint('selected');
+  await menu();
+  await checkpoint('views');
+  await page.getByRole('menuitemradio', { name: 'Saved', exact: true }).click();
+  await closed(page, 'menu');
+  await checkpoint('view-selected');
+  await menu();
+  await page.getByRole('menuitem', { name: l.saveAs, exact: true }).click();
+  await openedDialog(page);
+  await checkpoint('save-dialog');
+  await page.getByRole('button', { name: l.cancel, exact: true }).click();
+  await closed(page, 'dialog');
+  await checkpoint('save-cancelled');
+  await menu();
+  await page.getByRole('menuitem', { name: l.saveAs, exact: true }).click();
+  await openedDialog(page);
+  await page.getByRole('textbox', { name: l.viewName, exact: true }).fill('Snapshot');
+  await page.getByRole('button', { name: l.saveView, exact: true }).click();
+  await closed(page, 'dialog');
+  await checkpoint('saved');
+  await menu();
+  await page.getByRole('menuitem', { name: l.renameView, exact: true }).click();
+  await openedDialog(page);
+  await checkpoint('rename-dialog');
+  await page.getByRole('button', { name: l.cancel, exact: true }).click();
+  await closed(page, 'dialog');
+  await checkpoint('rename-cancelled');
+  await menu();
+  await page.getByRole('menuitem', { name: l.renameView, exact: true }).click();
+  await openedDialog(page);
+  await page.getByRole('textbox', { name: l.viewName, exact: true }).fill('Renamed');
+  await page.getByRole('button', { name: l.rename, exact: true }).click();
+  await closed(page, 'dialog');
+  await checkpoint('renamed');
+  await page.getByRole('button', { name: 'Name', exact: true }).click();
+  await menu();
+  await checkpoint('dirty-view');
+  await page.getByRole('menuitem', { name: l.saveChanges, exact: true }).click();
+  await closed(page, 'menu');
+  await checkpoint('changes-saved');
+  await page.getByRole('button', { name: 'Name', exact: true }).click();
+  await menu();
+  await page.getByRole('menuitem', { name: l.resetChanges, exact: true }).click();
+  await closed(page, 'menu');
+  await checkpoint('reset');
+  await menu();
+  await page.getByRole('menuitem', { name: l.deleteView, exact: true }).click();
+  await closed(page, 'menu');
+  await checkpoint('deleted');
+}
+
+const matrices = { pagination: paginationMatrix, filter: filterMatrix, table: tableMatrix };
+
+async function assertElements(page, block, language, state) {
+  const l = copy[language];
+  if (block === 'pagination') {
+    await expect(page.getByRole('combobox')).toHaveAccessibleName(l.rowsPerPageLabel);
+    await expect(page.getByText(l.rowsPerPage, { exact: true })).toBeVisible();
+    await expect(page.getByRole('navigation')).toHaveAccessibleName(
+      language === 'es' ? 'Páginas de Items' : 'Pages for Items',
+    );
+    await expect(page.locator('[aria-live]')).toHaveText(ranges[language][state]);
+    await formatterCalled(page, 'rangeSummary', numericArgs[state]);
+    await formatterCalled(page, 'paginationNav', ['Items']);
+    await formatterCalled(page, 'page', [1]);
+  } else if (block === 'filter') {
+    await expect(page.getByRole('search')).toHaveAccessibleName(l.searchLandmark);
+    await expect(page.getByRole('searchbox')).toHaveAccessibleName(l.searchLabel);
+    await expect(page.getByRole('searchbox')).toHaveAttribute('placeholder', l.searchPlaceholder);
+    await expect(page.getByRole('combobox')).toHaveAccessibleName(l.savedViewLabel);
+    if (state !== 'applied') await expect(page.getByRole('combobox')).toHaveText(l.savedViewPlaceholder);
+    await expect(page.getByRole('button', { name: l.addFilter, exact: true })).toBeVisible();
+    await expect(page.locator('[aria-live]')).toHaveText(results[language][state]);
+    await formatterCalled(page, 'resultCount', ['selected', 'focused', 'applied'].includes(state) ? [11] : [12]);
+    if (['selected', 'focused', 'applied'].includes(state)) {
+      await expect(page.getByRole('list')).toHaveAccessibleName(l.activeFilters);
+      await expect(page.getByText(l.filters, { exact: true })).toBeVisible();
+      await expect(page.getByRole('button', { name: l.clearAll, exact: true })).toBeVisible();
+      await formatterCalled(page, 'removeFilter', ['Status', 'Ready']);
+    }
+  } else {
+    if (state !== 'save-dialog' && state !== 'rename-dialog') {
+      await expect(page.getByRole('group', { name: l.density, exact: true })).toBeVisible();
+      for (const key of ['comfortable', 'compact', 'columns'])
+        await expect(page.getByRole('button', { name: l[key], exact: true })).toBeVisible();
+      await expect(page.getByRole('checkbox', { name: l.selectAll, exact: true })).toBeVisible();
+      await expect(page.getByRole('columnheader', { name: l.actions, exact: true })).toBeVisible();
+      for (const [key, args] of [
+        ['selectRow', ['Alpha']],
+        ['rowActions', ['Alpha']],
+        ['resizeColumn', ['Name']],
+        ['columnWidth', [200]],
+      ])
+        await formatterCalled(page, key, args);
+    }
+    if (state === 'columns' || state === 'toggled') {
+      for (const key of ['visibleColumns', 'pinColumns'])
+        await expect(page.getByText(l[key], { exact: true })).toBeVisible();
+    }
+    if (state === 'pin-options' || state === 'right-suffix')
+      for (const key of ['pinLeft', 'pinRight', 'unpinned'])
+        await expect(page.getByRole('menuitemradio', { name: l[key], exact: true })).toBeVisible();
+    if (state === 'views' || state === 'dirty-view') {
+      await expect(page.getByText(l.views, { exact: true })).toBeVisible();
+      await expect(page.getByRole('menuitemradio', { name: l.defaultViewOption, exact: true })).toBeVisible();
+      for (const key of ['saveChanges', 'saveAs', 'renameView', 'deleteView', 'resetChanges'])
+        await expect(page.getByRole('menuitem', { name: l[key], exact: true })).toBeVisible();
+    }
+    if (state === 'save-dialog' || state === 'rename-dialog') {
+      const rename = state === 'rename-dialog';
+      await expect(page.getByRole('dialog')).toHaveAccessibleName(l[rename ? 'renameViewTitle' : 'saveViewTitle']);
+      await expect(page.getByRole('textbox')).toHaveAccessibleName(l.viewName);
+      for (const key of ['cancel', 'closeDialog', rename ? 'rename' : 'saveView'])
+        await expect(page.getByRole('button', { name: l[key], exact: true })).toBeVisible();
+    }
+    if (state === 'selected') {
+      await expect(page.locator('[aria-live]').first()).toHaveText(language === 'es' ? 'Elegidos 1' : 'Chosen 1');
+      await formatterCalled(page, 'selectionCount', [1]);
+    }
+  }
+}
+
+for (const theme of themes)
+  for (const block of Object.keys(matrices)) {
+    for (const language of ['en', 'es'])
+      test(`${block} labels matrix ${language} ${theme}`, async ({ page }) => {
+        test.setTimeout(300_000);
+        await load(page, block, language, theme);
+        await matrices[block](
+          page,
+          copy[language],
+          async (state) => {
+            await assertElements(page, block, language, state);
+            await translatedCheckpoint(page, block, language, state);
+          },
+          language,
+        );
+      });
+
+    test(`${block} published 0.5.0 default regression ${theme}`, async ({ page }, testInfo) => {
+      test.setTimeout(300_000);
+      const baseline = new Map();
+      const snapshots = [];
+      const keyboard = async () => {
+        await page.locator('button, input').first().focus();
+        const trace = [];
+        for (let n = 0; n < 12; n++) {
+          await page.keyboard.press('Tab');
+          trace.push(
+            await page.evaluate(() => {
+              const el = document.activeElement;
+              return [el.tagName, el.getAttribute('role'), el.getAttribute('aria-label'), el.textContent];
+            }),
+          );
+        }
+        return trace;
+      };
+      try {
+        await load(page, block, 'baseline', theme);
+        const baselineKeyboard = await keyboard();
+        await matrices[block](page, defaults, async (state) => {
+          expect(await axeViolations(page)).toEqual([]);
+          baseline.set(state, await surfaces(page));
+          const name = `issue30-${block}-${theme}-${state}.png`;
+          const file = testInfo.snapshotPath(name);
+          fs.mkdirSync(path.dirname(file), { recursive: true });
+          snapshots.push(file);
+          await page.screenshot({ path: file, animations: 'disabled' });
+        });
+        await load(page, block, 'default', theme);
+        expect(await keyboard()).toEqual(baselineKeyboard);
+        await matrices[block](page, defaults, async (state) => {
+          expect(await surfaces(page)).toEqual(baseline.get(state));
+          expect(await axeViolations(page)).toEqual([]);
+          await expect(page).toHaveScreenshot(`issue30-${block}-${theme}-${state}.png`, {
+            maxDiffPixelRatio: 0.01,
+            animations: 'disabled',
+          });
+        });
+      } finally {
+        // Baselines are generated from the immutable packages for this run; never committed.
+        for (const file of snapshots) fs.rmSync(file, { force: true });
+      }
+    });
+  }
+
+for (const theme of themes)
+  for (const mode of ['default', 'en', 'es'])
+    for (const variant of ['empty', 'loading', 'grouped', 'editing']) {
+      test(`table ${variant} ${mode} ${theme}`, async ({ page }) => {
+        test.setTimeout(300_000);
+        await load(page, 'table', mode, theme, variant);
+        const checkpoint = async () => {
+          if (mode !== 'default') await checkCopy(page, expectedTable('table', mode, variant), mode);
+          expect(await axeViolations(page)).toEqual([]);
+        };
+        await checkpoint();
+        if (mode !== 'default') {
+          if (variant === 'empty')
+            for (const key of ['emptyTitle', 'emptyDescription'])
+              await expect(page.getByText(copy[mode][key], { exact: true })).toBeVisible();
+          if (variant === 'loading') {
+            await expect(page.getByRole('status')).toHaveText(mode === 'es' ? 'Cargando Items' : 'Fetching Items');
+            await formatterCalled(page, 'loading', ['Items']);
+          }
+          if (variant === 'grouped') {
+            await formatterCalled(page, 'selectGroup', [copy[mode].noGroup]);
+            await formatterCalled(page, 'groupRows', [2]);
+          }
+        }
+        if (variant === 'editing') {
+          await page.getByRole('button', { name: 'Alpha', exact: true }).click();
+          await checkpoint();
+          const input = page.getByRole('textbox');
+          if (mode !== 'default') {
+            await expect(input).toHaveAccessibleName(mode === 'es' ? 'Name de Alpha' : 'Name on Alpha');
+            await formatterCalled(page, 'editLabel', ['Name', 'Alpha']);
+          }
+          await input.fill('Edited');
+          await page.keyboard.press('Enter');
+          if (mode !== 'default') await expect(page.getByRole('alert')).toHaveText(copy[mode].editError);
+          await checkpoint();
+          await page.keyboard.press('Escape');
+          await page.locator('[data-row-id="a"] [data-cell-edit-trigger]').last().click();
+          const number = page.getByRole('spinbutton');
+          for (const [value, key, args, en, es] of [
+            ['0', 'minimumValue', [1], 'Minimum 1', 'Mínimo 1'],
+            ['11', 'maximumValue', [10], 'Maximum 10', 'Máximo 10'],
+          ]) {
+            await number.fill(value);
+            await page.keyboard.press('Enter');
+            if (mode !== 'default') {
+              await expect(page.getByRole('alert')).toHaveText(mode === 'es' ? es : en);
+              await formatterCalled(page, key, args);
+            }
+            await checkpoint();
+          }
+        }
+      });
+    }
+
+test('the #79 exemption keeps unnamed non-Select inputs and other listbox rules failing', async ({ page }) => {
+  await page.setContent(
+    '<main><input role="combobox" aria-expanded="false"><div role="listbox" class="outline-none"><div role="option">Other</div></div></main>',
+  );
+  const violations = await axeViolations(page);
+  expect(violations.find((v) => v.id === 'aria-input-field-name')?.nodes.length).toBe(2);
+  // A real Select popup still fails unrelated rules, even on the exempt list node.
+  await page.setContent(
+    '<main><div class="bg-popover"><div role="listbox" class="outline-none" aria-required="invalid"><div role="option">Other</div></div></div></main>',
+  );
+  expect((await axeViolations(page)).some((v) => v.id === 'aria-valid-attr-value')).toBe(true);
+});
