@@ -13,6 +13,31 @@ const columns = [
 ];
 
 describe('DataTable labels at the rendered block boundary', () => {
+  it('retains provider and English fallbacks for explicitly undefined nested keys', async () => {
+    const user = userEvent.setup();
+    render(
+      <I18nProvider locale="es">
+        <DataTable
+          rows={rows}
+          columns={columns}
+          showViewSwitcher
+          labels={{
+            columnMenu: { trigger: undefined, pinLeft: undefined },
+            density: { comfortable: undefined, compact: 'Custom compact' },
+            views: { defaultView: undefined, saveAs: undefined },
+            selection: { row: undefined },
+          }}
+        />
+      </I18nProvider>,
+    );
+    expect(screen.getByRole('button', { name: 'Columnas' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Filas holgadas' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Custom compact' })).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'Seleccionar Alpha' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Default view' }));
+    expect(await screen.findByRole('menuitem', { name: 'Save as new view…' })).toBeInTheDocument();
+  });
+
   it('replaces edit hints, editor names and built-in validation errors', async () => {
     const user = userEvent.setup();
     const editLabel = vi.fn((column: string, row: string) => `<editar ${column}/${row}>`);

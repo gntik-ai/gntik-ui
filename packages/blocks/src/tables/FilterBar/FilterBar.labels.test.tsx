@@ -4,6 +4,17 @@ import userEvent from '@testing-library/user-event';
 import { FilterBar } from './FilterBar';
 
 describe('FilterBar labels at the rendered block boundary', () => {
+  it('keeps English result plurals until a caller supplies a verbatim formatter', () => {
+    const { container, rerender } = render(<FilterBar resultCount={1} />);
+    expect(container.querySelector('p[aria-live]')?.textContent).toBe('1 result');
+    rerender(<FilterBar resultCount={1234} />);
+    expect(container.querySelector('p[aria-live]')?.textContent).toBe('1,234 results');
+    const results = vi.fn(() => '  <caller results>  ');
+    rerender(<FilterBar resultCount={1234} labels={{ results }} />);
+    expect(results).toHaveBeenLastCalledWith(1234);
+    expect(container.querySelector('p[aria-live]')?.textContent).toBe('  <caller results>  ');
+  });
+
   it('replaces search, saved views, chips and result announcements', async () => {
     const user = userEvent.setup();
     const remove = vi.fn((field: string, value: string) => `<${field}/${value}>`);

@@ -4,6 +4,17 @@ import userEvent from '@testing-library/user-event';
 import { PaginationFooter } from './PaginationFooter';
 
 describe('PaginationFooter labels at the rendered block boundary', () => {
+  it('passes raw empty and final-page bounds to the range formatter', () => {
+    const range = vi.fn(() => '  <caller range>  ');
+    const { rerender } = render(<PaginationFooter total={0} labels={{ range }} />);
+    expect(range).toHaveBeenLastCalledWith(0, 0, 0);
+    expect(screen.getByText('<caller range>')).toHaveAttribute('aria-live', 'polite');
+    expect(screen.getByText('<caller range>').textContent).toBe('  <caller range>  ');
+    rerender(<PaginationFooter total={1234} page={124} locale="es" labels={{ range }} />);
+    expect(range).toHaveBeenLastCalledWith(1231, 1234, 1234);
+    expect(screen.getByText('<caller range>').textContent).toBe('  <caller range>  ');
+  });
+
   it('renders formatter output verbatim through page and size changes', async () => {
     const user = userEvent.setup();
     const range = vi.fn((from: number, to: number, total: number) => `<${from}/${to}/${total}>`);
