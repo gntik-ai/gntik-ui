@@ -13,8 +13,8 @@ import {
   MenuSubContent,
   MenuSubTrigger,
   MenuTrigger,
-  useI18n,
 } from '@gntik-ai/ui';
+import { useDataTableLabels, type DataTableColumnMenuLabels } from './data-table-labels';
 import type { PinSide } from './column-sizing';
 import type { DataTableColumn } from './data-table-utils';
 
@@ -23,6 +23,7 @@ export interface ColumnVisibilityMenuProps<T> {
   hidden: ReadonlySet<string>;
   onToggle: (columnId: string, visible: boolean) => void;
   label?: string;
+  labels?: DataTableColumnMenuLabels;
   /** Pin side of a column; with `onPin`, the menu gets a "Pin columns" section. */
   pinOf?: (columnId: string) => PinSide | null;
   onPin?: (columnId: string, side: PinSide | null) => void;
@@ -39,11 +40,12 @@ export function ColumnVisibilityMenu<T>({
   hidden,
   onToggle,
   label: labelProp,
+  labels,
   pinOf,
   onPin,
 }: ColumnVisibilityMenuProps<T>) {
-  const { t } = useI18n();
-  const label = labelProp ?? t('table.columns');
+  const l = useDataTableLabels({ columnMenu: labels }).columnMenu;
+  const label = labelProp ?? l.trigger;
   const visibleCount = columns.filter((c) => !hidden.has(c.id)).length;
   const pinnable = onPin && pinOf ? columns.filter((c) => c.pinnable !== false && !hidden.has(c.id)) : [];
   return (
@@ -53,7 +55,7 @@ export function ColumnVisibilityMenu<T>({
       </MenuTrigger>
       <MenuContent align="end" className="min-w-[200px]">
         <MenuGroup>
-          <MenuGroupLabel>{t('table.visibleColumns')}</MenuGroupLabel>
+          <MenuGroupLabel>{l.visibleColumns}</MenuGroupLabel>
           {columns
             .filter((c) => c.hideable !== false)
             .map((c) => {
@@ -74,7 +76,7 @@ export function ColumnVisibilityMenu<T>({
           <>
             <MenuSeparator />
             <MenuGroup>
-              <MenuGroupLabel>Pin columns</MenuGroupLabel>
+              <MenuGroupLabel>{l.pinColumns}</MenuGroupLabel>
               {pinnable.map((c) => {
                 const side = pinOf(c.id);
                 return (
@@ -83,7 +85,7 @@ export function ColumnVisibilityMenu<T>({
                       {c.header}
                       {side && (
                         <span className="ms-auto ps-3 text-[11.5px] text-muted-foreground">
-                          {side === 'left' ? 'Left' : 'Right'}
+                          {side === 'left' ? l.left : l.right}
                         </span>
                       )}
                     </MenuSubTrigger>
@@ -92,9 +94,9 @@ export function ColumnVisibilityMenu<T>({
                         value={side ?? PIN_NONE}
                         onValueChange={(v: unknown) => onPin(c.id, v === 'left' || v === 'right' ? v : null)}
                       >
-                        <MenuRadioItem value="left">Pin left</MenuRadioItem>
-                        <MenuRadioItem value="right">Pin right</MenuRadioItem>
-                        <MenuRadioItem value={PIN_NONE}>Unpinned</MenuRadioItem>
+                        <MenuRadioItem value="left">{l.pinLeft}</MenuRadioItem>
+                        <MenuRadioItem value="right">{l.pinRight}</MenuRadioItem>
+                        <MenuRadioItem value={PIN_NONE}>{l.unpinned}</MenuRadioItem>
                       </MenuRadioGroup>
                     </MenuSubContent>
                   </MenuSub>

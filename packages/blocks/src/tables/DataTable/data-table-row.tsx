@@ -1,5 +1,5 @@
 import { ChevronRight } from '@gntik-ai/icons';
-import { Checkbox, cn, MoreMenu, TableCell, TableHead, TableRow, type MoreMenuAction, useI18n } from '@gntik-ai/ui';
+import { Checkbox, cn, MoreMenu, TableCell, TableHead, TableRow, type MoreMenuAction } from '@gntik-ai/ui';
 import type { CSSProperties, ReactNode } from 'react';
 import { stickyTint, type TableLayout } from './column-sizing';
 import {
@@ -9,6 +9,7 @@ import {
   selectionState,
   type DataTableColumn,
 } from './data-table-utils';
+import { useDataTableLabels, type DataTableLabels } from './data-table-labels';
 import { EditableCell, isCellEditable, type DataTableCellEditHandler } from './editable-cell';
 import type { SingleSelection } from './single-selection';
 
@@ -27,6 +28,7 @@ export interface DataTableBodyGroup<T> {
 
 /** Row rendering shared by the plain, grouped and virtualized bodies. */
 export interface RowContext<T> {
+  labels?: DataTableLabels;
   columns: ReadonlyArray<DataTableColumn<T>>;
   getRowId: (row: T) => string;
   getRowLabel: (row: T) => string;
@@ -50,6 +52,7 @@ export interface DataTableRowProps<T> extends RowContext<T> {
 
 export function DataTableRow<T>({
   row,
+  labels,
   columns,
   getRowId,
   getRowLabel,
@@ -64,7 +67,7 @@ export function DataTableRow<T>({
   ariaRowIndex,
   style,
 }: DataTableRowProps<T>) {
-  const { t } = useI18n();
+  const l = useDataTableLabels(labels);
   const id = getRowId(row);
   const selectionColumn = selectable || singleSelection != null;
   const isSelected = singleSelection ? singleSelection.selectedId === id : selected.has(id);
@@ -83,7 +86,7 @@ export function DataTableRow<T>({
             </span>
           ) : (
             <Checkbox
-              aria-label={t('table.selectRow', { label })}
+              aria-label={l.selection.row(label)}
               checked={isSelected}
               onCheckedChange={() => onToggleRow(id)}
             />
@@ -110,6 +113,7 @@ export function DataTableRow<T>({
           >
             {editable ? (
               <EditableCell
+                labels={labels?.status}
                 row={row}
                 rowId={id}
                 rowLabel={label}
@@ -131,7 +135,7 @@ export function DataTableRow<T>({
           className={cn('w-12 py-0', layout?.trail.className, tint(layout?.trail))}
           style={layout?.trail.style}
         >
-          <MoreMenu items={rowActions(row)} label={t('table.rowActions', { label })} variant="ghost" size="sm" />
+          <MoreMenu items={rowActions(row)} label={l.selection.rowActions(label)} variant="ghost" size="sm" />
         </TableCell>
       )}
     </TableRow>
@@ -142,6 +146,7 @@ export const groupHeadClass =
   'h-9 bg-secondary/50 text-[12.5px] font-semibold tracking-normal normal-case text-foreground';
 
 export interface GroupHeaderRowProps<T> {
+  labels?: DataTableLabels;
   group: DataTableBodyGroup<T>;
   open: boolean;
   selectable: boolean;
@@ -158,6 +163,7 @@ export interface GroupHeaderRowProps<T> {
 /** The header row of a group: group checkbox, collapse button, label and count. */
 export function GroupHeaderRow<T>({
   group,
+  labels,
   open,
   selectable,
   selected,
@@ -168,16 +174,16 @@ export function GroupHeaderRow<T>({
   ariaRowIndex,
   style,
 }: GroupHeaderRowProps<T>) {
-  const { t } = useI18n();
+  const l = useDataTableLabels(labels);
   const state = selectionState(group.ids, selected);
   const count = group.ids.length;
   const heading = (
     <>
       <span className="truncate">{group.label}</span>{' '}
       <span className="rounded-full bg-secondary px-1.5 font-mono text-[11px] font-medium text-muted-foreground tabular-nums">
-        {count}
+        {l.status.groupCount(count)}
       </span>{' '}
-      <span className="sr-only">{count === 1 ? 'row' : 'rows'}</span>
+      <span className="sr-only">{l.status.groupRows(count)}</span>
     </>
   );
   return (
@@ -185,7 +191,7 @@ export function GroupHeaderRow<T>({
       {selectable && (
         <TableCell className={cn('w-10 pe-0', groupHeadClass)}>
           <Checkbox
-            aria-label={t('table.selectRow', { label: `all in ${group.name}` })}
+            aria-label={l.selection.group(group.name)}
             checked={state.checked}
             indeterminate={state.indeterminate}
             disabled={count === 0}

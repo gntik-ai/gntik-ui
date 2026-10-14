@@ -15,7 +15,10 @@ import {
   useI18n,
 } from '@gntik-ai/ui';
 import { Fragment, useState } from 'react';
+import { filterBarDefaults, type FilterBarLabels } from './filter-bar-labels';
 import { DEPLOYMENT_DEFAULT_FILTERS, DEPLOYMENT_FILTER_FIELDS, DEPLOYMENT_SAVED_VIEWS } from './fixtures';
+
+export type { FilterBarLabels } from './filter-bar-labels';
 
 export interface FilterField {
   id: string;
@@ -36,6 +39,8 @@ export interface SavedView {
 }
 
 export interface FilterBarProps {
+  /** Built-in copy overrides. Legacy searchLabel and placeholder props take precedence. */
+  labels?: FilterBarLabels;
   fields?: readonly FilterField[];
   /** Search text (controlled). */
   query?: string;
@@ -74,12 +79,14 @@ export function FilterBar({
   defaultView = null,
   onViewChange,
   searchLabel: searchLabelProp,
-  placeholder = 'Search by name…',
+  placeholder: placeholderProp,
+  labels,
   resultCount,
   className,
 }: FilterBarProps) {
   const { t } = useI18n();
-  const searchLabel = searchLabelProp ?? t('common.search');
+  const searchLabel = searchLabelProp ?? labels?.searchLabel ?? t('common.search');
+  const placeholder = placeholderProp ?? labels?.placeholder ?? filterBarDefaults.placeholder;
   const [innerQuery, setInnerQuery] = useState(defaultQuery);
   const [innerFilters, setInnerFilters] = useState<readonly ActiveFilter[]>(defaultFilters);
   const [view, setView] = useState<string | null>(defaultView);
@@ -113,7 +120,11 @@ export function FilterBar({
   const hasAny = filters.length > 0 || query !== '';
 
   return (
-    <div role="search" aria-label={t('filters.label')} className={cn('flex flex-col gap-3', className)}>
+    <div
+      role="search"
+      aria-label={labels?.searchRegion ?? t('filters.label')}
+      className={cn('flex flex-col gap-3', className)}
+    >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <Input
           aria-label={searchLabel}
@@ -128,9 +139,9 @@ export function FilterBar({
         <div className="flex flex-wrap items-center gap-2">
           {views.length > 0 && (
             <SimpleSelect
-              aria-label={t('filters.savedView')}
+              aria-label={labels?.savedViewLabel ?? t('filters.savedView')}
               size="sm"
-              placeholder={t('filters.savedViews')}
+              placeholder={labels?.savedViewPlaceholder ?? t('filters.savedViews')}
               value={view}
               onValueChange={applyView}
               items={views.map((v) => ({ value: v.value, label: v.label }))}
@@ -138,7 +149,9 @@ export function FilterBar({
             />
           )}
           <Menu>
-            <MenuTrigger render={<Button variant="secondary" size="sm" icon={Plus} />}>{t('filters.add')}</MenuTrigger>
+            <MenuTrigger render={<Button variant="secondary" size="sm" icon={Plus} />}>
+              {labels?.addFilter ?? t('filters.add')}
+            </MenuTrigger>
             <MenuContent className="max-h-80 min-w-[220px] overflow-y-auto">
               {fields.map((field, i) => (
                 <Fragment key={field.id}>
@@ -165,8 +178,14 @@ export function FilterBar({
         </div>
         {resultCount !== undefined && (
           <p className="text-[12.5px] text-muted-foreground sm:ms-auto" aria-live="polite">
-            <span className="font-mono text-foreground tabular-nums">{resultCount.toLocaleString('en-US')}</span>{' '}
-            {resultCount === 1 ? 'result' : 'results'}
+            {labels?.results ? (
+              labels.results(resultCount)
+            ) : (
+              <>
+                <span className="font-mono text-foreground tabular-nums">{resultCount.toLocaleString('en-US')}</span>{' '}
+                {resultCount === 1 ? 'result' : 'results'}
+              </>
+            )}
           </p>
         )}
       </div>
@@ -174,23 +193,26 @@ export function FilterBar({
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase">
             <ListFilter size={12} aria-hidden />
-            Filters
+            {labels?.filtersHeading ?? filterBarDefaults.filtersHeading}
           </span>
-          <ul aria-label={t('filters.active')} className="flex flex-wrap items-center gap-2">
+          <ul aria-label={labels?.activeFilters ?? t('filters.active')} className="flex flex-wrap items-center gap-2">
             {filters.map((f) => (
               <li key={`${f.field}:${f.value}`} className="flex">
                 <Token
                   size="sm"
                   prefix={`${labelOf(f.field)}:`}
                   label={f.value}
-                  removeLabel={t('filters.remove', { field: labelOf(f.field), value: f.value })}
+                  removeLabel={
+                    labels?.remove?.(labelOf(f.field), f.value) ??
+                    t('filters.remove', { field: labelOf(f.field), value: f.value })
+                  }
                   onRemove={() => toggle(f, false)}
                 />
               </li>
             ))}
           </ul>
           <Button variant="ghost" size="sm" className="h-7 px-2 hover:text-destructive-text" onClick={clearAll}>
-            Clear all
+            {labels?.clearAll ?? filterBarDefaults.clearAll}
           </Button>
         </div>
       )}

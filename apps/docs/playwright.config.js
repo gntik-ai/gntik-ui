@@ -6,6 +6,8 @@ const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || undefined;
 
 export default defineConfig({
   testDir: './e2e',
+  // This matrix builds a dedicated fixture with immutable published-package aliases.
+  testIgnore: 'block-labels.a11y.spec.js',
   snapshotPathTemplate: '{testDir}/__screenshots__/{arg}{ext}',
   fullyParallel: true,
   reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',

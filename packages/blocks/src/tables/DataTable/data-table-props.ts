@@ -2,10 +2,13 @@ import type { MoreMenuAction, TableDensity } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import type { ColumnWidths, PinnedColumns } from './column-sizing';
 import type { DataTableColumn, DataTableGroupBy, SortState } from './data-table-utils';
+import type { DataTableLabels } from './data-table-labels';
 import type { DataTableCellEditHandler } from './editable-cell';
 import type { DataTableView } from './views';
 
 interface DataTableCommonProps<T> {
+  /** Built-in chrome overrides, merged by key within each nested group. */
+  labels?: DataTableLabels;
   rows?: readonly T[];
   columns?: ReadonlyArray<DataTableColumn<T>>;
   /** Stable row id (defaults to `row.id`). */

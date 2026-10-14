@@ -11,8 +11,9 @@
     "preview": "vite preview --port 4173 --strictPort",
     "visual": "playwright test catalog.visual",
     "visual:update": "playwright test catalog.visual --update-snapshots=changed",
-    "a11y": "playwright test a11y",
-    "test:yaml-worker": "node scripts/check-yaml-worker.mjs"
+    "a11y": "playwright test a11y && playwright test --config playwright.labels.config.js",
+    "test:yaml-worker": "node scripts/check-yaml-worker.mjs",
+    "test:block-labels": "playwright test --config playwright.labels.config.js"
   },
   "dependencies": {
     "@fontsource/geist": "^5.3.0",
@@ -31,6 +32,8 @@
     "@vitejs/plugin-react": "^6.1.0",
     "monaco-yaml": "^5.4.0",
     "tailwindcss": "^4.3.3",
-    "vite": "^8.3.0"
+    "vite": "^8.3.0",
+    "@gntik-ai/blocks-baseline": "npm:@gntik-ai/blocks@0.5.0",
+    "@gntik-ai/ui-baseline": "npm:@gntik-ai/ui@0.5.0"
   }
 }
