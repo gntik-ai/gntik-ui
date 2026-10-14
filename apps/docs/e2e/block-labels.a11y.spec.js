@@ -232,6 +232,7 @@ async function filterMatrix(page, check, labels, locale) {
 async function tableState(page, labels, locale, selected = false) {
   if (!labels) return;
   const l = labels.table;
+  await labelled(page, 'region', l.status.scrollable, { text: null });
   await button(page, l.columnMenu.trigger);
   await labelled(page, 'button', l.density.comfortable);
   await labelled(page, 'button', l.density.compact);
@@ -423,6 +424,7 @@ const matrices = { pagination: paginationMatrix, filters: filterMatrix, table: t
 // Literal defaults on built-in surfaces; caller headers, fields, options, view names and numeric controls are explicitly excluded.
 const englishDefaults = [
   'Rows per page',
+  'Rows',
   'Rows pagination',
   'Previous page',
   'Next page',
@@ -446,6 +448,7 @@ const englishDefaults = [
   'Rename view',
   'View name',
   'Cancel',
+  'Rename',
   'Close',
   'Columns',
   'Visible columns',
@@ -459,8 +462,13 @@ const englishDefaults = [
   'Comfortable rows',
   'Compact rows',
   'Select all rows on this page',
+  'Selection',
   'Actions',
+  'Deployments',
+  'Scrollable table',
   'Press Enter or F2 to edit.',
+  'The change could not be saved.',
+  'Enter a number.',
   'No group',
   'Yes',
   'No',

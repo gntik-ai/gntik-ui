@@ -58,6 +58,7 @@ function Fixture() {
   return (
     <>
       <DataTable
+        className="max-w-sm"
         rows={empty ? [] : rows}
         columns={columns}
         caption="Caller records"
