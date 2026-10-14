@@ -12,6 +12,11 @@ export const meta: BlockMeta = {
 
   labels: [
     {
+      key: 'scrollRegion',
+      type: 'string',
+      state: 'Non-virtual table overflow: focusable scroll region name; virtualized regions use the caller caption',
+    },
+    {
       key: 'selectionCount',
       type: '(count: number) => string',
       state: 'Multiple selection: toolbar count and polite live region',
@@ -96,7 +101,7 @@ export const meta: BlockMeta = {
     {
       key: 'paginationNav',
       type: '(noun: string) => string',
-      state: 'Always: navigation accessible name; noun is caller content',
+      state: 'Always: navigation accessible name; noun is the caller caption',
     },
     { key: 'previous', type: 'string', state: 'Always: previous-page button name' },
     { key: 'next', type: 'string', state: 'Always: next-page button name' },

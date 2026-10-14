@@ -1,6 +1,7 @@
 // Full caller-owned fixture copy. Production blocks do not ship translations.
 export const copy = {
   en: {
+    scrollRegion: 'Scrollable records',
     rowsPerPage: 'Page size',
     rowsPerPageLabel: 'Choose page size',
     previous: 'Go back',
@@ -52,6 +53,7 @@ export const copy = {
     enterNumber: 'Supply a numeric value',
   },
   es: {
+    scrollRegion: 'Registros desplazables',
     rowsPerPage: 'Filas por página',
     rowsPerPageLabel: 'Elegir tamaño',
     previous: 'Anterior',

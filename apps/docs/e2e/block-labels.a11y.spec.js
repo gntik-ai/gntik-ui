@@ -120,6 +120,17 @@ async function tableMatrix(page, l, checkpoint, language) {
     await expect(page.getByRole('menu')).toBeVisible();
   };
   await checkpoint('initial');
+  // Constrain the consumer layout while retaining the 1280x900 screenshot viewport.
+  // This reaches real overflow detection in both the published and current phases.
+  await page.locator('#root > div').evaluate((node) => (node.style.maxWidth = '320px'));
+  const region = page.getByRole('region');
+  await expect(region).toHaveCount(1);
+  expect(await region.evaluate((node) => node.scrollWidth > node.clientWidth + 1)).toBe(true);
+  await region.focus();
+  await expect(region).toBeFocused();
+  await checkpoint('overflow');
+  await page.locator('#root > div').evaluate((node) => (node.style.maxWidth = ''));
+  await expect(region).toHaveCount(0);
   await page.getByRole('button', { name: l.columns, exact: true }).click();
   await checkpoint('columns');
   await page.getByRole('menuitemcheckbox', { name: 'Region', exact: true }).click();

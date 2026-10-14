@@ -408,7 +408,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             aria-rowcount={virtual ? items + 1 : undefined}
             stickyHeader={virtualOn}
             containerClassName={virtualOn ? virtualContainerClassName : undefined}
-            containerLabel={virtualOn ? caption : undefined}
+            containerLabel={virtualOn ? caption : labels?.scrollRegion}
             // Keep single-mode resize handles inside their cells. Overflow at the
             // final column would add a scroll-container stop before the header.
             className={cn(

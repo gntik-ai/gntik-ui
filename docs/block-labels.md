@@ -30,7 +30,7 @@ labels prop. Saved views delete immediately; Save as and Rename are the only bui
 | `rowsPerPage`      | `string`                                              | Always: visible page-size text                                          |
 | `rowsPerPageLabel` | `string`                                              | Always: page-size Select accessible name                                |
 | `rangeSummary`     | `(from: number, to: number, total: number) => string` | Every page and page-size change: visible summary and polite live region |
-| `paginationNav`    | `(noun: string) => string`                            | Always: navigation accessible name; noun is caller content              |
+| `paginationNav`    | `(noun: string) => string`                            | Always: navigation accessible name; noun is caller content or defaults to the provider translation of rows |
 | `previous`         | `string`                                              | Always: previous-page button name                                       |
 | `next`             | `string`                                              | Always: next-page button name                                           |
 | `page`             | `(page: number) => string`                            | Always: numbered-page button name; number stays caller content          |
@@ -55,6 +55,7 @@ labels prop. Saved views delete immediately; Save as and Rename are the only bui
 
 | Key                 | Type                                                  | State / surface                                                             |
 | ------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------- |
+| `scrollRegion`      | `string`                                              | Non-virtual table overflow: focusable scroll region name; virtualized regions use the caller caption |
 | `selectionCount`    | `(count: number) => string`                           | Multiple selection: toolbar count and polite live region                    |
 | `columns`           | `string`                                              | Column visibility trigger text and name                                     |
 | `visibleColumns`    | `string`                                              | Open column menu: visibility heading                                        |
@@ -105,7 +106,7 @@ labels prop. Saved views delete immediately; Save as and Rename are the only bui
 | `rowsPerPage`       | `string`                                              | Always: visible page-size text                                              |
 | `rowsPerPageLabel`  | `string`                                              | Always: page-size Select accessible name                                    |
 | `rangeSummary`      | `(from: number, to: number, total: number) => string` | Every page and page-size change: visible summary and polite live region     |
-| `paginationNav`     | `(noun: string) => string`                            | Always: navigation accessible name; noun is caller content                  |
+| `paginationNav`     | `(noun: string) => string`                            | Always: navigation accessible name; noun is the caller caption              |
 | `previous`          | `string`                                              | Always: previous-page button name                                           |
 | `next`              | `string`                                              | Always: next-page button name                                               |
 | `page`              | `(page: number) => string`                            | Always: numbered-page button name; number stays caller content              |

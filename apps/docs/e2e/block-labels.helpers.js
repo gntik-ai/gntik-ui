@@ -151,6 +151,7 @@ export async function surfaces(page) {
     'dialog',
     'heading',
     'status',
+    'region',
   ]);
   const names = nodes
     .filter((node) => !node.ignored && controls.has(node.role?.value) && node.name?.value)
@@ -165,6 +166,7 @@ export async function surfaces(page) {
 
 // Fixed current defaults, independent of the source implementation and the translated fixture.
 const ENGLISH_DEFAULTS = [
+  'Scrollable table',
   'Rows per page',
   'Previous page',
   'Next page',

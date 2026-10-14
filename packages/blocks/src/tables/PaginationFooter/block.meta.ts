@@ -18,7 +18,8 @@ export const meta: BlockMeta = {
     {
       key: 'paginationNav',
       type: '(noun: string) => string',
-      state: 'Always: navigation accessible name; noun is caller content',
+      state:
+        'Always: navigation accessible name; noun is caller content or defaults to the provider translation of rows',
     },
     { key: 'previous', type: 'string', state: 'Always: previous-page button name' },
     { key: 'next', type: 'string', state: 'Always: next-page button name' },

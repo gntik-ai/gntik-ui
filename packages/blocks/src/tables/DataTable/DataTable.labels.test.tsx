@@ -13,6 +13,7 @@ const columns = [
   { id: 'region', header: 'Region', accessor: (r: (typeof rows)[number]) => r.region, width: 160 },
 ];
 const labels = {
+  scrollRegion: 'Tabla con desplazamiento',
   columns: 'Columnas',
   visibleColumns: 'Columnas visibles',
   pinColumns: 'Fijar columnas',

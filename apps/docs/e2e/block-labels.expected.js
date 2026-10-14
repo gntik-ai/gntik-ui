@@ -71,6 +71,7 @@ const filterStates = {
 };
 const tableStates = {
   initial: {},
+  overflow: { overflow: true },
   columns: { columns: true },
   toggled: { columns: true, hidden: true, dirty: true },
   'pin-options': { columns: true, pin: true, hidden: true, dirty: true },
@@ -167,6 +168,7 @@ export function expectedTable(block, language, state) {
     }
   } else {
     const s = tableStates[state];
+    if (s.overflow) name('scrollRegion', '#root [role="region"]', l.scrollRegion);
     const viewTrigger = '#root button[aria-haspopup="menu"]:has(.max-w-40)';
     const view = s.view || l.defaultView;
     name('defaultView/modified/caller:view', viewTrigger, s.dirty ? `${view} ${l.modified}` : view);
