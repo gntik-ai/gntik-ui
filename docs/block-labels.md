@@ -25,15 +25,15 @@ labels prop. Saved views delete immediately; Save as and Rename are the only bui
 
 ## PaginationFooter
 
-| Key                | Type                                                  | State / surface                                                         |
-| ------------------ | ----------------------------------------------------- | ----------------------------------------------------------------------- |
-| `rowsPerPage`      | `string`                                              | Always: visible page-size text                                          |
-| `rowsPerPageLabel` | `string`                                              | Always: page-size Select accessible name                                |
-| `rangeSummary`     | `(from: number, to: number, total: number) => string` | Every page and page-size change: visible summary and polite live region |
+| Key                | Type                                                  | State / surface                                                                                            |
+| ------------------ | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `rowsPerPage`      | `string`                                              | Always: visible page-size text                                                                             |
+| `rowsPerPageLabel` | `string`                                              | Always: page-size Select accessible name                                                                   |
+| `rangeSummary`     | `(from: number, to: number, total: number) => string` | Every page and page-size change: visible summary and polite live region                                    |
 | `paginationNav`    | `(noun: string) => string`                            | Always: navigation accessible name; noun is caller content or defaults to the provider translation of rows |
-| `previous`         | `string`                                              | Always: previous-page button name                                       |
-| `next`             | `string`                                              | Always: next-page button name                                           |
-| `page`             | `(page: number) => string`                            | Always: numbered-page button name; number stays caller content          |
+| `previous`         | `string`                                              | Always: previous-page button name                                                                          |
+| `next`             | `string`                                              | Always: next-page button name                                                                              |
+| `page`             | `(page: number) => string`                            | Always: numbered-page button name; number stays caller content                                             |
 
 ## FilterBar
 
@@ -53,60 +53,60 @@ labels prop. Saved views delete immediately; Save as and Rename are the only bui
 
 ## DataTable
 
-| Key                 | Type                                                  | State / surface                                                             |
-| ------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------- |
+| Key                 | Type                                                  | State / surface                                                                                      |
+| ------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | `scrollRegion`      | `string`                                              | Non-virtual table overflow: focusable scroll region name; virtualized regions use the caller caption |
-| `selectionCount`    | `(count: number) => string`                           | Multiple selection: toolbar count and polite live region                    |
-| `columns`           | `string`                                              | Column visibility trigger text and name                                     |
-| `visibleColumns`    | `string`                                              | Open column menu: visibility heading                                        |
-| `pinColumns`        | `string`                                              | Open column menu with pinning: pin heading                                  |
-| `pinnedLeft`        | `string`                                              | Open pin submenu trigger: left side suffix                                  |
-| `pinnedRight`       | `string`                                              | Open pin submenu trigger: right side suffix                                 |
-| `pinLeft`           | `string`                                              | Open pin submenu: left option                                               |
-| `pinRight`          | `string`                                              | Open pin submenu: right option                                              |
-| `unpinned`          | `string`                                              | Open pin submenu: unpinned option                                           |
-| `density`           | `string`                                              | Density group accessible name                                               |
-| `comfortable`       | `string`                                              | Comfortable density button name                                             |
-| `compact`           | `string`                                              | Compact density button name                                                 |
-| `resizeColumn`      | `(label: string) => string`                           | Resizable header: separator name; label is caller column header             |
-| `columnWidth`       | `(width: number) => string`                           | Resizable header: separator aria-valuetext in pixels                        |
-| `defaultView`       | `string`                                              | View trigger when no active view                                            |
-| `defaultViewOption` | `string`                                              | Open views menu: default option                                             |
-| `modified`          | `string`                                              | Dirty view trigger: screen reader suffix                                    |
-| `views`             | `string`                                              | Open views menu: heading                                                    |
-| `saveChanges`       | `string`                                              | Open views menu: save current view action                                   |
-| `saveAs`            | `string`                                              | Open views menu: save as action                                             |
-| `renameView`        | `string`                                              | Open views menu: rename action                                              |
-| `deleteView`        | `string`                                              | Open views menu: immediate delete action; no confirmation dialog            |
-| `resetChanges`      | `string`                                              | Open views menu: reset action                                               |
-| `saveViewTitle`     | `string`                                              | Save as dialog: title and accessible name                                   |
-| `renameViewTitle`   | `string`                                              | Rename dialog: title and accessible name                                    |
-| `viewName`          | `string`                                              | Save as and Rename dialogs: input label                                     |
-| `cancel`            | `string`                                              | Save as and Rename dialogs: cancel button                                   |
-| `saveView`          | `string`                                              | Save as dialog: submit button                                               |
-| `rename`            | `string`                                              | Rename dialog: submit button                                                |
-| `closeDialog`       | `string`                                              | Save as and Rename dialogs: close button name                               |
-| `selection`         | `string`                                              | Single selection: screen reader column heading                              |
-| `selectAll`         | `string`                                              | Multiple selection: header checkbox name                                    |
-| `selectRow`         | `(label: string) => string`                           | Multiple selection: row checkbox name; label is caller row name             |
-| `selectGroup`       | `(group: string) => string`                           | Grouped multiple selection: group checkbox name                             |
-| `groupRows`         | `(count: number) => string`                           | Grouped header: screen reader row-count unit; numeric count stays unchanged |
-| `noGroup`           | `string`                                              | Grouped header: fallback when group key is empty                            |
-| `actions`           | `string`                                              | Row actions present: screen reader column heading                           |
-| `rowActions`        | `(label: string) => string`                           | Row action menu trigger name; label is caller row name                      |
-| `emptyTitle`        | `string`                                              | Empty rows: default empty-state title                                       |
-| `emptyDescription`  | `string`                                              | Empty rows: default empty-state description                                 |
-| `loading`           | `(caption: string) => string`                         | Loading: status announcement; receives original caller caption              |
-| `editHint`          | `string`                                              | Editable table: shared keyboard instruction description                     |
-| `editLabel`         | `(column: string, row: string) => string`             | Editing cell: input accessible name                                         |
-| `editError`         | `string`                                              | Rejected cell edit without caller error message: alert                      |
-| `enterNumber`       | `string`                                              | Editing number: invalid numeric value alert                                 |
-| `minimumValue`      | `(min: number) => string`                             | Editing number below minimum: alert                                         |
-| `maximumValue`      | `(max: number) => string`                             | Editing number above maximum: alert                                         |
-| `rowsPerPage`       | `string`                                              | Always: visible page-size text                                              |
-| `rowsPerPageLabel`  | `string`                                              | Always: page-size Select accessible name                                    |
-| `rangeSummary`      | `(from: number, to: number, total: number) => string` | Every page and page-size change: visible summary and polite live region     |
-| `paginationNav`     | `(noun: string) => string`                            | Always: navigation accessible name; noun is the caller caption              |
-| `previous`          | `string`                                              | Always: previous-page button name                                           |
-| `next`              | `string`                                              | Always: next-page button name                                               |
-| `page`              | `(page: number) => string`                            | Always: numbered-page button name; number stays caller content              |
+| `selectionCount`    | `(count: number) => string`                           | Multiple selection: toolbar count and polite live region                                             |
+| `columns`           | `string`                                              | Column visibility trigger text and name                                                              |
+| `visibleColumns`    | `string`                                              | Open column menu: visibility heading                                                                 |
+| `pinColumns`        | `string`                                              | Open column menu with pinning: pin heading                                                           |
+| `pinnedLeft`        | `string`                                              | Open pin submenu trigger: left side suffix                                                           |
+| `pinnedRight`       | `string`                                              | Open pin submenu trigger: right side suffix                                                          |
+| `pinLeft`           | `string`                                              | Open pin submenu: left option                                                                        |
+| `pinRight`          | `string`                                              | Open pin submenu: right option                                                                       |
+| `unpinned`          | `string`                                              | Open pin submenu: unpinned option                                                                    |
+| `density`           | `string`                                              | Density group accessible name                                                                        |
+| `comfortable`       | `string`                                              | Comfortable density button name                                                                      |
+| `compact`           | `string`                                              | Compact density button name                                                                          |
+| `resizeColumn`      | `(label: string) => string`                           | Resizable header: separator name; label is caller column header                                      |
+| `columnWidth`       | `(width: number) => string`                           | Resizable header: separator aria-valuetext in pixels                                                 |
+| `defaultView`       | `string`                                              | View trigger when no active view                                                                     |
+| `defaultViewOption` | `string`                                              | Open views menu: default option                                                                      |
+| `modified`          | `string`                                              | Dirty view trigger: screen reader suffix                                                             |
+| `views`             | `string`                                              | Open views menu: heading                                                                             |
+| `saveChanges`       | `string`                                              | Open views menu: save current view action                                                            |
+| `saveAs`            | `string`                                              | Open views menu: save as action                                                                      |
+| `renameView`        | `string`                                              | Open views menu: rename action                                                                       |
+| `deleteView`        | `string`                                              | Open views menu: immediate delete action; no confirmation dialog                                     |
+| `resetChanges`      | `string`                                              | Open views menu: reset action                                                                        |
+| `saveViewTitle`     | `string`                                              | Save as dialog: title and accessible name                                                            |
+| `renameViewTitle`   | `string`                                              | Rename dialog: title and accessible name                                                             |
+| `viewName`          | `string`                                              | Save as and Rename dialogs: input label                                                              |
+| `cancel`            | `string`                                              | Save as and Rename dialogs: cancel button                                                            |
+| `saveView`          | `string`                                              | Save as dialog: submit button                                                                        |
+| `rename`            | `string`                                              | Rename dialog: submit button                                                                         |
+| `closeDialog`       | `string`                                              | Save as and Rename dialogs: close button name                                                        |
+| `selection`         | `string`                                              | Single selection: screen reader column heading                                                       |
+| `selectAll`         | `string`                                              | Multiple selection: header checkbox name                                                             |
+| `selectRow`         | `(label: string) => string`                           | Multiple selection: row checkbox name; label is caller row name                                      |
+| `selectGroup`       | `(group: string) => string`                           | Grouped multiple selection: group checkbox name                                                      |
+| `groupRows`         | `(count: number) => string`                           | Grouped header: screen reader row-count unit; numeric count stays unchanged                          |
+| `noGroup`           | `string`                                              | Grouped header: fallback when group key is empty                                                     |
+| `actions`           | `string`                                              | Row actions present: screen reader column heading                                                    |
+| `rowActions`        | `(label: string) => string`                           | Row action menu trigger name; label is caller row name                                               |
+| `emptyTitle`        | `string`                                              | Empty rows: default empty-state title                                                                |
+| `emptyDescription`  | `string`                                              | Empty rows: default empty-state description                                                          |
+| `loading`           | `(caption: string) => string`                         | Loading: status announcement; receives original caller caption                                       |
+| `editHint`          | `string`                                              | Editable table: shared keyboard instruction description                                              |
+| `editLabel`         | `(column: string, row: string) => string`             | Editing cell: input accessible name                                                                  |
+| `editError`         | `string`                                              | Rejected cell edit without caller error message: alert                                               |
+| `enterNumber`       | `string`                                              | Editing number: invalid numeric value alert                                                          |
+| `minimumValue`      | `(min: number) => string`                             | Editing number below minimum: alert                                                                  |
+| `maximumValue`      | `(max: number) => string`                             | Editing number above maximum: alert                                                                  |
+| `rowsPerPage`       | `string`                                              | Always: visible page-size text                                                                       |
+| `rowsPerPageLabel`  | `string`                                              | Always: page-size Select accessible name                                                             |
+| `rangeSummary`      | `(from: number, to: number, total: number) => string` | Every page and page-size change: visible summary and polite live region                              |
+| `paginationNav`     | `(noun: string) => string`                            | Always: navigation accessible name; noun is the caller caption                                       |
+| `previous`          | `string`                                              | Always: previous-page button name                                                                    |
+| `next`              | `string`                                              | Always: next-page button name                                                                        |
+| `page`              | `(page: number) => string`                            | Always: numbered-page button name; number stays caller content                                       |
