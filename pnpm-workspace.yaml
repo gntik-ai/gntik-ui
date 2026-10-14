@@ -9,6 +9,17 @@ workspaceConcurrency: 2
 
 # Supply-chain guard: only resolve releases published at least 7 days ago.
 minimumReleaseAge: 10080
+# The kit's own 2026-10-13 release, published from this repository, is exempt by exact
+# version so the default-English baseline can use it (gntik-ui #30). Every other version
+# of these packages, and every third-party package, still waits 7 days.
+minimumReleaseAgeExclude:
+  - '@gntik-ai/blocks@0.5.0'
+  - '@gntik-ai/charts@0.5.0'
+  - '@gntik-ai/editor@0.5.0'
+  - '@gntik-ai/flow@0.5.0'
+  - '@gntik-ai/icons@0.5.0'
+  - '@gntik-ai/tokens@0.2.1'
+  - '@gntik-ai/ui@0.5.0'
 
 allowBuilds:
   esbuild: true
