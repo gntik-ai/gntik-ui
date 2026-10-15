@@ -5,6 +5,7 @@ import test from 'node:test';
 import { axeViolations } from '../e2e/block-labels.helpers.js';
 import { expectedTable } from '../e2e/block-labels.expected.js';
 import { fixtureLabels } from '../src/block-labels-copy.js';
+import { installFixtureLandmarks } from '../src/block-labels-landmarks.js';
 
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
 const { JSDOM, VirtualConsole } = require('jsdom');
@@ -32,9 +33,10 @@ test('copy tables cover caller headings in the complete fixture document', () =>
 });
 
 // The DOM is the browser boundary: run the same injected axe build and filtering as Playwright.
-async function audit(html) {
+async function audit(html, setup = () => {}) {
   const dom = new JSDOM(html, { runScripts: 'outside-only', virtualConsole: new VirtualConsole() });
   try {
+    await setup(dom.window.document);
     const page = {
       addScriptTag: async ({ content }) => dom.window.eval(content),
       evaluate: async (fn, arg) => dom.window.eval(`(${fn.toString()})`)(arg),
@@ -44,6 +46,67 @@ async function audit(html) {
     dom.window.close();
   }
 }
+
+test('the fixture landmark contains body portals without exempting the region rule', async () => {
+  // Base UI portals append to body, alongside the fixture's padded content.
+  const portal = '<div data-base-ui-portal><div>Portalled option</div></div>';
+  const violations = await audit(fixturePage.replace('</body>', `${portal}</body>`), installFixtureLandmarks);
+  assert.equal(violations.length, 0);
+
+  const outsideLandmarks = await audit(
+    '<main><h1>Records</h1></main><div>Outside fixture content</div>',
+    installFixtureLandmarks,
+  );
+  assert.ok(outsideLandmarks.some((violation) => violation.id === 'region'));
+});
+
+test('fixture portal landmarks follow opening and closing without removing retained Select content', async () => {
+  await audit(fixturePage, async (document) => {
+    const disconnect = installFixtureLandmarks(document);
+    try {
+      const portal = document.createElement('div');
+      portal.setAttribute('data-base-ui-portal', '');
+      portal.innerHTML = '<div hidden><div role="listbox"><div role="option">Saved</div></div></div>';
+      document.body.append(portal);
+      await Promise.resolve();
+      assert.equal(document.querySelectorAll('[role="region"]').length, 0);
+
+      portal.firstElementChild.hidden = false;
+      await Promise.resolve();
+      assert.equal(document.querySelectorAll('[role="region"]').length, 1);
+      assert.equal(portal.getAttribute('aria-label'), 'Items');
+      // A submenu inherits its parent's landmark; it must not create a duplicate.
+      const nested = document.createElement('div');
+      nested.setAttribute('data-base-ui-portal', '');
+      portal.append(nested);
+      await Promise.resolve();
+      assert.equal(nested.hasAttribute('role'), false);
+      nested.remove();
+
+      portal.firstElementChild.hidden = true;
+      await Promise.resolve();
+      assert.equal(document.querySelectorAll('[role="region"]').length, 0);
+      assert.ok(document.querySelector('[role="listbox"]'));
+    } finally {
+      disconnect();
+    }
+  });
+});
+
+test('fixture landmarks preserve explicit portal host roles and names', async () => {
+  await audit(
+    fixturePage.replace(
+      '</body>',
+      '<div data-base-ui-portal role="complementary" aria-label="Existing host"><div>Content</div></div></body>',
+    ),
+    (document) => {
+      installFixtureLandmarks(document);
+      const host = document.querySelector('[data-base-ui-portal]');
+      assert.equal(host.getAttribute('role'), 'complementary');
+      assert.equal(host.getAttribute('aria-label'), 'Existing host');
+    },
+  );
+});
 
 test('#79 keeps unnamed textboxes and lookalike non-Select listboxes failing', async () => {
   const violations = await audit(

@@ -6,6 +6,9 @@ import * as published from '@gntik-ai/blocks-baseline';
 import { ThemeProvider, I18nProvider } from '@gntik-ai/ui';
 import { ThemeProvider as PublishedTheme, I18nProvider as PublishedI18n } from '@gntik-ai/ui-baseline';
 import { fixtureLabels } from './block-labels-copy.js';
+import { installFixtureLandmarks } from './block-labels-landmarks.js';
+
+installFixtureLandmarks(document);
 
 const params = new URLSearchParams(location.search);
 const baseline = params.get('mode') === 'baseline';

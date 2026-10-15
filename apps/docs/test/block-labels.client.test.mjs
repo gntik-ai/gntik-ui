@@ -4,6 +4,8 @@ import { createRequire } from 'node:module';
 import test from 'node:test';
 import { expectedTable } from '../e2e/block-labels.expected.js';
 import { fixtureLabels } from '../src/block-labels-copy.js';
+import { installFixtureLandmarks } from '../src/block-labels-landmarks.js';
+import { axeViolations } from '../e2e/block-labels.helpers.js';
 
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
 const { JSDOM } = require('jsdom');
@@ -25,7 +27,8 @@ test('element tables match client-rendered blocks, including Select portal ancho
       clearTimeout(timer);
     }
   };
-  const dom = new JSDOM(fixturePage, { url: 'http://localhost/', pretendToBeVisual: true });
+  const dom = new JSDOM(fixturePage, { url: 'http://localhost/', pretendToBeVisual: true, runScripts: 'outside-only' });
+  const disconnectLandmarks = installFixtureLandmarks(dom.window.document);
   const originals = new Map();
   const setGlobal = (key, value) => {
     originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
@@ -231,6 +234,19 @@ test('element tables match client-rendered blocks, including Select portal ancho
             if (name)
               assert.ok(expected.strings.includes(name), `${block}/${language}/${state}: unexpected name ${name}`);
           }
+          if (['open', 'menu', 'views', 'columns', 'pin-options', 'left-suffix'].includes(state)) {
+            const violations = await step(() =>
+              axeViolations({
+                addScriptTag: async ({ content }) => dom.window.eval(content),
+                evaluate: async (fn, arg) => dom.window.eval(`(${fn.toString()})`)(arg),
+              }),
+            );
+            assert.equal(
+              violations.some((v) => ['region', 'landmark-unique'].includes(v.id)),
+              false,
+              checkpoint,
+            );
+          }
         }
         await step(() => React.act(async () => root.render(null)));
       }
@@ -238,6 +254,7 @@ test('element tables match client-rendered blocks, including Select portal ancho
   } finally {
     // Synchronous unmount guarantees cleanup even if an earlier async act stalled.
     React.act(() => root.unmount());
+    disconnectLandmarks();
     dom.window.close();
     for (const [key, descriptor] of originals) {
       if (descriptor) Object.defineProperty(globalThis, key, descriptor);
