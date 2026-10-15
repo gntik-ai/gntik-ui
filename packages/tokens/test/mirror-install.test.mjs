@@ -17,6 +17,15 @@ const tarballPath = '/@gntik-ai/tokens/-/tokens-0.2.1.tgz';
 const sha512 = (bytes) => `sha512-${createHash('sha512').update(bytes).digest('base64')}`;
 const checkIntegrity = (bytes, integrity) =>
   assert.equal(sha512(bytes), integrity, 'carried tarball matches lockfile sha512');
+const outputTail = ({ stdout = '', stderr = '' }) =>
+  `${stdout}\n${stderr}`
+    .replace(/\bBearer\s+\S+/gi, 'Bearer <REDACTED>')
+    .replace(/\b((?:authorization|[a-z_]*token|_auth)\s*[:=]\s*)\S+/gi, '$1<REDACTED>')
+    .split('\n')
+    .slice(-30)
+    .join('\n');
+const succeeds = (result, message) => assert.equal(result.code, 0, `${message}\n${result.output}`);
+const fails = (result, message) => assert.notEqual(result.code, 0, `${message}\n${result.output}`);
 
 test(
   'locked tokens install from a mirror and an offline store, while altered bytes are rejected',
@@ -63,7 +72,8 @@ test(
       // Pack only local published files; use a temporary integrity, never overwrite the fixture.
       const local = path.join(root, 'local-package');
       await fs.mkdir(local);
-      for (const name of ['package.json', 'src', 'dist']) {
+      const manifest = JSON.parse(await fs.readFile(path.join(tokens, 'package.json'), 'utf8'));
+      for (const name of ['package.json', ...manifest.files]) {
         try {
           await fs.cp(path.join(tokens, name), path.join(local, name), { recursive: true });
         } catch (error) {
@@ -104,17 +114,47 @@ test(
       await fs.cp(preparedFixture, cwd, { recursive: true });
       return cwd;
     };
-    const store = async (name) => {
+    const emptyDirectory = async (name) => {
       const dir = path.join(root, name);
       await fs.mkdir(dir);
       assert.deepEqual(await fs.readdir(dir), []);
       return dir;
     };
+    const installState = async (name) => ({
+      storeDir: await emptyDirectory(`${name}-store`),
+      cacheDir: await emptyDirectory(`${name}-cache`),
+    });
     const mirror = async (bytes) => {
       const requests = [];
+      let url;
       const server = createServer((req, res) => {
         requests.push(`${req.method} ${req.url}`);
-        if (req.method !== 'GET' || req.url !== tarballPath) {
+        if (req.method !== 'GET') {
+          res.writeHead(404).end();
+          return;
+        }
+        // pnpm 11 checks registry metadata even with an unchanged frozen lockfile.
+        if (decodeURIComponent(new URL(req.url, url).pathname) === '/@gntik-ai/tokens') {
+          const publishedAt = '2026-10-13T00:00:00.000Z';
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(
+            JSON.stringify({
+              name: '@gntik-ai/tokens',
+              'dist-tags': { latest: '0.2.1' },
+              time: { created: publishedAt, modified: publishedAt, '0.2.1': publishedAt },
+              versions: {
+                '0.2.1': {
+                  name: '@gntik-ai/tokens',
+                  version: '0.2.1',
+                  // Altered bytes must still be checked against the original pinned integrity.
+                  dist: { integrity, tarball: new URL(tarballPath, url).href },
+                },
+              },
+            }),
+          );
+          return;
+        }
+        if (req.url !== tarballPath) {
           res.writeHead(404).end();
           return;
         }
@@ -126,25 +166,40 @@ test(
         server.once('error', reject);
         server.listen(0, '127.0.0.1', resolve);
       });
+      url = `http://127.0.0.1:${server.address().port}/`;
       return {
-        url: `http://127.0.0.1:${server.address().port}/`,
+        url,
         requests,
         close: () => new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve()))),
       };
     };
-    const pnpm = async (cwd, storeDir, args) => {
+    const pnpm = async (cwd, { storeDir, cacheDir }, args) => {
       const before = await fs.readFile(path.join(cwd, 'pnpm-lock.yaml'), 'utf8');
+      // Each consumer has a fresh HOME; only the explicit store and metadata cache are carried.
+      const consumerHome = path.join(cwd, 'home');
+      await fs.mkdir(consumerHome);
       try {
-        await exec('pnpm', [...args, '--store-dir', storeDir, '--ignore-scripts', '--fetch-retries', '0'], {
-          cwd,
-          env,
-          signal: t.signal,
-        });
-        return 0;
+        const result = await exec(
+          'pnpm',
+          [...args, '--store-dir', storeDir, '--cache-dir', cacheDir, '--ignore-scripts', '--fetch-retries', '0'],
+          {
+            cwd,
+            env: {
+              ...env,
+              HOME: consumerHome,
+              USERPROFILE: consumerHome,
+              XDG_CONFIG_HOME: consumerHome,
+              XDG_CACHE_HOME: path.join(consumerHome, 'cache'),
+              XDG_DATA_HOME: path.join(consumerHome, 'data'),
+            },
+            signal: t.signal,
+          },
+        );
+        return { code: 0, output: outputTail(result) };
       } catch (error) {
         // Missing tools, sockets, aborts, etc. must not satisfy a negative install assertion.
         if (!Number.isInteger(error.code) || error.code === 0 || error.signal) throw error;
-        return error.code;
+        return { code: error.code, output: outputTail(error) };
       } finally {
         assert.equal(await fs.readFile(path.join(cwd, 'pnpm-lock.yaml'), 'utf8'), before, 'lockfile stays unchanged');
       }
@@ -152,64 +207,58 @@ test(
     const installedVersion = async (cwd) =>
       JSON.parse(await fs.readFile(path.join(cwd, 'node_modules/@gntik-ai/tokens/package.json'), 'utf8')).version;
     const absent = async (cwd) =>
-      assert.rejects(fs.access(path.join(cwd, 'node_modules/@gntik-ai/tokens')), { code: 'ENOENT' });
+      assert.rejects(fs.lstat(path.join(cwd, 'node_modules/@gntik-ai/tokens')), { code: 'ENOENT' });
 
     const good = await mirror(tarball);
     const connected = await consumer('mirror-consumer');
-    assert.equal(
-      await pnpm(connected, await store('mirror-store'), ['install', '--frozen-lockfile', '--registry', good.url]),
-      0,
+    succeeds(
+      await pnpm(connected, await installState('mirror'), ['install', '--frozen-lockfile', '--registry', good.url]),
       'mirror install succeeds',
     );
     assert.ok(good.requests.includes(`GET ${tarballPath}`), 'mirror tarball was fetched');
     assert.equal(await installedVersion(connected), '0.2.1');
 
-    const offlineStore = await store('offline-store');
+    const offlineState = await installState('offline');
     good.requests.length = 0;
-    assert.equal(
-      await pnpm(await consumer('fetch-consumer'), offlineStore, [
+    succeeds(
+      await pnpm(await consumer('fetch-consumer'), offlineState, [
         'fetch',
         '--frozen-lockfile',
         '--registry',
         good.url,
       ]),
-      0,
       'fetch fills a separate empty store',
     );
     assert.ok(good.requests.includes(`GET ${tarballPath}`), 'fetch requested the carried tarball');
     await good.close();
     const offline = await consumer('offline-consumer');
-    assert.equal(
-      await pnpm(offline, offlineStore, ['install', '--frozen-lockfile', '--offline', '--registry', good.url]),
-      0,
+    succeeds(
+      await pnpm(offline, offlineState, ['install', '--frozen-lockfile', '--offline', '--registry', good.url]),
       'offline install succeeds with the server stopped',
     );
     assert.equal(await installedVersion(offline), '0.2.1');
 
     const bad = await mirror(altered);
     const tampered = await consumer('tampered-consumer');
-    assert.notEqual(
-      await pnpm(tampered, await store('tampered-store'), ['install', '--frozen-lockfile', '--registry', bad.url]),
-      0,
+    fails(
+      await pnpm(tampered, await installState('tampered'), ['install', '--frozen-lockfile', '--registry', bad.url]),
       'altered mirror install fails',
     );
     assert.ok(bad.requests.includes(`GET ${tarballPath}`), 'altered tarball was fetched');
     await absent(tampered);
-    const poisonedStore = await store('failed-fetch-store');
+    const poisonedState = await installState('failed-fetch');
     bad.requests.length = 0;
     const failedFetch = await consumer('failed-fetch-consumer');
-    assert.notEqual(
-      await pnpm(failedFetch, poisonedStore, ['fetch', '--frozen-lockfile', '--registry', bad.url]),
-      0,
+    fails(
+      await pnpm(failedFetch, poisonedState, ['fetch', '--frozen-lockfile', '--registry', bad.url]),
       'fetch of altered bytes fails',
     );
     assert.ok(bad.requests.includes(`GET ${tarballPath}`), 'fetch requested the altered tarball');
     await absent(failedFetch);
     await bad.close();
     const rejectedOffline = await consumer('rejected-offline-consumer');
-    assert.notEqual(
-      await pnpm(rejectedOffline, poisonedStore, ['install', '--frozen-lockfile', '--offline', '--registry', bad.url]),
-      0,
+    fails(
+      await pnpm(rejectedOffline, poisonedState, ['install', '--frozen-lockfile', '--offline', '--registry', bad.url]),
       'offline install after failed fetch fails',
     );
     await absent(rejectedOffline);

@@ -58,6 +58,13 @@ test('get_adoption_guide: public npm needs no credentials and disconnected insta
   assert.doesNotMatch(guide, /(?:set|export|configure|provide)\s+(?:an?\s+)?token/i);
 });
 
+test('get_adoption_guide: carries the pnpm metadata cache alongside the offline store', async () => {
+  const guide = await call('get_adoption_guide');
+  assert.match(guide, /pnpm fetch [^`]*--cache-dir \.\/offline-cache/);
+  assert.match(guide, /pnpm install [^`]*--offline [^`]*--cache-dir \.\/offline-cache/);
+  assert.match(guide, /Carry[^\n]*store[^\n]*metadata cache/);
+});
+
 test('get_adoption_guide: documents the synchronous external file for strict CSP and preserves inline customization', async () => {
   const guide = await call('get_adoption_guide');
   assert.match(guide, /@gntik-ai\/ui\/theme-bootstrap\.js/);

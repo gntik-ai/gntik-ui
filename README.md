@@ -128,10 +128,11 @@ prevents lockfile updates. Use lockfile entries with integrity and no tarball UR
 registry override controls the download location.
 
 Alternatively, while the mirror is reachable, fill an offline store from the consumer lockfile:
-`pnpm fetch --frozen-lockfile --store-dir ./offline-store --registry https://registry.example/`.
-Carry that store, the manifest and the unchanged lockfile into the disconnected environment,
-then run `pnpm install --frozen-lockfile --offline --store-dir ./offline-store`. Use the same
-pnpm version and target platform when preparing and consuming the store.
+`pnpm fetch --frozen-lockfile --store-dir ./offline-store --cache-dir ./offline-cache --registry https://registry.example/`.
+Carry the store, metadata cache, manifest and unchanged lockfile into the disconnected environment,
+then run `pnpm install --frozen-lockfile --offline --store-dir ./offline-store --cache-dir ./offline-cache --registry https://registry.example/`.
+Keep the same registry URL so pnpm can find its cached metadata even though the mirror is unreachable.
+Use the same pnpm version and target platform when preparing and consuming the store.
 
 ## Status
 
