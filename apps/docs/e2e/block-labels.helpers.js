@@ -51,6 +51,8 @@ export async function settledFocus(page, includeTabIndex = true) {
       new Promise((resolve, reject) => {
         const read = () => {
           const el = document.activeElement;
+          // A disabled control can retain focus until the browser's later blur task.
+          if (el.matches(':disabled')) return null;
           const fields = [el.tagName, el.getAttribute('role'), el.getAttribute('aria-label'), el.textContent];
           if (withTabIndex) fields.push(el.tabIndex);
           return fields;
@@ -63,7 +65,7 @@ export async function settledFocus(page, includeTabIndex = true) {
         }, 3_000);
         const poll = () => {
           const current = read();
-          if (JSON.stringify(current) === JSON.stringify(previous)) {
+          if (current && JSON.stringify(current) === JSON.stringify(previous)) {
             clearTimeout(timer);
             resolve(current);
           } else {

@@ -417,6 +417,25 @@ for (const theme of themes)
       });
     }
 
+test('a just-disabled focused button settles on BODY after a later task moves focus', async ({ page }) => {
+  await page.setContent('<body tabindex="-1"><main><button>Previous page</button></main></body>');
+  await page.getByRole('button').focus();
+  await page.evaluate(
+    () =>
+      new Promise((resolve) => {
+        const button = document.activeElement;
+        setTimeout(() => {
+          button.disabled = true;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => setTimeout(() => document.body.focus(), 0));
+          });
+          resolve();
+        }, 0);
+      }),
+  );
+  expect(await settledFocus(page)).toEqual(['BODY', null, null, 'Previous page', -1]);
+});
+
 test('opened popups wait for settled focus outside the popup', async ({ page }) => {
   await page.setContent(
     '<main><button>Saved view</button><div role="listbox" aria-label="Views"><div role="option">Saved</div></div></main>',

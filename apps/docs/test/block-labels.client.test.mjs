@@ -33,6 +33,48 @@ test('focus samples wait for frame-delayed DOM updates and preserve both trace s
   }
 });
 
+test('a just-disabled focused button settles on BODY after a later task moves focus', async () => {
+  const dom = new JSDOM('<body tabindex="-1"><button>Previous page</button></body>', {
+    pretendToBeVisual: true,
+    runScripts: 'outside-only',
+  });
+  const page = { evaluate: (fn, arg) => dom.window.eval(`(${fn.toString()})`)(arg) };
+  try {
+    const button = dom.window.document.querySelector('button');
+    button.focus();
+    await new Promise((resolve) => {
+      dom.window.setTimeout(() => {
+        button.disabled = true;
+        dom.window.requestAnimationFrame(() => {
+          dom.window.requestAnimationFrame(() => dom.window.setTimeout(() => dom.window.document.body.focus(), 0));
+        });
+        resolve();
+      }, 0);
+    });
+    assert.deepEqual(Array.from(await settledFocus(page)), ['BODY', null, null, 'Previous page', -1]);
+  } finally {
+    dom.window.close();
+  }
+});
+
+test('a disabled focused control cannot settle and still rejects within the existing bound', async () => {
+  const dom = new JSDOM('<fieldset><button>Previous page</button></fieldset>', {
+    pretendToBeVisual: true,
+    runScripts: 'outside-only',
+  });
+  const page = { evaluate: (fn, arg) => dom.window.eval(`(${fn.toString()})`)(arg) };
+  try {
+    const button = dom.window.document.querySelector('button');
+    button.focus();
+    // Fieldset disabling also matches :disabled, without a button disabled attribute.
+    dom.window.document.querySelector('fieldset').disabled = true;
+    assert.equal(button.matches(':disabled'), true);
+    await assert.rejects(settledFocus(page), /did not settle within 3000ms/);
+  } finally {
+    dom.window.close();
+  }
+});
+
 test('a continuously changing focus trace fails within the bounded settle timeout', async () => {
   const dom = new JSDOM('<button>Changing</button>', { pretendToBeVisual: true, runScripts: 'outside-only' });
   const page = { evaluate: (fn, arg) => dom.window.eval(`(${fn.toString()})`)(arg) };
