@@ -39,11 +39,8 @@ export async function openedDialog(page) {
 export async function openedPopup(page, role) {
   const popup = page.getByRole(role);
   await expect(popup.last()).toBeVisible();
-  await expect
-    .poll(() => popup.evaluateAll((nodes) => nodes.some((node) => node.contains(document.activeElement))), {
-      timeout: 3_000,
-    })
-    .toBe(true);
+  // Select may keep focus outside its listbox; wait wherever the primitive puts it.
+  await settledFocus(page);
 }
 
 // Read exactly the existing trace fields, twice on consecutive animation frames.

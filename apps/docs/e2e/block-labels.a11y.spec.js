@@ -417,6 +417,20 @@ for (const theme of themes)
       });
     }
 
+test('opened popups wait for settled focus outside the popup', async ({ page }) => {
+  await page.setContent(
+    '<main><button>Saved view</button><div role="listbox" aria-label="Views"><div role="option">Saved</div></div></main>',
+  );
+  await page.getByRole('button').focus();
+  await page.evaluate(() => {
+    const trigger = document.activeElement;
+    requestAnimationFrame(() => trigger.setAttribute('aria-label', 'Ready'));
+  });
+  await openedPopup(page, 'listbox');
+  expect(await page.evaluate(() => document.activeElement.getAttribute('aria-label'))).toBe('Ready');
+  expect(await page.getByRole('listbox').evaluate((node) => node.contains(document.activeElement))).toBe(false);
+});
+
 test('keyboard checkpoints wait for frame-delayed focus updates, including restoration', async ({ page }) => {
   await page.setContent('<main id="root"><button aria-label="Before">Probe</button><button>Restore</button></main>');
   await page.getByRole('button', { name: 'Restore' }).focus();
