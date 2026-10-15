@@ -1,0 +1,19 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+  .:
+    dependencies:
+      '@gntik-ai/tokens':
+        specifier: 0.2.1
+        version: 0.2.1
+
+packages:
+  '@gntik-ai/tokens@0.2.1':
+    resolution: {integrity: sha512-Ys7tPnkMylielio3HIxQMTPp1tnmxnEqbp7JGnIaXdcdiAdZieudaLm2xnDCTZ+SWfq5AFTxmH0JQxIB+6CRSA==}
+
+snapshots:
+  '@gntik-ai/tokens@0.2.1': {}

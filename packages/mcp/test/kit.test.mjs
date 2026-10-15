@@ -32,6 +32,32 @@ before(async () => {
 });
 after(() => client.close());
 
+test('get_adoption_guide: public npm needs no credentials and disconnected installs preserve integrity', async () => {
+  const guide = await call('get_adoption_guide');
+  assert.match(guide, /Install from public npm: `pnpm add @gntik-ai\/ui`/);
+  assert.match(guide, /registry\.npmjs\.org/);
+  assert.match(guide, /no token, credential or `\.npmrc` entry/);
+  assert.match(guide, /[Rr]emove.*`@gntik-ai:registry`.*`\.npmrc`/);
+  assert.equal(guide.match(/@gntik-ai:registry/g)?.length, 1);
+  for (const text of [
+    '### Disconnected installs',
+    'npm pack',
+    'npm audit signatures',
+    'sha512',
+    'dist.integrity',
+    '--frozen-lockfile',
+    'pnpm fetch',
+    '--offline',
+    '--registry',
+  ]) {
+    assert.ok(guide.includes(text), `guide includes ${text}`);
+  }
+  assert.match(guide, /byte-identical/);
+  assert.match(guide, /[Pp]rovenance.*does not travel/);
+  assert.doesNotMatch(guide, /NODE_AUTH_TOKEN|npm\.pkg\.github\.com|read:packages|GitHub Packages/);
+  assert.doesNotMatch(guide, /(?:set|export|configure|provide)\s+(?:an?\s+)?token/i);
+});
+
 test('get_adoption_guide: documents the synchronous external file for strict CSP and preserves inline customization', async () => {
   const guide = await call('get_adoption_guide');
   assert.match(guide, /@gntik-ai\/ui\/theme-bootstrap\.js/);

@@ -1,0 +1,8 @@
+{
+  "name": "mirror-consumer",
+  "private": true,
+  "packageManager": "pnpm@11.28.3",
+  "dependencies": {
+    "@gntik-ai/tokens": "0.2.1"
+  }
+}
