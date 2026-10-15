@@ -7,6 +7,16 @@ import { createRequire } from 'node:module';
 const pkg = (name, entry = 'src/index.ts') =>
   fileURLToPath(new URL(`../../packages/${name}/${entry}`, import.meta.url));
 
+const kitAlias = (name, entry) => ({
+  find: new RegExp(`^@gntik-ai/${name}$`),
+  replacement: pkg(name, entry),
+  // Published baseline dependencies must resolve their own published kit graph.
+  customResolver(source, importer) {
+    if (importer?.includes('/node_modules/')) return createRequire(importer).resolve(`@gntik-ai/${name}`);
+    return source;
+  },
+});
+
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
@@ -18,23 +28,8 @@ export default defineConfig({
         find: /^monaco-editor\/esm\/vs\//,
         replacement: fileURLToPath(new URL('./node_modules/monaco-editor/esm/vs/', import.meta.url)),
       },
-      ...['ui', 'blocks', 'templates', 'charts', 'chat', 'flow', 'editor'].map((name) => ({
-        find: new RegExp(`^@gntik-ai/${name}$`),
-        replacement: pkg(name),
-        // Published baseline dependencies must resolve their own published kit graph.
-        customResolver(source, importer) {
-          if (importer?.includes('/node_modules/')) return createRequire(importer).resolve(`@gntik-ai/${name}`);
-          return source;
-        },
-      })),
-      {
-        find: /^@gntik-ai\/icons$/,
-        replacement: pkg('icons', 'src/index.tsx'),
-        customResolver(source, importer) {
-          if (importer?.includes('/node_modules/')) return createRequire(importer).resolve('@gntik-ai/icons');
-          return source;
-        },
-      },
+      ...['ui', 'blocks', 'templates', 'charts', 'chat', 'flow', 'editor'].map((name) => kitAlias(name)),
+      kitAlias('icons', 'src/index.tsx'),
     ],
     dedupe: ['react', 'react-dom'],
   },

@@ -9,7 +9,22 @@ const require = createRequire(new URL('../../../packages/ui/package.json', impor
 const { JSDOM } = require('jsdom');
 const fixturePage = readFileSync(new URL('../block-labels.html', import.meta.url), 'utf8');
 
-test('element tables match client-rendered blocks, including Select portal anchors', async () => {
+test('element tables match client-rendered blocks, including Select portal anchors', { timeout: 300_000 }, async () => {
+  let checkpoint = 'setup';
+  // Bound async interactions as well as the whole test, with the failing fixture state.
+  const step = async (action) => {
+    let timer;
+    try {
+      return await Promise.race([
+        Promise.resolve().then(action),
+        new Promise((_, reject) => {
+          timer = setTimeout(() => reject(new Error(`Stalled at ${checkpoint}`)), 15_000);
+        }),
+      ]);
+    } finally {
+      clearTimeout(timer);
+    }
+  };
   const dom = new JSDOM(fixturePage, { url: 'http://localhost/', pretendToBeVisual: true });
   const originals = new Map();
   const setGlobal = (key, value) => {
@@ -36,13 +51,20 @@ test('element tables match client-rendered blocks, including Select portal ancho
   const React = require('react');
   const { createRoot } = require('react-dom/client');
   const { getByRole, queryByRole, waitFor } = require('@testing-library/react');
+  const closed = (role) =>
+    waitFor(() => {
+      // Comparing the DOM node to null makes AssertionError format its entire React tree
+      // on every retry during closing. Compare a boolean to keep retries cheap and bounded.
+      assert.equal(queryByRole(dom.window.document.body, role) === null, true, `${role} is still exposed`);
+      assert.equal(dom.window.document.querySelectorAll('[data-base-ui-focus-guard]').length, 0);
+    });
   const { default: userEvent } = require('@testing-library/user-event');
   const user = userEvent.setup({ document: dom.window.document });
   const testingRequire = createRequire(require.resolve('@testing-library/react'));
   const accessibilityRequire = createRequire(testingRequire.resolve('@testing-library/dom'));
   const { computeAccessibleName } = accessibilityRequire('dom-accessibility-api');
-  const { PaginationFooter, FilterBar, DataTable } = await import('../../../packages/blocks/dist/index.js');
-  const { ThemeProvider, I18nProvider } = await import('../../../packages/ui/dist/index.js');
+  const { PaginationFooter, FilterBar, DataTable } = await step(() => import('../../../packages/blocks/dist/index.js'));
+  const { ThemeProvider, I18nProvider } = await step(() => import('../../../packages/ui/dist/index.js'));
   function FilterFixture(props) {
     const [count, setCount] = React.useState(12);
     return React.createElement(FilterBar, {
@@ -90,19 +112,22 @@ test('element tables match client-rendered blocks, including Select portal ancho
           },
         ],
       ]) {
-        await React.act(async () => {
-          root.render(
-            React.createElement(
-              ThemeProvider,
-              { storageKey: null },
+        checkpoint = `${block}/${language}/render`;
+        await step(() =>
+          React.act(async () => {
+            root.render(
               React.createElement(
-                I18nProvider,
-                { locale: 'en', applyTo: 'document' },
-                React.createElement(Component, { ...props, labels }),
+                ThemeProvider,
+                { storageKey: null },
+                React.createElement(
+                  I18nProvider,
+                  { locale: 'en', applyTo: 'document' },
+                  React.createElement(Component, { ...props, labels }),
+                ),
               ),
-            ),
-          );
-        });
+            );
+          }),
+        );
         const states =
           block === 'pagination'
             ? ['initial', 'next', 'previous', 'numbered', 'open']
@@ -110,53 +135,63 @@ test('element tables match client-rendered blocks, including Select portal ancho
               ? ['initial', 'menu', 'selected', 'focused', 'removed', 'clear', 'views', 'applied']
               : ['initial', 'columns', 'toggled', 'pin-options', 'pinned', 'left-suffix'];
         for (const state of states) {
+          checkpoint = `${block}/${language}/${state}`;
           const byRole = (role, name) => getByRole(dom.window.document.body, role, { name, exact: true });
           if (block === 'pagination' && ['next', 'previous', 'numbered'].includes(state))
-            await user.click(
-              byRole('button', state === 'numbered' ? (language === 'es' ? 'Ir a 3' : 'Go to 3') : labels[state]),
-            );
-          if (['open', 'menu', 'columns', 'left-suffix'].includes(state)) {
-            await user.click(
-              byRole(
-                block === 'pagination' ? 'combobox' : 'button',
-                labels[block === 'pagination' ? 'rowsPerPageLabel' : block === 'filter' ? 'addFilter' : 'columns'],
+            await step(() =>
+              user.click(
+                byRole('button', state === 'numbered' ? (language === 'es' ? 'Ir a 3' : 'Go to 3') : labels[state]),
               ),
             );
-            await waitFor(() => getByRole(dom.window.document.body, block === 'pagination' ? 'listbox' : 'menu'));
+          if (['open', 'menu', 'columns', 'left-suffix'].includes(state)) {
+            await step(() =>
+              user.click(
+                byRole(
+                  block === 'pagination' ? 'combobox' : 'button',
+                  labels[block === 'pagination' ? 'rowsPerPageLabel' : block === 'filter' ? 'addFilter' : 'columns'],
+                ),
+              ),
+            );
+            await step(() =>
+              waitFor(() => getByRole(dom.window.document.body, block === 'pagination' ? 'listbox' : 'menu')),
+            );
           }
-          if (state === 'toggled') await user.click(byRole('menuitemcheckbox', 'Region'));
+          if (state === 'toggled') await step(() => user.click(byRole('menuitemcheckbox', 'Region')));
           if (block === 'filter') {
             if (state === 'selected') {
-              await user.click(byRole('menuitemcheckbox', 'Ready'));
-              await user.keyboard('{Escape}');
-              await waitFor(() => assert.equal(queryByRole(dom.window.document.body, 'menu'), null));
+              await step(() => user.click(byRole('menuitemcheckbox', 'Ready')));
+              await step(() => user.keyboard('{Escape}'));
+              await step(() => closed('menu'));
             }
             const remove = () => byRole('button', language === 'es' ? 'Quitar Status|Ready' : 'Drop Status|Ready');
-            if (state === 'focused') await React.act(async () => remove().focus());
-            if (state === 'removed') await user.keyboard('{Delete}');
+            if (state === 'focused') await step(() => React.act(async () => remove().focus()));
+            if (state === 'removed') await step(() => user.keyboard('{Delete}'));
             if (state === 'clear') {
-              await user.type(byRole('searchbox', labels.searchLabel), 'Alpha');
-              await user.click(byRole('button', labels.clearAll));
+              await step(() => user.type(byRole('searchbox', labels.searchLabel), 'Alpha'));
+              await step(() => user.click(byRole('button', labels.clearAll)));
             }
-            if (state === 'views') await user.click(byRole('combobox', labels.savedViewLabel));
+            if (state === 'views') await step(() => user.click(byRole('combobox', labels.savedViewLabel)));
+            if (state === 'views' || state === 'applied') {
+              await step(() => waitFor(() => byRole('listbox', '')));
+              await step(() => waitFor(() => byRole('option', 'Saved')));
+            }
             if (state === 'applied') {
-              await user.click(byRole('option', 'Saved'));
-              await waitFor(() => assert.equal(queryByRole(dom.window.document.body, 'listbox'), null));
+              await step(() => user.click(byRole('option', 'Saved')));
+              await step(() => closed('listbox'));
             }
           }
           if (state === 'pin-options' || state === 'left-suffix') {
-            await React.act(async () =>
-              dom.window.document.querySelector('[role="menuitem"][aria-haspopup="menu"]').focus(),
+            await step(() =>
+              React.act(async () =>
+                dom.window.document.querySelector('[role="menuitem"][aria-haspopup="menu"]').focus(),
+              ),
             );
-            await user.keyboard('{ArrowRight}');
-            await waitFor(() => byRole('menuitemradio', labels.pinLeft));
+            await step(() => user.keyboard('{ArrowRight}'));
+            await step(() => waitFor(() => byRole('menuitemradio', labels.pinLeft)));
           }
           if (state === 'pinned') {
-            await user.click(byRole('menuitemradio', labels.pinLeft));
-            await waitFor(() => assert.equal(queryByRole(dom.window.document.body, 'menu'), null));
-            await waitFor(() =>
-              assert.equal(dom.window.document.querySelectorAll('[data-base-ui-focus-guard]').length, 0),
-            );
+            await step(() => user.click(byRole('menuitemradio', labels.pinLeft)));
+            await step(() => closed('menu'));
           }
           const expected = expectedTable(block, language, state);
           for (const { key, selector, surface, values, background } of expected.elements) {
@@ -197,11 +232,12 @@ test('element tables match client-rendered blocks, including Select portal ancho
               assert.ok(expected.strings.includes(name), `${block}/${language}/${state}: unexpected name ${name}`);
           }
         }
-        await React.act(async () => root.render(null));
+        await step(() => React.act(async () => root.render(null)));
       }
     }
   } finally {
-    await React.act(async () => root.unmount());
+    // Synchronous unmount guarantees cleanup even if an earlier async act stalled.
+    React.act(() => root.unmount());
     dom.window.close();
     for (const [key, descriptor] of originals) {
       if (descriptor) Object.defineProperty(globalThis, key, descriptor);

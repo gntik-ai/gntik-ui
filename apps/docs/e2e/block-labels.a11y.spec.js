@@ -79,6 +79,7 @@ async function paginationMatrix(page, l, checkpoint, language) {
   await page.getByRole('button', { name: pageName(3), exact: true }).click();
   await checkpoint('numbered');
   await page.getByRole('combobox', { name: l.rowsPerPageLabel, exact: true }).click();
+  await expect(page.getByRole('listbox')).toBeVisible();
   await checkpoint('open');
   await page.getByRole('option', { name: '25', exact: true }).click();
   await closed(page, 'listbox');
@@ -89,6 +90,7 @@ async function filterMatrix(page, l, checkpoint, language) {
   const remove = language ? `${language === 'es' ? 'Quitar' : 'Drop'} Status|Ready` : 'Remove filter Status: Ready';
   await checkpoint('initial');
   await page.getByRole('button', { name: l.addFilter, exact: true }).click();
+  await expect(page.getByRole('menu')).toBeVisible();
   await checkpoint('menu');
   await page.getByRole('menuitemcheckbox', { name: 'Ready', exact: true }).click();
   await page.keyboard.press('Escape');
@@ -102,6 +104,7 @@ async function filterMatrix(page, l, checkpoint, language) {
   await page.getByRole('button', { name: l.clearAll, exact: true }).click();
   await checkpoint('clear');
   await page.getByRole('combobox', { name: l.savedViewLabel, exact: true }).click();
+  await expect(page.getByRole('listbox')).toBeVisible();
   await checkpoint('views');
   await page.getByRole('option', { name: 'Saved', exact: true }).click();
   await closed(page, 'listbox');
@@ -132,6 +135,7 @@ async function tableMatrix(page, l, checkpoint, language) {
   await page.locator('#root > div').evaluate((node) => (node.style.maxWidth = ''));
   await expect(region).toHaveCount(0);
   await page.getByRole('button', { name: l.columns, exact: true }).click();
+  await expect(page.getByRole('menu')).toBeVisible();
   await checkpoint('columns');
   await page.getByRole('menuitemcheckbox', { name: 'Region', exact: true }).click();
   await checkpoint('toggled');
@@ -151,6 +155,7 @@ async function tableMatrix(page, l, checkpoint, language) {
   await checkpoint('pinned-right');
   await page.getByRole('button', { name: l.columns, exact: true }).click();
   await page.getByRole('menuitem', { name: `Name${l.pinnedRight}`, exact: true }).hover();
+  await expect(page.getByRole('menuitemradio', { name: l.unpinned, exact: true })).toBeVisible();
   await checkpoint('right-suffix');
   await page.getByRole('menuitemradio', { name: l.unpinned, exact: true }).click();
   await closed(page, 'menu');
