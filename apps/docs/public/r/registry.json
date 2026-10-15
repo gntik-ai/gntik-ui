@@ -3114,6 +3114,11 @@
           "target": "components/blocks/tables/data-table/header-cell.tsx"
         },
         {
+          "path": "packages/blocks/src/tables/DataTable/labels.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/tables/data-table/labels.ts"
+        },
+        {
           "path": "packages/blocks/src/tables/DataTable/resize-handle.tsx",
           "type": "registry:component",
           "target": "components/blocks/tables/data-table/resize-handle.tsx"

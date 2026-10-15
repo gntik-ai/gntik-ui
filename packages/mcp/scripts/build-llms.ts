@@ -15,6 +15,7 @@ import {
   exportNameOf,
   firstSentence,
   loadKit,
+  labelsTable,
   usageOf,
   usesConsoleShell,
   type KitItem,
@@ -107,6 +108,7 @@ function full(item: KitItem): string {
       : `- Install: \`gntik-ui add ${item.id}\`; own the source with \`gntik-ui eject ${item.id}\``,
   );
   const out = [`### ${item.name} (\`${item.id}\`)`, '', item.description, '', ...facts];
+  if (item.labels?.length) out.push('', labelsTable(item));
   if (info.keyboard.length) {
     out.push(
       '',

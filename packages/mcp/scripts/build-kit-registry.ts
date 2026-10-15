@@ -14,12 +14,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import type { BlockLabelMeta } from '../src/kit.js';
 
 const ROOT = path.resolve(import.meta.dirname, '../../..');
 const OUT = path.join(ROOT, 'kit-registry.json');
 
 type Kind = 'component' | 'layout' | 'block' | 'template';
 interface Meta {
+  labels?: BlockLabelMeta[];
   name: string;
   group?: string;
   status?: string;
@@ -28,6 +30,7 @@ interface Meta {
   title?: string;
 }
 interface Item {
+  labels?: BlockLabelMeta[];
   id: string;
   kind: Kind;
   name: string;
@@ -236,6 +239,7 @@ async function build() {
       group: meta.group ?? meta.family ?? '',
       status: meta.status ?? 'stable',
       description: meta.description ?? '',
+      ...(meta.labels ? { labels: meta.labels } : {}),
       files: files.map((f) => ({
         path: rel(f),
         target: f.startsWith(s.dir + path.sep)

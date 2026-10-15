@@ -9,6 +9,7 @@
     "prebuild": "node scripts/copy-monaco.mjs",
     "build": "vite build",
     "preview": "vite preview --port 4173 --strictPort",
+    "test": "node --test test/block-labels.test.mjs test/block-labels.client.test.mjs",
     "visual": "playwright test catalog.visual",
     "visual:update": "playwright test catalog.visual --update-snapshots=changed",
     "a11y": "playwright test a11y",
@@ -26,6 +27,8 @@
     "recharts": "^3.10.0"
   },
   "devDependencies": {
+    "@gntik-ai/blocks-baseline": "npm:@gntik-ai/blocks@0.5.0",
+    "@gntik-ai/ui-baseline": "npm:@gntik-ai/ui@0.5.0",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.0",

@@ -20,4 +20,6 @@ export interface BlockMeta {
   description: string;
   /** @gntik-ai/ui (and other kit) components it composes, for docs and agents. */
   uses: string[];
+  /** Optional per-instance copy contract, listed in docs and kit metadata. */
+  labels?: Array<{ key: string; type: string; state: string }>;
 }

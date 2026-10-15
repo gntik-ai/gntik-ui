@@ -15,6 +15,7 @@ import {
   filterKit,
   firstSentence,
   loadKit,
+  labelsTable,
   nearIds,
   readRepoFile,
   usageOf,
@@ -63,6 +64,7 @@ export function mdKitItem(root: string, item: KitItem, opts: KitItemOptions = {}
   meta.push(`**Registry dependencies:** ${item.registryDependencies.map((d) => `\`${d}\``).join(', ') || '—'}`);
   if (item.docs) meta.push(`**Docs file:** [${item.docs}](${REPO_BLOB}${item.docs})`);
   out.push(meta.join('  \n'));
+  if (item.labels?.length) out.push(labelsTable(item));
   if (info.keyboard.length) {
     out.push(
       '## Keyboard',
@@ -115,6 +117,7 @@ export function mdKitList(items: KitItem[], total: number): string {
         )
         .join('\n'),
     );
+    for (const item of of) if (item.labels?.length) out.push(`### ${item.name} labels\n\n${labelsTable(item)}`);
   }
   out.push(
     'Details + source: `get_component` / `get_block` / `get_template` with the id. Build a page: `scaffold_page`.',
