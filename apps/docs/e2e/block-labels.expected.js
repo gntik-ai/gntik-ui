@@ -140,7 +140,8 @@ export function expectedTable(block, language, state) {
   };
   if (block === 'pagination') {
     const s = paginationStates[state];
-    pagination(ranges[language][state], s.size, s.pages, s.options, '#root > div > div:first-child > span');
+    // Base UI adds focus guards and an aria-owns span beside the caption while Select is open.
+    pagination(ranges[language][state], s.size, s.pages, s.options, '#root > div > div:first-child > span:first-child');
   } else if (block === 'filter') {
     const s = filterStates[state];
     name('searchLandmark', '#root [role="search"]', l.searchLandmark);
@@ -215,7 +216,7 @@ export function expectedTable(block, language, state) {
         '10',
         ['1'],
         undefined,
-        '#root > div > div:last-child > div:first-child > span',
+        '#root > div > div:last-child > div:first-child > span:first-child',
       );
     }
     if (s.selected) text('selectionCount', '#root span[aria-live]', es ? 'Elegidos 1' : 'Chosen 1');
@@ -228,7 +229,7 @@ export function expectedTable(block, language, state) {
       name('pinnedRight/caller:columns', '[role="menuitem"][aria-haspopup="menu"]', ...pinNames);
       caller.push('Name', 'Region', 'Quantity');
       if (s.suffix) {
-        text(s.suffix, '[role="menuitem"][aria-haspopup="menu"] .ms-auto', l[s.suffix]);
+        text(s.suffix, '[role="menuitem"][aria-haspopup="menu"] span.ms-auto', l[s.suffix]);
       }
     }
     if (s.pin) {
