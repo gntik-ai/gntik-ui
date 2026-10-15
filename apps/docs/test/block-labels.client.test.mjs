@@ -107,7 +107,7 @@ test('element tables match client-rendered blocks, including Select portal ancho
           block === 'pagination'
             ? ['initial', 'next', 'previous', 'numbered', 'open']
             : block === 'filter'
-              ? ['initial', 'menu']
+              ? ['initial', 'menu', 'selected', 'focused', 'removed', 'clear', 'views', 'applied']
               : ['initial', 'columns', 'toggled', 'pin-options', 'pinned', 'left-suffix'];
         for (const state of states) {
           const byRole = (role, name) => getByRole(dom.window.document.body, role, { name, exact: true });
@@ -125,6 +125,25 @@ test('element tables match client-rendered blocks, including Select portal ancho
             await waitFor(() => getByRole(dom.window.document.body, block === 'pagination' ? 'listbox' : 'menu'));
           }
           if (state === 'toggled') await user.click(byRole('menuitemcheckbox', 'Region'));
+          if (block === 'filter') {
+            if (state === 'selected') {
+              await user.click(byRole('menuitemcheckbox', 'Ready'));
+              await user.keyboard('{Escape}');
+              await waitFor(() => assert.equal(queryByRole(dom.window.document.body, 'menu'), null));
+            }
+            const remove = () => byRole('button', language === 'es' ? 'Quitar Status|Ready' : 'Drop Status|Ready');
+            if (state === 'focused') await React.act(async () => remove().focus());
+            if (state === 'removed') await user.keyboard('{Delete}');
+            if (state === 'clear') {
+              await user.type(byRole('searchbox', labels.searchLabel), 'Alpha');
+              await user.click(byRole('button', labels.clearAll));
+            }
+            if (state === 'views') await user.click(byRole('combobox', labels.savedViewLabel));
+            if (state === 'applied') {
+              await user.click(byRole('option', 'Saved'));
+              await waitFor(() => assert.equal(queryByRole(dom.window.document.body, 'listbox'), null));
+            }
+          }
           if (state === 'pin-options' || state === 'left-suffix') {
             await React.act(async () =>
               dom.window.document.querySelector('[role="menuitem"][aria-haspopup="menu"]').focus(),
@@ -152,14 +171,21 @@ test('element tables match client-rendered blocks, including Select portal ancho
             assert.deepEqual(actual, values, `${block}/${language}/${state}/${key}: ${selector}`);
           }
           const walk = dom.window.document.createTreeWalker(dom.window.document.body, dom.window.NodeFilter.SHOW_TEXT);
+          const hiddenByDisplay = new WeakMap();
+          const isHidden = (element) => {
+            if (!element) return false;
+            if (!hiddenByDisplay.has(element))
+              hiddenByDisplay.set(
+                element,
+                dom.window.getComputedStyle(element).display === 'none' || isHidden(element.parentElement),
+              );
+            return hiddenByDisplay.get(element);
+          };
           while (walk.nextNode()) {
             const node = walk.currentNode;
             const text = node.textContent.trim();
             if (!text || node.parentElement.closest('script, style')) continue;
-            let hidden = false;
-            for (let parent = node.parentElement; parent; parent = parent.parentElement)
-              if (dom.window.getComputedStyle(parent).display === 'none') hidden = true;
-            if (!hidden)
+            if (!isHidden(node.parentElement))
               assert.ok(expected.strings.includes(text), `${block}/${language}/${state}: unexpected text ${text}`);
           }
           for (const node of dom.window.document.querySelectorAll(
