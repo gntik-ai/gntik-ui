@@ -5,11 +5,51 @@ import test from 'node:test';
 import { expectedTable } from '../e2e/block-labels.expected.js';
 import { fixtureLabels } from '../src/block-labels-copy.js';
 import { installFixtureLandmarks } from '../src/block-labels-landmarks.js';
-import { axeViolations } from '../e2e/block-labels.helpers.js';
+import { axeViolations, settledFocus } from '../e2e/block-labels.helpers.js';
 
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
 const { JSDOM } = require('jsdom');
 const fixturePage = readFileSync(new URL('../block-labels.html', import.meta.url), 'utf8');
+
+test('focus samples wait for frame-delayed DOM updates and preserve both trace shapes', async () => {
+  const dom = new JSDOM('<button aria-label="Before">Before</button>', {
+    pretendToBeVisual: true,
+    runScripts: 'outside-only',
+  });
+  // The browser evaluation boundary runs in a real DOM with its own animation frames.
+  const page = { evaluate: (fn, arg) => dom.window.eval(`(${fn.toString()})`)(arg) };
+  try {
+    const button = dom.window.document.querySelector('button');
+    button.focus();
+    dom.window.requestAnimationFrame(() => {
+      button.setAttribute('aria-label', 'After');
+      button.textContent = 'Ready';
+      button.tabIndex = 2;
+    });
+    assert.deepEqual(Array.from(await settledFocus(page)), ['BUTTON', null, 'After', 'Ready', 2]);
+    assert.deepEqual(Array.from(await settledFocus(page, false)), ['BUTTON', null, 'After', 'Ready']);
+  } finally {
+    dom.window.close();
+  }
+});
+
+test('a continuously changing focus trace fails within the bounded settle timeout', async () => {
+  const dom = new JSDOM('<button>Changing</button>', { pretendToBeVisual: true, runScripts: 'outside-only' });
+  const page = { evaluate: (fn, arg) => dom.window.eval(`(${fn.toString()})`)(arg) };
+  try {
+    const button = dom.window.document.querySelector('button');
+    button.focus();
+    let change = 0;
+    const update = () => {
+      button.setAttribute('aria-label', String(++change));
+      dom.window.requestAnimationFrame(update);
+    };
+    dom.window.requestAnimationFrame(update);
+    await assert.rejects(settledFocus(page), /did not settle within 3000ms/);
+  } finally {
+    dom.window.close();
+  }
+});
 
 test('element tables match client-rendered blocks, including Select portal anchors', { timeout: 300_000 }, async () => {
   let checkpoint = 'setup';

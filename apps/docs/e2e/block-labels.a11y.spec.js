@@ -7,6 +7,8 @@ import {
   axeViolations,
   closed,
   openedDialog,
+  openedPopup,
+  settledFocus,
   keyboardAtState,
   surfaces,
   checkCopy,
@@ -79,7 +81,7 @@ async function paginationMatrix(page, l, checkpoint, language) {
   await page.getByRole('button', { name: pageName(3), exact: true }).click();
   await checkpoint('numbered');
   await page.getByRole('combobox', { name: l.rowsPerPageLabel, exact: true }).click();
-  await expect(page.getByRole('listbox')).toBeVisible();
+  await openedPopup(page, 'listbox');
   await checkpoint('open');
   await page.getByRole('option', { name: '25', exact: true }).click();
   await closed(page, 'listbox');
@@ -90,7 +92,7 @@ async function filterMatrix(page, l, checkpoint, language) {
   const remove = language ? `${language === 'es' ? 'Quitar' : 'Drop'} Status|Ready` : 'Remove filter Status: Ready';
   await checkpoint('initial');
   await page.getByRole('button', { name: l.addFilter, exact: true }).click();
-  await expect(page.getByRole('menu')).toBeVisible();
+  await openedPopup(page, 'menu');
   await checkpoint('menu');
   await page.getByRole('menuitemcheckbox', { name: 'Ready', exact: true }).click();
   await page.keyboard.press('Escape');
@@ -104,7 +106,7 @@ async function filterMatrix(page, l, checkpoint, language) {
   await page.getByRole('button', { name: l.clearAll, exact: true }).click();
   await checkpoint('clear');
   await page.getByRole('combobox', { name: l.savedViewLabel, exact: true }).click();
-  await expect(page.getByRole('listbox')).toBeVisible();
+  await openedPopup(page, 'listbox');
   await checkpoint('views');
   await page.getByRole('option', { name: 'Saved', exact: true }).click();
   await closed(page, 'listbox');
@@ -120,7 +122,7 @@ async function tableMatrix(page, l, checkpoint, language) {
       .filter({ hasText: /^(Default view|Original view|Vista original|Saved|Snapshot|Renamed)/ });
   const menu = async () => {
     await views().click();
-    await expect(page.getByRole('menu')).toBeVisible();
+    await openedPopup(page, 'menu');
   };
   await checkpoint('initial');
   // Constrain the consumer layout while retaining the 1280x900 screenshot viewport.
@@ -135,27 +137,32 @@ async function tableMatrix(page, l, checkpoint, language) {
   await page.locator('#root > div').evaluate((node) => (node.style.maxWidth = ''));
   await expect(region).toHaveCount(0);
   await page.getByRole('button', { name: l.columns, exact: true }).click();
-  await expect(page.getByRole('menu')).toBeVisible();
+  await openedPopup(page, 'menu');
   await checkpoint('columns');
   await page.getByRole('menuitemcheckbox', { name: 'Region', exact: true }).click();
   await checkpoint('toggled');
   await page.getByRole('menuitem', { name: 'Name', exact: true }).hover();
   await expect(page.getByRole('menuitemradio', { name: l.pinLeft, exact: true })).toBeVisible();
+  await openedPopup(page, 'menu');
   await checkpoint('pin-options');
   await page.getByRole('menuitemradio', { name: l.pinLeft, exact: true }).click();
   await closed(page, 'menu');
   await checkpoint('pinned');
   // Open again to collect the pinned suffix and both other pin options.
   await page.getByRole('button', { name: l.columns, exact: true }).click();
+  await openedPopup(page, 'menu');
   await page.getByRole('menuitem', { name: `Name${l.pinnedLeft}`, exact: true }).hover();
   await expect(page.getByRole('menuitemradio', { name: l.pinRight, exact: true })).toBeVisible();
+  await openedPopup(page, 'menu');
   await checkpoint('left-suffix');
   await page.getByRole('menuitemradio', { name: l.pinRight, exact: true }).click();
   await closed(page, 'menu');
   await checkpoint('pinned-right');
   await page.getByRole('button', { name: l.columns, exact: true }).click();
+  await openedPopup(page, 'menu');
   await page.getByRole('menuitem', { name: `Name${l.pinnedRight}`, exact: true }).hover();
   await expect(page.getByRole('menuitemradio', { name: l.unpinned, exact: true })).toBeVisible();
+  await openedPopup(page, 'menu');
   await checkpoint('right-suffix');
   await page.getByRole('menuitemradio', { name: l.unpinned, exact: true }).click();
   await closed(page, 'menu');
@@ -312,17 +319,15 @@ for (const theme of themes)
       const baseline = new Map();
       const keyboardStates = new Map();
       const snapshots = [];
+      // Parallel repeats must not overwrite or clean up another repeat's baseline.
+      const screenshotName = (state) => `issue30-${block}-${theme}-${state}-${testInfo.repeatEachIndex}.png`;
       const keyboard = async () => {
         await page.locator('button, input').first().focus();
+        await settledFocus(page, false);
         const trace = [];
         for (let n = 0; n < 12; n++) {
           await page.keyboard.press('Tab');
-          trace.push(
-            await page.evaluate(() => {
-              const el = document.activeElement;
-              return [el.tagName, el.getAttribute('role'), el.getAttribute('aria-label'), el.textContent];
-            }),
-          );
+          trace.push(await settledFocus(page, false));
         }
         return trace;
       };
@@ -333,7 +338,7 @@ for (const theme of themes)
           keyboardStates.set(state, await keyboardAtState(page));
           expect(await axeViolations(page)).toEqual([]);
           baseline.set(state, await surfaces(page));
-          const name = `issue30-${block}-${theme}-${state}.png`;
+          const name = screenshotName(state);
           const file = testInfo.snapshotPath(name);
           fs.mkdirSync(path.dirname(file), { recursive: true });
           snapshots.push(file);
@@ -345,7 +350,7 @@ for (const theme of themes)
           expect(await keyboardAtState(page)).toEqual(keyboardStates.get(state));
           expect(await surfaces(page)).toEqual(baseline.get(state));
           expect(await axeViolations(page)).toEqual([]);
-          await expect(page).toHaveScreenshot(`issue30-${block}-${theme}-${state}.png`, {
+          await expect(page).toHaveScreenshot(screenshotName(state), {
             maxDiffPixelRatio: 0.01,
             animations: 'disabled',
           });
@@ -411,6 +416,53 @@ for (const theme of themes)
         }
       });
     }
+
+test('keyboard checkpoints wait for frame-delayed focus updates, including restoration', async ({ page }) => {
+  await page.setContent('<main id="root"><button aria-label="Before">Probe</button><button>Restore</button></main>');
+  await page.getByRole('button', { name: 'Restore' }).focus();
+  await page.evaluate(() => {
+    const [probe, restore] = document.querySelectorAll('button');
+    probe.addEventListener('focus', () => requestAnimationFrame(() => probe.setAttribute('aria-label', 'After')));
+    let restores = 0;
+    restore.addEventListener('focus', () => {
+      if (++restores === 2) requestAnimationFrame(() => restore.setAttribute('aria-label', 'Restored'));
+    });
+  });
+  const trace = await keyboardAtState(page);
+  expect(trace[1]).toEqual(['BUTTON', null, 'After', 'Probe', 0]);
+  expect(trace.at(-1)).toEqual(['BUTTON', null, 'Restored', 'Restore', 0]);
+});
+
+for (const theme of themes)
+  for (const selected of [false, true])
+    test(`editor error contrast ${selected ? 'selected' : 'plain'} and hovered ${theme}`, async ({ page }) => {
+      await load(page, 'table', 'default', theme, 'editing');
+      const row = page.locator('[data-row-id="b"]');
+      if (selected) {
+        await row.getByRole('checkbox').focus();
+        await page.keyboard.press('Space');
+        await expect(row).toHaveAttribute('data-selected');
+      }
+      // Keyboard entry starts on an unhovered last row; clicking the input then adds hover.
+      await row.locator('[data-cell-edit-trigger]').last().focus();
+      await page.keyboard.press('Enter');
+      const input = row.getByRole('spinbutton');
+      await input.fill('0');
+      await page.keyboard.press('Enter');
+      const alert = row.getByRole('alert');
+      await expect(alert).toHaveText('Enter 1 or more.');
+      await expect(input).toHaveAttribute('aria-describedby', await alert.getAttribute('id'));
+      expect(await row.evaluate((node) => node.matches(':hover'))).toBe(false);
+      expect(await axeViolations(page)).toEqual([]);
+      await input.click();
+      expect(await row.evaluate((node) => node.matches(':hover'))).toBe(true);
+      expect(await axeViolations(page)).toEqual([]);
+      // An in-flow alert remains visible below its editor, including in the final row.
+      const fieldBox = await input.boundingBox();
+      const alertBox = await alert.boundingBox();
+      expect(alertBox.y).toBeGreaterThanOrEqual(fieldBox.y + fieldBox.height);
+      await expect(alert).toBeInViewport();
+    });
 
 test('the #79 exemption keeps unnamed non-Select inputs and other listbox rules failing', async ({ page }) => {
   await page.setContent(

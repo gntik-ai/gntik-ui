@@ -36,9 +36,54 @@ export async function openedDialog(page) {
     .toBe(0);
 }
 
+export async function openedPopup(page, role) {
+  const popup = page.getByRole(role);
+  await expect(popup.last()).toBeVisible();
+  await expect
+    .poll(() => popup.evaluateAll((nodes) => nodes.some((node) => node.contains(document.activeElement))), {
+      timeout: 3_000,
+    })
+    .toBe(true);
+}
+
+// Read exactly the existing trace fields, twice on consecutive animation frames.
+// A real timeout also bounds the wait if animation frames stop arriving.
+export async function settledFocus(page, includeTabIndex = true) {
+  return page.evaluate(
+    (withTabIndex) =>
+      new Promise((resolve, reject) => {
+        const read = () => {
+          const el = document.activeElement;
+          const fields = [el.tagName, el.getAttribute('role'), el.getAttribute('aria-label'), el.textContent];
+          if (withTabIndex) fields.push(el.tabIndex);
+          return fields;
+        };
+        let previous = read();
+        let frame;
+        const timer = setTimeout(() => {
+          cancelAnimationFrame(frame);
+          reject(new Error('Keyboard focus trace did not settle within 3000ms'));
+        }, 3_000);
+        const poll = () => {
+          const current = read();
+          if (JSON.stringify(current) === JSON.stringify(previous)) {
+            clearTimeout(timer);
+            resolve(current);
+          } else {
+            previous = current;
+            frame = requestAnimationFrame(poll);
+          }
+        };
+        frame = requestAnimationFrame(poll);
+      }),
+    includeTabIndex,
+  );
+}
+
 // Exercise focus movement at each baseline state without submitting or toggling a value.
 // Stay inside an open popup so the probe does not close it before the checkpoint.
 export async function keyboardAtState(page) {
+  const initial = await settledFocus(page);
   const originalFocus = await page.evaluateHandle(() => document.activeElement);
   const menu = page.getByRole('menu');
   const list = page.getByRole('listbox');
@@ -56,12 +101,8 @@ export async function keyboardAtState(page) {
     first = scope.locator('input:not([type="hidden"]):not([disabled]), button:not([disabled])').first();
     keys = ['Tab', 'Shift+Tab'];
   }
-  const focus = () =>
-    page.evaluate(() => {
-      const el = document.activeElement;
-      return [el.tagName, el.getAttribute('role'), el.getAttribute('aria-label'), el.textContent, el.tabIndex];
-    });
-  const trace = [await focus()];
+  const focus = () => settledFocus(page);
+  const trace = [initial];
   try {
     await first.focus();
     trace.push(await focus());

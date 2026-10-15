@@ -272,7 +272,7 @@ export function EditableCell<T>({
         <p
           id={errorId}
           role="alert"
-          className="mt-1 text-start text-[11.5px] font-medium whitespace-normal text-destructive-text"
+          className="mt-1 rounded-sm border border-border bg-popover px-1.5 py-1 text-start text-[11.5px] font-medium whitespace-normal text-destructive-text"
         >
           {error}
         </p>
