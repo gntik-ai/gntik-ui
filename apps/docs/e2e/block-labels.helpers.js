@@ -232,9 +232,8 @@ export async function checkCopy(page, expected, language) {
     }
   }
   const evidence = await surfaces(page);
-  const strings = [
+  const domStrings = [
     ...evidence.text,
-    ...evidence.names.map((n) => n.name),
     ...evidence.attributes.flatMap((a) =>
       ['aria-label', 'aria-description', 'title', 'placeholder', 'aria-valuetext', 'live']
         .map((key) => a[key])
@@ -243,9 +242,15 @@ export async function checkCopy(page, expected, language) {
   ];
   // Expected values are a state/element table, including explicit caller and composed names.
   const allowed = new Set(expected.strings);
-  for (const string of strings) expect(allowed.has(string), `Unexpected ${language} surface: ${string}`).toBe(true);
+  for (const string of domStrings) expect(allowed.has(string), `Unexpected ${language} surface: ${string}`).toBe(true);
+  const allowedNames = new Set([...expected.strings, ...expected.browserNames]);
+  const names = evidence.names.map((n) => n.name);
+  for (const name of names)
+    expect(allowedNames.has(name), `Unexpected ${language} accessible name: ${name}`).toBe(true);
+  for (const name of expected.browserNames)
+    expect(names, `Missing ${language} accessible name: ${name}`).toContain(name);
   if (language === 'es') {
-    for (const string of strings) {
+    for (const string of [...domStrings, ...names]) {
       expect(ENGLISH_DEFAULTS, `English default remained: ${string}`).not.toContain(string);
       expect(string).not.toMatch(
         /^(Remove filter |Resize .* column$|Select all in |Actions for |Loading items|\d+ selected$|Page \d+$|Enter \d+ or (more|less)\.$)/,

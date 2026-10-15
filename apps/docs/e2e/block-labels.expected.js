@@ -113,6 +113,9 @@ export function expectedTable(block, language, state) {
   const es = language === 'es';
   const elements = [];
   const caller = [];
+  // Chromium's accessibility tree applies CSS text-transform to name-from-content.
+  // Keep these explicit, state-specific browser names separate from verbatim DOM copy.
+  const browserNames = [];
   const add = (key, selector, surface, ...values) => elements.push({ key, selector, surface, values });
   const name = (key, selector, ...values) => add(key, selector, 'name', ...values);
   const text = (key, selector, ...values) => add(key, selector, 'text', ...values);
@@ -165,6 +168,7 @@ export function expectedTable(block, language, state) {
       text('caller:field', '[role="menu"] [role="group"] > :first-child', 'Status');
       name('caller:options', '[role="menuitemcheckbox"]', 'Ready', 'Failed');
       caller.push('Ready', 'Failed');
+      browserNames.push('STATUS');
     }
     if (s.options) {
       name('caller:views', '[role="listbox"]:visible [role="option"]', 'Saved');
@@ -188,6 +192,7 @@ export function expectedTable(block, language, state) {
     text('actions', '#root thead th:last-child', l.actions);
     const cols = s.right ? ['Quantity', 'Name'] : s.hidden ? ['Name', 'Quantity'] : ['Name', 'Region', 'Quantity'];
     const widths = s.right ? [120, 200] : s.hidden ? [s.width || 200, 120] : [200, 160, 120];
+    if (!s.dialog) browserNames.push('NAME', ...(!s.hidden ? ['REGION'] : []));
     name('resizeColumn', '#root [data-column-resizer]', ...cols.map((c) => `${es ? 'Ancho de' : 'Width for'} ${c}`));
     add(
       'columnWidth',
@@ -221,6 +226,9 @@ export function expectedTable(block, language, state) {
     }
     if (s.selected) text('selectionCount', '#root span[aria-live]', es ? 'Elegidos 1' : 'Chosen 1');
     if (s.columns) {
+      browserNames.push(
+        ...(es ? ['COLUMNAS VISIBLES', 'POSICIÓN DE COLUMNAS'] : ['DISPLAYED COLUMNS', 'COLUMN PLACEMENT']),
+      );
       const columnMenu = '[role="menu"]:has([role="menuitemcheckbox"])';
       text('visibleColumns', `${columnMenu} > [role="group"]:first-child > :first-child`, l.visibleColumns);
       text('pinColumns', `${columnMenu} > [role="group"]:last-child > :first-child`, l.pinColumns);
@@ -237,6 +245,7 @@ export function expectedTable(block, language, state) {
       caller.push(l.pinLeft, l.pinRight, l.unpinned);
     }
     if (s.views) {
+      browserNames.push(es ? 'VISTAS DE TABLA' : 'TABLE VIEWS');
       text('views', '[role="menu"]:visible > [role="group"] > :first-child', l.views);
       name(
         'defaultViewOption/caller:views',
@@ -324,5 +333,5 @@ export function expectedTable(block, language, state) {
         );
     }
   }
-  return { elements, strings: [...caller, ...elements.flatMap((entry) => entry.values)] };
+  return { elements, strings: [...caller, ...elements.flatMap((entry) => entry.values)], browserNames };
 }
