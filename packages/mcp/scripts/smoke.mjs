@@ -48,6 +48,10 @@ const expected = [
   'scaffold_preset',
 ];
 for (const e of expected) if (!names.includes(e)) fail(`missing tool ${e}`);
+const validationSchema = tools.find((t) => t.name === 'validate_page')?.inputSchema;
+if (validationSchema?.properties?.extendedColorChecks?.type !== 'boolean')
+  fail('validate_page without extendedColorChecks boolean');
+if (validationSchema?.required?.includes('extendedColorChecks')) fail('extendedColorChecks must be optional');
 ok(`tools (${names.length}): ${names.join(', ')}`);
 
 const overview = textOf(await client.callTool({ name: 'overview', arguments: {} }));
@@ -101,6 +105,8 @@ ok('get_adoption_guide');
 
 const rules = textOf(await client.callTool({ name: 'get_rules', arguments: {} }));
 if (!rules.includes('hex-color')) fail('get_rules without rule ids');
+for (const coverage of ['bg-white', 'text-black', 'CSS Color 4', 'hwb', 'color:', 'ring-offset', 'extendedColorChecks'])
+  if (!rules.includes(coverage)) fail(`get_rules without ${coverage} coverage`);
 ok('get_rules');
 
 const analysis = textOf(
@@ -131,6 +137,29 @@ const good = textOf(
 );
 if (!good.includes('✅')) fail('validate_page rejects tokenised code');
 ok('validate_page (bad ❌ / good ✅)');
+
+for (const extendedColorChecks of [undefined, true, false]) {
+  const result = await client.callTool({
+    name: 'validate_page',
+    arguments: {
+      source: '\n<div className="bg-black border-x-[color:red]" />',
+      filename: 'Page.tsx',
+      ...(extendedColorChecks === undefined ? {} : { extendedColorChecks }),
+    },
+  });
+  const output = textOf(result);
+  if (result.isError || !output.includes('# Validation · Page.tsx')) fail('validate_page without filename');
+  if (extendedColorChecks === false) {
+    if (!output.includes('✅') || output.includes('**palette-class**') || output.includes('**arbitrary-color**'))
+      fail('validate_page opt-out does not restore previous output');
+  } else {
+    if (!output.includes('L2 · **palette-class** (error)') || !output.includes('L2 · **arbitrary-color** (error)'))
+      fail('validate_page does not report extended colour checks by default');
+    if (!output.includes('bg-black') || !output.includes('border-x-[color:red]'))
+      fail('validate_page without offending classes');
+  }
+}
+ok('validate_page (extended colour checks default / true / false)');
 
 const sync = textOf(await client.callTool({ name: 'sync_design_system', arguments: {} }));
 if (!sync.includes('kit items')) fail('sync without stats');
