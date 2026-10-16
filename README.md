@@ -72,6 +72,26 @@ pnpm changeset        # describe a change to a published package
 Docs and catalog: **https://ui.gntik.ai**. Any item also installs with the shadcn CLI:
 `npx shadcn@latest add https://ui.gntik.ai/r/button.json` (index at `/r/registry.json`).
 
+Both install paths cover the same **261 items** in the generated
+[release manifest](packages/mcp/registry-manifest.json), pinned to release commit `b464709`:
+
+| Package install             | Registry items (id and URL in the manifest) |
+| --------------------------- | ------------------------------------------- |
+| `@gntik-ai/ui@0.5.0`        | 112 components, layouts and shared helpers  |
+| `@gntik-ai/chat@0.5.0`      | 12 chat components                          |
+| `@gntik-ai/blocks@0.6.0`    | 75 blocks                                   |
+| `@gntik-ai/templates@0.6.0` | 61 templates                                |
+| `@gntik-ai/tokens@0.2.1`    | `gntik-tokens` support item                 |
+
+For a pinned package install, use the exact versions above with `pnpm add`.
+The live registry follows main, so its sources can include unreleased changes;
+these versions describe the release baseline, not a versioned registry endpoint.
+`pnpm registry:check` compares the live inventory and files with the current generator offline.
+`pnpm registry:release-check` compares sources with version tags, blocks/templates with public
+npm tarballs, and dependency ranges with published package metadata at release time.
+The manifest records no missing components relative to the `b464709` snapshot.
+The release workflow integration remains a maintainer follow-up; the release gate is not active yet.
+
 Fastest path: `npx @gntik-ai/cli init` in a Vite or Next app (writes CSS imports,
 `gntik-ui.json` and the theme wiring, installs the packages), then `gntik-ui add <id>` for
 components, blocks or page templates (`gntik-ui list --json` shows everything). By hand:

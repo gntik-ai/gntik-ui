@@ -33,6 +33,30 @@ On every push to `main` the Release workflow runs `changesets/action`:
 
 Review the Version Packages PR like any other: the changelog is what consumers read.
 
+## Registry release baseline
+
+The live registry follows main. Its offline PR gate, `pnpm registry:check`, derives the
+inventory from source discovery and compares generated files at the same commit. The committed
+[`registry-release-snapshot.json`](../../packages/mcp/registry-release-snapshot.json) records
+the item names from `apps/docs/public/r/registry.json` at `b464709`; checking or generating the
+manifest needs no historical Git objects. `missingComponents` means discovered ids absent
+from that historical inventory, rather than components missing from today's registry.
+
+The manifest pins are explicit and are **not** advanced by `pnpm registry` or Changesets.
+Before enabling the release workflow fidelity step, a maintainer must advance the baseline to
+the intended published release: update `RELEASE_COMMIT` and the per-package `PINNED_VERSIONS`
+in `packages/mcp/scripts/build-registry-manifest.ts`, replace the snapshot with the sorted item
+names from that commit's registry index (recording its commit and path), then run `pnpm registry`.
+Update the README, adoption guide and historical fidelity test expectations for the new release.
+Commit these together; never edit `registry-manifest.json` by hand.
+
+Run `pnpm registry:check`, then `pnpm registry:release-check` with the version tags available
+and access to public npm. The release check fails on missing tags or unavailable npm artifacts;
+only its historical test fixtures skip when a shallow PR checkout lacks the tags. The current
+base includes unreleased data-table changes relative to blocks 0.6.0, so the release check
+correctly reports those files until the baseline advances to a release containing them.
+The release workflow integration remains a maintainer follow-up.
+
 ## Canary releases
 
 For testing an unmerged change in a product app:

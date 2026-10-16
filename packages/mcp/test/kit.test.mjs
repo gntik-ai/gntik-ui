@@ -329,3 +329,12 @@ test('scaffold_preset: monogram and converted SVG with token colours', async () 
   assert.equal(svgToJsx('<g stroke-linecap="round"></g>'), '<g strokeLinecap="round" />');
   assert.match(await call('scaffold_preset', { name: 'X', svg: 'not svg' }), /Cannot scaffold/);
 });
+
+test('get_adoption_guide: both installation paths share the pinned manifest inventory', async () => {
+  const guide = await call('get_adoption_guide');
+  assert.match(guide, /registry-manifest\.json/);
+  assert.match(guide, /261 items/);
+  for (const spec of ['ui@0.5.0', 'chat@0.5.0', 'blocks@0.6.0', 'templates@0.6.0', 'tokens@0.2.1'])
+    assert.ok(guide.includes(`@gntik-ai/${spec}`), spec);
+  assert.match(guide, /follows main/);
+});

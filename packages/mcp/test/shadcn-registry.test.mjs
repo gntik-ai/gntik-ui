@@ -126,6 +126,12 @@ test('npm dependencies carry version ranges, kit packages stay bare', () => {
   assert.deepEqual(byName.get('kpi-row').css, { '@import "@gntik-ai/ui/styles.css"': {} });
 });
 
+test('Node builtins are never installable npm dependencies', () => {
+  for (const item of items) {
+    assert.ok(!item.dependencies.some((dep) => dep.startsWith('node:')), item.name);
+  }
+});
+
 test('file contents are inlined and relative imports resolve to copied targets', () => {
   const SPEC = /(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s+)(['"])(\.[^'"\n]*)\1/g;
   const targetsOf = (name, seen = new Set()) => {

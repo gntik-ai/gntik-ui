@@ -8,8 +8,7 @@
   "dependencies": [
     "@gntik-ai/blocks",
     "@gntik-ai/icons",
-    "@gntik-ai/ui",
-    "node:crypto"
+    "@gntik-ai/ui"
   ],
   "registryDependencies": [
     "https://ui.gntik.ai/r/gntik-tokens.json"

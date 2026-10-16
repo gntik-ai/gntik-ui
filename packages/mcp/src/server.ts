@@ -414,6 +414,7 @@ export function buildServer(ctx: ServerContext): McpServer {
           : '(not found: packages/tokens/src/tailwind.css)',
         '## Theme switching',
         'Class on `<html>`: none = light · `dark` · `high_contrast` (ThemeProvider handles it). For strict CSP, copy `@gntik-ai/ui/theme-bootstrap.js` to same-origin static assets and load it synchronously in <head> before stylesheets and the app bundle (no async, defer or type="module"). The file uses storage key `gntik-theme` and default mode `dark`; custom storageKey/defaultMode need a file generated from `themeScript(storageKey, defaultMode)`. Inline `themeScript()` is still an option when CSP permits it. Fonts: Geist + Geist Mono (self-hosted with @fontsource/geist and @fontsource/geist-mono).',
+        'Both install paths use the item ids and per-package release pins in [registry-manifest.json](https://github.com/gntik-ai/gntik-ui/blob/main/packages/mcp/registry-manifest.json). The live registry follows main. Run release fidelity when packages publish; release workflow wiring remains a maintainer follow-up.',
         'Full tokens: tool `get_tokens` (format css), or install `@gntik-ai/tokens`. Brand preset (name + logo): `scaffold_preset`.',
       ].join('\n\n');
       return text(out);

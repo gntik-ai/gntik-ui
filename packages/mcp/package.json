@@ -23,9 +23,10 @@
     "start:http": "node dist/index.js --http",
     "test": "npm run build && node --test test/*.test.mjs",
     "smoke": "npm run build && node scripts/smoke.mjs",
-    "registry": "node --import tsx scripts/build-kit-registry.ts && node --import tsx scripts/build-inventory.ts && node --import tsx scripts/build-llms.ts && tsc -p tsconfig.json && node dist/build-registry.js && node --import tsx scripts/build-shadcn-registry.ts",
-    "registry:check": "node --import tsx scripts/build-kit-registry.ts --check && node --import tsx scripts/build-inventory.ts --check && node --import tsx scripts/build-llms.ts --check && tsc -p tsconfig.json && node dist/build-registry.js --check && node --import tsx scripts/build-shadcn-registry.ts --check",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "registry": "node --import tsx scripts/build-kit-registry.ts && node --import tsx scripts/build-inventory.ts && node --import tsx scripts/build-llms.ts && tsc -p tsconfig.json && node dist/build-registry.js && node --import tsx scripts/build-shadcn-registry.ts && node --import tsx scripts/build-registry-manifest.ts",
+    "registry:check": "node --import tsx scripts/build-kit-registry.ts --check && node --import tsx scripts/build-inventory.ts --check && node --import tsx scripts/build-llms.ts --check && tsc -p tsconfig.json && node dist/build-registry.js --check && node --import tsx scripts/build-shadcn-registry.ts --check && node --import tsx scripts/build-registry-manifest.ts --check",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "registry:release-check": "node --import tsx scripts/check-registry-release.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",

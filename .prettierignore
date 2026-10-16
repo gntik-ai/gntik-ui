@@ -5,6 +5,7 @@ pnpm-lock.yaml
 **/CHANGELOG.md
 registry.json
 kit-registry.json
+packages/mcp/registry-manifest.json
 INVENTORY.md
 apps/docs/public/
 packages/cli/test/fixtures/
