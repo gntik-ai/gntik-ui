@@ -1,6 +1,7 @@
 import { expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
+import { isDeepStrictEqual } from 'node:util';
 
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
 const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
@@ -185,6 +186,82 @@ export async function surfaces(page) {
     tree: await page.locator('body').ariaSnapshot(),
     callbacks: await page.evaluate(() => window.callbackCalls),
   };
+}
+
+// #79 adds the trigger's name to Select lists; only the 0.5.0 comparison removes that exact delta.
+export async function selectListboxPairs(page) {
+  const lists = await page.getByRole('listbox').all();
+  if (!lists.length) return [];
+  const session = await page.context().newCDPSession(page);
+  try {
+    const { root } = await session.send('DOM.getDocument');
+    const { nodeIds } = await session.send('DOM.querySelectorAll', {
+      nodeId: root.nodeId,
+      selector: '[role="combobox"][aria-haspopup="listbox"][aria-controls]',
+    });
+    const triggers = [];
+    for (const nodeId of nodeIds) {
+      const { node } = await session.send('DOM.describeNode', { nodeId });
+      const attributes = {};
+      for (let index = 0; index < node.attributes.length; index += 2)
+        attributes[node.attributes[index]] = node.attributes[index + 1];
+      triggers.push({ backendNodeId: node.backendNodeId, controls: attributes['aria-controls'] });
+    }
+    const { nodes } = await session.send('Accessibility.getFullAXTree');
+    const pairs = [];
+    for (const list of lists) {
+      const listboxId = await list.getAttribute('id');
+      if (!listboxId) continue;
+      const matches = triggers.filter((trigger) => trigger.controls === listboxId);
+      if (!matches.length) continue;
+      expect(matches, '#79 requires one trigger per listbox').toHaveLength(1);
+      const triggerNodeId = matches[0].backendNodeId;
+      const names = nodes.filter((node) => !node.ignored && node.backendDOMNodeId === triggerNodeId);
+      expect(names, '#79 requires the trigger in the accessibility tree').toHaveLength(1);
+      const name = names[0].name?.value;
+      expect(typeof name).toBe('string');
+      expect(name).not.toBe('');
+      // Independently verify the paired list's computed name, before snapshot normalization.
+      const namedList = page.getByRole('listbox', { name, exact: true });
+      await expect(namedList).toHaveCount(1);
+      await expect(namedList).toHaveAttribute('id', listboxId);
+      pairs.push({ listboxId, triggerNodeId, name });
+    }
+    return pairs;
+  } finally {
+    await session.detach();
+  }
+}
+
+export function normalizeSelectListboxNames(current, pairs) {
+  const attributes = [...current.attributes];
+  const lines = current.tree.split('\n');
+  for (const { name } of pairs) {
+    const expected = {
+      tag: 'DIV',
+      role: 'listbox',
+      'aria-label': name,
+      'aria-description': null,
+      title: null,
+      placeholder: null,
+      'aria-valuetext': null,
+      live: null,
+    };
+    const row = attributes.findIndex((attribute) => isDeepStrictEqual(attribute, expected));
+    expect(row, '#79 requires the exact listbox attributes row').toBeGreaterThanOrEqual(0);
+    attributes.splice(row, 1);
+
+    const named = `- listbox ${JSON.stringify(name)}`;
+    const matches = lines.flatMap((line, index) =>
+      line.trimStart() === named || line.trimStart() === `${named}:` ? [index] : [],
+    );
+    expect(matches, '#79 requires exactly one named listbox line').toHaveLength(1);
+    const index = matches[0];
+    const line = lines[index];
+    const indent = line.slice(0, line.length - line.trimStart().length);
+    lines[index] = `${indent}- listbox${line.trimStart() === `${named}:` ? ':' : ''}`;
+  }
+  return { ...current, attributes, tree: lines.join('\n') };
 }
 
 // Fixed current defaults, independent of the source implementation and the translated fixture.

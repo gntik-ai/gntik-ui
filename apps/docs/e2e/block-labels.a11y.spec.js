@@ -11,6 +11,8 @@ import {
   settledFocus,
   keyboardAtState,
   surfaces,
+  selectListboxPairs,
+  normalizeSelectListboxNames,
   checkCopy,
   formatterCalled,
 } from './block-labels.helpers.js';
@@ -348,7 +350,10 @@ for (const theme of themes)
         expect(await keyboard()).toEqual(baselineKeyboard);
         await matrices[block](page, defaults, async (state) => {
           expect(await keyboardAtState(page)).toEqual(keyboardStates.get(state));
-          expect(await surfaces(page)).toEqual(baseline.get(state));
+          const pairs = await selectListboxPairs(page);
+          if ((block === 'pagination' && state === 'open') || (block === 'filter' && state === 'views'))
+            expect(pairs.length, '#79 requires a paired open Select').toBeGreaterThan(0);
+          expect(normalizeSelectListboxNames(await surfaces(page), pairs)).toEqual(baseline.get(state));
           expect(await axeViolations(page)).toEqual([]);
           await expect(page).toHaveScreenshot(screenshotName(state), {
             maxDiffPixelRatio: 0.01,
@@ -497,12 +502,17 @@ for (const theme of themes)
       await expect(alert).toBeInViewport();
     });
 
-test('axe reports unnamed textboxes and listboxes', async ({ page }) => {
+test('the #79 exemption keeps unnamed non-Select inputs and other listbox rules failing', async ({ page }) => {
   await page.setContent(
     '<main><div role="textbox" tabindex="0"></div><div class="bg-popover"><div role="listbox" class="outline-none"><div role="option">Other</div></div></div></main>',
   );
   const violations = await axeViolations(page);
   expect(violations.find((v) => v.id === 'aria-input-field-name')?.nodes.length).toBe(2);
+  // A real Select popup still fails unrelated rules, even on the exempt list node.
+  await page.setContent(
+    '<main><div role="combobox" tabindex="0" aria-label="Choose" aria-expanded="true" aria-haspopup="listbox" aria-controls="select-list"></div><div class="bg-popover" role="presentation"><div id="select-list" role="listbox" class="outline-none" aria-required="invalid"><div role="option">Other</div></div></div></main>',
+  );
+  expect((await axeViolations(page)).some((v) => v.id === 'aria-valid-attr-value')).toBe(true);
 });
 
 test('copy checks reject labels placed on the wrong element', async ({ page }) => {
