@@ -1,6 +1,15 @@
 import { Select as BaseSelect } from '@base-ui/react/select';
+import { useRender } from '@base-ui/react/use-render';
 import { Check, ChevronDown, RotateCw } from 'lucide-react';
-import { useState, type ReactNode, type Ref } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+  type Ref,
+} from 'react';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { useAsyncOptions, type LoadOptions } from '../Combobox/useAsyncOptions';
@@ -9,8 +18,41 @@ import { selectVariants, type SelectVariantProps } from './select.variants';
 
 const s = selectVariants();
 
+const SelectTriggerContext = createContext<{
+  trigger: HTMLButtonElement | null;
+  setTrigger: (trigger: HTMLButtonElement | null) => void;
+} | null>(null);
+
 /** Select state container (value, defaultValue, onValueChange, items, multiple, open…). Renders no element. */
-export const Select = BaseSelect.Root;
+export function Select<Value, Multiple extends boolean | undefined = false>(
+  props: BaseSelect.Root.Props<Value, Multiple>,
+) {
+  const [trigger, setTrigger] = useState<HTMLButtonElement | null>(null);
+  return (
+    <SelectTriggerContext.Provider value={{ trigger, setTrigger }}>
+      <BaseSelect.Root {...props} />
+    </SelectTriggerContext.Provider>
+  );
+}
+
+// Read the resolved trigger attribute, including labels supplied by Base UI Field.
+// Observe attribute changes so caller updates also reach an already open listbox.
+function useTriggerAttribute(trigger: HTMLButtonElement | null, attribute: string) {
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      if (!trigger) return () => {};
+      const observer = new MutationObserver(onChange);
+      observer.observe(trigger, { attributes: true, attributeFilter: [attribute] });
+      return () => observer.disconnect();
+    },
+    [trigger, attribute],
+  );
+  return useSyncExternalStore(
+    subscribe,
+    () => trigger?.getAttribute(attribute) ?? undefined,
+    () => undefined,
+  );
+}
 
 /** Visible label; automatically labels the trigger. */
 export function SelectLabel({
@@ -31,18 +73,22 @@ export interface SelectTriggerProps
 }
 
 /** The button that shows the current value and a chevron, and opens the popup. */
-export function SelectTrigger({ size, className, placeholder, children, ...props }: SelectTriggerProps) {
+export function SelectTrigger({ size, className, placeholder, children, ref, ...props }: SelectTriggerProps) {
   const v = selectVariants({ size });
-  return (
-    <BaseSelect.Trigger className={cn(v.trigger(), className)} {...props}>
-      <BaseSelect.Value className={v.value()} placeholder={placeholder}>
-        {children}
-      </BaseSelect.Value>
-      <BaseSelect.Icon className={v.icon()}>
-        <ChevronDown size={15} aria-hidden />
-      </BaseSelect.Icon>
-    </BaseSelect.Trigger>
-  );
+  const context = useContext(SelectTriggerContext);
+  return useRender({
+    ref: [ref ?? null, context?.setTrigger ?? null],
+    render: (
+      <BaseSelect.Trigger className={cn(v.trigger(), className)} {...props}>
+        <BaseSelect.Value className={v.value()} placeholder={placeholder}>
+          {children}
+        </BaseSelect.Value>
+        <BaseSelect.Icon className={v.icon()}>
+          <ChevronDown size={15} aria-hidden />
+        </BaseSelect.Icon>
+      </BaseSelect.Trigger>
+    ),
+  });
 }
 
 export interface SelectContentProps extends Omit<BaseSelect.Popup.Props, 'className'> {
@@ -72,6 +118,10 @@ export function SelectContent({
   ...props
 }: SelectContentProps) {
   const dir = usePortalDir();
+  const context = useContext(SelectTriggerContext);
+  const labelledBy = useTriggerAttribute(context?.trigger ?? null, 'aria-labelledby');
+  const ariaLabel = useTriggerAttribute(context?.trigger ?? null, 'aria-label');
+  const explicitName = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined;
   return (
     <BaseSelect.Portal container={container}>
       <BaseSelect.Positioner
@@ -84,7 +134,13 @@ export function SelectContent({
       >
         <BaseSelect.Popup className={cn(s.popup(), className)} {...props}>
           {status}
-          <BaseSelect.List className={s.list()}>{children}</BaseSelect.List>
+          <BaseSelect.List
+            className={s.list()}
+            aria-labelledby={explicitName ? props['aria-labelledby'] : labelledBy}
+            aria-label={explicitName ? props['aria-label'] : ariaLabel}
+          >
+            {children}
+          </BaseSelect.List>
         </BaseSelect.Popup>
       </BaseSelect.Positioner>
     </BaseSelect.Portal>

@@ -497,17 +497,12 @@ for (const theme of themes)
       await expect(alert).toBeInViewport();
     });
 
-test('the #79 exemption keeps unnamed non-Select inputs and other listbox rules failing', async ({ page }) => {
+test('axe reports unnamed textboxes and listboxes', async ({ page }) => {
   await page.setContent(
     '<main><div role="textbox" tabindex="0"></div><div class="bg-popover"><div role="listbox" class="outline-none"><div role="option">Other</div></div></div></main>',
   );
   const violations = await axeViolations(page);
   expect(violations.find((v) => v.id === 'aria-input-field-name')?.nodes.length).toBe(2);
-  // A real Select popup still fails unrelated rules, even on the exempt list node.
-  await page.setContent(
-    '<main><div role="combobox" tabindex="0" aria-label="Choose" aria-expanded="true" aria-haspopup="listbox" aria-controls="select-list"></div><div class="bg-popover" role="presentation"><div id="select-list" role="listbox" class="outline-none" aria-required="invalid"><div role="option">Other</div></div></div></main>',
-  );
-  expect((await axeViolations(page)).some((v) => v.id === 'aria-valid-attr-value')).toBe(true);
 });
 
 test('copy checks reject labels placed on the wrong element', async ({ page }) => {

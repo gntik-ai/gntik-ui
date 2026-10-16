@@ -1,7 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
-import { SimpleSelect } from './Select';
+import { Field, FieldLabel } from '../Field/Field';
+import { Select, SelectContent, SelectItem, SelectLabel, SelectTrigger, SimpleSelect } from './Select';
 import SelectBasic from './examples/SelectBasic';
 import SelectGrouped from './examples/SelectGrouped';
 import SelectRich from './examples/SelectRich';
@@ -22,6 +23,113 @@ function setup(onValueChange = vi.fn()) {
 const highlighted = () => document.querySelector('[role="option"][data-highlighted]');
 
 describe('Select', () => {
+  it.each([{ 'aria-label': 'Available fruit' }, { 'aria-labelledby': 'list-label' }])(
+    'respects an explicit SelectContent name %o',
+    async (name) => {
+      const user = userEvent.setup();
+      render(
+        <Select items={fruits}>
+          <span id="list-label">Available fruit</span>
+          <SelectLabel>Fruit</SelectLabel>
+          <SelectTrigger placeholder="Choose a fruit" />
+          <SelectContent {...name}>
+            <SelectItem value="apple">Apple</SelectItem>
+          </SelectContent>
+        </Select>,
+      );
+      await user.click(screen.getByRole('combobox', { name: 'Fruit' }));
+      const listbox = await screen.findByRole('listbox');
+      expect(listbox).toHaveAccessibleName('Available fruit');
+      for (const [attribute, value] of Object.entries(name)) {
+        expect(listbox).toHaveAttribute(attribute, value);
+      }
+    },
+  );
+
+  it.each(['dark', 'light', 'high_contrast'])('reuses the exact caller aria-label in %s', async (theme) => {
+    document.documentElement.className = theme === 'light' ? '' : theme;
+    const user = userEvent.setup();
+    render(<SimpleSelect aria-label="Fruta" items={fruits} placeholder="Choose a fruit" />);
+    const trigger = screen.getByRole('combobox', { name: 'Fruta' });
+    await user.click(trigger);
+    const listbox = await screen.findByRole('listbox');
+    expect(listbox).toHaveAccessibleName('Fruta');
+    expect(listbox).toHaveAttribute('aria-label', 'Fruta');
+    expect(listbox).not.toHaveAttribute('aria-labelledby');
+    await expectNoAxeViolations();
+  });
+
+  it.each(['dark', 'light', 'high_contrast'])('names the open listbox after the visible label in %s', async (theme) => {
+    document.documentElement.className = theme === 'light' ? '' : theme;
+    const user = userEvent.setup();
+    render(<SimpleSelect label="Fruit" items={fruits} defaultValue="apple" />);
+    const trigger = screen.getByRole('combobox', { name: 'Fruit' });
+    await user.click(trigger);
+    const listbox = await screen.findByRole('listbox');
+    expect(listbox).toHaveAccessibleName('Fruit');
+    expect(listbox).toHaveAttribute('aria-labelledby', trigger.getAttribute('aria-labelledby'));
+    await expectNoAxeViolations();
+  });
+
+  it.each(['dark', 'light', 'high_contrast'])('reuses a composed SelectLabel id in %s', async (theme) => {
+    document.documentElement.className = theme === 'light' ? '' : theme;
+    const user = userEvent.setup();
+    render(
+      <Select items={fruits}>
+        <SelectLabel>Fruit</SelectLabel>
+        <SelectTrigger placeholder="Choose a fruit" />
+        <SelectContent>
+          <SelectItem value="apple">Apple</SelectItem>
+        </SelectContent>
+      </Select>,
+    );
+    const trigger = screen.getByRole('combobox', { name: 'Fruit' });
+    await user.click(trigger);
+    const listbox = await screen.findByRole('listbox');
+    expect(listbox).toHaveAccessibleName('Fruit');
+    const labelId = screen.getByText('Fruit').id;
+    expect(labelId).not.toBe('');
+    expect(listbox).toHaveAttribute('aria-labelledby', labelId);
+    expect(trigger).toHaveAttribute('aria-labelledby', labelId);
+    expect(trigger).toHaveAttribute('aria-controls', listbox.id);
+    await expectNoAxeViolations();
+  });
+
+  it('adds no fabricated name when the caller supplies no label', async () => {
+    const user = userEvent.setup();
+    render(<SimpleSelect items={fruits} placeholder="Choose a fruit" />);
+    await user.click(screen.getByRole('combobox'));
+    const listbox = await screen.findByRole('listbox');
+    expect(listbox).toHaveAccessibleName('');
+    expect(listbox).not.toHaveAttribute('aria-label');
+    expect(listbox).not.toHaveAttribute('aria-labelledby');
+  });
+
+  it('follows caller aria-label updates while open', async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(<SimpleSelect aria-label="Fruit" items={fruits} />);
+    await user.click(screen.getByRole('combobox', { name: 'Fruit' }));
+    expect(await screen.findByRole('listbox')).toHaveAccessibleName('Fruit');
+    rerender(<SimpleSelect aria-label="Fruta" items={fruits} />);
+    await waitFor(() => expect(screen.getByRole('listbox')).toHaveAccessibleName('Fruta'));
+    expect(screen.getByRole('combobox')).toHaveAccessibleName('Fruta');
+  });
+
+  it('reuses the label supplied by a surrounding Field', async () => {
+    const user = userEvent.setup();
+    render(
+      <Field>
+        <FieldLabel id="field-label">Fruit</FieldLabel>
+        <SimpleSelect items={fruits} />
+      </Field>,
+    );
+    const trigger = screen.getByRole('combobox', { name: 'Fruit' });
+    await user.click(trigger);
+    const listbox = await screen.findByRole('listbox');
+    expect(listbox).toHaveAccessibleName('Fruit');
+    expect(listbox).toHaveAttribute('aria-labelledby', 'field-label');
+  });
+
   it('labels the trigger and shows the placeholder', () => {
     const { trigger } = setup();
     expect(trigger).toHaveTextContent('Select…');

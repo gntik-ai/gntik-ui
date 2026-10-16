@@ -5,14 +5,6 @@ import { createRequire } from 'node:module';
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
 const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
-// The exact BaseSelect.List inside SelectContent, not a rule-wide exemption.
-export const SELECT_LISTBOX_NAME_79 = {
-  issue: 'gntik-ai/gntik-ui#79',
-  rule: 'aria-input-field-name',
-  selector: '.bg-popover[role="presentation"] > [role="listbox"].outline-none[id]',
-  trigger: '[role="combobox"][aria-haspopup="listbox"][aria-controls]',
-};
-
 export async function closed(page, role) {
   // Hidden Select lists stay mounted for typeahead. Only exposed roles must disappear.
   await expect(page.getByRole(role)).toHaveCount(0);
@@ -119,23 +111,14 @@ export async function keyboardAtState(page) {
 
 export async function axeViolations(page) {
   await page.addScriptTag({ content: AXE });
-  return page.evaluate(async (allow) => {
+  return page.evaluate(async () => {
     // eslint-disable-next-line no-undef
     const result = await axe.run(document.body);
-    return result.violations.flatMap((violation) => {
-      const nodes = violation.nodes.filter((node) => {
-        if (violation.id !== allow.rule || node.target.length !== 1 || typeof node.target[0] !== 'string') return true;
-        const list = document.querySelector(node.target[0]);
-        const isSelectList =
-          list?.matches(allow.selector) &&
-          [...document.querySelectorAll(allow.trigger)].some(
-            (trigger) => trigger.getAttribute('aria-controls') === list.id,
-          );
-        return !isSelectList;
-      });
-      return nodes.length ? [{ id: violation.id, nodes: nodes.map((node) => node.target) }] : [];
-    });
-  }, SELECT_LISTBOX_NAME_79);
+    return result.violations.map((violation) => ({
+      id: violation.id,
+      nodes: violation.nodes.map((node) => node.target),
+    }));
+  });
 }
 
 export async function surfaces(page) {
