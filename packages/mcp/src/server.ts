@@ -471,9 +471,14 @@ export function buildServer(ctx: ServerContext): McpServer {
         source: z.string().describe('Source of the rebuilt page'),
         filename: z.string().optional().describe('File name/path (informative)'),
         allow: z.array(z.string()).optional().describe('Rule ids to ignore (e.g. ["dark-variant"])'),
+        extendedColorChecks: z
+          .boolean()
+          .optional()
+          .describe('Extended colour checks (default true); false restores previous validation'),
       },
     },
-    async ({ source, filename, allow }) => text(mdValidation(validatePage(source, { filename, allow }), filename)),
+    async ({ source, filename, allow, extendedColorChecks }) =>
+      text(mdValidation(validatePage(source, { filename, allow, extendedColorChecks }), filename)),
   );
 
   server.registerTool(
