@@ -14,9 +14,7 @@ const items = new Map(
     .filter((name) => name !== 'registry.json')
     .map((name) => [name, fs.readFileSync(path.join(root, 'apps/docs/public/r', name), 'utf8')]),
 );
-const snapshot = JSON.parse(
-  fs.readFileSync(path.join(root, 'packages/mcp/registry-release-snapshot.json'), 'utf8'),
-);
+const snapshot = JSON.parse(fs.readFileSync(path.join(root, 'packages/mcp/registry-release-snapshot.json'), 'utf8'));
 // Components added after the pinned release are discovered and registered, but are not in
 // its snapshot; the manifest names them in missingComponents until a maintainer advances
 // the pins (docs/governance/release.md).
@@ -61,7 +59,10 @@ test('manifest covers the discovered inventory and pinned release snapshot', () 
   assert.equal(snapshot.releaseCommit, manifest.releaseCommit);
   // Every snapshot item is still discovered; only components added since the release are missing.
   const ids = new Set(manifest.items.map((row) => row.id));
-  assert.deepEqual(snapshot.itemNames.filter((name) => !ids.has(name)), []);
+  assert.deepEqual(
+    snapshot.itemNames.filter((name) => !ids.has(name)),
+    [],
+  );
   assert.deepEqual(manifest.missingComponents, addedSinceRelease(manifest.items));
   assert.deepEqual(gate.validateManifest(manifest, items), []);
 });
