@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 112 components, 12 layouts, 75 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 112 components, 12 layouts, 76 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -8852,6 +8852,38 @@ import { InlineEditTable } from '@gntik-ai/blocks';
 
 // Props default to the block fixtures; pass your data.
 <InlineEditTable />
+```
+
+### Load more footer (`load-more-footer`)
+
+A load more button and loaded-count summary for appended lists without a total or page count. Cursor mode uses nextCursor and optional hasMore; flag mode omits nextCursor and uses hasMore. Compose with DataTable paginated={false} or Collapsible and JsonViewer cards. The consumer owns rows, filters and cursor normalization. Each attempt must settle loading=false together with its result in one update; split settles are unsupported. Keep cursor, hasMore, counts and lastAppend unchanged on failure. Cursor failures replace the button with ErrorPanel; flag failures keep the same button. Exhaustion removes every control even on failure. Focus moves only when the focused control is removed, to its replacement or exhaustedFocusTarget (summary by default, root optionally). lastAppend uses increasing seq values for successful appends, never initial loads, replacements or failures. New appended counts are announced politely; settled errors assertively. Self-wraps in LiveAnnouncer when needed. Every label has translated defaults and per-key overrides.
+
+- Package: `@gntik-ai/blocks` · export `LoadMoreFooter` · group tables · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/tables/LoadMoreFooter/block.meta.ts
+- Composes: Button, ErrorPanel, LiveAnnouncer
+- Registry dependencies: error-panel
+- Preview: /preview.html?kind=block&id=load-more-footer
+- Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add load-more-footer`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `loadMore` | `string` | Available and idle: button name |
+| `loading` | `string` | Loading: button name; ErrorPanel uses its own translated busy text |
+| `retry` | `string` | Failed and available: retry button name |
+| `group` | `string` | Always: root group accessible name |
+| `moreAvailable` | `string` | Available: visible summary note |
+| `summary` | `(count: number) => string` | Always: loaded-count summary and default exhaustion focus target |
+| `loadedAnnouncement` | `(count: number) => string` | New lastAppend.seq with positive count: polite announcement |
+
+Usage:
+
+```tsx
+import { LoadMoreFooter } from '@gntik-ai/blocks';
+
+// Props default to the block fixtures; pass your data.
+<LoadMoreFooter />
 ```
 
 ### Pagination footer (`pagination-footer`)

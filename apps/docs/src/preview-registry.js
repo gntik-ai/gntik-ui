@@ -64,6 +64,12 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 export const PREVIEW_LOADERS = {
   block: {
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'load-more-footer--cursor': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/cursor'),
+    'load-more-footer--flag': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/flag'),
+    'load-more-footer--failed': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/failed'),
+    'load-more-footer--exhausted': () =>
+      import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/exhausted'),
+    'load-more-footer--cards': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/cards'),
     'data-table--single-selection': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/single-selection'),
     'plan-card--summary-full': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryFull'),
