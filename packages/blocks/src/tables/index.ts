@@ -35,6 +35,8 @@ export * from './FilterBar/FilterBar';
 export { meta as filterBarMeta } from './FilterBar/block.meta';
 export { DEPLOYMENT_DEFAULT_FILTERS, DEPLOYMENT_FILTER_FIELDS, DEPLOYMENT_SAVED_VIEWS } from './FilterBar/fixtures';
 export * from './PaginationFooter/PaginationFooter';
+export * from './CursorPagerFooter/CursorPagerFooter';
+export { meta as cursorPagerFooterMeta } from './CursorPagerFooter/block.meta';
 export { meta as paginationFooterMeta } from './PaginationFooter/block.meta';
 export * from './LoadMoreFooter/LoadMoreFooter';
 export { meta as loadMoreFooterMeta } from './LoadMoreFooter/block.meta';

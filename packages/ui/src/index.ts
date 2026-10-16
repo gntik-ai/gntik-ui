@@ -73,6 +73,7 @@ export * from './components/NumberInput';
 export * from './components/OtpInput';
 export * from './components/OverflowList';
 export * from './components/Pagination';
+export * from './components/CursorPagination';
 export * from './components/PasswordInput';
 export * from './components/PermissionMatrix';
 export * from './components/Popover';

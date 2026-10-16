@@ -82,6 +82,13 @@ export const PREVIEW_LOADERS = {
           })),
       ]),
     ),
+    'cursor-pager-footer--cursor-stack': () =>
+      import('../../../packages/blocks/src/tables/CursorPagerFooter/examples/CursorStack'),
+    'cursor-pager-footer--busy': () => import('../../../packages/blocks/src/tables/CursorPagerFooter/examples/Busy'),
+    'cursor-pager-footer--hidden': () =>
+      import('../../../packages/blocks/src/tables/CursorPagerFooter/examples/Hidden'),
+    'cursor-pager-footer--rows-per-page': () =>
+      import('../../../packages/blocks/src/tables/CursorPagerFooter/examples/RowsPerPage'),
     'load-more-footer--cursor': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/cursor'),
     'load-more-footer--flag': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/flag'),
     'load-more-footer--failed': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/failed'),
