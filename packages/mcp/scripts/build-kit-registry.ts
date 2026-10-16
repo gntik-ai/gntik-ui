@@ -115,7 +115,7 @@ function scanImports(entry: string[], folderToId: Map<string, string>, self: str
             queue.push(file);
           }
         }
-      } else {
+      } else if (!spec.startsWith('node:')) {
         const name = spec.startsWith('@') ? spec.split('/').slice(0, 2).join('/') : spec.split('/')[0]!;
         if (!['react', 'react-dom'].includes(name)) deps.add(name);
       }
@@ -135,7 +135,7 @@ interface Source {
   meta?: Meta;
 }
 
-function collectSources(): Source[] {
+export function collectSources(): Source[] {
   const out: Source[] = [];
   // Shared internals every ejected component needs (cn/tv helpers, theme + presets).
   out.push({
@@ -215,9 +215,10 @@ function collectSources(): Source[] {
   return out;
 }
 
+export const idOf = (s: Source) => s.id ?? (s.kind === 'template' ? path.basename(s.dir) : kebab(path.basename(s.dir)));
+
 async function build() {
   const sources = collectSources();
-  const idOf = (s: Source) => s.id ?? (s.kind === 'template' ? path.basename(s.dir) : kebab(path.basename(s.dir)));
   const folderToId = new Map(sources.map((s) => [s.dir, idOf(s)] as const));
   const items: Item[] = [];
   for (const s of sources) {
@@ -257,19 +258,27 @@ async function build() {
   return JSON.stringify({ version: 1, items }, null, 2) + '\n';
 }
 
-const json = await build();
-if (process.argv.includes('--check')) {
-  const current = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
-  if (current !== json) {
-    console.error('kit-registry.json is stale — run `pnpm registry`.');
-    process.exit(1);
+if (process.argv[1] && fs.realpathSync(process.argv[1]) === fs.realpathSync(import.meta.filename)) {
+  const json = await build();
+  if (process.argv.includes('--check')) {
+    const current = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
+    if (current !== json) {
+      const before = JSON.parse(current || '{"items":[]}') as { items: Item[] };
+      const after = JSON.parse(json) as { items: Item[] };
+      const rows = new Map(before.items.map((i) => [i.id, JSON.stringify(i)]));
+      const changed = after.items.filter((i) => rows.get(i.id) !== JSON.stringify(i)).map((i) => i.id);
+      const ids = new Set(after.items.map((i) => i.id));
+      changed.push(...before.items.filter((i) => !ids.has(i.id)).map((i) => i.id));
+      console.error(`kit-registry.json is stale (${changed.join(', ')}) — run \`pnpm registry\`.`);
+      process.exit(1);
+    }
+    console.log('kit-registry.json is up to date.');
+  } else {
+    fs.writeFileSync(OUT, json);
+    const counts = JSON.parse(json).items.reduce(
+      (a: Record<string, number>, i: Item) => ((a[i.kind] = (a[i.kind] ?? 0) + 1), a),
+      {},
+    );
+    console.log(`kit-registry.json written: ${JSON.stringify(counts)}`);
   }
-  console.log('kit-registry.json is up to date.');
-} else {
-  fs.writeFileSync(OUT, json);
-  const counts = JSON.parse(json).items.reduce(
-    (a: Record<string, number>, i: Item) => ((a[i.kind] = (a[i.kind] ?? 0) + 1), a),
-    {},
-  );
-  console.log(`kit-registry.json written: ${JSON.stringify(counts)}`);
 }

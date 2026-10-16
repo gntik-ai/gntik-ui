@@ -57,6 +57,7 @@ const DOCS = [
   '',
   `- [AGENTS.md](${link('AGENTS.md')}): how to find, compose and add kit items, the brand rules and the gate commands`,
   `- [kit-registry.json](${link('kit-registry.json')}): machine-readable list of every installable item with files and dependencies`,
+  `- [Release manifest](${link('packages/mcp/registry-manifest.json')}): shared package/registry item inventory, pinned versions and release baseline; the live registry follows main`,
   `- [INVENTORY.md](${link('INVENTORY.md')}): inventory of the catalog and the packages`,
   `- [Component contract](${link('packages/ui/CONTRIBUTING.md')}): folder layout, docs, tests and style rules for a component`,
   `- [Brand tokens](${link('packages/tokens/src/brand.css')}): colour, typography, radii and shadows for the three themes`,
