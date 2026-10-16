@@ -93,6 +93,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   onSortChange,
   manualSorting = false,
   paginated: paginatedProp,
+  paginationMode = 'client',
+  rowCount,
+  page: controlledPage,
+  pageSize: controlledPageSize,
+  onPageChange,
+  onPageSizeChange,
   defaultPageSize = 10,
   pageSizeOptions = [10, 25, 50],
   density: densityProp,
@@ -140,6 +146,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
 }: DataTableProps<T>) {
   const { t } = useI18n();
   const singleMode = selectionMode === 'single';
+  const serverMode = paginationMode === 'server';
   const selectable = selectionMode === undefined ? selectableProp : selectionMode === 'multiple';
   const selectionColumn = selectable || singleMode;
   const paginated = !singleMode && (paginatedProp ?? true);
@@ -198,10 +205,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const [innerCollapsed, setInnerCollapsed] = useState<ReadonlySet<string>>(() => new Set(defaultCollapsedGroups));
   const collapsed: ReadonlySet<string> = collapsedProp ? new Set(collapsedProp) : innerCollapsed;
 
-  const sortedRows = manualSorting ? [...rows] : sortRows(rows, columns, sort);
+  const sortedRows = serverMode ? rows : manualSorting ? [...rows] : sortRows(rows, columns, sort);
   const allGroups = effectiveGroupBy ? groupRows(sortedRows, effectiveGroupBy, rows) : null;
   const sorted = allGroups ? allGroups.flatMap((g) => g.rows) : sortedRows;
-  const pageRows = paginated ? paginate(sorted, page, pageSize) : sorted;
+  const pageRows = serverMode ? rows : paginated ? paginate(sorted, page, pageSize) : sorted;
   // Rows in collapsed groups are hidden, so select-all leaves them alone.
   const pageIds = (
     effectiveGroupBy ? pageRows.filter((row) => !collapsed.has(groupKeyOf(row, effectiveGroupBy))) : pageRows
@@ -214,6 +221,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     onSelectionChange?.(rows.map(getRowId).filter((id) => next.has(id)));
   };
   const changeSort = (columnId: string, direction: SortState['direction']) => {
+    if (serverMode) return;
     const next: SortState = { columnId, direction: sort?.columnId === columnId ? direction : 'ascending' };
     setInnerSort(next);
     onSortChange?.(next);
@@ -293,7 +301,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const applyState = (state: DataTableViewState) => {
     const nextSort = state.sort ?? null;
     setInnerSort(nextSort);
-    if (nextSort) onSortChange?.(nextSort);
+    if (nextSort && !serverMode) onSortChange?.(nextSort);
     setHiddenList(state.hiddenColumns ?? defaultHidden);
     setWidths(state.columnWidths ?? defaultColumnWidths);
     setPinned(state.pinnedColumns ?? defaultPinnedColumns);
@@ -301,7 +309,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     setGroupOverride(nextGroup === groupName(groupBy) && typeof groupBy !== 'function' ? undefined : nextGroup);
     if (nextGroup !== currentState.groupBy) onGroupByChange?.(nextGroup);
     if (state.filters !== filters) onFiltersChange?.(state.filters);
-    setPage(1);
+    if (!serverMode) setPage(1);
   };
   const viewsApi = useTableViews({
     views: viewsProp,
@@ -449,9 +457,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     <DataTableHeadCell
                       labels={labels}
                       key={c.id}
-                      column={c}
+                      column={serverMode ? { ...c, sortable: false } : c}
                       layout={layout.columns.get(c.id)}
-                      sortDirection={sort?.columnId === c.id ? sort.direction : 'none'}
+                      sortDirection={!serverMode && sort?.columnId === c.id ? sort.direction : 'none'}
                       onSortChange={(dir) => changeSort(c.id, dir)}
                       resize={
                         resizable && c.resizable !== false
@@ -513,15 +521,15 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           {labels?.loading ? labels.loading(caption) : <>Loading {caption.toLowerCase()}…</>}
         </p>
       )}
-      {paginated && !loading && rows.length > 0 && (
+      {paginated && !loading && (serverMode || rows.length > 0) && (
         <PaginationFooter
           labels={labels}
           className="border-t border-border px-4 py-3"
-          total={rows.length}
-          page={page}
-          onPageChange={setPage}
-          pageSize={pageSize}
-          onPageSizeChange={setPageSize}
+          total={serverMode ? rowCount : rows.length}
+          page={serverMode ? controlledPage : page}
+          onPageChange={serverMode ? onPageChange : setPage}
+          pageSize={serverMode ? controlledPageSize : pageSize}
+          onPageSizeChange={serverMode ? onPageSizeChange : setPageSize}
           pageSizeOptions={pageSizeOptions}
           noun={caption}
         />
