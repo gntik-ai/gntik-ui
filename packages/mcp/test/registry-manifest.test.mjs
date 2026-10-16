@@ -14,6 +14,13 @@ const items = new Map(
     .filter((name) => name !== 'registry.json')
     .map((name) => [name, fs.readFileSync(path.join(root, 'apps/docs/public/r', name), 'utf8')]),
 );
+const snapshot = JSON.parse(
+  fs.readFileSync(path.join(root, 'packages/mcp/registry-release-snapshot.json'), 'utf8'),
+);
+// Components added after the pinned release are discovered and registered, but are not in
+// its snapshot; the manifest names them in missingComponents until a maintainer advances
+// the pins (docs/governance/release.md).
+const addedSinceRelease = (rows) => rows.map((row) => row.id).filter((id) => !snapshot.itemNames.includes(id));
 
 test('manifest generation and validation work offline without release history', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gntik-manifest-'));
@@ -35,7 +42,7 @@ test('manifest generation and validation work offline without release history', 
     fs.writeFileSync(path.join(dir, 'package.json'), '{"type":"module"}');
     const offline = await tsImport(path.join(dir, 'packages/mcp/scripts/build-registry-manifest.ts'), import.meta.url);
     const generated = offline.buildManifest();
-    assert.equal(generated.items.length, 261);
+    assert.equal(generated.items.length, items.size);
     assert.deepEqual(offline.validateManifest(generated, items), []);
     assert.equal(
       offline.serializeManifest(generated),
@@ -47,9 +54,15 @@ test('manifest generation and validation work offline without release history', 
 });
 
 test('manifest covers the discovered inventory and pinned release snapshot', () => {
-  assert.equal(manifest.items.length, 261);
+  // One row per registry item (gntik-tokens included), at least the 261 of the pinned release.
+  assert.equal(manifest.items.length, items.size);
+  assert.ok(manifest.items.length >= 261);
   assert.equal(manifest.releaseCommit, 'b464709587664cf6588df02504fc88c02a7751c5');
-  assert.deepEqual(manifest.missingComponents, []);
+  assert.equal(snapshot.releaseCommit, manifest.releaseCommit);
+  // Every snapshot item is still discovered; only components added since the release are missing.
+  const ids = new Set(manifest.items.map((row) => row.id));
+  assert.deepEqual(snapshot.itemNames.filter((name) => !ids.has(name)), []);
+  assert.deepEqual(manifest.missingComponents, addedSinceRelease(manifest.items));
   assert.deepEqual(gate.validateManifest(manifest, items), []);
 });
 
