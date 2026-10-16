@@ -1,169 +1,2589 @@
 {
   "sourceCommit": "6051024d8b87e2e0896b42cabd6b554f0e73bd25",
   "cases": [
-    {"source":"<div className=\"bg-white\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-black\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-white\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-black\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"hover:bg-white\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"dark:text-black\" />","report":{"ok":true,"errors":0,"warnings":1,"tokensUsed":0,"findings":[{"rule":"dark-variant","severity":"warning","line":1,"excerpt":"<div className=\"dark:text-black\" />","message":"Variante dark: — los tokens ya cambian con el tema; no debería hacer falta"}],"summary":"0 errores · 1 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:text-white\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-black/50\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[#fff]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"hex-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#fff]\" />","message":"Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#fff]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[#ffffff80]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"hex-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#ffffff80]\" />","message":"Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#ffffff80]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-[rgb(0,0,0)]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"text-[rgb(0,0,0)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"text-[rgb(0,0,0)]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-[rgba(0,0,0,0.5)]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"text-[rgba(0,0,0,0.5)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"text-[rgba(0,0,0,0.5)]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[hsl(0,0%,100%)]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"bg-[hsl(0,0%,100%)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[hsl(0,0%,100%)]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-[oklch(0.7_0.1_200)]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"text-[oklch(0.7_0.1_200)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"text-[oklch(0.7_0.1_200)]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[color-mix(in_srgb,red,blue)]\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"bg-[color-mix(in_srgb,red,blue)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-[white]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"hover:bg-[#000]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"hex-color","severity":"error","line":1,"excerpt":"<div className=\"hover:bg-[#000]/40\" />","message":"Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"hover:bg-[#000]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"border-[#fff]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"hex-color","severity":"error","line":1,"excerpt":"<div className=\"border-[#fff]\" />","message":"Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"border-[#fff]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"ring-[rgb(0,0,0)]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"ring-[rgb(0,0,0)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"ring-[rgb(0,0,0)]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"divide-[hwb(0_0%_0%)]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"ring-offset-[#000]\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"hex-color","severity":"error","line":1,"excerpt":"<div className=\"ring-offset-[#000]\" />","message":"Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"from-[white]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"border-x-[color:red]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-background\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":1,"findings":[],"summary":"0 errores · 0 avisos · 1 usos de tokens de marca"}},
-    {"source":"<div className=\"text-foreground\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":1,"findings":[],"summary":"0 errores · 0 avisos · 1 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-card\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":1,"findings":[],"summary":"0 errores · 0 avisos · 1 usos de tokens de marca"}},
-    {"source":"<div className=\"text-muted-foreground\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":1,"findings":[],"summary":"0 errores · 0 avisos · 1 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[var(--card)]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"outline-[var(--ring)]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-[14px]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"border-[2px]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"ring-[3px]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"stroke-[1.5]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-transparent\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-current\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"border-white\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"ring-black\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"fill-white\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-white-ish\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-whitesmoke\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-whitesmoke-like\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"var(--bg-white)\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[transparent]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-[currentcolor]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-[redder]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"text-[red_14px]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[color:var(--card)]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"shadow-[0_0_30px_rgba(255,0,0,.6)]\" />","report":{"ok":true,"errors":0,"warnings":1,"tokensUsed":0,"findings":[{"rule":"glow-shadow","severity":"warning","line":1,"excerpt":"<div className=\"shadow-[0_0_30px_rgba(255,0,0,.6)]\" />","message":"Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"}],"summary":"0 errores · 1 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:bg-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:bg-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:bg-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:bg-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:bg-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:text-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:text-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:text-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:text-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:text-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:border-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:border-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-x-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-x-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:border-x-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-x-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-y-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-y-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:border-y-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-y-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-s-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-s-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:border-s-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-s-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-e-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-e-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:border-e-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-e-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-t-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-t-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:border-t-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-t-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-r-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-r-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:border-r-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-r-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-b-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-b-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:border-b-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-b-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-l-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-l-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:border-l-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:border-l-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:divide-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:divide-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:divide-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:divide-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:outline-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:outline-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:outline-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:outline-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:outline-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:ring-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:ring-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:ring-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:ring-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:ring-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:ring-offset-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:ring-offset-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:ring-offset-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:ring-offset-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:inset-ring-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:inset-ring-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:inset-ring-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:inset-ring-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:inset-ring-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:shadow-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:shadow-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:shadow-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:shadow-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:shadow-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:inset-shadow-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:inset-shadow-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:inset-shadow-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:inset-shadow-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:inset-shadow-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:text-shadow-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":1,"tokensUsed":0,"findings":[{"rule":"glow-shadow","severity":"warning","line":1,"excerpt":"<div className=\"md:hover:text-shadow-[white]/40\" />","message":"Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"}],"summary":"0 errores · 1 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:text-shadow-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":1,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:text-shadow-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:text-shadow-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"},{"rule":"glow-shadow","severity":"warning","line":1,"excerpt":"<div className=\"md:hover:text-shadow-[rgb(0,0,0)]/40\" />","message":"Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"}],"summary":"2 errores · 1 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:text-shadow-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":1,"tokensUsed":0,"findings":[{"rule":"glow-shadow","severity":"warning","line":1,"excerpt":"<div className=\"md:hover:text-shadow-[color:red]/40\" />","message":"Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"}],"summary":"0 errores · 1 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:drop-shadow-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":1,"tokensUsed":0,"findings":[{"rule":"glow-shadow","severity":"warning","line":1,"excerpt":"<div className=\"md:hover:drop-shadow-[white]/40\" />","message":"Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"}],"summary":"0 errores · 1 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:drop-shadow-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":1,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:drop-shadow-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:drop-shadow-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"},{"rule":"glow-shadow","severity":"warning","line":1,"excerpt":"<div className=\"md:hover:drop-shadow-[rgb(0,0,0)]/40\" />","message":"Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"}],"summary":"2 errores · 1 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:drop-shadow-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":1,"tokensUsed":0,"findings":[{"rule":"glow-shadow","severity":"warning","line":1,"excerpt":"<div className=\"md:hover:drop-shadow-[color:red]/40\" />","message":"Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"}],"summary":"0 errores · 1 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:decoration-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:decoration-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:decoration-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:decoration-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:decoration-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:placeholder-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:placeholder-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:placeholder-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:placeholder-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:caret-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:caret-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:caret-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:caret-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:accent-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:accent-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:accent-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:accent-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:fill-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:fill-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:fill-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:fill-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:fill-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:stroke-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:stroke-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:stroke-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:stroke-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:stroke-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:from-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:from-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:from-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:from-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:from-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:via-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:via-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:via-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:via-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:via-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:to-[white]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:to-[rgb(0,0,0)]/40\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"md:hover:to-[rgb(0,0,0)]/40\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"md:hover:to-[rgb(0,0,0)]/40\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"md:hover:to-[color:red]/40\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[#abc]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"hex-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#abc]\" />","message":"Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#abc]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[#abcd]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"hex-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#abcd]\" />","message":"Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#abcd]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[#abcdef]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"hex-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#abcdef]\" />","message":"Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#abcdef]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[#abcdef80]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"hex-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#abcdef80]\" />","message":"Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[#abcdef80]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[rgb(0,0,0)]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"bg-[rgb(0,0,0)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[rgb(0,0,0)]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[rgba(0,0,0,.5)]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"bg-[rgba(0,0,0,.5)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[rgba(0,0,0,.5)]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[hsl(0,0%,0%)]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"bg-[hsl(0,0%,0%)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[hsl(0,0%,0%)]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[hsla(0,0%,0%,.5)]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"bg-[hsla(0,0%,0%,.5)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[hsla(0,0%,0%,.5)]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[hwb(0_0%_0%)]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[lab(50_0_0)]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[lch(50_0_0)]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[oklab(0.5_0_0)]\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"bg-[oklab(0.5_0_0)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[oklch(0.5_0_0)]\" />","report":{"ok":false,"errors":2,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"bg-[oklch(0.5_0_0)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"arbitrary-color","severity":"error","line":1,"excerpt":"<div className=\"bg-[oklch(0.5_0_0)]\" />","message":"Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"}],"summary":"2 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[color(srgb_0_0_0)]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[color-mix(in_srgb,red,blue)]\" />","report":{"ok":false,"errors":1,"warnings":0,"tokensUsed":0,"findings":[{"rule":"raw-color-fn","severity":"error","line":1,"excerpt":"<div className=\"bg-[color-mix(in_srgb,red,blue)]\" />","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"}],"summary":"1 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[rebeccapurple]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[AliceBlue]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[DARKSLATEGREY]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<div className=\"bg-[color:red]\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"\n<div style=\"background:#ff0000\" class=\"bg-red-500 text-white\">\n  <span class=\"bg-gradient-to-r from-pink-500 to-purple-600\">glow</span>\n  <p class=\"shadow-[0_0_30px_rgba(255,0,0,.6)] dark:bg-black\">hola</p>\n  <i style=\"color: rgb(12, 34, 56)\"></i>\n</div>","report":{"ok":false,"errors":6,"warnings":4,"tokensUsed":0,"findings":[{"rule":"hex-color","severity":"error","line":2,"excerpt":"<div style=\"background:#ff0000\" class=\"bg-red-500 text-white\">","message":"Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"},{"rule":"palette-class","severity":"error","line":2,"excerpt":"<div style=\"background:#ff0000\" class=\"bg-red-500 text-white\">","message":"Clase de paleta Tailwind — se salta los tokens de marca"},{"rule":"inline-style-color","severity":"warning","line":2,"excerpt":"<div style=\"background:#ff0000\" class=\"bg-red-500 text-white\">","message":"Color en style inline — muévelo a clases de token"},{"rule":"palette-class","severity":"error","line":3,"excerpt":"<span class=\"bg-gradient-to-r from-pink-500 to-purple-600\">glow</span>","message":"Clase de paleta Tailwind — se salta los tokens de marca"},{"rule":"palette-class","severity":"error","line":3,"excerpt":"n class=\"bg-gradient-to-r from-pink-500 to-purple-600\">glow</span>","message":"Clase de paleta Tailwind — se salta los tokens de marca"},{"rule":"gradient","severity":"error","line":3,"excerpt":"<span class=\"bg-gradient-to-r from-pink-500 to-purple-600\">glow</span>","message":"Degradado — la marca es sobria: sin degradados de color"},{"rule":"glow-shadow","severity":"warning","line":4,"excerpt":"<p class=\"shadow-[0_0_30px_rgba(255,0,0,.6)] dark:bg-black\">hola</p>","message":"Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"},{"rule":"dark-variant","severity":"warning","line":4,"excerpt":"ass=\"shadow-[0_0_30px_rgba(255,0,0,.6)] dark:bg-black\">hola</p>","message":"Variante dark: — los tokens ya cambian con el tema; no debería hacer falta"},{"rule":"raw-color-fn","severity":"error","line":5,"excerpt":"<i style=\"color: rgb(12, 34, 56)\"></i>","message":"Función de color con valores crudos — solo hsl(var(--token) / α)"},{"rule":"inline-style-color","severity":"warning","line":5,"excerpt":"<i style=\"color: rgb(12, 34, 56)\"></i>","message":"Color en style inline — muévelo a clases de token"}],"summary":"6 errores · 4 avisos · 0 usos de tokens de marca"}},
-    {"source":"\nexport function Fila() {\n  return (\n    <button className=\"bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 rounded-lg h-9 px-3.5\">\n      Deploy agent\n    </button>\n  );\n}\nconst chip = <span className=\"bg-primary/14 text-primary border border-border rounded-md\">ok</span>;\n","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":6,"findings":[],"summary":"0 errores · 0 avisos · 6 usos de tokens de marca"}},
-    {"source":"<div style={{ backgroundImage: 'repeating-linear-gradient(135deg, hsl(var(--border) / 0.5) 0 1px, transparent 1px 11px)' }} />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":1,"findings":[],"summary":"0 errores · 0 avisos · 1 usos de tokens de marca"}},
-    {"source":"<i className=\"text-primary\" style={{ color: 'hsl(var(--primary) / 0.5)' }} />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":2,"findings":[],"summary":"0 errores · 0 avisos · 2 usos de tokens de marca"}},
-    {"source":"<a href=\"#cafe\">ir</a> &#39; <use href=\"#def\" /> url(#abc)","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"<p class=\"dark:bg-black\">x</p>","options":{"allow":["dark-variant","no-tokens"]},"report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":0,"findings":[],"summary":"0 errores · 0 avisos · 0 usos de tokens de marca"}},
-    {"source":"// Brand button — variant × size, with icon and loading state\nconst VARIANT = {\n  primary:     \"bg-primary text-primary-foreground shadow-sm hover:bg-primary/90\",\n  secondary:   \"border border-border bg-card text-foreground shadow-sm hover:bg-secondary/70\",\n  soft:        \"bg-primary/14 text-primary hover:bg-primary/20\",\n  ghost:       \"text-muted-foreground hover:bg-secondary/70 hover:text-foreground\",\n  destructive: \"bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90\",\n};\nconst SIZE = {\n  sm: \"h-8 gap-1.5 px-3 text-[12.5px] rounded-md\",\n  md: \"h-9 gap-1.5 px-3.5 text-[13px] rounded-lg\",\n  lg: \"h-11 gap-2 px-5 text-[14.5px] rounded-lg\",\n};\n\nfunction Button({ variant = \"primary\", size = \"md\", icon: Lead, loading, children, ...props }) {\n  const base = \"inline-flex items-center justify-center font-semibold whitespace-nowrap transition-colors \" +\n    \"focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-offset-2 focus-visible:ring-offset-card \" +\n    \"disabled:opacity-50 disabled:pointer-events-none\";\n  return (\n    <button {...props} disabled={props.disabled || loading}\n      className={base + \" \" + SIZE[size] + \" \" + VARIANT[variant]}>\n      {loading ? <Spinner /> : Lead && <Lead className=\"size-[15px]\" />}\n      {children}\n    </button>\n  );\n}\n// Icon-only — square box per size; always with an aria-label\nconst ICONBOX = { sm: \"size-8 rounded-md\", md: \"size-9 rounded-lg\", lg: \"size-11 rounded-lg\" };\n<Button iconOnly icon={PlusIcon} aria-label=\"Add\" />","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":17,"findings":[],"summary":"0 errores · 0 avisos · 17 usos de tokens de marca"}},
-    {"source":"// Simple — subtly tinted thead, divided rows, mono numbers on the right\n<table className=\"w-full border-collapse\">\n  <thead>\n    <tr className=\"border-b border-border bg-secondary/30\">\n      <th className=\"text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10\">Service</th>\n      <th className=\"text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10\">Region</th>\n      <th className=\"text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10\">Status</th>\n      <th className=\"text-right text-[11.5px] uppercase text-muted-foreground px-4 h-10\">Cost 30 d</th>\n    </tr>\n  </thead>\n  <tbody className=\"divide-y divide-border\">\n    {rows.map((a) => (\n      <tr key={a.id} className=\"hover:bg-accent/30\">\n        <td className=\"px-4 py-3\">{/* avatar + name + runtime */}</td>\n        <td className=\"px-4 py-3 font-mono text-[12px] text-muted-foreground\">{a.region}</td>\n        <td className=\"px-4 py-3\"><StatusPill tone={a.tone}>{a.state}</StatusPill></td>\n        <td className=\"px-4 py-3 text-right font-mono text-[12.5px]\">{money(a.cost)}</td>\n      </tr>\n    ))}\n  </tbody>\n</table>\n// Sortable — sort state lives in React; the header toggles asc/desc\nconst [sort, setSort] = useState({ key: 'cost', dir: 'desc' });\nconst click = (key) => setSort((s) => s.key === key\n  ? { key, dir: s.dir === 'asc' ? 'desc' : 'asc' }\n  : { key, dir: 'asc' });\n\nconst rows = [...data].sort((a, b) => {\n  const dir = sort.dir === 'asc' ? 1 : -1;\n  const va = a[sort.key], vb = b[sort.key];\n  return (typeof va === 'number' ? va - vb : String(va).localeCompare(vb)) * dir;\n});\n\n<th>\n  <button onClick={() => click('cost')} className=\"inline-flex items-center gap-1\">\n    Cost 30 d\n    <ChevronIcon className={sort.key === 'cost' ? 'opacity-100' : 'opacity-25'} dir={sort.dir} />\n  </button>\n</th>\n// With selection — Set of ids; indeterminate master checkbox; bulk bar\nconst [sel, setSel] = useState(new Set());\nconst toggle = (id) => setSel((s) => { const x = new Set(s); x.has(id) ? x.delete(id) : x.add(id); return x; });\nconst toggleAll = () => setSel((s) => s.size === all ? new Set() : new Set(data.map((a) => a.id)));\n\n{sel.size > 0 && (\n  <div className=\"flex items-center gap-3 px-4 h-12 border-b border-border bg-primary/8\">\n    <span className=\"text-[12.5px] font-semibold\">{sel.size} selected</span>\n    <button>Pause</button><button>Reassign</button>\n    <button className=\"text-destructive\">Delete</button>\n  </div>\n)}\n\n<th><Checkbox checked={n === all} indeterminate={n > 0 && n < all} onChange={toggleAll} /></th>\n<td><Checkbox checked={sel.has(a.id)} onChange={() => toggle(a.id)} /></td>\n// Row actions — \"Open\" button + (…) menu that closes on outside click\nconst [open, setOpen] = useState(false);\nconst ref = useRef(null);\nuseClickOutside(ref, () => setOpen(false), open);\n\n<td className=\"text-right\">\n  <button className=\"h-7 px-2.5 rounded-md text-[12px] hover:bg-secondary\">Open</button>\n  <div className=\"relative\" ref={ref}>\n    <button onClick={() => setOpen((o) => !o)}><DotsIcon /></button>\n    {open && (\n      <div className=\"absolute right-0 top-8 w-40 py-1 rounded-lg border border-border bg-popover shadow-md\">\n        <button>View details</button><button>Pause</button><button>Retry</button>\n        <div className=\"my-1 h-px bg-border\" />\n        <button className=\"text-destructive\">Delete</button>\n      </div>\n    )}\n  </div>\n</td>\n// With toolbar — live-filtering search + \"Add\"; filtering lives in React\nconst [q, setQ] = useState('');\nconst rows = data.filter((a) => !q ||\n  (a.name + ' ' + a.model + ' ' + a.region).toLowerCase().includes(q.trim().toLowerCase()));\n\n<div className=\"flex items-center gap-2 px-3 py-3 border-b border-border bg-secondary/20\">\n  <div className=\"relative flex-1 max-w-[300px]\">\n    <SearchIcon className=\"absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground\" />\n    <input value={q} onChange={(e) => setQ(e.target.value)} placeholder=\"Search services…\"\n      className=\"w-full h-9 rounded-md border border-border bg-card pl-9 pr-3 text-[13px] focus:ring-2 focus:ring-ring/35\" />\n  </div>\n  <button className=\"h-9 px-3 rounded-md border border-border bg-card text-[12.5px] font-medium\"><FilterIcon /> Filters</button>\n  <button className=\"ml-auto h-9 px-3.5 rounded-md bg-primary text-primary-foreground text-[12.5px] font-semibold\"><PlusIcon /> Add service</button>\n</div>\n\n{/* … the table renders rows; empty state when rows.length === 0 … */}\n// The full system (popovers, chips, saved views) lives in the Filters component.","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":27,"findings":[],"summary":"0 errores · 0 avisos · 27 usos de tokens de marca"}},
-    {"source":"// Destructive confirmation — destructive icon, danger action on the right\n<Modal open={open} onClose={close} size=\"sm\">\n  <div className=\"p-5\">\n    <div className=\"flex gap-3.5\">\n      <span className=\"grid size-10 place-items-center rounded-lg bg-destructive/12 text-destructive\"><AlertIcon /></span>\n      <div className=\"flex-1 pt-0.5\">\n        <h3 className=\"text-[15px] font-semibold text-foreground\">Delete “checkout-api”</h3>\n        <p className=\"mt-1.5 text-[13px] leading-6 text-muted-foreground\">\n          It will be disconnected and its logs deleted. This action cannot be undone.\n        </p>\n      </div>\n    </div>\n    <div className=\"mt-5 flex justify-end gap-2.5\">\n      <button className=\"h-9 px-3.5 rounded-lg text-[13px] font-semibold text-muted-foreground hover:bg-secondary/60\">Cancel</button>\n      <button className=\"h-9 px-3.5 rounded-lg text-[13px] font-semibold bg-destructive text-destructive-foreground hover:bg-destructive/90\">Delete</button>\n    </div>\n  </div>\n</Modal>\n// Modal — scrim + centered panel, close via scrim / ✕ / Esc, animated entry\nfunction Modal({ open, onClose, size = \"md\", children }) {\n  const [mounted, shown] = useReveal(open);          // mount + animate in/out\n  useEffect(() => {\n    if (!open) return;\n    const onKey = (e) => e.key === \"Escape\" && onClose();\n    window.addEventListener(\"keydown\", onKey);\n    return () => window.removeEventListener(\"keydown\", onKey);\n  }, [open, onClose]);\n  if (!mounted) return null;\n  return (\n    <div className=\"fixed inset-0 z-50 flex items-start justify-center p-8\">\n      <div onClick={onClose}\n        className={\"absolute inset-0 bg-background/75 backdrop-blur-[3px] transition-opacity duration-200 \" +\n          (shown ? \"opacity-100\" : \"opacity-0\")} />\n      <div role=\"dialog\" aria-modal=\"true\"\n        className={\"relative mt-6 w-full max-w-[460px] rounded-xl border border-border bg-popover shadow-lg \" +\n          \"transition-all duration-200 \" +\n          (shown ? \"opacity-100 translate-y-0 scale-100\" : \"opacity-0 translate-y-2 scale-[0.97]\")}>\n        {children}\n      </div>\n    </div>\n  );\n}\n// Centered notice with two actions — primary icon, 50/50 button grid\n<Modal open={open} onClose={close} size=\"sm\">\n  <div className=\"p-6 text-center\">\n    <span className=\"mx-auto grid size-12 place-items-center rounded-full bg-primary/12 text-primary\"><BoltIcon /></span>\n    <h3 className=\"mt-4 text-[16px] font-semibold text-foreground\">Apply rollback</h3>\n    <p className=\"mt-1.5 text-[13px] leading-6 text-muted-foreground\">\n      All 24 services will go back to version v4.4. The current deployment will be paused.\n    </p>\n  </div>\n  <div className=\"grid grid-cols-2 gap-2.5 px-6 pb-6\">\n    <button className=\"h-9 rounded-lg border border-border bg-card text-[13px] font-semibold text-foreground hover:bg-secondary/60\">Cancel</button>\n    <button className=\"h-9 rounded-lg bg-primary text-[13px] font-semibold text-primary-foreground hover:bg-primary/90\">Apply</button>\n  </div>\n</Modal>\n// Confirmation with footer bar — icon on the left, tinted row-reverse footer\n<Modal open={open} onClose={close} size=\"md\">\n  <div className=\"p-6\">\n    <div className=\"flex gap-4\">\n      <span className=\"grid size-10 shrink-0 place-items-center rounded-full bg-destructive/12 text-destructive\"><AlertIcon /></span>\n      <div className=\"flex-1 pt-0.5\">\n        <h3 className=\"text-[15px] font-semibold text-foreground\">Deactivate “eu-west-1”</h3>\n        <p className=\"mt-1.5 text-[13px] leading-6 text-muted-foreground\">\n          The 9 services will stop serving and traffic will be rerouted to eu-central-1.\n        </p>\n      </div>\n    </div>\n  </div>\n  <div className=\"flex flex-row-reverse gap-2.5 border-t border-border bg-secondary/40 px-6 py-4\">\n    <button className=\"h-9 px-3.5 rounded-lg bg-destructive text-[13px] font-semibold text-destructive-foreground hover:bg-destructive/90\">Deactivate</button>\n    <button className=\"h-9 px-3.5 rounded-lg border border-border bg-card text-[13px] font-semibold text-foreground hover:bg-secondary/60\">Cancel</button>\n  </div>\n</Modal>","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":36,"findings":[],"summary":"0 errores · 0 avisos · 36 usos de tokens de marca"}},
-    {"source":"// Brand alert — a single component, semantic tone from tokens\nconst TONE = {\n  info:        { wrap: \"border-info/25 bg-info/10\",               fg: \"text-info\",        icon: \"info\"  },\n  success:     { wrap: \"border-primary/25 bg-primary/10\",         fg: \"text-primary\",     icon: \"check\" },\n  warning:     { wrap: \"border-warning/30 bg-warning/10\",         fg: \"text-warning\",     icon: \"alert\" },\n  destructive: { wrap: \"border-destructive/30 bg-destructive/10\", fg: \"text-destructive\", icon: \"alert\" },\n};\n\nfunction Alert({ tone = \"info\", title, children, onDismiss, actions }) {\n  const t = TONE[tone];\n  return (\n    <div className={\"rounded-lg border p-4 \" + t.wrap}>\n      <div className=\"flex gap-3\">\n        <Icon name={t.icon} size={18} className={\"mt-px shrink-0 \" + t.fg} />\n        <div className=\"min-w-0 flex-1\">\n          {title && <h3 className={\"text-[13.5px] font-semibold \" + t.fg}>{title}</h3>}\n          {children && <div className=\"mt-1 text-[13px] leading-6 text-foreground/75\">{children}</div>}\n          {actions && <div className=\"mt-3 flex flex-wrap gap-x-5 gap-y-2\">{actions}</div>}\n        </div>\n        {onDismiss && (\n          <button onClick={onDismiss} aria-label=\"Dismiss\"\n            className={\"-mr-1 grid size-6 place-items-center rounded-md hover:bg-foreground/10 \" + t.fg}>\n            <XIcon />\n          </button>\n        )}\n      </div>\n    </div>\n  );\n}\n// With actions — links in the tone + a neutral one, and the ✕ to dismiss\n<Alert\n  tone=\"warning\"\n  title=\"The workspace is at 92% of its budget\"\n  onDismiss={() => setShow(false)}\n  actions={\n    <>\n      <button className=\"text-[12.5px] font-semibold text-warning hover:opacity-70\">Raise limit</button>\n      <button className=\"text-[12.5px] font-medium text-muted-foreground hover:opacity-70\">View usage</button>\n    </>\n  }\n>\n  You have used $9.2k of $10k this month. At 100%, non-critical services are paused.\n</Alert>\n// Error summary — destructive + list of problems\n<Alert tone=\"destructive\" title=\"Could not apply the “pii-redaction” policy\">\n  Fix these 3 problems and publish again:\n  <ul className=\"mt-2 list-disc space-y-1.5 pl-5 marker:text-destructive/60\">\n    <li>The <span className=\"font-mono text-foreground/90\">billing-api</span> service has no region.</li>\n    <li>The <span className=\"font-mono text-foreground/90\">block:ssn</span> rule references an empty pattern.</li>\n    <li>The cost limit per request must be greater than 0.</li>\n  </ul>\n</Alert>\n// Global banner — horizontal, message + ghost CTA + dismiss\n<div className=\"flex flex-col gap-3 rounded-lg border border-info/25 bg-info/10 px-4 py-3\n                sm:flex-row sm:items-center sm:justify-between\">\n  <div className=\"flex min-w-0 items-center gap-3\">\n    <BellIcon className=\"shrink-0 text-info\" />\n    <p className=\"text-[13px] text-foreground/85\">\n      <span className=\"font-semibold text-info\">Scheduled maintenance.</span> Services restart on Jul 2 at 02:00 UTC.\n    </p>\n  </div>\n  <div className=\"flex shrink-0 items-center gap-2\">\n    <button className=\"h-8 rounded-md border border-info/40 px-3 text-[12.5px] font-semibold text-info hover:bg-info/10\">View details</button>\n    <button onClick={dismiss} className=\"grid size-8 place-items-center rounded-md text-info hover:bg-info/10\"><XIcon /></button>\n  </div>\n</div>\n// Getting-started banner — numbered steps, actions and dismiss\nconst STEPS = [\n  { n: 1, title: \"Connect a source\",      desc: \"…\", cta: \"Connect\",        disabled: false },\n  { n: 2, title: \"Configure the service\", desc: \"…\", cta: \"Create service\", disabled: true, hint: \"Connect a source first\" },\n  { n: 3, title: \"Deploy\",                desc: \"…\", cta: \"Deploy\",         disabled: true, hint: \"Create a service first\" },\n];\n\n<div className=\"relative rounded-xl border border-border bg-background p-6 sm:p-7\">\n  <button onClick={dismiss} aria-label=\"Dismiss\"\n    className=\"absolute right-3 top-3 grid size-7 place-items-center rounded-md\n               text-muted-foreground hover:bg-secondary/70 hover:text-foreground\">\n    <XIcon />\n  </button>\n  <h3 className=\"pr-8 text-[15px] font-semibold text-foreground\">Launch your first service</h3>\n  <p className=\"mt-1.5 max-w-xl text-[13px] leading-6 text-muted-foreground\">\n    Connect a source, configure the service and deploy it to serve traffic.\n  </p>\n  <div className=\"mt-7 grid grid-cols-1 gap-x-6 gap-y-7 sm:grid-cols-3\">\n    {STEPS.map((s) => (\n      <div key={s.n} className=\"flex flex-col justify-between gap-5 border-l-2 border-primary/25 pl-4\">\n        <div>\n          <span className=\"inline-flex items-center rounded-md bg-primary/14 px-2 py-0.5\n                           text-[11px] font-semibold text-primary\">Step {s.n}</span>\n          <h4 className=\"mt-3 text-[13.5px] font-semibold text-foreground\">{s.title}</h4>\n          <p className=\"mt-1 text-[12.5px] leading-6 text-muted-foreground\">{s.desc}</p>\n        </div>\n        {s.disabled ? (\n          <div className=\"group relative inline-flex\">\n            <button disabled className=\"h-9 rounded-lg bg-primary px-3.5 text-[13px] font-semibold\n                                       text-primary-foreground opacity-40 cursor-not-allowed\">{s.cta}</button>\n            <span className=\"pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2\n                             whitespace-nowrap rounded-md border border-border bg-popover px-2.5 py-1.5\n                             text-[11.5px] text-popover-foreground shadow-md opacity-0 group-hover:opacity-100\">{s.hint}</span>\n          </div>\n        ) : (\n          <button className=\"h-9 rounded-lg bg-primary px-3.5 text-[13px] font-semibold\n                             text-primary-foreground shadow-sm hover:bg-primary/90\">{s.cta}</button>\n        )}\n      </div>\n    ))}\n  </div>\n</div>","report":{"ok":true,"errors":0,"warnings":0,"tokensUsed":49,"findings":[],"summary":"0 errores · 0 avisos · 49 usos de tokens de marca"}}
+    {
+      "source": "<div className=\"bg-white\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-black\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-white\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-black\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"hover:bg-white\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"dark:text-black\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 1,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "dark-variant",
+            "severity": "warning",
+            "line": 1,
+            "excerpt": "<div className=\"dark:text-black\" />",
+            "message": "Variante dark: — los tokens ya cambian con el tema; no debería hacer falta"
+          }
+        ],
+        "summary": "0 errores · 1 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:text-white\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-black/50\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[#fff]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "hex-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#fff]\" />",
+            "message": "Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#fff]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[#ffffff80]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "hex-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#ffffff80]\" />",
+            "message": "Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#ffffff80]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-[rgb(0,0,0)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"text-[rgb(0,0,0)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"text-[rgb(0,0,0)]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-[rgba(0,0,0,0.5)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"text-[rgba(0,0,0,0.5)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"text-[rgba(0,0,0,0.5)]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[hsl(0,0%,100%)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[hsl(0,0%,100%)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[hsl(0,0%,100%)]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-[oklch(0.7_0.1_200)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"text-[oklch(0.7_0.1_200)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"text-[oklch(0.7_0.1_200)]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[color-mix(in_srgb,red,blue)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[color-mix(in_srgb,red,blue)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-[white]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"hover:bg-[#000]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "hex-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"hover:bg-[#000]/40\" />",
+            "message": "Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"hover:bg-[#000]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"border-[#fff]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "hex-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"border-[#fff]\" />",
+            "message": "Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"border-[#fff]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"ring-[rgb(0,0,0)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"ring-[rgb(0,0,0)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"ring-[rgb(0,0,0)]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"divide-[hwb(0_0%_0%)]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"ring-offset-[#000]\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "hex-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"ring-offset-[#000]\" />",
+            "message": "Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"from-[white]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"border-x-[color:red]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-background\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 1,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 1 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-foreground\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 1,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 1 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-card\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 1,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 1 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-muted-foreground\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 1,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 1 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[var(--card)]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"outline-[var(--ring)]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-[14px]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"border-[2px]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"ring-[3px]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"stroke-[1.5]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-transparent\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-current\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"border-white\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"ring-black\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"fill-white\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-white-ish\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-whitesmoke\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-whitesmoke-like\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"var(--bg-white)\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[transparent]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-[currentcolor]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-[redder]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"text-[red_14px]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[color:var(--card)]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"shadow-[0_0_30px_rgba(255,0,0,.6)]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 1,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "glow-shadow",
+            "severity": "warning",
+            "line": 1,
+            "excerpt": "<div className=\"shadow-[0_0_30px_rgba(255,0,0,.6)]\" />",
+            "message": "Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"
+          }
+        ],
+        "summary": "0 errores · 1 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:bg-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:bg-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:bg-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:bg-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:bg-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:text-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:text-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:text-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:text-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:text-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:border-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:border-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-x-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-x-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:border-x-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-x-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-y-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-y-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:border-y-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-y-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-s-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-s-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:border-s-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-s-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-e-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-e-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:border-e-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-e-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-t-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-t-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:border-t-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-t-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-r-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-r-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:border-r-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-r-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-b-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-b-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:border-b-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-b-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-l-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-l-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:border-l-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:border-l-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:divide-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:divide-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:divide-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:divide-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:outline-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:outline-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:outline-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:outline-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:outline-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:ring-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:ring-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:ring-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:ring-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:ring-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:ring-offset-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:ring-offset-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:ring-offset-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:ring-offset-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:inset-ring-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:inset-ring-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:inset-ring-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:inset-ring-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:inset-ring-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:shadow-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:shadow-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:shadow-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:shadow-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:shadow-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:inset-shadow-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:inset-shadow-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:inset-shadow-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:inset-shadow-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:inset-shadow-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:text-shadow-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 1,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "glow-shadow",
+            "severity": "warning",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:text-shadow-[white]/40\" />",
+            "message": "Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"
+          }
+        ],
+        "summary": "0 errores · 1 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:text-shadow-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 1,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:text-shadow-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:text-shadow-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          },
+          {
+            "rule": "glow-shadow",
+            "severity": "warning",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:text-shadow-[rgb(0,0,0)]/40\" />",
+            "message": "Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"
+          }
+        ],
+        "summary": "2 errores · 1 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:text-shadow-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 1,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "glow-shadow",
+            "severity": "warning",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:text-shadow-[color:red]/40\" />",
+            "message": "Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"
+          }
+        ],
+        "summary": "0 errores · 1 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:drop-shadow-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 1,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "glow-shadow",
+            "severity": "warning",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:drop-shadow-[white]/40\" />",
+            "message": "Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"
+          }
+        ],
+        "summary": "0 errores · 1 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:drop-shadow-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 1,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:drop-shadow-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:drop-shadow-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          },
+          {
+            "rule": "glow-shadow",
+            "severity": "warning",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:drop-shadow-[rgb(0,0,0)]/40\" />",
+            "message": "Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"
+          }
+        ],
+        "summary": "2 errores · 1 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:drop-shadow-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 1,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "glow-shadow",
+            "severity": "warning",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:drop-shadow-[color:red]/40\" />",
+            "message": "Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"
+          }
+        ],
+        "summary": "0 errores · 1 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:decoration-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:decoration-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:decoration-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:decoration-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:decoration-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:placeholder-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:placeholder-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:placeholder-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:placeholder-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:caret-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:caret-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:caret-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:caret-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:accent-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:accent-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:accent-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:accent-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:fill-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:fill-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:fill-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:fill-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:fill-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:stroke-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:stroke-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:stroke-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:stroke-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:stroke-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:from-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:from-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:from-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:from-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:from-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:via-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:via-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:via-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:via-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:via-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:to-[white]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:to-[rgb(0,0,0)]/40\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:to-[rgb(0,0,0)]/40\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"md:hover:to-[rgb(0,0,0)]/40\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"md:hover:to-[color:red]/40\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[#abc]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "hex-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#abc]\" />",
+            "message": "Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#abc]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[#abcd]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "hex-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#abcd]\" />",
+            "message": "Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#abcd]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[#abcdef]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "hex-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#abcdef]\" />",
+            "message": "Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#abcdef]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[#abcdef80]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "hex-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#abcdef80]\" />",
+            "message": "Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[#abcdef80]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[rgb(0,0,0)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[rgb(0,0,0)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[rgb(0,0,0)]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[rgba(0,0,0,.5)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[rgba(0,0,0,.5)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[rgba(0,0,0,.5)]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[hsl(0,0%,0%)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[hsl(0,0%,0%)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[hsl(0,0%,0%)]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[hsla(0,0%,0%,.5)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[hsla(0,0%,0%,.5)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[hsla(0,0%,0%,.5)]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[hwb(0_0%_0%)]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[lab(50_0_0)]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[lch(50_0_0)]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[oklab(0.5_0_0)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[oklab(0.5_0_0)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[oklch(0.5_0_0)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 2,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[oklch(0.5_0_0)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "arbitrary-color",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[oklch(0.5_0_0)]\" />",
+            "message": "Color arbitrario en clase Tailwind (bg-[#…], text-[rgb(…)]) — usa tokens"
+          }
+        ],
+        "summary": "2 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[color(srgb_0_0_0)]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[color-mix(in_srgb,red,blue)]\" />",
+      "report": {
+        "ok": false,
+        "errors": 1,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 1,
+            "excerpt": "<div className=\"bg-[color-mix(in_srgb,red,blue)]\" />",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          }
+        ],
+        "summary": "1 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[rebeccapurple]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[AliceBlue]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[DARKSLATEGREY]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div className=\"bg-[color:red]\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "\n<div style=\"background:#ff0000\" class=\"bg-red-500 text-white\">\n  <span class=\"bg-gradient-to-r from-pink-500 to-purple-600\">glow</span>\n  <p class=\"shadow-[0_0_30px_rgba(255,0,0,.6)] dark:bg-black\">hola</p>\n  <i style=\"color: rgb(12, 34, 56)\"></i>\n</div>",
+      "report": {
+        "ok": false,
+        "errors": 6,
+        "warnings": 4,
+        "tokensUsed": 0,
+        "findings": [
+          {
+            "rule": "hex-color",
+            "severity": "error",
+            "line": 2,
+            "excerpt": "<div style=\"background:#ff0000\" class=\"bg-red-500 text-white\">",
+            "message": "Color hex hardcodeado — usa una clase de token (bg-primary, text-foreground, …)"
+          },
+          {
+            "rule": "palette-class",
+            "severity": "error",
+            "line": 2,
+            "excerpt": "<div style=\"background:#ff0000\" class=\"bg-red-500 text-white\">",
+            "message": "Clase de paleta Tailwind — se salta los tokens de marca"
+          },
+          {
+            "rule": "inline-style-color",
+            "severity": "warning",
+            "line": 2,
+            "excerpt": "<div style=\"background:#ff0000\" class=\"bg-red-500 text-white\">",
+            "message": "Color en style inline — muévelo a clases de token"
+          },
+          {
+            "rule": "palette-class",
+            "severity": "error",
+            "line": 3,
+            "excerpt": "<span class=\"bg-gradient-to-r from-pink-500 to-purple-600\">glow</span>",
+            "message": "Clase de paleta Tailwind — se salta los tokens de marca"
+          },
+          {
+            "rule": "palette-class",
+            "severity": "error",
+            "line": 3,
+            "excerpt": "n class=\"bg-gradient-to-r from-pink-500 to-purple-600\">glow</span>",
+            "message": "Clase de paleta Tailwind — se salta los tokens de marca"
+          },
+          {
+            "rule": "gradient",
+            "severity": "error",
+            "line": 3,
+            "excerpt": "<span class=\"bg-gradient-to-r from-pink-500 to-purple-600\">glow</span>",
+            "message": "Degradado — la marca es sobria: sin degradados de color"
+          },
+          {
+            "rule": "glow-shadow",
+            "severity": "warning",
+            "line": 4,
+            "excerpt": "<p class=\"shadow-[0_0_30px_rgba(255,0,0,.6)] dark:bg-black\">hola</p>",
+            "message": "Posible glow — la marca usa sombras planas (shadow-sm / shadow-md del tema)"
+          },
+          {
+            "rule": "dark-variant",
+            "severity": "warning",
+            "line": 4,
+            "excerpt": "ass=\"shadow-[0_0_30px_rgba(255,0,0,.6)] dark:bg-black\">hola</p>",
+            "message": "Variante dark: — los tokens ya cambian con el tema; no debería hacer falta"
+          },
+          {
+            "rule": "raw-color-fn",
+            "severity": "error",
+            "line": 5,
+            "excerpt": "<i style=\"color: rgb(12, 34, 56)\"></i>",
+            "message": "Función de color con valores crudos — solo hsl(var(--token) / α)"
+          },
+          {
+            "rule": "inline-style-color",
+            "severity": "warning",
+            "line": 5,
+            "excerpt": "<i style=\"color: rgb(12, 34, 56)\"></i>",
+            "message": "Color en style inline — muévelo a clases de token"
+          }
+        ],
+        "summary": "6 errores · 4 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "\nexport function Fila() {\n  return (\n    <button className=\"bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 rounded-lg h-9 px-3.5\">\n      Deploy agent\n    </button>\n  );\n}\nconst chip = <span className=\"bg-primary/14 text-primary border border-border rounded-md\">ok</span>;\n",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 6,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 6 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<div style={{ backgroundImage: 'repeating-linear-gradient(135deg, hsl(var(--border) / 0.5) 0 1px, transparent 1px 11px)' }} />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 1,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 1 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<i className=\"text-primary\" style={{ color: 'hsl(var(--primary) / 0.5)' }} />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 2,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 2 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<a href=\"#cafe\">ir</a> &#39; <use href=\"#def\" /> url(#abc)",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "<p class=\"dark:bg-black\">x</p>",
+      "options": { "allow": ["dark-variant", "no-tokens"] },
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 0,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 0 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "// Brand button — variant × size, with icon and loading state\nconst VARIANT = {\n  primary:     \"bg-primary text-primary-foreground shadow-sm hover:bg-primary/90\",\n  secondary:   \"border border-border bg-card text-foreground shadow-sm hover:bg-secondary/70\",\n  soft:        \"bg-primary/14 text-primary hover:bg-primary/20\",\n  ghost:       \"text-muted-foreground hover:bg-secondary/70 hover:text-foreground\",\n  destructive: \"bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90\",\n};\nconst SIZE = {\n  sm: \"h-8 gap-1.5 px-3 text-[12.5px] rounded-md\",\n  md: \"h-9 gap-1.5 px-3.5 text-[13px] rounded-lg\",\n  lg: \"h-11 gap-2 px-5 text-[14.5px] rounded-lg\",\n};\n\nfunction Button({ variant = \"primary\", size = \"md\", icon: Lead, loading, children, ...props }) {\n  const base = \"inline-flex items-center justify-center font-semibold whitespace-nowrap transition-colors \" +\n    \"focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-offset-2 focus-visible:ring-offset-card \" +\n    \"disabled:opacity-50 disabled:pointer-events-none\";\n  return (\n    <button {...props} disabled={props.disabled || loading}\n      className={base + \" \" + SIZE[size] + \" \" + VARIANT[variant]}>\n      {loading ? <Spinner /> : Lead && <Lead className=\"size-[15px]\" />}\n      {children}\n    </button>\n  );\n}\n// Icon-only — square box per size; always with an aria-label\nconst ICONBOX = { sm: \"size-8 rounded-md\", md: \"size-9 rounded-lg\", lg: \"size-11 rounded-lg\" };\n<Button iconOnly icon={PlusIcon} aria-label=\"Add\" />",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 17,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 17 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "// Simple — subtly tinted thead, divided rows, mono numbers on the right\n<table className=\"w-full border-collapse\">\n  <thead>\n    <tr className=\"border-b border-border bg-secondary/30\">\n      <th className=\"text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10\">Service</th>\n      <th className=\"text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10\">Region</th>\n      <th className=\"text-left text-[11.5px] uppercase text-muted-foreground px-4 h-10\">Status</th>\n      <th className=\"text-right text-[11.5px] uppercase text-muted-foreground px-4 h-10\">Cost 30 d</th>\n    </tr>\n  </thead>\n  <tbody className=\"divide-y divide-border\">\n    {rows.map((a) => (\n      <tr key={a.id} className=\"hover:bg-accent/30\">\n        <td className=\"px-4 py-3\">{/* avatar + name + runtime */}</td>\n        <td className=\"px-4 py-3 font-mono text-[12px] text-muted-foreground\">{a.region}</td>\n        <td className=\"px-4 py-3\"><StatusPill tone={a.tone}>{a.state}</StatusPill></td>\n        <td className=\"px-4 py-3 text-right font-mono text-[12.5px]\">{money(a.cost)}</td>\n      </tr>\n    ))}\n  </tbody>\n</table>\n// Sortable — sort state lives in React; the header toggles asc/desc\nconst [sort, setSort] = useState({ key: 'cost', dir: 'desc' });\nconst click = (key) => setSort((s) => s.key === key\n  ? { key, dir: s.dir === 'asc' ? 'desc' : 'asc' }\n  : { key, dir: 'asc' });\n\nconst rows = [...data].sort((a, b) => {\n  const dir = sort.dir === 'asc' ? 1 : -1;\n  const va = a[sort.key], vb = b[sort.key];\n  return (typeof va === 'number' ? va - vb : String(va).localeCompare(vb)) * dir;\n});\n\n<th>\n  <button onClick={() => click('cost')} className=\"inline-flex items-center gap-1\">\n    Cost 30 d\n    <ChevronIcon className={sort.key === 'cost' ? 'opacity-100' : 'opacity-25'} dir={sort.dir} />\n  </button>\n</th>\n// With selection — Set of ids; indeterminate master checkbox; bulk bar\nconst [sel, setSel] = useState(new Set());\nconst toggle = (id) => setSel((s) => { const x = new Set(s); x.has(id) ? x.delete(id) : x.add(id); return x; });\nconst toggleAll = () => setSel((s) => s.size === all ? new Set() : new Set(data.map((a) => a.id)));\n\n{sel.size > 0 && (\n  <div className=\"flex items-center gap-3 px-4 h-12 border-b border-border bg-primary/8\">\n    <span className=\"text-[12.5px] font-semibold\">{sel.size} selected</span>\n    <button>Pause</button><button>Reassign</button>\n    <button className=\"text-destructive\">Delete</button>\n  </div>\n)}\n\n<th><Checkbox checked={n === all} indeterminate={n > 0 && n < all} onChange={toggleAll} /></th>\n<td><Checkbox checked={sel.has(a.id)} onChange={() => toggle(a.id)} /></td>\n// Row actions — \"Open\" button + (…) menu that closes on outside click\nconst [open, setOpen] = useState(false);\nconst ref = useRef(null);\nuseClickOutside(ref, () => setOpen(false), open);\n\n<td className=\"text-right\">\n  <button className=\"h-7 px-2.5 rounded-md text-[12px] hover:bg-secondary\">Open</button>\n  <div className=\"relative\" ref={ref}>\n    <button onClick={() => setOpen((o) => !o)}><DotsIcon /></button>\n    {open && (\n      <div className=\"absolute right-0 top-8 w-40 py-1 rounded-lg border border-border bg-popover shadow-md\">\n        <button>View details</button><button>Pause</button><button>Retry</button>\n        <div className=\"my-1 h-px bg-border\" />\n        <button className=\"text-destructive\">Delete</button>\n      </div>\n    )}\n  </div>\n</td>\n// With toolbar — live-filtering search + \"Add\"; filtering lives in React\nconst [q, setQ] = useState('');\nconst rows = data.filter((a) => !q ||\n  (a.name + ' ' + a.model + ' ' + a.region).toLowerCase().includes(q.trim().toLowerCase()));\n\n<div className=\"flex items-center gap-2 px-3 py-3 border-b border-border bg-secondary/20\">\n  <div className=\"relative flex-1 max-w-[300px]\">\n    <SearchIcon className=\"absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground\" />\n    <input value={q} onChange={(e) => setQ(e.target.value)} placeholder=\"Search services…\"\n      className=\"w-full h-9 rounded-md border border-border bg-card pl-9 pr-3 text-[13px] focus:ring-2 focus:ring-ring/35\" />\n  </div>\n  <button className=\"h-9 px-3 rounded-md border border-border bg-card text-[12.5px] font-medium\"><FilterIcon /> Filters</button>\n  <button className=\"ml-auto h-9 px-3.5 rounded-md bg-primary text-primary-foreground text-[12.5px] font-semibold\"><PlusIcon /> Add service</button>\n</div>\n\n{/* … the table renders rows; empty state when rows.length === 0 … */}\n// The full system (popovers, chips, saved views) lives in the Filters component.",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 27,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 27 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "// Destructive confirmation — destructive icon, danger action on the right\n<Modal open={open} onClose={close} size=\"sm\">\n  <div className=\"p-5\">\n    <div className=\"flex gap-3.5\">\n      <span className=\"grid size-10 place-items-center rounded-lg bg-destructive/12 text-destructive\"><AlertIcon /></span>\n      <div className=\"flex-1 pt-0.5\">\n        <h3 className=\"text-[15px] font-semibold text-foreground\">Delete “checkout-api”</h3>\n        <p className=\"mt-1.5 text-[13px] leading-6 text-muted-foreground\">\n          It will be disconnected and its logs deleted. This action cannot be undone.\n        </p>\n      </div>\n    </div>\n    <div className=\"mt-5 flex justify-end gap-2.5\">\n      <button className=\"h-9 px-3.5 rounded-lg text-[13px] font-semibold text-muted-foreground hover:bg-secondary/60\">Cancel</button>\n      <button className=\"h-9 px-3.5 rounded-lg text-[13px] font-semibold bg-destructive text-destructive-foreground hover:bg-destructive/90\">Delete</button>\n    </div>\n  </div>\n</Modal>\n// Modal — scrim + centered panel, close via scrim / ✕ / Esc, animated entry\nfunction Modal({ open, onClose, size = \"md\", children }) {\n  const [mounted, shown] = useReveal(open);          // mount + animate in/out\n  useEffect(() => {\n    if (!open) return;\n    const onKey = (e) => e.key === \"Escape\" && onClose();\n    window.addEventListener(\"keydown\", onKey);\n    return () => window.removeEventListener(\"keydown\", onKey);\n  }, [open, onClose]);\n  if (!mounted) return null;\n  return (\n    <div className=\"fixed inset-0 z-50 flex items-start justify-center p-8\">\n      <div onClick={onClose}\n        className={\"absolute inset-0 bg-background/75 backdrop-blur-[3px] transition-opacity duration-200 \" +\n          (shown ? \"opacity-100\" : \"opacity-0\")} />\n      <div role=\"dialog\" aria-modal=\"true\"\n        className={\"relative mt-6 w-full max-w-[460px] rounded-xl border border-border bg-popover shadow-lg \" +\n          \"transition-all duration-200 \" +\n          (shown ? \"opacity-100 translate-y-0 scale-100\" : \"opacity-0 translate-y-2 scale-[0.97]\")}>\n        {children}\n      </div>\n    </div>\n  );\n}\n// Centered notice with two actions — primary icon, 50/50 button grid\n<Modal open={open} onClose={close} size=\"sm\">\n  <div className=\"p-6 text-center\">\n    <span className=\"mx-auto grid size-12 place-items-center rounded-full bg-primary/12 text-primary\"><BoltIcon /></span>\n    <h3 className=\"mt-4 text-[16px] font-semibold text-foreground\">Apply rollback</h3>\n    <p className=\"mt-1.5 text-[13px] leading-6 text-muted-foreground\">\n      All 24 services will go back to version v4.4. The current deployment will be paused.\n    </p>\n  </div>\n  <div className=\"grid grid-cols-2 gap-2.5 px-6 pb-6\">\n    <button className=\"h-9 rounded-lg border border-border bg-card text-[13px] font-semibold text-foreground hover:bg-secondary/60\">Cancel</button>\n    <button className=\"h-9 rounded-lg bg-primary text-[13px] font-semibold text-primary-foreground hover:bg-primary/90\">Apply</button>\n  </div>\n</Modal>\n// Confirmation with footer bar — icon on the left, tinted row-reverse footer\n<Modal open={open} onClose={close} size=\"md\">\n  <div className=\"p-6\">\n    <div className=\"flex gap-4\">\n      <span className=\"grid size-10 shrink-0 place-items-center rounded-full bg-destructive/12 text-destructive\"><AlertIcon /></span>\n      <div className=\"flex-1 pt-0.5\">\n        <h3 className=\"text-[15px] font-semibold text-foreground\">Deactivate “eu-west-1”</h3>\n        <p className=\"mt-1.5 text-[13px] leading-6 text-muted-foreground\">\n          The 9 services will stop serving and traffic will be rerouted to eu-central-1.\n        </p>\n      </div>\n    </div>\n  </div>\n  <div className=\"flex flex-row-reverse gap-2.5 border-t border-border bg-secondary/40 px-6 py-4\">\n    <button className=\"h-9 px-3.5 rounded-lg bg-destructive text-[13px] font-semibold text-destructive-foreground hover:bg-destructive/90\">Deactivate</button>\n    <button className=\"h-9 px-3.5 rounded-lg border border-border bg-card text-[13px] font-semibold text-foreground hover:bg-secondary/60\">Cancel</button>\n  </div>\n</Modal>",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 36,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 36 usos de tokens de marca"
+      }
+    },
+    {
+      "source": "// Brand alert — a single component, semantic tone from tokens\nconst TONE = {\n  info:        { wrap: \"border-info/25 bg-info/10\",               fg: \"text-info\",        icon: \"info\"  },\n  success:     { wrap: \"border-primary/25 bg-primary/10\",         fg: \"text-primary\",     icon: \"check\" },\n  warning:     { wrap: \"border-warning/30 bg-warning/10\",         fg: \"text-warning\",     icon: \"alert\" },\n  destructive: { wrap: \"border-destructive/30 bg-destructive/10\", fg: \"text-destructive\", icon: \"alert\" },\n};\n\nfunction Alert({ tone = \"info\", title, children, onDismiss, actions }) {\n  const t = TONE[tone];\n  return (\n    <div className={\"rounded-lg border p-4 \" + t.wrap}>\n      <div className=\"flex gap-3\">\n        <Icon name={t.icon} size={18} className={\"mt-px shrink-0 \" + t.fg} />\n        <div className=\"min-w-0 flex-1\">\n          {title && <h3 className={\"text-[13.5px] font-semibold \" + t.fg}>{title}</h3>}\n          {children && <div className=\"mt-1 text-[13px] leading-6 text-foreground/75\">{children}</div>}\n          {actions && <div className=\"mt-3 flex flex-wrap gap-x-5 gap-y-2\">{actions}</div>}\n        </div>\n        {onDismiss && (\n          <button onClick={onDismiss} aria-label=\"Dismiss\"\n            className={\"-mr-1 grid size-6 place-items-center rounded-md hover:bg-foreground/10 \" + t.fg}>\n            <XIcon />\n          </button>\n        )}\n      </div>\n    </div>\n  );\n}\n// With actions — links in the tone + a neutral one, and the ✕ to dismiss\n<Alert\n  tone=\"warning\"\n  title=\"The workspace is at 92% of its budget\"\n  onDismiss={() => setShow(false)}\n  actions={\n    <>\n      <button className=\"text-[12.5px] font-semibold text-warning hover:opacity-70\">Raise limit</button>\n      <button className=\"text-[12.5px] font-medium text-muted-foreground hover:opacity-70\">View usage</button>\n    </>\n  }\n>\n  You have used $9.2k of $10k this month. At 100%, non-critical services are paused.\n</Alert>\n// Error summary — destructive + list of problems\n<Alert tone=\"destructive\" title=\"Could not apply the “pii-redaction” policy\">\n  Fix these 3 problems and publish again:\n  <ul className=\"mt-2 list-disc space-y-1.5 pl-5 marker:text-destructive/60\">\n    <li>The <span className=\"font-mono text-foreground/90\">billing-api</span> service has no region.</li>\n    <li>The <span className=\"font-mono text-foreground/90\">block:ssn</span> rule references an empty pattern.</li>\n    <li>The cost limit per request must be greater than 0.</li>\n  </ul>\n</Alert>\n// Global banner — horizontal, message + ghost CTA + dismiss\n<div className=\"flex flex-col gap-3 rounded-lg border border-info/25 bg-info/10 px-4 py-3\n                sm:flex-row sm:items-center sm:justify-between\">\n  <div className=\"flex min-w-0 items-center gap-3\">\n    <BellIcon className=\"shrink-0 text-info\" />\n    <p className=\"text-[13px] text-foreground/85\">\n      <span className=\"font-semibold text-info\">Scheduled maintenance.</span> Services restart on Jul 2 at 02:00 UTC.\n    </p>\n  </div>\n  <div className=\"flex shrink-0 items-center gap-2\">\n    <button className=\"h-8 rounded-md border border-info/40 px-3 text-[12.5px] font-semibold text-info hover:bg-info/10\">View details</button>\n    <button onClick={dismiss} className=\"grid size-8 place-items-center rounded-md text-info hover:bg-info/10\"><XIcon /></button>\n  </div>\n</div>\n// Getting-started banner — numbered steps, actions and dismiss\nconst STEPS = [\n  { n: 1, title: \"Connect a source\",      desc: \"…\", cta: \"Connect\",        disabled: false },\n  { n: 2, title: \"Configure the service\", desc: \"…\", cta: \"Create service\", disabled: true, hint: \"Connect a source first\" },\n  { n: 3, title: \"Deploy\",                desc: \"…\", cta: \"Deploy\",         disabled: true, hint: \"Create a service first\" },\n];\n\n<div className=\"relative rounded-xl border border-border bg-background p-6 sm:p-7\">\n  <button onClick={dismiss} aria-label=\"Dismiss\"\n    className=\"absolute right-3 top-3 grid size-7 place-items-center rounded-md\n               text-muted-foreground hover:bg-secondary/70 hover:text-foreground\">\n    <XIcon />\n  </button>\n  <h3 className=\"pr-8 text-[15px] font-semibold text-foreground\">Launch your first service</h3>\n  <p className=\"mt-1.5 max-w-xl text-[13px] leading-6 text-muted-foreground\">\n    Connect a source, configure the service and deploy it to serve traffic.\n  </p>\n  <div className=\"mt-7 grid grid-cols-1 gap-x-6 gap-y-7 sm:grid-cols-3\">\n    {STEPS.map((s) => (\n      <div key={s.n} className=\"flex flex-col justify-between gap-5 border-l-2 border-primary/25 pl-4\">\n        <div>\n          <span className=\"inline-flex items-center rounded-md bg-primary/14 px-2 py-0.5\n                           text-[11px] font-semibold text-primary\">Step {s.n}</span>\n          <h4 className=\"mt-3 text-[13.5px] font-semibold text-foreground\">{s.title}</h4>\n          <p className=\"mt-1 text-[12.5px] leading-6 text-muted-foreground\">{s.desc}</p>\n        </div>\n        {s.disabled ? (\n          <div className=\"group relative inline-flex\">\n            <button disabled className=\"h-9 rounded-lg bg-primary px-3.5 text-[13px] font-semibold\n                                       text-primary-foreground opacity-40 cursor-not-allowed\">{s.cta}</button>\n            <span className=\"pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2\n                             whitespace-nowrap rounded-md border border-border bg-popover px-2.5 py-1.5\n                             text-[11.5px] text-popover-foreground shadow-md opacity-0 group-hover:opacity-100\">{s.hint}</span>\n          </div>\n        ) : (\n          <button className=\"h-9 rounded-lg bg-primary px-3.5 text-[13px] font-semibold\n                             text-primary-foreground shadow-sm hover:bg-primary/90\">{s.cta}</button>\n        )}\n      </div>\n    ))}\n  </div>\n</div>",
+      "report": {
+        "ok": true,
+        "errors": 0,
+        "warnings": 0,
+        "tokensUsed": 49,
+        "findings": [],
+        "summary": "0 errores · 0 avisos · 49 usos de tokens de marca"
+      }
+    }
   ]
 }
