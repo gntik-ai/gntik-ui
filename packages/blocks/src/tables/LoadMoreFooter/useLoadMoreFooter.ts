@@ -2,12 +2,21 @@ import { useAnnounce } from '@gntik-ai/ui';
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 
 /** Capture focus before React removes the control, then restore it after the replacement commits. */
-export function useLoadMoreFooter(control: 'button' | 'retry' | 'none', target: 'summary' | 'root') {
+export function useLoadMoreFooter(
+  control: 'button' | 'retry' | 'none',
+  target: 'summary' | 'root',
+  loading: boolean,
+  error: string,
+) {
   const rootRef = useRef<HTMLDivElement>(null);
   const summaryRef = useRef<HTMLParagraphElement>(null);
   const currentControl = useRef<HTMLElement | null>(null);
   const moveFocus = useRef(false);
   const inFlightCursorRef = useRef<string | undefined>(undefined);
+  useEffect(() => {
+    // A successful settle releases the cursor; later external failures use nextCursor.
+    if (!loading && !error) inFlightCursorRef.current = undefined;
+  }, [loading, error]);
   const controlRef = useCallback((node: HTMLElement | null) => {
     if (!node && currentControl.current?.contains(document.activeElement)) moveFocus.current = true;
     currentControl.current = node;

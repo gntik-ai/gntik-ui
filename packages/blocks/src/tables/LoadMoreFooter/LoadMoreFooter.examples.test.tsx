@@ -3,8 +3,16 @@ import userEvent from '@testing-library/user-event';
 import CursorExample from './examples/cursor';
 import FlagExample from './examples/flag';
 import CardsExample from './examples/cards';
+import ExhaustedExample from './examples/exhausted';
 
 describe('LoadMoreFooter consumer examples', () => {
+  it('keeps a settled error visible without retry in the exhausted example', () => {
+    render(<ExhaustedExample />);
+    expect(screen.getByRole('heading', { name: 'Request failed' })).toBeVisible();
+    expect(screen.queryByRole('button')).toBeNull();
+    expect(screen.getByText(/40 items loaded/)).toBeVisible();
+  });
+
   it.each([
     ['table', CursorExample],
     ['cards', CardsExample],

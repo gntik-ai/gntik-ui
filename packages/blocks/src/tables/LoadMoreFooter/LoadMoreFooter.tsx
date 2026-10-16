@@ -34,7 +34,12 @@ export interface LoadMoreFooterProps {
   className?: string;
 }
 
-/** Load more for appended lists without a total or page count. The consumer owns rows and requests. */
+/**
+ * Load more for appended lists without a total or page count. The consumer owns rows and requests.
+ * With no props, renders a static catalogue preview using fixture data. Supplying any prop selects
+ * the consumer contract: undefined nextCursor means flag mode and requires hasMore=true.
+ * loadedCount defaults to the preview fixture; consumers should pass their actual loaded count.
+ */
 export function LoadMoreFooter(props: LoadMoreFooterProps = {}) {
   const hasAnnouncer = useHasLiveAnnouncer();
   return hasAnnouncer ? (
@@ -66,7 +71,12 @@ function LoadMoreFooterContent(props: LoadMoreFooterProps) {
   const cursorMode = cursor !== undefined;
   const panel = cursorMode && failed;
   const control = !available ? 'none' : panel ? 'retry' : 'button';
-  const { rootRef, summaryRef, controlRef, inFlightCursorRef } = useLoadMoreFooter(control, exhaustedFocusTarget);
+  const { rootRef, summaryRef, controlRef, inFlightCursorRef } = useLoadMoreFooter(
+    control,
+    exhaustedFocusTarget,
+    loading,
+    error,
+  );
   const errorId = useId();
   useLoadMoreAnnouncements(
     loading,

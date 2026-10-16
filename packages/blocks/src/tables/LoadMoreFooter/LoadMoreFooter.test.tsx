@@ -113,6 +113,23 @@ describe('LoadMoreFooter failures and focus', () => {
     expect(onRetry.mock.calls).toEqual([['c2']]);
   });
 
+  it.each([true, false])(
+    'uses the current cursor for an external failure after a successful load (onRetry=%s)',
+    async (explicitRetry) => {
+      const user = userEvent.setup();
+      const onLoadMore = vi.fn();
+      const onRetry = vi.fn();
+      const props = { onLoadMore, onRetry: explicitRetry ? onRetry : undefined };
+      const { rerender } = render(<LoadMoreFooter {...props} nextCursor="c1" />);
+      await user.click(screen.getByRole('button', { name: 'Load more' }));
+      rerender(<LoadMoreFooter {...props} nextCursor="c1" loading />);
+      rerender(<LoadMoreFooter {...props} nextCursor="c2" loading={false} error="" />);
+      rerender(<LoadMoreFooter {...props} nextCursor="c2" error="External request failed" />);
+      await user.click(screen.getByRole('button', { name: 'Try again' }));
+      expect((explicitRetry ? onRetry : onLoadMore).mock.calls).toEqual(explicitRetry ? [['c2']] : [['c1'], ['c2']]);
+    },
+  );
+
   it.each(['cursor', 'flag'])('exhaustion overrides an error and removes every control in %s mode', async (mode) => {
     const props = { nextCursor: mode === 'cursor' ? 'c1' : undefined, hasMore: true, loadedCount: 37 };
     const { rerender } = render(<LoadMoreFooter {...props} />);
