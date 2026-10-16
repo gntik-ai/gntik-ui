@@ -4,3 +4,8 @@ export const firstRunSteps = ['Connect a Git repository', 'Configure build setti
 export const noResultsSample = { query: 'billing-api', filterCount: 2, entity: 'projects' } as const;
 
 export const noAccessSample = { resource: 'Billing', owner: 'an organization admin' } as const;
+
+export const notFoundSample = {
+  title: 'Resource not found',
+  description: 'This resource may have been deleted or moved.',
+} as const;

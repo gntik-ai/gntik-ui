@@ -8048,11 +8048,12 @@ import { StatusTimeline } from '@gntik-ai/blocks';
 
 ### Confirm destructive (`confirm-destructive`)
 
-AlertDialog for irreversible actions that requires typing the resource name, with async confirm and error display.
+AlertDialog for irreversible actions with exact typed-name and optional canConfirm gating, extra form fields, typed failure states, guarded retry and focus return. See the plain deletion and secret revocation examples.
 
 - Package: `@gntik-ai/blocks` · export `ConfirmDestructive` · group feedback · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/feedback/ConfirmDestructive/block.meta.ts
-- Composes: AlertDialog, Button, Field, Input
+- Composes: AlertDialog, Button, Field, Input, EmptyState
+- Registry dependencies: empty-states, error-panel
 - Preview: /preview.html?kind=block&id=confirm-destructive
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add confirm-destructive`
 
@@ -8067,9 +8068,9 @@ import { ConfirmDestructive } from '@gntik-ai/blocks';
 
 ### Empty states (`empty-states`)
 
-Three canonical empty states: first run (with checklist), no results (clear filters/search) and no access (request access).
+Four canonical empty states: first run (with checklist), no results (clear filters/search), no access (request access) and not found (optional action).
 
-- Package: `@gntik-ai/blocks` · export `FirstRunEmpty` · group feedback · status beta
+- Package: `@gntik-ai/blocks` · export `NotFoundEmpty` · group feedback · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/feedback/EmptyStates/block.meta.ts
 - Composes: EmptyState, Button, Link
 - Preview: /preview.html?kind=block&id=empty-states
@@ -8078,10 +8079,10 @@ Three canonical empty states: first run (with checklist), no results (clear filt
 Usage:
 
 ```tsx
-import { FirstRunEmpty } from '@gntik-ai/blocks';
+import { NotFoundEmpty } from '@gntik-ai/blocks';
 
 // Props default to the block fixtures; pass your data.
-<FirstRunEmpty />
+<NotFoundEmpty />
 ```
 
 ### Error panel (`error-panel`)

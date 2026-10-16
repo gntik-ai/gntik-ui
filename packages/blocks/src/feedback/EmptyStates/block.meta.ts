@@ -5,6 +5,6 @@ export const meta: BlockMeta = {
   family: 'feedback',
   status: 'beta',
   description:
-    'Three canonical empty states: first run (with checklist), no results (clear filters/search) and no access (request access).',
+    'Four canonical empty states: first run (with checklist), no results (clear filters/search), no access (request access) and not found (optional action).',
   uses: ['EmptyState', 'Button', 'Link'],
 };

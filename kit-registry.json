@@ -288,7 +288,7 @@
       "package": "@gntik-ai/blocks",
       "group": "feedback",
       "status": "beta",
-      "description": "AlertDialog for irreversible actions that requires typing the resource name, with async confirm and error display.",
+      "description": "AlertDialog for irreversible actions with exact typed-name and optional canConfirm gating, extra form fields, typed failure states, guarded retry and focus return. See the plain deletion and secret revocation examples.",
       "files": [
         {
           "path": "packages/blocks/src/feedback/ConfirmDestructive/ConfirmDestructive.tsx",
@@ -299,7 +299,10 @@
         "@gntik-ai/icons",
         "@gntik-ai/ui"
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "empty-states",
+        "error-panel"
+      ],
       "docs": "packages/blocks/src/feedback/ConfirmDestructive/block.meta.ts"
     },
     {
@@ -849,7 +852,7 @@
       "package": "@gntik-ai/blocks",
       "group": "feedback",
       "status": "beta",
-      "description": "Three canonical empty states: first run (with checklist), no results (clear filters/search) and no access (request access).",
+      "description": "Four canonical empty states: first run (with checklist), no results (clear filters/search), no access (request access) and not found (optional action).",
       "files": [
         {
           "path": "packages/blocks/src/feedback/EmptyStates/EmptyStates.tsx",

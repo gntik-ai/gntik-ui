@@ -1,9 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
-import { FirstRunEmpty, NoAccessEmpty, NoResultsEmpty } from './EmptyStates';
+import { FirstRunEmpty, NoAccessEmpty, NoResultsEmpty, NotFoundEmpty } from './EmptyStates';
 
 describe('EmptyStates', () => {
+  it('renders not found copy without actions or live regions, and accepts an action', async () => {
+    const { container, rerender } = render(<NotFoundEmpty title="Resource missing" description="It was deleted." />);
+    expect(screen.getByRole('heading', { name: 'Resource missing' })).toBeVisible();
+    expect(screen.getByText('It was deleted.')).toBeVisible();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    expect(container.querySelector('[role="alert"], [role="status"], [aria-live]')).toBeNull();
+    await expectNoAxeViolations(container);
+    rerender(<NotFoundEmpty action={<button>Go back</button>} />);
+    expect(screen.getByRole('button', { name: 'Go back' })).toBeVisible();
+  });
   it('renders the three defaults', async () => {
     const { container } = render(
       <>

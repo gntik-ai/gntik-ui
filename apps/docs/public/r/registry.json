@@ -2534,14 +2534,16 @@
       "name": "confirm-destructive",
       "type": "registry:block",
       "title": "Confirm destructive",
-      "description": "AlertDialog for irreversible actions that requires typing the resource name, with async confirm and error display.",
+      "description": "AlertDialog for irreversible actions with exact typed-name and optional canConfirm gating, extra form fields, typed failure states, guarded retry and focus return. See the plain deletion and secret revocation examples.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
         "@gntik-ai/ui"
       ],
       "registryDependencies": [
-        "https://ui.gntik.ai/r/gntik-tokens.json"
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/empty-states.json",
+        "https://ui.gntik.ai/r/error-panel.json"
       ],
       "css": {
         "@import \"@gntik-ai/ui/styles.css\"": {}
@@ -3848,7 +3850,7 @@
       "name": "empty-states",
       "type": "registry:block",
       "title": "Empty states",
-      "description": "Three canonical empty states: first run (with checklist), no results (clear filters/search) and no access (request access).",
+      "description": "Four canonical empty states: first run (with checklist), no results (clear filters/search), no access (request access) and not found (optional action).",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",

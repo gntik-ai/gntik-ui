@@ -2,7 +2,7 @@ import { Check, FolderPlus, Lock, SearchX } from '@gntik-ai/icons';
 import type { LucideIcon } from '@gntik-ai/icons';
 import { Button, EmptyState, Link, cn } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
-import { firstRunSteps, noAccessSample, noResultsSample } from './fixtures';
+import { firstRunSteps, noAccessSample, noResultsSample, notFoundSample } from './fixtures';
 
 interface SharedEmptyProps {
   /** Heading level that fits the page outline. */
@@ -10,6 +10,36 @@ interface SharedEmptyProps {
   /** Dashed border around the state (use inside a card or table). */
   bordered?: boolean;
   className?: string;
+}
+
+export interface NotFoundEmptyProps extends SharedEmptyProps {
+  icon?: LucideIcon;
+  title?: ReactNode;
+  description?: ReactNode;
+  action?: ReactNode;
+}
+
+/** Missing resource state; consumers may supply an optional way back. */
+export function NotFoundEmpty({
+  icon = SearchX,
+  title = notFoundSample.title,
+  description = notFoundSample.description,
+  action,
+  titleAs,
+  bordered = true,
+  className,
+}: NotFoundEmptyProps) {
+  return (
+    <EmptyState
+      icon={icon}
+      title={title}
+      description={description}
+      primaryAction={action}
+      titleAs={titleAs}
+      bordered={bordered}
+      className={cn('mx-auto', className)}
+    />
+  );
 }
 
 export interface FirstRunEmptyProps extends SharedEmptyProps {
