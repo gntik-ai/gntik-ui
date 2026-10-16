@@ -46,9 +46,11 @@ export function WizardOverlayBody({
       <div id={id} ref={ref} tabIndex={-1} className={className}>
         {children}
       </div>
-      <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
-        {live}
-      </div>
+      {announcement && (
+        <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+          {live}
+        </div>
+      )}
     </>
   );
 }

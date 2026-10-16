@@ -23,7 +23,7 @@ import {
 } from '../../components/AlertDialog';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '../../components/Dialog';
 import { Button } from '../../components/Button';
-import { Stepper, type StepItem } from '../../components/Stepper';
+import { Stepper, type StepItem, type StepperProps } from '../../components/Stepper';
 import { SkipLink } from '../../components/VisuallyHidden';
 import { useI18n } from '../../i18n/I18nProvider';
 import { WizardOverlayBody } from './WizardOverlayBody';
@@ -49,6 +49,10 @@ export interface WizardLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 
   className?: string;
   ref?: Ref<HTMLDivElement>;
   steps: StepItem[];
+  /** Completed steps remain display-only when false. Defaults to true. */
+  stepsInteractive?: boolean;
+  stepStatusText?: StepperProps['statusText'];
+  formatStepCount?: StepperProps['formatCount'];
   /** Zero-based index of the current step. */
   current: number;
   /** Called by Back, Next and by clicking a completed step. */
@@ -68,6 +72,8 @@ export interface WizardLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 
   /** Replaces the whole default footer (Back / Next). */
   footer?: ReactNode;
   backLabel?: string;
+  /** Locks Back without removing it from the tab order. */
+  backDisabled?: boolean;
   nextLabel?: string;
   finishLabel?: string;
   nextDisabled?: boolean;
@@ -107,6 +113,9 @@ export function WizardLayout({
   stepsSummaryLabel: stepsSummaryLabelProp,
   stepAnnouncement,
   steps,
+  stepsInteractive = true,
+  stepStatusText,
+  formatStepCount,
   current,
   onStepChange,
   onFinish,
@@ -117,6 +126,7 @@ export function WizardLayout({
   footerStart,
   footer,
   backLabel: backLabelProp,
+  backDisabled = false,
   nextLabel: nextLabelProp,
   finishLabel: finishLabelProp,
   nextDisabled = false,
@@ -214,9 +224,19 @@ export function WizardLayout({
             label={stepsLabel}
             steps={steps}
             current={current}
-            onStepClick={onStepChange}
+            onStepClick={stepsInteractive ? onStepChange : undefined}
+            statusText={stepStatusText}
+            formatCount={formatStepCount}
           />
-          <Stepper className={s.stepsCompact()} label={stepsSummaryLabel} steps={steps} current={current} compact />
+          <Stepper
+            className={s.stepsCompact()}
+            label={stepsSummaryLabel}
+            steps={steps}
+            current={current}
+            statusText={stepStatusText}
+            formatCount={formatStepCount}
+            compact
+          />
         </div>
       </header>
       {overlay && description && <DialogDescription className="sr-only">{description}</DialogDescription>}
@@ -236,8 +256,13 @@ export function WizardLayout({
             <Button
               variant="secondary"
               icon={ChevronLeft}
-              disabled={!overlay && current <= 0}
-              onClick={() => (overlay && current === 0 ? requestExit() : onStepChange?.(current - 1))}
+              disabled={backDisabled || (!overlay && current <= 0)}
+              focusableWhenDisabled={backDisabled}
+              onClick={() => {
+                if (backDisabled) return;
+                if (overlay && current === 0) requestExit();
+                else onStepChange?.(current - 1);
+              }}
             >
               {overlay && current === 0 ? cancelLabel : backLabel}
             </Button>
