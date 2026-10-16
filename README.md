@@ -78,6 +78,9 @@ components, blocks or page templates (`gntik-ui list --json` shows everything). 
 
 1. Install from public npm: `pnpm add @gntik-ai/ui`
    (it brings `@gntik-ai/tokens`; add `@gntik-ai/charts`, `flow`, `editor` as needed).
+   Connected installs from `registry.npmjs.org` need no token, credential or `.npmrc` entry
+   for `@gntik-ai`. Remove an old `@gntik-ai:registry` line from `.npmrc` so packages resolve
+   from public npm.
 2. In the global CSS, after Tailwind v4:
    ```css
    @import 'tailwindcss';
@@ -106,6 +109,30 @@ components, blocks or page templates (`gntik-ui list --json` shows everything). 
    (`SidebarLayout`, `SettingsLayout`…), blocks (`import { KpiRow } from '@gntik-ai/blocks'`)
    or whole pages (`import { HomeDashboardPage } from '@gntik-ai/templates'`). See
    `apps/example-vite` (Vite) and `apps/example-next` (Next.js) for complete wiring.
+
+### Disconnected installs
+
+Outside the disconnected environment, fetch each exact release from public npm, for example
+`npm pack @gntik-ai/tokens@0.2.1 --registry https://registry.npmjs.org/` (repeat for every
+locked package, including transitive dependencies). Optionally verify provenance with
+`npm audit signatures` in a temporary project installed from public npm. Compare each carried
+tarball's sha512 (base64, prefixed with `sha512-`) with that version's registry `dist.integrity`,
+available through `npm view @gntik-ai/tokens@0.2.1 dist.integrity --registry https://registry.npmjs.org/`.
+Provenance is registry metadata and does not travel with a republished `.tgz`.
+
+Publish the tarballs unmodified to an internal npm mirror. Keep the consumer lockfile's
+sha512 integrity: mirrored bytes must be byte-identical to the public npm tarballs. Point
+installs at the mirror with `pnpm install --frozen-lockfile --registry https://registry.example/`
+(or a `registry=` override). pnpm checks tarball integrity; `--frozen-lockfile` separately
+prevents lockfile updates. Use lockfile entries with integrity and no tarball URL so the
+registry override controls the download location.
+
+Alternatively, while the mirror is reachable, fill an offline store from the consumer lockfile:
+`pnpm fetch --frozen-lockfile --store-dir ./offline-store --cache-dir ./offline-cache --registry https://registry.example/`.
+Carry the store, metadata cache, manifest and unchanged lockfile into the disconnected environment,
+then run `pnpm install --frozen-lockfile --offline --store-dir ./offline-store --cache-dir ./offline-cache --registry https://registry.example/`.
+Keep the same registry URL so pnpm can find its cached metadata even though the mirror is unreachable.
+Use the same pnpm version and target platform when preparing and consuming the store.
 
 ## Status
 
