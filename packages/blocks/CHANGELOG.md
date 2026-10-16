@@ -1,5 +1,14 @@
 # @gntik-ai/blocks
 
+## 0.6.0
+
+### Minor Changes
+
+- 18f0018: Add configurable sign-up fields, optional consent, policy loading and unavailable states, validation summaries that focus every invalid control including consent with readable contrast in all themes, and minimum-length password guidance; short passwords now show the lowest strength level.
+- 442b687: Add typed per-instance labels and formatters for PaginationFooter, FilterBar and DataTable chrome, including overflow region names, while preserving existing defaults and provider translations.
+  
+  Keep cell-editor errors readable on plain, hovered and selected rows with a dedicated token surface.
+
 ## 0.5.0
 
 ### Minor Changes
