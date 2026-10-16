@@ -24,6 +24,8 @@ export interface ErrorPanelProps {
   secondaryAction?: FeedbackAction | null;
   titleAs?: 'h2' | 'h3';
   className?: string;
+  /** Disable the status region when a parent owns announcements. */
+  announce?: boolean;
 }
 
 /** Error summary for a failed load or action: what happened, request id, retry and technical details. */
@@ -40,6 +42,7 @@ export function ErrorPanel({
   secondaryAction = { label: 'Contact support', variant: 'ghost' },
   titleAs: Heading = 'h3',
   className,
+  announce = true,
 }: ErrorPanelProps) {
   const { t } = useI18n();
   const retryLabel = retryLabelProp ?? t('error.retry');
@@ -136,9 +139,11 @@ export function ErrorPanel({
               </CollapsiblePanel>
             </Collapsible>
           )}
-          <p role="status" className="sr-only">
-            {busy ? t('error.retryingStatus') : copied ? t('error.requestIdCopied') : ''}
-          </p>
+          {announce && (
+            <p role="status" className="sr-only">
+              {busy ? t('error.retryingStatus') : copied ? t('error.requestIdCopied') : ''}
+            </p>
+          )}
         </div>
       </div>
     </section>

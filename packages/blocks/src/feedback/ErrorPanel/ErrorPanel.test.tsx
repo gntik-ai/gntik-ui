@@ -4,6 +4,13 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { ErrorPanel } from './ErrorPanel';
 
 describe('ErrorPanel', () => {
+  it('allows its caller to own announcements while preserving the default status region', () => {
+    const { rerender } = render(<ErrorPanel />);
+    expect(screen.getByRole('status')).toBeInTheDocument();
+    rerender(<ErrorPanel announce={false} />);
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
   it('accepts a null code to hide the fixture chip', () => {
     render(<ErrorPanel code={null} />);
     expect(screen.queryByText('503')).not.toBeInTheDocument();

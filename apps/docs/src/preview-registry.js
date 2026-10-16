@@ -64,6 +64,24 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 export const PREVIEW_LOADERS = {
   block: {
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'confirm-destructive': () =>
+      import('../../../packages/blocks/src/feedback/ConfirmDestructive/examples/PlainDeletion'),
+    'confirm-destructive--extra-fields': () =>
+      import('../../../packages/blocks/src/feedback/ConfirmDestructive/examples/SecretRevocation'),
+    ...Object.fromEntries(
+      [
+        ['server', 'ServerFailure'],
+        ['network', 'NetworkFailure'],
+        ['no-access', 'NoAccessFailure'],
+        ['not-found', 'NotFoundFailure'],
+      ].map(([state, name]) => [
+        `confirm-destructive--${state}`,
+        () =>
+          import('../../../packages/blocks/src/feedback/ConfirmDestructive/examples/FailureStates').then((module) => ({
+            default: module[name],
+          })),
+      ]),
+    ),
     'load-more-footer--cursor': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/cursor'),
     'load-more-footer--flag': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/flag'),
     'load-more-footer--failed': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/failed'),

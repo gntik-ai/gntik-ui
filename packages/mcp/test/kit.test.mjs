@@ -174,6 +174,18 @@ test('get_block: metadata, composed components, deps and source', async () => {
   assert.match(await call('get_block', { id: 'kpi' }), /Did you mean .*kpi-row/);
 });
 
+test('destructive feedback: discoverable not found state and token-safe dialog sources', async () => {
+  const empty = await call('get_block', { id: 'empty-states' });
+  assert.match(empty, /NotFoundEmptyProps/);
+  assert.match(empty, /not found/);
+  for (const id of ['confirm-destructive', 'empty-states', 'error-panel']) {
+    const item = kit.byId.get(id);
+    for (const file of item.files.filter((file) => /\.tsx?$/.test(file.path))) {
+      assert.equal(validatePage(fs.readFileSync(path.join(ROOT, file.path), 'utf8')).errors, 0, file.path);
+    }
+  }
+});
+
 test('truncated-collection-footer: discoverable non-interactive lower-bound and count-only recipes', async () => {
   assert.match(await call('list_kit', { kind: 'block' }), /`truncated-collection-footer`/);
   const item = kit.byId.get('truncated-collection-footer');

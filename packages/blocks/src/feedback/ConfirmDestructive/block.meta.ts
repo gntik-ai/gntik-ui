@@ -5,6 +5,6 @@ export const meta: BlockMeta = {
   family: 'feedback',
   status: 'beta',
   description:
-    'AlertDialog for irreversible actions that requires typing the resource name, with async confirm and error display.',
-  uses: ['AlertDialog', 'Button', 'Field', 'Input'],
+    'AlertDialog for irreversible actions with exact typed-name and optional canConfirm gating, extra form fields, typed failure states, guarded retry and focus return. See the plain deletion and secret revocation examples.',
+  uses: ['AlertDialog', 'Button', 'Field', 'Input', 'EmptyState'],
 };
