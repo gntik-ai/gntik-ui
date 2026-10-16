@@ -5938,6 +5938,50 @@
       ]
     },
     {
+      "name": "load-more-footer",
+      "type": "registry:block",
+      "title": "Load more footer",
+      "description": "A load more button and loaded-count summary for appended lists without a total or page count. Cursor mode uses nextCursor and optional hasMore; flag mode omits nextCursor and uses hasMore. Compose with DataTable paginated={false} or Collapsible and JsonViewer cards. The consumer owns rows, filters and cursor normalization. Each attempt must settle loading=false together with its result in one update; split settles are unsupported. Keep cursor, hasMore, counts and lastAppend unchanged on failure. Cursor failures replace the button with ErrorPanel; flag failures keep the same button. Exhaustion removes every control even on failure. Focus moves only when the focused control is removed, to its replacement or exhaustedFocusTarget (summary by default, root optionally). lastAppend uses increasing seq values for successful appends, never initial loads, replacements or failures. New appended counts are announced politely; settled errors assertively. Self-wraps in LiveAnnouncer when needed. Every label has translated defaults and per-key overrides.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/error-panel.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "block",
+        "tables"
+      ],
+      "meta": {
+        "kind": "block",
+        "package": "@gntik-ai/blocks",
+        "status": "beta",
+        "source": "packages/blocks/src/tables/LoadMoreFooter/block.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/blocks/src/tables/LoadMoreFooter/LoadMoreFooter.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/tables/load-more-footer/LoadMoreFooter.tsx"
+        },
+        {
+          "path": "packages/blocks/src/tables/LoadMoreFooter/fixtures.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/tables/load-more-footer/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/tables/LoadMoreFooter/useLoadMoreFooter.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/tables/load-more-footer/useLoadMoreFooter.ts"
+        }
+      ]
+    },
+    {
       "name": "log-viewer",
       "type": "registry:block",
       "title": "Log viewer",

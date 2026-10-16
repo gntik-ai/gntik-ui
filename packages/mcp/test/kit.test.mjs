@@ -2,6 +2,7 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
+import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
@@ -187,6 +188,22 @@ test('truncated-collection-footer: discoverable non-interactive lower-bound and 
   assert.match(md, /from '@gntik-ai\/blocks'/);
   assert.match(md, /visibleCount=\{37\}/);
   assert.match(md, /TruncatedCollectionFooterProps/);
+});
+
+test('load-more-footer: discoverable load more block with both availability modes and every label', async () => {
+  assert.match(await call('list_kit', { kind: 'block', group: 'tables', query: 'load more' }), /`load-more-footer`/);
+  const item = kit.byId.get('load-more-footer');
+  assert.equal(item.kind, 'block');
+  assert.equal(item.group, 'tables');
+  const md = await call('get_block', { id: 'load-more-footer' });
+  assert.match(md, /LoadMoreFooterProps/);
+  assert.match(md, /paginated=\{false\}/);
+  for (const key of ['loadMore', 'loading', 'retry', 'group', 'moreAvailable', 'summary', 'loadedAnnouncement']) {
+    assert.ok(md.includes(key), `documents ${key}`);
+  }
+  for (const file of item.files.filter((file) => file.path.includes('/LoadMoreFooter/') && /\.tsx?$/.test(file.path))) {
+    assert.equal(validatePage(fs.readFileSync(path.join(ROOT, file.path), 'utf8')).errors, 0, file.path);
+  }
 });
 
 test('subordinate-list: catalogue supplies its required props and resource-form composition example', async () => {

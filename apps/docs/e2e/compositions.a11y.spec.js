@@ -57,6 +57,18 @@ const cases = [
         .filter((theme) => id !== 'subordinate-list' || theme !== 'dark')
         .map((theme) => ({ kind: 'block', id, theme })),
   ),
+  ...[
+    'load-more-footer',
+    'load-more-footer--cursor',
+    'load-more-footer--flag',
+    'load-more-footer--failed',
+    'load-more-footer--exhausted',
+    'load-more-footer--cards',
+  ].flatMap((id) =>
+    ['dark', 'light', 'high_contrast']
+      .filter((theme) => id !== 'load-more-footer' || theme !== 'dark')
+      .map((theme) => ({ kind: 'block', id, theme })),
+  ),
   ...layoutExamples.map((id) => ({ kind: 'layout', id, theme: 'dark' })),
   ...['truncated-collection-footer', 'truncated-collection-footer--has-more'].flatMap((id) =>
     ['dark', 'light', 'high_contrast']
