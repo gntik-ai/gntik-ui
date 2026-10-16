@@ -1,7 +1,0 @@
----
-'@gntik-ai/blocks': minor
----
-
-Add typed per-instance labels and formatters for PaginationFooter, FilterBar and DataTable chrome, including overflow region names, while preserving existing defaults and provider translations.
-
-Keep cell-editor errors readable on plain, hovered and selected rows with a dedicated token surface.

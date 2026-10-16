@@ -1,5 +1,13 @@
 # @gntik-ai/templates
 
+## 0.6.0
+
+### Patch Changes
+
+- Updated dependencies [18f0018]
+- Updated dependencies [442b687]
+  - @gntik-ai/blocks@0.6.0
+
 ## 0.5.0
 
 ### Minor Changes
