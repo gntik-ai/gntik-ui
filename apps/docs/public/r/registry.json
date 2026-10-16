@@ -2959,6 +2959,117 @@
       ]
     },
     {
+      "name": "cursor-pager-footer",
+      "type": "registry:block",
+      "title": "Cursor pager footer",
+      "description": "Responsive stateless cursor-pagination footer for data-table paginated={false}. Forwards CursorPaginationProps: hasPrevious, hasNext, onPrevious, onNext, loading, busy, summary, shownCount, total, unavailableBehaviour, pageSize, pageSizeOptions, onPageSizeChange, previousLabel, nextLabel, ariaLabel, loadingLabel, labels and className. Consumer-owned opaque cursors stay outside the kit. summary accepts plain text or null; the count form requires labels.shownSummary and labels.totalSummary; select options require labels.rowsPerPage and labels.rowsPerPageLabel. Flat names override labels.previous, labels.next and labels.navLabel, then catalog defaults. loadingLabel=null preserves the summary while busy. One persistent polite atomic status; buttons remain focusable when aria-disabled. Removal of a focused control moves focus to Next, Previous, select, then nav root, including while busy. No page numbers or ranges. No props renders fixtures.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "block",
+        "tables"
+      ],
+      "meta": {
+        "kind": "block",
+        "package": "@gntik-ai/blocks",
+        "status": "beta",
+        "source": "packages/blocks/src/tables/CursorPagerFooter/block.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/blocks/src/tables/CursorPagerFooter/CursorPagerFooter.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/tables/cursor-pager-footer/CursorPagerFooter.tsx"
+        },
+        {
+          "path": "packages/blocks/src/tables/CursorPagerFooter/fixtures.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/tables/cursor-pager-footer/fixtures.ts"
+        }
+      ]
+    },
+    {
+      "name": "cursor-pagination",
+      "type": "registry:ui",
+      "title": "CursorPagination",
+      "description": "See the cursor-pager-footer block example for data-table paginated={false} with a consumer-owned token stack. Stateless Previous/Next navigation for consumer-owned cursor stacks, with no page numbers, ranges or invented totals. Supply a plain-text summary (null keeps it empty) or shownCount with required labels.shownSummary and labels.totalSummary; only a positive exact total uses totalSummary. A pageSizeOptions select requires pageSize, onPageSizeChange, labels.rowsPerPage and labels.rowsPerPageLabel. Flat previousLabel, nextLabel and ariaLabel override labels.previous, labels.next and labels.navLabel, then provider catalog defaults. loading and busy are aliases: rendered buttons stay focusable and aria-disabled with aria-busy, while the select stays enabled. loadingLabel defaults to the catalog; null keeps the summary during busy. One persistent polite status writes once per changed text; mount, empty text and unchanged commits do not announce. Removal of the focused control moves focus to Next, Previous, the select or the nav root, in that order, even while busy; focus elsewhere never moves.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/select.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Navigation"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/CursorPagination/CursorPagination.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/CursorPagination/CursorPagination.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/cursor-pagination/CursorPagination.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/CursorPagination/cursor-pagination.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/cursor-pagination/cursor-pagination.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CursorPagination/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/cursor-pagination/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CursorPagination/CursorPagination.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/cursor-pagination/CursorPagination.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "danger-zone",
       "type": "registry:block",
       "title": "Danger zone",

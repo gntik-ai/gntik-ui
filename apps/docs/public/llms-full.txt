@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 112 components, 12 layouts, 76 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 113 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -4635,6 +4635,40 @@ export default function BreadcrumbsBasic() {
 }
 ```
 
+### CursorPagination (`cursor-pagination`)
+
+See the cursor-pager-footer block example for data-table paginated={false} with a consumer-owned token stack. Stateless Previous/Next navigation for consumer-owned cursor stacks, with no page numbers, ranges or invented totals. Supply a plain-text summary (null keeps it empty) or shownCount with required labels.shownSummary and labels.totalSummary; only a positive exact total uses totalSummary. A pageSizeOptions select requires pageSize, onPageSizeChange, labels.rowsPerPage and labels.rowsPerPageLabel. Flat previousLabel, nextLabel and ariaLabel override labels.previous, labels.next and labels.navLabel, then provider catalog defaults. loading and busy are aliases: rendered buttons stay focusable and aria-disabled with aria-busy, while the select stays enabled. loadingLabel defaults to the catalog; null keeps the summary during busy. One persistent polite status writes once per changed text; mount, empty text and unchanged commits do not announce. Removal of the focused control moves focus to Next, Previous, the select or the nav root, in that order, even while busy; focus elsewhere never moves.
+
+- Package: `@gntik-ai/ui` · export `CursorPagination` · group Navigation · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/CursorPagination/CursorPagination.doc.ts
+- Primitive: `@base-ui/react/button + @base-ui/react/select (kit Button and SimpleSelect)`
+- ARIA pattern: named navigation landmark with one persistent polite atomic status
+- Registry dependencies: button, select, ui-utils
+- Install: `gntik-ui add cursor-pagination`; own the source with `gntik-ui eject cursor-pagination`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Moves through the select (when present), Previous and Next, including aria-disabled buttons |
+| Enter / Space | Activates an available button once; busy and unavailable buttons do nothing; opens the select |
+| ArrowDown / ArrowUp | Opens the select and moves between page-size options |
+| Enter / Escape | Selects the highlighted page size or closes the select; focus returns to its trigger |
+
+Tokens: card, border, foreground, muted-foreground, secondary, focus-ring, background, primary, ring, popover, popover-foreground, primary-text
+
+Usage:
+
+```tsx
+import { CursorPagination } from '@gntik-ai/ui';
+
+export default function Busy() {
+  return (
+    <CursorPagination hasPrevious hasNext loading summary="25 records loaded" onPrevious={() => {}} onNext={() => {}} />
+  );
+}
+```
+
 ### Link (`link`)
 
 Styled anchor in brand green, underlined by default so inline links do not rely on colour (WCAG 1.4.1); standalone links (nav, cards, actions) pass underline="hover" or "none". `external` adds the external icon, a hidden "opens in a new tab" hint and safe rel/target. LinkProvider supplies the app router link so internal links navigate client-side; `render` swaps the element per link.
@@ -8719,6 +8753,37 @@ import { GlobalSearch } from '@gntik-ai/blocks';
 
 // Props default to the block fixtures; pass your data.
 <GlobalSearch />
+```
+
+### Cursor pager footer (`cursor-pager-footer`)
+
+Responsive stateless cursor-pagination footer for data-table paginated={false}. Forwards CursorPaginationProps: hasPrevious, hasNext, onPrevious, onNext, loading, busy, summary, shownCount, total, unavailableBehaviour, pageSize, pageSizeOptions, onPageSizeChange, previousLabel, nextLabel, ariaLabel, loadingLabel, labels and className. Consumer-owned opaque cursors stay outside the kit. summary accepts plain text or null; the count form requires labels.shownSummary and labels.totalSummary; select options require labels.rowsPerPage and labels.rowsPerPageLabel. Flat names override labels.previous, labels.next and labels.navLabel, then catalog defaults. loadingLabel=null preserves the summary while busy. One persistent polite atomic status; buttons remain focusable when aria-disabled. Removal of a focused control moves focus to Next, Previous, select, then nav root, including while busy. No page numbers or ranges. No props renders fixtures.
+
+- Package: `@gntik-ai/blocks` · export `CursorPagerFooter` · group tables · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/tables/CursorPagerFooter/block.meta.ts
+- Composes: CursorPagination
+- Preview: /preview.html?kind=block&id=cursor-pager-footer
+- Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add cursor-pager-footer`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `previous` | `string` | Previous name, below previousLabel and above catalog defaults |
+| `next` | `string` | Next name, below nextLabel and above catalog defaults |
+| `navLabel` | `string` | Navigation name, below ariaLabel and above catalog defaults |
+| `shownSummary` | `(shownCount: number) => string` | Required in count form: no positive exact total |
+| `totalSummary` | `(total: number) => string` | Required in count form: positive exact total |
+| `rowsPerPage` | `string` | Required with pageSizeOptions: visible select label |
+| `rowsPerPageLabel` | `string` | Required with pageSizeOptions: select accessible name |
+
+Usage:
+
+```tsx
+import { CursorPagerFooter } from '@gntik-ai/blocks';
+
+// Props default to the block fixtures; pass your data.
+<CursorPagerFooter />
 ```
 
 ### Data table (`data-table`)

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cursor-pager-footer",
+  "type": "registry:block",
+  "title": "Cursor pager footer",
+  "description": "Responsive stateless cursor-pagination footer for data-table paginated={false}. Forwards CursorPaginationProps: hasPrevious, hasNext, onPrevious, onNext, loading, busy, summary, shownCount, total, unavailableBehaviour, pageSize, pageSizeOptions, onPageSizeChange, previousLabel, nextLabel, ariaLabel, loadingLabel, labels and className. Consumer-owned opaque cursors stay outside the kit. summary accepts plain text or null; the count form requires labels.shownSummary and labels.totalSummary; select options require labels.rowsPerPage and labels.rowsPerPageLabel. Flat names override labels.previous, labels.next and labels.navLabel, then catalog defaults. loadingLabel=null preserves the summary while busy. One persistent polite atomic status; buttons remain focusable when aria-disabled. Removal of a focused control moves focus to Next, Previous, select, then nav root, including while busy. No page numbers or ranges. No props renders fixtures.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/tables/CursorPagerFooter/CursorPagerFooter.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/tables/cursor-pager-footer/CursorPagerFooter.tsx",
+      "content": "import { CursorPagination, type CursorPaginationProps } from '@gntik-ai/ui';\nimport { CURSOR_PAGER_PREVIEW } from './fixtures';\n\n/** The complete CursorPaginationProps contract, or no props for the fixture preview. */\nexport type CursorPagerFooterProps = CursorPaginationProps | { [K in keyof CursorPaginationProps]?: never };\n\n/** Responsive table footer. Forwards every cursor-pagination prop without storing cursor state. */\nexport function CursorPagerFooter(props: CursorPagerFooterProps = {}) {\n  return <CursorPagination {...(props.hasPrevious === undefined ? CURSOR_PAGER_PREVIEW : props)} />;\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/tables/CursorPagerFooter/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/tables/cursor-pager-footer/fixtures.ts",
+      "content": "import type { CursorPaginationProps } from '@gntik-ai/ui';\n\nexport const CURSOR_PAGER_PREVIEW = {\n  hasPrevious: false,\n  hasNext: true,\n  onPrevious: () => {},\n  onNext: () => {},\n  shownCount: 25,\n  labels: {\n    shownSummary: (shownCount: number) => `${shownCount} records shown`,\n    totalSummary: (total: number) => `${total} records in total`,\n  },\n} satisfies CursorPaginationProps;\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "tables"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/tables/CursorPagerFooter/block.meta.ts"
+  }
+}

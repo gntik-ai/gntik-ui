@@ -384,6 +384,67 @@
       "docs": "packages/blocks/src/forms/CredentialDisclosureDialog/block.meta.ts"
     },
     {
+      "id": "cursor-pager-footer",
+      "kind": "block",
+      "name": "Cursor pager footer",
+      "package": "@gntik-ai/blocks",
+      "group": "tables",
+      "status": "beta",
+      "description": "Responsive stateless cursor-pagination footer for data-table paginated={false}. Forwards CursorPaginationProps: hasPrevious, hasNext, onPrevious, onNext, loading, busy, summary, shownCount, total, unavailableBehaviour, pageSize, pageSizeOptions, onPageSizeChange, previousLabel, nextLabel, ariaLabel, loadingLabel, labels and className. Consumer-owned opaque cursors stay outside the kit. summary accepts plain text or null; the count form requires labels.shownSummary and labels.totalSummary; select options require labels.rowsPerPage and labels.rowsPerPageLabel. Flat names override labels.previous, labels.next and labels.navLabel, then catalog defaults. loadingLabel=null preserves the summary while busy. One persistent polite atomic status; buttons remain focusable when aria-disabled. Removal of a focused control moves focus to Next, Previous, select, then nav root, including while busy. No page numbers or ranges. No props renders fixtures.",
+      "labels": [
+        {
+          "key": "previous",
+          "type": "string",
+          "state": "Previous name, below previousLabel and above catalog defaults"
+        },
+        {
+          "key": "next",
+          "type": "string",
+          "state": "Next name, below nextLabel and above catalog defaults"
+        },
+        {
+          "key": "navLabel",
+          "type": "string",
+          "state": "Navigation name, below ariaLabel and above catalog defaults"
+        },
+        {
+          "key": "shownSummary",
+          "type": "(shownCount: number) => string",
+          "state": "Required in count form: no positive exact total"
+        },
+        {
+          "key": "totalSummary",
+          "type": "(total: number) => string",
+          "state": "Required in count form: positive exact total"
+        },
+        {
+          "key": "rowsPerPage",
+          "type": "string",
+          "state": "Required with pageSizeOptions: visible select label"
+        },
+        {
+          "key": "rowsPerPageLabel",
+          "type": "string",
+          "state": "Required with pageSizeOptions: select accessible name"
+        }
+      ],
+      "files": [
+        {
+          "path": "packages/blocks/src/tables/CursorPagerFooter/CursorPagerFooter.tsx",
+          "target": "components/blocks/tables/cursor-pager-footer/CursorPagerFooter.tsx"
+        },
+        {
+          "path": "packages/blocks/src/tables/CursorPagerFooter/fixtures.ts",
+          "target": "components/blocks/tables/cursor-pager-footer/fixtures.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/blocks/src/tables/CursorPagerFooter/block.meta.ts"
+    },
+    {
       "id": "danger-zone",
       "kind": "block",
       "name": "Danger zone",
@@ -3607,6 +3668,58 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/CopyButton/CopyButton.doc.ts"
+    },
+    {
+      "id": "cursor-pagination",
+      "kind": "component",
+      "name": "CursorPagination",
+      "package": "@gntik-ai/ui",
+      "group": "Navigation",
+      "status": "beta",
+      "description": "See the cursor-pager-footer block example for data-table paginated={false} with a consumer-owned token stack. Stateless Previous/Next navigation for consumer-owned cursor stacks, with no page numbers, ranges or invented totals. Supply a plain-text summary (null keeps it empty) or shownCount with required labels.shownSummary and labels.totalSummary; only a positive exact total uses totalSummary. A pageSizeOptions select requires pageSize, onPageSizeChange, labels.rowsPerPage and labels.rowsPerPageLabel. Flat previousLabel, nextLabel and ariaLabel override labels.previous, labels.next and labels.navLabel, then provider catalog defaults. loading and busy are aliases: rendered buttons stay focusable and aria-disabled with aria-busy, while the select stays enabled. loadingLabel defaults to the catalog; null keeps the summary during busy. One persistent polite status writes once per changed text; mount, empty text and unchanged commits do not announce. Removal of the focused control moves focus to Next, Previous, the select or the nav root, in that order, even while busy; focus elsewhere never moves.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/CursorPagination/CursorPagination.tsx",
+          "target": "components/ui/cursor-pagination/CursorPagination.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/CursorPagination/cursor-pagination.variants.ts",
+          "target": "components/ui/cursor-pagination/cursor-pagination.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CursorPagination/index.ts",
+          "target": "components/ui/cursor-pagination/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "button",
+        "select",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/CursorPagination/CursorPagination.doc.ts"
     },
     {
       "id": "date-picker",

@@ -202,6 +202,50 @@ test('truncated-collection-footer: discoverable non-interactive lower-bound and 
   assert.match(md, /TruncatedCollectionFooterProps/);
 });
 
+test('cursor pagination: component and footer expose the full contract and validate without errors', async () => {
+  const names = [
+    'CursorPaginationProps',
+    'hasPrevious',
+    'hasNext',
+    'onPrevious',
+    'onNext',
+    'loading',
+    'busy',
+    'summary',
+    'shownCount',
+    'total',
+    'unavailableBehaviour',
+    'pageSize',
+    'pageSizeOptions',
+    'onPageSizeChange',
+    'previousLabel',
+    'nextLabel',
+    'ariaLabel',
+    'loadingLabel',
+    'labels',
+    'previous',
+    'next',
+    'navLabel',
+    'shownSummary',
+    'totalSummary',
+    'rowsPerPage',
+    'rowsPerPageLabel',
+    'className',
+  ];
+  for (const [id, tool] of [
+    ['cursor-pagination', 'get_component'],
+    ['cursor-pager-footer', 'get_block'],
+  ]) {
+    const md = await call(tool, { id });
+    for (const name of names) assert.ok(md.includes(name), `${id} documents ${name}`);
+    const item = kit.byId.get(id);
+    assert.ok(item, `${id} is registered`);
+    for (const file of item.files.filter((file) => /\.tsx?$/.test(file.path))) {
+      assert.equal(validatePage(fs.readFileSync(path.join(ROOT, file.path), 'utf8')).errors, 0, file.path);
+    }
+  }
+});
+
 test('load-more-footer: discoverable load more block with both availability modes and every label', async () => {
   assert.match(await call('list_kit', { kind: 'block', group: 'tables', query: 'load more' }), /`load-more-footer`/);
   const item = kit.byId.get('load-more-footer');

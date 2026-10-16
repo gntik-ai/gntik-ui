@@ -41,3 +41,26 @@ for (const theme of ['dark', '', 'high_contrast']) {
     expect(fresh, `new axe violations in ${name}`).toEqual([]);
   });
 }
+
+for (const theme of ['dark', 'light', 'high_contrast']) {
+  test(`cursor-pagination examples --${theme}`, async ({ page }) => {
+    await page.addInitScript((theme) => {
+      localStorage.setItem('gntik-theme', theme === 'light' ? '' : theme);
+      localStorage.setItem('gntik-section', 'ui-components');
+    }, theme);
+    await page.goto('/#ui-components');
+    const component = page.locator('#ui-CursorPagination');
+    await expect(component).toBeVisible();
+    await expect(component.getByRole('navigation')).toHaveCount(5);
+    await expect(component.getByRole('status')).toHaveCount(5);
+    await page.addScriptTag({ content: AXE });
+    const violations = await component.evaluate(async (element) => {
+      // eslint-disable-next-line no-undef
+      const result = await axe.run(element, {
+        runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
+      });
+      return result.violations.map((violation) => violation.id);
+    });
+    expect(violations).toEqual([]);
+  });
+}

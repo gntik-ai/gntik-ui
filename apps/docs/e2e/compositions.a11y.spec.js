@@ -23,6 +23,17 @@ const layoutExamples = kit.items
   });
 
 const cases = [
+  ...[
+    'cursor-pager-footer',
+    'cursor-pager-footer--cursor-stack',
+    'cursor-pager-footer--busy',
+    'cursor-pager-footer--hidden',
+    'cursor-pager-footer--rows-per-page',
+  ].flatMap((id) =>
+    ['dark', 'light', 'high_contrast']
+      .filter((theme) => id !== 'cursor-pager-footer' || theme !== 'dark')
+      .map((theme) => ({ kind: 'block', id, theme })),
+  ),
   ...['connecting', 'live-empty', 'live-with-events', 'error', 'stopped'].flatMap((state) =>
     ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: `live-event-stream--${state}`, theme })),
   ),
@@ -91,6 +102,25 @@ for (const { kind, id, theme } of cases) {
   test(name, async ({ page }) => {
     await page.goto(`/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}`);
     await page.locator('#root > *').first().waitFor();
+    if (id.startsWith('cursor-pager-footer')) {
+      const nav = page.getByRole('navigation', { name: 'Pagination' });
+      await expect(nav).toBeVisible();
+      await expect(nav).not.toHaveAttribute('aria-busy');
+      await expect(nav.getByRole('status')).toHaveCount(1);
+      await expect(nav.getByRole('status')).toHaveAttribute('aria-live', 'polite');
+      await expect(nav.getByRole('status')).toHaveAttribute('aria-atomic', 'true');
+      if (id.endsWith('--rows-per-page')) {
+        await expect(nav.getByRole('status')).toBeEmpty();
+        await expect(nav.getByRole('combobox')).toBeEnabled();
+      }
+      if (id.endsWith('--busy')) {
+        await expect(nav.getByRole('status')).toHaveText('Loading…');
+        for (const button of await nav.getByRole('button').all()) {
+          await expect(button).toHaveAttribute('aria-disabled', 'true');
+          await expect(button).toHaveAttribute('aria-busy', 'true');
+        }
+      }
+    }
     if (id.startsWith('truncated-collection-footer')) {
       const hasMore = id.endsWith('--has-more');
       const count = page.getByText(hasMore ? '100+' : '37', { exact: true });
