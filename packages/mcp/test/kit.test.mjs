@@ -235,6 +235,30 @@ test('subordinate-list: catalogue supplies its required props and resource-form 
   assert.doesNotMatch(code, /<SubordinateList \/>/);
 });
 
+test('create-wizard: additive flow API, examples and token-safe source are discoverable', async () => {
+  const listing = await call('list_kit', { kind: 'template', query: 'caller-defined' });
+  assert.match(listing, /`create-wizard`/);
+  const documentation = await call('get_template', { id: 'create-wizard' });
+  for (const text of [
+    'CreateWizardFlowProps',
+    'flowSteps',
+    'fieldErrors',
+    'blocking',
+    'AbortSignal',
+    'LiveAnnouncer',
+    'submitState',
+    'maxLength=500',
+  ]) {
+    assert.ok(documentation.includes(text), `documents ${text}`);
+  }
+  for (const id of ['create-wizard', 'wizard-layout']) {
+    const item = kit.byId.get(id);
+    for (const file of item.files.filter((file) => /\.tsx?$/.test(file.path))) {
+      assert.equal(validatePage(fs.readFileSync(path.join(ROOT, file.path), 'utf8')).errors, 0, file.path);
+    }
+  }
+});
+
 test('get_template: layout, blocks, console shell and source', async () => {
   const md = await call('get_template', { id: 'home-dashboard' });
   assert.match(md, /\*\*Layout:\*\*/);

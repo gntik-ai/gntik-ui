@@ -156,6 +156,21 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/templates/src/resource-detail/examples/realtime-configuration'),
     'resource-detail--postgres-table-detail': () =>
       import('../../../packages/templates/src/resource-detail/examples/postgres-table-detail'),
+    'create-wizard--uncontrolled-pending': () =>
+      import('../../../packages/templates/src/create-wizard/examples/UncontrolledPending'),
+    'create-wizard--uncontrolled-success': () =>
+      import('../../../packages/templates/src/create-wizard/examples/UncontrolledSuccess'),
+    'create-wizard--uncontrolled-error': () =>
+      import('../../../packages/templates/src/create-wizard/examples/UncontrolledError'),
+    'create-wizard--controlled-idle': () =>
+      import('../../../packages/templates/src/create-wizard/examples/ControlledIdle'),
+    'create-wizard--controlled-submitting': () =>
+      import('../../../packages/templates/src/create-wizard/examples/ControlledSubmitting'),
+    'create-wizard--controlled-success': () =>
+      import('../../../packages/templates/src/create-wizard/examples/ControlledSuccess'),
+    'create-wizard--controlled-error': () =>
+      import('../../../packages/templates/src/create-wizard/examples/ControlledError'),
+    'create-wizard--invite': () => import('../../../packages/templates/src/create-wizard/examples/Invite'),
     'create-wizard--overlay': () => import('../../../packages/templates/src/create-wizard/examples/Overlay'),
     'status-404--page-header': () => import('../../../packages/templates/src/status-404/examples/PageHeader'),
     'sign-in-card--username': () => import('../../../packages/templates/src/sign-in-card/examples/Username'),

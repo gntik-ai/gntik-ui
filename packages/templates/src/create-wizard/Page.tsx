@@ -1,3 +1,4 @@
+import { CreateWizardFlow, type CreateWizardFlowProps } from './Flow';
 import { DescriptionListCard } from '@gntik-ai/blocks';
 import {
   Checkbox,
@@ -18,7 +19,7 @@ import {
   type StepItem,
   type WizardLayoutProps,
 } from '@gntik-ai/ui';
-import { useId, useState, type ReactNode } from 'react';
+import { useId, useState, type ReactNode, type ReactElement } from 'react';
 import {
   PROJECT_NAME_RE,
   wizardCopy,
@@ -73,7 +74,7 @@ function StepIntro({ id, title, children }: { id: string; title: string; childre
 }
 
 /** Multi-step create flow in the focus-mode WizardLayout, ending in a review of every answer. */
-export default function CreateWizardPage({
+function LegacyCreateWizardPage({
   title = 'New project',
   steps = wizardSteps,
   initialValues = wizardInitialValues,
@@ -243,4 +244,34 @@ export default function CreateWizardPage({
       )}
     </WizardLayout>
   );
+}
+
+/** flowSteps selects the additive variant; legacy props cannot be combined with it. */
+export default function CreateWizardPage(
+  props: Partial<CreateWizardProps> & {
+    flowSteps?: never;
+    labels?: never;
+    summary?: never;
+    submitState?: never;
+    onComplete?: never;
+    resourceHref?: never;
+    errorMessage?: never;
+  },
+): ReactElement;
+export default function CreateWizardPage<V extends object>(props: CreateWizardFlowProps<V>): ReactElement;
+export default function CreateWizardPage<V extends object>(
+  props:
+    | CreateWizardFlowProps<V>
+    | (Partial<CreateWizardProps> & {
+        flowSteps?: never;
+        labels?: never;
+        summary?: never;
+        submitState?: never;
+        onComplete?: never;
+        resourceHref?: never;
+        errorMessage?: never;
+      }),
+) {
+  if (props.flowSteps !== undefined) return <CreateWizardFlow {...props} />;
+  return <LegacyCreateWizardPage {...props} />;
 }

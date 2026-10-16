@@ -13,6 +13,14 @@ export { meta as auditLogTemplateMeta } from './audit-log/template.meta';
 export type { AuditLogProps } from './audit-log/Page';
 export type { AuditEvent, AuditResult } from './audit-log/data';
 export { default as CreateWizardPage } from './create-wizard/Page';
+export { CreateWizardFlow } from './create-wizard/Flow';
+export type {
+  CreateWizardFlowProps,
+  CreateWizardFlowLabels,
+  CreateWizardFlowStep,
+  CreateWizardFieldErrors,
+  CreateWizardSubmitState,
+} from './create-wizard/Flow';
 export { meta as createWizardTemplateMeta } from './create-wizard/template.meta';
 export type { CreateWizardProps } from './create-wizard/Page';
 export type { CreateWizardCopy, SourceOption, WizardRegion, WizardValues } from './create-wizard/data';
