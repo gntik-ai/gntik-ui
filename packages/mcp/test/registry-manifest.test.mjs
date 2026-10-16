@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import { tsImport } from 'tsx/esm/api';
 
 const root = path.resolve(import.meta.dirname, '../../..');
@@ -13,6 +14,37 @@ const items = new Map(
     .filter((name) => name !== 'registry.json')
     .map((name) => [name, fs.readFileSync(path.join(root, 'apps/docs/public/r', name), 'utf8')]),
 );
+
+test('manifest generation and validation work offline without release history', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gntik-manifest-'));
+  try {
+    for (const pkg of ['ui', 'chat', 'blocks', 'templates']) {
+      fs.cpSync(path.join(root, `packages/${pkg}/src`), path.join(dir, `packages/${pkg}/src`), {
+        recursive: true,
+      });
+    }
+    fs.cpSync(path.join(root, 'packages/mcp/scripts'), path.join(dir, 'packages/mcp/scripts'), {
+      recursive: true,
+    });
+    for (const name of fs.readdirSync(path.join(root, 'packages/mcp'))) {
+      if (/^registry-.*\.json$/.test(name)) {
+        fs.copyFileSync(path.join(root, 'packages/mcp', name), path.join(dir, 'packages/mcp', name));
+      }
+    }
+    fs.cpSync(path.join(root, 'apps/docs/public/r'), path.join(dir, 'apps/docs/public/r'), { recursive: true });
+    fs.writeFileSync(path.join(dir, 'package.json'), '{"type":"module"}');
+    const offline = await tsImport(path.join(dir, 'packages/mcp/scripts/build-registry-manifest.ts'), import.meta.url);
+    const generated = offline.buildManifest();
+    assert.equal(generated.items.length, 261);
+    assert.deepEqual(offline.validateManifest(generated, items), []);
+    assert.equal(
+      offline.serializeManifest(generated),
+      fs.readFileSync(path.join(dir, 'packages/mcp/registry-manifest.json'), 'utf8'),
+    );
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
 
 test('manifest covers the discovered inventory and pinned release snapshot', () => {
   assert.equal(manifest.items.length, 261);

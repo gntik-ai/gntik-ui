@@ -37,10 +37,15 @@ export function gitFile(ref: string, file: string): Buffer {
 export function buildManifest(): Manifest {
   const sources = collectSources().map((s) => ({ id: idOf(s), package: s.pkg }));
   sources.push({ id: 'gntik-tokens', package: '@gntik-ai/tokens' });
-  const snapshot = JSON.parse(gitFile(RELEASE_COMMIT, 'apps/docs/public/r/registry.json').toString()) as {
-    items: { name: string }[];
+  // Committed historical evidence keeps generation and --check usable in depth-1 checkouts.
+  const snapshot = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'packages/mcp/registry-release-snapshot.json'), 'utf8'),
+  ) as {
+    releaseCommit: string;
+    itemNames: string[];
   };
-  const names = new Set(snapshot.items.map((item) => item.name));
+  if (snapshot.releaseCommit !== RELEASE_COMMIT) throw new Error('manifest: snapshot release commit differs from pins');
+  const names = new Set(snapshot.itemNames);
   const items = sources
     .sort((a, b) => a.id.localeCompare(b.id))
     .map((s) => {
