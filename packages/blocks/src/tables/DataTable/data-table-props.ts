@@ -139,21 +139,44 @@ interface DataTableCommonProps<T> {
   className?: string;
 }
 
+interface ClientPaginationProps {
+  paginationMode?: 'client';
+  rowCount?: never;
+  page?: never;
+  pageSize?: never;
+  onPageChange?: never;
+  onPageSizeChange?: never;
+}
+
+interface ServerPaginationProps {
+  /** Rows arrive as one server page: no client sorting or slicing, and no sortable headers. */
+  paginationMode: 'server';
+  /** Total number of rows across all pages; required even for an empty result. */
+  rowCount: number;
+  /** Current page, 1-based. Out-of-range pages are clamped for display without callbacks. */
+  page: number;
+  pageSize: number;
+  onPageChange?: (page: number) => void;
+  /** The footer may also request a page change to keep the first visible row on screen. */
+  onPageSizeChange?: (size: number) => void;
+}
+
 export type DataTableProps<T> = DataTableCommonProps<T> &
   (
-    | {
+    | ({
         selectionMode: 'single';
         paginated?: false;
         /** Consumer-supplied accessible group label; the kit adds no default. */
         legend?: ReactNode;
         'aria-label'?: string;
         'aria-labelledby'?: string;
-      }
-    | {
+        paginationMode?: never;
+      } & ClientPaginationProps)
+    | ({
         selectionMode?: 'none' | 'multiple';
         paginated?: boolean;
         legend?: never;
         'aria-label'?: never;
         'aria-labelledby'?: never;
-      }
+      } & (ClientPaginationProps | ServerPaginationProps))
   );
