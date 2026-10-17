@@ -252,8 +252,10 @@ for (const { kind, id, theme } of cases) {
         .toBe(true);
     }
     if (id.startsWith('credential-disclosure-dialog')) {
-      for (const toggle of await page.getByRole('button', { name: 'Show secret', exact: true }).all()) {
+      // Keep positional locators stable as revealing changes each button's accessible name.
+      for (const toggle of await page.getByRole('button', { name: /^(Show|Hide) secret$/ }).all()) {
         await toggle.click();
+        await expect(toggle).toHaveAttribute('aria-pressed', 'true');
       }
       const leaked = await page.evaluate(() => {
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
