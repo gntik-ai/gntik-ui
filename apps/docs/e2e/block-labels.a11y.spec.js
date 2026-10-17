@@ -11,6 +11,8 @@ import {
   settledFocus,
   keyboardAtState,
   surfaces,
+  selectListboxPairs,
+  normalizeSelectListboxNames,
   checkCopy,
   formatterCalled,
 } from './block-labels.helpers.js';
@@ -348,7 +350,10 @@ for (const theme of themes)
         expect(await keyboard()).toEqual(baselineKeyboard);
         await matrices[block](page, defaults, async (state) => {
           expect(await keyboardAtState(page)).toEqual(keyboardStates.get(state));
-          expect(await surfaces(page)).toEqual(baseline.get(state));
+          const pairs = await selectListboxPairs(page);
+          if ((block === 'pagination' && state === 'open') || (block === 'filter' && state === 'views'))
+            expect(pairs.length, '#79 requires a paired open Select').toBeGreaterThan(0);
+          expect(normalizeSelectListboxNames(await surfaces(page), pairs)).toEqual(baseline.get(state));
           expect(await axeViolations(page)).toEqual([]);
           await expect(page).toHaveScreenshot(screenshotName(state), {
             maxDiffPixelRatio: 0.01,

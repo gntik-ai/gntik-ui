@@ -32,7 +32,7 @@ test('copy tables cover caller headings in the complete fixture document', () =>
   }
 });
 
-// The DOM is the browser boundary: run the same injected axe build and filtering as Playwright.
+// The DOM is the browser boundary: run the same injected axe build as Playwright.
 async function audit(html, setup = () => {}) {
   const dom = new JSDOM(html, { runScripts: 'outside-only', virtualConsole: new VirtualConsole() });
   try {
@@ -108,7 +108,7 @@ test('fixture landmarks preserve explicit portal host roles and names', async ()
   );
 });
 
-test('#79 keeps unnamed textboxes and lookalike non-Select listboxes failing', async () => {
+test('axe reports unnamed textboxes and listboxes', async () => {
   const violations = await audit(
     '<main><div role="textbox" tabindex="0"></div><div class="bg-popover"><div role="listbox" class="outline-none"><div role="option">Other</div></div></div></main>',
   );
@@ -138,14 +138,6 @@ test('column-menu captions stay bound to the parent menu when a pin submenu open
   } finally {
     dom.window.close();
   }
-});
-
-test('#79 removes only the Select list node, preserving other nodes and rules', async () => {
-  const violations = await audit(
-    '<main><div role="textbox" tabindex="0"></div><div role="combobox" tabindex="0" aria-label="Choose" aria-expanded="true" aria-haspopup="listbox" aria-controls="select-list"></div><div class="bg-popover" role="presentation"><div id="select-list" role="listbox" class="outline-none" aria-required="invalid"><div role="option">Other</div></div></div></main>',
-  );
-  assert.equal(violations.find((v) => v.id === 'aria-input-field-name')?.nodes.length, 1);
-  assert.ok(violations.some((v) => v.id === 'aria-valid-attr-value'));
 });
 
 test('element tables match the rendered public blocks and fixture states', async () => {

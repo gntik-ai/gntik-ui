@@ -257,7 +257,7 @@ test('element tables match client-rendered blocks, including Select portal ancho
             }
             if (state === 'views') await step(() => user.click(byRole('combobox', labels.savedViewLabel)));
             if (state === 'views' || state === 'applied') {
-              await step(() => waitFor(() => byRole('listbox', '')));
+              await step(() => waitFor(() => byRole('listbox', labels.savedViewLabel)));
               await step(() => waitFor(() => byRole('option', 'Saved')));
             }
             if (state === 'applied') {
