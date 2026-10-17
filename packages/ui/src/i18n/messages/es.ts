@@ -2,6 +2,8 @@ import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  'common.yes': 'Sí',
+  'common.no': 'No',
   'statusTimeline.label': 'Historial de estado',
   'statusTimeline.empty': 'Sin historial de estado',
   'statusTimeline.showFewer': 'Ver menos',

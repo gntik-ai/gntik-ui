@@ -2,6 +2,8 @@ import type { PaginationFooterLabels } from '../PaginationFooter/PaginationFoote
 
 /** Per-instance table chrome, including the composed PaginationFooter. Caller data stays caller-owned. */
 export interface DataTableLabels extends PaginationFooterLabels {
+  booleanTrue: string;
+  booleanFalse: string;
   /** Non-virtual table overflow region; virtualized regions keep the caller caption. */
   scrollRegion: string;
   selectionCount: (count: number) => string;

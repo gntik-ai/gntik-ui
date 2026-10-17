@@ -12,6 +12,8 @@ export const meta: BlockMeta = {
     'Opt-in paginationMode="server" accepts a controlled 1-based page, pageSize and required rowCount (known total), with onPageChange/onPageSizeChange requests. Supplied rows render in order without client sorting or slicing, and headers have no sort affordance. Single selection cannot use server mode. The footer stays visible for empty results, clamps stale pages for display without callbacks, and hides during loading. Page-size changes may also request a page to keep the first visible row on screen. The consumer owns fetching and reconciles stale pages. See examples/server-pagination.tsx for an items/total/page/pageSize envelope consumer that handles both callbacks.',
 
   labels: [
+    { key: 'booleanTrue', type: 'string', state: 'Default cell text for a true boolean value' },
+    { key: 'booleanFalse', type: 'string', state: 'Default cell text for a false boolean value' },
     {
       key: 'scrollRegion',
       type: 'string',

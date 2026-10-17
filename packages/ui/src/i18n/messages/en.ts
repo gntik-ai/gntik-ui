@@ -7,6 +7,8 @@
  */
 export const en = {
   // Generic actions and states
+  'common.yes': 'Yes',
+  'common.no': 'No',
   'common.close': 'Close',
   'common.dismiss': 'Dismiss',
   'common.copy': 'Copy',

@@ -8801,6 +8801,8 @@ Labels (optional Partial per instance; explicit keys override provider translati
 
 | Key | Type | State / surface |
 | --- | --- | --- |
+| `booleanTrue` | `string` | Default cell text for a true boolean value |
+| `booleanFalse` | `string` | Default cell text for a false boolean value |
 | `scrollRegion` | `string` | Non-virtual table overflow: focusable scroll region name; virtualized regions use the caller caption |
 | `selectionCount` | `(count: number) => string` | Multiple selection: toolbar count and polite live region |
 | `columns` | `string` | Column visibility trigger text and name |

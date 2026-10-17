@@ -5,6 +5,7 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { DataTable } from './DataTable';
 import {
   compareValues,
+  formatCell,
   groupRows,
   paginate,
   selectionState,
@@ -142,6 +143,21 @@ describe('DataTable', () => {
 });
 
 describe('data-table-utils', () => {
+  it('preserves one-argument default cell values', () => {
+    expect(formatCell(null)).toBe('—');
+    expect(formatCell(undefined)).toBe('—');
+    expect(formatCell(true)).toBe('Yes');
+    expect(formatCell(false)).toBe('No');
+    const date = new Date(2026, 9, 17);
+    expect(formatCell(date)).toBe(date.toLocaleDateString());
+    expect(formatCell(new Date('x'))).toBe('Invalid Date');
+    expect(formatCell(1234.5)).toBe(1234.5);
+    expect(formatCell(0.30000000000000004)).toBe(0.30000000000000004);
+    expect(formatCell(NaN)).toBeNaN();
+    expect(formatCell(Infinity)).toBe(Infinity);
+    expect(formatCell('Text')).toBe('Text');
+  });
+
   type Row = { id: string; n: number | null };
   const cols: DataTableColumn<Row>[] = [{ id: 'n', header: 'N', accessor: (r) => r.n }];
   const rows: Row[] = [

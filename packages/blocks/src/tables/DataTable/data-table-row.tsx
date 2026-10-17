@@ -1,5 +1,15 @@
 import { ChevronRight } from '@gntik-ai/icons';
-import { Checkbox, cn, MoreMenu, TableCell, TableHead, TableRow, type MoreMenuAction, useI18n } from '@gntik-ai/ui';
+import {
+  Checkbox,
+  cn,
+  MoreMenu,
+  TableCell,
+  TableHead,
+  TableRow,
+  type MoreMenuAction,
+  useI18n,
+  useOptionalI18n,
+} from '@gntik-ai/ui';
 import type { CSSProperties, ReactNode } from 'react';
 import { stickyTint, type TableLayout } from './column-sizing';
 import {
@@ -68,6 +78,7 @@ export function DataTableRow<T>({
   style,
 }: DataTableRowProps<T>) {
   const { t } = useI18n();
+  const locale = useOptionalI18n()?.locale;
   const id = getRowId(row);
   const selectionColumn = selectable || singleSelection != null;
   const isSelected = singleSelection ? singleSelection.selectedId === id : selected.has(id);
@@ -95,7 +106,12 @@ export function DataTableRow<T>({
       )}
       {columns.map((c) => {
         const cl = layout?.columns.get(c.id);
-        const content = c.cell ? c.cell(row) : formatCell(c.accessor?.(row));
+        const content = c.cell
+          ? c.cell(row)
+          : formatCell(c.accessor?.(row), {
+              locale,
+              booleanLabels: [labels?.booleanTrue ?? t('common.yes'), labels?.booleanFalse ?? t('common.no')],
+            });
         const editable = onCellEdit && editHintId && isCellEditable(c, row);
         return (
           <TableCell
