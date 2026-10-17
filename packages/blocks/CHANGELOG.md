@@ -1,5 +1,11 @@
 # @gntik-ai/blocks
 
+## 0.8.0
+
+### Minor Changes
+
+- f98ac68: Add masked multi-secret disclosure, inline presentation, redacted content slots and copy callbacks.
+
 ## 0.7.0
 
 ### Minor Changes
