@@ -49,6 +49,9 @@ for (const { id, theme } of cases) {
     }
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(SLOW[id] ?? 600);
-    await expect(page).toHaveScreenshot(`${name}.png`, { fullPage: !VIEWPORT_ONLY.has(id) });
+    await expect(page).toHaveScreenshot(`${name}.png`, {
+      fullPage: !VIEWPORT_ONLY.has(id),
+      mask: [page.locator('[data-kit-redact]')],
+    });
   });
 }

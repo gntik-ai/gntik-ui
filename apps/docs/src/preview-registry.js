@@ -123,6 +123,12 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Stored'),
     'credential-disclosure-dialog--fresh': () =>
       import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Fresh'),
+    'credential-disclosure-dialog--multi-secret': () =>
+      import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/MultiSecret'),
+    'credential-disclosure-dialog--inline': () =>
+      import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/Inline'),
+    'credential-disclosure-dialog--issue-on-click': () =>
+      import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/IssueOnClick'),
     'credential-disclosure-dialog--response-gating': () =>
       import('../../../packages/blocks/src/forms/CredentialDisclosureDialog/examples/ResponseGating'),
     'subordinate-list': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/ResourceForm'),
