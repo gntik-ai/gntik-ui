@@ -233,6 +233,8 @@ it('replaces every pin option and the single-selection heading without translati
   const user = userEvent.setup({ pointerEventsCheck: 0 });
   const full: DataTableLabels = {
     ...labels,
+    booleanTrue: 'Sí',
+    booleanFalse: 'No',
     selectGroup: (group) => `Grupo ${group}`,
     groupRows: (count) => `${count} filas`,
     noGroup: 'Sin grupo',

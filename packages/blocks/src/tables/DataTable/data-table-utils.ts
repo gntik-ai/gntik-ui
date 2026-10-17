@@ -147,11 +147,25 @@ export function toggleOne(id: string, selected: ReadonlySet<string>): Set<string
   return next;
 }
 
-/** Default cell text for a raw value. */
-export function formatCell(value: CellValue): ReactNode {
+/** Optional locale and boolean text for default cells. */
+export interface DataTableCellFormatOptions {
+  locale?: string;
+  booleanLabels?: [trueLabel: string, falseLabel: string];
+}
+
+/** Default cell text for a raw value. Omitting options preserves the legacy output. */
+export function formatCell(value: CellValue, options?: DataTableCellFormatOptions): ReactNode {
   if (value == null) return '—';
-  if (value instanceof Date) return value.toLocaleDateString();
-  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (value instanceof Date) {
+    if (!options) return value.toLocaleDateString();
+    if (Number.isNaN(value.getTime())) return '—';
+    return new Intl.DateTimeFormat(options.locale, { year: 'numeric', month: 'numeric', day: 'numeric' }).format(value);
+  }
+  if (typeof value === 'boolean') return (options?.booleanLabels ?? ['Yes', 'No'])[value ? 0 : 1];
+  if (typeof value === 'number' && Number.isFinite(value) && options?.locale !== undefined) {
+    const decimal = new Intl.NumberFormat(options.locale).formatToParts(1.1).find((part) => part.type === 'decimal');
+    return String(value).replace('.', decimal?.value ?? '.');
+  }
   return value;
 }
 
