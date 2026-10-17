@@ -1,5 +1,22 @@
 # @gntik-ai/blocks
 
+## 0.7.0
+
+### Minor Changes
+
+- 937c914: Add optional destructive-confirmation fields, validity gating, typed failure states and focus return, plus NotFoundEmpty and ErrorPanel announcement control.
+- 1f0e5ee: Add opt-in controlled server pagination to DataTable for pages with a known total row count.
+- 236f8e7: Add stateless cursor pagination and a responsive cursor pager footer with accessible busy states, optional counts and page-size selection.
+- ccb56cf: Add an accessible load-more footer for cursor and flag lists with translated labels, retry, focus retention and append announcements.
+
+### Patch Changes
+
+- Updated dependencies [0e5a63d]
+- Updated dependencies [236f8e7]
+- Updated dependencies [ccb56cf]
+- Updated dependencies [90d8e31]
+  - @gntik-ai/ui@0.7.0
+
 ## 0.6.0
 
 ### Minor Changes

@@ -1,5 +1,23 @@
 # @gntik-ai/templates
 
+## 0.7.0
+
+### Minor Changes
+
+- 0e5a63d: Add caller-defined wizard flows with localized labels, validation, abortable submit states and accessible navigation locks.
+
+### Patch Changes
+
+- Updated dependencies [0e5a63d]
+- Updated dependencies [937c914]
+- Updated dependencies [1f0e5ee]
+- Updated dependencies [236f8e7]
+- Updated dependencies [ccb56cf]
+- Updated dependencies [90d8e31]
+  - @gntik-ai/ui@0.7.0
+  - @gntik-ai/blocks@0.7.0
+  - @gntik-ai/chat@0.7.0
+
 ## 0.6.0
 
 ### Patch Changes

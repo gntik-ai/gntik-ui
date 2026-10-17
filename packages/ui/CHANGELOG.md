@@ -1,5 +1,17 @@
 # @gntik-ai/ui
 
+## 0.7.0
+
+### Minor Changes
+
+- 0e5a63d: Add caller-defined wizard flows with localized labels, validation, abortable submit states and accessible navigation locks.
+- 236f8e7: Add stateless cursor pagination and a responsive cursor pager footer with accessible busy states, optional counts and page-size selection.
+- ccb56cf: Add an accessible load-more footer for cursor and flag lists with translated labels, retry, focus retention and append announcements.
+
+### Patch Changes
+
+- 90d8e31: Name the open Select listbox after its trigger's label.
+
 ## 0.5.0
 
 ### Minor Changes
