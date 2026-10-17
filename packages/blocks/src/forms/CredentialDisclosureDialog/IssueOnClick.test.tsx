@@ -4,7 +4,7 @@ import IssueOnClick from './examples/IssueOnClick';
 import { freshDisclosure } from './fixtures';
 import type { CredentialDisclosure } from './CredentialDisclosureDialog';
 
-it.each(['cancel', 'unmount', 'supersede'] as const)('ignores a deferred issuance after %s', async (action) => {
+it.each(['cancel', 'supersede'] as const)('ignores a deferred issuance after %s', async (action) => {
   const user = userEvent.setup();
   const results: ((value: CredentialDisclosure) => void)[] = [];
   const signals: AbortSignal[] = [];
@@ -12,13 +12,9 @@ it.each(['cancel', 'unmount', 'supersede'] as const)('ignores a deferred issuanc
     signals.push(signal);
     return new Promise<CredentialDisclosure>((resolve) => results.push(resolve));
   });
-  const { unmount } = render(<IssueOnClick request={request} />);
+  render(<IssueOnClick request={request} />);
   await user.click(screen.getByRole('button', { name: 'Issue credential' }));
-  if (action === 'unmount') unmount();
-  else
-    await user.click(
-      screen.getByRole('button', { name: action === 'cancel' ? 'Cancel request' : 'Supersede request' }),
-    );
+  await user.click(screen.getByRole('button', { name: action === 'cancel' ? 'Cancel request' : 'Supersede request' }));
   expect(signals[0]!.aborted).toBe(true);
   await act(async () => results[0]!(freshDisclosure));
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -29,6 +25,25 @@ it.each(['cancel', 'unmount', 'supersede'] as const)('ignores a deferred issuanc
     await user.click(screen.getByRole('button', { name: 'Show secret' }));
     expect(screen.getByRole('textbox')).toHaveValue('synthetic_current_response');
   }
+});
+
+it('cancels the pending request on unmount before its deferred response settles', async () => {
+  const user = userEvent.setup();
+  const onAbort = vi.fn();
+  let settle!: (value: CredentialDisclosure) => void;
+  const request = vi.fn((signal: AbortSignal) => {
+    signal.addEventListener('abort', onAbort);
+    return new Promise<CredentialDisclosure>((resolve) => {
+      settle = resolve;
+    });
+  });
+  const { unmount } = render(<IssueOnClick request={request} />);
+  await user.click(screen.getByRole('button', { name: 'Issue credential' }));
+  expect(onAbort).not.toHaveBeenCalled();
+  unmount();
+  expect(onAbort).toHaveBeenCalledOnce();
+  expect(request.mock.calls[0]![0].aborted).toBe(true);
+  await act(async () => settle(freshDisclosure));
 });
 
 it('keeps disclosure null on failure and shows only a caller-owned error', async () => {

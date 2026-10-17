@@ -1,24 +1,35 @@
 import { CodeBlock, CopyButton, LiveAnnouncer, SecretField, useI18n } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
-import type { CredentialDisclosureDialogProps, CredentialSecret } from './CredentialDisclosureDialog';
+import type { CredentialSecret } from './types';
+
+interface SecretCopyOptions {
+  showLabel?: string;
+  hideLabel?: string;
+  copyLabel?: string;
+  copiedLabel?: string;
+  successAnnouncement?: string;
+  failureAnnouncement?: string;
+  onCopy?: (id: string) => void;
+  copiedAnnouncementFor?: (label: string) => string;
+}
 
 /** Each secret owns feedback so simultaneous settlements cannot overwrite each other. */
 export function SecretCopy({
   secret,
-  labels,
+  options,
   grouped = false,
   masked = true,
   warning,
 }: {
   secret: CredentialSecret;
-  labels: CredentialDisclosureDialogProps;
+  options: SecretCopyOptions;
   grouped?: boolean;
   masked?: boolean;
   warning?: ReactNode;
 }) {
   const { t } = useI18n();
   const [pending, setPending] = useState(false);
-  const copied = labels.copiedLabel ?? t('credentialDisclosure.copied');
+  const copied = options.copiedLabel ?? t('credentialDisclosure.copied');
   const content = (
     <LiveAnnouncer>
       {warning}
@@ -28,8 +39,8 @@ export function SecretCopy({
             value={secret.value}
             copyable={false}
             aria-label={secret.label}
-            showLabel={labels.showLabel ?? t('credentialDisclosure.show')}
-            hideLabel={labels.hideLabel ?? t('credentialDisclosure.hide')}
+            showLabel={options.showLabel ?? t('credentialDisclosure.show')}
+            hideLabel={options.hideLabel ?? t('credentialDisclosure.hide')}
           />
         ) : (
           <CodeBlock code={secret.value} copyable={false} label={secret.label} wrapToggle={false} defaultWrap />
@@ -37,26 +48,28 @@ export function SecretCopy({
       </div>
       <CopyButton
         value={() => {
-          setPending(true);
+          if (grouped) setPending(true);
           return secret.value;
         }}
-        loading={pending}
+        loading={grouped && pending}
         display="label"
-        label={labels.copyLabel ?? t('credentialDisclosure.copy')}
+        label={options.copyLabel ?? t('credentialDisclosure.copy')}
         copiedLabel={copied}
         announcement={
           grouped
-            ? (labels.copiedAnnouncementFor?.(secret.label) ?? `${secret.label}: ${copied}`)
-            : (labels.successAnnouncement ?? t('credentialDisclosure.success'))
+            ? (options.copiedAnnouncementFor?.(secret.label) ?? `${secret.label}: ${copied}`)
+            : (options.successAnnouncement ?? t('credentialDisclosure.success'))
         }
-        failureLabel={labels.failureAnnouncement ?? t('credentialDisclosure.failure')}
-        failureAnnouncement={labels.failureAnnouncement ?? t('credentialDisclosure.failure')}
+        failureLabel={options.failureAnnouncement ?? t('credentialDisclosure.failure')}
+        failureAnnouncement={options.failureAnnouncement ?? t('credentialDisclosure.failure')}
         failurePoliteness="polite"
         onCopy={() => {
-          setPending(false);
-          labels.onCopy?.(secret.id);
+          if (grouped) setPending(false);
+          options.onCopy?.(secret.id);
         }}
-        onCopyError={() => setPending(false)}
+        onCopyError={() => {
+          if (grouped) setPending(false);
+        }}
       />
     </LiveAnnouncer>
   );

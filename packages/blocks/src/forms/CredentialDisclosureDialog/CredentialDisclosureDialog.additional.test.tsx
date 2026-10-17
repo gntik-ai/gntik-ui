@@ -233,6 +233,40 @@ function observeAnnouncements() {
   return { messages, stop: () => observer.disconnect() };
 }
 
+it.each(['stored', 'fresh', 'masked-fresh'] as const)(
+  'keeps a pending single-secret copy interactive without busy feedback (%s)',
+  async (kind) => {
+    const user = userEvent.setup();
+    const settlements: (() => void)[] = [];
+    const writeText = vi.fn(() => new Promise<void>((resolve) => settlements.push(resolve)));
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true });
+    const onCopy = vi.fn();
+    render(
+      <CredentialDisclosureDialog
+        disclosure={{ ...storedDisclosure, variant: kind === 'stored' ? 'stored' : 'fresh' }}
+        maskFresh={kind === 'masked-fresh'}
+        onClose={() => {}}
+        onCopy={onCopy}
+      />,
+    );
+    const button = await screen.findByRole('button', { name: 'Copy secret' });
+    const observation = observeAnnouncements();
+    await user.click(button);
+    expect(writeText).toHaveBeenCalledExactlyOnceWith(storedDisclosure.secret);
+    expect(button).not.toHaveAttribute('aria-busy');
+    expect(button).toBeEnabled();
+    await user.click(button);
+    expect(writeText).toHaveBeenCalledTimes(2);
+    expect(observation.messages).toEqual([]);
+    expect(onCopy).not.toHaveBeenCalled();
+    await act(async () => settlements[0]!());
+    await act(async () => settlements[1]!());
+    expect(observation.messages).toEqual(['Secret copied to clipboard', 'Secret copied to clipboard']);
+    expect(onCopy.mock.calls).toEqual([['secret'], ['secret']]);
+    observation.stop();
+  },
+);
+
 it('announces each settled copy once, including repeats, failures and deferred attempts; serializes pending activations', async () => {
   const user = userEvent.setup();
   let settle!: () => void;
@@ -258,6 +292,9 @@ it('announces each settled copy once, including repeats, failures and deferred a
   expect(observation.messages).toHaveLength(3);
   expect(observation.messages[2]).not.toContain('synthetic_');
   for (let attempt = 0; attempt < 2; attempt++) {
+    writeText.mockClear();
+    onCopy.mockClear();
+    observation.messages.length = 0;
     writeText.mockImplementationOnce(
       () =>
         new Promise<void>((resolve) => {
@@ -267,11 +304,14 @@ it('announces each settled copy once, including repeats, failures and deferred a
     await user.click(button);
     fireEvent.click(button);
     expect(button).toHaveAttribute('aria-busy', 'true');
+    expect(writeText).toHaveBeenCalledExactlyOnceWith('synthetic_dsn_value');
+    expect(onCopy).not.toHaveBeenCalled();
+    expect(observation.messages).toEqual([]);
     await act(async () => settle());
+    expect(writeText).toHaveBeenCalledOnce();
+    expect(onCopy).toHaveBeenCalledExactlyOnceWith('dsn');
+    expect(observation.messages).toEqual(['DSN: Copied']);
   }
-  expect(writeText).toHaveBeenCalledTimes(5);
-  expect(onCopy).toHaveBeenCalledTimes(4);
-  expect(observation.messages).toHaveLength(5);
   observation.stop();
 });
 

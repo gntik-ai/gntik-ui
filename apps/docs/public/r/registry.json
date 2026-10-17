@@ -2965,6 +2965,11 @@
           "path": "packages/blocks/src/forms/CredentialDisclosureDialog/focus.ts",
           "type": "registry:lib",
           "target": "components/blocks/forms/credential-disclosure-dialog/focus.ts"
+        },
+        {
+          "path": "packages/blocks/src/forms/CredentialDisclosureDialog/types.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/forms/credential-disclosure-dialog/types.ts"
         }
       ]
     },

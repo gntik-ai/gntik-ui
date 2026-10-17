@@ -14,6 +14,9 @@ import {
 import { useEffectEvent, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { SecretCopy } from './SecretCopy';
 import { usableFocusTarget } from './focus';
+import type { CredentialSecret } from './types';
+
+export type { CredentialSecret } from './types';
 
 export interface CredentialDisclosure {
   variant: 'stored' | 'fresh';
@@ -23,19 +26,18 @@ export interface CredentialDisclosure {
   secret: string;
 }
 
-export interface CredentialSecret {
-  id: string;
-  label: string;
-  value: string;
-}
-
 export interface CredentialDisclosureDialogProps {
   /** Additional masked values; ids must be unique, non-empty and not "secret". */
   additionalSecrets?: readonly CredentialSecret[];
+  /** Mask a fresh primary secret; read at the start of each session. */
   maskFresh?: boolean;
+  /** Redacted content below the secrets; clear secret-bearing content on close. */
   revealContent?: ReactNode;
+  /** Presentation fixed for each non-null opening. Defaults to a modal dialog. */
   presentation?: 'dialog' | 'inline';
+  /** Called after copying with the secret id (primary: "secret"), never its value. */
   onCopy?: (id: string) => void;
+  /** Label-only success announcement override, used only in multi-secret mode. */
   copiedAnnouncementFor?: (label: string) => string;
   /** Set only after a successful response. Leave null while pending or on failure. */
   disclosure: CredentialDisclosure | null;
@@ -202,13 +204,13 @@ function DisclosureSession(props: OpeningProps & FocusScope & { returnFocus: () 
       </dl>
       <SecretCopy
         secret={{ id: 'secret', label: secretLabel, value: disclosure.secret }}
-        labels={props}
+        options={props}
         grouped={additionalSecrets.length > 0}
         masked={disclosure.variant === 'stored' || maskFresh}
         warning={warning}
       />
       {additionalSecrets.map((secret) => (
-        <SecretCopy key={secret.id} secret={secret} labels={props} grouped />
+        <SecretCopy key={secret.id} secret={secret} options={props} grouped />
       ))}
       {props.revealContent != null && <div data-kit-redact>{props.revealContent}</div>}
     </>
