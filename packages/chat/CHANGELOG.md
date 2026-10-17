@@ -1,5 +1,15 @@
 # @gntik-ai/chat
 
+## 0.7.0
+
+### Patch Changes
+
+- Updated dependencies [0e5a63d]
+- Updated dependencies [236f8e7]
+- Updated dependencies [ccb56cf]
+- Updated dependencies [90d8e31]
+  - @gntik-ai/ui@0.7.0
+
 ## 0.5.0
 
 ### Patch Changes
