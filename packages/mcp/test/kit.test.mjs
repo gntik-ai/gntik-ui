@@ -186,6 +186,29 @@ test('destructive feedback: discoverable not found state and token-safe dialog s
   }
 });
 
+test('credential disclosure: optional multi-secret and inline API is discoverable and token-safe', async () => {
+  const item = kit.byId.get('credential-disclosure-dialog');
+  assert.ok(item);
+  const documentation = await call('get_block', { id: item.id });
+  for (const prop of [
+    'additionalSecrets',
+    'maskFresh',
+    'revealContent',
+    'presentation',
+    'onCopy',
+    'copiedAnnouncementFor',
+  ]) {
+    assert.ok(documentation.includes(prop), `documents ${prop}`);
+  }
+  for (const file of item.files.filter((file) => /\.tsx?$/.test(file.path))) {
+    assert.equal(validatePage(fs.readFileSync(path.join(ROOT, file.path), 'utf8')).errors, 0, file.path);
+  }
+  for (const name of ['MultiSecret', 'Inline', 'IssueOnClick']) {
+    const file = `packages/blocks/src/forms/CredentialDisclosureDialog/examples/${name}.tsx`;
+    assert.equal(validatePage(fs.readFileSync(path.join(ROOT, file), 'utf8')).errors, 0, file);
+  }
+});
+
 test('truncated-collection-footer: discoverable non-interactive lower-bound and count-only recipes', async () => {
   assert.match(await call('list_kit', { kind: 'block' }), /`truncated-collection-footer`/);
   const item = kit.byId.get('truncated-collection-footer');

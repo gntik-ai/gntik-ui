@@ -88,7 +88,7 @@ const cases = [
   ),
   ...['light', 'high_contrast'].map((theme) => ({ kind: 'layout', id: 'status-layout--status-layout-heading', theme })),
   ...['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: 'status-404--page-header', theme })),
-  ...['stored', 'fresh'].flatMap((variant) =>
+  ...['stored', 'fresh', 'multi-secret', 'inline', 'issue-on-click'].flatMap((variant) =>
     ['dark', 'light', 'high_contrast'].map((theme) => ({
       kind: 'block',
       id: `credential-disclosure-dialog--${variant}`,
@@ -99,7 +99,7 @@ const cases = [
 
 for (const { kind, id, theme } of cases) {
   const name = `${kind}:${id}--${theme}`;
-  test(name, async ({ page }) => {
+  test(name, async ({ page }, testInfo) => {
     await page.goto(`/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}`);
     await page.locator('#root > *').first().waitFor();
     if (id.startsWith('cursor-pager-footer')) {
@@ -239,7 +239,10 @@ for (const { kind, id, theme } of cases) {
     if (id === 'credential-disclosure-dialog--fresh') {
       await page.getByRole('button', { name: 'Disclose fresh secret' }).click();
     }
-    if (id.startsWith('credential-disclosure-dialog')) {
+    if (id === 'credential-disclosure-dialog--issue-on-click') {
+      await page.getByRole('button', { name: 'Issue credential', exact: true }).click();
+    }
+    if (id.startsWith('credential-disclosure-dialog') && !id.endsWith('--inline')) {
       await expect(page.getByRole('dialog')).toBeFocused();
       await page.keyboard.press('Shift+Tab');
       await expect(page.getByRole('button', { name: 'Close', exact: true })).toBeFocused();
@@ -247,6 +250,29 @@ for (const { kind, id, theme } of cases) {
       await expect
         .poll(() => page.getByRole('dialog').evaluate((dialog) => dialog.contains(document.activeElement)))
         .toBe(true);
+    }
+    if (id.startsWith('credential-disclosure-dialog')) {
+      // Keep positional locators stable as revealing changes each button's accessible name.
+      for (const toggle of await page.getByRole('button', { name: /^(Show|Hide) secret$/ }).all()) {
+        await toggle.click();
+        await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+      }
+      const leaked = await page.evaluate(() => {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const leaks = [];
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          if (node.textContent.includes('synthetic_') && !node.parentElement.closest('[data-kit-redact]')) {
+            leaks.push(node.parentElement.tagName);
+          }
+        }
+        return leaks;
+      });
+      expect(leaked, 'synthetic secret text must be inside a redaction region').toEqual([]);
+      await testInfo.attach('redacted-disclosure', {
+        body: await page.screenshot({ mask: [page.locator('[data-kit-redact]')] }),
+        contentType: 'image/png',
+      });
     }
     await page.waitForTimeout(kind === 'template' ? 900 : 500);
     await page.addScriptTag({ content: AXE });
