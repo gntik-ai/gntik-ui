@@ -44,6 +44,7 @@ export * from './components/CommandPalette';
 export * from './components/ContextMenu';
 export * from './components/CopyButton';
 export * from './components/DatePicker';
+export * from './components/DateField';
 export * from './components/DateTimeRangePicker';
 export * from './components/Dialog';
 export * from './components/DiffViewer';

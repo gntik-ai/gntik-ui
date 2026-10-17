@@ -10,6 +10,7 @@
   "missingComponents": [
     "cursor-pager-footer",
     "cursor-pagination",
+    "date-field",
     "load-more-footer"
   ],
   "items": [
@@ -70,6 +71,7 @@
     {"id":"danger-zone","package":"@gntik-ai/blocks","name":"danger-zone","version":"0.6.0","url":"https://ui.gntik.ai/r/danger-zone.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"data-explorer","package":"@gntik-ai/templates","name":"data-explorer","version":"0.6.0","url":"https://ui.gntik.ai/r/data-explorer.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"data-table","package":"@gntik-ai/blocks","name":"data-table","version":"0.6.0","url":"https://ui.gntik.ai/r/data-table.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"date-field","package":"@gntik-ai/ui","name":"date-field","version":"0.5.0","url":"https://ui.gntik.ai/r/date-field.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"date-picker","package":"@gntik-ai/ui","name":"date-picker","version":"0.5.0","url":"https://ui.gntik.ai/r/date-picker.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"date-range-filter","package":"@gntik-ai/blocks","name":"date-range-filter","version":"0.6.0","url":"https://ui.gntik.ai/r/date-range-filter.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"date-time-range-picker","package":"@gntik-ai/ui","name":"date-time-range-picker","version":"0.5.0","url":"https://ui.gntik.ai/r/date-time-range-picker.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},

@@ -1,6 +1,7 @@
 import { Field } from '@base-ui/react/field';
 import { Clock } from 'lucide-react';
-import { useRef, useState, type ComponentProps, type KeyboardEvent, type MouseEvent } from 'react';
+import { type ComponentProps, type MouseEvent } from 'react';
+import { useSegments } from './segments';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { timePickerVariants, type TimePickerVariantProps } from './time-picker.variants';
@@ -95,16 +96,6 @@ export function TimePicker({
   const locale = localeProp ?? providerLocale;
   const hourCycle = hourCycleProp ?? localeHourCycle(locale);
   const [amLabel, pmLabel] = dayPeriodLabels(locale);
-  const controlled = value !== undefined;
-  const [draft, setDraft] = useState<Draft>(() => toDraft(controlled ? value : defaultValue));
-  const [synced, setSynced] = useState(value);
-  // A new controlled value (not the echo of our own change) replaces the draft.
-  if (controlled && value !== synced) {
-    setSynced(value);
-    setDraft(toDraft(value));
-  }
-  const buffer = useRef<{ key: SegmentKey; text: string } | null>(null);
-  const segmentRefs = useRef<Array<HTMLDivElement | null>>([]);
   const s = timePickerVariants({ size });
   const minuteStep = Math.max(1, Math.floor(step));
 
@@ -114,17 +105,8 @@ export function TimePicker({
     ...(withSeconds ? (['second'] as const) : []),
     ...(hourCycle === 12 ? (['period'] as const) : []),
   ];
-  const current = draftToValue(draft, withSeconds);
-  const parsed = parseTimeOfDay(current);
-  const minT = parseTimeOfDay(min);
-  const maxT = parseTimeOfDay(max);
-  const outOfRange =
-    !!parsed &&
-    ((!!minT && timeToSeconds(parsed) < timeToSeconds(minT)) ||
-      (!!maxT && timeToSeconds(parsed) > timeToSeconds(maxT)));
-
-  const periodFlag = draft.hour !== null ? draft.hour >= 12 : draft.pm;
-  const display = (key: SegmentKey): number | null => {
+  const displayDraft = (draft: Draft, key: SegmentKey): number | null => {
+    const periodFlag = draft.hour !== null ? draft.hour >= 12 : draft.pm;
     if (key === 'hour') return draft.hour === null ? null : hourCycle === 12 ? draft.hour % 12 || 12 : draft.hour;
     if (key === 'minute') return draft.minute;
     if (key === 'second') return draft.second;
@@ -134,6 +116,7 @@ export function TimePicker({
     key === 'hour' ? (hourCycle === 12 ? [1, 12] : [0, 23]) : key === 'period' ? [0, 1] : [0, 59];
 
   const withSegment = (d: Draft, key: SegmentKey, n: number | null): Draft => {
+    const periodFlag = d.hour !== null ? d.hour >= 12 : d.pm;
     if (key === 'minute') return { ...d, minute: n };
     if (key === 'second') return { ...d, second: n };
     if (key === 'period') {
@@ -145,74 +128,34 @@ export function TimePicker({
     return { ...d, hour: (n % 12) + (periodFlag ? 12 : 0) };
   };
 
-  const commit = (next: Draft) => {
-    setDraft(next);
-    const v = draftToValue(next, withSeconds);
-    if (v !== current) {
-      if (controlled) setSynced(v);
-      onValueChange?.(v);
-    }
-  };
-
-  const focusSegment = (i: number) => {
-    buffer.current = null;
-    segmentRefs.current[Math.max(0, Math.min(keys.length - 1, i))]?.focus();
-  };
-
-  const spin = (key: SegmentKey, delta: number) => {
-    const [lo, hi] = range(key);
-    const cur = display(key);
-    const stepSize = key === 'minute' ? minuteStep : 1;
-    const top = Math.floor(hi / stepSize) * stepSize;
-    let next: number;
-    if (cur === null) next = delta > 0 ? lo : top;
-    else if (stepSize > 1)
-      next = delta > 0 ? (Math.floor(cur / stepSize) + 1) * stepSize : (Math.ceil(cur / stepSize) - 1) * stepSize;
-    else next = cur + delta;
-    if (next > hi) next = lo;
-    if (next < lo) next = top;
-    commit(withSegment(draft, key, next));
-  };
-
-  const typeDigit = (key: SegmentKey, index: number, digit: string) => {
-    const [lo, hi] = range(key);
-    let text = (buffer.current?.key === key ? buffer.current.text : '') + digit;
-    let n = Number(text);
-    if (n > hi) {
-      text = digit;
-      n = Number(digit);
-    }
-    if (n >= lo) commit(withSegment(draft, key, n));
-    else if (text.length >= 2) commit(withSegment(draft, key, hi)); // "00" on a 12-hour clock → 12
-    if (text.length >= 2 || n * 10 > hi) focusSegment(index + 1);
-    else buffer.current = { key, text };
-  };
-
-  const onKeyDown = (key: SegmentKey, index: number) => (e: KeyboardEvent<HTMLDivElement>) => {
-    if (disabled) return;
-    const editable = !readOnly;
-    let handled = true;
-    if (e.key === 'ArrowLeft') focusSegment(index - 1);
-    else if (e.key === 'ArrowRight') focusSegment(index + 1);
-    else if (!editable) handled = false;
-    else if (e.key === 'ArrowUp') spin(key, 1);
-    else if (e.key === 'ArrowDown') spin(key, -1);
-    else if (e.key === 'Home') commit(withSegment(draft, key, range(key)[0]));
-    else if (e.key === 'End')
-      commit(withSegment(draft, key, key === 'minute' ? Math.floor(59 / minuteStep) * minuteStep : range(key)[1]));
-    else if (e.key === 'Backspace' || e.key === 'Delete') {
-      buffer.current = null;
-      commit(withSegment(draft, key, null));
-    } else if (key !== 'period' && /^\d$/.test(e.key)) typeDigit(key, index, e.key);
-    else if (key === 'period' && e.key.length === 1) {
-      const c = e.key.toLowerCase();
-      if (c === 'a' || amLabel.toLowerCase().startsWith(c)) commit(withSegment(draft, key, 0));
-      else if (c === 'p' || pmLabel.toLowerCase().startsWith(c)) commit(withSegment(draft, key, 1));
-      else handled = false;
-    } else if ((e.key === ':' || e.key === '.') && index < keys.length - 1) focusSegment(index + 1);
-    else handled = false;
-    if (handled) e.preventDefault();
-  };
+  const { current, display, focusSegment, onKeyDown, buffer, segmentRefs } = useSegments({
+    value,
+    defaultValue: defaultValue ?? null,
+    onValueChange,
+    toDraft,
+    toValue: (d) => draftToValue(d, withSeconds),
+    keys,
+    display: displayDraft,
+    range,
+    withSegment,
+    step: (key) => (key === 'minute' ? minuteStep : 1),
+    numeric: (key) => key !== 'period',
+    character: (_key, character) => {
+      const c = character.toLowerCase();
+      if (c === 'a' || amLabel.toLowerCase().startsWith(c)) return 0;
+      if (c === 'p' || pmLabel.toLowerCase().startsWith(c)) return 1;
+      return undefined;
+    },
+    disabled,
+    readOnly,
+  });
+  const parsed = parseTimeOfDay(current);
+  const minT = parseTimeOfDay(min);
+  const maxT = parseTimeOfDay(max);
+  const outOfRange =
+    !!parsed &&
+    ((!!minT && timeToSeconds(parsed) < timeToSeconds(minT)) ||
+      (!!maxT && timeToSeconds(parsed) > timeToSeconds(maxT)));
 
   const onRootMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (disabled || (e.target as HTMLElement).getAttribute('role') === 'spinbutton') return;

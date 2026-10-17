@@ -453,6 +453,12 @@ export const en = {
   'terminal.nextMatch': 'Next match',
   'terminal.previousMatch': 'Previous match',
   // TimePicker, DatePicker withTime, DateTimeRangePicker, PermissionMatrix, QueryBuilder, ScheduleInput (cron)
+  'dateField.label': 'Date',
+  'dateField.year': 'Year',
+  'dateField.month': 'Month',
+  'dateField.day': 'Day',
+  'dateField.start': 'Start date',
+  'dateField.end': 'End date',
   'timePicker.label': 'Time',
   'timePicker.hours': 'Hours',
   'timePicker.minutes': 'Minutes',
