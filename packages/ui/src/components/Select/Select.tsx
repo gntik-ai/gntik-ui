@@ -11,6 +11,7 @@ import {
   type Ref,
 } from 'react';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
+import { ClearControlButton, clearChangeDetails, type ClearableProps } from '../../utils/clear-control';
 import { cn } from '../../utils/cn';
 import { useAsyncOptions, type LoadOptions } from '../Combobox/useAsyncOptions';
 import { Spinner } from '../Spinner';
@@ -186,7 +187,7 @@ export interface SimpleSelectItem<V extends string = string> {
 }
 
 export interface SimpleSelectProps<V extends string = string>
-  extends Omit<BaseSelect.Root.Props<V, false>, 'items' | 'multiple' | 'children'>, SelectVariantProps {
+  extends Omit<BaseSelect.Root.Props<V, false>, 'items' | 'multiple' | 'children'>, SelectVariantProps, ClearableProps {
   /** The options. With `loadOptions`, the ones known up front (e.g. the selected value's label). */
   items?: ReadonlyArray<SimpleSelectItem<V>>;
   /**
@@ -227,6 +228,12 @@ export function SimpleSelect<V extends string = string>({
   onOpenChange,
   triggerRef,
   ref,
+  clearable,
+  clearLabel,
+  onClear,
+  value,
+  defaultValue,
+  onValueChange,
   ...props
 }: SimpleSelectProps<V>) {
   const { t } = useI18n();
@@ -238,10 +245,36 @@ export function SimpleSelect<V extends string = string>({
     ? [...known.filter((k) => !remote.items.some((r) => r.value === k.value)), ...remote.items]
     : known;
   const sv = selectVariants();
+  const [control, setControl] = useState<HTMLButtonElement | null>(null);
+  const [inner, setInner] = useState<V | null>(defaultValue ?? null);
+  const current = value !== undefined ? value : inner;
+  const canClear = clearable && current !== null && !props.disabled && !props.readOnly;
+  const clear = (event: Event) => {
+    if (!canClear || control?.matches(':disabled, [data-disabled]')) return;
+    const details = clearChangeDetails(event, control ?? undefined);
+    onValueChange?.(null, details);
+    if (details.isCanceled) return;
+    setInner(null);
+    onClear?.();
+    control?.focus();
+  };
 
   const trigger = useRender({
-    ref: [ref ?? null, triggerRef ?? null],
-    render: <SelectTrigger size={size} className={className} placeholder={placeholder} aria-label={ariaLabel} />,
+    ref: [ref ?? null, triggerRef ?? null, setControl],
+    render: (
+      <SelectTrigger
+        size={size}
+        className={cn(className, canClear && 'pe-14')}
+        placeholder={placeholder}
+        aria-label={ariaLabel}
+        onKeyDown={(event) => {
+          if (canClear && (event.key === 'Delete' || event.key === 'Backspace')) {
+            event.preventDefault();
+            clear(event.nativeEvent);
+          }
+        }}
+      />
+    ),
   });
 
   let status: ReactNode = null;
@@ -279,9 +312,29 @@ export function SimpleSelect<V extends string = string>({
         onOpenChange?.(next, details);
       }}
       {...props}
+      value={clearable ? current : value}
+      defaultValue={defaultValue}
+      onValueChange={(next, details) => {
+        onValueChange?.(next, details);
+        if (!details.isCanceled) setInner(next);
+      }}
     >
       {label && <SelectLabel>{label}</SelectLabel>}
-      {trigger}
+      {clearable ? (
+        <div className="relative">
+          {trigger}
+          {canClear && (
+            <ClearControlButton
+              control={control}
+              clearLabel={clearLabel}
+              className="absolute end-7 top-1/2 -translate-y-1/2"
+              onClick={(event) => clear(event.nativeEvent)}
+            />
+          )}
+        </div>
+      ) : (
+        trigger
+      )}
       <SelectContent status={status} aria-busy={(loadOptions && remote.loading) || undefined}>
         {items.map((item) => (
           <SelectItem key={item.value} value={item.value} disabled={item.disabled}>

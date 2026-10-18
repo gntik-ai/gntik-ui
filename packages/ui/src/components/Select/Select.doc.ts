@@ -5,10 +5,11 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'stable',
   description:
-    'Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input).',
+    'Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name.',
   primitive: '@base-ui/react/select',
   pattern: 'select-only combobox + listbox',
   keyboard: [
+    ['Delete / Backspace', 'With clearable on a non-empty editable trigger: clears and keeps focus'],
     ['Enter / Space / ArrowDown', 'On the trigger: opens the popup'],
     ['ArrowDown / ArrowUp', 'Moves the highlight between options'],
     ['Enter', 'Selects the highlighted option and closes the popup'],

@@ -3840,7 +3840,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed.",
+      "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits.",
       "files": [
         {
           "path": "packages/ui/src/components/DatePicker/DatePicker.tsx",
@@ -4327,7 +4327,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field.",
+      "description": "Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name.",
       "files": [
         {
           "path": "packages/ui/src/components/Input/Input.tsx",
@@ -6000,7 +6000,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input).",
+      "description": "Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name.",
       "files": [
         {
           "path": "packages/ui/src/components/Select/Select.tsx",
@@ -6662,7 +6662,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field.",
+      "description": "Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field. Opt-in `clearable` reserves space for a reset button and returns focus to the textarea. `onClear` runs after the value change; `clearLabel` overrides the localized name.",
       "files": [
         {
           "path": "packages/ui/src/components/Textarea/Textarea.tsx",
@@ -6815,7 +6815,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`\"HH:mm\"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it.",
+      "description": "Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`\"HH:mm\"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name.",
       "files": [
         {
           "path": "packages/ui/src/components/TimePicker/TimePicker.tsx",
@@ -7410,6 +7410,34 @@
       "description": "cn() class merging and tv() variants helpers used by every component.",
       "files": [
         {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/index.ts",
+          "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/clear-control.tsx",
+          "target": "components/utils/clear-control.tsx"
+        },
+        {
           "path": "packages/ui/src/utils/cn.ts",
           "target": "components/utils/cn.ts"
         },
@@ -7427,7 +7455,9 @@
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "clsx",
+        "lucide-react",
         "tailwind-merge",
         "tailwind-variants"
       ],

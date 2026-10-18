@@ -130,7 +130,7 @@ Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the br
 - [Tour](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Tour/Tour.doc.ts): Onboarding steps anchored to elements (selector, ref or getter): a non-modal popover with a step counter and Back / Next / Skip, positioned at each target and outlined with the focus ring (no overlay, no glow). (Overlays, @gntik-ai/ui; id `tour`)
 - [ThemeProvider](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/theme/Logo.tsx): ThemeProvider (dark default, light, high contrast, system; persisted), themeScript, Logo and brand presets. (Theme, @gntik-ai/ui; id `theme`)
 - [ThemeSwitcher](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/ThemeSwitcher/ThemeSwitcher.doc.ts): Theme control bound to useTheme(): a segmented Light · Dark · High contrast · System control (labels or icon-only), and ThemeCycleButton, a compact icon button that cycles modes for toolbars. (Theme, @gntik-ai/ui; id `theme-switcher`)
-- [UI utilities](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/utils/cn.ts): cn() class merging and tv() variants helpers used by every component. (Utilities, @gntik-ai/ui; id `ui-utils`)
+- [UI utilities](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/i18n/I18nProvider.tsx): cn() class merging and tv() variants helpers used by every component. (Utilities, @gntik-ai/ui; id `ui-utils`)
 
 ## Layouts
 

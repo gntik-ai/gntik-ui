@@ -2,12 +2,14 @@ import { Field } from '@base-ui/react/field';
 import { useRender } from '@base-ui/react/use-render';
 import { mergeProps } from '@base-ui/react/merge-props';
 import { CalendarDays, ChevronDown } from 'lucide-react';
-import type { ComponentProps, Ref } from 'react';
+import { useState, type ComponentProps, type Ref } from 'react';
+import { ClearControlButton, type ClearableProps } from '../../utils/clear-control';
 import { cn } from '../../utils/cn';
 import { PopoverTrigger } from '../Popover';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
 
-export interface DateTriggerProps extends DatePickerVariantProps {
+export interface DateTriggerProps extends DatePickerVariantProps, ClearableProps {
+  readOnly?: boolean;
   ref?: Ref<HTMLInputElement>;
   text: string;
   placeholder: string;
@@ -32,12 +34,23 @@ export function DateTrigger({
   invalid,
   size = 'auto',
   className,
+  clearable,
+  clearLabel,
+  onClear,
+  readOnly,
   ...aria
 }: DateTriggerProps) {
+  const [control, setControl] = useState<HTMLInputElement | null>(null);
+  const canClear = clearable && !!text && !disabled && !readOnly;
+  const clear = () => {
+    if (control?.disabled) return;
+    onClear?.();
+    control?.focus();
+  };
   const s = datePickerVariants({ size });
   const px = size === 'sm' ? 14 : 15;
   const trigger = useRender({
-    ref,
+    ref: [ref ?? null, setControl],
     render: (
       <PopoverTrigger
         nativeButton={false}
@@ -53,6 +66,12 @@ export function DateTrigger({
                 <input
                   {...mergeProps<'input'>(controlProps as ComponentProps<'input'>, rest, {
                     role: 'combobox',
+                    onKeyDown: (event) => {
+                      if (canClear && (event.key === 'Delete' || event.key === 'Backspace')) {
+                        event.preventDefault();
+                        clear();
+                      }
+                    },
                     readOnly: true,
                     value: text,
                     placeholder,
@@ -60,7 +79,7 @@ export function DateTrigger({
                     'aria-invalid': invalid || undefined,
                     ...(aria['aria-label'] ? { 'aria-label': aria['aria-label'] } : {}),
                     ...(aria['aria-describedby'] ? { 'aria-describedby': aria['aria-describedby'] } : {}),
-                    className: s.input(),
+                    className: cn(s.input(), canClear && 'pe-16'),
                   })}
                 />
               )}
@@ -74,6 +93,15 @@ export function DateTrigger({
     <div className={cn(s.root(), className)}>
       <CalendarDays size={px} aria-hidden className={s.icon()} />
       {trigger}
+      {canClear && (
+        <ClearControlButton
+          className="absolute end-8"
+          control={control}
+          allowReadOnly
+          clearLabel={clearLabel}
+          onClick={clear}
+        />
+      )}
       <ChevronDown size={px} aria-hidden className={s.chevron()} />
     </div>
   );
