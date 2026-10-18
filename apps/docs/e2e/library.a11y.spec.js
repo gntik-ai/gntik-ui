@@ -42,6 +42,57 @@ for (const theme of ['dark', '', 'high_contrast']) {
   });
 }
 
+// Every chat component with a *.doc.ts is on the @gntik-ai/chat page, and the page passes axe with no
+// baseline (it is new, so nothing is allowed to fail). Same gate for the forms entry inside the Library.
+const chatDocFolders = fs
+  .readdirSync(new URL('../../../packages/chat/src/', import.meta.url), { withFileTypes: true })
+  .filter(
+    (d) =>
+      d.isDirectory() &&
+      fs
+        .readdirSync(new URL(`../../../packages/chat/src/${d.name}/`, import.meta.url))
+        .some((f) => f.endsWith('.doc.ts')),
+  )
+  .map((d) => d.name);
+const formsDocs = fs
+  .readdirSync(new URL('../../../packages/ui/src/forms/', import.meta.url))
+  .filter((f) => f.endsWith('.doc.ts'))
+  .map((f) => f.replace('.doc.ts', ''));
+
+for (const theme of ['dark', '', 'high_contrast']) {
+  const name = theme || 'light';
+  test(`chat-components a11y --${name}`, async ({ page }) => {
+    await page.addInitScript(
+      ([t]) => {
+        localStorage.setItem('gntik-theme', t);
+        localStorage.setItem('gntik-section', 'chat-components');
+      },
+      [theme],
+    );
+    await page.goto('/#chat-components');
+    await page.locator('main h1').first().waitFor();
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForTimeout(500);
+    await expect(page.locator('main section[id^="chat-"]')).toHaveCount(chatDocFolders.length);
+    await page.addScriptTag({ content: AXE });
+    const violations = await page.evaluate(async () => {
+      // eslint-disable-next-line no-undef
+      const r = await axe.run(document.querySelector('main'), {
+        runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
+      });
+      return r.violations.flatMap((v) => v.nodes.map((n) => `${v.id} :: ${n.target.join(' ')}`));
+    });
+    expect(violations, `axe violations in ${name}`).toEqual([]);
+  });
+}
+
+test('the forms entry is on the Library page', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('gntik-section', 'ui-components'));
+  await page.goto('/#ui-components');
+  await page.locator('main h1').first().waitFor();
+  for (const doc of formsDocs) await expect(page.locator(`#ui-${doc}`)).toBeVisible();
+});
+
 for (const theme of ['dark', 'light', 'high_contrast']) {
   test(`cursor-pagination examples --${theme}`, async ({ page }) => {
     await page.addInitScript((theme) => {

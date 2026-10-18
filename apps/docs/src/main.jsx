@@ -8,6 +8,7 @@ import './catalog/overview.jsx';
 import './catalog/install.jsx';
 import './catalog/api-reference.jsx';
 import './catalog/library.jsx';
+import './catalog/chat.jsx';
 import './catalog/viewers.jsx';
 import './catalog/app-shell.jsx';
 import './catalog/page-headings.jsx';

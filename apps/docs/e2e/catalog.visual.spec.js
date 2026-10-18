@@ -21,7 +21,7 @@ const THEME_SAMPLE = [
 const SLOW = { monaco: 4000, reactflow: 1500 };
 // Too tall for one full-page image (live examples, iframe galleries): snapshot the first viewport;
 // the content is covered by the axe gates (library.a11y + compositions.a11y).
-const VIEWPORT_ONLY = new Set(['ui-components', 'layouts', 'blocks', 'templates']);
+const VIEWPORT_ONLY = new Set(['ui-components', 'chat-components', 'layouts', 'blocks', 'templates']);
 
 const cases = [
   ...ids.map((id) => ({ id, theme: 'dark' })),
