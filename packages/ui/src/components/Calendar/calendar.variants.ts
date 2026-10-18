@@ -37,7 +37,7 @@ export const calendarVariants = tv({
       'data-selected:bg-primary data-selected:font-semibold data-selected:text-primary-foreground data-selected:ring-0 data-selected:hover:bg-primary/90',
       'aria-disabled:cursor-not-allowed aria-disabled:text-muted-foreground/30 aria-disabled:line-through aria-disabled:hover:bg-transparent',
     ],
-    outside: 'mx-auto grid size-8 place-items-center text-[12.5px] text-muted-foreground/45 tabular-nums select-none',
+    outside: 'mx-auto grid size-8 place-items-center text-[12.5px] text-muted-foreground tabular-nums select-none',
   },
 });
 
