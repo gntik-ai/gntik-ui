@@ -3035,6 +3035,14 @@
           "target": "components/ui/calendar/index.ts"
         },
         {
+          "path": "packages/ui/src/components/Calendar/period-grids.tsx",
+          "target": "components/ui/calendar/period-grids.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Calendar/period-grids.variants.ts",
+          "target": "components/ui/calendar/period-grids.variants.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -5388,6 +5396,80 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/PasswordInput/PasswordInput.doc.ts"
+    },
+    {
+      "id": "period-picker",
+      "kind": "component",
+      "name": "PeriodPicker",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "beta",
+      "description": "Whole ISO weeks, months, calendar quarters or years, single or range. PeriodPicker is a field and Base UI popover; PeriodCalendar is inline. Single values are the first day of a whole period at local midnight, not a single-day selection. Ranges include the last day of the final period. Weeks always run Monday–Sunday and use the ISO week-year, regardless of locale. Month names use Intl; quarter/week labels and presets use the en/es i18n catalogs. Form values: YYYY-MM, YYYY-Qn, YYYY or YYYY-Www; ranges submit <name>-start and <name>-end. Defaults are this and last complete period; presets=[] hides them. Min/max compare period overlap; disabled periods remain focusable. Range fields apply on the second pick; Escape discards an unfinished range. Calendar and DatePicker remain day-only.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/PeriodPicker/PeriodCalendar.tsx",
+          "target": "components/ui/period-picker/PeriodCalendar.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/PeriodPicker/PeriodPicker.tsx",
+          "target": "components/ui/period-picker/PeriodPicker.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/PeriodPicker/index.ts",
+          "target": "components/ui/period-picker/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PeriodPicker/period-picker.variants.ts",
+          "target": "components/ui/period-picker/period-picker.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PeriodPicker/period-presets.ts",
+          "target": "components/ui/period-picker/period-presets.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PeriodPicker/period-types.ts",
+          "target": "components/ui/period-picker/period-types.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PeriodPicker/period-utils.ts",
+          "target": "components/ui/period-picker/period-utils.ts"
+        },
+        {
+          "path": "packages/ui/src/components/PeriodPicker/use-period-value.ts",
+          "target": "components/ui/period-picker/use-period-value.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "calendar",
+        "date-picker",
+        "popover",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/PeriodPicker/PeriodPicker.doc.ts"
     },
     {
       "id": "permission-matrix",

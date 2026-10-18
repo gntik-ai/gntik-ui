@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 114 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 115 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -3405,6 +3405,58 @@ export default function PasswordInputBasic() {
         <PasswordInput size="sm" defaultValue="sk-live-example-secret" inputClassName="font-mono text-[12px]" />
       </Field>
     </div>
+  );
+}
+```
+
+### PeriodPicker (`period-picker`)
+
+Whole ISO weeks, months, calendar quarters or years, single or range. PeriodPicker is a field and Base UI popover; PeriodCalendar is inline. Single values are the first day of a whole period at local midnight, not a single-day selection. Ranges include the last day of the final period. Weeks always run Monday–Sunday and use the ISO week-year, regardless of locale. Month names use Intl; quarter/week labels and presets use the en/es i18n catalogs. Form values: YYYY-MM, YYYY-Qn, YYYY or YYYY-Www; ranges submit <name>-start and <name>-end. Defaults are this and last complete period; presets=[] hides them. Min/max compare period overlap; disabled periods remain focusable. Range fields apply on the second pick; Escape discards an unfinished range. Calendar and DatePicker remain day-only.
+
+- Package: `@gntik-ai/ui` · export `PeriodPicker` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/PeriodPicker/PeriodPicker.doc.ts
+- Primitive: `@base-ui/react/popover + internal Calendar period grids`
+- ARIA pattern: combobox with a dialog popup; inline grid with roving tabindex
+- Registry dependencies: calendar, date-picker, popover, ui-utils
+- Install: `gntik-ui add period-picker`; own the source with `gntik-ui eject period-picker`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Enter / Space (field) | Opens the popup and focuses the selected period or today |
+| Tab / Shift+Tab | One tab stop inside each grid; other controls and presets remain in the tab order |
+| ArrowLeft / ArrowRight | Moves one cell, crossing year/page boundaries; mirrored in RTL |
+| ArrowUp / ArrowDown | Moves one row: three months/years, four quarters, or seven days |
+| Home / End | Moves to the first/last cell of the row (ISO Monday/Sunday for weeks) |
+| PageUp / PageDown | Months/quarters: same period in the previous/next year; years: 12-year page; weeks: month (Shift: year) |
+| Enter / Space (grid) | Selects the period (range: start then end); aria-disabled cells cannot be selected |
+| Enter / Space (title) | Drills up: weeks → months → years; picking a coarser cell returns with focus restored |
+| Enter / Space (previous/next) | Moves one visible page: month for weeks, year for months/quarters, 12 years for years |
+| Escape | Closes the popup and returns focus to the field without applying an unfinished range |
+
+Tokens: background, foreground, muted-foreground, border, primary, primary-foreground, secondary, popover, focus-ring
+
+Usage:
+
+```tsx
+import { useI18n } from '@gntik-ai/ui';
+import { Field, FieldDescription, FieldLabel } from '@gntik-ai/ui';
+import { PeriodPicker } from '@gntik-ai/ui';
+
+export default function BillingMonth() {
+  const { t } = useI18n();
+  return (
+    <Field className="max-w-xs">
+      <FieldLabel>{t('periodPicker.billingMonth')}</FieldLabel>
+      <PeriodPicker
+        granularity="month"
+        name="billing-month"
+        today={new Date(2026, 9, 17)}
+        defaultValue={new Date(2026, 2, 1)}
+      />
+      <FieldDescription>{t('periodPicker.wholePeriodDescription')}</FieldDescription>
+    </Field>
   );
 }
 ```

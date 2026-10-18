@@ -102,3 +102,63 @@ export function formatDateRange(
 export function normalizeRange(a: Date, b: Date): DateRange {
   return compareDay(a, b) <= 0 ? { start: a, end: b } : { start: b, end: a };
 }
+
+export type PeriodGranularity = 'week' | 'month' | 'quarter' | 'year';
+
+export const quarterOf = (d: Date) => Math.floor(d.getMonth() / 3) + 1;
+export const startOfQuarter = (d: Date) => new Date(d.getFullYear(), (quarterOf(d) - 1) * 3, 1);
+export const endOfQuarter = (d: Date) => new Date(d.getFullYear(), quarterOf(d) * 3, 0);
+export const startOfYear = (d: Date) => new Date(d.getFullYear(), 0, 1);
+export const endOfYear = (d: Date) => new Date(d.getFullYear(), 11, 31);
+
+/** ISO week and week-year; UTC arithmetic on local date parts avoids DST-length days. */
+export function isoWeek(d: Date): { year: number; week: number } {
+  const thursday = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  thursday.setUTCDate(thursday.getUTCDate() + 4 - (thursday.getUTCDay() || 7));
+  const year = thursday.getUTCFullYear();
+  const week = Math.ceil(((thursday.getTime() - Date.UTC(year, 0, 1)) / 86400000 + 1) / 7);
+  return { year, week };
+}
+
+export function startOfPeriod(d: Date, granularity: PeriodGranularity): Date {
+  switch (granularity) {
+    case 'week':
+      return startOfWeek(d, 1);
+    case 'month':
+      return startOfMonth(d);
+    case 'quarter':
+      return startOfQuarter(d);
+    case 'year':
+      return startOfYear(d);
+  }
+}
+
+export function endOfPeriod(d: Date, granularity: PeriodGranularity): Date {
+  switch (granularity) {
+    case 'week':
+      return endOfWeek(d, 1);
+    case 'month':
+      return endOfMonth(d);
+    case 'quarter':
+      return endOfQuarter(d);
+    case 'year':
+      return endOfYear(d);
+  }
+}
+
+/** Stable local period form value; weeks always use the ISO week-year. */
+export function formatPeriodValue(d: Date, granularity: PeriodGranularity): string {
+  const year = String(d.getFullYear()).padStart(4, '0');
+  switch (granularity) {
+    case 'week': {
+      const iso = isoWeek(d);
+      return `${String(iso.year).padStart(4, '0')}-W${String(iso.week).padStart(2, '0')}`;
+    }
+    case 'month':
+      return `${year}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    case 'quarter':
+      return `${year}-Q${quarterOf(d)}`;
+    case 'year':
+      return year;
+  }
+}
