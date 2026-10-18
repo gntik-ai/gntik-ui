@@ -5,6 +5,7 @@ import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { SimpleSelect } from '../../components/Select';
 import { Textarea } from '../../components/Textarea';
+import { useI18n } from '../../i18n';
 import { Form, FormField, schemaResolver } from '..';
 
 const inviteSchema = z.object({
@@ -24,13 +25,14 @@ const roles = [
 ] as const;
 
 export default function FormInviteMember() {
+  const { t } = useI18n();
   const [sent, setSent] = useState<Invite | null>(null);
   const form = useForm<InviteInput, unknown, Invite>({
     resolver: schemaResolver<InviteInput, Invite>(inviteSchema),
     defaultValues: { name: '', email: '', note: '' },
   });
   return (
-    <Form form={form} onSubmit={setSent} className="grid w-full max-w-md gap-5" aria-label="Invite a member">
+    <Form form={form} onSubmit={setSent} className="grid w-full max-w-md gap-5" aria-label={t('forms.invite.title')}>
       <FormField<InviteInput, 'name'> name="name" label="Full name" required>
         {(field) => <Input {...field} autoComplete="name" />}
       </FormField>

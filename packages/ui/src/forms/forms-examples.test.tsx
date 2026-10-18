@@ -62,6 +62,15 @@ it('localizes the example labels and width options', () => {
   expect(screen.getByRole('combobox', { name: 'Ancho del campo' })).toHaveTextContent('Pequeño');
 });
 
+it('localizes the invite form accessible name', () => {
+  render(
+    <I18nProvider locale="es">
+      <FormInviteMember />
+    </I18nProvider>,
+  );
+  expect(screen.getByRole('form', { name: 'Invitar a un miembro' })).toBeInTheDocument();
+});
+
 it('submits fields mapped by the public helpers without FormField', async () => {
   const user = userEvent.setup();
   render(<FormBindingsHelpers />);

@@ -6,6 +6,7 @@
  * Month and weekday names, numbers and dates come from Intl, not from this catalog.
  */
 export const en = {
+  'forms.invite.title': 'Invite a member',
   'forms.bindings.width.xs': 'Extra small',
   'forms.bindings.width.sm': 'Small',
   'forms.bindings.width.md': 'Medium',

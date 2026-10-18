@@ -2,6 +2,7 @@ import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  'forms.invite.title': 'Invitar a un miembro',
   'forms.bindings.width.xs': 'Muy pequeño',
   'forms.bindings.width.sm': 'Pequeño',
   'forms.bindings.width.md': 'Mediano',
