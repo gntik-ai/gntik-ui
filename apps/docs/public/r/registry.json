@@ -6031,7 +6031,7 @@
       "name": "list-input",
       "type": "registry:ui",
       "title": "ListInput",
-      "description": "Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced.",
+      "description": "Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced. Use ListInput for standalone pairs without a form library; use FieldArray from @gntik-ai/ui/forms for arbitrary object fields managed by react-hook-form.",
       "author": "gntik-ai",
       "dependencies": [
         "lucide-react@^1.48.0"

@@ -7,3 +7,6 @@ export {
 } from './useFieldProps';
 export { FormField, Form, type FormFieldProps, type FormProps } from './FormField';
 export { schemaResolver, issuesToErrors, type ParseableSchema, type SchemaIssue } from './schemaResolver';
+export { FieldArray, type FieldArrayProps, type FieldArrayRow } from './FieldArray';
+export { fieldArrayVariants } from './field-array.variants';
+export { doc as fieldArrayDoc } from './FieldArray.doc';
