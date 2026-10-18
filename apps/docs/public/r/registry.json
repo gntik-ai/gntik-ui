@@ -1275,7 +1275,7 @@
       "name": "calendar",
       "type": "registry:ui",
       "title": "Calendar",
-      "description": "Month grid for picking a day or a range: today marker, disabled dates, min/max bounds, locale-aware month and weekday names (Intl), configurable week start, one or two months side by side. No date library: native Date + Intl.",
+      "description": "Day or range selection with one or two months, inclusive min/max bounds and Intl names. The clickable month heading opens a month grid, then the year heading opens a shared 12-year page (2020–2031 for 2026). Set maxView=\"day\" for the previous static header, or \"month\" to stop at months; the default is \"year\". Optional view/defaultView/onViewChange control or report the view (initially \"day\"). captionLayout=\"select\" uses labelled kit month/year selects; yearRange={from,to} defaults to the current year ±10, clipped to min/max and including the visible year. Picking a month returns to days, preserving and clamping the focused day, and calls onMonthChange once with the first day. DatePicker and DateRangePicker forward maxView and captionLayout and reopen in the day view.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -1283,6 +1283,7 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/select.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -1300,6 +1301,21 @@
           "path": "packages/ui/src/components/Calendar/Calendar.tsx",
           "type": "registry:ui",
           "target": "components/ui/calendar/Calendar.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Calendar/CalendarCaption.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/calendar/CalendarCaption.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Calendar/CalendarMonthView.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/calendar/CalendarMonthView.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Calendar/CalendarYearView.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/calendar/CalendarYearView.tsx"
         },
         {
           "path": "packages/ui/src/components/Calendar/calendar-utils.ts",
