@@ -1,0 +1,89 @@
+import { test, expect } from '@playwright/test';
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
+
+const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
+const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
+
+async function checkAxe(page, section) {
+  const violations = await page.evaluate(async (selector) => {
+    // The listbox is portaled outside the example section.
+    // eslint-disable-next-line no-undef
+    const result = await axe.run({ include: [selector, '[role="listbox"]'] });
+    return result.violations.map((violation) => violation.id);
+  }, section);
+  expect(violations).toEqual([]);
+}
+
+async function expectActiveVisible(input, page, name) {
+  const option = page.getByRole('option', { name, exact: true });
+  await expect(option).toHaveAttribute('data-highlighted', '');
+  await expect(input).toHaveAttribute('aria-activedescendant', await option.getAttribute('id'));
+  expect(
+    await option.evaluate((element) => {
+      const list = element.closest('[role="listbox"]');
+      const row = element.getBoundingClientRect();
+      const viewport = list.getBoundingClientRect();
+      return row.top >= viewport.top - 1 && row.bottom <= viewport.bottom + 1;
+    }),
+  ).toBe(true);
+}
+
+for (const theme of ['dark', '', 'high_contrast']) {
+  test(`virtualized options keyboard, layout and a11y --${theme || 'light'}`, async ({ page }) => {
+    await page.addInitScript((value) => {
+      localStorage.setItem('gntik-theme', value);
+      localStorage.setItem('gntik-section', 'ui-components');
+    }, theme);
+    await page.goto('/#ui-components');
+    const section = page.locator('#ui-Combobox');
+    const input = section.getByRole('combobox', { name: 'Nodes (10,000 options)' });
+    await input.click();
+    await page.evaluate(() => document.fonts.ready);
+    await page.addScriptTag({ content: AXE });
+    const list = page.getByRole('listbox');
+    expect(await list.getByRole('option').count()).toBeLessThanOrEqual(20);
+    expect(await list.evaluate((element) => element.scrollHeight)).toBe(320000);
+    await expect(list.getByRole('option').first()).toHaveAttribute('aria-setsize', '10000');
+    await input.press('ArrowDown');
+    for (let i = 0; i < 50; i++) await input.press('ArrowDown');
+    await expectActiveVisible(input, page, 'node-51');
+    await input.press('End');
+    await expectActiveVisible(input, page, 'node-10000');
+    await input.fill('node-4242');
+    await expect(list.getByRole('option')).toHaveCount(1);
+    expect(await list.evaluate((element) => element.scrollTop)).toBe(0);
+    await input.press('ArrowDown');
+    await input.press('Enter');
+    await expect(list).toHaveCount(0);
+    const trigger = input.locator('..').getByRole('button', { name: 'Show options' });
+    await trigger.click();
+    await expect(page.getByRole('option', { name: 'node-4242', exact: true })).toHaveAttribute('aria-selected', 'true');
+    const selectedVisible = await page.getByRole('option', { name: 'node-4242', exact: true }).evaluate((element) => {
+      const row = element.getBoundingClientRect();
+      const viewport = element.closest('[role="listbox"]').getBoundingClientRect();
+      return row.top >= viewport.top - 1 && row.bottom <= viewport.bottom + 1;
+    });
+    expect(selectedVisible).toBe(true);
+    await checkAxe(page, '#ui-Combobox');
+    await input.press('Escape');
+    await expect(section.getByRole('combobox', { name: 'Nodes (10,000 options)' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    );
+    const remote = section.getByRole('combobox', { name: 'Remote nodes (5,000 options)' });
+    await remote.click();
+    await expect(page.getByRole('option').first()).toHaveAttribute('aria-setsize', '5000');
+    await checkAxe(page, '#ui-Combobox');
+    await remote.press('Escape');
+    await expect(remote).toHaveAttribute('aria-expanded', 'false');
+
+    const multi = page.locator('#ui-MultiSelect').getByRole('combobox', { name: 'Nodes (5,000 options)' });
+    await multi.click();
+    expect(await page.getByRole('option').count()).toBeLessThanOrEqual(20);
+    await checkAxe(page, '#ui-MultiSelect');
+    await multi.press('Escape');
+    await expect(multi).toHaveAttribute('aria-expanded', 'false');
+    await checkAxe(page, '#ui-TransferList');
+  });
+}

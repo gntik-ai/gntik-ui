@@ -1,5 +1,6 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { createRef } from 'react';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from './Combobox';
 import ComboboxBasic from './examples/ComboboxBasic';
@@ -122,4 +123,179 @@ describe('Combobox', () => {
     await screen.findByRole('listbox');
     await expectNoAxeViolations();
   });
+});
+
+describe('virtualized Combobox', () => {
+  it('preserves the option ref and custom styles while positioning windowed rows', async () => {
+    const user = userEvent.setup();
+    const ref = createRef<HTMLDivElement>();
+    render(
+      <Combobox items={['node-1']} virtualized>
+        <ComboboxInput label="Nodes" />
+        <ComboboxContent itemHeight={32}>
+          {(item: string) => (
+            <ComboboxItem value={item} ref={ref} style={{ fontWeight: 600 }}>
+              {item}
+            </ComboboxItem>
+          )}
+        </ComboboxContent>
+      </Combobox>,
+    );
+    await user.click(screen.getByRole('combobox', { name: 'Nodes' }));
+    const option = await screen.findByRole('option', { name: 'node-1' });
+    expect(ref.current).toBe(option);
+    expect(option).toHaveStyle({ fontWeight: 600, height: '32px' });
+  });
+
+  it('windows the full list and preserves its accessible positions and height', async () => {
+    const user = userEvent.setup();
+    const items = Array.from({ length: 10000 }, (_, i) => `node-${i + 1}`);
+    render(
+      <Combobox items={items} virtualized>
+        <ComboboxInput label="Nodes" />
+        <ComboboxContent itemHeight={32}>
+          {(item: string) => (
+            <ComboboxItem key={item} value={item}>
+              {item}
+            </ComboboxItem>
+          )}
+        </ComboboxContent>
+      </Combobox>,
+    );
+    await user.click(screen.getByRole('combobox', { name: 'Nodes' }));
+    const list = await screen.findByRole('listbox');
+    const options = within(list).getAllByRole('option');
+    expect(options.length).toBeLessThanOrEqual(20);
+    expect(options[0]).toHaveAttribute('aria-setsize', '10000');
+    options.forEach((option, i) => expect(option).toHaveAttribute('aria-posinset', String(i + 1)));
+    expect(list.firstElementChild).toHaveStyle({ height: '320000px' });
+  });
+});
+
+it('keeps keyboard highlights mounted and scrolls selection into view on reopen', async () => {
+  const user = userEvent.setup();
+  const onValueChange = vi.fn();
+  const onItemHighlighted = vi.fn();
+  const items = Array.from({ length: 10000 }, (_, i) => `node-${i + 1}`);
+  render(
+    <Combobox items={items} virtualized onValueChange={onValueChange} onItemHighlighted={onItemHighlighted}>
+      <ComboboxInput label="Nodes" />
+      <ComboboxContent itemHeight={32}>
+        {(item: string) => (
+          <ComboboxItem key={item} value={item}>
+            {item}
+          </ComboboxItem>
+        )}
+      </ComboboxContent>
+    </Combobox>,
+  );
+  const input = screen.getByRole('combobox', { name: 'Nodes' });
+  await user.click(input);
+  const list = await screen.findByRole('listbox');
+  Object.defineProperty(list, 'clientHeight', { configurable: true, value: 256 });
+  await user.keyboard('{ArrowDown}{ArrowDown>50/}');
+  const option51 = await screen.findByRole('option', { name: 'node-51' });
+  expect(input).toHaveAttribute('aria-activedescendant', option51.id);
+  expect(option51).toHaveAttribute('data-highlighted');
+  expect(list.scrollTop).toBe(1376);
+  await user.keyboard('{End}');
+  const last = await screen.findByRole('option', { name: 'node-10000' });
+  expect(input).toHaveAttribute('aria-activedescendant', last.id);
+  expect(list.scrollTop).toBe(319744);
+  expect(onItemHighlighted).toHaveBeenLastCalledWith('node-10000', expect.objectContaining({ index: 9999 }));
+  fireEvent.change(input, { target: { value: 'node-4242' } });
+  expect(await screen.findByRole('option', { name: 'node-4242' })).toBeInTheDocument();
+  expect(screen.getAllByRole('option')).toHaveLength(1);
+  expect(list.scrollTop).toBe(0);
+  await user.keyboard('{ArrowDown}{Enter}');
+  expect(onValueChange).toHaveBeenCalledWith('node-4242', expect.anything());
+  await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument());
+  await user.click(screen.getByRole('button', { name: 'Show options' }));
+  const reopened = await screen.findByRole('listbox');
+  const selected = await screen.findByRole('option', { name: 'node-4242' });
+  expect(selected).toHaveAttribute('aria-selected', 'true');
+  expect(reopened.scrollTop).toBe(135488);
+  expect(screen.getAllByRole('option').length).toBeLessThanOrEqual(20);
+});
+
+it('keeps the highlight mounted during manual scrolling and supports Home and page navigation', async () => {
+  const user = userEvent.setup();
+  const items = Array.from({ length: 1000 }, (_, i) => `node-${i + 1}`);
+  render(
+    <Combobox items={items} virtualized>
+      <ComboboxInput label="Nodes" />
+      <ComboboxContent itemHeight={32}>
+        {(item: string) => (
+          <ComboboxItem key={item} value={item}>
+            {item}
+          </ComboboxItem>
+        )}
+      </ComboboxContent>
+    </Combobox>,
+  );
+  const input = screen.getByRole('combobox', { name: 'Nodes' });
+  await user.click(input);
+  const list = await screen.findByRole('listbox');
+  await user.keyboard('{Home}');
+  expect(highlighted()).toHaveTextContent('node-1');
+  const firstId = highlighted()?.id;
+  fireEvent.scroll(list, { target: { scrollTop: 16000 } });
+  expect(list.scrollTop).toBe(16000);
+  expect(input).toHaveAttribute('aria-activedescendant', firstId);
+  expect(document.getElementById(firstId!)).toBeInTheDocument();
+  expect(screen.getAllByRole('option').length).toBeLessThanOrEqual(20);
+  await user.keyboard('{PageDown}');
+  expect(highlighted()).toHaveTextContent('node-8');
+  expect(list.scrollTop).toBe(224);
+  await user.keyboard('{PageUp}');
+  expect(highlighted()).toHaveTextContent('node-1');
+  expect(list.scrollTop).toBe(0);
+});
+
+it('measures variable option rows rather than treating the estimate as a fixed height', async () => {
+  const geometry = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (
+    this: HTMLElement,
+  ) {
+    return {
+      x: 0,
+      y: 0,
+      top: 0,
+      left: 0,
+      right: 200,
+      bottom: this.getAttribute('role') === 'option' ? 64 : 256,
+      width: 200,
+      height: this.getAttribute('role') === 'option' ? 64 : 256,
+      toJSON: () => ({}),
+    };
+  });
+  try {
+    const user = userEvent.setup();
+    const items = Array.from({ length: 10000 }, (_, i) => `node-${i + 1}`);
+    render(
+      <Combobox items={items} virtualized>
+        <ComboboxInput label="Nodes" />
+        <ComboboxContent estimatedItemHeight={32}>
+          {(item: string) => (
+            <ComboboxItem key={item} value={item}>
+              {item}
+            </ComboboxItem>
+          )}
+        </ComboboxContent>
+      </Combobox>,
+    );
+    await user.click(screen.getByRole('combobox', { name: 'Nodes' }));
+    const second = await screen.findByRole('option', { name: 'node-2' });
+    expect(second).toHaveStyle({ transform: 'translateY(64px)' });
+    expect(screen.getAllByRole('option').length).toBeLessThanOrEqual(20);
+    expect(
+      Number.parseFloat((screen.getByRole('listbox').firstElementChild as HTMLElement).style.height),
+    ).toBeGreaterThan(320000);
+    await user.keyboard('{Home}');
+    const list = screen.getByRole('listbox');
+    fireEvent.scroll(list, { target: { scrollTop: 16000 } });
+    expect(list.scrollTop).toBe(16000);
+    expect(highlighted()).toHaveTextContent('node-1');
+  } finally {
+    geometry.mockRestore();
+  }
 });

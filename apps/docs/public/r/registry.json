@@ -2296,7 +2296,7 @@
       "name": "combobox",
       "type": "registry:ui",
       "title": "Combobox",
-      "description": "Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row).",
+      "description": "Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -2306,7 +2306,8 @@
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/select.json",
         "https://ui.gntik.ai/r/spinner.json",
-        "https://ui.gntik.ai/r/ui-utils.json"
+        "https://ui.gntik.ai/r/ui-utils.json",
+        "https://ui.gntik.ai/r/virtual-list.json"
       ],
       "categories": [
         "component",
@@ -2328,6 +2329,11 @@
           "path": "packages/ui/src/components/Combobox/ComboboxRoot.tsx",
           "type": "registry:ui",
           "target": "components/ui/combobox/ComboboxRoot.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Combobox/WindowedCombobox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/combobox/WindowedCombobox.tsx"
         },
         {
           "path": "packages/ui/src/components/Combobox/combobox.variants.ts",
@@ -7025,7 +7031,7 @@
       "name": "multi-select",
       "type": "registry:ui",
       "title": "MultiSelect",
-      "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`).",
+      "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -7035,7 +7041,8 @@
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/combobox.json",
         "https://ui.gntik.ai/r/spinner.json",
-        "https://ui.gntik.ai/r/ui-utils.json"
+        "https://ui.gntik.ai/r/ui-utils.json",
+        "https://ui.gntik.ai/r/virtual-list.json"
       ],
       "categories": [
         "component",
@@ -9884,7 +9891,7 @@
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
-      "description": "Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name.",
+      "description": "Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name. For long lists, use Combobox with virtualized and a flat items array (see ComboboxVirtualized); Select requires its options to stay mounted for typeahead.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -13664,7 +13671,7 @@
       "name": "transfer-list",
       "type": "registry:ui",
       "title": "TransferList",
-      "description": "Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced.",
+      "description": "Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced. Opt-in virtualized windows both panes with shared row measurement, keeps the active option mounted and preserves full-data bulk actions and keyboard reordering. Find-in-page and screen-reader browse mode reach rendered rows only.",
       "author": "gntik-ai",
       "dependencies": [
         "lucide-react@^1.48.0"
@@ -13673,7 +13680,8 @@
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/button.json",
         "https://ui.gntik.ai/r/input.json",
-        "https://ui.gntik.ai/r/ui-utils.json"
+        "https://ui.gntik.ai/r/ui-utils.json",
+        "https://ui.gntik.ai/r/virtual-list.json"
       ],
       "categories": [
         "component",
@@ -14224,6 +14232,11 @@
           "path": "packages/ui/src/components/VirtualList/index.ts",
           "type": "registry:ui",
           "target": "components/ui/virtual-list/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/VirtualList/use-measured-rows.ts",
+          "type": "registry:ui",
+          "target": "components/ui/virtual-list/use-measured-rows.ts"
         },
         {
           "path": "packages/ui/src/components/VirtualList/use-virtual-window.ts",

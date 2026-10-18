@@ -97,3 +97,18 @@ describe('MultiSelect', () => {
     await expectNoAxeViolations();
   });
 });
+
+it('windows 5000 options while Select all selects the full enabled data set', async () => {
+  const options = Array.from({ length: 5000 }, (_, i) => ({ value: `node-${i + 1}`, label: `Node ${i + 1}` }));
+  const { user, input, onValueChange } = setup({ options, virtualized: true, itemHeight: 32 });
+  await user.click(input);
+  const list = await screen.findByRole('listbox');
+  const rows = within(list).getAllByRole('option');
+  expect(rows.length).toBeLessThanOrEqual(20);
+  expect(rows[0]).toHaveTextContent('Select all');
+  expect(rows[0]).toHaveAttribute('aria-posinset', '1');
+  expect(rows[0]).toHaveAttribute('aria-setsize', '5001');
+  await user.click(rows[0]!);
+  expect(onValueChange).toHaveBeenLastCalledWith(options.map((option) => option.value));
+  expect(within(list).getAllByRole('option').length).toBeLessThanOrEqual(20);
+});

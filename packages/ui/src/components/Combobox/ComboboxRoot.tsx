@@ -8,6 +8,7 @@ import {
   retryItem,
   type SpecialItem,
 } from './specialItems';
+import { WindowedComboboxRoot } from './WindowedCombobox';
 import { useAsyncOptions, type LoadOptions } from './useAsyncOptions';
 
 export interface ComboboxAsyncProps<Value> {
@@ -59,7 +60,9 @@ export const useComboboxEnhancement = () => useContext(EnhancementContext);
 export function Combobox<Value, Multiple extends boolean | undefined = false>(props: ComboboxProps<Value, Multiple>) {
   const { loadOptions, debounceMs, onCreate, createLabel, loadingText, errorText, ...root } = props;
   const flat = root.items === undefined || (Array.isArray(root.items) && !root.items.some(isGroup));
-  if ((!loadOptions && !onCreate) || !flat) return <BaseCombobox.Root {...root} />;
+  if (!flat) return <BaseCombobox.Root {...root} />;
+  if (!loadOptions && !onCreate)
+    return root.virtualized && root.items ? <WindowedComboboxRoot {...root} /> : <BaseCombobox.Root {...root} />;
   return (
     <EnhancedCombobox
       root={root as BaseCombobox.Root.Props<unknown, Multiple>}
@@ -162,9 +165,10 @@ function EnhancedCombobox<Multiple extends boolean | undefined>({
     specials,
   };
 
+  const Root = root.virtualized ? WindowedComboboxRoot : BaseCombobox.Root;
   return (
     <EnhancementContext.Provider value={enhancement}>
-      <BaseCombobox.Root<unknown, Multiple>
+      <Root<unknown, Multiple>
         {...rest}
         multiple={multiple}
         items={allItems}
