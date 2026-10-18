@@ -74,7 +74,7 @@ export function DateSegments({
             }}
             role="spinbutton"
             tabIndex={disabled ? -1 : 0}
-            aria-label={prefix ? `${prefix}, ${label}` : label}
+            aria-label={prefix ? state.t('dateField.segmentInRange', { range: prefix, segment: label }) : label}
             aria-valuemin={min}
             aria-valuemax={max}
             aria-valuenow={n ?? undefined}

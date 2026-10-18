@@ -452,13 +452,15 @@ export const en = {
   'terminal.noMatches': 'No matches',
   'terminal.nextMatch': 'Next match',
   'terminal.previousMatch': 'Previous match',
-  // TimePicker, DatePicker withTime, DateTimeRangePicker, PermissionMatrix, QueryBuilder, ScheduleInput (cron)
+  // DateField and DateRangeField
   'dateField.label': 'Date',
   'dateField.year': 'Year',
   'dateField.month': 'Month',
   'dateField.day': 'Day',
   'dateField.start': 'Start date',
   'dateField.end': 'End date',
+  'dateField.segmentInRange': '{range}, {segment}',
+  // TimePicker, DatePicker withTime, DateTimeRangePicker, PermissionMatrix, QueryBuilder, ScheduleInput (cron)
   'timePicker.label': 'Time',
   'timePicker.hours': 'Hours',
   'timePicker.minutes': 'Minutes',

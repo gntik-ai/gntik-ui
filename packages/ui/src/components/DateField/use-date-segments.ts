@@ -3,6 +3,7 @@ import { useSegments } from '../TimePicker/segments';
 import { dayPeriodLabels, localeHourCycle } from '../TimePicker/time-utils';
 import type { DateFieldProps } from './DateField';
 import {
+  compareFieldDates,
   dateComplete,
   displaySegment,
   draftDate,
@@ -12,7 +13,7 @@ import {
   withDateSegment,
 } from './date-parts';
 
-/** Date-specific policy around the generic segment engine. Values compare by local timestamp. */
+/** Date-specific policy around the generic segment engine, including granularity-aware bounds. */
 export function useDateSegments(props: DateFieldProps) {
   const { locale: providerLocale, t } = useI18n();
   const locale = props.locale ?? providerLocale;
@@ -46,13 +47,13 @@ export function useDateSegments(props: DateFieldProps) {
     disabled: props.disabled,
     readOnly: props.readOnly,
   });
-  const current = engine.current === null ? null : new Date(engine.current);
+  const current = engine.committed === null ? null : new Date(engine.committed);
   const invalid =
     props.invalid ||
-    (dateComplete(engine.draft) && !draftDate(engine.draft)) ||
+    (dateComplete(engine.committedDraft) && !draftDate(engine.committedDraft)) ||
     (!!current &&
-      ((!!props.min && current < props.min) ||
-        (!!props.max && current > props.max) ||
+      ((!!props.min && compareFieldDates(current, props.min, granularity) < 0) ||
+        (!!props.max && compareFieldDates(current, props.max, granularity) > 0) ||
         !!props.isDateDisabled?.(current)));
   return { ...engine, currentDate: current, invalid, parts, keys, locale, granularity, t, am, pm };
 }

@@ -14,6 +14,7 @@ export interface DateFieldProps extends DateFieldVariantProps {
   onValueChange?: (date: Date | null) => void;
   granularity?: Granularity;
   hourCycle?: 12 | 24;
+  /** I18nProvider locale; English when no provider is present. */
   locale?: string;
   forceLeadingZeros?: boolean;
   min?: Date;

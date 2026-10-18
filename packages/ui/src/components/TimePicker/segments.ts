@@ -30,12 +30,14 @@ export function useSegments<K extends string, D, V>(options: SegmentOptions<K, D
   const equals = options.equals ?? Object.is;
   const controlled = value !== undefined;
   const [draft, setDraft] = useState<D>(() => toDraft(controlled ? value : defaultValue));
+  const [committedDraft, setCommittedDraft] = useState(draft);
   const [synced, setSynced] = useState(value);
   const [generation, setGeneration] = useState(0);
   if (controlled && !equals(value, synced as V)) {
     setSynced(value);
     if (options.resetOnExternalChange) setGeneration(generation + 1);
     setDraft(toDraft(value));
+    setCommittedDraft(toDraft(value));
   }
   const buffer = useRef<{ key: K; text: string; generation: number } | null>(null);
   const pending = useRef<{ draft: D; previous: V; generation: number } | null>(null);
@@ -48,6 +50,7 @@ export function useSegments<K extends string, D, V>(options: SegmentOptions<K, D
   const commit = (next: D, previous = current) => {
     pending.current = null;
     setDraft(next);
+    setCommittedDraft(next);
     const v = toValue(next);
     if (!equals(v, previous) || options.notifyDraft?.(next)) {
       if (controlled) setSynced(v);
@@ -127,5 +130,18 @@ export function useSegments<K extends string, D, V>(options: SegmentOptions<K, D
     else handled = false;
     if (handled) e.preventDefault();
   };
-  return { draft, current, display, range, commit, focusSegment, onKeyDown, buffer, segmentRefs, flush };
+  return {
+    draft,
+    current,
+    committedDraft,
+    committed: toValue(committedDraft),
+    display,
+    range,
+    commit,
+    focusSegment,
+    onKeyDown,
+    buffer,
+    segmentRefs,
+    flush,
+  };
 }

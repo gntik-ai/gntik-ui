@@ -5,7 +5,7 @@ import { cn } from '../../utils/cn';
 import type { DateRange } from '../Calendar/calendar-utils';
 import type { DateFieldProps } from './DateField';
 import { DateSegments } from './DateSegments';
-import { formatFormDate } from './date-parts';
+import { compareFieldDates, formatFormDate } from './date-parts';
 import { dateFieldVariants } from './date-field.variants';
 import { useDateSegments, type DateSegmentsState } from './use-date-segments';
 
@@ -31,7 +31,13 @@ export function DateRangeField(props: DateRangeFieldProps) {
     onValueChange: (next) => props.onValueChange?.({ start: start.currentDate, end: next }),
   });
   const invalid =
-    start.invalid || end.invalid || !!(start.currentDate && end.currentDate && end.currentDate < start.currentDate);
+    start.invalid ||
+    end.invalid ||
+    !!(
+      start.currentDate &&
+      end.currentDate &&
+      compareFieldDates(end.currentDate, start.currentDate, start.granularity) < 0
+    );
   const s = dateFieldVariants({ size: props.size });
   return (
     <>

@@ -124,6 +124,86 @@ describe('DateField', () => {
     expect(screen.getByRole('group')).toHaveAttribute('data-invalid');
     screen.getAllByRole('spinbutton').forEach((s) => expect(s).toHaveAttribute('aria-invalid', 'true'));
   });
+  it.each([
+    { min: new Date(2026, 9, 1, 9), max: new Date(2026, 9, 2, 9), text: '2026-10-01' },
+    { min: new Date(2026, 8, 30, 9), max: new Date(2026, 9, 1, 9), text: '2026-10-01T14:30' },
+  ])('compares day bounds by calendar day even when they carry a time (%j)', ({ min, max, text }) => {
+    const onValueChange = vi.fn();
+    render(<DateField locale="en-US" min={min} max={max} onValueChange={onValueChange} />);
+    fireEvent.paste(screen.getByRole('spinbutton', { name: 'Day' }), {
+      clipboardData: { getData: () => text },
+    });
+    expect(onValueChange).toHaveBeenCalledExactlyOnceWith(new Date(2026, 9, 1));
+    expect(screen.getByRole('group')).not.toHaveAttribute('data-invalid');
+    screen.getAllByRole('spinbutton').forEach((segment) => expect(segment).not.toHaveAttribute('aria-invalid'));
+  });
+  it.each([
+    { min: new Date('0100-01-01T00:00:00'), text: '0099-10-01', expected: new Date('0099-10-01T00:00:00') },
+    { max: new Date('0099-12-31T00:00:00'), text: '0100-10-01', expected: new Date('0100-10-01T00:00:00') },
+  ])('preserves literal small-year ordering at day bounds (%j)', ({ text, expected, ...bounds }) => {
+    const onValueChange = vi.fn();
+    render(<DateField locale="en-US" {...bounds} onValueChange={onValueChange} />);
+    fireEvent.paste(screen.getByRole('spinbutton', { name: 'Year' }), {
+      clipboardData: { getData: () => text },
+    });
+    expect(onValueChange).toHaveBeenCalledExactlyOnceWith(expected);
+    expect(screen.getByRole('group')).toHaveAttribute('data-invalid');
+    screen.getAllByRole('spinbutton').forEach((segment) => expect(segment).toHaveAttribute('aria-invalid', 'true'));
+  });
+  it.each([{ min: new Date(2026, 9, 1, 15) }, { max: new Date(2026, 9, 1, 14) }])(
+    'keeps time bounds at minute granularity (%j)',
+    (bounds) => {
+      const onValueChange = vi.fn();
+      render(
+        <DateField locale="en-US" granularity="minute" hourCycle={24} {...bounds} onValueChange={onValueChange} />,
+      );
+      fireEvent.paste(screen.getByRole('spinbutton', { name: 'Day' }), {
+        clipboardData: { getData: () => '2026-10-01T14:30' },
+      });
+      expect(onValueChange).toHaveBeenCalledExactlyOnceWith(new Date(2026, 9, 1, 14, 30));
+      expect(screen.getByRole('group')).toHaveAttribute('data-invalid');
+      screen.getAllByRole('spinbutton').forEach((segment) => expect(segment).toHaveAttribute('aria-invalid', 'true'));
+    },
+  );
+  it.each([
+    ['day', false],
+    ['minute', true],
+  ] as const)('evaluates disabled dates at %s granularity', (granularity, invalid) => {
+    render(
+      <DateField
+        granularity={granularity}
+        defaultValue={new Date(2026, 9, 1, 14, 30)}
+        isDateDisabled={(date) => date.getHours() >= 12}
+      />,
+    );
+    expect(screen.getByRole('group').hasAttribute('data-invalid')).toBe(invalid);
+    screen.getAllByRole('spinbutton').forEach((segment) => expect(segment.hasAttribute('aria-invalid')).toBe(invalid));
+  });
+  it('keeps a pending year out of the submitted value and validity until it is flushed', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    const { container } = render(
+      <DateField
+        locale="en-US"
+        name="from"
+        defaultValue={new Date(2026, 9, 1)}
+        min={new Date(2026, 0, 1)}
+        onValueChange={onValueChange}
+      />,
+    );
+    await user.click(screen.getByRole('spinbutton', { name: 'Year' }));
+    await user.keyboard('{Delete}2');
+    expect(screen.getByRole('spinbutton', { name: 'Year' })).toHaveTextContent('0002');
+    expect(container.querySelector('input[name="from"]')).toHaveValue('');
+    expect(screen.getByRole('group')).not.toHaveAttribute('data-invalid');
+    expect(onValueChange).toHaveBeenCalledExactlyOnceWith(null);
+    await user.tab();
+    const literalYear = new Date(2026, 9, 1);
+    literalYear.setFullYear(2);
+    expect(onValueChange).toHaveBeenLastCalledWith(literalYear);
+    expect(container.querySelector('input[name="from"]')).toHaveValue('0002-10-01');
+    expect(screen.getByRole('group')).toHaveAttribute('data-invalid');
+  });
   it.each(['2026-10-01', '2026-10-01T14:30', '2026-10-01T14:30:15', '10/01/2026', '10.01.2026', '10-01-2026'])(
     'pastes %s into any segment and submits a date',
     async (text) => {

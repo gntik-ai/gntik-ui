@@ -1,10 +1,16 @@
-import { toISODate } from '../Calendar/calendar-utils';
+import { compareDay, toISODate } from '../Calendar/calendar-utils';
 import { formatTimeOfDay } from '../TimePicker/time-utils';
 
 export type DateKey = 'year' | 'month' | 'day';
 export type SegmentKey = DateKey | 'hour' | 'minute' | 'second' | 'period';
 export type Granularity = 'day' | 'hour' | 'minute' | 'second';
 export type DatePart = { key: SegmentKey } | { literal: string };
+
+/** Day fields ignore time; date-time fields retain timestamp constraints. */
+export function compareFieldDates(a: Date, b: Date, granularity: Granularity): number {
+  // compareDay's Date constructor remaps years below 100; compare years before days.
+  return granularity === 'day' ? a.getFullYear() - b.getFullYear() || compareDay(a, b) : a.getTime() - b.getTime();
+}
 
 /** Numeric order and separators; unsupported locales fall back to ISO order. */
 export function dateParts(locale?: string): DatePart[] {

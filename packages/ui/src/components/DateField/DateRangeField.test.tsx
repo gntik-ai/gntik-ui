@@ -1,7 +1,47 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Field, FieldDescription, FieldLabel } from '../Field';
+import { I18nProvider } from '../../i18n/I18nProvider';
 import { DateRangeField } from './DateRangeField';
+
+it.each([
+  ['day', false],
+  ['minute', true],
+] as const)('compares same-day ranges at %s granularity', (granularity, invalid) => {
+  const { container } = render(
+    <DateRangeField
+      locale="en-US"
+      name="window"
+      granularity={granularity}
+      hourCycle={24}
+      defaultValue={{ start: new Date(2026, 9, 1, 15), end: new Date(2026, 9, 1, 14) }}
+    />,
+  );
+  expect(screen.getByRole('group').hasAttribute('data-invalid')).toBe(invalid);
+  screen.getAllByRole('spinbutton').forEach((segment) => expect(segment.hasAttribute('aria-invalid')).toBe(invalid));
+  expect(container.querySelector('input[name="window-start"]')).toHaveValue(
+    granularity === 'day' ? '2026-10-01' : '2026-10-01T15:00',
+  );
+  expect(container.querySelector('input[name="window-end"]')).toHaveValue(
+    granularity === 'day' ? '2026-10-01' : '2026-10-01T14:00',
+  );
+});
+
+it('allows the catalog to control the complete accessible segment name', () => {
+  render(
+    <I18nProvider locale="es-ES" messages={{ 'dateField.segmentInRange': '{segment} ({range})' }}>
+      <DateRangeField />
+    </I18nProvider>,
+  );
+  expect(screen.getAllByRole('spinbutton').map((segment) => segment.getAttribute('aria-label'))).toEqual([
+    'Día (Fecha de inicio)',
+    'Mes (Fecha de inicio)',
+    'Año (Fecha de inicio)',
+    'Día (Fecha de fin)',
+    'Mes (Fecha de fin)',
+    'Año (Fecha de fin)',
+  ]);
+});
 
 it('keeps six date segments in one group, reports reversed ranges, and submits both dates', async () => {
   const user = userEvent.setup();
