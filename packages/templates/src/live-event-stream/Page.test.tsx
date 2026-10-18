@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from '@gntik-ai/ui';
 import { expectNoAxeViolations } from '../test/a11y';
@@ -115,7 +115,9 @@ describe('LiveEventStreamPage', () => {
     const onSelectEvent = vi.fn();
     render(<LiveEventStreamPage status="live" events={events.slice(0, 2)} onSelectEvent={onSelectEvent} />);
     await user.click(screen.getByText('First record'));
-    expect(screen.getByRole('button', { name: 'Inspect event 12:00:00' })).toHaveAttribute('aria-pressed', 'true');
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Inspect event 12:00:00' })).toHaveAttribute('aria-pressed', 'true'),
+    );
     const panel = screen.getByRole('complementary', { name: 'Event inspector' });
     expect(within(panel).getByRole('tree', { name: 'Event payload' })).toHaveTextContent('alpha');
     expect(onSelectEvent).toHaveBeenLastCalledWith(events[0]);
@@ -123,8 +125,10 @@ describe('LiveEventStreamPage', () => {
     await user.tab();
     expect(screen.getByRole('button', { name: 'Inspect event 12:00:01' })).toHaveFocus();
     await user.keyboard('{Enter}');
-    expect(screen.getByRole('button', { name: 'Inspect event 12:00:01' })).toHaveAttribute('aria-pressed', 'true');
-    expect(within(panel).getByRole('tree', { name: 'Event payload' })).toHaveTextContent('beta');
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Inspect event 12:00:01' })).toHaveAttribute('aria-pressed', 'true'),
+    );
+    await waitFor(() => expect(within(panel).getByRole('tree', { name: 'Event payload' })).toHaveTextContent('beta'));
     expect(onSelectEvent).toHaveBeenLastCalledWith(events[1]);
     await expectNoAxeViolations();
   });
