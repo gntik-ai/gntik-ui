@@ -3744,6 +3744,75 @@
       "docs": "packages/ui/src/components/CursorPagination/CursorPagination.doc.ts"
     },
     {
+      "id": "date-field",
+      "kind": "component",
+      "name": "DateField",
+      "package": "@gntik-ai/ui",
+      "group": "Forms",
+      "status": "beta",
+      "description": "Typed local date and date-time entry in Intl locale order. DateField and DateRangeField expose named spinbuttons, calendar/min/max/disabled-date validation, ISO or numeric locale paste, and hidden form values. Granularity adds hours, minutes or seconds; a 12-hour clock adds AM/PM. Two-digit years remain literal (26 means year 26); empty segments use the TimePicker placeholder. forceLeadingZeros pads supplied values; typed segments are padded. Works inside Field. DatePicker triggers remain read-only.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/DateField/DateField.tsx",
+          "target": "components/ui/date-field/DateField.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/DateField/DateRangeField.tsx",
+          "target": "components/ui/date-field/DateRangeField.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/DateField/DateSegments.tsx",
+          "target": "components/ui/date-field/DateSegments.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/DateField/date-field.variants.ts",
+          "target": "components/ui/date-field/date-field.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DateField/date-parts.ts",
+          "target": "components/ui/date-field/date-parts.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DateField/index.ts",
+          "target": "components/ui/date-field/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DateField/use-date-segments.ts",
+          "target": "components/ui/date-field/use-date-segments.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "calendar",
+        "time-picker",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/DateField/DateField.doc.ts"
+    },
+    {
       "id": "date-picker",
       "kind": "component",
       "name": "DatePicker",
@@ -6660,6 +6729,10 @@
         {
           "path": "packages/ui/src/components/TimePicker/index.ts",
           "target": "components/ui/time-picker/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/TimePicker/segments.ts",
+          "target": "components/ui/time-picker/segments.ts"
         },
         {
           "path": "packages/ui/src/components/TimePicker/time-picker.variants.ts",

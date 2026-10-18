@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 113 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 114 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -2722,6 +2722,52 @@ export default function ComboboxAsync() {
       </Combobox>
       <p className="mt-2 text-[12px] text-muted-foreground">Results load as you type; stale requests are cancelled.</p>
     </div>
+  );
+}
+```
+
+### DateField (`date-field`)
+
+Typed local date and date-time entry in Intl locale order. DateField and DateRangeField expose named spinbuttons, calendar/min/max/disabled-date validation, ISO or numeric locale paste, and hidden form values. Granularity adds hours, minutes or seconds; a 12-hour clock adds AM/PM. Two-digit years remain literal (26 means year 26); empty segments use the TimePicker placeholder. forceLeadingZeros pads supplied values; typed segments are padded. Works inside Field. DatePicker triggers remain read-only.
+
+- Package: `@gntik-ai/ui` · export `DateField` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/DateField/DateField.doc.ts
+- Primitive: `@base-ui/react/field (control) + spinbutton segments`
+- ARIA pattern: group of spinbuttons (date field)
+- Registry dependencies: calendar, time-picker, ui-utils
+- Install: `gntik-ui add date-field`; own the source with `gntik-ui eject date-field`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Moves between segments, then out of the field; finishes a partially typed year |
+| 0–9 | Types digits and advances when full; years accept up to four digits |
+| ArrowUp / ArrowDown | Increments / decrements and wraps within the segment; day bounds follow month and leap year |
+| Home / End | Sets the focused segment to its minimum / maximum |
+| ArrowLeft / ArrowRight | Moves to the previous / next segment, including across a range |
+| Backspace / Delete | Clears the segment and submitted value |
+| A / P | On the AM/PM segment: selects AM / PM |
+| Paste | Fills from ISO date/date-time or locale-ordered numeric date; ignores other text |
+
+Tokens: background, border, foreground, muted-foreground, primary, primary-chip-text, secondary, destructive, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { useI18n } from '@gntik-ai/ui';
+import { Field, FieldLabel } from '@gntik-ai/ui';
+import { DateField } from '@gntik-ai/ui';
+
+export default function DateFieldBasic() {
+  const { t } = useI18n();
+  const [date, setDate] = useState<Date | null>(new Date(2026, 9, 1));
+  return (
+    <Field className="max-w-sm">
+      <FieldLabel>{t('dateField.label')}</FieldLabel>
+      <DateField value={date} onValueChange={setDate} name="date" />
+    </Field>
   );
 }
 ```
