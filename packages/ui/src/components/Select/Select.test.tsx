@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
@@ -213,4 +214,15 @@ describe('Select', () => {
     await screen.findByRole('listbox');
     await expectNoAxeViolations();
   });
+});
+
+it('ref and triggerRef both reach the SimpleSelect trigger', () => {
+  const ref = createRef<HTMLButtonElement>();
+  const triggerRef = createRef<HTMLButtonElement>();
+  render(<SimpleSelect ref={ref} triggerRef={triggerRef} items={fruits} aria-label="Fruit" />);
+  const trigger = screen.getByRole('combobox', { name: 'Fruit' });
+  expect(ref.current).toBe(trigger);
+  expect(triggerRef.current).toBe(trigger);
+  ref.current?.focus();
+  expect(trigger).toHaveFocus();
 });

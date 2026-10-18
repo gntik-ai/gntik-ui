@@ -44,8 +44,7 @@ const forFormsProduct = (code) =>
       .replace(/from '\.\.\/(FieldArray|FormField|useFieldProps|schemaResolver)'/g, "from '@gntik-ai/ui/forms'"),
   );
 
-// forms/FieldArray.doc.ts → "FieldArray"; its examples are forms/examples/FieldArray*.tsx. An example that
-// no doc names (the Form + schemaResolver one) goes under the first doc, since Form has no doc of its own yet.
+// Form and its bindings share FormField.doc.ts; FieldArray owns its prefixed examples.
 const formsFolderOf = (path) =>
   path
     .split('/')
@@ -53,6 +52,7 @@ const formsFolderOf = (path) =>
     .replace(/\.doc\.ts$/, '');
 const formsOwnerOf = (path, folders) => {
   const base = path.split('/').pop();
+  if (base.startsWith('Form') && folders.includes('FormField')) return 'FormField';
   const named = folders.filter((f) => base.startsWith(f)).sort((a, b) => b.length - a.length);
   return named[0] ?? [...folders].sort()[0];
 };

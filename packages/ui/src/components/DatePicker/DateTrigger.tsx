@@ -1,4 +1,5 @@
 import { Field } from '@base-ui/react/field';
+import { useRender } from '@base-ui/react/use-render';
 import { mergeProps } from '@base-ui/react/merge-props';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 import type { ComponentProps, Ref } from 'react';
@@ -7,6 +8,7 @@ import { PopoverTrigger } from '../Popover';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
 
 export interface DateTriggerProps extends DatePickerVariantProps {
+  ref?: Ref<HTMLInputElement>;
   text: string;
   placeholder: string;
   id?: string;
@@ -22,6 +24,7 @@ export interface DateTriggerProps extends DatePickerVariantProps {
  * Popover trigger and a Base UI Field control, so FieldLabel / FieldDescription wire to it.
  */
 export function DateTrigger({
+  ref,
   text,
   placeholder,
   id,
@@ -33,9 +36,9 @@ export function DateTrigger({
 }: DateTriggerProps) {
   const s = datePickerVariants({ size });
   const px = size === 'sm' ? 14 : 15;
-  return (
-    <div className={cn(s.root(), className)}>
-      <CalendarDays size={px} aria-hidden className={s.icon()} />
+  const trigger = useRender({
+    ref,
+    render: (
       <PopoverTrigger
         nativeButton={false}
         disabled={disabled}
@@ -65,6 +68,12 @@ export function DateTrigger({
           );
         }}
       />
+    ),
+  });
+  return (
+    <div className={cn(s.root(), className)}>
+      <CalendarDays size={px} aria-hidden className={s.icon()} />
+      {trigger}
       <ChevronDown size={px} aria-hidden className={s.chevron()} />
     </div>
   );

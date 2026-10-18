@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
@@ -157,4 +158,17 @@ describe('DatePicker', () => {
     await screen.findByRole('dialog');
     await expectNoAxeViolations();
   });
+});
+
+it.each([
+  ['date', DatePicker],
+  ['range', DateRangePicker],
+] as const)('forwards a ref to the %s input without opening the calendar', (_name, Picker) => {
+  const ref = createRef<HTMLInputElement>();
+  render(<Picker ref={ref} aria-label="Date" />);
+  expect(ref.current).toBe(screen.getByRole('combobox', { name: 'Date' }));
+  ref.current?.focus();
+  expect(ref.current).toHaveFocus();
+  expect(ref.current).toHaveAttribute('aria-expanded', 'false');
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 });

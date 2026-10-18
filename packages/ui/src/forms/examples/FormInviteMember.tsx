@@ -5,6 +5,7 @@ import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { SimpleSelect } from '../../components/Select';
 import { Textarea } from '../../components/Textarea';
+import { useI18n } from '../../i18n';
 import { Form, FormField, schemaResolver } from '..';
 
 const inviteSchema = z.object({
@@ -21,35 +22,25 @@ const roles = [
   { value: 'viewer', label: 'Viewer' },
   { value: 'editor', label: 'Editor' },
   { value: 'admin', label: 'Admin' },
-];
+] as const;
 
 export default function FormInviteMember() {
+  const { t } = useI18n();
   const [sent, setSent] = useState<Invite | null>(null);
   const form = useForm<InviteInput, unknown, Invite>({
     resolver: schemaResolver<InviteInput, Invite>(inviteSchema),
     defaultValues: { name: '', email: '', note: '' },
   });
   return (
-    <Form form={form} onSubmit={setSent} className="grid w-full max-w-md gap-5" aria-label="Invite a member">
+    <Form form={form} onSubmit={setSent} className="grid w-full max-w-md gap-5" aria-label={t('forms.invite.title')}>
       <FormField<InviteInput, 'name'> name="name" label="Full name" required>
         {(field) => <Input {...field} autoComplete="name" />}
       </FormField>
       <FormField<InviteInput, 'email'> name="email" label="Email" required description="We send the invitation here.">
         {(field) => <Input {...field} type="email" autoComplete="email" />}
       </FormField>
-      <FormField<InviteInput, 'role'> name="role" label="Role" required>
-        {({ ref, value, onChange, onBlur, name }) => (
-          <SimpleSelect
-            triggerRef={ref}
-            name={name}
-            items={roles}
-            value={value ?? null}
-            onValueChange={(v) => {
-              onChange(v);
-              onBlur();
-            }}
-          />
-        )}
+      <FormField<InviteInput, 'role'> name="role" bind="value" label="Role" required>
+        {(field) => <SimpleSelect {...field} items={roles} />}
       </FormField>
       <FormField<InviteInput, 'note'> name="note" label="Note" description="Optional, shown in the email.">
         {(field) => <Textarea {...field} rows={3} />}
