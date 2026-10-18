@@ -136,3 +136,4 @@ export * from './layouts/SplitLayout';
 export * from './layouts/StackedLayout';
 export * from './layouts/StatusLayout';
 export * from './layouts/WizardLayout';
+export * from './components/PeriodPicker';
