@@ -192,12 +192,12 @@ describe('Calendar views', () => {
     expect(options).toHaveLength(21);
     expect(options[0]).toHaveTextContent('2020');
     expect(options[20]).toHaveTextContent('2040');
-    await user.click(screen.getByRole('option', { name: '2030' }));
+    await user.click(await screen.findByRole('option', { name: '2030' }));
     expect(screen.getByRole('grid', { name: 'March 2030' })).toBeInTheDocument();
     expect(onMonthChange).toHaveBeenCalledExactlyOnceWith(new Date(2030, 2, 1));
     expect(onViewChange).not.toHaveBeenCalled();
     await user.click(screen.getByRole('combobox', { name: 'Month' }));
-    await user.click(screen.getByRole('option', { name: 'April' }));
+    await user.click(await screen.findByRole('option', { name: 'April' }));
     expect(screen.getByRole('grid', { name: 'April 2030' })).toBeInTheDocument();
     expect(onViewChange).not.toHaveBeenCalled();
   });
@@ -215,7 +215,12 @@ describe('Calendar views', () => {
       />,
     );
     await user.click(screen.getByRole('combobox', { name: 'Year' }));
-    expect(screen.getAllByRole('option').map((option) => option.textContent)).toEqual(['2024', '2025', '2026', '2027']);
+    expect((await screen.findAllByRole('option')).map((option) => option.textContent)).toEqual([
+      '2024',
+      '2025',
+      '2026',
+      '2027',
+    ]);
   });
 
   it('keeps a caption selection in its original panel when two months are shown', async () => {
@@ -225,13 +230,13 @@ describe('Calendar views', () => {
       <Calendar locale="en-US" today={march} numberOfMonths={2} captionLayout="select" onMonthChange={onMonthChange} />,
     );
     await user.click(screen.getAllByRole('combobox', { name: 'Month' })[1]!);
-    await user.click(screen.getByRole('option', { name: 'July' }));
+    await user.click(await screen.findByRole('option', { name: 'July' }));
     expect(screen.getAllByRole('combobox', { name: 'Month' })[1]).toHaveTextContent('July');
     expect(screen.getByRole('grid', { name: 'June 2026' })).toBeInTheDocument();
     expect(screen.getByRole('grid', { name: 'July 2026' })).toBeInTheDocument();
     expect(onMonthChange).toHaveBeenCalledExactlyOnceWith(new Date(2026, 5, 1));
     await user.click(screen.getAllByRole('combobox', { name: 'Year' })[1]!);
-    await user.click(screen.getByRole('option', { name: '2030' }));
+    await user.click(await screen.findByRole('option', { name: '2030' }));
     expect(screen.getByRole('grid', { name: 'June 2030' })).toBeInTheDocument();
     expect(screen.getByRole('grid', { name: 'July 2030' })).toBeInTheDocument();
   });
@@ -248,11 +253,15 @@ describe('Calendar views', () => {
       />,
     );
     await user.click(screen.getByRole('combobox', { name: 'Year' }));
-    expect(screen.getAllByRole('option').map((option) => option.textContent)).toEqual(['2025', '2026', '2040']);
-    await user.click(screen.getByRole('option', { name: '2025' }));
+    expect((await screen.findAllByRole('option')).map((option) => option.textContent)).toEqual([
+      '2025',
+      '2026',
+      '2040',
+    ]);
+    await user.click(await screen.findByRole('option', { name: '2025' }));
     await user.click(screen.getByRole('combobox', { name: 'Month' }));
-    expect(screen.getByRole('option', { name: 'May' })).toHaveAttribute('aria-disabled', 'true');
-    expect(screen.getByRole('option', { name: 'June' })).not.toHaveAttribute('aria-disabled', 'true');
+    expect(await screen.findByRole('option', { name: 'May' })).toHaveAttribute('aria-disabled', 'true');
+    expect(await screen.findByRole('option', { name: 'June' })).not.toHaveAttribute('aria-disabled', 'true');
   });
 
   it('mirrors month and year arrows under RTL', async () => {

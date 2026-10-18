@@ -97,7 +97,7 @@ describe('DataTable controlled server pagination', () => {
     const onPageSizeChange = vi.fn();
     render(<DataTable {...server} onPageChange={onPageChange} onPageSizeChange={onPageSizeChange} />);
     await user.click(screen.getByRole('combobox', { name: 'Rows per page' }));
-    await user.click(screen.getByRole('option', { name: '50' }));
+    await user.click(await screen.findByRole('option', { name: '50' }));
     expect(onPageSizeChange.mock.calls).toEqual([[50]]);
     expect(onPageChange.mock.calls).toEqual([[1]]);
     expect(renderedIds()).toHaveLength(20);
