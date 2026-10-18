@@ -62,6 +62,31 @@ describe('DatePicker', () => {
     expect(onValueChange).not.toHaveBeenCalled();
   });
 
+  it('Escape from the year view closes, restores focus, and reopens on the selected day', async () => {
+    const { user, field } = setup();
+    await user.click(field);
+    await user.click(await screen.findByRole('button', { name: 'March 2026, choose a month' }));
+    await user.click(screen.getByRole('button', { name: '2026, choose a year' }));
+    await user.keyboard('{PageDown}');
+    expect(screen.getByRole('heading')).toHaveTextContent('2032–2043');
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    await waitFor(() => expect(field).toHaveFocus());
+    await user.keyboard('{Enter}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Friday, March 20, 2026' })).toHaveFocus());
+    expect(screen.getByRole('grid', { name: 'March 2026' })).toBeInTheDocument();
+  });
+
+  it.each([DatePicker, DateRangePicker])('forwards the view limit and select caption to Calendar', async (Picker) => {
+    const user = userEvent.setup();
+    const { rerender } = render(<Picker aria-label="Date" locale="en-US" today={today} maxView="day" />);
+    await user.click(screen.getByRole('combobox', { name: 'Date' }));
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).queryByRole('button', { name: /choose a month/ })).not.toBeInTheDocument();
+    rerender(<Picker aria-label="Date" locale="en-US" today={today} captionLayout="select" />);
+    expect(within(dialog).getAllByRole('combobox', { name: 'Year' }).length).toBeGreaterThan(0);
+  });
+
   it('range: presets apply and close; the calendar applies after the second day', async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();

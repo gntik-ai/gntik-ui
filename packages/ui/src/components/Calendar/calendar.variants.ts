@@ -10,6 +10,10 @@ export const calendarVariants = tv({
     month: 'flex flex-col',
     header: 'mb-2 flex h-7 items-center justify-between gap-2',
     heading: 'flex-1 text-center text-[13px] font-semibold tracking-tight text-foreground',
+    headingButton: [
+      'rounded-md px-1 hover:bg-secondary/70',
+      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+    ],
     nav: [
       'grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors motion-reduce:transition-none',
       'hover:bg-secondary/70 hover:text-foreground',
@@ -33,7 +37,7 @@ export const calendarVariants = tv({
       'data-selected:bg-primary data-selected:font-semibold data-selected:text-primary-foreground data-selected:ring-0 data-selected:hover:bg-primary/90',
       'aria-disabled:cursor-not-allowed aria-disabled:text-muted-foreground/30 aria-disabled:line-through aria-disabled:hover:bg-transparent',
     ],
-    outside: 'mx-auto grid size-8 place-items-center text-[12.5px] text-muted-foreground/45 tabular-nums select-none',
+    outside: 'mx-auto grid size-8 place-items-center text-[12.5px] text-muted-foreground tabular-nums select-none',
   },
 });
 

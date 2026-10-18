@@ -4,6 +4,10 @@ import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { RTL_FLIP } from '../../utils/rtl';
 import { calendarVariants } from './calendar.variants';
+import { CalendarMonthView } from './CalendarMonthView';
+import { CalendarYearView } from './CalendarYearView';
+import { CalendarCaption } from './CalendarCaption';
+import { periodCellKey, yearPageStart } from './period-grids';
 import {
   addDays,
   addMonths,
@@ -16,6 +20,7 @@ import {
   isSameMonth,
   localeWeekStart,
   monthDiff,
+  monthOutsideBounds,
   monthWeeks,
   normalizeRange,
   startOfDay,
@@ -23,13 +28,22 @@ import {
   startOfWeek,
   toISODate,
   weekdayNames,
+  yearOutsideBounds,
   type DateRange,
   type WeekDay,
 } from './calendar-utils';
 
 const s = calendarVariants();
 
+export type CalendarView = 'day' | 'month' | 'year';
+
 interface CalendarCommonProps {
+  view?: CalendarView;
+  defaultView?: CalendarView;
+  onViewChange?: (view: CalendarView) => void;
+  maxView?: CalendarView;
+  captionLayout?: 'label' | 'select';
+  yearRange?: { from: number; to: number };
   className?: string;
   ref?: Ref<HTMLDivElement>;
   /** BCP 47 locale for month/weekday names and day labels. Defaults to the I18nProvider's, else the runtime locale. */
@@ -87,6 +101,12 @@ export function Calendar(props: CalendarProps) {
   const {
     className,
     ref,
+    view: viewProp,
+    defaultView = 'day',
+    onViewChange,
+    maxView = 'year',
+    captionLayout = 'label',
+    yearRange,
     locale: localeProp,
     min,
     max,
@@ -128,9 +148,27 @@ export function Calendar(props: CalendarProps) {
   const months = Array.from({ length: numberOfMonths }, (_, i) => addMonths(visibleMonth, i));
 
   const [focused, setFocused] = useState(() => startOfDay(anchor));
+  const [innerView, setInnerView] = useState<CalendarView>(defaultView);
+  const view = viewProp ?? innerView;
+  const [periodFocus, setPeriodFocus] = useState(() => startOfMonth(visibleMonth));
   const [preview, setPreview] = useState<Date | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
-  const focusPending = useRef(false);
+  const [focusRequest, setFocusRequest] = useState<{ view: CalendarView; date: Date } | null>(null);
+  const completedFocus = useRef<typeof focusRequest>(null);
+  const [renderedView, setRenderedView] = useState(view);
+
+  if (renderedView !== view) {
+    setRenderedView(view);
+    if (view !== 'day') {
+      // A heading request preserves its panel; an external transition starts at the visible month.
+      const date =
+        focusRequest?.view === view ? focusRequest.date : renderedView === 'day' ? visibleMonth : periodFocus;
+      setPeriodFocus(startOfMonth(date));
+      setFocusRequest({ view, date });
+    } else if (focusRequest?.view !== 'day') {
+      setFocusRequest(null);
+    }
+  }
 
   const isVisible = (d: Date) => {
     const diff = monthDiff(visibleMonth, d);
@@ -144,10 +182,25 @@ export function Calendar(props: CalendarProps) {
     [focused, isRange ? range.start : single, todayDate].find((d): d is Date => !!d && isVisible(d)) ?? visibleMonth;
 
   useEffect(() => {
-    if (!focusPending.current) return;
-    focusPending.current = false;
-    rootRef.current?.querySelector<HTMLButtonElement>(`[data-day="${toISODate(focused)}"]`)?.focus();
-  }, [focused, visibleMonth]);
+    // A controlled parent may apply a requested view on a later render.
+    if (!focusRequest || focusRequest.view !== view || completedFocus.current === focusRequest) return;
+    const selector =
+      view === 'day'
+        ? `[data-day="${toISODate(focusRequest.date)}"]`
+        : `[data-period="${periodCellKey(focusRequest.date, view)}"]`;
+    const target = rootRef.current?.querySelector<HTMLButtonElement>(selector);
+    if (target) {
+      completedFocus.current = focusRequest;
+      target.focus();
+    }
+  }, [focusRequest, view, visibleMonth]);
+
+  const changeView = (next: CalendarView, date = periodFocus) => {
+    if (next === view) return;
+    setFocusRequest({ view: next, date });
+    setInnerView(next);
+    onViewChange?.(next);
+  };
 
   const setMonth = (m: Date) => {
     const next = startOfMonth(m);
@@ -155,9 +208,31 @@ export function Calendar(props: CalendarProps) {
     onMonthChange?.(next);
   };
 
+  const pickMonth = (date: Date, panelIndex = 0) => {
+    const target = clampDay(addMonths(focused, monthDiff(focused, date)), min, max);
+    setFocused(target);
+    setMonth(addMonths(target, -panelIndex));
+    changeView('day', target);
+  };
+
+  const focusPeriod = (date: Date) => {
+    setPeriodFocus(view === 'year' ? new Date(date.getFullYear(), periodFocus.getMonth(), 1) : date);
+  };
+  const periodDisabled = (date: Date) => (view === 'year' ? yearOutsideBounds : monthOutsideBounds)(date, min, max);
+  const pageDisabled = (date: Date) => {
+    if (view === 'month') return yearOutsideBounds(date, min, max);
+    const start = yearPageStart(date.getFullYear());
+    return (!!min && min.getFullYear() > start + 11) || (!!max && max.getFullYear() < start);
+  };
+  const movePeriod = (date: Date) => {
+    if (pageDisabled(date)) return;
+    setFocusRequest({ view, date });
+    focusPeriod(date);
+  };
+
   const moveFocus = (next: Date) => {
     const target = clampDay(next, min, max);
-    focusPending.current = true;
+    setFocusRequest({ view: 'day', date: target });
     setFocused(target);
     if (isRange && range.start && !range.end) setPreview(target);
     const diff = monthDiff(visibleMonth, target);
@@ -210,6 +285,13 @@ export function Calendar(props: CalendarProps) {
   const prevDisabled = !!min && monthDiff(min, firstMonth) <= 0;
   const nextDisabled = !!max && monthDiff(lastMonth, max) <= 0;
   const weekdays = weekdayNames(locale, weekStartsOn);
+  const yearStart = yearPageStart(periodFocus.getFullYear());
+  const periodTitle =
+    view === 'year'
+      ? t('periodPicker.yearPage', { start: yearStart, end: yearStart + 11 })
+      : new Intl.DateTimeFormat(locale, { year: 'numeric' }).format(periodFocus);
+  const PeriodView = view === 'year' ? CalendarYearView : CalendarMonthView;
+  const periodStep = view === 'year' ? 144 : 12;
 
   const setRefs = (node: HTMLDivElement | null) => {
     rootRef.current = node;
@@ -224,114 +306,221 @@ export function Calendar(props: CalendarProps) {
       aria-label={props['aria-label'] ?? t('calendar.label')}
       className={cn(s.root(), className)}
     >
-      {months.map((m, mi) => {
-        const headingId = `${baseId}-m${mi}`;
-        return (
-          <div key={toISODate(m)} className={s.month()}>
-            <div className={s.header()}>
-              {mi === 0 ? (
-                <button
-                  type="button"
-                  aria-label={previousMonthLabel}
-                  disabled={prevDisabled}
-                  className={s.nav()}
-                  onClick={() => setMonth(addMonths(visibleMonth, -1))}
-                >
-                  <ChevronLeft size={16} aria-hidden className={RTL_FLIP} />
-                </button>
-              ) : (
-                <span className={s.navSpacer()} />
-              )}
-              <h2 id={headingId} aria-live="polite" className={s.heading()}>
-                {formatMonth(m, locale)}
+      {view !== 'day' ? (
+        <div className={s.month()}>
+          <div className={s.header()}>
+            <button
+              type="button"
+              aria-label={t(view === 'year' ? 'calendar.previousYears' : 'calendar.previousYear', { count: 12 })}
+              disabled={pageDisabled(addMonths(periodFocus, -periodStep))}
+              className={s.nav()}
+              onClick={() => movePeriod(addMonths(periodFocus, -periodStep))}
+            >
+              <ChevronLeft size={16} aria-hidden className={RTL_FLIP} />
+            </button>
+            {captionLayout === 'select' ? (
+              <CalendarCaption
+                month={periodFocus}
+                today={todayDate}
+                locale={locale}
+                min={min}
+                max={max}
+                yearRange={yearRange}
+                labelId={`${baseId}-period`}
+                onChange={pickMonth}
+              />
+            ) : (
+              <h2
+                id={view === 'month' && maxView === 'year' ? undefined : `${baseId}-period`}
+                aria-live="polite"
+                className={s.heading()}
+              >
+                {view === 'month' && maxView === 'year' ? (
+                  <button
+                    type="button"
+                    className={s.headingButton()}
+                    aria-label={t('calendar.chooseYear', { label: periodTitle })}
+                    onClick={() => changeView('year')}
+                  >
+                    <span id={`${baseId}-period`}>{periodTitle}</span>
+                  </button>
+                ) : (
+                  periodTitle
+                )}
               </h2>
-              {mi === months.length - 1 ? (
-                <button
-                  type="button"
-                  aria-label={nextMonthLabel}
-                  disabled={nextDisabled}
-                  className={s.nav()}
-                  onClick={() => setMonth(addMonths(visibleMonth, 1))}
-                >
-                  <ChevronRight size={16} aria-hidden className={RTL_FLIP} />
-                </button>
-              ) : (
-                <span className={s.navSpacer()} />
-              )}
-            </div>
-            <table role="grid" aria-labelledby={headingId} className={s.grid()}>
-              <thead>
-                <tr>
-                  {weekdays.map((w) => (
-                    <th key={w.long} scope="col" className={s.weekday()}>
-                      <abbr title={w.long} className={s.weekdayAbbr()}>
-                        {w.narrow}
-                      </abbr>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {monthWeeks(m, weekStartsOn).map((week) => (
-                  <tr key={toISODate(week[0] ?? m)}>
-                    {week.map((d) => {
-                      const key = toISODate(d);
-                      if (!isSameMonth(d, m)) {
+            )}
+            <button
+              type="button"
+              aria-label={t(view === 'year' ? 'calendar.nextYears' : 'calendar.nextYear', { count: 12 })}
+              disabled={pageDisabled(addMonths(periodFocus, periodStep))}
+              className={s.nav()}
+              onClick={() => movePeriod(addMonths(periodFocus, periodStep))}
+            >
+              <ChevronRight size={16} aria-hidden className={RTL_FLIP} />
+            </button>
+          </div>
+          <PeriodView
+            focused={periodFocus}
+            labelId={`${baseId}-period`}
+            locale={locale ?? new Intl.DateTimeFormat().resolvedOptions().locale}
+            onFocus={focusPeriod}
+            onMove={movePeriod}
+            onSelect={(date) => {
+              if (periodDisabled(date)) return;
+              if (view === 'year') {
+                focusPeriod(date);
+                changeView('month', new Date(date.getFullYear(), periodFocus.getMonth(), 1));
+              } else pickMonth(date);
+            }}
+            isDisabled={periodDisabled}
+            isSelected={(date) =>
+              [single, range.start, range.end].some(
+                (value) =>
+                  !!value && (view === 'year' ? value.getFullYear() === date.getFullYear() : isSameMonth(value, date)),
+              )
+            }
+            isCurrent={(date) =>
+              view === 'year' ? date.getFullYear() === todayDate.getFullYear() : isSameMonth(date, todayDate)
+            }
+          />
+        </div>
+      ) : (
+        months.map((m, mi) => {
+          const headingId = `${baseId}-m${mi}`;
+          return (
+            <div key={toISODate(m)} className={s.month()}>
+              <div className={s.header()}>
+                {mi === 0 ? (
+                  <button
+                    type="button"
+                    aria-label={previousMonthLabel}
+                    disabled={prevDisabled}
+                    className={s.nav()}
+                    onClick={() => setMonth(addMonths(visibleMonth, -1))}
+                  >
+                    <ChevronLeft size={16} aria-hidden className={RTL_FLIP} />
+                  </button>
+                ) : (
+                  <span className={s.navSpacer()} />
+                )}
+                {captionLayout === 'select' ? (
+                  <CalendarCaption
+                    month={m}
+                    today={todayDate}
+                    locale={locale}
+                    min={min}
+                    max={max}
+                    yearRange={yearRange}
+                    labelId={headingId}
+                    onChange={(date) => pickMonth(date, mi)}
+                  />
+                ) : (
+                  <h2 id={maxView === 'day' ? headingId : undefined} aria-live="polite" className={s.heading()}>
+                    {maxView === 'day' ? (
+                      formatMonth(m, locale)
+                    ) : (
+                      <button
+                        type="button"
+                        className={s.headingButton()}
+                        aria-label={t('calendar.chooseMonth', { label: formatMonth(m, locale) })}
+                        onClick={() => {
+                          setPeriodFocus(startOfMonth(m));
+                          changeView('month', m);
+                        }}
+                      >
+                        <span id={headingId}>{formatMonth(m, locale)}</span>
+                      </button>
+                    )}
+                  </h2>
+                )}
+                {mi === months.length - 1 ? (
+                  <button
+                    type="button"
+                    aria-label={nextMonthLabel}
+                    disabled={nextDisabled}
+                    className={s.nav()}
+                    onClick={() => setMonth(addMonths(visibleMonth, 1))}
+                  >
+                    <ChevronRight size={16} aria-hidden className={RTL_FLIP} />
+                  </button>
+                ) : (
+                  <span className={s.navSpacer()} />
+                )}
+              </div>
+              <table role="grid" aria-labelledby={headingId} className={s.grid()}>
+                <thead>
+                  <tr>
+                    {weekdays.map((w) => (
+                      <th key={w.long} scope="col" className={s.weekday()}>
+                        <abbr title={w.long} className={s.weekdayAbbr()}>
+                          {w.narrow}
+                        </abbr>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {monthWeeks(m, weekStartsOn).map((week) => (
+                    <tr key={toISODate(week[0] ?? m)}>
+                      {week.map((d) => {
+                        const key = toISODate(d);
+                        if (!isSameMonth(d, m)) {
+                          return (
+                            <td key={key} className={s.cell()}>
+                              {showOutsideDays && (
+                                <span aria-hidden className={s.outside()}>
+                                  {d.getDate()}
+                                </span>
+                              )}
+                            </td>
+                          );
+                        }
+                        const disabled = isDisabled(d);
+                        const selected = isRange
+                          ? isSameDay(d, range.start) || isSameDay(d, range.end)
+                          : isSameDay(d, single);
+                        const within = isRange && inRange(d);
+                        const rangeStart = within && isSameDay(d, shownRange?.start);
+                        const rangeEnd = within && isSameDay(d, shownRange?.end);
+                        const today = isSameDay(d, todayDate);
                         return (
-                          <td key={key} className={s.cell()}>
-                            {showOutsideDays && (
-                              <span aria-hidden className={s.outside()}>
-                                {d.getDate()}
-                              </span>
-                            )}
+                          <td
+                            key={key}
+                            aria-selected={selected || within}
+                            data-in-range={within || undefined}
+                            data-range-start={rangeStart || undefined}
+                            data-range-end={rangeEnd || undefined}
+                            className={s.cell()}
+                          >
+                            <button
+                              type="button"
+                              data-day={key}
+                              data-selected={selected || undefined}
+                              data-today={today || undefined}
+                              data-in-range={within || undefined}
+                              tabIndex={isSameDay(d, tabbable) ? 0 : -1}
+                              aria-label={formatDayLabel(d, locale)}
+                              aria-current={today ? 'date' : undefined}
+                              aria-disabled={disabled || undefined}
+                              className={s.day()}
+                              onClick={() => select(d)}
+                              onKeyDown={(e) => onDayKeyDown(e, d)}
+                              onFocus={() => setFocused(d)}
+                              onMouseEnter={isRange && range.start && !range.end ? () => setPreview(d) : undefined}
+                            >
+                              {d.getDate()}
+                            </button>
                           </td>
                         );
-                      }
-                      const disabled = isDisabled(d);
-                      const selected = isRange
-                        ? isSameDay(d, range.start) || isSameDay(d, range.end)
-                        : isSameDay(d, single);
-                      const within = isRange && inRange(d);
-                      const rangeStart = within && isSameDay(d, shownRange?.start);
-                      const rangeEnd = within && isSameDay(d, shownRange?.end);
-                      const today = isSameDay(d, todayDate);
-                      return (
-                        <td
-                          key={key}
-                          aria-selected={selected || within}
-                          data-in-range={within || undefined}
-                          data-range-start={rangeStart || undefined}
-                          data-range-end={rangeEnd || undefined}
-                          className={s.cell()}
-                        >
-                          <button
-                            type="button"
-                            data-day={key}
-                            data-selected={selected || undefined}
-                            data-today={today || undefined}
-                            data-in-range={within || undefined}
-                            tabIndex={isSameDay(d, tabbable) ? 0 : -1}
-                            aria-label={formatDayLabel(d, locale)}
-                            aria-current={today ? 'date' : undefined}
-                            aria-disabled={disabled || undefined}
-                            className={s.day()}
-                            onClick={() => select(d)}
-                            onKeyDown={(e) => onDayKeyDown(e, d)}
-                            onFocus={() => setFocused(d)}
-                            onMouseEnter={isRange && range.start && !range.end ? () => setPreview(d) : undefined}
-                          >
-                            {d.getDate()}
-                          </button>
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        );
-      })}
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        })
+      )}
     </div>
   );
 }

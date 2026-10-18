@@ -21,6 +21,8 @@ export interface PeriodGridProps {
   labelId: string;
   locale: string;
   label?: (date: Date) => string;
+  accessibleLabel?: (date: Date) => string;
+  isCurrent?: (date: Date) => boolean;
   weekLabel?: (date: Date) => string;
   onFocus: (date: Date) => void;
   onSelect: (date: Date) => void;
@@ -187,7 +189,11 @@ function PeriodGrid({
                     type="button"
                     data-period={key}
                     data-selected={selected || undefined}
-                    aria-label={granularity === 'week' ? formatDayLabel(date, props.locale) : undefined}
+                    aria-current={props.isCurrent?.(date) ? 'date' : undefined}
+                    aria-label={
+                      props.accessibleLabel?.(date) ??
+                      (granularity === 'week' ? formatDayLabel(date, props.locale) : undefined)
+                    }
                     aria-disabled={props.isDisabled(date) || undefined}
                     tabIndex={periodCellKey(props.focused, granularity) === key ? 0 : -1}
                     className={s.period()}

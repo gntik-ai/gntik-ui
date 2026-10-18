@@ -80,6 +80,11 @@ export function weekdayNames(locale: string | undefined, weekStartsOn: WeekDay) 
 export const formatMonth = (d: Date, locale?: string) =>
   new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(d);
 
+export const monthNames = (locale?: string, width: 'long' | 'short' = 'long') =>
+  Array.from({ length: 12 }, (_, month) =>
+    new Intl.DateTimeFormat(locale, { month: width }).format(new Date(2026, month, 1)),
+  );
+
 export const formatDayLabel = (d: Date, locale?: string) =>
   new Intl.DateTimeFormat(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(d);
 
@@ -110,6 +115,13 @@ export const startOfQuarter = (d: Date) => new Date(d.getFullYear(), (quarterOf(
 export const endOfQuarter = (d: Date) => new Date(d.getFullYear(), quarterOf(d) * 3, 0);
 export const startOfYear = (d: Date) => new Date(d.getFullYear(), 0, 1);
 export const endOfYear = (d: Date) => new Date(d.getFullYear(), 11, 31);
+
+/** A period is unavailable only when every day is outside the inclusive bounds. */
+export const monthOutsideBounds = (d: Date, min?: Date, max?: Date) =>
+  (!!min && compareDay(endOfMonth(d), min) < 0) || (!!max && compareDay(startOfMonth(d), max) > 0);
+
+export const yearOutsideBounds = (d: Date, min?: Date, max?: Date) =>
+  (!!min && compareDay(endOfYear(d), min) < 0) || (!!max && compareDay(startOfYear(d), max) > 0);
 
 /** ISO week and week-year; UTC arithmetic on local date parts avoids DST-length days. */
 export function isoWeek(d: Date): { year: number; week: number } {

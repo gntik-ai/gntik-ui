@@ -11,7 +11,7 @@ import { datePickerVariants, type DatePickerVariantProps } from './date-picker.v
 
 type CalendarPassThrough = Pick<
   CalendarRangeProps,
-  'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'numberOfMonths'
+  'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'numberOfMonths' | 'maxView' | 'captionLayout'
 >;
 
 export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVariantProps {
@@ -67,6 +67,8 @@ export function DateRangePicker({
   min,
   max,
   isDateDisabled,
+  maxView,
+  captionLayout,
   numberOfMonths = 2,
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
@@ -157,6 +159,7 @@ export function DateRangePicker({
             </div>
           )}
           <Calendar
+            key={String(open)}
             ref={calendarRef}
             mode="range"
             aria-label={t('datePicker.chooseRange')}
@@ -177,6 +180,8 @@ export function DateRangePicker({
             min={min}
             max={max}
             isDateDisabled={isDateDisabled}
+            maxView={maxView}
+            captionLayout={captionLayout}
             today={today}
           />
         </div>
