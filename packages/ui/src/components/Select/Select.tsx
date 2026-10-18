@@ -208,6 +208,8 @@ export interface SimpleSelectProps<V extends string = string>
   className?: string;
   /** Ref to the trigger button (e.g. so a form library can focus it). */
   triggerRef?: Ref<HTMLButtonElement>;
+  /** Alias of triggerRef; both refs receive the same trigger. */
+  ref?: Ref<HTMLButtonElement>;
 }
 
 /** One-line select from a flat `{ value, label }` list, or from `loadOptions`. */
@@ -224,6 +226,7 @@ export function SimpleSelect<V extends string = string>({
   'aria-label': ariaLabel,
   onOpenChange,
   triggerRef,
+  ref,
   ...props
 }: SimpleSelectProps<V>) {
   const { t } = useI18n();
@@ -235,6 +238,11 @@ export function SimpleSelect<V extends string = string>({
     ? [...known.filter((k) => !remote.items.some((r) => r.value === k.value)), ...remote.items]
     : known;
   const sv = selectVariants();
+
+  const trigger = useRender({
+    ref: [ref ?? null, triggerRef ?? null],
+    render: <SelectTrigger size={size} className={className} placeholder={placeholder} aria-label={ariaLabel} />,
+  });
 
   let status: ReactNode = null;
   if (loadOptions && remote.loading) {
@@ -273,13 +281,7 @@ export function SimpleSelect<V extends string = string>({
       {...props}
     >
       {label && <SelectLabel>{label}</SelectLabel>}
-      <SelectTrigger
-        ref={triggerRef}
-        size={size}
-        className={className}
-        placeholder={placeholder}
-        aria-label={ariaLabel}
-      />
+      {trigger}
       <SelectContent status={status} aria-busy={(loadOptions && remote.loading) || undefined}>
         {items.map((item) => (
           <SelectItem key={item.value} value={item.value} disabled={item.disabled}>

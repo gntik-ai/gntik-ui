@@ -152,3 +152,18 @@ describe('TimePicker', () => {
     await expectNoAxeViolations();
   });
 });
+
+it('forwards its ref to the hours segment', () => {
+  let target: HTMLDivElement | null = null;
+  render(
+    <TimePicker
+      ref={(element) => {
+        target = element;
+      }}
+      aria-label="Time"
+    />,
+  );
+  expect(target).toBe(screen.getByRole('spinbutton', { name: 'Hours' }));
+  (target as HTMLDivElement | null)?.focus();
+  expect(screen.getByRole('spinbutton', { name: 'Hours' })).toHaveFocus();
+});

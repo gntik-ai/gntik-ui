@@ -1,6 +1,6 @@
 import { Field } from '@base-ui/react/field';
 import { Clock } from 'lucide-react';
-import { type ComponentProps, type MouseEvent } from 'react';
+import { type ComponentProps, type MouseEvent, type Ref } from 'react';
 import { useSegments } from './segments';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
@@ -8,6 +8,8 @@ import { timePickerVariants, type TimePickerVariantProps } from './time-picker.v
 import { dayPeriodLabels, formatTimeOfDay, localeHourCycle, parseTimeOfDay, timeToSeconds } from './time-utils';
 
 export interface TimePickerProps extends TimePickerVariantProps {
+  /** Ref to the first editable (hours) segment. */
+  ref?: Ref<HTMLDivElement>;
   /** `"HH:mm"` (or `"HH:mm:ss"` with `withSeconds`), 24-hour clock; `null` while incomplete. */
   value?: string | null;
   defaultValue?: string | null;
@@ -70,6 +72,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
  * Backspace clears it, ArrowLeft/ArrowRight move between segments. Works inside Field.
  */
 export function TimePicker({
+  ref,
   value,
   defaultValue,
   onValueChange,
@@ -217,6 +220,10 @@ export function TimePicker({
                       <div
                         ref={(el) => {
                           segmentRefs.current[i] = el;
+                          if (i === 0) {
+                            if (typeof ref === 'function') return ref(el);
+                            if (ref) ref.current = el;
+                          }
                         }}
                         role="spinbutton"
                         tabIndex={isDisabled ? -1 : 0}

@@ -21,7 +21,7 @@ const roles = [
   { value: 'viewer', label: 'Viewer' },
   { value: 'editor', label: 'Editor' },
   { value: 'admin', label: 'Admin' },
-];
+] as const;
 
 export default function FormInviteMember() {
   const [sent, setSent] = useState<Invite | null>(null);
@@ -37,19 +37,8 @@ export default function FormInviteMember() {
       <FormField<InviteInput, 'email'> name="email" label="Email" required description="We send the invitation here.">
         {(field) => <Input {...field} type="email" autoComplete="email" />}
       </FormField>
-      <FormField<InviteInput, 'role'> name="role" label="Role" required>
-        {({ ref, value, onChange, onBlur, name }) => (
-          <SimpleSelect
-            triggerRef={ref}
-            name={name}
-            items={roles}
-            value={value ?? null}
-            onValueChange={(v) => {
-              onChange(v);
-              onBlur();
-            }}
-          />
-        )}
+      <FormField<InviteInput, 'role'> name="role" bind="value" label="Role" required>
+        {(field) => <SimpleSelect {...field} items={roles} />}
       </FormField>
       <FormField<InviteInput, 'note'> name="note" label="Note" description="Optional, shown in the email.">
         {(field) => <Textarea {...field} rows={3} />}

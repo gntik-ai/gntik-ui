@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from 'react';
+import { useId, useRef, useState, type Ref } from 'react';
 import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
 import { formatDate, toISODate } from '../Calendar/calendar-utils';
 import { Button } from '../Button';
@@ -15,6 +15,8 @@ type CalendarPassThrough = Pick<
 >;
 
 export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantProps {
+  /** Ref to the trigger input. Focusing it leaves the popup closed. */
+  ref?: Ref<HTMLInputElement>;
   value?: Date | null;
   defaultValue?: Date | null;
   onValueChange?: (date: Date | null) => void;
@@ -56,6 +58,7 @@ export function focusCalendarDay(container: HTMLElement | null) {
  * closes it and focus returns to the field.
  */
 export function DatePicker({
+  ref,
   value,
   defaultValue,
   onValueChange,
@@ -125,6 +128,7 @@ export function DatePicker({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <DateTrigger
+        ref={ref}
         text={text}
         placeholder={placeholder}
         id={id}

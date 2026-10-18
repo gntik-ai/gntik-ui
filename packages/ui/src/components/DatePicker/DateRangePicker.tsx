@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { Calendar, type CalendarRangeProps } from '../Calendar/Calendar';
 import { formatDateRange, startOfDay, toISODate, type DateRange } from '../Calendar/calendar-utils';
@@ -15,6 +15,8 @@ type CalendarPassThrough = Pick<
 >;
 
 export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVariantProps {
+  /** Ref to the trigger input. Focusing it leaves the popup closed. */
+  ref?: Ref<HTMLInputElement>;
   value?: DateRange;
   defaultValue?: DateRange;
   /** Fires with complete ranges only (both ends set). */
@@ -46,6 +48,7 @@ const EMPTY: DateRange = { start: null, end: null };
  * Calendar. A preset or the second calendar click applies the range and closes the popup.
  */
 export function DateRangePicker({
+  ref,
   value,
   defaultValue,
   onValueChange,
@@ -119,6 +122,7 @@ export function DateRangePicker({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <DateTrigger
+        ref={ref}
         text={formatDateRange(range, locale, formatOptions)}
         placeholder={placeholder}
         id={id}

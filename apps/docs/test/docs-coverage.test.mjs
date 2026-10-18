@@ -20,7 +20,7 @@ const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 /** Documented components that have no examples/ yet (no live preview on the page). */
 const NO_EXAMPLES = ['packages/chat/src/ChatDemo', 'packages/ui/src/components/Spinner'];
 /** Exported forms components with no <Name>.doc.ts yet (Form and FormField share FormField.tsx). */
-const FORMS_WITHOUT_DOC = ['FormField'];
+const FORMS_WITHOUT_DOC = [];
 /** kit-registry.json items that are not component folders, so they have no doc file. */
 const REGISTRY_WITHOUT_DOC = ['theme', 'ui-utils'];
 
