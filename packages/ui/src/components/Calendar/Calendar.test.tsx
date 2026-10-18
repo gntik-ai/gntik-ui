@@ -12,14 +12,7 @@ function setup(extra: Partial<Parameters<typeof Calendar>[0]> = {}) {
   const user = userEvent.setup();
   const onValueChange = vi.fn();
   render(
-    <Calendar
-      maxView="day"
-      locale="en-US"
-      weekStartsOn={1}
-      today={today}
-      onValueChange={onValueChange}
-      {...(extra as object)}
-    />,
+    <Calendar locale="en-US" weekStartsOn={1} today={today} onValueChange={onValueChange} {...(extra as object)} />,
   );
   return { user, onValueChange };
 }
@@ -35,24 +28,31 @@ describe('Calendar', () => {
     expect(grid.querySelectorAll('button[tabindex="0"]')).toHaveLength(1);
   });
 
-  it('ArrowLeft / ArrowRight move by day; ArrowUp / ArrowDown by week', async () => {
-    const { user } = setup();
-    await user.tab();
-    await user.tab();
-    await user.tab();
-    expect(day('Wednesday, March 11, 2026')).toHaveFocus();
-    await user.keyboard('{ArrowRight}');
-    expect(day('Thursday, March 12, 2026')).toHaveFocus();
-    await user.keyboard('{ArrowLeft}{ArrowLeft}');
-    expect(day('Tuesday, March 10, 2026')).toHaveFocus();
-    await user.keyboard('{ArrowDown}');
-    expect(day('Tuesday, March 17, 2026')).toHaveFocus();
-    await user.keyboard('{ArrowUp}{ArrowUp}');
-    expect(day('Tuesday, March 3, 2026')).toHaveFocus();
-    await user.keyboard('{ArrowUp}');
-    expect(screen.getByRole('grid', { name: 'February 2026' })).toBeInTheDocument();
-    expect(day('Tuesday, February 24, 2026')).toHaveFocus();
-  });
+  it.each(['day', 'year'] as const)(
+    'ArrowLeft / ArrowRight move by day; ArrowUp / ArrowDown by week (maxView=%s)',
+    async (maxView) => {
+      const { user } = setup({ maxView });
+      await user.tab();
+      if (maxView === 'year') {
+        await user.tab();
+        expect(day('March 2026, choose a month')).toHaveFocus();
+      }
+      await user.tab();
+      await user.tab();
+      expect(day('Wednesday, March 11, 2026')).toHaveFocus();
+      await user.keyboard('{ArrowRight}');
+      expect(day('Thursday, March 12, 2026')).toHaveFocus();
+      await user.keyboard('{ArrowLeft}{ArrowLeft}');
+      expect(day('Tuesday, March 10, 2026')).toHaveFocus();
+      await user.keyboard('{ArrowDown}');
+      expect(day('Tuesday, March 17, 2026')).toHaveFocus();
+      await user.keyboard('{ArrowUp}{ArrowUp}');
+      expect(day('Tuesday, March 3, 2026')).toHaveFocus();
+      await user.keyboard('{ArrowUp}');
+      expect(screen.getByRole('grid', { name: 'February 2026' })).toBeInTheDocument();
+      expect(day('Tuesday, February 24, 2026')).toHaveFocus();
+    },
+  );
 
   it('PageUp / PageDown move by month (Shift: year)', async () => {
     const { user } = setup();

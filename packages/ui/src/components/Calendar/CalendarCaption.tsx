@@ -4,6 +4,7 @@ import { formatMonth, monthNames, monthOutsideBounds, yearOutsideBounds } from '
 
 export interface CalendarCaptionProps {
   month: Date;
+  today: Date;
   locale?: string;
   min?: Date;
   max?: Date;
@@ -13,10 +14,19 @@ export interface CalendarCaptionProps {
 }
 
 /** Kit selects share the same visible-month boundary as the heading and navigation. */
-export function CalendarCaption({ month, locale, min, max, yearRange, labelId, onChange }: CalendarCaptionProps) {
+export function CalendarCaption({
+  month,
+  today,
+  locale,
+  min,
+  max,
+  yearRange,
+  labelId,
+  onChange,
+}: CalendarCaptionProps) {
   const { t } = useI18n();
   const year = month.getFullYear();
-  const currentYear = new Date().getFullYear();
+  const currentYear = today.getFullYear();
   const from = Math.max(yearRange?.from ?? currentYear - 10, min?.getFullYear() ?? -Infinity);
   const to = Math.min(yearRange?.to ?? currentYear + 10, max?.getFullYear() ?? Infinity);
   const years = [...new Set([...Array.from({ length: Math.max(0, to - from + 1) }, (_, i) => from + i), year])].sort(

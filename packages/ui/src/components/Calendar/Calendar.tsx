@@ -155,6 +155,20 @@ export function Calendar(props: CalendarProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [focusRequest, setFocusRequest] = useState<{ view: CalendarView; date: Date } | null>(null);
   const completedFocus = useRef<typeof focusRequest>(null);
+  const [renderedView, setRenderedView] = useState(view);
+
+  if (renderedView !== view) {
+    setRenderedView(view);
+    if (view !== 'day') {
+      // A heading request preserves its panel; an external transition starts at the visible month.
+      const date =
+        focusRequest?.view === view ? focusRequest.date : renderedView === 'day' ? visibleMonth : periodFocus;
+      setPeriodFocus(startOfMonth(date));
+      setFocusRequest({ view, date });
+    } else if (focusRequest?.view !== 'day') {
+      setFocusRequest(null);
+    }
+  }
 
   const isVisible = (d: Date) => {
     const diff = monthDiff(visibleMonth, d);
@@ -182,6 +196,7 @@ export function Calendar(props: CalendarProps) {
   }, [focusRequest, view, visibleMonth]);
 
   const changeView = (next: CalendarView, date = periodFocus) => {
+    if (next === view) return;
     setFocusRequest({ view: next, date });
     setInnerView(next);
     onViewChange?.(next);
@@ -193,10 +208,10 @@ export function Calendar(props: CalendarProps) {
     onMonthChange?.(next);
   };
 
-  const pickMonth = (date: Date) => {
+  const pickMonth = (date: Date, panelIndex = 0) => {
     const target = clampDay(addMonths(focused, monthDiff(focused, date)), min, max);
     setFocused(target);
-    setMonth(target);
+    setMonth(addMonths(target, -panelIndex));
     changeView('day', target);
   };
 
@@ -306,6 +321,7 @@ export function Calendar(props: CalendarProps) {
             {captionLayout === 'select' ? (
               <CalendarCaption
                 month={periodFocus}
+                today={todayDate}
                 locale={locale}
                 min={min}
                 max={max}
@@ -314,7 +330,11 @@ export function Calendar(props: CalendarProps) {
                 onChange={pickMonth}
               />
             ) : (
-              <h2 id={`${baseId}-period`} aria-live="polite" className={s.heading()}>
+              <h2
+                id={view === 'month' && maxView === 'year' ? undefined : `${baseId}-period`}
+                aria-live="polite"
+                className={s.heading()}
+              >
                 {view === 'month' && maxView === 'year' ? (
                   <button
                     type="button"
@@ -322,7 +342,7 @@ export function Calendar(props: CalendarProps) {
                     aria-label={t('calendar.chooseYear', { label: periodTitle })}
                     onClick={() => changeView('year')}
                   >
-                    {periodTitle}
+                    <span id={`${baseId}-period`}>{periodTitle}</span>
                   </button>
                 ) : (
                   periodTitle
@@ -386,15 +406,16 @@ export function Calendar(props: CalendarProps) {
                 {captionLayout === 'select' ? (
                   <CalendarCaption
                     month={m}
+                    today={todayDate}
                     locale={locale}
                     min={min}
                     max={max}
                     yearRange={yearRange}
                     labelId={headingId}
-                    onChange={pickMonth}
+                    onChange={(date) => pickMonth(date, mi)}
                   />
                 ) : (
-                  <h2 id={headingId} aria-live="polite" className={s.heading()}>
+                  <h2 id={maxView === 'day' ? headingId : undefined} aria-live="polite" className={s.heading()}>
                     {maxView === 'day' ? (
                       formatMonth(m, locale)
                     ) : (
@@ -407,7 +428,7 @@ export function Calendar(props: CalendarProps) {
                           changeView('month', m);
                         }}
                       >
-                        {formatMonth(m, locale)}
+                        <span id={headingId}>{formatMonth(m, locale)}</span>
                       </button>
                     )}
                   </h2>

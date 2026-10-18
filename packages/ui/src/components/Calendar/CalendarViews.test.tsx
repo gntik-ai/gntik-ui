@@ -8,6 +8,29 @@ const march = new Date(2026, 2, 15);
 const button = (name: string) => screen.getByRole('button', { name });
 
 describe('Calendar views', () => {
+  it.each(['month', 'year'] as const)('opens an externally controlled %s view at the visible year', async (view) => {
+    const user = userEvent.setup();
+    const onViewChange = vi.fn();
+    const { rerender } = render(<Calendar locale="en-US" today={march} view="day" onViewChange={onViewChange} />);
+    for (let i = 0; i < 12; i++) await user.click(button('Next month'));
+    rerender(<Calendar locale="en-US" today={march} view={view} onViewChange={onViewChange} />);
+    expect(button(view === 'month' ? 'March 2027' : '2027')).toHaveFocus();
+    expect(onViewChange).not.toHaveBeenCalled();
+    if (view === 'month') expect(screen.getByRole('heading')).toHaveTextContent('2027');
+    else {
+      await user.keyboard('{Enter}');
+      expect(onViewChange).toHaveBeenCalledExactlyOnceWith('month');
+      rerender(<Calendar locale="en-US" today={march} view="month" onViewChange={onViewChange} />);
+      expect(screen.getByRole('heading')).toHaveTextContent('2027');
+    }
+    onViewChange.mockClear();
+    rerender(<Calendar locale="en-US" today={march} view="day" onViewChange={onViewChange} />);
+    await user.click(button('Next month'));
+    rerender(<Calendar locale="en-US" today={march} view="month" onViewChange={onViewChange} />);
+    expect(button('April 2027')).toHaveFocus();
+    expect(onViewChange).not.toHaveBeenCalled();
+  });
+
   it('opens the month grid with the visible month focused and reports the view', async () => {
     const user = userEvent.setup();
     const onViewChange = vi.fn();
@@ -153,19 +176,30 @@ describe('Calendar views', () => {
   it('uses kit caption selects to jump years and exposes the default current-year range', async () => {
     const user = userEvent.setup();
     const onMonthChange = vi.fn();
-    render(<Calendar locale="en-US" today={march} captionLayout="select" onMonthChange={onMonthChange} />);
+    const onViewChange = vi.fn();
+    render(
+      <Calendar
+        locale="en-US"
+        today={new Date(2030, 2, 15)}
+        defaultMonth={march}
+        captionLayout="select"
+        onMonthChange={onMonthChange}
+        onViewChange={onViewChange}
+      />,
+    );
     await user.click(screen.getByRole('combobox', { name: 'Year' }));
-    const options = screen.getAllByRole('option');
-    const currentYear = new Date().getFullYear();
+    const options = await screen.findAllByRole('option');
     expect(options).toHaveLength(21);
-    expect(options[0]).toHaveTextContent(String(currentYear - 10));
-    expect(options[20]).toHaveTextContent(String(currentYear + 10));
+    expect(options[0]).toHaveTextContent('2020');
+    expect(options[20]).toHaveTextContent('2040');
     await user.click(screen.getByRole('option', { name: '2030' }));
     expect(screen.getByRole('grid', { name: 'March 2030' })).toBeInTheDocument();
     expect(onMonthChange).toHaveBeenCalledExactlyOnceWith(new Date(2030, 2, 1));
+    expect(onViewChange).not.toHaveBeenCalled();
     await user.click(screen.getByRole('combobox', { name: 'Month' }));
     await user.click(screen.getByRole('option', { name: 'April' }));
     expect(screen.getByRole('grid', { name: 'April 2030' })).toBeInTheDocument();
+    expect(onViewChange).not.toHaveBeenCalled();
   });
 
   it('clips the explicit year range to bounds and includes the visible year', async () => {
@@ -182,6 +216,24 @@ describe('Calendar views', () => {
     );
     await user.click(screen.getByRole('combobox', { name: 'Year' }));
     expect(screen.getAllByRole('option').map((option) => option.textContent)).toEqual(['2024', '2025', '2026', '2027']);
+  });
+
+  it('keeps a caption selection in its original panel when two months are shown', async () => {
+    const user = userEvent.setup();
+    const onMonthChange = vi.fn();
+    render(
+      <Calendar locale="en-US" today={march} numberOfMonths={2} captionLayout="select" onMonthChange={onMonthChange} />,
+    );
+    await user.click(screen.getAllByRole('combobox', { name: 'Month' })[1]!);
+    await user.click(screen.getByRole('option', { name: 'July' }));
+    expect(screen.getAllByRole('combobox', { name: 'Month' })[1]).toHaveTextContent('July');
+    expect(screen.getByRole('grid', { name: 'June 2026' })).toBeInTheDocument();
+    expect(screen.getByRole('grid', { name: 'July 2026' })).toBeInTheDocument();
+    expect(onMonthChange).toHaveBeenCalledExactlyOnceWith(new Date(2026, 5, 1));
+    await user.click(screen.getAllByRole('combobox', { name: 'Year' })[1]!);
+    await user.click(screen.getByRole('option', { name: '2030' }));
+    expect(screen.getByRole('grid', { name: 'June 2030' })).toBeInTheDocument();
+    expect(screen.getByRole('grid', { name: 'July 2030' })).toBeInTheDocument();
   });
 
   it('includes a visible year outside yearRange and disables out-of-bound month options', async () => {
@@ -232,7 +284,7 @@ describe('Calendar views', () => {
     expect(screen.getAllByRole('grid')).toHaveLength(1);
     expect(button('April 2026')).toHaveFocus();
     await user.click(button('May 2026'));
-    expect(screen.getAllByRole('grid').map((grid) => grid.getAttribute('aria-labelledby')).length).toBe(2);
+    expect(screen.getAllByRole('grid')).toHaveLength(2);
     expect(screen.getByRole('grid', { name: 'May 2026' })).toBeInTheDocument();
     expect(screen.getByRole('grid', { name: 'June 2026' })).toBeInTheDocument();
     expect(button('Friday, May 15, 2026')).toHaveFocus();

@@ -14,6 +14,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await page.goto('/#ui-components');
     const calendar = page.locator('#ui-Calendar').getByRole('group', { name: 'Calendar', exact: true }).first();
     await expect(calendar).toBeVisible();
+    await expect(calendar.getByRole('grid')).toHaveAccessibleName('March 2026');
     const example = calendar.locator('..');
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
@@ -32,6 +33,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     };
     await check();
     await calendar.getByRole('button', { name: 'March 2026, choose a month' }).click();
+    await expect(calendar.getByRole('grid')).toHaveAccessibleName('2026');
     await expect(calendar.getByRole('button', { name: 'March 2026', exact: true })).toBeFocused();
     await check();
     await calendar.getByRole('button', { name: '2026, choose a year' }).click();
