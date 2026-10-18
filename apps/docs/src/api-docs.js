@@ -1,6 +1,6 @@
 // API reference for the kit, generated at build time from the package sources: every
-// component and layout folder's *.doc.ts (name, group, keyboard contract, pattern…), its
-// exported `*Props` interfaces (members + JSDoc), defaults read from the component's
+// component, layout, chat and forms-entry *.doc.ts (name, group, keyboard contract, pattern…),
+// its exported `*Props` interfaces (members + JSDoc), defaults read from the component's
 // destructuring and tv() defaultVariants, and variant options from *.variants.ts.
 // Pure parsing over `?raw` imports — a new folder shows up with no registration.
 
@@ -9,6 +9,10 @@ const componentDocs = import.meta.glob('../../../packages/ui/src/components/*/*.
   import: 'doc',
 });
 const layoutDocs = import.meta.glob('../../../packages/ui/src/layouts/*/*.doc.ts', { eager: true, import: 'doc' });
+// @gntik-ai/chat: one folder per component, like ui.
+const chatDocs = import.meta.glob('../../../packages/chat/src/*/*.doc.ts', { eager: true, import: 'doc' });
+// @gntik-ai/ui/forms: the optional react-hook-form entry keeps its files flat, one *.doc.ts per piece.
+const formsDocs = import.meta.glob('../../../packages/ui/src/forms/*.doc.ts', { eager: true, import: 'doc' });
 const sources = {
   ...import.meta.glob('../../../packages/ui/src/components/*/*.{ts,tsx}', {
     eager: true,
@@ -16,6 +20,16 @@ const sources = {
     import: 'default',
   }),
   ...import.meta.glob('../../../packages/ui/src/layouts/*/*.{ts,tsx}', {
+    eager: true,
+    query: '?raw',
+    import: 'default',
+  }),
+  ...import.meta.glob('../../../packages/chat/src/*/*.{ts,tsx}', {
+    eager: true,
+    query: '?raw',
+    import: 'default',
+  }),
+  ...import.meta.glob('../../../packages/ui/src/forms/*.{ts,tsx}', {
     eager: true,
     query: '?raw',
     import: 'default',
@@ -261,14 +275,30 @@ function parsePropsTypes(src, variantTypes) {
   return out;
 }
 
-const folderKey = (path) => {
-  const [, kind, folder] = /\/(components|layouts)\/([^/]+)\//.exec(path) ?? [];
-  return `${kind}/${folder}`;
-};
+const kebab = (name) => name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+/**
+ * Where a source file lives: `components/Button`, `layouts/Page`, `chat/ChatMessage` or, for the flat
+ * forms entry, `forms/FieldArray` (named after the *.doc.ts, whose own files are FieldArray.tsx and
+ * field-array.variants.ts). Files of the forms entry that no doc claims return `null`.
+ */
+function folderKey(path, docBase) {
+  let m = /\/ui\/src\/(components|layouts)\/([^/]+)\//.exec(path);
+  if (m) return `${m[1]}/${m[2]}`;
+  m = /\/chat\/src\/([^/]+)\//.exec(path);
+  if (m) return `chat/${m[1]}`;
+  m = /\/ui\/src\/forms\/([^/]+)$/.exec(path);
+  if (m && docBase && (m[1].startsWith(`${docBase}.`) || m[1].startsWith(`${kebab(docBase)}.`)))
+    return `forms/${docBase}`;
+  return null;
+}
+
+const docBaseOf = (docPath) => docPath.slice(docPath.lastIndexOf('/') + 1).replace(/\.doc\.ts$/, '');
 
 function buildApi(docPath, doc) {
-  const key = folderKey(docPath);
-  const files = Object.keys(sources).filter((p) => folderKey(p) === key);
+  const docBase = docBaseOf(docPath);
+  const key = folderKey(docPath, docBase);
+  const files = Object.keys(sources).filter((p) => folderKey(p, docBase) === key);
   const isCode = (p) => !/\.(test|doc|stories)\.tsx?$|\/index\.ts$|\.variants\.ts$/.test(p);
   const variantTypes = Object.assign(
     {},
@@ -294,12 +324,13 @@ function buildApi(docPath, doc) {
   return { ...doc, folder: key.split('/')[1], kind: key.split('/')[0], propTypes: types };
 }
 
-export const COMPONENT_API = Object.fromEntries(
-  Object.entries(componentDocs).map(([p, d]) => [folderKey(p).split('/')[1], buildApi(p, d)]),
-);
-export const LAYOUT_API = Object.fromEntries(
-  Object.entries(layoutDocs).map(([p, d]) => [folderKey(p).split('/')[1], buildApi(p, d)]),
-);
+const apiOf = (docs) =>
+  Object.fromEntries(Object.entries(docs).map(([p, d]) => [folderKey(p, docBaseOf(p)).split('/')[1], buildApi(p, d)]));
+
+export const COMPONENT_API = apiOf(componentDocs);
+export const LAYOUT_API = apiOf(layoutDocs);
+export const CHAT_API = apiOf(chatDocs);
+export const FORMS_API = apiOf(formsDocs);
 
 // Exposed for tests and quick inspection from the console.
 export const __parse = { parsePropsTypes, parseVariants, parseDefaults, parseMembers };

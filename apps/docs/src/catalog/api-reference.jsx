@@ -1,12 +1,14 @@
 /* ============================================================================
    Gntik UI · api-reference.jsx — generated API docs for one kit component or
-   layout: Props tables (from its exported *Props types), the Keyboard table and
-   accessibility notes (from its *.doc.ts). Data comes from src/api-docs.js,
+   layout, chat component or forms-entry piece: Props tables (from its exported *Props
+   types), the Keyboard table and accessibility notes (from its *.doc.ts). Data comes from src/api-docs.js,
    built with import.meta.glob, so new folders appear with no registration.
    Every field is optional: a doc without keyboard rows or a folder without
    *Props types simply skips that block.
    ============================================================================ */
-import { COMPONENT_API, LAYOUT_API } from '../api-docs.js';
+import { COMPONENT_API, LAYOUT_API, CHAT_API, FORMS_API } from '../api-docs.js';
+
+const API_BY_KIND = { component: COMPONENT_API, layout: LAYOUT_API, chat: CHAT_API, forms: FORMS_API };
 
 const H = ({ level, className, children, id }) => {
   const Tag = `h${Math.min(level, 6)}`;
@@ -168,9 +170,12 @@ function a11yNotes(api) {
   return notes;
 }
 
-/** Generated API reference. `folder` is the package folder (e.g. "Button"); `kind` is component | layout. */
+/**
+ * Generated API reference. `folder` is the package folder (e.g. "Button"; for the forms entry, the doc's
+ * name, e.g. "FieldArray"); `kind` is component | layout | chat | forms.
+ */
 function ApiReference({ folder, kind = 'component', level = 3 }) {
-  const api = (kind === 'layout' ? LAYOUT_API : COMPONENT_API)[folder];
+  const api = (API_BY_KIND[kind] ?? COMPONENT_API)[folder];
   if (!api) return null;
   const idBase = `api-${kind}-${folder}`;
   const [main, ...parts] = api.propTypes;
