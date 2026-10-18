@@ -5,8 +5,8 @@ import ComboboxVirtualized from '../Combobox/examples/ComboboxVirtualized';
 import MultiSelectVirtualized from '../MultiSelect/examples/MultiSelectVirtualized';
 import TransferListVirtualized from '../TransferList/examples/TransferListVirtualized';
 
-it.each(['dark', '', 'high_contrast'])('virtualized examples are axe clean in theme %s', async (theme) => {
-  document.documentElement.className = theme;
+// CSS and per-theme contrast are covered by virtualized-options.a11y.spec.js in a browser.
+it('virtualized examples have accessible structure, closed and open', async () => {
   const user = userEvent.setup();
   render(
     <>

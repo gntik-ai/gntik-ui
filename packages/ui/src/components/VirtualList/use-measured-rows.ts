@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties, type UIEvent } from 'react';
 import { useVirtualWindow } from './use-virtual-window';
 
 export interface MeasuredRowOptions {
@@ -109,7 +109,8 @@ export function useMeasuredRows(
     rowProps,
     setViewport,
     scrollTo,
-    onScroll: (event: React.UIEvent<HTMLElement>) => {
+    pageSize: Math.max(1, Math.floor(height / sizeOf(Math.max(0, active))) - 1),
+    onScroll: (event: UIEvent<HTMLElement>) => {
       const top = event.currentTarget.scrollTop;
       if (top !== programmaticTop.current) scrollTarget.current = null;
       setScrollTop(top);

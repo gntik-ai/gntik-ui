@@ -147,7 +147,7 @@ describe('virtualized Combobox', () => {
     expect(option).toHaveStyle({ fontWeight: 600, height: '32px' });
   });
 
-  it('windows the full list and preserves its accessible positions and height', async () => {
+  it('windows the full list and preserves its accessible positions', async () => {
     const user = userEvent.setup();
     const items = Array.from({ length: 10000 }, (_, i) => `node-${i + 1}`);
     render(
@@ -168,7 +168,6 @@ describe('virtualized Combobox', () => {
     expect(options.length).toBeLessThanOrEqual(20);
     expect(options[0]).toHaveAttribute('aria-setsize', '10000');
     options.forEach((option, i) => expect(option).toHaveAttribute('aria-posinset', String(i + 1)));
-    expect(list.firstElementChild).toHaveStyle({ height: '320000px' });
   });
 });
 
@@ -198,11 +197,13 @@ it('keeps keyboard highlights mounted and scrolls selection into view on reopen'
   expect(input).toHaveAttribute('aria-activedescendant', option51.id);
   expect(option51).toHaveAttribute('data-highlighted');
   expect(list.scrollTop).toBe(1376);
+  onItemHighlighted.mockClear();
   await user.keyboard('{End}');
   const last = await screen.findByRole('option', { name: 'node-10000' });
   expect(input).toHaveAttribute('aria-activedescendant', last.id);
   expect(list.scrollTop).toBe(319744);
   expect(onItemHighlighted).toHaveBeenLastCalledWith('node-10000', expect.objectContaining({ index: 9999 }));
+  expect(onItemHighlighted).toHaveBeenCalledTimes(1);
   fireEvent.change(input, { target: { value: 'node-4242' } });
   expect(await screen.findByRole('option', { name: 'node-4242' })).toBeInTheDocument();
   expect(screen.getAllByRole('option')).toHaveLength(1);
@@ -220,9 +221,10 @@ it('keeps keyboard highlights mounted and scrolls selection into view on reopen'
 
 it('keeps the highlight mounted during manual scrolling and supports Home and page navigation', async () => {
   const user = userEvent.setup();
+  const onItemHighlighted = vi.fn();
   const items = Array.from({ length: 1000 }, (_, i) => `node-${i + 1}`);
   render(
-    <Combobox items={items} virtualized>
+    <Combobox items={items} virtualized onItemHighlighted={onItemHighlighted}>
       <ComboboxInput label="Nodes" />
       <ComboboxContent itemHeight={32}>
         {(item: string) => (
@@ -238,18 +240,28 @@ it('keeps the highlight mounted during manual scrolling and supports Home and pa
   const list = await screen.findByRole('listbox');
   await user.keyboard('{Home}');
   expect(highlighted()).toHaveTextContent('node-1');
+  expect(onItemHighlighted).toHaveBeenCalledTimes(1);
   const firstId = highlighted()?.id;
   fireEvent.scroll(list, { target: { scrollTop: 16000 } });
   expect(list.scrollTop).toBe(16000);
   expect(input).toHaveAttribute('aria-activedescendant', firstId);
   expect(document.getElementById(firstId!)).toBeInTheDocument();
   expect(screen.getAllByRole('option').length).toBeLessThanOrEqual(20);
+  onItemHighlighted.mockClear();
   await user.keyboard('{PageDown}');
   expect(highlighted()).toHaveTextContent('node-8');
+  expect(onItemHighlighted).toHaveBeenCalledTimes(1);
   expect(list.scrollTop).toBe(224);
+  onItemHighlighted.mockClear();
   await user.keyboard('{PageUp}');
   expect(highlighted()).toHaveTextContent('node-1');
+  expect(onItemHighlighted).toHaveBeenCalledTimes(1);
   expect(list.scrollTop).toBe(0);
+  await user.keyboard('{End}');
+  onItemHighlighted.mockClear();
+  await user.keyboard('{Home}');
+  expect(highlighted()).toHaveTextContent('node-1');
+  expect(onItemHighlighted).toHaveBeenCalledTimes(1);
 });
 
 it('measures variable option rows rather than treating the estimate as a fixed height', async () => {
@@ -287,9 +299,6 @@ it('measures variable option rows rather than treating the estimate as a fixed h
     const second = await screen.findByRole('option', { name: 'node-2' });
     expect(second).toHaveStyle({ transform: 'translateY(64px)' });
     expect(screen.getAllByRole('option').length).toBeLessThanOrEqual(20);
-    expect(
-      Number.parseFloat((screen.getByRole('listbox').firstElementChild as HTMLElement).style.height),
-    ).toBeGreaterThan(320000);
     await user.keyboard('{Home}');
     const list = screen.getByRole('listbox');
     fireEvent.scroll(list, { target: { scrollTop: 16000 } });

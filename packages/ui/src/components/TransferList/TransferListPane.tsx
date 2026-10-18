@@ -132,6 +132,35 @@ export function TransferListPane({
     e.preventDefault();
   };
 
+  const options = (virtualized ? rows.indices : visible.map((_, i) => i)).map((i) => {
+    const it = visible[i]!;
+    return (
+      <div
+        {...(virtualized ? rows.rowProps(i) : {})}
+        key={it.value}
+        id={optionId(i)}
+        role="option"
+        aria-selected={checked.has(it.value)}
+        aria-disabled={it.disabled || undefined}
+        data-active={i === activeIndex || undefined}
+        className={cn('group/option', s.option())}
+        onClick={() => {
+          setActiveValue(it.value);
+          toggle(it.value);
+        }}
+        onDoubleClick={() => !it.disabled && onTransfer([it.value])}
+      >
+        <span aria-hidden className={s.check()}>
+          {checked.has(it.value) && <Check size={11} strokeWidth={3} />}
+        </span>
+        <span className={s.optionText()}>
+          <span className={s.optionLabel()}>{it.label}</span>
+          {it.description && <span className={s.optionDescription()}>{it.description}</span>}
+        </span>
+      </div>
+    );
+  });
+
   return (
     <section aria-labelledby={titleId} className={s.pane()}>
       <div className={s.paneHead()}>
@@ -165,36 +194,13 @@ export function TransferListPane({
         style={visible.length ? { height } : undefined}
         onKeyDown={onKeyDown}
       >
-        <div className={virtualized ? 'relative' : undefined} style={virtualized ? { height: rows.total } : undefined}>
-          {(virtualized ? rows.indices : visible.map((_, i) => i)).map((i) => {
-            const it = visible[i]!;
-            return (
-              <div
-                {...(virtualized ? rows.rowProps(i) : {})}
-                key={it.value}
-                id={optionId(i)}
-                role="option"
-                aria-selected={checked.has(it.value)}
-                aria-disabled={it.disabled || undefined}
-                data-active={i === activeIndex || undefined}
-                className={cn('group/option', s.option())}
-                onClick={() => {
-                  setActiveValue(it.value);
-                  toggle(it.value);
-                }}
-                onDoubleClick={() => !it.disabled && onTransfer([it.value])}
-              >
-                <span aria-hidden className={s.check()}>
-                  {checked.has(it.value) && <Check size={11} strokeWidth={3} />}
-                </span>
-                <span className={s.optionText()}>
-                  <span className={s.optionLabel()}>{it.label}</span>
-                  {it.description && <span className={s.optionDescription()}>{it.description}</span>}
-                </span>
-              </div>
-            );
-          })}
-        </div>
+        {virtualized ? (
+          <div className="relative" style={{ height: rows.total }}>
+            {options}
+          </div>
+        ) : (
+          options
+        )}
       </div>
       {visible.length === 0 && (
         <div className={s.empty()} style={{ height }}>

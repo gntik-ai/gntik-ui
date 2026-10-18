@@ -7,6 +7,7 @@ import {
   useContext,
   useEffectEvent,
   useLayoutEffect,
+  useRef,
   useState,
   type ReactElement,
   type ReactNode,
@@ -18,6 +19,7 @@ interface WindowState {
   query: string;
   selected: unknown;
   equal: (a: unknown, b: unknown) => boolean;
+  batchHighlights: (navigate: () => void) => void;
 }
 const WindowContext = createContext<WindowState | null>(null);
 export const useComboboxWindow = () => useContext(WindowContext);
@@ -29,6 +31,18 @@ export function WindowedComboboxRoot<Value, Multiple extends boolean | undefined
   const [active, setActive] = useState(-1);
   const [query, setQuery] = useState(String(props.defaultInputValue ?? ''));
   const [value, setValue] = useState<unknown>(props.defaultValue);
+  type Highlight = Parameters<NonNullable<typeof props.onItemHighlighted>>;
+  const navigation = useRef<{ batching: boolean; last: Highlight | null }>({ batching: false, last: null });
+  const reportHighlight = (...args: Highlight) => {
+    setActive(args[1].index);
+    props.onItemHighlighted?.(...args);
+  };
+  const finishNavigation = () => {
+    navigation.current.batching = false;
+    const last = navigation.current.last;
+    navigation.current.last = null;
+    if (last) reportHighlight(...last);
+  };
   const selected = props.value !== undefined ? props.value : value;
   return (
     <WindowContext.Provider
@@ -37,13 +51,22 @@ export function WindowedComboboxRoot<Value, Multiple extends boolean | undefined
         query: String(props.inputValue ?? query),
         selected: props.multiple ? (selected as unknown[])?.[0] : selected,
         equal: (props.isItemEqualToValue as WindowState['equal']) ?? Object.is,
+        batchHighlights: (navigate) => {
+          navigation.current.batching = true;
+          navigation.current.last = null;
+          try {
+            navigate();
+          } finally {
+            finishNavigation();
+          }
+        },
       }}
     >
       <BaseCombobox.Root
         {...props}
         onItemHighlighted={(item, details) => {
-          setActive(details.index);
-          props.onItemHighlighted?.(item, details);
+          if (navigation.current.batching) navigation.current.last = [item, details];
+          else reportHighlight(item, details);
         }}
         onInputValueChange={(next, details) => {
           props.onInputValueChange?.(next, details);
@@ -74,7 +97,7 @@ export function WindowedComboboxList<Item = unknown>({
   const items = BaseCombobox.useFilteredItems<Item>();
   const selectedIndex = state?.selected != null ? items.findIndex((item) => state.equal(item, state.selected)) : -1;
   const active = state?.active ?? -1;
-  const { indices, total, rowProps, setViewport, scrollTo, onScroll } = useMeasuredRows(
+  const { indices, total, rowProps, setViewport, scrollTo, onScroll, pageSize } = useMeasuredRows(
     items.length,
     options,
     active >= 0 ? active : selectedIndex,
@@ -97,6 +120,25 @@ export function WindowedComboboxList<Item = unknown>({
       className="max-h-64 min-h-0 overflow-y-auto outline-none data-empty:hidden"
       style={{ height: Math.min(total, 256) }}
       onScroll={onScroll}
+      onKeyDown={(event) => {
+        if (!state || !['Home', 'End', 'PageUp', 'PageDown'].includes(event.key) || items.length === 0) return;
+        event.preventDefault();
+        event.preventBaseUIHandler();
+        const target =
+          event.key === 'Home'
+            ? 0
+            : event.key === 'End'
+              ? items.length - 1
+              : Math.max(0, Math.min(items.length - 1, active + (event.key === 'PageDown' ? pageSize : -pageSize)));
+        const key = target > active ? 'ArrowDown' : 'ArrowUp';
+        // Base UI reserves Home/End for the input caret and has no public highlight setter.
+        // Keep its navigation/selection state authoritative, reporting only the final highlight.
+        state.batchHighlights(() => {
+          for (let i = 0; i < Math.abs(target - active); i++) {
+            event.currentTarget.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+          }
+        });
+      }}
     >
       <div className="relative" style={{ height: total }}>
         {indices.map((index) => {
@@ -148,24 +190,7 @@ export const navigateVirtualOptions: NonNullable<BaseCombobox.Input.Props['onKey
   if (input.getAttribute('aria-expanded') !== 'true') return;
   const list = document.getElementById(input.getAttribute('aria-controls') ?? '');
   if (!list?.hasAttribute('data-virtualized')) return;
-  const count = Number(list.querySelector('[aria-setsize]')?.getAttribute('aria-setsize') ?? 0);
-  if (count === 0) return;
   event.preventDefault();
   event.preventBaseUIHandler();
-  const page = event.key === 'PageDown' || event.key === 'PageUp';
-  const rowHeight = list.querySelector<HTMLElement>('[role="option"]')?.getBoundingClientRect().height || 32;
-  const activeElement = document.getElementById(input.getAttribute('aria-activedescendant') ?? '');
-  const active = Number(activeElement?.getAttribute('aria-posinset') ?? 0) - 1;
-  const pageSize = Math.max(1, Math.floor((list.clientHeight || 256) / rowHeight) - 1);
-  const target = page
-    ? Math.max(0, Math.min(count - 1, active + (event.key === 'PageDown' ? pageSize : -pageSize)))
-    : event.key === 'End'
-      ? count - 1
-      : 0;
-  const key = target > active ? 'ArrowDown' : 'ArrowUp';
-  // Base UI owns the highlight and selection; its input reserves Home/End for the caret.
-  // Forward equivalent list navigation without accessing Base UI's private store.
-  for (let i = 0; i < Math.abs(target - active); i++) {
-    list.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
-  }
+  list.dispatchEvent(new KeyboardEvent('keydown', { key: event.key, bubbles: true }));
 };

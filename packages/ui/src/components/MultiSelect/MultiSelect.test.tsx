@@ -112,3 +112,30 @@ it('windows 5000 options while Select all selects the full enabled data set', as
   expect(onValueChange).toHaveBeenLastCalledWith(options.map((option) => option.value));
   expect(within(list).getAllByRole('option').length).toBeLessThanOrEqual(20);
 });
+
+it('navigates Home, End and pages across virtualized options including Select all', async () => {
+  const options = Array.from({ length: 5000 }, (_, i) => ({ value: `node-${i + 1}`, label: `Node ${i + 1}` }));
+  const { user, input } = setup({ options, virtualized: true, itemHeight: 32 });
+  await user.click(input);
+  const list = await screen.findByRole('listbox');
+  const expectActive = (name: string, position: number) => {
+    const option = within(list).getByRole('option', { name });
+    expect(option).toHaveAttribute('data-highlighted');
+    expect(option).toHaveAttribute('aria-posinset', String(position));
+    expect(input).toHaveAttribute('aria-activedescendant', option.id);
+    expect(within(list).getAllByRole('option').length).toBeLessThanOrEqual(20);
+  };
+  await user.keyboard('{Home}');
+  expectActive('Select all', 1);
+  await user.keyboard('{PageDown}');
+  expectActive('Node 7', 8);
+  expect(list.scrollTop).toBe(0);
+  await user.keyboard('{End}');
+  expectActive('Node 5000', 5001);
+  expect(list.scrollTop).toBe(159776);
+  await user.keyboard('{PageUp}');
+  expectActive('Node 4993', 4994);
+  await user.keyboard('{Home}');
+  expectActive('Select all', 1);
+  expect(list.scrollTop).toBe(0);
+});
