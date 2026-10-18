@@ -22,7 +22,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       const violations = await page.evaluate(async () => {
         // Include portalled select options as well as the example.
         const example = document.querySelector('#ui-Calendar [role="group"][aria-label="Calendar"]').parentElement;
-        const listbox = document.querySelector('[role="listbox"]');
+        const listbox = document.querySelector('[role="listbox"][aria-label="Year"]');
         // eslint-disable-next-line no-undef
         const result = await axe.run(listbox ? [example, listbox] : example, {
           runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
@@ -40,7 +40,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await expect(calendar.getByRole('button', { name: '2026', exact: true })).toBeFocused();
     await check();
     await example.getByRole('combobox', { name: 'Year', exact: true }).click();
-    await expect(page.getByRole('listbox')).toBeVisible();
+    await expect(page.getByRole('listbox', { name: 'Year', exact: true })).toBeVisible();
     await check();
   });
 }
