@@ -1,13 +1,14 @@
 import { Field } from '@base-ui/react/field';
 import { Clock } from 'lucide-react';
-import { type ComponentProps, type MouseEvent, type Ref } from 'react';
+import { useState, type ComponentProps, type MouseEvent, type Ref } from 'react';
 import { useSegments } from './segments';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
+import { ClearControlButton, type ClearableProps } from '../../utils/clear-control';
 import { cn } from '../../utils/cn';
 import { timePickerVariants, type TimePickerVariantProps } from './time-picker.variants';
 import { dayPeriodLabels, formatTimeOfDay, localeHourCycle, parseTimeOfDay, timeToSeconds } from './time-utils';
 
-export interface TimePickerProps extends TimePickerVariantProps {
+export interface TimePickerProps extends TimePickerVariantProps, ClearableProps {
   /** Ref to the first editable (hours) segment. */
   ref?: Ref<HTMLDivElement>;
   /** `"HH:mm"` (or `"HH:mm:ss"` with `withSeconds`), 24-hour clock; `null` while incomplete. */
@@ -86,6 +87,9 @@ export function TimePicker({
   id,
   disabled,
   readOnly,
+  clearable,
+  clearLabel,
+  onClear,
   invalid,
   icon = true,
   size = 'auto',
@@ -95,6 +99,7 @@ export function TimePicker({
   'aria-describedby': ariaDescribedBy,
 }: TimePickerProps) {
   const { t } = useI18n();
+  const [control, setControl] = useState<HTMLDivElement | null>(null);
   const providerLocale = useOptionalI18n()?.locale;
   const locale = localeProp ?? providerLocale;
   const hourCycle = hourCycleProp ?? localeHourCycle(locale);
@@ -131,7 +136,7 @@ export function TimePicker({
     return { ...d, hour: (n % 12) + (periodFlag ? 12 : 0) };
   };
 
-  const { current, display, focusSegment, onKeyDown, buffer, segmentRefs } = useSegments({
+  const { current, draft, commit, display, focusSegment, onKeyDown, buffer, segmentRefs } = useSegments({
     value,
     defaultValue: defaultValue ?? null,
     onValueChange,
@@ -188,6 +193,7 @@ export function TimePicker({
           const isDisabled = disabled || p.disabled;
           return (
             <div
+              ref={setControl}
               role="group"
               id={p.id}
               aria-label={ariaLabel ?? (ariaLabelledBy || p['aria-labelledby'] ? undefined : t('timePicker.label'))}
@@ -249,6 +255,19 @@ export function TimePicker({
                   );
                 })}
               </div>
+              {clearable && !isDisabled && !readOnly && keys.some((key) => displayDraft(draft, key) !== null) && (
+                <ClearControlButton
+                  control={control}
+                  clearLabel={clearLabel}
+                  onClick={() => {
+                    buffer.current = null;
+                    commit(EMPTY);
+                    if (current === null) onValueChange?.(null);
+                    onClear?.();
+                    focusSegment(0);
+                  }}
+                />
+              )}
             </div>
           );
         }}

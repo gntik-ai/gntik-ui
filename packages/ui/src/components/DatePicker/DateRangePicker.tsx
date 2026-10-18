@@ -1,3 +1,5 @@
+import { type ClearableProps } from '../../utils/clear-control';
+import { Button } from '../Button';
 import { useRef, useState, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { Calendar, type CalendarRangeProps } from '../Calendar/Calendar';
@@ -14,12 +16,13 @@ type CalendarPassThrough = Pick<
   'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'numberOfMonths' | 'maxView' | 'captionLayout'
 >;
 
-export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVariantProps {
+export interface DateRangePickerProps extends CalendarPassThrough, DatePickerVariantProps, ClearableProps {
+  readOnly?: boolean;
   /** Ref to the trigger input. Focusing it leaves the popup closed. */
   ref?: Ref<HTMLInputElement>;
   value?: DateRange;
   defaultValue?: DateRange;
-  /** Fires with complete ranges only (both ends set). */
+  /** Fires with complete ranges, or an empty range when cleared. */
   onValueChange?: (range: DateRange) => void;
   /** Quick ranges shown beside the calendar; pass `[]` to hide them. */
   presets?: DateRangePreset[];
@@ -62,6 +65,10 @@ export function DateRangePicker({
   name,
   id,
   disabled,
+  readOnly,
+  clearable,
+  clearLabel,
+  onClear,
   invalid,
   size,
   className,
@@ -95,6 +102,7 @@ export function DateRangePicker({
     : (matchPreset(presets, draft, today) ?? (draft.start ? presets.find((p) => !p.range) : undefined));
 
   const setOpen = (next: boolean) => {
+    if (next && (readOnly || disabled)) return;
     if (next) {
       setDraft(range);
       setCustomActive(false);
@@ -107,6 +115,13 @@ export function DateRangePicker({
     setInner(next);
     onValueChange?.(next);
     setOpen(false);
+  };
+
+  const clear = () => {
+    setDraft(EMPTY);
+    setCustomActive(false);
+    apply(EMPTY);
+    onClear?.();
   };
 
   const pickPreset = (p: DateRangePreset) => {
@@ -127,6 +142,10 @@ export function DateRangePicker({
         placeholder={placeholder}
         id={id}
         disabled={disabled}
+        readOnly={readOnly}
+        clearable={clearable}
+        clearLabel={clearLabel}
+        onClear={clear}
         invalid={invalid}
         size={size}
         className={className}
@@ -189,6 +208,13 @@ export function DateRangePicker({
             today={today}
           />
         </div>
+        {clearable && (range.start || range.end) && !disabled && !readOnly && (
+          <div className={s.timeRow()}>
+            <Button size="sm" variant="ghost" onClick={clear}>
+              {t('common.clear')}
+            </Button>
+          </div>
+        )}
       </PopoverContent>
     </Popover>
   );

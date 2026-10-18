@@ -1,11 +1,15 @@
 import { Input as BaseInput } from '@base-ui/react/input';
-import type { ComponentType, ReactNode, Ref } from 'react';
+import { useState, type ComponentType, type ReactNode, type Ref } from 'react';
+import { useRender } from '@base-ui/react/use-render';
+import { ClearControlButton, resetNativeValue, type ClearableProps } from '../../utils/clear-control';
 import { cn } from '../../utils/cn';
 import { inputVariants, INPUT_ICON_SIZE, type InputVariantProps } from './input.variants';
 
 type IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean; className?: string }>;
 
-export interface InputProps extends Omit<BaseInput.Props, 'className' | 'size'>, InputVariantProps {
+export interface InputProps extends Omit<BaseInput.Props, 'className' | 'size'>, InputVariantProps, ClearableProps {
+  /** Clear a non-empty editable input on Escape and stop propagation. */
+  clearOnEscape?: boolean;
   /** Classes for the outer wrapper (border, width, layout). */
   className?: string;
   /** Classes for the native <input>. */
@@ -36,16 +40,64 @@ export function Input({
   leadingAddon,
   trailingAddon,
   invalid,
+  clearable,
+  clearLabel,
+  onClear,
+  clearOnEscape,
+  ref,
+  onValueChange,
+  onKeyDown,
   ...props
 }: InputProps) {
+  const [control, setControl] = useState<HTMLInputElement | null>(null);
+  const [inner, setInner] = useState(props.defaultValue ?? '');
+  const hasValue = String(props.value ?? (control ? control.value : inner)).length > 0;
+  const clear = () => {
+    if (!control || control.disabled || control.readOnly) return;
+    resetNativeValue(control);
+    onClear?.();
+    control.focus();
+  };
+  const input = useRender({
+    ref: [ref ?? null, setControl],
+    render: (
+      <BaseInput
+        {...props}
+        onValueChange={(value, details) => {
+          setInner(value);
+          onValueChange?.(value, details);
+        }}
+        onKeyDown={(event) => {
+          onKeyDown?.(event);
+          if (
+            !event.defaultPrevented &&
+            clearOnEscape &&
+            event.key === 'Escape' &&
+            event.currentTarget.value &&
+            !event.currentTarget.disabled &&
+            !event.currentTarget.readOnly
+          ) {
+            event.preventDefault();
+            event.stopPropagation();
+            clear();
+          }
+        }}
+        className={cn(inputVariants({ size }).input(), inputClassName)}
+        aria-invalid={props['aria-invalid'] ?? (invalid || undefined)}
+      />
+    ),
+  });
   const s = inputVariants({ size });
   const px = INPUT_ICON_SIZE[size];
   return (
     <div className={cn(s.root(), className)} data-invalid={invalid || undefined}>
       {LeadingIcon && <LeadingIcon size={px} aria-hidden className={s.icon()} />}
       {leadingAddon != null && <span className={s.addon()}>{leadingAddon}</span>}
-      <BaseInput className={cn(s.input(), inputClassName)} aria-invalid={invalid || undefined} {...props} />
+      {input}
       {trailingAddon != null && <span className={s.addon()}>{trailingAddon}</span>}
+      {clearable && hasValue && !props.disabled && !props.readOnly && (
+        <ClearControlButton control={control} clearLabel={clearLabel} onClick={clear} />
+      )}
       {TrailingIcon && <TrailingIcon size={px} aria-hidden className={s.icon()} />}
     </div>
   );

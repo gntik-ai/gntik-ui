@@ -1,6 +1,8 @@
 import { Field } from '@base-ui/react/field';
 import { mergeProps } from '@base-ui/react/merge-props';
-import type { ComponentProps, Ref } from 'react';
+import { useState, type ComponentProps, type Ref } from 'react';
+import { useRender } from '@base-ui/react/use-render';
+import { ClearControlButton, resetNativeValue, type ClearableProps } from '../../utils/clear-control';
 import { cn } from '../../utils/cn';
 import { textareaVariants, type TextareaVariantProps } from './textarea.variants';
 
@@ -9,7 +11,7 @@ type NativeTextareaProps = Omit<
   'className' | 'ref' | 'value' | 'defaultValue' | 'onChange'
 >;
 
-export interface TextareaProps extends NativeTextareaProps, TextareaVariantProps {
+export interface TextareaProps extends NativeTextareaProps, TextareaVariantProps, ClearableProps {
   className?: string;
   ref?: Ref<HTMLTextAreaElement>;
   value?: string;
@@ -40,26 +42,56 @@ export function Textarea({
   defaultValue,
   onValueChange,
   rows = 4,
+  clearable,
+  clearLabel,
+  onClear,
   ...rest
 }: TextareaProps) {
+  const [control, setControl] = useState<HTMLTextAreaElement | null>(null);
+  const [inner, setInner] = useState(defaultValue ?? '');
+  const hasValue = (value ?? (control ? control.value : inner)).length > 0;
+  const textarea = useRender({
+    ref: [ref ?? null, setControl],
+    render: (
+      <Field.Control
+        id={id}
+        name={name}
+        disabled={disabled}
+        value={value}
+        defaultValue={defaultValue}
+        onValueChange={(v) => {
+          setInner(v);
+          onValueChange?.(v);
+        }}
+        render={(controlProps) => (
+          <textarea
+            {...mergeProps<'textarea'>(controlProps as ComponentProps<'textarea'>, rest, {
+              rows: autosize ? undefined : rows,
+              'aria-invalid': invalid || undefined,
+              className: cn(textareaVariants({ size, resize, autosize }), clearable && 'pe-9', className),
+            })}
+          />
+        )}
+      />
+    ),
+  });
+  if (!clearable) return textarea;
   return (
-    <Field.Control
-      ref={ref as Ref<HTMLElement> | undefined}
-      id={id}
-      name={name}
-      disabled={disabled}
-      value={value}
-      defaultValue={defaultValue}
-      onValueChange={onValueChange ? (v) => onValueChange(v) : undefined}
-      render={(controlProps) => (
-        <textarea
-          {...mergeProps<'textarea'>(controlProps as ComponentProps<'textarea'>, rest, {
-            rows: autosize ? undefined : rows,
-            'aria-invalid': invalid || undefined,
-            className: cn(textareaVariants({ size, resize, autosize }), className),
-          })}
+    <div className="relative">
+      {textarea}
+      {hasValue && !disabled && !rest.readOnly && (
+        <ClearControlButton
+          className="absolute top-2 end-2"
+          control={control}
+          clearLabel={clearLabel}
+          onClick={() => {
+            if (!control) return;
+            resetNativeValue(control);
+            onClear?.();
+            control.focus();
+          }}
         />
       )}
-    />
+    </div>
   );
 }

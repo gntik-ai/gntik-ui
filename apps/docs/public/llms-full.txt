@@ -2786,7 +2786,7 @@ export default function DateFieldBasic() {
 
 ### DatePicker (`date-picker`)
 
-Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed.
+Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits.
 
 - Package: `@gntik-ai/ui` · export `DatePicker` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/DatePicker/DatePicker.doc.ts
@@ -2799,6 +2799,7 @@ Keyboard:
 
 | Key | Behaviour |
 | --- | --- |
+| Delete / Backspace | With clearable on a non-empty editable trigger: clears and keeps focus |
 | Enter / Space | On the field: opens the calendar with focus on the selected day (or today) |
 | Arrow keys / PageUp / PageDown / Home / End | Move through the calendar (see Calendar) |
 | Enter | In the calendar: picks the day (range: start, then end) and closes (`withTime`: stays open) |
@@ -2983,7 +2984,7 @@ export default function FieldValidation() {
 
 ### Input (`input`)
 
-Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field.
+Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name.
 
 - Package: `@gntik-ai/ui` · export `Input` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Input/Input.doc.ts
@@ -2996,6 +2997,7 @@ Keyboard:
 
 | Key | Behaviour |
 | --- | --- |
+| Escape | With clearOnEscape and non-empty editable text: clears and stops propagation; otherwise propagates |
 | Tab | Moves focus into the input; trailing addon buttons follow in tab order |
 | Click on label | Inside a Field, focuses the input |
 
@@ -3852,7 +3854,7 @@ export default function SecretFieldBasic() {
 
 ### Select (`select`)
 
-Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input).
+Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name.
 
 - Package: `@gntik-ai/ui` · export `Select` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Select/Select.doc.ts
@@ -3865,6 +3867,7 @@ Keyboard:
 
 | Key | Behaviour |
 | --- | --- |
+| Delete / Backspace | With clearable on a non-empty editable trigger: clears and keeps focus |
 | Enter / Space / ArrowDown | On the trigger: opens the popup |
 | ArrowDown / ArrowUp | Moves the highlight between options |
 | Enter | Selects the highlighted option and closes the popup |
@@ -4014,7 +4017,7 @@ export default function SwitchSettings() {
 
 ### Textarea (`textarea`)
 
-Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field.
+Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field. Opt-in `clearable` reserves space for a reset button and returns focus to the textarea. `onClear` runs after the value change; `clearLabel` overrides the localized name.
 
 - Package: `@gntik-ai/ui` · export `Textarea` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Textarea/Textarea.doc.ts
@@ -4066,7 +4069,7 @@ export default function TextareaAutosize() {
 
 ### TimePicker (`time-picker`)
 
-Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`"HH:mm"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it.
+Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`"HH:mm"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name.
 
 - Package: `@gntik-ai/ui` · export `TimePicker` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/TimePicker/TimePicker.doc.ts
@@ -6355,7 +6358,7 @@ export default function ThemeSwitcherCycle() {
 cn() class merging and tv() variants helpers used by every component.
 
 - Package: `@gntik-ai/ui` · export `cn` · group Utilities · status stable
-- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/utils/cn.ts
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/i18n/I18nProvider.tsx
 - Install: `gntik-ui add ui-utils`; own the source with `gntik-ui eject ui-utils`
 
 Usage:

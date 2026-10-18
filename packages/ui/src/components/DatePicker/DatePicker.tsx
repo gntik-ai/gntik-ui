@@ -1,3 +1,4 @@
+import { type ClearableProps } from '../../utils/clear-control';
 import { useId, useRef, useState, type Ref } from 'react';
 import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
 import { formatDate, toISODate } from '../Calendar/calendar-utils';
@@ -14,7 +15,8 @@ type CalendarPassThrough = Pick<
   'locale' | 'weekStartsOn' | 'min' | 'max' | 'isDateDisabled' | 'today' | 'maxView' | 'captionLayout'
 >;
 
-export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantProps {
+export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantProps, ClearableProps {
+  readOnly?: boolean;
   /** Ref to the trigger input. Focusing it leaves the popup closed. */
   ref?: Ref<HTMLInputElement>;
   value?: Date | null;
@@ -70,6 +72,10 @@ export function DatePicker({
   name,
   id,
   disabled,
+  readOnly,
+  clearable,
+  clearLabel,
+  onClear,
   invalid,
   size,
   className,
@@ -100,6 +106,7 @@ export function DatePicker({
   const open = openProp ?? innerOpen;
 
   const setOpen = (next: boolean) => {
+    if (next && (readOnly || disabled)) return;
     setInnerOpen(next);
     onOpenChange?.(next);
   };
@@ -108,6 +115,23 @@ export function DatePicker({
     setInner(d);
     onValueChange?.(d);
   };
+  const clear = () => {
+    change(null);
+    onClear?.();
+  };
+  const clearAction =
+    clearable && date && !disabled && !readOnly ? (
+      <Button
+        size="sm"
+        variant="ghost"
+        onClick={() => {
+          clear();
+          setOpen(false);
+        }}
+      >
+        {t('common.clear')}
+      </Button>
+    ) : null;
   const timeFormat: Intl.DateTimeFormatOptions = formatOptions ?? {
     year: 'numeric',
     month: 'short',
@@ -133,6 +157,10 @@ export function DatePicker({
         placeholder={placeholder}
         id={id}
         disabled={disabled}
+        readOnly={readOnly}
+        clearable={clearable}
+        clearLabel={clearLabel}
+        onClear={clear}
         invalid={invalid}
         size={size}
         className={className}
@@ -169,6 +197,7 @@ export function DatePicker({
           captionLayout={captionLayout}
           today={today}
         />
+        {!withTime && clearAction && <div className={s.timeRow()}>{clearAction}</div>}
         {withTime && (
           <div className={s.timeRow()}>
             <span id={timeLabelId} className={s.timeLabel()}>
@@ -188,6 +217,7 @@ export function DatePicker({
               size="sm"
               className="w-auto flex-1"
             />
+            {clearAction}
             <Button size="sm" onClick={() => setOpen(false)}>
               {t('datePicker.done')}
             </Button>
