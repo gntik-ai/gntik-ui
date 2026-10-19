@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 115 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 116 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -4240,6 +4240,186 @@ export default function TransferListColumns() {
       />
       <p className="text-[12px] text-muted-foreground">Table order: {visible.join(' · ')}</p>
     </div>
+  );
+}
+```
+
+### AgentSurface (`agent-surface`)
+
+Opt-in, placement-neutral renderer for v0.9 A2UI command envelopes (A2UI_VERSION). Pass an immutable messages log and a trusted catalog; append createSurface, updateComponents, updateDataModel and deleteSurface messages. Component records have id, component, optional children (child ids), and flat catalog properties; the root id is "root". Text/Heading/Badge use text; Text optionally accepts href; Heading accepts level 1–6. Card contains children; Stack accepts direction (row/column) and gap (0–12). Button uses label, optional disabled and action { name, context }; Input uses label, optional text value/disabled and only type text. Select uses label, options [{ value, label }], optional value/disabled; Checkbox uses label, optional checked/disabled. Alert uses title and optional text. { path: "/user/name" } reads a JSON Pointer; Input/Select value and Checkbox checked write back to that path. updateDataModel { surfaceId, path?, value } replaces the value at path (default: model root). Buttons, keyboard activation and implicit form submission emit onAction { name, surfaceId, context } with the current bound values. Replacing the log replays it; keep existing message objects stable when appending. Runtime validation rejects unsupported versions, malformed JSON, prototype keys, cycles, shared children and excessive trees (256 nodes, depth 32, 32 surfaces). Missing child definitions may arrive later. Unknown components and invalid properties show a localized placeholder and report a deduplicated onError diagnostic. The visible, accessible agent-content frame cannot be relabelled by the agent. Delete restores focus to the next surviving sibling control, a textarea composer, or the labelled container. defineAgentCatalog accepts trusted host wrappers { component, validate }; validate must return a fresh allow-list of known properties or null. Wrappers receive { props, children, onValueChange, onAction } and must assign explicit kit props. Never spread agent data into elements. Recognized URL properties reuse Markdown safeUrl; text renders as React text nodes. Custom catalogs can reintroduce phishing and executable content: audit their wrappers and validators, never allow passwords, payments, file uploads, arbitrary markup or host-chrome styling. Transport, side-panel placement, v0.8 adapters and Markdown integration belong to consumers or future changes. The live example demonstrates every default entry, model patches, actions, rejection, deletion and reset.
+
+- Package: `@gntik-ai/chat` · export `AgentSurface` · group Layout · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/AgentSurface/AgentSurface.doc.ts
+- Primitive: `Kit components (Base UI)`
+- ARIA pattern: labelled region containing a form
+- Registry dependencies: markdown
+- Install: `gntik-ui add agent-surface`; own the source with `gntik-ui eject agent-surface`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Moves between enabled form controls and links |
+| Enter / Space | Activates a Button exactly once; Enter in an Input submits with the first Button |
+| Space | Toggles a Checkbox and updates its bound model path |
+| Enter / ArrowDown | Opens a Select; ArrowUp/ArrowDown navigates options |
+| Enter / Escape | Selects an option / closes a Select and returns focus |
+| Surface deletion | Moves focus to a surviving sibling control, the composer, or the labelled container |
+
+Tokens: background, card, border, foreground, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { Button, Stack, Text } from '@gntik-ai/ui';
+import { useState } from 'react';
+import { useChatI18n } from '@gntik-ai/chat';
+import { AgentSurface } from '@gntik-ai/chat';
+import { defaultAgentCatalog } from '@gntik-ai/chat';
+import { A2UI_VERSION, type A2uiMessage } from '@gntik-ai/chat';
+
+/** Transport belongs to the consumer. This example appends commands locally. */
+export default function AgentSurfaceForm() {
+  const { tc } = useChatI18n();
+  function initial(): A2uiMessage[] {
+    return [
+      { version: A2UI_VERSION, createSurface: { surfaceId: 's1' } },
+      {
+        version: A2UI_VERSION,
+        updateDataModel: {
+          surfaceId: 's1',
+          value: { user: { name: 'Ana' }, language: 'en', notify: false, submitted: false },
+        },
+      },
+      {
+        version: A2UI_VERSION,
+        updateComponents: {
+          surfaceId: 's1',
+          components: [
+            { id: 'root', component: 'Card', children: ['stack'] },
+            {
+              id: 'stack',
+              component: 'Stack',
+              direction: 'column',
+              gap: 3,
+              children: ['heading', 'badge', 'notice', 'name', 'echo', 'language', 'notify', 'link', 'submit'],
+            },
+            { id: 'heading', component: 'Heading', text: tc('chat.surfaceExampleTitle'), level: 2 },
+            { id: 'badge', component: 'Badge', text: tc('chat.surfaceExampleBadge') },
+            {
+              id: 'notice',
+              component: 'Alert',
+              title: tc('chat.surfaceExampleTitle'),
+              text: tc('chat.surfaceExampleNotice'),
+            },
+            {
+              id: 'name',
+              component: 'Input',
+              disabled: { path: '/submitted' },
+              label: tc('chat.surfaceExampleName'),
+              value: { path: '/user/name' },
+            },
+            { id: 'echo', component: 'Text', text: { path: '/user/name' } },
+            {
+              id: 'language',
+              component: 'Select',
+              disabled: { path: '/submitted' },
+              label: tc('chat.surfaceExampleChoice'),
+              value: { path: '/language' },
+              options: [
+                { value: 'en', label: tc('chat.surfaceExampleEnglish') },
+                { value: 'es', label: tc('chat.surfaceExampleSpanish') },
+              ],
+            },
+            {
+              id: 'notify',
+              component: 'Checkbox',
+              disabled: { path: '/submitted' },
+              label: tc('chat.surfaceExampleNotify'),
+              checked: { path: '/notify' },
+            },
+            { id: 'link', component: 'Text', text: tc('chat.surfaceExampleLink'), href: 'https://ui.gntik.ai' },
+            {
+              id: 'submit',
+              component: 'Button',
+              disabled: { path: '/submitted' },
+              label: tc('chat.surfaceExampleSubmit'),
+              action: {
+                name: 'submit',
+                context: {
+                  name: { path: '/user/name' },
+                  language: { path: '/language' },
+                  notify: { path: '/notify' },
+                },
+              },
+            },
+          ],
+        },
+      },
+    ];
+  }
+  const [messages, setMessages] = useState(initial);
+  const [removed, setRemoved] = useState(false);
+  const [status, setStatus] = useState('');
+  const append = (message: A2uiMessage) => setMessages((current) => [...current, message]);
+  return (
+    <Stack gap={3}>
+      <AgentSurface
+        messages={messages}
+        catalog={defaultAgentCatalog}
+        onAction={({ context }) => {
+          setStatus(tc('chat.surfaceExampleStatus', { name: String(context.name ?? '') }));
+          append({ version: A2UI_VERSION, updateDataModel: { surfaceId: 's1', path: '/submitted', value: true } });
+        }}
+        onError={() => setStatus(tc('chat.surfaceExampleRejected'))}
+      />
+      <Stack direction="row" gap={2} wrap>
+        <Button
+          variant="secondary"
+          disabled={removed}
+          onClick={() =>
+            append({ version: A2UI_VERSION, updateDataModel: { surfaceId: 's1', path: '/user/name', value: 'Bea' } })
+          }
+        >
+          {tc('chat.surfaceExamplePatch')}
+        </Button>
+        <Button
+          variant="secondary"
+          disabled={removed}
+          onClick={() =>
+            append({
+              version: A2UI_VERSION,
+              updateComponents: { surfaceId: 's1', components: [{ id: 'root', component: 'Iframe' }] },
+            })
+          }
+        >
+          {tc('chat.surfaceExampleUnsupported')}
+        </Button>
+        <Button
+          variant="secondary"
+          disabled={removed}
+          onClick={() => {
+            append({ version: A2UI_VERSION, deleteSurface: { surfaceId: 's1' } });
+            setRemoved(true);
+          }}
+        >
+          {tc('chat.surfaceExampleRemove')}
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setMessages(initial());
+            setRemoved(false);
+            setStatus('');
+          }}
+        >
+          {tc('chat.surfaceExampleReset')}
+        </Button>
+      </Stack>
+      <Text role="status" aria-live="polite">
+        {status}
+      </Text>
+    </Stack>
   );
 }
 ```
