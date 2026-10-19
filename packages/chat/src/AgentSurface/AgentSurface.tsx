@@ -72,6 +72,7 @@ export function AgentSurface({ messages, catalog, onError, onAction }: AgentSurf
     <section
       key={id}
       data-agent-surface={id}
+      role="group"
       aria-label={tc('chat.surfaceAgentContent')}
       className="rounded-lg border border-border bg-background p-3"
     >

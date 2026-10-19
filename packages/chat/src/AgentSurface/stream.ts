@@ -37,6 +37,8 @@ export function consume(previous: StreamState, messages: A2uiMessage[]): StreamS
       if (parsed.error.code === 'version') {
         state.blocked.add(parsed.error.surfaceId);
         state.surfaces.delete(parsed.error.surfaceId);
+        // Keep the focus fallback mounted only if this surface was previously rendered.
+        if (previous.surfaces.has(parsed.error.surfaceId)) state.deleted = true;
       }
       state.errors.push(parsed.error);
       continue;

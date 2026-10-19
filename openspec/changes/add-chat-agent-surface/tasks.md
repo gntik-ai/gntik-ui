@@ -14,12 +14,13 @@
 - [x] Cover unknown types, invalid props, URL/HTML/handler controls and custom-validator errors.
 - [x] Cover malformed/versioned commands, graph limits and prototype-pollution guards.
 - [x] Cover focus recovery, keyboard operation and semantic axe checks in three themes (jsdom).
+- [x] Reproduce and fix duplicate landmarks across multiple surfaces and focus loss on late unsupported versions; add renderer-seam regressions before each fix.
 
 ## Docs and release
 
 - [x] Add live docs with every default entry, patches, actions, rejection and deletion.
 - [x] Add one changeset: minor chat and patch ui.
-- [x] Regenerate registries and run repository gates; the token mirror-install test requires a local socket (listen EPERM in the sandbox).
+- [x] Regenerate registries and run repository gates; the token mirror-install test was rerun and cannot bind its local socket (listen EPERM on 127.0.0.1 in this sandbox); its result is skipped, while the other token tests pass.
 - [x] Validate OpenSpec with the CLI in strict mode.
 - [ ] Run browser axe with color contrast in PR CI; the sandbox has no Playwright Chromium executable.
 

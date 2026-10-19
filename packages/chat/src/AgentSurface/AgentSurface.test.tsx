@@ -20,6 +20,32 @@ const card = components([
 ]);
 
 describe('AgentSurface', () => {
+  it.each(['one renderer', 'separate renderers'])('multiple surfaces are axe clean in %s', async (placement) => {
+    const second: A2uiMessage[] = [
+      { version: A2UI_VERSION, createSurface: { surfaceId: 's2' } },
+      {
+        version: A2UI_VERSION,
+        updateComponents: { surfaceId: 's2', components: [{ id: 'root', component: 'Text', text: 'Second' }] },
+      },
+    ];
+    const { container } = render(
+      placement === 'one renderer' ? (
+        <AgentSurface messages={[create, card, ...second]} catalog={defaultAgentCatalog} />
+      ) : (
+        <>
+          <AgentSurface messages={[create, card]} catalog={defaultAgentCatalog} />
+          <AgentSurface messages={[create, card]} catalog={defaultAgentCatalog} />
+        </>
+      ),
+    );
+    expect(container.querySelectorAll('[data-agent-surface]')).toHaveLength(2);
+    for (const frame of container.querySelectorAll('[data-agent-surface]')) {
+      expect(frame).toHaveAccessibleName('Agent content');
+      expect(frame).toHaveTextContent('Agent content');
+    }
+    await expectNoAxeViolations(container);
+  });
+
   it('progressively renders kit components and patches a child without remounting its Card', () => {
     const { rerender } = render(<AgentSurface messages={[create]} catalog={defaultAgentCatalog} />);
     expect(screen.queryByText('Hello')).toBeNull();
@@ -79,7 +105,8 @@ describe('AgentSurface', () => {
     );
     expect(screen.getByText('<img src=x onerror=alert(1)>')).toBeInTheDocument();
     expect(container.querySelector('img,iframe,.agent-class,[style],[onclick]')).toBeNull();
-    expect(screen.getByRole('region', { name: 'Agent content' })).toHaveTextContent('Agent content');
+    expect(screen.getByText('Agent content')).toBeInTheDocument();
+    expect(screen.getAllByRole('group', { name: 'Agent content' })).toHaveLength(2);
   });
 
   it('binds Input and Text to the current model, supports keyboard submit and resolves action context once', async () => {
@@ -342,10 +369,35 @@ describe('AgentSurface', () => {
       await user.click(screen.getByRole('button', { name: 'Submit' }));
       rerender(view([create, card, remove]));
       expect(screen.queryByRole('button', { name: 'Submit' })).toBeNull();
-      expect(screen.queryByRole('region', { name: 'Agent content' })).toBeNull();
+      expect(screen.queryByText('Agent content')).toBeNull();
       if (destination === 'sibling') expect(screen.getByRole('button', { name: 'Next' })).toHaveFocus();
       else if (destination === 'composer') expect(screen.getByRole('textbox', { name: 'Message' })).toHaveFocus();
       else expect(document.activeElement).not.toBe(document.body);
+    },
+  );
+  it.each(['sibling', 'composer', 'container'])(
+    'suppresses a focused surface on a later unsupported version and restores focus to the %s',
+    async (destination) => {
+      const user = userEvent.setup();
+      const onError = vi.fn();
+      const unsupported = { ...card, version: 'v0.8' } as unknown as A2uiMessage;
+      const view = (messages: A2uiMessage[]) => (
+        <>
+          <AgentSurface messages={messages} catalog={defaultAgentCatalog} onError={onError} />
+          {destination === 'sibling' && <button>Next</button>}
+          {destination === 'composer' && <textarea aria-label="Message" />}
+        </>
+      );
+      const { rerender } = render(view([create, card]));
+      await user.click(screen.getByRole('button', { name: 'Submit' }));
+      rerender(view([create, card, unsupported]));
+      expect(screen.queryByRole('button', { name: 'Submit' })).toBeNull();
+      expect(screen.queryByText('Agent content')).toBeNull();
+      expect(onError).toHaveBeenCalledExactlyOnceWith({ code: 'version', surfaceId: 's1' });
+      expect(document.activeElement).not.toBe(document.body);
+      if (destination === 'sibling') expect(screen.getByRole('button', { name: 'Next' })).toHaveFocus();
+      else if (destination === 'composer') expect(screen.getByRole('textbox', { name: 'Message' })).toHaveFocus();
+      else expect(screen.getByRole('group', { name: 'Agent content' })).toHaveFocus();
     },
   );
   it('does not move focus when deleting an unfocused surface', () => {
@@ -470,7 +522,7 @@ describe('AgentSurface', () => {
         <AgentSurfaceForm />
       </I18nProvider>,
     );
-    expect(screen.getByRole('region', { name: 'Contenido del agente' })).toBeInTheDocument();
+    expect(screen.getAllByRole('group', { name: 'Contenido del agente' })).toHaveLength(2);
     expect(screen.getByRole('textbox', { name: 'Nombre' })).toHaveValue('Ana');
     expect(screen.getByRole('button', { name: 'Enviar' })).toBeInTheDocument();
   });

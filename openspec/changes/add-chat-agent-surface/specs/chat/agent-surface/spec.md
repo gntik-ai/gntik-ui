@@ -44,7 +44,7 @@ Surfaces SHALL render an adjacency list rooted at root, keyed by component id. M
 
 ### Requirement: Bindings resolve JSON Pointer paths
 
-A prop given as { path } SHALL read from the model at that RFC 6901 pointer. Input and Select value and Checkbox checked MUST write user changes back immutably. updateDataModel SHALL replace the value at its path, defaulting to the model root, and update every bound component. Pointer reads and writes MUST reject **proto**, prototype and constructor segments, malformed escapes and excessive depth. Model payloads MUST reject prototype keys.
+A prop given as { path } SHALL read from the model at that RFC 6901 pointer. Input and Select value and Checkbox checked MUST write user changes back immutably. updateDataModel SHALL replace the value at its path, defaulting to the model root, and update every bound component. Pointer reads and writes MUST reject `__proto__`, `prototype` and `constructor` segments, malformed escapes and excessive depth. Model payloads MUST reject prototype keys.
 
 #### Scenario: Two-way Input
 
