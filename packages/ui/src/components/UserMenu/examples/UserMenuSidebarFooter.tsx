@@ -1,4 +1,5 @@
-import { SidebarLayout, UserMenu } from '@gntik-ai/ui';
+import { SidebarLayout } from '../../../layouts/SidebarLayout';
+import { UserMenu } from '../UserMenu';
 
 export default function UserMenuSidebarFooter() {
   return (

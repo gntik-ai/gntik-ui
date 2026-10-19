@@ -27,6 +27,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
         buttonWidth: button.getBoundingClientRect().width,
         footerContentWidth: footer.clientWidth - parseFloat(padding.paddingLeft) - parseFloat(padding.paddingRight),
         sidebarOverflows: sidebar.scrollWidth > sidebar.clientWidth,
+        buttonOverflowsVertically: button.scrollHeight > button.clientHeight,
         emailOverflows: email.scrollWidth > email.clientWidth,
         textOverflow: getComputedStyle(email).textOverflow,
       };
@@ -34,6 +35,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     expect(layout.sidebarWidth).toBe(248);
     expect(layout.buttonWidth).toBeCloseTo(layout.footerContentWidth, 0);
     expect(layout.sidebarOverflows).toBe(false);
+    expect(layout.buttonOverflowsVertically).toBe(false);
     expect(layout.emailOverflows).toBe(true);
     expect(layout.textOverflow).toBe('ellipsis');
 

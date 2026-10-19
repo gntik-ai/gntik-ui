@@ -122,13 +122,18 @@ describe('UserMenu', () => {
   it.each(['dark', 'light', 'high_contrast'])(
     'the sidebar example has no axe violations closed and open in %s',
     async (theme) => {
-      document.documentElement.className = theme === 'light' ? '' : theme;
-      const user = userEvent.setup();
-      render(<UserMenuSidebarFooter />);
-      await expectNoAxeViolations();
-      await user.click(screen.getByRole('button', { name: 'Account menu for Ana López' }));
-      await screen.findByRole('menu');
-      await expectNoAxeViolations();
+      const previousTheme = document.documentElement.className;
+      try {
+        document.documentElement.className = theme === 'light' ? '' : theme;
+        const user = userEvent.setup();
+        render(<UserMenuSidebarFooter />);
+        await expectNoAxeViolations();
+        await user.click(screen.getByRole('button', { name: 'Account menu for Ana López' }));
+        await screen.findByRole('menu');
+        await expectNoAxeViolations();
+      } finally {
+        document.documentElement.className = previousTheme;
+      }
     },
   );
 
