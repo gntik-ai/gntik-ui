@@ -7,10 +7,18 @@ const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
 async function checkAxe(page, section) {
   const violations = await page.evaluate(async (selector) => {
-    // The listbox is portaled outside the example section.
+    const example = document.querySelector(selector);
+    const input = example.querySelector('[role="combobox"][aria-expanded="true"]');
+    const list = input && document.getElementById(input.getAttribute('aria-controls'));
+    // Base UI aria-hides the background, including the catalog's unrelated listboxes.
+    // Audit the full section when closed; when open, audit the input and its entire
+    // portaled popup (including async status), rather than the hidden background.
+    const context = input && list ? [input, list.parentElement] : example;
     // eslint-disable-next-line no-undef
-    const result = await axe.run({ include: [selector, '[role="listbox"]'] });
-    return result.violations.map((violation) => violation.id);
+    const result = await axe.run(context);
+    return result.violations.flatMap((violation) =>
+      violation.nodes.map((node) => `${violation.id}: ${node.target.join(' ')}`),
+    );
   }, section);
   expect(violations).toEqual([]);
 }
@@ -47,9 +55,13 @@ for (const theme of ['dark', '', 'high_contrast']) {
     await page.goto('/#ui-components');
     const section = page.locator('#ui-Combobox');
     const input = section.getByRole('combobox', { name: 'Nodes (10,000 options)' });
-    await input.click();
+    await expect(input).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
+    for (const selector of ['#ui-Combobox', '#ui-MultiSelect', '#ui-TransferList']) {
+      await checkAxe(page, selector);
+    }
+    await input.click();
     const list = await controlledList(page, input);
     expect(await list.getByRole('option').count()).toBeLessThanOrEqual(20);
     expect(await list.evaluate((element) => element.scrollHeight)).toBe(320000);
