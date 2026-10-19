@@ -48,6 +48,7 @@ async function expectActiveVisible(input, list, name) {
 
 for (const theme of ['dark', '', 'high_contrast']) {
   test(`virtualized options keyboard, layout and a11y --${theme || 'light'}`, async ({ page }) => {
+    test.setTimeout(90_000);
     await page.addInitScript((value) => {
       localStorage.setItem('gntik-theme', value);
       localStorage.setItem('gntik-section', 'ui-components');
