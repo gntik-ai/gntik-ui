@@ -15,8 +15,17 @@ async function checkAxe(page, section) {
   expect(violations).toEqual([]);
 }
 
-async function expectActiveVisible(input, page, name) {
-  const option = page.getByRole('option', { name, exact: true });
+async function controlledList(page, input) {
+  await expect(input).toHaveAttribute('aria-controls', /.+/);
+  const id = await input.getAttribute('aria-controls');
+  // The catalog also contains unrelated, persistent TransferList listboxes.
+  const list = page.getByRole('listbox').and(page.locator(`[id="${id}"]`));
+  await expect(list).toBeVisible();
+  return list;
+}
+
+async function expectActiveVisible(input, list, name) {
+  const option = list.getByRole('option', { name, exact: true });
   await expect(option).toHaveAttribute('data-highlighted', '');
   await expect(input).toHaveAttribute('aria-activedescendant', await option.getAttribute('id'));
   expect(
@@ -41,29 +50,36 @@ for (const theme of ['dark', '', 'high_contrast']) {
     await input.click();
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
-    const list = page.getByRole('listbox');
+    const list = await controlledList(page, input);
     expect(await list.getByRole('option').count()).toBeLessThanOrEqual(20);
     expect(await list.evaluate((element) => element.scrollHeight)).toBe(320000);
     await expect(list.getByRole('option').first()).toHaveAttribute('aria-setsize', '10000');
     await input.press('ArrowDown');
     for (let i = 0; i < 50; i++) await input.press('ArrowDown');
-    await expectActiveVisible(input, page, 'node-51');
+    await expectActiveVisible(input, list, 'node-51');
     await input.press('End');
-    await expectActiveVisible(input, page, 'node-10000');
+    await expectActiveVisible(input, list, 'node-10000');
     await input.fill('node-4242');
     await expect(list.getByRole('option')).toHaveCount(1);
     expect(await list.evaluate((element) => element.scrollTop)).toBe(0);
     await input.press('ArrowDown');
     await input.press('Enter');
+    await expect(input).toHaveAttribute('aria-expanded', 'false');
     await expect(list).toHaveCount(0);
     const trigger = input.locator('..').getByRole('button', { name: 'Show options' });
     await trigger.click();
-    await expect(page.getByRole('option', { name: 'node-4242', exact: true })).toHaveAttribute('aria-selected', 'true');
-    const selectedVisible = await page.getByRole('option', { name: 'node-4242', exact: true }).evaluate((element) => {
-      const row = element.getBoundingClientRect();
-      const viewport = element.closest('[role="listbox"]').getBoundingClientRect();
-      return row.top >= viewport.top - 1 && row.bottom <= viewport.bottom + 1;
-    });
+    const reopenedList = await controlledList(page, input);
+    await expect(reopenedList.getByRole('option', { name: 'node-4242', exact: true })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+    const selectedVisible = await reopenedList
+      .getByRole('option', { name: 'node-4242', exact: true })
+      .evaluate((element) => {
+        const row = element.getBoundingClientRect();
+        const viewport = element.closest('[role="listbox"]').getBoundingClientRect();
+        return row.top >= viewport.top - 1 && row.bottom <= viewport.bottom + 1;
+      });
     expect(selectedVisible).toBe(true);
     await checkAxe(page, '#ui-Combobox');
     await input.press('Escape');
@@ -73,14 +89,16 @@ for (const theme of ['dark', '', 'high_contrast']) {
     );
     const remote = section.getByRole('combobox', { name: 'Remote nodes (5,000 options)' });
     await remote.click();
-    await expect(page.getByRole('option').first()).toHaveAttribute('aria-setsize', '5000');
+    const remoteList = await controlledList(page, remote);
+    await expect(remoteList.getByRole('option').first()).toHaveAttribute('aria-setsize', '5000');
     await checkAxe(page, '#ui-Combobox');
     await remote.press('Escape');
     await expect(remote).toHaveAttribute('aria-expanded', 'false');
 
     const multi = page.locator('#ui-MultiSelect').getByRole('combobox', { name: 'Nodes (5,000 options)' });
     await multi.click();
-    expect(await page.getByRole('option').count()).toBeLessThanOrEqual(20);
+    const multiList = await controlledList(page, multi);
+    expect(await multiList.getByRole('option').count()).toBeLessThanOrEqual(20);
     await checkAxe(page, '#ui-MultiSelect');
     await multi.press('Escape');
     await expect(multi).toHaveAttribute('aria-expanded', 'false');
