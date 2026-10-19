@@ -1,5 +1,5 @@
 import { Menu as BaseMenu } from '@base-ui/react/menu';
-import { LogOut, Palette } from 'lucide-react';
+import { ChevronsUpDown, LogOut, Palette } from 'lucide-react';
 import { createElement, type ComponentType, type ReactNode } from 'react';
 import { useTheme, type ThemeMode } from '../../theme/ThemeProvider';
 import { cn } from '../../utils/cn';
@@ -59,6 +59,8 @@ export interface UserMenuProps {
   signOutLabel?: string;
   /** Show the user's name next to the avatar in the trigger. */
   showName?: boolean;
+  /** Full-width name/email trigger for sidebar footers; implies showName. Disable in collapsed rails. */
+  showEmail?: boolean;
   /** Accessible name of the trigger. */
   triggerLabel?: string;
   /** Extra content at the end of the menu (before sign out). */
@@ -114,7 +116,8 @@ export function UserMenu({
   themeLabel: themeLabelProp,
   onSignOut,
   signOutLabel: signOutLabelProp,
-  showName = false,
+  showName: showNameProp = false,
+  showEmail = false,
   triggerLabel,
   children,
 }: UserMenuProps) {
@@ -123,7 +126,8 @@ export function UserMenu({
   const signOutLabel = signOutLabelProp ?? t('userMenu.signOut');
   const themeOptions = useThemeOptions(themeOptionsProp);
   const { mode, setMode } = useTheme();
-  const s = userMenuVariants({ showName });
+  const showName = showNameProp || showEmail;
+  const s = userMenuVariants({ showName, showEmail });
   const hasEnd = showTheme || children || onSignOut;
   return (
     <Menu>
@@ -132,7 +136,15 @@ export function UserMenu({
         className={cn(s.trigger(), className)}
       >
         <Avatar src={user.avatarSrc} initials={getInitials(user.name)} size="sm" shape="rounded" />
-        {showName && <span className={s.triggerName()}>{user.name}</span>}
+        {showEmail ? (
+          <span className={s.triggerText()}>
+            <span className={s.name()}>{user.name}</span>
+            {user.email && <span className={s.email()}>{user.email}</span>}
+          </span>
+        ) : (
+          showName && <span className={s.triggerName()}>{user.name}</span>
+        )}
+        {showEmail && <ChevronsUpDown size={15} aria-hidden className={s.triggerChevron()} />}
       </MenuTrigger>
       <MenuContent align="end" className={s.popup()}>
         <MenuGroup aria-label={user.name}>

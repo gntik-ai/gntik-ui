@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Navigation',
   status: 'beta',
   description:
-    'Account menu for the topbar: avatar trigger (optionally with the name) opening a name/email header, data-driven items (buttons or router links), a Theme submenu bound to useTheme(), and a destructive Sign out.',
+    'Account menu for topbars and sidebar footers: avatar trigger (optionally with the name), or showEmail for a full-width name/email trigger in a sidebar footer. Disable showEmail in a collapsed rail. Opens a name/email header, data-driven items (buttons or router links), a Theme submenu bound to useTheme(), and a destructive Sign out.',
   primitive: '@base-ui/react/menu',
   pattern: 'menu button',
   keyboard: [
@@ -23,6 +23,7 @@ export const doc: ComponentDoc = {
     'accent',
     'accent-foreground',
     'secondary',
+    'foreground',
     'muted-foreground',
     'destructive-text',
     'focus-ring',
