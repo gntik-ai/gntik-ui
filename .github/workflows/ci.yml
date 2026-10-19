@@ -41,9 +41,16 @@ jobs:
       - name: Gate — musematic and Falcone are built only from the kit
         run: node apps/musematic/scripts/check-kit-only.mjs && node apps/falcone/scripts/check-kit-only.mjs
 
+  # The axe suite (about 750 tests, 13.5 min in one job) runs in three Playwright shards,
+  # so a CI cycle is about 5 min of a11y instead of 14. It does not wait for `checks`: each
+  # job builds what it needs, and a red PR then reports every failing suite in one cycle.
   a11y:
-    needs: checks
+    name: a11y (${{ matrix.shard }}/3)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v7
       - run: corepack enable
@@ -55,10 +62,9 @@ jobs:
       - run: pnpm --filter @gntik-ai/docs build
       - run: pnpm --filter @gntik-ai/docs exec playwright install --with-deps chromium
       - name: axe on @gntik-ai/ui in dark, light and high contrast (against a11y-baseline.json)
-        run: pnpm a11y
+        run: pnpm --filter @gntik-ai/docs exec playwright test a11y --shard=${{ matrix.shard }}/3
 
   visual:
-    needs: checks
     runs-on: ubuntu-latest
     # Baselines are recorded on this runner image (see visual-update below): fonts and
     # antialiasing differ between machines, so CI is the reference renderer.
