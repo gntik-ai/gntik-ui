@@ -7,6 +7,8 @@ import { ComboboxSpecialItem } from '../Combobox/Combobox';
 import { comboboxVariants } from '../Combobox/combobox.variants';
 import { createItem, hasExactLabel, isSpecialItem, retryItem, type SpecialItem } from '../Combobox/specialItems';
 import { useAsyncOptions, type LoadOptions } from '../Combobox/useAsyncOptions';
+import { WindowedComboboxList, WindowedComboboxRoot, navigateVirtualOptions } from '../Combobox/WindowedCombobox';
+import type { MeasuredRowOptions } from '../VirtualList/use-measured-rows';
 import { Spinner } from '../Spinner';
 import { multiSelectVariants, type MultiSelectVariantProps } from './multi-select.variants';
 
@@ -20,7 +22,9 @@ export interface MultiSelectOption {
   disabled?: boolean;
 }
 
-export interface MultiSelectProps extends MultiSelectVariantProps {
+export interface MultiSelectProps extends MultiSelectVariantProps, MeasuredRowOptions {
+  /** Render only the visible option rows. Default false. */
+  virtualized?: boolean;
   options: MultiSelectOption[];
   /** Selected option values (controlled). */
   value?: string[];
@@ -108,6 +112,10 @@ export function MultiSelect({
   createLabel,
   loadingText,
   errorText,
+  virtualized = false,
+  itemHeight,
+  estimatedItemHeight,
+  overscan,
 }: MultiSelectProps) {
   const { t } = useI18n();
   const placeholder = placeholderProp ?? t('common.searchPlaceholder');
@@ -189,8 +197,11 @@ export function MultiSelect({
   const visible = selected.slice(0, maxVisibleChips);
   const hidden = selected.length - visible.length;
 
+  const Root = virtualized ? WindowedComboboxRoot : BaseCombobox.Root;
+  const List = virtualized ? WindowedComboboxList : BaseCombobox.List;
   return (
-    <BaseCombobox.Root
+    <Root
+      virtualized={virtualized}
       items={items}
       multiple
       value={selected}
@@ -242,6 +253,7 @@ export function MultiSelect({
             aria-invalid={invalid || undefined}
             placeholder={selected.length ? undefined : placeholder}
             className={cb.chipsInput()}
+            onKeyDown={virtualized ? navigateVirtualOptions : undefined}
           />
         </BaseCombobox.Chips>
         {selected.length > 0 && (
@@ -255,7 +267,7 @@ export function MultiSelect({
       </BaseCombobox.InputGroup>
       <BaseCombobox.Portal>
         <BaseCombobox.Positioner dir={dir} className={cb.positioner()} side="bottom" align="start" sideOffset={6}>
-          <BaseCombobox.Popup className={cb.popup()}>
+          <BaseCombobox.Popup className={cn(cb.popup(), virtualized && 'flex flex-col overflow-hidden')}>
             {(loadOptions || onCreate) && (
               <BaseCombobox.Status className={cn(cb.status(), !!remote.error && !remote.loading && cb.statusError())}>
                 {remote.loading ? (
@@ -269,7 +281,10 @@ export function MultiSelect({
               </BaseCombobox.Status>
             )}
             <BaseCombobox.Empty className={cb.empty()}>{busy ? null : emptyText}</BaseCombobox.Empty>
-            <BaseCombobox.List className={cb.list()} aria-busy={remote.loading || undefined}>
+            <List
+              {...(virtualized ? { itemHeight, estimatedItemHeight, overscan } : { className: cb.list() })}
+              aria-busy={remote.loading || undefined}
+            >
               {(o: MultiSelectOption | SpecialItem) =>
                 isSpecialItem(o) ? (
                   <ComboboxSpecialItem key={`${o.__gntikSpecial}:${o.value}`} item={o} createLabel={createLabel} />
@@ -298,10 +313,10 @@ export function MultiSelect({
                   </BaseCombobox.Item>
                 )
               }
-            </BaseCombobox.List>
+            </List>
           </BaseCombobox.Popup>
         </BaseCombobox.Positioner>
       </BaseCombobox.Portal>
-    </BaseCombobox.Root>
+    </Root>
   );
 }

@@ -105,3 +105,29 @@ describe('TransferList', () => {
     await expectNoAxeViolations();
   });
 });
+
+it('windows both panes while keyboard checks, bulk moves and reordering use every item', async () => {
+  const items = Array.from({ length: 2000 }, (_, i) => ({ value: `node-${i + 1}`, label: `Node ${i + 1}` }));
+  const { user, available, selected, onValueChange, active } = setup({ items, defaultValue: [], virtualized: true });
+  expect(within(available).getAllByRole('option').length).toBeLessThanOrEqual(20);
+  expect(within(available).getAllByRole('option')[0]).toHaveAttribute('aria-setsize', '2000');
+  available.focus();
+  await user.keyboard('{End} ');
+  const last = within(available).getByRole('option', { name: 'Node 2000' });
+  expect(available).toHaveAttribute('aria-activedescendant', last.id);
+  expect(last).toHaveAttribute('aria-selected', 'true');
+  expect(last).toHaveAttribute('aria-posinset', '2000');
+  expect(available.scrollTop).toBeGreaterThan(0);
+  await user.keyboard('{Home}{ArrowDown}');
+  expect(active(available)).toBe('Node 2');
+  await user.keyboard('{Control>}a{/Control}');
+  expect(screen.getByText('2000/2000')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Add all' }));
+  expect(onValueChange).toHaveBeenLastCalledWith(items.map((item) => item.value));
+  expect(within(available).queryAllByRole('option')).toHaveLength(0);
+  expect(within(selected).getAllByRole('option').length).toBeLessThanOrEqual(20);
+  selected.focus();
+  await user.keyboard('{End} {Alt>}{ArrowUp}{/Alt}');
+  expect(onValueChange.mock.lastCall?.[0].slice(-2)).toEqual(['node-2000', 'node-1999']);
+  expect(active(selected)).toBe('Node 2000');
+});

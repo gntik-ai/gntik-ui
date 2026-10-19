@@ -212,3 +212,42 @@ describe('Combobox creatable (onCreate)', () => {
     await expectNoAxeViolations();
   });
 });
+
+it('virtualized async options announce loading, window 5000 results and retry an error', async () => {
+  const pending = deferred<Opt[]>();
+  const options = Array.from({ length: 5000 }, (_, i) => ({ value: `node-${i + 1}`, label: `Node ${i + 1}` }));
+  const load = vi
+    .fn<(query: string) => Promise<Opt[]>>()
+    .mockReturnValueOnce(pending.promise)
+    .mockRejectedValueOnce(new Error('offline'))
+    .mockResolvedValue(options);
+  const user = userEvent.setup();
+  render(
+    <Combobox virtualized loadOptions={load} debounceMs={0}>
+      <ComboboxInput label="Remote nodes" />
+      <ComboboxContent itemHeight={32}>
+        {(item: Opt) => (
+          <ComboboxItem key={item.value} value={item}>
+            {item.label}
+          </ComboboxItem>
+        )}
+      </ComboboxContent>
+    </Combobox>,
+  );
+  const input = screen.getByRole('combobox', { name: 'Remote nodes' });
+  await user.click(input);
+  await waitFor(() => expect(statusText()).toContain('Loading…'));
+  expect(screen.getByRole('listbox')).toHaveAttribute('aria-busy', 'true');
+  await act(async () => pending.resolve(options));
+  expect((await screen.findAllByRole('option')).length).toBeLessThanOrEqual(20);
+  expect(screen.getAllByRole('option')[0]).toHaveAttribute('aria-setsize', '5000');
+  await user.paste('retry');
+  await waitFor(() => expect(load).toHaveBeenCalledWith('retry', expect.anything()));
+  await waitFor(() => expect(statusText()).toContain('Couldn’t load options.'));
+  const retry = await screen.findByRole('option', { name: 'Retry' });
+  expect(statusText()).toContain('Couldn’t load options.');
+  expect(retry).toHaveAttribute('aria-setsize', '1');
+  await user.click(retry);
+  await waitFor(() => expect(screen.getAllByRole('option')[0]).toHaveAttribute('aria-setsize', '5000'));
+  expect(screen.getAllByRole('option').length).toBeLessThanOrEqual(20);
+});

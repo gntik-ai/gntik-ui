@@ -2,6 +2,13 @@ import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  'virtualOptions.nodes': 'Nodos (10.000 opciones)',
+  'virtualOptions.remoteNodes': 'Nodos remotos (5.000 opciones)',
+  'virtualOptions.multiNodes': 'Nodos (5.000 opciones)',
+  'virtualOptions.node': 'nodo-{index}',
+  'virtualOptions.description': 'Detalles adicionales del nodo',
+  'virtualOptions.note':
+    'Solo se montan las filas visibles. La búsqueda y el teclado siguen accediendo a todas las opciones.',
   'forms.invite.title': 'Invitar a un miembro',
   'forms.bindings.width.xs': 'Muy pequeño',
   'forms.bindings.width.sm': 'Pequeño',

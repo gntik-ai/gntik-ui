@@ -3,6 +3,8 @@ import { Check, ChevronDown, Plus, RotateCw, Search, X } from 'lucide-react';
 import { useId, type ReactNode, type Ref } from 'react';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import type { MeasuredRowOptions } from '../VirtualList/use-measured-rows';
+import { WindowedComboboxList, useComboboxWindow, useVirtualOptionsKeyDown } from './WindowedCombobox';
 import { Spinner } from '../Spinner';
 import { comboboxVariants, type ComboboxVariantProps } from './combobox.variants';
 import { useComboboxEnhancement } from './ComboboxRoot';
@@ -41,6 +43,7 @@ export function ComboboxInput({
   ...props
 }: ComboboxInputProps) {
   const { t } = useI18n();
+  const onKeyDown = useVirtualOptionsKeyDown(props.onKeyDown);
   const clearLabel = clearLabelProp ?? t('common.clearSelection');
   const triggerLabel = triggerLabelProp ?? t('common.showOptions');
   const autoId = useId();
@@ -60,6 +63,7 @@ export function ComboboxInput({
           aria-labelledby={label ? `${inputId}-label` : undefined}
           className={v.input()}
           {...props}
+          onKeyDown={onKeyDown}
         />
         {showClear && (
           <BaseCombobox.Clear aria-label={clearLabel} className={v.iconButton()}>
@@ -97,6 +101,7 @@ export function ComboboxChipsInput<Item = unknown>({
   ...props
 }: ComboboxChipsInputProps<Item>) {
   const { t } = useI18n();
+  const onKeyDown = useVirtualOptionsKeyDown(props.onKeyDown);
   const removeLabel = removeLabelProp ?? ((l: string) => t('common.removeItem', { label: l }));
   const autoId = useId();
   const inputId = id ?? autoId;
@@ -128,6 +133,7 @@ export function ComboboxChipsInput<Item = unknown>({
                 placeholder={values.length ? undefined : placeholder}
                 className={s.chipsInput()}
                 {...props}
+                onKeyDown={onKeyDown}
               />
             </BaseCombobox.Chips>
           )}
@@ -137,7 +143,8 @@ export function ComboboxChipsInput<Item = unknown>({
   );
 }
 
-export interface ComboboxContentProps extends Omit<BaseCombobox.Popup.Props, 'className' | 'children'> {
+export interface ComboboxContentProps
+  extends Omit<BaseCombobox.Popup.Props, 'className' | 'children'>, MeasuredRowOptions {
   className?: string;
   /** Shown (and announced) when no item matches the query. */
   emptyText?: ReactNode;
@@ -158,12 +165,16 @@ export function ComboboxContent({
   sideOffset = 6,
   container,
   children,
+  itemHeight,
+  estimatedItemHeight,
+  overscan,
   ...props
 }: ComboboxContentProps) {
   const { t } = useI18n();
   const emptyText = emptyTextProp ?? t('common.noMatches');
   const dir = usePortalDir();
   const enh = useComboboxEnhancement();
+  const windowed = useComboboxWindow();
   let list = children;
   if (enh && typeof children === 'function') {
     list = (item: unknown, index: number) =>
@@ -188,7 +199,14 @@ export function ComboboxContent({
   return (
     <BaseCombobox.Portal container={container}>
       <BaseCombobox.Positioner dir={dir} className={s.positioner()} side={side} align={align} sideOffset={sideOffset}>
-        <BaseCombobox.Popup className={cn(s.popup(), className)} {...props}>
+        <BaseCombobox.Popup
+          className={cn(
+            s.popup(),
+            windowed && typeof list === 'function' && 'flex flex-col overflow-hidden',
+            className,
+          )}
+          {...props}
+        >
           {enh && (
             <BaseCombobox.Status className={cn(s.status(), !!enh.error && !enh.loading && s.statusError())}>
               {enh.loading ? (
@@ -202,9 +220,20 @@ export function ComboboxContent({
             </BaseCombobox.Status>
           )}
           <BaseCombobox.Empty className={s.empty()}>{busy ? null : emptyText}</BaseCombobox.Empty>
-          <BaseCombobox.List className={s.list()} aria-busy={enh?.loading || undefined}>
-            {list}
-          </BaseCombobox.List>
+          {windowed && typeof list === 'function' ? (
+            <WindowedComboboxList
+              aria-busy={enh?.loading || undefined}
+              itemHeight={itemHeight}
+              estimatedItemHeight={estimatedItemHeight}
+              overscan={overscan}
+            >
+              {list}
+            </WindowedComboboxList>
+          ) : (
+            <BaseCombobox.List className={s.list()} aria-busy={enh?.loading || undefined}>
+              {list}
+            </BaseCombobox.List>
+          )}
         </BaseCombobox.Popup>
       </BaseCombobox.Positioner>
     </BaseCombobox.Portal>
@@ -215,7 +244,8 @@ export function ComboboxContent({
 export function ComboboxSpecialItem({
   item,
   createLabel,
-}: {
+  ...props
+}: BaseCombobox.Item.Props & {
   item: SpecialItem;
   createLabel?: (input: string) => ReactNode;
 }) {
@@ -224,7 +254,7 @@ export function ComboboxSpecialItem({
   const label = createLabel ?? enh?.createLabel;
   const create = item.__gntikSpecial === 'create';
   return (
-    <BaseCombobox.Item value={item} className={cn(s.item(), s.specialItem())}>
+    <BaseCombobox.Item value={item} className={cn(s.item(), s.specialItem())} {...props}>
       <span className={s.itemContent()}>
         {create ? (
           <Plus size={14} aria-hidden className={s.specialIcon()} />

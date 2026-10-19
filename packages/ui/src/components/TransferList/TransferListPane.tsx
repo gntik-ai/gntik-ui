@@ -1,6 +1,7 @@
 import { Check, Search } from 'lucide-react';
-import { useEffect, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { useEffect, useEffectEvent, useLayoutEffect, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
+import { useMeasuredRows } from '../VirtualList/use-measured-rows';
 import { Input } from '../Input';
 import { transferListVariants } from './transfer-list.variants';
 
@@ -14,6 +15,7 @@ export interface TransferListItem {
 const s = transferListVariants();
 
 export interface TransferListPaneProps {
+  virtualized?: boolean;
   id: string;
   title: ReactNode;
   items: TransferListItem[];
@@ -50,6 +52,7 @@ export function TransferListPane({
   countLabel,
   footer,
   height,
+  virtualized = false,
 }: TransferListPaneProps) {
   const [query, setQuery] = useState('');
   const [activeValue, setActiveValue] = useState<string | null>(null);
@@ -63,7 +66,18 @@ export function TransferListPane({
   const titleId = `${id}-title`;
   const optionId = (i: number) => `${id}-opt-${i}`;
 
+  const rows = useMeasuredRows(virtualized ? visible : [], {}, activeIndex, typeof height === 'number' ? height : 240);
+  const { scrollTo } = rows;
+  const scrollOnChange = useEffectEvent((index: number) => scrollTo(index));
+  useLayoutEffect(() => {
+    if (virtualized) scrollOnChange(activeIndex);
+  }, [activeIndex, virtualized]);
+  useLayoutEffect(() => {
+    if (virtualized) scrollOnChange(-1);
+  }, [query, virtualized]);
+
   useEffect(() => {
+    if (virtualized) return;
     document.getElementById(optionId(activeIndex))?.scrollIntoView?.({ block: 'nearest' });
   });
 
@@ -113,6 +127,35 @@ export function TransferListPane({
     e.preventDefault();
   };
 
+  const options = (virtualized ? rows.indices : visible.map((_, i) => i)).map((i) => {
+    const it = visible[i]!;
+    return (
+      <div
+        {...(virtualized ? rows.rowProps(i) : {})}
+        key={it.value}
+        id={optionId(i)}
+        role="option"
+        aria-selected={checked.has(it.value)}
+        aria-disabled={it.disabled || undefined}
+        data-active={i === activeIndex || undefined}
+        className={cn('group/option', s.option())}
+        onClick={() => {
+          setActiveValue(it.value);
+          toggle(it.value);
+        }}
+        onDoubleClick={() => !it.disabled && onTransfer([it.value])}
+      >
+        <span aria-hidden className={s.check()}>
+          {checked.has(it.value) && <Check size={11} strokeWidth={3} />}
+        </span>
+        <span className={s.optionText()}>
+          <span className={s.optionLabel()}>{it.label}</span>
+          {it.description && <span className={s.optionDescription()}>{it.description}</span>}
+        </span>
+      </div>
+    );
+  });
+
   return (
     <section aria-labelledby={titleId} className={s.pane()}>
       <div className={s.paneHead()}>
@@ -135,39 +178,24 @@ export function TransferListPane({
         </div>
       )}
       <div
+        ref={virtualized ? rows.setViewport : undefined}
+        onScroll={virtualized ? rows.onScroll : undefined}
         role="listbox"
         aria-multiselectable
         aria-labelledby={titleId}
         aria-activedescendant={active ? optionId(activeIndex) : undefined}
         tabIndex={0}
-        className={s.listbox()}
+        className={cn(s.listbox(), virtualized && 'p-0')}
         style={visible.length ? { height } : undefined}
         onKeyDown={onKeyDown}
       >
-        {visible.map((it, i) => (
-          <div
-            key={it.value}
-            id={optionId(i)}
-            role="option"
-            aria-selected={checked.has(it.value)}
-            aria-disabled={it.disabled || undefined}
-            data-active={i === activeIndex || undefined}
-            className={cn('group/option', s.option())}
-            onClick={() => {
-              setActiveValue(it.value);
-              toggle(it.value);
-            }}
-            onDoubleClick={() => !it.disabled && onTransfer([it.value])}
-          >
-            <span aria-hidden className={s.check()}>
-              {checked.has(it.value) && <Check size={11} strokeWidth={3} />}
-            </span>
-            <span className={s.optionText()}>
-              <span className={s.optionLabel()}>{it.label}</span>
-              {it.description && <span className={s.optionDescription()}>{it.description}</span>}
-            </span>
+        {virtualized ? (
+          <div className="relative" style={{ height: rows.total }}>
+            {options}
           </div>
-        ))}
+        ) : (
+          options
+        )}
       </div>
       {visible.length === 0 && (
         <div className={s.empty()} style={{ height }}>

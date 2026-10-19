@@ -52,6 +52,8 @@ const defaultLabels: TransferListLabels = {
 };
 
 export interface TransferListProps {
+  /** Render only the visible rows in each pane. Default false. */
+  virtualized?: boolean;
   items: TransferListItem[];
   /** Selected values, in order (controlled). */
   value?: string[];
@@ -84,6 +86,7 @@ export function TransferList({
   titles,
   labels: labelsProp,
   className,
+  virtualized = false,
 }: TransferListProps) {
   const labels = { ...defaultLabels, ...labelsProp };
   const [inner, setInner] = useState<string[]>(defaultValue);
@@ -157,6 +160,7 @@ export function TransferList({
         noMatchesText={labels.noMatches}
         countLabel={labels.count}
         height={height}
+        virtualized={virtualized}
       />
       <div role="group" aria-label={labels.actions} className={s.actions()}>
         <IconButton
@@ -211,6 +215,7 @@ export function TransferList({
         noMatchesText={labels.noMatches}
         countLabel={labels.count}
         height={height}
+        virtualized={virtualized}
         footer={
           reorderable ? (
             <>

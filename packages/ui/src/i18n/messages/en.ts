@@ -6,6 +6,12 @@
  * Month and weekday names, numbers and dates come from Intl, not from this catalog.
  */
 export const en = {
+  'virtualOptions.nodes': 'Nodes (10,000 options)',
+  'virtualOptions.remoteNodes': 'Remote nodes (5,000 options)',
+  'virtualOptions.multiNodes': 'Nodes (5,000 options)',
+  'virtualOptions.node': 'node-{index}',
+  'virtualOptions.description': 'Additional node details',
+  'virtualOptions.note': 'Only visible rows are mounted. Search and keyboard navigation still reach every option.',
   'forms.invite.title': 'Invite a member',
   'forms.bindings.width.xs': 'Extra small',
   'forms.bindings.width.sm': 'Small',
