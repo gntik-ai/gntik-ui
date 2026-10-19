@@ -12,21 +12,23 @@ export interface MeasuredRowOptions {
 
 /** Shared measurement, window and instant scrolling for option lists. */
 export function useMeasuredRows(
-  count: number,
+  items: readonly unknown[],
   { itemHeight, estimatedItemHeight = 32, overscan = 4 }: MeasuredRowOptions,
   active = -1,
   initialHeight = 256,
 ) {
+  const count = items.length;
   const viewport = useRef<HTMLElement | null>(null);
   const observer = useRef<ResizeObserver | null>(null);
+  const rowItems = useRef(new WeakMap<HTMLElement, unknown>());
   const scrollTarget = useRef<number | null>(null);
   const programmaticTop = useRef<number | null>(null);
-  const [sizes, setSizes] = useState<Record<number, number>>({});
+  const [sizes, setSizes] = useState<ReadonlyMap<unknown, number>>(new Map());
   const [scrollTop, setScrollTop] = useState(0);
   const [height, setHeight] = useState(initialHeight);
   const sizeOf = useCallback(
-    (i: number) => itemHeight ?? sizes[i] ?? estimatedItemHeight,
-    [itemHeight, sizes, estimatedItemHeight],
+    (i: number) => itemHeight ?? sizes.get(items[i]) ?? estimatedItemHeight,
+    [itemHeight, items, sizes, estimatedItemHeight],
   );
   const win = useVirtualWindow(count, sizeOf, scrollTop, height, overscan);
 
@@ -44,12 +46,13 @@ export function useMeasuredRows(
   }, []);
 
   const measureRow = useCallback(
-    (node: HTMLElement | null) => {
+    (node: HTMLElement | null, item: unknown) => {
       if (!node || itemHeight !== undefined) return;
+      rowItems.current.set(node, item);
       const measure = (element: HTMLElement) => {
-        const i = Number(element.dataset.index);
+        const key = rowItems.current.get(element);
         const h = element.getBoundingClientRect().height;
-        if (h > 0) setSizes((prev) => (prev[i] === h ? prev : { ...prev, [i]: h }));
+        if (h > 0) setSizes((prev) => (prev.get(key) === h ? prev : new Map(prev).set(key, h)));
       };
       measure(node);
       if (typeof ResizeObserver === 'undefined') return;
@@ -90,7 +93,8 @@ export function useMeasuredRows(
   if (active >= 0 && active < count && !indices.includes(active)) indices.push(active);
   indices.sort((a, b) => a - b);
   const rowProps = (i: number) => ({
-    ref: measureRow,
+    // Reused DOM nodes must be measured again when their item or index changes.
+    ref: (node: HTMLElement | null) => measureRow(node, items[i]),
     'data-index': i,
     'aria-setsize': count,
     'aria-posinset': i + 1,

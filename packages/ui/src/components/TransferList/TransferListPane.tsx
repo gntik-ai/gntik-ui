@@ -66,12 +66,7 @@ export function TransferListPane({
   const titleId = `${id}-title`;
   const optionId = (i: number) => `${id}-opt-${i}`;
 
-  const rows = useMeasuredRows(
-    virtualized ? visible.length : 0,
-    {},
-    activeIndex,
-    typeof height === 'number' ? height : 240,
-  );
+  const rows = useMeasuredRows(virtualized ? visible : [], {}, activeIndex, typeof height === 'number' ? height : 240);
   const { scrollTo } = rows;
   const scrollOnChange = useEffectEvent((index: number) => scrollTo(index));
   useLayoutEffect(() => {

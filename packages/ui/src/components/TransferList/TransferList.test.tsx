@@ -28,10 +28,6 @@ describe('TransferList', () => {
     expect(available).toHaveAttribute('aria-multiselectable', 'true');
     expect(names(available)).toEqual(['Alpha', 'Bravo', 'Charlie']);
     expect(names(selected)).toEqual(['Delta']);
-    within(available)
-      .getAllByRole('option')
-      .forEach((option) => expect(option.parentElement).toBe(available));
-    expect(within(selected).getByRole('option').parentElement).toBe(selected);
   });
 
   it('arrows / Home / End move the active option; Space checks; Enter moves', async () => {

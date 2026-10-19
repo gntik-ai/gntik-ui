@@ -57,8 +57,13 @@ for (const theme of ['dark', '', 'high_contrast']) {
     await input.press('ArrowDown');
     for (let i = 0; i < 50; i++) await input.press('ArrowDown');
     await expectActiveVisible(input, list, 'node-51');
+    const endStarted = performance.now();
     await input.press('End');
     await expectActiveVisible(input, list, 'node-10000');
+    test.info().annotations.push({
+      type: 'End navigation latency',
+      description: `${Math.round(performance.now() - endStarted)}ms including browser assertions`,
+    });
     await input.fill('node-4242');
     await expect(list.getByRole('option')).toHaveCount(1);
     expect(await list.evaluate((element) => element.scrollTop)).toBe(0);

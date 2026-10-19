@@ -4,7 +4,7 @@ import { useId, type ReactNode, type Ref } from 'react';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import type { MeasuredRowOptions } from '../VirtualList/use-measured-rows';
-import { WindowedComboboxList, useComboboxWindow, navigateVirtualOptions } from './WindowedCombobox';
+import { WindowedComboboxList, useComboboxWindow, useVirtualOptionsKeyDown } from './WindowedCombobox';
 import { Spinner } from '../Spinner';
 import { comboboxVariants, type ComboboxVariantProps } from './combobox.variants';
 import { useComboboxEnhancement } from './ComboboxRoot';
@@ -43,7 +43,7 @@ export function ComboboxInput({
   ...props
 }: ComboboxInputProps) {
   const { t } = useI18n();
-  const windowed = useComboboxWindow();
+  const onKeyDown = useVirtualOptionsKeyDown(props.onKeyDown);
   const clearLabel = clearLabelProp ?? t('common.clearSelection');
   const triggerLabel = triggerLabelProp ?? t('common.showOptions');
   const autoId = useId();
@@ -63,10 +63,7 @@ export function ComboboxInput({
           aria-labelledby={label ? `${inputId}-label` : undefined}
           className={v.input()}
           {...props}
-          onKeyDown={(event) => {
-            props.onKeyDown?.(event);
-            if (windowed) navigateVirtualOptions(event);
-          }}
+          onKeyDown={onKeyDown}
         />
         {showClear && (
           <BaseCombobox.Clear aria-label={clearLabel} className={v.iconButton()}>
@@ -104,7 +101,7 @@ export function ComboboxChipsInput<Item = unknown>({
   ...props
 }: ComboboxChipsInputProps<Item>) {
   const { t } = useI18n();
-  const windowed = useComboboxWindow();
+  const onKeyDown = useVirtualOptionsKeyDown(props.onKeyDown);
   const removeLabel = removeLabelProp ?? ((l: string) => t('common.removeItem', { label: l }));
   const autoId = useId();
   const inputId = id ?? autoId;
@@ -136,10 +133,7 @@ export function ComboboxChipsInput<Item = unknown>({
                 placeholder={values.length ? undefined : placeholder}
                 className={s.chipsInput()}
                 {...props}
-                onKeyDown={(event) => {
-                  props.onKeyDown?.(event);
-                  if (windowed) navigateVirtualOptions(event);
-                }}
+                onKeyDown={onKeyDown}
               />
             </BaseCombobox.Chips>
           )}

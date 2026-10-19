@@ -98,7 +98,7 @@ export function WindowedComboboxList<Item = unknown>({
   const selectedIndex = state?.selected != null ? items.findIndex((item) => state.equal(item, state.selected)) : -1;
   const active = state?.active ?? -1;
   const { indices, total, rowProps, setViewport, scrollTo, onScroll, pageSize } = useMeasuredRows(
-    items.length,
+    items,
     options,
     active >= 0 ? active : selectedIndex,
   );
@@ -194,3 +194,14 @@ export const navigateVirtualOptions: NonNullable<BaseCombobox.Input.Props['onKey
   event.preventBaseUIHandler();
   list.dispatchEvent(new KeyboardEvent('keydown', { key: event.key, bubbles: true }));
 };
+
+/** Share caller-first keyboard handling between the single and chips inputs. */
+export function useVirtualOptionsKeyDown(
+  handler: BaseCombobox.Input.Props['onKeyDown'],
+): NonNullable<BaseCombobox.Input.Props['onKeyDown']> {
+  const windowed = useComboboxWindow();
+  return (event) => {
+    handler?.(event);
+    if (windowed) navigateVirtualOptions(event);
+  };
+}
