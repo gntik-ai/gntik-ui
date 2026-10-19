@@ -1,4 +1,5 @@
 // @gntik-ai/chat — public API. One export block per folder (alphabetical).
+export * from './AgentSurface';
 export * from './Attachment';
 export * from './ChatComposer';
 export * from './ChatDemo';

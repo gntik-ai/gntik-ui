@@ -8,6 +8,7 @@
     "@gntik-ai/tokens": "0.2.1"
   },
   "missingComponents": [
+    "agent-surface",
     "cursor-pager-footer",
     "cursor-pagination",
     "date-field",
@@ -19,6 +20,7 @@
     {"id":"accordion","package":"@gntik-ai/ui","name":"accordion","version":"0.5.0","url":"https://ui.gntik.ai/r/accordion.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"activity-feed","package":"@gntik-ai/blocks","name":"activity-feed","version":"0.6.0","url":"https://ui.gntik.ai/r/activity-feed.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"agenda-list","package":"@gntik-ai/blocks","name":"agenda-list","version":"0.6.0","url":"https://ui.gntik.ai/r/agenda-list.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"agent-surface","package":"@gntik-ai/chat","name":"agent-surface","version":"0.5.0","url":"https://ui.gntik.ai/r/agent-surface.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"alert","package":"@gntik-ai/ui","name":"alert","version":"0.5.0","url":"https://ui.gntik.ai/r/alert.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"alert-dialog","package":"@gntik-ai/ui","name":"alert-dialog","version":"0.5.0","url":"https://ui.gntik.ai/r/alert-dialog.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"app-sidebar","package":"@gntik-ai/blocks","name":"app-sidebar","version":"0.6.0","url":"https://ui.gntik.ai/r/app-sidebar.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},

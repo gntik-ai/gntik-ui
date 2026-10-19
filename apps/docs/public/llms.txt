@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 115 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 116 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -24,6 +24,7 @@ Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the br
 - [ToggleGroup](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/ToggleGroup/ToggleGroup.doc.ts): Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). (Actions, @gntik-ai/ui; id `toggle-group`)
 - [Toolbar](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Toolbar/Toolbar.doc.ts): Action bar above tables and lists: search, filters and actions with a single Tab stop and arrow-key navigation. (Actions, @gntik-ai/ui; id `toolbar`)
 - [Accordion](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Accordion/Accordion.doc.ts): A stack of collapsible sections separated by dividers, flush or inside a card. (Display, @gntik-ai/ui; id `accordion`)
+- [AgentSurface](https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/AgentSurface/AgentSurface.doc.ts): Opt-in, placement-neutral renderer for allow-listed agent content. (Display, @gntik-ai/chat; id `agent-surface`)
 - [AttachmentList](https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/Attachment/Attachment.doc.ts): Files attached to a message or waiting in the composer. (Display, @gntik-ai/chat; id `attachment`)
 - [Avatar](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Avatar/Avatar.doc.ts): Person or entity avatar: image with an initials (or icon) fallback, five sizes (xs–xl), round or rounded, tinted tones and an optional presence dot. (Display, @gntik-ai/ui; id `avatar`)
 - [Badge](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Badge/Badge.doc.ts): Compact label for status, counts and categories. (Display, @gntik-ai/ui; id `badge`)
