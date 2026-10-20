@@ -19,7 +19,7 @@ export const globalSearchPages: CommandItem[] = [
   { id: 'page-analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'page-members', label: 'Members', icon: Users, keywords: ['team', 'people'] },
   { id: 'page-billing', label: 'Billing', icon: CreditCard, keywords: ['invoices', 'plan'] },
-  { id: 'page-settings', label: 'Settings', icon: Settings, shortcut: ['⌘', ','] },
+  { id: 'page-settings', label: 'Settings', icon: Settings, shortcut: ['mod', ','] },
 ];
 
 export const globalSearchRecords: CommandItem[] = [
@@ -48,7 +48,7 @@ export const globalSearchRecords: CommandItem[] = [
 ];
 
 export const globalSearchActions: CommandItem[] = [
-  { id: 'action-new-project', label: 'Create project', icon: FolderPlus, shortcut: ['⌘', 'N'], keywords: ['new'] },
+  { id: 'action-new-project', label: 'Create project', icon: FolderPlus, shortcut: ['mod', 'N'], keywords: ['new'] },
   {
     id: 'action-deploy',
     label: 'Deploy to production',

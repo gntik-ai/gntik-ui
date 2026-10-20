@@ -4,6 +4,18 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { GlobalSearch } from './GlobalSearch';
 
 describe('GlobalSearch', () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it('shows Ctrl for the Create project shortcut on Linux', async () => {
+    vi.stubGlobal('navigator', { platform: 'Linux x86_64' });
+    const user = userEvent.setup();
+    render(<GlobalSearch />);
+    await user.click(screen.getByRole('button', { name: /Search/ }));
+    const item = await screen.findByRole('option', { name: /Create project/ });
+    expect(within(item).getByText('Ctrl')).toBeInTheDocument();
+    expect(within(item).queryByText('⌘')).not.toBeInTheDocument();
+  });
+
   it('renders the trigger with the shortcut hint', async () => {
     const { container } = render(<GlobalSearch />);
     expect(screen.getByRole('button', { name: /Search/ })).toBeInTheDocument();

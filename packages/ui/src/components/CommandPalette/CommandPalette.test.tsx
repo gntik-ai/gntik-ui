@@ -3,6 +3,49 @@ import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { filterCommandGroups, scoreCommand } from './command-filter';
 import CommandPaletteBasic from './examples/CommandPaletteBasic';
+import { CommandPalette, CommandPaletteTrigger } from './CommandPalette';
+
+describe('CommandPaletteTrigger platform hints', () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it('shows Ctrl K announced as Control on Windows', () => {
+    vi.stubGlobal('navigator', { platform: 'Win32' });
+    render(
+      <CommandPalette groups={[]}>
+        <CommandPaletteTrigger />
+      </CommandPalette>,
+    );
+    const trigger = screen.getByRole('button', { name: /Search/ });
+    expect(within(trigger).getByText('Ctrl')).toHaveAttribute('aria-hidden', 'true');
+    expect(within(trigger).getByText('Control')).toHaveClass('sr-only');
+    expect(within(trigger).getByText('K')).toBeInTheDocument();
+    expect(within(trigger).queryByText('⌘')).not.toBeInTheDocument();
+  });
+
+  it('shows Command K on macOS', () => {
+    vi.stubGlobal('navigator', { platform: 'MacIntel' });
+    render(
+      <CommandPalette groups={[]}>
+        <CommandPaletteTrigger />
+      </CommandPalette>,
+    );
+    const trigger = screen.getByRole('button', { name: /Search/ });
+    expect(within(trigger).getByText('⌘')).toHaveAttribute('aria-hidden', 'true');
+    expect(within(trigger).getByText('Command')).toHaveClass('sr-only');
+    expect(within(trigger).getByText('K')).toBeInTheDocument();
+  });
+
+  it.each(['Win32', 'MacIntel', 'Linux x86_64'])('keeps explicit keys on %s', (platform) => {
+    vi.stubGlobal('navigator', { platform });
+    render(
+      <CommandPalette groups={[]}>
+        <CommandPaletteTrigger keys={['⌘', 'K']} />
+      </CommandPalette>,
+    );
+    expect(screen.getByText('⌘')).toBeInTheDocument();
+    expect(screen.queryByText('Ctrl')).not.toBeInTheDocument();
+  });
+});
 
 async function openWithShortcut(combo = '{Meta>}k{/Meta}') {
   const user = userEvent.setup();

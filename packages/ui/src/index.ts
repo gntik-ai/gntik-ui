@@ -3,6 +3,7 @@ export { foldText, matchText, matchRanges, type MatchTextOptions } from './utils
 export { cn } from './utils/cn';
 export { tv, type VariantProps } from './utils/tv';
 export type { ComponentDoc } from './doc';
+export { getOs, useOs, type Os } from './hooks/useOs';
 
 // i18n
 export * from './i18n';

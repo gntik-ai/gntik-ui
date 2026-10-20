@@ -1,4 +1,4 @@
-import { useI18n } from '@gntik-ai/ui';
+import { useI18n, useOs } from '@gntik-ai/ui';
 import { Keyboard, Search } from '@gntik-ai/icons';
 import { EmptyState, Grid, Heading, Input, KbdCombo, Stack, Text } from '@gntik-ai/ui';
 import { useId, useState } from 'react';
@@ -16,9 +16,10 @@ export interface ShortcutSheetProps {
 /** Searchable shortcut sheet shared by the page and the dialog. */
 export function ShortcutSheet({ groups, headingLevel = 2, columns = 2, autoFocus }: ShortcutSheetProps) {
   const { locale } = useI18n();
+  const os = useOs();
   const [query, setQuery] = useState('');
   const countId = useId();
-  const visible = filterShortcuts(groups, query, locale);
+  const visible = filterShortcuts(groups, query, locale, os);
   const total = visible.reduce((n, g) => n + g.shortcuts.length, 0);
   return (
     <Stack gap={5}>
