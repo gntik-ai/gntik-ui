@@ -1,3 +1,5 @@
+import Spanish from './examples/Spanish';
+import { I18nProvider } from '@gntik-ai/ui';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
@@ -34,6 +36,15 @@ describe('PageHeader', () => {
     expect(screen.getByRole('heading', { level: 1 })).not.toHaveAttribute('tabindex');
   });
 
+  it('names the tablist from the active Spanish catalog', () => {
+    render(
+      <I18nProvider locale="es">
+        <PageHeader />
+      </I18nProvider>,
+    );
+    expect(screen.getByRole('tablist', { name: 'Secciones de la página' })).toBeInTheDocument();
+  });
+
   it('renders the default header', async () => {
     const { container } = render(<PageHeader />);
     expect(screen.getByRole('heading', { level: 1, name: 'Deployments' })).toBeInTheDocument();
@@ -65,4 +76,11 @@ describe('PageHeader', () => {
     await user.click(screen.getByRole('tab', { name: /Domains/ }));
     expect(onTabChange).toHaveBeenCalledWith('domains');
   });
+});
+
+it.each(['dark', 'light', 'high_contrast'])('Spanish PageHeader example is axe clean (%s)', async (theme) => {
+  document.documentElement.className = theme === 'light' ? '' : theme;
+  const { container } = render(<Spanish />);
+  expect(screen.getByRole('tablist', { name: 'Secciones de la página' })).toBeInTheDocument();
+  await expectNoAxeViolations(container);
 });

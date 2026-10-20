@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { useRef, type HTMLAttributes, type Key, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
@@ -10,11 +11,6 @@ export interface OverflowListLabels {
   /** Accessible name and heading of the popover ("3 more"). */
   title: (count: number) => string;
 }
-
-const DEFAULT_LABELS: OverflowListLabels = {
-  more: (n) => `+${n} more`,
-  title: (n) => `${n} more`,
-};
 
 export interface OverflowListProps<T>
   extends Omit<HTMLAttributes<HTMLDivElement>, 'className' | 'children'>, OverflowListVariantProps {
@@ -54,7 +50,12 @@ export function OverflowList<T>({
   className,
   ...props
 }: OverflowListProps<T>) {
-  const labels = { ...DEFAULT_LABELS, ...labelsProp };
+  const { t } = useI18n();
+  const labels: OverflowListLabels = {
+    more: (count) => t('overflowList.more', { count }),
+    title: (count) => t('overflowList.title', { count }),
+    ...labelsProp,
+  };
   const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const fit = useFitCount(responsive, containerRef, measureRef, items.length);

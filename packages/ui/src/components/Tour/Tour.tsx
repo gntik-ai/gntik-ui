@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { X } from 'lucide-react';
 import { useLayoutEffect, useRef, useState, type KeyboardEvent, type ReactNode, type RefObject } from 'react';
@@ -25,15 +26,6 @@ export interface TourLabels {
   close: string;
   counter: (step: number, total: number) => string;
 }
-
-const defaultLabels: TourLabels = {
-  back: 'Back',
-  next: 'Next',
-  finish: 'Finish',
-  skip: 'Skip tour',
-  close: 'End tour',
-  counter: (i, n) => `Step ${i + 1} of ${n}`,
-};
 
 export interface TourProps {
   steps: TourStep[];
@@ -85,7 +77,16 @@ export function Tour({
   labels: labelsProp,
   className,
 }: TourProps) {
-  const labels = { ...defaultLabels, ...labelsProp };
+  const { t } = useI18n();
+  const labels: TourLabels = {
+    skip: t('tour.skip'),
+    close: t('tour.close'),
+    counter: (index, total) => t('tour.counter', { count: index + 1, total }),
+    back: t('common.back'),
+    next: t('common.next'),
+    finish: t('common.finish'),
+    ...labelsProp,
+  };
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [innerStep, setInnerStep] = useState(defaultStep);
   const isOpen = (open ?? innerOpen) && steps.length > 0;

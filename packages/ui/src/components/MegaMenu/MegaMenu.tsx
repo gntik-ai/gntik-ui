@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { NavigationMenu } from '@base-ui/react/navigation-menu';
 import { ChevronDown } from 'lucide-react';
 import { createElement, useId, type CSSProperties, type ReactNode } from 'react';
@@ -163,7 +164,9 @@ function TopLink({
  * Router links come from LinkProvider; the trigger of the section holding the current page is
  * marked. Pair it with StackedLayout (as its sub-nav row) and `megaMenuNavItems` for MobileNav.
  */
-export function MegaMenu({ items, label = 'Main', currentHref, onNavigate, className }: MegaMenuProps) {
+export function MegaMenu({ items, label: labelProp, currentHref, onNavigate, className }: MegaMenuProps) {
+  const { t } = useI18n();
+  const label = labelProp === undefined ? t('megaMenu.label') : labelProp;
   return (
     <NavigationMenu.Root aria-label={label} className={cn(s.root(), className)}>
       <NavigationMenu.List className={s.list()}>

@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import {
   useCallback,
   useImperativeHandle,
@@ -74,7 +75,7 @@ export function VirtualList<T>({
   defaultSelectedKey = null,
   onSelectedKeyChange,
   onActivate,
-  emptyText = 'No items.',
+  emptyText: emptyTextProp,
   divided,
   className,
   rowClassName,
@@ -82,6 +83,8 @@ export function VirtualList<T>({
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
 }: VirtualListProps<T>) {
+  const { t } = useI18n();
+  const emptyText = emptyTextProp === undefined ? t('virtualList.empty') : emptyTextProp;
   const count = items.length;
   const [scrollTop, setScrollTop] = useState(0);
   const [viewportHeight, setViewportHeight] = useState(typeof height === 'number' ? height : 320);

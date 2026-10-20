@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { useEffect, useState, type HTMLAttributes, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { formatClock, formatCompact, toIsoDuration, toMs, type DateInput, type DurationUnits } from './format';
@@ -13,8 +14,6 @@ export interface TimerLabels {
   /** Unit suffixes of the compact format. */
   units: DurationUnits;
 }
-
-const DEFAULT_LABELS: TimerLabels = { paused: 'Paused', stopped: 'Stopped', units: { h: 'h', m: 'm', s: 's' } };
 
 export interface TimerProps
   extends Omit<HTMLAttributes<HTMLSpanElement>, 'className' | 'children'>, Pick<TimerVariantProps, 'size'> {
@@ -64,7 +63,13 @@ export function Timer({
   className,
   ...props
 }: TimerProps) {
-  const labels = { ...DEFAULT_LABELS, ...labelsProp };
+  const { t } = useI18n();
+  const labels: TimerLabels = {
+    paused: t('timer.paused'),
+    stopped: t('timer.stopped'),
+    units: { h: t('timer.unitHours'), m: t('timer.unitMinutes'), s: t('timer.unitSeconds') },
+    ...labelsProp,
+  };
   const [now, setNow] = useState(() => initialNow ?? Date.now());
   const running = status === 'running';
 

@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { Drawer as BaseDrawer } from '@base-ui/react/drawer';
 import { X } from 'lucide-react';
 import { createContext, useContext, useId, useState, type KeyboardEvent, type ReactNode } from 'react';
@@ -15,13 +16,6 @@ export interface BottomSheetLabels {
   /** Announced when the sheet settles on a snap point. */
   position: (index: number, total: number) => string;
 }
-
-const defaultLabels: BottomSheetLabels = {
-  handle: 'Resize sheet',
-  handleHint: 'Arrow Up expands, Arrow Down collapses.',
-  close: 'Close',
-  position: (i, n) => (i === n - 1 ? 'Sheet expanded.' : `Sheet at height ${i + 1} of ${n}.`),
-};
 
 interface SheetContextValue {
   snapPoints: BottomSheetSnapPoint[];
@@ -65,7 +59,15 @@ export function BottomSheet({
   const initial = defaultSnapPoint ?? snapPoints[0] ?? 1;
   const [inner, setInner] = useState<BottomSheetSnapPoint | null>(initial);
   const snap = snapPoint !== undefined ? snapPoint : inner;
-  const labels = { ...defaultLabels, ...labelsProp };
+  const { t } = useI18n();
+  const labels: BottomSheetLabels = {
+    handle: t('bottomSheet.handle'),
+    handleHint: t('bottomSheet.handleHint'),
+    position: (index, total) =>
+      index === total - 1 ? t('bottomSheet.expanded') : t('bottomSheet.position', { count: index + 1, total }),
+    close: t('common.close'),
+    ...labelsProp,
+  };
   const setSnap = (next: BottomSheetSnapPoint | null) => {
     setInner(next);
     onSnapPointChange?.(next);
@@ -171,6 +173,7 @@ export function BottomSheetContent({
   ...props
 }: BottomSheetContentProps) {
   const ctx = useContext(SheetContext);
+  const { t } = useI18n();
   const s = bottomSheetVariants();
   return (
     <BaseDrawer.Portal container={container}>
@@ -189,7 +192,7 @@ export function BottomSheetContent({
           <BaseDrawer.Content className={s.content()}>{children}</BaseDrawer.Content>
           {footer != null && <div className={s.footer()}>{footer}</div>}
           {showClose && (
-            <BaseDrawer.Close aria-label={ctx?.labels.close ?? defaultLabels.close} className={s.close()}>
+            <BaseDrawer.Close aria-label={ctx?.labels.close ?? t('common.close')} className={s.close()}>
               <X size={16} aria-hidden />
             </BaseDrawer.Close>
           )}

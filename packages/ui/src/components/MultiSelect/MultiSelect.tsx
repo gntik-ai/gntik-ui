@@ -94,7 +94,7 @@ export function MultiSelect({
   clearLabel: clearLabelProp,
   triggerLabel: triggerLabelProp,
   emptyText: emptyTextProp,
-  removeLabel = (l) => `Remove ${l}`,
+  removeLabel: removeLabelProp,
   renderOption,
   name,
   id,
@@ -122,6 +122,7 @@ export function MultiSelect({
   const deselectAllLabel = deselectAllLabelProp ?? t('common.deselectAll');
   const clearLabel = clearLabelProp ?? t('common.clearAll');
   const triggerLabel = triggerLabelProp ?? t('common.showOptions');
+  const removeLabel = removeLabelProp ?? ((label: string) => t('common.removeItem', { label }));
   const emptyText = emptyTextProp ?? t('common.noMatches');
   const dir = usePortalDir();
   const autoId = useId();

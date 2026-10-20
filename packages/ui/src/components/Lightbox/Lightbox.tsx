@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { ChevronLeft, ChevronRight, Play, X, ZoomIn, ZoomOut } from 'lucide-react';
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
@@ -29,19 +30,6 @@ export interface LightboxLabels {
   status: (index: number, total: number, alt: string) => string;
   thumbnail: (index: number, alt: string) => string;
 }
-
-const defaultLabels: LightboxLabels = {
-  title: 'Media viewer',
-  close: 'Close viewer',
-  previous: 'Previous',
-  next: 'Next',
-  zoomIn: 'Zoom in',
-  zoomOut: 'Zoom out',
-  thumbnails: 'Thumbnails',
-  counter: (i, n) => `${i + 1} / ${n}`,
-  status: (i, n, alt) => `${i + 1} of ${n}: ${alt}`,
-  thumbnail: (i, alt) => `Show ${i + 1}: ${alt}`,
-};
 
 export interface LightboxProps {
   items: LightboxItem[];
@@ -79,7 +67,20 @@ export function Lightbox({
   labels: labelsProp,
   container,
 }: LightboxProps) {
-  const labels = { ...defaultLabels, ...labelsProp };
+  const { t } = useI18n();
+  const labels: LightboxLabels = {
+    title: t('lightbox.title'),
+    close: t('lightbox.close'),
+    zoomIn: t('lightbox.zoomIn'),
+    zoomOut: t('lightbox.zoomOut'),
+    thumbnails: t('lightbox.thumbnails'),
+    counter: (index, total) => t('lightbox.counter', { count: index + 1, total }),
+    status: (index, total, label) => t('lightbox.status', { count: index + 1, total, label }),
+    thumbnail: (index, label) => t('lightbox.thumbnail', { count: index + 1, label }),
+    previous: t('common.previous'),
+    next: t('common.next'),
+    ...labelsProp,
+  };
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [innerIndex, setInnerIndex] = useState(defaultIndex);
   const [zoomState, setZoomState] = useState({ at: -1, zoom: 1 });

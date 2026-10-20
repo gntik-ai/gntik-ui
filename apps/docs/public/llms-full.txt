@@ -4387,7 +4387,7 @@ export default function TokenInputEmails() {
 
 ### TransferList (`transfer-list`)
 
-Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced. Opt-in virtualized windows both panes with shared row measurement, keeps the active option mounted and preserves full-data bulk actions and keyboard reordering. Find-in-page and screen-reader browse mode reach rendered rows only.
+Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced. Opt-in virtualized windows both panes with shared row measurement, keeps the active option mounted and preserves full-data bulk actions and keyboard reordering. Find-in-page and screen-reader browse mode reach rendered rows only. Built-in defaults follow I18nProvider (en/es); labels overrides win per key. The catalog defaults example demonstrates the shared component labels, including overlays, lists, navigation and file controls.
 
 - Package: `@gntik-ai/ui` · export `TransferList` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/TransferList/TransferList.doc.ts
@@ -4413,31 +4413,114 @@ Usage:
 
 ```tsx
 import { useState } from 'react';
+import { I18nProvider } from '@gntik-ai/ui';
+import { BottomSheet, BottomSheetContent, BottomSheetTrigger } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
+import { Carousel } from '@gntik-ai/ui';
+import { JsonViewer } from '@gntik-ai/ui';
+import { Lightbox } from '@gntik-ai/ui';
+import { ListInput } from '@gntik-ai/ui';
+import { MegaMenu } from '@gntik-ai/ui';
+import { MultiSelect } from '@gntik-ai/ui';
+import { OverflowList } from '@gntik-ai/ui';
+import { Thumbnail, ThumbnailList } from '@gntik-ai/ui';
+import { Timer } from '@gntik-ai/ui';
+import { Tour } from '@gntik-ai/ui';
+import { TreeList } from '@gntik-ai/ui';
+import { VirtualList } from '@gntik-ai/ui';
 import { TransferList } from '@gntik-ai/ui';
 
-const columns = [
-  { value: 'name', label: 'Name', description: 'Project name' },
-  { value: 'owner', label: 'Owner', description: 'Member who created it' },
-  { value: 'status', label: 'Status', description: 'Last deployment result' },
-  { value: 'region', label: 'Region' },
-  { value: 'created', label: 'Created', description: 'Creation date' },
-  { value: 'updated', label: 'Last updated' },
-  { value: 'cost', label: 'Monthly cost', description: 'From the latest invoice' },
-  { value: 'id', label: 'Project ID', disabled: true },
+const items = [
+  { value: 'report', label: 'Report' },
+  { value: 'notes', label: 'Notes' },
 ];
+const preview =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120"><circle cx="80" cy="60" r="40" fill-opacity="0.2"/></svg>',
+  );
 
-export default function TransferListColumns() {
-  const [visible, setVisible] = useState(['name', 'status', 'updated']);
+/** Caller content stays English; built-in labels follow the Spanish provider. */
+export default function TransferListCatalogDefaults() {
+  const [tourOpen, setTourOpen] = useState(false);
+  const [mediaOpen, setMediaOpen] = useState(false);
+  const [files, setFiles] = useState(['report.pdf', 'upload.csv', 'retry.pdf']);
+  const [retrying, setRetrying] = useState(false);
   return (
-    <div className="flex max-w-3xl flex-col gap-3">
-      <TransferList
-        items={columns}
-        value={visible}
-        onValueChange={setVisible}
-        titles={{ available: 'Hidden columns', selected: 'Visible columns' }}
-      />
-      <p className="text-[12px] text-muted-foreground">Table order: {visible.join(' · ')}</p>
-    </div>
+    <I18nProvider locale="es">
+      <div className="grid max-w-2xl gap-6" data-i18n-catalog>
+        <p className="text-sm text-muted-foreground">
+          Spanish defaults, English caller content. Labels and function overrides still take precedence.
+        </p>
+        <TransferList items={items} />
+        <TreeList
+          aria-label="Remote files"
+          nodes={[{ id: 'remote', label: 'Remote', hasChildren: true }]}
+          loadChildren={() => Promise.reject(new Error('Offline example'))}
+        />
+        <div className="flex gap-4">
+          <Timer start={0} end={3725000} status="paused" format="compact" />
+          <Timer start={0} end={65000} status="stopped" format="compact" />
+        </div>
+        <ListInput label="Variables" defaultValue={[{ key: 'REGION', value: 'west' }]} secret />
+        <Carousel label="Documents" showDots autoplay={5000}>
+          <div>Report</div>
+          <div>Notes</div>
+        </Carousel>
+        <JsonViewer data={{ report: { name: 'Quarterly report', pages: 3 }, tags: ['draft'] }} />
+        <VirtualList items={[]} renderItem={() => null} height={80} />
+        <MegaMenu items={[{ id: 'overview', label: 'Overview', href: '#overview' }]} />
+        <OverflowList items={['Report', 'Notes', 'Archive', 'Draft']} max={1} renderItem={(item) => item} />
+        <ThumbnailList aria-label="Files">
+          {files.map((name) => (
+            <Thumbnail
+              key={name}
+              name={name}
+              progress={name === 'upload.csv' || (name === 'retry.pdf' && retrying) ? 40 : undefined}
+              error={name === 'retry.pdf' && !retrying}
+              onRemove={() => setFiles((current) => current.filter((file) => file !== name))}
+              onRetry={name === 'retry.pdf' ? () => setRetrying(true) : undefined}
+            />
+          ))}
+        </ThumbnailList>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setFiles(['report.pdf', 'upload.csv', 'retry.pdf']);
+            setRetrying(false);
+          }}
+        >
+          Reset files
+        </Button>
+        <MultiSelect label="Documents" options={items} defaultValue={['report']} />
+        <div className="flex flex-wrap gap-2">
+          <Button onClick={() => setTourOpen(true)}>Start tour</Button>
+          <Button onClick={() => setMediaOpen(true)}>View media</Button>
+          <BottomSheet>
+            <BottomSheetTrigger render={<Button />}>Open sheet</BottomSheetTrigger>
+            <BottomSheetContent title="Report details" description="Resize using the handle or arrow keys.">
+              Quarterly report
+            </BottomSheetContent>
+          </BottomSheet>
+        </div>
+        <Tour
+          open={tourOpen}
+          onOpenChange={setTourOpen}
+          steps={[
+            { target: '#missing-target', title: 'Report' },
+            { target: '#missing-target', title: 'Notes' },
+          ]}
+        />
+        <Lightbox
+          open={mediaOpen}
+          onOpenChange={setMediaOpen}
+          items={[
+            { src: preview, alt: 'Report preview' },
+            { src: preview, alt: 'Notes preview' },
+          ]}
+        />
+      </div>
+    </I18nProvider>
   );
 }
 ```
@@ -8842,7 +8925,7 @@ import { BulkActionBar } from '@gntik-ai/blocks';
 
 ### Page header (`page-header`)
 
-Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as="div" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1.
+Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as="div" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1. The tablist name follows I18nProvider (en/es); the Spanish preview keeps caller content unchanged.
 
 - Package: `@gntik-ai/blocks` · export `PageHeader` · group page-chrome · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/page-chrome/PageHeader/block.meta.ts
