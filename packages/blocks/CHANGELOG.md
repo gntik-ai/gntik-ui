@@ -1,5 +1,26 @@
 # @gntik-ai/blocks
 
+## 0.9.0
+
+### Patch Changes
+
+- 8781fd7: Match text without accents or case in kit searches and filters, and highlight the original text at correct Unicode offsets.
+- 0ce6f33: Read built-in component labels and PageHeader section names from the active English or Spanish catalog while preserving caller overrides.
+- 9de4924: Format default table cells in the provider locale, with customizable boolean labels and English and Spanish yes/no catalog entries.
+- Updated dependencies [91529bb]
+- Updated dependencies [4ab6493]
+- Updated dependencies [73b19e3]
+- Updated dependencies [53e8909]
+- Updated dependencies [e67ab87]
+- Updated dependencies [8781fd7]
+- Updated dependencies [47c4582]
+- Updated dependencies [0ce6f33]
+- Updated dependencies [9de4924]
+- Updated dependencies [57d8e4e]
+- Updated dependencies [39b9e66]
+- Updated dependencies [7340188]
+  - @gntik-ai/ui@0.9.0
+
 ## 0.8.0
 
 ### Minor Changes

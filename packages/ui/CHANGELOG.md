@@ -1,5 +1,25 @@
 # @gntik-ai/ui
 
+## 0.9.0
+
+### Minor Changes
+
+- 91529bb: Add FieldArray to the optional forms entry for repeatable object fields with accessible actions, validation, focus management and English/Spanish messages.
+- 4ab6493: Add PeriodPicker and inline PeriodCalendar for whole ISO weeks, months, quarters and years, with ranges, translated presets and keyboard navigation.
+- 53e8909: Add clickable Calendar headings for month and year navigation, controlled views and select captions that preserve each panel and respect today; set maxView="day" on Calendar or date pickers to keep the previous static heading. Keep adjacent-month dates readable in all themes.
+- e67ab87: Add opt-in clear buttons and keyboard resets to text inputs, optional selects, date pickers and time pickers.
+- 47c4582: Add opt-in form control bindings, form-wide field props, width presets and focus refs for selects and pickers.
+- 57d8e4e: Add locale-ordered DateField and DateRangeField with keyboard entry, date-time segments, validation, paste and form submission.
+- 39b9e66: Add an optional full-width name and email trigger for UserMenu in sidebar footers.
+- 7340188: Add opt-in virtualized option lists to Combobox, MultiSelect and TransferList with accessible keyboard navigation and full-data bulk actions.
+
+### Patch Changes
+
+- 73b19e3: Add an opt-in AgentSurface with a validated, allow-listed kit catalog, data bindings, actions, and localized agent-content groups and focus recovery when content is removed or suppressed.
+- 8781fd7: Match text without accents or case in kit searches and filters, and highlight the original text at correct Unicode offsets.
+- 0ce6f33: Read built-in component labels and PageHeader section names from the active English or Spanish catalog while preserving caller overrides.
+- 9de4924: Format default table cells in the provider locale, with customizable boolean labels and English and Spanish yes/no catalog entries.
+
 ## 0.7.0
 
 ### Minor Changes
