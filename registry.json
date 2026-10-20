@@ -1459,6 +1459,7 @@
         }
       ],
       "file": "apps/docs/src/catalog/file-upload.jsx",
+      "header": "Gntik UI · file-upload.jsx — file upload (\"Forms\" group).\nDifferent from the Empty states dropzone (which fills a void): this is the\nreal form control — multi-file dropzone with progress and states, compact\nbutton+name input, and image/logo upload. Click simulates the selection\n(deterministic preview). Tokens only, zero hardcoded colour.",
       "intro": "The real upload control inside a form — not to be confused with the Empty states dropzone, which fills a void. Three forms: the multi-file dropzone with a per-file progress bar and states (uploading, uploaded, error with retry); the compact button + name input for a single attachment in a row; and image upload for a logo or avatar, with a striped placeholder and preview. In the catalog, clicking simulates the selection so the preview is deterministic."
     },
     "textareas": {

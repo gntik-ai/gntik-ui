@@ -1,7 +1,3 @@
-import { formatBytes, I18nProvider, Thumbnail } from '@gntik-ai/ui';
-import { FileUploadPanel } from '@gntik-ai/blocks';
-import { AttachmentChip } from '@gntik-ai/chat';
-
 /* ============================================================================
    Gntik UI · file-upload.jsx — file upload ("Forms" group).
    Different from the Empty states dropzone (which fills a void): this is the
@@ -9,6 +5,10 @@ import { AttachmentChip } from '@gntik-ai/chat';
    button+name input, and image/logo upload. Click simulates the selection
    (deterministic preview). Tokens only, zero hardcoded colour.
    ============================================================================ */
+import { formatBytes, I18nProvider, Thumbnail } from '@gntik-ai/ui';
+import { FileUploadPanel } from '@gntik-ai/blocks';
+import { AttachmentChip } from '@gntik-ai/chat';
+
 (function () {
   const { SectionHead, CodeBlock, Icon, useState, useRef, useEffect } = window;
 
