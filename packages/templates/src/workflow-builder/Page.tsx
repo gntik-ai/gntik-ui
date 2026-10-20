@@ -1,17 +1,21 @@
 import {
   CodePanel,
+  builderNodes,
+  builderEdges,
+  cleanFlowGraph,
   type CodePanelProps,
   FlowBuilder,
   type ConsoleEntry,
   type FlowBuilderProps,
   type FlowEdge,
+  type FlowGraph,
   type FlowNode,
   type FlowNodeKind,
   type PaletteItem,
 } from '@gntik-ai/blocks';
 import { Save, Upload } from '@gntik-ai/icons';
-import { Breadcrumbs, Button, CanvasLayout, StatusTag, type BreadcrumbItem } from '@gntik-ai/ui';
-import { useState } from 'react';
+import { Breadcrumbs, Button, CanvasLayout, StatusTag, useI18n, type BreadcrumbItem } from '@gntik-ai/ui';
+import { useRef, useState } from 'react';
 import { flowBuilderBreadcrumbs, flowBuilderContent } from './data';
 
 export interface FlowBuilderPageProps<Kind extends string = FlowNodeKind> extends Pick<
@@ -25,6 +29,8 @@ export interface FlowBuilderPageProps<Kind extends string = FlowNodeKind> extend
   | 'mode'
   | 'nodeStatus'
   | 'onNodeSelect'
+  | 'graph'
+  | 'onGraphChange'
 > {
   /** Optional companion code panel; run mode forces readOnly. */
   codePanel?: CodePanelProps;
@@ -43,7 +49,7 @@ export interface FlowBuilderPageProps<Kind extends string = FlowNodeKind> extend
   defaultConsoleEntries: ConsoleEntry[];
   onConsoleChange: (entries: ConsoleEntry[]) => void;
   onConsoleClear: () => void;
-  onSave: () => void | Promise<void>;
+  onSave: (graph: FlowGraph<Kind>) => void | Promise<void>;
   onPublish: () => void;
   breadcrumbs: BreadcrumbItem[];
   /** Builder height in px on wide screens. */
@@ -61,8 +67,8 @@ export default function FlowBuilderPage<Kind extends string = FlowNodeKind>(
   const {
     title = flowBuilderContent.title,
     status = flowBuilderContent.status,
-    nodes,
-    edges,
+    nodes = builderNodes,
+    edges = builderEdges,
     palette,
     onRun,
     consoleEntries,
@@ -80,19 +86,32 @@ export default function FlowBuilderPage<Kind extends string = FlowNodeKind>(
     mode,
     nodeStatus,
     onNodeSelect,
+    graph,
+    onGraphChange,
     codePanel,
     breadcrumbs = flowBuilderBreadcrumbs,
     height = 640,
     fullScreen = true,
   } = props;
   const [saving, setSaving] = useState(false);
-  const [savedNote, setSavedNote] = useState(flowBuilderContent.lastSaved);
+  const [initialGraph] = useState<FlowGraph<Kind>>(() => ({ nodes, edges }));
+  const [latestGraph, setLatestGraph] = useState<FlowGraph<Kind>>();
+  const [saveState, setSaveState] = useState<'initial' | 'unsaved' | 'saved'>('initial');
+  const revision = useRef(0);
+  const { t } = useI18n();
+  const savedNote =
+    saveState === 'initial'
+      ? flowBuilderContent.lastSaved
+      : t(saveState === 'unsaved' ? 'actionBar.unsaved' : 'actionBar.saved');
 
   const save = async () => {
     setSaving(true);
+    const savedRevision = revision.current;
     try {
-      await onSave?.();
-      setSavedNote('All changes saved');
+      await onSave?.(cleanFlowGraph(graph ?? latestGraph ?? initialGraph));
+      if (revision.current === savedRevision) setSaveState('saved');
+    } catch {
+      // The host owns persistence errors; retain the unsaved note and allow a retry.
     } finally {
       setSaving(false);
     }
@@ -133,6 +152,13 @@ export default function FlowBuilderPage<Kind extends string = FlowNodeKind>(
           title={title}
           nodes={nodes}
           edges={edges}
+          graph={graph}
+          onGraphChange={(next, change) => {
+            revision.current += 1;
+            setLatestGraph(next);
+            setSaveState('unsaved');
+            onGraphChange?.(next, change);
+          }}
           palette={palette}
           onRun={onRun}
           consoleEntries={consoleEntries}

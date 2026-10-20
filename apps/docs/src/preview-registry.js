@@ -63,6 +63,8 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 
 export const PREVIEW_LOADERS = {
   block: {
+    'flow-builder--controlled-graph': () =>
+      import('../../../packages/blocks/src/builders/FlowBuilder/examples/ControlledGraph'),
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
     'page-header--spanish': () => import('../../../packages/blocks/src/page-chrome/PageHeader/examples/Spanish'),
     'confirm-destructive': () =>
@@ -152,6 +154,7 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),
   },
   template: {
+    'workflow-builder--save-graph': () => import('../../../packages/templates/src/workflow-builder/examples/SaveGraph'),
     ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
     'live-event-stream--connecting': () =>
       import('../../../packages/templates/src/live-event-stream/examples/Connecting'),

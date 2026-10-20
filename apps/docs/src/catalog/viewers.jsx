@@ -204,6 +204,24 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                 </div>
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'block' && it.id === 'flow-builder' && (
+                <Viewer
+                  kind="block"
+                  id="flow-builder--controlled-graph"
+                  title={it.title}
+                  file="../../../packages/blocks/src/builders/FlowBuilder/examples/ControlledGraph.tsx"
+                  height={height}
+                />
+              )}
+              {kind === 'template' && it.id === 'workflow-builder' && (
+                <Viewer
+                  kind="template"
+                  id="workflow-builder--save-graph"
+                  title={it.title}
+                  file="../../../packages/templates/src/workflow-builder/examples/SaveGraph.tsx"
+                  height={height}
+                />
+              )}
               {kind === 'block' && it.id === 'page-header' && (
                 <>
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">Spanish defaults</h4>

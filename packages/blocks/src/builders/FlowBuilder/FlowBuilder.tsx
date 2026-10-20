@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { Play } from '@gntik-ai/icons';
-import { FlowCanvas, useFlowState, type FlowNode, type FlowNodeData, type FlowNodeKind } from '@gntik-ai/flow';
+import { FlowCanvas, type FlowCanvasProps, type FlowNode, type FlowNodeData, type FlowNodeKind } from '@gntik-ai/flow';
 import { Button, ResizablePanel, ResizablePanelGroup, ResizeHandle, cn } from '@gntik-ai/ui';
 import {
   builderConsole,
@@ -14,20 +14,51 @@ import {
 import type { FlowBuilderExtensions } from './extensions';
 import { useDecoratedNodes } from './decorated-nodes';
 import { useConnections } from './connections';
+import { useBuilderGraph } from './graph-state';
 import { FlowProblems } from './problems';
 import { NodeInspector, NodePalette, RunConsole } from './parts';
 
 export type { ConsoleEntry, FlowEdge, PaletteItem } from './fixtures';
+/** Shared starter graph for hosts that also need its value before the first edit. */
+export { builderNodes, builderEdges } from './fixtures';
 /** Graph types re-exported so apps can type nodes without depending on @gntik-ai/flow. */
 export type { FlowNode, FlowNodeData, FlowNodeKind, FlowTone } from '@gntik-ai/flow';
 
 export type { FlowConnection, FlowConnectionRejection, FlowValidationIssue } from './extensions';
 export type { FlowNodeRenderer, FlowHandle, FlowNodeRenderProps } from '@gntik-ai/flow';
 
+export interface FlowGraph<Kind extends string = FlowNodeKind> {
+  nodes: FlowNode<Kind | FlowNodeKind>[];
+  edges: FlowEdge[];
+}
+
+export interface FlowGraphChange {
+  type: 'add' | 'delete' | 'move' | 'connect' | 'update';
+  nodeIds: string[];
+  edgeIds: string[];
+}
+
+/** Persist graph content without canvas selection, drag or measurement state. */
+export function cleanFlowGraph<Kind extends string>(graph: FlowGraph<Kind>): FlowGraph<Kind> {
+  return {
+    ...graph,
+    nodes: graph.nodes.map((original) => {
+      const node = { ...original };
+      delete node.selected;
+      delete node.dragging;
+      delete node.measured;
+      return node;
+    }),
+  };
+}
+
 export interface FlowBuilderProps<Kind extends string = FlowNodeKind> extends FlowBuilderExtensions {
   title?: string;
   nodes?: FlowNode<Kind | FlowNodeKind>[];
   edges?: FlowEdge[];
+  /** Controlled graph content. Canvas selection, measurements and active drags stay local. */
+  graph?: FlowGraph<Kind>;
+  onGraphChange?: (graph: FlowGraph<Kind>, change: FlowGraphChange) => void;
   palette?: PaletteItem[];
   /**
    * Console output (controlled). Run and Clear then report the next list through
@@ -49,10 +80,7 @@ export interface FlowBuilderProps<Kind extends string = FlowNodeKind> extends Fl
    * of them) to log the real run; return nothing to log a simulated run. While a returned
    * promise is pending the Run button shows a loading state; a rejection is logged as an error.
    */
-  onRun?: (graph: {
-    nodes: FlowNode<Kind | FlowNodeKind>[];
-    edges: FlowEdge[];
-  }) => FlowRunResult | Promise<FlowRunResult>;
+  onRun?: (graph: FlowGraph<Kind>) => FlowRunResult | Promise<FlowRunResult>;
   className?: string;
 }
 
@@ -90,6 +118,8 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
   title = 'Untitled flow',
   nodes: initialNodes = builderNodes,
   edges: initialEdges = builderEdges,
+  graph,
+  onGraphChange,
   palette = builderPalette,
   consoleEntries,
   defaultConsoleEntries = builderConsole,
@@ -111,17 +141,15 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
 }: FlowBuilderProps<Kind>) {
   const runMode = mode === 'run';
   const root = useRef<HTMLElement>(null);
+  const flow = useRef<
+    Parameters<NonNullable<FlowCanvasProps<FlowNode<Kind | FlowNodeKind>, FlowEdge>['onInit']>>[0] | null
+  >(null);
   const wide = useIsWide();
   const panelAs = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
-  const {
-    nodes,
-    edges,
-    setNodes,
-    setEdges,
-    onNodesChange,
-    onEdgesChange,
-    onConnect: defaultConnect,
-  } = useFlowState<FlowNode<Kind | FlowNodeKind>, FlowEdge>(initialNodes, initialEdges);
+  const { nodes, edges, setNodes, setEdges, onNodesChange, onEdgesChange } = useBuilderGraph<Kind>(
+    { nodes: initialNodes, edges: initialEdges },
+    graph,
+  );
   const [innerLog, setInnerLog] = useState<ConsoleEntry[]>(defaultConsoleEntries);
   const log = consoleEntries ?? innerLog;
   const latestLog = useRef(log);
@@ -135,7 +163,9 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
 
   const addNode = (item: PaletteItem) => {
     seq.current += 1;
-    const id = `${item.kind}-${seq.current}`;
+    let suffix = 1;
+    while (nodes.some((node) => node.id === `${item.kind}-${suffix}`)) suffix += 1;
+    const id = `${item.kind}-${suffix}`;
     const right = nodes.reduce((max, n) => Math.max(max, n.position.x), -256);
     const slim = item.kind === 'trigger' || item.kind === 'router';
     const node: FlowNode = {
@@ -147,15 +177,19 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
       selected: true,
       data: { title: `New ${item.title.toLowerCase()}`, subtitle: item.description },
     };
-    setNodes((ns) => [...ns.map((n) => (n.selected ? { ...n, selected: false } : n)), node]);
+    const next = [...nodes.map((n) => (n.selected ? { ...n, selected: false } : n)), node];
+    setNodes(next);
+    onGraphChange?.(cleanFlowGraph({ nodes: next, edges }), { type: 'add', nodeIds: [id], edgeIds: [] });
   };
 
-  const updateNode = (id: string, patch: Partial<FlowNodeData>) =>
-    setNodes((ns) => ns.map((n) => (n.id === id ? { ...n, data: { ...n.data, ...patch } } : n)));
+  const updateNode = (id: string, patch: Partial<FlowNodeData>) => {
+    const next = nodes.map((n) => (n.id === id ? { ...n, data: { ...n.data, ...patch } } : n));
+    setNodes(next);
+    onGraphChange?.(cleanFlowGraph({ nodes: next, edges }), { type: 'update', nodeIds: [id], edgeIds: [] });
+  };
 
   const deleteNode = (id: string) => {
-    setNodes((ns) => ns.filter((n) => n.id !== id));
-    setEdges((es) => es.filter((e) => e.source !== id && e.target !== id));
+    void flow.current?.deleteElements({ nodes: [{ id }] });
   };
 
   const commitLog = (next: ConsoleEntry[]) => {
@@ -205,12 +239,21 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
     commitLog([]);
   };
 
-  const connections = useConnections(nodes, setEdges, defaultConnect, {
-    onConnect: onConnected,
-    onConnectEdge,
-    isValidConnection,
-    onConnectionRejected,
-  });
+  const connections = useConnections(
+    nodes,
+    edges,
+    (edge) => {
+      const next = [...edges, edge];
+      setEdges(next);
+      onGraphChange?.(cleanFlowGraph({ nodes, edges: next }), { type: 'connect', nodeIds: [], edgeIds: [edge.id] });
+    },
+    {
+      onConnect: onConnected,
+      onConnectEdge,
+      isValidConnection,
+      onConnectionRejected,
+    },
+  );
 
   const issues = validationIssues ?? NO_ISSUES;
   const displayedNodes = useDecoratedNodes(nodes, issues, nodeStatus, runMode);
@@ -228,11 +271,40 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
       height={h}
       nodes={displayedNodes}
       edges={edges}
-      onNodesChange={(changes) =>
+      onInit={(instance) => {
+        flow.current = instance;
+      }}
+      onDelete={({ nodes: deletedNodes, edges: deletedEdges }) => {
+        if (runMode) return;
+        const nodeIds = deletedNodes.map((node) => node.id);
+        const edgeIds = deletedEdges.map((edge) => edge.id);
+        const next = {
+          nodes: nodes.filter((node) => !nodeIds.includes(node.id)),
+          edges: edges.filter((edge) => !edgeIds.includes(edge.id)),
+        };
+        setNodes(next.nodes);
+        setEdges(next.edges);
+        onGraphChange?.(cleanFlowGraph(next), { type: 'delete', nodeIds, edgeIds });
+      }}
+      onNodesChange={(changes) => {
         onNodesChange(
           runMode ? changes.filter((change) => change.type === 'select' || change.type === 'dimensions') : changes,
-        )
-      }
+        );
+        if (runMode) return;
+        const moves = changes
+          .filter((change) => change.type === 'position')
+          .filter((change) => change.dragging === false);
+        if (!moves.length) return;
+        const next = nodes.map((node) => {
+          const move = moves.find((change) => change.id === node.id);
+          return move?.type === 'position' && move.position ? { ...node, position: move.position } : node;
+        });
+        onGraphChange?.(cleanFlowGraph({ nodes: next, edges }), {
+          type: 'move',
+          nodeIds: moves.map((move) => move.id),
+          edgeIds: [],
+        });
+      }}
       onEdgesChange={(changes) =>
         onEdgesChange(runMode ? changes.filter((change) => change.type === 'select') : changes)
       }
