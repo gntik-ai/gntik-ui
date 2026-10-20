@@ -39,18 +39,6 @@ export function simulateUpload(_file: File, onProgress: (pct: number) => void): 
   });
 }
 
-export function formatBytes(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`;
-  const units = ['KB', 'MB', 'GB', 'TB'];
-  let v = bytes / 1024;
-  let i = 0;
-  while (v >= 1024 && i < units.length - 1) {
-    v /= 1024;
-    i++;
-  }
-  return `${v >= 10 ? Math.round(v) : v.toFixed(1)} ${units[i]}`;
-}
-
 /** Matches a file against an `accept` list (".csv", "image/*", "application/pdf"). */
 export function acceptsFile(file: { name: string; type: string }, accept: string | undefined) {
   if (!accept) return true;

@@ -60,6 +60,13 @@ function formatBytes(bytes: number): string {
     v /= 1000;
     u += 1;
   }
+  if (
+    Number(nf({ maximumFractionDigits: u === 0 ? 0 : 1, useGrouping: false }).format(v)) >= 1000 &&
+    u < BYTE_UNITS.length - 1
+  ) {
+    v /= 1000;
+    u += 1;
+  }
   return `${sign}${nf({ maximumFractionDigits: u === 0 ? 0 : 1 }).format(v)} ${BYTE_UNITS[u]}`;
 }
 

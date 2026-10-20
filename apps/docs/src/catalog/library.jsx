@@ -44,7 +44,7 @@ const withDefault = (modules) =>
 // Examples import from '../Name'; in a product they import from the package.
 const forProduct = (code) =>
   code
-    .replace(/from '\.\.\/\.\.\/\.\.\/i18n\/I18nProvider'/g, "from '@gntik-ai/ui'")
+    .replace(/from '\.\.\/\.\.\/\.\.\/i18n\/(?:I18nProvider|format)'/g, "from '@gntik-ai/ui'")
     .replace(/from '\.\.\/(\.\.\/)?[A-Za-z]+(\/[A-Za-z.]+)?'/g, "from '@gntik-ai/ui'");
 // The forms entry is its own import path (react-hook-form and zod are optional peers); its examples
 // import the entry as '..' or by file, and the kit components from ../../components/*.

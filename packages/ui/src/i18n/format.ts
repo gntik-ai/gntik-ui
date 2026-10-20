@@ -3,6 +3,68 @@ import type { MessageKey, Messages } from './messages/en';
 /** Values interpolated into a message: `{name}` placeholders and plural selectors. */
 export type MessageVars = Record<string, string | number>;
 
+/** Options for locale-aware byte or bit sizes. */
+export interface FormatBytesOptions {
+  /** BCP 47 locale; defaults to English. */
+  locale?: string;
+  /** Decimal SI (default) or binary IEC multiples. Bits always use 1000. */
+  base?: 1000 | 1024;
+  /** The input's unit; defaults to bytes. */
+  unit?: 'byte' | 'bit';
+  /** Intl label width; binary multiples always use IEC symbols. Defaults to short. */
+  unitDisplay?: 'short' | 'long' | 'narrow';
+  /** Maximum decimals above the base unit; defaults to 1. */
+  maximumFractionDigits?: number;
+}
+
+/**
+ * Formats a size with localized Intl unit labels, rounding into the next unit when needed.
+ * Bytes scale through petabytes, bits through terabits; non-finite values return `—`.
+ * A string second argument remains shorthand for the locale.
+ * @example formatBytes(1536, 'es') // '1,5 kB'
+ * @example formatBytes(26_214_400, { base: 1024 }) // '25 MiB'
+ */
+export function formatBytes(value: number, options: string | FormatBytesOptions = {}): string {
+  if (!Number.isFinite(value)) return '—';
+  const {
+    locale = 'en',
+    base = 1000,
+    unit = 'byte',
+    unitDisplay = 'short',
+    maximumFractionDigits = 1,
+  } = typeof options === 'string' ? { locale: options } : options;
+  const scale = unit === 'bit' ? 1000 : base;
+  const prefixes = ['', 'kilo', 'mega', 'giga', 'tera', 'peta'];
+  const last = unit === 'bit' ? 4 : 5;
+  let magnitude = Math.abs(value);
+  let index = 0;
+  while (magnitude >= scale && index < last) {
+    magnitude /= scale;
+    index++;
+  }
+  // Intl rounding also handles decimal ties that binary toFixed can round down.
+  const rounded = new Intl.NumberFormat('en', {
+    maximumFractionDigits: index === 0 ? 0 : maximumFractionDigits,
+    useGrouping: false,
+  }).format(magnitude);
+  if (Number(rounded) >= scale && index < last) {
+    magnitude /= scale;
+    index++;
+  }
+  const signed = value < 0 ? -magnitude : magnitude;
+  const numberOptions = { maximumFractionDigits: index === 0 ? 0 : maximumFractionDigits };
+  if ((unit === 'byte' && index === 0 && unitDisplay === 'short') || (scale === 1024 && index > 0)) {
+    const symbol = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'][index];
+    return `${new Intl.NumberFormat(locale, numberOptions).format(signed)} ${symbol}`;
+  }
+  return new Intl.NumberFormat(locale, {
+    ...numberOptions,
+    style: 'unit',
+    unit: `${prefixes[index]}${unit}`,
+    unitDisplay,
+  }).format(signed);
+}
+
 /** Scripts written right to left (language subtag). */
 const RTL_LANGUAGES = new Set(['ar', 'arc', 'ckb', 'dv', 'fa', 'he', 'iw', 'ks', 'ku', 'ps', 'sd', 'ug', 'ur', 'yi']);
 
@@ -100,6 +162,7 @@ export interface I18nFormatters {
   /** Translates a built-in key, filling placeholders. */
   t: (key: MessageKey, vars?: MessageVars) => string;
   formatNumber: (value: number, options?: Intl.NumberFormatOptions) => string;
+  formatBytes: (value: number, options?: FormatBytesOptions) => string;
   formatCurrency: (value: number, currency: string, options?: Intl.NumberFormatOptions) => string;
   formatDate: (value: DateValue, options?: Intl.DateTimeFormatOptions) => string;
   /**
@@ -136,6 +199,7 @@ export function createFormatters(locale: string, messages: Messages): I18nFormat
   return {
     t: (key, vars) => interpolate(messages[key] ?? key, vars, locale),
     formatNumber: (value, options) => new Intl.NumberFormat(locale, options).format(value),
+    formatBytes: (value, options) => formatBytes(value, { locale, ...options }),
     formatCurrency: (value, currency, options) =>
       new Intl.NumberFormat(locale, { style: 'currency', currency, ...options }).format(value),
     formatDate: (value, options = { dateStyle: 'medium' }) =>

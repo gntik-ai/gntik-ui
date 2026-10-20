@@ -1,8 +1,9 @@
+import { formatBytes } from '../../i18n/format';
 import { useI18n } from '../../i18n/I18nProvider';
 import { AlertCircle, X } from 'lucide-react';
 import { Children, isValidElement, useId, type HTMLAttributes, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
-import { FILE_ICON, fileExtension, fileKind, formatBytes } from './file-kind';
+import { FILE_ICON, fileExtension, fileKind } from './file-kind';
 import { thumbnailVariants } from './thumbnail.variants';
 
 export type ThumbnailStatus = 'idle' | 'uploading' | 'done' | 'error';
@@ -64,7 +65,9 @@ export function Thumbnail({
   className,
   ...props
 }: ThumbnailProps) {
-  const { t } = useI18n();
+  const { t, formatBytes: providerFormatBytes } = useI18n();
+  const formatSize = (bytes: number) =>
+    locale === undefined ? providerFormatBytes(bytes) : formatBytes(bytes, locale);
   const labels: ThumbnailLabels = {
     uploading: (label) => t('thumbnail.uploading', { label }),
     error: t('thumbnail.error'),
@@ -137,9 +140,9 @@ export function Thumbnail({
               )}
             </>
           ) : uploading && pct !== undefined ? (
-            `${pct}%${size !== undefined ? ` · ${formatBytes(size, locale)}` : ''}`
+            `${pct}%${size !== undefined ? ` · ${formatSize(size)}` : ''}`
           ) : size !== undefined ? (
-            formatBytes(size, locale)
+            formatSize(size)
           ) : (
             (ext ?? '')
           )}

@@ -7,13 +7,6 @@ export function formatDuration(ms: number) {
   return `${m} m ${String(s).padStart(2, '0')} s`;
 }
 
-/** "12 KB", "3.4 MB". */
-export function formatBytes(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
-
 /** Short local time ("14:05") for a message timestamp. */
 export function formatTime(date: Date) {
   return date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });

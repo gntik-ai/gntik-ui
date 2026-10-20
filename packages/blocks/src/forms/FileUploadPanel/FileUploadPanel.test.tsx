@@ -1,3 +1,4 @@
+import { I18nProvider } from '@gntik-ai/ui';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
@@ -5,6 +6,26 @@ import { FileUploadPanel } from './FileUploadPanel';
 import { acceptsFile } from './fixtures';
 
 describe('FileUploadPanel', () => {
+  it('shows decimal default limits and provider-localized file sizes', () => {
+    render(
+      <I18nProvider locale="es">
+        <FileUploadPanel defaultFiles={[{ id: 'es', name: 'report.pdf', size: 1536, progress: 100, status: 'done' }]} />
+      </I18nProvider>,
+    );
+    expect(screen.getByText(/25 MB/)).toBeInTheDocument();
+    expect(screen.getByText(/1,5 kB/)).toBeInTheDocument();
+  });
+
+  it('rejects files above the decimal default limit', () => {
+    const onUpload = vi.fn(() => Promise.resolve());
+    const { container } = render(<FileUploadPanel defaultFiles={[]} onUpload={onUpload} />);
+    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+    const big = new File([new Uint8Array(25_000_001)], 'big.pdf', { type: 'application/pdf' });
+    fireEvent.change(input, { target: { files: [big] } });
+    expect(screen.getByText(/Exceeds the 25 MB limit/)).toBeInTheDocument();
+    expect(onUpload).not.toHaveBeenCalled();
+  });
+
   it('renders the default list', async () => {
     const { container } = render(<FileUploadPanel />);
     expect(screen.getByRole('group', { name: 'Upload files' })).toBeInTheDocument();
@@ -27,7 +48,7 @@ describe('FileUploadPanel', () => {
     fireEvent.change(input, { target: { files: [ok, big, bad] } });
     expect(onUpload).toHaveBeenCalledOnce();
     expect(screen.getByRole('progressbar', { name: 'Uploading report.csv' })).toBeInTheDocument();
-    expect(screen.getByText(/Exceeds the 1000 B limit/)).toBeInTheDocument();
+    expect(screen.getByText(/Exceeds the 1 kB limit/)).toBeInTheDocument();
     expect(screen.getByText(/File type not accepted/)).toBeInTheDocument();
     await act(async () => finish());
     expect(screen.getByText(/^3 B · uploaded$/)).toBeInTheDocument();

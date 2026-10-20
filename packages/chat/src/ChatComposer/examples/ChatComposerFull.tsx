@@ -55,7 +55,7 @@ export default function ChatComposerFull() {
         maxLength={2000}
         attachments={files}
         accept=".pdf,.csv,.md,.txt,image/*"
-        maxSize={10 * 1024 * 1024}
+        maxSize={10_000_000}
         maxFiles={5}
         onAttach={attach}
         onRemoveAttachment={(id) => setFiles((f) => f.filter((x) => x.id !== id))}

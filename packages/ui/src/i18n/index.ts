@@ -10,6 +10,8 @@ export {
 } from './I18nProvider';
 export {
   createFormatters,
+  formatBytes,
+  type FormatBytesOptions,
   interpolate,
   localeDirection,
   type I18nFormatters,

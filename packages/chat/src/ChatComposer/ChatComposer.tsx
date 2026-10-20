@@ -1,4 +1,4 @@
-import { Button, IconButton, cn } from '@gntik-ai/ui';
+import { formatBytes, Button, IconButton, cn } from '@gntik-ai/ui';
 import { ArrowUp, Paperclip, Square, Upload, X } from 'lucide-react';
 import {
   useId,
@@ -13,7 +13,6 @@ import {
   type Ref,
 } from 'react';
 import { AttachmentList, validateFiles, type AttachmentRejection, type ChatAttachment } from '../Attachment';
-import { formatBytes } from '../utils/format';
 import { useChatI18n } from '../utils/i18n';
 import { chatComposerStyles as s } from './chatComposer.variants';
 
@@ -95,7 +94,7 @@ export function ChatComposer({
   className,
   ref,
 }: ChatComposerProps) {
-  const { t, tc } = useChatI18n();
+  const { t, tc, locale } = useChatI18n();
   const placeholder = placeholderProp ?? t('chat.placeholder');
   const label = labelProp ?? t('chat.messageLabel');
   const id = useId();
@@ -143,7 +142,7 @@ export function ChatComposer({
         reason === 'type'
           ? tc('chat.fileTypeNotAllowed', { name: file.name })
           : reason === 'size'
-            ? tc('chat.fileTooLarge', { name: file.name, max: formatBytes(maxSize ?? 0) })
+            ? tc('chat.fileTooLarge', { name: file.name, max: formatBytes(maxSize ?? 0, locale) })
             : tc('chat.tooManyFiles', { max: maxFiles ?? 0 }),
     }));
     // One "too many files" line is enough.

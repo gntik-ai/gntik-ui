@@ -168,7 +168,7 @@ export function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoP
               onAttach={attach}
               onRemoveAttachment={(id) => setFiles((all) => all.filter((f) => f.id !== id))}
               accept=".pdf,.csv,.md,.txt,.json,image/*"
-              maxSize={10 * 1024 * 1024}
+              maxSize={10_000_000}
               maxFiles={5}
               modelPicker={<ModelPicker compact models={DEMO_MODELS} value={model} onValueChange={setModel} />}
             />
