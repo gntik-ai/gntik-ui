@@ -6,6 +6,8 @@
  * Month and weekday names, numbers and dates come from Intl, not from this catalog.
  */
 export const en = {
+  'matchText.search': 'Search names without accents',
+  'matchText.results': 'Matching names',
   'virtualOptions.nodes': 'Nodes (10,000 options)',
   'virtualOptions.remoteNodes': 'Remote nodes (5,000 options)',
   'virtualOptions.multiNodes': 'Nodes (5,000 options)',

@@ -1,3 +1,4 @@
+import { matchText } from '@gntik-ai/ui';
 import { BookOpen, CreditCard, LifeBuoy, Plug, Rocket, Shield, type LucideIcon } from '@gntik-ai/icons';
 import type { NavGroup } from '@gntik-ai/ui';
 
@@ -144,8 +145,6 @@ export const helpArticles: HelpArticle[] = [
 ];
 
 /** Articles whose title or excerpt contains the query. */
-export function searchArticles(articles: readonly HelpArticle[], query: string): HelpArticle[] {
-  const q = query.trim().toLowerCase();
-  if (!q) return [...articles];
-  return articles.filter((a) => a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q));
+export function searchArticles(articles: readonly HelpArticle[], query: string, locale?: string): HelpArticle[] {
+  return articles.filter((a) => matchText(a.title, query, { locale }) || matchText(a.excerpt, query, { locale }));
 }

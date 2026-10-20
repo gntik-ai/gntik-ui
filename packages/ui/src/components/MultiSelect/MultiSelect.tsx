@@ -2,6 +2,7 @@ import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, ChevronDown, X } from 'lucide-react';
 import { useId, useRef, useState, type ReactNode, type Ref } from 'react';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
+import { matchText } from '../../utils/match-text';
 import { cn } from '../../utils/cn';
 import { ComboboxSpecialItem } from '../Combobox/Combobox';
 import { comboboxVariants } from '../Combobox/combobox.variants';
@@ -72,10 +73,8 @@ export interface MultiSelectProps extends MultiSelectVariantProps, MeasuredRowOp
 }
 
 const SELECT_ALL: MultiSelectOption = { value: '\u0000select-all', label: '' };
-const matches = (o: MultiSelectOption, q: string) =>
-  o === SELECT_ALL
-    ? q.trim() === ''
-    : `${o.label} ${o.description ?? ''}`.toLowerCase().includes(q.trim().toLowerCase());
+const matches = (o: MultiSelectOption, q: string, locale?: string) =>
+  o === SELECT_ALL ? q.trim() === '' : matchText(`${o.label} ${o.description ?? ''}`, q, { locale });
 
 /**
  * Searchable multi-select on Base UI Combobox (multiple): selected options as removable chips
@@ -117,7 +116,7 @@ export function MultiSelect({
   estimatedItemHeight,
   overscan,
 }: MultiSelectProps) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const placeholder = placeholderProp ?? t('common.searchPlaceholder');
   const selectAllLabel = selectAllLabelProp ?? t('common.selectAll');
   const deselectAllLabel = deselectAllLabelProp ?? t('common.deselectAll');
@@ -206,7 +205,9 @@ export function MultiSelect({
       multiple
       value={selected}
       onValueChange={handleChange}
-      filter={(o: MultiSelectOption | SpecialItem, q: string) => isSpecialItem(o) || !!loadOptions || matches(o, q)}
+      filter={(o: MultiSelectOption | SpecialItem, q: string) =>
+        isSpecialItem(o) || !!loadOptions || matches(o, q, locale)
+      }
       isItemEqualToValue={(a: MultiSelectOption | SpecialItem, b: MultiSelectOption | SpecialItem) =>
         isSpecialItem(a) || isSpecialItem(b) ? a === b : a.value === b.value
       }

@@ -177,3 +177,23 @@ describe('PowerSearch', () => {
     await expectNoAxeViolations();
   });
 });
+
+it('suggests accented values for unaccented text', async () => {
+  const user = userEvent.setup();
+  render(<PowerSearch aria-label="Filter" fields={[{ key: 'name', values: ['Función'] }]} />);
+  await user.type(screen.getByRole('combobox', { name: 'Filter' }), 'name=funcion');
+  expect(await screen.findByRole('option', { name: 'Función' })).toBeInTheDocument();
+});
+
+it('folds text and contains terms while preserving equality and ordering', () => {
+  const fields = [{ key: 'name' }];
+  for (const [query, expected] of [
+    ['funcion', true],
+    ['name~funcion', true],
+    ['name!~funcion', false],
+    ['name=funcion', false],
+    ['name!=funcion', true],
+  ] as const) {
+    expect(matchPowerSearch(parsePowerSearch(query, fields), { name: 'Función' })).toBe(expected);
+  }
+});

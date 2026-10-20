@@ -98,3 +98,21 @@ describe('evaluateQuery', () => {
     expect(operatorsFor({ id: 'x', label: 'X', type: 'text', operators: ['eq'] })).toEqual(['eq']);
   });
 });
+
+it.each([
+  ['contains', 'funcion', true],
+  ['notContains', 'funcion', false],
+  ['startsWith', 'func', true],
+  ['endsWith', 'cion', true],
+  ['eq', 'funcion', false],
+  ['neq', 'funcion', true],
+  ['in', ['funcion'], false],
+  ['notIn', ['funcion'], true],
+] as const)('keeps the accent policy for %s', (operator, value, expected) => {
+  expect(
+    evaluateQuery(
+      { type: 'condition', id: 'name', field: 'name', operator, value: typeof value === 'string' ? value : [...value] },
+      { name: 'Función' },
+    ),
+  ).toBe(expected);
+});

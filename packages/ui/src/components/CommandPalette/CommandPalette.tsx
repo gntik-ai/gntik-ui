@@ -112,7 +112,7 @@ export function CommandPalette({
   className,
   children,
 }: CommandPaletteProps) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const recentLabel = recentLabelProp ?? t('commandPalette.recent');
   const label = labelProp ?? t('commandPalette.label');
   const placeholder = placeholderProp ?? t('commandPalette.placeholder');
@@ -129,7 +129,7 @@ export function CommandPalette({
   };
   useCommandPaletteShortcut(() => setOpen(!open), { enabled: shortcut });
 
-  const visible: CommandEntryGroup[] = filterCommandGroups(groups, query, recent, recentLabel);
+  const visible: CommandEntryGroup[] = filterCommandGroups(groups, query, recent, recentLabel, locale);
   const count = visible.reduce((n, g) => n + g.items.length, 0);
 
   const run = (item: CommandItem) => {

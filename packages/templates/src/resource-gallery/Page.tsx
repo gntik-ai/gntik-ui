@@ -1,3 +1,4 @@
+import { useI18n } from '@gntik-ai/ui';
 import {
   DataTable,
   NoResultsEmpty,
@@ -43,10 +44,11 @@ export default function ResourceGalleryPage({
   onAction,
   shell,
 }: Partial<ResourceGalleryProps>) {
+  const { locale } = useI18n();
   const [items, setItems] = useState<readonly ResourceCard[]>(initialItems);
   const [view, setView] = useState<GalleryView>(defaultView);
   const [query, setQuery] = useState('');
-  const visible = searchResources(items, query);
+  const visible = searchResources(items, query, locale);
 
   const handleAction = (action: ResourceAction, item: ResourceCard) => {
     if (onAction) onAction(action, item);

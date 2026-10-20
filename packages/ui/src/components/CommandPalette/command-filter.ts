@@ -1,3 +1,4 @@
+import { foldText } from '../../utils/match-text';
 import type { ComponentType } from 'react';
 
 export type CommandIcon = ComponentType<{ size?: number; 'aria-hidden'?: boolean; className?: string }>;
@@ -41,7 +42,7 @@ const BOUNDARY = /[\s\-_./:]/;
 
 /** Scores one search token against a text: prefix > word start > substring > subsequence. -1 = no match. */
 function scoreToken(text: string, token: string): number {
-  const t = text.toLowerCase();
+  const t = text;
   const idx = t.indexOf(token);
   if (idx === 0) return 100;
   if (idx > 0) return BOUNDARY.test(t.charAt(idx - 1)) ? 80 : 60;
@@ -62,15 +63,18 @@ function scoreToken(text: string, token: string): number {
  * Fuzzy-ish relevance of an item for a query: every whitespace-separated token must match the
  * label, a keyword or the description (weighted lower). Returns -1 when it does not match.
  */
-export function scoreCommand(item: CommandItem, query: string): number {
-  const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+export function scoreCommand(item: CommandItem, query: string, locale?: string): number {
+  const tokens = foldText(query.trim(), locale).split(/\s+/).filter(Boolean);
   if (!tokens.length) return 0;
+  const label = foldText(item.label, locale);
+  const keywords = (item.keywords ?? []).map((k) => foldText(k, locale));
+  const description = item.description ? foldText(item.description, locale) : '';
   let total = 0;
   for (const token of tokens) {
     const best = Math.max(
-      scoreToken(item.label, token),
-      ...(item.keywords ?? []).map((k) => scoreToken(k, token) * 0.9),
-      item.description ? scoreToken(item.description, token) * 0.5 : -1,
+      scoreToken(label, token),
+      ...keywords.map((k) => scoreToken(k, token) * 0.9),
+      description ? scoreToken(description, token) * 0.5 : -1,
     );
     if (best < 0) return -1;
     total += best;
@@ -87,6 +91,7 @@ export function filterCommandGroups(
   query: string,
   recent: CommandItem[] = [],
   recentLabel = 'Recent',
+  locale?: string,
 ): CommandEntryGroup[] {
   const toEntries = (items: CommandItem[], prefix = '') => items.map((item) => ({ key: prefix + item.id, item }));
   if (!query.trim()) {
@@ -99,7 +104,7 @@ export function filterCommandGroups(
     .map((g) => ({
       value: g.label,
       items: g.items
-        .map((item) => ({ item, score: scoreCommand(item, query) }))
+        .map((item) => ({ item, score: scoreCommand(item, query, locale) }))
         .filter((r) => r.score >= 0)
         .sort((a, b) => b.score - a.score)
         .map(({ item }) => ({ key: item.id, item })),

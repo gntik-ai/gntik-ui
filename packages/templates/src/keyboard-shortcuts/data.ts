@@ -1,3 +1,4 @@
+import { matchText } from '@gntik-ai/ui';
 import type { BreadcrumbItem } from '@gntik-ai/ui';
 
 export interface Shortcut {
@@ -67,7 +68,7 @@ export const shortcutGroups: ShortcutGroup[] = [
 ];
 
 /** Groups with only the shortcuts whose description or keys match the query. */
-export function filterShortcuts(groups: readonly ShortcutGroup[], query: string): ShortcutGroup[] {
+export function filterShortcuts(groups: readonly ShortcutGroup[], query: string, locale?: string): ShortcutGroup[] {
   const q = query.trim().toLowerCase();
   if (!q) return [...groups];
   return groups
@@ -75,8 +76,8 @@ export function filterShortcuts(groups: readonly ShortcutGroup[], query: string)
       ...g,
       shortcuts: g.shortcuts.filter(
         (s) =>
-          s.description.toLowerCase().includes(q) ||
-          g.title.toLowerCase().includes(q) ||
+          matchText(s.description, query, { locale }) ||
+          matchText(g.title, query, { locale }) ||
           [...s.keys, ...(s.then ?? [])].join(' ').toLowerCase() === q,
       ),
     }))

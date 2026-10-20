@@ -6,9 +6,15 @@
    Every field is optional: a doc without keyboard rows or a folder without
    *Props types simply skips that block.
    ============================================================================ */
-import { COMPONENT_API, LAYOUT_API, CHAT_API, FORMS_API } from '../api-docs.js';
+import { COMPONENT_API, LAYOUT_API, CHAT_API, FORMS_API, UTILS_API } from '../api-docs.js';
 
-const API_BY_KIND = { component: COMPONENT_API, layout: LAYOUT_API, chat: CHAT_API, forms: FORMS_API };
+const API_BY_KIND = {
+  component: COMPONENT_API,
+  layout: LAYOUT_API,
+  chat: CHAT_API,
+  forms: FORMS_API,
+  utils: UTILS_API,
+};
 
 const H = ({ level, className, children, id }) => {
   const Tag = `h${Math.min(level, 6)}`;

@@ -1,3 +1,4 @@
+import { matchText } from '@gntik-ai/ui';
 import type { ActiveFilter, FilterField, KpiItem } from '@gntik-ai/blocks';
 import {
   moveKanbanCard,
@@ -169,9 +170,14 @@ export function triageFieldValue(i: TriageIncident, field: string): string | und
 }
 
 /** True when the incident matches the search text and every filtered field (OR within a field). */
-export function matchesTriage(i: TriageIncident, query: string, filters: readonly ActiveFilter[]): boolean {
-  const q = query.trim().toLowerCase();
-  if (q && ![i.id, i.title, i.service, i.owner].some((v) => v.toLowerCase().includes(q))) return false;
+export function matchesTriage(
+  i: TriageIncident,
+  query: string,
+  filters: readonly ActiveFilter[],
+  locale?: string,
+): boolean {
+  const q = query.trim();
+  if (q && ![i.id, i.title, i.service, i.owner].some((v) => matchText(v, q, { locale }))) return false;
   const byField = new Map<string, string[]>();
   for (const f of filters) byField.set(f.field, [...(byField.get(f.field) ?? []), f.value]);
   return [...byField].every(([field, values]) => values.includes(triageFieldValue(i, field) ?? ''));

@@ -4,6 +4,7 @@
 // destructuring and tv() defaultVariants, and variant options from *.variants.ts.
 // Pure parsing over `?raw` imports — a new folder shows up with no registration.
 
+const utilsDocs = import.meta.glob('../../../packages/ui/src/utils/*.doc.ts', { eager: true, import: 'doc' });
 const componentDocs = import.meta.glob('../../../packages/ui/src/components/*/*.doc.ts', {
   eager: true,
   import: 'doc',
@@ -14,6 +15,7 @@ const chatDocs = import.meta.glob('../../../packages/chat/src/*/*.doc.ts', { eag
 // @gntik-ai/ui/forms: the optional react-hook-form entry keeps its files flat, one *.doc.ts per piece.
 const formsDocs = import.meta.glob('../../../packages/ui/src/forms/*.doc.ts', { eager: true, import: 'doc' });
 const sources = {
+  ...import.meta.glob('../../../packages/ui/src/utils/*.ts', { eager: true, query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/ui/src/components/*/*.{ts,tsx}', {
     eager: true,
     query: '?raw',
@@ -290,6 +292,8 @@ function folderKey(path, docBase) {
   m = /\/ui\/src\/forms\/([^/]+)$/.exec(path);
   if (m && docBase && (m[1].startsWith(`${docBase}.`) || m[1].startsWith(`${kebab(docBase)}.`)))
     return `forms/${docBase}`;
+  m = /\/ui\/src\/utils\/([^/]+)$/.exec(path);
+  if (m && docBase && m[1].startsWith(`${docBase}.`)) return `utils/${docBase}`;
   return null;
 }
 
@@ -327,6 +331,7 @@ function buildApi(docPath, doc) {
 const apiOf = (docs) =>
   Object.fromEntries(Object.entries(docs).map(([p, d]) => [folderKey(p, docBaseOf(p)).split('/')[1], buildApi(p, d)]));
 
+export const UTILS_API = apiOf(utilsDocs);
 export const COMPONENT_API = apiOf(componentDocs);
 export const LAYOUT_API = apiOf(layoutDocs);
 export const CHAT_API = apiOf(chatDocs);

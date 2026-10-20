@@ -5588,6 +5588,7 @@
       "description": "Collapsible JSON inspector built on TreeList: objects and arrays expand, values use contrast-safe type tokens, `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value. Optional `maxDisplayChars` (finite integer >= 1) measures UTF-16 units: strings as-is, other values as two-space JSON. Over-cap values become read-only text with an ellipsis (dropping a trailing high surrogate) and a warning Badge labelled by `labels.truncated`. Search has no effect in this fallback; Copy value copies the full measured text, as explained by `labels.copyFullHint`, and Copy path is disabled. `maxHeight` bounds the scrollable body. Only in capped mode, null, undefined and empty strings show `emptyContent` (default a muted dash). Leaving the cap unset preserves existing behavior. The cap limits rendering, not serialization cost.",
       "author": "gntik-ai",
       "dependencies": [
+        "@base-ui/react@^1.8.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -5626,6 +5627,31 @@
           "path": "packages/ui/src/components/JsonViewer/json-viewer.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/json-viewer/json-viewer.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/components/JsonViewer/JsonViewer.doc.ts",
@@ -8516,6 +8542,31 @@
           "path": "packages/ui/src/components/PowerSearch/power-search.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/power-search/power-search.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/components/PowerSearch/PowerSearch.doc.ts",
@@ -13758,6 +13809,7 @@
       "description": "Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced. Opt-in virtualized windows both panes with shared row measurement, keeps the active option mounted and preserves full-data bulk actions and keyboard reordering. Find-in-page and screen-reader browse mode reach rendered rows only.",
       "author": "gntik-ai",
       "dependencies": [
+        "@base-ui/react@^1.8.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -13797,6 +13849,31 @@
           "path": "packages/ui/src/components/TransferList/transfer-list.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/transfer-list/transfer-list.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
         },
         {
           "path": "packages/ui/src/components/TransferList/TransferList.doc.ts",
@@ -14023,6 +14100,11 @@
           "path": "packages/ui/src/utils/density-merge.ts",
           "type": "registry:ui",
           "target": "components/utils/density-merge.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/match-text.ts",
+          "type": "registry:ui",
+          "target": "components/utils/match-text.ts"
         },
         {
           "path": "packages/ui/src/utils/rtl.ts",

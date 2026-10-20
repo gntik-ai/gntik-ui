@@ -1,10 +1,20 @@
+import { useI18n } from '../../i18n/I18nProvider';
+import { matchRanges } from '../../utils/match-text';
 import { Check, Copy } from 'lucide-react';
 import { useEffect, useMemo, useState, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { Badge } from '../Badge/Badge';
 import { TreeList } from '../TreeList/TreeList';
 import type { TreeNode } from '../TreeList/tree-model';
-import { entries, joinPath, jsonType, matchAncestors, measureJsonDisplay, pathsToDepth } from './json-model';
+import {
+  entries,
+  joinPath,
+  jsonType,
+  jsonSearchIndex,
+  ancestorsFromIndex,
+  measureJsonDisplay,
+  pathsToDepth,
+} from './json-model';
 import { jsonTypeClass, jsonViewerVariants } from './json-viewer.variants';
 
 export interface JsonViewerLabels {
@@ -65,27 +75,23 @@ export interface JsonViewerProps {
 
 const s = jsonViewerVariants();
 
-function highlight(text: string, query: string): ReactNode {
-  const q = query.trim().toLowerCase();
-  if (!q) return text;
+function highlight(text: string, query: string, locale?: string): ReactNode {
   const out: ReactNode[] = [];
   let from = 0;
-  let at = text.toLowerCase().indexOf(q);
-  while (at !== -1) {
-    if (at > from) out.push(text.slice(from, at));
+  for (const [start, end] of matchRanges(text, query, { locale })) {
+    out.push(text.slice(from, start));
     out.push(
-      <mark key={at} className={s.mark()}>
-        {text.slice(at, at + q.length)}
+      <mark key={start} className={s.mark()}>
+        {text.slice(start, end)}
       </mark>,
     );
-    from = at + q.length;
-    at = text.toLowerCase().indexOf(q, from);
+    from = end;
   }
-  if (from < text.length) out.push(text.slice(from));
+  out.push(text.slice(from));
   return out;
 }
 
-function preview(value: unknown, labels: JsonViewerLabels, query: string): ReactNode {
+function preview(value: unknown, labels: JsonViewerLabels, query: string, locale?: string): ReactNode {
   const type = jsonType(value);
   if (type === 'object' || type === 'array') {
     const n = entries(value).length;
@@ -96,7 +102,7 @@ function preview(value: unknown, labels: JsonViewerLabels, query: string): React
     );
   }
   const text = type === 'string' ? JSON.stringify(value) : String(value ?? null);
-  return <span className={jsonTypeClass[type]}>{highlight(text, query)}</span>;
+  return <span className={jsonTypeClass[type]}>{highlight(text, query, locale)}</span>;
 }
 
 /**
@@ -118,6 +124,7 @@ export function JsonViewer({
   className,
   ref,
 }: JsonViewerProps) {
+  const { locale } = useI18n();
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
   const display = useMemo(() => measureJsonDisplay(data, maxDisplayChars), [data, maxDisplayChars]);
   const truncated = display?.truncated ?? false;
@@ -127,12 +134,18 @@ export function JsonViewer({
   );
   const [selected, setSelected] = useState<string[]>([]);
   const [status, setStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
-  const [revealed, setRevealed] = useState({ search: '', data: undefined as unknown });
+  const searchIndex = useMemo(
+    () => (showTree ? jsonSearchIndex(data, maxDepth, locale) : []),
+    [data, maxDepth, locale, showTree],
+  );
+  const [revealed, setRevealed] = useState({ search: '', data: undefined as unknown, locale: '' });
 
   // Reveal matches when the query (or data) changes; the user can still collapse them afterwards.
-  if (revealed.search !== search || revealed.data !== data) {
-    setRevealed({ search, data });
-    const extra = showTree ? [...matchAncestors(data, search, maxDepth)].filter((p) => !expanded.includes(p)) : [];
+  if (revealed.search !== search || revealed.data !== data || revealed.locale !== locale) {
+    setRevealed({ search, data, locale });
+    const extra = showTree
+      ? [...ancestorsFromIndex(searchIndex, search, locale)].filter((p) => !expanded.includes(p))
+      : [];
     if (extra.length) setExpanded([...expanded, ...extra]);
   }
 
@@ -149,10 +162,10 @@ export function JsonViewer({
         content: (
           <span className={s.row()}>
             <span className={typeof key === 'number' ? jsonTypeClass.punctuation : jsonTypeClass.key}>
-              {highlight(keyText, search)}
+              {highlight(keyText, search, locale)}
             </span>
             <span className={jsonTypeClass.punctuation}>: </span>
-            {preview(v, labels, search)}
+            {preview(v, labels, search, locale)}
           </span>
         ),
         children: (type === 'object' || type === 'array') && level < maxDepth ? build(v, id, level + 1) : undefined,
@@ -163,7 +176,13 @@ export function JsonViewer({
     ? []
     : rootType === 'object' || rootType === 'array'
       ? build(data, '', 1)
-      : [{ id: '', label: labels.root, content: <span className={s.row()}>{preview(data, labels, search)}</span> }];
+      : [
+          {
+            id: '',
+            label: labels.root,
+            content: <span className={s.row()}>{preview(data, labels, search, locale)}</span>,
+          },
+        ];
 
   useEffect(() => {
     if (status === 'idle') return;

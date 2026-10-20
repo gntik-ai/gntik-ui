@@ -1,3 +1,4 @@
+import { matchText } from '../../utils/match-text';
 /**
  * QueryBuilder model: a serialisable tree of AND/OR groups and field conditions, plus pure
  * helpers to describe it (`queryToString`) and to test a record against it (`evaluateQuery`).
@@ -201,7 +202,12 @@ function equals(a: unknown, b: unknown, type: QueryFieldType | undefined): boole
   return norm(a) === norm(b);
 }
 
-function test(c: QueryCondition, record: Record<string, unknown>, type: QueryFieldType | undefined): boolean {
+function test(
+  c: QueryCondition,
+  record: Record<string, unknown>,
+  type: QueryFieldType | undefined,
+  locale?: string,
+): boolean {
   const v = record[c.field];
   const target = c.value;
   switch (c.operator) {
@@ -218,13 +224,13 @@ function test(c: QueryCondition, record: Record<string, unknown>, type: QueryFie
     case 'neq':
       return !equals(v, target, type);
     case 'contains':
-      return norm(v).includes(norm(target));
+      return matchText(String(v ?? ''), String(target ?? ''), { locale });
     case 'notContains':
-      return !norm(v).includes(norm(target));
+      return !matchText(String(v ?? ''), String(target ?? ''), { locale });
     case 'startsWith':
-      return norm(v).startsWith(norm(target));
+      return matchText(String(v ?? ''), String(target ?? ''), { locale, mode: 'startsWith' });
     case 'endsWith':
-      return norm(v).endsWith(norm(target));
+      return matchText(String(v ?? ''), String(target ?? ''), { locale, mode: 'endsWith' });
     case 'in':
     case 'notIn': {
       const list = Array.isArray(target) ? (target as unknown[]).map(String) : [];
@@ -257,14 +263,19 @@ const hasCompleteCondition = (node: QueryNode): boolean =>
  * item does. Incomplete conditions are ignored, and an empty group matches everything.
  * Pass `fields` so values are compared by their declared type.
  */
-export function evaluateQuery(tree: QueryNode, record: Record<string, unknown>, fields?: QueryField[]): boolean {
+export function evaluateQuery(
+  tree: QueryNode,
+  record: Record<string, unknown>,
+  fields?: QueryField[],
+  locale?: string,
+): boolean {
   if (tree.type === 'condition') {
     if (!isConditionComplete(tree)) return true;
-    return test(tree, record, fields?.find((f) => f.id === tree.field)?.type);
+    return test(tree, record, fields?.find((f) => f.id === tree.field)?.type, locale);
   }
   const relevant = tree.children.filter(hasCompleteCondition);
   if (!relevant.length) return true;
   return tree.combinator === 'and'
-    ? relevant.every((c) => evaluateQuery(c, record, fields))
-    : relevant.some((c) => evaluateQuery(c, record, fields));
+    ? relevant.every((c) => evaluateQuery(c, record, fields, locale))
+    : relevant.some((c) => evaluateQuery(c, record, fields, locale));
 }

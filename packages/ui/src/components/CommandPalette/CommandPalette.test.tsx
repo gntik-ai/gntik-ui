@@ -112,3 +112,10 @@ describe('CommandPalette', () => {
     await expectNoAxeViolations();
   });
 });
+
+it('lists accented commands with the same score for either spelling', () => {
+  const item = { id: 'function', label: 'Función de prueba' };
+  expect(scoreCommand(item, 'funcion')).toBe(100);
+  expect(scoreCommand(item, 'función')).toBe(100);
+  expect(filterCommandGroups([{ label: 'Actions', items: [item] }], 'funcion')[0]?.items[0]?.item).toEqual(item);
+});

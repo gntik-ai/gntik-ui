@@ -26,6 +26,14 @@ const formsSources = import.meta.glob('../../../../packages/ui/src/forms/example
   import: 'default',
 });
 
+const utilsDocs = import.meta.glob('../../../../packages/ui/src/utils/*.doc.ts', { eager: true, import: 'doc' });
+const utilsExamples = import.meta.glob('../../../../packages/ui/src/utils/examples/*.tsx', { eager: true });
+const utilsSources = import.meta.glob('../../../../packages/ui/src/utils/examples/*.tsx', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+});
+
 const withDefault = (modules) =>
   Object.fromEntries(
     Object.entries(modules)
@@ -58,6 +66,20 @@ const formsOwnerOf = (path, folders) => {
 };
 
 const COMPONENTS = sortEntries([
+  ...buildEntries({
+    docs: utilsDocs,
+    examples: withDefault(utilsExamples),
+    sources: utilsSources,
+    folderOf: (path) =>
+      path
+        .split('/')
+        .pop()
+        .replace(/\.doc\.ts$/, ''),
+    ownerOf: () => 'match-text',
+    forProduct: (code) =>
+      code.replace(/from '[^']*(?:match-text|I18nProvider|components\/Input)'/g, "from '@gntik-ai/ui'"),
+    apiKind: 'utils',
+  }),
   ...buildEntries({
     docs,
     examples: withDefault(exampleModules),

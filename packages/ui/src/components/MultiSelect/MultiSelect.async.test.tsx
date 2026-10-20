@@ -87,3 +87,10 @@ describe('MultiSelect async + creatable', () => {
     await expectNoAxeViolations();
   });
 });
+
+it('the topics example folds accents in the async query', async () => {
+  const user = userEvent.setup();
+  render(<MultiSelectAsync />);
+  await user.type(screen.getByRole('combobox', { name: 'Topics' }), 'séarch');
+  expect(await screen.findByRole('option', { name: /search/ })).toBeInTheDocument();
+});

@@ -1,3 +1,4 @@
+import { matchText } from '../../utils/match-text';
 /** Comparison operators a filter can use. `~` is "contains", `!~` "does not contain". */
 export type PowerSearchOperator = '=' | '!=' | '>' | '>=' | '<' | '<=' | '~' | '!~';
 export type PowerSearchFieldType = 'string' | 'number' | 'enum' | 'date';
@@ -164,7 +165,7 @@ export function parsePowerSearch<K extends string>(
   return { type: 'and', terms };
 }
 
-function compare(actual: unknown, op: PowerSearchOperator, expected: string | number): boolean {
+function compare(actual: unknown, op: PowerSearchOperator, expected: string | number, locale?: string): boolean {
   if (typeof expected === 'number') {
     const a = Number(actual);
     if (!Number.isFinite(a)) return false;
@@ -178,6 +179,10 @@ function compare(actual: unknown, op: PowerSearchOperator, expected: string | nu
       '~': String(a).includes(String(expected)),
       '!~': !String(a).includes(String(expected)),
     }[op];
+  }
+  if (op === '~' || op === '!~') {
+    const matches = matchText(String(actual ?? ''), expected, { locale });
+    return op === '~' ? matches : !matches;
   }
   const a = String(actual ?? '').toLowerCase();
   const e = expected.toLowerCase();
@@ -197,16 +202,12 @@ function compare(actual: unknown, op: PowerSearchOperator, expected: string | nu
 export function matchPowerSearch<K extends string>(
   query: PowerSearchQuery<K>,
   record: Partial<Record<K, unknown>>,
+  locale?: string,
 ): boolean {
   return query.terms.every((t) => {
     if (t.type === 'text') {
-      const needle = t.value.toLowerCase();
-      return Object.values(record).some((v) =>
-        String(v ?? '')
-          .toLowerCase()
-          .includes(needle),
-      );
+      return Object.values(record).some((v) => matchText(String(v ?? ''), t.value, { locale }));
     }
-    return compare(record[t.field], t.operator, t.value);
+    return compare(record[t.field], t.operator, t.value, locale);
   });
 }

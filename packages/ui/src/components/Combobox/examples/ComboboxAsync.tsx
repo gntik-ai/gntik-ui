@@ -1,3 +1,6 @@
+import { useCallback } from 'react';
+import { useI18n } from '../../../i18n/I18nProvider';
+import { matchText } from '../../../utils/match-text';
 import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from '../Combobox';
 
 interface Member {
@@ -17,11 +20,10 @@ const DIRECTORY: Member[] = [
 ];
 
 /** Stands in for `fetch('/api/members?q=…', { signal })`: resolves after a short delay, honours abort. */
-function searchMembers(query: string, { signal }: { signal: AbortSignal }): Promise<Member[]> {
+function searchMembers(query: string, { signal }: { signal: AbortSignal }, locale?: string): Promise<Member[]> {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
-      const q = query.toLowerCase();
-      resolve(DIRECTORY.filter((m) => `${m.label} ${m.email}`.toLowerCase().includes(q)));
+      resolve(DIRECTORY.filter((m) => matchText(`${m.label} ${m.email}`, query, { locale })));
     }, 300);
     signal.addEventListener('abort', () => {
       clearTimeout(timer);
@@ -31,9 +33,14 @@ function searchMembers(query: string, { signal }: { signal: AbortSignal }): Prom
 }
 
 export default function ComboboxAsync() {
+  const { locale } = useI18n();
+  const loadOptions = useCallback(
+    (query: string, context: { signal: AbortSignal }) => searchMembers(query, context, locale),
+    [locale],
+  );
   return (
     <div className="w-full max-w-sm">
-      <Combobox<Member> loadOptions={searchMembers} debounceMs={250}>
+      <Combobox<Member> loadOptions={loadOptions} debounceMs={250}>
         <ComboboxInput label="Assignee" placeholder="Search the directory…" showClear />
         <ComboboxContent emptyText="No members match.">
           {(m: Member) => (

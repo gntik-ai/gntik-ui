@@ -1,3 +1,4 @@
+import { useI18n } from '@gntik-ai/ui';
 import {
   ChartCard,
   DataTable,
@@ -100,11 +101,12 @@ export default function UsageAnalyticsPage<P extends object = CostPoint, T exten
   onExport,
   shell,
 }: Partial<UsageAnalyticsProps<P, T>>) {
+  const { locale } = useI18n();
   const secondary = { ...(TRAFFIC_CHART as unknown as UsageSecondaryChart<T>), ...secondaryChart };
   const [range, setRange] = useState<DateRange | null>(null);
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<ActiveFilter[]>([]);
-  const visible = filterUsage(rows, query, filters);
+  const visible = filterUsage(rows, query, filters, locale);
 
   const clearFilters = () => setFilters([]);
   const exportAction = {

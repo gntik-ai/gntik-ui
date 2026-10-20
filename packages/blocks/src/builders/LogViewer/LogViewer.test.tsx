@@ -95,3 +95,14 @@ describe('LogViewer', () => {
     expect(screen.getByRole('button', { name: 'Copied' })).toBeInTheDocument();
   });
 });
+
+it.each([
+  ['Función', 'funcion', 'Función'],
+  ['İstanbul', 'stan', 'stan'],
+])('keeps and marks the original substring of %s', async (message, query, marked) => {
+  const user = userEvent.setup();
+  render(<LogViewer lines={[{ ...makeLogLines(1)[0]!, message, source: undefined }]} />);
+  await user.type(screen.getByRole('searchbox', { name: 'Search logs' }), query);
+  expect(renderedLines()).toHaveLength(1);
+  expect([...screen.getByRole('log').querySelectorAll('mark')].map((mark) => mark.textContent)).toEqual([marked]);
+});

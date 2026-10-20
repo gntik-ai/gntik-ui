@@ -17,6 +17,12 @@ function setup(props: Partial<Parameters<typeof MultiSelect>[0]> = {}) {
 }
 
 describe('MultiSelect', () => {
+  it('finds an accented label when typing an unaccented query', async () => {
+    const { user, input } = setup({ options: [{ value: 'function', label: 'Función' }] });
+    await user.type(input, 'funcion');
+    expect(await screen.findByRole('option', { name: 'Función' })).toBeInTheDocument();
+  });
+
   it('typing filters the options (and hides Select all)', async () => {
     const { user, input } = setup();
     await user.click(input);
