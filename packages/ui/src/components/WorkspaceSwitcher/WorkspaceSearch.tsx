@@ -1,3 +1,4 @@
+import { matchText } from '../../utils/match-text';
 import { Combobox } from '@base-ui/react/combobox';
 import { Check, Plus, Search } from 'lucide-react';
 import { useMemo } from 'react';
@@ -28,7 +29,7 @@ export function WorkspaceSearch({
   searchPlaceholder: searchPlaceholderProp,
   emptyText: emptyTextProp,
 }: WorkspaceSearchProps) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const searchPlaceholder = searchPlaceholderProp ?? t('workspace.search');
   const emptyText = emptyTextProp ?? t('workspace.empty');
   const dir = usePortalDir();
@@ -48,9 +49,7 @@ export function WorkspaceSearch({
       }}
       itemToStringLabel={(w) => w.name}
       isItemEqualToValue={(a, b) => a.id === b.id}
-      filter={(w, query) =>
-        w.id === CREATE_ID || `${w.name} ${w.meta ?? ''}`.toLowerCase().includes(query.trim().toLowerCase())
-      }
+      filter={(w, query) => w.id === CREATE_ID || matchText(`${w.name} ${w.meta ?? ''}`, query, { locale })}
       autoHighlight
     >
       <Combobox.Trigger aria-label={triggerLabel(current, label)} className={cn(s.trigger(), className)}>

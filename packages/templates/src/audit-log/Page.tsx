@@ -1,3 +1,5 @@
+import { useI18n } from '@gntik-ai/ui';
+import { matchText } from '@gntik-ai/ui';
 import {
   DataTable,
   DateRangeFilter,
@@ -60,13 +62,14 @@ export function filterAuditEvents(
   query: string,
   filters: readonly ActiveFilter[],
   range: DateRange,
+  locale?: string,
 ) {
-  const q = query.trim().toLowerCase();
+  const q = query.trim();
   const fields = [...new Set(filters.map((f) => f.field))];
   const from = range.start ? startOfDay(range.start).getTime() : -Infinity;
   const to = range.end ? startOfDay(range.end).getTime() + DAY : Infinity;
   return events.filter((e) => {
-    if (q && ![e.actor.name, e.actor.email, e.action, e.target].some((v) => v.toLowerCase().includes(q))) return false;
+    if (q && ![e.actor.name, e.actor.email, e.action, e.target].some((v) => matchText(v, q, { locale }))) return false;
     if (!fields.every((field) => filters.some((f) => f.field === field && f.value === fieldValue(e, field))))
       return false;
     const t = e.at.getTime();
@@ -104,6 +107,7 @@ function downloadCsv(events: AuditEvent[]) {
 
 /** Audit log: ConsoleShell + Page with FilterBar + DateRangeFilter, an events DataTable and a diff drawer. */
 export default function AuditLogPage(props: Partial<AuditLogProps>) {
+  const { locale } = useI18n();
   const {
     events = auditEvents,
     filterFields = auditFilterFields,
@@ -125,7 +129,7 @@ export default function AuditLogPage(props: Partial<AuditLogProps>) {
   });
   const [diffEvent, setDiffEvent] = useState<AuditEvent | null>(null);
 
-  const rows = filterAuditEvents(events, query, filters, range);
+  const rows = filterAuditEvents(events, query, filters, range, locale);
 
   const columns: DataTableColumn<AuditEvent>[] = [
     {

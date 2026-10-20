@@ -131,3 +131,9 @@ it('windows both panes while keyboard checks, bulk moves and reordering use ever
   expect(onValueChange.mock.lastCall?.[0].slice(-2)).toEqual(['node-2000', 'node-1999']);
   expect(active(selected)).toBe('Node 2000');
 });
+
+it('finds accented items with an unaccented query', async () => {
+  const { user, available } = setup({ items: [{ value: 'function', label: 'Función' }], defaultValue: [] });
+  await user.type(screen.getByRole('searchbox', { name: 'Search available' }), 'funcion');
+  expect(within(available).getByRole('option', { name: 'Función' })).toBeInTheDocument();
+});

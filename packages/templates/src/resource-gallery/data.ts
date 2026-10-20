@@ -1,3 +1,4 @@
+import { matchText } from '@gntik-ai/ui';
 import { RESOURCE_CARDS, type DataTableColumn, type PageToolbarView, type ResourceCard } from '@gntik-ai/blocks';
 import { LayoutGrid, Table2 } from '@gntik-ai/icons';
 import { StatusTag, type BreadcrumbItem } from '@gntik-ai/ui';
@@ -37,8 +38,6 @@ export const galleryColumns: DataTableColumn<ResourceCard>[] = [
 ];
 
 /** Case-insensitive search over name and description. */
-export function searchResources(items: readonly ResourceCard[], query: string): ResourceCard[] {
-  const q = query.trim().toLowerCase();
-  if (!q) return [...items];
-  return items.filter((i) => i.name.toLowerCase().includes(q) || (i.description ?? '').toLowerCase().includes(q));
+export function searchResources(items: readonly ResourceCard[], query: string, locale?: string): ResourceCard[] {
+  return items.filter((i) => matchText(i.name, query, { locale }) || matchText(i.description ?? '', query, { locale }));
 }

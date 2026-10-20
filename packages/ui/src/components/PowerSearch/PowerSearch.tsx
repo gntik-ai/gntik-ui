@@ -1,3 +1,5 @@
+import { useI18n } from '../../i18n/I18nProvider';
+import { matchText } from '../../utils/match-text';
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { ListFilter, X } from 'lucide-react';
 import { useId, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
@@ -100,6 +102,7 @@ export function PowerSearch<K extends string = string>({
   className,
   'aria-label': ariaLabel,
 }: PowerSearchProps<K>) {
+  const { locale } = useI18n();
   const labels = { ...defaultLabels, ...labelsProp };
   const opLabels = { ...defaultOperatorLabels, ...opLabelsProp };
   const [inner, setInner] = useState<PowerSearchQuery<K>>(defaultValue ?? emptyPowerSearchQuery<K>());
@@ -213,11 +216,11 @@ export function PowerSearch<K extends string = string>({
     if (!open) setOpen(true);
   };
 
-  const q = input.trim().toLowerCase();
+  const q = input.trim();
   let suggestions: Suggestion[] = [];
   if (stage === 'field') {
     suggestions = fields
-      .filter((f) => !q || f.key.toLowerCase().includes(q) || f.label?.toLowerCase().includes(q))
+      .filter((f) => !q || matchText(f.key, q, { locale }) || (f.label && matchText(f.label, q, { locale })))
       .map((f) => ({
         id: `field:${f.key}`,
         label: fieldLabel(f),
@@ -229,11 +232,11 @@ export function PowerSearch<K extends string = string>({
       suggestions.push({ id: `text:${q}`, label: labels.freeText(input.trim()), kind: 'text', key: input.trim() });
   } else if (stage === 'operator' && field) {
     suggestions = operatorsFor(field)
-      .filter((o) => !q || o.startsWith(q) || opLabels[o].toLowerCase().includes(q))
+      .filter((o) => !q || matchText(o, q, { mode: 'startsWith', locale }) || matchText(opLabels[o], q, { locale }))
       .map((o) => ({ id: `op:${o}`, label: opLabels[o], kind: 'operator' as const, key: o, code: o }));
   } else if (field) {
     suggestions = valueOptions(field)
-      .filter((o) => !q || o.value.toLowerCase().includes(q) || o.label?.toLowerCase().includes(q))
+      .filter((o) => !q || matchText(o.value, q, { locale }) || (o.label && matchText(o.label, q, { locale })))
       .map((o) => ({ id: `value:${o.value}`, label: o.label ?? o.value, kind: 'value' as const, key: o.value }));
   }
 

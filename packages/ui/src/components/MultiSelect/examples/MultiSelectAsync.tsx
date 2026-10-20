@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useI18n } from '../../../i18n/I18nProvider';
+import { matchText } from '../../../utils/match-text';
+import { useCallback, useState } from 'react';
 import { MultiSelect, type MultiSelectOption } from '../MultiSelect';
 
 const TOPICS: MultiSelectOption[] = [
@@ -10,9 +12,13 @@ const TOPICS: MultiSelectOption[] = [
 ];
 
 /** Stands in for `fetch('/api/topics?q=…', { signal })`. */
-function searchTopics(query: string, { signal }: { signal: AbortSignal }): Promise<MultiSelectOption[]> {
+function searchTopics(
+  query: string,
+  { signal }: { signal: AbortSignal },
+  locale?: string,
+): Promise<MultiSelectOption[]> {
   return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => resolve(TOPICS.filter((t) => t.label.includes(query.toLowerCase()))), 250);
+    const timer = setTimeout(() => resolve(TOPICS.filter((t) => matchText(t.label, query, { locale }))), 250);
     signal.addEventListener('abort', () => {
       clearTimeout(timer);
       reject(new DOMException('Aborted', 'AbortError'));
@@ -21,6 +27,11 @@ function searchTopics(query: string, { signal }: { signal: AbortSignal }): Promi
 }
 
 export default function MultiSelectAsync() {
+  const { locale } = useI18n();
+  const loadOptions = useCallback(
+    (query: string, context: { signal: AbortSignal }) => searchTopics(query, context, locale),
+    [locale],
+  );
   const [value, setValue] = useState<string[]>([]);
   return (
     <div className="w-full max-w-sm">
@@ -30,7 +41,7 @@ export default function MultiSelectAsync() {
         options={[]}
         value={value}
         onValueChange={setValue}
-        loadOptions={searchTopics}
+        loadOptions={loadOptions}
         onCreate={(input) => {
           const created = { value: input.toLowerCase(), label: input.toLowerCase(), description: 'New topic' };
           TOPICS.push(created);

@@ -1,3 +1,4 @@
+import { matchText } from '@gntik-ai/ui';
 import type { ActiveFilter, ChartCardRange, DataTableColumn, FilterField, SavedView } from '@gntik-ai/blocks';
 import type { BreadcrumbItem } from '@gntik-ai/ui';
 
@@ -68,12 +69,17 @@ export const usageSavedViews: SavedView[] = [
  * Search by project name; filters match the row field named by the filter id (same field OR,
  * across fields AND). Filters on fields the row does not have are ignored.
  */
-export function filterUsage(rows: readonly UsageRow[], query: string, filters: readonly ActiveFilter[]): UsageRow[] {
-  const q = query.trim().toLowerCase();
+export function filterUsage(
+  rows: readonly UsageRow[],
+  query: string,
+  filters: readonly ActiveFilter[],
+  locale?: string,
+): UsageRow[] {
+  const q = query.trim();
   const byField = new Map<string, string[]>();
   for (const f of filters) byField.set(f.field, [...(byField.get(f.field) ?? []), f.value]);
   return rows.filter((row) => {
-    if (q && !row.project.toLowerCase().includes(q)) return false;
+    if (q && !matchText(row.project, q, { locale })) return false;
     for (const [field, values] of byField) {
       const value: unknown = (row as unknown as Record<string, unknown>)[field];
       if (value !== undefined && value !== null && !values.includes(String(value))) return false;

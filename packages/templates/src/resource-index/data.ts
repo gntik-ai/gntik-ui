@@ -1,3 +1,4 @@
+import { matchText } from '@gntik-ai/ui';
 import {
   DEPLOYMENT_COLUMNS,
   DEPLOYMENT_ROWS,
@@ -62,18 +63,20 @@ export function filterResources<T extends object = ResourceRow>(
   query: string,
   filters: readonly ActiveFilter[],
   columns?: ReadonlyArray<Column<T>>,
+  locale?: string,
 ): T[] {
-  const q = query.trim().toLowerCase();
+  const q = query.trim();
   const byField = new Map<string, string[]>();
   for (const f of filters) byField.set(f.field, [...(byField.get(f.field) ?? []), f.value.toLowerCase()]);
   return rows.filter((row) => {
     if (q) {
       const r = row as Record<string, unknown>;
-      let haystack = [r.name, r.id].map(text).filter((v) => v !== undefined);
+      const searchText = (v: unknown) => (typeof v === 'string' || typeof v === 'number' ? String(v) : undefined);
+      let haystack = [r.name, r.id].map(searchText).filter((v) => v !== undefined);
       // Rows without a name/id: search every column value instead.
       if (haystack.length === 0 && columns)
-        haystack = columns.map((c) => text(c.accessor?.(row))).filter((v) => v !== undefined);
-      if (!haystack.some((v) => v.includes(q))) return false;
+        haystack = columns.map((c) => searchText(c.accessor?.(row))).filter((v) => v !== undefined);
+      if (!haystack.some((v) => matchText(v, q, { locale }))) return false;
     }
     for (const [field, values] of byField) {
       const value = text(fieldValue(row, field, columns));

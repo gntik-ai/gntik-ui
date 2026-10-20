@@ -1,3 +1,4 @@
+import { useI18n } from '@gntik-ai/ui';
 import {
   BulkActionBar,
   DataTable,
@@ -92,11 +93,12 @@ export default function ResourceIndexPage<T extends object = ResourceRow>({
   loading = false,
   shell,
 }: Partial<ResourceIndexProps<T>>) {
+  const { locale } = useI18n();
   const [rows, setRows] = useState<readonly T[]>(initialRows);
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<ActiveFilter[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
-  const visible = filterResources(rows, query, filters, columns);
+  const visible = filterResources(rows, query, filters, columns, locale);
   const visibleSelected = selected.filter((id) => visible.some((r) => getRowId(r) === id));
   const tableColumns = useMemo(
     () => linkColumns(columns, linkColumnId ?? columns[0]?.id, getRowHref, onRowClick),

@@ -2,6 +2,8 @@ import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  'matchText.search': 'Buscar nombres sin acentos',
+  'matchText.results': 'Nombres coincidentes',
   'virtualOptions.nodes': 'Nodos (10.000 opciones)',
   'virtualOptions.remoteNodes': 'Nodos remotos (5.000 opciones)',
   'virtualOptions.multiNodes': 'Nodos (5.000 opciones)',

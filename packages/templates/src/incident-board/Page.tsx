@@ -1,3 +1,4 @@
+import { useI18n } from '@gntik-ai/ui';
 import { FilterBar, KpiRow, PageHeader, type ActiveFilter, type FilterField } from '@gntik-ai/blocks';
 import { Download, Plus } from '@gntik-ai/icons';
 import {
@@ -95,13 +96,17 @@ function IncidentBoard({
   onDeclare,
   onExport,
 }: BoardProps) {
+  const { locale } = useI18n();
   const announce = useAnnounce();
   const [columns, setColumns] = useState(defaultColumns);
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<ActiveFilter[]>(defaultFilters);
   const [openId, setOpenId] = useState<string | null>(defaultOpenId);
 
-  const visible = columns.map((c) => ({ ...c, cards: c.cards.filter((i) => matchesTriage(i, query, filters)) }));
+  const visible = columns.map((c) => ({
+    ...c,
+    cards: c.cards.filter((i) => matchesTriage(i, query, filters, locale)),
+  }));
   const shown = visible.reduce((n, c) => n + c.cards.length, 0);
   const openColumn = columns.find((c) => c.cards.some((i) => i.id === openId));
   const open = openColumn?.cards.find((i) => i.id === openId);

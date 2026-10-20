@@ -1,6 +1,7 @@
 import { NoResultsEmpty, PageHeader, SectionHeader } from '@gntik-ai/blocks';
 import { Search } from '@gntik-ai/icons';
 import {
+  matchText,
   Checkbox,
   CheckboxGroup,
   Grid,
@@ -46,14 +47,13 @@ const EMPTY_SELECTION: SearchSelection = { type: [], owner: [] };
 const facetValue = (hit: SearchHit, facet: SearchFacet['id']) => (facet === 'type' ? hit.type : hit.owner);
 
 /** Hits whose title or snippet contain the query (case-insensitive). */
-export function matchQuery(hits: readonly SearchHit[], query: string) {
-  const q = query.trim().toLowerCase();
-  return q ? hits.filter((h) => `${h.title} ${h.snippet}`.toLowerCase().includes(q)) : [...hits];
+export function matchQuery(hits: readonly SearchHit[], query: string, locale?: string) {
+  return hits.filter((h) => matchText(`${h.title} ${h.snippet}`, query, { locale }));
 }
 
 /** Search results: ConsoleShell + Page with Checkbox-group facets and results grouped by type. */
 export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const {
     hits = searchHits,
     facets = searchFacets,
@@ -69,7 +69,7 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
   const [query, setQuery] = useState(defaultQuery);
   const [selection, setSelection] = useState<SearchSelection>(EMPTY_SELECTION);
 
-  const matched = matchQuery(hits, query);
+  const matched = matchQuery(hits, query, locale);
   const results = matched.filter((h) =>
     (Object.keys(selection) as Array<SearchFacet['id']>).every(
       (f) => selection[f].length === 0 || selection[f].includes(facetValue(h, f)),

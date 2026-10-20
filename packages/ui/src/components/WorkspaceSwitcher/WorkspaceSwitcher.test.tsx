@@ -1,3 +1,4 @@
+import { WorkspaceSwitcher } from './WorkspaceSwitcher';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
@@ -105,4 +106,21 @@ describe('WorkspaceSwitcher (searchable)', () => {
     await open();
     await expectNoAxeViolations();
   });
+});
+
+it('finds an accented workspace without accents', async () => {
+  const user = userEvent.setup();
+  render(
+    <WorkspaceSwitcher
+      searchable
+      workspaces={[{ id: 'function', name: 'Función' }]}
+      currentId="function"
+      onSelect={() => {}}
+    />,
+  );
+  await user.tab();
+  await user.keyboard('{Enter}');
+  await screen.findByRole('listbox');
+  await user.type(screen.getByRole('combobox', { name: 'Find a workspace' }), 'funcion');
+  expect(await screen.findByRole('option', { name: /Función/ })).toBeInTheDocument();
 });

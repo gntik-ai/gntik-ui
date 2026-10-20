@@ -251,3 +251,10 @@ it('virtualized async options announce loading, window 5000 results and retry an
   await waitFor(() => expect(screen.getAllByRole('option')[0]).toHaveAttribute('aria-setsize', '5000'));
   expect(screen.getAllByRole('option').length).toBeLessThanOrEqual(20);
 });
+
+it('the directory example folds accents in the async query', async () => {
+  const user = userEvent.setup();
+  render(<ComboboxAsync />);
+  await user.type(screen.getByRole('combobox', { name: 'Assignee' }), 'Inés');
+  expect(await screen.findByRole('option', { name: /Ines Roca/ })).toBeInTheDocument();
+});

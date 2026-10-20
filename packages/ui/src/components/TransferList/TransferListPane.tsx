@@ -1,3 +1,5 @@
+import { useI18n } from '../../i18n/I18nProvider';
+import { matchText } from '../../utils/match-text';
 import { Check, Search } from 'lucide-react';
 import { useEffect, useEffectEvent, useLayoutEffect, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
@@ -56,8 +58,8 @@ export function TransferListPane({
 }: TransferListPaneProps) {
   const [query, setQuery] = useState('');
   const [activeValue, setActiveValue] = useState<string | null>(null);
-  const q = query.trim().toLowerCase();
-  const visible = q ? items.filter((it) => `${it.label} ${it.description ?? ''}`.toLowerCase().includes(q)) : items;
+  const { locale } = useI18n();
+  const visible = items.filter((it) => matchText(`${it.label} ${it.description ?? ''}`, query, { locale }));
   const activeIndex = Math.max(
     0,
     visible.findIndex((it) => it.value === activeValue),

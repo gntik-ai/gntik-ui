@@ -1,3 +1,4 @@
+import { foldText } from '../../utils/match-text';
 export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
 export type JsonType = 'string' | 'number' | 'boolean' | 'null' | 'object' | 'array';
@@ -38,23 +39,36 @@ export function joinPath(parent: string, key: string | number) {
   return `${parent}[${JSON.stringify(key)}]`;
 }
 
-/** Paths of every container whose subtree contains a key or primitive value matching `query`. */
-export function matchAncestors(data: unknown, query: string, maxDepth = Infinity) {
-  const q = query.trim().toLowerCase();
-  const out = new Set<string>();
-  if (!q) return out;
+/** Folded node text and its ancestors, reusable while only the query changes. */
+export function jsonSearchIndex(data: unknown, maxDepth = Infinity, locale?: string) {
+  const out: Array<{ text: string; ancestors: string[] }> = [];
   const walk = (value: unknown, path: string, depth: number, ancestors: string[]) => {
     for (const [k, v] of entries(value)) {
       const p = joinPath(path, k);
       const type = jsonType(v);
       const primitive = type !== 'object' && type !== 'array';
-      if (String(k).toLowerCase().includes(q) || (primitive && String(v).toLowerCase().includes(q)))
-        ancestors.forEach((a) => out.add(a));
+      out.push({ text: foldText(String(k), locale), ancestors });
+      if (primitive) out.push({ text: foldText(String(v), locale), ancestors });
       if (!primitive && depth < maxDepth) walk(v, p, depth + 1, [...ancestors, p]);
     }
   };
   walk(data, '', 1, []);
   return out;
+}
+
+export function ancestorsFromIndex(index: ReturnType<typeof jsonSearchIndex>, query: string, locale?: string) {
+  const q = foldText(query.trim(), locale);
+  const out = new Set<string>();
+  if (q)
+    for (const node of index) {
+      if (node.text.indexOf(q) !== -1) node.ancestors.forEach((a) => out.add(a));
+    }
+  return out;
+}
+
+/** Paths of every container whose subtree contains a key or primitive value matching `query`. */
+export function matchAncestors(data: unknown, query: string, maxDepth = Infinity, locale?: string) {
+  return ancestorsFromIndex(jsonSearchIndex(data, maxDepth, locale), query, locale);
 }
 
 /** Container paths up to (not including) `depth` levels, for the initial expansion. */

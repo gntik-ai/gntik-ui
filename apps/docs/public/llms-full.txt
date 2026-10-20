@@ -2865,6 +2865,9 @@ Tokens: background, border, popover, popover-foreground, primary, primary-text, 
 Usage:
 
 ```tsx
+import { useCallback } from 'react';
+import { useI18n } from '@gntik-ai/ui';
+import { matchText } from '@gntik-ai/ui';
 import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from '@gntik-ai/ui';
 
 interface Member {
@@ -2884,11 +2887,10 @@ const DIRECTORY: Member[] = [
 ];
 
 /** Stands in for `fetch('/api/members?q=…', { signal })`: resolves after a short delay, honours abort. */
-function searchMembers(query: string, { signal }: { signal: AbortSignal }): Promise<Member[]> {
+function searchMembers(query: string, { signal }: { signal: AbortSignal }, locale?: string): Promise<Member[]> {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
-      const q = query.toLowerCase();
-      resolve(DIRECTORY.filter((m) => `${m.label} ${m.email}`.toLowerCase().includes(q)));
+      resolve(DIRECTORY.filter((m) => matchText(`${m.label} ${m.email}`, query, { locale })));
     }, 300);
     signal.addEventListener('abort', () => {
       clearTimeout(timer);
@@ -2898,9 +2900,14 @@ function searchMembers(query: string, { signal }: { signal: AbortSignal }): Prom
 }
 
 export default function ComboboxAsync() {
+  const { locale } = useI18n();
+  const loadOptions = useCallback(
+    (query: string, context: { signal: AbortSignal }) => searchMembers(query, context, locale),
+    [locale],
+  );
   return (
     <div className="w-full max-w-sm">
-      <Combobox<Member> loadOptions={searchMembers} debounceMs={250}>
+      <Combobox<Member> loadOptions={loadOptions} debounceMs={250}>
         <ComboboxInput label="Assignee" placeholder="Search the directory…" showClear />
         <ComboboxContent emptyText="No members match.">
           {(m: Member) => (
@@ -3401,7 +3408,9 @@ Tokens: background, border, popover, popover-foreground, primary, primary-text, 
 Usage:
 
 ```tsx
-import { useState } from 'react';
+import { useI18n } from '@gntik-ai/ui';
+import { matchText } from '@gntik-ai/ui';
+import { useCallback, useState } from 'react';
 import { MultiSelect, type MultiSelectOption } from '@gntik-ai/ui';
 
 const TOPICS: MultiSelectOption[] = [
@@ -3413,9 +3422,13 @@ const TOPICS: MultiSelectOption[] = [
 ];
 
 /** Stands in for `fetch('/api/topics?q=…', { signal })`. */
-function searchTopics(query: string, { signal }: { signal: AbortSignal }): Promise<MultiSelectOption[]> {
+function searchTopics(
+  query: string,
+  { signal }: { signal: AbortSignal },
+  locale?: string,
+): Promise<MultiSelectOption[]> {
   return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => resolve(TOPICS.filter((t) => t.label.includes(query.toLowerCase()))), 250);
+    const timer = setTimeout(() => resolve(TOPICS.filter((t) => matchText(t.label, query, { locale }))), 250);
     signal.addEventListener('abort', () => {
       clearTimeout(timer);
       reject(new DOMException('Aborted', 'AbortError'));
@@ -3424,6 +3437,11 @@ function searchTopics(query: string, { signal }: { signal: AbortSignal }): Promi
 }
 
 export default function MultiSelectAsync() {
+  const { locale } = useI18n();
+  const loadOptions = useCallback(
+    (query: string, context: { signal: AbortSignal }) => searchTopics(query, context, locale),
+    [locale],
+  );
   const [value, setValue] = useState<string[]>([]);
   return (
     <div className="w-full max-w-sm">
@@ -3433,7 +3451,7 @@ export default function MultiSelectAsync() {
         options={[]}
         value={value}
         onValueChange={setValue}
-        loadOptions={searchTopics}
+        loadOptions={loadOptions}
         onCreate={(input) => {
           const created = { value: input.toLowerCase(), label: input.toLowerCase(), description: 'New topic' };
           TOPICS.push(created);

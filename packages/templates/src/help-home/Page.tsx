@@ -1,3 +1,4 @@
+import { useI18n } from '@gntik-ai/ui';
 import { Clock, Search } from '@gntik-ai/icons';
 import {
   Badge,
@@ -36,6 +37,7 @@ export interface HelpHomeProps {
 
 /** Help center home on DocsLayout: search, category cards and popular articles. */
 export default function HelpHomePage(props: Partial<HelpHomeProps>) {
+  const { locale } = useI18n();
   const {
     brand = <Logo size={22} wordmark />,
     title = 'How can we help?',
@@ -53,7 +55,7 @@ export default function HelpHomePage(props: Partial<HelpHomeProps>) {
   } = props;
   const [query, setQuery] = useState('');
   const ids = useId();
-  const results = searchArticles(articles, query);
+  const results = searchArticles(articles, query, locale);
   const searching = query.trim() !== '';
   const categoryTitle = (id: string) => categories.find((c) => c.id === id)?.title ?? id;
 

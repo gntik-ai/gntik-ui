@@ -222,3 +222,12 @@ describe('JsonViewer', () => {
     await expectNoAxeViolations();
   });
 });
+
+it.each([
+  ['Función', 'funcion', 'Función'],
+  ['İstanbul', 'stan', 'stan'],
+])('marks original offsets in %s and reveals ancestors', (text, search, marked) => {
+  render(<JsonViewer data={{ outer: { name: text } }} defaultExpandDepth={0} search={search} />);
+  expect(screen.getByRole('treeitem', { name: new RegExp('name:') })).toBeInTheDocument();
+  expect([...document.querySelectorAll('mark')].map((mark) => mark.textContent)).toEqual([marked]);
+});

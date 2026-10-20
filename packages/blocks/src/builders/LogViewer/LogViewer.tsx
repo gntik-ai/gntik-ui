@@ -1,6 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode, type UIEvent } from 'react';
 import { Check, Copy, Eye, Search } from '@gntik-ai/icons';
-import { IconButton, Input, Switch, Toggle, ToggleGroup, cn } from '@gntik-ai/ui';
+import { IconButton, Input, Switch, Toggle, ToggleGroup, cn, foldText, matchRanges, useI18n } from '@gntik-ai/ui';
 import { logLines as defaultLines, type LogLevel, type LogLine } from './fixtures';
 
 export type { LogLevel, LogLine } from './fixtures';
@@ -43,24 +43,19 @@ export interface LogViewerProps {
 }
 
 /** Wraps case-insensitive matches of `query` in <mark>. */
-function highlight(text: string, query: string): ReactNode {
-  if (!query) return text;
-  const lower = text.toLowerCase();
-  const q = query.toLowerCase();
+function highlight(text: string, query: string, locale?: string): ReactNode {
   const parts: ReactNode[] = [];
   let from = 0;
-  let at = lower.indexOf(q, from);
-  while (at !== -1) {
-    if (at > from) parts.push(text.slice(from, at));
+  for (const [start, end] of matchRanges(text, query, { locale })) {
+    parts.push(text.slice(from, start));
     parts.push(
-      <mark key={at} className="rounded-sm bg-warning/30 text-foreground">
-        {text.slice(at, at + q.length)}
+      <mark key={start} className="rounded-sm bg-warning/30 text-foreground">
+        {text.slice(start, end)}
       </mark>,
     );
-    from = at + q.length;
-    at = lower.indexOf(q, from);
+    from = end;
   }
-  if (from < text.length) parts.push(text.slice(from));
+  parts.push(text.slice(from));
   return parts;
 }
 
@@ -88,6 +83,7 @@ export function LogViewer({
   titleAs: TitleTag = 'h3',
   className,
 }: LogViewerProps) {
+  const { locale } = useI18n();
   const titleId = useId();
   const viewport = useRef<HTMLDivElement>(null);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -103,14 +99,24 @@ export function LogViewer({
     return c;
   }, [lines]);
 
+  const foldedLines = useMemo(
+    () =>
+      lines.map((line) => ({
+        line,
+        message: foldText(line.message, locale),
+        source: foldText(line.source ?? '', locale),
+      })),
+    [lines, locale],
+  );
   const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return lines.filter(
-      (l) =>
-        levels.includes(l.level) &&
-        (!q || l.message.toLowerCase().includes(q) || (l.source ?? '').toLowerCase().includes(q)),
-    );
-  }, [lines, levels, query]);
+    const q = foldText(query.trim(), locale);
+    return foldedLines
+      .filter(
+        ({ line, message, source }) =>
+          levels.includes(line.level) && (!q || message.indexOf(q) !== -1 || source.indexOf(q) !== -1),
+      )
+      .map(({ line }) => line);
+  }, [foldedLines, levels, query, locale]);
 
   const total = visible.length * rowHeight;
   const maxScroll = Math.max(0, total - height);
@@ -213,11 +219,11 @@ export function LogViewer({
                   </span>
                   {line.source && (
                     <span className="hidden shrink-0 text-muted-foreground sm:inline">
-                      [{highlight(line.source, query.trim())}]
+                      [{highlight(line.source, query, locale)}]
                     </span>
                   )}
                   <span className="min-w-0 flex-1 truncate text-foreground">
-                    {highlight(line.message, query.trim())}
+                    {highlight(line.message, query, locale)}
                   </span>
                   {onSelectLine && (
                     <IconButton
