@@ -1,3 +1,4 @@
+import { I18nProvider } from '@gntik-ai/ui';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
@@ -10,6 +11,15 @@ import AttachmentStates from './examples/AttachmentStates';
 const file = (name: string, type: string, size = 10) => new File(['x'.repeat(size)], name, { type });
 
 describe('AttachmentChip / AttachmentList', () => {
+  it('shows file sizes in the provider locale', () => {
+    render(
+      <I18nProvider locale="es">
+        <AttachmentChip attachment={{ id: 'es', name: 'report.pdf', size: 1536 }} />
+      </I18nProvider>,
+    );
+    expect(screen.getByText('1,5 kB')).toBeInTheDocument();
+  });
+
   it('shows name and size, an image thumbnail or a file-type icon', () => {
     const { container } = render(
       <AttachmentList
@@ -20,7 +30,7 @@ describe('AttachmentChip / AttachmentList', () => {
       />,
     );
     const items = screen.getAllByRole('listitem');
-    expect(items[0]).toHaveTextContent('photo.png2 KB');
+    expect(items[0]).toHaveTextContent('photo.png2 kB');
     expect(items[0]?.querySelector('img')).toHaveAttribute('alt', '');
     expect(container.querySelector('[data-kind="spreadsheet"] svg')).not.toBeNull();
   });

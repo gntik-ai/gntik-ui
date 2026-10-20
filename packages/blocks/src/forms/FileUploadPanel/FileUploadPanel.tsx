@@ -1,7 +1,7 @@
 import { Button, IconButton, Progress, cn, useI18n } from '@gntik-ai/ui';
 import { CircleAlert, FileText, RotateCcw, Upload, X } from '@gntik-ai/icons';
 import { useId, useRef, useState, type DragEvent } from 'react';
-import { acceptsFile, formatBytes, simulateUpload, uploadItems, type UploadItem } from './fixtures';
+import { acceptsFile, simulateUpload, uploadItems, type UploadItem } from './fixtures';
 
 export type { UploadItem, UploadStatus } from './fixtures';
 
@@ -33,7 +33,7 @@ const nextId = () => `upload-${++uid}`;
  */
 export function FileUploadPanel({
   accept = '.csv,.json,.jsonl,.yaml,.pdf',
-  maxSize = 25 * 1024 * 1024,
+  maxSize = 25_000_000,
   multiple = true,
   defaultFiles = uploadItems,
   onUpload = simulateUpload,
@@ -43,7 +43,7 @@ export function FileUploadPanel({
   disabled = false,
   className,
 }: FileUploadPanelProps) {
-  const { t } = useI18n();
+  const { t, formatBytes } = useI18n();
   const label = labelProp ?? t('upload.label');
   const id = useId();
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -196,7 +196,7 @@ export function FileUploadPanel({
 }
 
 function FileRow({ item, onRemove, onRetry }: { item: UploadItem; onRemove: () => void; onRetry?: () => void }) {
-  const { t } = useI18n();
+  const { t, formatBytes } = useI18n();
   const err = item.status === 'error';
   const done = item.status === 'done';
   return (

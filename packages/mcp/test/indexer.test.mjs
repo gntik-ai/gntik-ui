@@ -25,6 +25,13 @@ test('componentes: snippets canónicos extraídos', () => {
   assert.ok(buttons.snippets[0].title, 'el snippet tiene título del bloque Variant');
 });
 
+test('file-upload docs retain the section description alongside formatter examples', () => {
+  const upload = index.components['file-upload'];
+  assert.match(upload.header ?? '', /file upload \("Forms" group\)/);
+  assert.match(upload.header, /multi-file dropzone with progress and states/);
+  assert.ok(upload.snippets.some((snippet) => snippet.code.includes('formatBytes')));
+});
+
 test('componentes: escapes de template literal resueltos (charts)', () => {
   const area = index.components['area-charts'];
   assert.ok(area.snippets.length >= 2, `area-charts: esperaba ≥2 snippets, hay ${area.snippets.length}`);

@@ -78,16 +78,3 @@ export const FILE_ICON: Record<FileKind, LucideIcon> = {
   document: FileText,
   file: File,
 };
-
-/** "2.4 MB" style size with binary multiples. */
-export function formatBytes(bytes: number, locale?: string) {
-  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
-  let value = bytes;
-  let i = 0;
-  while (value >= 1024 && i < units.length - 1) {
-    value /= 1024;
-    i++;
-  }
-  const digits = i === 0 || value >= 10 ? 0 : 1;
-  return `${new Intl.NumberFormat(locale, { maximumFractionDigits: digits }).format(value)} ${units[i]}`;
-}

@@ -1,4 +1,4 @@
-import { cn, fileKind, type FileKind } from '@gntik-ai/ui';
+import { formatBytes, cn, fileKind, type FileKind } from '@gntik-ai/ui';
 import {
   AlertCircle,
   File,
@@ -14,7 +14,6 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import type { Ref } from 'react';
-import { formatBytes } from '../utils/format';
 import { useChatI18n } from '../utils/i18n';
 import { attachmentStyles as s } from './attachment.variants';
 
@@ -80,7 +79,7 @@ export function AttachmentChip({
   className,
   ref,
 }: AttachmentChipProps) {
-  const { t, tc } = useChatI18n();
+  const { t, tc, locale } = useChatI18n();
   const status = attachmentStatus(a);
   const kind = fileKind(a.name, a.type);
   const Icon = status === 'error' ? AlertCircle : ICONS[kind];
@@ -100,7 +99,7 @@ export function AttachmentChip({
     ) : status === 'uploading' ? (
       <span className={s.meta}>{pct === null ? t('common.loading') : `${pct}%`}</span>
     ) : a.size !== undefined ? (
-      <span className={s.meta}>{formatBytes(a.size)}</span>
+      <span className={s.meta}>{formatBytes(a.size, locale)}</span>
     ) : null;
 
   const buttons = (

@@ -70,7 +70,7 @@ describe('ChatComposer', () => {
         attachments={[{ id: 'a', name: 'report.pdf', size: 2048 }]}
       />,
     );
-    expect(screen.getByRole('list', { name: 'Attachments' })).toHaveTextContent('report.pdf2 KB');
+    expect(screen.getByRole('list', { name: 'Attachments' })).toHaveTextContent('report.pdf2 kB');
     await user.tab();
     expect(screen.getByRole('button', { name: 'Remove report.pdf' })).toHaveFocus();
     await user.keyboard('{Enter}');
@@ -131,7 +131,7 @@ describe('ChatComposer', () => {
         onAttach={onAttach}
         onReject={onReject}
         accept=".pdf,image/*"
-        maxSize={1024}
+        maxSize={1000}
         maxFiles={2}
         attachments={[{ id: 'a', name: 'one.pdf' }]}
       />,
@@ -150,7 +150,7 @@ describe('ChatComposer', () => {
     expect(onAttach).toHaveBeenCalledWith([ok]);
     expect(onReject.mock.calls[0]?.[0].map((r: { reason: string }) => r.reason)).toEqual(['size', 'type', 'count']);
     const alert = screen.getByRole('alert');
-    expect(alert).toHaveTextContent('big.png is larger than 1 KB');
+    expect(alert).toHaveTextContent('big.png is larger than 1 kB');
     expect(alert).toHaveTextContent('tool.exe is not an allowed file type');
     expect(alert).toHaveTextContent('You can attach up to 2 files');
     await user.click(within(alert).getByRole('button', { name: 'Dismiss' }));

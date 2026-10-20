@@ -2,10 +2,30 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import ThumbnailUploads from './examples/ThumbnailUploads';
-import { fileKind, formatBytes } from './file-kind';
+import ThumbnailSizes from './examples/ThumbnailSizes';
+import { fileKind } from './file-kind';
+import { formatBytes } from '../../i18n/format';
 import { Thumbnail } from './Thumbnail';
+import { I18nProvider } from '../../i18n';
 
 describe('Thumbnail', () => {
+  it('uses the provider locale unless the size locale is overridden', () => {
+    render(
+      <I18nProvider locale="es">
+        <Thumbnail name="spanish.pdf" size={1536} />
+        <Thumbnail name="english.pdf" size={1536} locale="en" />
+        <Thumbnail name="upload.pdf" size={1536} progress={40} />
+      </I18nProvider>,
+    );
+    expect(screen.getByRole('figure', { name: 'spanish.pdf' })).toHaveTextContent('1,5 kB');
+    expect(screen.getByRole('figure', { name: 'english.pdf' })).toHaveTextContent('1.5 kB');
+    expect(screen.getByRole('figure', { name: 'upload.pdf' })).toHaveTextContent('40% · 1,5 kB');
+  });
+  it('formats decimal kilobytes consistently in English and Spanish', () => {
+    expect(formatBytes(1536, 'en')).toBe('1.5 kB');
+    expect(formatBytes(1536, 'es')).toBe('1,5 kB');
+  });
+
   it('derives kind and size labels', () => {
     expect(fileKind('report.pdf')).toBe('document');
     expect(fileKind('clip', 'video/mp4')).toBe('video');
@@ -18,7 +38,7 @@ describe('Thumbnail', () => {
     render(<ThumbnailUploads />);
     const list = screen.getByRole('list', { name: 'Attachments' });
     expect(within(list).getAllByRole('listitem')).toHaveLength(4);
-    expect(screen.getByRole('figure', { name: /deployment-runbook\.pdf/ })).toHaveTextContent('230 KB');
+    expect(screen.getByRole('figure', { name: /deployment-runbook\.pdf/ })).toHaveTextContent('236 kB');
   });
 
   it('shows upload progress as a progressbar with the shimmer', () => {
@@ -57,6 +77,11 @@ describe('Thumbnail', () => {
 
   it('has no axe violations', async () => {
     render(<ThumbnailUploads />);
+    await expectNoAxeViolations();
+  });
+
+  it('size options example has no axe violations', async () => {
+    render(<ThumbnailSizes />);
     await expectNoAxeViolations();
   });
 });

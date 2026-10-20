@@ -5,6 +5,10 @@
    button+name input, and image/logo upload. Click simulates the selection
    (deterministic preview). Tokens only, zero hardcoded colour.
    ============================================================================ */
+import { formatBytes, I18nProvider, Thumbnail } from '@gntik-ai/ui';
+import { FileUploadPanel } from '@gntik-ai/blocks';
+import { AttachmentChip } from '@gntik-ai/chat';
+
 (function () {
   const { SectionHead, CodeBlock, Icon, useState, useRef, useEffect } = window;
 
@@ -29,7 +33,7 @@
     </div>
   );
 
-  const fmtSize = (kb) => (kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : Math.round(kb) + ' KB');
+  const fmtSize = (kb) => formatBytes(kb * 1000);
   const KIND = {
     yaml: { icon: 'code', tag: 'YAML' },
     json: { icon: 'code', tag: 'JSON' },
@@ -380,6 +384,43 @@ const addFile = () => {
           status="done"
           intro="The real upload control inside a form — not to be confused with the Empty states dropzone, which fills a void. Three forms: the multi-file dropzone with a per-file progress bar and states (uploading, uploaded, error with retry); the compact button + name input for a single attachment in a row; and image upload for a logo or avatar, with a striped placeholder and preview. In the catalog, clicking simulates the selection so the preview is deterministic."
         />
+
+        <Variant
+          title="Locale-aware file sizes"
+          desc="The same 1,536-byte file uses the Spanish provider locale across the kit. The second thumbnail overrides it with English. formatBytes also supports binary IEC units, bits, label widths and precision."
+          code={`import { formatBytes, I18nProvider, Thumbnail } from '@gntik-ai/ui';
+import { FileUploadPanel } from '@gntik-ai/blocks';
+import { AttachmentChip } from '@gntik-ai/chat';
+
+formatBytes(1536, 'es'); // 1,5 kB
+formatBytes(26_214_400, { base: 1024 }); // 25 MiB
+formatBytes(25_000_000, { unitDisplay: 'long' }); // 25 megabytes
+formatBytes(25_000_000, { unitDisplay: 'narrow' }); // 25MB
+formatBytes(1500, { unit: 'bit' }); // 1.5 kb
+formatBytes(1536, { maximumFractionDigits: 2 }); // 1.54 kB
+
+<I18nProvider locale="es">
+  <Thumbnail name="report.pdf" size={1536} />
+  <Thumbnail name="report-en.pdf" size={1536} locale="en" />
+  <AttachmentChip attachment={{ id: 'report', name: 'report.pdf', size: 1536 }} />
+  <FileUploadPanel defaultFiles={[
+    { id: 'report', name: 'report.pdf', size: 1536, progress: 100, status: 'done' },
+  ]} />
+</I18nProvider>`}
+        >
+          <div data-format-bytes-components className="space-y-4">
+            <I18nProvider locale="es">
+              <div className="flex flex-wrap gap-4">
+                <Thumbnail name="report.pdf" size={1536} />
+                <Thumbnail name="report-en.pdf" size={1536} locale="en" />
+              </div>
+              <AttachmentChip attachment={{ id: 'report', name: 'report.pdf', size: 1536 }} />
+              <FileUploadPanel
+                defaultFiles={[{ id: 'report', name: 'report.pdf', size: 1536, progress: 100, status: 'done' }]}
+              />
+            </I18nProvider>
+          </div>
+        </Variant>
 
         <Variant
           title="Multi-file dropzone"

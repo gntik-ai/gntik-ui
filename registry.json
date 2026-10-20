@@ -1430,6 +1430,13 @@
       "blurb": "Multi-file dropzone with progress, compact input and logo upload.",
       "snippets": [
         {
+          "name": "inline_1",
+          "title": "Locale-aware file sizes",
+          "desc": "The same 1,536-byte file uses the Spanish provider locale across the kit. The second thumbnail overrides it with English. formatBytes also supports binary IEC units, bits, label widths and precision.",
+          "lang": "tsx",
+          "code": "import { formatBytes, I18nProvider, Thumbnail } from '@gntik-ai/ui';\nimport { FileUploadPanel } from '@gntik-ai/blocks';\nimport { AttachmentChip } from '@gntik-ai/chat';\n\nformatBytes(1536, 'es'); // 1,5 kB\nformatBytes(26_214_400, { base: 1024 }); // 25 MiB\nformatBytes(25_000_000, { unitDisplay: 'long' }); // 25 megabytes\nformatBytes(25_000_000, { unitDisplay: 'narrow' }); // 25MB\nformatBytes(1500, { unit: 'bit' }); // 1.5 kb\nformatBytes(1536, { maximumFractionDigits: 2 }); // 1.54 kB\n\n<I18nProvider locale=\"es\">\n  <Thumbnail name=\"report.pdf\" size={1536} />\n  <Thumbnail name=\"report-en.pdf\" size={1536} locale=\"en\" />\n  <AttachmentChip attachment={{ id: 'report', name: 'report.pdf', size: 1536 }} />\n  <FileUploadPanel defaultFiles={[\n    { id: 'report', name: 'report.pdf', size: 1536, progress: 100, status: 'done' },\n  ]} />\n</I18nProvider>"
+        },
+        {
           "name": "CODE_DROP",
           "title": "Multi-file dropzone",
           "desc": "Drag (it tints primary) or click to queue files. Each one uploads with its progress bar and ends in ✓; the example includes a failed file with its retry action. The ✕ removes it from the queue.",
@@ -2757,7 +2764,7 @@
     "groups": 19,
     "components": 66,
     "withSnippets": 58,
-    "snippets": 189,
+    "snippets": 190,
     "tokens": 103
   }
 }

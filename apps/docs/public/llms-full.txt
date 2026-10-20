@@ -1794,7 +1794,7 @@ export default function TextRoles() {
 
 ### Thumbnail (`thumbnail`)
 
-File or image preview tile: image or file-type icon with extension tag, name and size caption, upload progress (progressbar + shimmer that holds still under reduced motion), error state with retry, and a remove button. ThumbnailList lays tiles out as a wrapping list. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
+File or image preview tile: image or file-type icon with extension tag, name and size caption, upload progress (progressbar + shimmer that holds still under reduced motion), error state with retry, and a remove button. ThumbnailList lays tiles out as a wrapping list. Sizes use the shared formatBytes export (decimal SI by default); ThumbnailSizes demonstrates localized labels, IEC base, bits, display widths and precision. Built-in labels and sizes follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `Thumbnail` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Thumbnail/Thumbnail.doc.ts
@@ -1814,69 +1814,40 @@ Tokens: card, border, secondary, muted-foreground, foreground, primary, destruct
 Usage:
 
 ```tsx
-import { useEffect, useState } from 'react';
+import { I18nProvider } from '@gntik-ai/ui';
+import { formatBytes, type FormatBytesOptions } from '@gntik-ai/ui';
 import { Thumbnail, ThumbnailList } from '@gntik-ai/ui';
 
-// Neutral illustration: shapes in the default fill at low opacity, so it reads on every theme.
-const PREVIEW =
-  'data:image/svg+xml;utf8,' +
-  encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120"><rect width="160" height="120" fill-opacity="0.08"/><circle cx="118" cy="34" r="14" fill-opacity="0.22"/><path d="M0 120 L52 58 L92 100 L118 76 L160 120 Z" fill-opacity="0.3"/></svg>',
-  );
-
-interface Item {
-  id: string;
-  name: string;
-  size: number;
-  type?: string;
-  src?: string;
-  progress?: number;
-  error?: string;
-}
-
-const INITIAL: Item[] = [
-  { id: 'a', name: 'architecture-diagram.png', size: 482_000, type: 'image/png', src: PREVIEW },
-  { id: 'b', name: 'q3-invoices.csv', size: 1_840_000, progress: 35 },
-  { id: 'c', name: 'deployment-runbook.pdf', size: 236_000 },
-  { id: 'd', name: 'backup-2026-05.tar.gz', size: 31_400_000, error: 'Exceeds 25 MB' },
+const FORMATS: FormatBytesOptions[] = [
+  { locale: 'en' },
+  { locale: 'es' },
+  { unitDisplay: 'long' },
+  { unitDisplay: 'narrow' },
+  { base: 1024 },
+  { base: 1024, locale: 'es', unitDisplay: 'long' },
+  { unit: 'bit' },
+  { unit: 'bit', unitDisplay: 'long' },
+  { maximumFractionDigits: 2 },
 ];
 
-export default function ThumbnailUploads() {
-  const [items, setItems] = useState(INITIAL);
-  const uploading = items.some((i) => i.progress !== undefined && i.progress < 100);
-
-  useEffect(() => {
-    if (!uploading) return;
-    const id = window.setInterval(() => {
-      setItems((list) =>
-        list.map((i) =>
-          i.progress !== undefined && i.progress < 100 ? { ...i, progress: Math.min(100, i.progress + 13) } : i,
-        ),
-      );
-    }, 400);
-    return () => window.clearInterval(id);
-  }, [uploading]);
-
-  const remove = (id: string) => setItems((list) => list.filter((i) => i.id !== id));
-  const retry = (id: string) =>
-    setItems((list) => list.map((i) => (i.id === id ? { ...i, error: undefined, size: 18_200_000, progress: 0 } : i)));
-
+/** Provider-localized sizes, a per-thumbnail override, and the shared formatter options. */
+export default function ThumbnailSizes() {
   return (
-    <ThumbnailList aria-label="Attachments">
-      {items.map((item) => (
-        <Thumbnail
-          key={item.id}
-          name={item.name}
-          size={item.size}
-          type={item.type}
-          src={item.src}
-          progress={item.progress}
-          error={item.error}
-          onRemove={() => remove(item.id)}
-          onRetry={item.error ? () => retry(item.id) : undefined}
-        />
-      ))}
-    </ThumbnailList>
+    <div data-format-bytes-preview className="space-y-4">
+      <I18nProvider locale="es">
+        <ThumbnailList>
+          <Thumbnail name="report-es.pdf" size={1536} />
+          <Thumbnail name="report-en.pdf" size={1536} locale="en" />
+        </ThumbnailList>
+      </I18nProvider>
+      <ul className="space-y-1 font-mono text-sm text-foreground">
+        {FORMATS.map((options, index) => (
+          <li key={index}>
+            <code>{formatBytes(25_000_000, options)}</code>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 ```
@@ -2694,7 +2665,7 @@ export default function ChatComposerFull() {
         maxLength={2000}
         attachments={files}
         accept=".pdf,.csv,.md,.txt,image/*"
-        maxSize={10 * 1024 * 1024}
+        maxSize={10_000_000}
         maxFiles={5}
         onAttach={attach}
         onRemoveAttachment={(id) => setFiles((f) => f.filter((x) => x.id !== id))}
