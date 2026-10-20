@@ -1,3 +1,4 @@
+import { I18nProvider } from '@gntik-ai/ui';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
@@ -25,4 +26,28 @@ describe('AgendaList', () => {
     render(<AgendaList events={[]} />);
     expect(screen.getByRole('heading', { name: 'Nothing scheduled' })).toBeInTheDocument();
   });
+});
+
+it.each([
+  ['en-US', undefined, '9:30 AM–10:00 AM'],
+  ['es-ES', undefined, '09:30–10:00'],
+  ['en-US', 'h23', '09:30–10:00'],
+] as const)('formats agenda ranges for %s with override %s', (locale, hourCycle, expected) => {
+  render(
+    <I18nProvider locale={locale}>
+      <AgendaList
+        hourCycle={hourCycle}
+        events={[
+          {
+            id: 'clock',
+            title: 'Review',
+            kind: 'task',
+            start: new Date(2026, 3, 15, 9, 30),
+            end: new Date(2026, 3, 15, 10),
+          },
+        ]}
+      />
+    </I18nProvider>,
+  );
+  expect(screen.getByText(expected)).toBeInTheDocument();
 });

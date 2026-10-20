@@ -12,14 +12,12 @@ Scheduling blocks use Monday-first weeks and a 24-hour clock even under an en-US
 - Mark locale weekends with data-weekend without changing their appearance.
 - Add locale regressions, docs previews, a changeset and regenerated registries.
 
-## Approval blocker at assigned base 12de06c
+## Amended API contract (2026-10-20)
 
-The requested new public localeHourCycle(locale?) returning 'h12' | 'h23' conflicts with an existing public export of the same name returning 12 | 24. packages/ui/src/components/TimePicker/time-utils.ts:44 defines the numeric contract; TimePicker/index.ts:2 exports it, and packages/ui/src/index.ts:111 re-exports it at the package root. TimePicker.test.tsx:146-147 explicitly expects 12 and 24.
+The existing public localeHourCycle(locale?) continues to return 12 | 24, with its implementation and TimePicker tests unchanged. Only localeWeekStart is newly exported from ui. Scheduling blocks reuse the numeric helper through an internal resolveHourCycle mapping (12 to h12, 24 to h23); no second public helper is added. The weekend helper stays internal to blocks.
 
-Adding the requested Calendar export produced a NAMESPACE_CONFLICT warning in the ui build. Replacing the root export would change existing callers' return values and types. The approved patch release and bounded scope do not authorise that breaking change. No source implementation is retained pending a compatible API decision.
-
-Recommended amendment: preserve the existing numeric localeHourCycle export, reuse it in blocks with an explicit mapping to h12/h23, and revise the new-helper requirement accordingly. Alternatively, approve a distinct name for the string-returning helper. The current OpenSpec requires the conflicting name and cannot be implemented as written without breaking its release constraint.
+Defaults are resolved on every render from useOptionalI18n()?.locale, otherwise undefined for the runtime locale, matching ui Calendar. useI18n still supplies translations, direction and date labels. weekStartsOn uses the existing exported WeekDay type. The API blocker is resolved by the operator amendment.
 
 ## Impact
 
-Once the API decision is approved, en-US consumers will default to Sunday-first weeks and 12-hour times. Consumers can retain Monday-first, 24-hour schedules with weekStartsOn={1} and hourCycle="h23". Monday-first, 24-hour locales retain their existing presentation. No deployment or publication is involved.
+With this change, en-US consumers will default to Sunday-first weeks and 12-hour times. Consumers can retain Monday-first, 24-hour schedules with weekStartsOn={1} and hourCycle="h23". Monday-first, 24-hour locales retain their existing presentation. No deployment or publication is involved.

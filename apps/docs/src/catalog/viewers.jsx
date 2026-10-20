@@ -204,6 +204,15 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                 </div>
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'block' && ['month-calendar', 'week-calendar', 'agenda-list'].includes(it.id) && (
+                <Viewer
+                  kind="block"
+                  id={`${it.id}--locale`}
+                  title={it.title}
+                  file={`../../../packages/blocks/src/scheduling/${it.id === 'month-calendar' ? 'MonthCalendar' : it.id === 'week-calendar' ? 'WeekCalendar' : 'AgendaList'}/examples/Locale.tsx`}
+                  height={height}
+                />
+              )}
               {kind === 'block' && it.id === 'flow-builder' && (
                 <Viewer
                   kind="block"

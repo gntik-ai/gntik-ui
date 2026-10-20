@@ -1,7 +1,10 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
-import { cn, useI18n } from '@gntik-ai/ui';
+import { cn, useI18n, localeWeekStart, type WeekDay } from '@gntik-ai/ui';
+import { useSchedulingClock } from '../shared/useSchedulingClock';
 import { CalendarHeader } from '../shared/CalendarHeader';
 import {
+  type HourCycle,
+  formatHour,
   addDays,
   dayKey,
   formatDay,
@@ -13,19 +16,24 @@ import {
   sameDay,
   startOfWeek,
   weekDays,
+  weekendDays,
 } from '../shared/dates';
 import { defaultEventKinds, groupByDay, kindOf, TONE, type EventKind, type ScheduleEvent } from '../shared/events';
 import { sampleEvents, sampleToday } from '../shared/fixtures';
 
 export interface WeekCalendarProps {
   events?: ScheduleEvent[];
+  /** First weekday; defaults to the provider or runtime locale. */
+  weekStartsOn?: WeekDay;
+  /** Clock used for events and hour labels; defaults to the provider or runtime locale. */
+  hourCycle?: HourCycle;
   /** The app's "today" (the block never reads the clock). */
   today?: Date;
   /** Current time for the "now" line, shown when it falls in the visible week. Defaults to `today`. */
   now?: Date;
   /** A date inside the week shown first (uncontrolled). Defaults to `today`. */
   defaultWeek?: Date;
-  /** Called with the Monday of the newly shown week. */
+  /** Called with the first day of the newly shown week. */
   onWeekChange?: (weekStart: Date) => void;
   /** Makes events buttons. */
   onEventClick?: (event: ScheduleEvent) => void;
@@ -41,7 +49,6 @@ export interface WeekCalendarProps {
 }
 
 const HOURS = Array.from({ length: 24 }, (_, h) => h);
-const pad = (n: number) => String(n).padStart(2, '0');
 
 interface Placed {
   event: ScheduleEvent;
@@ -89,6 +96,8 @@ function layoutDay(list: readonly ScheduleEvent[], hourHeight: number): Placed[]
 /** Week view: seven day columns over a scrolling 24-hour time grid, with a "now" line. */
 export function WeekCalendar({
   events = sampleEvents,
+  weekStartsOn: weekStartsOnProp,
+  hourCycle: hourCycleProp,
   today = sampleToday,
   now,
   defaultWeek,
@@ -102,11 +111,15 @@ export function WeekCalendar({
   className,
 }: WeekCalendarProps) {
   const { t, locale } = useI18n();
+  const clock = useSchedulingClock(hourCycleProp);
+  const weekStartsOn = weekStartsOnProp ?? localeWeekStart(clock.locale);
   const titleId = useId();
-  const [weekStart, setWeekStart] = useState<Date>(() => startOfWeek(defaultWeek ?? today));
+  const [weekStart, setWeekStart] = useState<Date>(() => startOfWeek(defaultWeek ?? today, weekStartsOn));
   const scrollRef = useRef<HTMLDivElement>(null);
   const byDay = useMemo(() => groupByDay(events), [events]);
-  const days = weekDays(weekStart);
+  const days = weekDays(weekStart, weekStartsOn);
+  const visibleStart = days[0] ?? weekStart;
+  const weekend = weekendDays(clock.locale);
   const nowAt = now ?? today;
   const nowVisible = days.some((d) => sameDay(d, nowAt));
 
@@ -126,9 +139,9 @@ export function WeekCalendar({
         title={formatWeekRange(days, locale)}
         prevLabel={t('calendar.previousWeek')}
         nextLabel={t('calendar.nextWeek')}
-        onPrev={() => show(addDays(weekStart, -7))}
-        onNext={() => show(addDays(weekStart, 7))}
-        onToday={() => show(startOfWeek(today))}
+        onPrev={() => show(addDays(visibleStart, -7))}
+        onNext={() => show(addDays(visibleStart, 7))}
+        onToday={() => show(startOfWeek(today, weekStartsOn))}
         actions={actions}
       />
       <div className="overflow-x-auto">
@@ -173,7 +186,7 @@ export function WeekCalendar({
                     className="absolute end-2 font-mono text-[10px] text-muted-foreground"
                     style={{ top: h * hourHeight - 6 }}
                   >
-                    {pad(h)}:00
+                    {formatHour(h, clock.locale, clock.hourCycle)}
                   </span>
                 ))}
               </div>
@@ -193,20 +206,21 @@ export function WeekCalendar({
                     return (
                       <ul
                         key={dayKey(d)}
+                        data-weekend={weekend.includes(d.getDay() as WeekDay) ? '' : undefined}
                         aria-label={formatDay(d, locale)}
                         className="relative border-s border-border/70 first:border-s-0"
                       >
                         {layoutDay(list, hourHeight).map(({ event, top, height: h, lane, lanes }) => {
                           const kind = kindOf(event, kinds);
                           const tone = TONE[kind.tone];
-                          const range = formatRange(event.start, event.end, locale);
+                          const range = formatRange(event.start, event.end, clock.locale, clock.hourCycle);
                           const body = (
                             <>
                               <span className="block truncate text-[11px] leading-tight font-semibold text-foreground">
                                 {event.title}
                               </span>
                               <span className="block truncate font-mono text-[10px] text-muted-foreground">
-                                {formatTime(event.start, locale)}
+                                {formatTime(event.start, clock.locale, clock.hourCycle)}
                               </span>
                             </>
                           );

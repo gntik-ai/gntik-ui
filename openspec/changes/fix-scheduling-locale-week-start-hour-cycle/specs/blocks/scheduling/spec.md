@@ -28,7 +28,7 @@ MonthCalendar and WeekCalendar SHALL use an explicit weekStartsOn when supplied,
 
 ### Requirement: Event times follow the locale's hour cycle
 
-MonthCalendar, WeekCalendar and AgendaList SHALL use an explicit hourCycle when supplied, otherwise the provider or runtime locale's hour cycle. Twelve-hour times SHALL use numeric hours; 24-hour times SHALL retain two-digit hours and h23. The ui package SHALL export localeWeekStart and localeHourCycle; the approved string-returning localeHourCycle API remains blocked by its existing numeric public contract until the proposal's API decision is resolved.
+MonthCalendar, WeekCalendar and AgendaList SHALL use an explicit hourCycle when supplied, otherwise the provider or runtime locale's hour cycle. Twelve-hour times SHALL use numeric hours; 24-hour times SHALL retain two-digit hours and h23. The ui package SHALL newly export only localeWeekStart and SHALL preserve the existing localeHourCycle(locale?): 12 | 24 API unchanged. Blocks SHALL reuse that numeric helper through an internal mapping to h12/h23. Defaults SHALL be resolved each render using useOptionalI18n()?.locale, otherwise undefined for the runtime locale; useI18n().locale SHALL NOT supply these defaults.
 
 #### Scenario: Twelve-hour locale
 
@@ -67,3 +67,16 @@ MonthCalendar cells and WeekCalendar columns SHALL carry data-weekend for locale
 - **GIVEN** en-US
 - **WHEN** either calendar renders
 - **THEN** all Saturday and Sunday cells or columns have data-weekend and no weekday has it
+
+#### Scenario: Existing public clock API
+
+- **GIVEN** imports from the ui package root
+- **WHEN** localeHourCycle is called with en-US or en-GB
+- **THEN** it returns 12 or 24 respectively, with the existing TimePicker assertions unchanged
+- **AND** localeWeekStart is importable from the same root
+
+#### Scenario: No provider
+
+- **GIVEN** no I18nProvider
+- **WHEN** MonthCalendar and ui Calendar render beside each other
+- **THEN** their first weekday matches localeWeekStart(undefined)
