@@ -5430,7 +5430,7 @@ export default function TreeListFiles() {
 
 ### UserMenu (`user-menu`)
 
-Account menu for the topbar: avatar trigger (optionally with the name) opening a name/email header, data-driven items (buttons or router links), a Theme submenu bound to useTheme(), and a destructive Sign out.
+Account menu for topbars and sidebar footers: avatar trigger (optionally with the name), or showEmail for a full-width name/email trigger in a sidebar footer. Disable showEmail in a collapsed rail. Opens a name/email header, data-driven items (buttons or router links), a Theme submenu bound to useTheme(), and a destructive Sign out.
 
 - Package: `@gntik-ai/ui` · export `UserMenu` · group Navigation · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/UserMenu/UserMenu.doc.ts
@@ -5449,7 +5449,7 @@ Keyboard:
 | Enter | Runs the highlighted item (or selects a theme) and closes the menu |
 | Escape | Closes the menu and returns focus to the avatar |
 
-Tokens: popover, border, primary, primary-foreground, accent, accent-foreground, secondary, muted-foreground, destructive-text, focus-ring
+Tokens: popover, border, primary, primary-foreground, accent, accent-foreground, secondary, foreground, muted-foreground, destructive-text, focus-ring
 
 Usage:
 

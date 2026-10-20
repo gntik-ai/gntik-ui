@@ -8,6 +8,8 @@ export const userMenuVariants = tv({
       'data-popup-open:ring-2 data-popup-open:ring-ring/40',
     ],
     triggerName: 'pe-1 text-[13px] font-semibold text-foreground',
+    triggerText: 'flex min-w-0 flex-1 flex-col text-start',
+    triggerChevron: 'shrink-0 text-muted-foreground',
     popup: 'w-60',
     header: 'flex items-center gap-2.5 px-2.5 py-2',
     headerText: 'min-w-0',
@@ -15,6 +17,9 @@ export const userMenuVariants = tv({
     email: 'truncate font-mono text-[10.5px] text-muted-foreground',
   },
   variants: {
+    showEmail: {
+      true: { trigger: 'w-full min-w-0 justify-start' },
+    },
     showName: {
       true: { trigger: 'h-9 pe-2 ps-0.5 hover:bg-secondary/60' },
     },

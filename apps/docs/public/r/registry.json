@@ -14134,7 +14134,7 @@
       "name": "user-menu",
       "type": "registry:ui",
       "title": "UserMenu",
-      "description": "Account menu for the topbar: avatar trigger (optionally with the name) opening a name/email header, data-driven items (buttons or router links), a Theme submenu bound to useTheme(), and a destructive Sign out.",
+      "description": "Account menu for topbars and sidebar footers: avatar trigger (optionally with the name), or showEmail for a full-width name/email trigger in a sidebar footer. Disable showEmail in a collapsed rail. Opens a name/email header, data-driven items (buttons or router links), a Theme submenu bound to useTheme(), and a destructive Sign out.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
