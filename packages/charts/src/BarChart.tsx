@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { Bar, BarChart as RBarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
 import { ChartLegend, useHiddenSeries } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
@@ -67,7 +68,8 @@ export function BarChart<T extends object>({
     { valueFormatter, previewKey: categories[0], vertical },
   );
   const radius: Radius = stacked ? 0 : vertical ? [0, 3, 3, 0] : [3, 3, 0, 0];
-  const name = accessibleName('Bar chart', ariaLabel, title, categories);
+  const labels = useChartLabels();
+  const name = accessibleName(labels.barChart, ariaLabel, title, categories);
   return (
     <ChartFrame
       label={name}

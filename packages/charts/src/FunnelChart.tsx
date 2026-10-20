@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { Funnel, FunnelChart as RFunnelChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { tooltipContent } from './ChartTooltip';
 import { chartFmt, cx, identity, type ValueFormatter } from './format';
@@ -85,8 +86,9 @@ export function FunnelChart<T extends object>({
     })),
     ramp,
   );
+  const labels = useChartLabels();
   const name = accessibleName(
-    'Funnel chart',
+    labels.funnelChart,
     ariaLabel,
     title,
     stages.map((s) => s.name),
@@ -135,7 +137,7 @@ export function FunnelChart<T extends object>({
             </ResponsiveContainer>
           </div>
           {showStages && (
-            <ol aria-label="Stages" className="flex w-full flex-col gap-2 sm:w-64">
+            <ol aria-label={labels.stages} className="flex w-full flex-col gap-2 sm:w-64">
               {stages.map((s, i) => (
                 <li
                   key={s.name}
@@ -150,7 +152,7 @@ export function FunnelChart<T extends object>({
                     <span className="text-muted-foreground">{chartFmt.percent(s.conversion)}</span>
                     {i > 0 && (
                       <span className="text-destructive-text">
-                        <span className="sr-only">drop-off </span>−{chartFmt.percent(s.dropOff)}
+                        <span className="sr-only">{labels.dropOffPrefix}</span>−{chartFmt.percent(s.dropOff)}
                       </span>
                     )}
                   </span>
@@ -161,7 +163,7 @@ export function FunnelChart<T extends object>({
           {dataTable && (
             <ChartDataTable
               caption={name}
-              columns={['Stage', category, 'Conversion', 'Drop-off']}
+              columns={[labels.stage, category, labels.conversion, labels.dropOff]}
               rows={stages.map((s) => [
                 s.name,
                 valueFormatter(s.value),

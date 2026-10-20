@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { I18nProvider } from '@gntik-ai/ui';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { ChartCard } from './ChartCard';
@@ -6,6 +7,14 @@ import HeatmapChartCard from './examples/heatmap';
 import { TRAFFIC_BY_RANGE } from './fixtures';
 
 describe('ChartCard', () => {
+  it('uses the kit locale for the loading chart', () => {
+    render(
+      <I18nProvider locale="es">
+        <ChartCard state="loading" />
+      </I18nProvider>,
+    );
+    expect(screen.getByRole('status', { name: 'Cargando gráfico' })).toBeInTheDocument();
+  });
   it('renders title, legend and chart for the first range', async () => {
     const { container } = render(<ChartCard />);
     expect(screen.getByRole('heading', { name: 'Infrastructure cost' })).toBeInTheDocument();

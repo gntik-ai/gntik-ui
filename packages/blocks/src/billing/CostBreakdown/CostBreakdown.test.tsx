@@ -1,8 +1,18 @@
+import { I18nProvider } from '@gntik-ai/ui';
 import { render, screen, within } from '@testing-library/react';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { CostBreakdown } from './CostBreakdown';
 
 describe('CostBreakdown', () => {
+  it('uses the kit locale for an empty chart', () => {
+    render(
+      <I18nProvider locale="es">
+        <CostBreakdown items={[]} />
+      </I18nProvider>,
+    );
+    expect(screen.getByText('Sin datos para este periodo')).toBeInTheDocument();
+  });
+
   it('renders the donut figure and the total', async () => {
     const { container } = render(<CostBreakdown />);
     expect(screen.getByRole('figure', { name: /Cost breakdown: Compute \$740.00/ })).toBeInTheDocument();

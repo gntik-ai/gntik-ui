@@ -1,4 +1,5 @@
-import { Badge, Card, cn } from '@gntik-ai/ui';
+import { ChartLocaleProvider } from '@gntik-ai/charts';
+import { Badge, Card, cn, useI18n } from '@gntik-ai/ui';
 import { LineChart } from '@gntik-ai/charts';
 import { formatMoney } from '../format';
 import { sampleBudget, sampleSpend } from './fixtures';
@@ -69,37 +70,40 @@ export function SpendVsBudget({
     { label: 'Budget', value: formatMoney(budget, currency) },
   ];
 
+  const { locale } = useI18n();
   return (
-    <Card className={cn('p-6', className)}>
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <TitleTag className="text-[15px] font-semibold tracking-tight text-foreground">{title}</TitleTag>
-          {period && <p className="mt-0.5 text-[12.5px] text-muted-foreground">{period}</p>}
-        </div>
-        <Badge tone={over ? 'warning' : 'success'} dot>
-          {over ? 'Forecast over budget' : 'Within budget'}
-        </Badge>
-      </div>
-      <dl className="mt-4 grid grid-cols-3 gap-4">
-        {stats.map((s) => (
-          <div key={s.label} className="min-w-0">
-            <dt className="text-[11.5px] text-muted-foreground">{s.label}</dt>
-            <dd className="mt-1 truncate font-mono text-[14px] font-semibold text-foreground tabular-nums">
-              {s.value}
-            </dd>
+    <ChartLocaleProvider locale={locale}>
+      <Card className={cn('p-6', className)}>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <TitleTag className="text-[15px] font-semibold tracking-tight text-foreground">{title}</TitleTag>
+            {period && <p className="mt-0.5 text-[12.5px] text-muted-foreground">{period}</p>}
           </div>
-        ))}
-      </dl>
-      <LineChart
-        className="mt-5"
-        data={rows}
-        index="day"
-        categories={['Spend', 'Forecast', 'Budget']}
-        colors={['primary', 'cyan', 'amber']}
-        valueFormatter={money}
-        height={height}
-        aria-label={`${title}: ${formatMoney(toDate, currency)} spent, ${formatMoney(forecast, currency)} forecast against a ${formatMoney(budget, currency)} budget`}
-      />
-    </Card>
+          <Badge tone={over ? 'warning' : 'success'} dot>
+            {over ? 'Forecast over budget' : 'Within budget'}
+          </Badge>
+        </div>
+        <dl className="mt-4 grid grid-cols-3 gap-4">
+          {stats.map((s) => (
+            <div key={s.label} className="min-w-0">
+              <dt className="text-[11.5px] text-muted-foreground">{s.label}</dt>
+              <dd className="mt-1 truncate font-mono text-[14px] font-semibold text-foreground tabular-nums">
+                {s.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <LineChart
+          className="mt-5"
+          data={rows}
+          index="day"
+          categories={['Spend', 'Forecast', 'Budget']}
+          colors={['primary', 'cyan', 'amber']}
+          valueFormatter={money}
+          height={height}
+          aria-label={`${title}: ${formatMoney(toDate, currency)} spent, ${formatMoney(forecast, currency)} forecast against a ${formatMoney(budget, currency)} budget`}
+        />
+      </Card>
+    </ChartLocaleProvider>
   );
 }

@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import type { ReactNode } from 'react';
 import { cx } from './format';
 
@@ -28,14 +29,15 @@ export interface ChartEmptyProps {
 }
 
 /** Placeholder for a chart without data. */
-export function ChartEmpty({ height = 240, children = 'No data for this period', className }: ChartEmptyProps) {
+export function ChartEmpty({ height = 240, children, className }: ChartEmptyProps) {
+  const { empty } = useChartLabels();
   return (
     <div data-chart-state="empty" className={cx(stateBox, className)} style={{ height }}>
       <svg aria-hidden viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-muted-foreground" strokeWidth={1.75}>
         <path d="M3 3v18h18" />
         <path d="M7 15h2M12 11h2M17 7h2" strokeLinecap="round" />
       </svg>
-      <p className="text-[13px] text-muted-foreground">{children}</p>
+      <p className="text-[13px] text-muted-foreground">{children === undefined ? empty : children}</p>
     </div>
   );
 }
@@ -50,7 +52,9 @@ export interface ChartLoadingProps {
 const SKELETON_BARS = [42, 64, 50, 78, 58, 88, 70, 54];
 
 /** Skeleton plot (bars over a baseline); the pulse stops under prefers-reduced-motion. */
-export function ChartLoading({ height = 240, label = 'Loading chart', className }: ChartLoadingProps) {
+export function ChartLoading({ height = 240, label: labelProp, className }: ChartLoadingProps) {
+  const { loading } = useChartLabels();
+  const label = labelProp ?? loading;
   return (
     <div
       role="status"
@@ -80,12 +84,8 @@ export interface ChartErrorProps {
 }
 
 /** Error placeholder with an optional retry action. */
-export function ChartError({
-  height = 240,
-  children = 'The chart could not be loaded.',
-  onRetry,
-  className,
-}: ChartErrorProps) {
+export function ChartError({ height = 240, children, onRetry, className }: ChartErrorProps) {
+  const { error, retry } = useChartLabels();
   return (
     <div
       role="alert"
@@ -93,14 +93,14 @@ export function ChartError({
       className={cx(stateBox, 'border-destructive/40', className)}
       style={{ height }}
     >
-      <p className="text-[13px] text-destructive-text">{children}</p>
+      <p className="text-[13px] text-destructive-text">{children === undefined ? error : children}</p>
       {onRetry && (
         <button
           type="button"
           onClick={onRetry}
           className="h-8 rounded-md border border-border bg-card px-3 text-[12.5px] font-medium text-foreground transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transition-none"
         >
-          Retry
+          {retry}
         </button>
       )}
     </div>

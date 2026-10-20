@@ -1,3 +1,5 @@
+import { I18nProvider } from '@gntik-ai/ui';
+import { BarChart } from '@gntik-ai/charts';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ComponentType } from 'react';
@@ -16,6 +18,17 @@ const workspaces = [
 ];
 
 describe('ConsoleShell', () => {
+  it('passes the kit locale to charts in its content', () => {
+    render(
+      <I18nProvider locale="es">
+        <ConsoleShell>
+          <BarChart data={[]} index="month" categories={['requests']} state="loading" />
+        </ConsoleShell>
+      </I18nProvider>,
+    );
+    expect(screen.getByRole('status', { name: 'Cargando gráfico' })).toBeInTheDocument();
+  });
+
   it('shows the default usage meter and help link', () => {
     render(<ConsoleShell>content</ConsoleShell>);
     expect(screen.getByRole('meter')).toBeInTheDocument();

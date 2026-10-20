@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import type { Ref, SVGAttributes } from 'react';
 import { cx } from './format';
 
@@ -64,7 +65,8 @@ export function MiniBar({
   className,
   ...props
 }: MiniBarProps) {
-  const name = props['aria-label'] ?? describeBars(data, label, formatValue);
+  const chartLabels = useChartLabels();
+  const name = props['aria-label'] ?? describeBars(data, label ?? chartLabels.bars, formatValue);
   const token = TONE_TOKEN[tone];
   const n = data.length;
   const lo = n ? Math.min(0, ...data) : 0;

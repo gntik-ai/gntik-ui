@@ -1,5 +1,6 @@
 import {
   AreaChart,
+  ChartLocaleProvider,
   BarChart,
   Heatmap,
   LineChart,
@@ -9,7 +10,17 @@ import {
   type HeatmapProps,
   type ValueFormatter,
 } from '@gntik-ai/charts';
-import { Card, CardAction, CardDescription, CardHeader, CardTitle, cn, Toggle, ToggleGroup } from '@gntik-ai/ui';
+import {
+  Card,
+  CardAction,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  useI18n,
+  cn,
+  Toggle,
+  ToggleGroup,
+} from '@gntik-ai/ui';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { TrendDelta, type KpiDelta } from '../shared/TrendDelta';
 import { COST_BY_RANGE, COST_RANGES, type CostPoint } from './fixtures';
@@ -146,73 +157,76 @@ export function ChartCard<T extends object = CostPoint>({
     'aria-label': chartLabel,
     ...states,
   };
+  const { locale } = useI18n();
   return (
-    <Card className={className}>
-      <CardHeader className="pb-2">
-        <CardTitle as={titleAs}>{title}</CardTitle>
-        {description && <CardDescription>{description}</CardDescription>}
-        <CardAction className="flex items-center gap-2">
-          {showRangeToggle && ranges.length > 1 && (
-            <ToggleGroup
-              aria-label={`${title} range`}
-              size="sm"
-              value={active ? [active.value] : []}
-              onFocus={(event) => {
-                // Tab enters at the pressed option; pointer and restored focus stay on their original option.
-                if (!tabEntry.current) return;
-                if (event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)) return;
-                const selected = event.currentTarget.querySelector<HTMLButtonElement>('[aria-pressed="true"]');
-                selected?.focus();
-              }}
-              onValueChange={(v) => {
-                const next = v[0];
-                if (!next) return;
-                if (rangeProp === undefined) setInner(next);
-                onRangeChange?.(next);
-              }}
-            >
-              {ranges.map((r) => (
-                <Toggle key={r.value} value={r.value} className="font-mono">
-                  {r.label}
-                </Toggle>
-              ))}
-            </ToggleGroup>
-          )}
-          {action}
-        </CardAction>
-      </CardHeader>
-      {active?.summary && (
-        <p className="flex flex-wrap items-baseline gap-x-2 px-5" aria-live="polite">
-          <span className="text-[24px] font-semibold tracking-tight text-foreground tabular-nums">
-            {active.summary.value}
-          </span>
-          {active.summary.delta && <TrendDelta {...active.summary.delta} />}
-        </p>
-      )}
-      <div className={cn('px-3 pb-4 pt-3 sm:px-4', !footer && 'pb-5')}>
-        {kind === 'heatmap' ? (
-          <Heatmap
-            data={data}
-            index={index}
-            categories={categories}
-            color={colors[0] ?? 'primary'}
-            valueFormatter={valueFormatter}
-            showScale={showLegend}
-            height={height}
-            aria-label={chartLabel}
-            {...heatmap}
-            {...states}
-            dataTable={dataTable ?? true}
-          />
-        ) : kind === 'bar' ? (
-          <BarChart {...common} stacked={stacked} />
-        ) : kind === 'line' ? (
-          <LineChart {...common} />
-        ) : (
-          <AreaChart {...common} stacked={stacked} />
+    <ChartLocaleProvider locale={locale}>
+      <Card className={className}>
+        <CardHeader className="pb-2">
+          <CardTitle as={titleAs}>{title}</CardTitle>
+          {description && <CardDescription>{description}</CardDescription>}
+          <CardAction className="flex items-center gap-2">
+            {showRangeToggle && ranges.length > 1 && (
+              <ToggleGroup
+                aria-label={`${title} range`}
+                size="sm"
+                value={active ? [active.value] : []}
+                onFocus={(event) => {
+                  // Tab enters at the pressed option; pointer and restored focus stay on their original option.
+                  if (!tabEntry.current) return;
+                  if (event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget)) return;
+                  const selected = event.currentTarget.querySelector<HTMLButtonElement>('[aria-pressed="true"]');
+                  selected?.focus();
+                }}
+                onValueChange={(v) => {
+                  const next = v[0];
+                  if (!next) return;
+                  if (rangeProp === undefined) setInner(next);
+                  onRangeChange?.(next);
+                }}
+              >
+                {ranges.map((r) => (
+                  <Toggle key={r.value} value={r.value} className="font-mono">
+                    {r.label}
+                  </Toggle>
+                ))}
+              </ToggleGroup>
+            )}
+            {action}
+          </CardAction>
+        </CardHeader>
+        {active?.summary && (
+          <p className="flex flex-wrap items-baseline gap-x-2 px-5" aria-live="polite">
+            <span className="text-[24px] font-semibold tracking-tight text-foreground tabular-nums">
+              {active.summary.value}
+            </span>
+            {active.summary.delta && <TrendDelta {...active.summary.delta} />}
+          </p>
         )}
-      </div>
-      {footer && <div className="border-t border-border px-5 py-3 text-[12.5px] text-muted-foreground">{footer}</div>}
-    </Card>
+        <div className={cn('px-3 pb-4 pt-3 sm:px-4', !footer && 'pb-5')}>
+          {kind === 'heatmap' ? (
+            <Heatmap
+              data={data}
+              index={index}
+              categories={categories}
+              color={colors[0] ?? 'primary'}
+              valueFormatter={valueFormatter}
+              showScale={showLegend}
+              height={height}
+              aria-label={chartLabel}
+              {...heatmap}
+              {...states}
+              dataTable={dataTable ?? true}
+            />
+          ) : kind === 'bar' ? (
+            <BarChart {...common} stacked={stacked} />
+          ) : kind === 'line' ? (
+            <LineChart {...common} />
+          ) : (
+            <AreaChart {...common} stacked={stacked} />
+          )}
+        </div>
+        {footer && <div className="border-t border-border px-5 py-3 text-[12.5px] text-muted-foreground">{footer}</div>}
+      </Card>
+    </ChartLocaleProvider>
   );
 }

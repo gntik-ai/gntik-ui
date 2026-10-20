@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { useId, useState, type ReactElement } from 'react';
 import { ReferenceLine } from 'recharts';
 import { cx, type ValueFormatter } from './format';
@@ -253,12 +254,13 @@ export function ChartMarkers({
   onActiveChange,
   className,
 }: ChartMarkersProps) {
+  const labels = useChartLabels();
   const id = useId();
   if (thresholds.length === 0 && annotations.length === 0) return null;
   const fmt = (n: number) => (valueFormatter ? valueFormatter(n) : String(n));
   return (
     <ul
-      aria-label="Chart markers"
+      aria-label={labels.markers}
       className={cx(
         'mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 px-1 text-[12px] text-muted-foreground',
         className,
@@ -278,7 +280,7 @@ export function ChartMarkers({
             />
           </svg>
           <span>
-            <span className="sr-only">Threshold:</span> {th.label}{' '}
+            <span className="sr-only">{labels.threshold}</span> {th.label}{' '}
             <span className="font-mono tabular-nums">({fmt(th.value)})</span>
           </span>
         </li>
@@ -308,7 +310,7 @@ export function ChartMarkers({
                 <path d="M1,1 l8,4 l-8,4 z" fill={v(TONE_TOKENS[a.tone ?? 'neutral'].stroke)} />
               </svg>
               <span>
-                <span className="sr-only">{`Marker at ${String(a.x)}:`}</span> {a.label}
+                <span className="sr-only">{labels.markerAt.replace('{x}', String(a.x))}</span> {a.label}
               </span>
             </button>
             {a.description && (

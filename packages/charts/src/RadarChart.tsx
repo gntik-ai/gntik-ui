@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart as RRadarChart, Tooltip } from 'recharts';
 import { ChartLegend, useHiddenSeries } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
@@ -48,7 +49,8 @@ export function RadarChart<T extends object>({
     label: c,
     color: col(i),
   }));
-  const name = accessibleName('Radar chart', ariaLabel, title, categories);
+  const labels = useChartLabels();
+  const name = accessibleName(labels.radarChart, ariaLabel, title, categories);
   return (
     <ChartFrame
       label={name}

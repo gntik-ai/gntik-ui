@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { Area, AreaChart as RAreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
 import { ChartLegend, useHiddenSeries } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
@@ -62,7 +63,8 @@ export function AreaChart<T extends object>({
   );
   const col = (i: number) => seriesColor(t, colors, i);
   const legend = categories.map((c, i) => ({ key: c, label: c, color: col(i) }));
-  const name = accessibleName('Area chart', ariaLabel, title, categories);
+  const labels = useChartLabels();
+  const name = accessibleName(labels.areaChart, ariaLabel, title, categories);
   return (
     <ChartFrame
       label={name}
