@@ -992,7 +992,7 @@
       ],
       "file": "apps/docs/src/catalog/bar-charts.jsx",
       "header": "Gntik UI · bar-charts.jsx — \"Bar charts\" subcategory (Charts group).\nCounts by category: stacked, grouped and horizontal. Sample data\n(jobs by status, tokens in/out, spend by service). Tooltip + interactive\nlegend, live theme. (Tremor blocks come after.)",
-      "intro": "Counts by category. Stacked for composition, grouped to compare series side by side and horizontal for rankings. Green carries the main series; categoricals cover the rest. Below, two dashboard cards adapted from Tremor Blocks."
+      "intro": "Counts by category. Stacked for composition, grouped to compare series side by side and horizontal for rankings. Green carries the main series; categoricals cover the rest. Below, two dashboard cards adapted from Tremor Blocks. Standalone charts support English and Spanish labels through ChartLocaleProvider."
     },
     "line-charts": {
       "id": "line-charts",

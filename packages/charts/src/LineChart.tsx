@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { CartesianGrid, Line, LineChart as RLineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { ChartLegend, useHiddenSeries } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
@@ -71,7 +72,8 @@ export function LineChart<T extends object>({
   const last = x.view[x.view.length - 1];
   const xTicks: Tick[] | undefined =
     startEndOnly && first && last ? [asTick(field(first, index)), asTick(field(last, index))] : undefined;
-  const name = accessibleName('Line chart', ariaLabel, title, categories);
+  const labels = useChartLabels();
+  const name = accessibleName(labels.lineChart, ariaLabel, title, categories);
   return (
     <ChartFrame
       label={name}

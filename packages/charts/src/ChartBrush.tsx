@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { useRef, useState, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
 import { cx } from './format';
 import { legendFocus } from './ChartLegend';
@@ -83,9 +84,11 @@ export function ChartBrush({
   onRangeChange,
   labelOf,
   preview,
-  label = 'Zoom range',
+  label: labelProp,
   className,
 }: ChartBrushProps) {
+  const labels = useChartLabels();
+  const label = labelProp ?? labels.zoomRange;
   const track = useRef<HTMLDivElement>(null);
   const drag = useRef<{ kind: 'start' | 'end' | 'window'; originIndex: number; originRange: ChartRange } | null>(null);
   const last = Math.max(1, length - 1);
@@ -147,7 +150,7 @@ export function ChartBrush({
       <div
         role="slider"
         tabIndex={0}
-        aria-label={which === 'start' ? 'Range start' : 'Range end'}
+        aria-label={which === 'start' ? labels.rangeStart : labels.rangeEnd}
         aria-orientation="horizontal"
         aria-valuemin={which === 'start' ? 0 : start + 1}
         aria-valuemax={which === 'start' ? end - 1 : length - 1}
@@ -204,7 +207,7 @@ export function ChartBrush({
             onClick={() => onRangeChange([0, length - 1])}
             className={cx('px-1 font-medium text-foreground underline-offset-2 hover:underline', legendFocus)}
           >
-            Reset zoom
+            {labels.resetZoom}
           </button>
         )}
       </div>

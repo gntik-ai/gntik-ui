@@ -4,8 +4,13 @@
    (jobs by status, tokens in/out, spend by service). Tooltip + interactive
    legend, live theme. (Tremor blocks come after.)
    ============================================================================ */
+import LocalizedCharts from '../../../../packages/charts/src/examples/LocalizedCharts';
+import localizedSource from '../../../../packages/charts/src/examples/LocalizedCharts?raw';
+const chartDocs = import.meta.glob('../../../../packages/charts/src/*.doc.ts', { eager: true, import: 'doc' });
+const localeDoc = chartDocs['../../../../packages/charts/src/i18n.doc.ts'];
+
 (function () {
-  const { SectionHead, ChartCard, ChartVariant, BarChart, BarList, chartFmt } = window;
+  const { SectionHead, ChartCard, ChartVariant, ApiReference, BarChart, BarList, chartFmt } = window;
 
   const RUNS = [
     { day: 'Mon', Succeeded: 1240, Failed: 38, Cancelled: 22 },
@@ -264,8 +269,17 @@
           kicker="Charts"
           title="Bar charts"
           status="done"
-          intro="Counts by category. Stacked for composition, grouped to compare series side by side and horizontal for rankings. Green carries the main series; categoricals cover the rest. Below, two dashboard cards adapted from Tremor Blocks."
+          intro="Counts by category. Stacked for composition, grouped to compare series side by side and horizontal for rankings. Green carries the main series; categoricals cover the rest. Below, two dashboard cards adapted from Tremor Blocks. Standalone charts support English and Spanish labels through ChartLocaleProvider."
         />
+
+        <ChartVariant
+          title={localeDoc.name}
+          desc={`${localeDoc.description} ${localeDoc.pattern}`}
+          code={localizedSource}
+        >
+          <LocalizedCharts />
+          <ApiReference folder="i18n" kind="charts" />
+        </ChartVariant>
 
         <ChartVariant
           title="Stacked"

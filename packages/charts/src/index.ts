@@ -1,4 +1,13 @@
 export { AreaChart, type AreaChartProps } from './AreaChart';
+export {
+  ChartLocaleProvider,
+  useChartLabels,
+  chartLabelSets,
+  en,
+  es,
+  type ChartLabels,
+  type ChartLocaleProviderProps,
+} from './i18n';
 export { BarChart, type BarChartProps } from './BarChart';
 export { LineChart, type LineChartProps } from './LineChart';
 export { ComboChart, type ComboChartProps } from './ComboChart';

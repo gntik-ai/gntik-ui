@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { Sankey, Tooltip, type SankeyLinkProps as LinkProps, type SankeyNodeProps as NodeProps } from 'recharts';
 import { tooltipContent } from './ChartTooltip';
 import { identity, type ValueFormatter } from './format';
@@ -82,8 +83,9 @@ export function SankeyChart({
   const resolved = resolveSankeyLinks(nodes, links);
   const fills = nodes.map((n, i) => (n.color ? t.color(n.color) : seriesColor(t, colors, i)));
   const sources = new Set(resolved.map((l) => l.source));
+  const labels = useChartLabels();
   const name = accessibleName(
-    'Sankey chart',
+    labels.sankeyChart,
     ariaLabel,
     title,
     nodes.map((n) => n.name),
@@ -137,7 +139,7 @@ export function SankeyChart({
         dataTable && (
           <ChartDataTable
             caption={name}
-            columns={['From', 'To', 'Value']}
+            columns={[labels.from, labels.to, labels.value]}
             rows={resolved.map((l) => [
               nodes[l.source]?.name ?? '',
               nodes[l.target]?.name ?? '',

@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { useId, useState, type KeyboardEvent } from 'react';
 import { cx, identity, type ValueFormatter } from './format';
 import { divergingRamp, rampIndex, sequentialRamp } from './palette';
@@ -88,7 +89,8 @@ export function Heatmap<T extends object>({
   const id = useId();
   const cellHeight = cellHeightFor(height, data.length) ?? cellHeightProp;
   const [active, setActive] = useState<readonly [number, number] | null>(null);
-  const name = accessibleName('Heatmap', ariaLabel, title, []);
+  const labels = useChartLabels();
+  const name = accessibleName(labels.heatmap, ariaLabel, title, []);
   const diverging = scale === 'diverging';
   const count = steps ?? (diverging ? 7 : 6);
   const ramp = diverging ? divergingRamp(count) : sequentialRamp(count, { color });
@@ -161,7 +163,7 @@ export function Heatmap<T extends object>({
       <div
         role="group"
         tabIndex={0}
-        aria-label={`${name}: colour grid, use the arrow keys to read cells`}
+        aria-label={`${name}: ${labels.colourGrid}`}
         onKeyDown={onKeyDown}
         onFocus={() => setActive((a) => a ?? [0, 0])}
         onBlur={() => setActive(null)}

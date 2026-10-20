@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { Bar, CartesianGrid, ComposedChart, Line, Tooltip, XAxis, YAxis } from 'recharts';
 import { ChartLegend, useHiddenSeries } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
@@ -64,7 +65,8 @@ export function ComboChart<T extends object>({
     { key: lineSeries, label: lineSeries, color: lc },
   ];
   const fmtSeries = (v: unknown, name: string) => formatAny(v, name === lineSeries ? lineFormatter : barFormatter);
-  const name = accessibleName('Combo chart', ariaLabel, title, [barSeries, lineSeries]);
+  const labels = useChartLabels();
+  const name = accessibleName(labels.comboChart, ariaLabel, title, [barSeries, lineSeries]);
   return (
     <ChartFrame
       label={name}

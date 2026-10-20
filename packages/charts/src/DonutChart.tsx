@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { useHiddenSeries, legendFocus } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
@@ -64,8 +65,9 @@ export function DonutChart<T extends object>({
   const shown = slices.filter((s) => !hidden.has(s.name));
   const total = shown.reduce((sum, s) => sum + s.value, 0);
   const isDonut = variant === 'donut';
+  const labels = useChartLabels();
   const name = accessibleName(
-    isDonut ? 'Donut chart' : 'Pie chart',
+    isDonut ? labels.donutChart : labels.pieChart,
     ariaLabel,
     title,
     slices.map((s) => s.name),

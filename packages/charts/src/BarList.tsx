@@ -1,3 +1,4 @@
+import { useChartLabels } from './i18n';
 import { cx, identity, type ValueFormatter } from './format';
 import { chartStateView, resolveState, type ChartStateProps } from './states';
 import { field, numField, type DataKey } from './shared';
@@ -30,12 +31,14 @@ export function BarList<T extends object>({
   color = 'primary',
   sortOrder = 'desc',
   className,
-  'aria-label': ariaLabel = 'Bar list',
+  'aria-label': ariaLabelProp,
   state,
   emptyMessage,
   errorMessage,
   onRetry,
 }: BarListProps<T>) {
+  const labels = useChartLabels();
+  const ariaLabel = ariaLabelProp ?? labels.barList;
   const effective = resolveState(state, data.length);
   const placeholder = chartStateView(effective, { height: 160, emptyMessage, errorMessage, onRetry });
   if (placeholder)

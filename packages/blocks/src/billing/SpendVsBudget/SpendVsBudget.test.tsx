@@ -1,9 +1,19 @@
+import { I18nProvider } from '@gntik-ai/ui';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { SpendVsBudget } from './SpendVsBudget';
 
 describe('SpendVsBudget', () => {
+  it('uses the kit locale for an empty chart', () => {
+    render(
+      <I18nProvider locale="es">
+        <SpendVsBudget data={[]} />
+      </I18nProvider>,
+    );
+    expect(screen.getByText('Sin datos para este periodo')).toBeInTheDocument();
+  });
+
   it('renders the summary and the chart figure', async () => {
     const { container } = render(<SpendVsBudget />);
     expect(screen.getByRole('heading', { name: 'Spend vs budget' })).toBeInTheDocument();

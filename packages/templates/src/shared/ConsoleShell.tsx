@@ -1,3 +1,4 @@
+import { ChartLocaleProvider } from '@gntik-ai/charts';
 import {
   AppSidebarFooter,
   AppSidebarHeader,
@@ -9,6 +10,7 @@ import {
 } from '@gntik-ai/blocks';
 import {
   SidebarLayout,
+  useI18n,
   type BreadcrumbItem,
   type NavGroup,
   type SidebarLayoutProps,
@@ -63,36 +65,39 @@ export function ConsoleShell({
   sidebarLabel,
   collapseMode,
 }: ConsoleShellProps) {
+  const { locale } = useI18n();
   return (
-    <SidebarLayout
-      fullScreen
-      storageKey={storageKey}
-      sidebarLabel={sidebarLabel}
-      collapseMode={collapseMode}
-      sidebarHeader={({ collapsed }) => (
-        <AppSidebarHeader
-          collapsed={collapsed}
-          workspaces={workspaces}
-          currentWorkspaceId={currentWorkspaceId}
-          onWorkspaceChange={onWorkspaceChange}
-          onCreateWorkspace={onCreateWorkspace}
-        />
-      )}
-      sidebar={({ collapsed }) => <AppSidebarNav groups={nav} currentHref={currentHref} collapsed={collapsed} />}
-      sidebarFooter={({ collapsed }) => (
-        <AppSidebarFooter
-          collapsed={collapsed}
-          user={user}
-          usage={usage}
-          helpHref={helpHref}
-          helpLabel={helpLabel}
-          userMenuItems={userMenuItems}
-          onSignOut={onSignOut}
-        />
-      )}
-      topbar={<AppTopbar breadcrumbs={breadcrumbs} user={user} {...topbar} />}
-    >
-      {children}
-    </SidebarLayout>
+    <ChartLocaleProvider locale={locale}>
+      <SidebarLayout
+        fullScreen
+        storageKey={storageKey}
+        sidebarLabel={sidebarLabel}
+        collapseMode={collapseMode}
+        sidebarHeader={({ collapsed }) => (
+          <AppSidebarHeader
+            collapsed={collapsed}
+            workspaces={workspaces}
+            currentWorkspaceId={currentWorkspaceId}
+            onWorkspaceChange={onWorkspaceChange}
+            onCreateWorkspace={onCreateWorkspace}
+          />
+        )}
+        sidebar={({ collapsed }) => <AppSidebarNav groups={nav} currentHref={currentHref} collapsed={collapsed} />}
+        sidebarFooter={({ collapsed }) => (
+          <AppSidebarFooter
+            collapsed={collapsed}
+            user={user}
+            usage={usage}
+            helpHref={helpHref}
+            helpLabel={helpLabel}
+            userMenuItems={userMenuItems}
+            onSignOut={onSignOut}
+          />
+        )}
+        topbar={<AppTopbar breadcrumbs={breadcrumbs} user={user} {...topbar} />}
+      >
+        {children}
+      </SidebarLayout>
+    </ChartLocaleProvider>
   );
 }
