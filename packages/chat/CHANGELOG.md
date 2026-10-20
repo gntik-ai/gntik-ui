@@ -1,5 +1,27 @@
 # @gntik-ai/chat
 
+## 0.9.0
+
+### Minor Changes
+
+- 73b19e3: Add an opt-in AgentSurface with a validated, allow-listed kit catalog, data bindings, actions, and localized agent-content groups and focus recovery when content is removed or suppressed.
+
+### Patch Changes
+
+- Updated dependencies [91529bb]
+- Updated dependencies [4ab6493]
+- Updated dependencies [73b19e3]
+- Updated dependencies [53e8909]
+- Updated dependencies [e67ab87]
+- Updated dependencies [8781fd7]
+- Updated dependencies [47c4582]
+- Updated dependencies [0ce6f33]
+- Updated dependencies [9de4924]
+- Updated dependencies [57d8e4e]
+- Updated dependencies [39b9e66]
+- Updated dependencies [7340188]
+  - @gntik-ai/ui@0.9.0
+
 ## 0.7.0
 
 ### Patch Changes
