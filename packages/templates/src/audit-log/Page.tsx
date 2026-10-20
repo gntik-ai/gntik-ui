@@ -77,7 +77,11 @@ export function filterAuditEvents(
   });
 }
 
-const csvCell = (v: string) => (/[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
+/** Neutralises leading spreadsheet formula triggers before applying CSV quoting. */
+export function escapeCsvCell(value: string): string {
+  const safe = /^[=+@\t\r-]/.test(value) ? `'${value}` : value;
+  return /[",\n]/.test(safe) ? `"${safe.replace(/"/g, '""')}"` : safe;
+}
 
 /** CSV of the events (time, actor, action, resource, target, ip, result). */
 export function auditEventsToCsv(events: readonly AuditEvent[]) {
@@ -92,7 +96,7 @@ export function auditEventsToCsv(events: readonly AuditEvent[]) {
     e.ip,
     e.result,
   ]);
-  return [head, ...rows].map((r) => r.map(csvCell).join(',')).join('\n');
+  return [head, ...rows].map((r) => r.map(escapeCsvCell).join(',')).join('\n');
 }
 
 function downloadCsv(events: AuditEvent[]) {

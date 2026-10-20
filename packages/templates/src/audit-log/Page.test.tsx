@@ -6,6 +6,59 @@ import { auditEvents } from './data';
 
 const ALL = { start: null, end: null };
 
+describe('auditEventsToCsv', () => {
+  it('neutralises an actor formula before applying CSV quoting', () => {
+    const event = {
+      ...auditEvents[0]!,
+      actor: { name: '=HYPERLINK("https://example.test","x")', email: 'ana@example.test' },
+    };
+
+    expect(auditEventsToCsv([event]).split('\n')[1]).toContain(
+      `,"'=HYPERLINK(""https://example.test"",""x"")",ana@example.test,`,
+    );
+  });
+
+  it.each([
+    ['equals', '=1+1', "'=1+1"],
+    ['plus', '+1', "'+1"],
+    ['minus', '-1', "'-1"],
+    ['at sign', '@SUM(A1)', "'@SUM(A1)"],
+    ['tab', '\tprojects/a', "'\tprojects/a"],
+    ['carriage return', '\rprojects/a', "'\rprojects/a"],
+  ])('neutralises a target starting with %s', (_label, target, expected) => {
+    const event = { ...auditEvents[0]!, target };
+
+    expect(auditEventsToCsv([event]).split('\n')[1]?.split(',')[5]).toBe(expected);
+  });
+
+  it.each([
+    ['plain', 'projects/a', 'projects/a'],
+    ['comma', 'projects/a,b', '"projects/a,b"'],
+    ['quote', 'projects/"a"', '"projects/""a"""'],
+    ['newline', 'projects/a\nb', '"projects/a\nb"'],
+    ['embedded equals', 'a=b', 'a=b'],
+    ['embedded minus', 'x-1', 'x-1'],
+    ['leading space', ' =1+1', ' =1+1'],
+    ['empty', '', ''],
+  ])('preserves safe cells with %s and the CSV format', (_label, target, expected) => {
+    const event = {
+      ...auditEvents[0]!,
+      at: new Date('2026-01-02T03:04:05.000Z'),
+      actor: { name: 'Ana López', email: 'ana@example.test' },
+      action: 'project.update',
+      resource: 'Project',
+      target,
+      ip: '10.0.0.4',
+      result: 'succeeded' as const,
+    };
+
+    expect(auditEventsToCsv([event])).toBe(
+      'time,actor,email,action,resource,target,ip,result\n' +
+        `2026-01-02T03:04:05.000Z,Ana López,ana@example.test,project.update,Project,${expected},10.0.0.4,succeeded`,
+    );
+  });
+});
+
 describe('AuditLogPage', () => {
   it('renders filters, date range and the events table', { timeout: 15000 }, async () => {
     render(<AuditLogPage />);
