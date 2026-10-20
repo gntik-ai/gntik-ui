@@ -19,7 +19,10 @@ export const lightboxVariants = tv({
     zoomValue: 'w-12 text-center font-mono text-[11.5px] text-muted-foreground tabular-nums',
     control,
     stageWrap: 'relative flex min-h-0 flex-1 items-stretch',
-    stage: 'grid min-h-0 min-w-0 flex-1 place-items-center overflow-auto p-4 sm:px-16',
+    stage: [
+      'grid min-h-0 min-w-0 flex-1 place-items-center overflow-auto p-4 sm:px-16',
+      'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+    ],
     media: 'w-auto max-w-full rounded-md object-contain shadow-md select-none',
     nav: [
       'absolute top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full border border-border bg-card text-foreground shadow-sm transition-colors',

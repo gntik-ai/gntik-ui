@@ -185,7 +185,7 @@ export function Lightbox({
               </button>
             )}
             <figure className="m-0 flex min-h-0 min-w-0 flex-1 flex-col">
-              <div className={s.stage()} onDoubleClick={() => !isVideo && setZoom(zoom > 1 ? 1 : 2)}>
+              <div className={s.stage()} tabIndex={0} onDoubleClick={() => !isVideo && setZoom(zoom > 1 ? 1 : 2)}>
                 {item &&
                   (isVideo ? (
                     <video
