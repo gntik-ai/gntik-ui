@@ -66,8 +66,13 @@ describe('Kbd', () => {
   });
 
   it.each(['dark', '', 'high_contrast'])('example has no axe violations in theme %s', async (theme) => {
+    const previous = document.documentElement.className;
     document.documentElement.className = theme;
-    render(<KbdShortcuts />);
-    await expectNoAxeViolations();
+    try {
+      render(<KbdShortcuts />);
+      await expectNoAxeViolations();
+    } finally {
+      document.documentElement.className = previous;
+    }
   });
 });

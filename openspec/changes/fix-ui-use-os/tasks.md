@@ -14,7 +14,7 @@
 - [x] 2.3 Cover modifier rendering, spoken names, explicit glyphs and label precedence.
 - [x] 2.4 Cover Linux GlobalSearch and shortcut sheet rendering/search, and legacy filter callers.
 - [x] 2.5 Add a browser axe regression for the Kbd example in all three themes.
-- [x] 2.6 Run repository gates and browser a11y; record sandbox limitations in the implementation result.
+- [ ] 2.6 Complete repository gates and browser a11y; PR CI must finish the sandbox-blocked checks below.
 
 ## 3. Docs and release
 
@@ -27,4 +27,4 @@
 
 Browser a11y cannot start Vite preview: listen EPERM on ::1:4173. The token mirror-install integration test cannot bind its local mirror: listen EPERM on 127.0.0.1. These checks require PR CI. Visual baselines remain an operator/CI responsibility.
 
-The required library test command stops at that mirror test. A supplementary full UI suite did not complete under sandbox memory pressure; all 55 issue-focused UI, GlobalSearch and shortcut-sheet tests pass. The full library suite remains a PR CI check. Library build, lint, complete typecheck, registry checks and both kit-only checks pass.
+The required library test command stops at that mirror test, so it does not verify later packages. Broad follow-up Vitest runs exceeded sandbox memory, killed the concurrent lint process and produced test timeouts; they do not establish a full suite pass. Sequential reruns pass lint, the 46 useOs/Kbd/CommandPalette tests and all three settings-profile fixture/mode tests. The settings-profile DOM fixture now expects Ctrl/Control, matching the default trigger on Linux. Kbd example accessibility tests restore the previous root theme class. Library build, complete typecheck, registry regeneration/checks, docs coverage, OpenSpec validation and both kit-only checks pass. The full library command and browser a11y remain PR CI checks.
