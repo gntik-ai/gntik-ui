@@ -2,7 +2,8 @@
  * Built-in English catalog: every string the kit renders on its own (labels, accessible names,
  * announcements). It is the source of the message keys; other catalogs must cover every key.
  *
- * Placeholders: `{name}`. Plurals (Intl.PluralRules): `{count, plural, one {{count} item} other {{count} items}}`.
+ * Placeholders: `{name}`. Plurals (Intl.PluralRules): `{count, plural, one {# item} other {# items}}`.
+ * Use `{count}` instead of `#` inside plural branches to keep numbers ungrouped for English parity.
  * Month and weekday names, numbers and dates come from Intl, not from this catalog.
  */
 export const en = {

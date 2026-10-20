@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Display',
   status: 'beta',
   description:
-    'Windowed list for thousands of rows: only the visible rows plus `overscan` are mounted, with a fixed `itemHeight` or measured rows from an estimate. One roving tab stop, aria-setsize/posinset on every row, `scrollToIndex` through a ref, and a single-select `listbox` mode. No dependencies.',
+    'Windowed list for thousands of rows: only the visible rows plus `overscan` are mounted, with a fixed `itemHeight` or measured rows from an estimate. One roving tab stop, aria-setsize/posinset on every row, `scrollToIndex` through a ref, and a single-select `listbox` mode. No dependencies. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.',
   pattern: 'list / listbox with roving tabindex',
   keyboard: [
     ['Tab', 'Moves focus to the active row (one tab stop)'],

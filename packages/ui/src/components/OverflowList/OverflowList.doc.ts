@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Display',
   status: 'beta',
   description:
-    'Row of chips or avatars that renders items up to `max` (or to the available width with `responsive`, measured by ResizeObserver) and a "+N more" button that opens a Popover listing the rest.',
+    'Row of chips or avatars that renders items up to `max` (or to the available width with `responsive`, measured by ResizeObserver) and a "+N more" button that opens a Popover listing the rest. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.',
   primitive: '@base-ui/react/popover',
   pattern: 'list + disclosure popover',
   keyboard: [

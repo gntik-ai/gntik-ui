@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Navigation',
   status: 'beta',
   description:
-    'Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states.',
+    'Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.',
   pattern: 'tree view',
   keyboard: [
     ['Tab', 'Moves focus into the tree (selected or first node) and out of it'],

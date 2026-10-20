@@ -204,6 +204,18 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                 </div>
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'block' && it.id === 'page-header' && (
+                <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">Spanish defaults</h4>
+                  <Viewer
+                    kind="block"
+                    id="page-header--spanish"
+                    title="Page header · Spanish defaults"
+                    file="../../../packages/blocks/src/page-chrome/PageHeader/examples/Spanish.tsx"
+                    height={height}
+                  />
+                </>
+              )}
               {kind === 'template' && it.id === 'create-wizard' && (
                 <>
                   <p className="my-4 text-[13px] leading-6 text-muted-foreground">

@@ -36,6 +36,16 @@ it('asks for a fixed baseline entry to be removed', () => {
   ]);
 });
 
+it('rejects an extra occurrence of a baselined literal at its new line', () => {
+  const literals = findLiteralLabels(
+    '<nav aria-label="Billing cycle" />;\n<nav aria-label="Billing cycle" />;',
+    'Example.tsx',
+  );
+  expect(checkLabelBaseline(literals, ['Example.tsx:aria-label:Billing cycle'])).toEqual([
+    'Example.tsx:2: hard-coded default aria-label: Billing cycle',
+  ]);
+});
+
 it('finds function defaults and multiline JSX, while allowing translations and explicit symbols', () => {
   const source = `const defaultLabels = { remove: (label: string) => \`Remove \${label}\` };
     const labels = { next: t('common.next') };

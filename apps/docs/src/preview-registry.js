@@ -197,17 +197,5 @@ export const PREVIEW_LOADERS = {
   },
   layout: Object.fromEntries(LAYOUTS.map((l) => [l.id, l.load])),
 };
-const pageHeader = BLOCKS.find((block) => block.id === 'page-header');
-const spanishPageHeader = pageHeader
-  ? [
-      {
-        ...pageHeader,
-        id: 'page-header--spanish',
-        name: 'PageHeaderSpanish',
-        file: '../../../packages/blocks/src/page-chrome/PageHeader/examples/Spanish.tsx',
-        meta: { ...pageHeader.meta, name: 'Page header · Spanish defaults' },
-      },
-    ]
-  : [];
-export const CATALOG = { blocks: [...BLOCKS, ...spanishPageHeader], templates: TEMPLATES, layouts: LAYOUTS };
+export const CATALOG = { blocks: BLOCKS, templates: TEMPLATES, layouts: LAYOUTS };
 export const loadSource = (file) => (sourcesRaw[file] ? sourcesRaw[file]() : Promise.resolve(''));

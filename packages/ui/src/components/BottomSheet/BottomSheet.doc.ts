@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Overlays',
   status: 'beta',
   description:
-    'Mobile sheet that rests at snap points (a peek height and expanded by default): drag or swipe it between heights or down to close, or use the handle from the keyboard. Modal like a dialog: focus is trapped, Escape closes and focus returns to the trigger.',
+    'Mobile sheet that rests at snap points (a peek height and expanded by default): drag or swipe it between heights or down to close, or use the handle from the keyboard. Modal like a dialog: focus is trapped, Escape closes and focus returns to the trigger. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.',
   primitive: '@base-ui/react/drawer (snapPoints)',
   pattern: 'modal dialog with a resize handle button',
   keyboard: [

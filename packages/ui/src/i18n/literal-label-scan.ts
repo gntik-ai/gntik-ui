@@ -88,11 +88,17 @@ export function findLiteralLabels(source: string, file: string): LabelLiteral[] 
 
 /** Both unexpected literals and stale exceptions fail; fixing a literal shrinks the baseline. */
 export function checkLabelBaseline(literals: LabelLiteral[], baseline: readonly string[]): string[] {
-  const actual = new Set(literals.map(labelLiteralKey));
+  // Consume each exception once: duplicating an existing literal must also fail.
+  const remaining = [...baseline];
   return [
     ...literals
-      .filter((literal) => !baseline.includes(labelLiteralKey(literal)))
+      .filter((literal) => {
+        const index = remaining.indexOf(labelLiteralKey(literal));
+        if (index === -1) return true;
+        remaining.splice(index, 1);
+        return false;
+      })
       .map(({ file, line, kind, text }) => `${file}:${line}: hard-coded default ${kind}: ${text}`),
-    ...baseline.filter((key) => !actual.has(key)).map((key) => `Remove fixed baseline entry: ${key}`),
+    ...remaining.map((key) => `Remove fixed baseline entry: ${key}`),
   ];
 }
