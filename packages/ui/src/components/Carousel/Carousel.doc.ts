@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Display',
   status: 'beta',
   description:
-    'Scroll-snap media strip: one, two, three or auto-width slides per view, previous/next buttons, optional picker dots, arrow keys on the focused strip. No autoplay by default; `autoplay` adds a pause control, pauses on hover and focus, and starts paused under reduced motion.',
+    'Scroll-snap media strip: one, two, three or auto-width slides per view, previous/next buttons, optional picker dots, arrow keys on the focused strip. No autoplay by default; `autoplay` adds a pause control, pauses on hover and focus, and starts paused under reduced motion. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.',
   pattern: 'APG carousel (region with aria-roledescription="carousel", slides as labelled groups)',
   keyboard: [
     ['Tab', 'Moves through the controls, then the strip, then the slide content'],

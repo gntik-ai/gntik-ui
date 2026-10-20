@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { useId, useState, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
@@ -27,29 +28,6 @@ export interface TransferListLabels {
   removed: (n: number) => string;
   moved: string;
 }
-
-const defaultLabels: TransferListLabels = {
-  available: 'Available',
-  selected: 'Selected',
-  searchAvailable: 'Search available',
-  searchSelected: 'Search selected',
-  searchPlaceholder: 'Filter…',
-  add: 'Add checked',
-  addAll: 'Add all',
-  remove: 'Remove checked',
-  removeAll: 'Remove all',
-  moveUp: 'Move checked up',
-  moveDown: 'Move checked down',
-  actions: 'Transfer actions',
-  emptyAvailable: 'Everything is selected.',
-  emptySelected: 'Nothing selected yet.',
-  noMatches: 'No matches.',
-  reorderHint: 'Alt+↑/↓ reorders',
-  count: (c, t) => (c ? `${c}/${t}` : String(t)),
-  added: (n) => `Added ${n} ${n === 1 ? 'item' : 'items'}.`,
-  removed: (n) => `Removed ${n} ${n === 1 ? 'item' : 'items'}.`,
-  moved: 'Order changed.',
-};
 
 export interface TransferListProps {
   /** Render only the visible rows in each pane. Default false. */
@@ -88,7 +66,30 @@ export function TransferList({
   className,
   virtualized = false,
 }: TransferListProps) {
-  const labels = { ...defaultLabels, ...labelsProp };
+  const { t } = useI18n();
+  const labels: TransferListLabels = {
+    available: t('transferList.available'),
+    selected: t('transferList.selected'),
+    searchAvailable: t('transferList.searchAvailable'),
+    searchSelected: t('transferList.searchSelected'),
+    searchPlaceholder: t('transferList.searchPlaceholder'),
+    add: t('transferList.add'),
+    addAll: t('transferList.addAll'),
+    remove: t('transferList.remove'),
+    removeAll: t('transferList.removeAll'),
+    moveUp: t('transferList.moveUp'),
+    moveDown: t('transferList.moveDown'),
+    actions: t('transferList.actions'),
+    emptyAvailable: t('transferList.emptyAvailable'),
+    emptySelected: t('transferList.emptySelected'),
+    reorderHint: t('transferList.reorderHint'),
+    moved: t('transferList.moved'),
+    noMatches: t('common.noMatches'),
+    count: (checked, total) => (checked ? `${checked}/${total}` : String(total)),
+    added: (count) => t('transferList.added', { count }),
+    removed: (count) => t('transferList.removed', { count }),
+    ...labelsProp,
+  };
   const [inner, setInner] = useState<string[]>(defaultValue);
   const selectedValues = value ?? inner;
   const [checkedLeft, setCheckedLeft] = useState<Set<string>>(new Set());

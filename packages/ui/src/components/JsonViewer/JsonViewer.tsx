@@ -35,19 +35,6 @@ export interface JsonViewerLabels {
   root: string;
 }
 
-const DEFAULT_LABELS: JsonViewerLabels = {
-  copyPath: 'Copy path',
-  copyValue: 'Copy value',
-  copied: 'Copied to clipboard',
-  copyFailed: 'Copy failed',
-  selectHint: 'Select a node to copy its path or value',
-  truncated: 'Truncated',
-  copyFullHint: 'Copy value copies the full, untruncated value',
-  keys: (n) => `${n} ${n === 1 ? 'key' : 'keys'}`,
-  items: (n) => `${n} ${n === 1 ? 'item' : 'items'}`,
-  root: '(root)',
-};
-
 export interface JsonViewerProps {
   className?: string;
   ref?: Ref<HTMLDivElement>;
@@ -112,7 +99,7 @@ function preview(value: unknown, labels: JsonViewerLabels, query: string, locale
  */
 export function JsonViewer({
   data,
-  label = 'JSON',
+  label = 'JSON', // i18n-literal-allow: language-independent data format identifier
   defaultExpandDepth = 1,
   maxDepth = Infinity,
   search = '',
@@ -124,8 +111,20 @@ export function JsonViewer({
   className,
   ref,
 }: JsonViewerProps) {
-  const { locale } = useI18n();
-  const labels = { ...DEFAULT_LABELS, ...labelsProp };
+  const { t, locale } = useI18n();
+  const labels: JsonViewerLabels = {
+    copyPath: t('jsonViewer.copyPath'),
+    copyValue: t('jsonViewer.copyValue'),
+    selectHint: t('jsonViewer.selectHint'),
+    truncated: t('jsonViewer.truncated'),
+    copyFullHint: t('jsonViewer.copyFullHint'),
+    keys: (count) => t('jsonViewer.keys', { count }),
+    items: (count) => t('jsonViewer.items', { count }),
+    root: t('jsonViewer.root'),
+    copied: t('common.copiedToClipboard'),
+    copyFailed: t('common.copyFailed'),
+    ...labelsProp,
+  };
   const display = useMemo(() => measureJsonDisplay(data, maxDisplayChars), [data, maxDisplayChars]);
   const truncated = display?.truncated ?? false;
   const showTree = !truncated && !display?.empty;

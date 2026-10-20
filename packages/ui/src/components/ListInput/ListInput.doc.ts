@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'beta',
   description:
-    'Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced. Use ListInput for standalone pairs without a form library; use FieldArray from @gntik-ai/ui/forms for arbitrary object fields managed by react-hook-form.',
+    'Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced. Use ListInput for standalone pairs without a form library; use FieldArray from @gntik-ai/ui/forms for arbitrary object fields managed by react-hook-form. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.',
   pattern: 'list of labelled text field pairs',
   keyboard: [
     ['Tab', 'Moves through key, value, reveal, move and remove controls row by row'],

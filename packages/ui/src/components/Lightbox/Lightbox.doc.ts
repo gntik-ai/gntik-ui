@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Overlays',
   status: 'beta',
   description:
-    'Full-screen image and video viewer: previous / next, zoom (buttons, keys or double click) with a scrollable stage, captions, a thumbnail strip and an announced position. Modal: focus is trapped, Escape closes and focus returns to the opener.',
+    'Full-screen image and video viewer: previous / next, zoom (buttons, keys or double click) with a scrollable stage, captions, a thumbnail strip and an announced position. Modal: focus is trapped, Escape closes and focus returns to the opener. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.',
   primitive: '@base-ui/react/dialog',
   pattern: 'modal dialog with a labelled thumbnail group',
   keyboard: [

@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { AlertCircle, X } from 'lucide-react';
 import { Children, isValidElement, useId, type HTMLAttributes, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
@@ -16,13 +17,6 @@ export interface ThumbnailLabels {
   /** Retry action text. */
   retry: string;
 }
-
-const DEFAULT_LABELS: ThumbnailLabels = {
-  remove: (name) => `Remove ${name}`,
-  uploading: (name) => `Uploading ${name}`,
-  error: 'Upload failed',
-  retry: 'Retry',
-};
 
 export interface ThumbnailProps extends Omit<HTMLAttributes<HTMLElement>, 'className' | 'children'> {
   className?: string;
@@ -70,7 +64,14 @@ export function Thumbnail({
   className,
   ...props
 }: ThumbnailProps) {
-  const labels = { ...DEFAULT_LABELS, ...labelsProp };
+  const { t } = useI18n();
+  const labels: ThumbnailLabels = {
+    uploading: (label) => t('thumbnail.uploading', { label }),
+    error: t('thumbnail.error'),
+    remove: (label) => t('common.removeItem', { label }),
+    retry: t('common.retry'),
+    ...labelsProp,
+  };
   const nameId = useId();
   const uploading = progress !== undefined && !error && (progress === null || progress < 100);
   const status: ThumbnailStatus = error ? 'error' : uploading ? 'uploading' : progress !== undefined ? 'done' : 'idle';

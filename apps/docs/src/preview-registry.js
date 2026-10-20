@@ -64,6 +64,7 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 export const PREVIEW_LOADERS = {
   block: {
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'page-header--spanish': () => import('../../../packages/blocks/src/page-chrome/PageHeader/examples/Spanish'),
     'confirm-destructive': () =>
       import('../../../packages/blocks/src/feedback/ConfirmDestructive/examples/PlainDeletion'),
     'confirm-destructive--extra-fields': () =>

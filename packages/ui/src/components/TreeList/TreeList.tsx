@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { Check, ChevronRight } from 'lucide-react';
 import { useId, useRef, type HTMLAttributes, type KeyboardEvent, type MouseEvent, type Ref } from 'react';
 import { cn } from '../../utils/cn';
@@ -11,8 +12,6 @@ export interface TreeListLabels {
   error: string;
   retry: string;
 }
-
-const DEFAULT_LABELS: TreeListLabels = { loading: 'Loading…', error: 'Could not load items.', retry: 'Retry' };
 
 export interface TreeListProps
   extends UseTreeListOptions, Omit<HTMLAttributes<HTMLUListElement>, 'className' | 'children' | 'onSelect'> {
@@ -50,7 +49,13 @@ export function TreeList({
   onKeyDown,
   ...props
 }: TreeListProps) {
-  const labels = { ...DEFAULT_LABELS, ...labelsProp };
+  const { t } = useI18n();
+  const labels: TreeListLabels = {
+    error: t('treeList.error'),
+    loading: t('common.loading'),
+    retry: t('common.retry'),
+    ...labelsProp,
+  };
   const tree = useTreeList({
     nodes,
     expanded,

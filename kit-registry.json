@@ -1688,7 +1688,7 @@
       "package": "@gntik-ai/blocks",
       "group": "page-chrome",
       "status": "beta",
-      "description": "Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as=\"div\" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1.",
+      "description": "Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as=\"div\" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1. The tablist name follows I18nProvider (en/es); the Spanish preview keeps caller content unchanged.",
       "files": [
         {
           "path": "packages/blocks/src/page-chrome/PageHeader/PageHeader.tsx",
@@ -2956,7 +2956,7 @@
       "package": "@gntik-ai/ui",
       "group": "Overlays",
       "status": "beta",
-      "description": "Mobile sheet that rests at snap points (a peek height and expanded by default): drag or swipe it between heights or down to close, or use the handle from the keyboard. Modal like a dialog: focus is trapped, Escape closes and focus returns to the trigger.",
+      "description": "Mobile sheet that rests at snap points (a peek height and expanded by default): drag or swipe it between heights or down to close, or use the handle from the keyboard. Modal like a dialog: focus is trapped, Escape closes and focus returns to the trigger. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/BottomSheet/BottomSheet.tsx",
@@ -2969,6 +2969,26 @@
         {
           "path": "packages/ui/src/components/BottomSheet/index.ts",
           "target": "components/ui/bottom-sheet/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -3178,7 +3198,7 @@
       "package": "@gntik-ai/ui",
       "group": "Display",
       "status": "beta",
-      "description": "Scroll-snap media strip: one, two, three or auto-width slides per view, previous/next buttons, optional picker dots, arrow keys on the focused strip. No autoplay by default; `autoplay` adds a pause control, pauses on hover and focus, and starts paused under reduced motion.",
+      "description": "Scroll-snap media strip: one, two, three or auto-width slides per view, previous/next buttons, optional picker dots, arrow keys on the focused strip. No autoplay by default; `autoplay` adds a pause control, pauses on hover and focus, and starts paused under reduced motion. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/Carousel/Carousel.tsx",
@@ -3191,9 +3211,30 @@
         {
           "path": "packages/ui/src/components/Carousel/index.ts",
           "target": "components/ui/carousel/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -4420,7 +4461,7 @@
       "package": "@gntik-ai/ui",
       "group": "Display",
       "status": "beta",
-      "description": "Collapsible JSON inspector built on TreeList: objects and arrays expand, values use contrast-safe type tokens, `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value. Optional `maxDisplayChars` (finite integer >= 1) measures UTF-16 units: strings as-is, other values as two-space JSON. Over-cap values become read-only text with an ellipsis (dropping a trailing high surrogate) and a warning Badge labelled by `labels.truncated`. Search has no effect in this fallback; Copy value copies the full measured text, as explained by `labels.copyFullHint`, and Copy path is disabled. `maxHeight` bounds the scrollable body. Only in capped mode, null, undefined and empty strings show `emptyContent` (default a muted dash). Leaving the cap unset preserves existing behavior. The cap limits rendering, not serialization cost.",
+      "description": "Collapsible JSON inspector built on TreeList: objects and arrays expand, values use contrast-safe type tokens, `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value. Optional `maxDisplayChars` (finite integer >= 1) measures UTF-16 units: strings as-is, other values as two-space JSON. Over-cap values become read-only text with an ellipsis (dropping a trailing high surrogate) and a warning Badge labelled by `labels.truncated`. Search has no effect in this fallback; Copy value copies the full measured text, as explained by `labels.copyFullHint`, and Copy path is disabled. `maxHeight` bounds the scrollable body. Only in capped mode, null, undefined and empty strings show `emptyContent` (default a muted dash). Leaving the cap unset preserves existing behavior. The cap limits rendering, not serialization cost. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/JsonViewer/JsonViewer.tsx",
@@ -4647,7 +4688,7 @@
       "package": "@gntik-ai/ui",
       "group": "Overlays",
       "status": "beta",
-      "description": "Full-screen image and video viewer: previous / next, zoom (buttons, keys or double click) with a scrollable stage, captions, a thumbnail strip and an announced position. Modal: focus is trapped, Escape closes and focus returns to the opener.",
+      "description": "Full-screen image and video viewer: previous / next, zoom (buttons, keys or double click) with a scrollable stage, captions, a thumbnail strip and an announced position. Modal: focus is trapped, Escape closes and focus returns to the opener. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/Lightbox/Lightbox.tsx",
@@ -4660,6 +4701,26 @@
         {
           "path": "packages/ui/src/components/Lightbox/lightbox.variants.ts",
           "target": "components/ui/lightbox/lightbox.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -4729,7 +4790,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced. Use ListInput for standalone pairs without a form library; use FieldArray from @gntik-ai/ui/forms for arbitrary object fields managed by react-hook-form.",
+      "description": "Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced. Use ListInput for standalone pairs without a form library; use FieldArray from @gntik-ai/ui/forms for arbitrary object fields managed by react-hook-form. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/ListInput/ListInput.tsx",
@@ -4746,9 +4807,30 @@
         {
           "path": "packages/ui/src/components/ListInput/list-input.variants.ts",
           "target": "components/ui/list-input/list-input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -4836,7 +4918,7 @@
       "package": "@gntik-ai/ui",
       "group": "Navigation",
       "status": "beta",
-      "description": "Top navigation with wide panels: items with sections open a panel of link columns with descriptions and optional featured content; plain items are links. Hover or click opens, the panel resizes between items, router links come from LinkProvider and the current page is marked. Use it as the StackedLayout sub-nav row; `megaMenuNavItems` feeds MobileNav.",
+      "description": "Top navigation with wide panels: items with sections open a panel of link columns with descriptions and optional featured content; plain items are links. Hover or click opens, the panel resizes between items, router links come from LinkProvider and the current page is marked. Use it as the StackedLayout sub-nav row; `megaMenuNavItems` feeds MobileNav. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/MegaMenu/MegaMenu.tsx",
@@ -4849,6 +4931,26 @@
         {
           "path": "packages/ui/src/components/MegaMenu/mega-menu.variants.ts",
           "target": "components/ui/mega-menu/mega-menu.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -5083,7 +5185,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only.",
+      "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/MultiSelect/MultiSelect.tsx",
@@ -5357,7 +5459,7 @@
       "package": "@gntik-ai/ui",
       "group": "Display",
       "status": "beta",
-      "description": "Row of chips or avatars that renders items up to `max` (or to the available width with `responsive`, measured by ResizeObserver) and a \"+N more\" button that opens a Popover listing the rest.",
+      "description": "Row of chips or avatars that renders items up to `max` (or to the available width with `responsive`, measured by ResizeObserver) and a \"+N more\" button that opens a Popover listing the rest. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/OverflowList/OverflowList.tsx",
@@ -5374,9 +5476,31 @@
         {
           "path": "packages/ui/src/components/OverflowList/useFitCount.ts",
           "target": "components/ui/overflow-list/useFitCount.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "popover",
         "ui-utils"
@@ -6886,7 +7010,7 @@
       "package": "@gntik-ai/ui",
       "group": "Display",
       "status": "beta",
-      "description": "File or image preview tile: image or file-type icon with extension tag, name and size caption, upload progress (progressbar + shimmer that holds still under reduced motion), error state with retry, and a remove button. ThumbnailList lays tiles out as a wrapping list.",
+      "description": "File or image preview tile: image or file-type icon with extension tag, name and size caption, upload progress (progressbar + shimmer that holds still under reduced motion), error state with retry, and a remove button. ThumbnailList lays tiles out as a wrapping list. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/Thumbnail/Thumbnail.tsx",
@@ -6903,9 +7027,30 @@
         {
           "path": "packages/ui/src/components/Thumbnail/thumbnail.variants.ts",
           "target": "components/ui/thumbnail/thumbnail.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -6979,7 +7124,7 @@
       "package": "@gntik-ai/ui",
       "group": "Display",
       "status": "beta",
-      "description": "Elapsed time since a start, live while running (\"1:02:05\" or compact \"2m 14s\"), with paused and stopped states. Renders role=\"timer\" around a <time dateTime=\"PT…\"> duration; silent by default, `announce` speaks it politely once a minute.",
+      "description": "Elapsed time since a start, live while running (\"1:02:05\" or compact \"2m 14s\"), with paused and stopped states. Renders role=\"timer\" around a <time dateTime=\"PT…\"> duration; silent by default, `announce` speaks it politely once a minute. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/Timer/Timer.tsx",
@@ -6996,9 +7141,31 @@
         {
           "path": "packages/ui/src/components/Timer/timer.variants.ts",
           "target": "components/ui/timer/timer.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "ui-utils"
       ],
@@ -7372,7 +7539,7 @@
       "package": "@gntik-ai/ui",
       "group": "Overlays",
       "status": "beta",
-      "description": "Onboarding steps anchored to elements (selector, ref or getter): a non-modal popover with a step counter and Back / Next / Skip, positioned at each target and outlined with the focus ring (no overlay, no glow). Focus moves into the step and returns when the tour ends; missing targets centre the step.",
+      "description": "Onboarding steps anchored to elements (selector, ref or getter): a non-modal popover with a step counter and Back / Next / Skip, positioned at each target and outlined with the focus ring (no overlay, no glow). Focus moves into the step and returns when the tour ends; missing targets centre the step. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/Tour/Tour.tsx",
@@ -7385,6 +7552,26 @@
         {
           "path": "packages/ui/src/components/Tour/tour.variants.ts",
           "target": "components/ui/tour/tour.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
@@ -7405,7 +7592,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced. Opt-in virtualized windows both panes with shared row measurement, keeps the active option mounted and preserves full-data bulk actions and keyboard reordering. Find-in-page and screen-reader browse mode reach rendered rows only.",
+      "description": "Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced. Opt-in virtualized windows both panes with shared row measurement, keeps the active option mounted and preserves full-data bulk actions and keyboard reordering. Find-in-page and screen-reader browse mode reach rendered rows only. Built-in defaults follow I18nProvider (en/es); labels overrides win per key. The catalog defaults example demonstrates the shared component labels, including overlays, lists, navigation and file controls.",
       "files": [
         {
           "path": "packages/ui/src/components/TransferList/TransferList.tsx",
@@ -7463,7 +7650,7 @@
       "package": "@gntik-ai/ui",
       "group": "Navigation",
       "status": "beta",
-      "description": "Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states.",
+      "description": "Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/TreeList/TreeList.tsx",
@@ -7484,9 +7671,30 @@
         {
           "path": "packages/ui/src/components/TreeList/useTreeList.ts",
           "target": "components/ui/tree-list/useTreeList.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
       "dependencies": [
+        "@base-ui/react",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -7657,7 +7865,7 @@
       "package": "@gntik-ai/ui",
       "group": "Display",
       "status": "beta",
-      "description": "Windowed list for thousands of rows: only the visible rows plus `overscan` are mounted, with a fixed `itemHeight` or measured rows from an estimate. One roving tab stop, aria-setsize/posinset on every row, `scrollToIndex` through a ref, and a single-select `listbox` mode. No dependencies.",
+      "description": "Windowed list for thousands of rows: only the visible rows plus `overscan` are mounted, with a fixed `itemHeight` or measured rows from an estimate. One roving tab stop, aria-setsize/posinset on every row, `scrollToIndex` through a ref, and a single-select `listbox` mode. No dependencies. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "files": [
         {
           "path": "packages/ui/src/components/VirtualList/VirtualList.tsx",
@@ -7678,9 +7886,31 @@
         {
           "path": "packages/ui/src/components/VirtualList/virtual-list.variants.ts",
           "target": "components/ui/virtual-list/virtual-list.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "ui-utils"
       ],

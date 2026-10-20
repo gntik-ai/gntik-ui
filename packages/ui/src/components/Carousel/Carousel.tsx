@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import {
   Children,
@@ -24,16 +25,6 @@ export interface CarouselLabels {
   /** Accessible name of the dot group. */
   pickers: string;
 }
-
-const defaultLabels: CarouselLabels = {
-  previous: 'Previous slide',
-  next: 'Next slide',
-  play: 'Start automatic slide show',
-  pause: 'Stop automatic slide show',
-  slide: (i, n) => `${i + 1} of ${n}`,
-  goTo: (i) => `Go to slide ${i + 1}`,
-  pickers: 'Choose slide',
-};
 
 export interface CarouselProps extends CarouselVariantProps {
   /** Accessible name of the carousel (required by the pattern). */
@@ -82,7 +73,17 @@ export function Carousel({
   labels: labelsProp,
   className,
 }: CarouselProps) {
-  const labels = { ...defaultLabels, ...labelsProp };
+  const { t } = useI18n();
+  const labels: CarouselLabels = {
+    previous: t('carousel.previous'),
+    next: t('carousel.next'),
+    play: t('carousel.play'),
+    pause: t('carousel.pause'),
+    slide: (index, total) => t('carousel.slide', { count: index + 1, total }),
+    goTo: (index) => t('carousel.goTo', { count: index + 1 }),
+    pickers: t('carousel.pickers'),
+    ...labelsProp,
+  };
   const slides = Children.toArray(children);
   const total = slides.length;
   const [inner, setInner] = useState(defaultIndex);

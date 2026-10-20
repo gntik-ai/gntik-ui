@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/I18nProvider';
 import { ArrowDown, ArrowUp, Eye, EyeOff, Plus, Trash2 } from 'lucide-react';
 import { useId, useLayoutEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react';
 import { cn } from '../../utils/cn';
@@ -31,22 +32,6 @@ export interface ListInputLabels {
   limit: (max: number) => string;
   pasteHint: string;
 }
-
-const defaultLabels: ListInputLabels = {
-  key: 'Key',
-  value: 'Value',
-  add: 'Add row',
-  remove: (n) => `Remove row ${n}`,
-  moveUp: (n) => `Move row ${n} up`,
-  moveDown: (n) => `Move row ${n} down`,
-  reveal: (n) => `Show value ${n}`,
-  duplicate: 'Duplicate key',
-  added: (c) => (c === 1 ? 'Added a row.' : `Added ${c} rows.`),
-  removed: (n) => `Removed row ${n}.`,
-  moved: (n) => `Moved to position ${n}.`,
-  limit: (m) => `Limit of ${m} rows reached.`,
-  pasteHint: 'Paste KEY=value lines to add several rows.',
-};
 
 let seq = 0;
 /** A row with a fresh id. */
@@ -101,7 +86,23 @@ export function ListInput({
   labels: labelsProp,
   className,
 }: ListInputProps) {
-  const labels = { ...defaultLabels, ...labelsProp };
+  const { t } = useI18n();
+  const labels: ListInputLabels = {
+    key: t('listInput.key'),
+    value: t('listInput.value'),
+    add: t('listInput.add'),
+    remove: (count) => t('listInput.remove', { count }),
+    moveUp: (count) => t('listInput.moveUp', { count }),
+    moveDown: (count) => t('listInput.moveDown', { count }),
+    reveal: (count) => t('listInput.reveal', { count }),
+    duplicate: t('listInput.duplicate'),
+    added: (count) => t('listInput.added', { count }),
+    removed: (count) => t('listInput.removed', { count }),
+    moved: (count) => t('listInput.moved', { count }),
+    limit: (count) => t('listInput.limit', { count }),
+    pasteHint: t('listInput.pasteHint'),
+    ...labelsProp,
+  };
   const [inner, setInner] = useState<ListInputRow[]>(() => {
     const rows = (defaultValue ?? []).map((r) => ({
       ...createListInputRow(r.key, r.value),

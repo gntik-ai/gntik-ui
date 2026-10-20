@@ -9,7 +9,7 @@
     "prebuild": "node scripts/copy-monaco.mjs",
     "build": "vite build",
     "preview": "vite preview --port 4173 --strictPort",
-    "test": "node --test test/block-labels.test.mjs test/block-labels.client.test.mjs test/select-listbox-normalization.test.mjs test/docs-coverage.test.mjs",
+    "test": "node --test test/block-labels.test.mjs test/block-labels.client.test.mjs test/select-listbox-normalization.test.mjs test/docs-coverage.test.mjs test/preview-catalog.test.mjs",
     "visual": "playwright test catalog.visual",
     "visual:update": "playwright test catalog.visual --update-snapshots=changed",
     "a11y": "playwright test a11y",

@@ -7,6 +7,7 @@ import {
   TabsList,
   TabsTab,
   cn,
+  useI18n,
   type BreadcrumbItem,
   type StatusDefinition,
 } from '@gntik-ai/ui';
@@ -74,6 +75,7 @@ export function PageHeader({
   onTabChange,
   className,
 }: PageHeaderProps) {
+  const { t } = useI18n();
   const explicitPrimary = actions.findIndex((a) => a.variant === 'primary');
   const primaryIndex = explicitPrimary >= 0 ? explicitPrimary : actions.length - 1;
   const primary = actions[primaryIndex];
@@ -138,7 +140,7 @@ export function PageHeader({
           onValueChange={(value) => onTabChange?.(String(value))}
           className="mt-5"
         >
-          <TabsList aria-label="Page sections" className="overflow-x-auto">
+          <TabsList aria-label={t('pageHeader.sections')} className="overflow-x-auto">
             {tabs.map((t) => (
               <TabsTab key={t.value} value={t.value} count={t.count}>
                 {t.label}

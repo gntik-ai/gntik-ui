@@ -822,7 +822,7 @@ export default function BlockquoteProse() {
 
 ### Carousel (`carousel`)
 
-Scroll-snap media strip: one, two, three or auto-width slides per view, previous/next buttons, optional picker dots, arrow keys on the focused strip. No autoplay by default; `autoplay` adds a pause control, pauses on hover and focus, and starts paused under reduced motion.
+Scroll-snap media strip: one, two, three or auto-width slides per view, previous/next buttons, optional picker dots, arrow keys on the focused strip. No autoplay by default; `autoplay` adds a pause control, pauses on hover and focus, and starts paused under reduced motion. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `Carousel` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Carousel/Carousel.doc.ts
@@ -1127,7 +1127,7 @@ export default function DiffViewerJson() {
 
 ### JsonViewer (`json-viewer`)
 
-Collapsible JSON inspector built on TreeList: objects and arrays expand, values use contrast-safe type tokens, `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value. Optional `maxDisplayChars` (finite integer >= 1) measures UTF-16 units: strings as-is, other values as two-space JSON. Over-cap values become read-only text with an ellipsis (dropping a trailing high surrogate) and a warning Badge labelled by `labels.truncated`. Search has no effect in this fallback; Copy value copies the full measured text, as explained by `labels.copyFullHint`, and Copy path is disabled. `maxHeight` bounds the scrollable body. Only in capped mode, null, undefined and empty strings show `emptyContent` (default a muted dash). Leaving the cap unset preserves existing behavior. The cap limits rendering, not serialization cost.
+Collapsible JSON inspector built on TreeList: objects and arrays expand, values use contrast-safe type tokens, `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value. Optional `maxDisplayChars` (finite integer >= 1) measures UTF-16 units: strings as-is, other values as two-space JSON. Over-cap values become read-only text with an ellipsis (dropping a trailing high surrogate) and a warning Badge labelled by `labels.truncated`. Search has no effect in this fallback; Copy value copies the full measured text, as explained by `labels.copyFullHint`, and Copy path is disabled. `maxHeight` bounds the scrollable body. Only in capped mode, null, undefined and empty strings show `emptyContent` (default a muted dash). Leaving the cap unset preserves existing behavior. The cap limits rendering, not serialization cost. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `JsonViewer` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/JsonViewer/JsonViewer.doc.ts
@@ -1351,7 +1351,7 @@ export default function MarkdownReply() {
 
 ### OverflowList (`overflow-list`)
 
-Row of chips or avatars that renders items up to `max` (or to the available width with `responsive`, measured by ResizeObserver) and a "+N more" button that opens a Popover listing the rest.
+Row of chips or avatars that renders items up to `max` (or to the available width with `responsive`, measured by ResizeObserver) and a "+N more" button that opens a Popover listing the rest. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `OverflowList` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/OverflowList/OverflowList.doc.ts
@@ -1794,7 +1794,7 @@ export default function TextRoles() {
 
 ### Thumbnail (`thumbnail`)
 
-File or image preview tile: image or file-type icon with extension tag, name and size caption, upload progress (progressbar + shimmer that holds still under reduced motion), error state with retry, and a remove button. ThumbnailList lays tiles out as a wrapping list.
+File or image preview tile: image or file-type icon with extension tag, name and size caption, upload progress (progressbar + shimmer that holds still under reduced motion), error state with retry, and a remove button. ThumbnailList lays tiles out as a wrapping list. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `Thumbnail` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Thumbnail/Thumbnail.doc.ts
@@ -1883,7 +1883,7 @@ export default function ThumbnailUploads() {
 
 ### Timer (`timer`)
 
-Elapsed time since a start, live while running ("1:02:05" or compact "2m 14s"), with paused and stopped states. Renders role="timer" around a <time dateTime="PT…"> duration; silent by default, `announce` speaks it politely once a minute.
+Elapsed time since a start, live while running ("1:02:05" or compact "2m 14s"), with paused and stopped states. Renders role="timer" around a <time dateTime="PT…"> duration; silent by default, `announce` speaks it politely once a minute. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `Timer` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Timer/Timer.doc.ts
@@ -2094,7 +2094,7 @@ export default function ToolCallCardStates() {
 
 ### VirtualList (`virtual-list`)
 
-Windowed list for thousands of rows: only the visible rows plus `overscan` are mounted, with a fixed `itemHeight` or measured rows from an estimate. One roving tab stop, aria-setsize/posinset on every row, `scrollToIndex` through a ref, and a single-select `listbox` mode. No dependencies.
+Windowed list for thousands of rows: only the visible rows plus `overscan` are mounted, with a fixed `itemHeight` or measured rows from an estimate. One roving tab stop, aria-setsize/posinset on every row, `scrollToIndex` through a ref, and a single-select `listbox` mode. No dependencies. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `VirtualList` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/VirtualList/VirtualList.doc.ts
@@ -3286,7 +3286,7 @@ export default function KeyValueEditorEnv() {
 
 ### ListInput (`list-input`)
 
-Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced. Use ListInput for standalone pairs without a form library; use FieldArray from @gntik-ai/ui/forms for arbitrary object fields managed by react-hook-form.
+Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced. Use ListInput for standalone pairs without a form library; use FieldArray from @gntik-ai/ui/forms for arbitrary object fields managed by react-hook-form. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `ListInput` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/ListInput/ListInput.doc.ts
@@ -3382,7 +3382,7 @@ export default function ModelPickerProviders() {
 
 ### MultiSelect (`multi-select`)
 
-Searchable multi-select: selected options as removable chips (extra ones collapse into "+N"), a "Select all" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only.
+Searchable multi-select: selected options as removable chips (extra ones collapse into "+N"), a "Select all" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `MultiSelect` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/MultiSelect/MultiSelect.doc.ts
@@ -4387,7 +4387,7 @@ export default function TokenInputEmails() {
 
 ### TransferList (`transfer-list`)
 
-Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced. Opt-in virtualized windows both panes with shared row measurement, keeps the active option mounted and preserves full-data bulk actions and keyboard reordering. Find-in-page and screen-reader browse mode reach rendered rows only.
+Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced. Opt-in virtualized windows both panes with shared row measurement, keeps the active option mounted and preserves full-data bulk actions and keyboard reordering. Find-in-page and screen-reader browse mode reach rendered rows only. Built-in defaults follow I18nProvider (en/es); labels overrides win per key. The catalog defaults example demonstrates the shared component labels, including overlays, lists, navigation and file controls.
 
 - Package: `@gntik-ai/ui` · export `TransferList` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/TransferList/TransferList.doc.ts
@@ -4413,31 +4413,114 @@ Usage:
 
 ```tsx
 import { useState } from 'react';
+import { I18nProvider } from '@gntik-ai/ui';
+import { BottomSheet, BottomSheetContent, BottomSheetTrigger } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
+import { Carousel } from '@gntik-ai/ui';
+import { JsonViewer } from '@gntik-ai/ui';
+import { Lightbox } from '@gntik-ai/ui';
+import { ListInput } from '@gntik-ai/ui';
+import { MegaMenu } from '@gntik-ai/ui';
+import { MultiSelect } from '@gntik-ai/ui';
+import { OverflowList } from '@gntik-ai/ui';
+import { Thumbnail, ThumbnailList } from '@gntik-ai/ui';
+import { Timer } from '@gntik-ai/ui';
+import { Tour } from '@gntik-ai/ui';
+import { TreeList } from '@gntik-ai/ui';
+import { VirtualList } from '@gntik-ai/ui';
 import { TransferList } from '@gntik-ai/ui';
 
-const columns = [
-  { value: 'name', label: 'Name', description: 'Project name' },
-  { value: 'owner', label: 'Owner', description: 'Member who created it' },
-  { value: 'status', label: 'Status', description: 'Last deployment result' },
-  { value: 'region', label: 'Region' },
-  { value: 'created', label: 'Created', description: 'Creation date' },
-  { value: 'updated', label: 'Last updated' },
-  { value: 'cost', label: 'Monthly cost', description: 'From the latest invoice' },
-  { value: 'id', label: 'Project ID', disabled: true },
+const items = [
+  { value: 'report', label: 'Report' },
+  { value: 'notes', label: 'Notes' },
 ];
+const preview =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120"><circle cx="80" cy="60" r="40" fill-opacity="0.2"/></svg>',
+  );
 
-export default function TransferListColumns() {
-  const [visible, setVisible] = useState(['name', 'status', 'updated']);
+/** Caller content stays English; built-in labels follow the Spanish provider. */
+export default function TransferListCatalogDefaults() {
+  const [tourOpen, setTourOpen] = useState(false);
+  const [mediaOpen, setMediaOpen] = useState(false);
+  const [files, setFiles] = useState(['report.pdf', 'upload.csv', 'retry.pdf']);
+  const [retrying, setRetrying] = useState(false);
   return (
-    <div className="flex max-w-3xl flex-col gap-3">
-      <TransferList
-        items={columns}
-        value={visible}
-        onValueChange={setVisible}
-        titles={{ available: 'Hidden columns', selected: 'Visible columns' }}
-      />
-      <p className="text-[12px] text-muted-foreground">Table order: {visible.join(' · ')}</p>
-    </div>
+    <I18nProvider locale="es">
+      <div className="grid max-w-2xl gap-6" data-i18n-catalog>
+        <p className="text-sm text-muted-foreground">
+          Spanish defaults, English caller content. Labels and function overrides still take precedence.
+        </p>
+        <TransferList items={items} />
+        <TreeList
+          aria-label="Remote files"
+          nodes={[{ id: 'remote', label: 'Remote', hasChildren: true }]}
+          loadChildren={() => Promise.reject(new Error('Offline example'))}
+        />
+        <div className="flex gap-4">
+          <Timer start={0} end={3725000} status="paused" format="compact" />
+          <Timer start={0} end={65000} status="stopped" format="compact" />
+        </div>
+        <ListInput label="Variables" defaultValue={[{ key: 'REGION', value: 'west' }]} secret />
+        <Carousel label="Documents" showDots autoplay={5000}>
+          <div>Report</div>
+          <div>Notes</div>
+        </Carousel>
+        <JsonViewer data={{ report: { name: 'Quarterly report', pages: 3 }, tags: ['draft'] }} />
+        <VirtualList items={[]} renderItem={() => null} height={80} />
+        <MegaMenu items={[{ id: 'overview', label: 'Overview', href: '#overview' }]} />
+        <OverflowList items={['Report', 'Notes', 'Archive', 'Draft']} max={1} renderItem={(item) => item} />
+        <ThumbnailList aria-label="Files">
+          {files.map((name) => (
+            <Thumbnail
+              key={name}
+              name={name}
+              progress={name === 'upload.csv' || (name === 'retry.pdf' && retrying) ? 40 : undefined}
+              error={name === 'retry.pdf' && !retrying}
+              onRemove={() => setFiles((current) => current.filter((file) => file !== name))}
+              onRetry={name === 'retry.pdf' ? () => setRetrying(true) : undefined}
+            />
+          ))}
+        </ThumbnailList>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setFiles(['report.pdf', 'upload.csv', 'retry.pdf']);
+            setRetrying(false);
+          }}
+        >
+          Reset files
+        </Button>
+        <MultiSelect label="Documents" options={items} defaultValue={['report']} />
+        <div className="flex flex-wrap gap-2">
+          <Button onClick={() => setTourOpen(true)}>Start tour</Button>
+          <Button onClick={() => setMediaOpen(true)}>View media</Button>
+          <BottomSheet>
+            <BottomSheetTrigger render={<Button />}>Open sheet</BottomSheetTrigger>
+            <BottomSheetContent title="Report details" description="Resize using the handle or arrow keys.">
+              Quarterly report
+            </BottomSheetContent>
+          </BottomSheet>
+        </div>
+        <Tour
+          open={tourOpen}
+          onOpenChange={setTourOpen}
+          steps={[
+            { target: '#missing-target', title: 'Report' },
+            { target: '#missing-target', title: 'Notes' },
+          ]}
+        />
+        <Lightbox
+          open={mediaOpen}
+          onOpenChange={setMediaOpen}
+          items={[
+            { src: preview, alt: 'Report preview' },
+            { src: preview, alt: 'Notes preview' },
+          ]}
+        />
+      </div>
+    </I18nProvider>
   );
 }
 ```
@@ -5033,7 +5116,7 @@ export default function LinkRouter() {
 
 ### MegaMenu (`mega-menu`)
 
-Top navigation with wide panels: items with sections open a panel of link columns with descriptions and optional featured content; plain items are links. Hover or click opens, the panel resizes between items, router links come from LinkProvider and the current page is marked. Use it as the StackedLayout sub-nav row; `megaMenuNavItems` feeds MobileNav.
+Top navigation with wide panels: items with sections open a panel of link columns with descriptions and optional featured content; plain items are links. Hover or click opens, the panel resizes between items, router links come from LinkProvider and the current page is marked. Use it as the StackedLayout sub-nav row; `megaMenuNavItems` feeds MobileNav. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `MegaMenu` · group Navigation · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/MegaMenu/MegaMenu.doc.ts
@@ -5354,7 +5437,7 @@ export default function TabsPills() {
 
 ### TreeList (`tree-list`)
 
-Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states.
+Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `TreeList` · group Navigation · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/TreeList/TreeList.doc.ts
@@ -5629,7 +5712,7 @@ export default function AlertDialogDelete() {
 
 ### BottomSheet (`bottom-sheet`)
 
-Mobile sheet that rests at snap points (a peek height and expanded by default): drag or swipe it between heights or down to close, or use the handle from the keyboard. Modal like a dialog: focus is trapped, Escape closes and focus returns to the trigger.
+Mobile sheet that rests at snap points (a peek height and expanded by default): drag or swipe it between heights or down to close, or use the handle from the keyboard. Modal like a dialog: focus is trapped, Escape closes and focus returns to the trigger. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `BottomSheet` · group Overlays · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/BottomSheet/BottomSheet.doc.ts
@@ -6140,7 +6223,7 @@ export default function InfoTipLabel() {
 
 ### Lightbox (`lightbox`)
 
-Full-screen image and video viewer: previous / next, zoom (buttons, keys or double click) with a scrollable stage, captions, a thumbnail strip and an announced position. Modal: focus is trapped, Escape closes and focus returns to the opener.
+Full-screen image and video viewer: previous / next, zoom (buttons, keys or double click) with a scrollable stage, captions, a thumbnail strip and an announced position. Modal: focus is trapped, Escape closes and focus returns to the opener. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `Lightbox` · group Overlays · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Lightbox/Lightbox.doc.ts
@@ -6395,7 +6478,7 @@ export default function TooltipRich() {
 
 ### Tour (`tour`)
 
-Onboarding steps anchored to elements (selector, ref or getter): a non-modal popover with a step counter and Back / Next / Skip, positioned at each target and outlined with the focus ring (no overlay, no glow). Focus moves into the step and returns when the tour ends; missing targets centre the step.
+Onboarding steps anchored to elements (selector, ref or getter): a non-modal popover with a step counter and Back / Next / Skip, positioned at each target and outlined with the focus ring (no overlay, no glow). Focus moves into the step and returns when the tour ends; missing targets centre the step. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.
 
 - Package: `@gntik-ai/ui` · export `Tour` · group Overlays · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Tour/Tour.doc.ts
@@ -8842,7 +8925,7 @@ import { BulkActionBar } from '@gntik-ai/blocks';
 
 ### Page header (`page-header`)
 
-Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as="div" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1.
+Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as="div" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1. The tablist name follows I18nProvider (en/es); the Spanish preview keeps caller content unchanged.
 
 - Package: `@gntik-ai/blocks` · export `PageHeader` · group page-chrome · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/page-chrome/PageHeader/block.meta.ts
