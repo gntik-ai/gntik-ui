@@ -2,7 +2,45 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../test/a11y';
 import KeyboardShortcutsPage, { KeyboardShortcutsDialog } from './Page';
-import { filterShortcuts, shortcutGroups } from './data';
+import { filterShortcuts, shortcutGroups, type ShortcutGroup } from './data';
+import { ShortcutSheet } from './ShortcutSheet';
+
+describe('platform shortcut hints', () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it('shows Ctrl on Linux and finds the command palette by ctrl k', async () => {
+    vi.stubGlobal('navigator', { platform: 'Linux x86_64' });
+    render(<ShortcutSheet groups={shortcutGroups} />);
+    const row = screen.getByText('Open the command palette').closest('li');
+    expect(row).not.toBeNull();
+    expect(within(row!).getByText('Ctrl')).toBeInTheDocument();
+    await userEvent.type(screen.getByRole('searchbox'), 'ctrl k');
+    expect(screen.getByText('Open the command palette')).toBeInTheDocument();
+    expect(screen.getByText('1 shortcut')).toBeInTheDocument();
+  });
+
+  it('matches platform modifier spellings without changing legacy callers', () => {
+    const ids = (groups: ShortcutGroup[]) => groups.flatMap((group) => group.shortcuts.map((shortcut) => shortcut.id));
+    expect(ids(filterShortcuts(shortcutGroups, 'CtRl k', 'en', 'linux'))).toEqual(['palette']);
+    expect(ids(filterShortcuts(shortcutGroups, '⌘ k', 'en', 'macos'))).toEqual(['palette']);
+    expect(ids(filterShortcuts(shortcutGroups, '⌘ k', 'en'))).toEqual(['palette']);
+    const legacy: ShortcutGroup[] = [
+      {
+        id: 'legacy',
+        title: 'Legacy',
+        shortcuts: [
+          { id: 'literal', description: 'Explicit shortcut', keys: ['⌘', 'K'] },
+          { id: 'sequence', description: 'Sequence', keys: ['G'], then: ['P'] },
+        ],
+      },
+    ];
+    expect(ids(filterShortcuts(legacy, '⌘ k', 'es'))).toEqual(['literal']);
+    expect(filterShortcuts(legacy, 'ctrl k', 'es')).toEqual([]);
+    expect(ids(filterShortcuts(legacy, 'g p'))).toEqual(['sequence']);
+    expect(filterShortcuts(legacy, 'legacy')).toEqual(legacy);
+    expect(filterShortcuts(legacy, ' ')).toEqual(legacy);
+  });
+});
 
 describe('KeyboardShortcutsPage', () => {
   it('renders the console page with every group', { timeout: 15000 }, async () => {

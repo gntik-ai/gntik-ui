@@ -206,7 +206,7 @@ export interface CommandPaletteTriggerProps extends Omit<Dialog.Trigger.Props, '
 /** Search-style button that opens the palette; place it inside <CommandPalette>. */
 export function CommandPaletteTrigger({
   className,
-  keys = ['⌘', 'K'],
+  keys = ['mod', 'K'],
   children: childrenProp,
   ...props
 }: CommandPaletteTriggerProps) {

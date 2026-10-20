@@ -1,6 +1,7 @@
 import { Fragment, type HTMLAttributes, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { useI18n } from '../../i18n/I18nProvider';
+import { useOs } from '../../hooks/useOs';
 import type { MessageKey } from '../../i18n/messages/en';
 import { kbdVariants, type KbdVariantProps } from './kbd.variants';
 
@@ -10,6 +11,7 @@ const KEY_MESSAGES: Record<string, MessageKey> = {
   '⌥': 'kbd.option',
   '⇧': 'kbd.shift',
   '⌃': 'kbd.control',
+  Ctrl: 'kbd.control',
   '↵': 'kbd.enter',
   '⏎': 'kbd.enter',
   '⌫': 'kbd.backspace',
@@ -33,17 +35,19 @@ export interface KbdProps extends Omit<HTMLAttributes<HTMLElement>, 'className'>
 /** One keyboard key. Symbol glyphs are hidden from screen readers and replaced by their name. */
 export function Kbd({ size, label, className, children, ...props }: KbdProps) {
   const { t } = useI18n();
-  const key = typeof children === 'string' ? KEY_MESSAGES[children] : undefined;
+  const os = useOs();
+  const resolved = children === 'mod' ? (os === 'macos' || os === 'ios' ? '⌘' : 'Ctrl') : children;
+  const key = typeof resolved === 'string' ? KEY_MESSAGES[resolved] : undefined;
   const spoken = label ?? (key ? t(key) : undefined);
   return (
     <kbd className={cn(kbdVariants({ size }).key(), className)} {...props}>
       {spoken ? (
         <>
-          <span aria-hidden>{children}</span>
+          <span aria-hidden>{resolved}</span>
           <span className="sr-only">{spoken}</span>
         </>
       ) : (
-        children
+        resolved
       )}
     </kbd>
   );
@@ -52,7 +56,7 @@ export function Kbd({ size, label, className, children, ...props }: KbdProps) {
 export interface KbdComboProps extends Omit<HTMLAttributes<HTMLElement>, 'className'>, KbdVariantProps {
   className?: string;
   ref?: Ref<HTMLElement>;
-  /** Keys pressed together, e.g. ['⌘', 'K']. */
+  /** Keys pressed together, e.g. ['mod', 'K']. mod follows the platform's command modifier. */
   keys: string[];
   /** Visible joiner between keys (e.g. "+"); none by default, as on macOS. */
   separator?: ReactNode;
