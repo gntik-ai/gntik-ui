@@ -1,4 +1,4 @@
-import { useRef, type Dispatch, type SetStateAction } from 'react';
+import { useRef } from 'react';
 import type { FlowCanvasProps, FlowNode } from '@gntik-ai/flow';
 import type { FlowBuilderExtensions, FlowConnection, FlowConnectionRejection } from './extensions';
 import type { FlowEdge } from './fixtures';
@@ -8,8 +8,8 @@ type Candidate = Parameters<NonNullable<FlowCanvasProps<FlowNode<string>, FlowEd
 
 export function useConnections(
   nodes: FlowNode<string>[],
-  setEdges: Dispatch<SetStateAction<FlowEdge[]>>,
-  defaultConnect: Connect,
+  edges: FlowEdge[],
+  commit: (edge: FlowEdge) => void,
   props: FlowBuilderExtensions,
 ) {
   const pending = useRef<FlowConnectionRejection | null>(null);
@@ -52,15 +52,33 @@ export function useConnections(
     }
     if (props.onConnectEdge) {
       const mapped = props.onConnectEdge(describe(c));
-      setEdges((es) => [
-        ...es,
-        {
-          ...c,
-          ...mapped,
-          id: `edge-${++seq.current}-${c.source}-${c.target}`,
-        },
-      ]);
-    } else defaultConnect(c);
+      let id: string;
+      do {
+        id = `edge-${++seq.current}-${c.source}-${c.target}`;
+      } while (edges.some((edge) => edge.id === id));
+      commit({ ...c, ...mapped, id });
+    } else if (
+      c.source &&
+      c.target &&
+      !edges.some(
+        (edge) =>
+          edge.source === c.source &&
+          edge.target === c.target &&
+          (edge.sourceHandle || null) === (c.sourceHandle || null) &&
+          (edge.targetHandle || null) === (c.targetHandle || null),
+      )
+    ) {
+      // Match useFlowState's default edge shape and duplicate-connection behavior.
+      const edge: FlowEdge = {
+        ...c,
+        id: `xy-edge__${c.source}${c.sourceHandle || ''}-${c.target}${c.targetHandle || ''}`,
+        type: 'smoothstep',
+        animated: true,
+      };
+      if (edge.sourceHandle === null) delete edge.sourceHandle;
+      if (edge.targetHandle === null) delete edge.targetHandle;
+      commit(edge);
+    }
     props.onConnect?.(describe(c));
   };
   return { connect, validate, finish, reset };

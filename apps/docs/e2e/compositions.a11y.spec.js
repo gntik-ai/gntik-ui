@@ -24,6 +24,10 @@ const layoutExamples = kit.items
 
 const cases = [
   ...[
+    { kind: 'block', id: 'flow-builder--controlled-graph' },
+    { kind: 'template', id: 'workflow-builder--save-graph' },
+  ].flatMap((example) => ['dark', 'light', 'high_contrast'].map((theme) => ({ ...example, theme }))),
+  ...[
     'cursor-pager-footer',
     'cursor-pager-footer--cursor-stack',
     'cursor-pager-footer--busy',
