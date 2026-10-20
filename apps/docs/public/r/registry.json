@@ -754,7 +754,7 @@
       "name": "audit-log",
       "type": "registry:block",
       "title": "Audit log",
-      "description": "Workspace audit trail: FilterBar (search, actor / resource / result filters) and DateRangeFilter over a DataTable of events with actor, action, target and result; a drawer shows the change diff (CodeBlock); export to CSV.",
+      "description": "Workspace audit trail: FilterBar (search, actor / resource / result filters) and DateRangeFilter over a DataTable of events with actor, action, target and result; a drawer shows the change diff (CodeBlock); export to CSV. CSV export neutralises leading spreadsheet formula triggers.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",
