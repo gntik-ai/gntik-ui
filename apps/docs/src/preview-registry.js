@@ -4,6 +4,7 @@
 const kebab = (s) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
 const blockModules = import.meta.glob('../../../packages/blocks/src/*/*/*.tsx');
+const blockLabelExamples = import.meta.glob('../../../packages/blocks/src/*/*/examples/{Spanish,Labels}.tsx');
 const blockMetas = import.meta.glob('../../../packages/blocks/src/*/*/block.meta.ts', { eager: true, import: 'meta' });
 const templateModules = import.meta.glob('../../../packages/templates/src/*/Page.tsx');
 const templateMetas = import.meta.glob('../../../packages/templates/src/*/template.meta.ts', {
@@ -63,6 +64,12 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 
 export const PREVIEW_LOADERS = {
   block: {
+    ...Object.fromEntries(
+      Object.entries(blockLabelExamples).map(([file, load]) => [
+        `${kebab(file.split('/').at(-3))}--${file.endsWith('/Labels.tsx') ? 'labels' : 'spanish'}`,
+        load,
+      ]),
+    ),
     'month-calendar--locale': () => import('../../../packages/blocks/src/scheduling/MonthCalendar/examples/Locale'),
     'week-calendar--locale': () => import('../../../packages/blocks/src/scheduling/WeekCalendar/examples/Locale'),
     'agenda-list--locale': () => import('../../../packages/blocks/src/scheduling/AgendaList/examples/Locale'),
@@ -157,6 +164,8 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),
   },
   template: {
+    'resource-detail--spanish': () => import('../../../packages/templates/src/resource-detail/examples/Spanish'),
+    'resource-detail--labels': () => import('../../../packages/templates/src/resource-detail/examples/Labels'),
     'workflow-builder--save-graph': () => import('../../../packages/templates/src/workflow-builder/examples/SaveGraph'),
     ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
     'live-event-stream--connecting': () =>

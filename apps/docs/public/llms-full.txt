@@ -8279,13 +8279,28 @@ import { FlowBuilder } from '@gntik-ai/blocks';
 
 ### Log viewer (`log-viewer`)
 
-Windowed log stream (role="log"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows.
+Windowed log stream (role="log"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.
 
 - Package: `@gntik-ai/blocks` · export `LogViewer` · group builders · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/builders/LogViewer/block.meta.ts
 - Composes: ToggleGroup, Toggle, Input, Switch, IconButton
 - Preview: /preview.html?kind=block&id=log-viewer
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add log-viewer`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Visible heading and log region name; title prop wins |
+| `levelFilter` | `string` | Level filter group name |
+| `searchLabel` | `string` | Searchbox name |
+| `searchPlaceholder` | `string` | Searchbox placeholder |
+| `follow` | `string` | Follow switch name |
+| `count` | `(visible: number, total: number) => string` | Filtered line count |
+| `empty` | `string` | No matching lines |
+| `inspect` | `(timestamp: string) => string` | Inspect button name when onSelectLine exists |
+| `copy` | `(timestamp: string) => string` | Copy button before copying |
+| `copied` | `string` | Copy button after copying |
 
 Usage:
 
@@ -8355,13 +8370,24 @@ import { CommentThread } from '@gntik-ai/blocks';
 
 ### Description list card (`description-list-card`)
 
-Key–value detail card with mono, status and rich values, copy-to-clipboard buttons and an Edit action.
+Key–value detail card with mono, status and rich values, copy-to-clipboard buttons and an Edit action. Optional labels?: Partial<DescriptionListCardLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.
 
 - Package: `@gntik-ai/blocks` · export `DescriptionListCard` · group data-display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/data-display/DescriptionListCard/block.meta.ts
 - Composes: Card, Button, IconButton, StatusTag
 - Preview: /preview.html?kind=block&id=description-list-card
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add description-list-card`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Card heading; title prop wins |
+| `description` | `string` | Card description; description prop wins |
+| `edit` | `string` | Edit button; editLabel prop wins |
+| `copy` | `(label: string) => string` | Copy button name; original item label |
+| `copied` | `(label: string) => string` | Copy button name after copying; original item label |
+| `copiedToClipboard` | `string` | Polite copy announcement |
 
 Usage:
 
@@ -8470,13 +8496,32 @@ import { ConfirmDestructive } from '@gntik-ai/blocks';
 
 ### Empty states (`empty-states`)
 
-Four canonical empty states: first run (with checklist), no results (clear filters/search), no access (request access) and not found (optional action).
+Four canonical empty states: first run (with checklist), no results (clear filters/search), no access (request access) and not found (optional action). FirstRunEmpty, NoResultsEmpty and NoAccessEmpty accept labels?: Partial<FirstRunEmptyLabels>, Partial<NoResultsEmptyLabels> and Partial<NoAccessEmptyLabels> respectively. Each type has its own keys below; explicit title, description, actionLabel and secondary props win. Defaults follow I18nProvider (en/es). NoResultsEmpty keeps the query in a mono span unless queryTitle replaces the heading. NotFoundEmpty and all imported fixtures stay English. See the Catalog labels live preview.
 
 - Package: `@gntik-ai/blocks` · export `NotFoundEmpty` · group feedback · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/feedback/EmptyStates/block.meta.ts
 - Composes: EmptyState, Button, Link
 - Preview: /preview.html?kind=block&id=empty-states
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add empty-states`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `FirstRunEmpty.labels.title` | `string` | FirstRunEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `FirstRunEmpty.labels.description` | `string` | FirstRunEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `FirstRunEmpty.labels.action` | `string` | FirstRunEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `FirstRunEmpty.labels.guide` | `string` | FirstRunEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `NoResultsEmpty.labels.queryTitle` | `(entity: string, query: string) => string` | NoResultsEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `NoResultsEmpty.labels.title` | `(entity: string) => string` | NoResultsEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `NoResultsEmpty.labels.description` | `(filterCount: number) => string` | NoResultsEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `NoResultsEmpty.labels.clearFilters` | `string` | NoResultsEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `NoResultsEmpty.labels.clearSearch` | `string` | NoResultsEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `NoAccessEmpty.labels.title` | `(resource: string) => string` | NoAccessEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `NoAccessEmpty.labels.description` | `(resource: string, owner: string) => string` | NoAccessEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `NoAccessEmpty.labels.request` | `string` | NoAccessEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `NoAccessEmpty.labels.requested` | `string` | NoAccessEmpty: per-key override; formatters receive original data. Explicit props win. |
+| `NoAccessEmpty.labels.sent` | `string` | NoAccessEmpty: per-key override; formatters receive original data. Explicit props win. |
 
 Usage:
 
@@ -8489,13 +8534,29 @@ import { NotFoundEmpty } from '@gntik-ai/blocks';
 
 ### Error panel (`error-panel`)
 
-Error summary with status code, copyable request id, retry with loading state and a technical-details disclosure.
+Error summary with status code, copyable request id, retry with loading state and a technical-details disclosure. Optional labels?: Partial<ErrorPanelLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.
 
 - Package: `@gntik-ai/blocks` · export `ErrorPanel` · group feedback · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/feedback/ErrorPanel/block.meta.ts
 - Composes: Button, IconButton, Collapsible
 - Preview: /preview.html?kind=block&id=error-panel
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add error-panel`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Panel heading; explicit title prop wins, including null |
+| `message` | `string` | Summary; explicit message prop wins, including null |
+| `support` | `string` | Default secondary action; explicit secondaryAction wins, including null |
+| `retry` | `string` | Retry button; retryLabel prop wins |
+| `retrying` | `string` | Busy retry button |
+| `retryingStatus` | `string` | Busy status announcement |
+| `requestId` | `string` | Request ID caption |
+| `copyRequestId` | `string` | Copy request ID button |
+| `copied` | `string` | Copy button after copying |
+| `requestIdCopied` | `string` | Copied status announcement |
+| `details` | `string` | Technical details disclosure |
 
 Usage:
 
@@ -8508,13 +8569,22 @@ import { ErrorPanel } from '@gntik-ai/blocks';
 
 ### Inline callout (`inline-callout`)
 
-Alert-based in-content callout with a tone, title, body, action buttons or links and optional dismiss.
+Alert-based in-content callout with a tone, title, body, action buttons or links and optional dismiss. Optional labels?: Partial<InlineCalloutLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.
 
 - Package: `@gntik-ai/blocks` · export `InlineCallout` · group feedback · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/feedback/InlineCallout/block.meta.ts
 - Composes: Alert, Button, Link
 - Preview: /preview.html?kind=block&id=inline-callout
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add inline-callout`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Callout title; explicit title prop wins, including null |
+| `description` | `string` | Callout body; explicit description prop wins, including null |
+| `upgrade` | `string` | Default primary action; explicit actions win |
+| `viewUsage` | `string` | Default usage link; explicit actions win |
 
 Usage:
 
@@ -8897,13 +8967,22 @@ import { BulkActionBar } from '@gntik-ai/blocks';
 
 ### Page header (`page-header`)
 
-Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as="div" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1. The tablist name follows I18nProvider (en/es); the Spanish preview keeps caller content unchanged.
+Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as="div" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1. The tablist name follows I18nProvider (en/es); the Spanish preview keeps caller content unchanged. Optional labels?: Partial<PageHeaderLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.
 
 - Package: `@gntik-ai/blocks` · export `PageHeader` · group page-chrome · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/page-chrome/PageHeader/block.meta.ts
 - Composes: Breadcrumbs, Button, MoreMenu, StatusTag, Tabs
 - Preview: /preview.html?kind=block&id=page-header
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add page-header`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Heading; explicit title prop wins, including null |
+| `description` | `string` | Description; explicit description prop wins, including null |
+| `moreActions` | `string` | Compact actions menu name |
+| `sections` | `string` | Tablist name |
 
 Usage:
 
@@ -10596,7 +10675,7 @@ export default function Route() {
 
 ### Resource detail (`resource-detail`)
 
-Resource detail with editable Overview, Activity and Settings tabs by default; optional readOnly (boolean, default false) uses only explicit header and detail props and one Overview tab, with optional history (readonly StatusEvent[], default undefined): omitted hides the history card, [] shows the named empty state, and events render exactly as supplied without invented actors. Read-only ignores activity, events, dangerActions, defaultTab, onSaveSettings and onDangerAction; explicit actions and onEditDetails are honored. The Resource sections tablist retains Tab, arrow, Home/End and Enter/Space keyboard navigation; history is a named group containing the Status history list or empty-state region. Uses token styling in dark (default), light and high_contrast. Examples: runtime-with-transition maps state and lastTransitionAt to one actor-free event, runtime-without-transition maps null to [], and realtime-configuration and postgres-table-detail omit history. ConsoleShell retains sample frame defaults unless explicit shell props are supplied, as in the examples.
+Resource detail with editable Overview, Activity and Settings tabs by default; optional readOnly (boolean, default false) uses only explicit header and detail props and one Overview tab, with optional history (readonly StatusEvent[], default undefined): omitted hides the history card, [] shows the named empty state, and events render exactly as supplied without invented actors. Read-only ignores activity, events, dangerActions, defaultTab, onSaveSettings and onDangerAction; explicit actions and onEditDetails are honored. The Resource sections tablist retains Tab, arrow, Home/End and Enter/Space keyboard navigation; history is a named group containing the Status history list or empty-state region. Uses token styling in dark (default), light and high_contrast. Examples: runtime-with-transition maps state and lastTransitionAt to one actor-free event, runtime-without-transition maps null to [], and realtime-configuration and postgres-table-detail omit history. Optional labels?: Partial<ResourceDetailLabels> overrides overview, activity, settings and sections (all strings). Unset keys use I18nProvider (en/es); no provider keeps English. Only the tabs and tablist are localized by this template; fixtures and other section text are unchanged. readOnly keeps only the localized overview tab. See the Catalog labels live preview. ConsoleShell retains sample frame defaults unless explicit shell props are supplied, as in the examples.
 
 - Package: `@gntik-ai/templates` · export `ResourceDetailPage` · group Resources · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/resource-detail/template.meta.ts

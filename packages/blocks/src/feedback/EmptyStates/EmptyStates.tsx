@@ -1,6 +1,6 @@
 import { Check, FolderPlus, Lock, SearchX } from '@gntik-ai/icons';
 import type { LucideIcon } from '@gntik-ai/icons';
-import { Button, EmptyState, Link, cn } from '@gntik-ai/ui';
+import { Button, EmptyState, Link, cn, useI18n } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
 import { firstRunSteps, noAccessSample, noResultsSample, notFoundSample } from './fixtures';
 
@@ -42,7 +42,16 @@ export function NotFoundEmpty({
   );
 }
 
+export interface FirstRunEmptyLabels {
+  title: string;
+  description: string;
+  action: string;
+  guide: string;
+}
+
 export interface FirstRunEmptyProps extends SharedEmptyProps {
+  /** Per-key copy overrides; explicit props take precedence over labels and catalog defaults. */
+  labels?: Partial<FirstRunEmptyLabels>;
   icon?: LucideIcon;
   title?: ReactNode;
   description?: ReactNode;
@@ -57,16 +66,26 @@ export interface FirstRunEmptyProps extends SharedEmptyProps {
 /** First-run state: nothing created yet; explains the value and offers the first action. */
 export function FirstRunEmpty({
   icon = FolderPlus,
-  title = 'Create your first project',
-  description = 'Projects group your services, environments and deployments. Start one from a repository in a couple of minutes.',
-  actionLabel = 'New project',
+  title: titleProp,
+  labels,
+  description: descriptionProp,
+  actionLabel: actionLabelProp,
   onAction,
-  secondary = { label: 'Read the guide', href: '#guide' },
+  secondary: secondaryProp,
   steps = firstRunSteps,
   titleAs,
   bordered = true,
   className,
 }: FirstRunEmptyProps) {
+  const { t } = useI18n();
+  const title = titleProp === undefined ? (labels?.title ?? t('emptyState.firstRun.title')) : titleProp;
+  const description =
+    descriptionProp === undefined ? (labels?.description ?? t('emptyState.firstRun.description')) : descriptionProp;
+  const actionLabel = actionLabelProp ?? labels?.action ?? t('emptyState.firstRun.action');
+  const secondary =
+    secondaryProp === undefined
+      ? { label: labels?.guide ?? t('emptyState.firstRun.guide'), href: '#guide' }
+      : secondaryProp;
   return (
     <EmptyState
       icon={icon}
@@ -104,7 +123,18 @@ export function FirstRunEmpty({
   );
 }
 
+export interface NoResultsEmptyLabels {
+  /** Replaces the complete query heading; catalog defaults retain the query’s monospace span. */
+  queryTitle: (entity: string, query: string) => string;
+  title: (entity: string) => string;
+  description: (filterCount: number) => string;
+  clearFilters: string;
+  clearSearch: string;
+}
+
 export interface NoResultsEmptyProps extends SharedEmptyProps {
+  /** Per-key overrides; formatter arguments are caller data and results render verbatim. */
+  labels?: Partial<NoResultsEmptyLabels>;
   /** The search text that matched nothing. */
   query?: string;
   /** Number of active filters (shows "Clear filters" when > 0). */
@@ -118,6 +148,7 @@ export interface NoResultsEmptyProps extends SharedEmptyProps {
 /** No-results state for a filtered list or table: echoes the query and offers ways out. */
 export function NoResultsEmpty({
   query = noResultsSample.query,
+  labels,
   filterCount = noResultsSample.filterCount,
   entity = noResultsSample.entity,
   onClearFilters,
@@ -126,7 +157,7 @@ export function NoResultsEmpty({
   bordered = false,
   className,
 }: NoResultsEmptyProps) {
-  const filters = filterCount > 0 ? ` with ${filterCount} ${filterCount === 1 ? 'filter' : 'filters'} applied` : '';
+  const { t } = useI18n();
   return (
     <EmptyState
       icon={SearchX}
@@ -135,26 +166,31 @@ export function NoResultsEmpty({
       bordered={bordered}
       className={cn('mx-auto', className)}
       title={
-        query ? (
-          <>
-            No {entity} match “<span className="font-mono">{query}</span>”
-          </>
-        ) : (
-          `No ${entity} found`
-        )
+        query
+          ? (labels?.queryTitle?.(entity, query) ?? (
+              <>
+                {t('emptyState.noResults.queryTitleBefore', { entity })}
+                <span className="font-mono">{query}</span>
+                {t('emptyState.noResults.queryTitleAfter')}
+              </>
+            ))
+          : (labels?.title?.(entity) ?? t('emptyState.noResults.title', { entity }))
       }
-      description={`Check the spelling or try a broader search${filters}.`}
+      description={
+        labels?.description?.(filterCount) ??
+        t('emptyState.noResults.description', { count: filterCount > 0 ? filterCount : 0 })
+      }
       primaryAction={
         filterCount > 0 ? (
           <Button variant="secondary" size="sm" onClick={onClearFilters}>
-            Clear filters
+            {labels?.clearFilters ?? t('emptyState.noResults.clearFilters')}
           </Button>
         ) : undefined
       }
       secondaryAction={
         query ? (
           <Button variant="ghost" size="sm" onClick={onClearSearch}>
-            Clear search
+            {labels?.clearSearch ?? t('emptyState.noResults.clearSearch')}
           </Button>
         ) : undefined
       }
@@ -162,7 +198,17 @@ export function NoResultsEmpty({
   );
 }
 
+export interface NoAccessEmptyLabels {
+  title: (resource: string) => string;
+  description: (resource: string, owner: string) => string;
+  request: string;
+  requested: string;
+  sent: string;
+}
+
 export interface NoAccessEmptyProps extends SharedEmptyProps {
+  /** Per-key overrides; formatters receive the original resource and owner, without translation. */
+  labels?: Partial<NoAccessEmptyLabels>;
   /** What the viewer cannot see. */
   resource?: string;
   /** Who can grant access. */
@@ -176,6 +222,7 @@ export interface NoAccessEmptyProps extends SharedEmptyProps {
 /** Permission state: the viewer lacks access; explains who can grant it and lets them ask. */
 export function NoAccessEmpty({
   resource = noAccessSample.resource,
+  labels,
   owner = noAccessSample.owner,
   onRequestAccess,
   defaultRequested = false,
@@ -183,6 +230,7 @@ export function NoAccessEmpty({
   bordered = true,
   className,
 }: NoAccessEmptyProps) {
+  const { t } = useI18n();
   const [state, setState] = useState<'idle' | 'pending' | 'requested'>(defaultRequested ? 'requested' : 'idle');
   const request = async () => {
     setState('pending');
@@ -199,8 +247,11 @@ export function NoAccessEmpty({
       titleAs={titleAs}
       bordered={bordered}
       className={cn('mx-auto', className)}
-      title={`You don’t have access to ${resource}`}
-      description={`Ask ${owner} to grant you a role that includes ${resource.toLowerCase()} permissions.`}
+      title={labels?.title?.(resource) ?? t('emptyState.noAccess.title', { resource })}
+      description={
+        labels?.description?.(resource, owner) ??
+        t('emptyState.noAccess.description', { resource: resource.toLowerCase(), owner })
+      }
       primaryAction={
         <Button
           variant={state === 'requested' ? 'secondary' : 'primary'}
@@ -209,12 +260,14 @@ export function NoAccessEmpty({
           disabled={state === 'requested'}
           onClick={() => void request()}
         >
-          {state === 'requested' ? 'Access requested' : 'Request access'}
+          {state === 'requested'
+            ? (labels?.requested ?? t('emptyState.noAccess.requested'))
+            : (labels?.request ?? t('emptyState.noAccess.request'))}
         </Button>
       }
     >
       <p role="status" className="sr-only">
-        {state === 'requested' ? 'Access request sent' : ''}
+        {state === 'requested' ? (labels?.sent ?? t('emptyState.noAccess.sent')) : ''}
       </p>
     </EmptyState>
   );

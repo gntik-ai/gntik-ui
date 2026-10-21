@@ -14,7 +14,22 @@ const LEVEL_STYLE: Record<LogLevel, { label: string; className: string }> = {
   error: { label: 'ERROR', className: 'bg-destructive/15 text-destructive-chip-text' },
 };
 
+export interface LogViewerLabels {
+  title: string;
+  levelFilter: string;
+  searchLabel: string;
+  searchPlaceholder: string;
+  follow: string;
+  count: (visible: number, total: number) => string;
+  empty: string;
+  inspect: (timestamp: string) => string;
+  copy: (timestamp: string) => string;
+  copied: string;
+}
+
 export interface LogViewerProps {
+  /** Per-key copy overrides; explicit props take precedence, then labels, then the active catalog. */
+  labels?: Partial<LogViewerLabels>;
   /** Log lines, oldest first. */
   lines?: LogLine[];
   /** Accessible name of the log region and visible title. */
@@ -70,7 +85,8 @@ function lineText(line: LogLine) {
  */
 export function LogViewer({
   lines = defaultLines,
-  title = 'Logs',
+  title: titleProp,
+  labels,
   height = 360,
   rowHeight = 24,
   overscan = 8,
@@ -83,7 +99,8 @@ export function LogViewer({
   titleAs: TitleTag = 'h3',
   className,
 }: LogViewerProps) {
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
+  const title = titleProp ?? labels?.title ?? t('logViewer.title');
   const titleId = useId();
   const viewport = useRef<HTMLDivElement>(null);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -157,11 +174,18 @@ export function LogViewer({
             {title}
           </TitleTag>
           <span className="font-mono text-[11px] text-muted-foreground">
-            {visible.length} of {lines.length}
+            {labels?.count?.(visible.length, lines.length) ??
+              t('logViewer.count', { visible: visible.length, total: lines.length })}
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-2 lg:ms-auto">
-          <ToggleGroup aria-label="Log levels" size="sm" multiple value={levels} onValueChange={(v) => setLevels(v)}>
+          <ToggleGroup
+            aria-label={labels?.levelFilter ?? t('logViewer.levelFilter')}
+            size="sm"
+            multiple
+            value={levels}
+            onValueChange={(v) => setLevels(v)}
+          >
             {LOG_LEVELS.map((lv) => (
               <Toggle key={lv} value={lv}>
                 {lv}
@@ -172,14 +196,19 @@ export function LogViewer({
           <Input
             size="sm"
             type="search"
-            aria-label="Search logs"
-            placeholder="Search…"
+            aria-label={labels?.searchLabel ?? t('logViewer.searchLabel')}
+            placeholder={labels?.searchPlaceholder ?? t('logViewer.searchPlaceholder')}
             leadingIcon={Search}
             value={query}
             onValueChange={(v) => setQuery(String(v))}
             className="w-full sm:w-48"
           />
-          <Switch size="sm" label="Follow" checked={follow} onCheckedChange={setFollow} />
+          <Switch
+            size="sm"
+            label={labels?.follow ?? t('logViewer.follow')}
+            checked={follow}
+            onCheckedChange={setFollow}
+          />
         </div>
       </div>
       <div
@@ -194,7 +223,7 @@ export function LogViewer({
       >
         {visible.length === 0 ? (
           <p className="px-4 py-6 text-center font-sans text-[13px] text-muted-foreground">
-            No lines match the current filters.
+            {labels?.empty ?? t('logViewer.empty')}
           </p>
         ) : (
           <div className="relative w-full" style={{ height: total }}>
@@ -229,7 +258,7 @@ export function LogViewer({
                     <IconButton
                       size="sm"
                       icon={Eye}
-                      label={`Inspect event ${line.timestamp}`}
+                      label={labels?.inspect?.(line.timestamp) ?? t('logViewer.inspect', { timestamp: line.timestamp })}
                       aria-pressed={line.id === selectedLineId}
                       onClick={(event) => {
                         event.stopPropagation();
@@ -241,7 +270,11 @@ export function LogViewer({
                   <IconButton
                     size="sm"
                     icon={copied === line.id ? Check : Copy}
-                    label={copied === line.id ? 'Copied' : `Copy line ${line.timestamp}`}
+                    label={
+                      copied === line.id
+                        ? (labels?.copied ?? t('common.copied'))
+                        : (labels?.copy?.(line.timestamp) ?? t('logViewer.copy', { timestamp: line.timestamp }))
+                    }
                     onClick={(event) => {
                       if (onSelectLine) event.stopPropagation();
                       copy(line);

@@ -28,6 +28,7 @@ import {
   TabsPanel,
   TabsTab,
   Textarea,
+  useI18n,
   type BreadcrumbItem,
 } from '@gntik-ai/ui';
 import { useState } from 'react';
@@ -45,7 +46,16 @@ import {
 
 export type ResourceDetailTab = 'overview' | 'activity' | 'settings';
 
+export interface ResourceDetailLabels {
+  overview: string;
+  activity: string;
+  settings: string;
+  sections: string;
+}
+
 export interface ResourceDetailProps {
+  /** Per-key copy overrides; explicit props take precedence, then labels, then the active catalog. */
+  labels?: Partial<ResourceDetailLabels>;
   /**
    * Optional boolean, default false. Shows only the keyboard-accessible Overview tab in
    * the "Resource sections" tablist, using explicit resource props without sample defaults.
@@ -85,14 +95,11 @@ export interface ResourceDetailProps {
   shell: Omit<ConsoleShellProps, 'children'>;
 }
 
-const TABS: Array<{ value: ResourceDetailTab; label: string }> = [
-  { value: 'overview', label: 'Overview' },
-  { value: 'activity', label: 'Activity' },
-  { value: 'settings', label: 'Settings' },
-];
+const TABS: ResourceDetailTab[] = ['overview', 'activity', 'settings'];
 
 /** Resource detail: editable tabs by default, or explicit-only Overview when readOnly is true. */
 export default function ResourceDetailPage(props: Partial<ResourceDetailProps>) {
+  const { t } = useI18n();
   const readOnly = props.readOnly ?? false;
   const {
     name = readOnly ? '' : detailResource.name,
@@ -114,6 +121,7 @@ export default function ResourceDetailPage(props: Partial<ResourceDetailProps>) 
     onSaveSettings,
     onDangerAction,
     shell,
+    labels,
   } = props;
   const meta = metaProp ?? (readOnly ? [] : detailMeta);
   const actions: PageChromeAction[] =
@@ -130,7 +138,10 @@ export default function ResourceDetailPage(props: Partial<ResourceDetailProps>) 
   const [settings, setSettings] = useState<ResourceSettings>({ name, description });
   const [saved, setSaved] = useState<ResourceSettings>({ name, description });
   const dirty = settings.name !== saved.name || settings.description !== saved.description;
-  const tabs = readOnly ? TABS.filter((t) => t.value === 'overview') : TABS;
+  const tabs = (readOnly ? TABS.filter((value) => value === 'overview') : TABS).map((value) => ({
+    value,
+    label: labels?.[value] ?? t(`resourceDetail.${value}`),
+  }));
 
   return (
     <ConsoleShell currentHref="/deployments" breadcrumbs={breadcrumbs} {...shell}>
@@ -156,7 +167,7 @@ export default function ResourceDetailPage(props: Partial<ResourceDetailProps>) 
             onTabChange?.(next);
           }}
         >
-          <TabsList aria-label="Resource sections">
+          <TabsList aria-label={labels?.sections ?? t('resourceDetail.sections')}>
             {tabs.map((t) => (
               <TabsTab key={t.value} value={t.value}>
                 {t.label}

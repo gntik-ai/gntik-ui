@@ -4,7 +4,23 @@ import { Button, Collapsible, CollapsiblePanel, CollapsibleTrigger, IconButton, 
 import { useId, useRef, useState, type ReactNode } from 'react';
 import type { FeedbackAction } from '../types';
 
+export interface ErrorPanelLabels {
+  title: string;
+  message: string;
+  support: string;
+  retry: string;
+  retrying: string;
+  retryingStatus: string;
+  requestId: string;
+  copyRequestId: string;
+  copied: string;
+  requestIdCopied: string;
+  details: string;
+}
+
 export interface ErrorPanelProps {
+  /** Per-key copy overrides; explicit props take precedence, then labels, then the active catalog. */
+  labels?: Partial<ErrorPanelLabels>;
   icon?: LucideIcon;
   title?: ReactNode;
   /** Human summary of what failed and what to do. */
@@ -31,21 +47,28 @@ export interface ErrorPanelProps {
 /** Error summary for a failed load or action: what happened, request id, retry and technical details. */
 export function ErrorPanel({
   icon: Icon = ServerCrash,
-  title = 'We couldn’t load deployments',
-  message = 'The service didn’t respond in time. Your data is safe; try again in a moment.',
+  title: titleProp,
+  labels,
+  message: messageProp,
   code = 503,
   requestId = 'req_8f2c41d07a9b',
   details = 'GET /v1/projects/acme-web/deployments\n503 Service Unavailable\nupstream timed out after 30000 ms (pool: api-eu-west-1)',
   onRetry,
   retrying,
   retryLabel: retryLabelProp,
-  secondaryAction = { label: 'Contact support', variant: 'ghost' },
+  secondaryAction: secondaryActionProp,
   titleAs: Heading = 'h3',
   className,
   announce = true,
 }: ErrorPanelProps) {
   const { t } = useI18n();
-  const retryLabel = retryLabelProp ?? t('error.retry');
+  const title = titleProp === undefined ? (labels?.title ?? t('error.title')) : titleProp;
+  const message = messageProp === undefined ? (labels?.message ?? t('error.message')) : messageProp;
+  const secondaryAction =
+    secondaryActionProp === undefined
+      ? { label: labels?.support ?? t('error.support'), variant: 'ghost' as const }
+      : secondaryActionProp;
+  const retryLabel = retryLabelProp ?? labels?.retry ?? t('error.retry');
   const id = useId();
   const [innerRetrying, setInnerRetrying] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -97,13 +120,15 @@ export function ErrorPanel({
           {message != null && <p className="mt-1.5 max-w-xl text-[13px] leading-6 text-muted-foreground">{message}</p>}
           {requestId && (
             <div className="mt-3 flex items-center gap-1.5 text-[12px] text-muted-foreground">
-              <span>{t('error.requestId')}</span>
+              <span>{labels?.requestId ?? t('error.requestId')}</span>
               <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11.5px] text-foreground">
                 {requestId}
               </code>
               <IconButton
                 icon={copied ? Check : Copy}
-                label={copied ? t('common.copied') : t('error.copyRequestId')}
+                label={
+                  copied ? (labels?.copied ?? t('common.copied')) : (labels?.copyRequestId ?? t('error.copyRequestId'))
+                }
                 size="sm"
                 variant="ghost"
                 className="size-7"
@@ -114,7 +139,7 @@ export function ErrorPanel({
           <div className="mt-4 flex flex-wrap items-center gap-2">
             {onRetry && (
               <Button variant="secondary" size="sm" icon={RotateCw} loading={busy} onClick={() => void retry()}>
-                {busy ? t('error.retrying') : retryLabel}
+                {busy ? (labels?.retrying ?? t('error.retrying')) : retryLabel}
               </Button>
             )}
             {secondaryAction && (
@@ -131,7 +156,7 @@ export function ErrorPanel({
           </div>
           {details && (
             <Collapsible className="mt-4">
-              <CollapsibleTrigger className="text-[12.5px]">{t('error.details')}</CollapsibleTrigger>
+              <CollapsibleTrigger className="text-[12.5px]">{labels?.details ?? t('error.details')}</CollapsibleTrigger>
               <CollapsiblePanel>
                 <pre className="mt-2 max-h-60 overflow-auto rounded-md border border-border bg-muted/50 p-3 font-mono text-[11.5px] leading-5 whitespace-pre-wrap text-foreground">
                   {details}
@@ -141,7 +166,11 @@ export function ErrorPanel({
           )}
           {announce && (
             <p role="status" className="sr-only">
-              {busy ? t('error.retryingStatus') : copied ? t('error.requestIdCopied') : ''}
+              {busy
+                ? (labels?.retryingStatus ?? t('error.retryingStatus'))
+                : copied
+                  ? (labels?.requestIdCopied ?? t('error.requestIdCopied'))
+                  : ''}
             </p>
           )}
         </div>
