@@ -1,7 +1,14 @@
 import { useI18n, WizardLayout, type WizardLayoutProps } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 
+export interface DialogWizardLabels {
+  title: string;
+  details: string;
+  review: string;
+}
+
 export interface DialogWizardProps extends Omit<WizardLayoutProps, 'mode' | 'steps' | 'current'> {
+  labels?: Partial<DialogWizardLabels>;
   steps?: WizardLayoutProps['steps'];
   current?: number;
   /** Step-local validation surface, normally a ValidationSummary with consumer copy. */
@@ -12,6 +19,7 @@ export interface DialogWizardProps extends Omit<WizardLayoutProps, 'mode' | 'ste
 
 /** Modal variant of create-wizard for a flow over its parent page. State stays consumer-owned. */
 export function DialogWizard({
+  labels,
   steps,
   current = 0,
   size = 'dialog',
@@ -22,7 +30,10 @@ export function DialogWizard({
   ...props
 }: DialogWizardProps) {
   const { t } = useI18n();
-  const items = steps ?? [{ label: t('wizard.details') }, { label: t('wizard.review') }];
+  const items = steps ?? [
+    { label: labels?.details ?? t('wizard.details') },
+    { label: labels?.review ?? t('wizard.review') },
+  ];
   return (
     <WizardLayout
       {...props}
@@ -30,7 +41,7 @@ export function DialogWizard({
       size={size}
       steps={items}
       current={current}
-      title={title ?? t('wizard.title')}
+      title={title ?? labels?.title ?? t('wizard.title')}
     >
       {stepError}
       {current >= items.length - 1 && reviewStep != null ? reviewStep : children}

@@ -1,10 +1,45 @@
-import { Alert, Button, Field, FieldDescription, FieldError, FieldLabel, Input, OtpInput, cn } from '@gntik-ai/ui';
+import {
+  useI18n,
+  Alert,
+  Button,
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  Input,
+  OtpInput,
+  cn,
+} from '@gntik-ai/ui';
 import { useEffect, useState, type ReactNode } from 'react';
 import { AuthHeader, authFormClass, useAsyncSubmit } from '../shared';
 
 export type MfaMethod = 'code' | 'backup';
 
+export interface MfaChallengeLabels {
+  eyebrow: string;
+  title: string;
+  backupTitle: string;
+  backupDescription: string;
+  destinationDescription: (length: number, destination: string) => string;
+  description: (length: number) => string;
+  formLabel: string;
+  codeLabel: string;
+  codeRequired: (length: number) => string;
+  backupLabel: string;
+  backupPlaceholder: string;
+  backupHint: string;
+  backupRequired: string;
+  submit: string;
+  useCode: string;
+  resendIn: (remaining: number) => string;
+  resend: string;
+  resent: string;
+  backToSignIn: string;
+  fallbackError: string;
+}
+
 export interface MfaChallengeProps {
+  labels?: Partial<MfaChallengeLabels>;
   /** Verifies the code. A returned promise shows the loading state; a rejection shows in the alert. */
   onVerify?: (code: string, method: MfaMethod) => void | Promise<void>;
   /** Sends a new code; the resend button then waits `resendCooldown` seconds. */
@@ -31,6 +66,7 @@ export interface MfaChallengeProps {
  * and a resend button with a countdown.
  */
 export function MfaChallenge({
+  labels,
   onVerify,
   onResend,
   resendCooldown = 30,
@@ -40,10 +76,13 @@ export function MfaChallenge({
   error: errorProp,
   loading: loadingProp,
   onCancel,
-  eyebrow = 'Two-step verification',
-  title = 'Enter your verification code',
+  eyebrow: eyebrowProp,
+  title: titleProp,
   className,
 }: MfaChallengeProps) {
+  const { t } = useI18n();
+  const eyebrow = eyebrowProp === undefined ? (labels?.eyebrow ?? t('mfaChallenge.eyebrow')) : eyebrowProp;
+  const title = titleProp === undefined ? (labels?.title ?? t('mfaChallenge.title')) : titleProp;
   const [method, setMethod] = useState<MfaMethod>('code');
   const [code, setCode] = useState('');
   const [backup, setBackup] = useState('');
@@ -53,7 +92,7 @@ export function MfaChallenge({
   const [now, setNow] = useState(start);
   const [resendAt, setResendAt] = useState(() => start + (initialCooldown ?? resendCooldown) * 1000);
   const [resent, setResent] = useState(false);
-  const { loading, error, run } = useAsyncSubmit('That code did not work. Try again.');
+  const { loading, error, run } = useAsyncSubmit(labels?.fallbackError ?? t('mfaChallenge.fallbackError'));
   const busy = loadingProp ?? loading;
   const alert = errorProp ?? error;
   const remaining = Math.max(0, Math.ceil((resendAt - now) / 1000));
@@ -73,30 +112,31 @@ export function MfaChallenge({
   };
 
   const resend = async () => {
-    const t = Date.now();
-    setNow(t);
-    setResendAt(t + resendCooldown * 1000);
+    const time = Date.now();
+    setNow(time);
+    setResendAt(time + resendCooldown * 1000);
     setResent(true);
     await onResend?.();
   };
 
   const description =
     method === 'backup'
-      ? 'Enter one of the backup codes you saved when you turned on two-step verification. Each code works once.'
+      ? (labels?.backupDescription ?? t('mfaChallenge.backupDescription'))
       : destination
-        ? `We sent a ${length}-digit code to ${destination}.`
-        : `Open your authenticator app and enter the ${length}-digit code.`;
+        ? (labels?.destinationDescription?.(length, destination) ??
+          t('mfaChallenge.destinationDescription', { length, destination }))
+        : (labels?.description?.(length) ?? t('mfaChallenge.description', { length }));
 
   return (
     <div className={cn(authFormClass, className)}>
       <AuthHeader
         eyebrow={eyebrow}
-        title={method === 'backup' ? 'Use a backup code' : title}
+        title={method === 'backup' ? (labels?.backupTitle ?? t('mfaChallenge.backupTitle')) : title}
         description={description}
       />
       <form
         noValidate
-        aria-label="Verify your identity"
+        aria-label={labels?.formLabel ?? t('mfaChallenge.formLabel')}
         className="flex flex-col gap-5"
         onSubmit={(e) => {
           e.preventDefault();
@@ -106,7 +146,7 @@ export function MfaChallenge({
         {alert && <Alert tone="destructive" description={alert} />}
         {method === 'code' ? (
           <Field invalid={invalid}>
-            <FieldLabel>Verification code</FieldLabel>
+            <FieldLabel>{labels?.codeLabel ?? t('mfaChallenge.codeLabel')}</FieldLabel>
             <OtpInput
               length={length}
               value={code}
@@ -116,25 +156,27 @@ export function MfaChallenge({
               groupSize={length / 2}
               disabled={busy}
             />
-            <FieldError match={invalid}>Enter all {length} digits.</FieldError>
+            <FieldError match={invalid}>
+              {labels?.codeRequired?.(length) ?? t('mfaChallenge.codeRequired', { length })}
+            </FieldError>
           </Field>
         ) : (
           <Field invalid={invalid}>
-            <FieldLabel>Backup code</FieldLabel>
+            <FieldLabel>{labels?.backupLabel ?? t('mfaChallenge.backupLabel')}</FieldLabel>
             <Input
               value={backup}
               onValueChange={setBackup}
-              placeholder="xxxx-xxxx"
+              placeholder={labels?.backupPlaceholder ?? t('mfaChallenge.backupPlaceholder')}
               autoComplete="one-time-code"
               spellCheck={false}
               inputClassName="font-mono tracking-wider"
             />
-            <FieldDescription>Backup codes are 8 characters, with or without the dash.</FieldDescription>
-            <FieldError match={invalid}>Enter a backup code.</FieldError>
+            <FieldDescription>{labels?.backupHint ?? t('mfaChallenge.backupHint')}</FieldDescription>
+            <FieldError match={invalid}>{labels?.backupRequired ?? t('mfaChallenge.backupRequired')}</FieldError>
           </Field>
         )}
         <Button type="submit" size="lg" loading={busy} className="w-full">
-          Verify
+          {labels?.submit ?? t('mfaChallenge.submit')}
         </Button>
       </form>
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-[13px]">
@@ -147,21 +189,25 @@ export function MfaChallenge({
             setSubmitted(false);
           }}
         >
-          {method === 'code' ? 'Use a backup code' : 'Use a verification code'}
+          {method === 'code'
+            ? (labels?.backupTitle ?? t('mfaChallenge.backupTitle'))
+            : (labels?.useCode ?? t('mfaChallenge.useCode'))}
         </Button>
         {method === 'code' && onResend !== undefined && (
           <Button variant="ghost" size="sm" disabled={remaining > 0} onClick={() => void resend()}>
-            {remaining > 0 ? `Resend code in ${remaining}s` : 'Resend code'}
+            {remaining > 0
+              ? (labels?.resendIn?.(remaining) ?? t('mfaChallenge.resendIn', { remaining }))
+              : (labels?.resend ?? t('mfaChallenge.resend'))}
           </Button>
         )}
       </div>
       <span role="status" className="sr-only">
-        {resent ? 'A new code was sent.' : ''}
+        {resent ? (labels?.resent ?? t('mfaChallenge.resent')) : ''}
       </span>
       {onCancel && (
         <p className="mt-6 text-center">
           <Button variant="ghost" size="sm" onClick={onCancel}>
-            Back to sign in
+            {labels?.backToSignIn ?? t('mfaChallenge.backToSignIn')}
           </Button>
         </p>
       )}

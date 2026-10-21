@@ -7936,13 +7936,36 @@ import { TraceWaterfall } from '@gntik-ai/blocks';
 
 ### Forgot password form (`forgot-password-form`)
 
-Email (default) or username-or-email password recovery; onSubmit receives the trimmed identifier. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. ref.focus accepts identifier. title/description and sentTitle/sentDescription configure request and sent copy; sentTitle, sentDescription, sentStatus and resendActions accept null to hide inbox copy, announcements and resend/change-identifier actions. Preview: forgot-password-form--username-or-email.
+Email (default) or username-or-email password recovery; onSubmit receives the trimmed identifier. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. ref.focus accepts identifier. title/description and sentTitle/sentDescription configure request and sent copy; sentTitle, sentDescription, sentStatus and resendActions accept null to hide inbox copy, announcements and resend/change-identifier actions. Preview: forgot-password-form--username-or-email. Optional labels?: Partial<ForgotPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=forgot-password-form--labels.
 
 - Package: `@gntik-ai/blocks` · export `ForgotPasswordForm` · group auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/auth/ForgotPasswordForm/block.meta.ts
 - Composes: Field, FieldLabel, FieldDescription, FieldError, Input, Button, Alert, Link
 - Preview: /preview.html?kind=block&id=forgot-password-form
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add forgot-password-form`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `formLabel` | `string` | Default content and accessible names |
+| `eyebrow` | `string` | Default content and accessible names |
+| `title` | `string` | Default content and accessible names |
+| `description` | `string` | Default content and accessible names |
+| `sentTitle` | `string` | Async feedback |
+| `sentDescription` | `(email: string) => ReactNode` | Async feedback |
+| `addressFallback` | `string` | Async feedback |
+| `sentStatus` | `string` | Async feedback |
+| `fallbackError` | `string` | Validation feedback |
+| `backToSignIn` | `string` | Default content and accessible names |
+| `resend` | `string` | Default content and accessible names |
+| `changeEmail` | `string` | Default content and accessible names |
+| `identifierLabel` | `string` | Default content and accessible names |
+| `identifierPlaceholder` | `string` | Default content and accessible names |
+| `submit` | `string` | Default content and accessible names |
+| `identifierRequired` | `string` | Validation feedback |
+| `identifierInvalid` | `string` | Validation feedback |
+| `identifierTooShort` | `string` | Validation feedback |
 
 Usage:
 
@@ -7955,13 +7978,38 @@ import { ForgotPasswordForm } from '@gntik-ai/blocks';
 
 ### MFA challenge (`mfa-challenge`)
 
-Second-factor step with a one-time code (auto-submit), a backup-code mode and resend with a countdown.
+Second-factor step with a one-time code (auto-submit), a backup-code mode and resend with a countdown. Optional labels?: Partial<MfaChallengeLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=mfa-challenge--labels.
 
 - Package: `@gntik-ai/blocks` · export `MfaChallenge` · group auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/auth/MfaChallenge/block.meta.ts
 - Composes: OtpInput, Field, Input, Button, Alert
 - Preview: /preview.html?kind=block&id=mfa-challenge
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add mfa-challenge`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `eyebrow` | `string` | Default content and accessible names |
+| `title` | `string` | Default content and accessible names |
+| `backupTitle` | `string` | Default content and accessible names |
+| `backupDescription` | `string` | Default content and accessible names |
+| `destinationDescription` | `(length: number, destination: string) => string` | Default content and accessible names |
+| `description` | `(length: number) => string` | Default content and accessible names |
+| `formLabel` | `string` | Default content and accessible names |
+| `codeLabel` | `string` | Default content and accessible names |
+| `codeRequired` | `(length: number) => string` | Validation feedback |
+| `backupLabel` | `string` | Default content and accessible names |
+| `backupPlaceholder` | `string` | Default content and accessible names |
+| `backupHint` | `string` | Default content and accessible names |
+| `backupRequired` | `string` | Validation feedback |
+| `submit` | `string` | Default content and accessible names |
+| `useCode` | `string` | Default content and accessible names |
+| `resendIn` | `(remaining: number) => string` | Default content and accessible names |
+| `resend` | `string` | Default content and accessible names |
+| `resent` | `string` | Async feedback |
+| `backToSignIn` | `string` | Default content and accessible names |
+| `fallbackError` | `string` | Validation feedback |
 
 Usage:
 
@@ -7974,13 +8022,31 @@ import { MfaChallenge } from '@gntik-ai/blocks';
 
 ### Reset password form (`reset-password-form`)
 
-New password with a strength meter and a confirmation field with mismatch validation, then a success state.
+New password with a strength meter and a confirmation field with mismatch validation, then a success state. Optional labels?: Partial<ResetPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=reset-password-form--labels.
 
 - Package: `@gntik-ai/blocks` · export `ResetPasswordForm` · group auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/auth/ResetPasswordForm/block.meta.ts
 - Composes: Field, PasswordInput, Button, Alert
 - Preview: /preview.html?kind=block&id=reset-password-form
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add reset-password-form`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `eyebrow` | `string` | Default content and accessible names |
+| `title` | `string` | Default content and accessible names |
+| `description` | `(minimum: number) => string` | Default content and accessible names |
+| `newPassword` | `string` | Default content and accessible names |
+| `confirmPassword` | `string` | Default content and accessible names |
+| `passwordTooShort` | `(minimum: number) => string` | Validation feedback |
+| `passwordMismatch` | `string` | Validation feedback |
+| `submit` | `string` | Default content and accessible names |
+| `successTitle` | `string` | Async feedback |
+| `successDescription` | `string` | Async feedback |
+| `successStatus` | `string` | Async feedback |
+| `continue` | `string` | Default content and accessible names |
+| `fallbackError` | `string` | Validation feedback |
 
 Usage:
 
@@ -7993,7 +8059,7 @@ import { ResetPasswordForm } from '@gntik-ai/blocks';
 
 ### Sign-in form (`sign-in-form`)
 
-Email (default) or text identifier and password sign-in. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. passwordHelp/passwordHelpId describe the password. Text submissions add values.identifier and retain values.email; email-mode payloads are unchanged. sso and signUpPrompt accept replacements or null. Preview: sign-in-form--username.
+Email (default) or text identifier and password sign-in. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. passwordHelp/passwordHelpId describe the password. Text submissions add values.identifier and retain values.email; email-mode payloads are unchanged. sso and signUpPrompt accept replacements or null. Preview: sign-in-form--username. Optional labels?: Partial<SignInFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-in-form--labels.
 
 - Package: `@gntik-ai/blocks` · export `SignInForm` · group auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/auth/SignInForm/block.meta.ts
@@ -8001,6 +8067,29 @@ Email (default) or text identifier and password sign-in. Supports identifier (ty
 - Registry dependencies: sso-buttons
 - Preview: /preview.html?kind=block&id=sign-in-form
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add sign-in-form`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `eyebrow` | `string` | Default content and accessible names |
+| `title` | `string` | Default content and accessible names |
+| `description` | `string` | Default content and accessible names |
+| `formLabel` | `string` | Default content and accessible names |
+| `identifierLabel` | `string` | Default content and accessible names |
+| `identifierPlaceholder` | `string` | Default content and accessible names |
+| `password` | `string` | Default content and accessible names |
+| `forgotPassword` | `string` | Default content and accessible names |
+| `passwordRequired` | `string` | Validation feedback |
+| `remember` | `string` | Default content and accessible names |
+| `submit` | `string` | Default content and accessible names |
+| `divider` | `string` | Default content and accessible names |
+| `signUpPrompt` | `string` | Default content and accessible names |
+| `signUp` | `string` | Default content and accessible names |
+| `fallbackError` | `string` | Validation feedback |
+| `identifierRequired` | `string` | Validation feedback |
+| `identifierInvalid` | `string` | Validation feedback |
+| `identifierTooShort` | `string` | Validation feedback |
 
 Usage:
 
@@ -8013,7 +8102,7 @@ import { SignInForm } from '@gntik-ai/blocks';
 
 ### Sign-up form (`sign-up-form`)
 
-Account creation with default name/email fields or ordered text/email fields (values.fields), a password strength meter and required consent (terms=false opts out). minPasswordLength defaults to 8 and drives length validation and the insufficient-length meter; optional passwordHelp can receive the minimum. Configured fields support help, required, autoComplete and validation messages, with a linked validation summary on invalid submit. policyLoading renders skeletons without a form; unavailable replaces the form with consumer title, message and optional action. loading remains submitting; error is form-level feedback. Examples: custom-fields, no-terms, unavailable, loading, submitting and error.
+Account creation with default name/email fields or ordered text/email fields (values.fields), a password strength meter and required consent (terms=false opts out). minPasswordLength defaults to 8 and drives length validation and the insufficient-length meter; optional passwordHelp can receive the minimum. Configured fields support help, required, autoComplete and validation messages, with a linked validation summary on invalid submit. policyLoading renders skeletons without a form; unavailable replaces the form with consumer title, message and optional action. loading remains submitting; error is form-level feedback. Examples: custom-fields, no-terms, unavailable, loading, submitting and error. Optional labels?: Partial<SignUpFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-up-form--labels.
 
 - Package: `@gntik-ai/blocks` · export `SignUpForm` · group auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/auth/SignUpForm/block.meta.ts
@@ -8021,6 +8110,34 @@ Account creation with default name/email fields or ordered text/email fields (va
 - Registry dependencies: sso-buttons, validation-summary
 - Preview: /preview.html?kind=block&id=sign-up-form
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add sign-up-form`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `eyebrow` | `string` | Default content and accessible names |
+| `title` | `string` | Default content and accessible names |
+| `description` | `string` | Default content and accessible names |
+| `name` | `string` | Default content and accessible names |
+| `namePlaceholder` | `string` | Default content and accessible names |
+| `nameRequired` | `string` | Validation feedback |
+| `email` | `string` | Default content and accessible names |
+| `emailPlaceholder` | `string` | Default content and accessible names |
+| `password` | `string` | Default content and accessible names |
+| `passwordTooShort` | `(minimum: number) => string` | Validation feedback |
+| `termsRequired` | `string` | Validation feedback |
+| `terms` | `string` | Default content and accessible names |
+| `privacy` | `string` | Default content and accessible names |
+| `termsConsent` | `(terms: ReactNode, privacy: ReactNode) => ReactNode` | Async feedback |
+| `submit` | `string` | Default content and accessible names |
+| `divider` | `string` | Default content and accessible names |
+| `signInPrompt` | `string` | Default content and accessible names |
+| `signIn` | `string` | Default content and accessible names |
+| `policyLoading` | `string` | Async feedback |
+| `fallbackError` | `string` | Validation feedback |
+| `emailInvalid` | `string` | Validation feedback |
+| `fieldRequired` | `(label: string) => string` | Validation feedback |
+| `fieldInvalid` | `string` | Validation feedback |
 
 Usage:
 
@@ -8033,13 +8150,19 @@ import { SignUpForm } from '@gntik-ai/blocks';
 
 ### SSO buttons (`sso-buttons`)
 
-Neutral "Continue with …" provider buttons with lucide icons and a per-provider loading state.
+Neutral "Continue with …" provider buttons with lucide icons and a per-provider loading state. Optional labels?: Partial<SsoButtonsLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sso-buttons--labels.
 
 - Package: `@gntik-ai/blocks` · export `SsoButtons` · group auth · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/auth/SsoButtons/block.meta.ts
 - Composes: Button
 - Preview: /preview.html?kind=block&id=sso-buttons
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add sso-buttons`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `label` | `string` | Default content and accessible names |
 
 Usage:
 
@@ -8635,13 +8758,36 @@ import { SystemBanner } from '@gntik-ai/blocks';
 
 ### Create API key dialog (`create-api-key-dialog`)
 
-Two-step dialog: name, scopes and expiry, then the secret shown once in a copyable CodeBlock with a warning.
+Two-step dialog: name, scopes and expiry, then the secret shown once in a copyable CodeBlock with a warning. Optional labels?: Partial<CreateApiKeyDialogLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=create-api-key-dialog--labels.
 
 - Package: `@gntik-ai/blocks` · export `CreateApiKeyDialog` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/CreateApiKeyDialog/block.meta.ts
 - Composes: Dialog, Field, Input, CheckboxGroup, Checkbox, Select, CodeBlock, Alert, Button
 - Preview: /preview.html?kind=block&id=create-api-key-dialog
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add create-api-key-dialog`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Default content and accessible names |
+| `description` | `string` | Default content and accessible names |
+| `name` | `string` | Default content and accessible names |
+| `namePlaceholder` | `string` | Default content and accessible names |
+| `nameRequired` | `string` | Validation feedback |
+| `scopes` | `string` | Default content and accessible names |
+| `scopesRequired` | `string` | Validation feedback |
+| `expiration` | `string` | Default content and accessible names |
+| `errorTitle` | `string` | Validation feedback |
+| `fallbackError` | `string` | Validation feedback |
+| `cancel` | `string` | Default content and accessible names |
+| `submit` | `string` | Default content and accessible names |
+| `successTitle` | `string` | Async feedback |
+| `successDescription` | `string` | Async feedback |
+| `warningTitle` | `string` | Default content and accessible names |
+| `warningDescription` | `string` | Default content and accessible names |
+| `secretLabel` | `string` | Default content and accessible names |
+| `done` | `string` | Async feedback |
 
 Usage:
 
@@ -8654,13 +8800,33 @@ import { CreateApiKeyDialog } from '@gntik-ai/blocks';
 
 ### Credential disclosure dialog (`credential-disclosure-dialog`)
 
-Controlled disclosure for an existing credential. Set disclosure ({variant: stored | fresh, credentialId, expiresAt: caller-formatted ReactNode, secret}) only after a successful response; null renders nothing while pending or on failure. Clear disclosure, additionalSecrets and secret-bearing revealContent in onClose to drop every secret; a fresh secret requires a new successful response before showing it again. No pending/error state or internal secret retention. Stored values start masked; each null-to-value opening or changed credentialId/secret resets masking and copy feedback. Fresh values use a non-copyable CodeBlock with a kit CopyButton and a replacement warning, or a masked SecretField when maskFresh is set at session start. Optional additionalSecrets ({id, label, value}) are always masked and use independent toggles and serialized copy actions; ids must be non-empty, unique and not secret, with the first duplicate winning. Multi-secret groups announce label plus copiedLabel, or copiedAnnouncementFor(label); onCopy(id) never receives a value. Every secret and the optional revealContent slot have data-kit-redact. The session key includes additional ids and values. presentation is dialog by default or inline, fixed until the next opening: inline is a named section, never traps focus or handles Escape, and its warning is a non-live note. Surviving focus stays; removing the focused slot or session control focuses the popup or inline heading. Focused inline unmounts return focus through the same resolvers. Dismissed retained props stay hidden; clear and re-set or change a session value to reopen. Optional English defaults through en/es i18n for title, description, credentialIdLabel, expiryLabel, secretLabel, showLabel, hideLabel, copyLabel, copiedLabel, successAnnouncement, failureAnnouncement, warningTitle, warningText and closeLabel. Copy results are announced politely, including manual-selection fallback. Popup initial focus and focus trapping use Base UI; at close, resolveReturnFocus() is validated for connection, visibility, enabled state and focusability, then fallbackFocus(), then the original opener. Synthetic fixtures only; the default Stored preview is masked and the Fresh preview starts closed.
+Controlled disclosure for an existing credential. Set disclosure ({variant: stored | fresh, credentialId, expiresAt: caller-formatted ReactNode, secret}) only after a successful response; null renders nothing while pending or on failure. Clear disclosure, additionalSecrets and secret-bearing revealContent in onClose to drop every secret; a fresh secret requires a new successful response before showing it again. No pending/error state or internal secret retention. Stored values start masked; each null-to-value opening or changed credentialId/secret resets masking and copy feedback. Fresh values use a non-copyable CodeBlock with a kit CopyButton and a replacement warning, or a masked SecretField when maskFresh is set at session start. Optional additionalSecrets ({id, label, value}) are always masked and use independent toggles and serialized copy actions; ids must be non-empty, unique and not secret, with the first duplicate winning. Multi-secret groups announce label plus copiedLabel, or copiedAnnouncementFor(label); onCopy(id) never receives a value. Every secret and the optional revealContent slot have data-kit-redact. The session key includes additional ids and values. presentation is dialog by default or inline, fixed until the next opening: inline is a named section, never traps focus or handles Escape, and its warning is a non-live note. Surviving focus stays; removing the focused slot or session control focuses the popup or inline heading. Focused inline unmounts return focus through the same resolvers. Dismissed retained props stay hidden; clear and re-set or change a session value to reopen. Optional English defaults through en/es i18n for title, description, credentialIdLabel, expiryLabel, secretLabel, showLabel, hideLabel, copyLabel, copiedLabel, successAnnouncement, failureAnnouncement, warningTitle, warningText and closeLabel. Copy results are announced politely, including manual-selection fallback. Popup initial focus and focus trapping use Base UI; at close, resolveReturnFocus() is validated for connection, visibility, enabled state and focusability, then fallbackFocus(), then the original opener. Synthetic fixtures only; the default Stored preview is masked and the Fresh preview starts closed. Optional labels?: Partial<CredentialDisclosureDialogLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=credential-disclosure-dialog--labels.
 
 - Package: `@gntik-ai/blocks` · export `CredentialDisclosureDialog` · group forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/CredentialDisclosureDialog/block.meta.ts
 - Composes: Dialog, SecretField, CodeBlock, CopyButton, Alert, LiveAnnouncer, Button
 - Preview: /preview.html?kind=block&id=credential-disclosure-dialog
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add credential-disclosure-dialog`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Default content and accessible names |
+| `description` | `string` | Default content and accessible names |
+| `credentialIdLabel` | `string` | Default content and accessible names |
+| `expiryLabel` | `string` | Default content and accessible names |
+| `secretLabel` | `string` | Default content and accessible names |
+| `showLabel` | `string` | Default content and accessible names |
+| `hideLabel` | `string` | Default content and accessible names |
+| `copyLabel` | `string` | Default content and accessible names |
+| `copiedLabel` | `string` | Async feedback |
+| `successAnnouncement` | `string` | Async feedback |
+| `failureAnnouncement` | `string` | Async feedback |
+| `warningTitle` | `string` | Default content and accessible names |
+| `warningText` | `string` | Default content and accessible names |
+| `closeLabel` | `string` | Default content and accessible names |
+| `copiedAnnouncementFor` | `(label: string, copied: string) => string` | Async feedback |
 
 Usage:
 
@@ -8701,13 +8867,24 @@ export default function Fresh() {
 
 ### Danger zone (`danger-zone`)
 
-Bordered destructive section whose actions open an alert dialog that can require typing the resource name.
+Bordered destructive section whose actions open an alert dialog that can require typing the resource name. Optional labels?: Partial<DangerZoneLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=danger-zone--labels.
 
 - Package: `@gntik-ai/blocks` · export `DangerZone` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/DangerZone/block.meta.ts
 - Composes: Button, AlertDialog, Field, Input, Alert
 - Preview: /preview.html?kind=block&id=danger-zone
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add danger-zone`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Default content and accessible names |
+| `description` | `string` | Default content and accessible names |
+| `confirmationTitle` | `(title: string) => string` | Destructive confirmation dialog |
+| `confirmPrompt` | `(text: ReactNode) => ReactNode` | Destructive confirmation dialog |
+| `cancel` | `string` | Destructive confirmation dialog |
+| `fallbackError` | `string` | Destructive confirmation dialog |
 
 Usage:
 
@@ -8720,13 +8897,21 @@ import { DangerZone } from '@gntik-ai/blocks';
 
 ### Date range filter (`date-range-filter`)
 
-Compact date range picker for toolbars: small trigger with short dates, presets and a clear button.
+Compact date range picker for toolbars: small trigger with short dates, presets and a clear button. Optional labels?: Partial<DateRangeFilterLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=date-range-filter--labels.
 
 - Package: `@gntik-ai/blocks` · export `DateRangeFilter` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/DateRangeFilter/block.meta.ts
 - Composes: DateRangePicker, IconButton
 - Preview: /preview.html?kind=block&id=date-range-filter
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add date-range-filter`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `label` | `string` | Default content and accessible names |
+| `placeholder` | `string` | Default content and accessible names |
+| `clear` | `(label: string) => string` | Default content and accessible names |
 
 Usage:
 
@@ -8739,13 +8924,21 @@ import { DateRangeFilter } from '@gntik-ai/blocks';
 
 ### Dialog wizard (`dialog-wizard`)
 
-Modal variant of create-wizard for create flows over their parent page, without a route change. Defaults to dialog size (fullscreen on mobile); size="fullscreen" fills every viewport. Consumer-controlled step state survives closing. Use the create-wizard page template for a dedicated page flow, or WizardLayout mode="overlay" for a fullscreen flow. Supply all labels, pendingLabel and stepAnnouncement from your own i18n; stepError accepts ValidationSummary and reviewStep accepts DescriptionListCard.
+Modal variant of create-wizard for create flows over their parent page, without a route change. Defaults to dialog size (fullscreen on mobile); size="fullscreen" fills every viewport. Consumer-controlled step state survives closing. Use the create-wizard page template for a dedicated page flow, or WizardLayout mode="overlay" for a fullscreen flow. Supply all labels, pendingLabel and stepAnnouncement from your own i18n; stepError accepts ValidationSummary and reviewStep accepts DescriptionListCard. Optional labels?: Partial<DialogWizardLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=dialog-wizard--labels.
 
 - Package: `@gntik-ai/blocks` · export `DialogWizard` · group forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/DialogWizard/block.meta.ts
 - Composes: WizardLayout, Dialog, Stepper, Button
 - Preview: /preview.html?kind=block&id=dialog-wizard
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add dialog-wizard`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Default content and accessible names |
+| `details` | `string` | Default content and accessible names |
+| `review` | `string` | Default content and accessible names |
 
 Usage:
 
@@ -8758,13 +8951,36 @@ import { DialogWizard } from '@gntik-ai/blocks';
 
 ### File upload panel (`file-upload-panel`)
 
-Drag-and-drop zone with a Browse button, type and size validation, and a file list with progress, retry and remove.
+Drag-and-drop zone with a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.
 
 - Package: `@gntik-ai/blocks` · export `FileUploadPanel` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/FileUploadPanel/block.meta.ts
 - Composes: Button, IconButton, Progress
 - Preview: /preview.html?kind=block&id=file-upload-panel
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add file-upload-panel`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `label` | `string` | Default content and accessible names |
+| `drop` | `string` | Default content and accessible names |
+| `browse` | `string` | Default content and accessible names |
+| `files` | `string` | Default content and accessible names |
+| `failed` | `string` | Default content and accessible names |
+| `typeRejected` | `string` | Default content and accessible names |
+| `hint` | `(types: string, size: string) => string` | Default content and accessible names |
+| `tooLarge` | `(size: string) => string` | Default content and accessible names |
+| `done` | `(name: string) => string` | Async feedback |
+| `error` | `(name: string) => string` | Validation feedback |
+| `added` | `(count: number) => string` | Default content and accessible names |
+| `rejected` | `(count: number) => string` | Default content and accessible names |
+| `removed` | `(name: string) => string` | Default content and accessible names |
+| `uploading` | `(name: string) => string` | Async feedback |
+| `notUploaded` | `(error: string) => string` | Async feedback |
+| `uploaded` | `(size: string) => string` | Async feedback |
+| `retry` | `(name: string) => string` | Default content and accessible names |
+| `remove` | `(name: string) => string` | Default content and accessible names |
 
 Usage:
 
@@ -8777,13 +8993,20 @@ import { FileUploadPanel } from '@gntik-ai/blocks';
 
 ### Form section (`form-section`)
 
-Two-column settings section: title and help on the left, fields on the right; stacks on small screens.
+Two-column settings section: title and help on the left, fields on the right; stacks on small screens. Optional labels?: Partial<FormSectionLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=form-section--labels.
 
 - Package: `@gntik-ai/blocks` · export `FormSection` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/FormSection/block.meta.ts
 - Composes: Field, Input, Textarea
 - Preview: /preview.html?kind=block&id=form-section
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add form-section`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Default content and accessible names |
+| `description` | `string` | Default content and accessible names |
 
 Usage:
 
@@ -8796,13 +9019,34 @@ import { FormSection } from '@gntik-ai/blocks';
 
 ### Invite members dialog (`invite-members-dialog`)
 
-Dialog to invite people by email (validated chips) with a role and an optional message; submits with a loading state.
+Dialog to invite people by email (validated chips) with a role and an optional message; submits with a loading state. Optional labels?: Partial<InviteMembersDialogLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=invite-members-dialog--labels.
 
 - Package: `@gntik-ai/blocks` · export `InviteMembersDialog` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/InviteMembersDialog/block.meta.ts
 - Composes: Dialog, TokenInput, Select, Textarea, Field, Button, Alert
 - Preview: /preview.html?kind=block&id=invite-members-dialog
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add invite-members-dialog`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `string` | Default content and accessible names |
+| `description` | `string` | Default content and accessible names |
+| `emails` | `string` | Default content and accessible names |
+| `placeholder` | `string` | Default content and accessible names |
+| `listLabel` | `string` | Default content and accessible names |
+| `role` | `string` | Default content and accessible names |
+| `message` | `string` | Default content and accessible names |
+| `messagePlaceholder` | `string` | Default content and accessible names |
+| `emailRequired` | `string` | Validation feedback |
+| `emailInvalid` | `(email: string) => string` | Validation feedback |
+| `fixInvalid` | `(count: number) => string` | Validation feedback |
+| `errorTitle` | `string` | Validation feedback |
+| `fallbackError` | `string` | Validation feedback |
+| `cancel` | `string` | Default content and accessible names |
+| `submit` | `string` | Default content and accessible names |
+| `submitMany` | `(count: number) => string` | Default content and accessible names |
 
 Usage:
 
@@ -8815,13 +9059,20 @@ import { InviteMembersDialog } from '@gntik-ai/blocks';
 
 ### Settings row (`settings-row`)
 
-A setting with its label and description on the left and a control (Switch by default) on the right.
+A setting with its label and description on the left and a control (Switch by default) on the right. Optional labels?: Partial<SettingsRowLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=settings-row--labels.
 
 - Package: `@gntik-ai/blocks` · export `SettingsRow` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/SettingsRow/block.meta.ts
 - Composes: Switch
 - Preview: /preview.html?kind=block&id=settings-row
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add settings-row`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `label` | `string` | Default content and accessible names |
+| `description` | `string` | Default content and accessible names |
 
 Usage:
 
@@ -8834,13 +9085,19 @@ import { SettingsRow } from '@gntik-ai/blocks';
 
 ### Validation summary (`validation-summary`)
 
-Error summary that lists every problem with a link to its field and takes focus after a failed submit.
+Error summary that lists every problem with a link to its field and takes focus after a failed submit. Optional labels?: Partial<ValidationSummaryLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=validation-summary--labels.
 
 - Package: `@gntik-ai/blocks` · export `ValidationSummary` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/ValidationSummary/block.meta.ts
 - Composes: Alert, Link
 - Preview: /preview.html?kind=block&id=validation-summary
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add validation-summary`
+
+Labels (optional Partial per instance; explicit keys override provider translations and defaults):
+
+| Key | Type | State / surface |
+| --- | --- | --- |
+| `title` | `(count: number) => string` | Default content and accessible names |
 
 Usage:
 

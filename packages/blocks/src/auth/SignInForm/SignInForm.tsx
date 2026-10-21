@@ -1,4 +1,5 @@
 import {
+  useI18n,
   Alert,
   Button,
   Checkbox,
@@ -38,7 +39,26 @@ export interface SignInFormRef {
   focus(field: 'identifier' | 'password'): void;
 }
 
+export interface SignInFormLabels extends Required<AuthValidationMessages> {
+  eyebrow: string;
+  title: string;
+  description: string;
+  formLabel: string;
+  identifierLabel: string;
+  identifierPlaceholder: string;
+  password: string;
+  forgotPassword: string;
+  passwordRequired: string;
+  remember: string;
+  submit: string;
+  divider: string;
+  signUpPrompt: string;
+  signUp: string;
+  fallbackError: string;
+}
+
 export interface SignInFormProps extends AuthFormAccessibilityProps {
+  labels?: Partial<SignInFormLabels>;
   /** React 19 ref for focus after a server response. */
   ref?: Ref<SignInFormRef>;
   identifier?: AuthIdentifierConfig;
@@ -79,6 +99,7 @@ const linkHandler = (fn?: () => void) =>
 
 /** Email + password sign-in with remember me, forgot-password link, SSO slot, error alert and loading. */
 export function SignInForm({
+  labels,
   identifier,
   messages,
   passwordHelp,
@@ -87,7 +108,7 @@ export function SignInForm({
   fieldInvalid,
   feedbackId,
   'aria-describedby': describedBy,
-  'aria-label': ariaLabel = 'Sign in',
+  'aria-label': ariaLabelProp,
   'aria-labelledby': labelledBy,
   onSubmit,
   error: errorProp,
@@ -99,17 +120,23 @@ export function SignInForm({
   onSignUp,
   signUpPrompt,
   sso = <SsoButtons />,
-  eyebrow = 'Secure access',
-  title = 'Sign in to your workspace',
-  description = 'Use your work email to continue.',
+  eyebrow: eyebrowProp,
+  title: titleProp,
+  description: descriptionProp,
   headingLevel,
   className,
 }: SignInFormProps) {
+  const { t } = useI18n();
+  const eyebrow = eyebrowProp === undefined ? (labels?.eyebrow ?? t('signIn.eyebrow')) : eyebrowProp;
+  const title = titleProp === undefined ? (labels?.title ?? t('signIn.title')) : titleProp;
+  const description =
+    descriptionProp === undefined ? (labels?.description ?? t('signIn.description')) : descriptionProp;
+  const ariaLabel = ariaLabelProp ?? labels?.formLabel ?? t('signIn.formLabel');
   const [email, setEmail] = useState(defaultEmail);
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(true);
   const [submitted, setSubmitted] = useState(false);
-  const { loading, error, run } = useAsyncSubmit('Sign-in failed. Try again.');
+  const { loading, error, run } = useAsyncSubmit(labels?.fallbackError ?? t('signIn.fallbackError'));
   const busy = loadingProp ?? loading;
   const alert = errorProp ?? error;
   const identifierInput = useRef<HTMLInputElement>(null);
@@ -121,7 +148,7 @@ export function SignInForm({
     }),
     [],
   );
-  const identifierError = authIdentifierError(email, identifier, messages);
+  const identifierError = authIdentifierError(email, identifier, messages, t, labels);
   const emailInvalid = submitted && identifierError !== null;
   const passwordInvalid = submitted && password === '';
 
@@ -157,14 +184,14 @@ export function SignInForm({
       >
         {alert && <Alert id={feedbackId} tone="destructive" description={alert} />}
         <Field invalid={emailInvalid || fieldInvalid?.identifier === true}>
-          <FieldLabel>{identifier?.label ?? 'Email'}</FieldLabel>
+          <FieldLabel>{identifier?.label ?? labels?.identifierLabel ?? t('signIn.identifierLabel')}</FieldLabel>
           <Input
             ref={identifierInput}
             aria-describedby={fieldInvalid?.identifier ? feedbackId : undefined}
             type={identifier?.type ?? 'email'}
             leadingIcon={Mail}
             autoComplete={identifier?.autoComplete ?? 'email'}
-            placeholder={identifier?.placeholder ?? 'name@company.com'}
+            placeholder={identifier?.placeholder ?? labels?.identifierPlaceholder ?? t('signIn.identifierPlaceholder')}
             minLength={identifier?.minLength}
             maxLength={identifier?.maxLength}
             value={email}
@@ -178,9 +205,9 @@ export function SignInForm({
         </Field>
         <Field invalid={passwordInvalid || fieldInvalid?.password === true}>
           <div className="flex items-center justify-between gap-3">
-            <FieldLabel>Password</FieldLabel>
+            <FieldLabel>{labels?.password ?? t('signIn.password')}</FieldLabel>
             <Link href={forgotPasswordHref} onClick={linkHandler(onForgotPassword)} className="text-[12.5px]">
-              Forgot password?
+              {labels?.forgotPassword ?? t('signIn.forgotPassword')}
             </Link>
           </div>
           <PasswordInput
@@ -193,17 +220,17 @@ export function SignInForm({
           />
           {passwordHelp != null && <FieldDescription id={passwordHelpId}>{passwordHelp}</FieldDescription>}
           <FieldError role="alert" match={passwordInvalid}>
-            {messages?.passwordRequired ?? 'Enter your password.'}
+            {messages?.passwordRequired ?? labels?.passwordRequired ?? t('signIn.passwordRequired')}
           </FieldError>
         </Field>
-        <Checkbox label="Keep me signed in" checked={remember} onCheckedChange={setRemember} />
+        <Checkbox label={labels?.remember ?? t('signIn.remember')} checked={remember} onCheckedChange={setRemember} />
         <Button type="submit" size="lg" loading={busy} className="mt-2 w-full">
-          Sign in
+          {labels?.submit ?? t('signIn.submit')}
         </Button>
       </form>
       {sso != null && (
         <>
-          <AuthDivider>Or continue with</AuthDivider>
+          <AuthDivider>{labels?.divider ?? t('signIn.divider')}</AuthDivider>
           {sso}
         </>
       )}
@@ -211,9 +238,9 @@ export function SignInForm({
         <p className="mt-7 text-center text-[13px] text-muted-foreground">
           {signUpPrompt === undefined ? (
             <>
-              New here?{' '}
+              {labels?.signUpPrompt ?? t('signIn.signUpPrompt')}{' '}
               <Link href={signUpHref} onClick={linkHandler(onSignUp)}>
-                Create an account
+                {labels?.signUp ?? t('signIn.signUp')}
               </Link>
             </>
           ) : (

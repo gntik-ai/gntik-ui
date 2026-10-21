@@ -1,9 +1,26 @@
-import { Alert, Button, Field, FieldError, FieldLabel, PasswordInput, cn } from '@gntik-ai/ui';
+import { useI18n, Alert, Button, Field, FieldError, FieldLabel, PasswordInput, cn } from '@gntik-ai/ui';
 import { CircleCheck } from '@gntik-ai/icons';
 import { useState, type ReactNode } from 'react';
 import { AuthHeader, authFormClass, useAsyncSubmit } from '../shared';
 
+export interface ResetPasswordFormLabels {
+  eyebrow: string;
+  title: string;
+  description: (minimum: number) => string;
+  newPassword: string;
+  confirmPassword: string;
+  passwordTooShort: (minimum: number) => string;
+  passwordMismatch: string;
+  submit: string;
+  successTitle: string;
+  successDescription: string;
+  successStatus: string;
+  continue: string;
+  fallbackError: string;
+}
+
 export interface ResetPasswordFormProps {
+  labels?: Partial<ResetPasswordFormLabels>;
   /** Saves the new password. A returned promise shows the loading state; a rejection shows in the alert. */
   onSubmit?: (password: string) => void | Promise<void>;
   error?: string | null;
@@ -16,19 +33,22 @@ export interface ResetPasswordFormProps {
 
 /** New password + confirmation with length and mismatch validation, then a success state. */
 export function ResetPasswordForm({
+  labels,
   onSubmit,
   error: errorProp,
   minPasswordLength = 8,
   onContinue,
-  eyebrow = 'Account recovery',
+  eyebrow: eyebrowProp,
   className,
 }: ResetPasswordFormProps) {
+  const { t } = useI18n();
+  const eyebrow = eyebrowProp === undefined ? (labels?.eyebrow ?? t('resetPassword.eyebrow')) : eyebrowProp;
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [confirmTouched, setConfirmTouched] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [done, setDone] = useState(false);
-  const { loading, error, run } = useAsyncSubmit('Your password could not be updated.');
+  const { loading, error, run } = useAsyncSubmit(labels?.fallbackError ?? t('resetPassword.fallbackError'));
   const alert = errorProp ?? error;
   const tooShort = password.length < minPasswordLength;
   const mismatch = confirm !== password;
@@ -43,14 +63,14 @@ export function ResetPasswordForm({
         </span>
         <AuthHeader
           eyebrow={eyebrow}
-          title="Password updated"
-          description="You can now sign in with your new password. Other sessions were signed out."
+          title={labels?.successTitle ?? t('resetPassword.successTitle')}
+          description={labels?.successDescription ?? t('resetPassword.successDescription')}
         />
         <div role="status" className="sr-only">
-          Password updated.
+          {labels?.successStatus ?? t('resetPassword.successStatus')}
         </div>
         <Button size="lg" className="w-full" onClick={onContinue}>
-          Continue to sign in
+          {labels?.continue ?? t('resetPassword.continue')}
         </Button>
       </div>
     );
@@ -60,12 +80,14 @@ export function ResetPasswordForm({
     <div className={cn(authFormClass, className)}>
       <AuthHeader
         eyebrow={eyebrow}
-        title="Set a new password"
-        description={`Use at least ${minPasswordLength} characters. Avoid passwords you use elsewhere.`}
+        title={labels?.title ?? t('resetPassword.title')}
+        description={
+          labels?.description?.(minPasswordLength) ?? t('resetPassword.description', { minimum: minPasswordLength })
+        }
       />
       <form
         noValidate
-        aria-label="Set a new password"
+        aria-label={labels?.title ?? t('resetPassword.title')}
         className="flex flex-col gap-4"
         onSubmit={(e) => {
           e.preventDefault();
@@ -76,12 +98,15 @@ export function ResetPasswordForm({
       >
         {alert && <Alert tone="destructive" description={alert} />}
         <Field invalid={passwordInvalid}>
-          <FieldLabel>New password</FieldLabel>
+          <FieldLabel>{labels?.newPassword ?? t('resetPassword.newPassword')}</FieldLabel>
           <PasswordInput showStrength value={password} onValueChange={setPassword} required />
-          <FieldError match={passwordInvalid}>Use at least {minPasswordLength} characters.</FieldError>
+          <FieldError match={passwordInvalid}>
+            {labels?.passwordTooShort?.(minPasswordLength) ??
+              t('resetPassword.passwordTooShort', { minimum: minPasswordLength })}
+          </FieldError>
         </Field>
         <Field invalid={confirmInvalid}>
-          <FieldLabel>Confirm password</FieldLabel>
+          <FieldLabel>{labels?.confirmPassword ?? t('resetPassword.confirmPassword')}</FieldLabel>
           <PasswordInput
             autoComplete="new-password"
             value={confirm}
@@ -89,10 +114,12 @@ export function ResetPasswordForm({
             onBlur={() => setConfirmTouched(true)}
             required
           />
-          <FieldError match={confirmInvalid}>Passwords don't match.</FieldError>
+          <FieldError match={confirmInvalid}>
+            {labels?.passwordMismatch ?? t('resetPassword.passwordMismatch')}
+          </FieldError>
         </Field>
         <Button type="submit" size="lg" loading={loading} className="mt-2 w-full">
-          Update password
+          {labels?.submit ?? t('resetPassword.submit')}
         </Button>
       </form>
     </div>

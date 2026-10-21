@@ -26,7 +26,26 @@ export interface CredentialDisclosure {
   secret: string;
 }
 
+export interface CredentialDisclosureDialogLabels {
+  title: string;
+  description: string;
+  credentialIdLabel: string;
+  expiryLabel: string;
+  secretLabel: string;
+  showLabel: string;
+  hideLabel: string;
+  copyLabel: string;
+  copiedLabel: string;
+  successAnnouncement: string;
+  failureAnnouncement: string;
+  warningTitle: string;
+  warningText: string;
+  closeLabel: string;
+  copiedAnnouncementFor: (label: string, copied: string) => string;
+}
+
 export interface CredentialDisclosureDialogProps {
+  labels?: Partial<CredentialDisclosureDialogLabels>;
   /** Additional masked values; ids must be unique, non-empty and not "secret". */
   additionalSecrets?: readonly CredentialSecret[];
   /** Mask a fresh primary secret; read at the start of each session. */
@@ -181,25 +200,29 @@ function DisclosureSession(props: OpeningProps & FocusScope & { returnFocus: () 
     setOpen(false);
     props.onClose();
   };
-  const closeLabel = props.closeLabel ?? t('credentialDisclosure.close');
-  const title = props.title ?? t('credentialDisclosure.title');
-  const description = props.description ?? t('credentialDisclosure.description');
-  const secretLabel = props.secretLabel ?? t('credentialDisclosure.secret');
+  const closeLabel = props.closeLabel ?? props.labels?.closeLabel ?? t('credentialDisclosure.close');
+  const title = props.title ?? props.labels?.title ?? t('credentialDisclosure.title');
+  const description = props.description ?? props.labels?.description ?? t('credentialDisclosure.description');
+  const secretLabel = props.secretLabel ?? props.labels?.secretLabel ?? t('credentialDisclosure.secret');
   const warning =
     disclosure.variant === 'fresh' ? (
       <Alert
         role={presentation === 'inline' ? 'note' : 'alert'}
         tone="warning"
-        title={props.warningTitle ?? t('credentialDisclosure.warningTitle')}
-        description={props.warningText ?? t('credentialDisclosure.warningText')}
+        title={props.warningTitle ?? props.labels?.warningTitle ?? t('credentialDisclosure.warningTitle')}
+        description={props.warningText ?? props.labels?.warningText ?? t('credentialDisclosure.warningText')}
       />
     ) : null;
   const body = (
     <>
       <dl className="grid grid-cols-2 gap-2 text-sm">
-        <dt className="text-muted-foreground">{props.credentialIdLabel ?? t('credentialDisclosure.credentialId')}</dt>
+        <dt className="text-muted-foreground">
+          {props.credentialIdLabel ?? props.labels?.credentialIdLabel ?? t('credentialDisclosure.credentialId')}
+        </dt>
         <dd className="break-all font-mono">{disclosure.credentialId}</dd>
-        <dt className="text-muted-foreground">{props.expiryLabel ?? t('credentialDisclosure.expiry')}</dt>
+        <dt className="text-muted-foreground">
+          {props.expiryLabel ?? props.labels?.expiryLabel ?? t('credentialDisclosure.expiry')}
+        </dt>
         <dd>{disclosure.expiresAt}</dd>
       </dl>
       <SecretCopy

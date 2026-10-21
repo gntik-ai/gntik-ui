@@ -1,11 +1,18 @@
-import { Button, cn } from '@gntik-ai/ui';
+import { useI18n, Button, cn } from '@gntik-ai/ui';
 import { useId, useState, type ReactNode } from 'react';
-import { ConfirmDestructiveDialog } from './ConfirmDestructiveDialog';
+import { ConfirmDestructiveDialog, type ConfirmDestructiveDialogLabels } from './ConfirmDestructiveDialog';
 import { dangerZoneActions, type DangerZoneAction } from './fixtures';
 
 export type { DangerZoneAction } from './fixtures';
 
+export interface DangerZoneLabels extends ConfirmDestructiveDialogLabels {
+  title: string;
+  description: string;
+  confirmationTitle: (title: string) => string;
+}
+
 export interface DangerZoneProps {
+  labels?: Partial<DangerZoneLabels>;
   title?: ReactNode;
   description?: ReactNode;
   actions?: DangerZoneAction[];
@@ -20,13 +27,18 @@ export interface DangerZoneProps {
  * `confirmText` require typing it (e.g. the project name) before the confirm button enables.
  */
 export function DangerZone({
-  title = 'Danger zone',
-  description = 'These actions affect the whole project and every member who can access it.',
+  labels,
+  title: titleProp,
+  description: descriptionProp,
   actions = dangerZoneActions,
   onConfirm,
   headingLevel: Heading = 'h2',
   className,
 }: DangerZoneProps) {
+  const { t } = useI18n();
+  const title = titleProp === undefined ? (labels?.title ?? t('dangerZone.title')) : titleProp;
+  const description =
+    descriptionProp === undefined ? (labels?.description ?? t('dangerZone.description')) : descriptionProp;
   const id = useId();
   const [pending, setPending] = useState<DangerZoneAction | null>(null);
   const [open, setOpen] = useState(false);
@@ -74,7 +86,10 @@ export function DangerZone({
           key={pending.id}
           open={open}
           onOpenChange={setOpen}
-          title={`${pending.title}?`}
+          labels={labels}
+          title={
+            labels?.confirmationTitle?.(pending.title) ?? t('dangerZone.confirmationTitle', { title: pending.title })
+          }
           description={pending.description}
           confirmText={pending.confirmText}
           confirmLabel={pending.actionLabel}

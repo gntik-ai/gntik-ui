@@ -1,11 +1,37 @@
 import type { BlockMeta } from '../../meta';
+import type { SignUpFormLabels } from './SignUpForm';
 
 export const meta: BlockMeta = {
   name: 'Sign-up form',
   family: 'auth',
   status: 'stable',
   description:
-    'Account creation with default name/email fields or ordered text/email fields (values.fields), a password strength meter and required consent (terms=false opts out). minPasswordLength defaults to 8 and drives length validation and the insufficient-length meter; optional passwordHelp can receive the minimum. Configured fields support help, required, autoComplete and validation messages, with a linked validation summary on invalid submit. policyLoading renders skeletons without a form; unavailable replaces the form with consumer title, message and optional action. loading remains submitting; error is form-level feedback. Examples: custom-fields, no-terms, unavailable, loading, submitting and error.',
+    'Account creation with default name/email fields or ordered text/email fields (values.fields), a password strength meter and required consent (terms=false opts out). minPasswordLength defaults to 8 and drives length validation and the insufficient-length meter; optional passwordHelp can receive the minimum. Configured fields support help, required, autoComplete and validation messages, with a linked validation summary on invalid submit. policyLoading renders skeletons without a form; unavailable replaces the form with consumer title, message and optional action. loading remains submitting; error is form-level feedback. Examples: custom-fields, no-terms, unavailable, loading, submitting and error. Optional labels?: Partial<SignUpFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-up-form--labels.',
+  labels: [
+    { key: 'eyebrow', type: 'string', state: 'Default content and accessible names' },
+    { key: 'title', type: 'string', state: 'Default content and accessible names' },
+    { key: 'description', type: 'string', state: 'Default content and accessible names' },
+    { key: 'name', type: 'string', state: 'Default content and accessible names' },
+    { key: 'namePlaceholder', type: 'string', state: 'Default content and accessible names' },
+    { key: 'nameRequired', type: 'string', state: 'Validation feedback' },
+    { key: 'email', type: 'string', state: 'Default content and accessible names' },
+    { key: 'emailPlaceholder', type: 'string', state: 'Default content and accessible names' },
+    { key: 'password', type: 'string', state: 'Default content and accessible names' },
+    { key: 'passwordTooShort', type: '(minimum: number) => string', state: 'Validation feedback' },
+    { key: 'termsRequired', type: 'string', state: 'Validation feedback' },
+    { key: 'terms', type: 'string', state: 'Default content and accessible names' },
+    { key: 'privacy', type: 'string', state: 'Default content and accessible names' },
+    { key: 'termsConsent', type: '(terms: ReactNode, privacy: ReactNode) => ReactNode', state: 'Async feedback' },
+    { key: 'submit', type: 'string', state: 'Default content and accessible names' },
+    { key: 'divider', type: 'string', state: 'Default content and accessible names' },
+    { key: 'signInPrompt', type: 'string', state: 'Default content and accessible names' },
+    { key: 'signIn', type: 'string', state: 'Default content and accessible names' },
+    { key: 'policyLoading', type: 'string', state: 'Async feedback' },
+    { key: 'fallbackError', type: 'string', state: 'Validation feedback' },
+    { key: 'emailInvalid', type: 'string', state: 'Validation feedback' },
+    { key: 'fieldRequired', type: '(label: string) => string', state: 'Validation feedback' },
+    { key: 'fieldInvalid', type: 'string', state: 'Validation feedback' },
+  ] satisfies Array<{ key: keyof SignUpFormLabels; type: string; state: string }>,
   uses: [
     'Field',
     'Input',

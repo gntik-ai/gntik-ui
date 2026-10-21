@@ -1,4 +1,5 @@
 import {
+  useI18n,
   Alert,
   Button,
   Checkbox,
@@ -36,7 +37,29 @@ export interface CreateApiKeyInput {
   expiry: string;
 }
 
+export interface CreateApiKeyDialogLabels {
+  title: string;
+  description: string;
+  name: string;
+  namePlaceholder: string;
+  nameRequired: string;
+  scopes: string;
+  scopesRequired: string;
+  expiration: string;
+  errorTitle: string;
+  fallbackError: string;
+  cancel: string;
+  submit: string;
+  successTitle: string;
+  successDescription: string;
+  warningTitle: string;
+  warningDescription: string;
+  secretLabel: string;
+  done: string;
+}
+
 export interface CreateApiKeyDialogProps {
+  labels?: Partial<CreateApiKeyDialogLabels>;
   scopes?: ApiKeyScope[];
   expiries?: ApiKeyExpiry[];
   defaultExpiry?: string;
@@ -54,6 +77,7 @@ export interface CreateApiKeyDialogProps {
  * with copy. Closing the dialog discards the secret; it can't be shown again.
  */
 export function CreateApiKeyDialog({
+  labels,
   scopes = apiKeyScopes,
   expiries = apiKeyExpiries,
   defaultExpiry = '90d',
@@ -63,6 +87,7 @@ export function CreateApiKeyDialog({
   onOpenChange,
   trigger = <Button icon={KeyRound} />,
 }: CreateApiKeyDialogProps) {
+  const { t } = useI18n();
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [name, setName] = useState('');
   const [selected, setSelected] = useState<string[]>([]);
@@ -98,22 +123,20 @@ export function CreateApiKeyDialog({
       const value = await onCreate({ name: name.trim(), scopes: selected, expiry });
       setSecret(value);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'The key could not be created.');
+      setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('createApiKey.fallbackError')));
     }
     setLoading(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {trigger && <DialogTrigger render={trigger}>Create API key</DialogTrigger>}
+      {trigger && <DialogTrigger render={trigger}>{labels?.title ?? t('createApiKey.title')}</DialogTrigger>}
       <DialogContent size="lg">
         {secret == null ? (
           <>
             <DialogHeader>
-              <DialogTitle>Create API key</DialogTitle>
-              <DialogDescription>
-                Keys act on behalf of this workspace. Grant only the scopes the integration needs.
-              </DialogDescription>
+              <DialogTitle>{labels?.title ?? t('createApiKey.title')}</DialogTitle>
+              <DialogDescription>{labels?.description ?? t('createApiKey.description')}</DialogDescription>
             </DialogHeader>
             <form
               noValidate
@@ -124,21 +147,21 @@ export function CreateApiKeyDialog({
             >
               <DialogBody className="grid gap-5">
                 <Field invalid={nameInvalid}>
-                  <FieldLabel required>Name</FieldLabel>
+                  <FieldLabel required>{labels?.name ?? t('createApiKey.name')}</FieldLabel>
                   <Input
                     value={name}
                     onValueChange={setName}
-                    placeholder="ci-deployments"
+                    placeholder={labels?.namePlaceholder ?? t('createApiKey.namePlaceholder')}
                     required
                     autoComplete="off"
                   />
-                  <FieldError match={nameInvalid}>Give the key a name.</FieldError>
+                  <FieldError match={nameInvalid}>{labels?.nameRequired ?? t('createApiKey.nameRequired')}</FieldError>
                 </Field>
                 <Fieldset
                   render={<CheckboxGroup value={selected} onValueChange={setSelected} />}
                   aria-invalid={scopesInvalid || undefined}
                 >
-                  <FieldsetLegend>Scopes</FieldsetLegend>
+                  <FieldsetLegend>{labels?.scopes ?? t('createApiKey.scopes')}</FieldsetLegend>
                   {scopes.map((s) => (
                     <Checkbox
                       key={s.value}
@@ -147,10 +170,14 @@ export function CreateApiKeyDialog({
                       description={s.description}
                     />
                   ))}
-                  {scopesInvalid && <p className="text-[12.5px] text-destructive-text">Select at least one scope.</p>}
+                  {scopesInvalid && (
+                    <p className="text-[12.5px] text-destructive-text">
+                      {labels?.scopesRequired ?? t('createApiKey.scopesRequired')}
+                    </p>
+                  )}
                 </Fieldset>
                 <Field>
-                  <FieldLabel>Expiration</FieldLabel>
+                  <FieldLabel>{labels?.expiration ?? t('createApiKey.expiration')}</FieldLabel>
                   <Select value={expiry} onValueChange={(v) => v != null && setExpiry(v)} items={expiries}>
                     <SelectTrigger className="w-full sm:w-56" />
                     <SelectContent>
@@ -162,12 +189,20 @@ export function CreateApiKeyDialog({
                     </SelectContent>
                   </Select>
                 </Field>
-                {error && <Alert tone="destructive" title="Key not created" description={error} />}
+                {error && (
+                  <Alert
+                    tone="destructive"
+                    title={labels?.errorTitle ?? t('createApiKey.errorTitle')}
+                    description={error}
+                  />
+                )}
               </DialogBody>
               <DialogFooter>
-                <DialogClose render={<Button variant="ghost" disabled={loading} />}>Cancel</DialogClose>
+                <DialogClose render={<Button variant="ghost" disabled={loading} />}>
+                  {labels?.cancel ?? t('createApiKey.cancel')}
+                </DialogClose>
                 <Button type="submit" loading={loading}>
-                  Create key
+                  {labels?.submit ?? t('createApiKey.submit')}
                 </Button>
               </DialogFooter>
             </form>
@@ -175,19 +210,26 @@ export function CreateApiKeyDialog({
         ) : (
           <>
             <DialogHeader>
-              <DialogTitle>API key created</DialogTitle>
-              <DialogDescription>Store it in your secrets manager. Use it as a bearer token.</DialogDescription>
+              <DialogTitle>{labels?.successTitle ?? t('createApiKey.successTitle')}</DialogTitle>
+              <DialogDescription>
+                {labels?.successDescription ?? t('createApiKey.successDescription')}
+              </DialogDescription>
             </DialogHeader>
             <DialogBody className="grid gap-4">
               <Alert
                 tone="warning"
-                title="Copy this key now"
-                description="For your security it is shown only once. If you lose it, revoke it and create a new one."
+                title={labels?.warningTitle ?? t('createApiKey.warningTitle')}
+                description={labels?.warningDescription ?? t('createApiKey.warningDescription')}
               />
-              <CodeBlock code={secret} label="New API key" wrapToggle={false} defaultWrap />
+              <CodeBlock
+                code={secret}
+                label={labels?.secretLabel ?? t('createApiKey.secretLabel')}
+                wrapToggle={false}
+                defaultWrap
+              />
             </DialogBody>
             <DialogFooter>
-              <DialogClose render={<Button />}>Done</DialogClose>
+              <DialogClose render={<Button />}>{labels?.done ?? t('createApiKey.done')}</DialogClose>
             </DialogFooter>
           </>
         )}

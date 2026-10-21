@@ -1,4 +1,5 @@
 import {
+  useI18n,
   Alert,
   Button,
   Dialog,
@@ -33,7 +34,27 @@ export interface InvitePayload {
   message: string;
 }
 
+export interface InviteMembersDialogLabels {
+  title: string;
+  description: string;
+  emails: string;
+  placeholder: string;
+  listLabel: string;
+  role: string;
+  message: string;
+  messagePlaceholder: string;
+  emailRequired: string;
+  emailInvalid: (email: string) => string;
+  fixInvalid: (count: number) => string;
+  errorTitle: string;
+  fallbackError: string;
+  cancel: string;
+  submit: string;
+  submitMany: (count: number) => string;
+}
+
 export interface InviteMembersDialogProps {
+  labels?: Partial<InviteMembersDialogLabels>;
   roles?: RoleOption[];
   defaultRole?: string;
   /** Sends the invitations. A returned promise shows a loading state; a rejection shows its message. */
@@ -49,10 +70,9 @@ export interface InviteMembersDialogProps {
   description?: string;
 }
 
-const emailError = (t: string) => (EMAIL_RE.test(t) ? null : `${t} is not a valid email address`);
-
 /** Invite dialog: email chips with validation, a role and an optional message; submit with loading. */
 export function InviteMembersDialog({
+  labels,
   roles = memberRoles,
   defaultRole = 'member',
   onInvite,
@@ -61,9 +81,14 @@ export function InviteMembersDialog({
   defaultOpen = false,
   onOpenChange,
   trigger = <Button icon={UserPlus} />,
-  title = 'Invite members',
-  description = 'Invitations expire after 7 days. Separate addresses with commas or Enter.',
+  title: titleProp,
+  description: descriptionProp,
 }: InviteMembersDialogProps) {
+  const { t } = useI18n();
+  const title = titleProp ?? labels?.title ?? t('inviteMembers.title');
+  const description = descriptionProp ?? labels?.description ?? t('inviteMembers.description');
+  const emailError = (email: string) =>
+    EMAIL_RE.test(email) ? null : (labels?.emailInvalid?.(email) ?? t('inviteMembers.emailInvalid', { email }));
   const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [emails, setEmails] = useState<string[]>([]);
   const [role, setRole] = useState(defaultRole);
@@ -76,9 +101,9 @@ export function InviteMembersDialog({
   const invalidCount = emails.filter((e) => emailError(e)).length;
   const emailsProblem =
     emails.length === 0
-      ? 'Add at least one email address.'
+      ? (labels?.emailRequired ?? t('inviteMembers.emailRequired'))
       : invalidCount > 0
-        ? `Fix ${invalidCount} invalid ${invalidCount === 1 ? 'address' : 'addresses'}.`
+        ? (labels?.fixInvalid?.(invalidCount) ?? t('inviteMembers.fixInvalid', { count: invalidCount }))
         : null;
   const showEmailError = submitted && emailsProblem != null;
 
@@ -106,7 +131,7 @@ export function InviteMembersDialog({
       setOpen(false);
     } catch (e) {
       setLoading(false);
-      setError(e instanceof Error ? e.message : 'The invitations could not be sent.');
+      setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('inviteMembers.fallbackError')));
     }
   };
 
@@ -129,20 +154,20 @@ export function InviteMembersDialog({
         >
           <DialogBody className="grid gap-5">
             <Field invalid={showEmailError}>
-              <FieldLabel required>Email addresses</FieldLabel>
+              <FieldLabel required>{labels?.emails ?? t('inviteMembers.emails')}</FieldLabel>
               <TokenInput
                 value={emails}
                 onValueChange={setEmails}
                 validate={emailError}
                 maxItems={maxInvites}
-                placeholder="name@company.com"
-                listLabel="Invited addresses"
+                placeholder={labels?.placeholder ?? t('inviteMembers.placeholder')}
+                listLabel={labels?.listLabel ?? t('inviteMembers.listLabel')}
                 invalid={showEmailError}
               />
               <FieldError match={showEmailError}>{emailsProblem}</FieldError>
             </Field>
             <Field>
-              <FieldLabel>Role</FieldLabel>
+              <FieldLabel>{labels?.role ?? t('inviteMembers.role')}</FieldLabel>
               <Select
                 value={role}
                 onValueChange={(v) => v != null && setRole(v)}
@@ -160,20 +185,30 @@ export function InviteMembersDialog({
               {roleLabel && <FieldDescription>{roleLabel}</FieldDescription>}
             </Field>
             <Field>
-              <FieldLabel>Message (optional)</FieldLabel>
+              <FieldLabel>{labels?.message ?? t('inviteMembers.message')}</FieldLabel>
               <Textarea
                 rows={3}
                 value={message}
                 onValueChange={setMessage}
-                placeholder="Join us on the billing-dashboard project."
+                placeholder={labels?.messagePlaceholder ?? t('inviteMembers.messagePlaceholder')}
               />
             </Field>
-            {error && <Alert tone="destructive" title="Invitations not sent" description={error} />}
+            {error && (
+              <Alert
+                tone="destructive"
+                title={labels?.errorTitle ?? t('inviteMembers.errorTitle')}
+                description={error}
+              />
+            )}
           </DialogBody>
           <DialogFooter>
-            <DialogClose render={<Button variant="ghost" disabled={loading} />}>Cancel</DialogClose>
+            <DialogClose render={<Button variant="ghost" disabled={loading} />}>
+              {labels?.cancel ?? t('inviteMembers.cancel')}
+            </DialogClose>
             <Button type="submit" loading={loading}>
-              {emails.length > 1 ? `Send ${emails.length} invitations` : 'Send invitation'}
+              {emails.length > 1
+                ? (labels?.submitMany?.(emails.length) ?? t('inviteMembers.submitMany', { count: emails.length }))
+                : (labels?.submit ?? t('inviteMembers.submit'))}
             </Button>
           </DialogFooter>
         </form>
