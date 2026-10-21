@@ -1,5 +1,17 @@
 # @gntik-ai/chat
 
+## 0.10.0
+
+### Patch Changes
+
+- 9dd0d8d: Unify locale-aware file sizes across thumbnails, uploads and chat, with binary and bit options, consistent chart unit promotion, and a decimal 25 MB default upload limit.
+- Updated dependencies [e130bce]
+- Updated dependencies [d05dc61]
+- Updated dependencies [77301a9]
+- Updated dependencies [609af5a]
+- Updated dependencies [9dd0d8d]
+  - @gntik-ai/ui@0.10.0
+
 ## 0.9.0
 
 ### Minor Changes

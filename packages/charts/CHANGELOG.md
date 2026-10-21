@@ -1,5 +1,12 @@
 # @gntik-ai/charts
 
+## 0.10.0
+
+### Patch Changes
+
+- 79cb85e: Add English/Spanish chart labels with ChartLocaleProvider and bridge the kit locale in chart blocks and ConsoleShell; generated accessible names now follow Spanish providers, while explicit props and English defaults remain unchanged.
+- 9dd0d8d: Unify locale-aware file sizes across thumbnails, uploads and chat, with binary and bit options, consistent chart unit promotion, and a decimal 25 MB default upload limit.
+
 ## 0.5.0
 
 ### Patch Changes
