@@ -7,7 +7,7 @@
    API reference.
    ============================================================================ */
 import { useEffect, useMemo, useState } from 'react';
-import { Table, TableCaption, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@gntik-ai/ui';
+import { Table, TableCaption, TableHeader, TableBody, TableRow, TableHead, TableCell, useI18n } from '@gntik-ai/ui';
 import { CATALOG, loadSource } from '../preview-registry.js';
 import { previewQuery, usePreviewSettings } from '../preview-settings.jsx';
 
@@ -128,6 +128,7 @@ function Viewer({ kind, id, title, file, height }) {
 }
 
 function Gallery({ kicker, title, intro, groups, kind, height, api }) {
+  const { t } = useI18n();
   const names = groups.map(([g]) => g);
   const [group, setGroup] = useState('All');
   const shown = group === 'All' ? groups : groups.filter(([g]) => g === group);
@@ -205,13 +206,16 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
               {kind === 'block' && ['month-calendar', 'week-calendar', 'agenda-list'].includes(it.id) && (
-                <Viewer
-                  kind="block"
-                  id={`${it.id}--locale`}
-                  title={it.title}
-                  file={`../../../packages/blocks/src/scheduling/${it.id === 'month-calendar' ? 'MonthCalendar' : it.id === 'week-calendar' ? 'WeekCalendar' : 'AgendaList'}/examples/Locale.tsx`}
-                  height={height}
-                />
+                <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">{t('calendar.localeDefaults')}</h4>
+                  <Viewer
+                    kind="block"
+                    id={`${it.id}--locale`}
+                    title={`${it.title} · ${t('calendar.localeDefaults')}`}
+                    file={`${it.file.slice(0, it.file.lastIndexOf('/'))}/examples/Locale.tsx`}
+                    height={height}
+                  />
+                </>
               )}
               {kind === 'block' && it.id === 'flow-builder' && (
                 <Viewer

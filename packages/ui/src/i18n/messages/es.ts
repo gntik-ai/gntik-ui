@@ -230,6 +230,7 @@ export const es: Messages = {
   'calendar.month': 'Mes',
   'calendar.year': 'Año',
   'calendar.label': 'Calendario',
+  'calendar.localeDefaults': 'Valores predeterminados regionales',
   'calendar.previousMonth': 'Mes anterior',
   'calendar.nextMonth': 'Mes siguiente',
   'calendar.today': 'Hoy',

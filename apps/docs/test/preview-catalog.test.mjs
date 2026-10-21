@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 import test from 'node:test';
 
 test('block gallery lists installable blocks while Spanish PageHeader remains previewable', async () => {
@@ -26,5 +27,48 @@ test('block gallery lists installable blocks while Spanish PageHeader remains pr
     assert.match(source, /I18nProvider locale="es"/);
   } finally {
     await server.close();
+  }
+});
+
+test('scheduling locale previews have distinct frame titles and control names', async () => {
+  const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
+  const { JSDOM } = require('jsdom');
+  const React = require('react');
+  const { renderToStaticMarkup } = require('react-dom/server');
+  const { createServer } = await import('vite');
+  const dom = new JSDOM();
+  const originalWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const originalDocument = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  const originalReact = Object.getOwnPropertyDescriptor(globalThis, 'React');
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: dom.window });
+  Object.defineProperty(globalThis, 'document', { configurable: true, value: dom.window.document });
+  Object.defineProperty(globalThis, 'React', { configurable: true, value: React });
+  const server = await createServer({
+    root: fileURLToPath(new URL('..', import.meta.url)),
+    server: { middlewareMode: true, ws: false, watch: null },
+    optimizeDeps: { noDiscovery: true, include: [] },
+  });
+  try {
+    await server.ssrLoadModule('/src/catalog/kit.jsx');
+    await server.ssrLoadModule('/src/catalog/viewers.jsx');
+    dom.window.document.body.innerHTML = renderToStaticMarkup(React.createElement(dom.window.SECTIONS.blocks));
+    for (const id of ['month-calendar', 'week-calendar', 'agenda-list']) {
+      const article = dom.window.document.querySelector(`[aria-labelledby="block-${id}-t"]`);
+      const titles = [...article.querySelectorAll('iframe')].map((frame) => frame.title);
+      assert.equal(titles.length, 2);
+      assert.equal(new Set(titles).size, 2, `${id} frame titles must be unique`);
+      const labels = [...article.querySelectorAll('[role="group"]')].map((group) => group.getAttribute('aria-label'));
+      assert.equal(new Set(labels).size, labels.length, `${id} control groups must have distinct names`);
+      assert.equal(article.querySelector('h4')?.textContent, 'Locale defaults');
+    }
+  } finally {
+    await server.close();
+    dom.window.close();
+    if (originalWindow) Object.defineProperty(globalThis, 'window', originalWindow);
+    else delete globalThis.window;
+    if (originalDocument) Object.defineProperty(globalThis, 'document', originalDocument);
+    else delete globalThis.document;
+    if (originalReact) Object.defineProperty(globalThis, 'React', originalReact);
+    else delete globalThis.React;
   }
 });
