@@ -63,6 +63,9 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 
 export const PREVIEW_LOADERS = {
   block: {
+    'month-calendar--locale': () => import('../../../packages/blocks/src/scheduling/MonthCalendar/examples/Locale'),
+    'week-calendar--locale': () => import('../../../packages/blocks/src/scheduling/WeekCalendar/examples/Locale'),
+    'agenda-list--locale': () => import('../../../packages/blocks/src/scheduling/AgendaList/examples/Locale'),
     'flow-builder--controlled-graph': () =>
       import('../../../packages/blocks/src/builders/FlowBuilder/examples/ControlledGraph'),
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),

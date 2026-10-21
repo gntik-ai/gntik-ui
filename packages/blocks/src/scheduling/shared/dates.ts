@@ -1,4 +1,5 @@
-/** Native-Date helpers for the scheduling blocks. Weeks start on Monday. */
+/** Native-Date helpers for the scheduling blocks. Week starts are caller-supplied. */
+import type { WeekDay } from '@gntik-ai/ui';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -31,19 +32,19 @@ export function sameMonth(a: Date, b: Date): boolean {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth();
 }
 
-/** Monday of the week containing `d`. */
-export function startOfWeek(d: Date): Date {
-  return addDays(startOfDay(d), -((d.getDay() + 6) % 7));
+/** First day of the week containing `d`. */
+export function startOfWeek(d: Date, weekStartsOn: WeekDay): Date {
+  return addDays(startOfDay(d), -((d.getDay() - weekStartsOn + 7) % 7));
 }
 
-export function weekDays(d: Date): Date[] {
-  const mon = startOfWeek(d);
-  return Array.from({ length: 7 }, (_, i) => addDays(mon, i));
+export function weekDays(d: Date, weekStartsOn: WeekDay): Date[] {
+  const first = startOfWeek(d, weekStartsOn);
+  return Array.from({ length: 7 }, (_, i) => addDays(first, i));
 }
 
-/** Six Monday-first weeks covering the month of `d`. */
-export function monthGrid(d: Date): Date[][] {
-  const start = startOfWeek(startOfMonth(d));
+/** Six weeks covering the month of `d`, starting on `weekStartsOn`. */
+export function monthGrid(d: Date, weekStartsOn: WeekDay): Date[][] {
+  const start = startOfWeek(startOfMonth(d), weekStartsOn);
   return Array.from({ length: 6 }, (_, w) => Array.from({ length: 7 }, (_, i) => addDays(start, w * 7 + i)));
 }
 
@@ -53,23 +54,33 @@ export function hourOf(d: Date): number {
 }
 
 const cache = new Map<string, Intl.DateTimeFormat>();
-/** Cached Intl formatter; `locale` defaults to en-US (pass `useI18n().locale` to localise). */
+/** Cached Intl formatter; an omitted locale uses the runtime locale. */
 const fmt = (locale: string | undefined, opts: Intl.DateTimeFormatOptions) => {
-  const key = `${locale ?? 'en-US'}|${JSON.stringify(opts)}`;
+  const key = `${locale ?? new Intl.DateTimeFormat().resolvedOptions().locale}|${JSON.stringify(opts)}`;
   let f = cache.get(key);
   if (!f) {
-    f = new Intl.DateTimeFormat(locale ?? 'en-US', opts);
+    f = new Intl.DateTimeFormat(locale, opts);
     cache.set(key, f);
   }
   return f;
 };
 
-/** "09:30". */
-export const formatTime = (d: Date, locale?: string) =>
-  fmt(locale, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d);
-/** "09:30–10:00". */
-export const formatRange = (start: Date, end: Date, locale?: string) =>
-  `${formatTime(start, locale)}–${formatTime(end, locale)}`;
+/** The clock options accepted by the scheduling blocks. */
+export type HourCycle = 'h12' | 'h23';
+
+/** "9:30 AM" or "09:30". */
+export const formatTime = (d: Date, locale: string | undefined, hourCycle: HourCycle) =>
+  fmt(locale, { hour: hourCycle === 'h12' ? 'numeric' : '2-digit', minute: '2-digit', hourCycle }).format(d);
+/** "9:30 AM–10:00 AM" or "09:30–10:00". */
+export const formatRange = (start: Date, end: Date, locale: string | undefined, hourCycle: HourCycle) =>
+  `${formatTime(start, locale, hourCycle)}–${formatTime(end, locale, hourCycle)}`;
+/** Compact gutter label: "9 AM" or "09:00". */
+export const formatHour = (hour: number, locale: string | undefined, hourCycle: HourCycle) =>
+  fmt(locale, {
+    hour: hourCycle === 'h12' ? 'numeric' : '2-digit',
+    ...(hourCycle === 'h23' ? { minute: '2-digit' as const } : {}),
+    hourCycle,
+  }).format(new Date(2026, 0, 1, hour));
 /** "Wednesday, April 15, 2026". */
 export const formatFullDate = (d: Date, locale?: string) =>
   fmt(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).format(d);
@@ -91,8 +102,21 @@ export function formatWeekRange(days: readonly Date[], locale?: string): string 
   if (!first || !last) return '';
   if (locale && !locale.toLowerCase().startsWith('en'))
     return fmt(locale, { month: 'short', day: 'numeric', year: 'numeric' }).formatRange(first, last);
-  if (sameMonth(first, last)) return `${formatShort(first)} – ${last.getDate()}, ${last.getFullYear()}`;
+  if (sameMonth(first, last)) return `${formatShort(first, 'en-US')} – ${last.getDate()}, ${last.getFullYear()}`;
   if (first.getFullYear() === last.getFullYear())
-    return `${formatShort(first)} – ${formatShort(last)}, ${last.getFullYear()}`;
-  return `${formatShort(first)}, ${first.getFullYear()} – ${formatShort(last)}, ${last.getFullYear()}`;
+    return `${formatShort(first, 'en-US')} – ${formatShort(last, 'en-US')}, ${last.getFullYear()}`;
+  return `${formatShort(first, 'en-US')}, ${first.getFullYear()} – ${formatShort(last, 'en-US')}, ${last.getFullYear()}`;
+}
+
+/** Internal to blocks: Intl weekdays 1–7 become JS weekdays 0–6. */
+export function weekendDays(locale?: string): WeekDay[] {
+  try {
+    const loc = new Intl.Locale(locale ?? new Intl.DateTimeFormat().resolvedOptions().locale) as Intl.Locale & {
+      getWeekInfo?: () => { weekend: number[] };
+      weekInfo?: { weekend: number[] };
+    };
+    const info = loc.getWeekInfo?.() ?? loc.weekInfo;
+    if (info) return info.weekend.map((day) => (day % 7) as WeekDay);
+  } catch {}
+  return [6, 0];
 }

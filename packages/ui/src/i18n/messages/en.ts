@@ -210,6 +210,7 @@ export const en = {
   'calendar.month': 'Month',
   'calendar.year': 'Year',
   'calendar.label': 'Calendar',
+  'calendar.localeDefaults': 'Locale defaults',
   'calendar.previousMonth': 'Previous month',
   'calendar.nextMonth': 'Next month',
   'calendar.today': 'Today',

@@ -168,7 +168,7 @@
       "name": "agenda-list",
       "type": "registry:block",
       "title": "Agenda list",
-      "description": "Upcoming scheduled work grouped by day (Today/Tomorrow labels), each row with a kind tile, time range, location and kind badge; empty state included.",
+      "description": "Upcoming scheduled work grouped by day (Today/Tomorrow labels), each row with a kind tile, locale-formatted time range, location and kind badge; empty state included. hourCycle overrides the provider/runtime clock. Locale examples show en-US, es-ES, then en-US with the 24-hour override.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -215,6 +215,11 @@
           "path": "packages/blocks/src/scheduling/shared/fixtures.ts",
           "type": "registry:lib",
           "target": "components/blocks/scheduling/shared/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/scheduling/shared/useSchedulingClock.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/scheduling/shared/useSchedulingClock.ts"
         }
       ]
     },
@@ -1385,7 +1390,7 @@
       "name": "calendar",
       "type": "registry:ui",
       "title": "Calendar",
-      "description": "Day or range selection with one or two months, inclusive min/max bounds and Intl names. The clickable month heading opens a month grid, then the year heading opens a shared 12-year page (2020–2031 for 2026). Set maxView=\"day\" for the previous static header, or \"month\" to stop at months; the default is \"year\". Optional view/defaultView/onViewChange control or report the view (initially \"day\"). captionLayout=\"select\" uses labelled kit month/year selects; yearRange={from,to} defaults to the current year ±10, clipped to min/max and including the visible year. Picking a month returns to days, preserving and clamping the focused day, and calls onMonthChange once with the first day. DatePicker and DateRangePicker forward maxView and captionLayout and reopen in the day view.",
+      "description": "The public localeWeekStart(locale?) helper returns the locale first weekday (0–6, Monday fallback), matching scheduling blocks. Day or range selection with one or two months, inclusive min/max bounds and Intl names. The clickable month heading opens a month grid, then the year heading opens a shared 12-year page (2020–2031 for 2026). Set maxView=\"day\" for the previous static header, or \"month\" to stop at months; the default is \"year\". Optional view/defaultView/onViewChange control or report the view (initially \"day\"). captionLayout=\"select\" uses labelled kit month/year selects; yearRange={from,to} defaults to the current year ±10, clipped to min/max and including the visible year. Picking a month returns to days, preserving and clamping the focused day, and calls onMonthChange once with the first day. DatePicker and DateRangePicker forward maxView and captionLayout and reopen in the day view.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -7236,7 +7241,7 @@
       "name": "month-calendar",
       "type": "registry:block",
       "title": "Month calendar",
-      "description": "Monday-first month grid of scheduled work with per-day event lines, today/selected states, month navigation and full grid keyboard support.",
+      "description": "Locale-first month grid of scheduled work with per-day event lines, today/selected states, month navigation and full grid keyboard support. weekStartsOn and hourCycle override provider/runtime defaults; data-weekend marks locale weekends without styling. Locale examples show en-US, es-ES, then en-US with Monday-first and 24-hour overrides.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -7283,6 +7288,11 @@
           "path": "packages/blocks/src/scheduling/shared/fixtures.ts",
           "type": "registry:lib",
           "target": "components/blocks/scheduling/shared/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/scheduling/shared/useSchedulingClock.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/scheduling/shared/useSchedulingClock.ts"
         }
       ]
     },
@@ -14837,7 +14847,7 @@
       "name": "week-calendar",
       "type": "registry:block",
       "title": "Week calendar",
-      "description": "Seven-day time grid with positioned events (overlaps side by side), a now line, week navigation and optional clickable events.",
+      "description": "Locale-first seven-day time grid with positioned events (overlaps side by side), a now line, week navigation and optional clickable events. weekStartsOn and hourCycle override provider/runtime defaults; data-weekend marks locale weekends without styling. Locale examples show en-US, es-ES, then en-US with Monday-first and 24-hour overrides.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -14884,6 +14894,11 @@
           "path": "packages/blocks/src/scheduling/shared/fixtures.ts",
           "type": "registry:lib",
           "target": "components/blocks/scheduling/shared/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/scheduling/shared/useSchedulingClock.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/scheduling/shared/useSchedulingClock.ts"
         }
       ]
     },

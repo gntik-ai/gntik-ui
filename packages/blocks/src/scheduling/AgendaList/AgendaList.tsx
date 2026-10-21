@@ -1,13 +1,16 @@
 import { useId, useMemo } from 'react';
 import { Badge, EmptyState, cn, useI18n } from '@gntik-ai/ui';
 import { CalendarDays, ChevronRight, Clock } from '@gntik-ai/icons';
+import { useSchedulingClock } from '../shared/useSchedulingClock';
 import { EventTile } from '../shared/EventTile';
-import { addDays, dayKey, formatDay, formatRange, sameDay } from '../shared/dates';
+import { addDays, dayKey, formatDay, formatRange, sameDay, type HourCycle } from '../shared/dates';
 import { defaultEventKinds, groupByDay, kindOf, TONE, type EventKind, type ScheduleEvent } from '../shared/events';
 import { sampleEvents, sampleToday } from '../shared/fixtures';
 
 export interface AgendaListProps {
   events?: ScheduleEvent[];
+  /** Clock used for event ranges; defaults to the provider or runtime locale. */
+  hourCycle?: HourCycle;
   /** The app's "today": labels the Today/Tomorrow groups. */
   today?: Date;
   /** Only events on or after this day. Defaults to `today`; pass null for all. */
@@ -30,6 +33,7 @@ export interface AgendaListProps {
 /** Upcoming scheduled work grouped by day, each row with a kind tile, time range and location. */
 export function AgendaList({
   events = sampleEvents,
+  hourCycle: hourCycleProp,
   today = sampleToday,
   from,
   days = 7,
@@ -43,6 +47,7 @@ export function AgendaList({
   className,
 }: AgendaListProps) {
   const { t, locale } = useI18n();
+  const clock = useSchedulingClock(hourCycleProp);
   const title = titleProp ?? t('calendar.agenda');
   const emptyTitle = emptyTitleProp ?? t('calendar.emptyTitle');
   const emptyDescription = emptyDescriptionProp ?? t('calendar.emptyDescription');
@@ -105,7 +110,7 @@ export function AgendaList({
                 >
                   {list.map((event) => {
                     const kind = kindOf(event, kinds);
-                    const range = formatRange(event.start, event.end, locale);
+                    const range = formatRange(event.start, event.end, clock.locale, clock.hourCycle);
                     const content = (
                       <>
                         <EventTile kind={kind} />
