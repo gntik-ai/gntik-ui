@@ -9148,7 +9148,7 @@
       "name": "query-builder",
       "type": "registry:ui",
       "title": "QueryBuilder",
-      "description": "Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for \"between\"); add and remove conditions and groups up to `maxDepth`. The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record.",
+      "description": "Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for \"between\"); add and remove conditions and groups up to `maxDepth`. The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record. Inverted numeric or date \"between\" ranges show an inline error and are ignored by evaluation. Before sending a query to a backend, check each condition with `isConditionComplete` and `isConditionValid`; validation preserves the entered values.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",

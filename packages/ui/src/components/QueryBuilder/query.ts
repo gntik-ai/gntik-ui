@@ -113,6 +113,17 @@ export function isConditionComplete(c: QueryCondition): boolean {
   return v !== undefined && v !== null && v !== '';
 }
 
+/** False only for a complete, inverted numeric or date `between` pair. Check completeness separately. */
+export function isConditionValid(c: QueryCondition): boolean {
+  if (c.operator !== 'between' || !isConditionComplete(c) || !Array.isArray(c.value)) return true;
+  const [from, to] = c.value;
+  const numeric = typeof from === 'number' && typeof to === 'number';
+  const dates = typeof from === 'string' && typeof to === 'string' && dayKey(from) !== null && dayKey(to) !== null;
+  if (!numeric && !dates) return true;
+  const order = compare(from, to, undefined);
+  return order === null || !(order > 0);
+}
+
 // ------------------------------------------------------------------ queryToString
 
 export interface QueryToStringOptions {
@@ -255,12 +266,14 @@ function test(
 }
 
 const hasCompleteCondition = (node: QueryNode): boolean =>
-  node.type === 'condition' ? isConditionComplete(node) : node.children.some(hasCompleteCondition);
+  node.type === 'condition'
+    ? isConditionComplete(node) && isConditionValid(node)
+    : node.children.some(hasCompleteCondition);
 
 /**
  * Whether `record` matches the query. Text comparisons ignore case; dates compare by day
  * (`YYYY-MM-DD` strings or Date objects); array-valued record fields match `eq` / `in` when any
- * item does. Incomplete conditions are ignored, and an empty group matches everything.
+ * item does. Incomplete and invalid conditions are ignored; a group with none left matches everything.
  * Pass `fields` so values are compared by their declared type.
  */
 export function evaluateQuery(
@@ -270,7 +283,7 @@ export function evaluateQuery(
   locale?: string,
 ): boolean {
   if (tree.type === 'condition') {
-    if (!isConditionComplete(tree)) return true;
+    if (!isConditionComplete(tree) || !isConditionValid(tree)) return true;
     return test(tree, record, fields?.find((f) => f.id === tree.field)?.type, locale);
   }
   const relevant = tree.children.filter(hasCompleteCondition);

@@ -697,6 +697,7 @@ export const es: Messages = {
   'queryBuilder.value': 'Valor',
   'queryBuilder.valueFrom': 'Desde',
   'queryBuilder.valueTo': 'Hasta',
+  'queryBuilder.rangeInverted': '«Desde» no puede ser posterior a «Hasta».',
   'queryBuilder.addCondition': 'Añadir condición',
   'queryBuilder.addGroup': 'Añadir grupo',
   'queryBuilder.removeCondition': 'Quitar condición {index}',

@@ -1,9 +1,11 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { I18nProvider } from '../../i18n/I18nProvider';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { QueryBuilder, type QueryBuilderProps } from './QueryBuilder';
 import QueryBuilderBasic from './examples/QueryBuilderBasic';
 import QueryBuilderEvaluate from './examples/QueryBuilderEvaluate';
+import QueryBuilderRanges from './examples/QueryBuilderRanges';
 import { deploymentFields, deploymentQuery } from './examples/fields';
 import type { QueryGroup } from './query';
 
@@ -103,6 +105,93 @@ describe('QueryBuilder', () => {
     expect(within(screen.getByRole('group', { name: 'Condition 1' })).queryByRole('textbox')).not.toBeInTheDocument();
     expect(screen.getByRole('status')).toHaveTextContent('Public is true');
   });
+
+  it('describes both inverted number inputs and clears the error when corrected', async () => {
+    const { user, last } = setup({
+      defaultValue: {
+        type: 'group',
+        id: 'range',
+        combinator: 'and',
+        children: [{ type: 'condition', id: 'number', field: 'replicas', operator: 'between' }],
+      },
+    });
+    const from = screen.getByRole('textbox', { name: 'From' });
+    const to = screen.getByRole('textbox', { name: 'To' });
+    const message = "'From' must not be after 'To'.";
+    await user.type(from, '10');
+    expect(screen.queryByText(message)).not.toBeInTheDocument();
+    expect(from).not.toHaveAttribute('aria-invalid');
+    await user.type(to, '5');
+    for (const input of [from, to]) {
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+      expect(input).toHaveAccessibleDescription(message);
+      expect(document.getElementById(input.getAttribute('aria-describedby') ?? '')).toHaveTextContent(message);
+    }
+    expect(last()?.children[0]).toMatchObject({ value: [10, 5] });
+    const errorId = to.getAttribute('aria-describedby');
+    await user.clear(to);
+    await user.type(to, '20');
+    expect(screen.queryByText(message)).not.toBeInTheDocument();
+    for (const input of [from, to]) {
+      expect(input).not.toHaveAttribute('aria-invalid');
+      expect(input).not.toHaveAttribute('aria-describedby');
+    }
+    await user.clear(to);
+    await user.type(to, '5');
+    expect(to).toHaveAttribute('aria-describedby', errorId);
+    await user.clear(from);
+    await user.type(from, '1');
+    expect(screen.queryByText(message)).not.toBeInTheDocument();
+    expect(last()?.children[0]).toMatchObject({ value: [1, 5] });
+  });
+
+  it.each([
+    ['en', 'From', 'To', "'From' must not be after 'To'."],
+    ['es', 'Desde', 'Hasta', '«Desde» no puede ser posterior a «Hasta».'],
+  ])('describes controlled date ranges in %s only while inverted', (locale, fromLabel, toLabel, message) => {
+    const view = (value: [string, string]) => (
+      <I18nProvider locale={locale}>
+        <QueryBuilder
+          fields={deploymentFields}
+          value={{
+            type: 'group',
+            id: 'range',
+            combinator: 'and',
+            children: [{ type: 'condition', id: 'date', field: 'createdAt', operator: 'between', value }],
+          }}
+        />
+      </I18nProvider>
+    );
+    const { rerender } = render(view(['2026-03-10', '']));
+    expect(screen.queryByText(message)).not.toBeInTheDocument();
+    rerender(view(['2026-03-10', '2026-03-01']));
+    const inputs = [screen.getByRole('combobox', { name: fromLabel }), screen.getByRole('combobox', { name: toLabel })];
+    for (const input of inputs) {
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+      expect(input).toHaveAccessibleDescription(message);
+      expect(document.getElementById(input.getAttribute('aria-describedby') ?? '')).toHaveTextContent(message);
+    }
+    rerender(view(['2026-03-10', '2026-03-20']));
+    expect(screen.queryByText(message)).not.toBeInTheDocument();
+    for (const input of inputs) {
+      expect(input).not.toHaveAttribute('aria-invalid');
+      expect(input).not.toHaveAttribute('aria-describedby');
+    }
+  });
+
+  it.each(['dark', 'light', 'high_contrast'])(
+    'the invalid range example has no semantic axe violations in %s',
+    async (theme) => {
+      document.documentElement.className = theme === 'light' ? '' : theme;
+      try {
+        render(<QueryBuilderRanges />);
+        expect(screen.getAllByText("'From' must not be after 'To'.")).toHaveLength(2);
+        await expectNoAxeViolations();
+      } finally {
+        document.documentElement.className = '';
+      }
+    },
+  );
 
   it.each([
     ['QueryBuilderBasic', QueryBuilderBasic],

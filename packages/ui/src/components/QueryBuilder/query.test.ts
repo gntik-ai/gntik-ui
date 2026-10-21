@@ -1,5 +1,13 @@
 import { deploymentFields, deploymentQuery } from './examples/fields';
-import { evaluateQuery, isConditionComplete, operatorsFor, queryToString, type QueryGroup } from './query';
+import {
+  evaluateQuery,
+  isConditionComplete,
+  isConditionValid,
+  operatorsFor,
+  queryToString,
+  type QueryCondition,
+  type QueryGroup,
+} from './query';
 
 const q = (combinator: 'and' | 'or', children: QueryGroup['children']): QueryGroup => ({
   type: 'group',
@@ -28,6 +36,12 @@ describe('queryToString', () => {
 });
 
 describe('evaluateQuery', () => {
+  it('skips an inverted number range instead of discarding every record', () => {
+    const condition = { type: 'condition', id: 'range', field: 'amount', operator: 'between', value: [10, 5] } as const;
+    const records = [{ amount: 3 }, { amount: 7 }, { amount: 12 }];
+    expect(records.filter((record) => evaluateQuery({ ...condition, value: [10, 5] }, record))).toEqual(records);
+  });
+
   const rec = {
     name: 'API Gateway',
     status: 'running',
@@ -115,4 +129,66 @@ it.each([
       { name: 'Función' },
     ),
   ).toBe(expected);
+});
+
+describe('between range validity', () => {
+  const range = (value: QueryCondition['value']): QueryCondition => ({
+    type: 'condition',
+    id: 'range',
+    field: 'amount',
+    operator: 'between',
+    value,
+  });
+
+  it.each([
+    [[10, 5], false],
+    [[5, 10], true],
+    [[5, 5], true],
+    [['2026-03-10', '2026-03-01'], false],
+    [['2026-03-01', '2026-03-01'], true],
+    [['2026-03-01T23:59:00', '2026-03-01T00:00:00'], true],
+    [['2026-03-01', '2026-03-10'], true],
+    [['z', 'a'], true],
+    [['10', '5'], true],
+    [[10, '5'], true],
+  ] as const)('validates %j as %s', (value, expected) => {
+    expect(isConditionValid(range([...value] as QueryCondition['value']))).toBe(expected);
+  });
+
+  it('leaves incomplete pairs incomplete without throwing, and accepts other complete operators', () => {
+    const incomplete = range([1, null]);
+    expect(isConditionComplete(incomplete)).toBe(false);
+    expect(() => isConditionValid(incomplete)).not.toThrow();
+    expect(isConditionValid({ ...range(10), operator: 'gt' })).toBe(true);
+    expect(isConditionComplete(range([10, 5]))).toBe(true);
+  });
+
+  it.each(['and', 'or'] as const)('ignores inverted ranges in nested %s groups', (combinator) => {
+    const records = [{ amount: 3 }, { amount: 7 }, { amount: 12 }];
+    const invalid = range([10, 5]);
+    const onlyInvalid = q(combinator, [invalid]);
+    const sibling: QueryCondition = { ...range(7), operator: 'eq' };
+    expect(records.filter((record) => evaluateQuery(onlyInvalid, record))).toEqual(records);
+    expect(records.filter((record) => evaluateQuery(q(combinator, [invalid, sibling]), record))).toEqual([
+      { amount: 7 },
+    ]);
+    expect(records.filter((record) => evaluateQuery(q(combinator, [onlyInvalid, sibling]), record))).toEqual([
+      { amount: 7 },
+    ]);
+    expect(records.filter((record) => evaluateQuery(range([5, 10]), record))).toEqual([{ amount: 7 }]);
+  });
+
+  it('matches only the same day, including datetime values', () => {
+    const condition = { ...range(['2026-03-01', '2026-03-01']), field: 'createdAt' };
+    const records = [
+      { createdAt: '2026-02-28T23:59:00' },
+      { createdAt: '2026-03-01' },
+      { createdAt: '2026-03-01T23:59:00' },
+      { createdAt: '2026-03-02' },
+    ];
+    expect(records.filter((record) => evaluateQuery(condition, record))).toEqual([
+      { createdAt: '2026-03-01' },
+      { createdAt: '2026-03-01T23:59:00' },
+    ]);
+  });
 });
