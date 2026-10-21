@@ -219,7 +219,7 @@ export function WeekCalendar({
                               <span className="block truncate text-[11px] leading-tight font-semibold text-foreground">
                                 {event.title}
                               </span>
-                              <span className="block truncate font-mono text-[10px] text-muted-foreground">
+                              <span className="block truncate font-mono text-[10px] text-foreground">
                                 {formatTime(event.start, clock.locale, clock.hourCycle)}
                               </span>
                             </>
