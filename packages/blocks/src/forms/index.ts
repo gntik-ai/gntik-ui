@@ -19,7 +19,11 @@ export * from './DialogWizard/DialogWizard';
 export { meta as dialogWizardMeta } from './DialogWizard/block.meta';
 export { dialogWizardCopy, dialogWizardSteps } from './DialogWizard/fixtures';
 export { meta as validationSummaryMeta } from './ValidationSummary/block.meta';
-export { ConfirmDestructiveDialog, type ConfirmDestructiveDialogProps } from './DangerZone/ConfirmDestructiveDialog';
+export {
+  ConfirmDestructiveDialog,
+  type ConfirmDestructiveDialogProps,
+  type ConfirmDestructiveDialogLabels,
+} from './DangerZone/ConfirmDestructiveDialog';
 export { dangerZoneActions } from './DangerZone/fixtures';
 export { memberRoles } from './InviteMembersDialog/fixtures';
 export { apiKeyScopes, apiKeyExpiries, generateDemoSecret } from './CreateApiKeyDialog/fixtures';

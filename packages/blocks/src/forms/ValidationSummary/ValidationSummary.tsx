@@ -1,10 +1,15 @@
-import { Alert, Link, cn } from '@gntik-ai/ui';
+import { useI18n, Alert, Link, cn } from '@gntik-ai/ui';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { validationIssues, type ValidationIssue } from './fixtures';
 
 export type { ValidationIssue } from './fixtures';
 
+export interface ValidationSummaryLabels {
+  title: (count: number) => string;
+}
+
 export interface ValidationSummaryProps {
+  labels?: Partial<ValidationSummaryLabels>;
   errors?: ValidationIssue[];
   /** Increment on every submit attempt: the summary takes focus when there are errors. */
   submitCount?: number;
@@ -25,11 +30,13 @@ const focusField = (fieldId: string) => {
  * After a failed submit it takes focus, so screen readers announce it.
  */
 export function ValidationSummary({
+  labels,
   errors = validationIssues,
   submitCount = 0,
   title,
   className,
 }: ValidationSummaryProps) {
+  const { t } = useI18n();
   const ref = useRef<HTMLDivElement | null>(null);
   const hasErrors = errors.length > 0;
 
@@ -38,8 +45,7 @@ export function ValidationSummary({
   }, [submitCount, hasErrors]);
 
   if (!hasErrors) return null;
-  const heading =
-    title ?? `There ${errors.length === 1 ? 'is 1 problem' : `are ${errors.length} problems`} with this form`;
+  const heading = title ?? labels?.title?.(errors.length) ?? t('validationSummary.title', { count: errors.length });
   return (
     <Alert
       ref={ref}

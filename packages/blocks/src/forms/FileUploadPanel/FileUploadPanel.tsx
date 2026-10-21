@@ -5,7 +5,29 @@ import { acceptsFile, simulateUpload, uploadItems, type UploadItem } from './fix
 
 export type { UploadItem, UploadStatus } from './fixtures';
 
+export interface FileUploadPanelLabels {
+  label: string;
+  drop: string;
+  browse: string;
+  files: string;
+  failed: string;
+  typeRejected: string;
+  hint: (types: string, size: string) => string;
+  tooLarge: (size: string) => string;
+  done: (name: string) => string;
+  error: (name: string) => string;
+  added: (count: number) => string;
+  rejected: (count: number) => string;
+  removed: (name: string) => string;
+  uploading: (name: string) => string;
+  notUploaded: (error: string) => string;
+  uploaded: (size: string) => string;
+  retry: (name: string) => string;
+  remove: (name: string) => string;
+}
+
 export interface FileUploadPanelProps {
+  labels?: Partial<FileUploadPanelLabels>;
   /** Accepted types, as for `<input accept>` (".csv,.json", "image/*"). */
   accept?: string;
   /** Maximum size per file in bytes. */
@@ -32,6 +54,7 @@ const nextId = () => `upload-${++uid}`;
  * retry and remove. Rejected files stay in the list with the reason.
  */
 export function FileUploadPanel({
+  labels,
   accept = '.csv,.json,.jsonl,.yaml,.pdf',
   maxSize = 25_000_000,
   multiple = true,
@@ -44,7 +67,7 @@ export function FileUploadPanel({
   className,
 }: FileUploadPanelProps) {
   const { t, formatBytes } = useI18n();
-  const label = labelProp ?? t('upload.label');
+  const label = labelProp ?? labels?.label ?? t('upload.label');
   const id = useId();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [sources, setSources] = useState<Record<string, File>>({});
@@ -53,6 +76,13 @@ export function FileUploadPanel({
   const [announcement, setAnnouncement] = useState('');
   const hintText =
     hint ??
+    labels?.hint?.(
+      accept
+        .split(',')
+        .map((a) => a.replace('.', '').toUpperCase())
+        .join(' · '),
+      formatBytes(maxSize),
+    ) ??
     t('upload.hint', {
       types: accept
         .split(',')
@@ -69,11 +99,14 @@ export function FileUploadPanel({
     onUpload(file, (pct) => patch(itemId, { progress: pct })).then(
       () => {
         patch(itemId, { status: 'done', progress: 100 });
-        setAnnouncement(t('upload.done', { name: file.name }));
+        setAnnouncement(labels?.done?.(file.name) ?? t('upload.done', { name: file.name }));
       },
       (e: unknown) => {
-        patch(itemId, { status: 'error', error: e instanceof Error ? e.message : t('upload.failed') });
-        setAnnouncement(t('upload.error', { name: file.name }));
+        patch(itemId, {
+          status: 'error',
+          error: e instanceof Error ? e.message : (labels?.failed ?? t('upload.failed')),
+        });
+        setAnnouncement(labels?.error?.(file.name) ?? t('upload.error', { name: file.name }));
       },
     );
   };
@@ -86,9 +119,9 @@ export function FileUploadPanel({
     for (const file of files) {
       const itemId = nextId();
       const error = !acceptsFile(file, accept)
-        ? t('upload.typeRejected')
+        ? (labels?.typeRejected ?? t('upload.typeRejected'))
         : file.size > maxSize
-          ? t('upload.tooLarge', { size: formatBytes(maxSize) })
+          ? (labels?.tooLarge?.(formatBytes(maxSize)) ?? t('upload.tooLarge', { size: formatBytes(maxSize) }))
           : undefined;
       added.push({
         id: itemId,
@@ -107,7 +140,10 @@ export function FileUploadPanel({
     setSources((current) => ({ ...current, ...kept }));
     const rejected = added.filter((a) => a.error).length;
     setAnnouncement(
-      [t('upload.added', { count: added.length - rejected }), rejected ? t('upload.rejected', { count: rejected }) : '']
+      [
+        labels?.added?.(added.length - rejected) ?? t('upload.added', { count: added.length - rejected }),
+        rejected ? (labels?.rejected?.(rejected) ?? t('upload.rejected', { count: rejected })) : '',
+      ]
         .filter(Boolean)
         .join(' '),
     );
@@ -117,7 +153,7 @@ export function FileUploadPanel({
   const remove = (item: UploadItem) => {
     setSources((current) => Object.fromEntries(Object.entries(current).filter(([k]) => k !== item.id)));
     setItems((list) => list.filter((x) => x.id !== item.id));
-    setAnnouncement(t('upload.removed', { name: item.name }));
+    setAnnouncement(labels?.removed?.(item.name) ?? t('upload.removed', { name: item.name }));
     onRemove?.(item);
   };
 
@@ -154,7 +190,7 @@ export function FileUploadPanel({
         <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-secondary/70 text-muted-foreground ring-1 ring-border">
           <Upload size={22} aria-hidden />
         </div>
-        <p className="mt-4 text-[13.5px] text-foreground">{t('upload.drop')}</p>
+        <p className="mt-4 text-[13.5px] text-foreground">{labels?.drop ?? t('upload.drop')}</p>
         <Button
           variant="secondary"
           size="sm"
@@ -163,7 +199,7 @@ export function FileUploadPanel({
           onClick={() => inputRef.current?.click()}
           aria-describedby={`${id}-hint`}
         >
-          {t('upload.browse')}
+          {labels?.browse ?? t('upload.browse')}
         </Button>
         <p id={`${id}-hint`} className="mt-3 font-mono text-[11.5px] text-muted-foreground">
           {hintText}
@@ -182,9 +218,15 @@ export function FileUploadPanel({
         />
       </div>
       {items.length > 0 && (
-        <ul aria-label={t('upload.files')} className="mt-4 space-y-2">
+        <ul aria-label={labels?.files ?? t('upload.files')} className="mt-4 space-y-2">
           {items.map((item) => (
-            <FileRow key={item.id} item={item} onRemove={() => remove(item)} onRetry={retryFor(item.id)} />
+            <FileRow
+              key={item.id}
+              labels={labels}
+              item={item}
+              onRemove={() => remove(item)}
+              onRetry={retryFor(item.id)}
+            />
           ))}
         </ul>
       )}
@@ -195,7 +237,17 @@ export function FileUploadPanel({
   );
 }
 
-function FileRow({ item, onRemove, onRetry }: { item: UploadItem; onRemove: () => void; onRetry?: () => void }) {
+function FileRow({
+  item,
+  onRemove,
+  onRetry,
+  labels,
+}: {
+  item: UploadItem;
+  onRemove: () => void;
+  onRetry?: () => void;
+  labels?: Partial<FileUploadPanelLabels>;
+}) {
   const { t, formatBytes } = useI18n();
   const err = item.status === 'error';
   const done = item.status === 'done';
@@ -219,14 +271,15 @@ function FileRow({ item, onRemove, onRetry }: { item: UploadItem; onRemove: () =
           <Progress
             value={item.progress}
             size="sm"
-            aria-label={t('upload.uploading', { name: item.name })}
+            aria-label={labels?.uploading?.(item.name) ?? t('upload.uploading', { name: item.name })}
             className="mt-1.5"
           />
         ) : (
           <div className={cn('mt-0.5 font-mono text-[11px]', err ? 'text-destructive-text' : 'text-muted-foreground')}>
             {err
-              ? t('upload.notUploaded', { error: item.error ?? t('upload.failed') })
-              : t('upload.uploaded', { size: formatBytes(item.size) })}
+              ? (labels?.notUploaded?.(item.error ?? labels?.failed ?? t('upload.failed')) ??
+                t('upload.notUploaded', { error: item.error ?? labels?.failed ?? t('upload.failed') }))
+              : (labels?.uploaded?.(formatBytes(item.size)) ?? t('upload.uploaded', { size: formatBytes(item.size) }))}
           </div>
         )}
       </div>
@@ -236,9 +289,19 @@ function FileRow({ item, onRemove, onRetry }: { item: UploadItem; onRemove: () =
         </span>
       )}
       {err && onRetry && (
-        <IconButton icon={RotateCcw} size="sm" label={t('upload.retry', { name: item.name })} onClick={onRetry} />
+        <IconButton
+          icon={RotateCcw}
+          size="sm"
+          label={labels?.retry?.(item.name) ?? t('upload.retry', { name: item.name })}
+          onClick={onRetry}
+        />
       )}
-      <IconButton icon={X} size="sm" label={t('common.removeItem', { label: item.name })} onClick={onRemove} />
+      <IconButton
+        icon={X}
+        size="sm"
+        label={labels?.remove?.(item.name) ?? t('common.removeItem', { label: item.name })}
+        onClick={onRemove}
+      />
     </li>
   );
 }

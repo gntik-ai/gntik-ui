@@ -1,4 +1,4 @@
-import { Switch, cn } from '@gntik-ai/ui';
+import { useI18n, Switch, cn } from '@gntik-ai/ui';
 import { useId, type ReactNode } from 'react';
 
 export interface SettingsRowControlIds {
@@ -8,7 +8,13 @@ export interface SettingsRowControlIds {
   descriptionId: string | undefined;
 }
 
+export interface SettingsRowLabels {
+  label: string;
+  description: string;
+}
+
 export interface SettingsRowProps {
+  labels?: Partial<SettingsRowLabels>;
   label?: ReactNode;
   description?: ReactNode;
   /**
@@ -27,8 +33,9 @@ export interface SettingsRowProps {
 
 /** One setting: label and description on the left, its control (a Switch by default) on the right. */
 export function SettingsRow({
-  label = 'Deployment notifications',
-  description = 'Email the project owners when a deployment fails or is rolled back.',
+  labels,
+  label: labelProp,
+  description: descriptionProp,
   control,
   checked,
   defaultChecked = true,
@@ -37,6 +44,10 @@ export function SettingsRow({
   children,
   className,
 }: SettingsRowProps) {
+  const { t } = useI18n();
+  const label = labelProp === undefined ? (labels?.label ?? t('settingsRow.label')) : labelProp;
+  const description =
+    descriptionProp === undefined ? (labels?.description ?? t('settingsRow.description')) : descriptionProp;
   const id = useId();
   const labelId = `${id}-label`;
   const descriptionId = description != null ? `${id}-desc` : undefined;

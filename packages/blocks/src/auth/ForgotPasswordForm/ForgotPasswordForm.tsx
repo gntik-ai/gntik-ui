@@ -1,4 +1,5 @@
-import { Alert, Button, Field, FieldDescription, FieldError, FieldLabel, Input, Link, cn } from '@gntik-ai/ui';
+import { useI18n, Alert, Button, Field, FieldDescription, FieldError, FieldLabel, Input, Link, cn } from '@gntik-ai/ui';
+import { translatedContent } from '../../forms/translated-content';
 import { ArrowLeft, Mail, MailCheck } from '@gntik-ai/icons';
 import { useImperativeHandle, useRef, useState, type MouseEvent, type ReactNode, type Ref } from 'react';
 import {
@@ -16,7 +17,26 @@ export interface ForgotPasswordFormRef {
   focus(field: 'identifier'): void;
 }
 
+export interface ForgotPasswordFormLabels extends Required<Omit<AuthValidationMessages, 'passwordRequired'>> {
+  formLabel: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  sentTitle: string;
+  sentDescription: (email: string) => ReactNode;
+  addressFallback: string;
+  sentStatus: string;
+  fallbackError: string;
+  backToSignIn: string;
+  resend: string;
+  changeEmail: string;
+  identifierLabel: string;
+  identifierPlaceholder: string;
+  submit: string;
+}
+
 export interface ForgotPasswordFormProps extends AuthFormAccessibilityProps {
+  labels?: Partial<ForgotPasswordFormLabels>;
   /** React 19 ref for focus after a server response; available in the request state. */
   ref?: Ref<ForgotPasswordFormRef>;
   identifier?: AuthIdentifierConfig;
@@ -46,13 +66,14 @@ export interface ForgotPasswordFormProps extends AuthFormAccessibilityProps {
 
 /** Request a reset link by email, then a "check your inbox" state with resend and a way back. */
 export function ForgotPasswordForm({
+  labels,
   identifier,
   messages,
   ref,
   fieldInvalid,
   feedbackId,
   'aria-describedby': describedBy,
-  'aria-label': ariaLabel = 'Reset password request',
+  'aria-label': ariaLabelProp,
   'aria-labelledby': labelledBy,
   onSubmit,
   error: errorProp,
@@ -60,24 +81,33 @@ export function ForgotPasswordForm({
   defaultSent = false,
   signInHref = '#',
   onBackToSignIn,
-  eyebrow = 'Account recovery',
-  title = 'Forgot your password?',
-  description = "Enter the email you sign in with and we'll send you a reset link.",
-  sentTitle = 'Check your email',
+  eyebrow: eyebrowProp,
+  title: titleProp,
+  description: descriptionProp,
+  sentTitle: sentTitleProp,
   sentDescription,
-  sentStatus = 'Reset link sent.',
+  sentStatus: sentStatusProp,
   resendActions,
   headingLevel,
   className,
 }: ForgotPasswordFormProps) {
+  const { t } = useI18n();
+  const eyebrow = eyebrowProp === undefined ? (labels?.eyebrow ?? t('forgotPassword.eyebrow')) : eyebrowProp;
+  const title = titleProp === undefined ? (labels?.title ?? t('forgotPassword.title')) : titleProp;
+  const description =
+    descriptionProp === undefined ? (labels?.description ?? t('forgotPassword.description')) : descriptionProp;
+  const sentTitle = sentTitleProp === undefined ? (labels?.sentTitle ?? t('forgotPassword.sentTitle')) : sentTitleProp;
+  const sentStatus =
+    sentStatusProp === undefined ? (labels?.sentStatus ?? t('forgotPassword.sentStatus')) : sentStatusProp;
+  const ariaLabel = ariaLabelProp ?? labels?.formLabel ?? t('forgotPassword.formLabel');
   const [email, setEmail] = useState(defaultEmail);
   const [submitted, setSubmitted] = useState(false);
   const [sent, setSent] = useState(defaultSent);
-  const { loading, error, run } = useAsyncSubmit('The reset link could not be sent.');
+  const { loading, error, run } = useAsyncSubmit(labels?.fallbackError ?? t('forgotPassword.fallbackError'));
   const alert = errorProp ?? error;
   const identifierInput = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => ({ focus: () => identifierInput.current?.focus() }), []);
-  const identifierError = authIdentifierError(email, identifier, messages);
+  const identifierError = authIdentifierError(email, identifier, messages, t, labels);
   const emailInvalid = submitted && identifierError !== null;
 
   const send = async () => {
@@ -100,7 +130,7 @@ export function ForgotPasswordForm({
       }
     >
       <ArrowLeft size={14} aria-hidden className="rtl:-scale-x-100" />
-      Back to sign in
+      {labels?.backToSignIn ?? t('forgotPassword.backToSignIn')}
     </Link>
   );
 
@@ -115,15 +145,18 @@ export function ForgotPasswordForm({
           title={sentTitle}
           headingLevel={headingLevel}
           description={
-            sentDescription === undefined ? (
-              <>
-                If an account exists for{' '}
-                <span className="font-medium text-foreground">{email.trim() || 'that address'}</span>, you will receive
-                a link to reset your password. It expires in 1 hour.
-              </>
-            ) : (
-              sentDescription
-            )
+            sentDescription === undefined
+              ? (labels?.sentDescription?.(
+                  email.trim() || (labels?.addressFallback ?? t('forgotPassword.addressFallback')),
+                ) ??
+                translatedContent(t('forgotPassword.sentDescription'), {
+                  email: (
+                    <span className="font-medium text-foreground">
+                      {email.trim() || (labels?.addressFallback ?? t('forgotPassword.addressFallback'))}
+                    </span>
+                  ),
+                }))
+              : sentDescription
           }
         />
         {sentStatus != null && (
@@ -137,7 +170,7 @@ export function ForgotPasswordForm({
             {resendActions === undefined ? (
               <>
                 <Button variant="secondary" size="lg" loading={loading} className="w-full" onClick={() => void send()}>
-                  Resend link
+                  {labels?.resend ?? t('forgotPassword.resend')}
                 </Button>
                 <Button
                   variant="ghost"
@@ -148,7 +181,7 @@ export function ForgotPasswordForm({
                     setSubmitted(false);
                   }}
                 >
-                  Use a different email
+                  {labels?.changeEmail ?? t('forgotPassword.changeEmail')}
                 </Button>
               </>
             ) : (
@@ -182,14 +215,16 @@ export function ForgotPasswordForm({
       >
         {alert && <Alert id={feedbackId} tone="destructive" description={alert} />}
         <Field invalid={emailInvalid || fieldInvalid?.identifier === true}>
-          <FieldLabel>{identifier?.label ?? 'Email'}</FieldLabel>
+          <FieldLabel>{identifier?.label ?? labels?.identifierLabel ?? t('forgotPassword.identifierLabel')}</FieldLabel>
           <Input
             ref={identifierInput}
             aria-describedby={fieldInvalid?.identifier ? feedbackId : undefined}
             type={identifier?.type ?? 'email'}
             leadingIcon={Mail}
             autoComplete={identifier?.autoComplete ?? 'email'}
-            placeholder={identifier?.placeholder ?? 'name@company.com'}
+            placeholder={
+              identifier?.placeholder ?? labels?.identifierPlaceholder ?? t('forgotPassword.identifierPlaceholder')
+            }
             minLength={identifier?.minLength}
             maxLength={identifier?.maxLength}
             value={email}
@@ -202,7 +237,7 @@ export function ForgotPasswordForm({
           </FieldError>
         </Field>
         <Button type="submit" size="lg" loading={loading} className="mt-2 w-full">
-          Send reset link
+          {labels?.submit ?? t('forgotPassword.submit')}
         </Button>
       </form>
       <p className="mt-7 text-center">{back}</p>

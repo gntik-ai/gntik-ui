@@ -1,7 +1,13 @@
-import { Field, FieldDescription, FieldLabel, Input, Textarea, cn } from '@gntik-ai/ui';
+import { useI18n, Field, FieldDescription, FieldLabel, Input, Textarea, cn } from '@gntik-ai/ui';
 import { useId, type HTMLAttributes, type ReactNode } from 'react';
 
+export interface FormSectionLabels {
+  title: string;
+  description: string;
+}
+
 export interface FormSectionProps extends Omit<HTMLAttributes<HTMLElement>, 'title' | 'className'> {
+  labels?: Partial<FormSectionLabels>;
   /** Section title shown in the left column; also names the section landmark. */
   title?: ReactNode;
   /** Help text under the title. */
@@ -38,8 +44,9 @@ function SampleFields() {
  * single column on small screens.
  */
 export function FormSection({
-  title = 'General',
-  description = 'Basic details shown to everyone who can access this project.',
+  labels,
+  title: titleProp,
+  description: descriptionProp,
   children,
   actions,
   headingLevel: Heading = 'h2',
@@ -47,6 +54,10 @@ export function FormSection({
   className,
   ...props
 }: FormSectionProps) {
+  const { t } = useI18n();
+  const title = titleProp === undefined ? (labels?.title ?? t('formSection.title')) : titleProp;
+  const description =
+    descriptionProp === undefined ? (labels?.description ?? t('formSection.description')) : descriptionProp;
   const id = useId();
   return (
     <section

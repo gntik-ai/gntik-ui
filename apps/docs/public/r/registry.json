@@ -2958,7 +2958,7 @@
       "name": "create-api-key-dialog",
       "type": "registry:block",
       "title": "Create API key dialog",
-      "description": "Two-step dialog: name, scopes and expiry, then the secret shown once in a copyable CodeBlock with a warning.",
+      "description": "Two-step dialog: name, scopes and expiry, then the secret shown once in a copyable CodeBlock with a warning. Optional labels?: Partial<CreateApiKeyDialogLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=create-api-key-dialog--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -3094,7 +3094,7 @@
       "name": "credential-disclosure-dialog",
       "type": "registry:block",
       "title": "Credential disclosure dialog",
-      "description": "Controlled disclosure for an existing credential. Set disclosure ({variant: stored | fresh, credentialId, expiresAt: caller-formatted ReactNode, secret}) only after a successful response; null renders nothing while pending or on failure. Clear disclosure, additionalSecrets and secret-bearing revealContent in onClose to drop every secret; a fresh secret requires a new successful response before showing it again. No pending/error state or internal secret retention. Stored values start masked; each null-to-value opening or changed credentialId/secret resets masking and copy feedback. Fresh values use a non-copyable CodeBlock with a kit CopyButton and a replacement warning, or a masked SecretField when maskFresh is set at session start. Optional additionalSecrets ({id, label, value}) are always masked and use independent toggles and serialized copy actions; ids must be non-empty, unique and not secret, with the first duplicate winning. Multi-secret groups announce label plus copiedLabel, or copiedAnnouncementFor(label); onCopy(id) never receives a value. Every secret and the optional revealContent slot have data-kit-redact. The session key includes additional ids and values. presentation is dialog by default or inline, fixed until the next opening: inline is a named section, never traps focus or handles Escape, and its warning is a non-live note. Surviving focus stays; removing the focused slot or session control focuses the popup or inline heading. Focused inline unmounts return focus through the same resolvers. Dismissed retained props stay hidden; clear and re-set or change a session value to reopen. Optional English defaults through en/es i18n for title, description, credentialIdLabel, expiryLabel, secretLabel, showLabel, hideLabel, copyLabel, copiedLabel, successAnnouncement, failureAnnouncement, warningTitle, warningText and closeLabel. Copy results are announced politely, including manual-selection fallback. Popup initial focus and focus trapping use Base UI; at close, resolveReturnFocus() is validated for connection, visibility, enabled state and focusability, then fallbackFocus(), then the original opener. Synthetic fixtures only; the default Stored preview is masked and the Fresh preview starts closed.",
+      "description": "Controlled disclosure for an existing credential. Set disclosure ({variant: stored | fresh, credentialId, expiresAt: caller-formatted ReactNode, secret}) only after a successful response; null renders nothing while pending or on failure. Clear disclosure, additionalSecrets and secret-bearing revealContent in onClose to drop every secret; a fresh secret requires a new successful response before showing it again. No pending/error state or internal secret retention. Stored values start masked; each null-to-value opening or changed credentialId/secret resets masking and copy feedback. Fresh values use a non-copyable CodeBlock with a kit CopyButton and a replacement warning, or a masked SecretField when maskFresh is set at session start. Optional additionalSecrets ({id, label, value}) are always masked and use independent toggles and serialized copy actions; ids must be non-empty, unique and not secret, with the first duplicate winning. Multi-secret groups announce label plus copiedLabel, or copiedAnnouncementFor(label); onCopy(id) never receives a value. Every secret and the optional revealContent slot have data-kit-redact. The session key includes additional ids and values. presentation is dialog by default or inline, fixed until the next opening: inline is a named section, never traps focus or handles Escape, and its warning is a non-live note. Surviving focus stays; removing the focused slot or session control focuses the popup or inline heading. Focused inline unmounts return focus through the same resolvers. Dismissed retained props stay hidden; clear and re-set or change a session value to reopen. Optional English defaults through en/es i18n for title, description, credentialIdLabel, expiryLabel, secretLabel, showLabel, hideLabel, copyLabel, copiedLabel, successAnnouncement, failureAnnouncement, warningTitle, warningText and closeLabel. Copy results are announced politely, including manual-selection fallback. Popup initial focus and focus trapping use Base UI; at close, resolveReturnFocus() is validated for connection, visibility, enabled state and focusability, then fallbackFocus(), then the original opener. Synthetic fixtures only; the default Stored preview is masked and the Fresh preview starts closed. Optional labels?: Partial<CredentialDisclosureDialogLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=credential-disclosure-dialog--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui"
@@ -3258,7 +3258,7 @@
       "name": "danger-zone",
       "type": "registry:block",
       "title": "Danger zone",
-      "description": "Bordered destructive section whose actions open an alert dialog that can require typing the resource name.",
+      "description": "Bordered destructive section whose actions open an alert dialog that can require typing the resource name. Optional labels?: Partial<DangerZoneLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=danger-zone--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui"
@@ -3294,6 +3294,11 @@
           "path": "packages/blocks/src/forms/DangerZone/fixtures.ts",
           "type": "registry:lib",
           "target": "components/blocks/forms/danger-zone/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/forms/translated-content.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/forms/translated-content.tsx"
         }
       ]
     },
@@ -3649,7 +3654,7 @@
       "name": "date-range-filter",
       "type": "registry:block",
       "title": "Date range filter",
-      "description": "Compact date range picker for toolbars: small trigger with short dates, presets and a clear button.",
+      "description": "Compact date range picker for toolbars: small trigger with short dates, presets and a clear button. Optional labels?: Partial<DateRangeFilterLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=date-range-filter--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -3883,7 +3888,7 @@
       "name": "dialog-wizard",
       "type": "registry:block",
       "title": "Dialog wizard",
-      "description": "Modal variant of create-wizard for create flows over their parent page, without a route change. Defaults to dialog size (fullscreen on mobile); size=\"fullscreen\" fills every viewport. Consumer-controlled step state survives closing. Use the create-wizard page template for a dedicated page flow, or WizardLayout mode=\"overlay\" for a fullscreen flow. Supply all labels, pendingLabel and stepAnnouncement from your own i18n; stepError accepts ValidationSummary and reviewStep accepts DescriptionListCard.",
+      "description": "Modal variant of create-wizard for create flows over their parent page, without a route change. Defaults to dialog size (fullscreen on mobile); size=\"fullscreen\" fills every viewport. Consumer-controlled step state survives closing. Use the create-wizard page template for a dedicated page flow, or WizardLayout mode=\"overlay\" for a fullscreen flow. Supply all labels, pendingLabel and stepAnnouncement from your own i18n; stepError accepts ValidationSummary and reviewStep accepts DescriptionListCard. Optional labels?: Partial<DialogWizardLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=dialog-wizard--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui"
@@ -4584,7 +4589,7 @@
       "name": "file-upload-panel",
       "type": "registry:block",
       "title": "File upload panel",
-      "description": "Drag-and-drop zone with a Browse button, type and size validation, and a file list with progress, retry and remove.",
+      "description": "Drag-and-drop zone with a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -4773,7 +4778,7 @@
       "name": "forgot-password-form",
       "type": "registry:block",
       "title": "Forgot password form",
-      "description": "Email (default) or username-or-email password recovery; onSubmit receives the trimmed identifier. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. ref.focus accepts identifier. title/description and sentTitle/sentDescription configure request and sent copy; sentTitle, sentDescription, sentStatus and resendActions accept null to hide inbox copy, announcements and resend/change-identifier actions. Preview: forgot-password-form--username-or-email.",
+      "description": "Email (default) or username-or-email password recovery; onSubmit receives the trimmed identifier. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. ref.focus accepts identifier. title/description and sentTitle/sentDescription configure request and sent copy; sentTitle, sentDescription, sentStatus and resendActions accept null to hide inbox copy, announcements and resend/change-identifier actions. Preview: forgot-password-form--username-or-email. Optional labels?: Partial<ForgotPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=forgot-password-form--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -4805,6 +4810,11 @@
           "path": "packages/blocks/src/auth/shared.tsx",
           "type": "registry:component",
           "target": "components/blocks/auth/shared.tsx"
+        },
+        {
+          "path": "packages/blocks/src/forms/translated-content.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/forms/translated-content.tsx"
         }
       ]
     },
@@ -4812,7 +4822,7 @@
       "name": "form-section",
       "type": "registry:block",
       "title": "Form section",
-      "description": "Two-column settings section: title and help on the left, fields on the right; stacks on small screens.",
+      "description": "Two-column settings section: title and help on the left, fields on the right; stacks on small screens. Optional labels?: Partial<FormSectionLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=form-section--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui"
@@ -5569,7 +5579,7 @@
       "name": "invite-members-dialog",
       "type": "registry:block",
       "title": "Invite members dialog",
-      "description": "Dialog to invite people by email (validated chips) with a role and an optional message; submits with a loading state.",
+      "description": "Dialog to invite people by email (validated chips) with a role and an optional message; submits with a loading state. Optional labels?: Partial<InviteMembersDialogLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=invite-members-dialog--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -6988,7 +6998,7 @@
       "name": "mfa-challenge",
       "type": "registry:block",
       "title": "MFA challenge",
-      "description": "Second-factor step with a one-time code (auto-submit), a backup-code mode and resend with a countdown.",
+      "description": "Second-factor step with a one-time code (auto-submit), a backup-code mode and resend with a countdown. Optional labels?: Partial<MfaChallengeLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=mfa-challenge--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui"
@@ -9372,7 +9382,7 @@
       "name": "reset-password-form",
       "type": "registry:block",
       "title": "Reset password form",
-      "description": "New password with a strength meter and a confirmation field with mismatch validation, then a success state.",
+      "description": "New password with a strength meter and a confirmation field with mismatch validation, then a success state. Optional labels?: Partial<ResetPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=reset-password-form--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -10780,7 +10790,7 @@
       "name": "settings-row",
       "type": "registry:block",
       "title": "Settings row",
-      "description": "A setting with its label and description on the left and a control (Switch by default) on the right.",
+      "description": "A setting with its label and description on the left and a control (Switch by default) on the right. Optional labels?: Partial<SettingsRowLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=settings-row--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui"
@@ -11154,7 +11164,7 @@
       "name": "sign-in-form",
       "type": "registry:block",
       "title": "Sign-in form",
-      "description": "Email (default) or text identifier and password sign-in. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. passwordHelp/passwordHelpId describe the password. Text submissions add values.identifier and retain values.email; email-mode payloads are unchanged. sso and signUpPrompt accept replacements or null. Preview: sign-in-form--username.",
+      "description": "Email (default) or text identifier and password sign-in. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. passwordHelp/passwordHelpId describe the password. Text submissions add values.identifier and retain values.email; email-mode payloads are unchanged. sso and signUpPrompt accept replacements or null. Preview: sign-in-form--username. Optional labels?: Partial<SignInFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-in-form--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -11235,7 +11245,7 @@
       "name": "sign-up-form",
       "type": "registry:block",
       "title": "Sign-up form",
-      "description": "Account creation with default name/email fields or ordered text/email fields (values.fields), a password strength meter and required consent (terms=false opts out). minPasswordLength defaults to 8 and drives length validation and the insufficient-length meter; optional passwordHelp can receive the minimum. Configured fields support help, required, autoComplete and validation messages, with a linked validation summary on invalid submit. policyLoading renders skeletons without a form; unavailable replaces the form with consumer title, message and optional action. loading remains submitting; error is form-level feedback. Examples: custom-fields, no-terms, unavailable, loading, submitting and error.",
+      "description": "Account creation with default name/email fields or ordered text/email fields (values.fields), a password strength meter and required consent (terms=false opts out). minPasswordLength defaults to 8 and drives length validation and the insufficient-length meter; optional passwordHelp can receive the minimum. Configured fields support help, required, autoComplete and validation messages, with a linked validation summary on invalid submit. policyLoading renders skeletons without a form; unavailable replaces the form with consumer title, message and optional action. loading remains submitting; error is form-level feedback. Examples: custom-fields, no-terms, unavailable, loading, submitting and error. Optional labels?: Partial<SignUpFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-up-form--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -11269,6 +11279,11 @@
           "path": "packages/blocks/src/auth/shared.tsx",
           "type": "registry:component",
           "target": "components/blocks/auth/shared.tsx"
+        },
+        {
+          "path": "packages/blocks/src/forms/translated-content.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/forms/translated-content.tsx"
         }
       ]
     },
@@ -11722,7 +11737,7 @@
       "name": "sso-buttons",
       "type": "registry:block",
       "title": "SSO buttons",
-      "description": "Neutral \"Continue with …\" provider buttons with lucide icons and a per-provider loading state.",
+      "description": "Neutral \"Continue with …\" provider buttons with lucide icons and a per-provider loading state. Optional labels?: Partial<SsoButtonsLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sso-buttons--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -14607,7 +14622,7 @@
       "name": "validation-summary",
       "type": "registry:block",
       "title": "Validation summary",
-      "description": "Error summary that lists every problem with a link to its field and takes focus after a failed submit.",
+      "description": "Error summary that lists every problem with a link to its field and takes focus after a failed submit. Optional labels?: Partial<ValidationSummaryLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=validation-summary--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui"

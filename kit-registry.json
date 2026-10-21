@@ -345,7 +345,99 @@
       "package": "@gntik-ai/blocks",
       "group": "forms",
       "status": "stable",
-      "description": "Two-step dialog: name, scopes and expiry, then the secret shown once in a copyable CodeBlock with a warning.",
+      "description": "Two-step dialog: name, scopes and expiry, then the secret shown once in a copyable CodeBlock with a warning. Optional labels?: Partial<CreateApiKeyDialogLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=create-api-key-dialog--labels.",
+      "labels": [
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "namePlaceholder",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "nameRequired",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "scopes",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "scopesRequired",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "expiration",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "errorTitle",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "fallbackError",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "cancel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "submit",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "successTitle",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "successDescription",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "warningTitle",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "warningDescription",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "secretLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "done",
+          "type": "string",
+          "state": "Async feedback"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/forms/CreateApiKeyDialog/CreateApiKeyDialog.tsx",
@@ -370,7 +462,84 @@
       "package": "@gntik-ai/blocks",
       "group": "forms",
       "status": "beta",
-      "description": "Controlled disclosure for an existing credential. Set disclosure ({variant: stored | fresh, credentialId, expiresAt: caller-formatted ReactNode, secret}) only after a successful response; null renders nothing while pending or on failure. Clear disclosure, additionalSecrets and secret-bearing revealContent in onClose to drop every secret; a fresh secret requires a new successful response before showing it again. No pending/error state or internal secret retention. Stored values start masked; each null-to-value opening or changed credentialId/secret resets masking and copy feedback. Fresh values use a non-copyable CodeBlock with a kit CopyButton and a replacement warning, or a masked SecretField when maskFresh is set at session start. Optional additionalSecrets ({id, label, value}) are always masked and use independent toggles and serialized copy actions; ids must be non-empty, unique and not secret, with the first duplicate winning. Multi-secret groups announce label plus copiedLabel, or copiedAnnouncementFor(label); onCopy(id) never receives a value. Every secret and the optional revealContent slot have data-kit-redact. The session key includes additional ids and values. presentation is dialog by default or inline, fixed until the next opening: inline is a named section, never traps focus or handles Escape, and its warning is a non-live note. Surviving focus stays; removing the focused slot or session control focuses the popup or inline heading. Focused inline unmounts return focus through the same resolvers. Dismissed retained props stay hidden; clear and re-set or change a session value to reopen. Optional English defaults through en/es i18n for title, description, credentialIdLabel, expiryLabel, secretLabel, showLabel, hideLabel, copyLabel, copiedLabel, successAnnouncement, failureAnnouncement, warningTitle, warningText and closeLabel. Copy results are announced politely, including manual-selection fallback. Popup initial focus and focus trapping use Base UI; at close, resolveReturnFocus() is validated for connection, visibility, enabled state and focusability, then fallbackFocus(), then the original opener. Synthetic fixtures only; the default Stored preview is masked and the Fresh preview starts closed.",
+      "description": "Controlled disclosure for an existing credential. Set disclosure ({variant: stored | fresh, credentialId, expiresAt: caller-formatted ReactNode, secret}) only after a successful response; null renders nothing while pending or on failure. Clear disclosure, additionalSecrets and secret-bearing revealContent in onClose to drop every secret; a fresh secret requires a new successful response before showing it again. No pending/error state or internal secret retention. Stored values start masked; each null-to-value opening or changed credentialId/secret resets masking and copy feedback. Fresh values use a non-copyable CodeBlock with a kit CopyButton and a replacement warning, or a masked SecretField when maskFresh is set at session start. Optional additionalSecrets ({id, label, value}) are always masked and use independent toggles and serialized copy actions; ids must be non-empty, unique and not secret, with the first duplicate winning. Multi-secret groups announce label plus copiedLabel, or copiedAnnouncementFor(label); onCopy(id) never receives a value. Every secret and the optional revealContent slot have data-kit-redact. The session key includes additional ids and values. presentation is dialog by default or inline, fixed until the next opening: inline is a named section, never traps focus or handles Escape, and its warning is a non-live note. Surviving focus stays; removing the focused slot or session control focuses the popup or inline heading. Focused inline unmounts return focus through the same resolvers. Dismissed retained props stay hidden; clear and re-set or change a session value to reopen. Optional English defaults through en/es i18n for title, description, credentialIdLabel, expiryLabel, secretLabel, showLabel, hideLabel, copyLabel, copiedLabel, successAnnouncement, failureAnnouncement, warningTitle, warningText and closeLabel. Copy results are announced politely, including manual-selection fallback. Popup initial focus and focus trapping use Base UI; at close, resolveReturnFocus() is validated for connection, visibility, enabled state and focusability, then fallbackFocus(), then the original opener. Synthetic fixtures only; the default Stored preview is masked and the Fresh preview starts closed. Optional labels?: Partial<CredentialDisclosureDialogLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=credential-disclosure-dialog--labels.",
+      "labels": [
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "credentialIdLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "expiryLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "secretLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "showLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "hideLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "copyLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "copiedLabel",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "successAnnouncement",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "failureAnnouncement",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "warningTitle",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "warningText",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "closeLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "copiedAnnouncementFor",
+          "type": "(label: string, copied: string) => string",
+          "state": "Async feedback"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/forms/CredentialDisclosureDialog/CredentialDisclosureDialog.tsx",
@@ -467,7 +636,39 @@
       "package": "@gntik-ai/blocks",
       "group": "forms",
       "status": "stable",
-      "description": "Bordered destructive section whose actions open an alert dialog that can require typing the resource name.",
+      "description": "Bordered destructive section whose actions open an alert dialog that can require typing the resource name. Optional labels?: Partial<DangerZoneLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=danger-zone--labels.",
+      "labels": [
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "confirmationTitle",
+          "type": "(title: string) => string",
+          "state": "Destructive confirmation dialog"
+        },
+        {
+          "key": "confirmPrompt",
+          "type": "(text: ReactNode) => ReactNode",
+          "state": "Destructive confirmation dialog"
+        },
+        {
+          "key": "cancel",
+          "type": "string",
+          "state": "Destructive confirmation dialog"
+        },
+        {
+          "key": "fallbackError",
+          "type": "string",
+          "state": "Destructive confirmation dialog"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/forms/DangerZone/ConfirmDestructiveDialog.tsx",
@@ -480,6 +681,10 @@
         {
           "path": "packages/blocks/src/forms/DangerZone/fixtures.ts",
           "target": "components/blocks/forms/danger-zone/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/forms/translated-content.tsx",
+          "target": "components/blocks/forms/translated-content.tsx"
         }
       ],
       "dependencies": [
@@ -869,7 +1074,24 @@
       "package": "@gntik-ai/blocks",
       "group": "forms",
       "status": "stable",
-      "description": "Compact date range picker for toolbars: small trigger with short dates, presets and a clear button.",
+      "description": "Compact date range picker for toolbars: small trigger with short dates, presets and a clear button. Optional labels?: Partial<DateRangeFilterLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=date-range-filter--labels.",
+      "labels": [
+        {
+          "key": "label",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "placeholder",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "clear",
+          "type": "(label: string) => string",
+          "state": "Default content and accessible names"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/forms/DateRangeFilter/DateRangeFilter.tsx",
@@ -947,7 +1169,24 @@
       "package": "@gntik-ai/blocks",
       "group": "forms",
       "status": "beta",
-      "description": "Modal variant of create-wizard for create flows over their parent page, without a route change. Defaults to dialog size (fullscreen on mobile); size=\"fullscreen\" fills every viewport. Consumer-controlled step state survives closing. Use the create-wizard page template for a dedicated page flow, or WizardLayout mode=\"overlay\" for a fullscreen flow. Supply all labels, pendingLabel and stepAnnouncement from your own i18n; stepError accepts ValidationSummary and reviewStep accepts DescriptionListCard.",
+      "description": "Modal variant of create-wizard for create flows over their parent page, without a route change. Defaults to dialog size (fullscreen on mobile); size=\"fullscreen\" fills every viewport. Consumer-controlled step state survives closing. Use the create-wizard page template for a dedicated page flow, or WizardLayout mode=\"overlay\" for a fullscreen flow. Supply all labels, pendingLabel and stepAnnouncement from your own i18n; stepError accepts ValidationSummary and reviewStep accepts DescriptionListCard. Optional labels?: Partial<DialogWizardLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=dialog-wizard--labels.",
+      "labels": [
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "details",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "review",
+          "type": "string",
+          "state": "Default content and accessible names"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/forms/DialogWizard/DialogWizard.tsx",
@@ -1244,7 +1483,99 @@
       "package": "@gntik-ai/blocks",
       "group": "forms",
       "status": "stable",
-      "description": "Drag-and-drop zone with a Browse button, type and size validation, and a file list with progress, retry and remove.",
+      "description": "Drag-and-drop zone with a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.",
+      "labels": [
+        {
+          "key": "label",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "drop",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "browse",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "files",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "failed",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "typeRejected",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "hint",
+          "type": "(types: string, size: string) => string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "tooLarge",
+          "type": "(size: string) => string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "done",
+          "type": "(name: string) => string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "error",
+          "type": "(name: string) => string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "added",
+          "type": "(count: number) => string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "rejected",
+          "type": "(count: number) => string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "removed",
+          "type": "(name: string) => string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "uploading",
+          "type": "(name: string) => string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "notUploaded",
+          "type": "(error: string) => string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "uploaded",
+          "type": "(size: string) => string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "retry",
+          "type": "(name: string) => string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "remove",
+          "type": "(name: string) => string",
+          "state": "Default content and accessible names"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/forms/FileUploadPanel/FileUploadPanel.tsx",
@@ -1401,7 +1732,99 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "Email (default) or username-or-email password recovery; onSubmit receives the trimmed identifier. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. ref.focus accepts identifier. title/description and sentTitle/sentDescription configure request and sent copy; sentTitle, sentDescription, sentStatus and resendActions accept null to hide inbox copy, announcements and resend/change-identifier actions. Preview: forgot-password-form--username-or-email.",
+      "description": "Email (default) or username-or-email password recovery; onSubmit receives the trimmed identifier. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. ref.focus accepts identifier. title/description and sentTitle/sentDescription configure request and sent copy; sentTitle, sentDescription, sentStatus and resendActions accept null to hide inbox copy, announcements and resend/change-identifier actions. Preview: forgot-password-form--username-or-email. Optional labels?: Partial<ForgotPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=forgot-password-form--labels.",
+      "labels": [
+        {
+          "key": "formLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "eyebrow",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "sentTitle",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "sentDescription",
+          "type": "(email: string) => ReactNode",
+          "state": "Async feedback"
+        },
+        {
+          "key": "addressFallback",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "sentStatus",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "fallbackError",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "backToSignIn",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "resend",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "changeEmail",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "identifierLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "identifierPlaceholder",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "submit",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "identifierRequired",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "identifierInvalid",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "identifierTooShort",
+          "type": "string",
+          "state": "Validation feedback"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/auth/ForgotPasswordForm/ForgotPasswordForm.tsx",
@@ -1410,6 +1833,10 @@
         {
           "path": "packages/blocks/src/auth/shared.tsx",
           "target": "components/blocks/auth/shared.tsx"
+        },
+        {
+          "path": "packages/blocks/src/forms/translated-content.tsx",
+          "target": "components/blocks/forms/translated-content.tsx"
         }
       ],
       "dependencies": [
@@ -1426,7 +1853,19 @@
       "package": "@gntik-ai/blocks",
       "group": "forms",
       "status": "stable",
-      "description": "Two-column settings section: title and help on the left, fields on the right; stacks on small screens.",
+      "description": "Two-column settings section: title and help on the left, fields on the right; stacks on small screens. Optional labels?: Partial<FormSectionLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=form-section--labels.",
+      "labels": [
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "state": "Default content and accessible names"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/forms/FormSection/FormSection.tsx",
@@ -1568,7 +2007,89 @@
       "package": "@gntik-ai/blocks",
       "group": "forms",
       "status": "stable",
-      "description": "Dialog to invite people by email (validated chips) with a role and an optional message; submits with a loading state.",
+      "description": "Dialog to invite people by email (validated chips) with a role and an optional message; submits with a loading state. Optional labels?: Partial<InviteMembersDialogLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=invite-members-dialog--labels.",
+      "labels": [
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "emails",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "placeholder",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "listLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "role",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "message",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "messagePlaceholder",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "emailRequired",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "emailInvalid",
+          "type": "(email: string) => string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "fixInvalid",
+          "type": "(count: number) => string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "errorTitle",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "fallbackError",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "cancel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "submit",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "submitMany",
+          "type": "(count: number) => string",
+          "state": "Default content and accessible names"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/forms/InviteMembersDialog/InviteMembersDialog.tsx",
@@ -1821,7 +2342,109 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "Second-factor step with a one-time code (auto-submit), a backup-code mode and resend with a countdown.",
+      "description": "Second-factor step with a one-time code (auto-submit), a backup-code mode and resend with a countdown. Optional labels?: Partial<MfaChallengeLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=mfa-challenge--labels.",
+      "labels": [
+        {
+          "key": "eyebrow",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "backupTitle",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "backupDescription",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "destinationDescription",
+          "type": "(length: number, destination: string) => string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "(length: number) => string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "formLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "codeLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "codeRequired",
+          "type": "(length: number) => string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "backupLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "backupPlaceholder",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "backupHint",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "backupRequired",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "submit",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "useCode",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "resendIn",
+          "type": "(remaining: number) => string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "resend",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "resent",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "backToSignIn",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "fallbackError",
+          "type": "string",
+          "state": "Validation feedback"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/auth/MfaChallenge/MfaChallenge.tsx",
@@ -2286,7 +2909,74 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "New password with a strength meter and a confirmation field with mismatch validation, then a success state.",
+      "description": "New password with a strength meter and a confirmation field with mismatch validation, then a success state. Optional labels?: Partial<ResetPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=reset-password-form--labels.",
+      "labels": [
+        {
+          "key": "eyebrow",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "(minimum: number) => string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "newPassword",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "confirmPassword",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "passwordTooShort",
+          "type": "(minimum: number) => string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "passwordMismatch",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "submit",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "successTitle",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "successDescription",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "successStatus",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "continue",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "fallbackError",
+          "type": "string",
+          "state": "Validation feedback"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/auth/ResetPasswordForm/ResetPasswordForm.tsx",
@@ -2386,7 +3076,19 @@
       "package": "@gntik-ai/blocks",
       "group": "forms",
       "status": "stable",
-      "description": "A setting with its label and description on the left and a control (Switch by default) on the right.",
+      "description": "A setting with its label and description on the left and a control (Switch by default) on the right. Optional labels?: Partial<SettingsRowLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=settings-row--labels.",
+      "labels": [
+        {
+          "key": "label",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "state": "Default content and accessible names"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/forms/SettingsRow/SettingsRow.tsx",
@@ -2406,7 +3108,99 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "Email (default) or text identifier and password sign-in. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. passwordHelp/passwordHelpId describe the password. Text submissions add values.identifier and retain values.email; email-mode payloads are unchanged. sso and signUpPrompt accept replacements or null. Preview: sign-in-form--username.",
+      "description": "Email (default) or text identifier and password sign-in. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. passwordHelp/passwordHelpId describe the password. Text submissions add values.identifier and retain values.email; email-mode payloads are unchanged. sso and signUpPrompt accept replacements or null. Preview: sign-in-form--username. Optional labels?: Partial<SignInFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-in-form--labels.",
+      "labels": [
+        {
+          "key": "eyebrow",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "formLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "identifierLabel",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "identifierPlaceholder",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "password",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "forgotPassword",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "passwordRequired",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "remember",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "submit",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "divider",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "signUpPrompt",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "signUp",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "fallbackError",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "identifierRequired",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "identifierInvalid",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "identifierTooShort",
+          "type": "string",
+          "state": "Validation feedback"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/auth/SignInForm/SignInForm.tsx",
@@ -2433,7 +3227,124 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "Account creation with default name/email fields or ordered text/email fields (values.fields), a password strength meter and required consent (terms=false opts out). minPasswordLength defaults to 8 and drives length validation and the insufficient-length meter; optional passwordHelp can receive the minimum. Configured fields support help, required, autoComplete and validation messages, with a linked validation summary on invalid submit. policyLoading renders skeletons without a form; unavailable replaces the form with consumer title, message and optional action. loading remains submitting; error is form-level feedback. Examples: custom-fields, no-terms, unavailable, loading, submitting and error.",
+      "description": "Account creation with default name/email fields or ordered text/email fields (values.fields), a password strength meter and required consent (terms=false opts out). minPasswordLength defaults to 8 and drives length validation and the insufficient-length meter; optional passwordHelp can receive the minimum. Configured fields support help, required, autoComplete and validation messages, with a linked validation summary on invalid submit. policyLoading renders skeletons without a form; unavailable replaces the form with consumer title, message and optional action. loading remains submitting; error is form-level feedback. Examples: custom-fields, no-terms, unavailable, loading, submitting and error. Optional labels?: Partial<SignUpFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-up-form--labels.",
+      "labels": [
+        {
+          "key": "eyebrow",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "namePlaceholder",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "nameRequired",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "email",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "emailPlaceholder",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "password",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "passwordTooShort",
+          "type": "(minimum: number) => string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "termsRequired",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "terms",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "privacy",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "termsConsent",
+          "type": "(terms: ReactNode, privacy: ReactNode) => ReactNode",
+          "state": "Async feedback"
+        },
+        {
+          "key": "submit",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "divider",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "signInPrompt",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "signIn",
+          "type": "string",
+          "state": "Default content and accessible names"
+        },
+        {
+          "key": "policyLoading",
+          "type": "string",
+          "state": "Async feedback"
+        },
+        {
+          "key": "fallbackError",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "emailInvalid",
+          "type": "string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "fieldRequired",
+          "type": "(label: string) => string",
+          "state": "Validation feedback"
+        },
+        {
+          "key": "fieldInvalid",
+          "type": "string",
+          "state": "Validation feedback"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/auth/SignUpForm/SignUpForm.tsx",
@@ -2442,6 +3353,10 @@
         {
           "path": "packages/blocks/src/auth/shared.tsx",
           "target": "components/blocks/auth/shared.tsx"
+        },
+        {
+          "path": "packages/blocks/src/forms/translated-content.tsx",
+          "target": "components/blocks/forms/translated-content.tsx"
         }
       ],
       "dependencies": [
@@ -2510,7 +3425,14 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "Neutral \"Continue with …\" provider buttons with lucide icons and a per-provider loading state.",
+      "description": "Neutral \"Continue with …\" provider buttons with lucide icons and a per-provider loading state. Optional labels?: Partial<SsoButtonsLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sso-buttons--labels.",
+      "labels": [
+        {
+          "key": "label",
+          "type": "string",
+          "state": "Default content and accessible names"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/auth/SsoButtons/SsoButtons.tsx",
@@ -2761,7 +3683,14 @@
       "package": "@gntik-ai/blocks",
       "group": "forms",
       "status": "stable",
-      "description": "Error summary that lists every problem with a link to its field and takes focus after a failed submit.",
+      "description": "Error summary that lists every problem with a link to its field and takes focus after a failed submit. Optional labels?: Partial<ValidationSummaryLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=validation-summary--labels.",
+      "labels": [
+        {
+          "key": "title",
+          "type": "(count: number) => string",
+          "state": "Default content and accessible names"
+        }
+      ],
       "files": [
         {
           "path": "packages/blocks/src/forms/ValidationSummary/ValidationSummary.tsx",

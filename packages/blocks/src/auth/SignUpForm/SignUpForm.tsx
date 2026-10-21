@@ -1,4 +1,5 @@
 import {
+  useI18n,
   Alert,
   Button,
   Checkbox,
@@ -12,6 +13,7 @@ import {
   Skeleton,
   cn,
 } from '@gntik-ai/ui';
+import { translatedContent } from '../../forms/translated-content';
 import { Mail, User } from '@gntik-ai/icons';
 import { useId, useState, type MouseEvent, type ReactNode } from 'react';
 import { SsoButtons } from '../SsoButtons/SsoButtons';
@@ -23,6 +25,7 @@ import {
   authSignUpFieldError,
   useAsyncSubmit,
   type AuthSignUpField,
+  type AuthSignUpFieldLabels,
   type AuthUnavailableState,
   type AuthSignUpValidationMessages,
 } from '../shared';
@@ -36,7 +39,32 @@ export interface SignUpValues {
   fields?: Record<string, string>;
 }
 
+export interface SignUpFormLabels extends AuthSignUpFieldLabels {
+  eyebrow: string;
+  title: string;
+  description: string;
+  name: string;
+  namePlaceholder: string;
+  nameRequired: string;
+  email: string;
+  emailPlaceholder: string;
+  password: string;
+  passwordTooShort: (minimum: number) => string;
+  termsRequired: string;
+  terms: string;
+  privacy: string;
+  termsConsent: (terms: ReactNode, privacy: ReactNode) => ReactNode;
+  submit: string;
+  divider: string;
+  signInPrompt: string;
+  signIn: string;
+  policyLoading: string;
+  fallbackError: string;
+  emailInvalid: string;
+}
+
 export interface SignUpFormProps {
+  labels?: Partial<SignUpFormLabels>;
   /** Ordered text/email inputs before Password. Omit to keep the default fields and payload. */
   fields?: readonly AuthSignUpField[];
   messages?: AuthSignUpValidationMessages;
@@ -68,6 +96,7 @@ export interface SignUpFormProps {
 
 /** Account creation: name, work email, password with a strength meter and a required terms checkbox. */
 export function SignUpForm({
+  labels,
   fields,
   messages,
   unavailable,
@@ -83,11 +112,16 @@ export function SignUpForm({
   signInHref = '#',
   onSignIn,
   sso = <SsoButtons />,
-  eyebrow = 'Get started',
-  title = 'Create your account',
-  description = 'Set up a workspace for your team in a couple of minutes.',
+  eyebrow: eyebrowProp,
+  title: titleProp,
+  description: descriptionProp,
   className,
 }: SignUpFormProps) {
+  const { t } = useI18n();
+  const eyebrow = eyebrowProp === undefined ? (labels?.eyebrow ?? t('signUp.eyebrow')) : eyebrowProp;
+  const title = titleProp === undefined ? (labels?.title ?? t('signUp.title')) : titleProp;
+  const description =
+    descriptionProp === undefined ? (labels?.description ?? t('signUp.description')) : descriptionProp;
   const termsErrorId = useId();
   const fieldPrefix = useId();
   const passwordId = `${fieldPrefix}-password`;
@@ -96,7 +130,7 @@ export function SignUpForm({
   const [submitCount, setSubmitCount] = useState(0);
   const fieldValue = (id: string) => (Object.hasOwn(fieldValues, id) ? (fieldValues[id] ?? '') : '');
   const configuredErrors: ValidationIssue[] = (fields ?? []).flatMap((field) => {
-    const message = authSignUpFieldError(fieldValue(field.id), field);
+    const message = authSignUpFieldError(fieldValue(field.id), field, t, labels);
     return message ? [{ fieldId: `${fieldPrefix}-field-${field.id}`, label: field.label, message }] : [];
   });
   const [name, setName] = useState('');
@@ -104,7 +138,7 @@ export function SignUpForm({
   const [password, setPassword] = useState('');
   const [terms, setTerms] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const { loading, error, run } = useAsyncSubmit('The account could not be created.');
+  const { loading, error, run } = useAsyncSubmit(labels?.fallbackError ?? t('signUp.fallbackError'));
   const busy = loadingProp ?? loading;
   const alert = errorProp ?? error;
   const nameInvalid = submitted && name.trim() === '';
@@ -114,14 +148,20 @@ export function SignUpForm({
   const termsInvalid = submitted && termsProp !== false && !terms;
 
   const passwordError =
-    messages?.passwordTooShort?.(minPasswordLength) ?? `Use at least ${minPasswordLength} characters.`;
-  const termsError = messages?.termsRequired ?? 'Accept the terms to continue.';
+    messages?.passwordTooShort?.(minPasswordLength) ??
+    labels?.passwordTooShort?.(minPasswordLength) ??
+    t('signUp.passwordTooShort', { minimum: minPasswordLength });
+  const termsError = messages?.termsRequired ?? labels?.termsRequired ?? t('signUp.termsRequired');
+  const termsLink = <Link href={termsHref}>{labels?.terms ?? t('signUp.terms')}</Link>;
+  const privacyLink = <Link href={privacyHref}>{labels?.privacy ?? t('signUp.privacy')}</Link>;
   const summaryErrors = [
     ...configuredErrors,
     ...(password.length < minPasswordLength
-      ? [{ fieldId: passwordId, label: 'Password', message: passwordError }]
+      ? [{ fieldId: passwordId, label: labels?.password ?? t('signUp.password'), message: passwordError }]
       : []),
-    ...(termsProp !== false && !terms ? [{ fieldId: termsId, label: 'Terms', message: termsError }] : []),
+    ...(termsProp !== false && !terms
+      ? [{ fieldId: termsId, label: labels?.terms ?? t('signUp.terms'), message: termsError }]
+      : []),
   ];
 
   if (unavailable)
@@ -135,7 +175,7 @@ export function SignUpForm({
     return (
       <div className={cn(authFormClass, 'flex flex-col gap-4', className)}>
         <span role="status" className="sr-only">
-          Loading sign-up policy…
+          {labels?.policyLoading ?? t('signUp.policyLoading')}
         </span>
         <Skeleton aria-hidden className="h-8 w-3/4" />
         <Skeleton aria-hidden className="h-4 w-full" />
@@ -150,7 +190,7 @@ export function SignUpForm({
       <AuthHeader eyebrow={eyebrow} title={title} description={description} />
       <form
         noValidate
-        aria-label="Create account"
+        aria-label={labels?.submit ?? t('signUp.submit')}
         className="flex flex-col gap-4"
         onSubmit={(e) => {
           e.preventDefault();
@@ -181,7 +221,7 @@ export function SignUpForm({
         )}
         {fields !== undefined ? (
           fields.map((field) => {
-            const message = authSignUpFieldError(fieldValue(field.id), field);
+            const message = authSignUpFieldError(fieldValue(field.id), field, t, labels);
             const invalid = submitted && message !== null;
             return (
               <Field key={field.id} invalid={invalid}>
@@ -203,34 +243,34 @@ export function SignUpForm({
         ) : (
           <>
             <Field invalid={nameInvalid}>
-              <FieldLabel>Full name</FieldLabel>
+              <FieldLabel>{labels?.name ?? t('signUp.name')}</FieldLabel>
               <Input
                 leadingIcon={User}
                 autoComplete="name"
-                placeholder="Avery Collins"
+                placeholder={labels?.namePlaceholder ?? t('signUp.namePlaceholder')}
                 value={name}
                 onValueChange={setName}
                 required
               />
-              <FieldError match={nameInvalid}>Enter your name.</FieldError>
+              <FieldError match={nameInvalid}>{labels?.nameRequired ?? t('signUp.nameRequired')}</FieldError>
             </Field>
             <Field invalid={emailInvalid}>
-              <FieldLabel>Work email</FieldLabel>
+              <FieldLabel>{labels?.email ?? t('signUp.email')}</FieldLabel>
               <Input
                 type="email"
                 leadingIcon={Mail}
                 autoComplete="email"
-                placeholder="name@company.com"
+                placeholder={labels?.emailPlaceholder ?? t('signUp.emailPlaceholder')}
                 value={email}
                 onValueChange={setEmail}
                 required
               />
-              <FieldError match={emailInvalid}>Enter a valid email address.</FieldError>
+              <FieldError match={emailInvalid}>{labels?.emailInvalid ?? t('authValidation.emailInvalid')}</FieldError>
             </Field>
           </>
         )}
         <Field invalid={passwordInvalid}>
-          <FieldLabel>Password</FieldLabel>
+          <FieldLabel>{labels?.password ?? t('signUp.password')}</FieldLabel>
           <PasswordInput
             id={fields !== undefined ? passwordId : undefined}
             showStrength
@@ -255,9 +295,8 @@ export function SignUpForm({
               aria-invalid={termsInvalid || undefined}
               aria-describedby={termsInvalid ? termsErrorId : undefined}
               label={
-                <>
-                  I agree to the <Link href={termsHref}>Terms</Link> and <Link href={privacyHref}>Privacy Policy</Link>.
-                </>
+                labels?.termsConsent?.(termsLink, privacyLink) ??
+                translatedContent(t('signUp.termsConsent'), { terms: termsLink, privacy: privacyLink })
               }
             />
             {termsInvalid && (
@@ -268,17 +307,17 @@ export function SignUpForm({
           </div>
         )}
         <Button type="submit" size="lg" loading={busy} className="mt-2 w-full">
-          Create account
+          {labels?.submit ?? t('signUp.submit')}
         </Button>
       </form>
       {sso != null && (
         <>
-          <AuthDivider>Or sign up with</AuthDivider>
+          <AuthDivider>{labels?.divider ?? t('signUp.divider')}</AuthDivider>
           {sso}
         </>
       )}
       <p className="mt-7 text-center text-[13px] text-muted-foreground">
-        Already have an account?{' '}
+        {labels?.signInPrompt ?? t('signUp.signInPrompt')}{' '}
         <Link
           href={signInHref}
           onClick={
@@ -290,7 +329,7 @@ export function SignUpForm({
               : undefined
           }
         >
-          Sign in
+          {labels?.signIn ?? t('signUp.signIn')}
         </Link>
       </p>
     </div>

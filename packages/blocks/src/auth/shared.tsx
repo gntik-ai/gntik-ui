@@ -1,4 +1,4 @@
-import { cn } from '@gntik-ai/ui';
+import { cn, en, useI18n, type I18n } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
 
 export interface AuthHeaderProps {
@@ -45,7 +45,8 @@ export function AuthDivider({ children }: { children: ReactNode }) {
 export const authFormClass = 'w-full max-w-[392px]';
 
 /** Loading + error state around an async submit handler. A rejection's message becomes the error. */
-export function useAsyncSubmit(fallbackError = 'Something went wrong. Try again.') {
+export function useAsyncSubmit(fallbackError?: string) {
+  const { t } = useI18n();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const run = async (fn: () => void | Promise<void>) => {
@@ -57,7 +58,7 @@ export function useAsyncSubmit(fallbackError = 'Something went wrong. Try again.
       return true;
     } catch (e) {
       setLoading(false);
-      setError(e instanceof Error ? e.message : fallbackError);
+      setError(e instanceof Error ? e.message : (fallbackError ?? t('authValidation.fallbackError')));
       return false;
     }
   };
@@ -98,17 +99,32 @@ export interface AuthFormAccessibilityProps {
   'aria-labelledby'?: string;
 }
 
-export function authIdentifierError(value: string, config?: AuthIdentifierConfig, messages?: AuthValidationMessages) {
+export function authIdentifierError(
+  value: string,
+  config?: AuthIdentifierConfig,
+  messages?: AuthValidationMessages,
+  t?: I18n['t'],
+  labels?: AuthValidationMessages,
+) {
   const trimmed = value.trim();
-  const fallback = config?.type === 'text' ? 'Enter a valid identifier.' : 'Enter a valid email address.';
-  if (!trimmed) return messages?.identifierRequired ?? fallback;
+  const fallback =
+    config?.type === 'text'
+      ? (t?.('authValidation.identifierInvalid') ?? en['authValidation.identifierInvalid'])
+      : (t?.('authValidation.emailInvalid') ?? en['authValidation.emailInvalid']);
+  if (!trimmed) return messages?.identifierRequired ?? labels?.identifierRequired ?? fallback;
   if (config?.minLength !== undefined && trimmed.length < config.minLength)
-    return messages?.identifierTooShort ?? messages?.identifierInvalid ?? fallback;
+    return (
+      messages?.identifierTooShort ??
+      messages?.identifierInvalid ??
+      labels?.identifierTooShort ??
+      labels?.identifierInvalid ??
+      fallback
+    );
   if (
     ((config?.type ?? 'email') === 'email' && !EMAIL_RE.test(trimmed)) ||
     (config?.maxLength !== undefined && trimmed.length > config.maxLength)
   )
-    return messages?.identifierInvalid ?? fallback;
+    return messages?.identifierInvalid ?? labels?.identifierInvalid ?? fallback;
   return null;
 }
 
@@ -125,11 +141,32 @@ export interface AuthSignUpField {
   messages?: { required?: string; invalid?: string };
 }
 
-export function authSignUpFieldError(value: string, field: AuthSignUpField) {
+export interface AuthSignUpFieldLabels {
+  fieldRequired: (label: string) => string;
+  fieldInvalid: string;
+}
+
+export function authSignUpFieldError(
+  value: string,
+  field: AuthSignUpField,
+  t?: I18n['t'],
+  labels?: Partial<AuthSignUpFieldLabels>,
+) {
   const trimmed = value.trim();
-  if (!trimmed) return field.required ? (field.messages?.required ?? `Enter ${field.label}.`) : null;
+  if (!trimmed)
+    return field.required
+      ? (field.messages?.required ??
+          labels?.fieldRequired?.(field.label) ??
+          t?.('authValidation.fieldRequired', { label: field.label }) ??
+          en['authValidation.fieldRequired'].replace('{label}', () => field.label))
+      : null;
   if (field.type === 'email' && !EMAIL_RE.test(trimmed))
-    return field.messages?.invalid ?? 'Enter a valid email address.';
+    return (
+      field.messages?.invalid ??
+      labels?.fieldInvalid ??
+      t?.('authValidation.emailInvalid') ??
+      en['authValidation.emailInvalid']
+    );
   return null;
 }
 

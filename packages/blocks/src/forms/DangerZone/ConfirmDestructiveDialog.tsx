@@ -11,10 +11,19 @@ import {
   Field,
   FieldLabel,
   Input,
+  useI18n,
 } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
+import { translatedContent } from '../translated-content';
+
+export interface ConfirmDestructiveDialogLabels {
+  confirmPrompt: (text: ReactNode) => ReactNode;
+  cancel: string;
+  fallbackError: string;
+}
 
 export interface ConfirmDestructiveDialogProps {
+  labels?: Partial<ConfirmDestructiveDialogLabels>;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: ReactNode;
@@ -28,6 +37,7 @@ export interface ConfirmDestructiveDialogProps {
 
 /** Destructive confirmation (alertdialog) that can require typing the resource name first. */
 export function ConfirmDestructiveDialog({
+  labels,
   open,
   onOpenChange,
   title,
@@ -36,6 +46,7 @@ export function ConfirmDestructiveDialog({
   confirmLabel,
   onConfirm,
 }: ConfirmDestructiveDialogProps) {
+  const { t } = useI18n();
   const [typed, setTyped] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +72,7 @@ export function ConfirmDestructiveDialog({
       onOpenChange(false);
     } catch (e) {
       setLoading(false);
-      setError(e instanceof Error ? e.message : 'Something went wrong. Try again.');
+      setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('dangerZone.fallbackError')));
     }
   };
 
@@ -82,14 +93,17 @@ export function ConfirmDestructiveDialog({
           {confirmText != null && (
             <Field>
               <FieldLabel>
-                Type <span className="font-mono font-semibold text-foreground">{confirmText}</span> to confirm
+                {labels?.confirmPrompt?.(confirmText) ??
+                  translatedContent(t('dangerZone.confirmPrompt'), {
+                    text: <span className="font-mono font-semibold text-foreground">{confirmText}</span>,
+                  })}
               </FieldLabel>
               <Input value={typed} onValueChange={setTyped} autoComplete="off" spellCheck={false} disabled={loading} />
             </Field>
           )}
           {error && <Alert tone="destructive" description={error} />}
           <AlertDialogFooter className="mt-1">
-            <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={loading}>{labels?.cancel ?? t('dangerZone.cancel')}</AlertDialogCancel>
             <Button type="submit" variant="destructive" disabled={!matches} loading={loading}>
               {confirmLabel}
             </Button>

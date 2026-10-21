@@ -10,7 +10,14 @@ import {
 import { X } from '@gntik-ai/icons';
 import { useState } from 'react';
 
+export interface DateRangeFilterLabels {
+  label: string;
+  placeholder: string;
+  clear: (label: string) => string;
+}
+
 export interface DateRangeFilterProps {
+  labels?: Partial<DateRangeFilterLabels>;
   value?: DateRange;
   /** Initial range; defaults to the "Last 7 days" preset. Pass `{ start: null, end: null }` for none. */
   defaultValue?: DateRange;
@@ -33,6 +40,7 @@ const SHORT: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
 
 /** Compact DateRangePicker for toolbars: small trigger, short dates, presets and a clear button. */
 export function DateRangeFilter({
+  labels,
   value,
   defaultValue,
   onValueChange,
@@ -45,8 +53,8 @@ export function DateRangeFilter({
   className,
 }: DateRangeFilterProps) {
   const { t } = useI18n();
-  const label = labelProp ?? t('dateRange.label');
-  const placeholder = placeholderProp ?? t('dateRange.any');
+  const label = labelProp ?? labels?.label ?? t('dateRange.label');
+  const placeholder = placeholderProp ?? labels?.placeholder ?? t('dateRange.any');
   const [inner, setInner] = useState<DateRange>(
     () => defaultValue ?? presets.find((p) => p.id === 'last-7')?.range?.(today ?? new Date()) ?? EMPTY,
   );
@@ -73,7 +81,7 @@ export function DateRangeFilter({
         <IconButton
           icon={X}
           size="sm"
-          label={t('common.clearItem', { label: label.toLowerCase() })}
+          label={labels?.clear?.(label.toLowerCase()) ?? t('common.clearItem', { label: label.toLowerCase() })}
           disabled={disabled}
           onClick={() => set(EMPTY)}
         />
