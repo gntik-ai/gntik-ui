@@ -1,5 +1,28 @@
 # @gntik-ai/templates
 
+## 0.10.0
+
+### Minor Changes
+
+- 609af5a: Localize batch-1 console labels in English and Spanish with optional per-key overrides; the expanded Messages type requires full custom catalogs to add the new keys, and blocks, templates and ui must release together.
+
+### Patch Changes
+
+- e130bce: Show platform-aware shortcut hints with useOs and the mod key token.
+- 743ec1e: Report committed flow edits and save the current workflow graph with accurate unsaved status.
+- 79cb85e: Add English/Spanish chart labels with ChartLocaleProvider and bridge the kit locale in chart blocks and ConsoleShell; generated accessible names now follow Spanish providers, while explicit props and English defaults remain unchanged.
+- Updated dependencies [e130bce]
+- Updated dependencies [d05dc61]
+- Updated dependencies [77301a9]
+- Updated dependencies [743ec1e]
+- Updated dependencies [79cb85e]
+- Updated dependencies [609af5a]
+- Updated dependencies [9dd0d8d]
+  - @gntik-ai/ui@0.10.0
+  - @gntik-ai/blocks@0.10.0
+  - @gntik-ai/charts@0.10.0
+  - @gntik-ai/chat@0.10.0
+
 ## 0.9.0
 
 ### Patch Changes

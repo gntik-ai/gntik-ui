@@ -1,5 +1,27 @@
 # @gntik-ai/blocks
 
+## 0.10.0
+
+### Minor Changes
+
+- 609af5a: Localize batch-1 console labels in English and Spanish with optional per-key overrides; the expanded Messages type requires full custom catalogs to add the new keys, and blocks, templates and ui must release together.
+
+### Patch Changes
+
+- e130bce: Show platform-aware shortcut hints with useOs and the mod key token.
+- 77301a9: Follow provider or runtime week starts and clocks in scheduling blocks, add weekend attributes and overrides, and export localeWeekStart; without a provider, en-US runtimes now use Sunday-first weeks and 12-hour times (pass weekStartsOn={1} and hourCycle="h23" to retain the previous layout).
+- 743ec1e: Report committed flow edits and save the current workflow graph with accurate unsaved status.
+- 79cb85e: Add English/Spanish chart labels with ChartLocaleProvider and bridge the kit locale in chart blocks and ConsoleShell; generated accessible names now follow Spanish providers, while explicit props and English defaults remain unchanged.
+- 9dd0d8d: Unify locale-aware file sizes across thumbnails, uploads and chat, with binary and bit options, consistent chart unit promotion, and a decimal 25 MB default upload limit.
+- Updated dependencies [e130bce]
+- Updated dependencies [d05dc61]
+- Updated dependencies [77301a9]
+- Updated dependencies [79cb85e]
+- Updated dependencies [609af5a]
+- Updated dependencies [9dd0d8d]
+  - @gntik-ai/ui@0.10.0
+  - @gntik-ai/charts@0.10.0
+
 ## 0.9.0
 
 ### Patch Changes

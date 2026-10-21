@@ -1,5 +1,18 @@
 # @gntik-ai/ui
 
+## 0.10.0
+
+### Minor Changes
+
+- 609af5a: Localize batch-1 console labels in English and Spanish with optional per-key overrides; the expanded Messages type requires full custom catalogs to add the new keys, and blocks, templates and ui must release together.
+
+### Patch Changes
+
+- e130bce: Show platform-aware shortcut hints with useOs and the mod key token.
+- d05dc61: Flag inverted number and date ranges in QueryBuilder and skip them during evaluation, leaving more records visible instead of matching none.
+- 77301a9: Follow provider or runtime week starts and clocks in scheduling blocks, add weekend attributes and overrides, and export localeWeekStart; without a provider, en-US runtimes now use Sunday-first weeks and 12-hour times (pass weekStartsOn={1} and hourCycle="h23" to retain the previous layout).
+- 9dd0d8d: Unify locale-aware file sizes across thumbnails, uploads and chat, with binary and bit options, consistent chart unit promotion, and a decimal 25 MB default upload limit.
+
 ## 0.9.0
 
 ### Minor Changes
