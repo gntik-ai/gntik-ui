@@ -7,6 +7,7 @@ export {
   createQueryGroup,
   createQueryCondition,
   isConditionComplete,
+  isConditionValid,
   queryToString,
   evaluateQuery,
   type QueryFieldType,

@@ -3817,7 +3817,7 @@ export default function PowerSearchDeployments() {
 
 ### QueryBuilder (`query-builder`)
 
-Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for "between"); add and remove conditions and groups up to `maxDepth`. The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record.
+Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for "between"); add and remove conditions and groups up to `maxDepth`. The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record. Inverted numeric or date "between" ranges show an inline error and are ignored by evaluation. Before sending a query to a backend, check each condition with `isConditionComplete` and `isConditionValid`; validation preserves the entered values.
 
 - Package: `@gntik-ai/ui` · export `QueryBuilder` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/QueryBuilder/QueryBuilder.doc.ts
@@ -3835,7 +3835,7 @@ Keyboard:
 | ArrowLeft / ArrowRight | In a group's AND / OR switch: moves between the options (Enter / Space picks) |
 | Enter / Space / ArrowDown | On a field, operator or enum value: opens its list (see Select) |
 
-Tokens: card, secondary, border, foreground, muted-foreground, primary, focus-ring
+Tokens: card, secondary, border, foreground, muted-foreground, primary, focus-ring, destructive-text
 
 Usage:
 

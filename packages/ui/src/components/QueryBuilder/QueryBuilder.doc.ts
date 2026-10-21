@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'beta',
   description:
-    'Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for "between"); add and remove conditions and groups up to `maxDepth`. The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record.',
+    'Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for "between"); add and remove conditions and groups up to `maxDepth`. The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record. Inverted numeric or date "between" ranges show an inline error and are ignored by evaluation. Before sending a query to a backend, check each condition with `isConditionComplete` and `isConditionValid`; validation preserves the entered values.',
   primitive: 'Select, MultiSelect, Input, NumberInput, DatePicker, ToggleGroup, Button',
   pattern: 'nested groups of form controls',
   keyboard: [
@@ -20,5 +20,14 @@ export const doc: ComponentDoc = {
     ['ArrowLeft / ArrowRight', "In a group's AND / OR switch: moves between the options (Enter / Space picks)"],
     ['Enter / Space / ArrowDown', 'On a field, operator or enum value: opens its list (see Select)'],
   ],
-  tokens: ['card', 'secondary', 'border', 'foreground', 'muted-foreground', 'primary', 'focus-ring'],
+  tokens: [
+    'card',
+    'secondary',
+    'border',
+    'foreground',
+    'muted-foreground',
+    'primary',
+    'focus-ring',
+    'destructive-text',
+  ],
 };

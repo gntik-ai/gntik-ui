@@ -711,6 +711,7 @@ export const en = {
   'queryBuilder.value': 'Value',
   'queryBuilder.valueFrom': 'From',
   'queryBuilder.valueTo': 'To',
+  'queryBuilder.rangeInverted': "'From' must not be after 'To'.",
   'queryBuilder.addCondition': 'Add condition',
   'queryBuilder.addGroup': 'Add group',
   'queryBuilder.removeCondition': 'Remove condition {index}',

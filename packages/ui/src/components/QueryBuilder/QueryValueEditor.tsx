@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { useI18n } from '../../i18n/I18nProvider';
 import { toISODate } from '../Calendar/calendar-utils';
 import { DatePicker } from '../DatePicker';
@@ -5,7 +6,7 @@ import { Input } from '../Input';
 import { MultiSelect } from '../MultiSelect';
 import { NumberInput } from '../NumberInput';
 import { SimpleSelect } from '../Select';
-import { operatorArity, type QueryCondition, type QueryField, type QueryValue } from './query';
+import { isConditionValid, operatorArity, type QueryCondition, type QueryField, type QueryValue } from './query';
 import { queryBuilderVariants } from './query-builder.variants';
 
 export interface QueryValueEditorProps {
@@ -28,6 +29,8 @@ const asNumber = (v: unknown): number | null => (typeof v === 'number' && !Numbe
 /** The value control for a condition: depends on the field type and the operator's arity. */
 export function QueryValueEditor({ condition, field, onChange, disabled, locale }: QueryValueEditorProps) {
   const { t } = useI18n();
+  const errorId = useId();
+  const inverted = !isConditionValid(condition);
   const arity = operatorArity(condition.operator);
   if (!field || arity === 'none') return null;
   const v = condition.value;
@@ -72,6 +75,8 @@ export function QueryValueEditor({ condition, field, onChange, disabled, locale 
         <>
           <NumberInput
             aria-label={t('queryBuilder.valueFrom')}
+            invalid={inverted}
+            aria-describedby={inverted ? errorId : undefined}
             value={asNumber(pair[0])}
             onValueChange={(n) => set(0, n)}
             disabled={disabled}
@@ -81,6 +86,8 @@ export function QueryValueEditor({ condition, field, onChange, disabled, locale 
           />
           <NumberInput
             aria-label={t('queryBuilder.valueTo')}
+            invalid={inverted}
+            aria-describedby={inverted ? errorId : undefined}
             value={asNumber(pair[1])}
             onValueChange={(n) => set(1, n)}
             disabled={disabled}
@@ -88,6 +95,11 @@ export function QueryValueEditor({ condition, field, onChange, disabled, locale 
             hideSteppers
             className="w-28"
           />
+          {inverted && (
+            <p id={errorId} className="w-full text-[12px] leading-5 text-destructive-text">
+              {t('queryBuilder.rangeInverted')}
+            </p>
+          )}
         </>
       );
     }
@@ -118,6 +130,8 @@ export function QueryValueEditor({ condition, field, onChange, disabled, locale 
         <>
           <DatePicker
             aria-label={t('queryBuilder.valueFrom')}
+            invalid={inverted}
+            aria-describedby={inverted ? errorId : undefined}
             value={fromISO(pair[0])}
             onValueChange={(d) => set(0, d)}
             locale={locale}
@@ -127,6 +141,8 @@ export function QueryValueEditor({ condition, field, onChange, disabled, locale 
           />
           <DatePicker
             aria-label={t('queryBuilder.valueTo')}
+            invalid={inverted}
+            aria-describedby={inverted ? errorId : undefined}
             value={fromISO(pair[1])}
             onValueChange={(d) => set(1, d)}
             locale={locale}
@@ -134,6 +150,11 @@ export function QueryValueEditor({ condition, field, onChange, disabled, locale 
             size="sm"
             className="w-44"
           />
+          {inverted && (
+            <p id={errorId} className="w-full text-[12px] leading-5 text-destructive-text">
+              {t('queryBuilder.rangeInverted')}
+            </p>
+          )}
         </>
       );
     }
