@@ -7,6 +7,61 @@
  * Month and weekday names, numbers and dates come from Intl, not from this catalog.
  */
 export const en = {
+  'resourceDetail.overview': 'Overview',
+  'resourceDetail.activity': 'Activity',
+  'resourceDetail.settings': 'Settings',
+  'resourceDetail.sections': 'Resource sections',
+
+  'error.title': 'We couldn’t load deployments',
+  'error.message': 'The service didn’t respond in time. Your data is safe; try again in a moment.',
+  'error.support': 'Contact support',
+
+  'emptyState.noAccess.title': 'You don’t have access to {resource}',
+  'emptyState.noAccess.description': 'Ask {owner} to grant you a role that includes {resource} permissions.',
+  'emptyState.noAccess.request': 'Request access',
+  'emptyState.noAccess.requested': 'Access requested',
+  'emptyState.noAccess.sent': 'Access request sent',
+
+  'emptyState.noResults.queryTitleBefore': 'No {entity} match “',
+  'emptyState.noResults.queryTitleAfter': '”',
+  'emptyState.noResults.title': 'No {entity} found',
+  'emptyState.noResults.description':
+    'Check the spelling or try a broader search{count, plural, =0 {} one { with {count} filter applied} other { with {count} filters applied}}.',
+  'emptyState.noResults.clearFilters': 'Clear filters',
+  'emptyState.noResults.clearSearch': 'Clear search',
+
+  'emptyState.firstRun.title': 'Create your first project',
+  'emptyState.firstRun.description':
+    'Projects group your services, environments and deployments. Start one from a repository in a couple of minutes.',
+  'emptyState.firstRun.action': 'New project',
+  'emptyState.firstRun.guide': 'Read the guide',
+
+  'callout.title': 'You have used 92% of your build minutes',
+  'callout.description':
+    'Builds will queue once the monthly limit is reached. Upgrade the plan or reduce concurrent builds.',
+  'callout.upgrade': 'Upgrade plan',
+  'callout.viewUsage': 'View usage',
+
+  'descriptionList.title': 'Configuration',
+  'descriptionList.description': 'Settings of this deployment.',
+  'descriptionList.edit': 'Edit',
+  'descriptionList.copy': 'Copy {label}',
+  'descriptionList.copied': '{label} copied',
+
+  'pageHeader.title': 'Deployments',
+  'pageHeader.description': 'Every build and release of this project across its environments.',
+  'pageHeader.moreActions': 'More actions',
+
+  'logViewer.title': 'Logs',
+  'logViewer.levelFilter': 'Log levels',
+  'logViewer.searchLabel': 'Search logs',
+  'logViewer.searchPlaceholder': 'Search…',
+  'logViewer.follow': 'Follow',
+  'logViewer.count': '{visible} of {total}',
+  'logViewer.empty': 'No lines match the current filters.',
+  'logViewer.inspect': 'Inspect event {timestamp}',
+  'logViewer.copy': 'Copy line {timestamp}',
+
   'pageHeader.sections': 'Page sections',
   'thumbnail.uploading': 'Uploading {label}',
   'thumbnail.error': 'Upload failed',

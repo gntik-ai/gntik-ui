@@ -9,6 +9,7 @@ import {
   cn,
   IconButton,
   StatusTag,
+  useI18n,
 } from '@gntik-ai/ui';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { DEPLOYMENT_DETAILS } from './fixtures';
@@ -29,7 +30,18 @@ export interface DescriptionItem {
   copyValue?: string;
 }
 
+export interface DescriptionListCardLabels {
+  title: string;
+  description: string;
+  edit: string;
+  copy: (label: string) => string;
+  copied: (label: string) => string;
+  copiedToClipboard: string;
+}
+
 export interface DescriptionListCardProps {
+  /** Per-key copy overrides; explicit props take precedence, then labels, then the active catalog. */
+  labels?: Partial<DescriptionListCardLabels>;
   title?: string;
   description?: string;
   items?: readonly DescriptionItem[];
@@ -43,7 +55,16 @@ export interface DescriptionListCardProps {
   className?: string;
 }
 
-function CopyButton({ item, onCopy }: { item: DescriptionItem; onCopy?: (item: DescriptionItem) => void }) {
+function CopyButton({
+  item,
+  onCopy,
+  labels,
+}: {
+  item: DescriptionItem;
+  onCopy?: (item: DescriptionItem) => void;
+  labels?: Partial<DescriptionListCardLabels>;
+}) {
+  const { t } = useI18n();
   const [copied, setCopied] = useState(false);
   const timer = useRef<number | undefined>(undefined);
   useEffect(() => () => window.clearTimeout(timer.current), []);
@@ -61,14 +82,18 @@ function CopyButton({ item, onCopy }: { item: DescriptionItem; onCopy?: (item: D
     <>
       <IconButton
         icon={copied ? Check : Copy}
-        label={copied ? `${item.label} copied` : `Copy ${item.label}`}
+        label={
+          copied
+            ? (labels?.copied?.(item.label) ?? t('descriptionList.copied', { label: item.label }))
+            : (labels?.copy?.(item.label) ?? t('descriptionList.copy', { label: item.label }))
+        }
         size="sm"
         variant="ghost"
         className={cn('size-7 shrink-0', copied && 'text-success-text')}
         onClick={copy}
       />
       <span className="sr-only" aria-live="polite">
-        {copied ? 'Copied to clipboard' : ''}
+        {copied ? (labels?.copiedToClipboard ?? t('common.copiedToClipboard')) : ''}
       </span>
     </>
   );
@@ -76,15 +101,20 @@ function CopyButton({ item, onCopy }: { item: DescriptionItem; onCopy?: (item: D
 
 /** Key–value detail card: label column, values (mono, status or rich), copy buttons and an Edit action. */
 export function DescriptionListCard({
-  title = 'Configuration',
-  description = 'Settings of this deployment.',
+  title: titleProp,
+  labels,
+  description: descriptionProp,
   items = DEPLOYMENT_DETAILS,
   onEdit,
-  editLabel = 'Edit',
+  editLabel: editLabelProp,
   onCopy,
   titleAs = 'h3',
   className,
 }: DescriptionListCardProps) {
+  const { t } = useI18n();
+  const title = titleProp ?? labels?.title ?? t('descriptionList.title');
+  const description = descriptionProp ?? labels?.description ?? t('descriptionList.description');
+  const editLabel = editLabelProp ?? labels?.edit ?? t('descriptionList.edit');
   return (
     <Card className={className}>
       <CardHeader divided>
@@ -110,7 +140,7 @@ export function DescriptionListCard({
                   {item.render ?? item.value}
                 </span>
               )}
-              {item.copyable && <CopyButton item={item} onCopy={onCopy} />}
+              {item.copyable && <CopyButton item={item} onCopy={onCopy} labels={labels} />}
             </dd>
           </div>
         ))}

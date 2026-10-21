@@ -3767,7 +3767,7 @@
       "name": "description-list-card",
       "type": "registry:block",
       "title": "Description list card",
-      "description": "Key–value detail card with mono, status and rich values, copy-to-clipboard buttons and an Edit action.",
+      "description": "Key–value detail card with mono, status and rich values, copy-to-clipboard buttons and an Edit action. Optional labels?: Partial<DescriptionListCardLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -4257,7 +4257,7 @@
       "name": "empty-states",
       "type": "registry:block",
       "title": "Empty states",
-      "description": "Four canonical empty states: first run (with checklist), no results (clear filters/search), no access (request access) and not found (optional action).",
+      "description": "Four canonical empty states: first run (with checklist), no results (clear filters/search), no access (request access) and not found (optional action). FirstRunEmpty, NoResultsEmpty and NoAccessEmpty accept labels?: Partial<FirstRunEmptyLabels>, Partial<NoResultsEmptyLabels> and Partial<NoAccessEmptyLabels> respectively. Each type has its own keys below; explicit title, description, actionLabel and secondary props win. Defaults follow I18nProvider (en/es). NoResultsEmpty keeps the query in a mono span unless queryTitle replaces the heading. NotFoundEmpty and all imported fixtures stay English. See the Catalog labels live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -4329,7 +4329,7 @@
       "name": "error-panel",
       "type": "registry:block",
       "title": "Error panel",
-      "description": "Error summary with status code, copyable request id, retry with loading state and a technical-details disclosure.",
+      "description": "Error summary with status code, copyable request id, retry with loading state and a technical-details disclosure. Optional labels?: Partial<ErrorPanelLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -5361,7 +5361,7 @@
       "name": "inline-callout",
       "type": "registry:block",
       "title": "Inline callout",
-      "description": "Alert-based in-content callout with a tone, title, body, action buttons or links and optional dismiss.",
+      "description": "Alert-based in-content callout with a tone, title, body, action buttons or links and optional dismiss. Optional labels?: Partial<InlineCalloutLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -6491,7 +6491,7 @@
       "name": "log-viewer",
       "type": "registry:block",
       "title": "Log viewer",
-      "description": "Windowed log stream (role=\"log\"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows.",
+      "description": "Windowed log stream (role=\"log\"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -7936,7 +7936,7 @@
       "name": "page-header",
       "type": "registry:block",
       "title": "Page header",
-      "description": "Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as=\"div\" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1. The tablist name follows I18nProvider (en/es); the Spanish preview keeps caller content unchanged.",
+      "description": "Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as=\"div\" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1. The tablist name follows I18nProvider (en/es); the Spanish preview keeps caller content unchanged. Optional labels?: Partial<PageHeaderLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -9532,7 +9532,7 @@
       "name": "resource-detail",
       "type": "registry:block",
       "title": "Resource detail",
-      "description": "Resource detail with editable Overview, Activity and Settings tabs by default; optional readOnly (boolean, default false) uses only explicit header and detail props and one Overview tab, with optional history (readonly StatusEvent[], default undefined): omitted hides the history card, [] shows the named empty state, and events render exactly as supplied without invented actors. Read-only ignores activity, events, dangerActions, defaultTab, onSaveSettings and onDangerAction; explicit actions and onEditDetails are honored. The Resource sections tablist retains Tab, arrow, Home/End and Enter/Space keyboard navigation; history is a named group containing the Status history list or empty-state region. Uses token styling in dark (default), light and high_contrast. Examples: runtime-with-transition maps state and lastTransitionAt to one actor-free event, runtime-without-transition maps null to [], and realtime-configuration and postgres-table-detail omit history. ConsoleShell retains sample frame defaults unless explicit shell props are supplied, as in the examples.",
+      "description": "Resource detail with editable Overview, Activity and Settings tabs by default; optional readOnly (boolean, default false) uses only explicit header and detail props and one Overview tab, with optional history (readonly StatusEvent[], default undefined): omitted hides the history card, [] shows the named empty state, and events render exactly as supplied without invented actors. Read-only ignores activity, events, dangerActions, defaultTab, onSaveSettings and onDangerAction; explicit actions and onEditDetails are honored. The Resource sections tablist retains Tab, arrow, Home/End and Enter/Space keyboard navigation; history is a named group containing the Status history list or empty-state region. Uses token styling in dark (default), light and high_contrast. Examples: runtime-with-transition maps state and lastTransitionAt to one actor-free event, runtime-without-transition maps null to [], and realtime-configuration and postgres-table-detail omit history. Optional labels?: Partial<ResourceDetailLabels> overrides overview, activity, settings and sections (all strings). Unset keys use I18nProvider (en/es); no provider keeps English. Only the tabs and tablist are localized by this template; fixtures and other section text are unchanged. readOnly keeps only the localized overview tab. See the Catalog labels live preview. ConsoleShell retains sample frame defaults unless explicit shell props are supplied, as in the examples.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",

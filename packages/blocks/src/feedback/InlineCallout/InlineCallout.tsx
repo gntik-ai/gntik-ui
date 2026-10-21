@@ -1,9 +1,18 @@
-import { Alert, Button, Link, type AlertTone } from '@gntik-ai/ui';
+import { Alert, Button, Link, useI18n, type AlertTone } from '@gntik-ai/ui';
 import type { LucideIcon } from '@gntik-ai/icons';
 import { useState, type ReactNode } from 'react';
 import type { FeedbackAction } from '../types';
 
+export interface InlineCalloutLabels {
+  title: string;
+  description: string;
+  upgrade: string;
+  viewUsage: string;
+}
+
 export interface InlineCalloutProps {
+  /** Per-key copy overrides; explicit props take precedence, then labels, then the active catalog. */
+  labels?: Partial<InlineCalloutLabels>;
   tone?: AlertTone;
   title?: ReactNode;
   description?: ReactNode;
@@ -18,23 +27,27 @@ export interface InlineCalloutProps {
   className?: string;
 }
 
-const inlineCalloutDefaultActions: FeedbackAction[] = [
-  { label: 'Upgrade plan', variant: 'secondary' },
-  { label: 'View usage', href: '#usage' },
-];
-
 /** In-content callout built on Alert: tone, title, body and a row of actions. */
 export function InlineCallout({
   tone = 'warning',
-  title = 'You have used 92% of your build minutes',
-  description = 'Builds will queue once the monthly limit is reached. Upgrade the plan or reduce concurrent builds.',
-  actions = inlineCalloutDefaultActions,
+  title: titleProp,
+  labels,
+  description: descriptionProp,
+  actions: actionsProp,
   icon,
   dismissible = false,
   open,
   onDismiss,
   className,
 }: InlineCalloutProps) {
+  const { t } = useI18n();
+  const title = titleProp === undefined ? (labels?.title ?? t('callout.title')) : titleProp;
+  const description =
+    descriptionProp === undefined ? (labels?.description ?? t('callout.description')) : descriptionProp;
+  const actions: FeedbackAction[] = actionsProp ?? [
+    { label: labels?.upgrade ?? t('callout.upgrade'), variant: 'secondary' },
+    { label: labels?.viewUsage ?? t('callout.viewUsage'), href: '#usage' },
+  ];
   const [dismissed, setDismissed] = useState(false);
   if (!(open ?? !dismissed)) return null;
   return (

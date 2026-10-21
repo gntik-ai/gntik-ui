@@ -57,7 +57,7 @@ export { meta as resetPasswordTemplateMeta } from './reset-password/template.met
 export type { ResetPasswordPageProps } from './reset-password/Page';
 export { default as ResourceDetailPage } from './resource-detail/Page';
 export { meta as resourceDetailTemplateMeta } from './resource-detail/template.meta';
-export type { ResourceDetailProps, ResourceDetailTab } from './resource-detail/Page';
+export type { ResourceDetailProps, ResourceDetailTab, ResourceDetailLabels } from './resource-detail/Page';
 export type { ResourceSettings } from './resource-detail/data';
 export { default as ResourceFormPage } from './resource-form/Page';
 export { meta as resourceFormTemplateMeta } from './resource-form/template.meta';

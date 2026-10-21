@@ -13,6 +13,14 @@ import { previewQuery, usePreviewSettings } from '../preview-settings.jsx';
 
 const { SectionHead, CodeBlock, ApiReference } = window;
 
+const LABEL_EXAMPLES = {
+  'log-viewer': 'builders/LogViewer',
+  'description-list-card': 'data-display/DescriptionListCard',
+  'inline-callout': 'feedback/InlineCallout',
+  'empty-states': 'feedback/EmptyStates',
+  'error-panel': 'feedback/ErrorPanel',
+};
+
 const DEVICES = [
   ['Desktop', '100%'],
   ['Tablet', '768px'],
@@ -234,6 +242,46 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                   file="../../../packages/templates/src/workflow-builder/examples/SaveGraph.tsx"
                   height={height}
                 />
+              )}
+              {kind === 'block' && LABEL_EXAMPLES[it.id] && (
+                <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">Catalog labels</h4>
+                  <Viewer
+                    kind="block"
+                    id={`${it.id}--spanish`}
+                    title={`${it.title} · catalog labels`}
+                    file={`../../../packages/blocks/src/${LABEL_EXAMPLES[it.id]}/examples/Spanish.tsx`}
+                    height={height}
+                  />
+                </>
+              )}
+              {kind === 'block' && it.id === 'page-header' && (
+                <Viewer
+                  kind="block"
+                  id="page-header--labels"
+                  title="Page header · label overrides"
+                  file="../../../packages/blocks/src/page-chrome/PageHeader/examples/Labels.tsx"
+                  height={height}
+                />
+              )}
+              {kind === 'template' && it.id === 'resource-detail' && (
+                <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">Catalog labels</h4>
+                  <Viewer
+                    kind="template"
+                    id="resource-detail--spanish"
+                    title="Resource detail · Spanish tabs"
+                    file="../../../packages/templates/src/resource-detail/examples/Spanish.tsx"
+                    height={height}
+                  />
+                  <Viewer
+                    kind="template"
+                    id="resource-detail--labels"
+                    title="Resource detail · label overrides"
+                    file="../../../packages/templates/src/resource-detail/examples/Labels.tsx"
+                    height={height}
+                  />
+                </>
               )}
               {kind === 'block' && it.id === 'page-header' && (
                 <>

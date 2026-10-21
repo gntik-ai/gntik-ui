@@ -2,6 +2,61 @@ import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  'resourceDetail.overview': 'Resumen',
+  'resourceDetail.activity': 'Actividad',
+  'resourceDetail.settings': 'Configuración',
+  'resourceDetail.sections': 'Secciones del recurso',
+
+  'error.title': 'No se pudieron cargar los despliegues',
+  'error.message': 'El servicio no respondió a tiempo. Tus datos están a salvo; vuelve a intentarlo en un momento.',
+  'error.support': 'Contactar con soporte',
+
+  'emptyState.noAccess.title': 'No tienes acceso a {resource}',
+  'emptyState.noAccess.description': 'Pide a {owner} que te asigne un rol con permisos de {resource}.',
+  'emptyState.noAccess.request': 'Solicitar acceso',
+  'emptyState.noAccess.requested': 'Acceso solicitado',
+  'emptyState.noAccess.sent': 'Solicitud de acceso enviada',
+
+  'emptyState.noResults.queryTitleBefore': 'No hay {entity} que coincidan con “',
+  'emptyState.noResults.queryTitleAfter': '”',
+  'emptyState.noResults.title': 'No se encontraron {entity}',
+  'emptyState.noResults.description':
+    'Revisa la ortografía o prueba una búsqueda más amplia{count, plural, =0 {} one { con {count} filtro aplicado} other { con {count} filtros aplicados}}.',
+  'emptyState.noResults.clearFilters': 'Borrar filtros',
+  'emptyState.noResults.clearSearch': 'Borrar búsqueda',
+
+  'emptyState.firstRun.title': 'Crea tu primer proyecto',
+  'emptyState.firstRun.description':
+    'Los proyectos agrupan tus servicios, entornos y despliegues. Crea uno desde un repositorio en un par de minutos.',
+  'emptyState.firstRun.action': 'Nuevo proyecto',
+  'emptyState.firstRun.guide': 'Leer la guía',
+
+  'callout.title': 'Has usado el 92% de tus minutos de compilación',
+  'callout.description':
+    'Las compilaciones se pondrán en cola al alcanzar el límite mensual. Mejora el plan o reduce las compilaciones simultáneas.',
+  'callout.upgrade': 'Mejorar el plan',
+  'callout.viewUsage': 'Ver uso',
+
+  'descriptionList.title': 'Configuración',
+  'descriptionList.description': 'Configuración de este despliegue.',
+  'descriptionList.edit': 'Editar',
+  'descriptionList.copy': 'Copiar {label}',
+  'descriptionList.copied': '{label} copiado',
+
+  'pageHeader.title': 'Despliegues',
+  'pageHeader.description': 'Todas las compilaciones y versiones de este proyecto en sus entornos.',
+  'pageHeader.moreActions': 'Más acciones',
+
+  'logViewer.title': 'Registros',
+  'logViewer.levelFilter': 'Niveles de registro',
+  'logViewer.searchLabel': 'Buscar en los registros',
+  'logViewer.searchPlaceholder': 'Buscar…',
+  'logViewer.follow': 'Seguir',
+  'logViewer.count': '{visible} de {total}',
+  'logViewer.empty': 'Ninguna línea coincide con los filtros actuales.',
+  'logViewer.inspect': 'Inspeccionar evento {timestamp}',
+  'logViewer.copy': 'Copiar línea {timestamp}',
+
   'pageHeader.sections': 'Secciones de la página',
   'thumbnail.uploading': 'Subiendo {label}',
   'thumbnail.error': 'Error al subir',

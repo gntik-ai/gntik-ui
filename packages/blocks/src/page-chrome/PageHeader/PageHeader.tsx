@@ -31,7 +31,16 @@ export interface PageHeaderTab {
   count?: number;
 }
 
+export interface PageHeaderLabels {
+  title: string;
+  description: string;
+  moreActions: string;
+  sections: string;
+}
+
 export interface PageHeaderProps {
+  /** Per-key copy overrides; explicit props take precedence, then labels, then the active catalog. */
+  labels?: Partial<PageHeaderLabels>;
   /** Root element. Use 'div' where the layout already has a banner (e.g. StackedLayout's pageHeader slot). */
   as?: 'header' | 'div';
   /** Location trail above the title; `null` hides it. */
@@ -62,9 +71,10 @@ export interface PageHeaderProps {
 export function PageHeader({
   as: Root = 'header',
   breadcrumbs = pageHeaderBreadcrumbs,
-  title = 'Deployments',
+  title: titleProp,
+  labels,
   titleRef,
-  description = 'Every build and release of this project across its environments.',
+  description: descriptionProp,
   status = 'active',
   statuses,
   meta = pageHeaderMeta,
@@ -76,6 +86,9 @@ export function PageHeader({
   className,
 }: PageHeaderProps) {
   const { t } = useI18n();
+  const title = titleProp === undefined ? (labels?.title ?? t('pageHeader.title')) : titleProp;
+  const description =
+    descriptionProp === undefined ? (labels?.description ?? t('pageHeader.description')) : descriptionProp;
   const explicitPrimary = actions.findIndex((a) => a.variant === 'primary');
   const primaryIndex = explicitPrimary >= 0 ? explicitPrimary : actions.length - 1;
   const primary = actions[primaryIndex];
@@ -127,7 +140,9 @@ export function PageHeader({
           <>
             <div className="hidden shrink-0 items-center gap-2.5 sm:flex">{actions.map(renderAction)}</div>
             <div className="flex shrink-0 items-center gap-2 sm:hidden">
-              {folded.length > 0 && <MoreMenu items={folded.map(toMenuAction)} label="More actions" />}
+              {folded.length > 0 && (
+                <MoreMenu items={folded.map(toMenuAction)} label={labels?.moreActions ?? t('pageHeader.moreActions')} />
+              )}
               {primary && renderAction(primary, primaryIndex)}
             </div>
           </>
@@ -140,7 +155,7 @@ export function PageHeader({
           onValueChange={(value) => onTabChange?.(String(value))}
           className="mt-5"
         >
-          <TabsList aria-label={t('pageHeader.sections')} className="overflow-x-auto">
+          <TabsList aria-label={labels?.sections ?? t('pageHeader.sections')} className="overflow-x-auto">
             {tabs.map((t) => (
               <TabsTab key={t.value} value={t.value} count={t.count}>
                 {t.label}
