@@ -80,22 +80,120 @@ it.each([false, true])('client preservation=%s reports removed rows only when op
   expect(onSelectionChange).toHaveBeenLastCalledWith(preserveSelection ? ['1', '2'] : ['2']);
 });
 
+it.each([false, true])(
+  'announces matching selection through one persistent region with summary=%s',
+  async (selectionSummary) => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <DataTable
+        {...server}
+        rows={rows.slice(0, 20)}
+        paginated={false}
+        selectAllMatching
+        onSelectionModelChange={() => {}}
+        showColumnMenu={false}
+        showDensityToggle={false}
+        selectionSummary={selectionSummary}
+      />,
+    );
+    const announcement = container.querySelector('[aria-live="polite"]');
+    expect(announcement).toBeInTheDocument();
+    expect(announcement).toBeEmptyDOMElement();
+    await user.click(screen.getByRole('checkbox', { name: 'Select all rows on this page' }));
+    expect(announcement).toHaveTextContent('All 20 rows on this page are selected.');
+    expect(container.querySelectorAll('[aria-live="polite"]')).toHaveLength(1);
+    if (selectionSummary) expect(screen.getByText('20 selected')).not.toHaveAttribute('aria-hidden', 'true');
+    await user.click(screen.getByRole('button', { name: 'Select all 95 rows' }));
+    expect(announcement).toHaveTextContent('All 95 rows are selected.');
+    await user.click(screen.getByRole('button', { name: 'Clear selection' }));
+    expect(announcement).toBeEmptyDOMElement();
+  },
+);
+
 it('selects every matching client row and retains the strip button and focus when clearing', async () => {
   const user = userEvent.setup();
   const onSelectionChange = vi.fn();
   render(<DataTable rows={rows} columns={columns} selectAllMatching onSelectionChange={onSelectionChange} />);
   await user.click(screen.getByRole('checkbox', { name: 'Select all rows on this page' }));
-  expect(screen.getByText('All 10 rows on this page are selected.')).toHaveAttribute('aria-live', 'polite');
+  expect(
+    screen.getByText('All 10 rows on this page are selected.', { selector: '[aria-hidden="true"]' }),
+  ).toBeVisible();
   const button = screen.getByRole('button', { name: 'Select all 95 rows' });
   await user.click(button);
   expect(onSelectionChange.mock.lastCall?.[0]).toHaveLength(95);
   expect(onSelectionChange.mock.lastCall?.[0]).toContain('95');
-  expect(screen.getByText('All 95 rows are selected.')).toBeInTheDocument();
+  expect(screen.getByText('All 95 rows are selected.', { selector: '[aria-hidden="true"]' })).toBeVisible();
   expect(screen.getByRole('button', { name: 'Clear selection' })).toBe(button);
   expect(button).toHaveFocus();
-  await user.click(button);
+  await user.keyboard('{Enter}');
   expect(onSelectionChange).toHaveBeenLastCalledWith([]);
   expect(screen.queryByText('All 95 rows are selected.')).not.toBeInTheDocument();
+  expect(screen.getByRole('checkbox', { name: 'Select all rows on this page' })).toHaveFocus();
+});
+
+it('returns keyboard focus to the table when clearing with a hidden page checkbox', async () => {
+  const user = userEvent.setup();
+  render(
+    <DataTable
+      rows={rows}
+      columns={columns}
+      selectAllMatching
+      hideSelectAll
+      defaultSelectedIds={rows.slice(0, 10).map((row) => row.id)}
+    />,
+  );
+  const button = screen.getByRole('button', { name: 'Select all 95 rows' });
+  button.focus();
+  await user.keyboard('{Enter}');
+  expect(screen.getByRole('button', { name: 'Clear selection' })).toHaveFocus();
+  await user.keyboard('{Enter}');
+  expect(screen.getByRole('table')).toHaveFocus();
+  await user.tab();
+  expect(screen.getByRole('button', { name: 'Name' })).toHaveFocus();
+  await user.tab();
+  expect(screen.getByRole('checkbox', { name: 'Select Item 1' })).toHaveFocus();
+});
+
+it('does not offer more server matches when all rows are loaded and one is disabled', async () => {
+  const user = userEvent.setup();
+  const onSelectionChange = vi.fn();
+  render(
+    <DataTable
+      {...server}
+      rows={rows.slice(0, 20)}
+      rowCount={20}
+      selectAllMatching
+      isRowDisabled={(row) => row.id === '4'}
+      onSelectionChange={onSelectionChange}
+      onSelectionModelChange={() => {}}
+    />,
+  );
+  await user.click(screen.getByRole('checkbox', { name: 'Select all rows on this page' }));
+  expect(onSelectionChange.mock.lastCall?.[0]).toHaveLength(19);
+  expect(screen.getByText('19 selected')).toBeVisible();
+  expect(screen.queryByRole('button', { name: 'Select all 20 rows' })).not.toBeInTheDocument();
+});
+
+it('excludes loaded disabled server rows from the matching model and preserves that count across pages', async () => {
+  const user = userEvent.setup();
+  const onSelectionModelChange = vi.fn();
+  const props = {
+    ...server,
+    selectAllMatching: true,
+    isRowDisabled: (row: (typeof rows)[number]) => row.id === '4',
+    onSelectionModelChange,
+  };
+  const { rerender } = render(<DataTable {...props} rows={rows.slice(0, 20)} />);
+  await user.click(screen.getByRole('checkbox', { name: 'Select all rows on this page' }));
+  await user.click(screen.getByRole('button', { name: 'Select all 95 rows' }));
+  expect(onSelectionModelChange).toHaveBeenLastCalledWith({ type: 'exclude', ids: ['4'] });
+  expect(screen.getByRole('checkbox', { name: 'Select Item 4' })).not.toBeChecked();
+  expect(screen.getByRole('checkbox', { name: 'Select Item 4' })).toHaveAttribute('aria-disabled', 'true');
+  expect(screen.getByText('94 selected')).toBeVisible();
+  onSelectionModelChange.mockClear();
+  rerender(<DataTable {...props} rows={rows.slice(20, 40)} page={2} />);
+  expect(screen.getByText('94 selected')).toBeVisible();
+  expect(onSelectionModelChange).not.toHaveBeenCalled();
 });
 
 it('reports an exclude model, keeps it through paging, sizing and sorting, and clears only on changed filters', async () => {
@@ -120,7 +218,7 @@ it('reports an exclude model, keeps it through paging, sizing and sorting, and c
   await user.click(screen.getByRole('checkbox', { name: 'Select Item 3' }));
   expect(onSelectionModelChange).toHaveBeenLastCalledWith({ type: 'exclude', ids: ['3'] });
   expect(screen.getByText('94 selected')).toBeInTheDocument();
-  expect(screen.getByText('All 94 rows are selected.')).toBeInTheDocument();
+  expect(screen.getByText('All 94 rows are selected.', { selector: '[aria-hidden="true"]' })).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Apply' }));
   expect(act).toHaveBeenLastCalledWith(expect.not.arrayContaining(['3']), { type: 'exclude', ids: ['3'] });
   onSelectionChange.mockClear();

@@ -335,9 +335,9 @@ it.each([
         name: locale === 'en-US' ? 'Select all rows on this page' : 'Seleccionar todas las filas de esta página',
       }),
     );
-    expect(screen.getByText(pageText!)).toBeInTheDocument();
+    expect(screen.getByText(pageText!, { selector: '[aria-hidden="true"]' })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: action }));
-    expect(screen.getByText(allText!)).toBeInTheDocument();
+    expect(screen.getByText(allText!, { selector: '[aria-hidden="true"]' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: clear })).toHaveFocus();
   },
 );
@@ -359,9 +359,9 @@ it('overrides every matching-selection string through labels', async () => {
     />,
   );
   await user.click(screen.getByRole('checkbox', { name: 'Select all rows on this page' }));
-  expect(screen.getByText('Page picked: 1')).toBeInTheDocument();
+  expect(screen.getByText('Page picked: 1', { selector: '[aria-hidden="true"]' })).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Pick matches: 2' }));
-  expect(screen.getByText('Matches picked: 2')).toBeInTheDocument();
+  expect(screen.getByText('Matches picked: 2', { selector: '[aria-hidden="true"]' })).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: 'Clear picks' }));
   expect(screen.queryByText('Matches picked: 2')).toBeNull();
 });

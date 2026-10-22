@@ -126,20 +126,13 @@ export function paginate<T>(rows: readonly T[], page: number, pageSize: number):
 export function selectionState(
   visibleIds: readonly string[],
   selected: ReadonlySet<string>,
-  disabledIds?: ReadonlySet<string>,
 ): { checked: boolean; indeterminate: boolean } {
-  const ids = visibleIds.filter((id) => !disabledIds?.has(id));
-  const count = ids.filter((id) => selected.has(id)).length;
-  return { checked: count > 0 && count === ids.length, indeterminate: count > 0 && count < ids.length };
+  const count = visibleIds.filter((id) => selected.has(id)).length;
+  return { checked: count > 0 && count === visibleIds.length, indeterminate: count > 0 && count < visibleIds.length };
 }
 
 /** Selects all of `ids` when not all are selected; otherwise clears them. Other selections are kept. */
-export function toggleAll(
-  ids: readonly string[],
-  selected: ReadonlySet<string>,
-  disabledIds?: ReadonlySet<string>,
-): Set<string> {
-  ids = ids.filter((id) => !disabledIds?.has(id));
+export function toggleAll(ids: readonly string[], selected: ReadonlySet<string>): Set<string> {
   const next = new Set(selected);
   const all = ids.length > 0 && ids.every((id) => selected.has(id));
   for (const id of ids) {

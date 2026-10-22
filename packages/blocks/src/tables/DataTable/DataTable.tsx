@@ -151,7 +151,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   className,
   labels,
 }: DataTableProps<T>) {
-  const { t } = useI18n();
+  const { t, formatNumber } = useI18n();
   const singleMode = selectionMode === 'single';
   const serverMode = paginationMode === 'server';
   const selectable = selectionMode === undefined ? selectableProp : selectionMode === 'multiple';
@@ -159,6 +159,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const paginated = paginatedProp ?? (serverMode || !singleMode);
   const editHintId = useId();
   const tableRef = useRef<HTMLTableElement>(null);
+  const pageCheckboxRef = useRef<HTMLElement>(null);
   // A view active at mount seeds the initial state.
   const [initialView] = useState(() =>
     (viewsProp ?? defaultViews ?? []).find((v) => v.id === (activeViewId ?? defaultActiveViewId)),
@@ -369,75 +370,98 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const hasSelection = selectable && selectedCount > 0 && (selectionSummary || bulkActions != null);
   const showToolbar = toolbar != null || showDensityToggle || showColumnMenu || showViews || hasSelection;
   const anyEditable = onCellEdit != null && columns.some((c) => c.editable);
+  const showSelectionStrip =
+    selectable &&
+    selectAllMatching &&
+    (!serverMode || !!onSelectionModelChange) &&
+    (header.checked || model.type === 'exclude' || (!serverMode && allMatchingSelected)) &&
+    (serverMode ? (rowCount ?? 0) > rows.length : enabledIds.length > pageIds.length);
+  const allMatching = serverMode ? model.type === 'exclude' : allMatchingSelected;
+  const matchingCount = serverMode ? selectedCount : enabledIds.length;
+  const stripMessage = allMatching
+    ? (labels?.allMatchingSelected?.(matchingCount) ??
+      t('table.allMatchingSelected', { count: formatNumber(matchingCount) }))
+    : (labels?.pageSelected?.(pageIds.length) ?? t('table.pageSelected', { count: formatNumber(pageIds.length) }));
+  const selectionCount = labels?.selectionCount ? labels.selectionCount(selectedCount) : <>{selectedCount} selected</>;
 
   return (
     <div className={cn('overflow-hidden rounded-xl border border-border bg-card shadow-sm', className)}>
-      {showToolbar && (
-        <div
-          className={cn(
-            'flex min-h-12 flex-wrap items-center gap-2 border-b border-border px-3 py-2 transition-colors motion-reduce:transition-none',
-            hasSelection ? 'bg-primary/8' : 'bg-secondary/30',
-          )}
-        >
-          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-            {hasSelection ? (
-              <>
-                {selectionSummary && (
-                  <span className="text-[12.5px] font-semibold text-foreground" aria-live="polite">
-                    {labels?.selectionCount ? labels.selectionCount(selectedCount) : <>{selectedCount} selected</>}
-                  </span>
-                )}
-                {selectionSummary && bulkActions && <span aria-hidden className="h-4 w-px bg-border" />}
-                {bulkActions?.(selectedList, model)}
-              </>
-            ) : (
-              toolbar
-            )}
-          </div>
-          <div className="flex items-center gap-2">
-            {showViews && (
-              <ViewSwitcher
-                labels={labels}
-                views={viewsApi.views}
-                activeId={viewsApi.activeId}
-                dirty={viewsApi.dirty}
-                onSelect={viewsApi.select}
-                onSaveAs={viewsApi.saveAs}
-                onSave={viewsApi.save}
-                onRename={viewsApi.rename}
-                onDelete={viewsApi.remove}
-                onReset={viewsApi.reset}
-              />
-            )}
-            {showDensityToggle && <DensityToggle labels={labels} value={density} onChange={changeDensity} />}
-            {showColumnMenu && (
-              <ColumnVisibilityMenu
-                labels={labels}
-                columns={columns}
-                hidden={hidden}
-                onToggle={toggleColumn}
-                pinOf={pinning ? (id) => pinSideOf(id, pinned) : undefined}
-                onPin={pinning ? (id, side) => setPinned(setColumnPin(pinned, id, side)) : undefined}
-              />
-            )}
-          </div>
-        </div>
-      )}
-      {selectable &&
-        selectAllMatching &&
-        (!serverMode || onSelectionModelChange) &&
-        (header.checked || model.type === 'exclude' || (!serverMode && allMatchingSelected)) &&
-        (serverMode ? (rowCount ?? 0) : enabledIds.length) > pageIds.length && (
-          <SelectionStrip
-            labels={labels}
-            all={serverMode ? model.type === 'exclude' : allMatchingSelected}
-            pageCount={pageIds.length}
-            total={serverMode ? (rowCount ?? 0) : enabledIds.length}
-            selectedCount={serverMode ? selectedCount : enabledIds.length}
-            onSelectAll={selectMatching}
-            onClear={clear}
-          />
+      <div
+        className={cn(
+          !showToolbar && 'sr-only',
+          'flex min-h-12 flex-wrap items-center gap-2 border-b border-border px-3 py-2 transition-colors motion-reduce:transition-none',
+          hasSelection ? 'bg-primary/8' : 'bg-secondary/30',
         )}
+      >
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+          {selectable && (
+            <span
+              className={
+                hasSelection && selectionSummary && !showSelectionStrip
+                  ? 'text-[12.5px] font-semibold text-foreground'
+                  : 'sr-only'
+              }
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {showSelectionStrip ? stripMessage : hasSelection && selectionSummary ? selectionCount : null}
+            </span>
+          )}
+          {hasSelection ? (
+            <>
+              {selectionSummary && showSelectionStrip && (
+                <span className="text-[12.5px] font-semibold text-foreground">{selectionCount}</span>
+              )}
+              {selectionSummary && bulkActions && <span aria-hidden className="h-4 w-px bg-border" />}
+              {bulkActions?.(selectedList, model)}
+            </>
+          ) : (
+            toolbar
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          {showViews && (
+            <ViewSwitcher
+              labels={labels}
+              views={viewsApi.views}
+              activeId={viewsApi.activeId}
+              dirty={viewsApi.dirty}
+              onSelect={viewsApi.select}
+              onSaveAs={viewsApi.saveAs}
+              onSave={viewsApi.save}
+              onRename={viewsApi.rename}
+              onDelete={viewsApi.remove}
+              onReset={viewsApi.reset}
+            />
+          )}
+          {showDensityToggle && <DensityToggle labels={labels} value={density} onChange={changeDensity} />}
+          {showColumnMenu && (
+            <ColumnVisibilityMenu
+              labels={labels}
+              columns={columns}
+              hidden={hidden}
+              onToggle={toggleColumn}
+              pinOf={pinning ? (id) => pinSideOf(id, pinned) : undefined}
+              onPin={pinning ? (id, side) => setPinned(setColumnPin(pinned, id, side)) : undefined}
+            />
+          )}
+        </div>
+      </div>
+      {showSelectionStrip && (
+        <SelectionStrip
+          labels={labels}
+          all={allMatching}
+          message={stripMessage}
+          total={serverMode ? (rowCount ?? 0) : enabledIds.length}
+          onSelectAll={selectMatching}
+          onClear={() => {
+            // Restore focus before clearing removes the strip and its focused button.
+            const target = hideSelectAll || loading || pageIds.length === 0 ? tableRef : pageCheckboxRef;
+            target.current?.focus();
+            clear();
+          }}
+        />
+      )}
       {anyEditable && (
         <span id={editHintId} className="sr-only">
           {labels?.editHint ?? 'Press Enter or F2 to edit.'}
@@ -448,6 +472,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
         <DensityProvider density={density}>
           <Table
             ref={tableRef}
+            tabIndex={selectable && selectAllMatching ? -1 : undefined}
             aria-busy={loading || undefined}
             aria-rowcount={virtual ? items + 1 : undefined}
             stickyHeader={virtualOn}
@@ -457,6 +482,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             // final column would add a scroll-container stop before the header.
             className={cn(
               layout.tableClassName,
+              selectable && selectAllMatching && 'focus-visible:outline-2 focus-visible:outline-focus-ring',
               singleMode && '[&_[data-column-resizer]]:end-0 [&_[data-column-resizer]]:justify-end',
             )}
             style={layout.tableStyle}
@@ -480,6 +506,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     )}
                     {selectable && !hideSelectAll && (
                       <Checkbox
+                        ref={pageCheckboxRef}
                         aria-label={labels?.selectAll ?? t('table.selectAllPage')}
                         checked={header.checked}
                         indeterminate={header.indeterminate}
