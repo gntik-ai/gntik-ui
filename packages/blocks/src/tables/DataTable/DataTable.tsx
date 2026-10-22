@@ -394,7 +394,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
         )}
       >
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-          {selectable && (
+          {/* Matching selection needs a mounted announcer; default tables retain their published surface. */}
+          {selectable && (selectAllMatching || (hasSelection && selectionSummary)) && (
             <span
               className={
                 hasSelection && selectionSummary && !showSelectionStrip

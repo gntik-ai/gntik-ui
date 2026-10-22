@@ -80,6 +80,16 @@ it.each([false, true])('client preservation=%s reports removed rows only when op
   expect(onSelectionChange).toHaveBeenLastCalledWith(preserveSelection ? ['1', '2'] : ['2']);
 });
 
+it('keeps the default announcement surface absent until rows are selected', async () => {
+  const user = userEvent.setup();
+  const { container } = render(<DataTable rows={rows.slice(0, 2)} columns={columns} paginated={false} />);
+  expect(container.querySelector('[aria-live]')).not.toBeInTheDocument();
+  await user.click(screen.getByRole('checkbox', { name: 'Select Item 1' }));
+  expect(container.querySelector('[aria-live="polite"]')).toHaveTextContent('1 selected');
+  await user.click(screen.getByRole('checkbox', { name: 'Select Item 1' }));
+  expect(container.querySelector('[aria-live]')).not.toBeInTheDocument();
+});
+
 it.each([false, true])(
   'announces matching selection through one persistent region with summary=%s',
   async (selectionSummary) => {

@@ -41,11 +41,25 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
   test(`matching client selection keeps keyboard focus and is accessible in ${theme}`, async ({ page }) => {
     await page.goto(`/preview.html?kind=block&id=data-table--client-selection&theme=${theme}`);
     await page.getByRole('checkbox', { name: 'Select all rows on this page' }).click();
-    await expect(page.getByText('All 9 rows on this page are selected.')).toBeVisible();
+    await expect(
+      page
+        .getByText('All 9 rows on this page are selected.', { exact: true })
+        .and(page.locator('[aria-hidden="true"]')),
+    ).toBeVisible();
+    await expect(
+      page
+        .getByText('All 9 rows on this page are selected.', { exact: true })
+        .and(page.locator('[aria-live="polite"]')),
+    ).toHaveText('All 9 rows on this page are selected.');
     await scan(page);
     await page.getByRole('button', { name: 'Select all 94 rows' }).click();
     await expect(page.getByRole('button', { name: 'Clear selection' })).toBeFocused();
-    await expect(page.getByText('All 94 rows are selected.')).toBeVisible();
+    await expect(
+      page.getByText('All 94 rows are selected.', { exact: true }).and(page.locator('[aria-hidden="true"]')),
+    ).toBeVisible();
+    await expect(
+      page.getByText('All 94 rows are selected.', { exact: true }).and(page.locator('[aria-live="polite"]')),
+    ).toHaveText('All 94 rows are selected.');
     await scan(page);
   });
 
