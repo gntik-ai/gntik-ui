@@ -2,6 +2,14 @@ import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  'themeScope.title': 'Vista previa clara',
+  'themeScope.description': 'Esta tarjeta y su menú usan el tema claro.',
+  'themeScope.choice': 'Opción de vista previa',
+  'themeScope.personal': 'Personal',
+  'themeScope.nested': 'Una región oscura dentro de una región clara.',
+  'themeScope.release': 'Liberar tema forzado',
+  'themeScope.force': 'Forzar tema claro',
+
   'resourceDetail.overview': 'Resumen',
   'resourceDetail.activity': 'Actividad',
   'resourceDetail.settings': 'Configuración',

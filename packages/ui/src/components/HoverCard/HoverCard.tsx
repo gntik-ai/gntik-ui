@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { PreviewCard as BasePreviewCard } from '@base-ui/react/preview-card';
 import type { ReactNode } from 'react';
 import { usePortalDir } from '../../i18n/I18nProvider';
@@ -31,7 +32,7 @@ export interface HoverCardContentProps extends Omit<BasePreviewCard.Popup.Props,
   sideOffset?: BasePreviewCard.Positioner.Props['sideOffset'];
   /** Draw an arrow pointing at the trigger. */
   arrow?: boolean;
-  /** Portal container; defaults to document.body. */
+  /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BasePreviewCard.Portal.Props['container'];
   children?: ReactNode;
 }
@@ -50,9 +51,10 @@ export function HoverCardContent({
   children,
   ...props
 }: HoverCardContentProps) {
+  const portalContainer = usePortalContainer();
   const dir = usePortalDir();
   return (
-    <BasePreviewCard.Portal container={container}>
+    <BasePreviewCard.Portal container={container ?? portalContainer}>
       <BasePreviewCard.Positioner
         dir={dir}
         className={s.positioner()}

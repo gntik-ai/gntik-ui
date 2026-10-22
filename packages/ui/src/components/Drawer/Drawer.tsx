@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { Drawer as BaseDrawer } from '@base-ui/react/drawer';
 import { X } from 'lucide-react';
 import { createContext, useContext, type HTMLAttributes, type ReactNode } from 'react';
@@ -47,7 +48,7 @@ export interface DrawerContentProps extends Omit<BaseDrawer.Popup.Props, 'classN
   showClose?: boolean;
   /** Accessible name of the close button (default: the catalog's "Close"). */
   closeLabel?: string;
-  /** Portal container; defaults to document.body. */
+  /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BaseDrawer.Portal.Props['container'];
   children?: ReactNode;
 }
@@ -66,12 +67,13 @@ export function DrawerContent({
   children,
   ...props
 }: DrawerContentProps) {
+  const portalContainer = usePortalContainer();
   const dir = usePortalDir();
   const { t } = useI18n();
   const side = useContext(SideContext);
   const v = drawerVariants({ side, size });
   return (
-    <BaseDrawer.Portal container={container}>
+    <BaseDrawer.Portal container={container ?? portalContainer}>
       <BaseDrawer.Backdrop className={v.backdrop()} />
       <BaseDrawer.Viewport dir={dir} className={v.viewport()}>
         <BaseDrawer.Popup className={cn(v.popup(), className)} {...props}>

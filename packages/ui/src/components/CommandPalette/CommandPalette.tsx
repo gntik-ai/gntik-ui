@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { Autocomplete } from '@base-ui/react/autocomplete';
 import { Dialog } from '@base-ui/react/dialog';
 import { ArrowRight, Search } from 'lucide-react';
@@ -112,6 +113,7 @@ export function CommandPalette({
   className,
   children,
 }: CommandPaletteProps) {
+  const portalContainer = usePortalContainer();
   const { t, locale } = useI18n();
   const recentLabel = recentLabelProp ?? t('commandPalette.recent');
   const label = labelProp ?? t('commandPalette.label');
@@ -142,7 +144,7 @@ export function CommandPalette({
   return (
     <Dialog.Root open={open} onOpenChange={(next) => setOpen(next)}>
       {children}
-      <Dialog.Portal>
+      <Dialog.Portal container={portalContainer}>
         <Dialog.Backdrop className={s.backdrop()} />
         <Dialog.Viewport dir={dir} className={s.viewport()}>
           <Dialog.Popup aria-label={label} className={cn(s.popup(), className)}>

@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, ChevronDown, Plus, RotateCw, Search, X } from 'lucide-react';
 import { useId, type ReactNode, type Ref } from 'react';
@@ -170,6 +171,7 @@ export function ComboboxContent({
   overscan,
   ...props
 }: ComboboxContentProps) {
+  const portalContainer = usePortalContainer();
   const { t } = useI18n();
   const emptyText = emptyTextProp ?? t('common.noMatches');
   const dir = usePortalDir();
@@ -197,7 +199,7 @@ export function ComboboxContent({
   const errorText =
     typeof enh?.errorText === 'function' ? enh.errorText(enh.error) : (enh?.errorText ?? t('combobox.loadFailed'));
   return (
-    <BaseCombobox.Portal container={container}>
+    <BaseCombobox.Portal container={container ?? portalContainer}>
       <BaseCombobox.Positioner dir={dir} className={s.positioner()} side={side} align={align} sideOffset={sideOffset}>
         <BaseCombobox.Popup
           className={cn(

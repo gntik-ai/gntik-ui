@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X, type LucideIcon } from 'lucide-react';
 import { useMemo, type ReactNode } from 'react';
@@ -128,7 +129,7 @@ export interface ToasterProps {
   className?: string;
   /** Accessible name of each toast's close button. */
   closeLabel?: string;
-  /** Portal container; defaults to document.body. */
+  /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BaseToast.Portal.Props['container'];
 }
 
@@ -137,13 +138,14 @@ export interface ToasterProps {
  * hovering or focusing it pauses auto-dismiss.
  */
 export function Toaster({ className, closeLabel: closeLabelProp, container }: ToasterProps) {
+  const portalContainer = usePortalContainer();
   const { t } = useI18n();
   const closeLabel = closeLabelProp ?? t('toast.dismiss');
   const dir = usePortalDir();
   const { toasts } = BaseToast.useToastManager<ToastData>();
   const s = toastVariants();
   return (
-    <BaseToast.Portal container={container}>
+    <BaseToast.Portal container={container ?? portalContainer}>
       <BaseToast.Viewport dir={dir} className={cn(s.viewport(), className)}>
         {toasts.map((t) => {
           const type = t.type ? (TYPE_ALIASES[t.type] ?? t.type) : 'neutral';

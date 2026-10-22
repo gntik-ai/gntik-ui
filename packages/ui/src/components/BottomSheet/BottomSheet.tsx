@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { useI18n } from '../../i18n/I18nProvider';
 import { Drawer as BaseDrawer } from '@base-ui/react/drawer';
 import { X } from 'lucide-react';
@@ -172,11 +173,12 @@ export function BottomSheetContent({
   children,
   ...props
 }: BottomSheetContentProps) {
+  const portalContainer = usePortalContainer();
   const ctx = useContext(SheetContext);
   const { t } = useI18n();
   const s = bottomSheetVariants();
   return (
-    <BaseDrawer.Portal container={container}>
+    <BaseDrawer.Portal container={container ?? portalContainer}>
       <BaseDrawer.Backdrop className={s.backdrop()} />
       <BaseDrawer.Viewport className={s.viewport()}>
         <BaseDrawer.Popup className={cn(s.popup(), className)} {...props}>

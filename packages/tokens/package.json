@@ -24,7 +24,8 @@
       "types": "./dist/tokens.d.ts",
       "default": "./dist/tokens.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./scope.css": "./src/scope.css"
   },
   "sideEffects": [
     "*.css"

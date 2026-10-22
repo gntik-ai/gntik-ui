@@ -25,6 +25,32 @@ function Switcher() {
 }
 
 describe('ThemeProvider', () => {
+  it('forces light over storage, persists choices while forced and applies them when released', async () => {
+    localStorage.setItem('gntik-theme', 'dark');
+    const user = userEvent.setup();
+    const { rerender } = render(
+      <ThemeProvider forcedMode="light">
+        <Switcher />
+      </ThemeProvider>,
+    );
+    expect(document.documentElement.className).toBe('');
+    expect(document.documentElement.style.colorScheme).toBe('light');
+    expect(screen.getByTestId('state')).toHaveTextContent('dark/light');
+    await user.click(screen.getByText('high_contrast'));
+    expect(localStorage.getItem('gntik-theme')).toBe('high_contrast');
+    expect(screen.getByTestId('state')).toHaveTextContent('high_contrast/light');
+    expect(document.documentElement.className).toBe('');
+    expect(document.documentElement.style.colorScheme).toBe('light');
+    rerender(
+      <ThemeProvider>
+        <Switcher />
+      </ThemeProvider>,
+    );
+    expect(screen.getByTestId('state')).toHaveTextContent('high_contrast/high_contrast');
+    expect(document.documentElement).toHaveClass('high_contrast');
+    expect(document.documentElement.style.colorScheme).toBe('dark');
+  });
+
   it('defaults to dark and sets the class on <html>', () => {
     render(
       <ThemeProvider>

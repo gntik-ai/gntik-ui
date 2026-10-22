@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { useI18n } from '../../i18n/I18nProvider';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { X } from 'lucide-react';
@@ -77,6 +78,7 @@ export function Tour({
   labels: labelsProp,
   className,
 }: TourProps) {
+  const portalContainer = usePortalContainer();
   const { t } = useI18n();
   const labels: TourLabels = {
     skip: t('tour.skip'),
@@ -161,7 +163,7 @@ export function Tour({
           end(false);
         }}
       >
-        <BasePopover.Portal>
+        <BasePopover.Portal container={portalContainer}>
           <BasePopover.Positioner
             className={s.positioner()}
             anchor={() => resolve(target) ?? centre}

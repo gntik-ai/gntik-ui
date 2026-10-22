@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { useI18n } from '../../i18n/I18nProvider';
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { ChevronLeft, ChevronRight, Play, X, ZoomIn, ZoomOut } from 'lucide-react';
@@ -67,6 +68,7 @@ export function Lightbox({
   labels: labelsProp,
   container,
 }: LightboxProps) {
+  const portalContainer = usePortalContainer();
   const { t } = useI18n();
   const labels: LightboxLabels = {
     title: t('lightbox.title'),
@@ -135,7 +137,7 @@ export function Lightbox({
 
   return (
     <BaseDialog.Root open={isOpen} onOpenChange={(next) => setOpen(next)}>
-      <BaseDialog.Portal container={container}>
+      <BaseDialog.Portal container={container ?? portalContainer}>
         <BaseDialog.Backdrop className={s.backdrop()} />
         <BaseDialog.Popup className={s.popup()} onKeyDown={onKeyDown}>
           <BaseDialog.Title className="sr-only">{labels.title}</BaseDialog.Title>

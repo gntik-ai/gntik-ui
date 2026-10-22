@@ -34,6 +34,14 @@ const utilsSources = import.meta.glob('../../../../packages/ui/src/utils/example
   import: 'default',
 });
 
+const themeDocs = import.meta.glob('../../../../packages/ui/src/theme/*.doc.ts', { eager: true, import: 'doc' });
+const themeExamples = import.meta.glob('../../../../packages/ui/src/theme/examples/*.tsx', { eager: true });
+const themeSources = import.meta.glob('../../../../packages/ui/src/theme/examples/*.tsx', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+});
+
 const withDefault = (modules) =>
   Object.fromEntries(
     Object.entries(modules)
@@ -70,6 +78,15 @@ const formsOwnerOf = (path, folders) => {
 };
 
 const COMPONENTS = sortEntries([
+  ...buildEntries({
+    docs: themeDocs,
+    examples: withDefault(themeExamples),
+    sources: themeSources,
+    folderOf: formsFolderOf,
+    ownerOf: formsOwnerOf,
+    forProduct: (code) => code.replace(/from '[.][^']+'/g, "from '@gntik-ai/ui'"),
+    apiKind: 'theme',
+  }),
   ...buildEntries({
     docs: utilsDocs,
     examples: withDefault(utilsExamples),

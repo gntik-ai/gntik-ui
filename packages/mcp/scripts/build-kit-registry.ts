@@ -164,7 +164,7 @@ export function collectSources(): Source[] {
       name: 'ThemeProvider',
       group: 'Theme',
       description:
-        'ThemeProvider (dark default, light, high contrast, system; persisted), themeScript, Logo and brand presets.',
+        'ThemeProvider (persisted page mode, optional forcedMode), ThemeScope (nested themes and themed portals), themeScript, Logo and brand presets.',
     },
   });
   const doc = (kind: Kind, pkg: string, base: string, targetBase: string) => {

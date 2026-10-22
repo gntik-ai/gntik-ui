@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { X } from 'lucide-react';
 import type { HTMLAttributes, ReactNode } from 'react';
@@ -20,7 +21,7 @@ export interface DialogContentProps extends Omit<BaseDialog.Popup.Props, 'classN
   showClose?: boolean;
   /** Accessible name of the close button. */
   closeLabel?: string;
-  /** Portal container; defaults to document.body. */
+  /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BaseDialog.Portal.Props['container'];
   children?: ReactNode;
 }
@@ -39,12 +40,13 @@ export function DialogContent({
   children,
   ...props
 }: DialogContentProps) {
+  const portalContainer = usePortalContainer();
   const { t } = useI18n();
   const closeLabel = closeLabelProp ?? t('common.close');
   const dir = usePortalDir();
   const v = dialogVariants({ size, presentation });
   return (
-    <BaseDialog.Portal container={container}>
+    <BaseDialog.Portal container={container ?? portalContainer}>
       <BaseDialog.Backdrop className={v.backdrop()} />
       <BaseDialog.Viewport dir={dir} className={v.viewport()}>
         <BaseDialog.Popup className={cn(v.popup(), className)} {...props}>

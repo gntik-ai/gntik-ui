@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import type { ReactElement, ReactNode } from 'react';
 import { usePortalDir } from '../../i18n/I18nProvider';
@@ -32,7 +33,7 @@ export interface TooltipContentProps extends Omit<BaseTooltip.Popup.Props, 'clas
   arrow?: boolean;
   /** Keyboard shortcut shown after the label (solid variant). */
   kbd?: string;
-  /** Portal container; defaults to document.body. */
+  /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BaseTooltip.Portal.Props['container'];
   children?: ReactNode;
 }
@@ -50,10 +51,11 @@ export function TooltipContent({
   children,
   ...props
 }: TooltipContentProps) {
+  const portalContainer = usePortalContainer();
   const dir = usePortalDir();
   const v = tooltipVariants({ variant });
   return (
-    <BaseTooltip.Portal container={container}>
+    <BaseTooltip.Portal container={container ?? portalContainer}>
       <BaseTooltip.Positioner dir={dir} className={v.positioner()} side={side} align={align} sideOffset={sideOffset}>
         <BaseTooltip.Popup role="tooltip" className={cn(v.popup(), className)} {...props}>
           {arrow && <BaseTooltip.Arrow className={v.arrow()} />}

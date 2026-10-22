@@ -1,0 +1,128 @@
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { renderToString } from 'react-dom/server';
+import { ThemeScope } from './ThemeScope';
+import { ThemeProvider, useTheme } from './ThemeProvider';
+import { usePortalContainer } from '../utils/portal';
+import { Select, SelectContent, SelectItem, SelectLabel, SelectTrigger } from '../components/Select/Select';
+import { expectNoAxeViolations } from '../test/a11y';
+
+function FruitSelect({ container }: { container?: HTMLElement }) {
+  return (
+    <Select defaultOpen items={[{ value: 'apple', label: 'Apple' }]}>
+      <SelectLabel>Fruit</SelectLabel>
+      <SelectTrigger placeholder="Choose fruit" />
+      <SelectContent container={container}>
+        <SelectItem value="apple">Apple</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}
+
+it('portals an initially open Select into the light scope and passes axe', async () => {
+  document.documentElement.className = 'dark';
+  const { container } = render(
+    <ThemeScope theme="light">
+      <FruitSelect />
+    </ThemeScope>,
+  );
+  const listbox = await screen.findByRole('listbox');
+  const portal = listbox.closest('[data-theme-scope-portal]');
+  expect(portal).toHaveClass('light');
+  expect(portal?.parentElement).toBe(document.body);
+  expect(container.querySelector('[role="listbox"]')).toBeNull();
+  await expectNoAxeViolations();
+});
+
+it('lets an explicit Select container win over the scope', async () => {
+  const explicit = document.createElement('div');
+  document.body.appendChild(explicit);
+  const { unmount } = render(
+    <ThemeScope theme="light">
+      <FruitSelect container={explicit} />
+    </ThemeScope>,
+  );
+  try {
+    const listbox = await screen.findByRole('listbox');
+    expect(explicit).toContainElement(listbox);
+    expect(listbox.closest('[data-theme-scope-portal]')).toBeNull();
+  } finally {
+    unmount();
+    explicit.remove();
+  }
+});
+
+it('keeps the default body portal outside a scope', async () => {
+  const { container } = render(<FruitSelect />);
+  const listbox = await screen.findByRole('listbox');
+  expect(document.body).toContainElement(listbox);
+  expect(container).not.toContainElement(listbox);
+  expect(document.querySelector('[data-theme-scope-portal]')).toBeNull();
+  expect(listbox.closest('[data-base-ui-portal]')?.parentElement).toBe(document.body);
+});
+
+function Probe() {
+  const { mode, resolved, setMode } = useTheme();
+  const portal = usePortalContainer();
+  return (
+    <button onClick={() => setMode('dark')} data-portal={portal?.dataset.themeScopePortal}>
+      {mode}/{resolved}
+    </button>
+  );
+}
+
+it('scopes resolved while keeping page mode and setMode, and supports Base UI render', async () => {
+  const user = userEvent.setup();
+  const { container } = render(
+    <ThemeProvider defaultMode="high_contrast" storageKey={null}>
+      <ThemeScope theme="light" className="rounded-lg" render={<section />}>
+        <ThemeScope theme="dark">
+          <Probe />
+        </ThemeScope>
+      </ThemeScope>
+    </ThemeProvider>,
+  );
+  const outer = container.querySelector('section');
+  expect(outer).toHaveClass('light', 'rounded-lg');
+  expect(outer).toHaveAttribute('data-theme-scope', 'light');
+  expect(outer?.firstElementChild).toHaveClass('dark');
+  expect(screen.getByRole('button')).toHaveTextContent('high_contrast/dark');
+  expect(document.documentElement).toHaveClass('high_contrast');
+  await user.click(screen.getByRole('button'));
+  expect(document.documentElement).toHaveClass('dark');
+  expect(screen.getByRole('button')).toHaveTextContent('dark/dark');
+});
+
+it('owns one body portal per scope, updates its theme and removes it on unmount', () => {
+  const { rerender, unmount } = render(
+    <ThemeScope theme="light">
+      <Probe />
+    </ThemeScope>,
+  );
+  const portal = document.querySelector('[data-theme-scope-portal]');
+  expect(portal?.parentElement).toBe(document.body);
+  expect(portal).toHaveClass('light');
+  expect(screen.getByRole('button')).toHaveAttribute('data-portal', 'light');
+  rerender(
+    <ThemeScope theme="dark">
+      <Probe />
+    </ThemeScope>,
+  );
+  expect(document.querySelectorAll('[data-theme-scope-portal]')).toHaveLength(1);
+  expect(document.querySelector('[data-theme-scope-portal]')).toHaveClass('dark');
+  unmount();
+  expect(document.querySelector('[data-theme-scope-portal]')).toBeNull();
+});
+
+it('defaults to no portal outside a scope and creates no portal during SSR', () => {
+  render(<Probe />);
+  expect(screen.getByRole('button')).not.toHaveAttribute('data-portal');
+  expect(
+    renderToString(
+      <ThemeScope theme="light">
+        <Probe />
+      </ThemeScope>,
+    ),
+  ).toContain('data-theme-scope="light"');
+  expect(document.querySelector('[data-theme-scope-portal]')).toBeNull();
+});

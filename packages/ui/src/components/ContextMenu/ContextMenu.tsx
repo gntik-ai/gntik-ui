@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { ContextMenu as BaseContextMenu } from '@base-ui/react/context-menu';
 import type { KeyboardEvent, ReactNode } from 'react';
 import { cn } from '../../utils/cn';
@@ -69,15 +70,16 @@ export function ContextMenuTrigger({
 
 export interface ContextMenuContentProps extends Omit<BaseContextMenu.Popup.Props, 'className'> {
   className?: string;
-  /** Portal container; defaults to document.body. */
+  /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BaseContextMenu.Portal.Props['container'];
   children?: ReactNode;
 }
 
 /** The floating list (role `menu`) placed at the pointer; same look as MenuContent. */
 export function ContextMenuContent({ className, container, children, ...props }: ContextMenuContentProps) {
+  const portalContainer = usePortalContainer();
   return (
-    <BaseContextMenu.Portal container={container}>
+    <BaseContextMenu.Portal container={container ?? portalContainer}>
       <BaseContextMenu.Positioner className={s.positioner()}>
         <BaseContextMenu.Popup className={cn(s.popup(), className)} {...props}>
           {children}

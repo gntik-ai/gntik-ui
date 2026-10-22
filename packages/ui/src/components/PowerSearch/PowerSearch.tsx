@@ -1,3 +1,4 @@
+import { usePortalContainer } from '../../utils/portal';
 import { useI18n } from '../../i18n/I18nProvider';
 import { matchText } from '../../utils/match-text';
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
@@ -102,6 +103,7 @@ export function PowerSearch<K extends string = string>({
   className,
   'aria-label': ariaLabel,
 }: PowerSearchProps<K>) {
+  const portalContainer = usePortalContainer();
   const { locale } = useI18n();
   const labels = { ...defaultLabels, ...labelsProp };
   const opLabels = { ...defaultOperatorLabels, ...opLabelsProp };
@@ -385,7 +387,7 @@ export function PowerSearch<K extends string = string>({
           className={s.input()}
           onKeyDown={onKeyDown}
         />
-        <BaseCombobox.Portal>
+        <BaseCombobox.Portal container={portalContainer}>
           <BaseCombobox.Positioner
             className={s.positioner()}
             side="bottom"
