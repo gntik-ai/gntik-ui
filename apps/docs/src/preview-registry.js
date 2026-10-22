@@ -110,6 +110,12 @@ export const PREVIEW_LOADERS = {
     'load-more-footer--cards': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/cards'),
     'data-table--single-selection': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/single-selection'),
+    'data-table--server-pagination': () =>
+      import('../../../packages/blocks/src/tables/DataTable/examples/server-pagination'),
+    'data-table--client-selection': () =>
+      import('../../../packages/blocks/src/tables/DataTable/examples/client-selection'),
+    'data-table--paginated-single-selection': () =>
+      import('../../../packages/blocks/src/tables/DataTable/examples/paginated-single-selection'),
     'plan-card--summary-full': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryFull'),
     'plan-card--summary-minimal': () => import('../../../packages/blocks/src/billing/PlanCard/examples/SummaryMinimal'),
     'plan-card--summary-unassigned': () =>

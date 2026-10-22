@@ -233,6 +233,10 @@ it('replaces every pin option and the single-selection heading without translati
   const user = userEvent.setup({ pointerEventsCheck: 0 });
   const full: DataTableLabels = {
     ...labels,
+    pageSelected: (count) => `Página seleccionada: ${count}`,
+    selectAllMatching: (count) => `Seleccionar coincidencias: ${count}`,
+    allMatchingSelected: (count) => `Coincidencias seleccionadas: ${count}`,
+    clearSelection: 'Borrar selección',
     booleanTrue: 'Sí',
     booleanFalse: 'No',
     selectGroup: (group) => `Grupo ${group}`,
@@ -290,4 +294,74 @@ it('replaces every pin option and the single-selection heading without translati
   expect(screen.getByRole('columnheader', { name: 'Selección' })).toBeInTheDocument();
   expect(screen.getByRole('radio', { name: 'Alpha' })).toBeVisible();
   expect(screen.queryByRole('radio', { name: 'Seleccionar Alpha' })).toBeNull();
+});
+
+it.each([
+  [
+    'en-US',
+    'All 10 rows on this page are selected.',
+    'Select all 12,345 rows',
+    'All 12,345 rows are selected.',
+    'Clear selection',
+  ],
+  [
+    'es-MX',
+    'Las 10 filas de esta página están seleccionadas.',
+    'Seleccionar las 12,345 filas',
+    'Las 12,345 filas están seleccionadas.',
+    'Borrar selección',
+  ],
+])(
+  'translates matching selection with provider-formatted counts in %s',
+  async (locale, pageText, action, allText, clear) => {
+    const user = userEvent.setup();
+    const records = Array.from({ length: 10 }, (_, i) => ({ id: String(i), name: `Item ${i}`, region: 'West' }));
+    render(
+      <I18nProvider locale={locale}>
+        <DataTable
+          rows={records}
+          columns={columns}
+          paginationMode="server"
+          page={1}
+          pageSize={10}
+          rowCount={12345}
+          selectAllMatching
+          onSelectionModelChange={() => {}}
+        />
+      </I18nProvider>,
+    );
+    await user.click(
+      screen.getByRole('checkbox', {
+        name: locale === 'en-US' ? 'Select all rows on this page' : 'Seleccionar todas las filas de esta página',
+      }),
+    );
+    expect(screen.getByText(pageText!)).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: action }));
+    expect(screen.getByText(allText!)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: clear })).toHaveFocus();
+  },
+);
+
+it('overrides every matching-selection string through labels', async () => {
+  const user = userEvent.setup();
+  render(
+    <DataTable
+      rows={rows}
+      columns={columns}
+      defaultPageSize={1}
+      selectAllMatching
+      labels={{
+        pageSelected: (n) => `Page picked: ${n}`,
+        selectAllMatching: (n) => `Pick matches: ${n}`,
+        allMatchingSelected: (n) => `Matches picked: ${n}`,
+        clearSelection: 'Clear picks',
+      }}
+    />,
+  );
+  await user.click(screen.getByRole('checkbox', { name: 'Select all rows on this page' }));
+  expect(screen.getByText('Page picked: 1')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Pick matches: 2' }));
+  expect(screen.getByText('Matches picked: 2')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Clear picks' }));
+  expect(screen.queryByText('Matches picked: 2')).toBeNull();
 });

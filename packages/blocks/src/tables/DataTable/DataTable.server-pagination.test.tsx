@@ -35,7 +35,7 @@ const summary = () => document.querySelector('[aria-live="polite"]');
 
 // @ts-expect-error Server pagination needs a known total.
 const missingTotal: DataTableProps<Row> = { paginationMode: 'server', page: 1, pageSize: 20 };
-// @ts-expect-error Server pagination cannot be combined with single selection.
+// Single selection accepts the same controlled server pagination contract.
 const singleServer: DataTableProps<Row> = { ...server, selectionMode: 'single', paginated: false };
 void missingTotal;
 void singleServer;

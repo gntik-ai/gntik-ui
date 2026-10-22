@@ -44,7 +44,9 @@ import { DensityToggle } from './density-toggle';
 import { DEPLOYMENT_COLUMNS, DEPLOYMENT_ROWS } from './fixtures';
 import { DataTableHeadCell } from './header-cell';
 import { SelectionGroup, useSingleSelection, useSingleSelectionWarnings } from './single-selection';
+import { SelectionStrip } from './selection-strip';
 import { useControllable, useTableViews } from './use-table-views';
+import { useMultipleSelection } from './use-multiple-selection';
 import { useVirtualRows } from './use-virtual-rows';
 import { ViewSwitcher, type DataTableViewState } from './views';
 
@@ -85,6 +87,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   selectedIds,
   defaultSelectedIds = [],
   onSelectionChange,
+  preserveSelection,
+  selectAllMatching = false,
+  hideSelectAll = false,
+  selectionModel,
+  onSelectionModelChange,
   bulkActions,
   selectionSummary = true,
   rowActions,
@@ -149,7 +156,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const serverMode = paginationMode === 'server';
   const selectable = selectionMode === undefined ? selectableProp : selectionMode === 'multiple';
   const selectionColumn = selectable || singleMode;
-  const paginated = !singleMode && (paginatedProp ?? true);
+  const paginated = paginatedProp ?? (serverMode || !singleMode);
   const editHintId = useId();
   const tableRef = useRef<HTMLTableElement>(null);
   // A view active at mount seeds the initial state.
@@ -161,7 +168,6 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const defaultHidden = columns.filter((c) => c.defaultHidden).map((c) => c.id);
 
   const [innerSort, setInnerSort] = useState<SortState | null>(seed.sort !== undefined ? seed.sort : defaultSort);
-  const [innerSelected, setInnerSelected] = useState<ReadonlySet<string>>(() => new Set(defaultSelectedIds));
   const [innerDensity, setInnerDensity] = useState<TableDensity | null>(defaultDensity ?? null);
   const contextDensity = useDensity();
   const [hiddenList, setHiddenList] = useControllable<readonly string[]>(
@@ -188,7 +194,30 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const effectiveGroupBy: DataTableGroupBy<T> | undefined =
     groupOverride === undefined ? groupBy : ((groupOverride ?? undefined) as DataTableGroupBy<T> | undefined);
   const sort = sortProp === undefined ? innerSort : sortProp;
-  const selected: ReadonlySet<string> = selectedIds ? new Set(selectedIds) : innerSelected;
+  const enabledIds = rows.filter((row) => !isRowDisabled?.(row)).map(getRowId);
+  const {
+    selected,
+    selectedList,
+    setSelected,
+    model,
+    selectedCount,
+    allMatchingSelected,
+    selectAllMatching: selectMatching,
+    clear,
+  } = useMultipleSelection({
+    rowIds: rows.map(getRowId),
+    selectedIds,
+    defaultSelectedIds,
+    onSelectionChange,
+    preserveSelection: preserveSelection ?? serverMode,
+    enabledIds,
+    selectionModel,
+    onSelectionModelChange,
+    serverMode,
+    selectAllMatching: selectable && selectAllMatching,
+    total: rowCount ?? rows.length,
+    filters,
+  });
   const density = densityProp ?? innerDensity ?? contextDensity;
   const visibleColumns = orderColumns(
     columns.filter((c) => !hidden.has(c.id)),
@@ -212,14 +241,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   // Rows in collapsed groups are hidden, so select-all leaves them alone.
   const pageIds = (
     effectiveGroupBy ? pageRows.filter((row) => !collapsed.has(groupKeyOf(row, effectiveGroupBy))) : pageRows
-  ).map(getRowId);
+  )
+    .filter((row) => !isRowDisabled?.(row))
+    .map(getRowId);
   const header = selectionState(pageIds, selected);
-  const selectedList = rows.map(getRowId).filter((id) => selected.has(id));
-
-  const setSelected = (next: Set<string>) => {
-    setInnerSelected(next);
-    onSelectionChange?.(rows.map(getRowId).filter((id) => next.has(id)));
-  };
   const changeSort = (columnId: string, direction: SortState['direction']) => {
     if (serverMode) return;
     const next: SortState = { columnId, direction: sort?.columnId === columnId ? direction : 'ascending' };
@@ -244,6 +269,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             name: nameOf(g.key),
             rows: pageRows.filter((row) => groupKeyOf(row, effectiveGroupBy) === g.key),
             ids: g.rows.map(getRowId),
+            selectableIds: g.rows.filter((row) => !isRowDisabled?.(row)).map(getRowId),
           }))
           .filter((g) => g.rows.length > 0)
       : undefined;
@@ -264,7 +290,6 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   useSingleSelectionWarnings({
     single: singleMode,
     selectionName,
-    paginated: paginatedProp,
     hasLabel:
       Boolean(legend || ariaLabel?.trim() || ariaLabelledBy?.trim()) ||
       typeof legend === 'number' ||
@@ -341,7 +366,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const rowHeight = rowHeightProp ?? ROW_HEIGHT[density];
   const virtual = useVirtualRows({ enabled: virtualOn, count: items, rowHeight, tableRef, viewportHeight: 512 });
 
-  const hasSelection = selectable && selectedList.length > 0 && (selectionSummary || bulkActions != null);
+  const hasSelection = selectable && selectedCount > 0 && (selectionSummary || bulkActions != null);
   const showToolbar = toolbar != null || showDensityToggle || showColumnMenu || showViews || hasSelection;
   const anyEditable = onCellEdit != null && columns.some((c) => c.editable);
 
@@ -359,15 +384,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
               <>
                 {selectionSummary && (
                   <span className="text-[12.5px] font-semibold text-foreground" aria-live="polite">
-                    {labels?.selectionCount ? (
-                      labels.selectionCount(selectedList.length)
-                    ) : (
-                      <>{selectedList.length} selected</>
-                    )}
+                    {labels?.selectionCount ? labels.selectionCount(selectedCount) : <>{selectedCount} selected</>}
                   </span>
                 )}
                 {selectionSummary && bulkActions && <span aria-hidden className="h-4 w-px bg-border" />}
-                {bulkActions?.(selectedList)}
+                {bulkActions?.(selectedList, model)}
               </>
             ) : (
               toolbar
@@ -402,6 +423,21 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           </div>
         </div>
       )}
+      {selectable &&
+        selectAllMatching &&
+        (!serverMode || onSelectionModelChange) &&
+        (header.checked || model.type === 'exclude' || (!serverMode && allMatchingSelected)) &&
+        (serverMode ? (rowCount ?? 0) : enabledIds.length) > pageIds.length && (
+          <SelectionStrip
+            labels={labels}
+            all={serverMode ? model.type === 'exclude' : allMatchingSelected}
+            pageCount={pageIds.length}
+            total={serverMode ? (rowCount ?? 0) : enabledIds.length}
+            selectedCount={serverMode ? selectedCount : enabledIds.length}
+            onSelectAll={selectMatching}
+            onClear={clear}
+          />
+        )}
       {anyEditable && (
         <span id={editHintId} className="sr-only">
           {labels?.editHint ?? 'Press Enter or F2 to edit.'}
@@ -439,8 +475,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     )}
                     style={layout.lead.style}
                   >
-                    {singleMode && <span className="sr-only">{labels?.selection ?? t('table.selection')}</span>}
-                    {selectable && (
+                    {(singleMode || hideSelectAll) && (
+                      <span className="sr-only">{labels?.selection ?? t('table.selection')}</span>
+                    )}
+                    {selectable && !hideSelectAll && (
                       <Checkbox
                         aria-label={labels?.selectAll ?? t('table.selectAllPage')}
                         checked={header.checked}
@@ -496,6 +534,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
               getRowId={getRowId}
               getRowLabel={labelOf}
               selectable={selectable}
+              isRowDisabled={isRowDisabled}
               selected={selected}
               singleSelection={singleMode ? singleSelection : undefined}
               onToggleRow={(id) => setSelected(toggleOne(id, selected))}

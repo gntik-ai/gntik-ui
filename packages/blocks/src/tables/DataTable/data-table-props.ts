@@ -1,7 +1,7 @@
 import type { MoreMenuAction, TableDensity } from '@gntik-ai/ui';
 import type { ReactNode } from 'react';
 import type { ColumnWidths, PinnedColumns } from './column-sizing';
-import type { DataTableColumn, DataTableGroupBy, SortState } from './data-table-utils';
+import type { DataTableColumn, DataTableGroupBy, DataTableSelectionModel, SortState } from './data-table-utils';
 import type { DataTableCellEditHandler } from './editable-cell';
 import type { DataTableLabels } from './labels';
 import type { DataTableView } from './views';
@@ -30,8 +30,18 @@ interface DataTableCommonProps<T> {
   selectedIds?: readonly string[];
   defaultSelectedIds?: readonly string[];
   onSelectionChange?: (ids: string[]) => void;
+  /** Keep ids absent from rows. Defaults to true for server pagination, false for client pagination. */
+  preserveSelection?: boolean;
+  /** Offer to extend a selected page to all matching rows (default false). */
+  selectAllMatching?: boolean;
+  /** Hide the page select-all checkbox, retaining row controls and the column heading. */
+  hideSelectAll?: boolean;
+  /** Controlled model; takes precedence over selectedIds. */
+  selectionModel?: DataTableSelectionModel;
+  /** Required to offer select-all-matching with server pagination. */
+  onSelectionModelChange?: (model: DataTableSelectionModel) => void;
   /** Rendered in the toolbar while rows are selected. */
-  bulkActions?: (selectedIds: string[]) => ReactNode;
+  bulkActions?: (selectedIds: string[], selection: DataTableSelectionModel) => ReactNode;
   /**
    * Shows the "N selected" text in the toolbar while rows are selected (default true). Turn it
    * off when the page renders its own count, e.g. a BulkActionBar.
@@ -165,13 +175,12 @@ export type DataTableProps<T> = DataTableCommonProps<T> &
   (
     | ({
         selectionMode: 'single';
-        paginated?: false;
+        paginated?: boolean;
         /** Consumer-supplied accessible group label; the kit adds no default. */
         legend?: ReactNode;
         'aria-label'?: string;
         'aria-labelledby'?: string;
-        paginationMode?: never;
-      } & ClientPaginationProps)
+      } & (ClientPaginationProps | ServerPaginationProps))
     | ({
         selectionMode?: 'none' | 'multiple';
         paginated?: boolean;

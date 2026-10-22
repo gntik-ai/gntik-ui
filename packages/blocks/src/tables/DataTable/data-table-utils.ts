@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 
 export type SortDirectionValue = 'ascending' | 'descending';
+/** Include lists selected ids; exclude selects every match except the listed ids. */
+export type DataTableSelectionModel = { type: 'include'; ids: string[] } | { type: 'exclude'; ids: string[] };
 export type CellValue = string | number | boolean | Date | null | undefined;
 
 export type DataTableColumnVariant = 'default' | 'mono' | 'muted' | 'numeric';
@@ -124,13 +126,20 @@ export function paginate<T>(rows: readonly T[], page: number, pageSize: number):
 export function selectionState(
   visibleIds: readonly string[],
   selected: ReadonlySet<string>,
+  disabledIds?: ReadonlySet<string>,
 ): { checked: boolean; indeterminate: boolean } {
-  const count = visibleIds.filter((id) => selected.has(id)).length;
-  return { checked: count > 0 && count === visibleIds.length, indeterminate: count > 0 && count < visibleIds.length };
+  const ids = visibleIds.filter((id) => !disabledIds?.has(id));
+  const count = ids.filter((id) => selected.has(id)).length;
+  return { checked: count > 0 && count === ids.length, indeterminate: count > 0 && count < ids.length };
 }
 
 /** Selects all of `ids` when not all are selected; otherwise clears them. Other selections are kept. */
-export function toggleAll(ids: readonly string[], selected: ReadonlySet<string>): Set<string> {
+export function toggleAll(
+  ids: readonly string[],
+  selected: ReadonlySet<string>,
+  disabledIds?: ReadonlySet<string>,
+): Set<string> {
+  ids = ids.filter((id) => !disabledIds?.has(id));
   const next = new Set(selected);
   const all = ids.length > 0 && ids.every((id) => selected.has(id));
   for (const id of ids) {
