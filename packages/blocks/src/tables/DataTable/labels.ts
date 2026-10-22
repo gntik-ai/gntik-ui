@@ -7,6 +7,10 @@ export interface DataTableLabels extends PaginationFooterLabels {
   /** Non-virtual table overflow region; virtualized regions keep the caller caption. */
   scrollRegion: string;
   selectionCount: (count: number) => string;
+  pageSelected: (count: number) => string;
+  selectAllMatching: (count: number) => string;
+  allMatchingSelected: (count: number) => string;
+  clearSelection: string;
   columns: string;
   visibleColumns: string;
   pinColumns: string;

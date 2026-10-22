@@ -44,7 +44,9 @@ import { DensityToggle } from './density-toggle';
 import { DEPLOYMENT_COLUMNS, DEPLOYMENT_ROWS } from './fixtures';
 import { DataTableHeadCell } from './header-cell';
 import { SelectionGroup, useSingleSelection, useSingleSelectionWarnings } from './single-selection';
+import { SelectionStrip } from './selection-strip';
 import { useControllable, useTableViews } from './use-table-views';
+import { useMultipleSelection } from './use-multiple-selection';
 import { useVirtualRows } from './use-virtual-rows';
 import { ViewSwitcher, type DataTableViewState } from './views';
 
@@ -85,6 +87,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   selectedIds,
   defaultSelectedIds = [],
   onSelectionChange,
+  preserveSelection,
+  selectAllMatching = false,
+  hideSelectAll = false,
+  selectionModel,
+  onSelectionModelChange,
   bulkActions,
   selectionSummary = true,
   rowActions,
@@ -144,14 +151,15 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   className,
   labels,
 }: DataTableProps<T>) {
-  const { t } = useI18n();
+  const { t, formatNumber } = useI18n();
   const singleMode = selectionMode === 'single';
   const serverMode = paginationMode === 'server';
   const selectable = selectionMode === undefined ? selectableProp : selectionMode === 'multiple';
   const selectionColumn = selectable || singleMode;
-  const paginated = !singleMode && (paginatedProp ?? true);
+  const paginated = paginatedProp ?? (serverMode || !singleMode);
   const editHintId = useId();
   const tableRef = useRef<HTMLTableElement>(null);
+  const pageCheckboxRef = useRef<HTMLElement>(null);
   // A view active at mount seeds the initial state.
   const [initialView] = useState(() =>
     (viewsProp ?? defaultViews ?? []).find((v) => v.id === (activeViewId ?? defaultActiveViewId)),
@@ -161,7 +169,6 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const defaultHidden = columns.filter((c) => c.defaultHidden).map((c) => c.id);
 
   const [innerSort, setInnerSort] = useState<SortState | null>(seed.sort !== undefined ? seed.sort : defaultSort);
-  const [innerSelected, setInnerSelected] = useState<ReadonlySet<string>>(() => new Set(defaultSelectedIds));
   const [innerDensity, setInnerDensity] = useState<TableDensity | null>(defaultDensity ?? null);
   const contextDensity = useDensity();
   const [hiddenList, setHiddenList] = useControllable<readonly string[]>(
@@ -188,7 +195,30 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const effectiveGroupBy: DataTableGroupBy<T> | undefined =
     groupOverride === undefined ? groupBy : ((groupOverride ?? undefined) as DataTableGroupBy<T> | undefined);
   const sort = sortProp === undefined ? innerSort : sortProp;
-  const selected: ReadonlySet<string> = selectedIds ? new Set(selectedIds) : innerSelected;
+  const enabledIds = rows.filter((row) => !isRowDisabled?.(row)).map(getRowId);
+  const {
+    selected,
+    selectedList,
+    setSelected,
+    model,
+    selectedCount,
+    allMatchingSelected,
+    selectAllMatching: selectMatching,
+    clear,
+  } = useMultipleSelection({
+    rowIds: rows.map(getRowId),
+    selectedIds,
+    defaultSelectedIds,
+    onSelectionChange,
+    preserveSelection: preserveSelection ?? serverMode,
+    enabledIds,
+    selectionModel,
+    onSelectionModelChange,
+    serverMode,
+    selectAllMatching: selectable && selectAllMatching,
+    total: rowCount ?? rows.length,
+    filters,
+  });
   const density = densityProp ?? innerDensity ?? contextDensity;
   const visibleColumns = orderColumns(
     columns.filter((c) => !hidden.has(c.id)),
@@ -212,14 +242,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   // Rows in collapsed groups are hidden, so select-all leaves them alone.
   const pageIds = (
     effectiveGroupBy ? pageRows.filter((row) => !collapsed.has(groupKeyOf(row, effectiveGroupBy))) : pageRows
-  ).map(getRowId);
+  )
+    .filter((row) => !isRowDisabled?.(row))
+    .map(getRowId);
   const header = selectionState(pageIds, selected);
-  const selectedList = rows.map(getRowId).filter((id) => selected.has(id));
-
-  const setSelected = (next: Set<string>) => {
-    setInnerSelected(next);
-    onSelectionChange?.(rows.map(getRowId).filter((id) => next.has(id)));
-  };
   const changeSort = (columnId: string, direction: SortState['direction']) => {
     if (serverMode) return;
     const next: SortState = { columnId, direction: sort?.columnId === columnId ? direction : 'ascending' };
@@ -244,6 +270,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             name: nameOf(g.key),
             rows: pageRows.filter((row) => groupKeyOf(row, effectiveGroupBy) === g.key),
             ids: g.rows.map(getRowId),
+            selectableIds: g.rows.filter((row) => !isRowDisabled?.(row)).map(getRowId),
           }))
           .filter((g) => g.rows.length > 0)
       : undefined;
@@ -264,7 +291,6 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   useSingleSelectionWarnings({
     single: singleMode,
     selectionName,
-    paginated: paginatedProp,
     hasLabel:
       Boolean(legend || ariaLabel?.trim() || ariaLabelledBy?.trim()) ||
       typeof legend === 'number' ||
@@ -341,66 +367,101 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const rowHeight = rowHeightProp ?? ROW_HEIGHT[density];
   const virtual = useVirtualRows({ enabled: virtualOn, count: items, rowHeight, tableRef, viewportHeight: 512 });
 
-  const hasSelection = selectable && selectedList.length > 0 && (selectionSummary || bulkActions != null);
+  const hasSelection = selectable && selectedCount > 0 && (selectionSummary || bulkActions != null);
   const showToolbar = toolbar != null || showDensityToggle || showColumnMenu || showViews || hasSelection;
   const anyEditable = onCellEdit != null && columns.some((c) => c.editable);
+  const showSelectionStrip =
+    selectable &&
+    selectAllMatching &&
+    (!serverMode || !!onSelectionModelChange) &&
+    (header.checked || model.type === 'exclude' || (!serverMode && allMatchingSelected)) &&
+    (serverMode ? (rowCount ?? 0) > rows.length : enabledIds.length > pageIds.length);
+  const allMatching = serverMode ? model.type === 'exclude' : allMatchingSelected;
+  const matchingCount = serverMode ? selectedCount : enabledIds.length;
+  const stripMessage = allMatching
+    ? (labels?.allMatchingSelected?.(matchingCount) ??
+      t('table.allMatchingSelected', { count: formatNumber(matchingCount) }))
+    : (labels?.pageSelected?.(pageIds.length) ?? t('table.pageSelected', { count: formatNumber(pageIds.length) }));
+  const selectionCount = labels?.selectionCount ? labels.selectionCount(selectedCount) : <>{selectedCount} selected</>;
 
   return (
     <div className={cn('overflow-hidden rounded-xl border border-border bg-card shadow-sm', className)}>
-      {showToolbar && (
-        <div
-          className={cn(
-            'flex min-h-12 flex-wrap items-center gap-2 border-b border-border px-3 py-2 transition-colors motion-reduce:transition-none',
-            hasSelection ? 'bg-primary/8' : 'bg-secondary/30',
+      <div
+        className={cn(
+          !showToolbar && 'sr-only',
+          'flex min-h-12 flex-wrap items-center gap-2 border-b border-border px-3 py-2 transition-colors motion-reduce:transition-none',
+          hasSelection ? 'bg-primary/8' : 'bg-secondary/30',
+        )}
+      >
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+          {/* Matching selection needs a mounted announcer; default tables retain their published surface. */}
+          {selectable && (selectAllMatching || (hasSelection && selectionSummary)) && (
+            <span
+              className={
+                hasSelection && selectionSummary && !showSelectionStrip
+                  ? 'text-[12.5px] font-semibold text-foreground'
+                  : 'sr-only'
+              }
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {showSelectionStrip ? stripMessage : hasSelection && selectionSummary ? selectionCount : null}
+            </span>
           )}
-        >
-          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-            {hasSelection ? (
-              <>
-                {selectionSummary && (
-                  <span className="text-[12.5px] font-semibold text-foreground" aria-live="polite">
-                    {labels?.selectionCount ? (
-                      labels.selectionCount(selectedList.length)
-                    ) : (
-                      <>{selectedList.length} selected</>
-                    )}
-                  </span>
-                )}
-                {selectionSummary && bulkActions && <span aria-hidden className="h-4 w-px bg-border" />}
-                {bulkActions?.(selectedList)}
-              </>
-            ) : (
-              toolbar
-            )}
-          </div>
-          <div className="flex items-center gap-2">
-            {showViews && (
-              <ViewSwitcher
-                labels={labels}
-                views={viewsApi.views}
-                activeId={viewsApi.activeId}
-                dirty={viewsApi.dirty}
-                onSelect={viewsApi.select}
-                onSaveAs={viewsApi.saveAs}
-                onSave={viewsApi.save}
-                onRename={viewsApi.rename}
-                onDelete={viewsApi.remove}
-                onReset={viewsApi.reset}
-              />
-            )}
-            {showDensityToggle && <DensityToggle labels={labels} value={density} onChange={changeDensity} />}
-            {showColumnMenu && (
-              <ColumnVisibilityMenu
-                labels={labels}
-                columns={columns}
-                hidden={hidden}
-                onToggle={toggleColumn}
-                pinOf={pinning ? (id) => pinSideOf(id, pinned) : undefined}
-                onPin={pinning ? (id, side) => setPinned(setColumnPin(pinned, id, side)) : undefined}
-              />
-            )}
-          </div>
+          {hasSelection ? (
+            <>
+              {selectionSummary && showSelectionStrip && (
+                <span className="text-[12.5px] font-semibold text-foreground">{selectionCount}</span>
+              )}
+              {selectionSummary && bulkActions && <span aria-hidden className="h-4 w-px bg-border" />}
+              {bulkActions?.(selectedList, model)}
+            </>
+          ) : (
+            toolbar
+          )}
         </div>
+        <div className="flex items-center gap-2">
+          {showViews && (
+            <ViewSwitcher
+              labels={labels}
+              views={viewsApi.views}
+              activeId={viewsApi.activeId}
+              dirty={viewsApi.dirty}
+              onSelect={viewsApi.select}
+              onSaveAs={viewsApi.saveAs}
+              onSave={viewsApi.save}
+              onRename={viewsApi.rename}
+              onDelete={viewsApi.remove}
+              onReset={viewsApi.reset}
+            />
+          )}
+          {showDensityToggle && <DensityToggle labels={labels} value={density} onChange={changeDensity} />}
+          {showColumnMenu && (
+            <ColumnVisibilityMenu
+              labels={labels}
+              columns={columns}
+              hidden={hidden}
+              onToggle={toggleColumn}
+              pinOf={pinning ? (id) => pinSideOf(id, pinned) : undefined}
+              onPin={pinning ? (id, side) => setPinned(setColumnPin(pinned, id, side)) : undefined}
+            />
+          )}
+        </div>
+      </div>
+      {showSelectionStrip && (
+        <SelectionStrip
+          labels={labels}
+          all={allMatching}
+          message={stripMessage}
+          total={serverMode ? (rowCount ?? 0) : enabledIds.length}
+          onSelectAll={selectMatching}
+          onClear={() => {
+            // Restore focus before clearing removes the strip and its focused button.
+            const target = hideSelectAll || loading || pageIds.length === 0 ? tableRef : pageCheckboxRef;
+            target.current?.focus();
+            clear();
+          }}
+        />
       )}
       {anyEditable && (
         <span id={editHintId} className="sr-only">
@@ -412,6 +473,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
         <DensityProvider density={density}>
           <Table
             ref={tableRef}
+            tabIndex={selectable && selectAllMatching ? -1 : undefined}
             aria-busy={loading || undefined}
             aria-rowcount={virtual ? items + 1 : undefined}
             stickyHeader={virtualOn}
@@ -421,6 +483,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             // final column would add a scroll-container stop before the header.
             className={cn(
               layout.tableClassName,
+              selectable && selectAllMatching && 'focus-visible:outline-2 focus-visible:outline-focus-ring',
               singleMode && '[&_[data-column-resizer]]:end-0 [&_[data-column-resizer]]:justify-end',
             )}
             style={layout.tableStyle}
@@ -439,9 +502,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     )}
                     style={layout.lead.style}
                   >
-                    {singleMode && <span className="sr-only">{labels?.selection ?? t('table.selection')}</span>}
-                    {selectable && (
+                    {(singleMode || hideSelectAll) && (
+                      <span className="sr-only">{labels?.selection ?? t('table.selection')}</span>
+                    )}
+                    {selectable && !hideSelectAll && (
                       <Checkbox
+                        ref={pageCheckboxRef}
                         aria-label={labels?.selectAll ?? t('table.selectAllPage')}
                         checked={header.checked}
                         indeterminate={header.indeterminate}
@@ -496,6 +562,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
               getRowId={getRowId}
               getRowLabel={labelOf}
               selectable={selectable}
+              isRowDisabled={isRowDisabled}
               selected={selected}
               singleSelection={singleMode ? singleSelection : undefined}
               onToggleRow={(id) => setSelected(toggleOne(id, selected))}

@@ -94,19 +94,12 @@ export function useSingleSelection<T>(options: {
 export function useSingleSelectionWarnings({
   single,
   selectionName,
-  paginated,
   hasLabel,
 }: {
   single: boolean;
   selectionName?: string;
-  paginated?: boolean;
   hasLabel: boolean;
 }) {
-  useEffect(() => {
-    if (single && paginated === true && process.env.NODE_ENV === 'development') {
-      console.warn('DataTable single selection: paginated=true is unsupported; rendering all rows without pagination.');
-    }
-  }, [single, paginated]);
   useEffect(() => {
     if (!single || process.env.NODE_ENV !== 'development') return;
     if (!hasLabel) console.warn('DataTable single selection: supply legend, aria-label or aria-labelledby.');

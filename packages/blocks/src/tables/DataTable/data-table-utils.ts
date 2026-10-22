@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 
 export type SortDirectionValue = 'ascending' | 'descending';
+/** Include lists selected ids; exclude selects every match except the listed ids. */
+export type DataTableSelectionModel = { type: 'include'; ids: string[] } | { type: 'exclude'; ids: string[] };
 export type CellValue = string | number | boolean | Date | null | undefined;
 
 export type DataTableColumnVariant = 'default' | 'mono' | 'muted' | 'numeric';

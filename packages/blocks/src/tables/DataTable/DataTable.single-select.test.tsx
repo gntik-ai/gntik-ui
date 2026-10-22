@@ -172,9 +172,9 @@ describe('DataTable single selection', () => {
     }
   });
 
-  it('rejects pagination in types and warns while rendering all rows if the type check is bypassed', () => {
-    // @ts-expect-error Single selection cannot be paginated.
-    const invalid: DataTableProps<(typeof rows)[number]> = {
+  it('paginates single selection without warnings and preserves an off-page choice', async () => {
+    const user = userEvent.setup();
+    const valid: DataTableProps<(typeof rows)[number]> = {
       ...base,
       selectionMode: 'single',
       paginated: true,
@@ -183,15 +183,55 @@ describe('DataTable single selection', () => {
     vi.stubEnv('NODE_ENV', 'development');
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     try {
-      render(<DataTable {...invalid} defaultPageSize={1} virtualize={true} />);
-      expect(warn).toHaveBeenCalledWith(expect.stringContaining('paginated'));
-      expect(screen.getAllByRole('radio')).toHaveLength(3);
-      expect(screen.queryByRole('navigation')).toBeNull();
+      render(<DataTable {...valid} defaultPageSize={1} defaultSelectedId="c" virtualize={true} />);
+      expect(warn).not.toHaveBeenCalled();
+      expect(screen.getAllByRole('radio')).toHaveLength(1);
+      expect(screen.queryByRole('radio', { checked: true })).toBeNull();
+      expect(screen.getByRole('radio', { name: 'Alpha' })).toHaveAttribute('tabindex', '0');
+      await user.tab();
+      expect(screen.getByRole('radio', { name: 'Alpha' })).toHaveFocus();
+      await user.click(screen.getByRole('button', { name: 'Page 3' }));
+      expect(screen.getByRole('radio', { name: 'Gamma' })).toBeChecked();
+      expect(screen.getByRole('radio', { name: 'Gamma' })).toHaveAttribute('tabindex', '0');
       expect(screen.getByRole('table')).not.toHaveAttribute('data-virtualized');
     } finally {
       warn.mockRestore();
       vi.unstubAllEnvs();
     }
+  });
+
+  it('keeps the controlled single choice across server pages and enters on the first enabled radio', async () => {
+    const user = userEvent.setup();
+    const records = Array.from({ length: 60 }, (_, i) => ({ id: String(i + 1), name: `Item ${i + 1}` }));
+    const columns = [{ id: 'name', header: 'Name', accessor: (r: (typeof records)[number]) => r.name }];
+    const onSelectedIdChange = vi.fn();
+    const props = {
+      paginationMode: 'server' as const,
+      selectionMode: 'single' as const,
+      rowCount: 60,
+      page: 1,
+      pageSize: 20,
+      selectedId: '42',
+      columns,
+      legend: 'Items; current choice Item 42',
+      showColumnMenu: false,
+      showDensityToggle: false,
+      isRowDisabled: (r: (typeof records)[number]) => r.id === '1',
+      onSelectedIdChange,
+    };
+    const { rerender } = render(<DataTable {...props} rows={records.slice(0, 20)} />);
+    expect(screen.getAllByRole('radio')).toHaveLength(20);
+    expect(screen.getByRole('button', { name: 'Page 3' })).toBeInTheDocument();
+    expect(screen.queryByRole('radio', { checked: true })).toBeNull();
+    await user.tab();
+    expect(screen.getByRole('radio', { name: 'Item 2' })).toHaveFocus();
+    expect(onSelectedIdChange).not.toHaveBeenCalled();
+    rerender(<DataTable {...props} rows={records.slice(40, 60)} page={3} />);
+    expect(screen.getByRole('radio', { name: 'Item 42' })).toBeChecked();
+    expect(screen.getByRole('radio', { name: 'Item 42' })).toHaveAttribute('tabindex', '0');
+    await user.click(screen.getByRole('radio', { name: 'Item 43' }));
+    expect(onSelectedIdChange).toHaveBeenLastCalledWith('43');
+    expect(screen.getByRole('radio', { name: 'Item 42' })).toBeChecked();
   });
 
   it('isolates generated radio names between tables', async () => {

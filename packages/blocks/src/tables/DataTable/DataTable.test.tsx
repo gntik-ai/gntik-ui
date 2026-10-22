@@ -282,3 +282,58 @@ describe('DataTable groupBy', () => {
     ]);
   });
 });
+
+it('skips disabled rows for page, group and all-matching selection and checkbox states', async () => {
+  const user = userEvent.setup();
+  const rows = Array.from({ length: 20 }, (_, i) => ({
+    id: String(i + 1),
+    name: `Row ${i + 1}`,
+    locked: i === 3,
+    group: 'Items',
+  }));
+  const columns = [{ id: 'name', header: 'Name', accessor: (row: (typeof rows)[number]) => row.name }];
+  const onSelectionChange = vi.fn();
+  render(
+    <DataTable
+      rows={rows}
+      columns={columns}
+      groupBy="group"
+      isRowDisabled={(row) => row.locked}
+      selectAllMatching
+      onSelectionChange={onSelectionChange}
+    />,
+  );
+  const locked = screen.getByRole('checkbox', { name: 'Select Row 4' });
+  expect(locked).toHaveAttribute('aria-disabled', 'true');
+  const page = screen.getByRole('checkbox', { name: 'Select all rows on this page' });
+  await user.click(page);
+  expect(onSelectionChange.mock.lastCall?.[0]).toHaveLength(9);
+  expect(onSelectionChange.mock.lastCall?.[0]).not.toContain('4');
+  expect(page).toHaveAttribute('aria-checked', 'true');
+  expect(locked).not.toBeChecked();
+  await user.click(screen.getByRole('button', { name: 'Select all 19 rows' }));
+  expect(onSelectionChange.mock.lastCall?.[0]).toHaveLength(19);
+  expect(onSelectionChange.mock.lastCall?.[0]).not.toContain('4');
+  const group = screen.getByRole('checkbox', { name: 'Select all in Items' });
+  expect(group).toHaveAttribute('aria-checked', 'true');
+  await user.click(group);
+  expect(onSelectionChange).toHaveBeenLastCalledWith([]);
+  await user.click(group);
+  expect(onSelectionChange.mock.lastCall?.[0]).toHaveLength(19);
+  expect(locked).not.toBeChecked();
+});
+
+it('disables page and group toggles when all rows are disabled', () => {
+  render(<DataTable groupBy="region" isRowDisabled={() => true} />);
+  for (const checkbox of screen.getAllByRole('checkbox')) expect(checkbox).toHaveAttribute('aria-disabled', 'true');
+});
+
+it('hides only the header select-all control, keeping the selection heading and row controls', async () => {
+  const user = userEvent.setup();
+  const onSelectionChange = vi.fn();
+  render(<DataTable hideSelectAll onSelectionChange={onSelectionChange} />);
+  expect(screen.queryByRole('checkbox', { name: 'Select all rows on this page' })).not.toBeInTheDocument();
+  expect(screen.getByRole('columnheader', { name: 'Selection' }).firstElementChild).toHaveClass('sr-only');
+  await user.click(screen.getByRole('checkbox', { name: `Select ${DEPLOYMENT_ROWS[0]!.name}` }));
+  expect(onSelectionChange).toHaveBeenLastCalledWith([DEPLOYMENT_ROWS[0]!.id]);
+});

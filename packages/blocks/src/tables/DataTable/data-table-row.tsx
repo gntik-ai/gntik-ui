@@ -34,6 +34,7 @@ export interface DataTableBodyGroup<T> {
   rows: readonly T[];
   /** Ids of every row in the group (all pages): the count and the group checkbox use them. */
   ids: readonly string[];
+  selectableIds: readonly string[];
 }
 
 /** Row rendering shared by the plain, grouped and virtualized bodies. */
@@ -43,6 +44,7 @@ export interface RowContext<T> {
   getRowId: (row: T) => string;
   getRowLabel: (row: T) => string;
   selectable: boolean;
+  isRowDisabled?: (row: T) => boolean;
   selected: ReadonlySet<string>;
   singleSelection?: SingleSelection<T>;
   onToggleRow: (id: string) => void;
@@ -67,6 +69,7 @@ export function DataTableRow<T>({
   getRowId,
   getRowLabel,
   selectable,
+  isRowDisabled,
   selected,
   singleSelection,
   onToggleRow,
@@ -99,6 +102,7 @@ export function DataTableRow<T>({
             <Checkbox
               aria-label={labels?.selectRow?.(label) ?? t('table.selectRow', { label })}
               checked={isSelected}
+              disabled={isRowDisabled?.(row)}
               onCheckedChange={() => onToggleRow(id)}
             />
           )}
@@ -196,7 +200,7 @@ export function GroupHeaderRow<T>({
   style,
 }: GroupHeaderRowProps<T>) {
   const { t } = useI18n();
-  const state = selectionState(group.ids, selected);
+  const state = selectionState(group.selectableIds, selected);
   const count = group.ids.length;
   const heading = (
     <>
@@ -215,8 +219,8 @@ export function GroupHeaderRow<T>({
             aria-label={labels?.selectGroup?.(group.name) ?? t('table.selectRow', { label: `all in ${group.name}` })}
             checked={state.checked}
             indeterminate={state.indeterminate}
-            disabled={count === 0}
-            onCheckedChange={() => onToggleRows?.(group.ids)}
+            disabled={group.selectableIds.length === 0}
+            onCheckedChange={() => onToggleRows?.(group.selectableIds)}
           />
         </TableCell>
       )}

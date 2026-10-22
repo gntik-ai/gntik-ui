@@ -7,9 +7,11 @@ export const meta: BlockMeta = {
   status: 'beta',
   description:
     'Generic typed table: sortable headers with aria-sort, row selection with select-all and indeterminate by default (selectionMode="multiple"), selectionMode="none" to hide selection, column visibility menu, density toggle, row actions, loading and empty states, client-side sort and pagination, optional row groups (groupBy) with rowgroup header rows, counts, keyboard-accessible collapse buttons and group selection; column resize (pointer drag or a focusable role="separator" handle with arrow keys, min/max widths, controlled columnWidths), column pinning to either edge with sticky cells (column menu or pinnedColumns), row virtualization for large datasets (aria-rowcount/aria-rowindex, works with selection and grouping), inline cell editing (text, number and select editors; Enter/F2 to edit, Enter/Tab to commit, Escape to cancel, onCellEdit can reject with an inline error) and saved views (filters, sort, visible columns, widths, pinning and grouping) with a view switcher to save as, rename, delete and reset. ' +
-    'Opt-in selectionMode="single" uses native radios in a labelled fieldset (never paginated or virtualized; paginated defaults to false and paginated=true is a type error). Single mode uses selectedId/onSelectedIdChange or defaultSelectedId; isRowDisabled skips unavailable rows and preserves a checked disabled choice without callbacks. Supply legend, aria-label or aria-labelledby for the group and getRowLabel for each radio (otherwise the first column labels it). selectionName is used verbatim and must be unique per page; omitted names use an instance-unique useId name, and duplicate supplied names or missing group labels warn in development. Tab enters once on the checked enabled row or first enabled row; arrows wrap and skip disabled rows, Space selects, Shift+Tab exits, and all-disabled groups have no tab stop. No select-all, group checkboxes, bulk actions or selection summary appear in single mode. ' +
+    'Opt-in selectionMode="single" uses native radios in a labelled fieldset (never virtualized; client pagination defaults to false, and paginated=true or paginationMode="server" enables pagination). Single mode uses selectedId/onSelectedIdChange or defaultSelectedId; isRowDisabled skips unavailable rows and preserves a checked disabled choice without callbacks. Supply legend, aria-label or aria-labelledby for the group and getRowLabel for each radio (otherwise the first column labels it). selectionName is used verbatim and must be unique per page; omitted names use an instance-unique useId name, and duplicate supplied names or missing group labels warn in development. Tab enters once on the checked enabled row or first enabled row; arrows wrap and skip disabled rows, Space selects, Shift+Tab exits, and all-disabled groups have no tab stop. No select-all, group checkboxes, bulk actions or selection summary appear in single mode. ' +
     'Examples in examples/single-selection.tsx: an uncontrolled non-paginated list with legend="Available items" and a controlled versions table with legend="Available versions", selectedId="v2" and a checked disabled version. ' +
-    'Opt-in paginationMode="server" accepts a controlled 1-based page, pageSize and required rowCount (known total), with onPageChange/onPageSizeChange requests. Supplied rows render in order without client sorting or slicing, and headers have no sort affordance. Single selection cannot use server mode. The footer stays visible for empty results, clamps stale pages for display without callbacks, and hides during loading. Page-size changes may also request a page to keep the first visible row on screen. The consumer owns fetching and reconciles stale pages. See examples/server-pagination.tsx for an items/total/page/pageSize envelope consumer that handles both callbacks.',
+    'Opt-in paginationMode="server" accepts a controlled 1-based page, pageSize and required rowCount (known total), with onPageChange/onPageSizeChange requests. Supplied rows render in order without client sorting or slicing, and headers have no sort affordance. Single selection keeps its chosen id across pages. Off-page choices leave every visible radio unchecked and the first enabled radio is the tab stop; name the current choice in the legend. See examples/paginated-single-selection.tsx for client and server pagination. The footer stays visible for empty results, clamps stale pages for display without callbacks, and hides during loading. Page-size changes may also request a page to keep the first visible row on screen. The consumer owns fetching and reconciles stale pages. See examples/server-pagination.tsx for an items/total/page/pageSize envelope consumer that handles both callbacks. ' +
+    'Multiple selection preserves ids from other server pages by default; preserveSelection=false restores page-only reporting, and client tables can opt in with preserveSelection=true. selectedIds remains supported. A controlled selectionModel takes precedence and uses { type: "include", ids: string[] } for selected ids or { type: "exclude", ids: string[] } for every match except those ids. bulkActions(ids, model) receives the full include list; in exclude mode ids contains enabled selections in the current rows and the model is authoritative. One-argument actions remain compatible. ' +
+    'selectAllMatching defaults to false and offers a strip after the page is fully selected: client mode includes every enabled row, while server mode requires onSelectionModelChange and reports an exclude model. The same button becomes Clear selection without moving focus; clearing returns focus to the page checkbox, or to the table when the checkbox is hidden or unavailable. An exclude model resets through both callbacks when filters changes by JSON value; filters must include every narrowing input, including search text. Paging, page size and sorting preserve selection. An exclude action covers the matching result set at action time, including later-created rows; the consumer executes it. isRowDisabled disables multiple-selection checkboxes and page/group/all-matching toggles skip known disabled rows. Server counts use rowCount minus explicit excluded ids, including disabled ids on the page where Select all is activated. isRowDisabled cannot evaluate unloaded rows, so the server must enforce eligibility for the complete matching result set; return only eligible matches and their rowCount when counts must exclude all unavailable rows. hideSelectAll defaults to false and hides just the header checkbox, retaining an accessible Selection heading. See examples/client-selection.tsx for client preservation, disabled rows and select-all-matching, and examples/server-pagination.tsx for controlled models, cross-page actions and the preservation/header options.',
 
   labels: [
     { key: 'booleanTrue', type: 'string', state: 'Default cell text for a true boolean value' },
@@ -24,6 +26,22 @@ export const meta: BlockMeta = {
       type: '(count: number) => string',
       state: 'Multiple selection: toolbar count and polite live region',
     },
+    {
+      key: 'pageSelected',
+      type: '(count: number) => string',
+      state: 'Matching-selection strip: selected page announcement',
+    },
+    {
+      key: 'selectAllMatching',
+      type: '(count: number) => string',
+      state: 'Matching-selection strip: select every enabled match',
+    },
+    {
+      key: 'allMatchingSelected',
+      type: '(count: number) => string',
+      state: 'Matching-selection strip: all-matching announcement',
+    },
+    { key: 'clearSelection', type: 'string', state: 'Matching-selection strip: clear action' },
     { key: 'columns', type: 'string', state: 'Column visibility trigger text and name' },
     { key: 'visibleColumns', type: 'string', state: 'Open column menu: visibility heading' },
     { key: 'pinColumns', type: 'string', state: 'Open column menu with pinning: pin heading' },
@@ -61,7 +79,7 @@ export const meta: BlockMeta = {
     { key: 'saveView', type: 'string', state: 'Save as dialog: submit button' },
     { key: 'rename', type: 'string', state: 'Rename dialog: submit button' },
     { key: 'closeDialog', type: 'string', state: 'Save as and Rename dialogs: close button name' },
-    { key: 'selection', type: 'string', state: 'Single selection: screen reader column heading' },
+    { key: 'selection', type: 'string', state: 'Single selection or hideSelectAll: screen reader column heading' },
     { key: 'selectAll', type: 'string', state: 'Multiple selection: header checkbox name' },
     {
       key: 'selectRow',
