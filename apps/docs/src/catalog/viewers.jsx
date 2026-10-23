@@ -213,6 +213,18 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                 </div>
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'block' && it.id === 'log-viewer' && (
+                <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">Full messages and level names</h4>
+                  <Viewer
+                    kind="block"
+                    id="log-viewer--wrap"
+                    title="Log viewer · wrapped messages and level overrides"
+                    file="../../../packages/blocks/src/builders/LogViewer/examples/Wrap.tsx"
+                    height={height}
+                  />
+                </>
+              )}
               {kind === 'block' && ['month-calendar', 'week-calendar', 'agenda-list'].includes(it.id) && (
                 <>
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">{t('calendar.localeDefaults')}</h4>

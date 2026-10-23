@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode, type UIEvent } from 'react';
 import { Check, Copy, Eye, Search } from '@gntik-ai/icons';
 import { IconButton, Input, Switch, Toggle, ToggleGroup, cn, foldText, matchRanges, useI18n } from '@gntik-ai/ui';
+import { useWrappedLogRows } from './use-wrapped-log-rows';
 import { logLines as defaultLines, type LogLevel, type LogLine } from './fixtures';
 
 export type { LogLevel, LogLine } from './fixtures';
@@ -15,6 +16,7 @@ const LEVEL_STYLE: Record<LogLevel, { label: string; className: string }> = {
 };
 
 export interface LogViewerLabels {
+  levels?: Partial<Record<LogLevel, string>>;
   title: string;
   levelFilter: string;
   searchLabel: string;
@@ -38,6 +40,8 @@ export interface LogViewerProps {
   height?: number;
   /** Fixed row height in px (the windowing math relies on it). */
   rowHeight?: number;
+  /** Wrap full messages and measure variable-height rows. Default false; rowHeight estimates unmeasured rows. */
+  wrap?: boolean;
   /** Rows rendered above and below the visible window. */
   overscan?: number;
   /** Levels shown initially. */
@@ -89,6 +93,7 @@ export function LogViewer({
   labels,
   height = 360,
   rowHeight = 24,
+  wrap = false,
   overscan = 8,
   defaultLevels = LOG_LEVELS,
   defaultFollow = true,
@@ -135,12 +140,13 @@ export function LogViewer({
       .map(({ line }) => line);
   }, [foldedLines, levels, query, locale]);
 
-  const total = visible.length * rowHeight;
+  const wrapped = useWrappedLogRows(wrap, visible, rowHeight, height, overscan, scrollTop, follow);
+  const total = wrap ? wrapped.total : visible.length * rowHeight;
   const maxScroll = Math.max(0, total - height);
   // While following, the window is pinned to the end (the DOM scroll catches up in the effect).
   const offset = follow ? maxScroll : Math.min(scrollTop, maxScroll);
-  const start = Math.max(0, Math.floor(offset / rowHeight) - overscan);
-  const end = Math.min(visible.length, Math.ceil((offset + height) / rowHeight) + overscan);
+  const start = wrap ? wrapped.start : Math.max(0, Math.floor(offset / rowHeight) - overscan);
+  const end = wrap ? wrapped.end : Math.min(visible.length, Math.ceil((offset + height) / rowHeight) + overscan);
   const rows = visible.slice(start, end);
 
   useEffect(() => {
@@ -188,7 +194,7 @@ export function LogViewer({
           >
             {LOG_LEVELS.map((lv) => (
               <Toggle key={lv} value={lv}>
-                {lv}
+                {labels?.levels?.[lv] ?? t(`logViewer.levelFilterOption.${lv}`)}
                 <span className="font-mono text-[10.5px] opacity-70">{counts[lv]}</span>
               </Toggle>
             ))}
@@ -233,9 +239,18 @@ export function LogViewer({
                 <div
                   key={line.id}
                   data-slot="log-line"
+                  ref={wrap ? (node) => wrapped.measureRow(node, line.id) : undefined}
                   onClick={onSelectLine ? () => onSelectLine(line) : undefined}
-                  className="group absolute inset-x-0 flex items-center gap-2.5 px-3 hover:bg-secondary/50"
-                  style={{ top: (start + i) * rowHeight, height: rowHeight }}
+                  className={
+                    wrap
+                      ? 'group absolute inset-x-0 flex items-start gap-2.5 px-3 hover:bg-secondary/50'
+                      : 'group absolute inset-x-0 flex items-center gap-2.5 px-3 hover:bg-secondary/50'
+                  }
+                  style={
+                    wrap
+                      ? { top: wrapped.offsets[start + i], minHeight: rowHeight }
+                      : { top: (start + i) * rowHeight, height: rowHeight }
+                  }
                 >
                   <span className="shrink-0 text-muted-foreground tabular-nums">{line.timestamp}</span>
                   <span
@@ -244,14 +259,20 @@ export function LogViewer({
                       lv.className,
                     )}
                   >
-                    {lv.label}
+                    {labels?.levels?.[line.level] ?? t(`logViewer.level.${line.level}`)}
                   </span>
                   {line.source && (
                     <span className="hidden shrink-0 text-muted-foreground sm:inline">
                       [{highlight(line.source, query, locale)}]
                     </span>
                   )}
-                  <span className="min-w-0 flex-1 truncate text-foreground">
+                  <span
+                    className={
+                      wrap
+                        ? 'min-w-0 flex-1 whitespace-pre-wrap break-words text-foreground'
+                        : 'min-w-0 flex-1 truncate text-foreground'
+                    }
+                  >
                     {highlight(line.message, query, locale)}
                   </span>
                   {onSelectLine && (

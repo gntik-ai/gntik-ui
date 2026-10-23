@@ -23,6 +23,10 @@ test('block gallery lists installable blocks while Spanish PageHeader remains pr
     );
     const preview = await PREVIEW_LOADERS.block['page-header--spanish']();
     assert.equal(typeof preview.default, 'function');
+    const wrap = await PREVIEW_LOADERS.block['log-viewer--wrap']();
+    assert.equal(typeof wrap.default, 'function');
+    const wrapSource = await loadSource('../../../packages/blocks/src/builders/LogViewer/examples/Wrap.tsx');
+    assert.match(wrapSource, /\bwrap\b/);
     const source = await loadSource('../../../packages/blocks/src/page-chrome/PageHeader/examples/Spanish.tsx');
     assert.match(source, /I18nProvider locale="es"/);
   } finally {
