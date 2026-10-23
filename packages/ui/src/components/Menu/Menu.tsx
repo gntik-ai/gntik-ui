@@ -1,6 +1,7 @@
 import { Menu as BaseMenu } from '@base-ui/react/menu';
 import { Check, ChevronRight } from 'lucide-react';
 import type { ComponentType, ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { menuVariants } from './menu.variants';
@@ -27,7 +28,7 @@ export interface MenuContentProps extends Omit<BaseMenu.Popup.Props, 'className'
   /** Gap between trigger and menu, in px. */
   sideOffset?: BaseMenu.Positioner.Props['sideOffset'];
   alignOffset?: BaseMenu.Positioner.Props['alignOffset'];
-  /** Portal container; defaults to document.body. */
+  /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BaseMenu.Portal.Props['container'];
   children?: ReactNode;
 }
@@ -43,9 +44,10 @@ export function MenuContent({
   children,
   ...props
 }: MenuContentProps) {
+  const portalContainer = usePortalContainer();
   const dir = usePortalDir();
   return (
-    <BaseMenu.Portal container={container}>
+    <BaseMenu.Portal container={container ?? portalContainer}>
       <BaseMenu.Positioner
         dir={dir}
         className={s.positioner()}

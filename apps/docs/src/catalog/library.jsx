@@ -34,6 +34,14 @@ const utilsSources = import.meta.glob('../../../../packages/ui/src/utils/example
   import: 'default',
 });
 
+const themeDocs = import.meta.glob('../../../../packages/ui/src/theme/*.doc.ts', { eager: true, import: 'doc' });
+const themeExamples = import.meta.glob('../../../../packages/ui/src/theme/examples/*.tsx', { eager: true });
+const themeSources = import.meta.glob('../../../../packages/ui/src/theme/examples/*.tsx', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+});
+
 const withDefault = (modules) =>
   Object.fromEntries(
     Object.entries(modules)
@@ -57,12 +65,12 @@ const forFormsProduct = (code) =>
   );
 
 // Form and its bindings share FormField.doc.ts; FieldArray owns its prefixed examples.
-const formsFolderOf = (path) =>
+const docNameOf = (path) =>
   path
     .split('/')
     .pop()
     .replace(/\.doc\.ts$/, '');
-const formsOwnerOf = (path, folders) => {
+const exampleOwnerOf = (path, folders) => {
   const base = path.split('/').pop();
   if (base.startsWith('Form') && folders.includes('FormField')) return 'FormField';
   const named = folders.filter((f) => base.startsWith(f)).sort((a, b) => b.length - a.length);
@@ -70,6 +78,15 @@ const formsOwnerOf = (path, folders) => {
 };
 
 const COMPONENTS = sortEntries([
+  ...buildEntries({
+    docs: themeDocs,
+    examples: withDefault(themeExamples),
+    sources: themeSources,
+    folderOf: docNameOf,
+    ownerOf: exampleOwnerOf,
+    forProduct: (code) => code.replace(/from '[.][^']+'/g, "from '@gntik-ai/ui'"),
+    apiKind: 'theme',
+  }),
   ...buildEntries({
     docs: utilsDocs,
     examples: withDefault(utilsExamples),
@@ -96,8 +113,8 @@ const COMPONENTS = sortEntries([
     docs: formsDocs,
     examples: withDefault(formsExampleModules),
     sources: formsSources,
-    folderOf: formsFolderOf,
-    ownerOf: formsOwnerOf,
+    folderOf: docNameOf,
+    ownerOf: exampleOwnerOf,
     forProduct: forFormsProduct,
     apiKind: 'forms',
   }),

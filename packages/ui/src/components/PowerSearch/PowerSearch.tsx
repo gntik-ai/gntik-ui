@@ -3,6 +3,7 @@ import { matchText } from '../../utils/match-text';
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { ListFilter, X } from 'lucide-react';
 import { useId, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { cn } from '../../utils/cn';
 import { PowerSearchChip } from './PowerSearchChip';
 import {
@@ -102,6 +103,7 @@ export function PowerSearch<K extends string = string>({
   className,
   'aria-label': ariaLabel,
 }: PowerSearchProps<K>) {
+  const portalContainer = usePortalContainer();
   const { locale } = useI18n();
   const labels = { ...defaultLabels, ...labelsProp };
   const opLabels = { ...defaultOperatorLabels, ...opLabelsProp };
@@ -385,7 +387,7 @@ export function PowerSearch<K extends string = string>({
           className={s.input()}
           onKeyDown={onKeyDown}
         />
-        <BaseCombobox.Portal>
+        <BaseCombobox.Portal container={portalContainer}>
           <BaseCombobox.Positioner
             className={s.positioner()}
             side="bottom"

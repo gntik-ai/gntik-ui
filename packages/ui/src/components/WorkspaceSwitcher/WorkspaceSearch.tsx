@@ -2,6 +2,7 @@ import { matchText } from '../../utils/match-text';
 import { Combobox } from '@base-ui/react/combobox';
 import { Check, Plus, Search } from 'lucide-react';
 import { useMemo } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { workspaceSwitcherVariants } from './workspace-switcher.variants';
@@ -29,6 +30,7 @@ export function WorkspaceSearch({
   searchPlaceholder: searchPlaceholderProp,
   emptyText: emptyTextProp,
 }: WorkspaceSearchProps) {
+  const portalContainer = usePortalContainer();
   const { t, locale } = useI18n();
   const searchPlaceholder = searchPlaceholderProp ?? t('workspace.search');
   const emptyText = emptyTextProp ?? t('workspace.empty');
@@ -55,7 +57,7 @@ export function WorkspaceSearch({
       <Combobox.Trigger aria-label={triggerLabel(current, label)} className={cn(s.trigger(), className)}>
         <WorkspaceTriggerContent workspace={current} />
       </Combobox.Trigger>
-      <Combobox.Portal>
+      <Combobox.Portal container={portalContainer}>
         <Combobox.Positioner dir={dir} className="z-50 outline-none" align="start" sideOffset={8}>
           <Combobox.Popup className={s.searchPopup()} aria-label={label}>
             <div className={s.searchField()}>

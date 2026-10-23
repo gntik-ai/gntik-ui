@@ -10,6 +10,7 @@ import {
   type ReactNode,
   type Ref,
 } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { ClearControlButton, clearChangeDetails, type ClearableProps } from '../../utils/clear-control';
 import { cn } from '../../utils/cn';
@@ -99,7 +100,7 @@ export interface SelectContentProps extends Omit<BaseSelect.Popup.Props, 'classN
   side?: BaseSelect.Positioner.Props['side'];
   align?: BaseSelect.Positioner.Props['align'];
   sideOffset?: number;
-  /** Portal container; defaults to document.body. */
+  /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BaseSelect.Portal.Props['container'];
   /** Rendered above the list, e.g. a loading or error message (SimpleSelect uses it for `loadOptions`). */
   status?: ReactNode;
@@ -118,13 +119,14 @@ export function SelectContent({
   children,
   ...props
 }: SelectContentProps) {
+  const portalContainer = usePortalContainer();
   const dir = usePortalDir();
   const context = useContext(SelectTriggerContext);
   const labelledBy = useTriggerAttribute(context?.trigger ?? null, 'aria-labelledby');
   const ariaLabel = useTriggerAttribute(context?.trigger ?? null, 'aria-label');
   const explicitName = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined;
   return (
-    <BaseSelect.Portal container={container}>
+    <BaseSelect.Portal container={container ?? portalContainer}>
       <BaseSelect.Positioner
         dir={dir}
         className={s.positioner()}

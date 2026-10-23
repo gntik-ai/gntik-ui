@@ -2,6 +2,7 @@ import { useI18n } from '../../i18n/I18nProvider';
 import { NavigationMenu } from '@base-ui/react/navigation-menu';
 import { ChevronDown } from 'lucide-react';
 import { createElement, useId, type CSSProperties, type ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { cn } from '../../utils/cn';
 import { useLinkComponent } from '../Link';
 import type { NavIcon, NavItem } from '../NavList';
@@ -165,6 +166,7 @@ function TopLink({
  * marked. Pair it with StackedLayout (as its sub-nav row) and `megaMenuNavItems` for MobileNav.
  */
 export function MegaMenu({ items, label: labelProp, currentHref, onNavigate, className }: MegaMenuProps) {
+  const portalContainer = usePortalContainer();
   const { t } = useI18n();
   const label = labelProp === undefined ? t('megaMenu.label') : labelProp;
   return (
@@ -193,7 +195,7 @@ export function MegaMenu({ items, label: labelProp, currentHref, onNavigate, cla
           </NavigationMenu.Item>
         ))}
       </NavigationMenu.List>
-      <NavigationMenu.Portal>
+      <NavigationMenu.Portal container={portalContainer}>
         <NavigationMenu.Positioner
           className={s.positioner()}
           sideOffset={8}

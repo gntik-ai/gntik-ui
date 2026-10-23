@@ -21,6 +21,7 @@ export {
   type ThemeProviderProps,
 } from './theme/ThemeProvider';
 export { Logo, type LogoProps } from './theme/Logo';
+export { ThemeScope, type ThemeScopeProps } from './theme/ThemeScope';
 export { presets, gntikPreset, musematicPreset, falconePreset, type BrandPreset } from './theme/presets';
 
 // Components

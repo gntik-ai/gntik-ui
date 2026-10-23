@@ -7,6 +7,14 @@
  * Month and weekday names, numbers and dates come from Intl, not from this catalog.
  */
 export const en = {
+  'themeScope.title': 'Light preview',
+  'themeScope.description': 'This card and its popup use the light theme.',
+  'themeScope.choice': 'Preview choice',
+  'themeScope.personal': 'Personal',
+  'themeScope.nested': 'A dark region inside a light region.',
+  'themeScope.release': 'Release forced theme',
+  'themeScope.force': 'Force light theme',
+
   'resourceDetail.overview': 'Overview',
   'resourceDetail.activity': 'Activity',
   'resourceDetail.settings': 'Settings',

@@ -1,6 +1,7 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, ChevronDown, X } from 'lucide-react';
 import { useId, useRef, useState, type ReactNode, type Ref } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { matchText } from '../../utils/match-text';
 import { cn } from '../../utils/cn';
@@ -116,6 +117,7 @@ export function MultiSelect({
   estimatedItemHeight,
   overscan,
 }: MultiSelectProps) {
+  const portalContainer = usePortalContainer();
   const { t, locale } = useI18n();
   const placeholder = placeholderProp ?? t('common.searchPlaceholder');
   const selectAllLabel = selectAllLabelProp ?? t('common.selectAll');
@@ -267,7 +269,7 @@ export function MultiSelect({
           <ChevronDown size={15} aria-hidden className={cb.chevron()} />
         </BaseCombobox.Trigger>
       </BaseCombobox.InputGroup>
-      <BaseCombobox.Portal>
+      <BaseCombobox.Portal container={portalContainer}>
         <BaseCombobox.Positioner dir={dir} className={cb.positioner()} side="bottom" align="start" sideOffset={6}>
           <BaseCombobox.Popup className={cn(cb.popup(), virtualized && 'flex flex-col overflow-hidden')}>
             {(loadOptions || onCreate) && (

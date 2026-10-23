@@ -25,7 +25,14 @@ interface ThemeContextValue {
   brand: BrandPreset;
 }
 
-const ThemeContext = createContext<ThemeContextValue | null>(null);
+const DEFAULT_THEME: ThemeContextValue = {
+  mode: 'dark',
+  resolved: 'dark',
+  setMode: () => {},
+  brand: gntikPreset,
+};
+
+export const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function systemTheme(): ResolvedTheme {
   if (typeof window === 'undefined' || !window.matchMedia) return 'dark';
@@ -73,6 +80,8 @@ export interface ThemeProviderProps {
    * The stored choice, if any, applies right after hydration.
    */
   initialMode?: ThemeMode;
+  /** Apply this theme while retaining the user's stored page preference. */
+  forcedMode?: ResolvedTheme;
   /** Brand preset (name + logo). Colours are the same for every preset. */
   brand?: BrandPreset;
   /** localStorage key; pass `null` to disable persistence. */
@@ -92,6 +101,7 @@ export function ThemeProvider({
   children,
   defaultMode = 'dark',
   initialMode,
+  forcedMode,
   brand = gntikPreset,
   storageKey = 'gntik-theme',
   target = () => (typeof document === 'undefined' ? null : document.documentElement),
@@ -101,7 +111,7 @@ export function ThemeProvider({
   const stored = useSyncExternalStore(subscribeStored, getStored, serverStored);
   const system = useSyncExternalStore(subscribeSystem, systemTheme, serverSystem);
   const mode = stored ?? localMode;
-  const resolved = mode === 'system' ? system : mode;
+  const resolved = forcedMode ?? (mode === 'system' ? system : mode);
 
   useEffect(() => {
     const el = target();
@@ -131,5 +141,5 @@ export function ThemeProvider({
 
 /** Current theme and brand. Outside a provider it reports the dark default and the gntik preset. */
 export function useTheme(): ThemeContextValue {
-  return useContext(ThemeContext) ?? { mode: 'dark', resolved: 'dark', setMode: () => {}, brand: gntikPreset };
+  return useContext(ThemeContext) ?? DEFAULT_THEME;
 }

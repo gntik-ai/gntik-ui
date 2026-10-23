@@ -1,6 +1,7 @@
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { X } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { popoverVariants, type PopoverVariantProps } from './popover.variants';
@@ -23,7 +24,7 @@ export interface PopoverContentProps extends Omit<BasePopover.Popup.Props, 'clas
   alignOffset?: BasePopover.Positioner.Props['alignOffset'];
   /** Draw a small arrow pointing at the trigger. */
   arrow?: boolean;
-  /** Portal container; defaults to document.body. */
+  /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BasePopover.Portal.Props['container'];
   children?: ReactNode;
 }
@@ -44,10 +45,11 @@ export function PopoverContent({
   children,
   ...props
 }: PopoverContentProps) {
+  const portalContainer = usePortalContainer();
   const dir = usePortalDir();
   const v = popoverVariants({ padding });
   return (
-    <BasePopover.Portal container={container}>
+    <BasePopover.Portal container={container ?? portalContainer}>
       <BasePopover.Positioner
         dir={dir}
         className={v.positioner()}

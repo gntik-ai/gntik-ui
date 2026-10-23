@@ -13003,9 +13003,11 @@
       "name": "theme",
       "type": "registry:ui",
       "title": "ThemeProvider",
-      "description": "ThemeProvider (dark default, light, high contrast, system; persisted), themeScript, Logo and brand presets.",
+      "description": "ThemeProvider (persisted page mode, optional forcedMode), ThemeScope (nested themes and themed portals), themeScript, Logo and brand presets.",
       "author": "gntik-ai",
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/ui-utils.json"
@@ -13029,6 +13031,11 @@
           "path": "packages/ui/src/theme/ThemeProvider.tsx",
           "type": "registry:ui",
           "target": "components/theme/ThemeProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/theme/ThemeScope.tsx",
+          "type": "registry:ui",
+          "target": "components/theme/ThemeScope.tsx"
         },
         {
           "path": "packages/ui/src/theme/musematic-mark.ts",
@@ -14442,6 +14449,11 @@
           "path": "packages/ui/src/utils/match-text.ts",
           "type": "registry:ui",
           "target": "components/utils/match-text.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/portal.ts",
+          "type": "registry:ui",
+          "target": "components/utils/portal.ts"
         },
         {
           "path": "packages/ui/src/utils/rtl.ts",

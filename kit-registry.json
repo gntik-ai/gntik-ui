@@ -8147,7 +8147,7 @@
       "package": "@gntik-ai/ui",
       "group": "Theme",
       "status": "stable",
-      "description": "ThemeProvider (dark default, light, high contrast, system; persisted), themeScript, Logo and brand presets.",
+      "description": "ThemeProvider (persisted page mode, optional forcedMode), ThemeScope (nested themes and themed portals), themeScript, Logo and brand presets.",
       "files": [
         {
           "path": "packages/ui/src/theme/Logo.tsx",
@@ -8156,6 +8156,10 @@
         {
           "path": "packages/ui/src/theme/ThemeProvider.tsx",
           "target": "components/theme/ThemeProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/theme/ThemeScope.tsx",
+          "target": "components/theme/ThemeScope.tsx"
         },
         {
           "path": "packages/ui/src/theme/musematic-mark.ts",
@@ -8170,7 +8174,9 @@
           "target": "components/theme/theme-script.ts"
         }
       ],
-      "dependencies": [],
+      "dependencies": [
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "ui-utils"
       ]
@@ -9009,6 +9015,10 @@
         {
           "path": "packages/ui/src/utils/match-text.ts",
           "target": "components/utils/match-text.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/portal.ts",
+          "target": "components/utils/portal.ts"
         },
         {
           "path": "packages/ui/src/utils/rtl.ts",

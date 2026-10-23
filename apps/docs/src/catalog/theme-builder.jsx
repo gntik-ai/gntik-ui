@@ -17,6 +17,7 @@ import {
   LinkProvider,
   Logo,
   Textarea,
+  ThemeScope,
   Toggle,
   ToggleGroup,
 } from '@gntik-ai/ui';
@@ -46,7 +47,7 @@ function parseBlocks(css) {
 }
 const BRAND = parseBlocks(brandCss);
 const PAIRING = parseBlocks(pairingCss);
-/** Every custom property of a theme, resolved root → theme. Applied inline, it scopes a subtree to that theme. */
+/** Frozen values resolved root → theme, used only for the contrast calculations. */
 const THEME_VARS = Object.fromEntries(
   THEME_LIST.map(([t]) => [
     t,
@@ -57,7 +58,6 @@ const THEME_VARS = Object.fromEntries(
     },
   ]),
 );
-const themeStyle = (t) => ({ ...THEME_VARS[t], colorScheme: t === 'light' ? 'light' : 'dark' });
 
 function hslToRgb(channels) {
   const [h = 0, s = 0, l = 0] = (channels || '').split(/\s+/).map((x) => parseFloat(x) || 0);
@@ -323,10 +323,7 @@ function InertLink(props) {
 
 function ThemePanel({ theme, label, preset }) {
   return (
-    <div
-      style={themeStyle(theme)}
-      className="overflow-hidden rounded-lg border border-border bg-background text-foreground"
-    >
+    <ThemeScope theme={theme} className="overflow-hidden rounded-lg border border-border bg-background text-foreground">
       <div className="flex h-11 items-center justify-between gap-3 border-b border-border bg-chrome px-3">
         <Logo brand={preset} size={22} wordmark />
         <span className="font-mono text-[10.5px] uppercase tracking-wide text-muted-foreground">{label}</span>
@@ -336,7 +333,7 @@ function ThemePanel({ theme, label, preset }) {
         <Logo brand={preset} size={28} />
         <Logo brand={preset} size={20} />
       </div>
-    </div>
+    </ThemeScope>
   );
 }
 
@@ -344,8 +341,8 @@ function MiniConsole({ theme, preset }) {
   const [href, setHref] = useState('/projects');
   return (
     <LinkProvider component={InertLink}>
-      <div
-        style={themeStyle(theme)}
+      <ThemeScope
+        theme={theme}
         className="flex h-[340px] overflow-hidden rounded-lg border border-border bg-background text-foreground"
       >
         <div className="flex w-52 shrink-0 flex-col gap-3 border-r border-border bg-chrome p-3 max-sm:hidden">
@@ -369,7 +366,7 @@ function MiniConsole({ theme, preset }) {
             <KpiRow variant="strip" items={KPI_ITEMS.slice(0, 3)} showTrends={false} label="Preview metrics" />
           </div>
         </div>
-      </div>
+      </ThemeScope>
     </LinkProvider>
   );
 }
