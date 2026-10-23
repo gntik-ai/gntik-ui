@@ -35,6 +35,13 @@ export default function Spanish() {
             sent: 'Your request was sent',
           }}
         />
+        <NoAccessEmpty resource="Restricted settings" showRequestAccess={false} />
+        <NoAccessEmpty
+          resource="Restricted resource"
+          showRequestAccess={false}
+          action={{ label: 'Back to overview', href: '#overview' }}
+        />
+        <NoAccessEmpty resource="Shared resource" action={{ label: 'Back to overview', href: '#overview' }} />
       </Stack>
     </I18nProvider>
   );

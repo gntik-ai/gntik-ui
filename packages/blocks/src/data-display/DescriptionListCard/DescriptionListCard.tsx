@@ -45,6 +45,10 @@ export interface DescriptionListCardProps {
   title?: string;
   description?: string;
   items?: readonly DescriptionItem[];
+  /** Wrap values, including long unbroken strings, instead of truncating (default false). */
+  wrap?: boolean;
+  /** Responsive columns; items fill top to bottom in contiguous groups (default 1). */
+  columns?: 1 | 2 | 3;
   /** Shows an Edit button in the header. */
   onEdit?: () => void;
   editLabel?: string;
@@ -105,6 +109,8 @@ export function DescriptionListCard({
   labels,
   description: descriptionProp,
   items = DEPLOYMENT_DETAILS,
+  wrap = false,
+  columns = 1,
   onEdit,
   editLabel: editLabelProp,
   onCopy,
@@ -115,6 +121,27 @@ export function DescriptionListCard({
   const title = titleProp ?? labels?.title ?? t('descriptionList.title');
   const description = descriptionProp ?? labels?.description ?? t('descriptionList.description');
   const editLabel = editLabelProp ?? labels?.edit ?? t('descriptionList.edit');
+  const renderItem = (item: DescriptionItem) => (
+    <div
+      key={item.id}
+      className={cn('grid grid-cols-1 gap-1 py-3.5', columns === 1 && 'sm:grid-cols-[160px_minmax(0,1fr)] sm:gap-4')}
+    >
+      <dt className="text-[13px] text-muted-foreground">{item.label}</dt>
+      <dd className="flex min-w-0 items-center gap-2 text-[13px] text-foreground">
+        {item.status ? (
+          <StatusTag status={item.status} />
+        ) : (
+          <span
+            className={cn(wrap ? 'min-w-0 wrap-anywhere' : 'min-w-0 truncate', item.mono && 'font-mono text-[12.5px]')}
+          >
+            {item.render ?? item.value}
+          </span>
+        )}
+        {item.copyable && <CopyButton item={item} onCopy={onCopy} labels={labels} />}
+      </dd>
+    </div>
+  );
+  const chunkSize = Math.ceil(items.length / columns);
   return (
     <Card className={className}>
       <CardHeader divided>
@@ -128,23 +155,17 @@ export function DescriptionListCard({
           </CardAction>
         )}
       </CardHeader>
-      <dl className="divide-y divide-border px-5">
-        {items.map((item) => (
-          <div key={item.id} className="grid grid-cols-1 gap-1 py-3.5 sm:grid-cols-[160px_minmax(0,1fr)] sm:gap-4">
-            <dt className="text-[13px] text-muted-foreground">{item.label}</dt>
-            <dd className="flex min-w-0 items-center gap-2 text-[13px] text-foreground">
-              {item.status ? (
-                <StatusTag status={item.status} />
-              ) : (
-                <span className={cn('min-w-0 truncate', item.mono && 'font-mono text-[12.5px]')}>
-                  {item.render ?? item.value}
-                </span>
-              )}
-              {item.copyable && <CopyButton item={item} onCopy={onCopy} labels={labels} />}
-            </dd>
-          </div>
-        ))}
-      </dl>
+      {columns === 1 ? (
+        <dl className="divide-y divide-border px-5">{items.map(renderItem)}</dl>
+      ) : (
+        <div className={cn('grid grid-cols-1 gap-x-6 px-5', columns === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-3')}>
+          {Array.from({ length: columns }, (_, column) => (
+            <dl key={column} className="min-w-0 divide-y divide-border">
+              {items.slice(column * chunkSize, (column + 1) * chunkSize).map(renderItem)}
+            </dl>
+          ))}
+        </div>
+      )}
     </Card>
   );
 }
