@@ -20,18 +20,23 @@ function FruitSelect({ container }: { container?: HTMLElement }) {
 }
 
 it('portals an initially open Select into the light scope and passes axe', async () => {
+  const previousClassName = document.documentElement.className;
   document.documentElement.className = 'dark';
-  const { container } = render(
-    <ThemeScope theme="light">
-      <FruitSelect />
-    </ThemeScope>,
-  );
-  const listbox = await screen.findByRole('listbox');
-  const portal = listbox.closest('[data-theme-scope-portal]');
-  expect(portal).toHaveClass('light');
-  expect(portal?.parentElement).toBe(document.body);
-  expect(container.querySelector('[role="listbox"]')).toBeNull();
-  await expectNoAxeViolations();
+  try {
+    const { container } = render(
+      <ThemeScope theme="light">
+        <FruitSelect />
+      </ThemeScope>,
+    );
+    const listbox = await screen.findByRole('listbox');
+    const portal = listbox.closest('[data-theme-scope-portal]');
+    expect(portal).toHaveClass('light');
+    expect(portal?.parentElement).toBe(document.body);
+    expect(container.querySelector('[role="listbox"]')).toBeNull();
+    await expectNoAxeViolations();
+  } finally {
+    document.documentElement.className = previousClassName;
+  }
 });
 
 it('lets an explicit Select container win over the scope', async () => {
@@ -109,7 +114,9 @@ it('owns one body portal per scope, updates its theme and removes it on unmount'
     </ThemeScope>,
   );
   expect(document.querySelectorAll('[data-theme-scope-portal]')).toHaveLength(1);
+  expect(document.querySelector('[data-theme-scope-portal]')).toBe(portal);
   expect(document.querySelector('[data-theme-scope-portal]')).toHaveClass('dark');
+  expect(portal).toHaveAttribute('data-theme-scope-portal', 'dark');
   unmount();
   expect(document.querySelector('[data-theme-scope-portal]')).toBeNull();
 });

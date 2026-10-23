@@ -8,22 +8,28 @@ import ThemeScopeNested from './examples/ThemeScopeNested';
 import ThemeProviderForced from './examples/ThemeProviderForced';
 
 it.each<ResolvedTheme>(['dark', 'light', 'high_contrast'])('scope examples pass axe in %s', async (theme) => {
+  const user = userEvent.setup();
   render(
     <ThemeProvider defaultMode={theme} storageKey={null}>
       <ThemeScopeLightCard />
       <ThemeScopeNested />
     </ThemeProvider>,
   );
+  expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  await expectNoAxeViolations();
+  await user.click(screen.getByRole('combobox', { name: 'Preview choice' }));
   expect(await screen.findByRole('listbox')).toHaveAccessibleName('Preview choice');
   await expectNoAxeViolations();
 });
 
 it('translates the scoped Select example into Spanish', async () => {
+  const user = userEvent.setup();
   render(
     <I18nProvider locale="es">
       <ThemeScopeLightCard />
     </I18nProvider>,
   );
+  await user.click(screen.getByRole('combobox', { name: 'Opción de vista previa' }));
   expect(await screen.findByRole('listbox')).toHaveAccessibleName('Opción de vista previa');
   expect(screen.getByRole('option', { name: 'Personal' })).toBeInTheDocument();
   await expectNoAxeViolations();

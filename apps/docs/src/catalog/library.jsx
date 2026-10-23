@@ -65,12 +65,12 @@ const forFormsProduct = (code) =>
   );
 
 // Form and its bindings share FormField.doc.ts; FieldArray owns its prefixed examples.
-const formsFolderOf = (path) =>
+const docNameOf = (path) =>
   path
     .split('/')
     .pop()
     .replace(/\.doc\.ts$/, '');
-const formsOwnerOf = (path, folders) => {
+const exampleOwnerOf = (path, folders) => {
   const base = path.split('/').pop();
   if (base.startsWith('Form') && folders.includes('FormField')) return 'FormField';
   const named = folders.filter((f) => base.startsWith(f)).sort((a, b) => b.length - a.length);
@@ -82,8 +82,8 @@ const COMPONENTS = sortEntries([
     docs: themeDocs,
     examples: withDefault(themeExamples),
     sources: themeSources,
-    folderOf: formsFolderOf,
-    ownerOf: formsOwnerOf,
+    folderOf: docNameOf,
+    ownerOf: exampleOwnerOf,
     forProduct: (code) => code.replace(/from '[.][^']+'/g, "from '@gntik-ai/ui'"),
     apiKind: 'theme',
   }),
@@ -113,8 +113,8 @@ const COMPONENTS = sortEntries([
     docs: formsDocs,
     examples: withDefault(formsExampleModules),
     sources: formsSources,
-    folderOf: formsFolderOf,
-    ownerOf: formsOwnerOf,
+    folderOf: docNameOf,
+    ownerOf: exampleOwnerOf,
     forProduct: forFormsProduct,
     apiKind: 'forms',
   }),

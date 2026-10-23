@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRender } from '@base-ui/react/use-render';
 import { cn } from '../utils/cn';
 import { PortalContainerContext } from '../utils/portal';
@@ -14,17 +14,24 @@ export function ThemeScope({ theme, children, className, render, ref, ...props }
   const page = useTheme();
   const value = useMemo(() => ({ ...page, resolved: theme }), [page, theme]);
   const [container, setContainer] = useState<HTMLDivElement>();
+  const initialTheme = useRef(theme);
 
   useEffect(() => {
     const portal = document.createElement('div');
-    portal.className = theme;
-    portal.dataset.themeScopePortal = theme;
+    portal.className = initialTheme.current;
+    portal.dataset.themeScopePortal = initialTheme.current;
     document.body.appendChild(portal);
     // Publish the mounted DOM node so already-open overlays also receive the container.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setContainer(portal);
     return () => portal.remove();
-  }, [theme]);
+  }, []);
+
+  useEffect(() => {
+    if (!container) return;
+    container.setAttribute('class', theme);
+    container.setAttribute('data-theme-scope-portal', theme);
+  }, [container, theme]);
 
   const element = useRender({
     defaultTagName: 'div',

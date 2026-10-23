@@ -14,7 +14,7 @@ export default function ThemeScopeLightCard() {
       >
         <p className="font-medium text-primary-text">{t('themeScope.title')}</p>
         <p className="text-sm text-muted-foreground">{t('themeScope.description')}</p>
-        <Select defaultOpen modal={false} defaultValue="personal" items={items}>
+        <Select modal={false} defaultValue="personal" items={items}>
           <SelectLabel>{t('themeScope.choice')}</SelectLabel>
           <SelectTrigger />
           <SelectContent>

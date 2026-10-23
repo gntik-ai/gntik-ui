@@ -25,6 +25,13 @@ interface ThemeContextValue {
   brand: BrandPreset;
 }
 
+const DEFAULT_THEME: ThemeContextValue = {
+  mode: 'dark',
+  resolved: 'dark',
+  setMode: () => {},
+  brand: gntikPreset,
+};
+
 export const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function systemTheme(): ResolvedTheme {
@@ -134,5 +141,5 @@ export function ThemeProvider({
 
 /** Current theme and brand. Outside a provider it reports the dark default and the gntik preset. */
 export function useTheme(): ThemeContextValue {
-  return useContext(ThemeContext) ?? { mode: 'dark', resolved: 'dark', setMode: () => {}, brand: gntikPreset };
+  return useContext(ThemeContext) ?? DEFAULT_THEME;
 }

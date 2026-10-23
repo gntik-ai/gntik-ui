@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, render, renderHook, screen } from '@testing-library/react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import type { ReactElement } from 'react';
@@ -25,6 +25,16 @@ function Switcher() {
 }
 
 describe('ThemeProvider', () => {
+  it('keeps the fallback page controls stable outside a provider', () => {
+    const { result, rerender } = renderHook(() => useTheme());
+    const initial = result.current;
+    act(() => initial.setMode('light'));
+    rerender();
+    expect(result.current.mode).toBe('dark');
+    expect(result.current.resolved).toBe('dark');
+    expect(result.current.setMode).toBe(initial.setMode);
+  });
+
   it('forces light over storage, persists choices while forced and applies them when released', async () => {
     localStorage.setItem('gntik-theme', 'dark');
     const user = userEvent.setup();
