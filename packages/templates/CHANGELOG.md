@@ -1,5 +1,26 @@
 # @gntik-ai/templates
 
+## 0.11.0
+
+### Minor Changes
+
+- 98a94b2: Add shell-less resource details and caller-supplied tabs for embedding in existing applications.
+
+### Patch Changes
+
+- Updated dependencies [966a473]
+- Updated dependencies [3cad9d6]
+- Updated dependencies [b366590]
+- Updated dependencies [3b5e0b0]
+- Updated dependencies [8379594]
+  - @gntik-ai/blocks@0.11.0
+  - @gntik-ai/ui@0.11.0
+  - @gntik-ai/tokens@0.3.0
+  - @gntik-ai/chat@0.11.0
+  - @gntik-ai/charts@0.11.0
+  - @gntik-ai/editor@0.11.0
+  - @gntik-ai/flow@0.11.0
+
 ## 0.10.0
 
 ### Minor Changes

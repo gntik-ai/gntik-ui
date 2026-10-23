@@ -1,5 +1,11 @@
 # @gntik-ai/tokens
 
+## 0.3.0
+
+### Minor Changes
+
+- 3b5e0b0: Add ThemeScope with themed overlays, per-scope color schemes and ThemeProvider forcedMode; the new .light selector also applies kit tokens to existing elements using that class.
+
 ## 0.2.1
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @gntik-ai/editor
 
+## 0.11.0
+
+### Patch Changes
+
+- Updated dependencies [3b5e0b0]
+  - @gntik-ai/tokens@0.3.0
+
 ## 0.5.0
 
 ### Patch Changes
