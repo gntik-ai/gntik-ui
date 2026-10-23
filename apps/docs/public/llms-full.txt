@@ -8402,7 +8402,7 @@ import { FlowBuilder } from '@gntik-ai/blocks';
 
 ### Log viewer (`log-viewer`)
 
-Windowed log stream (role="log"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.
+Windowed log stream (role="log"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional wrap (default false) shows full messages in measured, variable-height rows; rowHeight estimates unmeasured rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label, including per-level chip and filter names through labels.levels. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Copied log text and imported fixtures stay unchanged. See the Catalog labels and Full messages and level names live previews.
 
 - Package: `@gntik-ai/blocks` · export `LogViewer` · group builders · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/builders/LogViewer/block.meta.ts
@@ -8416,6 +8416,7 @@ Labels (optional Partial per instance; explicit keys override provider translati
 | --- | --- | --- |
 | `title` | `string` | Visible heading and log region name; title prop wins |
 | `levelFilter` | `string` | Level filter group name |
+| `levels` | `Partial<Record<LogLevel, string>>` | Per-level chip and filter names; omitted levels use the catalog |
 | `searchLabel` | `string` | Searchbox name |
 | `searchPlaceholder` | `string` | Searchbox placeholder |
 | `follow` | `string` | Follow switch name |

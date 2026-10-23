@@ -64,6 +64,7 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 
 export const PREVIEW_LOADERS = {
   block: {
+    'log-viewer--wrap': () => import('../../../packages/blocks/src/builders/LogViewer/examples/Wrap'),
     'theme-scope': () => import('../../../packages/ui/src/theme/examples/ThemeScopeLightCard'),
     'theme-scope--nested': () => import('../../../packages/ui/src/theme/examples/ThemeScopeNested'),
     'theme-provider--forced': () => import('../../../packages/ui/src/theme/examples/ThemeProviderForced'),

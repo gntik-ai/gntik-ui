@@ -2266,7 +2266,7 @@
       "package": "@gntik-ai/blocks",
       "group": "builders",
       "status": "beta",
-      "description": "Windowed log stream (role=\"log\"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.",
+      "description": "Windowed log stream (role=\"log\"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional wrap (default false) shows full messages in measured, variable-height rows; rowHeight estimates unmeasured rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label, including per-level chip and filter names through labels.levels. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Copied log text and imported fixtures stay unchanged. See the Catalog labels and Full messages and level names live previews.",
       "labels": [
         {
           "key": "title",
@@ -2277,6 +2277,11 @@
           "key": "levelFilter",
           "type": "string",
           "state": "Level filter group name"
+        },
+        {
+          "key": "levels",
+          "type": "Partial<Record<LogLevel, string>>",
+          "state": "Per-level chip and filter names; omitted levels use the catalog"
         },
         {
           "key": "searchLabel",
@@ -2327,6 +2332,10 @@
         {
           "path": "packages/blocks/src/builders/LogViewer/fixtures.ts",
           "target": "components/blocks/builders/log-viewer/fixtures.ts"
+        },
+        {
+          "path": "packages/blocks/src/builders/LogViewer/use-wrapped-log-rows.ts",
+          "target": "components/blocks/builders/log-viewer/use-wrapped-log-rows.ts"
         }
       ],
       "dependencies": [
