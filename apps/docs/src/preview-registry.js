@@ -175,6 +175,8 @@ export const PREVIEW_LOADERS = {
   },
   template: {
     'resource-detail--spanish': () => import('../../../packages/templates/src/resource-detail/examples/Spanish'),
+    'resource-detail--embedded-custom-tabs': () =>
+      import('../../../packages/templates/src/resource-detail/examples/embedded-custom-tabs'),
     'resource-detail--labels': () => import('../../../packages/templates/src/resource-detail/examples/Labels'),
     'workflow-builder--save-graph': () => import('../../../packages/templates/src/workflow-builder/examples/SaveGraph'),
     ...Object.fromEntries(TEMPLATES.map((t) => [t.id, t.load])),
