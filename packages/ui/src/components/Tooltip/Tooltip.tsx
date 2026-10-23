@@ -1,6 +1,6 @@
-import { usePortalContainer } from '../../utils/portal';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import type { ReactElement, ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { tooltipVariants, type TooltipVariantProps } from './tooltip.variants';

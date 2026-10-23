@@ -1,7 +1,7 @@
-import { usePortalContainer } from '../../utils/portal';
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X, type LucideIcon } from 'lucide-react';
 import { useMemo, type ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { Spinner } from '../Spinner';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';

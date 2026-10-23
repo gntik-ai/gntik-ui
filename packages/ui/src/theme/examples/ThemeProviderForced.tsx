@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { ThemeProvider, useTheme } from '../ThemeProvider';
 import { ThemeScope } from '../ThemeScope';
 import { useI18n } from '../../i18n/I18nProvider';
@@ -32,7 +32,7 @@ export default function ThemeProviderForced() {
   );
 }
 
-function ThemeScopePreview({ children }: { children: React.ReactNode }) {
+function ThemeScopePreview({ children }: { children: ReactNode }) {
   const { resolved } = useTheme();
   return (
     <ThemeScope theme={resolved} className="space-y-3 rounded-lg bg-background p-4 text-foreground">

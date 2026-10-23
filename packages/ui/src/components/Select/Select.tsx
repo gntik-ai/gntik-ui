@@ -1,4 +1,3 @@
-import { usePortalContainer } from '../../utils/portal';
 import { Select as BaseSelect } from '@base-ui/react/select';
 import { useRender } from '@base-ui/react/use-render';
 import { Check, ChevronDown, RotateCw } from 'lucide-react';
@@ -11,6 +10,7 @@ import {
   type ReactNode,
   type Ref,
 } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { ClearControlButton, clearChangeDetails, type ClearableProps } from '../../utils/clear-control';
 import { cn } from '../../utils/cn';

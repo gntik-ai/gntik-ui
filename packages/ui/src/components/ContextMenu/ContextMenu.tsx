@@ -1,6 +1,6 @@
-import { usePortalContainer } from '../../utils/portal';
 import { ContextMenu as BaseContextMenu } from '@base-ui/react/context-menu';
 import type { KeyboardEvent, ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { cn } from '../../utils/cn';
 import { contextMenuVariants } from './context-menu.variants';
 

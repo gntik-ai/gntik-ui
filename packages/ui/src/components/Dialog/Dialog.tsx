@@ -1,7 +1,7 @@
-import { usePortalContainer } from '../../utils/portal';
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { X } from 'lucide-react';
 import type { HTMLAttributes, ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { dialogVariants, type DialogVariantProps } from './dialog.variants';

@@ -1,9 +1,9 @@
-import { usePortalContainer } from '../../utils/portal';
 import { useI18n } from '../../i18n/I18nProvider';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { X } from 'lucide-react';
 import { useLayoutEffect, useRef, useState, type KeyboardEvent, type ReactNode, type RefObject } from 'react';
 import { createPortal } from 'react-dom';
+import { usePortalContainer } from '../../utils/portal';
 import { cn } from '../../utils/cn';
 import { Button } from '../Button';
 import { tourVariants } from './tour.variants';

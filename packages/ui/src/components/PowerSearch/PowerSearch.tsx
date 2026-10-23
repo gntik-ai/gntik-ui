@@ -1,9 +1,9 @@
-import { usePortalContainer } from '../../utils/portal';
 import { useI18n } from '../../i18n/I18nProvider';
 import { matchText } from '../../utils/match-text';
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { ListFilter, X } from 'lucide-react';
 import { useId, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { cn } from '../../utils/cn';
 import { PowerSearchChip } from './PowerSearchChip';
 import {

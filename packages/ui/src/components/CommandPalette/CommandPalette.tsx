@@ -1,8 +1,8 @@
-import { usePortalContainer } from '../../utils/portal';
 import { Autocomplete } from '@base-ui/react/autocomplete';
 import { Dialog } from '@base-ui/react/dialog';
 import { ArrowRight, Search } from 'lucide-react';
 import { useId, useState, type ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { RTL_FLIP } from '../../utils/rtl';

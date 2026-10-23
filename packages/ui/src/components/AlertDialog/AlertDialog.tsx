@@ -1,7 +1,7 @@
-import { usePortalContainer } from '../../utils/portal';
 import { AlertDialog as BaseAlertDialog } from '@base-ui/react/alert-dialog';
 import { Info, TriangleAlert } from 'lucide-react';
 import type { HTMLAttributes, ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { Button, type ButtonProps } from '../Button';

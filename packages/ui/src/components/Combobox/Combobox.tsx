@@ -1,7 +1,7 @@
-import { usePortalContainer } from '../../utils/portal';
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, ChevronDown, Plus, RotateCw, Search, X } from 'lucide-react';
 import { useId, type ReactNode, type Ref } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import type { MeasuredRowOptions } from '../VirtualList/use-measured-rows';

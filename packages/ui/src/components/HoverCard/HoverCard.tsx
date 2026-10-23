@@ -1,6 +1,6 @@
-import { usePortalContainer } from '../../utils/portal';
 import { PreviewCard as BasePreviewCard } from '@base-ui/react/preview-card';
 import type { ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { hoverCardVariants } from './hover-card.variants';

@@ -1,7 +1,7 @@
-import { usePortalContainer } from '../../utils/portal';
 import { Menu as BaseMenu } from '@base-ui/react/menu';
 import { Check, ChevronRight } from 'lucide-react';
 import type { ComponentType, ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { menuVariants } from './menu.variants';

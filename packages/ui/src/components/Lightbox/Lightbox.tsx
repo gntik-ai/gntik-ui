@@ -1,8 +1,8 @@
-import { usePortalContainer } from '../../utils/portal';
 import { useI18n } from '../../i18n/I18nProvider';
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { ChevronLeft, ChevronRight, Play, X, ZoomIn, ZoomOut } from 'lucide-react';
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { cn } from '../../utils/cn';
 import { lightboxVariants } from './lightbox.variants';
 

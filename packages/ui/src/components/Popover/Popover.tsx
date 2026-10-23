@@ -1,7 +1,7 @@
-import { usePortalContainer } from '../../utils/portal';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { X } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { popoverVariants, type PopoverVariantProps } from './popover.variants';
