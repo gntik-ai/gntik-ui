@@ -33,6 +33,7 @@ import {
 } from '@gntik-ai/ui';
 import { useState } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
+import { CustomTabs, type CustomTabsProps } from './CustomTabs';
 import {
   detailActivity,
   detailBreadcrumbs,
@@ -53,11 +54,11 @@ export interface ResourceDetailLabels {
   sections: string;
 }
 
-export interface ResourceDetailProps {
+interface ResourceDetailBaseProps {
   /** Per-key copy overrides; explicit props take precedence, then labels, then the active catalog. */
   labels?: Partial<ResourceDetailLabels>;
   /**
-   * Optional boolean, default false. Shows only the keyboard-accessible Overview tab in
+   * Optional boolean, default false. With built-in tabs, shows only the keyboard-accessible Overview tab in
    * the "Resource sections" tablist, using explicit resource props without sample defaults.
    * Ignores activity, events, dangerActions, defaultTab, onSaveSettings and onDangerAction.
    * Explicit actions and onEditDetails are still honored. ConsoleShell defaults are unchanged.
@@ -86,19 +87,38 @@ export interface ResourceDetailProps {
   events: readonly StatusEvent[];
   activity: readonly ActivityItem[];
   dangerActions: DangerZoneAction[];
-  defaultTab: ResourceDetailTab;
-  onTabChange: (tab: ResourceDetailTab) => void;
   onEditDetails: () => void;
   onSaveSettings: (settings: ResourceSettings) => void;
   /** Confirmed Danger zone action id (e.g. `pause`, `delete`). */
   onDangerAction: (actionId: string) => void | Promise<void>;
-  shell: Omit<ConsoleShellProps, 'children'>;
+  /** null omits ConsoleShell; undefined or an object preserves the default frame. */
+  shell: Omit<ConsoleShellProps, 'children'> | null;
 }
+
+// Custom tabs require an explicit list; omitted tabs retain the built-in value types.
+type ResourceDetailTabsProps =
+  | {
+      tabs?: undefined;
+      defaultTab?: ResourceDetailTab;
+      onTabChange?: (tab: ResourceDetailTab) => void;
+    }
+  /** Replaces the built-in tabs, including in read-only mode; [] hides the tab set. */
+  | CustomTabsProps;
+
+export type ResourceDetailProps = ResourceDetailBaseProps & ResourceDetailTabsProps;
 
 const TABS: ResourceDetailTab[] = ['overview', 'activity', 'settings'];
 
-/** Resource detail: editable tabs by default, or explicit-only Overview when readOnly is true. */
-export default function ResourceDetailPage(props: Partial<ResourceDetailProps>) {
+/**
+ * Resource detail: editable tabs by default, or explicit-only Overview when readOnly is true.
+ * Pass tabs to replace the built-in sections with caller labels, values and content; readOnly
+ * does not filter custom tabs. An omitted or unknown defaultTab selects the first custom tab.
+ * shell={null} renders only Page and its header. The host owns the main landmark and must
+ * provide ChartLocaleProvider when its custom chart content needs a locale. Breadcrumbs
+ * render in the header in this mode: pass a trail or [] to avoid the editable sample trail.
+ * Omitted or object shells and omitted tabs preserve the existing default output.
+ */
+export default function ResourceDetailPage(props: Partial<ResourceDetailBaseProps> & ResourceDetailTabsProps) {
   const { t } = useI18n();
   const readOnly = props.readOnly ?? false;
   const {
@@ -116,7 +136,6 @@ export default function ResourceDetailPage(props: Partial<ResourceDetailProps>) 
     activity = readOnly ? [] : detailActivity,
     dangerActions = readOnly ? [] : detailDangerActions,
     defaultTab = 'overview',
-    onTabChange,
     onEditDetails,
     onSaveSettings,
     onDangerAction,
@@ -134,7 +153,7 @@ export default function ResourceDetailPage(props: Partial<ResourceDetailProps>) 
         ]);
   const details = detailsProp ?? (readOnly ? [] : detailItems);
   const historyEvents = readOnly ? props.history : events;
-  const [tab, setTab] = useState<ResourceDetailTab>(defaultTab);
+  const [tab, setTab] = useState(defaultTab);
   const [settings, setSettings] = useState<ResourceSettings>({ name, description });
   const [saved, setSaved] = useState<ResourceSettings>({ name, description });
   const dirty = settings.name !== saved.name || settings.description !== saved.description;
@@ -143,28 +162,36 @@ export default function ResourceDetailPage(props: Partial<ResourceDetailProps>) 
     label: labels?.[value] ?? t(`resourceDetail.${value}`),
   }));
 
-  return (
-    <ConsoleShell currentHref="/deployments" breadcrumbs={breadcrumbs} {...shell}>
-      <Page
-        width="wide"
-        header={
-          <PageHeader
-            breadcrumbs={null}
-            title={name}
-            description={description}
-            status={status}
-            meta={meta}
-            actions={actions}
-            tabs={null}
-          />
-        }
-      >
+  const content = (
+    <Page
+      width="wide"
+      header={
+        <PageHeader
+          as={shell === null ? 'div' : undefined}
+          breadcrumbs={shell === null ? breadcrumbs : null}
+          title={name}
+          description={description}
+          status={status}
+          meta={meta}
+          actions={actions}
+          tabs={null}
+        />
+      }
+    >
+      {props.tabs !== undefined ? (
+        <CustomTabs
+          tabs={props.tabs}
+          defaultTab={props.defaultTab}
+          onTabChange={props.onTabChange}
+          label={labels?.sections ?? t('resourceDetail.sections')}
+        />
+      ) : (
         <Tabs
           value={readOnly ? 'overview' : tab}
           onValueChange={(v) => {
             const next = tabs.find((t) => t.value === v)?.value ?? 'overview';
             setTab(next);
-            onTabChange?.(next);
+            if (props.tabs === undefined) props.onTabChange?.(next);
           }}
         >
           <TabsList aria-label={labels?.sections ?? t('resourceDetail.sections')}>
@@ -267,7 +294,15 @@ export default function ResourceDetailPage(props: Partial<ResourceDetailProps>) 
             </TabsPanel>
           )}
         </Tabs>
-      </Page>
+      )}
+    </Page>
+  );
+
+  return shell === null ? (
+    content
+  ) : (
+    <ConsoleShell currentHref="/deployments" breadcrumbs={breadcrumbs} {...shell}>
+      {content}
     </ConsoleShell>
   );
 }
