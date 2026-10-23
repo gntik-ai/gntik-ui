@@ -6,7 +6,7 @@ export const meta: BlockMeta = {
   family: 'data-display',
   status: 'beta',
   description:
-    'Key–value detail card with mono, status and rich values, copy-to-clipboard buttons and an Edit action. Optional labels?: Partial<DescriptionListCardLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview.',
+    'Key–value detail card with mono, status and rich values, copy-to-clipboard buttons and an Edit action. Optional labels?: Partial<DescriptionListCardLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview. wrap?: boolean (default false) shows full values and breaks long unbroken strings. columns?: 1 | 2 | 3 (default 1) stacks terms above values in two or three columns from sm, with one column below sm; items fill contiguous top-to-bottom chunks of ceil(item count / columns), and dividers stay within each column. Defaults preserve the original single-column rows. See the Spanish live preview for wrapping and both column layouts.',
   labels: [
     { key: 'title', type: 'string', state: 'Card heading; title prop wins' },
     { key: 'description', type: 'string', state: 'Card description; description prop wins' },

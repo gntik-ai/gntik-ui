@@ -46,6 +46,8 @@ export interface PageHeaderProps {
   /** Location trail above the title; `null` hides it. */
   breadcrumbs?: BreadcrumbItem[] | null;
   title?: ReactNode;
+  /** Wrap the title, including long unbroken words, instead of truncating (default false). */
+  wrapTitle?: boolean;
   /** h1 focus target: adds tabIndex=-1 for titleRef.current.focus(), outside the Tab order. */
   titleRef?: Ref<HTMLHeadingElement>;
   description?: ReactNode;
@@ -72,6 +74,7 @@ export function PageHeader({
   as: Root = 'header',
   breadcrumbs = pageHeaderBreadcrumbs,
   title: titleProp,
+  wrapTitle = false,
   labels,
   titleRef,
   description: descriptionProp,
@@ -115,7 +118,10 @@ export function PageHeader({
             <h1
               ref={titleRef}
               tabIndex={titleRef != null ? -1 : undefined}
-              className="min-w-0 truncate text-2xl font-bold tracking-tight text-foreground"
+              className={cn(
+                wrapTitle ? 'min-w-0 wrap-anywhere' : 'min-w-0 truncate',
+                'text-2xl font-bold tracking-tight text-foreground',
+              )}
             >
               {title}
             </h1>

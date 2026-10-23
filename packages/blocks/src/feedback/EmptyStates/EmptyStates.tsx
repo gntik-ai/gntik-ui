@@ -215,6 +215,10 @@ export interface NoAccessEmptyProps extends SharedEmptyProps {
   owner?: string;
   /** Called on "Request access"; may return a promise (the button shows a spinner). */
   onRequestAccess?: () => void | Promise<void>;
+  /** Show the request button and its status announcement (default true). */
+  showRequestAccess?: boolean;
+  /** One href link; secondary to the request button, or primary when the button is hidden. */
+  action?: { label: string; href: string };
   /** Start in the "requested" state (e.g. a pending request exists). */
   defaultRequested?: boolean;
 }
@@ -225,6 +229,8 @@ export function NoAccessEmpty({
   labels,
   owner = noAccessSample.owner,
   onRequestAccess,
+  showRequestAccess = true,
+  action,
   defaultRequested = false,
   titleAs,
   bordered = true,
@@ -241,6 +247,11 @@ export function NoAccessEmpty({
       setState('idle');
     }
   };
+  const actionLink = action ? (
+    <Link underline="hover" href={action.href} className="inline-flex h-9 items-center px-2 text-[13px] font-semibold">
+      {action.label}
+    </Link>
+  ) : undefined;
   return (
     <EmptyState
       icon={Lock}
@@ -253,22 +264,29 @@ export function NoAccessEmpty({
         t('emptyState.noAccess.description', { resource: resource.toLowerCase(), owner })
       }
       primaryAction={
-        <Button
-          variant={state === 'requested' ? 'secondary' : 'primary'}
-          icon={state === 'requested' ? Check : undefined}
-          loading={state === 'pending'}
-          disabled={state === 'requested'}
-          onClick={() => void request()}
-        >
-          {state === 'requested'
-            ? (labels?.requested ?? t('emptyState.noAccess.requested'))
-            : (labels?.request ?? t('emptyState.noAccess.request'))}
-        </Button>
+        showRequestAccess ? (
+          <Button
+            variant={state === 'requested' ? 'secondary' : 'primary'}
+            icon={state === 'requested' ? Check : undefined}
+            loading={state === 'pending'}
+            disabled={state === 'requested'}
+            onClick={() => void request()}
+          >
+            {state === 'requested'
+              ? (labels?.requested ?? t('emptyState.noAccess.requested'))
+              : (labels?.request ?? t('emptyState.noAccess.request'))}
+          </Button>
+        ) : (
+          actionLink
+        )
       }
+      secondaryAction={showRequestAccess ? actionLink : undefined}
     >
-      <p role="status" className="sr-only">
-        {state === 'requested' ? (labels?.sent ?? t('emptyState.noAccess.sent')) : ''}
-      </p>
+      {showRequestAccess && (
+        <p role="status" className="sr-only">
+          {state === 'requested' ? (labels?.sent ?? t('emptyState.noAccess.sent')) : ''}
+        </p>
+      )}
     </EmptyState>
   );
 }

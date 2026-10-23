@@ -6,6 +6,17 @@ export default function Spanish() {
   return (
     <I18nProvider locale="es">
       <PageHeader />
+      <PageHeader
+        as="div"
+        wrapTitle
+        title={`Resource details and correlation identifier ${'a'.repeat(120)}`}
+        breadcrumbs={null}
+        description={null}
+        status=""
+        meta={[]}
+        actions={[]}
+        tabs={null}
+      />
     </I18nProvider>
   );
 }
