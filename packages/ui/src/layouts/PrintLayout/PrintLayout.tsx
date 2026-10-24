@@ -2,6 +2,7 @@ import type { HTMLAttributes, ReactNode, Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { SkipLink } from '../../components/VisuallyHidden';
 import { useI18n } from '../../i18n/I18nProvider';
+import { useCSP } from '../../csp';
 import { printLayoutVariants, type PrintLayoutVariantProps } from './print-layout.variants';
 
 type PageSize = NonNullable<PrintLayoutVariantProps['size']>;
@@ -53,11 +54,14 @@ export function PrintLayout({
   ...props
 }: PrintLayoutProps) {
   const { t } = useI18n();
+  const { nonce, disableStyleElements } = useCSP();
   const skipLinkLabel = skipLinkLabelProp ?? t('skip.document');
   const s = printLayoutVariants({ size, margin, fullScreen });
   return (
     <div className={cn(s.root(), className)} {...props}>
-      {pageRule && <style>{`@page { size: ${PAGE_SIZE[size]}; margin: ${PAGE_MARGIN[margin]}; }`}</style>}
+      {pageRule && !disableStyleElements && (
+        <style nonce={nonce}>{`@page { size: ${PAGE_SIZE[size]}; margin: ${PAGE_MARGIN[margin]}; }`}</style>
+      )}
       <SkipLink targetId={mainId} className={s.skipLink()}>
         {skipLinkLabel}
       </SkipLink>

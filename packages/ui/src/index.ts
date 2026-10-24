@@ -10,6 +10,9 @@ export { useBreakpoint, useBreakpointValue, type Breakpoint, type BreakpointOpti
 // i18n
 export * from './i18n';
 
+// Content Security Policy
+export { CSPProvider, useCSP, type CSPConfig, type CSPProviderProps } from './csp';
+
 // Density
 export { DensityProvider, useDensity, type Density, type DensityProviderProps } from './density';
 

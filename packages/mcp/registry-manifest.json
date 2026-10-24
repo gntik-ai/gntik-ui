@@ -9,6 +9,7 @@
   },
   "missingComponents": [
     "agent-surface",
+    "csp-provider",
     "cursor-pager-footer",
     "cursor-pagination",
     "date-field",
@@ -69,6 +70,7 @@
     {"id":"create-wizard","package":"@gntik-ai/templates","name":"create-wizard","version":"0.6.0","url":"https://ui.gntik.ai/r/create-wizard.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"create-workspace","package":"@gntik-ai/templates","name":"create-workspace","version":"0.6.0","url":"https://ui.gntik.ai/r/create-workspace.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"credential-disclosure-dialog","package":"@gntik-ai/blocks","name":"credential-disclosure-dialog","version":"0.6.0","url":"https://ui.gntik.ai/r/credential-disclosure-dialog.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"csp-provider","package":"@gntik-ai/ui","name":"csp-provider","version":"0.5.0","url":"https://ui.gntik.ai/r/csp-provider.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"cursor-pager-footer","package":"@gntik-ai/blocks","name":"cursor-pager-footer","version":"0.6.0","url":"https://ui.gntik.ai/r/cursor-pager-footer.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"cursor-pagination","package":"@gntik-ai/ui","name":"cursor-pagination","version":"0.5.0","url":"https://ui.gntik.ai/r/cursor-pagination.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"danger-zone","package":"@gntik-ai/blocks","name":"danger-zone","version":"0.6.0","url":"https://ui.gntik.ai/r/danger-zone.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},

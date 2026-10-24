@@ -363,6 +363,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -445,6 +450,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -852,6 +862,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/en.ts"
@@ -943,6 +958,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -1023,6 +1043,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -1216,6 +1241,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -1297,6 +1327,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -1508,6 +1543,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -1575,6 +1615,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -1721,6 +1766,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -2318,6 +2368,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -2569,6 +2624,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -2660,6 +2720,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -2963,6 +3028,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -3224,6 +3294,41 @@
       ]
     },
     {
+      "name": "csp-provider",
+      "type": "registry:ui",
+      "title": "CSPProvider",
+      "description": "CSPProvider passes the app server nonce to Base UI and kit inline elements; useCSP exposes the settings for custom elements. Disable style elements to use static CSS.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "categories": [
+        "component",
+        "Theme"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "stable",
+        "source": "packages/ui/src/csp/CSPProvider.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/csp/CSPProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/csp/CSPProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/csp/index.ts",
+          "type": "registry:ui",
+          "target": "components/csp/index.ts"
+        }
+      ]
+    },
+    {
       "name": "cursor-pager-footer",
       "type": "registry:block",
       "title": "Cursor pager footer",
@@ -3311,6 +3416,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -3633,6 +3743,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -3727,6 +3842,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -3852,6 +3972,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -3966,6 +4091,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4100,6 +4230,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -4214,6 +4349,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/en.ts"
@@ -4309,6 +4449,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5303,6 +5448,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -5480,6 +5630,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5685,6 +5840,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/en.ts"
@@ -5867,6 +6027,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -5947,6 +6112,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6033,6 +6203,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6131,6 +6306,11 @@
           "path": "packages/ui/src/i18n/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6346,6 +6526,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -6426,6 +6611,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6515,6 +6705,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6846,6 +7041,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -6967,6 +7167,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7287,6 +7492,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -7566,6 +7776,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -7654,6 +7869,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7826,6 +8046,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -7901,6 +8126,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7982,6 +8212,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8071,6 +8306,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -8135,6 +8375,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8327,6 +8572,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -8447,6 +8697,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8673,6 +8928,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -8749,6 +9009,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8925,6 +9190,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -9016,6 +9286,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9145,6 +9420,7 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/csp-provider.json",
         "https://ui.gntik.ai/r/ui-utils.json",
         "https://ui.gntik.ai/r/visually-hidden.json"
       ],
@@ -9168,6 +9444,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9499,6 +9780,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -9752,6 +10038,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -10183,6 +10474,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -10423,6 +10719,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -10588,6 +10889,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -10908,6 +11214,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -11342,6 +11653,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -11786,6 +12102,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -11959,6 +12280,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -12021,6 +12347,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -12232,6 +12563,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -12526,6 +12862,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/en.ts"
@@ -12740,6 +13081,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -13044,6 +13390,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -13123,6 +13474,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -13215,6 +13571,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -13459,6 +13820,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -13539,6 +13905,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -13631,6 +14002,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -13757,6 +14133,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -13844,6 +14225,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -13925,6 +14311,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -14055,6 +14446,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -14178,6 +14574,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -14367,6 +14768,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -14454,6 +14860,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -14585,6 +14996,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -14671,6 +15087,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -14830,6 +15251,11 @@
           "path": "packages/ui/src/i18n/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -15040,6 +15466,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -15204,6 +15635,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -15283,6 +15719,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -15414,6 +15855,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -15565,6 +16011,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",

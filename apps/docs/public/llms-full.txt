@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 116 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 117 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -6542,6 +6542,74 @@ export default function TourOnboarding() {
 }
 ```
 
+### CSPProvider (`csp-provider`)
+
+CSPProvider passes the app server nonce to Base UI and kit inline elements; useCSP exposes the settings for custom elements. Disable style elements to use static CSS.
+
+- Package: `@gntik-ai/ui` · export `CSPProvider` · group Theme · status stable
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/csp/CSPProvider.doc.ts
+- Primitive: `@base-ui/react/csp-provider`
+- Install: `gntik-ui add csp-provider`; own the source with `gntik-ui eject csp-provider`
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { CSPProvider, useCSP } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
+import { ScrollArea } from '@gntik-ai/ui';
+import { SimpleSelect } from '@gntik-ai/ui';
+import { Slider } from '@gntik-ai/ui';
+import { Tabs, TabsList, TabsTab, TabsIndicator } from '@gntik-ai/ui';
+
+function Preview() {
+  const { t } = useI18n();
+  const { disableStyleElements } = useCSP();
+  return (
+    <div className="space-y-4">
+      <p role="status">{t(disableStyleElements ? 'csp.disabled' : 'csp.enabled')}</p>
+      <SimpleSelect
+        label={t('csp.choice')}
+        items={[
+          { value: 'light', label: t('theme.light') },
+          { value: 'dark', label: t('theme.dark') },
+        ]}
+      />
+      <ScrollArea aria-label={t('csp.content')} className="h-32" bordered>
+        {Array.from({ length: 20 }, (_, i) => (
+          <p className="p-2" key={i}>
+            {t('csp.content')} {i + 1}
+          </p>
+        ))}
+      </ScrollArea>
+      <Tabs defaultValue="light">
+        <TabsList aria-label={t('theme.label')} indicator={false}>
+          <TabsTab value="light">{t('theme.light')}</TabsTab>
+          <TabsTab value="dark">{t('theme.dark')}</TabsTab>
+          <TabsIndicator renderBeforeHydration />
+        </TabsList>
+      </Tabs>
+      <Slider label={t('csp.choice')} thumbAlignment="edge" defaultValue={50} />
+    </div>
+  );
+}
+
+export default function CSPProviderPreview() {
+  const { nonce } = useCSP();
+  const { t } = useI18n();
+  const [disabled, setDisabled] = useState(false);
+  return (
+    <CSPProvider nonce={nonce} disableStyleElements={disabled}>
+      <div className="space-y-4">
+        <Button onClick={() => setDisabled(!disabled)}>{t(disabled ? 'csp.enable' : 'csp.disable')}</Button>
+        <Preview />
+      </div>
+    </CSPProvider>
+  );
+}
+```
+
 ### ThemeProvider (`theme`)
 
 ThemeProvider (persisted page mode, optional forcedMode), ThemeScope (nested themes and themed portals), themeScript, Logo and brand presets.
@@ -7115,7 +7183,7 @@ Printable document frame for invoices, reports and receipts: an A4 or Letter pag
 - Package: `@gntik-ai/ui` · export `PrintLayout` · group Layout · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/layouts/PrintLayout/PrintLayout.doc.ts
 - ARIA pattern: landmark (main) + labelled article
-- Registry dependencies: ui-utils, visually-hidden
+- Registry dependencies: csp-provider, ui-utils, visually-hidden
 - Install: `gntik-ui add print-layout`; own the source with `gntik-ui eject print-layout`
 
 Keyboard:

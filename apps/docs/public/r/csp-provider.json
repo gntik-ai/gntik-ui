@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "csp-provider",
+  "type": "registry:ui",
+  "title": "CSPProvider",
+  "description": "CSPProvider passes the app server nonce to Base UI and kit inline elements; useCSP exposes the settings for custom elements. Disable style elements to use static CSS.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/csp/CSPProvider.tsx",
+      "type": "registry:ui",
+      "target": "components/csp/CSPProvider.tsx",
+      "content": "import { CSPProvider as BaseCSPProvider } from '@base-ui/react/csp-provider';\nimport { createContext, useContext, useMemo, type ReactNode } from 'react';\n\n/** CSP settings shared by kit-owned inline elements. The app server owns the nonce. */\nexport interface CSPConfig {\n  nonce: string | undefined;\n  disableStyleElements: boolean;\n}\n\nexport interface CSPProviderProps {\n  /** Per-response nonce matching the app's Content-Security-Policy header. */\n  nonce?: string;\n  /** Omit inline style elements. Supply static CSS, including any PrintLayout @page rule. */\n  disableStyleElements?: boolean;\n  children?: ReactNode;\n}\n\nconst CSPContext = createContext<CSPConfig>({ nonce: undefined, disableStyleElements: false });\n\n/** Forward CSP settings to Base UI and kit-owned inline styles and scripts. Adds no DOM element. */\nexport function CSPProvider({ nonce, disableStyleElements = false, children }: CSPProviderProps) {\n  const value = useMemo(() => ({ nonce, disableStyleElements }), [nonce, disableStyleElements]);\n  return (\n    <CSPContext.Provider value={value}>\n      <BaseCSPProvider nonce={nonce} disableStyleElements={disableStyleElements}>\n        {children}\n      </BaseCSPProvider>\n    </CSPContext.Provider>\n  );\n}\n\n/** CSP settings for custom inline elements; outside a provider: no nonce, styles enabled. */\nexport function useCSP(): CSPConfig {\n  return useContext(CSPContext);\n}\n"
+    },
+    {
+      "path": "packages/ui/src/csp/index.ts",
+      "type": "registry:ui",
+      "target": "components/csp/index.ts",
+      "content": "export { CSPProvider, useCSP, type CSPConfig, type CSPProviderProps } from './CSPProvider';\n"
+    }
+  ],
+  "categories": [
+    "component",
+    "Theme"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/ui",
+    "status": "stable",
+    "source": "packages/ui/src/csp/CSPProvider.doc.ts"
+  }
+}

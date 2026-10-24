@@ -8,6 +8,8 @@
     "dev": "next dev --port 3001",
     "build": "next build",
     "start": "next start --port 3001",
+    "test": "node --test test/*.test.mjs",
+    "test:csp": "pnpm --filter @gntik-ai/docs exec playwright test --config ../example-next/playwright.config.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
