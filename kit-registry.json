@@ -3919,6 +3919,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -3972,6 +3976,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4106,6 +4114,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -4158,6 +4170,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4245,6 +4261,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -4298,6 +4318,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4415,6 +4439,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -4501,6 +4529,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4827,6 +4859,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -4929,6 +4965,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -4993,6 +5033,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5086,6 +5130,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -5142,6 +5190,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5216,6 +5268,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -5285,6 +5341,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -5348,6 +5408,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -5408,6 +5472,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5473,6 +5541,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -5528,6 +5600,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5677,6 +5753,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -5730,6 +5810,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5822,6 +5906,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -5883,6 +5971,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -5940,6 +6032,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6004,6 +6100,10 @@
           "target": "components/i18n/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -6065,6 +6165,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -6118,6 +6222,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6177,6 +6285,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6307,6 +6419,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -6366,6 +6482,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6491,6 +6611,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -6586,6 +6710,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -6652,6 +6780,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -6714,6 +6846,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -6771,6 +6907,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -6824,6 +6964,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6882,6 +7026,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -6943,6 +7091,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -7000,6 +7152,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7079,6 +7235,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -7137,6 +7297,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -7191,6 +7355,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7254,6 +7422,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7348,6 +7520,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7447,6 +7623,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -7508,6 +7688,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7605,6 +7789,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -7692,6 +7880,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7839,6 +8031,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -7915,6 +8111,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8061,6 +8261,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -8182,6 +8386,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -8235,6 +8443,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8297,6 +8509,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8455,6 +8671,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -8515,6 +8735,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8580,6 +8804,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -8637,6 +8865,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8697,6 +8929,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -8750,6 +8986,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8838,6 +9078,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -8895,6 +9139,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9020,6 +9268,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -9076,6 +9328,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9137,6 +9393,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9203,6 +9463,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9283,6 +9547,10 @@
         {
           "path": "packages/ui/src/i18n/index.ts",
           "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9368,6 +9636,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -9436,6 +9708,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -9488,6 +9764,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9552,6 +9832,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -9596,6 +9880,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9652,6 +9940,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9713,6 +10005,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9779,6 +10075,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -9836,6 +10136,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -9882,12 +10186,24 @@
       "description": "Printable document frame for invoices, reports and receipts: an A4 or Letter page (`size`) with margins (`margin`), header and footer slots and a `PageBreak` helper. On screen it is a paper sheet (bg-card / text-card-foreground, border, shadow-sm) on a muted backdrop in the current theme; `print:` variants drop the chrome (no backdrop, border, shadow or outer padding) and an `@page` rule sets paper size and margins (`pageRule`). The header and footer print once, at the top and end of the document. The consuming app should print with the light theme (ThemeProvider `defaultMode=\"light\"`, or `setMode('light')` before `window.print()`); no print-only colours are defined.",
       "files": [
         {
+          "path": "packages/ui/src/csp/CSPProvider.tsx",
+          "target": "components/csp/CSPProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/csp/index.ts",
+          "target": "components/csp/index.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9945,6 +10261,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -10000,6 +10320,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -10064,6 +10388,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -10119,6 +10447,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -10179,6 +10511,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "target": "components/i18n/messages/en.ts"
         },
@@ -10233,6 +10569,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",

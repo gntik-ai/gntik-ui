@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import type { ReactNode } from 'react';
 import '@fontsource/geist/400.css';
 import '@fontsource/geist/500.css';
@@ -16,8 +16,11 @@ export const metadata: Metadata = {
   description: 'gntik-ui templates as Next.js App Router routes.',
 };
 
+export const dynamic = 'force-dynamic';
+
 /** Server Component: reads the theme cookie so the first HTML already carries the right theme. */
 export default async function RootLayout({ children }: { children: ReactNode }) {
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
   const mode = parseMode((await cookies()).get(THEME_COOKIE)?.value);
   const cls = htmlClassFor(mode);
   return (
@@ -28,10 +31,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="bg-background text-foreground antialiased">
-        <Providers initialMode={mode}>{children}</Providers>
+        <Providers nonce={nonce} initialMode={mode}>
+          {children}
+        </Providers>
       </body>
     </html>
   );

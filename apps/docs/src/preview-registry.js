@@ -64,6 +64,7 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 
 export const PREVIEW_LOADERS = {
   block: {
+    'csp-provider': () => import('../../../packages/ui/src/csp/examples/CSPProviderPreview'),
     'log-viewer--wrap': () => import('../../../packages/blocks/src/builders/LogViewer/examples/Wrap'),
     'theme-scope': () => import('../../../packages/ui/src/theme/examples/ThemeScopeLightCard'),
     'theme-scope--nested': () => import('../../../packages/ui/src/theme/examples/ThemeScopeNested'),
