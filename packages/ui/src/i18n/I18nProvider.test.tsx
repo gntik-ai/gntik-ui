@@ -152,3 +152,55 @@ describe('I18nProvider / useI18n', () => {
     expect(html).toHaveAttribute('lang', 'en');
   });
 });
+
+describe('provider display time zone', () => {
+  it('defaults to system both inside and outside a provider', () => {
+    expect(capture((probe) => <>{probe}</>).timeZone).toBe('system');
+    expect(capture((probe) => <I18nProvider locale="en-GB">{probe}</I18nProvider>).timeZone).toBe('system');
+  });
+  it('formats in Madrid, allows an explicit override, and responds to zone changes', () => {
+    let value: I18n | undefined;
+    const probe = (
+      <Probe
+        onValue={(v) => {
+          value = v;
+        }}
+      />
+    );
+    const { rerender } = render(
+      <I18nProvider locale="en-GB" timeZone="Europe/Madrid">
+        {probe}
+      </I18nProvider>,
+    );
+    const date = new Date('2026-04-15T07:30:00Z');
+    expect(value?.formatDate(date, { timeStyle: 'short' })).toBe('09:30');
+    expect(value?.formatDate(date, { timeStyle: 'short', timeZone: 'UTC' })).toBe('07:30');
+    rerender(
+      <I18nProvider locale="en-GB" timeZone="UTC">
+        {probe}
+      </I18nProvider>,
+    );
+    expect(value?.formatDate(date, { timeStyle: 'short' })).toBe('07:30');
+  });
+  it.each(['development', 'production'])('falls back for invalid zones in %s', (mode) => {
+    vi.stubEnv('NODE_ENV', mode);
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      expect(
+        capture((probe) => (
+          <I18nProvider locale="en" timeZone="Mars/Base">
+            {probe}
+          </I18nProvider>
+        )).timeZone,
+      ).toBe('system');
+      if (mode === 'production') expect(warn).not.toHaveBeenCalled();
+      else {
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn).toHaveBeenCalledWith(expect.stringContaining('Mars/Base'));
+      }
+    } finally {
+      warn.mockRestore();
+      vi.unstubAllEnvs();
+    }
+  });
+});

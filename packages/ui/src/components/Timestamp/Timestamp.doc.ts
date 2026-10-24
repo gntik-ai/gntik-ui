@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Display',
   status: 'beta',
   description:
-    'A date in a <time dateTime> element: relative ("3 minutes ago", Intl.RelativeTimeFormat) or absolute (Intl.DateTimeFormat), localised with `locale`. Accepts a Date, ISO string or epoch ms. Relative labels refresh on an adaptive interval that is cleared on unmount. The full date shows in a tooltip on hover or focus and is also part of the accessible text.',
+    'A date in a <time dateTime> element: relative ("3 minutes ago", Intl.RelativeTimeFormat) or absolute (Intl.DateTimeFormat), localised with `locale`. Accepts a Date, ISO string or epoch ms. Relative labels refresh on an adaptive interval that is cleared on unmount. The full date shows in a tooltip on hover or focus and is also part of the accessible text. Display timeZone defaults to I18nProvider (system when unset); use the same zone on server and client. The TimeZone example shows the provider default and UTC overrides',
   primitive: '@base-ui/react/tooltip',
   pattern: 'tooltip',
   keyboard: [

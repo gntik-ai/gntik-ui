@@ -77,10 +77,10 @@ export const TONE: Record<EventTone, { dot: string; soft: string; bar: string; i
 };
 
 /** Events grouped by local day key, each day sorted by start. */
-export function groupByDay(events: readonly ScheduleEvent[]): Map<string, ScheduleEvent[]> {
+export function groupByDay(events: readonly ScheduleEvent[], timeZone = 'system'): Map<string, ScheduleEvent[]> {
   const map = new Map<string, ScheduleEvent[]>();
   for (const e of events) {
-    const key = dayKey(e.start);
+    const key = dayKey(e.start, timeZone);
     const list = map.get(key);
     if (list) list.push(e);
     else map.set(key, [e]);

@@ -1,6 +1,7 @@
 import { DirectionProvider } from '@base-ui/react/direction-provider';
-import { createContext, useContext, useEffect, useMemo, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, type ReactNode } from 'react';
 import { createFormatters, localeDirection, type I18nFormatters } from './format';
+import { isValidTimeZone } from './time-zone';
 import { catalogs } from './messages';
 import { en, type Messages } from './messages/en';
 
@@ -10,6 +11,7 @@ export type Direction = 'ltr' | 'rtl';
 export interface I18n extends I18nFormatters {
   locale: string;
   dir: Direction;
+  timeZone: string;
 }
 
 export interface I18nProviderProps {
@@ -17,6 +19,8 @@ export interface I18nProviderProps {
   locale: string;
   /** Overrides or additions on top of the built-in catalog (e.g. a full catalog for another language). */
   messages?: Partial<Messages>;
+  /** Display time zone: system (default), UTC or an IANA name. Use the same zone on server and client. */
+  timeZone?: string;
   /** Text direction; defaults to the locale's (rtl for Arabic, Hebrew, Persian, Urdu…). */
   dir?: Direction;
   /**
@@ -28,7 +32,7 @@ export interface I18nProviderProps {
 }
 
 const I18nContext = createContext<I18n | null>(null);
-const DEFAULT_I18N: I18n = { locale: 'en', dir: 'ltr', ...createFormatters('en', en) };
+const DEFAULT_I18N: I18n = { locale: 'en', dir: 'ltr', timeZone: 'system', ...createFormatters('en', en) };
 
 /** The built-in catalog for a locale's language, falling back to English. */
 export function builtInMessages(locale: string): Messages {
@@ -40,12 +44,27 @@ export function builtInMessages(locale: string): Messages {
  * Locale, messages and direction for every kit component below it. Also sets Base UI's
  * direction, so arrow-key navigation (Tabs, Menu, Slider, Toolbar…) follows RTL.
  */
-export function I18nProvider({ locale, messages, dir, applyTo = 'wrapper', children }: I18nProviderProps) {
+export function I18nProvider({
+  locale,
+  messages,
+  dir,
+  timeZone = 'system',
+  applyTo = 'wrapper',
+  children,
+}: I18nProviderProps) {
+  const zone = isValidTimeZone(timeZone) ? timeZone : 'system';
+  const warned = useRef<string | null>(null);
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'production' && zone !== timeZone && warned.current !== timeZone) {
+      warned.current = timeZone;
+      console.warn(`I18nProvider: invalid time zone "${timeZone}"; using system.`);
+    }
+  }, [zone, timeZone]);
   const direction = dir ?? localeDirection(locale);
   const value = useMemo<I18n>(() => {
     const merged: Messages = { ...builtInMessages(locale), ...messages };
-    return { locale, dir: direction, ...createFormatters(locale, merged) };
-  }, [locale, messages, direction]);
+    return { locale, dir: direction, timeZone: zone, ...createFormatters(locale, merged, zone) };
+  }, [locale, messages, direction, zone]);
 
   useEffect(() => {
     if (applyTo !== 'document') return;

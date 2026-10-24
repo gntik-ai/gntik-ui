@@ -1905,7 +1905,7 @@ export default function TimerStates() {
 
 ### Timestamp (`timestamp`)
 
-A date in a <time dateTime> element: relative ("3 minutes ago", Intl.RelativeTimeFormat) or absolute (Intl.DateTimeFormat), localised with `locale`. Accepts a Date, ISO string or epoch ms. Relative labels refresh on an adaptive interval that is cleared on unmount. The full date shows in a tooltip on hover or focus and is also part of the accessible text.
+A date in a <time dateTime> element: relative ("3 minutes ago", Intl.RelativeTimeFormat) or absolute (Intl.DateTimeFormat), localised with `locale`. Accepts a Date, ISO string or epoch ms. Relative labels refresh on an adaptive interval that is cleared on unmount. The full date shows in a tooltip on hover or focus and is also part of the accessible text. Display timeZone defaults to I18nProvider (system when unset); use the same zone on server and client. The TimeZone example shows the provider default and UTC overrides
 
 - Package: `@gntik-ai/ui` · export `Timestamp` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Timestamp/Timestamp.doc.ts
@@ -3921,7 +3921,7 @@ export default function RadioGroupCards() {
 
 ### ScheduleInput (`schedule-input`)
 
-Cron schedule editor: presets (hourly at minute, daily at, weekly on days at, monthly on day at) that write a 5-field cron expression, plus a raw cron field (*, lists, ranges, steps, names, macros) with validation and an error message, a plain-language summary ("Every weekday at 09:00") and the next runs in a time zone. Pure helpers: parseCron, describeCron, nextRuns.
+Cron schedule editor: presets (hourly at minute, daily at, weekly on days at, monthly on day at) that write a 5-field cron expression, plus a raw cron field (*, lists, ranges, steps, names, macros) with validation and an error message, a plain-language summary ("Every weekday at 09:00") and the next runs in a time zone. Pure helpers: parseCron, describeCron, nextRuns. Display timeZone defaults to I18nProvider (system when unset); use the same zone on server and client. The TimeZone example shows the provider default and UTC overrides
 
 - Package: `@gntik-ai/ui` · export `ScheduleInput` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/ScheduleInput/ScheduleInput.doc.ts
@@ -9312,7 +9312,7 @@ import { StickyActionBar } from '@gntik-ai/blocks';
 
 ### Agenda list (`agenda-list`)
 
-Upcoming scheduled work grouped by day (Today/Tomorrow labels), each row with a kind tile, locale-formatted time range, location and kind badge; empty state included. hourCycle overrides the provider/runtime clock. Locale examples show en-US, es-ES, then en-US with the 24-hour override.
+Upcoming scheduled work grouped by day (Today/Tomorrow labels), each row with a kind tile, locale-formatted time range, location and kind badge; empty state included. hourCycle overrides the provider/runtime clock. timeZone defaults to I18nProvider (system when unset); TimeZone examples demonstrate UTC, an explicit New York override and a Spanish Madrid provider. Use the same zone on server and client. Locale examples show en-US, es-ES, then en-US with the 24-hour override.
 
 - Package: `@gntik-ai/blocks` · export `AgendaList` · group scheduling · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/scheduling/AgendaList/block.meta.ts
@@ -9331,7 +9331,7 @@ import { AgendaList } from '@gntik-ai/blocks';
 
 ### Month calendar (`month-calendar`)
 
-Locale-first month grid of scheduled work with per-day event lines, today/selected states, month navigation and full grid keyboard support. weekStartsOn and hourCycle override provider/runtime defaults; data-weekend marks locale weekends without styling. Locale examples show en-US, es-ES, then en-US with Monday-first and 24-hour overrides.
+Locale-first month grid of scheduled work with per-day event lines, today/selected states, month navigation and full grid keyboard support. weekStartsOn and hourCycle override provider/runtime defaults; data-weekend marks locale weekends without styling. timeZone defaults to I18nProvider (system when unset); TimeZone examples demonstrate UTC, an explicit New York override and a Spanish Madrid provider. Use the same zone on server and client. Locale examples show en-US, es-ES, then en-US with Monday-first and 24-hour overrides.
 
 - Package: `@gntik-ai/blocks` · export `MonthCalendar` · group scheduling · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/scheduling/MonthCalendar/block.meta.ts
@@ -9368,7 +9368,7 @@ import { TimeSlotPicker } from '@gntik-ai/blocks';
 
 ### Week calendar (`week-calendar`)
 
-Locale-first seven-day time grid with positioned events (overlaps side by side), a now line, week navigation and optional clickable events. weekStartsOn and hourCycle override provider/runtime defaults; data-weekend marks locale weekends without styling. Locale examples show en-US, es-ES, then en-US with Monday-first and 24-hour overrides.
+Locale-first seven-day time grid with positioned events (overlaps side by side), a now line, week navigation and optional clickable events. weekStartsOn and hourCycle override provider/runtime defaults; data-weekend marks locale weekends without styling. timeZone defaults to I18nProvider (system when unset); TimeZone examples demonstrate UTC, an explicit New York override and a Spanish Madrid provider. Use the same zone on server and client. Locale examples show en-US, es-ES, then en-US with Monday-first and 24-hour overrides.
 
 - Package: `@gntik-ai/blocks` · export `WeekCalendar` · group scheduling · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/scheduling/WeekCalendar/block.meta.ts

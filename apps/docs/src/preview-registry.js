@@ -74,6 +74,10 @@ export const PREVIEW_LOADERS = {
         load,
       ]),
     ),
+    'month-calendar--time-zone': () =>
+      import('../../../packages/blocks/src/scheduling/MonthCalendar/examples/TimeZone'),
+    'week-calendar--time-zone': () => import('../../../packages/blocks/src/scheduling/WeekCalendar/examples/TimeZone'),
+    'agenda-list--time-zone': () => import('../../../packages/blocks/src/scheduling/AgendaList/examples/TimeZone'),
     'month-calendar--locale': () => import('../../../packages/blocks/src/scheduling/MonthCalendar/examples/Locale'),
     'week-calendar--locale': () => import('../../../packages/blocks/src/scheduling/WeekCalendar/examples/Locale'),
     'agenda-list--locale': () => import('../../../packages/blocks/src/scheduling/AgendaList/examples/Locale'),

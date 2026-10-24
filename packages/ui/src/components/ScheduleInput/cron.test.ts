@@ -111,3 +111,25 @@ describe('schedule presets', () => {
     expect(compressCronList([0, 1, 2, 3, 6])).toBe('0-3,6');
   });
 });
+
+// Run this characterization with TZ=Europe/Madrid to exercise the runtime-zone path too.
+describe('nextRuns DST compatibility', () => {
+  beforeAll(() => {
+    vi.stubEnv('TZ', 'Europe/Madrid');
+  });
+  afterAll(() => {
+    vi.unstubAllEnvs();
+  });
+  it.each([undefined, 'Europe/Madrid'])('skips gap minutes (%s)', (zone) => {
+    expect(nextRuns('30 2 * * *', new Date('2026-03-28T12:00:00Z'), 2, zone).map((d) => d.toISOString())).toEqual([
+      '2026-03-30T00:30:00.000Z',
+      '2026-03-31T00:30:00.000Z',
+    ]);
+  });
+  it.each([
+    [undefined, '2026-10-25T00:30:00.000Z'],
+    ['Europe/Madrid', '2026-10-25T01:30:00.000Z'],
+  ])('preserves the overlap choice (%s)', (zone, expected) => {
+    expect(nextRuns('30 2 * * *', new Date('2026-10-24T12:00:00Z'), 1, zone)[0]?.toISOString()).toBe(expected);
+  });
+});
