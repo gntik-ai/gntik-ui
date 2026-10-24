@@ -1,9 +1,11 @@
+import { markdownEs } from './markdown-messages';
 import { cspEs } from './csp-messages';
 import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
 export const es: Messages = {
   ...cspEs,
+  ...markdownEs,
   'contact.sendFailed': 'No hemos podido enviar tu mensaje. Inténtalo de nuevo.',
   'themeScope.title': 'Vista previa clara',
   'themeScope.description': 'Esta tarjeta y su menú usan el tema claro.',
@@ -580,8 +582,6 @@ export const es: Messages = {
   'chat.badResponse': 'Mala respuesta',
   'chat.taskDone': 'Hecho',
   'chat.taskNotDone': 'Pendiente',
-  'chat.image': 'Imagen: {alt}',
-  'chat.untitled': 'sin título',
   'chat.openSource': 'Abrir fuente',
   'toolCall.calling': 'Llamando a',
   'toolCall.called': 'Se llamó a',

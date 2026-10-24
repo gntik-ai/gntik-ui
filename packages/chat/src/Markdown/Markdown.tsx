@@ -1,9 +1,20 @@
 import { cn, useI18n } from '@gntik-ai/ui';
 import { ExternalLink } from 'lucide-react';
-import { Children, isValidElement, memo, type ReactNode } from 'react';
-import ReactMarkdown, { defaultUrlTransform, type Components } from 'react-markdown';
+import {
+  Children,
+  createContext,
+  Fragment,
+  isValidElement,
+  memo,
+  useContext,
+  type ComponentType,
+  type ReactNode,
+} from 'react';
+import ReactMarkdown, { defaultUrlTransform, type Components, type Options } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { CodeBlock } from './CodeBlock';
+import { splitCustomTags, type MarkdownSegment } from './customTags';
+import { useHtmlSubset } from './htmlSubset';
 import { markdownStyles as s, streamingCaretClass } from './markdown.variants';
 
 export interface MarkdownProps {
@@ -12,6 +23,35 @@ export interface MarkdownProps {
   /** Text is still arriving: closes a dangling code fence and draws the caret. */
   streaming?: boolean;
   className?: string;
+  /** Stable component map, merged over the kit defaults. Receives untrusted content. */
+  components?: MarkdownComponents;
+  codeRenderers?: Record<string, ComponentType<MarkdownCodeRendererProps>>;
+  /** Only standalone block tags registered here consume source. */
+  customTags?: Record<string, ComponentType<MarkdownCustomTagProps>>;
+  /** Opt in to the fixed sanitised HTML subset, loaded asynchronously. */
+  allowHtml?: boolean;
+  /** Stable plugin arrays, appended after the kit plugins. */
+  remarkPlugins?: Options['remarkPlugins'];
+  rehypePlugins?: Options['rehypePlugins'];
+}
+
+export type MarkdownComponents = Partial<Components>;
+export interface MarkdownCodeRendererProps {
+  code: string;
+  language: string;
+  streaming: boolean;
+  complete: boolean;
+}
+export interface MarkdownCustomTagProps {
+  children: ReactNode;
+  attributes: Record<string, string>;
+  streaming: boolean;
+  complete: boolean;
+}
+const MarkdownContext = createContext({ streaming: false });
+/** Stream state for element overrides, code renderers and custom tags. */
+export function useMarkdownContext(): { streaming: boolean } {
+  return useContext(MarkdownContext);
 }
 
 const SAFE_PROTOCOL = /^(https?|mailto|tel):/i;
@@ -87,7 +127,7 @@ function omitNode<T extends { node?: unknown }>(props: T): Omit<T, 'node'> {
 
 type CodeChildProps = { className?: string; children?: ReactNode };
 
-const components: Components = {
+const kitComponents: Components = {
   h1: (p) => <h1 {...omitNode(p)} className={s.h1} />,
   h2: (p) => <h2 {...omitNode(p)} className={s.h2} />,
   h3: (p) => <h3 {...omitNode(p)} className={s.h3} />,
@@ -128,29 +168,92 @@ const components: Components = {
   img: ({ src, alt }) => <ImageLink href={typeof src === 'string' ? src : ''} alt={alt} />,
   input: ({ checked, type }) => (type === 'checkbox' ? <TaskCheckbox checked={!!checked} /> : null),
   code: ({ className, children }) => <code className={cn(s.inlineCode, className)}>{children}</code>,
-  pre: ({ children }) => {
+};
+
+/**
+ * Safe markdown for model output: raw HTML is skipped by default, links are
+ * restricted to http(s)/mailto/tel/relative, external links open in a new tab with a marker,
+ * and fenced code gets a copy button. Partial input from a stream is tolerated.
+ */
+function MarkdownContent({
+  children,
+  streaming = false,
+  components,
+  codeRenderers,
+  remarkPlugins,
+  rehypePlugins,
+  htmlPlugins,
+}: MarkdownProps & { htmlPlugins?: Options['rehypePlugins'] }) {
+  const source = streaming ? repairStreamingMarkdown(children) : children;
+  const repairedFence =
+    source === children ? undefined : Array.from(children.matchAll(/^ {0,3}(`{3,}|~{3,})/gm)).at(-1);
+  // HAST starts the code node at the marker, after any permitted indentation.
+  const repairedOffset = repairedFence ? repairedFence.index + repairedFence[0].search(/[`~]/) : -1;
+  const renderers = new Map(
+    Object.entries(codeRenderers ?? {}).map(([language, renderer]) => [language.toLowerCase(), renderer]),
+  );
+  const pre: Components['pre'] = ({ children, node }) => {
     const child = Children.toArray(children)[0];
     if (!isValidElement<CodeChildProps>(child)) return <pre className={s.code.pre}>{children}</pre>;
     const language = /language-([\w+#.-]+)/.exec(child.props.className ?? '')?.[1];
     const code = String(Children.toArray(child.props.children).join('')).replace(/\n$/, '');
-    return <CodeBlock code={code} language={language} />;
-  },
-};
-
-const remarkPlugins = [remarkGfm];
-
-/**
- * Safe markdown for model output: raw HTML is never rendered (skipped, not parsed), links are
- * restricted to http(s)/mailto/tel/relative, external links open in a new tab with a marker,
- * and fenced code gets a copy button. Partial input from a stream is tolerated.
- */
-export const Markdown = memo(function Markdown({ children, streaming = false, className }: MarkdownProps) {
-  const source = streaming ? repairStreamingMarkdown(children) : children;
+    const Renderer = language ? renderers.get(language.toLowerCase()) : undefined;
+    return Renderer && language ? (
+      <Renderer
+        code={code}
+        language={language.toLowerCase()}
+        streaming={streaming}
+        complete={node?.position?.start.offset !== repairedOffset}
+      />
+    ) : (
+      <CodeBlock code={code} language={language} />
+    );
+  };
   return (
-    <div data-streaming={streaming || undefined} className={cn(s.root, streaming && streamingCaretClass, className)}>
-      <ReactMarkdown remarkPlugins={remarkPlugins} components={components} skipHtml urlTransform={safeUrl}>
-        {source}
-      </ReactMarkdown>
-    </div>
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm, ...(remarkPlugins ?? [])]}
+      rehypePlugins={[...(htmlPlugins ?? []), ...(rehypePlugins ?? [])]}
+      components={{ ...kitComponents, pre, ...components }}
+      skipHtml
+      urlTransform={safeUrl}
+    >
+      {source}
+    </ReactMarkdown>
+  );
+}
+
+export const Markdown = memo(function Markdown({
+  children,
+  streaming = false,
+  className,
+  customTags,
+  allowHtml = false,
+  ...props
+}: MarkdownProps) {
+  const htmlPlugins = useHtmlSubset(allowHtml);
+  const tags = new Map(Object.entries(customTags ?? {}).map(([name, renderer]) => [name.toLowerCase(), renderer]));
+  const segments = splitCustomTags(children, new Set(tags.keys()), streaming);
+  function renderSegments(parts: MarkdownSegment[]): ReactNode {
+    return parts.map((part, index) => {
+      if (part.type === 'markdown')
+        return (
+          <MarkdownContent key={index} {...props} streaming={streaming} htmlPlugins={htmlPlugins}>
+            {part.source}
+          </MarkdownContent>
+        );
+      const Tag = tags.get(part.name)!;
+      return (
+        <Tag key={index} attributes={part.attributes} streaming={streaming} complete={part.complete}>
+          {renderSegments(part.children)}
+        </Tag>
+      );
+    });
+  }
+  return (
+    <MarkdownContext.Provider value={{ streaming }}>
+      <div data-streaming={streaming || undefined} className={cn(s.root, streaming && streamingCaretClass, className)}>
+        <Fragment>{renderSegments(segments)}</Fragment>
+      </div>
+    </MarkdownContext.Provider>
   );
 });

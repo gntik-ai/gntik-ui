@@ -1,7 +1,9 @@
+import { markdownEn } from './markdown-messages';
 import { cspEn } from './csp-messages';
 /** Built-in English labels, accessible names and announcements. See format.ts for interpolation syntax. */
 export const en = {
   ...cspEn,
+  ...markdownEn,
   'contact.sendFailed': "We couldn't send your message. Please try again.",
   'themeScope.title': 'Light preview',
   'themeScope.description': 'This card and its popup use the light theme.',
@@ -584,8 +586,6 @@ export const en = {
   'chat.badResponse': 'Bad response',
   'chat.taskDone': 'Done',
   'chat.taskNotDone': 'Not done',
-  'chat.image': 'Image: {alt}',
-  'chat.untitled': 'untitled',
   'chat.openSource': 'Open source',
   'toolCall.calling': 'Calling',
   'toolCall.called': 'Called',
