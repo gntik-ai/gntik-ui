@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 117 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 118 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -18,6 +18,7 @@ Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the br
 
 - [Button](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Button/Button.doc.ts): Triggers an action. Five variants (primary, secondary, soft, ghost, destructive), three sizes, icons and a loading state. (Actions, @gntik-ai/ui; id `button`)
 - [CopyButton](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/CopyButton/CopyButton.doc.ts): Copies a string, or the result of a (possibly async) getter, to the clipboard. (Actions, @gntik-ai/ui; id `copy-button`)
+- [DownloadButton](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/DownloadButton/DownloadButton.doc.ts): Saves required data (a string, Blob, or sync/async getter) as fileName. (Actions, @gntik-ai/ui; id `download-button`)
 - [MessageFeedback](https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/MessageFeedback/MessageFeedback.doc.ts): Actions for an assistant reply: copy, regenerate and thumbs up / down toggles (aria-pressed). (Actions, @gntik-ai/chat; id `message-feedback`)
 - [SplitButton](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/SplitButton/SplitButton.doc.ts): A primary action joined to a menu of secondary actions. (Actions, @gntik-ai/ui; id `split-button`)
 - [SuggestionChips](https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/SuggestionChips/SuggestionChips.doc.ts): Prompt suggestions: a two-column grid of cards with descriptions for an empty conversation, or a row of pills for follow-ups after a reply. (Actions, @gntik-ai/chat; id `suggestion-chips`)

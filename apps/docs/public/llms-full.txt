@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 117 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 118 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -91,6 +91,58 @@ export default function CopyButtonBasic() {
         <CopyButton value={command} label="Copy command" size="sm" />
       </div>
       <CopyButton value="ws_8f2a91c4" display="label" variant="secondary" label="Copy workspace ID" />
+    </div>
+  );
+}
+```
+
+### DownloadButton (`download-button`)
+
+Saves required data (a string, Blob, or sync/async getter) as fileName. mimeType defaults to the Blob type, otherwise text/plain;charset=utf-8; extensions are not inferred. Inherits Button props, with a Download icon and translated default label. Async getters use Button loading, stay focusable and ignore repeat activation. onDownloaded fires after saving; onDownloadError receives failures, announced politely through LiveAnnouncer or a local status region. The static CSV, async success/failure and one-time JSON examples demonstrate these states and callbacks. downloadFile(data, fileName, mimeType?) is also exported; it removes the temporary anchor, revokes its URL on the next task, and does nothing without object URL support. Browsers differ: iOS Safari may open a tab. Exports are held in memory; use a server export for very large row sets. toCsv(rows, columns, options?) accepts columns with header and value (a row key or getter). Defaults: comma delimiter, header true, BOM false, CRLF, escapeFormulas true. Options also accept semicolon or tab delimiters, header false, BOM true, LF and escapeFormulas false. Null/undefined become empty cells, Dates use ISO, numbers/booleans retain their values and objects use JSON. Text starting with =, +, -, @, TAB or CR gets an apostrophe before CSV quoting; legitimate + or - text also changes. Disabling escapeFormulas is unsafe for spreadsheets. escapeCsvCell(text, delimiter?) always protects formulas and quotes delimiters, double quotes, CR and LF. It shares a name with the templates package helper: import explicitly from @gntik-ai/ui. Its CR-led cells are deliberately quoted, unlike the legacy audit-log helper.
+
+- Package: `@gntik-ai/ui` · export `DownloadButton` · group Actions · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/DownloadButton/DownloadButton.doc.ts
+- Primitive: `@base-ui/react/button`
+- ARIA pattern: button + status
+- Registry dependencies: button, live-announcer, ui-utils
+- Install: `gntik-ui add download-button`; own the source with `gntik-ui eject download-button`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Enter | Downloads the file |
+| Space | Downloads the file |
+| Tab | Moves focus to and from the button, including while pending |
+
+Tokens: primary, primary-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { DownloadButton, toCsv } from '@gntik-ai/ui';
+
+/** The secondary button fails once; activating it again retries successfully. */
+export default function DownloadButtonAsync() {
+  const [failed, setFailed] = useState(false);
+  const getCsv = () =>
+    new Promise<string>((resolve) => {
+      setTimeout(() => resolve(toCsv([{ count: 42 }], [{ header: 'Count', value: 'count' }])), 500);
+    });
+  return (
+    <div className="flex flex-wrap gap-3">
+      <DownloadButton data={getCsv} fileName="report.csv" mimeType="text/csv" />
+      <DownloadButton
+        variant="secondary"
+        data={async () => {
+          if (!failed) throw new Error('Example export unavailable');
+          return getCsv();
+        }}
+        fileName="retry.csv"
+        mimeType="text/csv"
+        onDownloadError={() => setFailed(true)}
+      />
     </div>
   );
 }

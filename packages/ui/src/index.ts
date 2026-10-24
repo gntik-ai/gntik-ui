@@ -51,6 +51,7 @@ export * from './components/Combobox';
 export * from './components/CommandPalette';
 export * from './components/ContextMenu';
 export * from './components/CopyButton';
+export * from './components/DownloadButton';
 export * from './components/DatePicker';
 export * from './components/DateField';
 export * from './components/DateTimeRangePicker';

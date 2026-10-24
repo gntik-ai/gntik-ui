@@ -13,6 +13,7 @@
     "cursor-pager-footer",
     "cursor-pagination",
     "date-field",
+    "download-button",
     "load-more-footer",
     "period-picker"
   ],
@@ -86,6 +87,7 @@
     {"id":"diff-viewer","package":"@gntik-ai/ui","name":"diff-viewer","version":"0.5.0","url":"https://ui.gntik.ai/r/diff-viewer.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"docs-article","package":"@gntik-ai/templates","name":"docs-article","version":"0.6.0","url":"https://ui.gntik.ai/r/docs-article.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"docs-layout","package":"@gntik-ai/ui","name":"docs-layout","version":"0.5.0","url":"https://ui.gntik.ai/r/docs-layout.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"download-button","package":"@gntik-ai/ui","name":"download-button","version":"0.5.0","url":"https://ui.gntik.ai/r/download-button.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"drawer","package":"@gntik-ai/ui","name":"drawer","version":"0.5.0","url":"https://ui.gntik.ai/r/drawer.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"empty-state","package":"@gntik-ai/ui","name":"empty-state","version":"0.5.0","url":"https://ui.gntik.ai/r/empty-state.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"empty-states","package":"@gntik-ai/blocks","name":"empty-states","version":"0.6.0","url":"https://ui.gntik.ai/r/empty-states.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
