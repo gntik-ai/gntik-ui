@@ -109,6 +109,7 @@ export function LogViewer({
   const title = titleProp ?? labels?.title ?? t('logViewer.title');
   const titleId = useId();
   const viewport = useRef<HTMLDivElement>(null);
+  const lastFollowTop = useRef<number | null>(null);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const [levels, setLevels] = useState<string[]>(defaultLevels);
   const [query, setQuery] = useState('');
@@ -153,8 +154,22 @@ export function LogViewer({
   const rows = visible.slice(start, end);
 
   useEffect(() => {
-    if (follow && viewport.current) viewport.current.scrollTop = maxScroll;
-  }, [follow, maxScroll]);
+    const node = viewport.current;
+    if (!follow || !node) {
+      lastFollowTop.current = null;
+      return;
+    }
+    // A measurement can commit before the browser delivers an upward scroll event.
+    // Preserve that scroll instead of overwriting it with a new follow position.
+    // Account for the browser clamping scrollTop when the content shrinks.
+    if (lastFollowTop.current !== null && node.scrollTop < Math.min(lastFollowTop.current, maxScroll) - rowHeight) {
+      setScrollTop(node.scrollTop);
+      setFollow(false);
+      return;
+    }
+    node.scrollTop = maxScroll;
+    lastFollowTop.current = node.scrollTop;
+  }, [follow, maxScroll, rowHeight]);
 
   useEffect(() => {
     mounted.current = true;
