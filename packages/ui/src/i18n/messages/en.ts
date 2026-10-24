@@ -1,12 +1,8 @@
-/**
- * Built-in English catalog: every string the kit renders on its own (labels, accessible names,
- * announcements). It is the source of the message keys; other catalogs must cover every key.
- *
- * Placeholders: `{name}`. Plurals (Intl.PluralRules): `{count, plural, one {# item} other {# items}}`.
- * Use `{count}` instead of `#` inside plural branches to keep numbers ungrouped for English parity.
- * Month and weekday names, numbers and dates come from Intl, not from this catalog.
- */
+/** Built-in English labels, accessible names and announcements; every catalog must cover these keys.
+ * Placeholders: `{name}`; plurals: `{count, plural, one {# item} other {# items}}`.
+ * Use `{count}` instead of `#` in plural branches for ungrouped English numbers. Dates come from Intl. */
 export const en = {
+  'contact.sendFailed': "We couldn't send your message. Please try again.",
   'themeScope.title': 'Light preview',
   'themeScope.description': 'This card and its popup use the light theme.',
   'themeScope.choice': 'Preview choice',
@@ -14,12 +10,10 @@ export const en = {
   'themeScope.nested': 'A dark region inside a light region.',
   'themeScope.release': 'Release forced theme',
   'themeScope.force': 'Force light theme',
-
   'resourceDetail.overview': 'Overview',
   'resourceDetail.activity': 'Activity',
   'resourceDetail.settings': 'Settings',
   'resourceDetail.sections': 'Resource sections',
-
   'error.title': 'We couldn’t load deployments',
   'error.message': 'The service didn’t respond in time. Your data is safe; try again in a moment.',
   'error.support': 'Contact support',

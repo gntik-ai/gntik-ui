@@ -246,6 +246,24 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                   height={height}
                 />
               )}
+              {kind === 'template' && it.id === 'contact' && (
+                <>
+                  <Viewer
+                    kind="template"
+                    id="contact--failed-send"
+                    title={it.title}
+                    file="../../../packages/templates/src/contact/examples/FailedSend.tsx"
+                    height={height}
+                  />
+                  <Viewer
+                    kind="template"
+                    id="contact--custom-failure"
+                    title={it.title}
+                    file="../../../packages/templates/src/contact/examples/CustomFailure.tsx"
+                    height={height}
+                  />
+                </>
+              )}
               {kind === 'template' && it.id === 'workflow-builder' && (
                 <Viewer
                   kind="template"

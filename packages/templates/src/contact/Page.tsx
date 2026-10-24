@@ -1,6 +1,7 @@
 import { ValidationSummary, type ValidationIssue } from '@gntik-ai/blocks';
 import { CircleCheck, Clock, Mail, MapPin, Phone, Send } from '@gntik-ai/icons';
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -20,9 +21,11 @@ import {
   Stack,
   Text,
   Textarea,
+  useI18n,
   type MegaMenuItem,
 } from '@gntik-ai/ui';
 import { useId, useState, type ReactNode } from 'react';
+import { flushSync } from 'react-dom';
 import {
   contactTopics,
   emptyContact,
@@ -46,8 +49,10 @@ export interface ContactProps {
   topics: Array<{ value: ContactTopic; label: string }>;
   offices: Office[];
   defaultValues: Partial<ContactValues>;
-  /** Called with valid values; the page shows the success state once it resolves. */
+  /** Called with valid values; resolution shows success and rejection shows the error alert. */
   onSubmit: (values: ContactValues) => void | Promise<void>;
+  /** Visitor-facing send failure message; defaults to the localized contact.sendFailed text. */
+  submitErrorMessage?: ReactNode;
   footerLinks: Array<{ label: string; href: string }>;
   copyright: ReactNode;
 }
@@ -60,7 +65,7 @@ const LABELS: Record<keyof ContactValues, string> = {
   message: 'Message',
 };
 
-/** Public contact page: StackedLayout + MegaMenu, a validated form with a success state, and office cards. */
+/** Public contact page: validated form with send-failure feedback, a focused success state, and office cards. */
 export default function ContactPage(props: Partial<ContactProps>) {
   const {
     brand,
@@ -72,13 +77,16 @@ export default function ContactPage(props: Partial<ContactProps>) {
     offices: officeList = offices,
     defaultValues,
     onSubmit,
+    submitErrorMessage,
     footerLinks = publicFooterLinks,
     copyright = publicCopyright,
   } = props;
+  const { t } = useI18n();
   const [values, setValues] = useState<ContactValues>({ ...emptyContact, ...defaultValues });
   const [submitCount, setSubmitCount] = useState(0);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const ids = useId();
   const fieldId = (k: keyof ContactValues) => `${ids}-${k}`;
 
@@ -94,10 +102,16 @@ export default function ContactPage(props: Partial<ContactProps>) {
   const submit = async () => {
     setSubmitCount((n) => n + 1);
     if (Object.keys(validateContact(values)).length > 0) return;
-    setSending(true);
+    // Commit the cleared alert before the consumer's submission callback starts.
+    flushSync(() => {
+      setSubmitError(false);
+      setSending(true);
+    });
     try {
       await onSubmit?.(values);
       setSent(true);
+    } catch {
+      setSubmitError(true);
     } finally {
       setSending(false);
     }
@@ -106,6 +120,7 @@ export default function ContactPage(props: Partial<ContactProps>) {
     setValues({ ...emptyContact, ...defaultValues });
     setSubmitCount(0);
     setSent(false);
+    setSubmitError(false);
   };
 
   return (
@@ -215,6 +230,9 @@ export default function ContactPage(props: Partial<ContactProps>) {
                     <Text variant="caption" tone="muted">
                       By sending this form you agree to our <Link href="/privacy">privacy policy</Link>.
                     </Text>
+                    {submitError && (
+                      <Alert tone="destructive" description={submitErrorMessage ?? t('contact.sendFailed')} />
+                    )}
                     <div>
                       <Button type="submit" icon={Send} loading={sending}>
                         Send message
