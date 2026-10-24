@@ -1,6 +1,43 @@
-export type MarkdownSegment =
-  | { type: 'markdown'; source: string }
-  | { type: 'tag'; name: string; attributes: Record<string, string>; complete: boolean; children: MarkdownSegment[] };
+export interface CustomBlock {
+  id: number;
+  name: string;
+  attributes: Record<string, string>;
+  complete: boolean;
+  start: number;
+  end: number;
+  children: CustomBlock[];
+}
+
+interface MarkdownNode {
+  type: string;
+  children?: MarkdownNode[];
+  position?: { start: { offset?: number } };
+  data?: { hName: string; hProperties: Record<string, number> };
+}
+
+/** Wrap the already-parsed blocks, keeping definitions in the same Markdown document. */
+export function remarkCustomTags(blocks: CustomBlock[]) {
+  function wrap(nodes: MarkdownNode[], ranges: CustomBlock[]): MarkdownNode[] {
+    const result: MarkdownNode[] = [];
+    let cursor = 0;
+    for (const block of ranges) {
+      while (cursor < nodes.length && (nodes[cursor]!.position?.start.offset ?? Infinity) < block.start)
+        result.push(nodes[cursor++]!);
+      const children: MarkdownNode[] = [];
+      while (cursor < nodes.length && (nodes[cursor]!.position?.start.offset ?? Infinity) < block.end)
+        children.push(nodes[cursor++]!);
+      result.push({
+        type: 'markdownCustomTag',
+        data: { hName: 'markdown-custom-tag', hProperties: { dataMarkdownTag: block.id } },
+        children: wrap(children, block.children),
+      });
+    }
+    return result.concat(nodes.slice(cursor));
+  }
+  return () => (tree: MarkdownNode) => {
+    tree.children = wrap(tree.children ?? [], blocks);
+  };
+}
 
 interface TagLine {
   start: number;
@@ -32,8 +69,9 @@ function attributesFrom(text: string): Record<string, string> | undefined {
  * partial block) consume source. Every other byte stays in the normal Markdown pipeline.
  * Pairing first avoids reparsing arbitrary CommonMark HTML nodes or repeatedly searching tails.
  */
-export function splitCustomTags(source: string, names: ReadonlySet<string>, streaming: boolean): MarkdownSegment[] {
-  if (!names.size) return [{ type: 'markdown', source }];
+export function scanCustomTags(source: string, names: ReadonlySet<string>, streaming: boolean) {
+  const byId: Record<number, CustomBlock> = Object.create(null);
+  if (!names.size) return { source, blocks: [], byId };
   const tags: TagLine[] = [];
   let offset = 0;
   let fence: { marker: string; length: number } | undefined;
@@ -66,27 +104,40 @@ export function splitCustomTags(source: string, names: ReadonlySet<string>, stre
       closes.set(tag.name, pending);
     } else tag.close = pending.pop();
   }
-  function segments(start: number, end: number, from: number, to: number): MarkdownSegment[] {
-    const result: MarkdownSegment[] = [];
-    let cursor = start;
+  const masks: { start: number; end: number }[] = [];
+  function blocks(end: number, from: number, to: number): CustomBlock[] {
+    const result: CustomBlock[] = [];
     for (let i = from; i < to; i++) {
       const tag = tags[i]!;
       if (tag.closing) continue;
       const close = tag.close !== undefined && tag.close < to ? tags[tag.close] : undefined;
       if (!close && !streaming) continue;
-      if (tag.start > cursor) result.push({ type: 'markdown', source: source.slice(cursor, tag.start) });
-      result.push({
-        type: 'tag',
+      masks.push(tag);
+      const block: CustomBlock = {
+        id: i,
         name: tag.name,
         attributes: tag.attributes,
         complete: !!close,
-        children: segments(tag.end, close?.start ?? end, i + 1, close ? tag.close! : to),
-      });
-      cursor = close?.end ?? end;
+        start: tag.start,
+        end: close?.end ?? end,
+        children: blocks(close?.start ?? end, i + 1, close ? tag.close! : to),
+      };
+      if (close) masks.push(close);
+      byId[block.id] = block;
+      result.push(block);
       i = close ? tag.close! : to;
     }
-    if (cursor < end) result.push({ type: 'markdown', source: source.slice(cursor, end) });
     return result;
   }
-  return segments(0, source.length, 0, tags.length);
+  const ranges = blocks(source.length, 0, tags.length);
+  const parts: string[] = [];
+  let cursor = 0;
+  for (const mask of masks) {
+    parts.push(source.slice(cursor, mask.start), source.slice(mask.start, mask.end).replace(/[^\r\n]/g, ' '));
+    cursor = mask.end;
+  }
+  parts.push(source.slice(cursor));
+  // Preserve every source offset (including code fences) and parse exactly once. Only valid
+  // registered delimiters become blank lines; unknown HTML retains CommonMark handling.
+  return { source: parts.join(''), blocks: ranges, byId };
 }

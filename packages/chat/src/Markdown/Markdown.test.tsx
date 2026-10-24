@@ -26,6 +26,21 @@ function Reasoning({ children, attributes, complete, streaming }: MarkdownCustom
 const customTags = { think: Reasoning };
 
 describe('Markdown opt-in HTML', () => {
+  it('unwraps raw internal-looking tags without invoking a registered renderer', async () => {
+    const { container } = render(
+      <Markdown allowHtml customTags={customTags}>
+        {
+          '<think>\nPlan\n</think>\n\n<markdown-custom-tag data-markdown-tag="0">Keep this prose</markdown-custom-tag>\n\n<b>Loaded</b>'
+        }
+      </Markdown>,
+    );
+    await waitFor(() => expect(container.querySelector('b')).not.toBeNull());
+    expect(screen.getAllByTestId('reasoning')).toHaveLength(1);
+    expect(screen.getByTestId('reasoning')).toHaveTextContent('Plan');
+    expect(container).toHaveTextContent('Keep this prose');
+    expect(container.querySelector('markdown-custom-tag, [data-markdown-tag]')).toBeNull();
+  });
+
   it('lazily renders the fixed subset and removes unsafe HTML, attributes and URLs', async () => {
     const { container, rerender } = render(
       <Markdown allowHtml>
@@ -112,6 +127,38 @@ describe('Markdown opt-in HTML', () => {
 });
 
 describe('Markdown custom tags', () => {
+  it.each([false, true])(
+    'preserves footnote and reference definitions across registered tags in one parse (allowHtml=%s)',
+    async (allowHtml) => {
+      const spy = vi.fn();
+      const source =
+        'Text[^1] and [link][ref].\n\n<think>\nPlan [guide][ref].\n</think>\n\n[^1]: Footnote prose\n\n[ref]: https://example.com\n\n<b>Loaded</b>';
+      const { container } = render(
+        <Markdown allowHtml={allowHtml} customTags={customTags} remarkPlugins={[() => spy]}>
+          {source}
+        </Markdown>,
+      );
+      if (allowHtml) {
+        // The optional pipeline renders again once loaded; count a single parse per render.
+        await waitFor(() => expect(container.querySelector('b')).not.toBeNull());
+      }
+      expect(screen.getByRole('link', { name: /^link/ })).toHaveAttribute('href', 'https://example.com');
+      expect(screen.getByText('Footnote prose')).toBeInTheDocument();
+      expect(screen.getByTestId('reasoning').querySelector('a')).toHaveAttribute('href', 'https://example.com');
+      expect(screen.getByRole('link', { name: '1' })).toHaveAttribute('data-footnote-ref');
+      if (!allowHtml) expect(spy).toHaveBeenCalledTimes(1);
+    },
+  );
+
+  it('keeps custom tags independent of an ordinary div override', () => {
+    render(
+      <Markdown customTags={customTags} components={{ div: ({ children }) => <aside>{children}</aside> }}>
+        {'<think>\nPlan\n</think>'}
+      </Markdown>,
+    );
+    expect(screen.getByTestId('reasoning')).toHaveTextContent('Plan');
+  });
+
   it('accepts quoted attribute values containing angle brackets', () => {
     render(<Markdown customTags={customTags}>{'<think kind="x > 0" title=\'a < b\'>\nPlan\n</think>'}</Markdown>);
     expect(screen.getByTestId('reasoning')).toHaveAttribute('data-attributes', '{"kind":"x > 0","title":"a < b"}');
@@ -169,8 +216,9 @@ describe('Markdown custom tags', () => {
     expect(screen.getByText('Final paragraph')).toBeInTheDocument();
   });
 
-  it('does not reparse unknown HTML blocks and stays within 3x baseline time (800 lines)', () => {
-    const source = Array.from({ length: 800 }, (_, n) => `<b>Step ${n}</b>`).join('\n');
+  it.each([false, true])('parses 800 HTML lines once, with a registered block=%s', (registered) => {
+    const htmlLines = Array.from({ length: 800 }, (_, n) => `<b>Step ${n}</b>`).join('\n');
+    const source = registered ? `<think>\n${htmlLines}\n\nVisible\n</think>` : htmlLines;
     const spy = vi.fn();
     const remarkPlugins = [() => spy];
     const baseline = render(<Markdown remarkPlugins={remarkPlugins}>{source}</Markdown>);
@@ -183,24 +231,10 @@ describe('Markdown custom tags', () => {
         {source}
       </Markdown>,
     );
-    expect(extended.container.innerHTML).toBe(html);
+    if (registered) expect(screen.getByTestId('reasoning')).toHaveTextContent('Visible');
+    else expect(extended.container.innerHTML).toBe(html);
+    // Parse count is deterministic under CI load and catches document splitting too.
     expect(spy).toHaveBeenCalledTimes(1);
-    extended.unmount();
-    // Warmed above; interleave samples so scheduling and JIT costs affect both paths.
-    function measure(tags: boolean) {
-      const start = performance.now();
-      const view = render(<Markdown customTags={tags ? customTags : undefined}>{source}</Markdown>);
-      view.unmount();
-      return performance.now() - start;
-    }
-    const ordinary: number[] = [];
-    const custom: number[] = [];
-    for (let sample = 0; sample < 5; sample++) {
-      ordinary.push(measure(false));
-      custom.push(measure(true));
-    }
-    const median = (values: number[]) => values.sort((a, b) => a - b)[2]!;
-    expect(median(custom)).toBeLessThanOrEqual(3 * median(ordinary));
   });
 });
 
@@ -409,6 +443,19 @@ describe('Markdown rendering', () => {
 });
 
 describe('Markdown streaming', () => {
+  it('keeps the code Copy button and keyboard focus across streaming updates', async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(<Markdown streaming>{'```ts\nconst a = 1;'}</Markdown>);
+    const copy = screen.getByRole('button', { name: 'Copy code' });
+    await user.click(copy);
+    expect(copy).toHaveFocus();
+    expect(copy).toHaveAccessibleName('Copied code');
+
+    rerender(<Markdown streaming>{'```ts\nconst a = 1;\nconst b = 2;'}</Markdown>);
+    expect(screen.getByRole('button', { name: 'Copied code' })).toBe(copy);
+    expect(copy).toHaveFocus();
+  });
+
   it.each(['dark', 'light', 'high_contrast'])('custom example is axe clean in %s', async (theme) => {
     document.documentElement.className = theme;
     const { container } = render(<MarkdownCustom />);
