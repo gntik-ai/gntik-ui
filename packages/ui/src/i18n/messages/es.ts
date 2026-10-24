@@ -2,6 +2,7 @@ import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  'contact.sendFailed': 'No hemos podido enviar tu mensaje. Inténtalo de nuevo.',
   'themeScope.title': 'Vista previa clara',
   'themeScope.description': 'Esta tarjeta y su menú usan el tema claro.',
   'themeScope.choice': 'Opción de vista previa',

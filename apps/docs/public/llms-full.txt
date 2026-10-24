@@ -10656,7 +10656,7 @@ export default function Route() {
 
 ### Contact (`contact`)
 
-Public contact page: StackedLayout with a MegaMenu (MobileNav below lg), a validated contact form (Field, Input, Select, Textarea, ValidationSummary) with a focused success state, and office cards with address, email, phone and hours.
+Public contact page: StackedLayout with a MegaMenu (MobileNav below lg), a validated contact form (Field, Input, Select, Textarea, ValidationSummary) with a focused success state and a destructive Alert on failed sends. Failed sends keep all values and use submitErrorMessage or localized contact.sendFailed text without exposing backend errors. Includes office cards with address, email, phone and hours.
 
 - Package: `@gntik-ai/templates` · export `ContactPage` · group Overview · status experimental
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/contact/template.meta.ts
