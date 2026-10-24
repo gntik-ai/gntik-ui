@@ -17,13 +17,11 @@ export const en = {
   'error.title': 'We couldn’t load deployments',
   'error.message': 'The service didn’t respond in time. Your data is safe; try again in a moment.',
   'error.support': 'Contact support',
-
   'emptyState.noAccess.title': 'You don’t have access to {resource}',
   'emptyState.noAccess.description': 'Ask {owner} to grant you a role that includes {resource} permissions.',
   'emptyState.noAccess.request': 'Request access',
   'emptyState.noAccess.requested': 'Access requested',
   'emptyState.noAccess.sent': 'Access request sent',
-
   'emptyState.noResults.queryTitleBefore': 'No {entity} match “',
   'emptyState.noResults.queryTitleAfter': '”',
   'emptyState.noResults.title': 'No {entity} found',
@@ -198,6 +196,8 @@ export const en = {
   'common.copied': 'Copied',
   'common.copiedToClipboard': 'Copied to clipboard',
   'common.copyFailed': 'Copy failed',
+  'download.label': 'Download',
+  'download.failed': 'Download failed',
   'common.clear': 'Clear',
   'common.clearAll': 'Clear all',
   'common.clearSelection': 'Clear selection',

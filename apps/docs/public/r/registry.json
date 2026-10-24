@@ -4401,6 +4401,105 @@
       ]
     },
     {
+      "name": "download-button",
+      "type": "registry:ui",
+      "title": "DownloadButton",
+      "description": "Saves required data (a string, Blob, or sync/async getter) as fileName. mimeType defaults to the Blob type, otherwise text/plain;charset=utf-8; extensions are not inferred. Inherits Button props, with a Download icon and translated default label. Async getters use Button loading, stay focusable and ignore repeat activation. onDownloaded fires after saving; onDownloadError receives failures, announced politely through LiveAnnouncer or a local status region. The static CSV, async success/failure and one-time JSON examples demonstrate these states and callbacks. downloadFile(data, fileName, mimeType?) is also exported; it removes the temporary anchor, revokes its URL on the next task, and does nothing without object URL support. Browsers differ: iOS Safari may open a tab. Exports are held in memory; use a server export for very large row sets. toCsv(rows, columns, options?) accepts columns with header and value (a row key or getter). Defaults: comma delimiter, header true, BOM false, CRLF, escapeFormulas true. Options also accept semicolon or tab delimiters, header false, BOM true, LF and escapeFormulas false. Null/undefined become empty cells, Dates use ISO, numbers/booleans retain their values and objects use JSON. Text starting with =, +, -, @, TAB or CR gets an apostrophe before CSV quoting; legitimate + or - text also changes. Disabling escapeFormulas is unsafe for spreadsheets. escapeCsvCell(text, delimiter?) always protects formulas and quotes delimiters, double quotes, CR and LF. It shares a name with the templates package helper: import explicitly from @gntik-ai/ui. Its CR-led cells are deliberately quoted, unlike the legacy audit-log helper.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/live-announcer.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Actions"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/DownloadButton/DownloadButton.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/DownloadButton/DownloadButton.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/download-button/DownloadButton.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/DownloadButton/csv.ts",
+          "type": "registry:ui",
+          "target": "components/ui/download-button/csv.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DownloadButton/download-button.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/download-button/download-button.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DownloadButton/download.ts",
+          "type": "registry:ui",
+          "target": "components/ui/download-button/download.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DownloadButton/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/download-button/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DownloadButton/DownloadButton.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/download-button/DownloadButton.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "drawer",
       "type": "registry:ui",
       "title": "Drawer",

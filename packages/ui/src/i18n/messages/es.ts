@@ -230,6 +230,8 @@ export const es: Messages = {
   'common.copied': 'Copiado',
   'common.copiedToClipboard': 'Copiado al portapapeles',
   'common.copyFailed': 'No se pudo copiar',
+  'download.label': 'Descargar',
+  'download.failed': 'No se pudo descargar',
   'common.clear': 'Borrar',
   'common.clearAll': 'Borrar todo',
   'common.clearSelection': 'Borrar selección',
