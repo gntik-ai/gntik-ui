@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { usePrefersReducedMotion } from '@gntik-ai/ui';
 
 export interface UseChatScrollOptions {
   /** Distance from the bottom (px) still treated as "at the bottom". */
@@ -32,6 +33,7 @@ function distanceFromBottom(el: HTMLElement) {
  * pins it again.
  */
 export function useChatScroll({ threshold = 48 }: UseChatScrollOptions = {}): UseChatScrollResult {
+  const reduce = usePrefersReducedMotion();
   const [scrollEl, setScrollEl] = useState<HTMLElement | null>(null);
   const [contentEl, setContentEl] = useState<HTMLElement | null>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
@@ -78,15 +80,13 @@ export function useChatScroll({ threshold = 48 }: UseChatScrollOptions = {}): Us
       if (!scrollEl) return;
       pinned.current = true;
       setIsAtBottom(true);
-      const reduce =
-        typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (typeof scrollEl.scrollTo === 'function') {
         scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: reduce ? 'auto' : behavior });
       } else {
         pinToBottom(scrollEl);
       }
     },
-    [scrollEl],
+    [scrollEl, reduce],
   );
 
   return { scrollRef: setScrollEl, contentRef: setContentEl, isAtBottom, scrollToBottom };

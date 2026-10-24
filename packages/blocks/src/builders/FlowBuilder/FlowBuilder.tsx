@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { breakpointQuery } from '@gntik-ai/tokens/runtime';
 import { Play } from '@gntik-ai/icons';
 import { FlowCanvas, type FlowCanvasProps, type FlowNode, type FlowNodeData, type FlowNodeKind } from '@gntik-ai/flow';
-import { Button, ResizablePanel, ResizablePanelGroup, ResizeHandle, cn } from '@gntik-ai/ui';
+import { Button, ResizablePanel, ResizablePanelGroup, ResizeHandle, cn, useMediaQuery } from '@gntik-ai/ui';
 import {
   builderConsole,
   builderEdges,
@@ -88,22 +89,6 @@ export interface FlowBuilderProps<Kind extends string = FlowNodeKind> extends Fl
 export type FlowRunResult = ConsoleEntry[] | void | undefined;
 
 const NO_ISSUES: NonNullable<FlowBuilderProps['validationIssues']> = [];
-const WIDE_QUERY = '(min-width: 768px)';
-
-function subscribeWide(onChange: () => void) {
-  if (typeof window === 'undefined' || !window.matchMedia) return () => {};
-  const mql = window.matchMedia(WIDE_QUERY);
-  mql.addEventListener?.('change', onChange);
-  return () => mql.removeEventListener?.('change', onChange);
-}
-
-function useIsWide() {
-  return useSyncExternalStore(
-    subscribeWide,
-    () => (typeof window !== 'undefined' && window.matchMedia ? window.matchMedia(WIDE_QUERY).matches : true),
-    () => true,
-  );
-}
 
 function clock() {
   return new Date().toLocaleTimeString('en-GB', { hour12: false });
@@ -144,7 +129,7 @@ export function FlowBuilder<Kind extends string = FlowNodeKind>({
   const flow = useRef<
     Parameters<NonNullable<FlowCanvasProps<FlowNode<Kind | FlowNodeKind>, FlowEdge>['onInit']>>[0] | null
   >(null);
-  const wide = useIsWide();
+  const wide = useMediaQuery(breakpointQuery('md'), true);
   const panelAs = TitleTag === 'h2' ? 'h3' : TitleTag === 'h3' ? 'h4' : 'h5';
   const { nodes, edges, setNodes, setEdges, onNodesChange, onEdgesChange } = useBuilderGraph<Kind>(
     { nodes: initialNodes, edges: initialEdges },

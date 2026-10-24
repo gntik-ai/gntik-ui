@@ -6,9 +6,19 @@
    Every field is optional: a doc without keyboard rows or a folder without
    *Props types simply skips that block.
    ============================================================================ */
-import { COMPONENT_API, LAYOUT_API, CHAT_API, FORMS_API, UTILS_API, CHART_API, THEME_API } from '../api-docs.js';
+import {
+  COMPONENT_API,
+  LAYOUT_API,
+  CHAT_API,
+  FORMS_API,
+  UTILS_API,
+  CHART_API,
+  THEME_API,
+  HOOK_API,
+} from '../api-docs.js';
 
 const API_BY_KIND = {
+  hooks: HOOK_API,
   theme: THEME_API,
   component: COMPONENT_API,
   layout: LAYOUT_API,

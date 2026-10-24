@@ -1658,6 +1658,11 @@
           "target": "components/ui/carousel/index.ts"
         },
         {
+          "path": "packages/ui/src/hooks/useMediaQuery.ts",
+          "type": "registry:ui",
+          "target": "components/hooks/useMediaQuery.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "type": "registry:ui",
           "target": "components/i18n/I18nProvider.tsx"
@@ -4089,6 +4094,11 @@
       },
       "files": [
         {
+          "path": "packages/ui/src/hooks/useMediaQuery.ts",
+          "type": "registry:lib",
+          "target": "components/hooks/useMediaQuery.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "type": "registry:component",
           "target": "components/i18n/I18nProvider.tsx"
@@ -4682,6 +4692,7 @@
       "dependencies": [
         "@gntik-ai/flow",
         "@gntik-ai/icons",
+        "@gntik-ai/tokens",
         "@gntik-ai/ui"
       ],
       "registryDependencies": [
@@ -5534,6 +5545,11 @@
       },
       "files": [
         {
+          "path": "packages/ui/src/hooks/useMediaQuery.ts",
+          "type": "registry:lib",
+          "target": "components/hooks/useMediaQuery.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "type": "registry:component",
           "target": "components/i18n/I18nProvider.tsx"
@@ -5572,11 +5588,6 @@
           "path": "packages/ui/src/layouts/InspectorLayout/inspector-layout.variants.ts",
           "type": "registry:lib",
           "target": "components/layouts/inspector-layout/inspector-layout.variants.ts"
-        },
-        {
-          "path": "packages/ui/src/layouts/InspectorLayout/use-media-query.ts",
-          "type": "registry:hook",
-          "target": "components/layouts/inspector-layout/use-media-query.ts"
         },
         {
           "path": "packages/ui/src/layouts/InspectorLayout/InspectorLayout.doc.ts",
@@ -14053,6 +14064,11 @@
           "path": "packages/ui/src/components/Tour/tour.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/tour/tour.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useMediaQuery.ts",
+          "type": "registry:ui",
+          "target": "components/hooks/useMediaQuery.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",

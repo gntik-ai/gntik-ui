@@ -1753,6 +1753,7 @@
       "dependencies": [
         "@gntik-ai/flow",
         "@gntik-ai/icons",
+        "@gntik-ai/tokens",
         "@gntik-ai/ui"
       ],
       "registryDependencies": [],
@@ -4456,6 +4457,10 @@
         {
           "path": "packages/ui/src/components/Carousel/index.ts",
           "target": "components/ui/carousel/index.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useMediaQuery.ts",
+          "target": "components/hooks/useMediaQuery.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -8805,6 +8810,10 @@
           "target": "components/ui/tour/tour.variants.ts"
         },
         {
+          "path": "packages/ui/src/hooks/useMediaQuery.ts",
+          "target": "components/hooks/useMediaQuery.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -9398,6 +9407,10 @@
       "description": "Documentation shell: top bar · left nav (a NavList) · article · right table of contents. The `Outline` sub-component is the table of contents: scroll-spy with IntersectionObserver (rooted in the article column, guarded where it is missing) marks the heading in view with aria-current=\"location\", and activating a link moves focus to the heading. Below `lg` the nav hides and the table of contents moves into a Collapsible above the article. Fills its container; `fullScreen` switches to `h-dvh`.",
       "files": [
         {
+          "path": "packages/ui/src/hooks/useMediaQuery.ts",
+          "target": "components/hooks/useMediaQuery.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -9454,6 +9467,10 @@
       "description": "Main area with a pinnable right panel (properties, details, comments). Pinned, the panel docks beside the content; unpinned, it overlays it (flat shadow) and Escape closes it. Open and pinned states are controllable; an InspectorToggle placed in the main area opens and closes it. Below lg the panel opens as a bottom Drawer. Fills its container.",
       "files": [
         {
+          "path": "packages/ui/src/hooks/useMediaQuery.ts",
+          "target": "components/hooks/useMediaQuery.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -9484,10 +9501,6 @@
         {
           "path": "packages/ui/src/layouts/InspectorLayout/inspector-layout.variants.ts",
           "target": "components/layouts/inspector-layout/inspector-layout.variants.ts"
-        },
-        {
-          "path": "packages/ui/src/layouts/InspectorLayout/use-media-query.ts",
-          "target": "components/layouts/inspector-layout/use-media-query.ts"
         }
       ],
       "dependencies": [

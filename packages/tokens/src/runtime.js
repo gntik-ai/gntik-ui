@@ -2,6 +2,14 @@
 // React Flow, Monaco) use to read brand tokens at runtime. Values always come
 // from the live CSS variables of brand.css, so a theme switch re-skins them.
 
+/** Mobile-first breakpoints shared with the Tailwind bridge. */
+export const breakpoints = Object.freeze({ sm: '40rem', md: '48rem', lg: '64rem', xl: '80rem', '2xl': '96rem' });
+
+/** A min-width media query for a named kit breakpoint. */
+export function breakpointQuery(name) {
+  return `(min-width: ${breakpoints[name]})`;
+}
+
 /** Raw HSL channels of a token, e.g. tokenChannels('--primary') → "145 61% 50%". */
 export function tokenChannels(name, el) {
   if (typeof document === 'undefined') return '';
