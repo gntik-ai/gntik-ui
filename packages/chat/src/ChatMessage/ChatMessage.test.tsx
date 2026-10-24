@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { expectNoAxeViolations } from '../test/a11y';
@@ -9,6 +9,26 @@ import ChatMessageStreaming from './examples/ChatMessageStreaming';
 import ChatMessageTeam from './examples/ChatMessageTeam';
 
 describe('ChatMessage', () => {
+  it.each(['rejected', 'missing'] as const)('reports a %s clipboard write as failed', async (failure) => {
+    userEvent.setup();
+    const clipboard = navigator.clipboard;
+    if (failure === 'missing') Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+    else vi.spyOn(navigator.clipboard, 'writeText').mockRejectedValue(new DOMException('Denied', 'NotAllowedError'));
+    try {
+      render(
+        <ChatMessage role="assistant" copyText="Answer">
+          Answer
+        </ChatMessage>,
+      );
+      fireEvent.click(screen.getByRole('button', { name: 'Copy message' }));
+      const button = await screen.findByRole('button', { name: 'Copy failed' });
+      expect(screen.queryByRole('button', { name: 'Copied' })).toBeNull();
+      expect(button.querySelector('.lucide-check')).toBeNull();
+    } finally {
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: clipboard });
+      vi.restoreAllMocks();
+    }
+  });
   it('is an article named by its author, with a timestamp', () => {
     render(
       <ChatMessage role="user" author="Maria Ruiz" timestamp={new Date('2026-10-03T09:41:00Z')}>

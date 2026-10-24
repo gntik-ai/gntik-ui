@@ -11,7 +11,7 @@ import {
   Textarea,
   cn,
 } from '@gntik-ai/ui';
-import { Check, Copy, RefreshCw, ThumbsDown, ThumbsUp } from 'lucide-react';
+import { Check, Copy, RefreshCw, ThumbsDown, ThumbsUp, X } from 'lucide-react';
 import { useId, useState, type FormEvent, type Ref } from 'react';
 import { useChatI18n, type ChatMessageKey } from '../utils/i18n';
 import { useCopy } from '../utils/useCopy';
@@ -91,7 +91,7 @@ export function MessageFeedback({
   const [reason, setReason] = useState<string>('');
   const [comment, setComment] = useState('');
   const [announcement, setAnnouncement] = useState('');
-  const { copied, copy } = useCopy();
+  const { copied, status, copy } = useCopy();
   const reasons = reasonsProp ?? DEFAULT_REASONS.map((r) => ({ value: r.value, label: tc(r.key) }));
 
   const emit = (next: FeedbackValue) => {
@@ -134,11 +134,13 @@ export function MessageFeedback({
   return (
     <div ref={ref} role="group" aria-label={label ?? tc('chat.feedback')} className={cn(s.root, className)}>
       {copyText !== undefined && (
-        <SimpleTooltip content={copied ? t('common.copied') : t('common.copy')}>
+        <SimpleTooltip
+          content={status === 'failed' ? t('common.copyFailed') : copied ? t('common.copied') : t('common.copy')}
+        >
           <IconButton
             size="sm"
-            icon={copied ? Check : Copy}
-            label={copied ? t('common.copied') : t('chat.copyMessage')}
+            icon={status === 'failed' ? X : copied ? Check : Copy}
+            label={status === 'failed' ? t('common.copyFailed') : copied ? t('common.copied') : t('chat.copyMessage')}
             disabled={disabled}
             onClick={() => void copy(copyText)}
           />

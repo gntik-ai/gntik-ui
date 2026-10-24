@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode, type UIEvent } from 'react';
-import { Check, Copy, Eye, Search } from '@gntik-ai/icons';
+import { Check, Copy, Eye, Search, X } from '@gntik-ai/icons';
 import { IconButton, Input, Switch, Toggle, ToggleGroup, cn, foldText, matchRanges, useI18n } from '@gntik-ai/ui';
 import { useWrappedLogRows } from './use-wrapped-log-rows';
 import { logLines as defaultLines, type LogLevel, type LogLine } from './fixtures';
@@ -27,6 +27,7 @@ export interface LogViewerLabels {
   inspect: (timestamp: string) => string;
   copy: (timestamp: string) => string;
   copied: string;
+  copyFailed?: string;
 }
 
 export interface LogViewerProps {
@@ -113,7 +114,9 @@ export function LogViewer({
   const [query, setQuery] = useState('');
   const [follow, setFollow] = useState(defaultFollow);
   const [scrollTop, setScrollTop] = useState(0);
-  const [copied, setCopied] = useState<string | null>(null);
+  const [copyResult, setCopyResult] = useState<{ id: string; status: 'copied' | 'failed' } | null>(null);
+  const mounted = useRef(true);
+  const copyAttempt = useRef(0);
 
   const counts = useMemo(() => {
     const c: Record<LogLevel, number> = { debug: 0, info: 0, warn: 0, error: 0 };
@@ -153,7 +156,14 @@ export function LogViewer({
     if (follow && viewport.current) viewport.current.scrollTop = maxScroll;
   }, [follow, maxScroll]);
 
-  useEffect(() => () => clearTimeout(copyTimer.current), []);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+      copyAttempt.current += 1;
+      clearTimeout(copyTimer.current);
+    };
+  }, []);
 
   const onScroll = (event: UIEvent<HTMLDivElement>) => {
     const top = event.currentTarget.scrollTop;
@@ -161,12 +171,24 @@ export function LogViewer({
     if (follow && top < maxScroll - rowHeight) setFollow(false);
   };
 
-  const copy = (line: LogLine) => {
-    void navigator.clipboard?.writeText(lineText(line)).catch(() => undefined);
-    onCopyLine?.(line);
-    setCopied(line.id);
+  const copy = async (line: LogLine) => {
     clearTimeout(copyTimer.current);
-    copyTimer.current = setTimeout(() => setCopied(null), 1500);
+    const current = ++copyAttempt.current;
+    let status: 'copied' | 'failed' = 'failed';
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(lineText(line));
+        status = 'copied';
+      }
+    } catch {
+      // A denied write must not confirm a copied line.
+    }
+    if (!mounted.current) return;
+    if (current === copyAttempt.current) {
+      setCopyResult({ id: line.id, status });
+      copyTimer.current = setTimeout(() => setCopyResult(null), 1500);
+    }
+    if (status === 'copied') onCopyLine?.(line);
   };
 
   return (
@@ -235,6 +257,7 @@ export function LogViewer({
           <div className="relative w-full" style={{ height: total }}>
             {rows.map((line, i) => {
               const lv = LEVEL_STYLE[line.level];
+              const status = copyResult?.id === line.id ? copyResult.status : 'idle';
               return (
                 <div
                   key={line.id}
@@ -290,15 +313,17 @@ export function LogViewer({
                   )}
                   <IconButton
                     size="sm"
-                    icon={copied === line.id ? Check : Copy}
+                    icon={status === 'failed' ? X : status === 'copied' ? Check : Copy}
                     label={
-                      copied === line.id
-                        ? (labels?.copied ?? t('common.copied'))
-                        : (labels?.copy?.(line.timestamp) ?? t('logViewer.copy', { timestamp: line.timestamp }))
+                      status === 'failed'
+                        ? (labels?.copyFailed ?? t('common.copyFailed'))
+                        : status === 'copied'
+                          ? (labels?.copied ?? t('common.copied'))
+                          : (labels?.copy?.(line.timestamp) ?? t('logViewer.copy', { timestamp: line.timestamp }))
                     }
                     onClick={(event) => {
                       if (onSelectLine) event.stopPropagation();
-                      copy(line);
+                      void copy(line);
                     }}
                     className="size-6 shrink-0 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
                   />

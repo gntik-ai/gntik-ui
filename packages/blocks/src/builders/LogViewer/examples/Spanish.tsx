@@ -1,4 +1,4 @@
-import { I18nProvider, Stack } from '@gntik-ai/ui';
+import { I18nProvider, Stack, en } from '@gntik-ai/ui';
 import { LogViewer } from '../LogViewer';
 import { makeLogLines } from '../fixtures';
 const lines = makeLogLines(3);
@@ -12,6 +12,7 @@ export default function Spanish() {
           height={100}
           onSelectLine={() => {}}
           labels={{
+            copyFailed: en['common.copyFailed'],
             title: 'Application logs',
             levelFilter: 'Severity',
             searchLabel: 'Find log messages',

@@ -98,7 +98,7 @@ export default function CopyButtonBasic() {
 
 ### MessageFeedback (`message-feedback`)
 
-Actions for an assistant reply: copy, regenerate and thumbs up / down toggles (aria-pressed). Thumbs down opens a popover with a reason picker and an optional comment. Controlled with `value` + `onFeedback`; pressing the active thumb clears it. A polite status confirms the feedback.
+Actions for an assistant reply: copy, regenerate and thumbs up / down toggles (aria-pressed). Thumbs down opens a popover with a reason picker and an optional comment. Controlled with `value` + `onFeedback`; pressing the active thumb clears it. A polite status confirms the feedback. Copy actions show common.copyFailed when clipboard access is denied or unavailable, with no success icon; successful copies keep their labels and reset after 1600ms. See the bilingual Result feedback live preview.
 
 - Package: `@gntik-ai/chat` · export `MessageFeedback` · group Actions · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/MessageFeedback/MessageFeedback.doc.ts
@@ -870,7 +870,7 @@ export default function CarouselAutoplay() {
 
 ### ChatMessage (`chat-message`)
 
-One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows a TypingIndicator ("Assistant is typing") until text arrives and a caret after streamed plain text; ChatAnnouncer announces start and end once instead of every token.
+One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows a TypingIndicator ("Assistant is typing") until text arrives and a caret after streamed plain text; ChatAnnouncer announces start and end once instead of every token. Copy actions show common.copyFailed when clipboard access is denied or unavailable, with no success icon; successful copies keep their labels and reset after 1600ms. See the bilingual Result feedback live preview.
 
 - Package: `@gntik-ai/chat` · export `ChatMessage` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ChatMessage/ChatMessage.doc.ts
@@ -1297,7 +1297,7 @@ export default function KbdShortcuts() {
 
 ### Markdown (`markdown`)
 
-Safe, token-styled markdown for model output (react-markdown + remark-gfm): headings, lists, task lists, tables, blockquotes, inline and fenced code with a copy button, links with an external marker. Raw HTML is never rendered, unsafe URL schemes are stripped, and partial streamed input (unclosed fences) renders cleanly.
+Safe, token-styled markdown for model output (react-markdown + remark-gfm): headings, lists, task lists, tables, blockquotes, inline and fenced code with a copy button, links with an external marker. Raw HTML is never rendered, unsafe URL schemes are stripped, and partial streamed input (unclosed fences) renders cleanly. Copy actions show common.copyFailed when clipboard access is denied or unavailable, with no success icon; successful copies keep their labels and reset after 1600ms. See the bilingual Result feedback live preview.
 
 - Package: `@gntik-ai/chat` · export `Markdown` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/Markdown/Markdown.doc.ts
@@ -8402,7 +8402,7 @@ import { FlowBuilder } from '@gntik-ai/blocks';
 
 ### Log viewer (`log-viewer`)
 
-Windowed log stream (role="log"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional wrap (default false) shows full messages in measured, variable-height rows; rowHeight estimates unmeasured rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label, including per-level chip and filter names through labels.levels. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Copied log text and imported fixtures stay unchanged. See the Catalog labels and Full messages and level names live previews.
+Windowed log stream (role="log"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional wrap (default false) shows full messages in measured, variable-height rows; rowHeight estimates unmeasured rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label, including per-level chip and filter names through labels.levels. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Copied log text and imported fixtures stay unchanged. See the Catalog labels and Full messages and level names live previews. Copy actions await the clipboard write; denied or unavailable access shows common.copyFailed (overridden by labels.copyFailed), and only a successful write calls onCopyLine. Both results reset after 1500ms. See the Catalog labels live preview.
 
 - Package: `@gntik-ai/blocks` · export `LogViewer` · group builders · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/builders/LogViewer/block.meta.ts
@@ -8424,6 +8424,7 @@ Labels (optional Partial per instance; explicit keys override provider translati
 | `empty` | `string` | No matching lines |
 | `inspect` | `(timestamp: string) => string` | Inspect button name when onSelectLine exists |
 | `copy` | `(timestamp: string) => string` | Copy button before copying |
+| `copyFailed` | `string` | Copy button after a failed write, only on the affected line |
 | `copied` | `string` | Copy button after copying |
 
 Usage:
@@ -8494,7 +8495,7 @@ import { CommentThread } from '@gntik-ai/blocks';
 
 ### Description list card (`description-list-card`)
 
-Key–value detail card with mono, status and rich values, copy-to-clipboard buttons and an Edit action. Optional labels?: Partial<DescriptionListCardLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview. wrap?: boolean (default false) shows full values and breaks long unbroken strings. columns?: 1 | 2 | 3 (default 1) stacks terms above values in two or three columns from sm, with one column below sm; items fill contiguous top-to-bottom chunks of ceil(item count / columns), and dividers stay within each column. Defaults preserve the original single-column rows. See the Spanish live preview for wrapping and both column layouts.
+Key–value detail card with mono, status and rich values, copy-to-clipboard buttons and an Edit action. Optional labels?: Partial<DescriptionListCardLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview. wrap?: boolean (default false) shows full values and breaks long unbroken strings. columns?: 1 | 2 | 3 (default 1) stacks terms above values in two or three columns from sm, with one column below sm; items fill contiguous top-to-bottom chunks of ceil(item count / columns), and dividers stay within each column. Defaults preserve the original single-column rows. See the Spanish live preview for wrapping and both column layouts. Copy actions await the clipboard write; denied or unavailable access shows common.copyFailed (overridden by labels.copyFailed), and only a successful write calls onCopy. Both results reset after 1500ms. See the Catalog labels live preview.
 
 - Package: `@gntik-ai/blocks` · export `DescriptionListCard` · group data-display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/data-display/DescriptionListCard/block.meta.ts
@@ -8511,6 +8512,7 @@ Labels (optional Partial per instance; explicit keys override provider translati
 | `edit` | `string` | Edit button; editLabel prop wins |
 | `copy` | `(label: string) => string` | Copy button name; original item label |
 | `copied` | `(label: string) => string` | Copy button name after copying; original item label |
+| `copyFailed` | `string` | Copy button name and polite announcement after a failed write |
 | `copiedToClipboard` | `string` | Polite copy announcement |
 
 Usage:

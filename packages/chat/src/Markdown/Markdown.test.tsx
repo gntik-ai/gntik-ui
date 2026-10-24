@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { expectNoAxeViolations } from '../test/a11y';
 import MarkdownReply from './examples/MarkdownReply';
 import MarkdownStreaming from './examples/MarkdownStreaming';
@@ -65,6 +65,23 @@ describe('Markdown safety', () => {
 });
 
 describe('Markdown rendering', () => {
+  it.each(['rejected', 'missing'] as const)('reports a %s clipboard write as failed', async (failure) => {
+    userEvent.setup();
+    const clipboard = navigator.clipboard;
+    if (failure === 'missing') Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+    else vi.spyOn(navigator.clipboard, 'writeText').mockRejectedValue(new DOMException('Denied', 'NotAllowedError'));
+    try {
+      render(<Markdown>{'```ts\nconst a = 1;\n```'}</Markdown>);
+      fireEvent.click(screen.getByRole('button', { name: 'Copy code' }));
+      const button = await screen.findByRole('button', { name: 'Copy failed' });
+      expect(button).toHaveTextContent('Copy failed');
+      expect(screen.queryByText('Copied')).toBeNull();
+      expect(button.querySelector('.lucide-check')).toBeNull();
+    } finally {
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: clipboard });
+      vi.restoreAllMocks();
+    }
+  });
   it('renders GFM tables, task lists, blockquotes and inline code', () => {
     render(<MarkdownReply />);
     expect(screen.getByRole('table')).toBeInTheDocument();
