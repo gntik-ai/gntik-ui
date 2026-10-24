@@ -13,8 +13,9 @@
 - [x] Run static scrollbar and PrintLayout acceptance tests red before their source changes, then green.
 - [x] Run the request interceptor test red before proxy.ts, then green for policy forwarding and fresh nonces.
 - [x] Add the installed Base UI inline-element inventory and translated accessible live examples.
-- [x] Run bounded repository checks and strict OpenSpec validation (offline mirror check deferred below).
-- [ ] Verify production Next.js Playwright and docs axe suites in PR CI (browser suites excluded on workers).
+- [x] Run bounded repository checks and strict OpenSpec validation. See the follow-up validation record below for current evidence.
+- [ ] Operator: run `pnpm --filter @gntik-ai/example-next test:csp` against the production build; the existing PR CI does not schedule this standalone suite.
+- [ ] Verify docs axe suites in PR CI (browser suites excluded on workers).
 
 ## 3. Docs and release
 
@@ -30,12 +31,24 @@ The seams are the public kit entry's rendered DOM and renderToString output, the
 
 ## Renderer compatibility
 
-React 19.3 hoists resource styles and only preserves their nonce when the server renderer receives `nonce: { script: nonce, style: nonce }`. The installed Next.js renderer passes a string nonce (scripts only). The reference app therefore also enables `disableStyleElements` and serves its default `@page` rule from globals.css. This avoids a blocked resource style during the initial response while preserving nonced theme and prehydration scripts. Both supported streaming setups have public-seam tests; the guide documents this constraint. ScrollArea and Select nonce tests use independent DOM documents so React's resource cache cannot mask either component's behavior.
+React 19.3 hoists resource styles and only preserves their nonce when the server renderer receives `nonce: { script: nonce, style: nonce }`. The installed Next.js renderer passes a string nonce (scripts only). The reference app therefore also enables `disableStyleElements` and serves its default print rule as a named page for the CSP route from globals.css. This avoids a blocked resource style during the initial response while preserving nonced theme and prehydration scripts. Both supported streaming setups have public-seam tests; the guide documents this constraint. ScrollArea and Select nonce tests use independent DOM documents so React's resource cache cannot mask either component's behavior.
 
 ## Validation
 
-The library build, lint, monorepo typecheck, registry freshness, both consumer kit-only checks, docs build, docs coverage, strict OpenSpec validation and formatting checks pass. The public HTTP-boundary nonce test passes. All 20 focused CSP tests pass. The expanded run passes 89 tests across CSP, ScrollArea, Select, Combobox, Tabs, Slider and PrintLayout, including unchanged existing regression suites; the additional fresh-document default-style test passes separately. All permitted library suites excluding the unavailable token mirror test pass, including UI, blocks, chat and templates.
+The library build, lint, monorepo typecheck, registry freshness, both consumer kit-only checks, docs build, docs coverage, strict OpenSpec validation and formatting checks pass. The proxy nonce test and the public MCP usage/discoverability tests pass. The repaired CSP example test passes in 12 consecutive runs, and all ten permitted library suites excluding the unavailable tokens mirror test pass (including the full UI, blocks, chat and templates suites).
 
-The prescribed recursive library unit command cannot complete the unchanged tokens mirror-install test without network. The registry fetch fails and its offline fallback then reads gntik-ai-tokens-0.2.1.tgz after packing the current 0.3.0 package, producing ENOENT. The six token suites excluding mirror installation pass. The remaining permitted library suites pass when run separately with tokens, MCP and evals excluded.
+The prescribed recursive library unit command stops at the unchanged tokens mirror-install test without network. Its offline fallback packs the current 0.3.0 package but then reads gntik-ai-tokens-0.2.1.tgz, producing ENOENT. This is an environment-limited check, not a new assertion failure. The six tokens suites excluding mirror installation pass. The remaining library run passes: `pnpm -r --filter './packages/**' --filter '!@gntik-ai/tokens' --filter '!@gntik-ai/gntik-ui-mcp' --filter '!@gntik-ai/evals' test`.
 
-Browser suites (production Next.js CSP and docs axe in all three themes) are reserved for PR CI under worker policy and were not launched. Playwright discovers both production tests through `pnpm --filter @gntik-ai/example-next test:csp --list`. Run `pnpm --filter @gntik-ai/example-next test:csp` and `pnpm a11y` in PR CI; the production config builds and starts Next rather than using dev mode. MCP CLI and evals suites likewise remain for PR CI.
+Browser suites were not launched under worker policy. Docs axe runs in PR CI; production Next.js CSP needs an explicit operator run because the existing workflow selects only docs a11y tests. Run `pnpm --filter @gntik-ai/example-next test:csp` to collect AC6 production browser evidence: its config builds and starts Next rather than using dev mode. A discovered browser test is not an executed pass. MCP CLI and evals suites remain reserved for PR CI.
+
+## Checker follow-up
+
+The example test queried the Select listbox before Base UI asynchronously mounted it. Repeating `pnpm --filter @gntik-ai/ui test src/csp/CSPProvider.example.test.tsx` reproduced the reported missing-listbox assertion before the fix. The assertion now awaits `findByRole`.
+
+A public `usageOf` regression test failed with `PrintLayoutCSP.tsx` instead of `PrintLayoutInvoice.tsx`; renaming the secondary demo to `PrintLayoutStaticStyles.tsx` restores the invoice in MCP and llms-full.txt. A second registry-lookup test failed before adding the provider as an installable `csp-provider` item; its description also makes `useCSP` searchable. These tests run directly without the MCP CLI suite's subprocess-dependent tests.
+
+The provider metadata no longer lists tokens because it renders no DOM. Spanish translates the guide title. Guide prose lives in the docs app's en/es catalog, while shared live-preview labels stay in the runtime catalog. Catalog display metadata is derived without mutating the inventory. The fallback print rule uses a named page selected only by the CSP route. The script-only renderer workaround remains necessary and covered by the streaming tests.
+
+Production browser evidence is still pending: workers must not launch Chromium, and `.github` cannot be edited in this ChangeSet. The production Playwright config and standalone command remain available for the operator. A discovered test is not an executed browser pass.
+
+Renaming the PrintLayout demo also changes its preview URL. A browser-free public loader test reproduced the stale axe target (`print-layout--print-layout-csp`) before changing the browser fixture to `print-layout--print-layout-static-styles`; the configured CSP axe previews now both resolve and load successfully.

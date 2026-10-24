@@ -4,7 +4,7 @@ import { useI18n } from '../../../i18n';
 import { Button } from '../../../components/Button';
 import { PrintLayout } from '../PrintLayout';
 
-export default function PrintLayoutCSP() {
+export default function PrintLayoutStaticStyles() {
   const { nonce } = useCSP();
   const { t } = useI18n();
   const [disabled, setDisabled] = useState(false);

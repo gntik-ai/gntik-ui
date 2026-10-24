@@ -8,7 +8,7 @@ const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 for (const theme of ['dark', 'light', 'high_contrast']) {
   for (const [kind, id] of [
     ['block', 'csp-provider'],
-    ['layout', 'print-layout--print-layout-csp'],
+    ['layout', 'print-layout--print-layout-static-styles'],
   ]) {
     test(`${id} / ${theme}`, async ({ page }) => {
       await page.goto(`/preview.html?kind=${kind}&id=${id}&theme=${theme}`);

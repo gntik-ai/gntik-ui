@@ -19,7 +19,7 @@ it.each(['en', 'es'])('the CSP preview is accessible and switches to static styl
     locale === 'es' ? 'Elementos de estilo desactivados' : 'Style elements disabled',
   );
   await user.click(screen.getByRole('combobox'));
-  expect(screen.getByRole('listbox')).toHaveClass('[scrollbar-width:none]', '[&::-webkit-scrollbar]:hidden');
+  expect(await screen.findByRole('listbox')).toHaveClass('[scrollbar-width:none]', '[&::-webkit-scrollbar]:hidden');
   await user.keyboard('{Escape}');
   await expectNoAxeViolations();
 });

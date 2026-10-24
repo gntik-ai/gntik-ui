@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 116 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 117 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -6542,6 +6542,74 @@ export default function TourOnboarding() {
 }
 ```
 
+### CSPProvider (`csp-provider`)
+
+CSPProvider passes the app server nonce to Base UI and kit inline elements; useCSP exposes the settings for custom elements. Disable style elements to use static CSS.
+
+- Package: `@gntik-ai/ui` · export `CSPProvider` · group Theme · status stable
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/csp/CSPProvider.doc.ts
+- Primitive: `@base-ui/react/csp-provider`
+- Install: `gntik-ui add csp-provider`; own the source with `gntik-ui eject csp-provider`
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { CSPProvider, useCSP } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
+import { ScrollArea } from '@gntik-ai/ui';
+import { SimpleSelect } from '@gntik-ai/ui';
+import { Slider } from '@gntik-ai/ui';
+import { Tabs, TabsList, TabsTab, TabsIndicator } from '@gntik-ai/ui';
+
+function Preview() {
+  const { t } = useI18n();
+  const { disableStyleElements } = useCSP();
+  return (
+    <div className="space-y-4">
+      <p role="status">{t(disableStyleElements ? 'csp.disabled' : 'csp.enabled')}</p>
+      <SimpleSelect
+        label={t('csp.choice')}
+        items={[
+          { value: 'light', label: t('theme.light') },
+          { value: 'dark', label: t('theme.dark') },
+        ]}
+      />
+      <ScrollArea aria-label={t('csp.content')} className="h-32" bordered>
+        {Array.from({ length: 20 }, (_, i) => (
+          <p className="p-2" key={i}>
+            {t('csp.content')} {i + 1}
+          </p>
+        ))}
+      </ScrollArea>
+      <Tabs defaultValue="light">
+        <TabsList aria-label={t('theme.label')} indicator={false}>
+          <TabsTab value="light">{t('theme.light')}</TabsTab>
+          <TabsTab value="dark">{t('theme.dark')}</TabsTab>
+          <TabsIndicator renderBeforeHydration />
+        </TabsList>
+      </Tabs>
+      <Slider label={t('csp.choice')} thumbAlignment="edge" defaultValue={50} />
+    </div>
+  );
+}
+
+export default function CSPProviderPreview() {
+  const { nonce } = useCSP();
+  const { t } = useI18n();
+  const [disabled, setDisabled] = useState(false);
+  return (
+    <CSPProvider nonce={nonce} disableStyleElements={disabled}>
+      <div className="space-y-4">
+        <Button onClick={() => setDisabled(!disabled)}>{t(disabled ? 'csp.enable' : 'csp.disable')}</Button>
+        <Preview />
+      </div>
+    </CSPProvider>
+  );
+}
+```
+
 ### ThemeProvider (`theme`)
 
 ThemeProvider (persisted page mode, optional forcedMode), ThemeScope (nested themes and themed portals), themeScript, Logo and brand presets.
@@ -7115,7 +7183,7 @@ Printable document frame for invoices, reports and receipts: an A4 or Letter pag
 - Package: `@gntik-ai/ui` · export `PrintLayout` · group Layout · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/layouts/PrintLayout/PrintLayout.doc.ts
 - ARIA pattern: landmark (main) + labelled article
-- Registry dependencies: ui-utils, visually-hidden
+- Registry dependencies: csp-provider, ui-utils, visually-hidden
 - Install: `gntik-ui add print-layout`; own the source with `gntik-ui eject print-layout`
 
 Keyboard:
@@ -7129,26 +7197,111 @@ Tokens: card, card-foreground, secondary, border, muted-foreground
 Usage:
 
 ```tsx
-import { useState } from 'react';
-import { CSPProvider, useCSP } from '@gntik-ai/ui';
-import { useI18n } from '@gntik-ai/ui';
-import { Button } from '@gntik-ai/ui';
-import { PrintLayout } from '@gntik-ai/ui';
+import { Badge } from '@gntik-ai/ui';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@gntik-ai/ui';
+import { Logo } from '@gntik-ai/ui';
+import { PageBreak, PrintLayout } from '@gntik-ai/ui';
 
-export default function PrintLayoutCSP() {
-  const { nonce } = useCSP();
-  const { t } = useI18n();
-  const [disabled, setDisabled] = useState(false);
+const LINES = [
+  { item: 'Team plan · 12 seats', qty: '12', amount: 240 },
+  { item: 'Compute · 1,840 vCPU-hours', qty: '1,840', amount: 92 },
+  { item: 'Bandwidth · 420 GB', qty: '420', amount: 21 },
+  { item: 'Log retention · 30 days', qty: '1', amount: 15 },
+];
+
+const money = (n: number) => `$${n.toFixed(2)}`;
+const total = LINES.reduce((sum, l) => sum + l.amount, 0);
+
+export default function PrintLayoutInvoice() {
   return (
-    <CSPProvider nonce={nonce} disableStyleElements={disabled}>
-      <PrintLayout aria-label={t('csp.document')}>
-        <h1 className="mb-4 text-xl font-semibold">{t('csp.document')}</h1>
-        <Button onClick={() => setDisabled(!disabled)}>{t(disabled ? 'csp.enable' : 'csp.disable')}</Button>
-        <p role="status" className="mt-4">
-          {t(disabled ? 'csp.disabled' : 'csp.enabled')}
+    <div className="h-[560px] overflow-hidden rounded-lg border border-border">
+      <PrintLayout
+        aria-label="Invoice INV-2026-0042"
+        pageRule={false}
+        header={
+          <>
+            <div className="flex flex-col gap-2">
+              <Logo size={26} wordmark />
+              <p className="text-[11.5px] leading-snug text-muted-foreground">
+                Example Cloud Ltd · 1 Market Street
+                <br />
+                billing@example.com
+              </p>
+            </div>
+            <div className="text-end">
+              <h1 className="text-[22px] font-semibold tracking-tight">Invoice</h1>
+              <p className="font-mono text-[11.5px] text-muted-foreground">INV-2026-0042</p>
+              <Badge tone="success" size="sm" className="mt-2">
+                Paid
+              </Badge>
+            </div>
+          </>
+        }
+        footer="Thank you for your business. Questions about this invoice: billing@example.com"
+      >
+        <dl className="mb-8 grid grid-cols-3 gap-4 text-[12px]">
+          <div>
+            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">Billed to</dt>
+            <dd className="mt-1 font-medium">Acme Workspace</dd>
+          </div>
+          <div>
+            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">Period</dt>
+            <dd className="mt-1">1 – 30 Sep 2026</dd>
+          </div>
+          <div>
+            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">Issued</dt>
+            <dd className="mt-1">1 Oct 2026</dd>
+          </div>
+        </dl>
+        <Table>
+          <TableCaption srOnly>Invoice line items</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Item</TableHead>
+              <TableHead align="right">Quantity</TableHead>
+              <TableHead align="right">Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {LINES.map((l) => (
+              <TableRow key={l.item}>
+                <TableCell>{l.item}</TableCell>
+                <TableCell align="right" className="font-mono text-[12px]">
+                  {l.qty}
+                </TableCell>
+                <TableCell align="right" className="font-mono text-[12px]">
+                  {money(l.amount)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={2} className="font-semibold">
+                Total
+              </TableCell>
+              <TableCell align="right" className="font-mono text-[12.5px] font-semibold">
+                {money(total)}
+              </TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
+        <PageBreak />
+        <h2 className="mb-2 text-[15px] font-semibold">Usage detail</h2>
+        <p className="text-muted-foreground">
+          Compute is billed per vCPU-hour across all deployments in the workspace, rounded to the nearest hour.
         </p>
       </PrintLayout>
-    </CSPProvider>
+    </div>
   );
 }
 ```

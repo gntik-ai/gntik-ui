@@ -7,5 +7,4 @@ export const doc: ComponentDoc = {
   status: 'stable',
   description: en['csp.description'],
   primitive: '@base-ui/react/csp-provider',
-  tokens: ['background', 'foreground', 'border'],
 };

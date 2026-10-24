@@ -1,5 +1,5 @@
 import { cspEn } from './csp-messages';
-/** Built-in English labels, accessible names and announcements; every catalog must cover these keys. Placeholders: `{name}`; plurals: `{count, plural, one {# item} other {# items}}`. Use `{count}` instead of `#` in plural branches for ungrouped English numbers. Dates come from Intl. */
+/** Built-in English labels, accessible names and announcements. See format.ts for interpolation syntax. */
 export const en = {
   ...cspEn,
   'contact.sendFailed': "We couldn't send your message. Please try again.",

@@ -167,6 +167,15 @@ export function collectSources(): Source[] {
         'ThemeProvider (persisted page mode, optional forcedMode), ThemeScope (nested themes and themed portals), themeScript, Logo and brand presets.',
     },
   });
+  out.push({
+    kind: 'component',
+    pkg: '@gntik-ai/ui',
+    dir: path.join(ROOT, 'packages/ui/src/csp'),
+    metaFile: path.join(ROOT, 'packages/ui/src/csp/CSPProvider.doc.ts'),
+    metaExport: 'doc',
+    targetBase: 'components/csp',
+    id: 'csp-provider',
+  });
   const doc = (kind: Kind, pkg: string, base: string, targetBase: string) => {
     for (const name of subdirs(base)) {
       const f = path.join(base, name, `${name}.doc.ts`);

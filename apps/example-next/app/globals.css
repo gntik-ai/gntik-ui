@@ -1,8 +1,12 @@
 @import "tailwindcss";
 @import "@gntik-ai/templates/styles.css";
 
-/* CSPProvider disables inline styles; keep PrintLayout's default page rule in this stylesheet. */
-@page {
+/* CSPProvider disables inline styles; apply this fallback only to the CSP print demo. */
+@page csp-document {
   size: A4;
   margin: 20mm;
+}
+
+.csp-document {
+  page: csp-document;
 }

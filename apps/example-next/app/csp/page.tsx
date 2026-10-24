@@ -17,7 +17,7 @@ import {
 export default function CSPPage() {
   const { t } = useI18n();
   return (
-    <PrintLayout aria-label={t('csp.document')}>
+    <PrintLayout aria-label={t('csp.document')} className="csp-document">
       <div className="space-y-6">
         <h1 className="text-xl font-semibold">{t('csp.title')}</h1>
         <ThemeSwitcher />

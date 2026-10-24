@@ -113,11 +113,12 @@ const REGISTRY = [
   { group: 'Editors', icon: 'code', items: [
     { id: 'monaco', label: 'Monaco Editor', icon: 'code', status: 'done', blurb: 'The VS Code editor, themed: editing, diff, embedded and multi-language.' },
   ]},
-];
-
-// Registry indexing reads the literal array above; displayed copy comes from the catalog.
-const cspGuide = REGISTRY.flatMap(group => group.items).find(item => item.id === 'strict-csp');
-Object.assign(cspGuide, { label: builtInMessages('en')['csp.title'], blurb: builtInMessages('en')['csp.description'] });
+].map(group => ({
+  ...group,
+  items: group.items.map(item => item.id === 'strict-csp'
+    ? { ...item, label: builtInMessages('en')['csp.title'], blurb: builtInMessages('en')['csp.description'] }
+    : item),
+}));
 
 function regFlat() { return REGISTRY.flatMap(g => g.items.map(it => ({ ...it, group: g.group }))); }
 function regFind(id) { return regFlat().find(it => it.id === id); }

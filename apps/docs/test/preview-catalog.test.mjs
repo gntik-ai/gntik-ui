@@ -4,6 +4,28 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import test from 'node:test';
 
+test('CSP accessibility checks target existing live previews', async () => {
+  const { createServer } = await import('vite');
+  const server = await createServer({
+    root: fileURLToPath(new URL('..', import.meta.url)),
+    server: { middlewareMode: true, ws: false, watch: null },
+    optimizeDeps: { noDiscovery: true, include: [] },
+  });
+  try {
+    const { PREVIEW_LOADERS } = await server.ssrLoadModule('/src/preview-registry.js');
+    const checks = readFileSync(new URL('../e2e/csp-provider.a11y.spec.js', import.meta.url), 'utf8');
+    const previews = [...checks.matchAll(/\['(block|layout)',\s*'([^']+)'\]/g)];
+    assert.equal(previews.length, 2);
+    for (const [, kind, id] of previews) {
+      const load = PREVIEW_LOADERS[kind]?.[id];
+      assert.equal(typeof load, 'function', `missing CSP preview: kind=${kind}&id=${id}`);
+      assert.equal(typeof (await load()).default, 'function');
+    }
+  } finally {
+    await server.close();
+  }
+});
+
 test('block gallery lists installable blocks while Spanish PageHeader remains previewable', async () => {
   const { createServer } = await import('vite');
   const server = await createServer({

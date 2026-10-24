@@ -1,5 +1,4 @@
 import { cspEs } from './csp-messages';
-
 import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
