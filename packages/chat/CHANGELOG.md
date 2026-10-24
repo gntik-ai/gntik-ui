@@ -1,5 +1,16 @@
 # @gntik-ai/chat
 
+## 0.11.0
+
+### Patch Changes
+
+- Updated dependencies [3cad9d6]
+- Updated dependencies [b366590]
+- Updated dependencies [3b5e0b0]
+- Updated dependencies [8379594]
+  - @gntik-ai/ui@0.11.0
+  - @gntik-ai/tokens@0.3.0
+
 ## 0.10.0
 
 ### Patch Changes

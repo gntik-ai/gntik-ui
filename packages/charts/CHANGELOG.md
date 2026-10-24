@@ -1,5 +1,12 @@
 # @gntik-ai/charts
 
+## 0.11.0
+
+### Patch Changes
+
+- Updated dependencies [3b5e0b0]
+  - @gntik-ai/tokens@0.3.0
+
 ## 0.10.0
 
 ### Patch Changes

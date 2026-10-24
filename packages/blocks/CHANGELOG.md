@@ -1,5 +1,26 @@
 # @gntik-ai/blocks
 
+## 0.11.0
+
+### Minor Changes
+
+- 966a473: Add opt-in detail-value wrapping and columns, page-title wrapping, and no-access request visibility and link actions while preserving defaults.
+- 3cad9d6: Localise built-in form and authentication labels in English and Spanish with typed per-instance overrides.
+- b366590: Add localized LogViewer level names, per-level label overrides, and optional full-message wrapping with measured rows.
+
+### Patch Changes
+
+- 8379594: Keep server-mode selected ids across pages in onSelectionChange and bulkActions (preserveSelection={false} restores page-only reporting); add localized select-all-matching models, disabled multiple-selection rows, hideSelectAll and paginated single selection. Keep matching-selection announcements in a persistent live region, preserve the default announcement surface and restore keyboard focus when clearing.
+- Updated dependencies [3cad9d6]
+- Updated dependencies [b366590]
+- Updated dependencies [3b5e0b0]
+- Updated dependencies [8379594]
+  - @gntik-ai/ui@0.11.0
+  - @gntik-ai/tokens@0.3.0
+  - @gntik-ai/charts@0.11.0
+  - @gntik-ai/editor@0.11.0
+  - @gntik-ai/flow@0.11.0
+
 ## 0.10.0
 
 ### Minor Changes

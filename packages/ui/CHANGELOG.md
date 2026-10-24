@@ -1,5 +1,19 @@
 # @gntik-ai/ui
 
+## 0.11.0
+
+### Minor Changes
+
+- 3cad9d6: Localise built-in form and authentication labels in English and Spanish with typed per-instance overrides.
+- b366590: Add localized LogViewer level names, per-level label overrides, and optional full-message wrapping with measured rows.
+- 3b5e0b0: Add ThemeScope with themed overlays, per-scope color schemes and ThemeProvider forcedMode; the new .light selector also applies kit tokens to existing elements using that class.
+
+### Patch Changes
+
+- 8379594: Keep server-mode selected ids across pages in onSelectionChange and bulkActions (preserveSelection={false} restores page-only reporting); add localized select-all-matching models, disabled multiple-selection rows, hideSelectAll and paginated single selection. Keep matching-selection announcements in a persistent live region, preserve the default announcement surface and restore keyboard focus when clearing.
+- Updated dependencies [3b5e0b0]
+  - @gntik-ai/tokens@0.3.0
+
 ## 0.10.0
 
 ### Minor Changes
