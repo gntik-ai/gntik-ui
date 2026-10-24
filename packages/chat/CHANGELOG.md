@@ -1,5 +1,19 @@
 # @gntik-ai/chat
 
+## 0.12.0
+
+### Patch Changes
+
+- 41a4991: Report failed clipboard writes in chat, DescriptionListCard and LogViewer; onCopy and onCopyLine now fire only after successful writes, so click-based analytics may record fewer events.
+- cd9b1bd: Add SSR-safe media query and breakpoint hooks with shared breakpoint tokens, and use them for responsive panels and reduced-motion behaviour. Preserve upward log scrolling when wrapped rows finish measuring.
+- Updated dependencies [061c035]
+- Updated dependencies [87bc7c2]
+- Updated dependencies [52eee4d]
+- Updated dependencies [834d3a8]
+- Updated dependencies [cd9b1bd]
+  - @gntik-ai/ui@0.12.0
+  - @gntik-ai/tokens@0.4.0
+
 ## 0.11.0
 
 ### Patch Changes

@@ -1,5 +1,24 @@
 # @gntik-ai/templates
 
+## 0.12.0
+
+### Patch Changes
+
+- 52eee4d: A rejected contact onSubmit now shows a visitor-facing error with localized default text or submitErrorMessage, preserving form values for another attempt.
+- Updated dependencies [061c035]
+- Updated dependencies [87bc7c2]
+- Updated dependencies [52eee4d]
+- Updated dependencies [834d3a8]
+- Updated dependencies [41a4991]
+- Updated dependencies [cd9b1bd]
+  - @gntik-ai/ui@0.12.0
+  - @gntik-ai/blocks@0.12.0
+  - @gntik-ai/chat@0.12.0
+  - @gntik-ai/tokens@0.4.0
+  - @gntik-ai/charts@0.12.0
+  - @gntik-ai/editor@0.12.0
+  - @gntik-ai/flow@0.12.0
+
 ## 0.11.0
 
 ### Minor Changes
