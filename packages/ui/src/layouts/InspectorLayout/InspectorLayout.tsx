@@ -5,7 +5,7 @@ import { IconButton, type IconButtonProps } from '../../components/Button';
 import { Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerTitle } from '../../components/Drawer';
 import { inspectorLayoutVariants } from './inspector-layout.variants';
 import { useI18n } from '../../i18n/I18nProvider';
-import { useMediaQuery } from './use-media-query';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 export interface InspectorLayoutContextValue {
   open: boolean;

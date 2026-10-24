@@ -11,6 +11,7 @@ import {
 } from 'react';
 import { cn } from '../../utils/cn';
 import { useI18n } from '../../i18n/I18nProvider';
+import { usePrefersReducedMotion } from '../../hooks/useMediaQuery';
 import { outlineVariants } from './docs-layout.variants';
 
 export interface OutlineItem {
@@ -60,6 +61,7 @@ export function Outline({
   ref,
   ...props
 }: OutlineProps) {
+  const reduce = usePrefersReducedMotion();
   const { t } = useI18n();
   const label = labelProp ?? t('nav.onThisPage');
   const [inner, setInner] = useState<string | undefined>(items[0]?.id);
@@ -101,8 +103,6 @@ export function Outline({
     event.preventDefault();
     if (!target.matches(NATIVELY_FOCUSABLE)) target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });
-    const reduce =
-      typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     target.scrollIntoView?.({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
     setInner(id);
     onActiveChange?.(id);

@@ -4,6 +4,8 @@ export { cn } from './utils/cn';
 export { tv, type VariantProps } from './utils/tv';
 export type { ComponentDoc } from './doc';
 export { getOs, useOs, type Os } from './hooks/useOs';
+export { useMediaQuery, usePrefersReducedMotion } from './hooks/useMediaQuery';
+export { useBreakpoint, useBreakpointValue, type Breakpoint, type BreakpointOptions } from './hooks/useBreakpoint';
 
 // i18n
 export * from './i18n';

@@ -10,6 +10,14 @@
    ============================================================================ */
 import { buildEntries, sortEntries, PackageDocs } from './package-docs.jsx';
 
+const hooksDocs = import.meta.glob('../../../../packages/ui/src/hooks/*.doc.ts', { eager: true, import: 'doc' });
+const hooksExamples = import.meta.glob('../../../../packages/ui/src/hooks/examples/*.tsx', { eager: true });
+const hooksSources = import.meta.glob('../../../../packages/ui/src/hooks/examples/*.tsx', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+});
+
 const docs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', { eager: true, import: 'doc' });
 // Whole modules: helper files in examples/ (fixtures, demo routers) have no default export.
 const exampleModules = import.meta.glob('../../../../packages/ui/src/components/*/examples/*.tsx', { eager: true });
@@ -78,6 +86,15 @@ const exampleOwnerOf = (path, folders) => {
 };
 
 const COMPONENTS = sortEntries([
+  ...buildEntries({
+    docs: hooksDocs,
+    examples: withDefault(hooksExamples),
+    sources: hooksSources,
+    folderOf: docNameOf,
+    ownerOf: exampleOwnerOf,
+    forProduct,
+    apiKind: 'hooks',
+  }),
   ...buildEntries({
     docs: themeDocs,
     examples: withDefault(themeExamples),

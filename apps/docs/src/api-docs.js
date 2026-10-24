@@ -7,6 +7,7 @@
 const chartDocs = import.meta.glob('../../../packages/charts/src/*.doc.ts', { eager: true, import: 'doc' });
 const utilsDocs = import.meta.glob('../../../packages/ui/src/utils/*.doc.ts', { eager: true, import: 'doc' });
 const themeDocs = import.meta.glob('../../../packages/ui/src/theme/*.doc.ts', { eager: true, import: 'doc' });
+const hooksDocs = import.meta.glob('../../../packages/ui/src/hooks/*.doc.ts', { eager: true, import: 'doc' });
 const componentDocs = import.meta.glob('../../../packages/ui/src/components/*/*.doc.ts', {
   eager: true,
   import: 'doc',
@@ -17,6 +18,7 @@ const chatDocs = import.meta.glob('../../../packages/chat/src/*/*.doc.ts', { eag
 // @gntik-ai/ui/forms: the optional react-hook-form entry keeps its files flat, one *.doc.ts per piece.
 const formsDocs = import.meta.glob('../../../packages/ui/src/forms/*.doc.ts', { eager: true, import: 'doc' });
 const sources = {
+  ...import.meta.glob('../../../packages/ui/src/hooks/*.ts', { eager: true, query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/ui/src/theme/*.{ts,tsx}', { eager: true, query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/charts/src/*.{ts,tsx}', { eager: true, query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/ui/src/utils/*.ts', { eager: true, query: '?raw', import: 'default' }),
@@ -302,6 +304,8 @@ function folderKey(path, docBase) {
   if (m && docBase && m[1].startsWith(`${docBase}.`)) return `utils/${docBase}`;
   m = /\/ui\/src\/theme\/([^/]+)$/.exec(path);
   if (m && docBase && m[1].startsWith(`${docBase}.`)) return `theme/${docBase}`;
+  m = /\/ui\/src\/hooks\/([^/]+)$/.exec(path);
+  if (m && docBase && m[1].startsWith(`${docBase}.`)) return `hooks/${docBase}`;
   return null;
 }
 
@@ -342,6 +346,7 @@ const apiOf = (docs) =>
 export const CHART_API = apiOf(chartDocs);
 export const UTILS_API = apiOf(utilsDocs);
 export const THEME_API = apiOf(themeDocs);
+export const HOOK_API = apiOf(hooksDocs);
 export const COMPONENT_API = apiOf(componentDocs);
 export const LAYOUT_API = apiOf(layoutDocs);
 export const CHAT_API = apiOf(chatDocs);

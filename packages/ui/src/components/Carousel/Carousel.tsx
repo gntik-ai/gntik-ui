@@ -1,4 +1,5 @@
 import { useI18n } from '../../i18n/I18nProvider';
+import { usePrefersReducedMotion } from '../../hooks/useMediaQuery';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import {
   Children,
@@ -49,9 +50,6 @@ export interface CarouselProps extends CarouselVariantProps {
   className?: string;
 }
 
-const prefersReducedMotion = () =>
-  typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-
 /**
  * Scroll-snap media strip (APG carousel pattern): a labelled region with
  * `aria-roledescription="carousel"`, slides as labelled groups, previous/next buttons,
@@ -73,6 +71,7 @@ export function Carousel({
   labels: labelsProp,
   className,
 }: CarouselProps) {
+  const reducedMotion = usePrefersReducedMotion();
   const { t } = useI18n();
   const labels: CarouselLabels = {
     previous: t('carousel.previous'),
@@ -88,7 +87,9 @@ export function Carousel({
   const total = slides.length;
   const [inner, setInner] = useState(defaultIndex);
   const current = Math.min(Math.max(index ?? inner, 0), Math.max(total - 1, 0));
-  const [playing, setPlaying] = useState(() => !!autoplay && !prefersReducedMotion());
+  // Until the reader uses the play control, follow the preference after hydration too.
+  const [requestedPlaying, setPlaying] = useState<boolean | undefined>();
+  const playing = requestedPlaying ?? (!!autoplay && !reducedMotion);
   const [held, setHeld] = useState(false);
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const scrollingTo = useRef<number | null>(null);
@@ -100,7 +101,7 @@ export function Carousel({
     const el = viewportRef.current?.querySelector<HTMLElement>(`[data-slide-index="${i}"]`);
     if (!el || !viewportRef.current) return;
     scrollingTo.current = i;
-    const behavior: ScrollBehavior = prefersReducedMotion() ? 'auto' : 'smooth';
+    const behavior: ScrollBehavior = reducedMotion ? 'auto' : 'smooth';
     const vp = viewportRef.current;
     const rtl = getComputedStyle(vp).direction === 'rtl';
     const delta = rtl
@@ -191,7 +192,7 @@ export function Carousel({
             type="button"
             className={s.control()}
             aria-label={playing ? labels.pause : labels.play}
-            onClick={() => setPlaying((p) => !p)}
+            onClick={() => setPlaying(!playing)}
           >
             {playing ? <Pause size={14} aria-hidden /> : <Play size={14} aria-hidden />}
           </button>

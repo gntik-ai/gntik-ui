@@ -1,4 +1,5 @@
 import { useI18n } from '../../i18n/I18nProvider';
+import { usePrefersReducedMotion } from '../../hooks/useMediaQuery';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { X } from 'lucide-react';
 import { useLayoutEffect, useRef, useState, type KeyboardEvent, type ReactNode, type RefObject } from 'react';
@@ -78,6 +79,7 @@ export function Tour({
   labels: labelsProp,
   className,
 }: TourProps) {
+  const reduced = usePrefersReducedMotion();
   const portalContainer = usePortalContainer();
   const { t } = useI18n();
   const labels: TourLabels = {
@@ -118,7 +120,6 @@ export function Tour({
     const ring = ringRef.current;
     const el = isOpen ? resolve(current?.target) : null;
     if (!el) return;
-    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     el.scrollIntoView?.({ block: 'center', inline: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
     if (!ring) return;
     const place = () => {
@@ -137,7 +138,7 @@ export function Tour({
       window.removeEventListener('scroll', place, true);
       window.removeEventListener('resize', place);
     };
-  }, [isOpen, current?.target]);
+  }, [isOpen, current?.target, reduced]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const tag = (e.target as HTMLElement).tagName;
