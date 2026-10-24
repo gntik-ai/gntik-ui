@@ -1,5 +1,20 @@
 # @gntik-ai/ui
 
+## 0.12.0
+
+### Minor Changes
+
+- 061c035: Add DownloadButton, downloadFile and safe CSV serialization with spreadsheet formula protection.
+- 87bc7c2: Add CSPProvider and useCSP to forward app nonces to inline elements, support disabling style elements, and retain native scrollbar hiding with static classes.
+- 834d3a8: Add provider display time zones, DST-safe conversion helpers and zone-aware scheduling calendars while preserving existing runtime and cron behavior.
+- cd9b1bd: Add SSR-safe media query and breakpoint hooks with shared breakpoint tokens, and use them for responsive panels and reduced-motion behaviour. Preserve upward log scrolling when wrapped rows finish measuring.
+
+### Patch Changes
+
+- 52eee4d: A rejected contact onSubmit now shows a visitor-facing error with localized default text or submitErrorMessage, preserving form values for another attempt.
+- Updated dependencies [cd9b1bd]
+  - @gntik-ai/tokens@0.4.0
+
 ## 0.11.0
 
 ### Minor Changes

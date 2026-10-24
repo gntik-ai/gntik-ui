@@ -1,5 +1,11 @@
 # @gntik-ai/tokens
 
+## 0.4.0
+
+### Minor Changes
+
+- cd9b1bd: Add SSR-safe media query and breakpoint hooks with shared breakpoint tokens, and use them for responsive panels and reduced-motion behaviour. Preserve upward log scrolling when wrapped rows finish measuring.
+
 ## 0.3.0
 
 ### Minor Changes

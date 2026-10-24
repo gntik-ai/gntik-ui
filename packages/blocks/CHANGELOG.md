@@ -1,5 +1,26 @@
 # @gntik-ai/blocks
 
+## 0.12.0
+
+### Minor Changes
+
+- 834d3a8: Add provider display time zones, DST-safe conversion helpers and zone-aware scheduling calendars while preserving existing runtime and cron behavior.
+
+### Patch Changes
+
+- 41a4991: Report failed clipboard writes in chat, DescriptionListCard and LogViewer; onCopy and onCopyLine now fire only after successful writes, so click-based analytics may record fewer events.
+- cd9b1bd: Add SSR-safe media query and breakpoint hooks with shared breakpoint tokens, and use them for responsive panels and reduced-motion behaviour. Preserve upward log scrolling when wrapped rows finish measuring.
+- Updated dependencies [061c035]
+- Updated dependencies [87bc7c2]
+- Updated dependencies [52eee4d]
+- Updated dependencies [834d3a8]
+- Updated dependencies [cd9b1bd]
+  - @gntik-ai/ui@0.12.0
+  - @gntik-ai/tokens@0.4.0
+  - @gntik-ai/charts@0.12.0
+  - @gntik-ai/editor@0.12.0
+  - @gntik-ai/flow@0.12.0
+
 ## 0.11.0
 
 ### Minor Changes
