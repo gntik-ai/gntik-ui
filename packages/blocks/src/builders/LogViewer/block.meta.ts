@@ -6,7 +6,7 @@ export const meta: BlockMeta = {
   family: 'builders',
   status: 'beta',
   description:
-    'Windowed log stream (role="log"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional wrap (default false) shows full messages in measured, variable-height rows; rowHeight estimates unmeasured rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label, including per-level chip and filter names through labels.levels. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Copied log text and imported fixtures stay unchanged. See the Catalog labels and Full messages and level names live previews.',
+    'Windowed log stream (role="log"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional wrap (default false) shows full messages in measured, variable-height rows; rowHeight estimates unmeasured rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label, including per-level chip and filter names through labels.levels. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Copied log text and imported fixtures stay unchanged. See the Catalog labels and Full messages and level names live previews. Copy actions await the clipboard write; denied or unavailable access shows common.copyFailed (overridden by labels.copyFailed), and only a successful write calls onCopyLine. Both results reset after 1500ms. See the Catalog labels live preview.',
   labels: [
     { key: 'title', type: 'string', state: 'Visible heading and log region name; title prop wins' },
     { key: 'levelFilter', type: 'string', state: 'Level filter group name' },
@@ -22,6 +22,7 @@ export const meta: BlockMeta = {
     { key: 'empty', type: 'string', state: 'No matching lines' },
     { key: 'inspect', type: '(timestamp: string) => string', state: 'Inspect button name when onSelectLine exists' },
     { key: 'copy', type: '(timestamp: string) => string', state: 'Copy button before copying' },
+    { key: 'copyFailed', type: 'string', state: 'Copy button after a failed write, only on the affected line' },
     { key: 'copied', type: 'string', state: 'Copy button after copying' },
   ] satisfies Array<{ key: keyof LogViewerLabels; type: string; state: string }>,
   uses: ['ToggleGroup', 'Toggle', 'Input', 'Switch', 'IconButton'],

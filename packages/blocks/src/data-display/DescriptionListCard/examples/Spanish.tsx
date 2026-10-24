@@ -1,4 +1,4 @@
-import { I18nProvider, Stack } from '@gntik-ai/ui';
+import { I18nProvider, Stack, en } from '@gntik-ai/ui';
 import { DescriptionListCard } from '../DescriptionListCard';
 export default function Spanish() {
   return (
@@ -8,6 +8,7 @@ export default function Spanish() {
         <DescriptionListCard
           onEdit={() => {}}
           labels={{
+            copyFailed: en['common.copyFailed'],
             title: 'Resource details',
             description: 'Current settings',
             edit: 'Change',

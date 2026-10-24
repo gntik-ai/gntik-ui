@@ -1,5 +1,5 @@
 import { Button, useI18n } from '@gntik-ai/ui';
-import { Check, Copy } from 'lucide-react';
+import { Check, Copy, X } from 'lucide-react';
 import { useCopy } from '../utils/useCopy';
 import { markdownStyles } from './markdown.variants';
 
@@ -15,7 +15,7 @@ export interface CodeBlockProps {
 
 /** Fenced code with a language label and a copy button. */
 export function CodeBlock({ code, language, className }: CodeBlockProps) {
-  const { copied, copy } = useCopy();
+  const { copied, status, copy } = useCopy();
   const { t } = useI18n();
   return (
     <div className={className ? `${s.root} ${className}` : s.root} data-language={language}>
@@ -24,12 +24,12 @@ export function CodeBlock({ code, language, className }: CodeBlockProps) {
         <Button
           size="sm"
           variant="ghost"
-          icon={copied ? Check : Copy}
-          aria-label={copied ? t('chat.copiedCode') : t('chat.copyCode')}
+          icon={status === 'failed' ? X : copied ? Check : Copy}
+          aria-label={status === 'failed' ? t('common.copyFailed') : copied ? t('chat.copiedCode') : t('chat.copyCode')}
           className="h-7 px-2"
           onClick={() => void copy(code)}
         >
-          {copied ? t('common.copied') : t('common.copy')}
+          {status === 'failed' ? t('common.copyFailed') : copied ? t('common.copied') : t('common.copy')}
         </Button>
       </div>
       <pre className={s.pre}>

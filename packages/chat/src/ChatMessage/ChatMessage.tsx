@@ -1,5 +1,5 @@
 import { Avatar, IconButton, SimpleTooltip, cn, getInitials, useI18n, type MessageKey } from '@gntik-ai/ui';
-import { Check, Copy, RotateCcw, Sparkles, ThumbsDown, ThumbsUp, Wrench } from 'lucide-react';
+import { Check, Copy, RotateCcw, Sparkles, ThumbsDown, ThumbsUp, Wrench, X } from 'lucide-react';
 import { useId, type ReactNode, type Ref } from 'react';
 import { TypingIndicator, streamingCaret } from '../TypingIndicator';
 import { formatTime } from '../utils/format';
@@ -93,7 +93,7 @@ export function ChatMessage({
   const { t } = useI18n();
   const name = author ?? t(DEFAULT_AUTHOR[role]);
   const v = s.role[role];
-  const { copied, copy } = useCopy();
+  const { copied, status, copy } = useCopy();
   const isEmpty = children === undefined || children === null || children === '';
   const time =
     timestamp instanceof Date ? (
@@ -144,11 +144,15 @@ export function ChatMessage({
             className={cn(s.actions, alwaysShowActions && s.actionsVisible)}
           >
             {copyText !== undefined && (
-              <SimpleTooltip content={copied ? t('common.copied') : t('common.copy')}>
+              <SimpleTooltip
+                content={status === 'failed' ? t('common.copyFailed') : copied ? t('common.copied') : t('common.copy')}
+              >
                 <IconButton
                   size="sm"
-                  icon={copied ? Check : Copy}
-                  label={copied ? t('common.copied') : t('chat.copyMessage')}
+                  icon={status === 'failed' ? X : copied ? Check : Copy}
+                  label={
+                    status === 'failed' ? t('common.copyFailed') : copied ? t('common.copied') : t('chat.copyMessage')
+                  }
                   onClick={() => void copy(copyText)}
                 />
               </SimpleTooltip>

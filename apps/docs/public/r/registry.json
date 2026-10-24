@@ -1973,7 +1973,7 @@
       "name": "chat-message",
       "type": "registry:ui",
       "title": "ChatMessage",
-      "description": "One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows a TypingIndicator (\"Assistant is typing\") until text arrives and a caret after streamed plain text; ChatAnnouncer announces start and end once instead of every token.",
+      "description": "One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows a TypingIndicator (\"Assistant is typing\") until text arrives and a caret after streamed plain text; ChatAnnouncer announces start and end once instead of every token. Copy actions show common.copyFailed when clipboard access is denied or unavailable, with no success icon; successful copies keep their labels and reset after 1600ms. See the bilingual Result feedback live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui",
@@ -3782,7 +3782,7 @@
       "name": "description-list-card",
       "type": "registry:block",
       "title": "Description list card",
-      "description": "Key–value detail card with mono, status and rich values, copy-to-clipboard buttons and an Edit action. Optional labels?: Partial<DescriptionListCardLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview. wrap?: boolean (default false) shows full values and breaks long unbroken strings. columns?: 1 | 2 | 3 (default 1) stacks terms above values in two or three columns from sm, with one column below sm; items fill contiguous top-to-bottom chunks of ceil(item count / columns), and dividers stay within each column. Defaults preserve the original single-column rows. See the Spanish live preview for wrapping and both column layouts.",
+      "description": "Key–value detail card with mono, status and rich values, copy-to-clipboard buttons and an Edit action. Optional labels?: Partial<DescriptionListCardLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview. wrap?: boolean (default false) shows full values and breaks long unbroken strings. columns?: 1 | 2 | 3 (default 1) stacks terms above values in two or three columns from sm, with one column below sm; items fill contiguous top-to-bottom chunks of ceil(item count / columns), and dividers stay within each column. Defaults preserve the original single-column rows. See the Spanish live preview for wrapping and both column layouts. Copy actions await the clipboard write; denied or unavailable access shows common.copyFailed (overridden by labels.copyFailed), and only a successful write calls onCopy. Both results reset after 1500ms. See the Catalog labels live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -6511,7 +6511,7 @@
       "name": "log-viewer",
       "type": "registry:block",
       "title": "Log viewer",
-      "description": "Windowed log stream (role=\"log\"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional wrap (default false) shows full messages in measured, variable-height rows; rowHeight estimates unmeasured rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label, including per-level chip and filter names through labels.levels. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Copied log text and imported fixtures stay unchanged. See the Catalog labels and Full messages and level names live previews.",
+      "description": "Windowed log stream (role=\"log\"): level filter, search with highlighted matches, follow-tail and per-line copy. Renders only the visible rows. Optional wrap (default false) shows full messages in measured, variable-height rows; rowHeight estimates unmeasured rows. Optional labels?: Partial<LogViewerLabels> overrides each built-in label, including per-level chip and filter names through labels.levels. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Copied log text and imported fixtures stay unchanged. See the Catalog labels and Full messages and level names live previews. Copy actions await the clipboard write; denied or unavailable access shows common.copyFailed (overridden by labels.copyFailed), and only a successful write calls onCopyLine. Both results reset after 1500ms. See the Catalog labels live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -6555,7 +6555,7 @@
       "name": "markdown",
       "type": "registry:ui",
       "title": "Markdown",
-      "description": "Safe, token-styled markdown for model output (react-markdown + remark-gfm): headings, lists, task lists, tables, blockquotes, inline and fenced code with a copy button, links with an external marker. Raw HTML is never rendered, unsafe URL schemes are stripped, and partial streamed input (unclosed fences) renders cleanly.",
+      "description": "Safe, token-styled markdown for model output (react-markdown + remark-gfm): headings, lists, task lists, tables, blockquotes, inline and fenced code with a copy button, links with an external marker. Raw HTML is never rendered, unsafe URL schemes are stripped, and partial streamed input (unclosed fences) renders cleanly. Copy actions show common.copyFailed when clipboard access is denied or unavailable, with no success icon; successful copies keep their labels and reset after 1600ms. See the bilingual Result feedback live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui",
@@ -6813,7 +6813,7 @@
       "name": "message-feedback",
       "type": "registry:ui",
       "title": "MessageFeedback",
-      "description": "Actions for an assistant reply: copy, regenerate and thumbs up / down toggles (aria-pressed). Thumbs down opens a popover with a reason picker and an optional comment. Controlled with `value` + `onFeedback`; pressing the active thumb clears it. A polite status confirms the feedback.",
+      "description": "Actions for an assistant reply: copy, regenerate and thumbs up / down toggles (aria-pressed). Thumbs down opens a popover with a reason picker and an optional comment. Controlled with `value` + `onFeedback`; pressing the active thumb clears it. A polite status confirms the feedback. Copy actions show common.copyFailed when clipboard access is denied or unavailable, with no success icon; successful copies keep their labels and reset after 1600ms. See the bilingual Result feedback live preview.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui",

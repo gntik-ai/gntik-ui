@@ -7,6 +7,30 @@ import { makeLogLines } from './fixtures';
 const renderedLines = () => document.querySelectorAll('[data-slot="log-line"]');
 
 describe('LogViewer', () => {
+  it.each(['rejected', 'missing'] as const)(
+    'reports a %s clipboard write only on that line without calling onCopyLine',
+    async (failure) => {
+      userEvent.setup();
+      const clipboard = navigator.clipboard;
+      if (failure === 'missing')
+        Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+      else vi.spyOn(navigator.clipboard, 'writeText').mockRejectedValue(new DOMException('Denied', 'NotAllowedError'));
+      const onCopyLine = vi.fn();
+      try {
+        render(<LogViewer lines={makeLogLines(2)} onCopyLine={onCopyLine} />);
+        fireEvent.click(screen.getByRole('button', { name: 'Copy line 12:00:00.000' }));
+        const button = await screen.findByRole('button', { name: 'Copy failed' });
+        expect(button.closest('[data-slot="log-line"]')).toHaveTextContent('12:00:00.000');
+        expect(screen.getAllByRole('button', { name: /^Copy line/ })).toHaveLength(1);
+        expect(screen.queryByRole('button', { name: 'Copied' })).toBeNull();
+        expect(button.querySelector('.lucide-check')).toBeNull();
+        expect(onCopyLine).not.toHaveBeenCalled();
+      } finally {
+        Object.defineProperty(navigator, 'clipboard', { configurable: true, value: clipboard });
+        vi.restoreAllMocks();
+      }
+    },
+  );
   it('follows the bottom, stops after scrolling up more than a row and resumes on demand', async () => {
     const user = userEvent.setup();
     const { rerender } = render(<LogViewer lines={makeLogLines(100)} height={240} rowHeight={24} />);

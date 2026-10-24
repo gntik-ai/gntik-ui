@@ -1,5 +1,5 @@
 import { TooltipProvider } from '@gntik-ai/ui';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
@@ -24,6 +24,22 @@ function Controlled(props: Partial<MessageFeedbackProps> & { spy?: (v: FeedbackV
 }
 
 describe('MessageFeedback', () => {
+  it.each(['rejected', 'missing'] as const)('reports a %s clipboard write as failed', async (failure) => {
+    userEvent.setup();
+    const clipboard = navigator.clipboard;
+    if (failure === 'missing') Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+    else vi.spyOn(navigator.clipboard, 'writeText').mockRejectedValue(new DOMException('Denied', 'NotAllowedError'));
+    try {
+      render(<Controlled copyText="Answer" />);
+      fireEvent.click(screen.getByRole('button', { name: 'Copy message' }));
+      const button = await screen.findByRole('button', { name: 'Copy failed' });
+      expect(screen.queryByRole('button', { name: 'Copied' })).toBeNull();
+      expect(button.querySelector('.lucide-check')).toBeNull();
+    } finally {
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: clipboard });
+      vi.restoreAllMocks();
+    }
+  });
   it('Tab reaches copy, regenerate, good and bad in order', async () => {
     const user = userEvent.setup();
     render(<Controlled copyText="x" onRegenerate={() => {}} />);

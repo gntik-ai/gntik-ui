@@ -1,4 +1,4 @@
-import { Check, Copy, Pencil } from '@gntik-ai/icons';
+import { Check, Copy, Pencil, X } from '@gntik-ai/icons';
 import {
   Button,
   Card,
@@ -37,6 +37,7 @@ export interface DescriptionListCardLabels {
   copy: (label: string) => string;
   copied: (label: string) => string;
   copiedToClipboard: string;
+  copyFailed?: string;
 }
 
 export interface DescriptionListCardProps {
@@ -69,27 +70,50 @@ function CopyButton({
   labels?: Partial<DescriptionListCardLabels>;
 }) {
   const { t } = useI18n();
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const copied = status === 'copied';
+  const failedText = labels?.copyFailed ?? t('common.copyFailed');
   const timer = useRef<number | undefined>(undefined);
-  useEffect(() => () => window.clearTimeout(timer.current), []);
+  const mounted = useRef(true);
+  const attempt = useRef(0);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+      attempt.current += 1;
+      window.clearTimeout(timer.current);
+    };
+  }, []);
   const copy = async () => {
-    const text = item.copyValue ?? item.value ?? '';
-    try {
-      await navigator.clipboard?.writeText(text);
-    } catch {}
-    setCopied(true);
-    onCopy?.(item);
     window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setCopied(false), 1500);
+    const current = ++attempt.current;
+    const text = item.copyValue ?? item.value ?? '';
+    let next: 'copied' | 'failed' = 'failed';
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        next = 'copied';
+      }
+    } catch {
+      // Clipboard permission errors are shown and announced below.
+    }
+    if (!mounted.current) return;
+    if (current === attempt.current) {
+      setStatus(next);
+      timer.current = window.setTimeout(() => setStatus('idle'), 1500);
+    }
+    if (next === 'copied') onCopy?.(item);
   };
   return (
     <>
       <IconButton
-        icon={copied ? Check : Copy}
+        icon={status === 'failed' ? X : copied ? Check : Copy}
         label={
-          copied
-            ? (labels?.copied?.(item.label) ?? t('descriptionList.copied', { label: item.label }))
-            : (labels?.copy?.(item.label) ?? t('descriptionList.copy', { label: item.label }))
+          status === 'failed'
+            ? failedText
+            : copied
+              ? (labels?.copied?.(item.label) ?? t('descriptionList.copied', { label: item.label }))
+              : (labels?.copy?.(item.label) ?? t('descriptionList.copy', { label: item.label }))
         }
         size="sm"
         variant="ghost"
@@ -97,7 +121,7 @@ function CopyButton({
         onClick={copy}
       />
       <span className="sr-only" aria-live="polite">
-        {copied ? (labels?.copiedToClipboard ?? t('common.copiedToClipboard')) : ''}
+        {status === 'failed' ? failedText : copied ? (labels?.copiedToClipboard ?? t('common.copiedToClipboard')) : ''}
       </span>
     </>
   );
