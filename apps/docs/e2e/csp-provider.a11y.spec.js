@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
+import { closed } from './block-labels.helpers.js';
 
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
 const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
@@ -28,10 +29,14 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       await audit();
       await page.getByRole('button', { name: 'Disable style elements' }).click();
       if (kind === 'block') {
-        await page.getByRole('combobox', { name: 'Preview choice' }).click();
+        const trigger = page.getByRole('combobox', { name: 'Preview choice' });
+        await trigger.click();
         await expect(page.getByRole('listbox')).toBeVisible();
         await audit('[role="listbox"]');
         await page.keyboard.press('Escape');
+        // Audit the closed page after Base UI removes its focus guards and restores focus.
+        await closed(page, 'listbox');
+        await expect(trigger).toBeFocused();
       }
       await audit();
     });
