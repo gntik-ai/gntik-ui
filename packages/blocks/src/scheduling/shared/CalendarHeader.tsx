@@ -1,9 +1,11 @@
 import type { ReactNode } from 'react';
-import { Button, IconButton, useI18n } from '@gntik-ai/ui';
+import { Button, IconButton, useI18n, formatTimeZoneLabel } from '@gntik-ai/ui';
 import { ChevronLeft, ChevronRight } from '@gntik-ai/icons';
 
 export interface CalendarHeaderProps {
   titleId: string;
+  timeZone?: string;
+  referenceDate?: Date;
   title: string;
   subtitle?: string;
   prevLabel: string;
@@ -16,6 +18,8 @@ export interface CalendarHeaderProps {
 
 /** Title + previous / today / next navigation + caller actions. */
 export function CalendarHeader({
+  timeZone = 'system',
+  referenceDate,
   titleId,
   title,
   subtitle,
@@ -37,6 +41,7 @@ export function CalendarHeader({
         >
           {title}
         </h3>
+        <TimeZoneLabel id={`${titleId}-zone`} timeZone={timeZone} referenceDate={referenceDate} />
         {subtitle && <p className="mt-0.5 truncate font-mono text-[11px] text-muted-foreground">{subtitle}</p>}
       </div>
       <div className="flex shrink-0 items-center gap-2">
@@ -50,5 +55,25 @@ export function CalendarHeader({
         {actions}
       </div>
     </div>
+  );
+}
+
+/** Shared, wrapping zone caption for calendar and agenda headers. */
+export function TimeZoneLabel({
+  id,
+  timeZone,
+  referenceDate,
+}: {
+  id?: string;
+  timeZone: string;
+  referenceDate?: Date;
+}) {
+  const { t } = useI18n();
+  if (timeZone === 'system') return null;
+  const zone = timeZone === 'UTC' ? 'UTC' : `${timeZone} (${formatTimeZoneLabel(timeZone, referenceDate, 'en-US')})`;
+  return (
+    <p id={id} className="mt-0.5 break-words text-[11px] text-muted-foreground">
+      {t('scheduling.timeZone', { zone })}
+    </p>
   );
 }

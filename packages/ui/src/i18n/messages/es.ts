@@ -305,6 +305,8 @@ export const es: Messages = {
   'calendar.localeDefaults': 'Valores predeterminados regionales',
   'calendar.previousMonth': 'Mes anterior',
   'calendar.nextMonth': 'Mes siguiente',
+  'scheduling.displayTimeZone': 'Zona horaria de visualización',
+  'scheduling.timeZone': 'Horas en {zone}',
   'calendar.today': 'Hoy',
   'periodPicker.previousYear': 'Año anterior',
   'periodPicker.nextYear': 'Año siguiente',

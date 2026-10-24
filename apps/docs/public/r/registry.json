@@ -168,7 +168,7 @@
       "name": "agenda-list",
       "type": "registry:block",
       "title": "Agenda list",
-      "description": "Upcoming scheduled work grouped by day (Today/Tomorrow labels), each row with a kind tile, locale-formatted time range, location and kind badge; empty state included. hourCycle overrides the provider/runtime clock. Locale examples show en-US, es-ES, then en-US with the 24-hour override.",
+      "description": "Upcoming scheduled work grouped by day (Today/Tomorrow labels), each row with a kind tile, locale-formatted time range, location and kind badge; empty state included. hourCycle overrides the provider/runtime clock. timeZone defaults to I18nProvider (system when unset); TimeZone examples demonstrate UTC, an explicit New York override and a Spanish Madrid provider. Use the same zone on server and client. Locale examples show en-US, es-ES, then en-US with the 24-hour override.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -195,6 +195,11 @@
           "path": "packages/blocks/src/scheduling/AgendaList/AgendaList.tsx",
           "type": "registry:component",
           "target": "components/blocks/scheduling/agenda-list/AgendaList.tsx"
+        },
+        {
+          "path": "packages/blocks/src/scheduling/shared/CalendarHeader.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/scheduling/shared/CalendarHeader.tsx"
         },
         {
           "path": "packages/blocks/src/scheduling/shared/EventTile.tsx",
@@ -373,6 +378,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Alert/Alert.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/alert/Alert.doc.ts"
@@ -450,6 +460,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/AlertDialog/AlertDialog.doc.ts",
@@ -852,6 +867,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/AuthLayout/AuthLayout.tsx",
           "type": "registry:component",
           "target": "components/layouts/auth-layout/AuthLayout.tsx"
@@ -938,6 +958,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Avatar/Avatar.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/avatar/Avatar.doc.ts"
@@ -1013,6 +1038,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Badge/Badge.doc.ts",
@@ -1201,6 +1231,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/BottomSheet/BottomSheet.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/bottom-sheet/BottomSheet.doc.ts"
@@ -1277,6 +1312,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Breadcrumbs/Breadcrumbs.doc.ts",
@@ -1483,6 +1523,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Calendar/Calendar.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/calendar/Calendar.doc.ts"
@@ -1545,6 +1590,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/layouts/CanvasLayout/CanvasLayout.tsx",
@@ -1686,6 +1736,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Carousel/Carousel.doc.ts",
@@ -2278,6 +2333,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/CodeBlock/CodeBlock.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/code-block/CodeBlock.doc.ts"
@@ -2524,6 +2584,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Combobox/Combobox.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/combobox/Combobox.doc.ts"
@@ -2610,6 +2675,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/CommandPalette/CommandPalette.doc.ts",
@@ -2906,6 +2976,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/CopyButton/CopyButton.doc.ts",
@@ -3253,6 +3328,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/CursorPagination/CursorPagination.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/cursor-pagination/CursorPagination.doc.ts"
@@ -3568,6 +3648,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/DateField/DateField.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/date-field/DateField.doc.ts"
@@ -3657,6 +3742,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/DatePicker/DatePicker.doc.ts",
@@ -3777,6 +3867,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/DateTimeRangePicker/DateTimeRangePicker.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/date-time-range-picker/DateTimeRangePicker.doc.ts"
@@ -3886,6 +3981,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Dialog/Dialog.doc.ts",
@@ -4015,6 +4115,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/DiffViewer/DiffViewer.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/diff-viewer/DiffViewer.doc.ts"
@@ -4124,6 +4229,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/DocsLayout/DocsLayout.tsx",
           "type": "registry:component",
           "target": "components/layouts/docs-layout/DocsLayout.tsx"
@@ -4214,6 +4324,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Drawer/Drawer.doc.ts",
@@ -5203,6 +5318,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/HoverCard/HoverCard.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/hover-card/HoverCard.doc.ts"
@@ -5375,6 +5495,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/InfoTip/InfoTip.doc.ts",
@@ -5575,6 +5700,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/InspectorLayout/InspectorLayout.tsx",
           "type": "registry:component",
           "target": "components/layouts/inspector-layout/InspectorLayout.tsx"
@@ -5752,6 +5882,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/JsonViewer/JsonViewer.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/json-viewer/JsonViewer.doc.ts"
@@ -5827,6 +5962,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/KanbanBoard/KanbanBoard.doc.ts",
@@ -5908,6 +6048,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Kbd/Kbd.doc.ts",
@@ -6001,6 +6146,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/KeyValueEditor/KeyValueEditor.doc.ts",
@@ -6211,6 +6361,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Lightbox/Lightbox.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/lightbox/Lightbox.doc.ts"
@@ -6286,6 +6441,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Link/Link.doc.ts",
@@ -6370,6 +6530,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/ListInput/ListInput.doc.ts",
@@ -6696,6 +6861,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/MegaMenu/MegaMenu.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/mega-menu/MegaMenu.doc.ts"
@@ -6812,6 +6982,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Menu/Menu.doc.ts",
@@ -7127,6 +7302,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/MobileNav/MobileNav.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/mobile-nav/MobileNav.doc.ts"
@@ -7277,7 +7457,7 @@
       "name": "month-calendar",
       "type": "registry:block",
       "title": "Month calendar",
-      "description": "Locale-first month grid of scheduled work with per-day event lines, today/selected states, month navigation and full grid keyboard support. weekStartsOn and hourCycle override provider/runtime defaults; data-weekend marks locale weekends without styling. Locale examples show en-US, es-ES, then en-US with Monday-first and 24-hour overrides.",
+      "description": "Locale-first month grid of scheduled work with per-day event lines, today/selected states, month navigation and full grid keyboard support. weekStartsOn and hourCycle override provider/runtime defaults; data-weekend marks locale weekends without styling. timeZone defaults to I18nProvider (system when unset); TimeZone examples demonstrate UTC, an explicit New York override and a Spanish Madrid provider. Use the same zone on server and client. Locale examples show en-US, es-ES, then en-US with Monday-first and 24-hour overrides.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -7401,6 +7581,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/MultiSelect/MultiSelect.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/multi-select/MultiSelect.doc.ts"
@@ -7484,6 +7669,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/NavList/NavList.doc.ts",
@@ -7651,6 +7841,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/NotificationsPopover/NotificationsPopover.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/notifications-popover/NotificationsPopover.doc.ts"
@@ -7721,6 +7916,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/NumberInput/NumberInput.doc.ts",
@@ -7797,6 +7997,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/OtpInput/OtpInput.doc.ts",
@@ -7881,6 +8086,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/OverflowList/OverflowList.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/overflow-list/OverflowList.doc.ts"
@@ -7940,6 +8150,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/layouts/Page/Page.tsx",
@@ -8127,6 +8342,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Pagination/Pagination.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/pagination/Pagination.doc.ts"
@@ -8242,6 +8462,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/PasswordInput/PasswordInput.doc.ts",
@@ -8463,6 +8688,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/PeriodPicker/PeriodPicker.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/period-picker/PeriodPicker.doc.ts"
@@ -8534,6 +8764,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/PermissionMatrix/PermissionMatrix.doc.ts",
@@ -8705,6 +8940,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Popover/Popover.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/popover/Popover.doc.ts"
@@ -8791,6 +9031,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/PowerSearch/PowerSearch.doc.ts",
@@ -8938,6 +9183,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/layouts/PrintLayout/PrintLayout.tsx",
@@ -9264,6 +9514,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/QueryBuilder/QueryBuilder.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/query-builder/QueryBuilder.doc.ts"
@@ -9512,6 +9767,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Resizable/Resizable.doc.ts",
@@ -9860,7 +10120,7 @@
       "name": "schedule-input",
       "type": "registry:ui",
       "title": "ScheduleInput",
-      "description": "Cron schedule editor: presets (hourly at minute, daily at, weekly on days at, monthly on day at) that write a 5-field cron expression, plus a raw cron field (*, lists, ranges, steps, names, macros) with validation and an error message, a plain-language summary (\"Every weekday at 09:00\") and the next runs in a time zone. Pure helpers: parseCron, describeCron, nextRuns.",
+      "description": "Cron schedule editor: presets (hourly at minute, daily at, weekly on days at, monthly on day at) that write a 5-field cron expression, plus a raw cron field (*, lists, ranges, steps, names, macros) with validation and an error message, a plain-language summary (\"Every weekday at 09:00\") and the next runs in a time zone. Pure helpers: parseCron, describeCron, nextRuns. Display timeZone defaults to I18nProvider (system when unset); use the same zone on server and client. The TimeZone example shows the provider default and UTC overrides",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -9936,6 +10196,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/ScheduleInput/ScheduleInput.doc.ts",
@@ -10173,6 +10438,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/SecretField/SecretField.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/secret-field/SecretField.doc.ts"
@@ -10333,6 +10603,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Select/Select.doc.ts",
@@ -10648,6 +10923,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/layouts/SettingsLayout/SettingsLayout.tsx",
@@ -11077,6 +11357,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/layouts/SidebarLayout/SidebarLayout.tsx",
@@ -11516,6 +11801,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Sparkline/Sparkline.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/sparkline/Sparkline.doc.ts"
@@ -11684,6 +11974,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/SplitButton/SplitButton.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/split-button/SplitButton.doc.ts"
@@ -11741,6 +12036,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/layouts/SplitLayout/SplitLayout.tsx",
@@ -11947,6 +12247,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/layouts/StackedLayout/StackedLayout.tsx",
@@ -12236,6 +12541,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/layouts/StatusLayout/StatusLayout.tsx",
           "type": "registry:component",
           "target": "components/layouts/status-layout/StatusLayout.tsx"
@@ -12445,6 +12755,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Stepper/Stepper.doc.ts",
@@ -12744,6 +13059,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Table/Table.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/table/Table.doc.ts"
@@ -12818,6 +13138,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Tabs/Tabs.doc.ts",
@@ -12905,6 +13230,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Terminal/Terminal.doc.ts",
@@ -13144,6 +13474,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/ThemeSwitcher/ThemeSwitcher.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/theme-switcher/ThemeSwitcher.doc.ts"
@@ -13219,6 +13554,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Thumbnail/Thumbnail.doc.ts",
@@ -13306,6 +13646,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/TimePicker/TimePicker.doc.ts",
@@ -13427,6 +13772,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Timer/Timer.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/timer/Timer.doc.ts"
@@ -13442,7 +13792,7 @@
       "name": "timestamp",
       "type": "registry:ui",
       "title": "Timestamp",
-      "description": "A date in a <time dateTime> element: relative (\"3 minutes ago\", Intl.RelativeTimeFormat) or absolute (Intl.DateTimeFormat), localised with `locale`. Accepts a Date, ISO string or epoch ms. Relative labels refresh on an adaptive interval that is cleared on unmount. The full date shows in a tooltip on hover or focus and is also part of the accessible text.",
+      "description": "A date in a <time dateTime> element: relative (\"3 minutes ago\", Intl.RelativeTimeFormat) or absolute (Intl.DateTimeFormat), localised with `locale`. Accepts a Date, ISO string or epoch ms. Relative labels refresh on an adaptive interval that is cleared on unmount. The full date shows in a tooltip on hover or focus and is also part of the accessible text. Display timeZone defaults to I18nProvider (system when unset); use the same zone on server and client. The TimeZone example shows the provider default and UTC overrides",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0"
@@ -13507,6 +13857,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Timestamp/Timestamp.doc.ts",
@@ -13585,6 +13940,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Toast/Toast.doc.ts",
@@ -13710,6 +14070,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Token/Token.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/token/Token.doc.ts"
@@ -13828,6 +14193,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/TokenInput/TokenInput.doc.ts",
@@ -14012,6 +14382,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/Tooltip/Tooltip.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/tooltip/Tooltip.doc.ts"
@@ -14094,6 +14469,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/Tour/Tour.doc.ts",
@@ -14220,6 +14600,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/TransferList/TransferList.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/transfer-list/TransferList.doc.ts"
@@ -14301,6 +14686,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/TreeList/TreeList.doc.ts",
@@ -14455,6 +14845,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/utils/clear-control.tsx",
@@ -14660,6 +15055,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/UserMenu/UserMenu.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/user-menu/UserMenu.doc.ts"
@@ -14819,6 +15219,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/VirtualList/VirtualList.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/virtual-list/VirtualList.doc.ts"
@@ -14895,6 +15300,11 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
           "path": "packages/ui/src/components/VisuallyHidden/VisuallyHidden.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/visually-hidden/VisuallyHidden.doc.ts"
@@ -14910,7 +15320,7 @@
       "name": "week-calendar",
       "type": "registry:block",
       "title": "Week calendar",
-      "description": "Locale-first seven-day time grid with positioned events (overlaps side by side), a now line, week navigation and optional clickable events. weekStartsOn and hourCycle override provider/runtime defaults; data-weekend marks locale weekends without styling. Locale examples show en-US, es-ES, then en-US with Monday-first and 24-hour overrides.",
+      "description": "Locale-first seven-day time grid with positioned events (overlaps side by side), a now line, week navigation and optional clickable events. weekStartsOn and hourCycle override provider/runtime defaults; data-weekend marks locale weekends without styling. timeZone defaults to I18nProvider (system when unset); TimeZone examples demonstrate UTC, an explicit New York override and a Spanish Madrid provider. Use the same zone on server and client. Locale examples show en-US, es-ES, then en-US with Monday-first and 24-hour overrides.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -15019,6 +15429,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/layouts/WizardLayout/WizardLayout.tsx",
@@ -15165,6 +15580,11 @@
           "path": "packages/ui/src/i18n/messages/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
         },
         {
           "path": "packages/ui/src/components/WorkspaceSwitcher/WorkspaceSwitcher.doc.ts",

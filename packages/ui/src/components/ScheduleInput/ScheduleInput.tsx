@@ -19,7 +19,7 @@ export interface ScheduleInputProps {
   defaultValue?: string;
   /** Fires on every edit, valid or not. */
   onValueChange?: (value: string, details: { valid: boolean; error?: CronError }) => void;
-  /** IANA time zone for the upcoming runs ("Europe/Madrid"). Defaults to the runtime's. */
+  /** IANA time zone for the upcoming runs ("Europe/Madrid"). Defaults to the I18nProvider's display zone. */
   timeZone?: string;
   /** Locale for names, lists and dates. Defaults to the I18nProvider's. */
   locale?: string;
@@ -66,7 +66,7 @@ export function ScheduleInput({
   value,
   defaultValue = '0 9 * * 1-5',
   onValueChange,
-  timeZone,
+  timeZone: timeZoneProp,
   locale: localeProp,
   previewCount = 5,
   now: nowProp,
@@ -77,7 +77,9 @@ export function ScheduleInput({
   className,
   'aria-label': ariaLabel,
 }: ScheduleInputProps) {
-  const { t } = useI18n();
+  const { t, timeZone: providerZone } = useI18n();
+  const displayZone = timeZoneProp ?? providerZone;
+  const timeZone = displayZone === 'system' ? undefined : displayZone;
   const providerLocale = useOptionalI18n()?.locale;
   const locale = localeProp ?? providerLocale ?? 'en';
   const uid = useId();

@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'beta',
   description:
-    'Cron schedule editor: presets (hourly at minute, daily at, weekly on days at, monthly on day at) that write a 5-field cron expression, plus a raw cron field (*, lists, ranges, steps, names, macros) with validation and an error message, a plain-language summary ("Every weekday at 09:00") and the next runs in a time zone. Pure helpers: parseCron, describeCron, nextRuns.',
+    'Cron schedule editor: presets (hourly at minute, daily at, weekly on days at, monthly on day at) that write a 5-field cron expression, plus a raw cron field (*, lists, ranges, steps, names, macros) with validation and an error message, a plain-language summary ("Every weekday at 09:00") and the next runs in a time zone. Pure helpers: parseCron, describeCron, nextRuns. Display timeZone defaults to I18nProvider (system when unset); use the same zone on server and client. The TimeZone example shows the provider default and UTC overrides',
   primitive: '@base-ui/react/toggle-group + Field, Input, NumberInput, TimePicker',
   pattern: 'group of form controls (segmented control, textbox, spinbuttons)',
   keyboard: [

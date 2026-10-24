@@ -278,6 +278,8 @@ export const en = {
   'calendar.localeDefaults': 'Locale defaults',
   'calendar.previousMonth': 'Previous month',
   'calendar.nextMonth': 'Next month',
+  'scheduling.displayTimeZone': 'Display time zone',
+  'scheduling.timeZone': 'Times in {zone}',
   'calendar.today': 'Today',
   'periodPicker.previousYear': 'Previous year',
   'periodPicker.nextYear': 'Next year',
@@ -992,8 +994,6 @@ export const en = {
   'signUp.policyLoading': 'Loading sign-up policy…',
   'signUp.fallbackError': 'The account could not be created.',
 } as const;
-
-/** Every built-in message key. */
+/** Every built-in message key and the complete string catalog. */
 export type MessageKey = keyof typeof en;
-/** A complete catalog: one string per built-in key. */
 export type Messages = Record<MessageKey, string>;

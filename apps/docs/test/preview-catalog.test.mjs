@@ -34,7 +34,7 @@ test('block gallery lists installable blocks while Spanish PageHeader remains pr
   }
 });
 
-test('scheduling locale previews have distinct frame titles and control names', async () => {
+test('scheduling locale and display-zone previews have distinct frame titles and control names', async () => {
   const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
   const { JSDOM } = require('jsdom');
   const React = require('react');
@@ -59,11 +59,14 @@ test('scheduling locale previews have distinct frame titles and control names', 
     for (const id of ['month-calendar', 'week-calendar', 'agenda-list']) {
       const article = dom.window.document.querySelector(`[aria-labelledby="block-${id}-t"]`);
       const titles = [...article.querySelectorAll('iframe')].map((frame) => frame.title);
-      assert.equal(titles.length, 2);
-      assert.equal(new Set(titles).size, 2, `${id} frame titles must be unique`);
+      assert.equal(titles.length, 3);
+      assert.equal(new Set(titles).size, 3, `${id} frame titles must be unique`);
       const labels = [...article.querySelectorAll('[role="group"]')].map((group) => group.getAttribute('aria-label'));
       assert.equal(new Set(labels).size, labels.length, `${id} control groups must have distinct names`);
-      assert.equal(article.querySelector('h4')?.textContent, 'Locale defaults');
+      assert.deepEqual(
+        [...article.querySelectorAll('h4')].map((heading) => heading.textContent),
+        ['Locale defaults', 'Display time zone'],
+      );
     }
   } finally {
     await server.close();

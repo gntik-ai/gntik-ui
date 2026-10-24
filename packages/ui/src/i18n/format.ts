@@ -176,7 +176,19 @@ export interface I18nFormatters {
   formatList: (items: readonly string[], options?: Intl.ListFormatOptions) => string;
 }
 
-export function createFormatters(locale: string, messages: Messages): I18nFormatters {
+export function createFormatters(locale: string, messages: Messages, timeZone = 'system'): I18nFormatters {
+  const dateCache = new Map<string, Intl.DateTimeFormat>();
+  const formatDate = (value: DateValue, options: Intl.DateTimeFormatOptions = { dateStyle: 'medium' }) => {
+    const zone = options.timeZone ?? timeZone;
+    const resolved = { ...options, timeZone: zone === 'system' ? undefined : zone };
+    const key = JSON.stringify(resolved);
+    let formatter = dateCache.get(key);
+    if (!formatter) {
+      formatter = new Intl.DateTimeFormat(locale, resolved);
+      dateCache.set(key, formatter);
+    }
+    return formatter.format(toDate(value));
+  };
   function formatRelativeTime(
     value: number,
     unit: Intl.RelativeTimeFormatUnit,
@@ -202,8 +214,7 @@ export function createFormatters(locale: string, messages: Messages): I18nFormat
     formatBytes: (value, options) => formatBytes(value, { locale, ...options }),
     formatCurrency: (value, currency, options) =>
       new Intl.NumberFormat(locale, { style: 'currency', currency, ...options }).format(value),
-    formatDate: (value, options = { dateStyle: 'medium' }) =>
-      new Intl.DateTimeFormat(locale, options).format(toDate(value)),
+    formatDate,
     formatRelativeTime,
     formatList: (items, options = { style: 'long', type: 'conjunction' }) =>
       new Intl.ListFormat(locale, options).format(items),

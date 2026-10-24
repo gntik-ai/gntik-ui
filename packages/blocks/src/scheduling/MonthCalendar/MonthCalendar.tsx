@@ -1,9 +1,10 @@
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import { cn, useI18n, localeWeekStart, type WeekDay } from '@gntik-ai/ui';
+import { cn, useI18n, zonedParts, localeWeekStart, type WeekDay } from '@gntik-ai/ui';
 import { useSchedulingClock } from '../shared/useSchedulingClock';
 import { CalendarHeader } from '../shared/CalendarHeader';
 import {
   type HourCycle,
+  weekday,
   addDays,
   addMonths,
   dayKey,
@@ -24,6 +25,8 @@ import { sampleEvents, sampleToday } from '../shared/fixtures';
 
 export interface MonthCalendarProps {
   events?: ScheduleEvent[];
+  /** Display time zone; defaults to the I18nProvider zone (system outside a provider). */
+  timeZone?: string;
   /** Clock used for event times; defaults to the provider or runtime locale. */
   hourCycle?: HourCycle;
   /** First weekday; defaults to the provider or runtime locale. */
@@ -53,6 +56,7 @@ export interface MonthCalendarProps {
  */
 export function MonthCalendar({
   events = sampleEvents,
+  timeZone: timeZoneProp,
   hourCycle: hourCycleProp,
   weekStartsOn: weekStartsOnProp,
   today = sampleToday,
@@ -65,56 +69,61 @@ export function MonthCalendar({
   actions,
   className,
 }: MonthCalendarProps) {
-  const { t, locale, dir } = useI18n();
+  const { t, locale, dir, timeZone: providerZone } = useI18n();
+  const timeZone = timeZoneProp ?? providerZone;
   const clock = useSchedulingClock(hourCycleProp);
   const weekStartsOn = weekStartsOnProp ?? localeWeekStart(clock.locale);
   const titleId = useId();
-  const [selected, setSelected] = useState<Date>(() => startOfDay(defaultSelected ?? today));
-  const [focused, setFocused] = useState<Date>(() => startOfDay(defaultSelected ?? defaultMonth ?? today));
-  const [month, setMonth] = useState<Date>(() => startOfMonth(defaultMonth ?? defaultSelected ?? today));
+  const [selected, setSelected] = useState<Date>(() => startOfDay(defaultSelected ?? today, timeZone));
+  const [focused, setFocused] = useState<Date>(() => startOfDay(defaultSelected ?? defaultMonth ?? today, timeZone));
+  const [month, setMonth] = useState<Date>(() => startOfMonth(defaultMonth ?? defaultSelected ?? today, timeZone));
   const gridRef = useRef<HTMLDivElement>(null);
   const moveFocus = useRef(false);
-  const byDay = useMemo(() => groupByDay(events), [events]);
-  const weeks = monthGrid(month, weekStartsOn);
+  const byDay = useMemo(() => groupByDay(events, timeZone), [events, timeZone]);
+  const weeks = monthGrid(month, weekStartsOn, timeZone);
   const weekend = weekendDays(clock.locale);
   // The roving tab stop stays inside the visible month.
-  const tabStop = sameMonth(focused, month) ? focused : sameMonth(selected, month) ? selected : month;
+  const tabStop = sameMonth(focused, month, timeZone)
+    ? focused
+    : sameMonth(selected, month, timeZone)
+      ? selected
+      : month;
 
   useEffect(() => {
     if (!moveFocus.current) return;
     moveFocus.current = false;
-    gridRef.current?.querySelector<HTMLElement>(`[data-date="${dayKey(focused)}"]`)?.focus();
-  }, [focused]);
+    gridRef.current?.querySelector<HTMLElement>(`[data-date="${dayKey(focused, timeZone)}"]`)?.focus();
+  }, [focused, timeZone]);
 
   const showMonth = (next: Date) => {
-    const first = startOfMonth(next);
+    const first = startOfMonth(next, timeZone);
     setMonth(first);
     onMonthChange?.(first);
   };
 
   const go = (date: Date) => {
     setFocused(date);
-    if (!sameMonth(date, month)) showMonth(date);
+    if (!sameMonth(date, month, timeZone)) showMonth(date);
     moveFocus.current = true;
   };
 
   const select = (date: Date) => {
     setSelected(date);
     setFocused(date);
-    onSelectDate?.(date, byDay.get(dayKey(date)) ?? []);
+    onSelectDate?.(date, byDay.get(dayKey(date, timeZone)) ?? []);
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>, date: Date) => {
-    const weekStart = startOfWeek(date, weekStartsOn);
+    const weekStart = startOfWeek(date, weekStartsOn, timeZone);
     const map: Record<string, () => Date> = {
-      ArrowLeft: () => addDays(date, dir === 'rtl' ? 1 : -1),
-      ArrowRight: () => addDays(date, dir === 'rtl' ? -1 : 1),
-      ArrowUp: () => addDays(date, -7),
-      ArrowDown: () => addDays(date, 7),
+      ArrowLeft: () => addDays(date, dir === 'rtl' ? 1 : -1, timeZone),
+      ArrowRight: () => addDays(date, dir === 'rtl' ? -1 : 1, timeZone),
+      ArrowUp: () => addDays(date, -7, timeZone),
+      ArrowDown: () => addDays(date, 7, timeZone),
       Home: () => weekStart,
-      End: () => addDays(weekStart, 6),
-      PageUp: () => new Date(date.getFullYear(), date.getMonth() - 1, Math.min(date.getDate(), 28)),
-      PageDown: () => new Date(date.getFullYear(), date.getMonth() + 1, Math.min(date.getDate(), 28)),
+      End: () => addDays(weekStart, 6, timeZone),
+      PageUp: () => addDays(addMonths(date, -1, timeZone), Math.min(zonedParts(date, timeZone).day, 28) - 1, timeZone),
+      PageDown: () => addDays(addMonths(date, 1, timeZone), Math.min(zonedParts(date, timeZone).day, 28) - 1, timeZone),
     };
     const next = map[event.key];
     if (!next) return;
@@ -125,15 +134,17 @@ export function MonthCalendar({
   return (
     <div className={cn('overflow-hidden rounded-xl border border-border bg-card', className)}>
       <CalendarHeader
+        timeZone={timeZone}
+        referenceDate={month}
         titleId={titleId}
-        title={formatMonth(month, locale)}
+        title={formatMonth(month, locale, timeZone)}
         prevLabel={t('calendar.previousMonth')}
         nextLabel={t('calendar.nextMonth')}
-        onPrev={() => showMonth(addMonths(month, -1))}
-        onNext={() => showMonth(addMonths(month, 1))}
+        onPrev={() => showMonth(addMonths(month, -1, timeZone))}
+        onNext={() => showMonth(addMonths(month, 1, timeZone))}
         onToday={() => {
           showMonth(today);
-          setFocused(startOfDay(today));
+          setFocused(startOfDay(today, timeZone));
         }}
         actions={actions}
       />
@@ -141,37 +152,37 @@ export function MonthCalendar({
         <div role="row" className="grid grid-cols-7 border-b border-border bg-secondary/30">
           {(weeks[0] ?? []).map((day) => (
             <div
-              key={day.getDay()}
+              key={weekday(day, timeZone)}
               role="columnheader"
-              aria-label={formatWeekday(day, locale, 'long')}
+              aria-label={formatWeekday(day, locale, 'long', timeZone)}
               className="py-2 text-center text-[11px] font-medium tracking-wide text-muted-foreground uppercase"
             >
-              {formatWeekday(day, locale)}
+              {formatWeekday(day, locale, 'short', timeZone)}
             </div>
           ))}
         </div>
         {weeks.map((week) => (
-          <div key={dayKey(week[0] ?? month)} role="row" className="grid grid-cols-7">
+          <div key={dayKey(week[0] ?? month, timeZone)} role="row" className="grid grid-cols-7">
             {week.map((date) => {
-              const key = dayKey(date);
+              const key = dayKey(date, timeZone);
               const list = byDay.get(key) ?? [];
-              const inMonth = sameMonth(date, month);
-              const isToday = sameDay(date, today);
-              const isSelected = sameDay(date, selected);
+              const inMonth = sameMonth(date, month, timeZone);
+              const isToday = sameDay(date, today, timeZone);
+              const isSelected = sameDay(date, selected, timeZone);
               const extra = list.length - maxEventsPerDay;
               return (
                 <div
                   key={key}
                   role="gridcell"
-                  data-weekend={weekend.includes(date.getDay() as WeekDay) ? '' : undefined}
+                  data-weekend={weekend.includes(weekday(date, timeZone)) ? '' : undefined}
                   aria-selected={isSelected}
                   className="min-w-0 border-e border-b border-border/70 [&:nth-child(7)]:border-e-0"
                 >
                   <button
                     type="button"
                     data-date={key}
-                    tabIndex={sameDay(date, tabStop) ? 0 : -1}
-                    aria-label={`${formatFullDate(date, locale)}${list.length ? `, ${t('calendar.events', { count: list.length })}` : ''}`}
+                    tabIndex={sameDay(date, tabStop, timeZone) ? 0 : -1}
+                    aria-label={`${formatFullDate(date, locale, timeZone)}${list.length ? `, ${t('calendar.events', { count: list.length })}` : ''}`}
                     aria-current={isToday ? 'date' : undefined}
                     onClick={() => select(date)}
                     onKeyDown={(e) => onKeyDown(e, date)}
@@ -194,7 +205,7 @@ export function MonthCalendar({
                                 : 'text-muted-foreground',
                         )}
                       >
-                        {date.getDate()}
+                        {zonedParts(date, timeZone).day}
                       </span>
                       {isSelected && !isToday && <span aria-hidden className="size-1.5 rounded-full bg-primary" />}
                     </span>
@@ -211,7 +222,7 @@ export function MonthCalendar({
                           <span className={cn('size-1.5 shrink-0 rounded-full', TONE[kindOf(e, kinds).tone].dot)} />
                           <span className="truncate text-[11px] text-foreground/80">{e.title}</span>
                           <span className="ms-auto hidden shrink-0 font-mono text-[10px] text-muted-foreground xl:block">
-                            {formatTime(e.start, clock.locale, clock.hourCycle)}
+                            {formatTime(e.start, clock.locale, clock.hourCycle, timeZone)}
                           </span>
                         </span>
                       ))}

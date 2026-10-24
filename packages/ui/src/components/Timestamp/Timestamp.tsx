@@ -60,8 +60,13 @@ export function Timestamp({
   className,
   ...props
 }: TimestampProps) {
-  const providerLocale = useOptionalI18n()?.locale;
-  const locale = localeProp ?? providerLocale;
+  const provider = useOptionalI18n();
+  const locale = localeProp ?? provider?.locale;
+  const zone = provider?.timeZone;
+  const optionsInZone = (options: Intl.DateTimeFormatOptions): Intl.DateTimeFormatOptions => ({
+    ...options,
+    timeZone: (options.timeZone ?? zone) === 'system' ? undefined : (options.timeZone ?? zone),
+  });
   const date = toDate(value);
   const [now, setNow] = useState(() => initialNow ?? Date.now());
   const time = date?.getTime();
@@ -89,8 +94,8 @@ export function Timestamp({
   const label =
     format === 'relative'
       ? formatRelative(date, now, locale, relativeStyle)
-      : new Intl.DateTimeFormat(locale, dateOptions).format(date);
-  const full = new Intl.DateTimeFormat(locale, tooltipOptions).format(date);
+      : new Intl.DateTimeFormat(locale, optionsInZone(dateOptions)).format(date);
+  const full = new Intl.DateTimeFormat(locale, optionsInZone(tooltipOptions)).format(date);
   const showTooltip = tooltip && full !== label;
   const element = (
     // Relative labels and locale/time-zone formatting can legitimately differ between server and client.

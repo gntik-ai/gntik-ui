@@ -5,6 +5,7 @@
  * @hourly. Day matching follows Vixie cron: when both day fields are restricted, either matches.
  */
 import { interpolate, type MessageVars } from '../../i18n/format';
+import { zonedParts, fromZonedParts, type ZonedParts } from '../../i18n/time-zone';
 import { catalogs } from '../../i18n/messages';
 import { en, type MessageKey, type Messages } from '../../i18n/messages/en';
 
@@ -197,51 +198,38 @@ interface Zone {
   toInstant: (w: Wall) => number | null;
 }
 
-const localZone: Zone = {
-  toWall: (ms) => {
-    const d = new Date(ms);
-    return { y: d.getFullYear(), mo: d.getMonth(), d: d.getDate(), h: d.getHours(), mi: d.getMinutes() };
-  },
-  toInstant: (w) => {
-    const d = new Date(w.y, w.mo, w.d, w.h, w.mi);
-    return d.getHours() === w.h && d.getMinutes() === w.mi ? d.getTime() : null;
-  },
-};
-
-function tzZone(timeZone: string): Zone {
-  const fmt = new Intl.DateTimeFormat('en-US', {
-    timeZone,
-    hourCycle: 'h23',
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-  });
-  const parts = (ms: number) => {
-    const p: Record<string, number> = {};
-    for (const part of fmt.formatToParts(new Date(ms))) if (part.type !== 'literal') p[part.type] = Number(part.value);
-    return {
-      y: p.year ?? 0,
-      mo: (p.month ?? 1) - 1,
-      d: p.day ?? 1,
-      h: (p.hour ?? 0) % 24,
-      mi: p.minute ?? 0,
-      s: p.second ?? 0,
-    };
+/** Cron preserves its historical gap skipping and explicit-zone overlap choice. */
+function cronZone(timeZone = 'system'): Zone {
+  const parts = (ms: number) => zonedParts(new Date(ms), timeZone);
+  const wallParts = (w: Wall): ZonedParts => ({ year: w.y, month: w.mo + 1, day: w.d, hour: w.h, minute: w.mi });
+  const same = (ms: number, w: Wall) => {
+    const p = parts(ms);
+    return p.year === w.y && p.month === w.mo + 1 && p.day === w.d && p.hour === w.h && p.minute === w.mi;
   };
   const offset = (ms: number) => {
     const p = parts(ms);
-    return Date.UTC(p.y, p.mo, p.d, p.h, p.mi, p.s) - (ms - (((ms % 1000) + 1000) % 1000));
+    return Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second) - ms;
   };
-  const same = (ms: number, w: Wall) => {
-    const p = parts(ms);
-    return p.y === w.y && p.mo === w.mo && p.d === w.d && p.h === w.h && p.mi === w.mi;
-  };
+  // Validate even when no candidate wall minute will be found.
+  parts(0);
   return {
-    toWall: (ms) => parts(ms),
+    toWall: (ms) => {
+      const p = parts(ms);
+      return { y: p.year, mo: p.month - 1, d: p.day, h: p.hour, mi: p.minute };
+    },
     toInstant: (w) => {
+      if (timeZone === 'system') {
+        const date = fromZonedParts(wallParts(w), timeZone);
+        if (!date) return null;
+        const local = zonedParts(date);
+        // Match the original Date-constructor guard: gap hours are skipped, while
+        // a whole skipped date may move forward with the same hour and minute.
+        return local.hour === w.h && local.minute === w.mi ? date.getTime() : null;
+      }
+      const unambiguous = fromZonedParts(wallParts(w), timeZone, 'reject');
+      if (unambiguous) return unambiguous.getTime();
+      // The old tzZone algorithm chooses the offset at the UTC guess for overlaps.
+      // Keep that choice here; the public conversion helper uses compatible instead.
       const guess = Date.UTC(w.y, w.mo, w.d, w.h, w.mi);
       const first = guess - offset(guess);
       if (same(first, w)) return first;
@@ -267,7 +255,7 @@ export function nextRuns(cron: string | ParsedCron, from: Date, count: number, t
   const parsed = typeof cron === 'string' ? parseCron(cron) : ({ valid: true, cron } as const);
   if (!parsed.valid || count <= 0) return [];
   const c = parsed.cron;
-  const zone = timeZone ? tzZone(timeZone) : localZone;
+  const zone = cronZone(timeZone || undefined);
   const minutes = c.minute.values;
   const hours = new Set(c.hour.values);
   const months = new Set(c.month.values);

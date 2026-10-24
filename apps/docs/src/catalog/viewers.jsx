@@ -235,6 +235,14 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                     file={`${it.file.slice(0, it.file.lastIndexOf('/'))}/examples/Locale.tsx`}
                     height={height}
                   />
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">{t('scheduling.displayTimeZone')}</h4>
+                  <Viewer
+                    kind="block"
+                    id={`${it.id}--time-zone`}
+                    title={`${it.title} · ${t('scheduling.displayTimeZone')}`}
+                    file={`${it.file.slice(0, it.file.lastIndexOf('/'))}/examples/TimeZone.tsx`}
+                    height={height}
+                  />
                 </>
               )}
               {kind === 'block' && it.id === 'flow-builder' && (

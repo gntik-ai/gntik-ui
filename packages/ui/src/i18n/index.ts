@@ -21,3 +21,4 @@ export {
 export { en, type MessageKey, type Messages } from './messages/en';
 export { es } from './messages/es';
 export { catalogs, type CatalogLocale } from './messages';
+export { zonedParts, fromZonedParts, formatTimeZoneLabel, isValidTimeZone, type ZonedParts } from './time-zone';

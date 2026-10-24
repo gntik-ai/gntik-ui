@@ -2,6 +2,7 @@ import { useId, useMemo } from 'react';
 import { Badge, EmptyState, cn, useI18n } from '@gntik-ai/ui';
 import { CalendarDays, ChevronRight, Clock } from '@gntik-ai/icons';
 import { useSchedulingClock } from '../shared/useSchedulingClock';
+import { TimeZoneLabel } from '../shared/CalendarHeader';
 import { EventTile } from '../shared/EventTile';
 import { addDays, dayKey, formatDay, formatRange, sameDay, type HourCycle } from '../shared/dates';
 import { defaultEventKinds, groupByDay, kindOf, TONE, type EventKind, type ScheduleEvent } from '../shared/events';
@@ -9,6 +10,8 @@ import { sampleEvents, sampleToday } from '../shared/fixtures';
 
 export interface AgendaListProps {
   events?: ScheduleEvent[];
+  /** Display time zone; defaults to the I18nProvider zone (system outside a provider). */
+  timeZone?: string;
   /** Clock used for event ranges; defaults to the provider or runtime locale. */
   hourCycle?: HourCycle;
   /** The app's "today": labels the Today/Tomorrow groups. */
@@ -33,6 +36,7 @@ export interface AgendaListProps {
 /** Upcoming scheduled work grouped by day, each row with a kind tile, time range and location. */
 export function AgendaList({
   events = sampleEvents,
+  timeZone: timeZoneProp,
   hourCycle: hourCycleProp,
   today = sampleToday,
   from,
@@ -46,7 +50,8 @@ export function AgendaList({
   titleAs: TitleTag = 'h3',
   className,
 }: AgendaListProps) {
-  const { t, locale } = useI18n();
+  const { t, locale, timeZone: providerZone } = useI18n();
+  const timeZone = timeZoneProp ?? providerZone;
   const clock = useSchedulingClock(hourCycleProp);
   const title = titleProp ?? t('calendar.agenda');
   const emptyTitle = emptyTitleProp ?? t('calendar.emptyTitle');
@@ -55,23 +60,42 @@ export function AgendaList({
   const uid = useId();
   const start = from === undefined ? today : from;
   const groups = useMemo(() => {
-    const first = start ? dayKey(start) : null;
-    const last = start && days != null ? dayKey(addDays(start, days - 1)) : null;
-    return [...groupByDay(events).entries()]
+    const first = start ? dayKey(start, timeZone) : null;
+    const last = start && days != null ? dayKey(addDays(start, days - 1, timeZone), timeZone) : null;
+    return [...groupByDay(events, timeZone).entries()]
       .filter(([key]) => (first == null || key >= first) && (last == null || key <= last))
       .sort(([a], [b]) => a.localeCompare(b));
-  }, [events, start, days]);
+  }, [events, start, days, timeZone]);
 
   const dayLabel = (d: Date) => {
-    if (sameDay(d, today)) return `${t('calendar.today')} · ${formatDay(d, locale)}`;
-    if (sameDay(d, addDays(today, 1))) return `${t('calendar.tomorrow')} · ${formatDay(d, locale)}`;
-    return formatDay(d, locale);
+    if (sameDay(d, today, timeZone)) return `${t('calendar.today')} · ${formatDay(d, locale, timeZone)}`;
+    if (sameDay(d, addDays(today, 1, timeZone), timeZone))
+      return `${t('calendar.tomorrow')} · ${formatDay(d, locale, timeZone)}`;
+    return formatDay(d, locale, timeZone);
   };
 
   return (
-    <section aria-label={title} className={cn('overflow-hidden rounded-xl border border-border bg-card', className)}>
-      <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-5">
-        <TitleTag className="text-[15px] font-semibold tracking-tight text-foreground">{title}</TitleTag>
+    <section
+      aria-label={timeZone === 'system' ? title : undefined}
+      aria-labelledby={timeZone === 'system' ? undefined : `${uid}-title ${uid}-zone`}
+      className={cn('overflow-hidden rounded-xl border border-border bg-card', className)}
+    >
+      <div
+        className={cn(
+          'flex items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-5',
+          timeZone !== 'system' && 'flex-wrap',
+        )}
+      >
+        {timeZone === 'system' ? (
+          <TitleTag className="text-[15px] font-semibold tracking-tight text-foreground">{title}</TitleTag>
+        ) : (
+          <div className="min-w-0">
+            <TitleTag id={`${uid}-title`} className="text-[15px] font-semibold tracking-tight text-foreground">
+              {title}
+            </TitleTag>
+            <TimeZoneLabel id={`${uid}-zone`} timeZone={timeZone} referenceDate={start ?? today} />
+          </div>
+        )}
         <span className="font-mono text-[11px] text-muted-foreground">
           {groups.reduce((n, [, list]) => n + list.length, 0)} scheduled
         </span>
@@ -110,7 +134,7 @@ export function AgendaList({
                 >
                   {list.map((event) => {
                     const kind = kindOf(event, kinds);
-                    const range = formatRange(event.start, event.end, clock.locale, clock.hourCycle);
+                    const range = formatRange(event.start, event.end, clock.locale, clock.hourCycle, timeZone);
                     const content = (
                       <>
                         <EventTile kind={kind} />

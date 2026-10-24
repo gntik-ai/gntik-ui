@@ -1,9 +1,11 @@
+import TimestampTimeZone from './examples/TimestampTimeZone';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { TooltipProvider } from '../Tooltip';
 import { expectNoAxeViolations } from '../../test/a11y';
+import { I18nProvider } from '../../i18n/I18nProvider';
 import { Timestamp } from './Timestamp';
 import { formatRelative, toDate } from './format';
 import TimestampActivity from './examples/TimestampActivity';
@@ -109,4 +111,39 @@ describe('Timestamp', () => {
     await screen.findByRole('tooltip');
     await expectNoAxeViolations();
   });
+});
+
+it('uses the provider zone for absolute text and tooltip, with an explicit option taking priority', () => {
+  const { rerender } = render(
+    <I18nProvider locale="en-GB" timeZone="Europe/Madrid">
+      <Timestamp value="2026-04-15T07:30:00Z" format="absolute" dateOptions={{ timeStyle: 'short' }} />
+    </I18nProvider>,
+  );
+  const time = screen.getByText('09:30').closest('time');
+  expect(time).toHaveTextContent('09:30:00');
+  rerender(
+    <I18nProvider locale="en-GB" timeZone="Europe/Madrid">
+      <Timestamp
+        value="2026-04-15T07:30:00Z"
+        format="absolute"
+        dateOptions={{ timeStyle: 'short', timeZone: 'UTC' }}
+        tooltip={false}
+      />
+    </I18nProvider>,
+  );
+  expect(screen.getByText('07:30')).toHaveAttribute('datetime', '2026-04-15T07:30:00.000Z');
+});
+it('preserves runtime-zone output when the provider zone is unset', () => {
+  const date = new Date(2026, 3, 15, 9, 30);
+  render(
+    <I18nProvider locale="en-GB">
+      <Timestamp value={date} format="absolute" dateOptions={{ timeStyle: 'short' }} tooltip={false} />
+    </I18nProvider>,
+  );
+  expect(screen.getByText('09:30')).toBeInTheDocument();
+});
+
+it('has no axe violations in the provider-zone example', async () => {
+  render(<TimestampTimeZone />);
+  await expectNoAxeViolations();
 });
