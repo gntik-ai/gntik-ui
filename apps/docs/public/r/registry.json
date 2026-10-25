@@ -2570,6 +2570,8 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/copy-button.json",
+        "https://ui.gntik.ai/r/live-announcer.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -2607,6 +2609,11 @@
           "path": "packages/ui/src/components/CodeBlock/tokenize.ts",
           "type": "registry:ui",
           "target": "components/ui/code-block/tokenize.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useClipboard.ts",
+          "type": "registry:ui",
+          "target": "components/hooks/useClipboard.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -2672,11 +2679,6 @@
           "path": "packages/ui/src/components/CodeBlock/CodeBlock.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/code-block/CodeBlock.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
         }
       ]
     },
@@ -3342,6 +3344,11 @@
           "path": "packages/ui/src/components/CopyButton/index.ts",
           "type": "registry:ui",
           "target": "components/ui/copy-button/index.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useClipboard.ts",
+          "type": "registry:ui",
+          "target": "components/hooks/useClipboard.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -6734,6 +6741,8 @@
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/badge.json",
+        "https://ui.gntik.ai/r/copy-button.json",
+        "https://ui.gntik.ai/r/live-announcer.json",
         "https://ui.gntik.ai/r/tree-list.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
@@ -6767,6 +6776,11 @@
           "path": "packages/ui/src/components/JsonViewer/json-viewer.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/json-viewer/json-viewer.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useClipboard.ts",
+          "type": "registry:ui",
+          "target": "components/hooks/useClipboard.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -15263,6 +15277,8 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/copy-button.json",
+        "https://ui.gntik.ai/r/live-announcer.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -15300,6 +15316,11 @@
           "path": "packages/ui/src/components/Terminal/terminal.variants.ts",
           "type": "registry:ui",
           "target": "components/ui/terminal/terminal.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useClipboard.ts",
+          "type": "registry:ui",
+          "target": "components/hooks/useClipboard.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -15365,11 +15386,6 @@
           "path": "packages/ui/src/components/Terminal/Terminal.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/terminal/Terminal.doc.ts"
-        },
-        {
-          "path": "packages/ui/src/doc.ts",
-          "type": "registry:ui",
-          "target": "components/doc.ts"
         }
       ]
     },

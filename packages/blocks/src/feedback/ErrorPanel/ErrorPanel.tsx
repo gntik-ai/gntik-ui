@@ -1,7 +1,16 @@
 import { Check, Copy, RotateCw, ServerCrash } from '@gntik-ai/icons';
 import type { LucideIcon } from '@gntik-ai/icons';
-import { Button, Collapsible, CollapsiblePanel, CollapsibleTrigger, IconButton, cn, useI18n } from '@gntik-ai/ui';
-import { useId, useRef, useState, type ReactNode } from 'react';
+import {
+  Button,
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+  IconButton,
+  cn,
+  useClipboard,
+  useI18n,
+} from '@gntik-ai/ui';
+import { useId, useState, type ReactNode } from 'react';
 import type { FeedbackAction } from '../types';
 
 export interface ErrorPanelLabels {
@@ -71,8 +80,7 @@ export function ErrorPanel({
   const retryLabel = retryLabelProp ?? labels?.retry ?? t('error.retry');
   const id = useId();
   const [innerRetrying, setInnerRetrying] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const copyTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const { copied, copy: copyText } = useClipboard();
   const busy = retrying ?? innerRetrying;
 
   const retry = async () => {
@@ -85,17 +93,7 @@ export function ErrorPanel({
     }
   };
 
-  const copy = async () => {
-    if (!requestId) return;
-    try {
-      await navigator.clipboard.writeText(requestId);
-      setCopied(true);
-      clearTimeout(copyTimer.current);
-      copyTimer.current = setTimeout(() => setCopied(false), 2000);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copy = () => requestId && copyText(requestId);
 
   return (
     <section

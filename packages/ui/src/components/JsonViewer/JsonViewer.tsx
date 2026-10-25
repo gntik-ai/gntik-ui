@@ -1,7 +1,8 @@
+import { useClipboard } from '../../hooks/useClipboard';
 import { useI18n } from '../../i18n/I18nProvider';
 import { matchRanges } from '../../utils/match-text';
 import { Check, Copy } from 'lucide-react';
-import { useEffect, useMemo, useState, type ReactNode, type Ref } from 'react';
+import { useMemo, useState, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
 import { Badge } from '../Badge/Badge';
 import { TreeList } from '../TreeList/TreeList';
@@ -132,7 +133,7 @@ export function JsonViewer({
     showTree ? pathsToDepth(data, Math.min(defaultExpandDepth, maxDepth)) : [],
   );
   const [selected, setSelected] = useState<string[]>([]);
-  const [status, setStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const { status, copy } = useClipboard();
   const searchIndex = useMemo(
     () => (showTree ? jsonSearchIndex(data, maxDepth, locale) : []),
     [data, maxDepth, locale, showTree],
@@ -183,21 +184,7 @@ export function JsonViewer({
           },
         ];
 
-  useEffect(() => {
-    if (status === 'idle') return;
-    const id = window.setTimeout(() => setStatus('idle'), 2000);
-    return () => window.clearTimeout(id);
-  }, [status]);
-
   const current = selected[0];
-  const copy = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setStatus('copied');
-    } catch {
-      setStatus('failed');
-    }
-  };
 
   return (
     <div ref={ref} className={cn(s.root(), className)}>

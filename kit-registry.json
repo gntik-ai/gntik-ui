@@ -5012,6 +5012,10 @@
           "target": "components/ui/code-block/tokenize.ts"
         },
         {
+          "path": "packages/ui/src/hooks/useClipboard.ts",
+          "target": "components/hooks/useClipboard.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -5065,6 +5069,8 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "copy-button",
+        "live-announcer",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/CodeBlock/CodeBlock.doc.ts"
@@ -5341,6 +5347,10 @@
         {
           "path": "packages/ui/src/components/CopyButton/index.ts",
           "target": "components/ui/copy-button/index.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useClipboard.ts",
+          "target": "components/hooks/useClipboard.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -6436,6 +6446,10 @@
           "target": "components/ui/json-viewer/json-viewer.variants.ts"
         },
         {
+          "path": "packages/ui/src/hooks/useClipboard.ts",
+          "target": "components/hooks/useClipboard.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -6490,6 +6504,8 @@
       ],
       "registryDependencies": [
         "badge",
+        "copy-button",
+        "live-announcer",
         "tree-list",
         "ui-utils"
       ],
@@ -9691,6 +9707,10 @@
           "target": "components/ui/terminal/terminal.variants.ts"
         },
         {
+          "path": "packages/ui/src/hooks/useClipboard.ts",
+          "target": "components/hooks/useClipboard.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -9744,6 +9764,8 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "copy-button",
+        "live-announcer",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Terminal/Terminal.doc.ts"

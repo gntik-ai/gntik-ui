@@ -1,11 +1,10 @@
+import { useClipboard } from '../../hooks/useClipboard';
 import { Check, Copy, WrapText } from 'lucide-react';
-import { useEffect, useMemo, useState, type ReactNode, type Ref } from 'react';
+import { useMemo, useState, type ReactNode, type Ref } from 'react';
 import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { codeBlockVariants, tokenClass } from './code-block.variants';
 import { tokenizeLines } from './tokenize';
-
-type CopyStatus = 'idle' | 'copied' | 'failed';
 
 export interface CodeBlockProps {
   /** The source to show and copy. A single trailing newline is ignored. */
@@ -58,8 +57,7 @@ export function CodeBlock({
   ref,
 }: CodeBlockProps) {
   const [wrap, setWrap] = useState(defaultWrap);
-  const [status, setStatus] = useState<CopyStatus>('idle');
-  const [copies, setCopies] = useState(0);
+  const { status, copy: copyText } = useClipboard();
   const s = codeBlockVariants({ wrap });
   const source = code.endsWith('\n') ? code.slice(0, -1) : code;
 
@@ -78,21 +76,7 @@ export function CodeBlock({
     );
   }, [source, language, highlight]);
 
-  useEffect(() => {
-    if (status === 'idle') return;
-    const id = window.setTimeout(() => setStatus('idle'), 2000);
-    return () => window.clearTimeout(id);
-  }, [status, copies]);
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(source);
-      setStatus('copied');
-    } catch {
-      setStatus('failed');
-    }
-    setCopies((n) => n + 1);
-  };
+  const copy = () => copyText(source);
 
   const marked = new Set(highlightLines);
   const { t } = useI18n();

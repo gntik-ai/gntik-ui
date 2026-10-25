@@ -1,43 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useClipboard } from '@gntik-ai/ui';
+import { useCallback } from 'react';
 
-/**
- * Copies text to the clipboard and exposes a short-lived status and compatible `copied` flag for the button label.
- * The reset timer is cleared on unmount and on every new copy.
- */
+/** Copies text with shared fallback support and the chat's 1600ms feedback duration. */
 export function useCopy(resetMs = 1600) {
-  const [status, setStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
-  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  const mounted = useRef(true);
-  const attempt = useRef(0);
-  useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-      attempt.current += 1;
-      clearTimeout(timer.current);
-    };
-  }, []);
-
+  const { status, copied, copy: copyText } = useClipboard({ timeout: resetMs });
   const copy = useCallback(
     async (text: string) => {
-      clearTimeout(timer.current);
-      const current = ++attempt.current;
-      let next: 'copied' | 'failed' = 'failed';
-      try {
-        if (navigator.clipboard?.writeText) {
-          await navigator.clipboard.writeText(text);
-          next = 'copied';
-        }
-      } catch {
-        // Permission errors and unavailable clipboard access both report failure.
-      }
-      if (!mounted.current || current !== attempt.current) return;
-      setStatus(next);
-      timer.current = setTimeout(() => setStatus('idle'), resetMs);
+      await copyText(text);
     },
-    [resetMs],
+    [copyText],
   );
-
-  return { status, copied: status === 'copied', copy };
+  return { status, copied, copy };
 }

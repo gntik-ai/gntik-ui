@@ -81,3 +81,15 @@ describe('CodeEditorPage', () => {
     expect(filesToTree(['b.md', 'src/a.ts', 'src/lib/c.ts']).map((n) => n.id)).toEqual(['src/', 'b.md']);
   });
 });
+
+it.each([true, false])('copies a file path through the fallback only when it succeeds (%s)', async (success) => {
+  const user = userEvent.setup();
+  Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+  const exec = vi.fn(() => success);
+  Object.defineProperty(document, 'execCommand', { configurable: true, value: exec });
+  render(<CodeEditorPage loader={mockMonaco().loader} />);
+  fireEvent.contextMenu(within(screen.getByRole('treeitem', { name: /query\.ts/ })).getByText('query.ts'));
+  await user.click(await screen.findByRole('menuitem', { name: 'Copy path' }));
+  expect(exec).toHaveBeenCalledWith('copy');
+  expect(await screen.findByText(success ? 'Copied src/query.ts' : 'Copy failed')).toBeInTheDocument();
+});
