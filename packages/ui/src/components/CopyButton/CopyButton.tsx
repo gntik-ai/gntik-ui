@@ -1,11 +1,11 @@
 import { Check, Copy, X } from 'lucide-react';
-import { useEffect, useState, type Ref } from 'react';
+import { type Ref } from 'react';
+import { useClipboard } from '../../hooks/useClipboard';
 import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { Button, IconButton, type ButtonProps } from '../Button';
 import { useAnnounce, useHasLiveAnnouncer } from '../LiveAnnouncer';
 import { SimpleTooltip } from '../Tooltip';
-import { copyToClipboard } from './clipboard';
 import { copyButtonVariants } from './copy-button.variants';
 
 export type CopyStatus = 'idle' | 'copied' | 'failed';
@@ -66,34 +66,24 @@ export function CopyButton({
   const { t } = useI18n();
   const announce = useAnnounce();
   const hasAnnouncer = useHasLiveAnnouncer();
-  const [status, setStatus] = useState<CopyStatus>('idle');
-  const [attempt, setAttempt] = useState(0);
   const label = labelProp ?? t('common.copy');
   const copiedLabel = copiedProp ?? t('common.copied');
   const successText = announcementProp ?? t('common.copiedToClipboard');
   const failedText = failureLabel ?? t('common.copyFailed');
   const failureText = failureAnnouncement ?? failedText;
 
-  useEffect(() => {
-    if (status === 'idle') return;
-    const id = window.setTimeout(() => setStatus('idle'), resetAfter);
-    return () => window.clearTimeout(id);
-  }, [status, attempt, resetAfter]);
-
-  const copy = async () => {
-    try {
-      const text = typeof value === 'function' ? await value() : value;
-      await copyToClipboard(text);
-      setStatus('copied');
+  const { status, copy: copyValue } = useClipboard({
+    timeout: resetAfter,
+    onCopy: (text) => {
       if (hasAnnouncer) announce(successText);
       onCopy?.(text);
-    } catch (error) {
-      setStatus('failed');
+    },
+    onError: (error) => {
       if (hasAnnouncer) announce(failureText, failurePoliteness);
       onCopyError?.(error);
-    }
-    setAttempt((n) => n + 1);
-  };
+    },
+  });
+  const copy = () => copyValue(value);
 
   const s = copyButtonVariants({ state: status });
   const current = status === 'copied' ? copiedLabel : status === 'failed' ? failedText : label;

@@ -1035,7 +1035,7 @@ Read-only code panel with a filename / language header, a copy button ("Copied" 
 - Package: `@gntik-ai/ui` · export `CodeBlock` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/CodeBlock/CodeBlock.doc.ts
 - ARIA pattern: button · region
-- Registry dependencies: ui-utils
+- Registry dependencies: copy-button, live-announcer, ui-utils
 - Install: `gntik-ui add code-block`; own the source with `gntik-ui eject code-block`
 
 Keyboard:
@@ -1184,7 +1184,7 @@ Collapsible JSON inspector built on TreeList: objects and arrays expand, values 
 - Package: `@gntik-ai/ui` · export `JsonViewer` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/JsonViewer/JsonViewer.doc.ts
 - ARIA pattern: tree view
-- Registry dependencies: badge, tree-list, ui-utils
+- Registry dependencies: badge, copy-button, live-announcer, tree-list, ui-utils
 - Install: `gntik-ui add json-viewer`; own the source with `gntik-ui eject json-viewer`
 
 Keyboard:
@@ -1755,7 +1755,7 @@ Streamed command output (build, deploy, job logs). ANSI SGR colours map to contr
 - Package: `@gntik-ai/ui` · export `Terminal` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Terminal/Terminal.doc.ts
 - ARIA pattern: log · button · searchbox
-- Registry dependencies: ui-utils
+- Registry dependencies: copy-button, live-announcer, ui-utils
 - Install: `gntik-ui add terminal`; own the source with `gntik-ui eject terminal`
 
 Keyboard:

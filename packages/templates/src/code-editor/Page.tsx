@@ -6,6 +6,7 @@ import {
   Breadcrumbs,
   Button,
   CanvasLayout,
+  copyToClipboard,
   ContextMenu,
   ContextMenuContent,
   ContextMenuTrigger,
@@ -96,7 +97,7 @@ export default function CodeEditorPage(props: Partial<CodeEditorPageProps>) {
   };
   const copyPath = async (path: string) => {
     try {
-      await navigator.clipboard.writeText(path);
+      await copyToClipboard(path);
       setNote(`Copied ${path}`);
     } catch {
       setNote('Copy failed');

@@ -1,6 +1,17 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode, type UIEvent } from 'react';
 import { Check, Copy, Eye, Search, X } from '@gntik-ai/icons';
-import { IconButton, Input, Switch, Toggle, ToggleGroup, cn, foldText, matchRanges, useI18n } from '@gntik-ai/ui';
+import {
+  IconButton,
+  Input,
+  Switch,
+  Toggle,
+  ToggleGroup,
+  cn,
+  copyToClipboard,
+  foldText,
+  matchRanges,
+  useI18n,
+} from '@gntik-ai/ui';
 import { useWrappedLogRows } from './use-wrapped-log-rows';
 import { logLines as defaultLines, type LogLevel, type LogLine } from './fixtures';
 
@@ -191,10 +202,8 @@ export function LogViewer({
     const current = ++copyAttempt.current;
     let status: 'copied' | 'failed' = 'failed';
     try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(lineText(line));
-        status = 'copied';
-      }
+      await copyToClipboard(lineText(line));
+      status = 'copied';
     } catch {
       // A denied write must not confirm a copied line.
     }

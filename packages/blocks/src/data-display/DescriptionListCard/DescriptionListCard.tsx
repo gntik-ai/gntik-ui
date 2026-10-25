@@ -10,8 +10,9 @@ import {
   IconButton,
   StatusTag,
   useI18n,
+  useClipboard,
 } from '@gntik-ai/ui';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { DEPLOYMENT_DETAILS } from './fixtures';
 
 export interface DescriptionItem {
@@ -70,40 +71,9 @@ function CopyButton({
   labels?: Partial<DescriptionListCardLabels>;
 }) {
   const { t } = useI18n();
-  const [status, setStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
-  const copied = status === 'copied';
+  const { status, copied, copy: copyText } = useClipboard({ timeout: 1500, onCopy: () => onCopy?.(item) });
   const failedText = labels?.copyFailed ?? t('common.copyFailed');
-  const timer = useRef<number | undefined>(undefined);
-  const mounted = useRef(true);
-  const attempt = useRef(0);
-  useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-      attempt.current += 1;
-      window.clearTimeout(timer.current);
-    };
-  }, []);
-  const copy = async () => {
-    window.clearTimeout(timer.current);
-    const current = ++attempt.current;
-    const text = item.copyValue ?? item.value ?? '';
-    let next: 'copied' | 'failed' = 'failed';
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-        next = 'copied';
-      }
-    } catch {
-      // Clipboard permission errors are shown and announced below.
-    }
-    if (!mounted.current) return;
-    if (current === attempt.current) {
-      setStatus(next);
-      timer.current = window.setTimeout(() => setStatus('idle'), 1500);
-    }
-    if (next === 'copied') onCopy?.(item);
-  };
+  const copy = () => copyText(item.copyValue ?? item.value ?? '');
   return (
     <>
       <IconButton

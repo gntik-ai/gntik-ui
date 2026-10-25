@@ -1,3 +1,4 @@
+import { useClipboard } from '../../hooks/useClipboard';
 import { ArrowDown, Check, ChevronDown, ChevronUp, Copy, Search, WrapText } from 'lucide-react';
 import {
   useEffect,
@@ -197,7 +198,7 @@ export function Terminal({
   const [seenTotal, setSeenTotal] = useState(0);
   const [query, setQuery] = useState('');
   const [current, setCurrent] = useState(0);
-  const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const { status: copyStatus, copy } = useClipboard();
   const viewportRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const searchId = useId();
@@ -258,12 +259,6 @@ export function Terminal({
       mark.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }, [currentKey]);
 
-  useEffect(() => {
-    if (copyStatus === 'idle') return;
-    const id = window.setTimeout(() => setCopyStatus('idle'), 2000);
-    return () => window.clearTimeout(id);
-  }, [copyStatus]);
-
   const onScroll = () => {
     const el = viewportRef.current;
     if (!el) return;
@@ -315,14 +310,7 @@ export function Terminal({
     }
   };
 
-  const copyAll = async () => {
-    try {
-      await navigator.clipboard.writeText(parsed.map((line) => line.plain).join('\n'));
-      setCopyStatus('copied');
-    } catch {
-      setCopyStatus('failed');
-    }
-  };
+  const copyAll = () => copy(parsed.map((line) => line.plain).join('\n'));
 
   const toggleWrap = () => {
     const next = !wrap;
