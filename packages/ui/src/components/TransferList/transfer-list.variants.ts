@@ -14,7 +14,7 @@ export const transferListVariants = tv({
     ],
     option: [
       'flex cursor-default items-start gap-2.5 rounded-[6px] px-2 py-1.5 text-[13px] text-foreground select-none',
-      'hover:bg-secondary/50 data-active:bg-secondary/70 aria-selected:bg-primary/12 aria-selected:data-active:bg-primary/16',
+      'hover:bg-secondary/50 data-active:bg-secondary/70 aria-selected:bg-primary/12 aria-selected:data-active:bg-primary/16 forced-colors:data-active:bg-[Highlight] forced-colors:data-active:text-[HighlightText] forced-colors:data-active:[&_*]:text-[HighlightText] forced-colors:aria-selected:bg-[Highlight] forced-colors:aria-selected:text-[HighlightText] forced-colors:aria-selected:[&_*]:text-[HighlightText] forced-colors:aria-selected:data-active:bg-[Highlight] forced-colors:aria-selected:data-active:text-[HighlightText] forced-colors:aria-selected:data-active:[&_*]:text-[HighlightText] forced-colors:aria-selected:hover:bg-[Highlight] forced-colors:aria-selected:hover:text-[HighlightText] forced-colors:aria-selected:hover:[&_*]:text-[HighlightText]',
       'aria-disabled:cursor-not-allowed aria-disabled:opacity-45',
     ],
     check: [

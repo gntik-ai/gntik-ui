@@ -15,6 +15,10 @@ Rules:
 
 - Token classes only (`bg-primary`, `text-muted-foreground`, `border-border`…). No hex/rgb, no
   Tailwind palette colours, no gradients, no glow, no `dark:` variants (themes swap the tokens).
+- A state shown only by background, tint or shadow needs a `forced-colors:` fallback using CSS
+  system colours. Borders, outlines, text and `currentColor` icons survive forced colours; use
+  `Highlight` / `HighlightText` for selection and keep tone meaning in text labels. Scope every
+  fallback to `forced-colors:` so normal themes stay unchanged.
 - Text in brand colours uses the contrast-safe aliases: `text-primary-text`, `text-success-text`,
   `text-warning-text`, `text-destructive-text`. Focus: `focus-visible:outline-2
 focus-visible:outline-offset-2 focus-visible:outline-focus-ring`.

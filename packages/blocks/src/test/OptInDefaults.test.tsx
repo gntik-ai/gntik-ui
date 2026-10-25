@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { DescriptionListCard } from '../data-display/DescriptionListCard/DescriptionListCard';
 import { NoAccessEmpty } from '../feedback/EmptyStates/EmptyStates';
 import { PageHeader } from '../page-chrome/PageHeader/PageHeader';
+import { withoutForcedColors } from './without-forced-colors';
 
 // Static rendering keeps React's generated IDs deterministic without masking any HTML differences.
 // Captured before source edits at 6ec08de25c3311386f7ee97fc11605f2a7c307fe; never update from changed source.
@@ -23,5 +24,5 @@ it.each(cases)('preserves the pinned %s innerHTML', (name, component) => {
   };
   const container = document.createElement('div');
   container.innerHTML = renderToStaticMarkup(component);
-  expect(container.innerHTML).toBe(baseline.html[name]);
+  expect(withoutForcedColors(container).innerHTML).toBe(baseline.html[name]);
 });

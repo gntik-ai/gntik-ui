@@ -6,9 +6,10 @@ export const progressVariants = tv({
     header: 'flex items-center justify-between gap-3',
     label: 'text-[12.5px] font-medium text-foreground',
     value: 'font-mono text-[11.5px] font-semibold tabular-nums',
-    track: 'relative w-full overflow-hidden rounded-full bg-secondary',
+    track:
+      'relative w-full overflow-hidden rounded-full bg-secondary forced-colors:outline forced-colors:-outline-offset-1 forced-colors:outline-[CanvasText]',
     indicator: [
-      'block h-full rounded-full transition-[width] duration-400 ease-out motion-reduce:transition-none',
+      'block h-full rounded-full transition-[width] duration-400 ease-out motion-reduce:transition-none forced-colors:bg-[Highlight]',
       'data-[indeterminate]:w-2/5 data-[indeterminate]:animate-pulse motion-reduce:data-[indeterminate]:animate-none',
     ],
   },

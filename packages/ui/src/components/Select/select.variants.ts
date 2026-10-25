@@ -11,7 +11,7 @@ export const listboxPopup = [
 /** Shared option row for Select and Combobox. */
 export const listboxItem = [
   'flex cursor-default items-center justify-between gap-2 rounded-[6px] px-2.5 py-1.5 text-[13px] text-foreground outline-none select-none',
-  'data-highlighted:bg-secondary/70 data-selected:bg-primary/12 data-selected:data-highlighted:bg-primary/16',
+  'data-highlighted:bg-secondary/70 data-selected:bg-primary/12 data-selected:data-highlighted:bg-primary/16 forced-colors:data-highlighted:bg-[Highlight] forced-colors:data-highlighted:text-[HighlightText] forced-colors:data-highlighted:[&_*]:text-[HighlightText] forced-colors:data-selected:bg-[Highlight] forced-colors:data-selected:text-[HighlightText] forced-colors:data-selected:[&_*]:text-[HighlightText] forced-colors:data-selected:data-highlighted:bg-[Highlight] forced-colors:data-selected:data-highlighted:text-[HighlightText] forced-colors:data-selected:data-highlighted:[&_*]:text-[HighlightText]',
   'data-disabled:cursor-not-allowed data-disabled:opacity-45',
 ];
 

@@ -34,7 +34,7 @@ export const calendarVariants = tv({
       'focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring',
       'data-today:ring-1 data-today:ring-primary/60 data-today:ring-inset',
       'data-in-range:hover:bg-primary/16',
-      'data-selected:bg-primary data-selected:font-semibold data-selected:text-primary-foreground data-selected:ring-0 data-selected:hover:bg-primary/90',
+      'data-selected:bg-primary data-selected:font-semibold data-selected:text-primary-foreground data-selected:ring-0 data-selected:hover:bg-primary/90 forced-colors:data-selected:bg-[Highlight] forced-colors:data-selected:text-[HighlightText] forced-colors:data-selected:[&_*]:text-[HighlightText] forced-colors:data-selected:hover:bg-[Highlight] forced-colors:data-selected:hover:text-[HighlightText] forced-colors:data-selected:hover:[&_*]:text-[HighlightText]',
       'aria-disabled:cursor-not-allowed aria-disabled:text-muted-foreground/30 aria-disabled:line-through aria-disabled:hover:bg-transparent',
     ],
     outside: 'mx-auto grid size-8 place-items-center text-[12.5px] text-muted-foreground tabular-nums select-none',

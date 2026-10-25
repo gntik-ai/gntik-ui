@@ -27,7 +27,7 @@ export default function TabsPills() {
         ))}
       </Tabs>
       <Tabs variant="pills" defaultValue="summary" className="max-w-xl">
-        <TabsList aria-label="Report" fullWidth>
+        <TabsList aria-label="Report" fullWidth indicator={false}>
           <TabsTab value="summary">Summary</TabsTab>
           <TabsTab value="cost">Cost</TabsTab>
           <TabsTab value="latency">Latency</TabsTab>
