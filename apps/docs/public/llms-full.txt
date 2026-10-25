@@ -1851,7 +1851,7 @@ export default function TerminalBuildLog() {
 
 ### Text (`text`)
 
-Type roles on the brand scale. Text: body, label, supporting, caption, code and display, with tones (default, muted, primary, success, warning, destructive — contrast-safe *-text aliases). Heading: semantic level 1–6 with an independent visual size. Both truncate or clamp to N lines and render any element via `as` / `render`.
+Text uses text-body, text-label, text-supporting, text-caption and text-display; code stays relative at 0.92em. Heading sizes display, xl, lg, md, sm, xs and 2xs use text-display and text-heading-* independently of semantic level 1–6 (level 2 defaults to text-heading-lg). Eleven roles come from typography.css, also exported as DTCG typography, Figma type/* variables and typeScale with pixel dimensions and unitless leading. font-*, leading-* and tracking-* utilities override role defaults; body, supporting and caption inherit weight and tracking. Both components support contrast-safe tones, truncation, line clamping and as / render.
 
 - Package: `@gntik-ai/ui` · export `Text` · group Display · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Text/Text.doc.ts
@@ -1859,7 +1859,7 @@ Type roles on the brand scale. Text: body, label, supporting, caption, code and 
 - Registry dependencies: ui-utils
 - Install: `gntik-ui add text`; own the source with `gntik-ui eject text`
 
-Tokens: foreground, muted-foreground, primary-text, success-text, warning-text, destructive-text, secondary
+Tokens: type-display-size, type-heading-xl-size, type-heading-lg-size, type-heading-md-size, type-heading-sm-size, type-heading-xs-size, type-heading-2xs-size, type-body-size, type-label-size, type-supporting-size, type-caption-size, foreground, muted-foreground, primary-text, success-text, warning-text, destructive-text, secondary
 
 Usage:
 

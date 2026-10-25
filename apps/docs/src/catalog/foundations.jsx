@@ -1,3 +1,6 @@
+import { typeScale as namedTypeScale } from '@gntik-ai/tokens/tokens';
+import { useI18n } from '@gntik-ai/ui';
+
 /* ============================================================================
    Gntik UI · foundations.jsx — color · typography · spacing · radii ·
    shadows · icons. Everything references tokens from tokens/brand.css.
@@ -31,6 +34,7 @@
   );
 
   function FoundationsSection() {
+    const { t } = useI18n();
     const surface = [
       ['Background', 'bg-background', '--background'],
       ['Foreground', 'bg-foreground', '--foreground'],
@@ -63,15 +67,32 @@
       ['Cyan', 'bg-category-cyan', '--category-cyan'],
     ];
 
-    const typeScale = [
-      ['Display', 'text-[2.875rem] leading-[1.04] font-bold tracking-tight', '46 / 1.04 · -0.035em', 'text-[2.875rem]'],
-      ['Heading 1', 'text-[1.875rem] leading-tight font-bold tracking-tight', '30 / 1.1 · -0.03em', 'text-[1.875rem]'],
-      ['Heading 2', 'text-[1.5rem] leading-snug font-bold tracking-tight', '24 / 1.15 · -0.025em', 'text-2xl'],
-      ['Heading 3', 'text-xl font-semibold', '20 / 1.2 · -0.015em', 'text-xl'],
-      ['Body large', 'text-[1.0625rem] leading-relaxed', '17 / 1.5', 'text-[1.0625rem]'],
-      ['Body', 'text-[0.9375rem] leading-relaxed', '15 / 1.55', 'text-[0.9375rem]'],
-      ['Small', 'text-sm', '13 / 1.5', 'text-sm'],
-    ];
+    const roleClasses = {
+      display: 'text-display',
+      'heading-xl': 'text-heading-xl',
+      'heading-lg': 'text-heading-lg',
+      'heading-md': 'text-heading-md',
+      'heading-sm': 'text-heading-sm',
+      'heading-xs': 'text-heading-xs',
+      'heading-2xs': 'text-heading-2xs',
+      body: 'text-body',
+      label: 'text-label',
+      supporting: 'text-supporting',
+      caption: 'text-caption',
+    };
+    const typeScale = Object.entries(namedTypeScale).map(([role, type]) => [
+      t(`typography.${role}`),
+      roleClasses[role],
+      [
+        `${type.fontSize}px`,
+        type.lineHeight,
+        type.letterSpacing === undefined ? undefined : `${type.letterSpacing}px`,
+        type.fontWeight,
+      ]
+        .filter(Boolean)
+        .join(' / '),
+      roleClasses[role],
+    ]);
     const spacing = [
       ['1', 'w-1'],
       ['2', 'w-2'],

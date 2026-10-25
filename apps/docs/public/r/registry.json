@@ -393,6 +393,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -490,6 +495,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -912,6 +922,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:lib",
           "target": "components/i18n/time-zone.ts"
@@ -1018,6 +1033,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -1113,6 +1133,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -1321,6 +1346,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -1417,6 +1447,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -1643,6 +1678,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -1725,6 +1765,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -1887,6 +1932,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -2499,6 +2549,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -2765,6 +2820,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -2871,6 +2931,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -3187,6 +3252,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -3589,6 +3659,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -3924,6 +3999,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -4033,6 +4113,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4173,6 +4258,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -4302,6 +4392,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4451,6 +4546,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -4579,6 +4679,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4710,6 +4815,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -4800,6 +4910,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5809,6 +5924,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -6001,6 +6121,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6222,6 +6347,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:lib",
           "target": "components/i18n/time-zone.ts"
@@ -6419,6 +6549,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -6514,6 +6649,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6615,6 +6755,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6728,6 +6873,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6958,6 +7108,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -7053,6 +7208,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7157,6 +7317,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7515,6 +7680,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -7651,6 +7821,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7986,6 +8161,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -8280,6 +8460,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -8383,6 +8568,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8570,6 +8760,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -8660,6 +8855,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8756,6 +8956,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8860,6 +9065,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -8939,6 +9149,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9146,6 +9361,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -9281,6 +9501,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9522,6 +9747,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -9613,6 +9843,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9804,6 +10039,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -9910,6 +10150,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10078,6 +10323,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10424,6 +10674,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -10692,6 +10947,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11138,6 +11398,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -11393,6 +11658,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -11573,6 +11843,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11908,6 +12183,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12357,6 +12637,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12816,6 +13101,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -13004,6 +13294,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -13081,6 +13376,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -13307,6 +13607,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -13616,6 +13921,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:lib",
           "target": "components/i18n/time-zone.ts"
@@ -13845,6 +14155,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14164,6 +14479,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -14258,6 +14578,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14367,6 +14692,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -14387,7 +14717,7 @@
       "name": "text",
       "type": "registry:ui",
       "title": "Text",
-      "description": "Type roles on the brand scale. Text: body, label, supporting, caption, code and display, with tones (default, muted, primary, success, warning, destructive — contrast-safe *-text aliases). Heading: semantic level 1–6 with an independent visual size. Both truncate or clamp to N lines and render any element via `as` / `render`.",
+      "description": "Text uses text-body, text-label, text-supporting, text-caption and text-display; code stays relative at 0.92em. Heading sizes display, xl, lg, md, sm, xs and 2xs use text-display and text-heading-* independently of semantic level 1–6 (level 2 defaults to text-heading-lg). Eleven roles come from typography.css, also exported as DTCG typography, Figma type/* variables and typeScale with pixel dimensions and unitless leading. font-*, leading-* and tracking-* utilities override role defaults; body, supporting and caption inherit weight and tracking. Both components support contrast-safe tones, truncation, line clamping and as / render.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0"
@@ -14624,6 +14954,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -14719,6 +15054,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14826,6 +15166,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14967,6 +15312,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -15069,6 +15419,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -15165,6 +15520,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15310,6 +15670,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -15448,6 +15813,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15652,6 +16022,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -15755,6 +16130,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15901,6 +16281,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -16002,6 +16387,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16176,6 +16566,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16401,6 +16796,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -16580,6 +16980,11 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -16674,6 +17079,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16820,6 +17230,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16986,6 +17401,11 @@
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",

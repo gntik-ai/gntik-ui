@@ -25,7 +25,8 @@
       "default": "./dist/tokens.js"
     },
     "./package.json": "./package.json",
-    "./scope.css": "./src/scope.css"
+    "./scope.css": "./src/scope.css",
+    "./typography.css": "./src/typography.css"
   },
   "sideEffects": [
     "*.css"

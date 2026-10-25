@@ -1,9 +1,11 @@
+import { typographyEn } from './typography-messages';
 import { motionEn } from './motion-messages';
 import { markdownEn } from './markdown-messages';
 import { cspEn } from './csp-messages';
 /** Built-in English labels, accessible names and announcements. See format.ts for interpolation syntax. */
 export const en = {
   ...cspEn,
+  ...typographyEn,
   ...motionEn,
   ...markdownEn,
   'contact.sendFailed': "We couldn't send your message. Please try again.",
@@ -48,11 +50,9 @@ export const en = {
   'descriptionList.edit': 'Edit',
   'descriptionList.copy': 'Copy {label}',
   'descriptionList.copied': '{label} copied',
-
   'pageHeader.title': 'Deployments',
   'pageHeader.description': 'Every build and release of this project across its environments.',
   'pageHeader.moreActions': 'More actions',
-
   'logViewer.title': 'Logs',
   'logViewer.level.debug': 'DEBUG',
   'logViewer.level.info': 'INFO',

@@ -12,6 +12,7 @@
 @import "./scope.css";
 @import "./motion.css";
 @import "./density.css";
+@import "./typography.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -152,3 +153,43 @@
 @utility h-row { height: var(--row-h); }
 @utility py-cell { padding-block: var(--cell-py); }
 @utility py-bar { padding-block: var(--bar-py); }
+
+/* Typography: values live only in typography.css. */
+@theme inline {
+  --text-display: var(--type-display-size);
+  --text-display--line-height: var(--type-display-leading);
+  --text-display--letter-spacing: var(--type-display-tracking);
+  --text-display--font-weight: var(--type-display-weight);
+  --text-heading-xl: var(--type-heading-xl-size);
+  --text-heading-xl--line-height: var(--type-heading-xl-leading);
+  --text-heading-xl--letter-spacing: var(--type-heading-xl-tracking);
+  --text-heading-xl--font-weight: var(--type-heading-xl-weight);
+  --text-heading-lg: var(--type-heading-lg-size);
+  --text-heading-lg--line-height: var(--type-heading-lg-leading);
+  --text-heading-lg--letter-spacing: var(--type-heading-lg-tracking);
+  --text-heading-lg--font-weight: var(--type-heading-lg-weight);
+  --text-heading-md: var(--type-heading-md-size);
+  --text-heading-md--line-height: var(--type-heading-md-leading);
+  --text-heading-md--letter-spacing: var(--type-heading-md-tracking);
+  --text-heading-md--font-weight: var(--type-heading-md-weight);
+  --text-heading-sm: var(--type-heading-sm-size);
+  --text-heading-sm--line-height: var(--type-heading-sm-leading);
+  --text-heading-sm--letter-spacing: var(--type-heading-sm-tracking);
+  --text-heading-sm--font-weight: var(--type-heading-sm-weight);
+  --text-heading-xs: var(--type-heading-xs-size);
+  --text-heading-xs--line-height: var(--type-heading-xs-leading);
+  --text-heading-xs--letter-spacing: var(--type-heading-xs-tracking);
+  --text-heading-xs--font-weight: var(--type-heading-xs-weight);
+  --text-heading-2xs: var(--type-heading-2xs-size);
+  --text-heading-2xs--line-height: var(--type-heading-2xs-leading);
+  --text-heading-2xs--font-weight: var(--type-heading-2xs-weight);
+  --text-body: var(--type-body-size);
+  --text-body--line-height: var(--type-body-leading);
+  --text-label: var(--type-label-size);
+  --text-label--line-height: var(--type-label-leading);
+  --text-label--font-weight: var(--type-label-weight);
+  --text-supporting: var(--type-supporting-size);
+  --text-supporting--line-height: var(--type-supporting-leading);
+  --text-caption: var(--type-caption-size);
+  --text-caption--line-height: var(--type-caption-leading);
+}

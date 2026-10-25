@@ -1,11 +1,12 @@
+import { typographyEs } from './typography-messages';
 import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
 import { cspEs } from './csp-messages';
 import type { Messages } from './en';
-
 /** Built-in Spanish catalog. */
 export const es: Messages = {
   ...cspEs,
+  ...typographyEs,
   ...motionEs,
   ...markdownEs,
   'contact.sendFailed': 'No hemos podido enviar tu mensaje. Inténtalo de nuevo.',
@@ -16,7 +17,6 @@ export const es: Messages = {
   'themeScope.nested': 'Una región oscura dentro de una región clara.',
   'themeScope.release': 'Liberar tema forzado',
   'themeScope.force': 'Forzar tema claro',
-
   'resourceDetail.overview': 'Resumen',
   'resourceDetail.activity': 'Actividad',
   'resourceDetail.settings': 'Configuración',

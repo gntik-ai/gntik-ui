@@ -118,3 +118,77 @@ test('tokens.js exposes typed constants with the same per-theme hex as tokens.js
   }
   assert.equal(mod.cssVar('ring'), '--ring');
 });
+
+test('named type roles export DTCG composites with px dimensions and optional inheritance', () => {
+  assert.equal(Object.keys(dtcg.typography ?? {}).length, 11);
+  assert.equal(dtcg.typography?.label.$type, 'typography');
+  assert.deepEqual(dtcg.typography.label.$value, {
+    fontFamily: '{font.sans}',
+    fontSize: { value: 13, unit: 'px' },
+    lineHeight: 1.25,
+    fontWeight: 500,
+  });
+  assert.deepEqual(dtcg.typography['heading-sm'].$value, {
+    fontFamily: '{font.sans}',
+    fontSize: { value: 17, unit: 'px' },
+    lineHeight: 1.375,
+    letterSpacing: { value: -0.425, unit: 'px' },
+    fontWeight: 600,
+  });
+  assert.deepEqual(dtcg.typography.body.$value, {
+    fontFamily: '{font.sans}',
+    fontSize: { value: 15, unit: 'px' },
+    lineHeight: 1.625,
+  });
+  for (const role of ['body', 'supporting', 'caption']) {
+    assert.equal(dtcg.typography[role].$value.fontWeight, undefined);
+    assert.equal(dtcg.typography[role].$value.letterSpacing, undefined);
+  }
+});
+
+test('Figma type variables have text scopes and resolved values in all modes', () => {
+  const expected = [
+    ['label', 'font-size', 'FONT_SIZE', 13],
+    ['label', 'line-height', 'LINE_HEIGHT', 16.25],
+    ['label', 'font-weight', 'FONT_WEIGHT', 500],
+    ['heading-sm', 'font-size', 'FONT_SIZE', 17],
+    ['heading-sm', 'line-height', 'LINE_HEIGHT', 23.375],
+    ['body', 'font-size', 'FONT_SIZE', 15],
+    ['body', 'line-height', 'LINE_HEIGHT', 24.375],
+  ];
+  for (const [role, field, scope, value] of expected) {
+    const variable = figma.variables.find((v) => v.name === `type/${role}/${field}`);
+    assert.ok(variable, `${role}/${field}`);
+    assert.equal(variable.resolvedType, 'FLOAT');
+    assert.deepEqual(variable.scopes, [scope]);
+    for (const theme of THEMES) {
+      assert.equal(
+        figma.variableModeValues.find((v) => v.variableId === variable.id && v.modeId === `mode_${theme}`).value,
+        value,
+      );
+    }
+  }
+  for (const role of ['body', 'supporting', 'caption']) {
+    assert.equal(
+      figma.variables.some((v) => v.name === `type/${role}/font-weight`),
+      false,
+    );
+  }
+});
+
+test('TypeScript, JavaScript and declarations expose all eleven CSS type roles', async () => {
+  const mod = await import(path.join(out, 'tokens.js'));
+  assert.equal(Object.keys(mod.typeScale ?? {}).length, 11);
+  assert.deepEqual(mod.typeScale['heading-sm'], {
+    fontSize: 17,
+    lineHeight: 1.375,
+    letterSpacing: -0.425,
+    fontWeight: 600,
+  });
+  assert.deepEqual(mod.typeScale.body, { fontSize: 15, lineHeight: 1.625 });
+  for (const file of ['tokens.ts', 'tokens.d.ts']) {
+    const source = fs.readFileSync(path.join(out, file), 'utf8');
+    assert.match(source, /export (?:declare )?const typeScale/);
+    for (const role of Object.keys(mod.typeScale)) assert.ok(source.includes(`"${role}"`), `${file}: ${role}`);
+  }
+});
