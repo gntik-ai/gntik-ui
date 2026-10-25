@@ -5,11 +5,12 @@ export const switchVariants = tv({
     root: [
       'relative inline-flex shrink-0 cursor-pointer items-center rounded-full bg-secondary transition-colors',
       'data-checked:bg-primary',
+      'forced-colors:bg-[Canvas] forced-colors:outline forced-colors:-outline-offset-1 forced-colors:outline-[ButtonBorder] forced-colors:data-checked:bg-[Highlight] forced-colors:data-disabled:outline-[GrayText]',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
       'data-disabled:cursor-not-allowed data-disabled:opacity-50',
     ],
     thumb:
-      'pointer-events-none ms-[2px] grid place-items-center rounded-full bg-background shadow-sm transition-transform motion-reduce:transition-none',
+      'pointer-events-none ms-[2px] grid place-items-center rounded-full bg-background shadow-sm transition-transform motion-reduce:transition-none forced-colors:bg-[ButtonText] forced-colors:data-checked:bg-[HighlightText] forced-colors:data-disabled:bg-[GrayText]',
     label: 'inline-flex items-center gap-2.5 text-[13px] text-foreground',
   },
   variants: {

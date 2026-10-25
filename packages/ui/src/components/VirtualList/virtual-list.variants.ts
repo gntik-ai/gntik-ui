@@ -10,7 +10,7 @@ export const virtualListVariants = tv({
       'focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
     ],
     option:
-      'cursor-default data-active:bg-secondary/60 aria-selected:bg-primary/12 aria-selected:data-active:bg-primary/16',
+      'cursor-default data-active:bg-secondary/60 aria-selected:bg-primary/12 aria-selected:data-active:bg-primary/16 forced-colors:data-active:bg-[Highlight] forced-colors:data-active:text-[HighlightText] forced-colors:data-active:[&_*]:text-[HighlightText] forced-colors:aria-selected:bg-[Highlight] forced-colors:aria-selected:text-[HighlightText] forced-colors:aria-selected:[&_*]:text-[HighlightText] forced-colors:aria-selected:data-active:bg-[Highlight] forced-colors:aria-selected:data-active:text-[HighlightText] forced-colors:aria-selected:data-active:[&_*]:text-[HighlightText]',
     empty: 'grid h-full place-items-center px-4 py-8 text-[12.5px] text-muted-foreground',
   },
   variants: {

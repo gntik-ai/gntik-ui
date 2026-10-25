@@ -2,7 +2,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 
 export const separatorVariants = tv({
   slots: {
-    line: 'shrink-0 border-0',
+    line: 'shrink-0 border-0 forced-colors:bg-[CanvasText]',
     labelled: 'flex w-full items-center gap-3',
     label: 'shrink-0',
   },

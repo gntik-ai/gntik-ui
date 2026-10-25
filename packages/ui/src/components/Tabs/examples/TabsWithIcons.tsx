@@ -4,7 +4,7 @@ import { Tabs, TabsList, TabsPanel, TabsTab } from '../Tabs';
 export default function TabsWithIcons() {
   return (
     <Tabs defaultValue="activity">
-      <TabsList aria-label="Workspace">
+      <TabsList aria-label="Workspace" indicator={false}>
         <TabsTab value="activity" icon={Activity}>
           Activity
         </TabsTab>

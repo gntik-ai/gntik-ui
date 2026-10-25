@@ -9,8 +9,10 @@ export const radioGroupVariants = tv({
       'data-checked:border-primary data-checked:bg-primary data-invalid:border-destructive/70',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
       'data-disabled:cursor-not-allowed data-disabled:opacity-50',
+      'forced-colors:data-checked:border-[Highlight] forced-colors:data-checked:bg-[Highlight] forced-colors:data-disabled:border-[GrayText] forced-colors:data-disabled:data-checked:bg-[Canvas]',
     ],
-    indicator: 'size-1.5 rounded-full bg-primary-foreground data-unchecked:hidden',
+    indicator:
+      'size-1.5 rounded-full bg-primary-foreground data-unchecked:hidden forced-colors:bg-[HighlightText] forced-colors:data-disabled:bg-[GrayText]',
     item: 'grid grid-cols-[auto_1fr_auto] items-start gap-x-3 gap-y-0.5',
     label:
       'col-span-2 grid cursor-pointer grid-cols-subgrid items-start has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-70',
@@ -31,6 +33,7 @@ export const radioGroupVariants = tv({
           'rounded-md border border-border bg-background px-4 py-3.5 transition-colors motion-reduce:transition-none',
           'hover:border-muted-foreground/40 has-[[data-checked]]:border-primary/60 has-[[data-checked]]:ring-2 has-[[data-checked]]:ring-primary/20',
           'has-[[data-disabled]]:hover:border-border',
+          'forced-colors:has-[[data-checked]]:border-2 forced-colors:has-[[data-checked]]:border-[Highlight]',
         ],
         labelText: 'font-semibold',
         description: 'text-[12px]',

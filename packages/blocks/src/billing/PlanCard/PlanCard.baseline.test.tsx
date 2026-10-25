@@ -1,3 +1,4 @@
+import { withoutForcedColors } from '../../test/without-forced-colors';
 import { render } from '@testing-library/react';
 import { PlanCard, type BillingPlan } from './PlanCard';
 
@@ -16,11 +17,11 @@ const full: BillingPlan = {
 describe('PlanCard billing DOM baseline', () => {
   it('preserves the no-props billing header', () => {
     const { container } = render(<PlanCard />);
-    expect(container.outerHTML).toMatchSnapshot();
+    expect(withoutForcedColors(container).outerHTML).toMatchSnapshot();
   });
 
   it('preserves the FULL billing header', () => {
     const { container } = render(<PlanCard plan={full} upgradeLabel="Upgrade" manageLabel="Manage" />);
-    expect(container.outerHTML).toMatchSnapshot();
+    expect(withoutForcedColors(container).outerHTML).toMatchSnapshot();
   });
 });

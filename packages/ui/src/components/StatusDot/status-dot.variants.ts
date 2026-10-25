@@ -3,8 +3,8 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const statusDotVariants = tv({
   slots: {
     root: 'inline-flex items-center gap-2 align-middle',
-    dot: 'relative inline-flex shrink-0 rounded-full',
-    ping: 'absolute inset-0 animate-ping rounded-full opacity-60 motion-reduce:hidden motion-reduce:animate-none',
+    dot: 'relative inline-flex shrink-0 rounded-full forced-colors:bg-[CanvasText]',
+    ping: 'absolute inset-0 animate-ping rounded-full opacity-60 motion-reduce:hidden motion-reduce:animate-none forced-colors:hidden',
     label: 'text-[12.5px] leading-5 font-medium text-foreground',
   },
   variants: {

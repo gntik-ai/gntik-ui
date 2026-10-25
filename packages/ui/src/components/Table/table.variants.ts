@@ -12,7 +12,7 @@ export const tableVariants = tv({
     header: '',
     body: '[&>tr:last-child>td]:border-b-0',
     footer: 'font-medium [&>tr>td]:border-t [&>tr>td]:border-b-0 [&>tr>td]:border-border [&>tr>td]:bg-secondary/30',
-    row: 'transition-colors motion-reduce:transition-none hover:bg-accent/30 data-[selected]:bg-primary/8 data-[selected]:hover:bg-primary/12',
+    row: 'transition-colors motion-reduce:transition-none hover:bg-accent/30 data-[selected]:bg-primary/8 data-[selected]:hover:bg-primary/12 forced-colors:data-[selected]:bg-[Highlight] forced-colors:data-[selected]:text-[HighlightText] forced-colors:data-[selected]:[&_*]:text-[HighlightText] forced-colors:data-[selected]:hover:bg-[Highlight] forced-colors:data-[selected]:hover:text-[HighlightText] forced-colors:data-[selected]:hover:[&_*]:text-[HighlightText]',
     head: 'border-b border-border px-4 align-middle text-[11.5px] font-medium tracking-wide whitespace-nowrap text-muted-foreground uppercase',
     sortButton: [
       'inline-flex cursor-pointer items-center gap-1 rounded-sm uppercase tracking-wide transition-colors motion-reduce:transition-none hover:text-foreground',

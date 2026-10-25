@@ -10,8 +10,10 @@ export const meterVariants = tv({
     header: 'flex items-baseline justify-between gap-3',
     label: 'text-[13px] font-medium text-foreground',
     value: 'font-mono text-[11.5px] font-semibold tabular-nums',
-    track: 'relative w-full overflow-hidden rounded-full bg-secondary',
-    indicator: 'block h-full rounded-full transition-[width] duration-400 ease-out motion-reduce:transition-none',
+    track:
+      'relative w-full overflow-hidden rounded-full bg-secondary forced-colors:outline forced-colors:-outline-offset-1 forced-colors:outline-[CanvasText]',
+    indicator:
+      'block h-full rounded-full transition-[width] duration-400 ease-out motion-reduce:transition-none forced-colors:bg-[Highlight]',
     note: 'font-mono text-[11px]',
   },
   variants: {
