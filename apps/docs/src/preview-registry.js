@@ -68,6 +68,8 @@ export const PREVIEW_LOADERS = {
     'log-viewer--wrap': () => import('../../../packages/blocks/src/builders/LogViewer/examples/Wrap'),
     'theme-scope': () => import('../../../packages/ui/src/theme/examples/ThemeScopeLightCard'),
     'theme-scope--nested': () => import('../../../packages/ui/src/theme/examples/ThemeScopeNested'),
+    'motion-dialog': () => import('../../../packages/ui/src/components/Dialog/examples/DialogForm'),
+    'theme-provider--motion': () => import('../../../packages/ui/src/theme/examples/ThemeProviderMotion'),
     'theme-provider--forced': () => import('../../../packages/ui/src/theme/examples/ThemeProviderForced'),
     ...Object.fromEntries(
       Object.entries(blockLabelExamples).map(([file, load]) => [

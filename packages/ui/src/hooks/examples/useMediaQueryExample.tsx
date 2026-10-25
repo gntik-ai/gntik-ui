@@ -1,9 +1,9 @@
 import { breakpointQuery } from '@gntik-ai/tokens/runtime';
-import { useMediaQuery, usePrefersReducedMotion } from '../useMediaQuery';
+import { useMediaQuery, useReducedMotion } from '../useMediaQuery';
 
 export default function MediaQueryExample() {
   const wide = useMediaQuery(breakpointQuery('lg'), false);
-  const reducedMotion = usePrefersReducedMotion();
+  const reducedMotion = useReducedMotion();
   return (
     <div className="space-y-2 text-sm text-foreground" aria-live="polite">
       <p>Wide-screen behaviour: {wide ? 'enabled' : 'disabled'}</p>

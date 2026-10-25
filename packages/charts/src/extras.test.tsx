@@ -305,3 +305,11 @@ describe('useLiveSeries', () => {
     vi.useRealTimers();
   });
 });
+
+it('live series follows in-app reduced motion and runtime scope removal', async () => {
+  document.documentElement.dataset.motion = 'reduce';
+  const { result } = renderHook(() => useLiveSeries());
+  expect(result.current.reducedMotion).toBe(true);
+  await act(async () => document.documentElement.removeAttribute('data-motion'));
+  expect(result.current.reducedMotion).toBe(false);
+});

@@ -1,8 +1,10 @@
+import { motionEn } from './motion-messages';
 import { markdownEn } from './markdown-messages';
 import { cspEn } from './csp-messages';
 /** Built-in English labels, accessible names and announcements. See format.ts for interpolation syntax. */
 export const en = {
   ...cspEn,
+  ...motionEn,
   ...markdownEn,
   'contact.sendFailed': "We couldn't send your message. Please try again.",
   'themeScope.title': 'Light preview',
@@ -31,19 +33,16 @@ export const en = {
     'Check the spelling or try a broader search{count, plural, =0 {} one { with {count} filter applied} other { with {count} filters applied}}.',
   'emptyState.noResults.clearFilters': 'Clear filters',
   'emptyState.noResults.clearSearch': 'Clear search',
-
   'emptyState.firstRun.title': 'Create your first project',
   'emptyState.firstRun.description':
     'Projects group your services, environments and deployments. Start one from a repository in a couple of minutes.',
   'emptyState.firstRun.action': 'New project',
   'emptyState.firstRun.guide': 'Read the guide',
-
   'callout.title': 'You have used 92% of your build minutes',
   'callout.description':
     'Builds will queue once the monthly limit is reached. Upgrade the plan or reduce concurrent builds.',
   'callout.upgrade': 'Upgrade plan',
   'callout.viewUsage': 'View usage',
-
   'descriptionList.title': 'Configuration',
   'descriptionList.description': 'Settings of this deployment.',
   'descriptionList.edit': 'Edit',

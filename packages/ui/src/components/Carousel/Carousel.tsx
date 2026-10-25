@@ -1,5 +1,5 @@
 import { useI18n } from '../../i18n/I18nProvider';
-import { usePrefersReducedMotion } from '../../hooks/useMediaQuery';
+import { useReducedMotion } from '../../hooks/useMediaQuery';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import {
   Children,
@@ -71,7 +71,7 @@ export function Carousel({
   labels: labelsProp,
   className,
 }: CarouselProps) {
-  const reducedMotion = usePrefersReducedMotion();
+  const reducedMotion = useReducedMotion();
   const { t } = useI18n();
   const labels: CarouselLabels = {
     previous: t('carousel.previous'),

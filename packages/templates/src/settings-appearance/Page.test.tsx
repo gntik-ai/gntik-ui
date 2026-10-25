@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@gntik-ai/ui';
+import { I18nProvider, ThemeProvider } from '@gntik-ai/ui';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
@@ -41,4 +41,39 @@ describe('SettingsAppearancePage', () => {
     const { container } = renderPage();
     await expectNoAxeViolations(container);
   }, 15000);
+});
+
+it('toggles the app motion preference with an accessible switch', async () => {
+  renderPage();
+  const control = screen.getByRole('switch', { name: 'Reduce motion' });
+  expect(control).not.toBeChecked();
+  await userEvent.click(control);
+  expect(control).toBeChecked();
+  expect(document.documentElement).toHaveAttribute('data-motion', 'reduce');
+  await userEvent.click(control);
+  expect(control).not.toBeChecked();
+  expect(document.documentElement).not.toHaveAttribute('data-motion');
+});
+
+it.each(['dark', 'light', 'high_contrast'] as const)('motion row is axe clean in %s', async (theme) => {
+  const { container } = render(
+    <ThemeProvider defaultMode={theme} storageKey={null} motionStorageKey={null}>
+      <SettingsAppearancePage />
+    </ThemeProvider>,
+  );
+  await expectNoAxeViolations(container);
+});
+
+it('localizes the motion label and description in Spanish', () => {
+  render(
+    <I18nProvider locale="es">
+      <ThemeProvider defaultMotion="reduce" storageKey={null} motionStorageKey={null}>
+        <SettingsAppearancePage />
+      </ThemeProvider>
+    </I18nProvider>,
+  );
+  expect(screen.getByRole('switch', { name: 'Reducir movimiento' })).toBeChecked();
+  expect(screen.getByRole('switch', { name: 'Reducir movimiento' })).toHaveAccessibleDescription(
+    'Desactiva las animaciones y transiciones en esta aplicación, aunque tu dispositivo las permita.',
+  );
 });

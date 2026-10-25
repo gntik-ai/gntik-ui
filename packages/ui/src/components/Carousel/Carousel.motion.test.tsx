@@ -51,3 +51,14 @@ it('hydrates without mismatches and pauses once the reduced-motion preference is
     error.mockRestore();
   }
 });
+
+it('keeps autoplay stopped under an in-app motion scope', () => {
+  mockMediaQueries();
+  document.documentElement.dataset.motion = 'reduce';
+  try {
+    render(gallery);
+    expect(screen.getByRole('button', { name: 'Start automatic slide show' })).toBeInTheDocument();
+  } finally {
+    document.documentElement.removeAttribute('data-motion');
+  }
+});

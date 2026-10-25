@@ -88,3 +88,17 @@ describe('Tour', () => {
     await expectNoAxeViolations();
   });
 });
+
+it('scrolls without smooth behavior under the app motion scope', async () => {
+  document.documentElement.dataset.motion = 'reduce';
+  const original = Element.prototype.scrollIntoView;
+  const scroll = vi.fn();
+  Element.prototype.scrollIntoView = scroll;
+  try {
+    await start();
+    expect(scroll).toHaveBeenCalledWith(expect.objectContaining({ behavior: 'auto' }));
+  } finally {
+    Element.prototype.scrollIntoView = original;
+    document.documentElement.removeAttribute('data-motion');
+  }
+});

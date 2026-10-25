@@ -3,13 +3,13 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const dialogVariants = tv({
   slots: {
     backdrop: [
-      'fixed inset-0 z-50 bg-background/75 backdrop-blur-[3px] transition-opacity duration-200',
+      'fixed inset-0 z-50 bg-background/75 backdrop-blur-[3px] transition-opacity duration-normal',
       'data-starting-style:opacity-0 data-ending-style:opacity-0',
     ],
     viewport: 'fixed inset-0 z-50 flex items-start justify-center overflow-y-auto p-5 sm:p-8',
     popup: [
       'relative mt-[8vh] w-full rounded-xl border border-border bg-popover text-popover-foreground shadow-lg outline-none',
-      'transition-[opacity,translate,scale] duration-200 motion-reduce:transition-none',
+      'transition-[opacity,translate,scale] duration-normal motion-reduce:transition-none',
       'data-starting-style:translate-y-2 data-starting-style:scale-[0.97] data-starting-style:opacity-0',
       'data-ending-style:translate-y-2 data-ending-style:scale-[0.97] data-ending-style:opacity-0',
     ],
