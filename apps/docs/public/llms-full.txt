@@ -1349,7 +1349,7 @@ export default function KbdShortcuts() {
 
 ### Markdown (`markdown`)
 
-Safe, token-styled markdown for model output (react-markdown + remark-gfm): headings, lists, task lists, tables, blockquotes, inline and fenced code with a copy button, links with an external marker. Raw HTML is never rendered, unsafe URL schemes are stripped, and partial streamed input (unclosed fences) renders cleanly. Copy actions show common.copyFailed when clipboard access is denied or unavailable, with no success icon; successful copies keep their labels and reset after 1600ms. See the bilingual Result feedback live preview.
+Safe, token-styled Markdown with GFM, code copying and streaming fence repair. Raw HTML stays skipped by default and URL attributes always pass safeUrl, including plugin-created URLs and component overrides. components merges over kit renderers; codeRenderers matches languages case-insensitively and receives code, language, streaming and complete (false only for the repaired fence). customTags allowlists standalone block tags: children use the same Markdown pipeline, attributes exclude on* and style, and unclosed tags render only while streaming. Unknown or malformed tags stay in the normal skipped-HTML pipeline without consuming later prose. useMarkdownContext exposes streaming to every renderer. Keep component maps and plugin arrays stable to preserve memoisation. User remarkPlugins follow GFM; user rehypePlugins follow kit HTML processing. Overrides and plugins are trusted executable code receiving untrusted content: validate data, render React text/children, and never use dangerouslySetInnerHTML. allowHtml lazily imports rehype-raw and rehype-sanitize; until loaded, HTML stays skipped. Its fixed subset is b, strong, i, em, u, s, del, sub, sup, kbd, mark, abbr[title], br, details[open] and summary. Other raw elements unwrap to text; scripts, styles, frames, embeds, forms, media, SVG, MathML, template and textarea drop their contents. Event handlers and style attributes are removed. MarkdownCustom demonstrates overrides, chart fences, think tags, both plugin types, opt-in HTML and partial streaming. Copy actions show common.copyFailed when clipboard access fails; successful copies reset after 1600ms.
 
 - Package: `@gntik-ai/chat` · export `Markdown` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/Markdown/Markdown.doc.ts
@@ -1367,38 +1367,88 @@ Tokens: foreground, muted-foreground, primary-text, secondary, border, focus-rin
 Usage:
 
 ```tsx
-import { Markdown } from '@gntik-ai/chat';
+import { Alert, Badge, Card, Progress, useI18n } from '@gntik-ai/ui';
+import type { ReactNode } from 'react';
+import {
+  Markdown,
+  useMarkdownContext,
+  type MarkdownCodeRendererProps,
+  type MarkdownCustomTagProps,
+  type MarkdownProps,
+} from '@gntik-ai/chat';
 
-const REPLY = `## Rolling back a deployment
+function Callout({ children }: { children?: ReactNode }) {
+  return <Alert>{children}</Alert>;
+}
 
-You can roll back from the **Deployments** page or from the CLI. The previous build stays cached for 7 days.
-
-1. Open the project and pick the deployment.
-2. Choose *Roll back* and confirm.
-3. Watch the health checks until every region is green.
-
-| Region | Status | Latency |
-| --- | --- | --- |
-| eu-west | Healthy | 42 ms |
-| us-east | Degraded | 180 ms |
-
-> Rolling back does not revert database migrations.
-
-Run \`deploy rollback --to previous\` or script it:
-
-\`\`\`ts
-await client.deployments.rollback({ project: 'web-app', to: 'previous' });
-\`\`\`
-
-- [x] Notify the team
-- [ ] Update the incident log
-
-See the [rollback guide](https://example.com/docs/rollback) for details.`;
-
-export default function MarkdownReply() {
+function ChartFence({ code, complete }: MarkdownCodeRendererProps) {
+  const { t } = useI18n();
+  const { streaming } = useMarkdownContext();
+  const value = Number(code);
   return (
-    <div className="max-w-2xl">
-      <Markdown>{REPLY}</Markdown>
+    <Card className="my-3 space-y-2 p-3">
+      <Progress
+        label={t('chat.markdownChart')}
+        value={Number.isFinite(value) ? Math.max(0, Math.min(100, value)) : 0}
+        showValue
+      />
+      <Badge>{t(streaming && !complete ? 'chat.markdownPartial' : 'chat.markdownComplete')}</Badge>
+    </Card>
+  );
+}
+
+function Reasoning({ children, complete }: MarkdownCustomTagProps) {
+  const { t } = useI18n();
+  return (
+    <Card className="my-3 space-y-2 p-3">
+      <Badge>{t(complete ? 'chat.markdownReasoning' : 'chat.markdownPartial')}</Badge>
+      {children}
+    </Card>
+  );
+}
+
+interface ExampleNode {
+  type: string;
+  depth?: number;
+  tagName?: string;
+  properties?: Record<string, unknown>;
+  children?: ExampleNode[];
+}
+function walk(node: ExampleNode, change: (node: ExampleNode) => void) {
+  change(node);
+  node.children?.forEach((child) => walk(child, change));
+}
+// Stable maps and plugin arrays preserve Markdown's memoisation.
+const components = { blockquote: Callout };
+const codeRenderers = { chart: ChartFence };
+const customTags = { think: Reasoning };
+const remarkPlugins: MarkdownProps['remarkPlugins'] = [
+  () => (tree: ExampleNode) => {
+    walk(tree, (node) => {
+      if (node.type === 'heading') node.depth = 3;
+    });
+  },
+];
+const rehypePlugins: MarkdownProps['rehypePlugins'] = [
+  () => (tree: ExampleNode) => {
+    walk(tree, (node) => {
+      if (node.tagName === 'details') node.properties = { ...node.properties, open: true };
+    });
+  },
+];
+const extensions = { components, codeRenderers, customTags, remarkPlugins, rehypePlugins };
+
+/** Overrides receive untrusted text: validate data and render React children, never raw HTML. */
+export default function MarkdownCustom() {
+  const { t } = useI18n();
+  return (
+    <div className="max-w-2xl space-y-4">
+      <Markdown {...extensions} allowHtml>
+        {t('chat.markdownCustomReply')}
+      </Markdown>
+      <Markdown {...extensions} streaming>
+        {t('chat.markdownCustomPartial')}
+      </Markdown>
     </div>
   );
 }
