@@ -1,4 +1,3 @@
-import { withoutForcedColors } from '../test/without-forced-colors';
 import { render } from '@testing-library/react';
 import ResourceDetailPage from './Page';
 import { shell } from './examples/shell';
@@ -20,10 +19,10 @@ function stableIds(html: string) {
 
 it('preserves the original default shell markup', () => {
   const { container } = render(<ResourceDetailPage />);
-  expect(stableIds(withoutForcedColors(container).innerHTML)).toMatchSnapshot();
+  expect(stableIds(container.innerHTML)).toMatchSnapshot();
 });
 
 it('preserves the original explicit shell markup', () => {
   const { container } = render(<ResourceDetailPage shell={shell} />);
-  expect(stableIds(withoutForcedColors(container).innerHTML)).toMatchSnapshot();
+  expect(stableIds(container.innerHTML)).toMatchSnapshot();
 });

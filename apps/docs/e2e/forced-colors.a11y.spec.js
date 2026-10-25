@@ -52,16 +52,30 @@ test('switch state, thumb and track geometry survive forced colours', async ({ p
 test('radio circles, dots and checked cards retain their markers', async ({ page }) => {
   const c = await forceColours(page);
   // aria-checked is the public state; the indicator is the visible circle's child.
-  const selected = page.locator('#ui-RadioGroup [role="radio"][aria-checked="true"]').first();
-  const empty = page.locator('#ui-RadioGroup [role="radio"][aria-checked="false"]:not([data-disabled])').first();
+  const group = page.locator('#ui-RadioGroup').getByRole('radiogroup', { name: 'Deployment plan', exact: true });
+  const selected = group.getByRole('radio', { name: 'Dedicated', exact: true });
+  const empty = group.getByRole('radio', { name: 'Shared', exact: true });
+  await expect(selected).toBeChecked();
+  await expect(empty).not.toBeChecked();
   await colour(selected, 'backgroundColor', c.Highlight);
   await colour(selected.locator('span').first(), 'backgroundColor', c.HighlightText);
   await expect(empty).toHaveCSS('border-top-width', '1px');
   expect(await empty.evaluate((el) => getComputedStyle(el).borderTopColor)).not.toBe(c.Canvas);
   await expect(empty.locator('span')).toHaveCount(0);
-  const card = page.locator('#ui-RadioGroup div.rounded-md').filter({ has: selected }).first();
+  // Filter with a relative radio locator so the card and radio belong to this group.
+  const cardFor = (name) =>
+    group.locator('div.rounded-md').filter({ has: page.getByRole('radio', { name, exact: true }) });
+  const card = cardFor('Dedicated');
+  const otherCard = cardFor('Shared');
   await expect(card).toHaveCSS('border-top-width', '2px');
   await colour(card, 'borderTopColor', c.Highlight);
+  await expect(otherCard).toHaveCSS('border-top-width', '1px');
+  await empty.click();
+  await expect(empty).toBeChecked();
+  await expect(selected).not.toBeChecked();
+  await expect(otherCard).toHaveCSS('border-top-width', '2px');
+  await colour(otherCard, 'borderTopColor', c.Highlight);
+  await expect(card).toHaveCSS('border-top-width', '1px');
 });
 
 for (const [name, variant, sliding] of [
