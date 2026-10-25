@@ -32,7 +32,7 @@ export function NodeCard({ kind = 'step', icon, title, subtitle, meta, tone, sel
           aria-hidden="true"
           width="100%"
           height="100%"
-          className="gu-flow-run-frame pointer-events-none absolute inset-0 z-10"
+          className="gu-flow-run-frame pointer-events-none absolute inset-0 z-raised"
         >
           <rect
             className="gu-flow-run fill-none stroke-primary"

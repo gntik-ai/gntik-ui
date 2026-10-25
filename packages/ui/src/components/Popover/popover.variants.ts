@@ -10,7 +10,7 @@ export const POPOVER_ARROW_SIDES = [
 
 export const popoverVariants = tv({
   slots: {
-    positioner: 'z-50 outline-none',
+    positioner: 'z-popover outline-none',
     popup: [
       'relative origin-[var(--transform-origin)] rounded-[10px] border border-border bg-popover text-popover-foreground shadow-md outline-none',
       'max-w-[calc(100vw-2rem)] transition-[opacity,scale] duration-150 motion-reduce:transition-none',

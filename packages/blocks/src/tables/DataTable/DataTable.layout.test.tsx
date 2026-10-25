@@ -74,15 +74,16 @@ describe('DataTable column pinning', () => {
     expect(headers[1]).toHaveTextContent('Deployment');
     expect(headers[headers.length - 2]).toHaveTextContent('Cost');
     const name = head(/Deployment/);
-    expect(name).toHaveClass('sticky', 'border-e');
+    expect(name).toHaveClass('sticky', 'border-e', 'z-sticky-pinned');
+    expect(name).not.toHaveClass('z-raised');
     expect(name.style.width).toBe('220px');
     const cost = head(/Cost/);
-    expect(cost).toHaveClass('sticky', 'border-s');
+    expect(cost).toHaveClass('sticky', 'border-s', 'z-sticky-pinned');
     // The selection and actions columns stick with them.
-    expect(headers[0]).toHaveClass('sticky');
-    expect(headers[headers.length - 1]).toHaveClass('sticky');
+    expect(headers[0]).toHaveClass('sticky', 'z-sticky-pinned');
+    expect(headers[headers.length - 1]).toHaveClass('sticky', 'z-sticky-pinned');
     const firstRow = within(screen.getAllByRole('rowgroup')[1]!).getAllByRole('row')[0]!;
-    expect(within(firstRow).getAllByRole('cell')[1]).toHaveClass('sticky', 'bg-card');
+    expect(within(firstRow).getAllByRole('cell')[1]).toHaveClass('sticky', 'bg-card', 'z-raised');
     await expectNoAxeViolations(container);
   });
 

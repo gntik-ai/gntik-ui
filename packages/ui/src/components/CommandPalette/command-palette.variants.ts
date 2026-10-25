@@ -9,10 +9,10 @@ export const commandPaletteVariants = tv({
     ],
     triggerText: 'text-[13px]',
     backdrop: [
-      'fixed inset-0 z-50 bg-background/70 backdrop-blur-sm transition-opacity duration-150 motion-reduce:transition-none',
+      'fixed inset-0 z-overlay bg-background/70 backdrop-blur-sm transition-opacity duration-150 motion-reduce:transition-none',
       'data-starting-style:opacity-0 data-ending-style:opacity-0',
     ],
-    viewport: 'fixed inset-0 z-50 flex items-start justify-center px-4 pt-[12vh] pb-4',
+    viewport: 'fixed inset-0 z-modal flex items-start justify-center px-4 pt-[12vh] pb-4',
     popup: [
       'flex max-h-[min(560px,80vh)] w-full max-w-[560px] flex-col overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-lg outline-none',
       'transition-[opacity,scale] duration-150 motion-reduce:transition-none',

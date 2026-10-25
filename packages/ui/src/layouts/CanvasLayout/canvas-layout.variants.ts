@@ -16,10 +16,10 @@ export const canvasLayoutVariants = tv({
     center: 'flex min-w-0 flex-1 flex-col',
     main: 'relative min-h-0 flex-1 overflow-hidden outline-none',
     notice: [
-      'absolute top-3 left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center gap-2 lg:hidden',
+      'absolute top-3 left-1/2 z-docked flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center gap-2 lg:hidden',
       'rounded-md border border-border bg-card px-3 py-2 text-[12.5px] text-muted-foreground shadow-sm',
     ],
-    toolbar: 'absolute top-3 left-1/2 z-10 hidden -translate-x-1/2 lg:block',
+    toolbar: 'absolute top-3 left-1/2 z-sticky hidden -translate-x-1/2 lg:block',
     console: 'flex shrink-0 flex-col border-t border-border bg-card',
     consoleBar: 'flex h-9 shrink-0 items-center gap-2 px-2',
     consoleToggle: [

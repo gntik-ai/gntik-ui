@@ -14,7 +14,7 @@ export const inspectorLayoutVariants = tv({
     fullScreen: { true: { root: 'h-dvh' }, false: { root: 'h-full min-h-0' } },
     pinned: {
       true: { panel: '' },
-      false: { panel: 'absolute inset-y-0 end-0 z-20 shadow-md' },
+      false: { panel: 'absolute inset-y-0 end-0 z-docked shadow-md' },
     },
   },
   defaultVariants: { fullScreen: false, pinned: true },

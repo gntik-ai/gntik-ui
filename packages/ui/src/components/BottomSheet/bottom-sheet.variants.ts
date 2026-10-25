@@ -3,11 +3,11 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const bottomSheetVariants = tv({
   slots: {
     backdrop: [
-      'fixed inset-0 z-50 bg-background/70 backdrop-blur-[3px] transition-opacity duration-300 motion-reduce:transition-none',
+      'fixed inset-0 z-overlay bg-background/70 backdrop-blur-[3px] transition-opacity duration-300 motion-reduce:transition-none',
       'opacity-[calc(1-var(--drawer-swipe-progress,0))] data-swiping:duration-0',
       'data-starting-style:opacity-0 data-ending-style:opacity-0',
     ],
-    viewport: 'fixed inset-0 z-50 flex items-end justify-center',
+    viewport: 'fixed inset-0 z-modal flex items-end justify-center',
     popup: [
       'relative flex max-h-[calc(100dvh-1rem)] min-h-0 w-full max-w-2xl flex-col rounded-t-2xl border border-b-0 border-border bg-popover text-popover-foreground shadow-lg outline-none',
       '[transform:translateY(calc(var(--drawer-snap-point-offset,0px)+var(--drawer-swipe-movement-y,0px)))]',

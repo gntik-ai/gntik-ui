@@ -69,7 +69,7 @@ export function BarList<T extends object>({
                 className={cx('absolute inset-y-0 left-0 rounded-md', BAR_LIST_BG[color])}
                 style={{ width: `${pct}%` }}
               />
-              <div className="relative z-10 flex h-full items-center px-2.5">
+              <div className="relative z-raised flex h-full items-center px-2.5">
                 <span className="truncate text-[13px] text-foreground">{String(field(r, index))}</span>
               </div>
             </div>

@@ -11,6 +11,7 @@
 @import "./pairing.css";
 @import "./scope.css";
 @import "./motion.css";
+@import "./layers.css";
 @import "./density.css";
 @import "./typography.css";
 
@@ -193,3 +194,18 @@
   --text-caption: var(--type-caption-size);
   --text-caption--line-height: var(--type-caption-leading);
 }
+
+/* Static stacking utilities: leave Tailwind numeric utilities and namespaces intact. */
+@utility z-behind { z-index: var(--z-behind); }
+@utility z-base { z-index: var(--z-base); }
+@utility z-raised { z-index: var(--z-raised); }
+@utility z-sticky { z-index: var(--z-sticky); }
+@utility z-sticky-pinned { z-index: var(--z-sticky-pinned); }
+@utility z-docked { z-index: var(--z-docked); }
+@utility z-dropdown { z-index: var(--z-dropdown); }
+@utility z-overlay { z-index: var(--z-overlay); }
+@utility z-modal { z-index: var(--z-modal); }
+@utility z-popover { z-index: var(--z-popover); }
+@utility z-skip-link { z-index: var(--z-skip-link); }
+@utility z-toast { z-index: var(--z-toast); }
+@utility z-tooltip { z-index: var(--z-tooltip); }

@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Overlays',
   status: 'stable',
   description:
-    'Modal window for focused tasks: forms, details, confirmations. Compound parts (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose) in four sizes.',
+    'Modal window for focused tasks: forms, details, confirmations. Compound parts (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose) in four sizes. Named stacking layers keep nested popups, toasts and tooltips above the modal; see LayeredOverlays.',
   primitive: '@base-ui/react/dialog',
   pattern: 'dialog (modal)',
   keyboard: [

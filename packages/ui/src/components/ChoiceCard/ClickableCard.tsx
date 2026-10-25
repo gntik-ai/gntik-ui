@@ -29,7 +29,7 @@ export interface ClickableCardProps extends Omit<HTMLAttributes<HTMLDivElement>,
 /**
  * A card whose whole surface is one link or button. The title holds the only focus target and
  * stretches over the card, so the accessible name stays short and the description is linked
- * with aria-describedby. Extra interactive content inside needs `relative z-10`.
+ * with aria-describedby. Extra interactive content inside needs `relative z-raised`.
  */
 export function ClickableCard({
   title,

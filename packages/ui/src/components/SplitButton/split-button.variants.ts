@@ -7,8 +7,8 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const splitButtonVariants = tv({
   slots: {
     root: 'inline-flex shrink-0 items-stretch',
-    action: 'rounded-e-none focus-visible:z-10',
-    trigger: 'rounded-s-none focus-visible:z-10 data-popup-open:bg-secondary/70',
+    action: 'rounded-e-none focus-visible:z-raised',
+    trigger: 'rounded-s-none focus-visible:z-raised data-popup-open:bg-secondary/70',
     chevron: 'transition-transform duration-150 motion-reduce:transition-none in-data-popup-open:rotate-180',
   },
   variants: {

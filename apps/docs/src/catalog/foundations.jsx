@@ -2,10 +2,12 @@
    Gntik UI · foundations.jsx — color · typography · spacing · radii ·
    shadows · icons. Everything references tokens from tokens/brand.css.
    ============================================================================ */
+import layersCss from '@gntik-ai/tokens/layers.css?raw';
 import typographyCss from '@gntik-ai/tokens/typography.css?raw';
 import { useI18n } from '@gntik-ai/ui';
 
 // Docs build directly from source, without generating the token package's dist exports.
+const namedLayers = [...layersCss.matchAll(/--z-([\w-]+):\s*(-?\d+);/g)].map(([, name, value]) => [name, value]);
 const namedTypeScale = {};
 for (const [, role, property, value] of typographyCss.matchAll(
   /--type-(.+)-(size|leading|tracking|weight):\s*([^;]+);/g,
@@ -270,6 +272,18 @@ for (const [, role, property, value] of typographyCss.matchAll(
             lang="tsx"
             code={`<div className="bg-card text-card-foreground border border-border" />\n<button className="bg-primary text-primary-foreground" />\n<span className="text-primary/70" />   {/* opacity on a token */}`}
           />
+        </Block>
+
+        <Block title={t('layers.title')} hint="@gntik-ai/tokens/layers.css">
+          <p className="mb-4 text-[13px] text-muted-foreground">{t('layers.description')}</p>
+          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {namedLayers.map(([name, value]) => (
+              <div key={name} className="rounded-md border border-border p-3 font-mono text-[12px]">
+                <dt className="text-foreground">z-{name}</dt>
+                <dd className="text-muted-foreground">{value}</dd>
+              </div>
+            ))}
+          </dl>
         </Block>
 
         <Block title="Typography" hint="Geist · 400 / 500 / 600 / 700">

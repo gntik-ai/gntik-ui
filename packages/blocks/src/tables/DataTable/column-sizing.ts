@@ -85,7 +85,7 @@ export interface TableLayout {
 }
 
 // Sticky cells need an opaque surface; the row tint (hover, selected) is layered under the content.
-const STICKY = 'sticky z-[1] bg-card';
+const STICKY = 'sticky z-raised bg-card';
 const START_EDGE = 'border-e border-border';
 const END_EDGE = 'border-s border-border';
 
@@ -160,7 +160,7 @@ export function stickyTint(
   { selected = false, head = false } = {},
 ): string | undefined {
   if (!layout?.pinned) return undefined;
-  const base = 'before:pointer-events-none before:absolute before:inset-0 before:-z-10';
+  const base = 'before:pointer-events-none before:absolute before:inset-0 before:z-behind';
   if (head) return `${base} before:bg-secondary/30`;
   return `${base} ${selected ? 'before:bg-primary/8' : '[tr:hover>&]:before:bg-accent/30'}`;
 }

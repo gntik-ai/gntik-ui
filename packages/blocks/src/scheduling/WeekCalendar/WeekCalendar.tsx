@@ -277,7 +277,7 @@ export function WeekCalendar({
                 {nowVisible && (
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute inset-x-0 z-10 flex items-center"
+                    className="pointer-events-none absolute inset-x-0 z-raised flex items-center"
                     style={{ top: hourOf(nowAt, timeZone) * hourHeight }}
                   >
                     <span className="-ms-1 size-2 shrink-0 rounded-full bg-primary" />

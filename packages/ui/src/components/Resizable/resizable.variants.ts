@@ -5,7 +5,7 @@ export const resizableVariants = tv({
     group: 'flex size-full min-h-0 min-w-0 overflow-hidden',
     panel: 'min-h-0 min-w-0',
     handle: [
-      'relative z-10 flex shrink-0 touch-none items-center justify-center bg-border select-none',
+      'relative z-raised flex shrink-0 touch-none items-center justify-center bg-border select-none',
       'transition-colors duration-150 motion-reduce:transition-none',
       'hover:bg-primary/60 data-dragging:bg-primary focus-visible:bg-primary',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',

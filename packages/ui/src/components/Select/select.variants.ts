@@ -26,7 +26,7 @@ export const selectVariants = tv({
     ],
     value: 'flex min-w-0 items-center gap-2 truncate data-placeholder:text-muted-foreground',
     icon: 'flex shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none group-data-popup-open:rotate-180',
-    positioner: 'z-50 outline-none',
+    positioner: 'z-popover outline-none',
     popup: [...listboxPopup, '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden'],
     list: 'outline-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
     item: listboxItem,

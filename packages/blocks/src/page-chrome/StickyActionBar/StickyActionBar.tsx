@@ -45,7 +45,7 @@ export function StickyActionBar({
   return (
     <section
       aria-label={ariaLabel}
-      className={cn('sticky bottom-0 z-20 border-t border-border bg-card px-4 py-3 shadow-sm sm:px-6', className)}
+      className={cn('sticky bottom-0 z-docked border-t border-border bg-card px-4 py-3 shadow-sm sm:px-6', className)}
     >
       <div className="mx-auto flex max-w-5xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p role="status" className="flex items-center gap-2 text-[13px] text-foreground">

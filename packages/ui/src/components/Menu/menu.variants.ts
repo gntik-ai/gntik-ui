@@ -8,7 +8,7 @@ const itemBase = [
 
 export const menuVariants = tv({
   slots: {
-    positioner: 'z-50 outline-none',
+    positioner: 'z-popover outline-none',
     popup: [
       'min-w-[208px] origin-[var(--transform-origin)] rounded-[10px] border border-border bg-popover p-1.5 text-popover-foreground shadow-md outline-none',
       'max-h-[var(--available-height)] overflow-y-auto',

@@ -27,7 +27,7 @@ export const comboboxVariants = tv({
     chipRemove: 'grid size-4 place-items-center rounded transition-colors hover:bg-primary/20',
     chipsInput:
       'h-6 min-w-20 flex-1 bg-transparent px-1 text-[13px] text-foreground outline-none placeholder:text-muted-foreground',
-    positioner: 'z-50 outline-none',
+    positioner: 'z-popover outline-none',
     popup: listboxPopup,
     list: 'outline-none data-empty:hidden',
     item: listboxItem,

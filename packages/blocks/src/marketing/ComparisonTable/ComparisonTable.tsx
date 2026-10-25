@@ -62,7 +62,7 @@ export interface ComparisonTableProps {
 }
 
 const number = new Intl.NumberFormat('en-US');
-const STICKY = 'sticky start-0 z-10 bg-card';
+const STICKY = 'sticky start-0 z-sticky bg-card';
 
 /**
  * Feature comparison of plans or options: columns are plans, rows are features grouped by section.

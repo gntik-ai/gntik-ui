@@ -9,7 +9,7 @@ export const stepperVariants = tv({
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
     indicator:
-      'relative z-10 grid size-8 shrink-0 place-items-center rounded-full text-[12px] font-bold transition-colors motion-reduce:transition-none',
+      'relative z-raised grid size-8 shrink-0 place-items-center rounded-full text-[12px] font-bold transition-colors motion-reduce:transition-none',
     text: 'flex min-w-0 flex-col',
     label: 'text-[12.5px] font-medium whitespace-nowrap',
     description: 'text-[11.5px] leading-snug text-muted-foreground',

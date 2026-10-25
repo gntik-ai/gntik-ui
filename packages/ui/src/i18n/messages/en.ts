@@ -1,3 +1,4 @@
+import { layersEn } from './layer-messages';
 import { catalogPreviewEn } from './catalog-preview-messages';
 import { typographyEn } from './typography-messages';
 import { motionEn } from './motion-messages';
@@ -5,6 +6,7 @@ import { markdownEn } from './markdown-messages';
 import { cspEn } from './csp-messages';
 /** Built-in English labels, accessible names and announcements. See format.ts for interpolation syntax. */
 export const en = {
+  ...layersEn,
   ...cspEn,
   ...catalogPreviewEn,
   ...typographyEn,

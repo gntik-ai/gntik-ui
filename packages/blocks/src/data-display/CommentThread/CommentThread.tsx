@@ -80,7 +80,7 @@ export function CommentThread({
             {i < all.length - 1 && (
               <span aria-hidden className="absolute top-9 -bottom-5 start-[15.5px] w-px bg-border" />
             )}
-            <Avatar name={comment.author.name} src={comment.author.src} size="sm" className="relative z-10" />
+            <Avatar name={comment.author.name} src={comment.author.src} size="sm" className="relative z-raised" />
             <article className="min-w-0 flex-1 rounded-lg border border-border bg-background/50 p-3">
               <header className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
                 <span className="text-[12.5px] font-semibold text-foreground">{comment.author.name}</span>
