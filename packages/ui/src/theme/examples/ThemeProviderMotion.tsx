@@ -37,12 +37,19 @@ function Preview() {
 
 /** A local target keeps the catalog's page preference independent of this demonstration. */
 export default function ThemeProviderMotion() {
+  const { resolved } = useTheme();
   const ref = useRef<HTMLDivElement>(null);
   const target = useCallback(() => ref.current, []);
   return (
     <div className="space-y-4">
       <div ref={ref} data-testid="motion-scope" className="space-y-3">
-        <ThemeProvider defaultMotion="reduce" storageKey={null} motionStorageKey={null} target={target}>
+        <ThemeProvider
+          forcedMode={resolved}
+          defaultMotion="reduce"
+          storageKey={null}
+          motionStorageKey={null}
+          target={target}
+        >
           <Preview />
         </ThemeProvider>
       </div>
