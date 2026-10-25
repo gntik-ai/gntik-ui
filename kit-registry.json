@@ -3919,6 +3919,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -3941,6 +3945,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -3986,6 +3994,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4008,6 +4020,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4130,6 +4146,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4152,6 +4172,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4196,6 +4220,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4218,6 +4246,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4293,6 +4325,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4315,6 +4351,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4360,6 +4400,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4382,6 +4426,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4487,6 +4535,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4509,6 +4561,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4587,6 +4643,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4609,6 +4669,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4924,6 +4988,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -4946,6 +5014,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5038,6 +5110,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5060,6 +5136,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5116,6 +5196,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5138,6 +5222,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5219,6 +5307,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5241,6 +5333,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5313,6 +5409,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5335,6 +5435,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5397,6 +5501,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5419,6 +5527,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5478,6 +5590,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5500,6 +5616,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5553,6 +5673,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5575,6 +5699,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5627,6 +5755,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5649,6 +5781,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5702,6 +5838,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5724,6 +5864,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5783,6 +5927,10 @@
           "target": "components/i18n/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5805,6 +5953,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5852,6 +6004,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -5874,6 +6030,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6011,6 +6171,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6033,6 +6197,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6078,6 +6246,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6100,6 +6272,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6180,6 +6356,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6202,6 +6382,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6253,6 +6437,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6275,6 +6463,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6324,6 +6516,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6346,6 +6542,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6398,6 +6598,10 @@
           "target": "components/i18n/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6420,6 +6624,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6471,6 +6679,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6493,6 +6705,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6538,6 +6754,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6560,6 +6780,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6609,6 +6833,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6631,6 +6859,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6759,6 +6991,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6781,6 +7017,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6832,6 +7072,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6854,6 +7098,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6967,6 +7215,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -6989,6 +7241,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7074,6 +7330,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7096,6 +7356,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7152,6 +7416,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7174,6 +7442,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7226,6 +7498,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7248,6 +7524,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7295,6 +7575,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7317,6 +7601,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7362,6 +7650,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7384,6 +7676,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7432,6 +7728,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7454,6 +7754,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7503,6 +7807,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7525,6 +7833,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7574,6 +7886,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7596,6 +7912,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7663,6 +7983,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7685,6 +8009,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7733,6 +8061,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7755,6 +8087,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7801,6 +8137,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7823,6 +8163,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7876,6 +8220,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -7898,6 +8246,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7982,6 +8334,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8004,6 +8360,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8091,6 +8451,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8113,6 +8477,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8166,6 +8534,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8188,6 +8560,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8273,6 +8649,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8295,6 +8675,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8374,6 +8758,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8396,6 +8784,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8531,6 +8923,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8553,6 +8949,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8621,6 +9021,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8643,6 +9047,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8777,6 +9185,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8799,6 +9211,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8910,6 +9326,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8932,6 +9352,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8977,6 +9401,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -8999,6 +9427,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9051,6 +9483,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9075,6 +9511,10 @@
           "target": "components/i18n/messages/motion-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "target": "components/i18n/time-zone.ts"
         }
@@ -9095,7 +9535,7 @@
       "package": "@gntik-ai/ui",
       "group": "Display",
       "status": "stable",
-      "description": "Type roles on the brand scale. Text: body, label, supporting, caption, code and display, with tones (default, muted, primary, success, warning, destructive — contrast-safe *-text aliases). Heading: semantic level 1–6 with an independent visual size. Both truncate or clamp to N lines and render any element via `as` / `render`.",
+      "description": "Named type roles for body copy, labels, captions and headings on the brand scale. Text uses text-body, text-label, text-supporting, text-caption and text-display; code stays relative at 0.92em within its parent. Heading sizes display, xl, lg, md, sm, xs and 2xs use text-display and text-heading-* independently of semantic level 1–6 (level 2 defaults to text-heading-lg). Eleven roles come from typography.css, also exported as DTCG typography, Figma type/* variables and typeScale with pixel dimensions and unitless leading. font-*, leading-* and tracking-* utilities override role defaults; body, supporting and caption inherit weight and tracking. A font-size className such as text-[32px] replaces the entire role, including its leading, weight and tracking: unlike the previous separate variant classes, those defaults no longer remain. Supply explicit utilities when needed, for example text-[32px] font-bold tracking-tight for display, text-[12px] font-medium leading-tight for label, or text-[16px] font-semibold tracking-tight leading-snug for Heading. Both components support contrast-safe tones, truncation, line clamping and as / render.",
       "files": [
         {
           "path": "packages/ui/src/components/Text/Text.tsx",
@@ -9219,6 +9659,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9241,6 +9685,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9293,6 +9741,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9315,6 +9767,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9368,6 +9824,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9390,6 +9850,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9439,6 +9903,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9461,6 +9929,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9509,6 +9981,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9531,6 +10007,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9576,6 +10056,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9598,6 +10082,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9674,6 +10162,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9696,6 +10188,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9745,6 +10241,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9767,6 +10267,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9880,6 +10384,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9902,6 +10410,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9950,6 +10462,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -9972,6 +10488,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10024,6 +10544,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10046,6 +10570,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10102,6 +10630,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10124,6 +10656,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10194,6 +10730,10 @@
           "target": "components/i18n/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10216,6 +10756,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10289,6 +10833,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10311,6 +10859,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10369,6 +10921,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10391,6 +10947,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10435,6 +10995,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10457,6 +11021,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10509,6 +11077,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10531,6 +11103,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10567,6 +11143,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10589,6 +11169,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10635,6 +11219,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10657,6 +11245,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10708,6 +11300,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10730,6 +11326,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10785,6 +11385,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10807,6 +11411,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10855,6 +11463,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10877,6 +11489,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10921,6 +11537,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -10943,6 +11563,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10989,6 +11613,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -11011,6 +11639,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11058,6 +11690,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -11080,6 +11716,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11132,6 +11772,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -11154,6 +11798,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11201,6 +11849,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -11223,6 +11875,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11271,6 +11927,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -11293,6 +11953,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11339,6 +12003,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "target": "components/i18n/messages/csp-messages.ts"
         },
@@ -11361,6 +12029,10 @@
         {
           "path": "packages/ui/src/i18n/messages/motion-messages.ts",
           "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",

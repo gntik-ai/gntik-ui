@@ -1,0 +1,49 @@
+/* Named type roles. Omitted weight and tracking inherit from the surrounding text. */
+:root {
+  --type-display-size: 2.875rem;
+  --type-display-leading: 1.04;
+  --type-display-tracking: -0.025em;
+  --type-display-weight: 700;
+
+  --type-heading-xl-size: 1.875rem;
+  --type-heading-xl-leading: 1.25;
+  --type-heading-xl-tracking: -0.025em;
+  --type-heading-xl-weight: 700;
+
+  --type-heading-lg-size: 1.5rem;
+  --type-heading-lg-leading: 1.375;
+  --type-heading-lg-tracking: -0.025em;
+  --type-heading-lg-weight: 700;
+
+  --type-heading-md-size: 1.25rem;
+  --type-heading-md-leading: 1.375;
+  --type-heading-md-tracking: -0.025em;
+  --type-heading-md-weight: 600;
+
+  --type-heading-sm-size: 17px;
+  --type-heading-sm-leading: 1.375;
+  --type-heading-sm-tracking: -0.025em;
+  --type-heading-sm-weight: 600;
+
+  --type-heading-xs-size: 15px;
+  --type-heading-xs-leading: 1.375;
+  --type-heading-xs-tracking: -0.025em;
+  --type-heading-xs-weight: 600;
+
+  --type-heading-2xs-size: 13px;
+  --type-heading-2xs-leading: 1.375;
+  --type-heading-2xs-weight: 600;
+
+  --type-body-size: 0.9375rem;
+  --type-body-leading: 1.625;
+
+  --type-label-size: 13px;
+  --type-label-leading: 1.25;
+  --type-label-weight: 500;
+
+  --type-supporting-size: 13px;
+  --type-supporting-leading: 1.375;
+
+  --type-caption-size: 12px;
+  --type-caption-leading: 1.375;
+}

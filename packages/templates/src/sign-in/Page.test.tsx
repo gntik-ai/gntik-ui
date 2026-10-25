@@ -4,6 +4,11 @@ import { expectNoAxeViolations } from '../test/a11y';
 import SignInPage from './Page';
 
 describe('SignInPage', () => {
+  it('keeps the brand headline bold and tightly tracked at its custom font size', () => {
+    render(<SignInPage brand={{ eyebrow: 'Workspace', headline: 'A place for your team', features: [] }} />);
+    expect(screen.getByText('A place for your team')).toHaveClass('text-[32px]', 'font-bold', 'tracking-tight');
+  });
+
   it('renders the form, SSO options and brand panel', async () => {
     const { container } = render(<SignInPage />);
     expect(screen.getByRole('main')).toBeInTheDocument();

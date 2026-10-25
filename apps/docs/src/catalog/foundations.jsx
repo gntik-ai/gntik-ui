@@ -2,6 +2,17 @@
    Gntik UI · foundations.jsx — color · typography · spacing · radii ·
    shadows · icons. Everything references tokens from tokens/brand.css.
    ============================================================================ */
+import typographyCss from '@gntik-ai/tokens/typography.css?raw';
+import { useI18n } from '@gntik-ai/ui';
+
+// Docs build directly from source, without generating the token package's dist exports.
+const namedTypeScale = {};
+for (const [, role, property, value] of typographyCss.matchAll(
+  /--type-(.+)-(size|leading|tracking|weight):\s*([^;]+);/g,
+)) {
+  (namedTypeScale[role] ??= {})[property] = value;
+}
+
 (function () {
   const { Card, SectionHead, Icon, CodeBlock, LogoMark, Wordmark, MusematicMark } = window;
 
@@ -31,6 +42,7 @@
   );
 
   function FoundationsSection() {
+    const { t } = useI18n();
     const surface = [
       ['Background', 'bg-background', '--background'],
       ['Foreground', 'bg-foreground', '--foreground'],
@@ -63,15 +75,34 @@
       ['Cyan', 'bg-category-cyan', '--category-cyan'],
     ];
 
-    const typeScale = [
-      ['Display', 'text-[2.875rem] leading-[1.04] font-bold tracking-tight', '46 / 1.04 · -0.035em', 'text-[2.875rem]'],
-      ['Heading 1', 'text-[1.875rem] leading-tight font-bold tracking-tight', '30 / 1.1 · -0.03em', 'text-[1.875rem]'],
-      ['Heading 2', 'text-[1.5rem] leading-snug font-bold tracking-tight', '24 / 1.15 · -0.025em', 'text-2xl'],
-      ['Heading 3', 'text-xl font-semibold', '20 / 1.2 · -0.015em', 'text-xl'],
-      ['Body large', 'text-[1.0625rem] leading-relaxed', '17 / 1.5', 'text-[1.0625rem]'],
-      ['Body', 'text-[0.9375rem] leading-relaxed', '15 / 1.55', 'text-[0.9375rem]'],
-      ['Small', 'text-sm', '13 / 1.5', 'text-sm'],
-    ];
+    const roleClasses = {
+      display: 'text-display',
+      'heading-xl': 'text-heading-xl',
+      'heading-lg': 'text-heading-lg',
+      'heading-md': 'text-heading-md',
+      'heading-sm': 'text-heading-sm',
+      'heading-xs': 'text-heading-xs',
+      'heading-2xs': 'text-heading-2xs',
+      body: 'text-body',
+      label: 'text-label',
+      supporting: 'text-supporting',
+      caption: 'text-caption',
+    };
+    const typeScale = Object.entries(namedTypeScale).map(([role, type]) => {
+      const fontSize = parseFloat(type.size) * (type.size.endsWith('rem') ? 16 : 1);
+      return [
+        t(`typography.${role}`),
+        roleClasses[role],
+        [
+          `${fontSize}px`,
+          type.leading,
+          type.tracking === undefined ? undefined : `${Number((parseFloat(type.tracking) * fontSize).toFixed(8))}px`,
+          type.weight,
+        ]
+          .filter(Boolean)
+          .join(' / '),
+      ];
+    });
     const spacing = [
       ['1', 'w-1'],
       ['2', 'w-2'],
@@ -243,13 +274,13 @@
 
         <Block title="Typography" hint="Geist · 400 / 500 / 600 / 700">
           <div className="rounded-lg border border-border bg-card divide-y divide-border">
-            {typeScale.map(([name, cls, spec, tw]) => (
+            {typeScale.map(([name, cls, spec]) => (
               <div key={name} className="flex items-center justify-between gap-6 px-6 py-4">
                 <div className={'text-foreground min-w-0 truncate ' + cls}>gntik</div>
                 <div className="text-right shrink-0">
                   <div className="font-sans text-[12.5px] text-foreground font-medium">{name}</div>
                   <div className="font-mono text-[11px] text-muted-foreground">{spec}</div>
-                  <code className="font-mono text-[11px] text-primary">{tw}</code>
+                  <code className="font-mono text-[11px] text-primary">{cls}</code>
                 </div>
               </div>
             ))}

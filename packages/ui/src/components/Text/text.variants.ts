@@ -4,12 +4,12 @@ export const textVariants = tv({
   base: 'min-w-0',
   variants: {
     variant: {
-      body: 'text-[0.9375rem] leading-relaxed',
-      label: 'text-[13px] leading-tight font-medium',
-      supporting: 'text-[13px] leading-snug',
-      caption: 'text-[12px] leading-snug',
+      body: 'text-body',
+      label: 'text-label',
+      supporting: 'text-supporting',
+      caption: 'text-caption',
       code: 'rounded-sm bg-secondary px-1 py-0.5 font-mono text-[0.92em]',
-      display: 'text-[2.875rem] leading-[1.04] font-bold tracking-tight',
+      display: 'text-display',
     },
     tone: {
       default: 'text-foreground',
@@ -37,13 +37,13 @@ export const headingVariants = tv({
   base: 'min-w-0 text-balance',
   variants: {
     size: {
-      display: 'text-[2.875rem] leading-[1.04] font-bold tracking-tight',
-      xl: 'text-[1.875rem] leading-tight font-bold tracking-tight',
-      lg: 'text-[1.5rem] leading-snug font-bold tracking-tight',
-      md: 'text-xl leading-snug font-semibold tracking-tight',
-      sm: 'text-[17px] leading-snug font-semibold tracking-tight',
-      xs: 'text-[15px] leading-snug font-semibold tracking-tight',
-      '2xs': 'text-[13px] leading-snug font-semibold',
+      display: 'text-display',
+      xl: 'text-heading-xl',
+      lg: 'text-heading-lg',
+      md: 'text-heading-md',
+      sm: 'text-heading-sm',
+      xs: 'text-heading-xs',
+      '2xs': 'text-heading-2xs',
     },
     tone: {
       default: 'text-foreground',

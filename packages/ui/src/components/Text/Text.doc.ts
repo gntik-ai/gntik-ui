@@ -1,13 +1,24 @@
+import { en } from '../../i18n/messages/en';
 import type { ComponentDoc } from '../../doc';
 
 export const doc: ComponentDoc = {
   name: 'Text',
   group: 'Display',
   status: 'stable',
-  description:
-    'Type roles on the brand scale. Text: body, label, supporting, caption, code and display, with tones (default, muted, primary, success, warning, destructive — contrast-safe *-text aliases). Heading: semantic level 1–6 with an independent visual size. Both truncate or clamp to N lines and render any element via `as` / `render`.',
+  description: en['typography.description'],
   primitive: '@base-ui/react/use-render',
   tokens: [
+    'type-display-size',
+    'type-heading-xl-size',
+    'type-heading-lg-size',
+    'type-heading-md-size',
+    'type-heading-sm-size',
+    'type-heading-xs-size',
+    'type-heading-2xs-size',
+    'type-body-size',
+    'type-label-size',
+    'type-supporting-size',
+    'type-caption-size',
     'foreground',
     'muted-foreground',
     'primary-text',
