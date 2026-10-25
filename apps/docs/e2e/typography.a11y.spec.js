@@ -64,4 +64,9 @@ for (const theme of ['dark', '', 'high_contrast']) {
     });
     expect(violations).toEqual([]);
   });
+
+  test(`sign-in headline preserves computed typography --${theme || 'light'}`, async ({ page }) => {
+    await page.goto(`/preview.html?kind=template&id=sign-in&theme=${theme || 'light'}`);
+    await expectType(page.getByText('Ship with confidence, not guesswork.', { exact: true }), [32, 48, -0.8, 700]);
+  });
 }

@@ -1,10 +1,18 @@
-import { typeScale as namedTypeScale } from '@gntik-ai/tokens/tokens';
-import { useI18n } from '@gntik-ai/ui';
-
 /* ============================================================================
    Gntik UI · foundations.jsx — color · typography · spacing · radii ·
    shadows · icons. Everything references tokens from tokens/brand.css.
    ============================================================================ */
+import typographyCss from '@gntik-ai/tokens/typography.css?raw';
+import { useI18n } from '@gntik-ai/ui';
+
+// Docs build directly from source, without generating the token package's dist exports.
+const namedTypeScale = {};
+for (const [, role, property, value] of typographyCss.matchAll(
+  /--type-(.+)-(size|leading|tracking|weight):\s*([^;]+);/g,
+)) {
+  (namedTypeScale[role] ??= {})[property] = value;
+}
+
 (function () {
   const { Card, SectionHead, Icon, CodeBlock, LogoMark, Wordmark, MusematicMark } = window;
 
@@ -80,19 +88,21 @@ import { useI18n } from '@gntik-ai/ui';
       supporting: 'text-supporting',
       caption: 'text-caption',
     };
-    const typeScale = Object.entries(namedTypeScale).map(([role, type]) => [
-      t(`typography.${role}`),
-      roleClasses[role],
-      [
-        `${type.fontSize}px`,
-        type.lineHeight,
-        type.letterSpacing === undefined ? undefined : `${type.letterSpacing}px`,
-        type.fontWeight,
-      ]
-        .filter(Boolean)
-        .join(' / '),
-      roleClasses[role],
-    ]);
+    const typeScale = Object.entries(namedTypeScale).map(([role, type]) => {
+      const fontSize = parseFloat(type.size) * (type.size.endsWith('rem') ? 16 : 1);
+      return [
+        t(`typography.${role}`),
+        roleClasses[role],
+        [
+          `${fontSize}px`,
+          type.leading,
+          type.tracking === undefined ? undefined : `${Number((parseFloat(type.tracking) * fontSize).toFixed(8))}px`,
+          type.weight,
+        ]
+          .filter(Boolean)
+          .join(' / '),
+      ];
+    });
     const spacing = [
       ['1', 'w-1'],
       ['2', 'w-2'],
@@ -264,13 +274,13 @@ import { useI18n } from '@gntik-ai/ui';
 
         <Block title="Typography" hint="Geist · 400 / 500 / 600 / 700">
           <div className="rounded-lg border border-border bg-card divide-y divide-border">
-            {typeScale.map(([name, cls, spec, tw]) => (
+            {typeScale.map(([name, cls, spec]) => (
               <div key={name} className="flex items-center justify-between gap-6 px-6 py-4">
                 <div className={'text-foreground min-w-0 truncate ' + cls}>gntik</div>
                 <div className="text-right shrink-0">
                   <div className="font-sans text-[12.5px] text-foreground font-medium">{name}</div>
                   <div className="font-mono text-[11px] text-muted-foreground">{spec}</div>
-                  <code className="font-mono text-[11px] text-primary">{tw}</code>
+                  <code className="font-mono text-[11px] text-primary">{cls}</code>
                 </div>
               </div>
             ))}

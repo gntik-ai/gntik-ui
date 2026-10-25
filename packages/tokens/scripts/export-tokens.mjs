@@ -108,7 +108,9 @@ export function readModel() {
   const typeVars = parseBlocks(read('typography.css'))[':root'];
   const typography = {};
   for (const [key, value] of Object.entries(typeVars)) {
-    const [, role, property] = /^--type-(.+)-(size|leading|tracking|weight)$/.exec(key);
+    const match = /^--type-(.+)-(size|leading|tracking|weight)$/.exec(key);
+    if (!match) throw new Error(`Unknown typography variable: ${key}`);
+    const [, role, property] = match;
     (typography[role] ??= {})[property] = value;
   }
   const root = brand[':root'];

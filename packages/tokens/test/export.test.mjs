@@ -30,6 +30,17 @@ test('export leaves brand.css byte-identical and the frozen snapshot intact', ()
   for (const sel of Object.keys(frozen)) assert.deepEqual(brand[sel], frozen[sel]);
 });
 
+test('export identifies an unsupported typography declaration', (t) => {
+  const readFileSync = fs.readFileSync;
+  t.mock.method(fs, 'readFileSync', (file, ...options) => {
+    const content = readFileSync(file, ...options);
+    return String(file).endsWith('/src/typography.css')
+      ? content.replace(':root {', ':root { --type-unrecognised: 1;')
+      : content;
+  });
+  assert.throws(() => exportTokens(out), /Unknown typography variable: --type-unrecognised/);
+});
+
 test('tokens.json colours round-trip to brand.css in every theme (HSL exact, hex within rounding)', () => {
   for (const t of THEMES) {
     const colours = Object.entries(vars(t)).filter(([, v]) => HSL.test(v));

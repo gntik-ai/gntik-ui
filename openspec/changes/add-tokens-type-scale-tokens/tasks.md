@@ -1,16 +1,33 @@
 # Tasks
 
-- [x] Add the eleven CSS roles, Tailwind aliases and package export.
-- [x] Extend DTCG, Figma, TypeScript and declaration exports.
-- [x] Configure cn/tv font-size merging and adopt roles in Text and Heading.
-- [x] Add token, export, component and merge tests with red before green.
-- [x] Add catalog documentation, translated examples and computed-style/axe coverage for all three themes.
-- [x] Add one changeset with minor entries for tokens and UI and a patch entry for the sign-in template fix.
-- [x] Regenerate the kit registry and run bounded validation. The previous independent checker passed all seven toolchain gates, including the full library unit suite, in a scratch worktree.
-- [x] Reproduce the sign-in headline regression at the rendered SignInPage seam before fixing it: `pnpm --filter @gntik-ai/templates exec vitest run src/sign-in/Page.test.tsx` failed twice because the literal size removed the role's weight and tracking. Explicit font-bold and tracking-tight restore the base appearance; the regression passes afterward.
-- [x] Document literal-size override behavior in the translated Text/Heading description and live examples, repair the generated Text summary, and split existing preview translations out of the nearly full catalogs without changing their values.
-- [ ] PR CI runs browser accessibility, computed styles and visual baselines. The foundations table intentionally adds four rows; its baselines require an operator refresh on the CI runner. The sign-in headline must retain its existing baseline.
+## 1. Implementation
 
-## Follow-up validation
+- [x] 1.1 Add packages/tokens/src/typography.css, import it and the `@theme inline` bridge in src/tailwind.css, and export `./typography.css`.
+- [x] 1.2 Map `textVariants` and `headingVariants` in packages/ui/src/components/Text/text.variants.ts to the role utilities.
+- [x] 1.3 Extend `readModel`, `toDtcg`, `toFigma` and `toTs` in packages/tokens/scripts/export-tokens.mjs, and list the roles in apps/docs/src/catalog/foundations.jsx.
 
-Library build, lint, typecheck, registry consistency, docs coverage, formatting, strict OpenSpec validation and both consumer kit-only checks pass in the assigned worktree. All ten other library suites and the seven token test files that do not require a registry pass. The full library unit gate cannot complete offline: mirror-install.test.mjs cannot fetch the pinned public tarball, then its local fallback packs version 0.3.0 but reads gntik-ai-tokens-0.2.1.tgz (ENOENT at line 93). This environment limitation remains assigned to PR CI; it does not replace the earlier independent checker's passing result.
+## 2. Tests
+
+- [x] 2.1 packages/tokens/test/typography.test.mjs: roles, values, units and bridge coverage.
+- [x] 2.2 packages/tokens/test/export.test.mjs: the typography group, the Figma variables and `typeScale`.
+- [x] 2.3 Text.test.tsx: one role class per variant and size; a Playwright check of computed styles on the catalog previews.
+
+## 3. Docs and release
+
+- [x] 3.1 Add a changeset: minor for `@gntik-ai/tokens`, `@gntik-ai/ui` (and patch for the existing sign-in template correction).
+- [x] 3.2 Run `pnpm registry` and commit the generated files.
+- [x] 3.3 Run `openspec validate add-tokens-type-scale-tokens --strict`.
+
+## Review corrections
+
+- [x] Reproduce the fresh-checkout docs failure before changing source. `node apps/docs/test/foundations-build.test.mjs` failed at the real Vite build boundary when the filesystem guard rejected generated token exports. The foundations table now reads the source-backed typography CSS, preserving its displayed values, with the regression included in the docs test command.
+- [x] Restore the foundations header comment before imports and regenerate its registry header. Remove the redundant fourth table column.
+- [x] Reproduce the exporter's opaque TypeError for an unsupported typography variable via `node packages/tokens/test/export.test.mjs`, then add an explicit diagnostic and verify the regression passes.
+- [x] Retain the specified minor release and documented whole-role replacement for font-size overrides. This follows the acceptance criterion requiring size conflicts to resolve to the later utility. Explicit weight, tracking and leading utilities preserve defaults when consumers need them.
+- [x] Keep independent literal role lists in tests as specification oracles, and static utility names in the catalog and merge configuration for Tailwind scanning and merging.
+- [x] Extend the existing browser spec to verify computed typography on the actual sign-in template in all three themes, beyond its class-name unit assertion.
+- [ ] PR CI runs browser accessibility, computed styles and visual baselines. New foundations rows and the TypographyRoles example intentionally change catalog screenshots; the operator must refresh those baselines on the CI runner. Do not commit screenshots here. Existing component and sign-in rendering must retain their baselines.
+
+## Validation limits
+
+The required library unit command encounters the existing offline mirror-install limitation: the public 0.2.1 tarball is unavailable, and its local fallback packs the current 0.3.0 package but attempts to read gntik-ai-tokens-0.2.1.tgz (ENOENT). PR CI must run the complete unit gate with registry access. Browser suites and the mcp/evals suites run in PR CI; they are not run on this worker.

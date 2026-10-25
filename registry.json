@@ -612,6 +612,7 @@
         }
       ],
       "file": "apps/docs/src/catalog/foundations.jsx",
+      "header": "Gntik UI · foundations.jsx — color · typography · spacing · radii ·\nshadows · icons. Everything references tokens from tokens/brand.css.",
       "intro": "The base of the system: color, typography, spacing, radii and shadows — all as tokens in tokens/brand.css. Change the brand block and the whole catalog reskins. Three themes: light · dark · high_contrast."
     },
     "theme-builder": {
