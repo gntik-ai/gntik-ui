@@ -43,6 +43,9 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       const tooltip = page.getByRole('tooltip');
       await expect(tooltip).toBeVisible();
       expect(await layer(tooltip)).toBe(1800);
+      // The tooltip floats above the notification button; finish this interaction first.
+      await page.keyboard.press('Escape');
+      await expect(tooltip).toBeHidden();
       await page.getByRole('button', { name: 'Show notification', exact: true }).click();
       const toast = page.getByRole('dialog', { name: 'Settings saved', exact: true });
       await expect(toast).toBeVisible();
