@@ -43,9 +43,10 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       const tooltip = page.getByRole('tooltip');
       await expect(tooltip).toBeVisible();
       expect(await layer(tooltip)).toBe(1800);
-      // The tooltip floats above the notification button; finish this interaction first.
-      await page.keyboard.press('Escape');
+      // Move away from the tooltip without also dismissing the enclosing modal with Escape.
+      await modal.getByRole('heading', { name: `Layered ${kind}`, exact: true }).hover();
       await expect(tooltip).toBeHidden();
+      await expect(modal).toBeVisible();
       await page.getByRole('button', { name: 'Show notification', exact: true }).click();
       const toast = page.getByRole('dialog', { name: 'Settings saved', exact: true });
       await expect(toast).toBeVisible();
