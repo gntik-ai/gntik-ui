@@ -8,6 +8,7 @@ import { TimePicker } from '../TimePicker/TimePicker';
 import { formatTimeOfDay, timeOfDay, withTimeOfDay, parseTimeOfDay } from '../TimePicker/time-utils';
 import { DateTrigger } from './DateTrigger';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
+import { formatTimeZoneLabel, fromZonedParts, isValidTimeZone, zonedParts } from '../../i18n/time-zone';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
 
 type CalendarPassThrough = Pick<
@@ -24,11 +25,15 @@ export interface DatePickerProps extends CalendarPassThrough, DatePickerVariantP
   onValueChange?: (date: Date | null) => void;
   /** Intl options for the field text. */
   formatOptions?: Intl.DateTimeFormatOptions;
+  /** Display and edit in this IANA zone. Defaults to the provider zone, then the browser zone. */
+  timeZone?: string;
+  /** Hide the zone in the field text and time label. */
+  hideTimeZone?: boolean;
   placeholder?: string;
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** Submitted as `YYYY-MM-DD` (with `withTime`: `YYYY-MM-DDTHH:mm`) through a hidden input. */
+  /** Submits the calendar day, or wall time with `withTime`; non-system zones include the UTC offset. */
   name?: string;
   /**
    * Adds a TimePicker under the calendar: picking a day keeps the popup open (and the time),
@@ -65,6 +70,8 @@ export function DatePicker({
   defaultValue,
   onValueChange,
   formatOptions,
+  timeZone: timeZoneProp,
+  hideTimeZone = false,
   placeholder: placeholderProp,
   open: openProp,
   defaultOpen = false,
@@ -94,7 +101,9 @@ export function DatePicker({
   timeStep,
   withSeconds = false,
 }: DatePickerProps) {
-  const { t } = useI18n();
+  const { t, timeZone: providerZone } = useI18n();
+  const requestedZone = timeZoneProp ?? providerZone;
+  const zone = isValidTimeZone(requestedZone) ? requestedZone : 'system';
   const providerLocale = useOptionalI18n()?.locale;
   const locale = localeProp ?? providerLocale;
   const placeholder = placeholderProp ?? t(withTime ? 'datePicker.dateTimePlaceholder' : 'datePicker.placeholder');
@@ -104,6 +113,11 @@ export function DatePicker({
   const timeLabelId = useId();
   const date = value !== undefined ? value : inner;
   const open = openProp ?? innerOpen;
+  // Calendar consumes local-midnight days; these proxies represent the zone's calendar date.
+  const proxyDay = (instant: Date) => {
+    const p = zonedParts(instant, zone);
+    return new Date(p.year, p.month - 1, p.day);
+  };
 
   const setOpen = (next: boolean) => {
     if (next && (readOnly || disabled)) return;
@@ -141,12 +155,50 @@ export function DatePicker({
     ...(withSeconds ? { second: '2-digit' } : {}),
     ...(hourCycle ? { hourCycle: hourCycle === 12 ? 'h12' : 'h23' } : {}),
   };
-  const text = date ? formatDate(date, locale, withTime ? timeFormat : formatOptions) : '';
-  const hidden = date
+  const parts = date && zone !== 'system' ? zonedParts(date, zone) : null;
+  const time = date
+    ? parts
+      ? { hours: parts.hour, minutes: parts.minute, seconds: parts.second }
+      : timeOfDay(date)
+    : null;
+  const zoneLabel = zone !== 'system' && !hideTimeZone ? formatTimeZoneLabel(zone, date ?? new Date(), locale) : null;
+  const fieldFormat = withTime ? timeFormat : formatOptions;
+  // Intl styles cannot be combined with timeZoneName; replace an embedded name or append it.
+  const usesStyle = fieldFormat?.dateStyle !== undefined || fieldFormat?.timeStyle !== undefined;
+  let text = '';
+  if (date) {
+    if (zone === 'system') text = formatDate(date, locale, fieldFormat);
+    else if (usesStyle) {
+      const formatter = new Intl.DateTimeFormat(locale, { ...fieldFormat, timeZone: zone });
+      const embeddedZone = formatter.formatToParts(date).find((part) => part.type === 'timeZoneName')?.value;
+      const formatted = formatter.format(date);
+      text = embeddedZone
+        ? formatted.replace(embeddedZone, zoneLabel ?? '').trim()
+        : formatted + (zoneLabel ? ` ${zoneLabel}` : '');
+    } else {
+      text = formatDate(date, locale, {
+        ...(fieldFormat ?? { year: 'numeric', month: 'short', day: 'numeric' }),
+        timeZone: zone,
+        timeZoneName: hideTimeZone ? undefined : (fieldFormat?.timeZoneName ?? 'short'),
+      });
+    }
+  }
+  let hidden = date
     ? withTime
       ? `${toISODate(date)}T${formatTimeOfDay(timeOfDay(date), withSeconds)}`
       : toISODate(date)
     : '';
+  if (date && parts && time) {
+    const pad = (n: number) => String(n).padStart(2, '0');
+    hidden = `${parts.year}-${pad(parts.month)}-${pad(parts.day)}`;
+    if (withTime) {
+      const wall = new Date(0);
+      wall.setUTCFullYear(parts.year, parts.month - 1, parts.day);
+      wall.setUTCHours(parts.hour, parts.minute, parts.second, parts.millisecond);
+      const offset = Math.round((wall.getTime() - date.getTime()) / 60_000);
+      hidden += `T${formatTimeOfDay(time, withSeconds)}${offset < 0 ? '-' : '+'}${pad(Math.floor(Math.abs(offset) / 60))}:${pad(Math.abs(offset) % 60)}`;
+    }
+  }
   const s = datePickerVariants({ size });
 
   return (
@@ -179,36 +231,83 @@ export function DatePicker({
           key={String(open)}
           ref={calendarRef}
           aria-label={t('datePicker.choose')}
-          value={date}
+          value={zone === 'system' || !date ? date : proxyDay(date)}
           onValueChange={(d) => {
             if (withTime) {
-              change(withTimeOfDay(d, date ? timeOfDay(date) : { hours: 0, minutes: 0, seconds: 0 }));
+              if (zone === 'system') {
+                change(withTimeOfDay(d, date ? timeOfDay(date) : { hours: 0, minutes: 0, seconds: 0 }));
+              } else {
+                change(
+                  fromZonedParts(
+                    {
+                      year: d.getFullYear(),
+                      month: d.getMonth() + 1,
+                      day: d.getDate(),
+                      hour: time?.hours ?? 0,
+                      minute: time?.minutes ?? 0,
+                      second: time?.seconds ?? 0,
+                    },
+                    zone,
+                    'compatible',
+                  ),
+                );
+              }
               return;
             }
-            change(d);
+            change(
+              zone === 'system'
+                ? d
+                : fromZonedParts(
+                    {
+                      year: d.getFullYear(),
+                      month: d.getMonth() + 1,
+                      day: d.getDate(),
+                      hour: 0,
+                      minute: 0,
+                    },
+                    zone,
+                    'compatible',
+                  ),
+            );
             setOpen(false);
           }}
           locale={locale}
           weekStartsOn={weekStartsOn}
-          min={min}
-          max={max}
+          min={zone === 'system' || !min ? min : proxyDay(min)}
+          max={zone === 'system' || !max ? max : proxyDay(max)}
           isDateDisabled={isDateDisabled}
           maxView={maxView}
           captionLayout={captionLayout}
-          today={today}
+          today={zone === 'system' ? today : proxyDay(today ?? new Date())}
         />
         {!withTime && clearAction && <div className={s.timeRow()}>{clearAction}</div>}
         {withTime && (
           <div className={s.timeRow()}>
             <span id={timeLabelId} className={s.timeLabel()}>
-              {t('datePicker.time')}
+              {zoneLabel ? t('datePicker.timeIn', { timeZone: zoneLabel }) : t('datePicker.time')}
             </span>
             <TimePicker
               aria-labelledby={timeLabelId}
-              value={date ? formatTimeOfDay(timeOfDay(date), withSeconds) : null}
+              value={time ? formatTimeOfDay(time, withSeconds) : null}
               onValueChange={(v) => {
                 const tod = parseTimeOfDay(v);
-                if (tod) change(withTimeOfDay(date ?? today ?? new Date(), tod));
+                if (tod) {
+                  change(
+                    zone === 'system'
+                      ? withTimeOfDay(date ?? today ?? new Date(), tod)
+                      : fromZonedParts(
+                          {
+                            ...zonedParts(date ?? today ?? new Date(), zone),
+                            hour: tod.hours,
+                            minute: tod.minutes,
+                            second: tod.seconds,
+                            millisecond: 0,
+                          },
+                          zone,
+                          'compatible',
+                        ),
+                  );
+                }
               }}
               hourCycle={hourCycle}
               locale={locale}
