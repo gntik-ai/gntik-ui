@@ -9,9 +9,9 @@ import {
   type ReactNode,
 } from 'react';
 import { gntikPreset, type BrandPreset } from './presets';
-import type { ResolvedTheme, ThemeMode } from './theme-script';
+import type { MotionMode, ResolvedTheme, ThemeMode } from './theme-script';
 
-export { themeScript, type ThemeMode, type ResolvedTheme } from './theme-script';
+export { themeScript, type MotionMode, type ThemeMode, type ResolvedTheme } from './theme-script';
 
 /** Theme class per resolved mode. Light is the token default (:root), so it adds no class. */
 const THEME_CLASS: Record<ResolvedTheme, string> = { dark: 'dark', light: '', high_contrast: 'high_contrast' };
@@ -19,6 +19,8 @@ const ALL_CLASSES = ['dark', 'high_contrast'];
 const SYSTEM_QUERIES = ['(prefers-color-scheme: light)', '(prefers-contrast: more)'];
 
 interface ThemeContextValue {
+  motion: MotionMode;
+  setMotion: (motion: MotionMode) => void;
   mode: ThemeMode;
   resolved: ResolvedTheme;
   setMode: (mode: ThemeMode) => void;
@@ -26,6 +28,8 @@ interface ThemeContextValue {
 }
 
 const DEFAULT_THEME: ThemeContextValue = {
+  motion: 'system',
+  setMotion: () => {},
   mode: 'dark',
   resolved: 'dark',
   setMode: () => {},
@@ -73,6 +77,10 @@ const serverSystem = (): ResolvedTheme => 'dark';
 
 export interface ThemeProviderProps {
   children: ReactNode;
+  /** App motion preference. System preserves the OS reduced-motion setting. */
+  defaultMotion?: MotionMode;
+  /** Motion storage key; null disables persistence. */
+  motionStorageKey?: string | null;
   /** Mode when nothing is stored. Dark is the kit default. */
   defaultMode?: ThemeMode;
   /**
@@ -99,6 +107,8 @@ export interface ThemeProviderProps {
  */
 export function ThemeProvider({
   children,
+  defaultMotion = 'system',
+  motionStorageKey = 'gntik-motion',
   defaultMode = 'dark',
   initialMode,
   forcedMode,
@@ -106,6 +116,37 @@ export function ThemeProvider({
   storageKey = 'gntik-theme',
   target = () => (typeof document === 'undefined' ? null : document.documentElement),
 }: ThemeProviderProps) {
+  const [localMotion, setLocalMotion] = useState<MotionMode>(defaultMotion);
+  const getStoredMotion = useCallback(() => {
+    if (motionStorageKey == null) return null;
+    try {
+      return localStorage.getItem(motionStorageKey) === 'reduce' ? 'reduce' : null;
+    } catch {
+      return null;
+    }
+  }, [motionStorageKey]);
+  const storedMotion = useSyncExternalStore(subscribeStored, getStoredMotion, serverStored);
+  const motion = storedMotion ?? localMotion;
+
+  useEffect(() => {
+    const el = target();
+    if (motion === 'reduce') el?.setAttribute('data-motion', 'reduce');
+    else el?.removeAttribute('data-motion');
+  }, [motion, target]);
+
+  const setMotion = useCallback(
+    (next: MotionMode) => {
+      setLocalMotion(next);
+      if (motionStorageKey == null) return;
+      try {
+        if (next === 'reduce') localStorage.setItem(motionStorageKey, next);
+        else localStorage.removeItem(motionStorageKey);
+      } catch {}
+      storeListeners.forEach((listener) => listener());
+    },
+    [motionStorageKey],
+  );
+
   const [localMode, setLocalMode] = useState<ThemeMode>(initialMode ?? defaultMode);
   const getStored = useCallback(() => (storageKey ? readStored(storageKey) : null), [storageKey]);
   const stored = useSyncExternalStore(subscribeStored, getStored, serverStored);
@@ -135,7 +176,10 @@ export function ThemeProvider({
     [storageKey],
   );
 
-  const value = useMemo(() => ({ mode, resolved, setMode, brand }), [mode, resolved, setMode, brand]);
+  const value = useMemo(
+    () => ({ mode, resolved, setMode, brand, motion, setMotion }),
+    [mode, resolved, setMode, brand, motion, setMotion],
+  );
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 

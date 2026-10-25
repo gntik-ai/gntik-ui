@@ -44,3 +44,20 @@ test('tailwind.css imports motion.css and bridges easings and durations', () => 
     assert.match(tw, new RegExp(`@utility duration-${d} \\{[^}]*transition-duration: var\\(--duration-${d}\\);`));
   assert.match(tw, /--default-transition-duration: var\(--duration-[a-z]+\);/);
 });
+
+test('the in-app scope collapses all duration tokens without changing easing', () => {
+  const scope = /\[data-motion=["']reduce["']\]\s*\{([^}]*)\}/.exec(css);
+  assert.ok(scope, 'data-motion scope present');
+  for (const name of ['fast', 'normal', 'slow']) {
+    assert.match(scope[1], new RegExp(`--duration-${name}\\s*:\\s*0ms;`));
+  }
+  assert.doesNotMatch(scope[1], /--ease-/);
+});
+
+test('motion variants combine the OS query with a zero-specificity scope', () => {
+  assert.match(tw, /@custom-variant motion-reduce\s*\{/);
+  assert.match(tw, /@custom-variant motion-safe\s*\{/);
+  assert.match(tw, /&:where\(\[data-motion="reduce"\], \[data-motion="reduce"\] \*\)/);
+  assert.match(tw, /&:where\(:not\(\[data-motion="reduce"\], \[data-motion="reduce"\] \*\)\)/);
+  assert.match(tw, /@media \(prefers-reduced-motion: no-preference\)/);
+});

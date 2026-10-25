@@ -58,3 +58,34 @@ export function observeTheme(cb, el) {
   o.observe(target, { attributes: true, attributeFilter: ['class'] });
   return () => o.disconnect();
 }
+
+const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
+
+/** OS reduced motion or an explicit scope on the element or any ancestor (default html). */
+export function prefersReducedMotion(el) {
+  if (typeof document === 'undefined') return false;
+  return Boolean(
+    (el || document.documentElement).closest('[data-motion="reduce"]') ||
+    (typeof window !== 'undefined' && window.matchMedia?.(reducedMotionQuery).matches),
+  );
+}
+
+/** Subscribe to motion scope and OS changes; returns an unsubscribe function. */
+export function observeReducedMotion(cb, el) {
+  if (typeof document === 'undefined') return () => {};
+  const target = el || document.documentElement;
+  const notify = () => cb(prefersReducedMotion(target));
+  const media = typeof window !== 'undefined' ? window.matchMedia?.(reducedMotionQuery) : undefined;
+  if (media?.addEventListener) media.addEventListener('change', notify);
+  else media?.addListener(notify);
+  const observer = typeof MutationObserver !== 'undefined' ? new MutationObserver(notify) : undefined;
+  // Observe only the target and its ancestors, so unrelated subtree changes do not notify.
+  for (let ancestor = target; ancestor; ancestor = ancestor.parentElement) {
+    observer?.observe(ancestor, { attributes: true, attributeFilter: ['data-motion'] });
+  }
+  return () => {
+    observer?.disconnect();
+    if (media?.removeEventListener) media.removeEventListener('change', notify);
+    else media?.removeListener(notify);
+  };
+}

@@ -5,7 +5,8 @@ export const meta: TemplateMeta = {
   family: 'Settings',
   priority: 'P2',
   status: 'beta',
-  description: 'Theme switcher wired to the ThemeProvider, table density and interface language.',
+  description:
+    'Theme switcher wired to the ThemeProvider, an in-app Reduce motion switch, table density and interface language.',
   layout: 'SettingsLayout',
   blocks: ['app-sidebar', 'app-topbar', 'page-header', 'settings-row'],
 };

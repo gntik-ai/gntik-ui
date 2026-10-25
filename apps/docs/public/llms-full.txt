@@ -11248,7 +11248,7 @@ export default function Route() {
 
 ### Appearance settings (`settings-appearance`)
 
-Theme switcher wired to the ThemeProvider, table density and interface language.
+Theme switcher wired to the ThemeProvider, an in-app Reduce motion switch, table density and interface language.
 
 - Package: `@gntik-ai/templates` · export `SettingsAppearancePage` · group Settings · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/settings-appearance/template.meta.ts

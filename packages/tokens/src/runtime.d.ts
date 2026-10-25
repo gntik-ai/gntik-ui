@@ -19,3 +19,7 @@ export function tokenHex(name: string, el?: Element): string;
 export function currentTheme(el?: Element): Theme;
 /** Subscribes to theme class changes on <html>; returns an unsubscribe function. */
 export function observeTheme(cb: (theme: Theme) => void, el?: Element): () => void;
+/** OS reduced motion or a data-motion="reduce" scope (default html). False on the server. */
+export function prefersReducedMotion(el?: Element): boolean;
+/** Observe motion scope and OS changes. Returns an unsubscribe function; safe on the server. */
+export function observeReducedMotion(cb: (reduced: boolean) => void, el?: Element): () => void;

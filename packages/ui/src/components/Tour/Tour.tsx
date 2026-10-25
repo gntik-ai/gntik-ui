@@ -1,5 +1,5 @@
 import { useI18n } from '../../i18n/I18nProvider';
-import { usePrefersReducedMotion } from '../../hooks/useMediaQuery';
+import { useReducedMotion } from '../../hooks/useMediaQuery';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { X } from 'lucide-react';
 import { useLayoutEffect, useRef, useState, type KeyboardEvent, type ReactNode, type RefObject } from 'react';
@@ -79,7 +79,7 @@ export function Tour({
   labels: labelsProp,
   className,
 }: TourProps) {
-  const reduced = usePrefersReducedMotion();
+  const reduced = useReducedMotion();
   const portalContainer = usePortalContainer();
   const { t } = useI18n();
   const labels: TourLabels = {

@@ -1,5 +1,5 @@
 import { SettingsRow } from '@gntik-ai/blocks';
-import { Section, SimpleSelect, ThemeSwitcher, Toggle, ToggleGroup, useTheme } from '@gntik-ai/ui';
+import { Section, SimpleSelect, Switch, ThemeSwitcher, Toggle, ToggleGroup, useI18n, useTheme } from '@gntik-ai/ui';
 import { useState } from 'react';
 import { SettingsFrame, type SettingsFrameOptions } from '../settings-profile/SettingsFrame';
 import { THEME_LABELS, densities, languages as defaultLanguages, type Density, type LanguageOption } from './data';
@@ -24,7 +24,8 @@ export default function SettingsAppearancePage({
   onLanguageChange,
   ...frame
 }: Partial<SettingsAppearanceProps>) {
-  const { mode, resolved } = useTheme();
+  const { mode, resolved, motion, setMotion } = useTheme();
+  const { t } = useI18n();
   const [density, setDensity] = useState<Density>(initialDensity);
   const [language, setLanguage] = useState(initialLanguage);
 
@@ -43,6 +44,18 @@ export default function SettingsAppearancePage({
               : 'Dark is the default. High contrast strengthens borders and text.'
           }
           control={<ThemeSwitcher label="Theme" />}
+        />
+        <SettingsRow
+          label={t('motion.reduce')}
+          description={t('motion.description')}
+          control={({ labelId, descriptionId }) => (
+            <Switch
+              aria-labelledby={labelId}
+              aria-describedby={descriptionId}
+              checked={motion === 'reduce'}
+              onCheckedChange={(checked) => setMotion(checked ? 'reduce' : 'system')}
+            />
+          )}
         />
         <SettingsRow
           label="Density"

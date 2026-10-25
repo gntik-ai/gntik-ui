@@ -15,6 +15,23 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@custom-variant motion-reduce {
+  @media (prefers-reduced-motion: reduce) {
+    @slot;
+  }
+  &:where([data-motion="reduce"], [data-motion="reduce"] *) {
+    @slot;
+  }
+}
+
+@custom-variant motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    &:where(:not([data-motion="reduce"], [data-motion="reduce"] *)) {
+      @slot;
+    }
+  }
+}
+
 /* Tailwind v4 defaults, shared with the runtime breakpoint helpers. */
 @theme {
   --breakpoint-sm: 40rem;

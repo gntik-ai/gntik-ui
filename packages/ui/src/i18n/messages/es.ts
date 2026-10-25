@@ -1,3 +1,4 @@
+import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
 import { cspEs } from './csp-messages';
 import type { Messages } from './en';
@@ -5,6 +6,7 @@ import type { Messages } from './en';
 /** Built-in Spanish catalog. */
 export const es: Messages = {
   ...cspEs,
+  ...motionEs,
   ...markdownEs,
   'contact.sendFailed': 'No hemos podido enviar tu mensaje. Inténtalo de nuevo.',
   'themeScope.title': 'Vista previa clara',

@@ -99,3 +99,41 @@ it('follows reduced motion and reports false on the server', () => {
   act(() => media.change(1280, false));
   expect(screen.getByRole('status')).toHaveTextContent('false');
 });
+
+it('updates both motion hook names when the html scope changes', async () => {
+  mockMediaQueries();
+  const { useReducedMotion } = await import('./useMediaQuery');
+  const { result } = renderHook(() => [usePrefersReducedMotion(), useReducedMotion()]);
+  expect(result.current).toEqual([false, false]);
+  await act(async () => {
+    document.documentElement.dataset.motion = 'reduce';
+  });
+  expect(result.current).toEqual([true, true]);
+  await act(async () => {
+    document.documentElement.removeAttribute('data-motion');
+  });
+  expect(result.current).toEqual([false, false]);
+});
+
+it('hydrates motion from a false server snapshot before reading the html scope', async () => {
+  mockMediaQueries();
+  document.documentElement.dataset.motion = 'reduce';
+  function Motion() {
+    return <output>{String(usePrefersReducedMotion())}</output>;
+  }
+  const container = document.createElement('div');
+  container.innerHTML = renderToString(<Motion />);
+  expect(container.textContent).toBe('false');
+  const recoverable = vi.fn();
+  let root: ReturnType<typeof hydrateRoot> | undefined;
+  try {
+    await act(async () => {
+      root = hydrateRoot(container, <Motion />, { onRecoverableError: recoverable });
+    });
+    expect(container.textContent).toBe('true');
+    expect(recoverable).not.toHaveBeenCalled();
+  } finally {
+    await act(async () => root?.unmount());
+    document.documentElement.removeAttribute('data-motion');
+  }
+});

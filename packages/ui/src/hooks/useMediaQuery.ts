@@ -1,4 +1,5 @@
 import { useCallback, useSyncExternalStore } from 'react';
+import { observeReducedMotion, prefersReducedMotion } from '@gntik-ai/tokens/runtime';
 
 interface QueryStore {
   mql: MediaQueryList;
@@ -53,7 +54,10 @@ export function useMediaQuery(query: string, fallback = false): boolean {
   );
 }
 
-/** Follow the user's reduced-motion preference; false on the server and during hydration. */
-export function usePrefersReducedMotion(): boolean {
-  return useMediaQuery('(prefers-reduced-motion: reduce)');
+/** Follow the OS or html motion scope; false on the server and during hydration. */
+export function useReducedMotion(): boolean {
+  return useSyncExternalStore(observeReducedMotion, prefersReducedMotion, () => false);
 }
+
+/** Backward-compatible name for useReducedMotion. */
+export const usePrefersReducedMotion = useReducedMotion;

@@ -1,19 +1,10 @@
 import { useCallback, useMemo, useReducer, useSyncExternalStore, type FocusEvent } from 'react';
 
-const REDUCED_QUERY = '(prefers-reduced-motion: reduce)';
+import { observeReducedMotion, prefersReducedMotion } from '@gntik-ai/tokens/runtime';
 
-function subscribeReduced(onChange: () => void) {
-  if (typeof window === 'undefined' || !window.matchMedia) return () => {};
-  const mq = window.matchMedia(REDUCED_QUERY);
-  mq.addEventListener?.('change', onChange);
-  return () => mq.removeEventListener?.('change', onChange);
-}
-const getReduced = () =>
-  typeof window !== 'undefined' && window.matchMedia ? window.matchMedia(REDUCED_QUERY).matches : false;
-
-/** `true` when the user asks for reduced motion (false on the server). */
+/** OS or in-app reduced motion; false on the server and during hydration. */
 export function usePrefersReducedMotion(): boolean {
-  return useSyncExternalStore(subscribeReduced, getReduced, () => false);
+  return useSyncExternalStore(observeReducedMotion, prefersReducedMotion, () => false);
 }
 
 export interface UseLiveSeriesOptions<T> {

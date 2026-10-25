@@ -388,6 +388,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -480,6 +485,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -897,6 +907,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:lib",
           "target": "components/i18n/time-zone.ts"
@@ -998,6 +1013,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -1088,6 +1108,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -1291,6 +1316,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -1382,6 +1412,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -1603,6 +1638,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -1680,6 +1720,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -1765,6 +1810,7 @@
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
+        "@gntik-ai/tokens",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -1836,6 +1882,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -2443,6 +2494,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -2704,6 +2760,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -2805,6 +2866,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -3116,6 +3182,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -3513,6 +3584,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -3843,6 +3919,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -3947,6 +4028,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4082,6 +4168,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -4206,6 +4297,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4350,6 +4446,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -4414,7 +4515,8 @@
       "description": "Documentation shell: top bar · left nav (a NavList) · article · right table of contents. The `Outline` sub-component is the table of contents: scroll-spy with IntersectionObserver (rooted in the article column, guarded where it is missing) marks the heading in view with aria-current=\"location\", and activating a link moves focus to the heading. Below `lg` the nav hides and the table of contents moves into a Collapsible above the article. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.8.0",
+        "@gntik-ai/tokens"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -4472,6 +4574,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4598,6 +4705,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -4683,6 +4795,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -5687,6 +5804,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -5876,6 +5998,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -6029,6 +6156,7 @@
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
+        "@gntik-ai/tokens",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -6087,6 +6215,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6281,6 +6414,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -6371,6 +6509,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6467,6 +6610,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6575,6 +6723,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6800,6 +6953,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -6890,6 +7048,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6989,6 +7152,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7342,6 +7510,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -7473,6 +7646,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7803,6 +7981,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -8092,6 +8275,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -8190,6 +8378,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8372,6 +8565,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -8457,6 +8655,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8548,6 +8751,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8647,6 +8855,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -8721,6 +8934,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8923,6 +9141,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -9053,6 +9276,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9289,6 +9517,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -9375,6 +9608,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9561,6 +9799,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -9662,6 +9905,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9825,6 +10073,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10166,6 +10419,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -10429,6 +10687,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10870,6 +11133,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -11120,6 +11388,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -11297,6 +11570,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -11444,7 +11722,7 @@
       "name": "settings-appearance",
       "type": "registry:block",
       "title": "Appearance settings",
-      "description": "Theme switcher wired to the ThemeProvider, table density and interface language.",
+      "description": "Theme switcher wired to the ThemeProvider, an in-app Reduce motion switch, table density and interface language.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",
@@ -11625,6 +11903,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12069,6 +12352,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12523,6 +12811,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -12706,6 +12999,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -12778,6 +13076,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12999,6 +13302,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -13303,6 +13611,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:lib",
           "target": "components/i18n/time-zone.ts"
@@ -13527,6 +13840,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -13841,6 +14159,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -13930,6 +14253,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14032,6 +14360,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14286,6 +14619,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -14376,6 +14714,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14478,6 +14821,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14614,6 +14962,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -14711,6 +15064,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -14802,6 +15160,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14942,6 +15305,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -15075,6 +15443,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15274,6 +15647,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -15298,6 +15676,7 @@
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
+        "@gntik-ai/tokens",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -15371,6 +15750,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15512,6 +15896,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -15608,6 +15997,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15777,6 +16171,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15997,6 +16396,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -16171,6 +16575,11 @@
           "target": "components/i18n/messages/markdown-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -16260,6 +16669,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16401,6 +16815,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16562,6 +16981,11 @@
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",

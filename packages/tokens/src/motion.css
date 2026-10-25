@@ -24,3 +24,9 @@
     --duration-slow: 0ms;
   }
 }
+
+[data-motion="reduce"] {
+  --duration-fast: 0ms;
+  --duration-normal: 0ms;
+  --duration-slow: 0ms;
+}

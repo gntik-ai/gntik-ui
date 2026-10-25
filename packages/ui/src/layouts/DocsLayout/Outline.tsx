@@ -11,7 +11,7 @@ import {
 } from 'react';
 import { cn } from '../../utils/cn';
 import { useI18n } from '../../i18n/I18nProvider';
-import { usePrefersReducedMotion } from '../../hooks/useMediaQuery';
+import { useReducedMotion } from '../../hooks/useMediaQuery';
 import { outlineVariants } from './docs-layout.variants';
 
 export interface OutlineItem {
@@ -61,7 +61,7 @@ export function Outline({
   ref,
   ...props
 }: OutlineProps) {
-  const reduce = usePrefersReducedMotion();
+  const reduce = useReducedMotion();
   const { t } = useI18n();
   const label = labelProp ?? t('nav.onThisPage');
   const [inner, setInner] = useState<string | undefined>(items[0]?.id);
