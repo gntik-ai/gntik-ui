@@ -3,7 +3,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const toastVariants = tv({
   slots: {
     viewport: [
-      'fixed end-4 bottom-4 z-50 flex w-[320px] max-w-[calc(100vw-2rem)] flex-col-reverse gap-2.5 outline-none',
+      'fixed end-4 bottom-4 z-toast flex w-[320px] max-w-[calc(100vw-2rem)] flex-col-reverse gap-2.5 outline-none',
       'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus-ring',
     ],
     root: [

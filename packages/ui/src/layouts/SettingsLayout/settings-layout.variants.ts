@@ -14,7 +14,7 @@ export const settingsLayoutVariants = tv({
     title: 'text-[20px] font-semibold tracking-tight text-foreground',
     description: 'text-[13px] leading-relaxed text-muted-foreground',
     saveBar: [
-      'sticky bottom-0 z-10 mt-auto border-t border-border bg-card/95 shadow-sm',
+      'sticky bottom-0 z-sticky mt-auto border-t border-border bg-card/95 shadow-sm',
       'flex items-center justify-end gap-2 px-4 py-3 sm:px-8',
     ],
   },

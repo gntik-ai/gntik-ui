@@ -8,7 +8,7 @@ export const hoverCardVariants = tv({
       'hover:decoration-foreground data-popup-open:decoration-foreground',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
     ],
-    positioner: 'z-50 outline-none',
+    positioner: 'z-popover outline-none',
     popup: [
       'relative w-72 origin-[var(--transform-origin)] rounded-[10px] border border-border bg-popover p-4 text-popover-foreground shadow-md outline-none',
       'max-w-[calc(100vw-2rem)] transition-[opacity,scale] duration-150 motion-reduce:transition-none',

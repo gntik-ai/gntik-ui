@@ -69,7 +69,7 @@ export function StatusTimeline({
           return (
             <li key={event.id} className="relative flex gap-3 pb-6 last:pb-0">
               {!last && <span aria-hidden className="absolute top-5 bottom-0 start-[9px] w-px bg-border" />}
-              <span className="relative z-10 mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-card">
+              <span className="relative z-raised mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-card">
                 <StatusDot tone={event.tone} pulse={event.live} size="lg" />
               </span>
               <div className="min-w-0 flex-1">

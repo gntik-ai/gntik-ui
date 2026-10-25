@@ -28,7 +28,7 @@ export const powerSearchVariants = tv({
       'ms-auto grid size-6 shrink-0 place-items-center rounded text-muted-foreground transition-colors hover:text-foreground',
       'focus-visible:outline-2 focus-visible:outline-focus-ring',
     ],
-    positioner: 'z-50 outline-none',
+    positioner: 'z-popover outline-none',
     popup: [...listboxPopup, 'min-w-64'],
     group: 'px-2.5 pt-1.5 pb-1 font-mono text-[10px] font-medium tracking-wider text-muted-foreground uppercase',
     item: listboxItem,

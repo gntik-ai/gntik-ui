@@ -9,9 +9,9 @@ const control = [
 export const lightboxVariants = tv({
   slots: {
     backdrop:
-      'fixed inset-0 z-50 bg-background/95 transition-opacity duration-200 motion-reduce:transition-none data-starting-style:opacity-0 data-ending-style:opacity-0',
+      'fixed inset-0 z-overlay bg-background/95 transition-opacity duration-200 motion-reduce:transition-none data-starting-style:opacity-0 data-ending-style:opacity-0',
     popup: [
-      'fixed inset-0 z-50 flex flex-col text-foreground outline-none',
+      'fixed inset-0 z-modal flex flex-col text-foreground outline-none',
       'transition-opacity duration-200 motion-reduce:transition-none data-starting-style:opacity-0 data-ending-style:opacity-0',
     ],
     bar: 'flex shrink-0 items-center gap-1 border-b border-border/60 bg-chrome px-3 py-2',
@@ -25,7 +25,7 @@ export const lightboxVariants = tv({
     ],
     media: 'w-auto max-w-full rounded-md object-contain shadow-md select-none',
     nav: [
-      'absolute top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full border border-border bg-card text-foreground shadow-sm transition-colors',
+      'absolute top-1/2 z-raised grid size-10 -translate-y-1/2 place-items-center rounded-full border border-border bg-card text-foreground shadow-sm transition-colors',
       'hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring disabled:pointer-events-none disabled:opacity-40',
     ],
     prev: 'start-3',

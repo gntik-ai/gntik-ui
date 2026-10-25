@@ -22,6 +22,17 @@ const json = (f) => JSON.parse(fs.readFileSync(path.join(out, f), 'utf8'));
 const dtcg = json('tokens.json');
 const figma = json('figma-variables.json');
 
+test('stacking layers are DTCG numbers and are omitted from Figma variables', () => {
+  assert.deepEqual(dtcg.zIndex.modal, {
+    $type: 'number',
+    $value: 1400,
+    $extensions: { 'ai.gntik': { cssVar: '--z-modal' } },
+  });
+  assert.ok(
+    figma.variables.every((variable) => !variable.name.startsWith('zIndex/') && !variable.id.startsWith('var_z-')),
+  );
+});
+
 const hexToRgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
 const close = (a, b, msg) => a.forEach((v, i) => assert.ok(Math.abs(v - b[i]) <= 0.5 / 255 + 1e-9, msg));
 

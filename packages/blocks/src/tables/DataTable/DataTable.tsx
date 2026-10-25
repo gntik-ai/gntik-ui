@@ -497,7 +497,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     className={cn(
                       'w-10 pe-0',
                       layout.lead.className,
-                      layout.lead.pinned && 'z-[11] bg-card',
+                      layout.lead.pinned && 'z-sticky-pinned bg-card',
                       stickyTint(layout.lead, { head: true }),
                     )}
                     style={layout.lead.style}
@@ -545,7 +545,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     className={cn(
                       'w-12',
                       layout.trail.className,
-                      layout.trail.pinned && 'z-[11] bg-card',
+                      layout.trail.pinned && 'z-sticky-pinned bg-card',
                       stickyTint(layout.trail, { head: true }),
                     )}
                     style={layout.trail.style}

@@ -3939,6 +3939,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -4012,6 +4016,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -4166,6 +4174,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -4238,6 +4250,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -4345,6 +4361,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -4418,6 +4438,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -4555,6 +4579,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -4661,6 +4689,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -5008,6 +5040,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -5130,6 +5166,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -5214,6 +5254,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -5327,6 +5371,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -5429,6 +5477,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -5521,6 +5573,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -5610,6 +5666,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -5693,6 +5753,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -5732,7 +5796,7 @@
       "package": "@gntik-ai/ui",
       "group": "Overlays",
       "status": "stable",
-      "description": "Modal window for focused tasks: forms, details, confirmations. Compound parts (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose) in four sizes.",
+      "description": "Modal window for focused tasks: forms, details, confirmations. Compound parts (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose) in four sizes. Named stacking layers keep nested popups, toasts and tooltips above the modal; see LayeredOverlays.",
       "files": [
         {
           "path": "packages/ui/src/components/Dialog/Dialog.tsx",
@@ -5773,6 +5837,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -5856,6 +5924,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -5947,6 +6019,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -6022,6 +6098,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -6191,6 +6271,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -6264,6 +6348,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -6376,6 +6464,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -6457,6 +6549,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -6534,6 +6630,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -6618,6 +6718,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -6699,6 +6803,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -6772,6 +6880,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -6851,6 +6963,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -7011,6 +7127,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -7090,6 +7210,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -7235,6 +7359,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -7350,6 +7478,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -7436,6 +7568,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -7518,6 +7654,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -7595,6 +7735,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -7668,6 +7812,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -7746,6 +7894,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -7827,6 +7979,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -7904,6 +8060,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -8003,6 +8163,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -8081,6 +8245,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -8114,7 +8282,7 @@
       "package": "@gntik-ai/ui",
       "group": "Overlays",
       "status": "stable",
-      "description": "Non-modal floating panel anchored to a trigger, for short forms, details and filters. Optional arrow, four sides, three paddings. Parts: Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose.",
+      "description": "Non-modal floating panel anchored to a trigger, for short forms, details and filters. Optional arrow, four sides, three paddings. Close the popover before opening a Dialog from it: the popover layer is above the modal layer. Parts: Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose.",
       "files": [
         {
           "path": "packages/ui/src/components/Popover/Popover.tsx",
@@ -8155,6 +8323,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -8238,6 +8410,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -8352,6 +8528,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -8471,6 +8651,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -8552,6 +8736,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -8669,6 +8857,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -8776,6 +8968,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -8943,6 +9139,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -9039,6 +9239,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -9205,6 +9409,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -9346,6 +9554,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -9419,6 +9631,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -9501,6 +9717,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -9679,6 +9899,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -9759,6 +9983,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -9844,6 +10072,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -9921,6 +10153,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -10001,6 +10237,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -10074,6 +10314,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -10182,6 +10426,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -10259,6 +10507,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -10404,6 +10656,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -10480,6 +10736,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -10562,6 +10822,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -10648,6 +10912,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -10748,6 +11016,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -10853,6 +11125,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -10941,6 +11217,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -11013,6 +11293,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -11097,6 +11381,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -11161,6 +11449,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -11237,6 +11529,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -11318,6 +11614,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -11405,6 +11705,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -11483,6 +11787,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -11555,6 +11863,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -11633,6 +11945,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -11708,6 +12024,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -11792,6 +12112,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -11867,6 +12191,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -11947,6 +12275,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "target": "components/i18n/messages/markdown-messages.ts"
         },
@@ -12021,6 +12353,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",

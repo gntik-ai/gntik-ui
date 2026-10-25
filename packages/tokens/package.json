@@ -26,7 +26,8 @@
     },
     "./package.json": "./package.json",
     "./scope.css": "./src/scope.css",
-    "./typography.css": "./src/typography.css"
+    "./typography.css": "./src/typography.css",
+    "./layers.css": "./src/layers.css"
   },
   "sideEffects": [
     "*.css"

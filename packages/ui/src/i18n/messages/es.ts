@@ -1,3 +1,4 @@
+import { layersEs } from './layer-messages';
 import { catalogPreviewEs } from './catalog-preview-messages';
 import { typographyEs } from './typography-messages';
 import { motionEs } from './motion-messages';
@@ -7,6 +8,7 @@ import type { Messages } from './en';
 
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  ...layersEs,
   ...cspEs,
   ...catalogPreviewEs,
   ...typographyEs,

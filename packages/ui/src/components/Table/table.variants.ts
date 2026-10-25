@@ -27,7 +27,7 @@ export const tableVariants = tv({
       comfortable: { head: 'h-10', cell: 'py-3' },
     },
     sticky: {
-      true: { head: 'sticky top-0 z-10 bg-card' },
+      true: { head: 'sticky top-0 z-sticky bg-card' },
       false: { head: 'bg-secondary/30' },
     },
     align: {

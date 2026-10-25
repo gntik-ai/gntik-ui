@@ -2,7 +2,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 
 export const tooltipVariants = tv({
   slots: {
-    positioner: 'z-50',
+    positioner: 'z-tooltip',
     popup: [
       'relative origin-[var(--transform-origin)] transition-[opacity,scale] duration-150 motion-reduce:transition-none',
       'data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0',

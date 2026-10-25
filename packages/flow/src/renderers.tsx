@@ -87,7 +87,7 @@ export function adaptNodeRenderers(renderers: readonly FlowNodeRenderer[]): Node
           {definition.decorations !== 'consumer' && (
             <>
               {data.decoration?.status && (
-                <div className="pointer-events-none absolute -top-2 right-1 z-10">
+                <div className="pointer-events-none absolute -top-2 right-1 z-raised">
                   <FlowStatusBadge status={data.decoration.status} />
                 </div>
               )}

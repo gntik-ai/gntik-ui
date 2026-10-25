@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Overlays',
   status: 'stable',
   description:
-    'Non-modal floating panel anchored to a trigger, for short forms, details and filters. Optional arrow, four sides, three paddings. Parts: Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose.',
+    'Non-modal floating panel anchored to a trigger, for short forms, details and filters. Optional arrow, four sides, three paddings. Close the popover before opening a Dialog from it: the popover layer is above the modal layer. Parts: Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose.',
   primitive: '@base-ui/react/popover',
   pattern: 'dialog (non-modal disclosure)',
   keyboard: [

@@ -12,7 +12,7 @@ export const megaMenuVariants = tv({
     ],
     chevron: 'transition-transform duration-200 group-data-popup-open:rotate-180 motion-reduce:transition-none',
     positioner: [
-      'z-50 h-[var(--positioner-height)] w-[var(--positioner-width)] max-w-[var(--available-width)]',
+      'z-dropdown h-[var(--positioner-height)] w-[var(--positioner-width)] max-w-[var(--available-width)]',
       'transition-[top,left,right,bottom] duration-300 ease-out data-instant:transition-none motion-reduce:transition-none',
     ],
     popup: [

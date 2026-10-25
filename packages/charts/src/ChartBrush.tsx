@@ -56,7 +56,7 @@ export interface ChartBrushProps {
 }
 
 const thumbClass = cx(
-  'absolute top-1/2 z-10 h-7 w-3 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize touch-none rounded-sm border border-primary bg-card shadow-sm',
+  'absolute top-1/2 z-raised h-7 w-3 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize touch-none rounded-sm border border-primary bg-card shadow-sm',
   'after:absolute after:inset-y-2 after:left-1/2 after:w-px after:-translate-x-1/2 after:bg-primary',
   'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
 );

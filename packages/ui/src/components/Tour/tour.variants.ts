@@ -3,7 +3,7 @@ import { POPOVER_ARROW_SIDES } from '../Popover/popover.variants';
 
 export const tourVariants = tv({
   slots: {
-    positioner: 'z-50 outline-none',
+    positioner: 'z-popover outline-none',
     popup: [
       'relative w-[min(22rem,calc(100vw-2rem))] origin-[var(--transform-origin)] rounded-xl border border-border bg-popover p-4 text-popover-foreground shadow-lg outline-none',
       'transition-[opacity,scale] duration-150 motion-reduce:transition-none',
@@ -22,7 +22,7 @@ export const tourVariants = tv({
     dots: 'flex items-center gap-1',
     dot: 'size-1.5 rounded-full bg-border data-current:bg-primary',
     highlight:
-      'pointer-events-none fixed z-40 rounded-lg outline-2 outline-offset-4 outline-focus-ring transition-[top,left,width,height] duration-200 motion-reduce:transition-none',
+      'pointer-events-none fixed z-overlay rounded-lg outline-2 outline-offset-4 outline-focus-ring transition-[top,left,width,height] duration-200 motion-reduce:transition-none',
   },
 });
 

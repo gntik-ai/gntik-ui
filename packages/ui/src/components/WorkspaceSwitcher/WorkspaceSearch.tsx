@@ -58,7 +58,7 @@ export function WorkspaceSearch({
         <WorkspaceTriggerContent workspace={current} />
       </Combobox.Trigger>
       <Combobox.Portal container={portalContainer}>
-        <Combobox.Positioner dir={dir} className="z-50 outline-none" align="start" sideOffset={8}>
+        <Combobox.Positioner dir={dir} className="z-popover outline-none" align="start" sideOffset={8}>
           <Combobox.Popup className={s.searchPopup()} aria-label={label}>
             <div className={s.searchField()}>
               <Search size={15} aria-hidden className={s.searchIcon()} />

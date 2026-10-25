@@ -8,7 +8,7 @@ export const chatComposerStyles = {
     'data-[disabled]:opacity-60 data-[dragging]:border-primary/60',
   ].join(' '),
   dropOverlay:
-    'pointer-events-none absolute inset-0 z-10 flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-primary/60 bg-card/95 text-[13px] font-medium text-primary-text',
+    'pointer-events-none absolute inset-0 z-raised flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-primary/60 bg-card/95 text-[13px] font-medium text-primary-text',
   errors:
     'mx-3 mt-3 flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/8 px-2.5 py-1.5 text-[12px] text-destructive-chip-text',
   errorList: 'flex min-w-0 flex-1 flex-col gap-0.5',

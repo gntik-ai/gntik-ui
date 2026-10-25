@@ -38,7 +38,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "label": "mb-2 block text-[13px] font-medium text-foreground",
   "list": "outline-none data-empty:hidden",
   "popup": "max-h-[min(var(--available-height),18rem)] min-w-[var(--anchor-width)] origin-[var(--transform-origin)] overflow-y-auto rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-lg outline-none transition-[opacity,scale] duration-150 motion-reduce:transition-none data-starting-style:scale-[0.98] data-starting-style:opacity-0 data-ending-style:scale-[0.98] data-ending-style:opacity-0",
-  "positioner": "z-50 outline-none",
+  "positioner": "z-popover outline-none",
   "searchIcon": "shrink-0 text-muted-foreground",
   "specialIcon": "shrink-0 text-primary-text",
   "specialItem": "font-medium",
@@ -49,7 +49,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 
 exports[`forced colours > preserves the base non-forced output at the public variants seam > CommandPalette 1`] = `
 {
-  "backdrop": "fixed inset-0 z-50 bg-background/70 backdrop-blur-sm transition-opacity duration-150 motion-reduce:transition-none data-starting-style:opacity-0 data-ending-style:opacity-0",
+  "backdrop": "fixed inset-0 z-overlay bg-background/70 backdrop-blur-sm transition-opacity duration-150 motion-reduce:transition-none data-starting-style:opacity-0 data-ending-style:opacity-0",
   "base": "",
   "count": "ms-auto font-mono text-[10.5px]",
   "empty": "px-4 py-10 text-center text-[13px] text-muted-foreground empty:hidden",
@@ -71,7 +71,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "results": "min-h-0 flex-1 overflow-y-auto overscroll-contain py-2",
   "trigger": "inline-flex h-10 cursor-pointer items-center gap-2.5 rounded-lg border border-border bg-card pe-2.5 ps-3.5 text-muted-foreground transition-colors hover:border-ring/50 hover:text-foreground motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring",
   "triggerText": "text-[13px]",
-  "viewport": "fixed inset-0 z-50 flex items-start justify-center px-4 pt-[12vh] pb-4",
+  "viewport": "fixed inset-0 z-modal flex items-start justify-center px-4 pt-[12vh] pb-4",
 }
 `;
 
@@ -84,7 +84,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "itemIcon": "shrink-0 text-destructive-text",
   "itemLabel": "min-w-0 flex-1 truncate",
   "popup": "min-w-[208px] origin-[var(--transform-origin)] rounded-[10px] border border-border bg-popover p-1.5 text-popover-foreground shadow-md outline-none max-h-[var(--available-height)] overflow-y-auto transition-[opacity,scale] duration-100 motion-reduce:transition-none data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 data-instant:transition-none",
-  "positioner": "z-50 outline-none",
+  "positioner": "z-popover outline-none",
   "radioIndicator": "ms-auto shrink-0 text-primary-text",
   "separator": "-mx-1.5 my-1.5 h-px bg-border",
   "shortcut": "ms-auto ps-3 font-mono text-[10.5px] tracking-wide text-muted-foreground",
@@ -102,7 +102,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "itemIcon": "shrink-0 text-muted-foreground",
   "itemLabel": "min-w-0 flex-1 truncate",
   "popup": "min-w-[208px] origin-[var(--transform-origin)] rounded-[10px] border border-border bg-popover p-1.5 text-popover-foreground shadow-md outline-none max-h-[var(--available-height)] overflow-y-auto transition-[opacity,scale] duration-100 motion-reduce:transition-none data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 data-instant:transition-none",
-  "positioner": "z-50 outline-none",
+  "positioner": "z-popover outline-none",
   "radioIndicator": "ms-auto shrink-0 text-primary-text",
   "separator": "-mx-1.5 my-1.5 h-px bg-border",
   "shortcut": "ms-auto ps-3 font-mono text-[10.5px] tracking-wide text-muted-foreground",
@@ -189,7 +189,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "label": "mb-2 block text-[13px] font-medium text-foreground",
   "list": "outline-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
   "popup": "max-h-[min(var(--available-height),18rem)] min-w-[var(--anchor-width)] origin-[var(--transform-origin)] overflow-y-auto rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-lg outline-none transition-[opacity,scale] duration-150 motion-reduce:transition-none data-starting-style:scale-[0.98] data-starting-style:opacity-0 data-ending-style:scale-[0.98] data-ending-style:opacity-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-  "positioner": "z-50 outline-none",
+  "positioner": "z-popover outline-none",
   "retry": "inline-flex items-center gap-1 rounded-sm px-1.5 py-0.5 text-[12px] font-medium text-foreground underline underline-offset-2 hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring",
   "separator": "-mx-1 my-1 h-px bg-border",
   "status": "flex items-center justify-center gap-2 px-2.5 py-2 text-[12.5px] text-muted-foreground",
@@ -284,7 +284,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "list": "relative flex items-center gap-6 border-b border-border",
   "panel": "text-[13px] text-foreground outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-sm",
   "root": "flex flex-col gap-4",
-  "tab": "group relative z-[1] inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-tab -mb-px border-b-2 border-transparent text-[13px] rounded-t-sm data-active:border-primary",
+  "tab": "group relative z-raised inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-tab -mb-px border-b-2 border-transparent text-[13px] rounded-t-sm data-active:border-primary",
 }
 `;
 
@@ -297,7 +297,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "list": "relative inline-flex items-center gap-1 rounded-lg border border-border bg-secondary/40 p-1",
   "panel": "text-[13px] text-foreground outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-sm",
   "root": "flex flex-col gap-4",
-  "tab": "group relative z-[1] inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-control-sm rounded-md px-control text-[12.5px]",
+  "tab": "group relative z-raised inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-control-sm rounded-md px-control text-[12.5px]",
 }
 `;
 
@@ -310,7 +310,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "list": "relative inline-flex items-center gap-1 rounded-lg border border-border bg-secondary/40 p-1",
   "panel": "text-[13px] text-foreground outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-sm",
   "root": "flex flex-col gap-4",
-  "tab": "group relative z-[1] inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-control-sm rounded-md px-control text-[12.5px] data-active:bg-card data-active:shadow-sm",
+  "tab": "group relative z-raised inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-control-sm rounded-md px-control text-[12.5px] data-active:bg-card data-active:shadow-sm",
 }
 `;
 
@@ -323,11 +323,11 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "list": "relative flex items-center gap-6 border-b border-border",
   "panel": "text-[13px] text-foreground outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-sm",
   "root": "flex flex-col gap-4",
-  "tab": "group relative z-[1] inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-tab -mb-px border-b-2 border-transparent text-[13px] rounded-t-sm",
+  "tab": "group relative z-raised inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-tab -mb-px border-b-2 border-transparent text-[13px] rounded-t-sm",
 }
 `;
 
-exports[`forced colours > preserves the base non-forced output at the public variants seam > ToggleGroup 1`] = `"inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap text-muted-foreground transition-colors select-none hover:text-foreground data-pressed:bg-secondary data-pressed:text-foreground focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-disabled:cursor-not-allowed data-disabled:opacity-50 data-disabled:hover:text-muted-foreground rounded-lg border border-border bg-card shadow-sm hover:bg-secondary/50 data-pressed:border-primary/40 h-control px-4 text-[13px]"`;
+exports[`forced colours > preserves the base non-forced output at the public variants seam > ToggleGroup 1`] = `"inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap text-muted-foreground transition-colors select-none hover:text-foreground data-pressed:bg-secondary data-pressed:text-foreground focus-visible:relative focus-visible:z-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-disabled:cursor-not-allowed data-disabled:opacity-50 data-disabled:hover:text-muted-foreground rounded-lg border border-border bg-card shadow-sm hover:bg-secondary/50 data-pressed:border-primary/40 h-control px-4 text-[13px]"`;
 
 exports[`forced colours > preserves the base non-forced output at the public variants seam > TransferList 1`] = `
 {
@@ -356,7 +356,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "base": "",
   "empty": "grid h-full place-items-center px-4 py-8 text-[12.5px] text-muted-foreground",
   "option": "cursor-default data-active:bg-secondary/60 aria-selected:bg-primary/12 aria-selected:data-active:bg-primary/16",
-  "row": "absolute inset-x-0 top-0 flex items-center outline-none focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring border-b border-border/60",
+  "row": "absolute inset-x-0 top-0 flex items-center outline-none focus-visible:z-raised focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring border-b border-border/60",
   "spacer": "relative w-full",
   "viewport": "relative min-h-0 overflow-y-auto overscroll-contain rounded-lg border border-border bg-card outline-none",
 }

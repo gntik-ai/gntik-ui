@@ -29,7 +29,7 @@ export function DataTableHeadCell<T>({
 }: DataTableHeadCellProps<T>) {
   const align = columnAlign(column);
   const pinnedClass = layout?.pinned
-    ? cn(layout.className, 'z-[11]', stickyTint(layout, { head: true }), 'bg-card')
+    ? cn(layout.className, 'z-sticky-pinned', stickyTint(layout, { head: true }), 'bg-card')
     : undefined;
   if (!resize) {
     return (

@@ -10,7 +10,7 @@ export const pageVariants = tv({
     description: 'mt-1 text-[13px] text-muted-foreground',
     actions: 'flex shrink-0 flex-wrap items-center gap-2.5',
     body: 'flex min-w-0 flex-1 flex-col gap-6',
-    actionBar: 'sticky bottom-0 z-10 shrink-0 border-t border-border bg-card',
+    actionBar: 'sticky bottom-0 z-sticky shrink-0 border-t border-border bg-card',
     actionBarInner: 'mx-auto flex w-full flex-wrap items-center justify-end gap-2.5 px-4 py-3 sm:px-6 lg:px-[26px]',
   },
   variants: {

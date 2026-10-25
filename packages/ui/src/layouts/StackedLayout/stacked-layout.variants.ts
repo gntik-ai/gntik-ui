@@ -4,7 +4,7 @@ export const stackedLayoutVariants = tv({
   slots: {
     root: 'relative flex w-full min-w-0 flex-col overflow-y-auto bg-background font-sans text-foreground',
     skip: 'focus:absolute',
-    header: 'sticky top-0 z-20 shrink-0 border-b border-border/60 bg-chrome',
+    header: 'sticky top-0 z-docked shrink-0 border-b border-border/60 bg-chrome',
     bar: 'mx-auto flex h-[60px] w-full items-center gap-1 px-3 sm:px-4',
     brand: 'flex shrink-0 items-center px-1 lg:px-2',
     divider: 'mx-2 hidden h-6 w-px shrink-0 bg-border/70 lg:block',

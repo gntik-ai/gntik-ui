@@ -6,6 +6,25 @@
 export const densityMergeConfig = {
   extend: {
     classGroups: {
+      z: [
+        {
+          z: [
+            'behind',
+            'base',
+            'raised',
+            'sticky',
+            'sticky-pinned',
+            'docked',
+            'dropdown',
+            'overlay',
+            'modal',
+            'popover',
+            'skip-link',
+            'toast',
+            'tooltip',
+          ],
+        },
+      ],
       'font-size': [
         {
           text: [
