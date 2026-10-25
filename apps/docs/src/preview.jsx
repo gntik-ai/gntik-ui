@@ -19,6 +19,8 @@ const dir = params.get('dir') === 'rtl' ? 'rtl' : 'ltr';
 // This template owns its connection announcements and does not use toasts.
 // Base UI's toast viewport creates a polite region even with an empty queue.
 const quietStreamPreview = kind === 'template' && id.split('--')[0] === 'live-event-stream';
+// The layering example mounts its own startup toaster; a second one duplicates its landmark.
+const ownsToaster = kind === 'block' && id === 'layered-overlays';
 const authPreview = ['sign-in-form', 'forgot-password-form', 'sign-in-card', 'forgot-password'].includes(
   id.split('--')[0],
 );
@@ -63,7 +65,7 @@ createRoot(document.getElementById('root')).render(
               <div className={kind === 'block' ? (padded ? 'p-6' : '') : 'h-dvh'}>
                 <Preview />
               </div>
-              {!quietStreamPreview && <Toaster />}
+              {!quietStreamPreview && !ownsToaster && <Toaster />}
             </ToastProvider>
           </TooltipProvider>
         </I18nProvider>

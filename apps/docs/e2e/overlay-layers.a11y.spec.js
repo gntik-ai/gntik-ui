@@ -22,6 +22,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       await page.getByRole('button', { name: `Open ${kind}`, exact: true }).click();
       const modal = page.getByRole('dialog', { name: `Layered ${kind}`, exact: true });
       await expect(modal).toBeVisible();
+      await expect(page.getByRole('region', { name: 'Notifications', exact: true })).toHaveCount(1);
       expect(await layer(modal)).toBe(1400);
       const backdrop = await modal.evaluate(
         (element) => getComputedStyle(element.parentElement.previousElementSibling).zIndex,
