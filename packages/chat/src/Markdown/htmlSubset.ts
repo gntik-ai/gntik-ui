@@ -47,6 +47,9 @@ const dropContent = new Set([
 // Private fixed schema: consumers cannot widen it. Markdown-generated elements keep their
 // normal semantics; raw elements first pass the narrower subset policy below.
 const schema: SanitizeSchema = {
+  // GFM already prefixes footnote IDs. Raw tags cannot supply IDs after filterRaw
+  // and the attribute allowlist, so preserve Markdown IDs and their references.
+  clobber: [],
   tagNames: [
     ...subset,
     'a',
@@ -85,12 +88,12 @@ const schema: SanitizeSchema = {
     code: [['className', /^language-/]],
     ol: ['start'],
     ul: [['className', 'contains-task-list']],
-    li: [['className', 'task-list-item']],
+    li: ['id', ['className', 'task-list-item']],
     input: [['type', 'checkbox'], 'checked', 'disabled'],
     img: ['src', 'alt', 'title'],
     th: ['align'],
     td: ['align'],
-    section: ['dataFootnotes'],
+    section: ['dataFootnotes', ['className', 'footnotes']],
     h2: ['id', ['className', 'sr-only']],
   },
   protocols: { href: ['http', 'https', 'mailto', 'tel'], src: ['http', 'https'] },

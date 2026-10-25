@@ -39,3 +39,15 @@ The public Markdown seam reproduced both blocking defects before their fixes:
 - `pnpm --filter @gntik-ai/chat exec vitest run src/Markdown/Markdown.test.tsx -t 'preserves footnote'` failed because reference links and footnote prose disappeared across a registered tag. Registered delimiter lines are now masked without changing offsets; a kit remark transform wraps nodes from one shared document. Definitions work across tags, including with the HTML subset loaded.
 
 The redundant Fragment is removed. An additional red-before-green test keeps ordinary div overrides independent of registered custom tags. Internal custom wrappers survive the fixed sanitiser, while raw HTML still passes the original subset filter. The existing single changeset remains chat minor and ui patch.
+
+## Footnote navigation checker follow-up
+
+`pnpm --filter @gntik-ai/chat exec vitest run src/Markdown/Markdown.test.tsx -t 'footnote'` reproduced the remaining defect before the source fix: two tests failed because the footnote reference's fragment target did not exist with `allowHtml` enabled. The public DOM seam now checks both reference and back-reference targets across custom tags, plus navigation in a plain Markdown footnote reply after the HTML subset loads. It also checks the accessible footnote label and section class.
+
+The confirmed cause was the HTML sanitiser stripping list-item IDs, applying its default clobber prefix to already-prefixed GFM reference IDs and the accessible label reference, and stripping the footnotes section class. The fixed private schema preserves those Markdown-generated attributes and disables redundant clobbering. Raw HTML still passes the narrower subset filter first; a regression verifies raw a, li, h2 and section elements cannot supply competing IDs, and subset elements cannot supply IDs or names.
+
+Both Markdown suites pass (65 tests), including default DOM stability, safety, all three example themes and the existing deterministic 800-line parse-count bound. No scanner change is needed: the accepted parse-count regression remains, and the checker independently confirmed the scan is linear. The existing single changeset is updated and `pnpm registry` refreshes the embedded Markdown source; other generated registry files are unchanged.
+
+The required recursive library test command again stops in the unchanged tokens mirror-install test. Direct execution confirms ENOENT for gntik-ai-tokens-0.2.1.tgz after the unavailable public-registry request falls back to packing the current 0.3.0 package. This occurs before the install assertions; the command is SKIPPED as an offline environment limitation. The other six token test files pass. Browser suites, MCP CLI/evals tests and Next.js builds remain PR CI checks under worker policy.
+
+Final validation passes: all library builds, lint, monorepo typecheck, all ten library package suites excluding tokens/MCP/evals, registry freshness, both consumer kit-only checks, docs coverage, strict OpenSpec validation and changed-file formatting. No dependency or lockfile changes are needed.

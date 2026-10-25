@@ -26,6 +26,41 @@ function Reasoning({ children, attributes, complete, streaming }: MarkdownCustom
 const customTags = { think: Reasoning };
 
 describe('Markdown opt-in HTML', () => {
+  it('preserves GFM footnote navigation after loading the HTML subset', async () => {
+    const { container, rerender } = render(<Markdown allowHtml>{'<b>Loaded</b>'}</Markdown>);
+    await waitFor(() => expect(container.querySelector('b')).toHaveTextContent('Loaded'));
+    rerender(<Markdown allowHtml>{'Text[^1].\n\n[^1]: Note'}</Markdown>);
+
+    const reference = screen.getByRole('link', { name: '1' });
+    expect(reference).toHaveAttribute('href', '#user-content-fn-1');
+    expect(container.querySelector(reference.getAttribute('href')!)).toHaveTextContent('Note');
+    const backReference = screen.getByRole('link', { name: 'Back to reference 1' });
+    expect(backReference).toHaveAttribute('href', '#user-content-fnref-1');
+    expect(container.querySelector(backReference.getAttribute('href')!)).toBe(reference);
+    expect(container.querySelector(`#${reference.getAttribute('aria-describedby')}`)).toHaveTextContent('Footnotes');
+    expect(container.querySelector('section[data-footnotes]')).toHaveClass('footnotes');
+  });
+
+  it('prevents raw HTML from supplying IDs or names alongside Markdown footnotes', async () => {
+    const { container } = render(
+      <Markdown allowHtml>
+        {
+          'Text[^1].\n\n[^1]: Note\n\n<a id="user-content-fn-1" name="location">Raw link</a>\n\n<li id="user-content-fnref-1">Raw item</li>\n\n<h2 id="footnote-label">Raw heading</h2>\n\n<section id="location" class="footnotes">Raw section</section>\n\n<b id="location" name="location">Loaded</b>'
+        }
+      </Markdown>,
+    );
+    await waitFor(() => expect(container.querySelector('b')).toHaveTextContent('Loaded'));
+    expect(container.querySelector('b')).not.toHaveAttribute('id');
+    expect(container.querySelector('[name], #location')).toBeNull();
+    expect(container.querySelectorAll('#user-content-fn-1')).toHaveLength(1);
+    expect(container.querySelectorAll('#user-content-fnref-1')).toHaveLength(1);
+    expect(container.querySelectorAll('#footnote-label')).toHaveLength(1);
+    expect(container.querySelectorAll('section.footnotes')).toHaveLength(1);
+    for (const text of ['Raw link', 'Raw item', 'Raw heading', 'Raw section']) {
+      expect(container).toHaveTextContent(text);
+    }
+  });
+
   it('unwraps raw internal-looking tags without invoking a registered renderer', async () => {
     const { container } = render(
       <Markdown allowHtml customTags={customTags}>
@@ -145,7 +180,11 @@ describe('Markdown custom tags', () => {
       expect(screen.getByRole('link', { name: /^link/ })).toHaveAttribute('href', 'https://example.com');
       expect(screen.getByText('Footnote prose')).toBeInTheDocument();
       expect(screen.getByTestId('reasoning').querySelector('a')).toHaveAttribute('href', 'https://example.com');
-      expect(screen.getByRole('link', { name: '1' })).toHaveAttribute('data-footnote-ref');
+      const reference = screen.getByRole('link', { name: '1' });
+      expect(reference).toHaveAttribute('data-footnote-ref');
+      expect(container.querySelector(reference.getAttribute('href')!)).toHaveTextContent('Footnote prose');
+      const backReference = screen.getByRole('link', { name: 'Back to reference 1' });
+      expect(container.querySelector(backReference.getAttribute('href')!)).toBe(reference);
       if (!allowHtml) expect(spy).toHaveBeenCalledTimes(1);
     },
   );
