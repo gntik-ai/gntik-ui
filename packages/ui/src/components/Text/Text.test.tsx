@@ -109,6 +109,17 @@ describe('Heading', () => {
 });
 
 describe('TypographyRoles', () => {
+  it('demonstrates explicit weight and tracking when a literal size replaces a role', () => {
+    render(<TypographyRoles />);
+    expect(screen.getByText('Display with custom size')).toHaveClass('text-[32px]', 'font-bold', 'tracking-tight');
+    expect(screen.getByText('Label with custom size')).toHaveClass('text-[12px]', 'font-medium');
+    expect(screen.getByRole('heading', { name: 'Heading with custom size' })).toHaveClass(
+      'text-[16px]',
+      'font-semibold',
+      'tracking-tight',
+    );
+  });
+
   it('has no axe violations', async () => {
     render(<TypographyRoles />);
     await expectNoAxeViolations();

@@ -363,6 +363,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -465,6 +470,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -892,6 +902,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -1003,6 +1018,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -1103,6 +1123,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -1316,6 +1341,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -1417,6 +1447,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -1648,6 +1683,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -1735,6 +1775,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -1902,6 +1947,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -2519,6 +2569,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -2790,6 +2845,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -2901,6 +2961,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -3222,6 +3287,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -3629,6 +3699,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -3969,6 +4044,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -4083,6 +4163,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -4228,6 +4313,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -4362,6 +4452,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -4516,6 +4611,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -4649,6 +4749,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -4785,6 +4890,11 @@
           "target": "components/i18n/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -4880,6 +4990,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -5894,6 +6009,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -6091,6 +6211,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -6317,6 +6442,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -6519,6 +6649,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -6619,6 +6754,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -6725,6 +6865,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -6843,6 +6988,11 @@
           "path": "packages/ui/src/i18n/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -7078,6 +7228,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -7178,6 +7333,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -7287,6 +7447,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -7650,6 +7815,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -7791,6 +7961,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -8131,6 +8306,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -8430,6 +8610,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -8538,6 +8723,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -8730,6 +8920,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -8825,6 +9020,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -8926,6 +9126,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -9035,6 +9240,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -9119,6 +9329,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -9331,6 +9546,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -9471,6 +9691,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -9717,6 +9942,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -9813,6 +10043,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -10009,6 +10244,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -10120,6 +10360,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -10293,6 +10538,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -10644,6 +10894,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -10917,6 +11172,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -11368,6 +11628,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -11628,6 +11893,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -11813,6 +12083,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -12153,6 +12428,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -12607,6 +12887,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -13071,6 +13356,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -13264,6 +13554,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -13346,6 +13641,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -13577,6 +13877,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -13891,6 +14196,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -14125,6 +14435,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -14449,6 +14764,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -14548,6 +14868,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -14662,6 +14987,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -14717,7 +15047,7 @@
       "name": "text",
       "type": "registry:ui",
       "title": "Text",
-      "description": "Text uses text-body, text-label, text-supporting, text-caption and text-display; code stays relative at 0.92em. Heading sizes display, xl, lg, md, sm, xs and 2xs use text-display and text-heading-* independently of semantic level 1–6 (level 2 defaults to text-heading-lg). Eleven roles come from typography.css, also exported as DTCG typography, Figma type/* variables and typeScale with pixel dimensions and unitless leading. font-*, leading-* and tracking-* utilities override role defaults; body, supporting and caption inherit weight and tracking. Both components support contrast-safe tones, truncation, line clamping and as / render.",
+      "description": "Named type roles for body copy, labels, captions and headings on the brand scale. Text uses text-body, text-label, text-supporting, text-caption and text-display; code stays relative at 0.92em within its parent. Heading sizes display, xl, lg, md, sm, xs and 2xs use text-display and text-heading-* independently of semantic level 1–6 (level 2 defaults to text-heading-lg). Eleven roles come from typography.css, also exported as DTCG typography, Figma type/* variables and typeScale with pixel dimensions and unitless leading. font-*, leading-* and tracking-* utilities override role defaults; body, supporting and caption inherit weight and tracking. A font-size className such as text-[32px] replaces the entire role, including its leading, weight and tracking: unlike the previous separate variant classes, those defaults no longer remain. Supply explicit utilities when needed, for example text-[32px] font-bold tracking-tight for display, text-[12px] font-medium leading-tight for label, or text-[16px] font-semibold tracking-tight leading-snug for Heading. Both components support contrast-safe tones, truncation, line clamping and as / render.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0"
@@ -14924,6 +15254,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -15024,6 +15359,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -15136,6 +15476,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -15282,6 +15627,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -15389,6 +15739,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -15490,6 +15845,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -15640,6 +16000,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -15783,6 +16148,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -15992,6 +16362,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -16100,6 +16475,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -16251,6 +16631,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -16357,6 +16742,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -16536,6 +16926,11 @@
           "path": "packages/ui/src/i18n/index.ts",
           "type": "registry:ui",
           "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -16766,6 +17161,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -16950,6 +17350,11 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -17049,6 +17454,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -17200,6 +17610,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:lib",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -17371,6 +17786,11 @@
           "path": "packages/ui/src/i18n/format.ts",
           "type": "registry:ui",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",

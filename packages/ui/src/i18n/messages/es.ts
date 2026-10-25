@@ -1,26 +1,18 @@
+import { catalogPreviewEs } from './catalog-preview-messages';
 import { typographyEs } from './typography-messages';
 import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
 import { cspEs } from './csp-messages';
 import type { Messages } from './en';
+
 /** Built-in Spanish catalog. */
 export const es: Messages = {
   ...cspEs,
+  ...catalogPreviewEs,
   ...typographyEs,
   ...motionEs,
   ...markdownEs,
   'contact.sendFailed': 'No hemos podido enviar tu mensaje. Inténtalo de nuevo.',
-  'themeScope.title': 'Vista previa clara',
-  'themeScope.description': 'Esta tarjeta y su menú usan el tema claro.',
-  'themeScope.choice': 'Opción de vista previa',
-  'themeScope.personal': 'Personal',
-  'themeScope.nested': 'Una región oscura dentro de una región clara.',
-  'themeScope.release': 'Liberar tema forzado',
-  'themeScope.force': 'Forzar tema claro',
-  'resourceDetail.overview': 'Resumen',
-  'resourceDetail.activity': 'Actividad',
-  'resourceDetail.settings': 'Configuración',
-  'resourceDetail.sections': 'Secciones del recurso',
 
   'error.title': 'No se pudieron cargar los despliegues',
   'error.message': 'El servicio no respondió a tiempo. Tus datos están a salvo; vuelve a intentarlo en un momento.',

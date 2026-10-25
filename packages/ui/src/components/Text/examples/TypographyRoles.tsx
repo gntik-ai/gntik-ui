@@ -27,6 +27,19 @@ export default function TypographyRoles() {
       <Text className="leading-tight" data-typography-case="tight">
         {t('typography.tightBody')}
       </Text>
+      <Text variant="display" className="text-[32px] font-bold tracking-tight" data-typography-case="custom-display">
+        {t('typography.customDisplay')}
+      </Text>
+      <Text variant="label" className="text-[12px] font-medium leading-tight" data-typography-case="custom-label">
+        {t('typography.customLabel')}
+      </Text>
+      <Heading
+        size="sm"
+        className="text-[16px] font-semibold tracking-tight leading-snug"
+        data-typography-case="custom-heading"
+      >
+        {t('typography.customHeading')}
+      </Heading>
     </div>
   );
 }

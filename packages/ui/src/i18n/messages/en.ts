@@ -1,3 +1,4 @@
+import { catalogPreviewEn } from './catalog-preview-messages';
 import { typographyEn } from './typography-messages';
 import { motionEn } from './motion-messages';
 import { markdownEn } from './markdown-messages';
@@ -5,21 +6,11 @@ import { cspEn } from './csp-messages';
 /** Built-in English labels, accessible names and announcements. See format.ts for interpolation syntax. */
 export const en = {
   ...cspEn,
+  ...catalogPreviewEn,
   ...typographyEn,
   ...motionEn,
   ...markdownEn,
   'contact.sendFailed': "We couldn't send your message. Please try again.",
-  'themeScope.title': 'Light preview',
-  'themeScope.description': 'This card and its popup use the light theme.',
-  'themeScope.choice': 'Preview choice',
-  'themeScope.personal': 'Personal',
-  'themeScope.nested': 'A dark region inside a light region.',
-  'themeScope.release': 'Release forced theme',
-  'themeScope.force': 'Force light theme',
-  'resourceDetail.overview': 'Overview',
-  'resourceDetail.activity': 'Activity',
-  'resourceDetail.settings': 'Settings',
-  'resourceDetail.sections': 'Resource sections',
   'error.title': 'We couldn’t load deployments',
   'error.message': 'The service didn’t respond in time. Your data is safe; try again in a moment.',
   'error.support': 'Contact support',
@@ -50,9 +41,11 @@ export const en = {
   'descriptionList.edit': 'Edit',
   'descriptionList.copy': 'Copy {label}',
   'descriptionList.copied': '{label} copied',
+
   'pageHeader.title': 'Deployments',
   'pageHeader.description': 'Every build and release of this project across its environments.',
   'pageHeader.moreActions': 'More actions',
+
   'logViewer.title': 'Logs',
   'logViewer.level.debug': 'DEBUG',
   'logViewer.level.info': 'INFO',

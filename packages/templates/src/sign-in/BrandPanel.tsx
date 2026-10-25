@@ -15,7 +15,7 @@ export function BrandPanel({ eyebrow, headline, features }: BrandPanelCopy) {
         <Text variant="caption" tone="primary" className="font-mono tracking-[0.18em] uppercase">
           {eyebrow}
         </Text>
-        <Text variant="display" className="text-[32px] text-balance">
+        <Text variant="display" className="text-[32px] font-bold tracking-tight text-balance">
           {headline}
         </Text>
       </Stack>

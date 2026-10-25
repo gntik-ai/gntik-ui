@@ -54,6 +54,9 @@ for (const theme of ['dark', '', 'high_contrast']) {
     await expectType(example.locator('[data-typography-case="inherit"]'), [12, 16.5, 0, 700]);
     await expectType(example.locator('[data-typography-case="bold"]'), [17, 23.375, -0.425, 700]);
     await expectType(example.locator('[data-typography-case="tight"]'), [15, 18.75, 0, 400]);
+    await expectType(example.locator('[data-typography-case="custom-display"]'), [32, 48, -0.8, 700]);
+    await expectType(example.locator('[data-typography-case="custom-label"]'), [12, 15, 0, 500]);
+    await expectType(example.locator('[data-typography-case="custom-heading"]'), [16, 22, -0.4, 600]);
     await page.addScriptTag({ content: AXE });
     const violations = await example.evaluate(async (element) => {
       // eslint-disable-next-line no-undef
