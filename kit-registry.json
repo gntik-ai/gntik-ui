@@ -5065,7 +5065,7 @@
       "package": "@gntik-ai/ui",
       "group": "Display",
       "status": "beta",
-      "description": "Read-only code panel with a filename / language header, a copy button (\"Copied\" feedback plus a polite live announcement), optional line numbers, highlighted lines, a soft-wrap toggle and a max height. Default colouring is a minimal tokenizer for ts/tsx/js/json/bash/css that only uses contrast-safe text tokens; pass `highlight` to plug in another highlighter. Code is the inline variant for running text.",
+      "description": "Read-only code panel with a filename / language header, a copy button (\"Copied\" feedback plus a polite live announcement), optional line numbers, highlighted lines, a soft-wrap toggle and a max height. Default colouring is a minimal tokenizer for ts/tsx/js/json/bash/css that only uses contrast-safe text tokens; use CodeHighlighterProvider for whole-source grammars, or pass `highlight` for a per-line override. Code is the inline variant for running text.",
       "files": [
         {
           "path": "packages/ui/src/components/CodeBlock/Code.tsx",
@@ -5076,8 +5076,16 @@
           "target": "components/ui/code-block/CodeBlock.tsx"
         },
         {
+          "path": "packages/ui/src/components/CodeBlock/CodeHighlighterProvider.tsx",
+          "target": "components/ui/code-block/CodeHighlighterProvider.tsx"
+        },
+        {
           "path": "packages/ui/src/components/CodeBlock/code-block.variants.ts",
           "target": "components/ui/code-block/code-block.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CodeBlock/highlight-tokens.ts",
+          "target": "components/ui/code-block/highlight-tokens.ts"
         },
         {
           "path": "packages/ui/src/components/CodeBlock/index.ts",

@@ -9,6 +9,7 @@
    direction (PreviewScope). The page itself is shared with chat.jsx (package-docs.jsx).
    ============================================================================ */
 import { buildEntries, sortEntries, PackageDocs } from './package-docs.jsx';
+import { providerDocumentation } from '../../../../packages/ui/src/components/CodeBlock/CodeBlock.doc';
 
 const hooksDocs = import.meta.glob('../../../../packages/ui/src/hooks/*.doc.ts', { eager: true, import: 'doc' });
 const hooksExamples = import.meta.glob('../../../../packages/ui/src/hooks/examples/*.tsx', { eager: true });
@@ -18,7 +19,16 @@ const hooksSources = import.meta.glob('../../../../packages/ui/src/hooks/example
   import: 'default',
 });
 
-const docs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', { eager: true, import: 'doc' });
+const componentDocs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', {
+  eager: true,
+  import: 'doc',
+});
+const docs = Object.fromEntries(
+  Object.entries(componentDocs).map(([path, doc]) => [
+    path,
+    doc.name === 'CodeBlock' ? { ...doc, description: `${doc.description} ${providerDocumentation}` } : doc,
+  ]),
+);
 // Whole modules: helper files in examples/ (fixtures, demo routers) have no default export.
 const exampleModules = import.meta.glob('../../../../packages/ui/src/components/*/examples/*.tsx', { eager: true });
 const sources = import.meta.glob('../../../../packages/ui/src/components/*/examples/*.tsx', {
@@ -60,6 +70,7 @@ const withDefault = (modules) =>
 // Examples import from '../Name'; in a product they import from the package.
 const forProduct = (code) =>
   code
+    .replace(/from '\.\.\/\.\.\/\.\.\/code-highlight-shiki'/g, "from '@gntik-ai/ui/code-highlight-shiki'")
     .replace(/from '\.\.\/\.\.\/\.\.\/i18n(?:\/(?:I18nProvider|format|time-zone))?'/g, "from '@gntik-ai/ui'")
     .replace(/from '\.\.\/\.\.\/\.\.\/hooks\/useOs'/g, "from '@gntik-ai/ui'")
     .replace(/from '\.\.\/(\.\.\/)?[A-Za-z]+(\/[A-Za-z.]+)?'/g, "from '@gntik-ai/ui'");

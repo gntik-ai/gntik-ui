@@ -28,7 +28,11 @@
       "default": "./dist/forms.js"
     },
     "./styles.css": "./src/styles.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./code-highlight-shiki": {
+      "types": "./dist/code-highlight-shiki.d.ts",
+      "default": "./dist/code-highlight-shiki.js"
+    }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",

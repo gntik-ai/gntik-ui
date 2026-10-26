@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Display',
   status: 'beta',
   description:
-    'Read-only code panel with a filename / language header, a copy button ("Copied" feedback plus a polite live announcement), optional line numbers, highlighted lines, a soft-wrap toggle and a max height. Default colouring is a minimal tokenizer for ts/tsx/js/json/bash/css that only uses contrast-safe text tokens; pass `highlight` to plug in another highlighter. Code is the inline variant for running text.',
+    'Read-only code panel with a filename / language header, a copy button ("Copied" feedback plus a polite live announcement), optional line numbers, highlighted lines, a soft-wrap toggle and a max height. Default colouring is a minimal tokenizer for ts/tsx/js/json/bash/css that only uses contrast-safe text tokens; use CodeHighlighterProvider for whole-source grammars, or pass `highlight` for a per-line override. Code is the inline variant for running text.',
   pattern: 'button · region',
   keyboard: [
     ['Tab', 'Moves through the wrap toggle, the copy button and the scrollable code region'],
@@ -27,3 +27,7 @@ export const doc: ComponentDoc = {
     'focus-ring',
   ],
 };
+
+// Catalog-only adapter instructions: keep optional-peer references out of the core runtime entry.
+export const providerDocumentation =
+  'Providers: install with `pnpm add shiki`, then import `createShikiHighlighter` from `@gntik-ai/ui/code-highlight-shiki` and wrap blocks in `<CodeHighlighterProvider highlighter={highlighter}>`. Keep the instance stable with useMemo or create it outside render. The adapter lazily loads YAML, Python, Go and SQL (yml/py/golang/postgresql aliases), using the JavaScript regex engine without WebAssembly. Other languages retain the built-in tokenizer; unavailable languages stay plain and warn once in development. Add or override grammars with `createShikiHighlighter({ languages: { typescript: loadTypeScriptGrammar } })`. Each async loader returns a Shiki LanguageInput; the example shows a YAML loader override. Custom CodeHighlighter implementations return CodeToken[][] for the whole source or null, with optional load(language): Promise<boolean>; useCodeHighlighter reads the nearest provider. Provider tokens use tokenClass only; invalid text or line counts fall back to the built-in tokenizer. Use maxHeight for long files to keep the panel scrollable; tokenization still runs on the main thread and is memoised.';

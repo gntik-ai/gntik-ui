@@ -1,10 +1,12 @@
 import { useClipboard } from '../../hooks/useClipboard';
 import { Check, Copy, WrapText } from 'lucide-react';
-import { useMemo, useState, type ReactNode, type Ref } from 'react';
+import { useEffect, useMemo, useState, type ReactNode, type Ref } from 'react';
+import { highlightTokens } from './highlight-tokens';
 import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { codeBlockVariants, tokenClass } from './code-block.variants';
-import { tokenizeLines } from './tokenize';
+import { isSupportedLanguage, tokenizeLines } from './tokenize';
+import { loadCodeLanguage, useCodeHighlighter, warnUnavailableLanguage } from './CodeHighlighterProvider';
 
 export interface CodeBlockProps {
   /** The source to show and copy. A single trailing newline is ignored. */
@@ -27,7 +29,7 @@ export interface CodeBlockProps {
   maxHeight?: number | string;
   /**
    * Custom highlighter (e.g. Shiki). Called once per line with that line's text and the
-   * language; return the coloured nodes. Without it a minimal token-coloured tokenizer runs.
+   * language; return the coloured nodes. Takes precedence over the provider and built-in tokenizer.
    */
   highlight?: (code: string, language: string | undefined) => ReactNode;
   /** Accessible name of the scrollable code region. Defaults to the filename or "{language} code". */
@@ -61,9 +63,28 @@ export function CodeBlock({
   const s = codeBlockVariants({ wrap });
   const source = code.endsWith('\n') ? code.slice(0, -1) : code;
 
+  const highlighter = useCodeHighlighter();
+  const [loadRevision, setLoadRevision] = useState(0);
+  const providerTokens = useMemo(
+    () => (!highlight && highlighter && language ? highlightTokens(highlighter, source, language) : null),
+    [source, language, highlight, highlighter, loadRevision],
+  );
+  useEffect(() => {
+    if (highlight || providerTokens || !highlighter?.load || !language) return;
+    let active = true;
+    const normalized = language.toLowerCase();
+    void loadCodeLanguage(highlighter, normalized).then((loaded) => {
+      if (!active) return;
+      if (loaded) setLoadRevision((revision) => revision + 1);
+      else if (!isSupportedLanguage(normalized)) warnUnavailableLanguage(normalized);
+    });
+    return () => {
+      active = false;
+    };
+  }, [highlighter, language, highlight, providerTokens]);
   const lines = useMemo<ReactNode[]>(() => {
     if (highlight) return source.split('\n').map((line) => highlight(line, language));
-    return tokenizeLines(source, language).map((tokens) =>
+    return (providerTokens ?? tokenizeLines(source, language)).map((tokens) =>
       tokens.map((t, i) =>
         tokenClass[t.kind] ? (
           <span key={i} className={tokenClass[t.kind]}>
@@ -74,7 +95,7 @@ export function CodeBlock({
         ),
       ),
     );
-  }, [source, language, highlight]);
+  }, [source, language, highlight, providerTokens]);
 
   const copy = () => copyText(source);
 
