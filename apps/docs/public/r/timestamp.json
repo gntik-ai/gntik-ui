@@ -36,7 +36,7 @@
       "path": "packages/ui/src/components/Timestamp/timestamp.variants.ts",
       "type": "registry:ui",
       "target": "components/ui/timestamp/timestamp.variants.ts",
-      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const timestampVariants = tv({\n  base: [\n    'rounded-sm whitespace-nowrap tabular-nums',\n    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n  ],\n  variants: {\n    tone: {\n      default: 'text-foreground',\n      muted: 'text-muted-foreground',\n    },\n    interactive: {\n      true: 'cursor-default underline decoration-border decoration-dotted underline-offset-4',\n      false: '',\n    },\n  },\n  defaultVariants: { tone: 'muted', interactive: false },\n});\n\nexport type TimestampVariantProps = VariantProps<typeof timestampVariants>;\n"
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const timestampVariants = tv({\n  base: ['rounded-sm whitespace-nowrap tabular-nums', 'focus-ring'],\n  variants: {\n    tone: {\n      default: 'text-foreground',\n      muted: 'text-muted-foreground',\n    },\n    interactive: {\n      true: 'cursor-default underline decoration-border decoration-dotted underline-offset-4',\n      false: '',\n    },\n  },\n  defaultVariants: { tone: 'muted', interactive: false },\n});\n\nexport type TimestampVariantProps = VariantProps<typeof timestampVariants>;\n"
     },
     {
       "path": "packages/ui/src/i18n/I18nProvider.tsx",

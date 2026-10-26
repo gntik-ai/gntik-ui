@@ -184,7 +184,7 @@ export function WeekCalendar({
             tabIndex={0}
             role="region"
             aria-labelledby={timeZone === 'system' ? titleId : `${titleId} ${titleId}-zone`}
-            className="overflow-y-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring"
+            className="overflow-y-auto focus-ring-inset"
             style={{ maxHeight: height }}
           >
             <div className="relative flex" style={{ height: 24 * hourHeight }}>

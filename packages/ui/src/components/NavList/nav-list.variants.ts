@@ -1,6 +1,6 @@
 import { tv, type VariantProps } from '../../utils/tv';
 
-const focus = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';
+const focus = 'focus-ring';
 
 export const navListVariants = tv({
   slots: {

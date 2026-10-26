@@ -47,7 +47,7 @@
       "path": "packages/chat/src/utils/focus.ts",
       "type": "registry:ui",
       "target": "components/chat/utils/focus.ts",
-      "content": "/** Focus ring shared by every interactive element in the pack (brand rule). */\nexport const focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';\n"
+      "content": "/** Focus ring shared by every interactive element in the pack (brand rule). */\nexport const focusRing = 'focus-ring';\n"
     },
     {
       "path": "packages/chat/src/utils/i18n.ts",

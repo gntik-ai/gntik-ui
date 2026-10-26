@@ -6,8 +6,7 @@ import { tv, type VariantProps } from '../../utils/tv';
  */
 export const tableVariants = tv({
   slots: {
-    container:
-      'relative w-full overflow-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+    container: 'relative w-full overflow-auto focus-ring',
     table: 'w-full border-separate border-spacing-0 text-start text-[13px] text-foreground',
     header: '',
     body: '[&>tr:last-child>td]:border-b-0',
@@ -16,7 +15,7 @@ export const tableVariants = tv({
     head: 'border-b border-border px-4 align-middle text-[11.5px] font-medium tracking-wide whitespace-nowrap text-muted-foreground uppercase',
     sortButton: [
       'inline-flex cursor-pointer items-center gap-1 rounded-sm uppercase tracking-wide transition-colors motion-reduce:transition-none hover:text-foreground',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
     cell: 'border-b border-border px-4 align-middle',
     caption: 'caption-bottom px-4 py-3 text-start text-[12px] text-muted-foreground',

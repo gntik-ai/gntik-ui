@@ -15,7 +15,7 @@ export const dialogVariants = tv({
     ],
     close: [
       'absolute top-3.5 end-3.5 grid size-8 place-items-center rounded-lg text-muted-foreground transition-colors',
-      'hover:bg-secondary/60 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'hover:bg-secondary/60 hover:text-foreground focus-ring',
     ],
     header: 'flex flex-col gap-1 border-b border-border px-5 py-4 pe-14',
     title: 'text-[15px] font-semibold tracking-tight text-foreground',

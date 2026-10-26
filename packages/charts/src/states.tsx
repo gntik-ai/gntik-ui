@@ -98,7 +98,7 @@ export function ChartError({ height = 240, children, onRetry, className }: Chart
         <button
           type="button"
           onClick={onRetry}
-          className="h-8 rounded-md border border-border bg-card px-3 text-[12.5px] font-medium text-foreground transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transition-none"
+          className="h-8 rounded-md border border-border bg-card px-3 text-[12.5px] font-medium text-foreground transition-colors hover:bg-secondary focus-ring motion-reduce:transition-none"
         >
           {retry}
         </button>

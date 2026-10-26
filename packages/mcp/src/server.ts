@@ -435,7 +435,7 @@ export function buildServer(ctx: ServerContext): McpServer {
         '# Hard rules (catalog CLAUDE.md)',
         index.rulesMd ?? '(rules section not found — the validate_page checks apply)',
         '## Kit conventions',
-        '- Brand-coloured text: `text-primary-text`, `text-success-text`, `text-warning-text`, `text-destructive-text`; on tinted chips/badges `text-<tone>-chip-text`.\n- Focus: `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring`.\n- Inline links are underlined.\n- Copy is English and product-agnostic; product data lives in fixtures.',
+        '- Brand-coloured text: `text-primary-text`, `text-success-text`, `text-warning-text`, `text-destructive-text`; on tinted chips/badges `text-<tone>-chip-text`.\n- Focus: `focus-ring` (keyboard focus); `focus-ring-inset` (flush rows and clipped containers). Upgrade @gntik-ai/tokens to the minor release introducing these utilities before copying migrated sources.\n- Inline links are underlined.\n- Copy is English and product-agnostic; product data lives in fixtures.',
         '## What `validate_page` checks',
         RULES.map((r) => `- \`${r.id}\` (**${r.severity}**): ${r.message}`).join('\n'),
         '- `no-tokens` (**warning**): the page uses no token class at all.',

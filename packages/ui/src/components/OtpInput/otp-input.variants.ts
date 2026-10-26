@@ -7,7 +7,7 @@ export const otpInputVariants = tv({
     slot: [
       'm-0 rounded-md border border-border bg-background p-0 text-center font-mono font-medium text-foreground shadow-sm caret-primary uppercase',
       'transition-colors motion-reduce:transition-none',
-      'focus-visible:border-primary/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring focus:outline-none',
+      'focus-visible:border-primary/60 focus-ring focus:outline-none',
       'data-filled:border-muted-foreground/40',
       'data-invalid:border-destructive/70 group-data-invalid/otp:border-destructive/70',
       'disabled:cursor-not-allowed disabled:bg-secondary/50 disabled:text-muted-foreground',

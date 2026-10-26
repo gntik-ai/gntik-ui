@@ -31,7 +31,7 @@
       "path": "packages/ui/src/components/InfoTip/info-tip.variants.ts",
       "type": "registry:ui",
       "target": "components/ui/info-tip/info-tip.variants.ts",
-      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const infoTipVariants = tv({\n  slots: {\n    trigger: [\n      'inline-grid shrink-0 cursor-pointer place-items-center rounded-full align-middle text-muted-foreground transition-colors motion-reduce:transition-none',\n      'hover:text-foreground data-popup-open:text-foreground',\n      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n    ],\n    content: 'w-64',\n    body: 'text-[12.5px] leading-5 text-muted-foreground text-pretty',\n  },\n  variants: {\n    size: {\n      sm: { trigger: 'size-4' },\n      md: { trigger: 'size-5' },\n    },\n  },\n  defaultVariants: { size: 'sm' },\n});\n\nexport type InfoTipVariantProps = VariantProps<typeof infoTipVariants>;\n"
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\n\nexport const infoTipVariants = tv({\n  slots: {\n    trigger: [\n      'inline-grid shrink-0 cursor-pointer place-items-center rounded-full align-middle text-muted-foreground transition-colors motion-reduce:transition-none',\n      'hover:text-foreground data-popup-open:text-foreground',\n      'focus-ring',\n    ],\n    content: 'w-64',\n    body: 'text-[12.5px] leading-5 text-muted-foreground text-pretty',\n  },\n  variants: {\n    size: {\n      sm: { trigger: 'size-4' },\n      md: { trigger: 'size-5' },\n    },\n  },\n  defaultVariants: { size: 'sm' },\n});\n\nexport type InfoTipVariantProps = VariantProps<typeof infoTipVariants>;\n"
     },
     {
       "path": "packages/ui/src/i18n/I18nProvider.tsx",

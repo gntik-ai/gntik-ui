@@ -4,10 +4,7 @@ export const stepperVariants = tv({
   slots: {
     list: 'm-0 flex list-none p-0',
     item: 'relative flex',
-    step: [
-      'group flex rounded-lg text-start outline-none',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
-    ],
+    step: ['group flex rounded-lg text-start outline-none', 'focus-ring'],
     indicator:
       'relative z-raised grid size-8 shrink-0 place-items-center rounded-full text-[12px] font-bold transition-colors motion-reduce:transition-none',
     text: 'flex min-w-0 flex-col',

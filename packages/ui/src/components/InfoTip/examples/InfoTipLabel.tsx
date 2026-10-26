@@ -14,7 +14,7 @@ export default function InfoTipLabel() {
       <select
         id="retention"
         defaultValue="30"
-        className="h-9 w-48 rounded-md border border-border bg-background px-2.5 text-[13px] text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+        className="h-9 w-48 rounded-md border border-border bg-background px-2.5 text-[13px] text-foreground focus-ring"
       >
         <option value="7">7 days</option>
         <option value="30">30 days</option>

@@ -7,7 +7,7 @@ export const checkboxVariants = tv({
       'transition-colors motion-reduce:transition-none hover:border-muted-foreground/50',
       'data-checked:border-primary data-checked:bg-primary data-indeterminate:border-primary data-indeterminate:bg-primary',
       'data-invalid:border-destructive/70',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
       'data-disabled:cursor-not-allowed data-disabled:opacity-50',
     ],
     indicator: 'flex items-center justify-center data-unchecked:hidden',

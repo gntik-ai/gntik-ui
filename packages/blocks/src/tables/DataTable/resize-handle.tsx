@@ -79,7 +79,7 @@ export function ColumnResizeHandle({ label, width, min, max, onResize, onResizeE
       onKeyDown={onKeyDown}
       className={cn(
         'group/resizer absolute inset-y-0 -end-1.5 z-raised flex w-3 cursor-col-resize touch-none justify-center',
-        'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+        'focus-ring-inset',
       )}
     >
       <span

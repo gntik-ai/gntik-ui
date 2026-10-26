@@ -24,7 +24,7 @@ describe('ScrollArea', () => {
     render(<ScrollAreaActivity />);
     const region = screen.getByRole('region', { name: 'Recent activity' });
     expect(region).toHaveAttribute('tabindex');
-    expect(region).toHaveClass('focus-visible:outline-focus-ring');
+    expect(region).toHaveClass('focus-ring-inset');
   });
 
   it('Tab focuses the viewport when it overflows; arrows scroll it natively', async () => {

@@ -12,12 +12,12 @@ export const codeBlockVariants = tv({
     button: [
       'inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-md px-2 font-mono text-[11px] text-muted-foreground transition-colors motion-reduce:transition-none',
       'hover:bg-secondary hover:text-foreground aria-pressed:bg-secondary aria-pressed:text-foreground',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
     copied: 'text-primary-text hover:text-primary-text',
     pre: [
       'm-0 overflow-auto bg-background/40 py-3 font-mono text-[12.5px] leading-relaxed text-foreground',
-      'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring-inset',
     ],
     code: 'grid font-mono',
     line: 'flex border-s-2 border-transparent pe-4 ps-3.5 data-highlighted:border-primary data-highlighted:bg-primary/10',

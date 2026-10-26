@@ -14,7 +14,7 @@ export default function LightboxGallery() {
             <button
               type="button"
               aria-label={`Open ${m.alt}`}
-              className="block w-full overflow-hidden rounded-lg border border-border bg-card text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+              className="block w-full overflow-hidden rounded-lg border border-border bg-card text-foreground focus-ring"
               onClick={() => {
                 setIndex(i);
                 setOpen(true);

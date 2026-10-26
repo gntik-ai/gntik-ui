@@ -17,7 +17,7 @@ export const tourVariants = tv({
     skip: 'me-auto',
     close: [
       'absolute end-2 top-2 grid size-7 place-items-center rounded-md text-muted-foreground transition-colors',
-      'hover:bg-secondary/60 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'hover:bg-secondary/60 hover:text-foreground focus-ring',
     ],
     dots: 'flex items-center gap-1',
     dot: 'size-1.5 rounded-full bg-border data-current:bg-primary',

@@ -106,7 +106,7 @@ export default function NotificationInboxPage(props: Partial<NotificationInboxPr
               type="button"
               aria-current={n.id === selectedId ? 'true' : undefined}
               onClick={() => open(n)}
-              className="flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-start hover:bg-accent/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring aria-[current=true]:bg-accent"
+              className="flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-start hover:bg-accent/55 focus-ring aria-[current=true]:bg-accent"
             >
               <span className="mt-1.5 flex w-2 shrink-0 justify-center">
                 {!n.read && <StatusDot tone={n.tone} aria-hidden />}

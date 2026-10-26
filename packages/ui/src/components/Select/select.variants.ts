@@ -21,7 +21,7 @@ export const selectVariants = tv({
     trigger: [
       'group flex w-full items-center justify-between gap-2 rounded-md border border-border bg-background text-foreground shadow-sm transition-colors select-none',
       'hover:border-muted-foreground/40 data-popup-open:border-primary/60 data-popup-open:ring-2 data-popup-open:ring-ring/25',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
       'data-disabled:cursor-not-allowed data-disabled:opacity-50',
     ],
     value: 'flex min-w-0 items-center gap-2 truncate data-placeholder:text-muted-foreground',
@@ -38,7 +38,7 @@ export const selectVariants = tv({
     statusError: 'flex-wrap text-destructive-text',
     retry: [
       'inline-flex items-center gap-1 rounded-sm px-1.5 py-0.5 text-[12px] font-medium text-foreground underline underline-offset-2 hover:bg-secondary',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
   },
   variants: {

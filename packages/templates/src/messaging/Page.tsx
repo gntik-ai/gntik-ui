@@ -95,7 +95,7 @@ export default function MessagingPage(props: Partial<MessagingProps>) {
               type="button"
               aria-current={c.id === selectedId ? 'true' : undefined}
               onClick={() => openConversation(c.id)}
-              className="flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-start hover:bg-accent/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring aria-[current=true]:bg-accent"
+              className="flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-start hover:bg-accent/55 focus-ring aria-[current=true]:bg-accent"
             >
               <Avatar size="sm" name={c.title} aria-hidden />
               <span className="min-w-0 flex-1">

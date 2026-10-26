@@ -11,7 +11,10 @@ export const doc: ComponentDoc = {
   keyboard: [
     ['Enter', 'Activates the button'],
     ['Space', 'Activates the button'],
-    ['Tab', 'Moves focus; a loading button stays focusable'],
+    [
+      'Tab',
+      'Moves focus; a loading button stays focusable. Use focus-ring, or focus-ring-inset for flush or clipped rows. These keyboard-only utilities require the tokens minor release that introduces them.',
+    ],
   ],
   tokens: ['primary', 'primary-foreground', 'card', 'border', 'secondary', 'destructive', 'primary-text', 'focus-ring'],
 };

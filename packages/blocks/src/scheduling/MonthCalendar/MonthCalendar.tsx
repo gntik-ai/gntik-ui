@@ -188,7 +188,7 @@ export function MonthCalendar({
                     onKeyDown={(e) => onKeyDown(e, date)}
                     className={cn(
                       'flex h-full min-h-14 w-full flex-col items-stretch p-1.5 text-start transition-colors motion-reduce:transition-none sm:min-h-[92px] sm:p-2',
-                      'hover:bg-accent/30 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+                      'hover:bg-accent/30 focus-ring-inset',
                       inMonth ? 'bg-card' : 'bg-secondary/20',
                     )}
                   >

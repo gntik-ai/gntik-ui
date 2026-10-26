@@ -13,7 +13,7 @@ export const diffViewerVariants = tv({
     statRemoved: 'text-destructive-text',
     columns: 'grid grid-cols-2 border-b border-border font-mono text-[11.5px] text-muted-foreground',
     column: 'truncate px-3 py-1.5 first:border-e first:border-border',
-    body: 'overflow-auto font-mono text-[12px] leading-5 outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+    body: 'overflow-auto font-mono text-[12px] leading-5 outline-none focus-ring-inset',
     row: 'grid min-w-0',
     unifiedRow: 'grid-cols-[auto_auto_1.25rem_minmax(0,1fr)]',
     splitRow: 'grid-cols-2',

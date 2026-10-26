@@ -41,7 +41,7 @@ export function NodePalette({ items, onAdd, titleAs: TitleTag = 'h3' }: NodePale
               onClick={() => onAdd(item)}
               aria-label={`Add ${item.title}`}
               title={item.description}
-              className="group flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-start hover:bg-secondary/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+              className="group flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-start hover:bg-secondary/70 focus-ring"
             >
               <span className={cn('grid size-7 shrink-0 place-items-center rounded-md', KIND_CHIP[item.kind])}>
                 <KindGlyph kind={item.kind} size={14} />
@@ -177,7 +177,7 @@ export function RunConsole({ entries, onClear, titleAs: TitleTag = 'h3' }: RunCo
         role="log"
         aria-label="Run console"
         tabIndex={0}
-        className="flex-1 overflow-y-auto px-3 py-2 font-mono text-[11.5px] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring"
+        className="flex-1 overflow-y-auto px-3 py-2 font-mono text-[11.5px] focus-ring-inset"
       >
         {entries.length === 0 ? (
           <p className="font-sans text-[12.5px] text-muted-foreground">No output yet. Run the flow to see its steps.</p>

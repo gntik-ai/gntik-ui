@@ -69,7 +69,7 @@ export function Lane({
               onDragStart={onDragStart(card.id)}
               onDragEnd={onDragEnd}
               className={cn(
-                'group flex w-full cursor-grab flex-col gap-2 rounded-lg border border-border bg-card p-3 text-start shadow-sm transition-colors motion-reduce:transition-none hover:border-primary/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+                'group flex w-full cursor-grab flex-col gap-2 rounded-lg border border-border bg-card p-3 text-start shadow-sm transition-colors motion-reduce:transition-none hover:border-primary/40 focus-ring',
                 'aria-pressed:border-primary aria-pressed:bg-accent',
                 draggingId === card.id && 'opacity-50',
               )}

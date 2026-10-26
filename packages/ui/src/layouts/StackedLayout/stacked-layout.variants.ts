@@ -13,7 +13,7 @@ export const stackedLayoutVariants = tv({
     link: [
       'inline-flex h-9 shrink-0 items-center gap-2 rounded-lg px-3 text-[13px] font-medium text-muted-foreground transition-colors',
       'hover:bg-accent/45 hover:text-foreground motion-reduce:transition-none',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
       'aria-[current=page]:bg-accent aria-[current=page]:font-semibold aria-[current=page]:text-accent-foreground',
     ],
     actions: 'ms-auto flex shrink-0 items-center gap-2',

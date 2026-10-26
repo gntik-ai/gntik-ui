@@ -10,10 +10,7 @@ export default function Full() {
       actions={
         <>
           <Button onClick={() => window.alert('Edit')}>Edit</Button>
-          <a
-            href="#tenants"
-            className="text-primary-text underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
-          >
+          <a href="#tenants" className="text-primary-text underline focus-ring">
             View tenants
           </a>
         </>

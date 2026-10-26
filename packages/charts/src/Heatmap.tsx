@@ -56,7 +56,7 @@ export function cellHeightFor(height: number | undefined, rows: number): number 
   return Math.min(48, Math.max(16, Math.floor((height - LABEL_ROW - GAP * n) / n)));
 }
 
-const cellFocus = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';
+const cellFocus = 'focus-ring';
 
 /**
  * Cohort / time grid coloured with a sequential or diverging token ramp. The colour grid is

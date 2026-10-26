@@ -16,10 +16,9 @@ export const thumbnailVariants = tv({
     remove: [
       'absolute end-1.5 top-1.5 grid size-6 place-items-center rounded-md border border-border bg-card/90 text-muted-foreground shadow-sm transition-colors',
       'hover:bg-secondary hover:text-foreground',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
-    retry:
-      'underline underline-offset-2 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-sm',
+    retry: 'underline underline-offset-2 hover:text-foreground focus-ring rounded-sm',
     list: 'm-0 flex list-none flex-wrap gap-3 p-0',
   },
   variants: {

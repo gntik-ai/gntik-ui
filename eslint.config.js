@@ -8,6 +8,10 @@ import globals from 'globals';
 const PALETTE =
   'slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|black|white';
 const BRAND_PATTERNS = [
+  [
+    '(^|\\s)focus-visible:outline-2\\s+focus-visible:outline-offset-2\\s+focus-visible:outline-focus-ring(?=\\s|$)',
+    'Use focus-ring for the shared keyboard focus outline (focus-ring-inset for clipped items).',
+  ],
   ['(^|[\\s:])(-z-\\d+\\b|z-[1-9]\\d*\\b|-?z-\\[)', 'Use a named layer (z-raised, z-sticky, z-modal, z-toast…)'],
   [
     `\\b(bg|text|border|ring|outline|fill|stroke|from|via|to|shadow|divide|decoration|accent|caret)-(${PALETTE})(-\\d{2,3})?\\b`,

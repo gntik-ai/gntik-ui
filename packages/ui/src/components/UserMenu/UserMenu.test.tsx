@@ -93,7 +93,7 @@ describe('UserMenu', () => {
     expect(trigger.children).toHaveLength(showName ? 2 : 1);
     expect(trigger.className).toBe(
       'inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-lg transition-colors outline-none ' +
-        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring ' +
+        'focus-ring ' +
         'data-popup-open:ring-2 data-popup-open:ring-ring/40' +
         (showName ? ' h-9 pe-2 ps-0.5 hover:bg-secondary/60' : ''),
     );

@@ -25,7 +25,7 @@ export const canvasLayoutVariants = tv({
     consoleToggle: [
       'inline-flex h-7 items-center gap-1.5 rounded-md px-2 font-mono text-[10.5px] font-semibold tracking-[0.14em] text-muted-foreground uppercase',
       'transition-colors hover:bg-secondary hover:text-foreground motion-reduce:transition-none',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
     consoleChevron: 'transition-transform motion-reduce:transition-none',
     consoleActions: 'ms-auto flex items-center gap-1',

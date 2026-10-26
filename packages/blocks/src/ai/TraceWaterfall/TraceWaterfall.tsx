@@ -212,7 +212,7 @@ export function TraceWaterfall({
                     aria-expanded={open}
                     aria-label={t(open ? 'common.collapseItem' : 'common.expandItem', { label: span.name })}
                     onClick={() => setOpen(span.id, !open)}
-                    className="absolute top-1/2 z-raised grid size-6 -translate-y-1/2 place-items-center rounded text-muted-foreground hover:bg-secondary hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+                    className="absolute top-1/2 z-raised grid size-6 -translate-y-1/2 place-items-center rounded text-muted-foreground hover:bg-secondary hover:text-foreground focus-ring"
                     style={{ insetInlineStart: indent - 4 }}
                   >
                     <ChevronRight
@@ -240,7 +240,7 @@ export function TraceWaterfall({
                   onKeyDown={(e) => onKeyDown(e, index)}
                   className={cn(
                     'grid h-8 w-full grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-center pe-3 text-start hover:bg-secondary/50',
-                    'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+                    'focus-ring-inset',
                     isSelected && 'bg-primary/8 hover:bg-primary/12',
                   )}
                 >

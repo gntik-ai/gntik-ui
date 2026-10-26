@@ -25,7 +25,7 @@
       "path": "packages/ui/src/components/CursorPagination/cursor-pagination.variants.ts",
       "type": "registry:ui",
       "target": "components/ui/cursor-pagination/cursor-pagination.variants.ts",
-      "content": "import { tv } from '../../utils/tv';\n\nexport const cursorPaginationVariants = tv({\n  slots: {\n    root: 'flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n    selectGroup: 'flex items-center gap-2.5',\n    selectLabel: 'text-[12.5px] text-muted-foreground',\n    select: 'w-[76px] font-mono',\n    controls: 'flex flex-wrap items-center gap-3',\n    status: 'text-[12.5px] text-muted-foreground tabular-nums',\n  },\n});\n"
+      "content": "import { tv } from '../../utils/tv';\n\nexport const cursorPaginationVariants = tv({\n  slots: {\n    root: 'flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between focus-ring',\n    selectGroup: 'flex items-center gap-2.5',\n    selectLabel: 'text-[12.5px] text-muted-foreground',\n    select: 'w-[76px] font-mono',\n    controls: 'flex flex-wrap items-center gap-3',\n    status: 'text-[12.5px] text-muted-foreground tabular-nums',\n  },\n});\n"
     },
     {
       "path": "packages/ui/src/components/CursorPagination/index.ts",

@@ -8,7 +8,7 @@ export const accordionVariants = tv({
     trigger: [
       'group flex w-full cursor-pointer items-center gap-3 py-3.5 text-start text-[13px] font-medium text-foreground transition-colors',
       'hover:text-foreground/80 data-disabled:cursor-not-allowed',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-sm',
+      'focus-ring rounded-sm',
     ],
     chevron: [
       'ms-auto shrink-0 text-muted-foreground transition-transform duration-200 motion-reduce:transition-none',

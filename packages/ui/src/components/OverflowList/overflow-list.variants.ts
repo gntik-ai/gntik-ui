@@ -10,7 +10,7 @@ export const overflowListVariants = tv({
     trigger: [
       'inline-flex shrink-0 items-center justify-center font-medium text-muted-foreground transition-colors select-none',
       'hover:bg-secondary hover:text-foreground data-popup-open:bg-secondary data-popup-open:text-foreground',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
     popup: 'max-h-72 w-60 overflow-y-auto p-1.5',
     popupTitle: 'px-2 pt-1 pb-1.5 font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase',

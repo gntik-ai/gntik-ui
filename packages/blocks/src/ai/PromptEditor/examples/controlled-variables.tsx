@@ -13,7 +13,7 @@ export default function ControlledVariablesPromptEditor() {
       <button
         type="button"
         onClick={() => setVariables((prev) => ({ ...prev, ticket: 'Cannot reset my password' }))}
-        className="self-start text-[12.5px] text-primary-text underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+        className="self-start text-[12.5px] text-primary-text underline underline-offset-2 focus-ring"
       >
         Fill from sample ticket
       </button>

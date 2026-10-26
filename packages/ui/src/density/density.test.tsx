@@ -96,7 +96,7 @@ describe('comfortable class output is unchanged', () => {
   it('Button with an explicit size keeps its exact classes', () => {
     render(<Button size="md">Save</Button>);
     expect(screen.getByRole('button', { name: 'Save' }).className).toBe(
-      'inline-flex shrink-0 items-center justify-center font-semibold whitespace-nowrap transition-colors select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 h-9 gap-1.5 px-3.5 text-[13px] rounded-lg',
+      'inline-flex shrink-0 items-center justify-center font-semibold whitespace-nowrap transition-colors select-none focus-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 h-9 gap-1.5 px-3.5 text-[13px] rounded-lg',
     );
   });
 

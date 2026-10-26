@@ -1,6 +1,6 @@
 import { tv, type VariantProps } from '../../utils/tv';
 
-const focus = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';
+const focus = 'focus-ring';
 
 export const terminalVariants = tv({
   slots: {
@@ -24,7 +24,7 @@ export const terminalVariants = tv({
     body: 'relative min-h-0 flex-1',
     viewport: [
       'h-full overflow-auto bg-background/40 py-2 font-mono text-[12px] leading-[1.6] text-foreground',
-      'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring-inset',
     ],
     lines: 'grid',
     line: 'flex pe-3 ps-3 data-current:bg-primary/10',
