@@ -129,6 +129,28 @@
   transition-duration: var(--duration-slow);
 }
 
+/* Keyboard focus: the shared token outline, enabled only by :focus-visible.
+   Resolve the colour alias locally so nested theme scopes keep their pairing. */
+@utility focus-ring {
+  &:focus-visible {
+    --color-focus-ring: hsl(var(--focus-ring));
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+}
+/* Flush rows and clipped viewports keep the same outline inside their edges. */
+@utility focus-ring-inset {
+  &:focus-visible {
+    --color-focus-ring: hsl(var(--focus-ring));
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: var(--color-focus-ring);
+    outline-offset: -2px;
+  }
+}
+
 /* Density (density.css): static utilities over the per-density variables, so a
    control follows `data-density` on any ancestor. Comfortable values equal the
    kit's original classes (h-control = h-9, px-control = px-3.5, h-row = h-10…). */

@@ -5,7 +5,7 @@ export const collapsibleVariants = tv({
     root: 'flex flex-col',
     trigger: [
       'group inline-flex cursor-pointer items-center gap-2 rounded-md text-[13px] font-medium text-foreground transition-colors',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
       'data-disabled:cursor-not-allowed data-disabled:opacity-50',
     ],
     chevron: [

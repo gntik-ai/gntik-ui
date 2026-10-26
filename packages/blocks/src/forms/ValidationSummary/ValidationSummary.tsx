@@ -53,10 +53,7 @@ export function ValidationSummary({
       role="region"
       tone="destructive"
       title={heading}
-      className={cn(
-        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
-        className,
-      )}
+      className={cn('focus-ring', className)}
     >
       <ul className="mt-1 list-disc space-y-1 ps-4">
         {errors.map((e) => (

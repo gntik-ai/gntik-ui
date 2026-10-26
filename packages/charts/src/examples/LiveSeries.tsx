@@ -37,7 +37,7 @@ export default function LiveSeries({ interval = 1000 }: { interval?: number }) {
           type="button"
           aria-pressed={live.manuallyPaused}
           onClick={live.togglePaused}
-          className="h-7 rounded-md border border-border bg-card px-2.5 font-medium text-foreground hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+          className="h-7 rounded-md border border-border bg-card px-2.5 font-medium text-foreground hover:bg-secondary focus-ring"
         >
           {live.manuallyPaused ? 'Resume' : 'Pause'}
         </button>

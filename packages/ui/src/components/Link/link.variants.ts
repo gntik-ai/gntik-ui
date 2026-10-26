@@ -4,7 +4,7 @@ export const linkVariants = tv({
   slots: {
     root: [
       'cursor-pointer rounded-sm font-medium underline-offset-4 transition-colors',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
       'aria-disabled:pointer-events-none aria-disabled:opacity-50',
     ],
     externalIcon: 'ms-1 inline-block shrink-0 align-[-0.125em]',

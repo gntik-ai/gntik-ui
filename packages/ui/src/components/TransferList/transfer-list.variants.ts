@@ -8,10 +8,7 @@ export const transferListVariants = tv({
     paneTitle: 'min-w-0 flex-1 truncate text-[13px] font-semibold text-foreground',
     paneCount: 'shrink-0 font-mono text-[11px] text-muted-foreground tabular-nums',
     search: 'border-b border-border p-2',
-    listbox: [
-      'min-h-0 flex-1 overflow-y-auto p-1 outline-none',
-      'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
-    ],
+    listbox: ['min-h-0 flex-1 overflow-y-auto p-1 outline-none', 'focus-ring-inset'],
     option: [
       'flex cursor-default items-start gap-2.5 rounded-[6px] px-2 py-1.5 text-[13px] text-foreground select-none',
       'hover:bg-secondary/50 data-active:bg-secondary/70 aria-selected:bg-primary/12 aria-selected:data-active:bg-primary/16 forced-colors:data-active:bg-[Highlight] forced-colors:data-active:text-[HighlightText] forced-colors:data-active:[&_*]:text-[HighlightText] forced-colors:aria-selected:bg-[Highlight] forced-colors:aria-selected:text-[HighlightText] forced-colors:aria-selected:[&_*]:text-[HighlightText] forced-colors:aria-selected:data-active:bg-[Highlight] forced-colors:aria-selected:data-active:text-[HighlightText] forced-colors:aria-selected:data-active:[&_*]:text-[HighlightText] forced-colors:aria-selected:hover:bg-[Highlight] forced-colors:aria-selected:hover:text-[HighlightText] forced-colors:aria-selected:hover:[&_*]:text-[HighlightText]',

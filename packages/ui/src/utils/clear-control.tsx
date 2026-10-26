@@ -82,7 +82,7 @@ export function ClearControlButton({
       type="button"
       aria-label={clearLabel ?? (label ? t('common.clearItem', { label }) : t('common.clear'))}
       className={cn(
-        'inline-flex shrink-0 items-center justify-center rounded p-1 text-muted-foreground hover:bg-secondary hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+        'inline-flex shrink-0 items-center justify-center rounded p-1 text-muted-foreground hover:bg-secondary hover:text-foreground focus-ring',
         className,
       )}
       onMouseDown={(event) => event.stopPropagation()}

@@ -10,7 +10,7 @@ export const datePickerVariants = tv({
     input: [
       'w-full min-w-0 cursor-pointer truncate rounded-md border border-border bg-background text-start text-foreground caret-transparent shadow-sm outline-none',
       'transition-colors motion-reduce:transition-none placeholder:text-muted-foreground hover:border-muted-foreground/40',
-      'focus-visible:border-primary/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-visible:border-primary/60 focus-ring',
       'data-popup-open:border-primary/60 data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
       'disabled:cursor-not-allowed disabled:bg-secondary/50 disabled:text-muted-foreground disabled:hover:border-border',
     ],

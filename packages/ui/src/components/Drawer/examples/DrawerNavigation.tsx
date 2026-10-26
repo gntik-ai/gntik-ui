@@ -35,7 +35,7 @@ export default function DrawerNavigation() {
                     setOpen(false);
                   }}
                   className={
-                    'relative flex w-full items-center gap-3 rounded-lg px-2.5 py-2.5 text-start text-[13.5px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring ' +
+                    'relative flex w-full items-center gap-3 rounded-lg px-2.5 py-2.5 text-start text-[13.5px] transition-colors focus-ring ' +
                     (current
                       ? 'bg-accent font-semibold text-accent-foreground'
                       : 'font-medium text-muted-foreground hover:bg-accent/45 hover:text-foreground')

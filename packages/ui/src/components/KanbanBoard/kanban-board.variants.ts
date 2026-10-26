@@ -22,7 +22,7 @@ export const kanbanBoardVariants = tv({
       'block w-full cursor-grab select-none rounded-lg border border-border bg-card text-start text-foreground shadow-sm',
       'transition-[box-shadow,border-color] duration-150 motion-reduce:transition-none',
       'hover:border-primary/40',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
       'data-dragging:cursor-grabbing data-dragging:border-primary data-dragging:shadow-md',
     ],
     cardTitle: 'text-[13px] font-medium leading-5',

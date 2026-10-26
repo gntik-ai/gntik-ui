@@ -65,7 +65,7 @@ describe('PendingActivationPage', () => {
       await user.tab();
       const control = screen.getByRole(name === 'Retry' || name === 'Check status' ? 'button' : 'link', { name });
       expect(control).toHaveFocus();
-      expect(control).toHaveClass('focus-visible:outline-focus-ring');
+      expect(control).toHaveClass('focus-ring');
     }
     await user.tab();
     expect(document.body).toHaveFocus();

@@ -15,8 +15,7 @@ export interface ChartLegendProps {
   className?: string;
 }
 
-const legendFocus =
-  'rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';
+const legendFocus = 'rounded-sm focus-ring';
 
 /** Interactive legend: each entry is a toggle button that shows/hides its series. */
 export function ChartLegend({ items, hidden, onToggle, className }: ChartLegendProps) {

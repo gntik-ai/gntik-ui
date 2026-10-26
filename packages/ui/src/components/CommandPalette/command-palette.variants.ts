@@ -5,7 +5,7 @@ export const commandPaletteVariants = tv({
     trigger: [
       'inline-flex h-10 cursor-pointer items-center gap-2.5 rounded-lg border border-border bg-card pe-2.5 ps-3.5 text-muted-foreground transition-colors',
       'hover:border-ring/50 hover:text-foreground motion-reduce:transition-none',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
     triggerText: 'text-[13px]',
     backdrop: [

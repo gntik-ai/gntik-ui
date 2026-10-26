@@ -95,7 +95,7 @@ export function DataTableRow<T>({
             <span {...singleSelection.entryProps(row)} className="inline-flex">
               <input
                 {...singleSelection.inputProps(row)}
-                className="size-4 accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring disabled:cursor-not-allowed"
+                className="size-4 accent-primary focus-ring disabled:cursor-not-allowed"
               />
             </span>
           ) : (
@@ -230,7 +230,7 @@ export function GroupHeaderRow<T>({
             type="button"
             aria-expanded={open}
             onClick={() => onToggle?.(group.key)}
-            className="inline-flex max-w-full items-center gap-1.5 rounded-sm px-1 py-0.5 hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+            className="inline-flex max-w-full items-center gap-1.5 rounded-sm px-1 py-0.5 hover:bg-secondary focus-ring"
           >
             <ChevronRight
               size={14}

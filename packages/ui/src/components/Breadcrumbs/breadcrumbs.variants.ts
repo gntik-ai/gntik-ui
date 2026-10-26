@@ -1,6 +1,6 @@
 import { tv, type VariantProps } from '../../utils/tv';
 
-const focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';
+const focusRing = 'focus-ring';
 
 export const breadcrumbsVariants = tv({
   slots: {

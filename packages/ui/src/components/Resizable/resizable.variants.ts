@@ -8,7 +8,7 @@ export const resizableVariants = tv({
       'relative z-raised flex shrink-0 touch-none items-center justify-center bg-border select-none',
       'transition-colors duration-150 motion-reduce:transition-none',
       'hover:bg-primary/60 data-dragging:bg-primary focus-visible:bg-primary',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
       "after:absolute after:content-['']",
       'data-disabled:pointer-events-none data-disabled:bg-border',
     ],

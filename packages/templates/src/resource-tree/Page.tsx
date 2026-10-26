@@ -73,7 +73,7 @@ function columns(onOpen?: (r: TreeResource) => void): DataTableColumn<TreeResour
               <button
                 type="button"
                 onClick={() => onOpen(r)}
-                className="font-medium text-foreground underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+                className="font-medium text-foreground underline-offset-2 hover:underline focus-ring"
               >
                 {r.name}
               </button>

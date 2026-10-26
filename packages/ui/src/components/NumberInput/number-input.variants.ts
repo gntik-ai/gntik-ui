@@ -25,7 +25,7 @@ export const numberInputVariants = tv({
     stepper: [
       'grid shrink-0 place-items-center border-border text-muted-foreground transition-colors motion-reduce:transition-none',
       'hover:bg-secondary/70 hover:text-foreground active:bg-secondary',
-      'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring-inset',
       'disabled:cursor-not-allowed disabled:text-muted-foreground/40 disabled:hover:bg-transparent',
     ],
     decrement: 'border-e',

@@ -209,7 +209,7 @@ export function EditableCell<T>({
         }}
         className={cn(
           '-mx-1.5 -my-1 block max-w-[calc(100%+0.75rem)] min-w-[calc(100%+0.75rem)] cursor-text truncate rounded-sm px-1.5 py-1 text-inherit',
-          'hover:bg-secondary/60 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus-ring',
+          'hover:bg-secondary/60 focus-ring-inset',
           column.align === 'right' || column.variant === 'numeric' ? 'text-end' : 'text-start',
         )}
       >
@@ -240,7 +240,7 @@ export function EditableCell<T>({
           }}
           className={cn(
             'h-8 w-full rounded-md border border-input bg-background px-2 text-[13px] text-foreground',
-            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+            'focus-ring',
             error && 'border-destructive',
           )}
           {...common}

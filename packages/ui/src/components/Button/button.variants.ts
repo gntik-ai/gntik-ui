@@ -3,7 +3,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const buttonVariants = tv({
   base: [
     'inline-flex shrink-0 items-center justify-center font-semibold whitespace-nowrap transition-colors select-none',
-    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+    'focus-ring',
     'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
   ],
   variants: {

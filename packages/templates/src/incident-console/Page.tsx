@@ -124,7 +124,7 @@ export default function IncidentConsolePage(props: Partial<IncidentConsoleProps>
                 setSelectedId(i.id);
                 setShowDetail(true);
               }}
-              className="flex w-full flex-col gap-1.5 rounded-lg px-3 py-2.5 text-start hover:bg-accent/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring aria-[current=true]:bg-accent"
+              className="flex w-full flex-col gap-1.5 rounded-lg px-3 py-2.5 text-start hover:bg-accent/55 focus-ring aria-[current=true]:bg-accent"
             >
               <span className="flex items-center gap-2">
                 <Badge tone={severityTones[i.severity]} size="sm">

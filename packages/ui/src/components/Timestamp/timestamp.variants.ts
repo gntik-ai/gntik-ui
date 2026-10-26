@@ -1,10 +1,7 @@
 import { tv, type VariantProps } from '../../utils/tv';
 
 export const timestampVariants = tv({
-  base: [
-    'rounded-sm whitespace-nowrap tabular-nums',
-    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
-  ],
+  base: ['rounded-sm whitespace-nowrap tabular-nums', 'focus-ring'],
   variants: {
     tone: {
       default: 'text-foreground',

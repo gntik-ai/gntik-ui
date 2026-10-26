@@ -32,7 +32,7 @@ export const outlineVariants = tv({
       '-ms-px block border-s-2 border-transparent py-1 pe-2 text-[12.5px] leading-snug text-muted-foreground',
       'transition-colors hover:text-foreground motion-reduce:transition-none',
       'aria-[current=location]:border-primary aria-[current=location]:font-medium aria-[current=location]:text-primary-text',
-      'rounded-e-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'rounded-e-sm focus-ring',
     ],
   },
   variants: {

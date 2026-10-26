@@ -114,7 +114,7 @@ export function AgendaList({
           tabIndex={maxHeight ? 0 : undefined}
           role={maxHeight ? 'region' : undefined}
           aria-label={maxHeight ? `${title} list` : undefined}
-          className="overflow-y-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring"
+          className="overflow-y-auto focus-ring-inset"
         >
           {groups.map(([key, list]) => {
             const first = list[0];
@@ -167,7 +167,7 @@ export function AgendaList({
                             onClick={() => onEventClick(event)}
                             className={cn(
                               row,
-                              'group transition-colors hover:bg-accent/30 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transition-none',
+                              'group transition-colors hover:bg-accent/30 focus-ring-inset motion-reduce:transition-none',
                             )}
                           >
                             {content}

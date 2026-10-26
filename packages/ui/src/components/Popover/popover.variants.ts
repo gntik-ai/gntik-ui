@@ -21,7 +21,7 @@ export const popoverVariants = tv({
     description: 'mt-1 text-[12.5px] leading-5 text-muted-foreground text-pretty',
     close: [
       'absolute top-2 end-2 grid size-7 place-items-center rounded-md text-muted-foreground transition-colors',
-      'hover:bg-secondary/60 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'hover:bg-secondary/60 hover:text-foreground focus-ring',
     ],
   },
   variants: {

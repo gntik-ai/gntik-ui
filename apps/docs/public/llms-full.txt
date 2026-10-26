@@ -33,7 +33,7 @@ Keyboard:
 | --- | --- |
 | Enter | Activates the button |
 | Space | Activates the button |
-| Tab | Moves focus; a loading button stays focusable |
+| Tab | Moves focus; a loading button stays focusable. Use focus-ring, or focus-ring-inset for flush or clipped rows. These keyboard-only utilities require the tokens minor release that introduces them. |
 
 Tokens: primary, primary-foreground, card, border, secondary, destructive, primary-text, focus-ring
 
@@ -823,7 +823,7 @@ export default function BadgeRemovable() {
         <button
           type="button"
           onClick={() => setTags(INITIAL)}
-          className="font-mono text-[11px] text-primary-text hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+          className="font-mono text-[11px] text-primary-text hover:underline focus-ring"
         >
           Restore tags
         </button>
@@ -1113,10 +1113,7 @@ export default function CollapsibleAdvanced() {
       <CollapsibleTrigger>Advanced settings</CollapsibleTrigger>
       <CollapsiblePanel>
         <label className="flex items-center gap-2 text-foreground">
-          <input
-            type="checkbox"
-            className="size-4 accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
-          />
+          <input type="checkbox" className="size-4 accent-primary focus-ring" />
           Keep build cache between deployments
         </label>
       </CollapsiblePanel>
@@ -1696,8 +1693,7 @@ import { useState } from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@gntik-ai/ui';
 import { DEPLOYMENTS, count } from '@gntik-ai/ui';
 
-const checkboxClass =
-  'size-4 cursor-pointer accent-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring';
+const checkboxClass = 'size-4 cursor-pointer accent-primary focus-ring';
 
 export default function TableSelectable() {
   const [selected, setSelected] = useState<Set<number>>(new Set([2]));
@@ -2107,7 +2103,7 @@ export default function TokenFilters() {
         <button
           type="button"
           onClick={() => setFilters([])}
-          className="inline-flex h-7 items-center rounded-md px-2 text-[12px] font-medium text-muted-foreground transition-colors hover:text-destructive-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+          className="inline-flex h-7 items-center rounded-md px-2 text-[12px] font-medium text-muted-foreground transition-colors hover:text-destructive-text focus-ring"
         >
           Clear all
         </button>
@@ -6284,7 +6280,7 @@ export default function InfoTipLabel() {
       <select
         id="retention"
         defaultValue="30"
-        className="h-9 w-48 rounded-md border border-border bg-background px-2.5 text-[13px] text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+        className="h-9 w-48 rounded-md border border-border bg-background px-2.5 text-[13px] text-foreground focus-ring"
       >
         <option value="7">7 days</option>
         <option value="30">30 days</option>
@@ -6339,7 +6335,7 @@ export default function LightboxGallery() {
             <button
               type="button"
               aria-label={`Open ${m.alt}`}
-              className="block w-full overflow-hidden rounded-lg border border-border bg-card text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+              className="block w-full overflow-hidden rounded-lg border border-border bg-card text-foreground focus-ring"
               onClick={() => {
                 setIndex(i);
                 setOpen(true);
@@ -6950,7 +6946,7 @@ export default function CanvasLayoutFlowEditor() {
               <li key={label}>
                 <button
                   type="button"
-                  className="flex w-full items-center gap-2.5 rounded-md border border-border bg-background px-2.5 py-2 text-start text-[12.5px] transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transition-none"
+                  className="flex w-full items-center gap-2.5 rounded-md border border-border bg-background px-2.5 py-2 text-start text-[12.5px] transition-colors hover:bg-secondary focus-ring motion-reduce:transition-none"
                 >
                   <Icon size={15} aria-hidden className="text-muted-foreground" />
                   {label}
@@ -7003,7 +6999,7 @@ export default function CanvasLayoutFlowEditor() {
               aria-pressed={selected === n.id}
               onClick={() => setSelected(n.id)}
               style={{ left: n.x, top: n.y }}
-              className="absolute w-40 rounded-lg border border-border bg-card px-3 py-2 text-start shadow-sm transition-colors aria-pressed:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring motion-reduce:transition-none"
+              className="absolute w-40 rounded-lg border border-border bg-card px-3 py-2 text-start shadow-sm transition-colors aria-pressed:border-primary focus-ring motion-reduce:transition-none"
             >
               <span className="block font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
                 {n.kind}
@@ -7196,7 +7192,7 @@ export default function InspectorLayoutProperties() {
                 type="button"
                 aria-pressed={name === selected}
                 onClick={() => setSelected(name)}
-                className="w-full rounded-[10px] border border-border bg-card p-4 text-start font-mono text-[13px] hover:bg-accent/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring aria-pressed:border-primary"
+                className="w-full rounded-[10px] border border-border bg-card p-4 text-start font-mono text-[13px] hover:bg-accent/45 focus-ring aria-pressed:border-primary"
               >
                 {name}
               </button>
@@ -7716,7 +7712,7 @@ export default function SplitLayoutInvoices() {
                     setSelected(inv.id);
                     setShowDetail(true);
                   }}
-                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start hover:bg-accent/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring aria-[current=true]:bg-accent"
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start hover:bg-accent/55 focus-ring aria-[current=true]:bg-accent"
                 >
                   <span className="min-w-0 flex-1">
                     <span className="block font-mono text-[12.5px] font-semibold">{inv.id}</span>

@@ -21,7 +21,7 @@ export default function TokenFilters() {
         <button
           type="button"
           onClick={() => setFilters([])}
-          className="inline-flex h-7 items-center rounded-md px-2 text-[12px] font-medium text-muted-foreground transition-colors hover:text-destructive-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+          className="inline-flex h-7 items-center rounded-md px-2 text-[12px] font-medium text-muted-foreground transition-colors hover:text-destructive-text focus-ring"
         >
           Clear all
         </button>

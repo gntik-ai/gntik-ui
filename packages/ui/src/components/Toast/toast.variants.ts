@@ -12,7 +12,7 @@ export const toastVariants = tv({
       'transition-[opacity,translate,scale] duration-200 ease-out motion-reduce:transition-none',
       'data-starting-style:translate-y-3 data-starting-style:scale-[0.97] data-starting-style:opacity-0',
       'data-ending-style:translate-y-3 data-ending-style:scale-[0.97] data-ending-style:opacity-0',
-      'data-limited:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'data-limited:hidden focus-ring',
     ],
     content: 'flex gap-3 p-3.5',
     icon: 'mt-px grid size-7 shrink-0 place-items-center rounded-lg bg-foreground/5',
@@ -20,17 +20,14 @@ export const toastVariants = tv({
     title: 'text-[13px] font-semibold tracking-tight text-foreground',
     description: 'mt-0.5 text-[12.5px] leading-5 text-muted-foreground text-pretty',
     actions: 'mt-2 flex flex-wrap items-center gap-x-4 gap-y-1',
-    action: [
-      'rounded-sm text-[12px] font-semibold transition-opacity hover:opacity-70',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
-    ],
+    action: ['rounded-sm text-[12px] font-semibold transition-opacity hover:opacity-70', 'focus-ring'],
     dismissAction: [
       'rounded-sm text-[12px] font-medium text-muted-foreground transition-colors hover:text-foreground',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
     close: [
       '-mt-0.5 -me-1 grid size-6 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors',
-      'hover:bg-foreground/10 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'hover:bg-foreground/10 hover:text-foreground focus-ring',
     ],
   },
   variants: {

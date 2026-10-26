@@ -270,7 +270,7 @@ export function LogViewer({
         aria-live={announceLines && follow ? 'polite' : 'off'}
         tabIndex={0}
         onScroll={onScroll}
-        className="relative overflow-auto bg-background font-mono text-[12px] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring"
+        className="relative overflow-auto bg-background font-mono text-[12px] focus-ring-inset"
         style={{ height }}
       >
         {visible.length === 0 ? (

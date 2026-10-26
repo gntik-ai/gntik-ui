@@ -24,7 +24,7 @@
       "path": "packages/ui/src/components/ContextMenu/context-menu.variants.ts",
       "type": "registry:ui",
       "target": "components/ui/context-menu/context-menu.variants.ts",
-      "content": "import { tv, type VariantProps } from '../../utils/tv';\nimport { menuVariants } from '../menu/menu.variants';\n\nconst menu = menuVariants();\n\n/** Context menus reuse the Menu popup and item styles; only the trigger area is new. */\nexport const contextMenuVariants = tv({\n  slots: {\n    trigger: [\n      'rounded-lg select-none [-webkit-touch-callout:none]',\n      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',\n      'data-popup-open:bg-secondary/40',\n    ],\n    positioner: menu.positioner(),\n    popup: menu.popup(),\n  },\n});\n\nexport type ContextMenuVariantProps = VariantProps<typeof contextMenuVariants>;\n"
+      "content": "import { tv, type VariantProps } from '../../utils/tv';\nimport { menuVariants } from '../menu/menu.variants';\n\nconst menu = menuVariants();\n\n/** Context menus reuse the Menu popup and item styles; only the trigger area is new. */\nexport const contextMenuVariants = tv({\n  slots: {\n    trigger: ['rounded-lg select-none [-webkit-touch-callout:none]', 'focus-ring', 'data-popup-open:bg-secondary/40'],\n    positioner: menu.positioner(),\n    popup: menu.popup(),\n  },\n});\n\nexport type ContextMenuVariantProps = VariantProps<typeof contextMenuVariants>;\n"
     },
     {
       "path": "packages/ui/src/components/ContextMenu/index.ts",

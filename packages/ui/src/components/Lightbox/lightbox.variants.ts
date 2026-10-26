@@ -2,7 +2,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 
 const control = [
   'grid size-9 shrink-0 place-items-center rounded-lg text-muted-foreground transition-colors motion-reduce:transition-none',
-  'hover:bg-secondary/70 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+  'hover:bg-secondary/70 hover:text-foreground focus-ring',
   'disabled:pointer-events-none disabled:opacity-40',
 ];
 
@@ -19,14 +19,11 @@ export const lightboxVariants = tv({
     zoomValue: 'w-12 text-center font-mono text-[11.5px] text-muted-foreground tabular-nums',
     control,
     stageWrap: 'relative flex min-h-0 flex-1 items-stretch',
-    stage: [
-      'grid min-h-0 min-w-0 flex-1 place-items-center overflow-auto p-4 sm:px-16',
-      'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
-    ],
+    stage: ['grid min-h-0 min-w-0 flex-1 place-items-center overflow-auto p-4 sm:px-16', 'focus-ring-inset'],
     media: 'w-auto max-w-full rounded-md object-contain shadow-md select-none',
     nav: [
       'absolute top-1/2 z-raised grid size-10 -translate-y-1/2 place-items-center rounded-full border border-border bg-card text-foreground shadow-sm transition-colors',
-      'hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring disabled:pointer-events-none disabled:opacity-40',
+      'hover:bg-secondary focus-ring disabled:pointer-events-none disabled:opacity-40',
     ],
     prev: 'start-3',
     next: 'end-3',
@@ -35,7 +32,7 @@ export const lightboxVariants = tv({
     thumb: [
       'relative size-14 shrink-0 overflow-hidden rounded-md border border-border opacity-60 transition-opacity motion-reduce:transition-none',
       'hover:opacity-100 aria-[current=true]:border-primary aria-[current=true]:opacity-100',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
     thumbImg: 'size-full object-cover',
     thumbBadge: 'absolute inset-0 grid place-items-center bg-background/40 text-foreground',

@@ -6,7 +6,7 @@ export const workspaceSwitcherVariants = tv({
     trigger: [
       'group flex h-11 max-w-full cursor-pointer items-center gap-2.5 rounded-[10px] border border-border bg-card pe-2.5 ps-1.5 text-start transition-colors',
       'hover:bg-secondary/50 data-popup-open:bg-secondary/50 motion-reduce:transition-none',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
     triggerText: 'flex min-w-0 flex-col leading-tight',
     triggerName: 'truncate text-[13px] font-semibold text-foreground',

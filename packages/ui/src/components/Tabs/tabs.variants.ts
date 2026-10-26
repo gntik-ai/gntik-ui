@@ -7,7 +7,7 @@ export const tabsVariants = tv({
     tab: [
       'group relative z-raised inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none',
       'text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
       'data-disabled:pointer-events-none data-disabled:opacity-50',
     ],
     icon: 'shrink-0 transition-colors group-data-active:text-primary-text',
@@ -17,8 +17,7 @@ export const tabsVariants = tv({
     ],
     indicator:
       'absolute top-0 start-0 transition-[translate,width,height] duration-200 ease-out motion-reduce:transition-none',
-    panel:
-      'text-[13px] text-foreground outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-sm',
+    panel: 'text-[13px] text-foreground outline-none focus-ring rounded-sm',
   },
   variants: {
     variant: {

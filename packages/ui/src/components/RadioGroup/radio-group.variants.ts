@@ -7,7 +7,7 @@ export const radioGroupVariants = tv({
       'inline-flex size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-background',
       'transition-colors motion-reduce:transition-none hover:border-muted-foreground/50',
       'data-checked:border-primary data-checked:bg-primary data-invalid:border-destructive/70',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
       'data-disabled:cursor-not-allowed data-disabled:opacity-50',
       'forced-colors:data-checked:border-[Highlight] forced-colors:data-checked:bg-[Highlight] forced-colors:data-disabled:border-[GrayText] forced-colors:data-disabled:data-checked:bg-[Canvas]',
     ],

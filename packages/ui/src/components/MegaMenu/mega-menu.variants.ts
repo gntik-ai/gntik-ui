@@ -7,7 +7,7 @@ export const megaMenuVariants = tv({
     trigger: [
       'group inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg px-3 text-[13px] font-medium text-muted-foreground transition-colors select-none',
       'hover:bg-accent/45 hover:text-foreground data-popup-open:bg-accent/45 data-popup-open:text-foreground motion-reduce:transition-none',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
       'data-current:font-semibold data-current:text-foreground aria-[current=page]:bg-accent aria-[current=page]:font-semibold aria-[current=page]:text-accent-foreground',
     ],
     chevron: 'transition-transform duration-200 group-data-popup-open:rotate-180 motion-reduce:transition-none',
@@ -32,7 +32,7 @@ export const megaMenuVariants = tv({
     links: 'flex flex-col gap-0.5',
     link: [
       'flex min-w-0 items-start gap-3 rounded-lg px-2.5 py-2 text-start no-underline transition-colors motion-reduce:transition-none',
-      'hover:bg-secondary/60 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+      'hover:bg-secondary/60 focus-ring-inset',
       'data-active:bg-primary/10',
     ],
     linkIcon:

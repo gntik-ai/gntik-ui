@@ -10,7 +10,7 @@ export const blockquoteVariants = tv({
     source: 'flex min-w-0 flex-col',
     name: 'truncate font-semibold text-foreground not-italic',
     detail: 'truncate',
-    link: 'underline underline-offset-2 hover:text-foreground focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+    link: 'underline underline-offset-2 hover:text-foreground focus-visible:rounded-sm focus-ring',
   },
   variants: {
     variant: {

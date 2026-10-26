@@ -20,9 +20,9 @@ export const jsonViewerVariants = tv({
     action: [
       'inline-flex h-7 shrink-0 cursor-pointer items-center gap-1.5 rounded-md px-2 font-mono text-[11px] text-muted-foreground transition-colors motion-reduce:transition-none',
       'hover:bg-secondary hover:text-foreground disabled:pointer-events-none disabled:opacity-50',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
-    body: 'overflow-auto p-1.5 font-mono text-[12.5px] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus-ring',
+    body: 'overflow-auto p-1.5 font-mono text-[12.5px] focus-ring-inset',
     text: 'm-0 whitespace-pre-wrap break-words text-foreground',
     truncated: 'px-3 pt-2',
     emptyValue: 'px-1.5 py-2 text-muted-foreground',

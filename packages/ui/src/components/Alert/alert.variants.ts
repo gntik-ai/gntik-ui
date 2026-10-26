@@ -14,7 +14,7 @@ export const alertVariants = tv({
     actions: 'mt-3 flex flex-wrap items-center gap-x-5 gap-y-2',
     dismiss: [
       '-mt-0.5 -me-1 grid size-6 shrink-0 cursor-pointer place-items-center rounded-md transition-colors motion-reduce:transition-none hover:bg-foreground/10',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring',
+      'focus-ring',
     ],
   },
   variants: {
