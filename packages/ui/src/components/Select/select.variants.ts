@@ -12,7 +12,7 @@ export const listboxPopup = [
 export const listboxItem = [
   'flex cursor-default items-center justify-between gap-2 rounded-[6px] px-2.5 py-1.5 text-[13px] text-foreground outline-none select-none',
   'data-highlighted:bg-secondary/70 data-selected:bg-primary/12 data-selected:data-highlighted:bg-primary/16 forced-colors:data-highlighted:bg-[Highlight] forced-colors:data-highlighted:text-[HighlightText] forced-colors:data-highlighted:[&_*]:text-[HighlightText] forced-colors:data-selected:bg-[Highlight] forced-colors:data-selected:text-[HighlightText] forced-colors:data-selected:[&_*]:text-[HighlightText] forced-colors:data-selected:data-highlighted:bg-[Highlight] forced-colors:data-selected:data-highlighted:text-[HighlightText] forced-colors:data-selected:data-highlighted:[&_*]:text-[HighlightText]',
-  'data-disabled:cursor-not-allowed data-disabled:opacity-45',
+  'data-disabled:cursor-disabled data-disabled:opacity-45',
 ];
 
 export const selectVariants = tv({
@@ -22,7 +22,7 @@ export const selectVariants = tv({
       'group flex w-full items-center justify-between gap-2 rounded-md border border-border bg-background text-foreground shadow-sm transition-colors select-none',
       'hover:border-muted-foreground/40 data-popup-open:border-primary/60 data-popup-open:ring-2 data-popup-open:ring-ring/25',
       'focus-ring',
-      'data-disabled:cursor-not-allowed data-disabled:opacity-50',
+      'data-disabled:cursor-disabled data-disabled:opacity-50',
     ],
     value: 'flex min-w-0 items-center gap-2 truncate data-placeholder:text-muted-foreground',
     icon: 'flex shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none group-data-popup-open:rotate-180',

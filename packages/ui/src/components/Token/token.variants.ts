@@ -9,10 +9,10 @@ export const tokenVariants = tv({
     leading: 'inline-flex shrink-0 items-center [&_svg]:shrink-0',
     label: 'min-w-0 truncate font-medium',
     remove: [
-      'grid shrink-0 cursor-pointer place-items-center rounded text-muted-foreground transition-colors motion-reduce:transition-none',
+      'grid shrink-0 cursor-interactive place-items-center rounded text-muted-foreground transition-colors motion-reduce:transition-none',
       'hover:bg-secondary hover:text-foreground',
       'focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring',
-      'disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-muted-foreground',
+      'disabled:cursor-disabled disabled:hover:bg-transparent disabled:hover:text-muted-foreground',
     ],
   },
   variants: {

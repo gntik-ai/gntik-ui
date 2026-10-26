@@ -18,7 +18,7 @@ export const jsonViewerVariants = tv({
     path: 'min-w-0 flex-1 truncate font-mono text-[11.5px] text-muted-foreground',
     pathValue: 'text-foreground',
     action: [
-      'inline-flex h-7 shrink-0 cursor-pointer items-center gap-1.5 rounded-md px-2 font-mono text-[11px] text-muted-foreground transition-colors motion-reduce:transition-none',
+      'inline-flex h-7 shrink-0 cursor-interactive items-center gap-1.5 rounded-md px-2 font-mono text-[11px] text-muted-foreground transition-colors motion-reduce:transition-none',
       'hover:bg-secondary hover:text-foreground disabled:pointer-events-none disabled:opacity-50',
       'focus-ring',
     ],

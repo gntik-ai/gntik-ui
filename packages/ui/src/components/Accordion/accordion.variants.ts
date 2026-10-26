@@ -6,8 +6,8 @@ export const accordionVariants = tv({
     item: 'data-disabled:opacity-60',
     header: 'm-0',
     trigger: [
-      'group flex w-full cursor-pointer items-center gap-3 py-3.5 text-start text-[13px] font-medium text-foreground transition-colors',
-      'hover:text-foreground/80 data-disabled:cursor-not-allowed',
+      'group flex w-full cursor-interactive items-center gap-3 py-3.5 text-start text-[13px] font-medium text-foreground transition-colors',
+      'hover:text-foreground/80 data-disabled:cursor-disabled',
       'focus-ring rounded-sm',
     ],
     chevron: [

@@ -4,7 +4,7 @@ import { listboxItem, listboxPopup } from '../Select/select.variants';
 export const workspaceSwitcherVariants = tv({
   slots: {
     trigger: [
-      'group flex h-11 max-w-full cursor-pointer items-center gap-2.5 rounded-[10px] border border-border bg-card pe-2.5 ps-1.5 text-start transition-colors',
+      'group flex h-11 max-w-full cursor-interactive items-center gap-2.5 rounded-[10px] border border-border bg-card pe-2.5 ps-1.5 text-start transition-colors',
       'hover:bg-secondary/50 data-popup-open:bg-secondary/50 motion-reduce:transition-none',
       'focus-ring',
     ],

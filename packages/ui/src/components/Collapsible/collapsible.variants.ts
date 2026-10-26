@@ -4,9 +4,9 @@ export const collapsibleVariants = tv({
   slots: {
     root: 'flex flex-col',
     trigger: [
-      'group inline-flex cursor-pointer items-center gap-2 rounded-md text-[13px] font-medium text-foreground transition-colors',
+      'group inline-flex cursor-interactive items-center gap-2 rounded-md text-[13px] font-medium text-foreground transition-colors',
       'focus-ring',
-      'data-disabled:cursor-not-allowed data-disabled:opacity-50',
+      'data-disabled:cursor-disabled data-disabled:opacity-50',
     ],
     chevron: [
       'shrink-0 text-muted-foreground transition-transform duration-200 motion-reduce:transition-none',

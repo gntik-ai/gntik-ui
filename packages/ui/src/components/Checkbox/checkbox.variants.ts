@@ -3,17 +3,17 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const checkboxVariants = tv({
   slots: {
     root: [
-      'inline-flex size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-[5px] border border-border bg-background text-primary-foreground',
+      'inline-flex size-[18px] shrink-0 cursor-interactive items-center justify-center rounded-[5px] border border-border bg-background text-primary-foreground',
       'transition-colors motion-reduce:transition-none hover:border-muted-foreground/50',
       'data-checked:border-primary data-checked:bg-primary data-indeterminate:border-primary data-indeterminate:bg-primary',
       'data-invalid:border-destructive/70',
       'focus-ring',
-      'data-disabled:cursor-not-allowed data-disabled:opacity-50',
+      'data-disabled:cursor-disabled data-disabled:opacity-50',
     ],
     indicator: 'flex items-center justify-center data-unchecked:hidden',
     item: 'grid grid-cols-[auto_1fr] items-start gap-x-3 gap-y-0.5',
     label:
-      'col-span-2 grid cursor-pointer grid-cols-subgrid items-start has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-70',
+      'col-span-2 grid cursor-interactive grid-cols-subgrid items-start has-[[data-disabled]]:cursor-disabled has-[[data-disabled]]:opacity-70',
     labelText: 'text-[13px] leading-5 font-medium text-foreground select-none',
     description: 'col-start-2 text-[12.5px] leading-5 text-muted-foreground text-pretty',
     group: 'flex flex-col',

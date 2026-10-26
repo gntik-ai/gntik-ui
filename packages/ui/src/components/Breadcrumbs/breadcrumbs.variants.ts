@@ -18,7 +18,7 @@ export const breadcrumbsVariants = tv({
     current: 'truncate font-semibold text-foreground',
     separator: 'inline-flex shrink-0 select-none text-muted-foreground/40',
     ellipsis: [
-      'grid h-7 cursor-pointer place-items-center rounded-md px-1.5 text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground',
+      'grid h-7 cursor-interactive place-items-center rounded-md px-1.5 text-muted-foreground transition-colors hover:bg-secondary/60 hover:text-foreground',
       focusRing,
     ],
   },

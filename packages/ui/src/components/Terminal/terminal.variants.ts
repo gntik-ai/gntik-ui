@@ -16,8 +16,8 @@ export const terminalVariants = tv({
       'w-32 min-w-0 bg-transparent font-mono text-[11.5px] text-foreground outline-none placeholder:text-muted-foreground',
     matches: 'shrink-0 font-mono text-[10.5px] text-muted-foreground tabular-nums',
     button: [
-      'inline-flex h-7 min-w-7 cursor-pointer items-center justify-center gap-1.5 rounded-md px-1.5 font-mono text-[11px] text-muted-foreground transition-colors motion-reduce:transition-none',
-      'hover:bg-secondary hover:text-foreground aria-pressed:bg-secondary aria-pressed:text-foreground disabled:cursor-not-allowed disabled:opacity-50',
+      'inline-flex h-7 min-w-7 cursor-interactive items-center justify-center gap-1.5 rounded-md px-1.5 font-mono text-[11px] text-muted-foreground transition-colors motion-reduce:transition-none',
+      'hover:bg-secondary hover:text-foreground aria-pressed:bg-secondary aria-pressed:text-foreground disabled:cursor-disabled disabled:opacity-50',
       focus,
     ],
     copied: 'text-primary-text hover:text-primary-text',

@@ -7,13 +7,13 @@ export const paginationVariants = tv({
     root: 'flex items-center',
     list: 'flex items-center gap-1.5',
     page: [
-      'grid cursor-pointer place-items-center rounded-lg font-medium tabular-nums transition-colors',
+      'grid cursor-interactive place-items-center rounded-lg font-medium tabular-nums transition-colors',
       'text-muted-foreground hover:bg-secondary hover:text-foreground',
       'aria-[current=page]:bg-primary aria-[current=page]:font-semibold aria-[current=page]:text-primary-foreground aria-[current=page]:hover:bg-primary/90',
       focusRing,
     ],
     arrow: [
-      'grid cursor-pointer place-items-center rounded-lg border border-border bg-card text-muted-foreground transition-colors',
+      'grid cursor-interactive place-items-center rounded-lg border border-border bg-card text-muted-foreground transition-colors',
       'hover:border-ring/50 hover:text-foreground disabled:pointer-events-none disabled:opacity-40',
       focusRing,
     ],

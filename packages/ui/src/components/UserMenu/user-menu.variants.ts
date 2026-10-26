@@ -3,7 +3,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const userMenuVariants = tv({
   slots: {
     trigger: [
-      'inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-lg transition-colors outline-none',
+      'inline-flex shrink-0 cursor-interactive items-center gap-2 rounded-lg transition-colors outline-none',
       'focus-ring',
       'data-popup-open:ring-2 data-popup-open:ring-ring/40',
     ],

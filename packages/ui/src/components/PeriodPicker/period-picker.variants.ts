@@ -8,7 +8,7 @@ export const periodPickerVariants = tv({
     panel: 'flex flex-col sm:flex-row',
     presets: 'flex flex-wrap gap-1 border-b border-border p-2 sm:w-36 sm:flex-col sm:border-e sm:border-b-0',
     preset:
-      'rounded-md px-2.5 py-1.5 text-start text-[12.5px] text-foreground hover:bg-secondary/70 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring aria-disabled:cursor-not-allowed aria-disabled:text-muted-foreground',
+      'rounded-md px-2.5 py-1.5 text-start text-[12.5px] text-foreground hover:bg-secondary/70 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring aria-disabled:cursor-disabled aria-disabled:text-muted-foreground',
   },
 });
 

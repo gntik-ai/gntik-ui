@@ -6,7 +6,7 @@ export const powerSearchVariants = tv({
     root: [
       'flex w-full min-w-0 cursor-text flex-wrap items-center gap-1.5 rounded-md border border-border bg-background px-2 py-1.5 text-foreground shadow-sm transition-colors motion-reduce:transition-none',
       'has-[input:focus-visible]:border-primary/60 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-focus-ring',
-      'data-disabled:cursor-not-allowed data-disabled:bg-secondary/50',
+      'data-disabled:cursor-disabled data-disabled:bg-secondary/50',
     ],
     icon: 'ms-1 shrink-0 text-muted-foreground',
     terms: 'contents',
@@ -23,7 +23,7 @@ export const powerSearchVariants = tv({
     draft:
       'inline-flex h-6 items-center gap-1 rounded border border-dashed border-primary/50 px-1.5 font-mono text-[11.5px] text-primary-text',
     input:
-      'h-6 min-w-32 flex-1 bg-transparent px-1 text-[13px] text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed',
+      'h-6 min-w-32 flex-1 bg-transparent px-1 text-[13px] text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-disabled',
     clear: [
       'ms-auto grid size-6 shrink-0 place-items-center rounded text-muted-foreground transition-colors hover:text-foreground',
       'focus-visible:outline-2 focus-visible:outline-focus-ring',

@@ -3,14 +3,14 @@ import { tv, type VariantProps } from '../../utils/tv';
 /** One recessed box per character, mono digits, primary border while focused, destructive when invalid. */
 export const otpInputVariants = tv({
   slots: {
-    root: 'group/otp flex w-fit items-center gap-2 data-disabled:cursor-not-allowed',
+    root: 'group/otp flex w-fit items-center gap-2 data-disabled:cursor-disabled',
     slot: [
       'm-0 rounded-md border border-border bg-background p-0 text-center font-mono font-medium text-foreground shadow-sm caret-primary uppercase',
       'transition-colors motion-reduce:transition-none',
       'focus-visible:border-primary/60 focus-ring focus:outline-none',
       'data-filled:border-muted-foreground/40',
       'data-invalid:border-destructive/70 group-data-invalid/otp:border-destructive/70',
-      'disabled:cursor-not-allowed disabled:bg-secondary/50 disabled:text-muted-foreground',
+      'disabled:cursor-disabled disabled:bg-secondary/50 disabled:text-muted-foreground',
       'read-only:bg-secondary/40',
     ],
     separator: 'h-px w-2.5 shrink-0 rounded-full bg-muted-foreground/50',

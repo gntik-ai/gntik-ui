@@ -17,7 +17,7 @@ export const notificationsPopoverVariants = tv({
       'flex w-full gap-2.5 rounded-[7px] px-2.5 py-2 text-start',
       'focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-focus-ring',
     ],
-    rowInteractive: 'cursor-pointer transition-colors hover:bg-secondary/60 motion-reduce:transition-none',
+    rowInteractive: 'cursor-interactive transition-colors hover:bg-secondary/60 motion-reduce:transition-none',
     dot: 'mt-1.5 size-[7px] shrink-0 rounded-full',
     body: 'min-w-0 flex-1',
     itemTitle: 'block text-[12.5px] leading-snug text-foreground',

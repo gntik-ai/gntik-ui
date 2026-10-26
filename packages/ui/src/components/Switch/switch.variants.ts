@@ -3,11 +3,11 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const switchVariants = tv({
   slots: {
     root: [
-      'relative inline-flex shrink-0 cursor-pointer items-center rounded-full bg-secondary transition-colors',
+      'relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors',
       'data-checked:bg-primary',
       'forced-colors:bg-[Canvas] forced-colors:outline forced-colors:-outline-offset-1 forced-colors:outline-[ButtonBorder] forced-colors:data-checked:bg-[Highlight] forced-colors:data-disabled:outline-[GrayText]',
       'focus-ring',
-      'data-disabled:cursor-not-allowed data-disabled:opacity-50',
+      'data-disabled:cursor-disabled data-disabled:opacity-50',
     ],
     thumb:
       'pointer-events-none ms-[2px] grid place-items-center rounded-full bg-background shadow-sm transition-transform motion-reduce:transition-none forced-colors:bg-[ButtonText] forced-colors:data-checked:bg-[HighlightText] forced-colors:data-disabled:bg-[GrayText]',

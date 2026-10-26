@@ -3,7 +3,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const infoTipVariants = tv({
   slots: {
     trigger: [
-      'inline-grid shrink-0 cursor-pointer place-items-center rounded-full align-middle text-muted-foreground transition-colors motion-reduce:transition-none',
+      'inline-grid shrink-0 cursor-interactive place-items-center rounded-full align-middle text-muted-foreground transition-colors motion-reduce:transition-none',
       'hover:text-foreground data-popup-open:text-foreground',
       'focus-ring',
     ],

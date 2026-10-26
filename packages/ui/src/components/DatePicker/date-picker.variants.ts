@@ -8,11 +8,11 @@ export const datePickerVariants = tv({
   slots: {
     root: 'relative flex w-full min-w-0 items-center',
     input: [
-      'w-full min-w-0 cursor-pointer truncate rounded-md border border-border bg-background text-start text-foreground caret-transparent shadow-sm outline-none',
+      'w-full min-w-0 cursor-interactive truncate rounded-md border border-border bg-background text-start text-foreground caret-transparent shadow-sm outline-none',
       'transition-colors motion-reduce:transition-none placeholder:text-muted-foreground hover:border-muted-foreground/40',
       'focus-visible:border-primary/60 focus-ring',
       'data-popup-open:border-primary/60 data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
-      'disabled:cursor-not-allowed disabled:bg-secondary/50 disabled:text-muted-foreground disabled:hover:border-border',
+      'disabled:cursor-disabled disabled:bg-secondary/50 disabled:text-muted-foreground disabled:hover:border-border',
     ],
     icon: 'pointer-events-none absolute shrink-0 text-muted-foreground',
     chevron: 'pointer-events-none absolute shrink-0 text-muted-foreground',
