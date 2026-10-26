@@ -49,9 +49,11 @@ import { useControllable, useTableViews } from './use-table-views';
 import { useMultipleSelection } from './use-multiple-selection';
 import { useVirtualRows } from './use-virtual-rows';
 import { ViewSwitcher, type DataTableViewState } from './views';
+import { ExportMenu } from './export-menu';
+import { useTableExport } from './use-table-export';
 
 export type { DataTableLabels } from './labels';
-export type { DataTableProps } from './data-table-props';
+export type { DataTableProps, DataTableCsvExportOptions, DataTableExportRequest } from './data-table-props';
 
 const defaultRowId = (row: unknown): string => {
   const id = (row as { id?: unknown }).id;
@@ -72,7 +74,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   columns = DEPLOYMENT_COLUMNS as unknown as ReadonlyArray<DataTableColumn<T>>,
   getRowId = defaultRowId,
   getRowLabel,
-  caption = 'Deployments',
+  caption: captionProp,
   showCaption = false,
   selectable: selectableProp = true,
   selectionMode,
@@ -148,9 +150,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   filters,
   onFiltersChange,
   toolbar,
+  csvExport = false,
+  onExport,
   className,
   labels,
 }: DataTableProps<T>) {
+  const caption = captionProp ?? 'Deployments';
   const { t, formatNumber } = useI18n();
   const singleMode = selectionMode === 'single';
   const serverMode = paginationMode === 'server';
@@ -367,8 +372,31 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const rowHeight = rowHeightProp ?? ROW_HEIGHT[density];
   const virtual = useVirtualRows({ enabled: virtualOn, count: items, rowHeight, tableRef, viewportHeight: 512 });
 
+  const exportSelectedIds = singleMode
+    ? singleSelection.selectedId == null
+      ? []
+      : [singleSelection.selectedId]
+    : selectable
+      ? selectedList
+      : [];
+  const exportSelectedCount = singleMode ? exportSelectedIds.length : selectable ? selectedCount : 0;
+  const exportApi = useTableExport({
+    csvExport,
+    onExport,
+    serverMode,
+    caption: captionProp ?? '',
+    columns: visibleColumns,
+    sortedRows,
+    pageRows,
+    selectedIds: exportSelectedIds,
+    getRowId,
+    sort,
+    filters,
+    labels,
+  });
   const hasSelection = selectable && selectedCount > 0 && (selectionSummary || bulkActions != null);
-  const showToolbar = toolbar != null || showDensityToggle || showColumnMenu || showViews || hasSelection;
+  const showToolbar =
+    toolbar != null || showDensityToggle || showColumnMenu || showViews || hasSelection || exportApi.enabled;
   const anyEditable = onCellEdit != null && columns.some((c) => c.editable);
   const showSelectionStrip =
     selectable &&
@@ -385,7 +413,10 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const selectionCount = labels?.selectionCount ? labels.selectionCount(selectedCount) : <>{selectedCount} selected</>;
 
   return (
-    <div className={cn('overflow-hidden rounded-xl border border-border bg-card shadow-sm', className)}>
+    <div
+      className={cn('overflow-hidden rounded-xl border border-border bg-card shadow-sm', className)}
+      onKeyDown={exportApi.enabled ? exportApi.onCopyKeyDown : undefined}
+    >
       <div
         className={cn(
           !showToolbar && 'sr-only',
@@ -421,6 +452,17 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           )}
         </div>
         <div className="flex items-center gap-2">
+          {exportApi.enabled && (
+            <ExportMenu
+              count={rowCount ?? rows.length}
+              selectedCount={serverMode ? exportSelectedCount : exportApi.selectedRowCount}
+              scopes={exportApi.scopes}
+              busy={exportApi.busy}
+              onExport={exportApi.exportRows}
+              onCopy={exportApi.copySelected}
+              labels={labels}
+            />
+          )}
           {showViews && (
             <ViewSwitcher
               labels={labels}
@@ -462,6 +504,11 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
             clear();
           }}
         />
+      )}
+      {exportApi.enabled && (
+        <span role="status" aria-live="polite" className="sr-only">
+          {exportApi.announcement}
+        </span>
       )}
       {anyEditable && (
         <span id={editHintId} className="sr-only">

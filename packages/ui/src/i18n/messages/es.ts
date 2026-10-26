@@ -1,3 +1,4 @@
+import { tableMenuEs } from './table-menu-messages';
 import { layersEs } from './layer-messages';
 import { catalogPreviewEs } from './catalog-preview-messages';
 import { typographyEs } from './typography-messages';
@@ -7,6 +8,7 @@ import { cspEs } from './csp-messages';
 import type { Messages } from './en';
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  ...tableMenuEs,
   ...layersEs,
   ...cspEs,
   ...catalogPreviewEs,
@@ -467,12 +469,6 @@ export const es: Messages = {
   'table.actions': 'Acciones',
   'table.rowActions': 'Acciones de {label}',
   'table.emptyDescription': 'Nada coincide con los filtros actuales.',
-  'table.columns': 'Columnas',
-  'table.visibleColumns': 'Columnas visibles',
-  'table.density': 'Densidad de filas',
-  'table.comfortable': 'Filas holgadas',
-  'table.compact': 'Filas compactas',
-  'table.editRow': 'Editar {label}',
   'filters.label': 'Filtros',
   'filters.savedView': 'Vista guardada',
   'filters.savedViews': 'Vistas guardadas',

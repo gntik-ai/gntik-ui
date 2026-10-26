@@ -6,7 +6,24 @@ import type { DataTableCellEditHandler } from './editable-cell';
 import type { DataTableLabels } from './labels';
 import type { DataTableView } from './views';
 
+export interface DataTableCsvExportOptions {
+  fileName?: string;
+  scopes?: Array<'rows' | 'page' | 'selected'>;
+}
+
+export interface DataTableExportRequest {
+  scope: 'rows' | 'page' | 'selected';
+  columns: string[];
+  selectedIds: string[];
+  sort: SortState | null;
+  filters: unknown;
+}
+
 interface DataTableCommonProps<T> {
+  /** Opt-in CSV menu. Values are raw, with spreadsheet formula protection. */
+  csvExport?: boolean | DataTableCsvExportOptions;
+  /** Delegate exports to the consumer; required for server pagination. */
+  onExport?: (request: DataTableExportRequest) => void | Promise<void>;
   /** Per-key overrides; omitted keys keep existing defaults and provider translations. */
   labels?: Partial<DataTableLabels>;
   rows?: readonly T[];
