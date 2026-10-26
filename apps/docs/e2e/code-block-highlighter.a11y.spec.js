@@ -33,8 +33,10 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     for (const region of [yaml, python, go, sql, toml]) {
       await expect(region.locator('code span[style]:not([aria-hidden="true"])')).toHaveCount(0);
     }
-    // The copyable example must use the optional public entry, not a repository-relative path.
-    await expect(section).toContainText("from '@gntik-ai/ui/code-highlight-shiki'");
+    // Source panels start collapsed; open this example before checking its copyable public import.
+    const example = section.getByText('Code Block Highlighter', { exact: true }).locator('..');
+    await example.getByRole('button', { name: 'tsx', exact: true }).click();
+    await expect(example).toContainText("from '@gntik-ai/ui/code-highlight-shiki'");
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
     const violations = await section.evaluate(async (element) => {
