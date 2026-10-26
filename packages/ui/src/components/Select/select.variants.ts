@@ -1,3 +1,4 @@
+import { fieldControlVariants, fieldPickerHover } from '../../field-variant/field-control-variants';
 import { tv, type VariantProps } from '../../utils/tv';
 
 /** Shared popup surface for Select and Combobox (portal → positioner → popup). */
@@ -42,6 +43,24 @@ export const selectVariants = tv({
     ],
   },
   variants: {
+    variant: {
+      outline: {},
+      filled: {
+        trigger: [
+          fieldControlVariants.filled,
+          fieldPickerHover,
+          'focus-visible:border-primary/60 data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
+        ],
+      },
+      ghost: {
+        trigger: [
+          fieldControlVariants.ghost,
+          fieldPickerHover,
+          'focus-visible:border-primary/60 data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
+        ],
+      },
+    },
+
     size: {
       /** Follows `data-density` (comfortable = md). */
       auto: { trigger: 'h-control pe-2.5 ps-field text-[13px]' },
@@ -50,7 +69,7 @@ export const selectVariants = tv({
       lg: { trigger: 'h-11 pe-3 ps-3.5 text-[14.5px] rounded-lg' },
     },
   },
-  defaultVariants: { size: 'auto' },
+  defaultVariants: { variant: 'outline', size: 'auto' },
 });
 
 export type SelectVariantProps = VariantProps<typeof selectVariants>;

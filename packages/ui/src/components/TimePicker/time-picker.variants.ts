@@ -1,3 +1,4 @@
+import { fieldControlVariants } from '../../field-variant/field-control-variants';
 import { tv, type VariantProps } from '../../utils/tv';
 
 /**
@@ -22,6 +23,12 @@ export const timePickerVariants = tv({
     separator: 'px-px text-muted-foreground select-none',
   },
   variants: {
+    variant: {
+      outline: {},
+      filled: { root: fieldControlVariants.filled },
+      ghost: { root: fieldControlVariants.ghost },
+    },
+
     size: {
       /** Follows `data-density` (comfortable = md). */
       auto: { root: 'h-control gap-tight px-field text-[13px]' },
@@ -29,7 +36,7 @@ export const timePickerVariants = tv({
       md: { root: 'h-9 gap-2.5 px-3 text-[13px]' },
     },
   },
-  defaultVariants: { size: 'auto' },
+  defaultVariants: { variant: 'outline', size: 'auto' },
 });
 
 export type TimePickerVariantProps = VariantProps<typeof timePickerVariants>;

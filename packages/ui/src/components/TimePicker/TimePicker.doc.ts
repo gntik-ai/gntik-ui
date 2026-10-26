@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'beta',
   description:
-    'Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`"HH:mm"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name.',
+    'Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`"HH:mm"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.',
   primitive: '@base-ui/react/field (control) + spinbutton segments',
   pattern: 'group of spinbuttons (time field)',
   keyboard: [

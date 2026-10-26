@@ -1,3 +1,4 @@
+import { fieldControlVariants, fieldPickerHover } from '../../field-variant/field-control-variants';
 import { tv, type VariantProps } from '../../utils/tv';
 
 /**
@@ -29,6 +30,14 @@ export const datePickerVariants = tv({
     ],
   },
   variants: {
+    variant: {
+      outline: {},
+      filled: { input: [fieldControlVariants.filled, fieldPickerHover] },
+      ghost: {
+        input: [fieldControlVariants.ghost, fieldPickerHover],
+      },
+    },
+
     size: {
       /** Follows `data-density` (comfortable = md). */
       auto: { input: 'h-control pe-9 ps-9 text-[13px]', icon: 'start-3', chevron: 'end-3' },
@@ -36,7 +45,7 @@ export const datePickerVariants = tv({
       md: { input: 'h-9 pe-9 ps-9 text-[13px]', icon: 'start-3', chevron: 'end-3' },
     },
   },
-  defaultVariants: { size: 'auto' },
+  defaultVariants: { variant: 'outline', size: 'auto' },
 });
 
 export type DatePickerVariantProps = VariantProps<typeof datePickerVariants>;

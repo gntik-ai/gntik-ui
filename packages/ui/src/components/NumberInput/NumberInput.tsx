@@ -1,6 +1,7 @@
 import { NumberField } from '@base-ui/react/number-field';
 import { Minus, MoveHorizontal, Plus } from 'lucide-react';
 import { useId, type KeyboardEvent, type ReactNode, type Ref } from 'react';
+import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
 import { useI18n } from '../../i18n/I18nProvider';
 import { NUMBER_INPUT_ICON_SIZE, numberInputVariants, type NumberInputVariantProps } from './number-input.variants';
@@ -49,6 +50,7 @@ function onPageKey(event: KeyboardEvent<HTMLInputElement>) {
  */
 export function NumberInput({
   size = 'auto',
+  variant,
   align,
   className,
   inputClassName,
@@ -66,12 +68,13 @@ export function NumberInput({
   'aria-describedby': ariaDescribedBy,
   ...props
 }: NumberInputProps) {
+  const fieldVariant = useFieldVariant(variant);
   const { t } = useI18n();
   const decrementLabel = decrementLabelProp ?? t('numberInput.decrease');
   const incrementLabel = incrementLabelProp ?? t('numberInput.increase');
   const autoId = useId();
   const inputId = id ?? (scrubLabel != null ? autoId : undefined);
-  const s = numberInputVariants({ size, align });
+  const s = numberInputVariants({ variant: fieldVariant, size, align });
   const px = NUMBER_INPUT_ICON_SIZE[size];
   return (
     <NumberField.Root id={inputId} className={cn(s.root(), className)} {...props}>

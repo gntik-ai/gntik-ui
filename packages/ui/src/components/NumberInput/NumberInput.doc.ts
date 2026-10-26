@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'beta',
   description:
-    'Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes sm and md like Input; invalid, disabled and read-only states; works inside Field.',
+    'Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes sm and md like Input; invalid, disabled and read-only states; works inside Field. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.',
   primitive: '@base-ui/react/number-field',
   pattern: 'spinbutton-like textbox (number field)',
   keyboard: [

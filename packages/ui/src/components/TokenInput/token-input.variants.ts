@@ -1,3 +1,4 @@
+import { fieldControlVariants } from '../../field-variant/field-control-variants';
 import { tv, type VariantProps } from '../../utils/tv';
 
 /** The Input wrapper look, wrapping: chips first, then the free-text input. */
@@ -26,12 +27,18 @@ export const tokenInputVariants = tv({
     ],
   },
   variants: {
+    variant: {
+      outline: {},
+      filled: { root: [fieldControlVariants.filled, 'has-[input[aria-invalid=true]]:border-destructive/70'] },
+      ghost: { root: [fieldControlVariants.ghost, 'has-[input[aria-invalid=true]]:border-destructive/70'] },
+    },
+
     size: {
       sm: { root: 'min-h-8 px-1.5 py-1', input: 'h-6 px-1 text-[12px]', chip: 'h-5.5 text-[11.5px]' },
       md: { root: 'min-h-9 px-2 py-1.5', input: 'h-6 px-1 text-[13px]', chip: 'h-6 text-[12px]' },
     },
   },
-  defaultVariants: { size: 'md' },
+  defaultVariants: { variant: 'outline', size: 'md' },
 });
 
 export type TokenInputVariantProps = VariantProps<typeof tokenInputVariants>;

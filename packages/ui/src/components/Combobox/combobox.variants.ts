@@ -1,3 +1,4 @@
+import { fieldControlVariants } from '../../field-variant/field-control-variants';
 import { tv, type VariantProps } from '../../utils/tv';
 import { listboxItem, listboxPopup } from '../Select/select.variants';
 
@@ -40,6 +41,30 @@ export const comboboxVariants = tv({
     specialIcon: 'shrink-0 text-primary-text',
   },
   variants: {
+    variant: {
+      outline: {},
+      filled: {
+        inputGroup: [
+          fieldControlVariants.filled,
+          'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70',
+        ],
+        chipsGroup: [
+          fieldControlVariants.filled,
+          'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70',
+        ],
+      },
+      ghost: {
+        inputGroup: [
+          fieldControlVariants.ghost,
+          'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70',
+        ],
+        chipsGroup: [
+          fieldControlVariants.ghost,
+          'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70',
+        ],
+      },
+    },
+
     size: {
       /** Follows `data-density` (comfortable = md). */
       auto: { input: 'h-control text-[13px]' },
@@ -47,7 +72,7 @@ export const comboboxVariants = tv({
       md: { input: 'h-9 text-[13px]' },
     },
   },
-  defaultVariants: { size: 'auto' },
+  defaultVariants: { variant: 'outline', size: 'auto' },
 });
 
 export type ComboboxVariantProps = VariantProps<typeof comboboxVariants>;

@@ -85,6 +85,7 @@ export function DatePicker({
   onClear,
   invalid,
   size,
+  variant,
   className,
   locale: localeProp,
   weekStartsOn,
@@ -215,6 +216,7 @@ export function DatePicker({
         onClear={clear}
         invalid={invalid}
         size={size}
+        variant={variant}
         className={className}
         aria-label={ariaLabel}
         aria-describedby={ariaDescribedBy}

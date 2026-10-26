@@ -148,3 +148,10 @@ export * from './layouts/StackedLayout';
 export * from './layouts/StatusLayout';
 export * from './layouts/WizardLayout';
 export * from './components/PeriodPicker';
+
+export {
+  FieldVariantProvider,
+  useFieldVariant,
+  type FieldControlVariant,
+  type FieldVariantProviderProps,
+} from './field-variant';

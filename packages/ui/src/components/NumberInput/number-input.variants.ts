@@ -1,3 +1,4 @@
+import { fieldControlVariants } from '../../field-variant/field-control-variants';
 import { tv, type VariantProps } from '../../utils/tv';
 
 /**
@@ -32,6 +33,12 @@ export const numberInputVariants = tv({
     increment: 'border-s',
   },
   variants: {
+    variant: {
+      outline: {},
+      filled: { group: fieldControlVariants.filled },
+      ghost: { group: fieldControlVariants.ghost },
+    },
+
     size: {
       /** Follows `data-density` (comfortable = md). */
       auto: {
@@ -49,7 +56,7 @@ export const numberInputVariants = tv({
       end: { input: 'text-end' },
     },
   },
-  defaultVariants: { size: 'auto', align: 'start' },
+  defaultVariants: { variant: 'outline', size: 'auto', align: 'start' },
 });
 
 export type NumberInputVariantProps = VariantProps<typeof numberInputVariants>;

@@ -13,6 +13,7 @@ import {
 import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { ClearControlButton, clearChangeDetails, type ClearableProps } from '../../utils/clear-control';
+import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
 import { useAsyncOptions, type LoadOptions } from '../Combobox/useAsyncOptions';
 import { Spinner } from '../Spinner';
@@ -75,13 +76,16 @@ export interface SelectTriggerProps
 }
 
 /** The button that shows the current value and a chevron, and opens the popup. */
-export function SelectTrigger({ size, className, placeholder, children, ref, ...props }: SelectTriggerProps) {
-  const v = selectVariants({ size });
+export function SelectTrigger({ variant, size, className, placeholder, children, ref, ...props }: SelectTriggerProps) {
+  const v = selectVariants({ size, variant: useFieldVariant(variant) });
   const context = useContext(SelectTriggerContext);
   return useRender({
     ref: [ref ?? null, context?.setTrigger ?? null],
     render: (
-      <BaseSelect.Trigger className={cn(v.trigger(), className)} {...props}>
+      <BaseSelect.Trigger
+        className={(state) => cn(v.trigger(), state.readOnly && 'bg-secondary/40', className)}
+        {...props}
+      >
         <BaseSelect.Value className={v.value()} placeholder={placeholder}>
           {children}
         </BaseSelect.Value>
@@ -225,6 +229,7 @@ export function SimpleSelect<V extends string = string>({
   label,
   placeholder: placeholderProp,
   size,
+  variant,
   className,
   'aria-label': ariaLabel,
   onOpenChange,
@@ -266,6 +271,7 @@ export function SimpleSelect<V extends string = string>({
     render: (
       <SelectTrigger
         size={size}
+        variant={variant}
         className={cn(className, canClear && 'pe-14')}
         placeholder={placeholder}
         aria-label={ariaLabel}
