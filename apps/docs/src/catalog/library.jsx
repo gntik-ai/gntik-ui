@@ -18,7 +18,10 @@ const hooksSources = import.meta.glob('../../../../packages/ui/src/hooks/example
   import: 'default',
 });
 
-const docs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', { eager: true, import: 'doc' });
+const docs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', {
+  eager: true,
+  import: 'doc',
+});
 // Whole modules: helper files in examples/ (fixtures, demo routers) have no default export.
 const exampleModules = import.meta.glob('../../../../packages/ui/src/components/*/examples/*.tsx', { eager: true });
 const sources = import.meta.glob('../../../../packages/ui/src/components/*/examples/*.tsx', {
@@ -60,6 +63,7 @@ const withDefault = (modules) =>
 // Examples import from '../Name'; in a product they import from the package.
 const forProduct = (code) =>
   code
+    .replace(/from '\.\.\/\.\.\/\.\.\/code-highlight-shiki'/g, "from '@gntik-ai/ui/code-highlight-shiki'")
     .replace(/from '\.\.\/\.\.\/\.\.\/i18n(?:\/(?:I18nProvider|format|time-zone))?'/g, "from '@gntik-ai/ui'")
     .replace(/from '\.\.\/\.\.\/\.\.\/hooks\/useOs'/g, "from '@gntik-ai/ui'")
     .replace(/from '\.\.\/(\.\.\/)?[A-Za-z]+(\/[A-Za-z.]+)?'/g, "from '@gntik-ai/ui'");

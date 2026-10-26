@@ -28,7 +28,11 @@
       "default": "./dist/forms.js"
     },
     "./styles.css": "./src/styles.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./code-highlight-shiki": {
+      "types": "./dist/code-highlight-shiki.d.ts",
+      "default": "./dist/code-highlight-shiki.js"
+    }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -48,10 +52,14 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.55.0",
+    "shiki": "^3.0.0",
     "zod": "^3.25.0 || ^4.0.0"
   },
   "peerDependenciesMeta": {
     "react-hook-form": {
+      "optional": true
+    },
+    "shiki": {
       "optional": true
     },
     "zod": {
@@ -77,6 +85,7 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-hook-form": "^7.89.0",
+    "shiki": "^3.0.0",
     "tsdown": "^0.23.0",
     "typescript": "~6.0.3",
     "vitest": "^5.0.2",

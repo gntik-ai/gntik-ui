@@ -5065,7 +5065,7 @@
       "package": "@gntik-ai/ui",
       "group": "Display",
       "status": "beta",
-      "description": "Read-only code panel with a filename / language header, a copy button (\"Copied\" feedback plus a polite live announcement), optional line numbers, highlighted lines, a soft-wrap toggle and a max height. Default colouring is a minimal tokenizer for ts/tsx/js/json/bash/css that only uses contrast-safe text tokens; pass `highlight` to plug in another highlighter. Code is the inline variant for running text.",
+      "description": "Read-only code panel with optional whole-source grammars: install the optional peer with `pnpm add shiki`, then import `createShikiHighlighter` from `@gntik-ai/ui/code-highlight-shiki` and wrap blocks in `<CodeHighlighterProvider highlighter={highlighter}>`. Read-only code panel with a filename / language header, a copy button (\"Copied\" feedback plus a polite live announcement), optional line numbers, highlighted lines, a soft-wrap toggle and a max height. Default colouring is a minimal tokenizer for ts/tsx/js/json/bash/css that only uses contrast-safe text tokens; use CodeHighlighterProvider for whole-source grammars, or pass `highlight` for a per-line override. Code is the inline variant for running text. Keep the instance stable with useMemo or create it outside render. The adapter lazily loads YAML, Python, Go and SQL (yml/py/golang/postgresql aliases), using the JavaScript regex engine without WebAssembly. Other languages retain the built-in tokenizer; unavailable languages stay plain and warn once in development. Add grammars with `createShikiHighlighter({ languages: { toml: loadTomlGrammar } })`, as the live example demonstrates. Each async loader returns a Shiki LanguageInput and can also override a default grammar. Custom CodeHighlighter implementations return CodeToken[][] for the whole source or null, with optional load(language): Promise<boolean>; useCodeHighlighter reads the nearest provider. Provider tokens use tokenClass only; invalid text or line counts fall back to the built-in tokenizer. Use maxHeight for long files to keep the panel scrollable; tokenization still runs on the main thread and is memoised.",
       "files": [
         {
           "path": "packages/ui/src/components/CodeBlock/Code.tsx",
@@ -5076,8 +5076,16 @@
           "target": "components/ui/code-block/CodeBlock.tsx"
         },
         {
+          "path": "packages/ui/src/components/CodeBlock/CodeHighlighterProvider.tsx",
+          "target": "components/ui/code-block/CodeHighlighterProvider.tsx"
+        },
+        {
           "path": "packages/ui/src/components/CodeBlock/code-block.variants.ts",
           "target": "components/ui/code-block/code-block.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/CodeBlock/highlight-tokens.ts",
+          "target": "components/ui/code-block/highlight-tokens.ts"
         },
         {
           "path": "packages/ui/src/components/CodeBlock/index.ts",
