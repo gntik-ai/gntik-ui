@@ -6,7 +6,7 @@ export const textareaVariants = tv({
     'placeholder:text-muted-foreground transition-colors motion-reduce:transition-none',
     'focus-visible:border-primary/60 focus-ring',
     'data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
-    'disabled:cursor-not-allowed disabled:bg-secondary/50 disabled:text-muted-foreground',
+    'disabled:cursor-disabled disabled:bg-secondary/50 disabled:text-muted-foreground',
     'read-only:bg-secondary/40',
   ],
   variants: {

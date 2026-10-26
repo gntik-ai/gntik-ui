@@ -14,7 +14,7 @@ export const toolbarVariants = tv({
       'h-control-sm w-full min-w-[150px] rounded-md border border-border bg-background px-2.5 text-[12.5px] text-foreground transition-colors',
       'placeholder:text-muted-foreground hover:border-ring/50',
       focusRing,
-      'data-disabled:cursor-not-allowed data-disabled:opacity-50',
+      'data-disabled:cursor-disabled data-disabled:opacity-50',
     ],
     link: [
       'inline-flex h-control-sm items-center rounded-md px-1.5 text-[12.5px] font-medium text-primary-text underline-offset-4 hover:underline',

@@ -1,0 +1,11 @@
+/* ============================================================================
+   @gntik-ai/tokens · cursor.css — interactive and disabled cursor policy
+   ----------------------------------------------------------------------------
+   Theme-independent defaults shared by kit controls. Set --cursor-interactive
+   to default on :root to use the arrow for enabled controls; disabled controls
+   keep their own cursor. Kept out of brand.css, whose keys are frozen by test.
+   ============================================================================ */
+:root {
+  --cursor-interactive: pointer;
+  --cursor-disabled: not-allowed;
+}

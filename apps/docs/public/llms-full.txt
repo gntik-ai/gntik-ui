@@ -18,7 +18,7 @@ Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the br
 
 ### Button (`button`)
 
-Triggers an action. Five variants (primary, secondary, soft, ghost, destructive), three sizes, icons and a loading state. IconButton is the square, icon-only form.
+Triggers an action. Five variants (primary, secondary, soft, ghost, destructive), three sizes, icons and a loading state. IconButton is the square, icon-only form. Requires the matching tokens minor for cursor utilities: set --cursor-interactive: default on :root to use the arrow. Disabled and loading buttons keep the disabled cursor, receive pointer events, ignore activation and suppress hover styles.
 
 - Package: `@gntik-ai/ui` · export `Button` · group Actions · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Button/Button.doc.ts
@@ -35,22 +35,27 @@ Keyboard:
 | Space | Activates the button |
 | Tab | Moves focus; a loading button stays focusable. Use focus-ring, or focus-ring-inset for flush or clipped rows. These keyboard-only utilities require the tokens minor release that introduces them. |
 
-Tokens: primary, primary-foreground, card, border, secondary, destructive, primary-text, focus-ring
+Tokens: primary, primary-foreground, card, border, secondary, destructive, primary-text, focus-ring, cursor-interactive, cursor-disabled
 
 Usage:
 
 ```tsx
-import { MoreHorizontal } from '@gntik-ai/icons';
-import { Button, IconButton } from '@gntik-ai/ui';
+import type { CSSProperties } from 'react';
+import { Button } from '@gntik-ai/ui';
+import { Checkbox } from '@gntik-ai/ui';
 
-export default function ButtonStates() {
+/** Use the arrow for enabled controls; disabled and loading controls retain their cursor. */
+export default function ButtonCursorPolicy() {
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <Button size="sm">Small</Button>
-      <Button size="lg">Large</Button>
-      <Button loading>Saving</Button>
+    <div
+      data-cursor-policy="arrow"
+      style={{ '--cursor-interactive': 'default' } as CSSProperties}
+      className="flex flex-wrap items-center gap-3"
+    >
+      <Button>Small</Button>
       <Button disabled>Disabled</Button>
-      <IconButton icon={MoreHorizontal} label="More actions" />
+      <Button loading>Saving</Button>
+      <Checkbox label="Archived projects (locked)" disabled />
     </div>
   );
 }
@@ -1693,7 +1698,7 @@ import { useState } from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@gntik-ai/ui';
 import { DEPLOYMENTS, count } from '@gntik-ai/ui';
 
-const checkboxClass = 'size-4 cursor-pointer accent-primary focus-ring';
+const checkboxClass = 'size-4 cursor-interactive accent-primary focus-ring';
 
 export default function TableSelectable() {
   const [selected, setSelected] = useState<Set<number>>(new Set([2]));

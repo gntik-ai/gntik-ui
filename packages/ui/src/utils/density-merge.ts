@@ -1,11 +1,12 @@
 /**
- * Teaches tailwind-merge the density, typography and focus utilities from @gntik-ai/tokens, so
+ * Teaches tailwind-merge the density, typography, focus and cursor utilities from @gntik-ai/tokens, so
  * `cn('h-control', 'h-10')` and `px-control … px-0` resolve like any other Tailwind conflict.
  * Shared by `cn()` and the `tv()` instance.
  */
 export const densityMergeConfig = {
   extend: {
     classGroups: {
+      cursor: [{ cursor: ['interactive', 'disabled'] }],
       'focus-ring': ['focus-ring', 'focus-ring-inset'],
       z: [
         {

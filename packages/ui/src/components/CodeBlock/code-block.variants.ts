@@ -10,7 +10,7 @@ export const codeBlockVariants = tv({
     language: 'shrink-0 font-mono text-[11px] tracking-wide text-muted-foreground uppercase',
     actions: 'flex shrink-0 items-center gap-0.5',
     button: [
-      'inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-md px-2 font-mono text-[11px] text-muted-foreground transition-colors motion-reduce:transition-none',
+      'inline-flex h-7 cursor-interactive items-center gap-1.5 rounded-md px-2 font-mono text-[11px] text-muted-foreground transition-colors motion-reduce:transition-none',
       'hover:bg-secondary hover:text-foreground aria-pressed:bg-secondary aria-pressed:text-foreground',
       'focus-ring',
     ],

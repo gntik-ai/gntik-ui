@@ -11,9 +11,18 @@
 @import "./pairing.css";
 @import "./scope.css";
 @import "./motion.css";
+@import "./cursor.css";
 @import "./layers.css";
 @import "./density.css";
 @import "./typography.css";
+
+@utility cursor-interactive {
+  cursor: var(--cursor-interactive);
+}
+
+@utility cursor-disabled {
+  cursor: var(--cursor-disabled);
+}
 
 @custom-variant dark (&:where(.dark, .dark *));
 

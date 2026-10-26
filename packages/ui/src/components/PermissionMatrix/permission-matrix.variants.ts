@@ -26,7 +26,7 @@ export const permissionMatrixVariants = tv({
       'inline-flex h-chip min-w-24 items-center justify-center gap-1 rounded-md px-2 text-[11.5px] font-medium whitespace-nowrap',
       'transition-colors motion-reduce:transition-none',
       'focus-ring',
-      'aria-disabled:cursor-not-allowed',
+      'aria-disabled:cursor-disabled',
     ],
   },
   variants: {

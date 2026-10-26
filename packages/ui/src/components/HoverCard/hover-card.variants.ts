@@ -4,7 +4,7 @@ import { POPOVER_ARROW_SIDES } from '../Popover/popover.variants';
 export const hoverCardVariants = tv({
   slots: {
     trigger: [
-      'cursor-pointer rounded-sm font-medium text-foreground underline decoration-border decoration-1 underline-offset-4 transition-colors motion-reduce:transition-none',
+      'cursor-interactive rounded-sm font-medium text-foreground underline decoration-border decoration-1 underline-offset-4 transition-colors motion-reduce:transition-none',
       'hover:decoration-foreground data-popup-open:decoration-foreground',
       'focus-ring',
     ],

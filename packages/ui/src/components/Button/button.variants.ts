@@ -2,17 +2,18 @@ import { tv, type VariantProps } from '../../utils/tv';
 
 export const buttonVariants = tv({
   base: [
-    'inline-flex shrink-0 items-center justify-center font-semibold whitespace-nowrap transition-colors select-none',
+    'inline-flex shrink-0 items-center justify-center font-semibold whitespace-nowrap transition-colors select-none cursor-interactive',
     'focus-ring',
-    'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+    'data-[disabled]:cursor-disabled data-[disabled]:opacity-50',
   ],
   variants: {
     variant: {
-      primary: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90',
-      secondary: 'border border-border bg-card text-foreground shadow-sm hover:bg-secondary/70',
-      soft: 'bg-primary/14 text-primary-chip-text hover:bg-primary/20',
-      ghost: 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground',
-      destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
+      primary: 'bg-primary text-primary-foreground shadow-sm not-data-[disabled]:hover:bg-primary/90',
+      secondary: 'border border-border bg-card text-foreground shadow-sm not-data-[disabled]:hover:bg-secondary/70',
+      soft: 'bg-primary/14 text-primary-chip-text not-data-[disabled]:hover:bg-primary/20',
+      ghost:
+        'text-muted-foreground not-data-[disabled]:hover:bg-secondary/70 not-data-[disabled]:hover:text-foreground',
+      destructive: 'bg-destructive text-destructive-foreground shadow-sm not-data-[disabled]:hover:bg-destructive/90',
     },
     size: {
       /** Follows `data-density` (comfortable = md). */

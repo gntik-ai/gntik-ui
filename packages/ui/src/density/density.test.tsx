@@ -96,7 +96,7 @@ describe('comfortable class output is unchanged', () => {
   it('Button with an explicit size keeps its exact classes', () => {
     render(<Button size="md">Save</Button>);
     expect(screen.getByRole('button', { name: 'Save' }).className).toBe(
-      'inline-flex shrink-0 items-center justify-center font-semibold whitespace-nowrap transition-colors select-none focus-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 h-9 gap-1.5 px-3.5 text-[13px] rounded-lg',
+      'inline-flex shrink-0 items-center justify-center font-semibold whitespace-nowrap transition-colors select-none cursor-interactive focus-ring data-[disabled]:cursor-disabled data-[disabled]:opacity-50 bg-primary text-primary-foreground shadow-sm not-data-[disabled]:hover:bg-primary/90 h-9 gap-1.5 px-3.5 text-[13px] rounded-lg',
     );
   });
 
@@ -104,7 +104,7 @@ describe('comfortable class output is unchanged', () => {
     render(<Input size="md" aria-label="Name" />);
     const root = screen.getByRole('textbox', { name: 'Name' }).parentElement!;
     expect(root.className).toBe(
-      'flex w-full min-w-0 items-center rounded-md border border-border bg-background text-foreground shadow-sm transition-colors motion-reduce:transition-none has-[input:focus-visible]:border-primary/60 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-focus-ring data-invalid:border-destructive/70 has-[input[data-invalid]]:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input:disabled]:cursor-not-allowed has-[input:disabled]:bg-secondary/50 has-[input:disabled]:text-muted-foreground has-[input:read-only]:bg-secondary/40 h-9 gap-2.5 px-3 text-[13px]',
+      'flex w-full min-w-0 items-center rounded-md border border-border bg-background text-foreground shadow-sm transition-colors motion-reduce:transition-none has-[input:focus-visible]:border-primary/60 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-focus-ring data-invalid:border-destructive/70 has-[input[data-invalid]]:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input:disabled]:cursor-disabled has-[input:disabled]:bg-secondary/50 has-[input:disabled]:text-muted-foreground has-[input:read-only]:bg-secondary/40 h-9 gap-2.5 px-3 text-[13px]',
     );
   });
 });

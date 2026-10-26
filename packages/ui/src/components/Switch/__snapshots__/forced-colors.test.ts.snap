@@ -4,13 +4,13 @@ exports[`forced colours > preserves the base non-forced output at the public var
 {
   "base": "",
   "cell": "h-8 p-0 text-center data-in-range:bg-primary/12 data-range-start:rounded-s-md data-range-end:rounded-e-md",
-  "day": "mx-auto grid size-8 place-items-center rounded-md text-[12.5px] text-foreground tabular-nums outline-none select-none transition-colors motion-reduce:transition-none hover:bg-secondary/70 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring data-today:ring-1 data-today:ring-primary/60 data-today:ring-inset data-in-range:hover:bg-primary/16 data-selected:bg-primary data-selected:font-semibold data-selected:text-primary-foreground data-selected:ring-0 data-selected:hover:bg-primary/90 aria-disabled:cursor-not-allowed aria-disabled:text-muted-foreground/30 aria-disabled:line-through aria-disabled:hover:bg-transparent",
+  "day": "mx-auto grid size-8 place-items-center rounded-md text-[12.5px] text-foreground tabular-nums outline-none select-none transition-colors motion-reduce:transition-none hover:bg-secondary/70 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring data-today:ring-1 data-today:ring-primary/60 data-today:ring-inset data-in-range:hover:bg-primary/16 data-selected:bg-primary data-selected:font-semibold data-selected:text-primary-foreground data-selected:ring-0 data-selected:hover:bg-primary/90 aria-disabled:cursor-disabled aria-disabled:text-muted-foreground/30 aria-disabled:line-through aria-disabled:hover:bg-transparent",
   "grid": "w-[224px] border-collapse",
   "header": "mb-2 flex h-7 items-center justify-between gap-2",
   "heading": "flex-1 text-center text-[13px] font-semibold tracking-tight text-foreground",
   "headingButton": "rounded-md px-1 hover:bg-secondary/70 focus-ring",
   "month": "flex flex-col",
-  "nav": "grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-secondary/70 hover:text-foreground focus-ring disabled:cursor-not-allowed disabled:text-muted-foreground/30 disabled:hover:bg-transparent",
+  "nav": "grid size-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors motion-reduce:transition-none hover:bg-secondary/70 hover:text-foreground focus-ring disabled:cursor-disabled disabled:text-muted-foreground/30 disabled:hover:bg-transparent",
   "navSpacer": "size-7 shrink-0",
   "outside": "mx-auto grid size-8 place-items-center text-[12.5px] text-muted-foreground tabular-nums select-none",
   "root": "inline-flex w-fit flex-col gap-4 p-3 text-foreground sm:flex-row sm:gap-6",
@@ -26,14 +26,14 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "chip": "inline-flex h-6 items-center gap-1 rounded bg-primary/14 pe-1 ps-2 text-[12px] font-medium text-primary-chip-text outline-none data-highlighted:bg-primary/24 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring",
   "chipRemove": "grid size-4 place-items-center rounded transition-colors hover:bg-primary/20",
   "chips": "flex w-full flex-wrap items-center gap-1.5",
-  "chipsGroup": "rounded-md border border-border bg-background text-foreground shadow-sm transition-colors focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring has-[input[data-disabled]]:cursor-not-allowed has-[input[data-disabled]]:opacity-50 cursor-text px-2 py-1.5",
+  "chipsGroup": "rounded-md border border-border bg-background text-foreground shadow-sm transition-colors focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring has-[input[data-disabled]]:cursor-disabled has-[input[data-disabled]]:opacity-50 cursor-text px-2 py-1.5",
   "chipsInput": "h-6 min-w-20 flex-1 bg-transparent px-1 text-[13px] text-foreground outline-none placeholder:text-muted-foreground",
   "empty": "px-2.5 py-3 text-center text-[12.5px] text-muted-foreground empty:hidden",
   "iconButton": "grid size-7 shrink-0 place-items-center rounded text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-focus-ring",
   "indicator": "flex shrink-0 text-primary-text",
   "input": "w-full min-w-0 bg-transparent pe-1 ps-2.5 text-foreground outline-none placeholder:text-muted-foreground h-control text-[13px]",
-  "inputGroup": "rounded-md border border-border bg-background text-foreground shadow-sm transition-colors focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring has-[input[data-disabled]]:cursor-not-allowed has-[input[data-disabled]]:opacity-50 flex items-center pe-1 ps-3",
-  "item": "flex cursor-default items-center justify-between gap-2 rounded-[6px] px-2.5 py-1.5 text-[13px] text-foreground outline-none select-none data-highlighted:bg-secondary/70 data-selected:bg-primary/12 data-selected:data-highlighted:bg-primary/16 data-disabled:cursor-not-allowed data-disabled:opacity-45",
+  "inputGroup": "rounded-md border border-border bg-background text-foreground shadow-sm transition-colors focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring has-[input[data-disabled]]:cursor-disabled has-[input[data-disabled]]:opacity-50 flex items-center pe-1 ps-3",
+  "item": "flex cursor-default items-center justify-between gap-2 rounded-[6px] px-2.5 py-1.5 text-[13px] text-foreground outline-none select-none data-highlighted:bg-secondary/70 data-selected:bg-primary/12 data-selected:data-highlighted:bg-primary/16 data-disabled:cursor-disabled data-disabled:opacity-45",
   "itemContent": "flex min-w-0 flex-1 items-center gap-2",
   "label": "mb-2 block text-[13px] font-medium text-foreground",
   "list": "outline-none data-empty:hidden",
@@ -60,7 +60,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "input": "h-full min-w-0 flex-1 bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground",
   "inputIcon": "shrink-0 text-muted-foreground",
   "inputRow": "flex h-[52px] shrink-0 items-center gap-2.5 border-b border-border px-4",
-  "item": "group flex min-h-9 w-full cursor-pointer items-center gap-3 rounded-lg px-2.5 py-1.5 text-start text-foreground outline-none select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:cursor-not-allowed data-disabled:opacity-50",
+  "item": "group flex min-h-9 w-full cursor-interactive items-center gap-3 rounded-lg px-2.5 py-1.5 text-start text-foreground outline-none select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:cursor-disabled data-disabled:opacity-50",
   "itemArrow": "shrink-0 text-muted-foreground opacity-0 group-data-highlighted:opacity-100",
   "itemDescription": "truncate text-[11.5px] text-muted-foreground",
   "itemIcon": "shrink-0 text-muted-foreground group-data-highlighted:text-primary-text",
@@ -69,7 +69,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "list": "outline-none",
   "popup": "flex max-h-[min(560px,80vh)] w-full max-w-[560px] flex-col overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-lg outline-none transition-[opacity,scale] duration-150 motion-reduce:transition-none data-starting-style:scale-[0.98] data-starting-style:opacity-0 data-ending-style:scale-[0.98] data-ending-style:opacity-0",
   "results": "min-h-0 flex-1 overflow-y-auto overscroll-contain py-2",
-  "trigger": "inline-flex h-10 cursor-pointer items-center gap-2.5 rounded-lg border border-border bg-card pe-2.5 ps-3.5 text-muted-foreground transition-colors hover:border-ring/50 hover:text-foreground motion-reduce:transition-none focus-ring",
+  "trigger": "inline-flex h-10 cursor-interactive items-center gap-2.5 rounded-lg border border-border bg-card pe-2.5 ps-3.5 text-muted-foreground transition-colors hover:border-ring/50 hover:text-foreground motion-reduce:transition-none focus-ring",
   "triggerText": "text-[13px]",
   "viewport": "fixed inset-0 z-modal flex items-start justify-center px-4 pt-[12vh] pb-4",
 }
@@ -80,7 +80,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "base": "",
   "checkbox": "grid size-[18px] shrink-0 place-items-center rounded-[5px] border border-border text-primary-foreground transition-colors group-data-checked:border-primary group-data-checked:bg-primary",
   "groupLabel": "px-2.5 pt-2 pb-1 font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase",
-  "item": "relative flex h-item w-full cursor-default items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none transition-colors data-disabled:pointer-events-none data-disabled:opacity-50 text-destructive-text data-highlighted:bg-destructive/10 data-highlighted:text-destructive-chip-text",
+  "item": "relative flex h-item w-full cursor-interactive items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none transition-colors data-disabled:pointer-events-none data-disabled:opacity-50 text-destructive-text data-highlighted:bg-destructive/10 data-highlighted:text-destructive-chip-text",
   "itemIcon": "shrink-0 text-destructive-text",
   "itemLabel": "min-w-0 flex-1 truncate",
   "popup": "min-w-[208px] origin-[var(--transform-origin)] rounded-[10px] border border-border bg-popover p-1.5 text-popover-foreground shadow-md outline-none max-h-[var(--available-height)] overflow-y-auto transition-[opacity,scale] duration-100 motion-reduce:transition-none data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 data-instant:transition-none",
@@ -89,7 +89,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "separator": "-mx-1.5 my-1.5 h-px bg-border",
   "shortcut": "ms-auto ps-3 font-mono text-[10.5px] tracking-wide text-muted-foreground",
   "subChevron": "ms-auto shrink-0 text-muted-foreground rtl:-scale-x-100",
-  "subTrigger": "relative flex h-item w-full cursor-default items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none text-foreground transition-colors data-highlighted:bg-secondary/70 data-disabled:pointer-events-none data-disabled:opacity-50 data-popup-open:bg-secondary/70",
+  "subTrigger": "relative flex h-item w-full cursor-interactive items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none text-foreground transition-colors data-highlighted:bg-secondary/70 data-disabled:pointer-events-none data-disabled:opacity-50 data-popup-open:bg-secondary/70",
 }
 `;
 
@@ -98,7 +98,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "base": "",
   "checkbox": "grid size-[18px] shrink-0 place-items-center rounded-[5px] border border-border text-primary-foreground transition-colors group-data-checked:border-primary group-data-checked:bg-primary",
   "groupLabel": "px-2.5 pt-2 pb-1 font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase",
-  "item": "relative flex h-item w-full cursor-default items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none text-foreground transition-colors data-highlighted:bg-secondary/70 data-disabled:pointer-events-none data-disabled:opacity-50",
+  "item": "relative flex h-item w-full cursor-interactive items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none text-foreground transition-colors data-highlighted:bg-secondary/70 data-disabled:pointer-events-none data-disabled:opacity-50",
   "itemIcon": "shrink-0 text-muted-foreground",
   "itemLabel": "min-w-0 flex-1 truncate",
   "popup": "min-w-[208px] origin-[var(--transform-origin)] rounded-[10px] border border-border bg-popover p-1.5 text-popover-foreground shadow-md outline-none max-h-[var(--available-height)] overflow-y-auto transition-[opacity,scale] duration-100 motion-reduce:transition-none data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 data-instant:transition-none",
@@ -107,7 +107,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "separator": "-mx-1.5 my-1.5 h-px bg-border",
   "shortcut": "ms-auto ps-3 font-mono text-[10.5px] tracking-wide text-muted-foreground",
   "subChevron": "ms-auto shrink-0 text-muted-foreground rtl:-scale-x-100",
-  "subTrigger": "relative flex h-item w-full cursor-default items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none text-foreground transition-colors data-highlighted:bg-secondary/70 data-disabled:pointer-events-none data-disabled:opacity-50 data-popup-open:bg-secondary/70",
+  "subTrigger": "relative flex h-item w-full cursor-interactive items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none text-foreground transition-colors data-highlighted:bg-secondary/70 data-disabled:pointer-events-none data-disabled:opacity-50 data-popup-open:bg-secondary/70",
 }
 `;
 
@@ -143,9 +143,9 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "group": "flex flex-col gap-3",
   "indicator": "size-1.5 rounded-full bg-primary-foreground data-unchecked:hidden",
   "item": "grid grid-cols-[auto_1fr_auto] items-start gap-x-3 gap-y-0.5 rounded-md border border-border bg-background px-4 py-3.5 transition-colors motion-reduce:transition-none hover:border-muted-foreground/40 has-[[data-checked]]:border-primary/60 has-[[data-checked]]:ring-2 has-[[data-checked]]:ring-primary/20 has-[[data-disabled]]:hover:border-border",
-  "label": "col-span-2 grid cursor-pointer grid-cols-subgrid items-start has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-70",
+  "label": "col-span-2 grid cursor-interactive grid-cols-subgrid items-start has-[[data-disabled]]:cursor-disabled has-[[data-disabled]]:opacity-70",
   "labelText": "min-w-0 text-[13px] leading-5 text-foreground select-none font-semibold",
-  "radio": "inline-flex size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-background transition-colors motion-reduce:transition-none hover:border-muted-foreground/50 data-checked:border-primary data-checked:bg-primary data-invalid:border-destructive/70 focus-ring data-disabled:cursor-not-allowed data-disabled:opacity-50",
+  "radio": "inline-flex size-[18px] shrink-0 cursor-interactive items-center justify-center rounded-full border border-border bg-background transition-colors motion-reduce:transition-none hover:border-muted-foreground/50 data-checked:border-primary data-checked:bg-primary data-invalid:border-destructive/70 focus-ring data-disabled:cursor-disabled data-disabled:opacity-50",
   "trailing": "col-start-3 row-start-1 text-end text-[13px] leading-5 font-semibold text-foreground",
 }
 `;
@@ -157,9 +157,9 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "group": "flex flex-col gap-0 divide-y divide-border/60 overflow-hidden rounded-md border border-border bg-background/40",
   "indicator": "size-1.5 rounded-full bg-primary-foreground data-unchecked:hidden",
   "item": "grid grid-cols-[auto_1fr_auto] items-start gap-x-3 gap-y-0.5 px-4 py-3.5",
-  "label": "col-span-2 grid cursor-pointer grid-cols-subgrid items-start has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-70",
+  "label": "col-span-2 grid cursor-interactive grid-cols-subgrid items-start has-[[data-disabled]]:cursor-disabled has-[[data-disabled]]:opacity-70",
   "labelText": "min-w-0 text-[13px] leading-5 font-medium text-foreground select-none",
-  "radio": "inline-flex size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-background transition-colors motion-reduce:transition-none hover:border-muted-foreground/50 data-checked:border-primary data-checked:bg-primary data-invalid:border-destructive/70 focus-ring data-disabled:cursor-not-allowed data-disabled:opacity-50",
+  "radio": "inline-flex size-[18px] shrink-0 cursor-interactive items-center justify-center rounded-full border border-border bg-background transition-colors motion-reduce:transition-none hover:border-muted-foreground/50 data-checked:border-primary data-checked:bg-primary data-invalid:border-destructive/70 focus-ring data-disabled:cursor-disabled data-disabled:opacity-50",
   "trailing": "col-start-3 row-start-1 text-end text-[13px] leading-5 font-semibold text-foreground",
 }
 `;
@@ -171,9 +171,9 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "group": "flex flex-col gap-2.5",
   "indicator": "size-1.5 rounded-full bg-primary-foreground data-unchecked:hidden",
   "item": "grid grid-cols-[auto_1fr_auto] items-start gap-x-3 gap-y-0.5",
-  "label": "col-span-2 grid cursor-pointer grid-cols-subgrid items-start has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-70",
+  "label": "col-span-2 grid cursor-interactive grid-cols-subgrid items-start has-[[data-disabled]]:cursor-disabled has-[[data-disabled]]:opacity-70",
   "labelText": "min-w-0 text-[13px] leading-5 font-medium text-foreground select-none",
-  "radio": "inline-flex size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-background transition-colors motion-reduce:transition-none hover:border-muted-foreground/50 data-checked:border-primary data-checked:bg-primary data-invalid:border-destructive/70 focus-ring data-disabled:cursor-not-allowed data-disabled:opacity-50",
+  "radio": "inline-flex size-[18px] shrink-0 cursor-interactive items-center justify-center rounded-full border border-border bg-background transition-colors motion-reduce:transition-none hover:border-muted-foreground/50 data-checked:border-primary data-checked:bg-primary data-invalid:border-destructive/70 focus-ring data-disabled:cursor-disabled data-disabled:opacity-50",
   "trailing": "col-start-3 row-start-1 text-end text-[13px] leading-5 font-semibold text-foreground",
 }
 `;
@@ -184,7 +184,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "groupLabel": "px-2.5 pt-2 pb-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase",
   "icon": "flex shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none group-data-popup-open:rotate-180",
   "indicator": "flex shrink-0 text-primary-text",
-  "item": "flex cursor-default items-center justify-between gap-2 rounded-[6px] px-2.5 py-1.5 text-[13px] text-foreground outline-none select-none data-highlighted:bg-secondary/70 data-selected:bg-primary/12 data-selected:data-highlighted:bg-primary/16 data-disabled:cursor-not-allowed data-disabled:opacity-45",
+  "item": "flex cursor-default items-center justify-between gap-2 rounded-[6px] px-2.5 py-1.5 text-[13px] text-foreground outline-none select-none data-highlighted:bg-secondary/70 data-selected:bg-primary/12 data-selected:data-highlighted:bg-primary/16 data-disabled:cursor-disabled data-disabled:opacity-45",
   "itemText": "flex min-w-0 items-center gap-2 truncate",
   "label": "mb-2 block text-[13px] font-medium text-foreground",
   "list": "outline-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
@@ -194,7 +194,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "separator": "-mx-1 my-1 h-px bg-border",
   "status": "flex items-center justify-center gap-2 px-2.5 py-2 text-[12.5px] text-muted-foreground",
   "statusError": "flex-wrap text-destructive-text",
-  "trigger": "group flex w-full items-center justify-between gap-2 rounded-md border border-border bg-background text-foreground shadow-sm transition-colors select-none hover:border-muted-foreground/40 data-popup-open:border-primary/60 data-popup-open:ring-2 data-popup-open:ring-ring/25 focus-ring data-disabled:cursor-not-allowed data-disabled:opacity-50 h-control pe-2.5 ps-field text-[13px]",
+  "trigger": "group flex w-full items-center justify-between gap-2 rounded-md border border-border bg-background text-foreground shadow-sm transition-colors select-none hover:border-muted-foreground/40 data-popup-open:border-primary/60 data-popup-open:ring-2 data-popup-open:ring-ring/25 focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-control pe-2.5 ps-field text-[13px]",
   "value": "flex min-w-0 items-center gap-2 truncate data-placeholder:text-muted-foreground",
 }
 `;
@@ -211,12 +211,12 @@ exports[`forced colours > preserves the base non-forced output at the public var
 exports[`forced colours > preserves the base non-forced output at the public variants seam > Slider 1`] = `
 {
   "base": "",
-  "control": "flex w-full touch-none items-center select-none data-disabled:cursor-not-allowed py-2.5",
+  "control": "flex w-full touch-none items-center select-none data-disabled:cursor-disabled py-2.5",
   "header": "flex items-baseline justify-between gap-3",
   "indicator": "rounded-full bg-primary select-none",
   "label": "text-[13px] font-medium text-foreground",
   "root": "flex w-full flex-col gap-2 data-disabled:opacity-50",
-  "thumb": "rounded-full border border-primary bg-background shadow-sm transition-[scale] select-none motion-reduce:transition-none has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus-ring data-dragging:scale-110 data-disabled:cursor-not-allowed size-[18px]",
+  "thumb": "rounded-full border border-primary bg-background shadow-sm transition-[scale] select-none motion-reduce:transition-none has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus-ring data-dragging:scale-110 data-disabled:cursor-disabled size-[18px]",
   "track": "relative w-full rounded-full bg-secondary select-none h-1.5",
   "value": "font-mono text-[12px] text-muted-foreground tabular-nums",
 }
@@ -236,7 +236,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 {
   "base": "",
   "label": "inline-flex items-center gap-2.5 text-[13px] text-foreground",
-  "root": "relative inline-flex shrink-0 cursor-pointer items-center rounded-full bg-secondary transition-colors data-checked:bg-primary focus-ring data-disabled:cursor-not-allowed data-disabled:opacity-50 h-[26px] w-[46px]",
+  "root": "relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors data-checked:bg-primary focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-[26px] w-[46px]",
   "thumb": "pointer-events-none ms-[2px] grid place-items-center rounded-full bg-background shadow-sm transition-transform motion-reduce:transition-none size-[22px] data-checked:translate-x-[20px] rtl:data-checked:-translate-x-[20px]",
 }
 `;
@@ -245,7 +245,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 {
   "base": "",
   "label": "inline-flex items-center gap-2.5 text-[13px] text-foreground",
-  "root": "relative inline-flex shrink-0 cursor-pointer items-center rounded-full bg-secondary transition-colors data-checked:bg-primary focus-ring data-disabled:cursor-not-allowed data-disabled:opacity-50 h-[18px] w-8",
+  "root": "relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors data-checked:bg-primary focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-[18px] w-8",
   "thumb": "pointer-events-none ms-[2px] grid place-items-center rounded-full bg-background shadow-sm transition-transform motion-reduce:transition-none size-3.5 data-checked:translate-x-[14px] rtl:data-checked:-translate-x-[14px]",
 }
 `;
@@ -254,7 +254,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 {
   "base": "",
   "label": "inline-flex items-center gap-2.5 text-[13px] text-foreground",
-  "root": "relative inline-flex shrink-0 cursor-pointer items-center rounded-full bg-secondary transition-colors data-checked:bg-primary focus-ring data-disabled:cursor-not-allowed data-disabled:opacity-50 h-[22px] w-[40px]",
+  "root": "relative inline-flex shrink-0 cursor-interactive items-center rounded-full bg-secondary transition-colors data-checked:bg-primary focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 h-[22px] w-[40px]",
   "thumb": "pointer-events-none ms-[2px] grid place-items-center rounded-full bg-background shadow-sm transition-transform motion-reduce:transition-none size-[18px] data-checked:translate-x-[18px] rtl:data-checked:-translate-x-[18px]",
 }
 `;
@@ -270,7 +270,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "head": "border-b border-border px-4 align-middle text-[11.5px] font-medium tracking-wide whitespace-nowrap text-muted-foreground uppercase h-10 bg-secondary/30 text-start",
   "header": "",
   "row": "transition-colors motion-reduce:transition-none hover:bg-accent/30 data-[selected]:bg-primary/8 data-[selected]:hover:bg-primary/12",
-  "sortButton": "inline-flex cursor-pointer items-center gap-1 rounded-sm uppercase tracking-wide transition-colors motion-reduce:transition-none hover:text-foreground focus-ring",
+  "sortButton": "inline-flex cursor-interactive items-center gap-1 rounded-sm uppercase tracking-wide transition-colors motion-reduce:transition-none hover:text-foreground focus-ring",
   "table": "w-full border-separate border-spacing-0 text-start text-[13px] text-foreground",
 }
 `;
@@ -284,7 +284,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "list": "relative flex items-center gap-6 border-b border-border",
   "panel": "text-[13px] text-foreground outline-none focus-ring rounded-sm",
   "root": "flex flex-col gap-4",
-  "tab": "group relative z-raised inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-tab -mb-px border-b-2 border-transparent text-[13px] rounded-t-sm data-active:border-primary",
+  "tab": "group relative z-raised inline-flex shrink-0 cursor-interactive items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-tab -mb-px border-b-2 border-transparent text-[13px] rounded-t-sm data-active:border-primary",
 }
 `;
 
@@ -297,7 +297,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "list": "relative inline-flex items-center gap-1 rounded-lg border border-border bg-secondary/40 p-1",
   "panel": "text-[13px] text-foreground outline-none focus-ring rounded-sm",
   "root": "flex flex-col gap-4",
-  "tab": "group relative z-raised inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-control-sm rounded-md px-control text-[12.5px]",
+  "tab": "group relative z-raised inline-flex shrink-0 cursor-interactive items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-control-sm rounded-md px-control text-[12.5px]",
 }
 `;
 
@@ -310,7 +310,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "list": "relative inline-flex items-center gap-1 rounded-lg border border-border bg-secondary/40 p-1",
   "panel": "text-[13px] text-foreground outline-none focus-ring rounded-sm",
   "root": "flex flex-col gap-4",
-  "tab": "group relative z-raised inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-control-sm rounded-md px-control text-[12.5px] data-active:bg-card data-active:shadow-sm",
+  "tab": "group relative z-raised inline-flex shrink-0 cursor-interactive items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-control-sm rounded-md px-control text-[12.5px] data-active:bg-card data-active:shadow-sm",
 }
 `;
 
@@ -323,11 +323,11 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "list": "relative flex items-center gap-6 border-b border-border",
   "panel": "text-[13px] text-foreground outline-none focus-ring rounded-sm",
   "root": "flex flex-col gap-4",
-  "tab": "group relative z-raised inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-tab -mb-px border-b-2 border-transparent text-[13px] rounded-t-sm",
+  "tab": "group relative z-raised inline-flex shrink-0 cursor-interactive items-center justify-center gap-2 font-medium whitespace-nowrap select-none text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground focus-ring data-disabled:pointer-events-none data-disabled:opacity-50 h-tab -mb-px border-b-2 border-transparent text-[13px] rounded-t-sm",
 }
 `;
 
-exports[`forced colours > preserves the base non-forced output at the public variants seam > ToggleGroup 1`] = `"inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap text-muted-foreground transition-colors select-none hover:text-foreground data-pressed:bg-secondary data-pressed:text-foreground focus-visible:relative focus-visible:z-raised focus-ring data-disabled:cursor-not-allowed data-disabled:opacity-50 data-disabled:hover:text-muted-foreground rounded-lg border border-border bg-card shadow-sm hover:bg-secondary/50 data-pressed:border-primary/40 h-control px-4 text-[13px]"`;
+exports[`forced colours > preserves the base non-forced output at the public variants seam > ToggleGroup 1`] = `"inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap text-muted-foreground transition-colors select-none hover:text-foreground data-pressed:bg-secondary data-pressed:text-foreground focus-visible:relative focus-visible:z-raised focus-ring data-disabled:cursor-disabled data-disabled:opacity-50 data-disabled:hover:text-muted-foreground rounded-lg border border-border bg-card shadow-sm hover:bg-secondary/50 data-pressed:border-primary/40 h-control px-4 text-[13px]"`;
 
 exports[`forced colours > preserves the base non-forced output at the public variants seam > TransferList 1`] = `
 {
@@ -337,7 +337,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "empty": "grid place-items-center px-3 py-6 text-center text-[12.5px] text-muted-foreground",
   "footHint": "ms-1 min-w-0 flex-1 truncate text-[11.5px] text-muted-foreground",
   "listbox": "min-h-0 flex-1 overflow-y-auto p-1 outline-none focus-ring-inset",
-  "option": "flex cursor-default items-start gap-2.5 rounded-[6px] px-2 py-1.5 text-[13px] text-foreground select-none hover:bg-secondary/50 data-active:bg-secondary/70 aria-selected:bg-primary/12 aria-selected:data-active:bg-primary/16 aria-disabled:cursor-not-allowed aria-disabled:opacity-45",
+  "option": "flex cursor-default items-start gap-2.5 rounded-[6px] px-2 py-1.5 text-[13px] text-foreground select-none hover:bg-secondary/50 data-active:bg-secondary/70 aria-selected:bg-primary/12 aria-selected:data-active:bg-primary/16 aria-disabled:cursor-disabled aria-disabled:opacity-45",
   "optionDescription": "truncate text-[11.5px] text-muted-foreground",
   "optionLabel": "truncate",
   "optionText": "flex min-w-0 flex-col",

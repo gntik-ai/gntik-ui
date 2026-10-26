@@ -10,7 +10,7 @@ export const periodGridVariants = tv({
       'transition-colors motion-reduce:transition-none hover:bg-secondary/70',
       'focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring',
       'data-selected:bg-primary data-selected:font-semibold data-selected:text-primary-foreground',
-      'aria-disabled:cursor-not-allowed aria-disabled:text-muted-foreground aria-disabled:line-through',
+      'aria-disabled:cursor-disabled aria-disabled:text-muted-foreground aria-disabled:line-through',
     ],
   },
 });

@@ -4,7 +4,7 @@ import { listboxItem, listboxPopup } from '../Select/select.variants';
 const field = [
   'rounded-md border border-border bg-background text-foreground shadow-sm transition-colors',
   'focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring',
-  'has-[input[data-disabled]]:cursor-not-allowed has-[input[data-disabled]]:opacity-50',
+  'has-[input[data-disabled]]:cursor-disabled has-[input[data-disabled]]:opacity-50',
 ];
 
 export const comboboxVariants = tv({

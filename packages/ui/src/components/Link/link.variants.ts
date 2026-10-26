@@ -3,7 +3,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const linkVariants = tv({
   slots: {
     root: [
-      'cursor-pointer rounded-sm font-medium underline-offset-4 transition-colors',
+      'cursor-interactive rounded-sm font-medium underline-offset-4 transition-colors',
       'focus-ring',
       'aria-disabled:pointer-events-none aria-disabled:opacity-50',
     ],

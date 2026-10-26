@@ -92,7 +92,7 @@ describe('UserMenu', () => {
     expect(within(trigger).queryByText(email)).not.toBeInTheDocument();
     expect(trigger.children).toHaveLength(showName ? 2 : 1);
     expect(trigger.className).toBe(
-      'inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-lg transition-colors outline-none ' +
+      'inline-flex shrink-0 cursor-interactive items-center gap-2 rounded-lg transition-colors outline-none ' +
         'focus-ring ' +
         'data-popup-open:ring-2 data-popup-open:ring-ring/40' +
         (showName ? ' h-9 pe-2 ps-0.5 hover:bg-secondary/60' : ''),

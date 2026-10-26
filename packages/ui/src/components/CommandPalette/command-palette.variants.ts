@@ -3,7 +3,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const commandPaletteVariants = tv({
   slots: {
     trigger: [
-      'inline-flex h-10 cursor-pointer items-center gap-2.5 rounded-lg border border-border bg-card pe-2.5 ps-3.5 text-muted-foreground transition-colors',
+      'inline-flex h-10 cursor-interactive items-center gap-2.5 rounded-lg border border-border bg-card pe-2.5 ps-3.5 text-muted-foreground transition-colors',
       'hover:border-ring/50 hover:text-foreground motion-reduce:transition-none',
       'focus-ring',
     ],
@@ -27,9 +27,9 @@ export const commandPaletteVariants = tv({
     group: 'px-2 pb-1.5',
     groupLabel: 'px-2.5 pt-2 pb-1 font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground uppercase select-none',
     item: [
-      'group flex min-h-9 w-full cursor-pointer items-center gap-3 rounded-lg px-2.5 py-1.5 text-start text-foreground outline-none select-none',
+      'group flex min-h-9 w-full cursor-interactive items-center gap-3 rounded-lg px-2.5 py-1.5 text-start text-foreground outline-none select-none',
       'data-highlighted:bg-accent data-highlighted:text-accent-foreground forced-colors:data-highlighted:bg-[Highlight] forced-colors:data-highlighted:text-[HighlightText] forced-colors:data-highlighted:[&&_*]:text-[HighlightText]',
-      'data-disabled:cursor-not-allowed data-disabled:opacity-50',
+      'data-disabled:cursor-disabled data-disabled:opacity-50',
     ],
     itemIcon: 'shrink-0 text-muted-foreground group-data-highlighted:text-primary-text',
     itemText: 'flex min-w-0 flex-1 flex-col',

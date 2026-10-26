@@ -49,7 +49,7 @@ export const stepperVariants = tv({
     },
     interactive: {
       true: {
-        step: 'cursor-pointer',
+        step: 'cursor-interactive',
         indicator: 'group-hover:bg-primary/85',
         label: 'group-hover:underline underline-offset-2',
       },

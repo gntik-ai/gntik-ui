@@ -7,11 +7,11 @@ export const tokenInputVariants = tv({
       'flex w-full min-w-0 cursor-text flex-wrap items-center gap-1.5 rounded-md border border-border bg-background text-foreground shadow-sm transition-colors motion-reduce:transition-none',
       'has-[input:focus-visible]:border-primary/60 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-focus-ring',
       'data-invalid:border-destructive/70 has-[input[data-invalid]]:border-destructive/70',
-      'data-disabled:cursor-not-allowed data-disabled:bg-secondary/50 has-[input:disabled]:cursor-not-allowed has-[input:disabled]:bg-secondary/50',
+      'data-disabled:cursor-disabled data-disabled:bg-secondary/50 has-[input:disabled]:cursor-disabled has-[input:disabled]:bg-secondary/50',
     ],
     list: 'contents',
     input:
-      'min-w-24 flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed',
+      'min-w-24 flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-disabled',
     counter: 'ms-auto shrink-0 pe-0.5 font-mono text-[11px] text-muted-foreground tabular-nums',
     chip: [
       'inline-flex max-w-full items-center gap-1 rounded border border-transparent bg-primary/14 pe-1 ps-2 font-medium text-primary-chip-text',

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../Table';
 import { DEPLOYMENTS, count } from './data';
 
-const checkboxClass = 'size-4 cursor-pointer accent-primary focus-ring';
+const checkboxClass = 'size-4 cursor-interactive accent-primary focus-ring';
 
 export default function TableSelectable() {
   const [selected, setSelected] = useState<Set<number>>(new Set([2]));

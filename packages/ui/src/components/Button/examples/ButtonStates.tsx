@@ -3,7 +3,7 @@ import { Button, IconButton } from '../Button';
 
 export default function ButtonStates() {
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div data-cursor-policy="tokens" className="flex flex-wrap items-center gap-3">
       <Button size="sm">Small</Button>
       <Button size="lg">Large</Button>
       <Button loading>Saving</Button>

@@ -6,14 +6,14 @@ export const sliderVariants = tv({
     header: 'flex items-baseline justify-between gap-3',
     label: 'text-[13px] font-medium text-foreground',
     value: 'font-mono text-[12px] text-muted-foreground tabular-nums',
-    control: 'flex w-full touch-none items-center select-none data-disabled:cursor-not-allowed',
+    control: 'flex w-full touch-none items-center select-none data-disabled:cursor-disabled',
     track:
       'relative w-full rounded-full bg-secondary select-none forced-colors:outline forced-colors:-outline-offset-1 forced-colors:outline-[CanvasText]',
     indicator: 'rounded-full bg-primary select-none forced-colors:bg-[Highlight]',
     thumb: [
       'rounded-full border border-primary bg-background shadow-sm transition-[scale] select-none motion-reduce:transition-none',
       'has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus-ring',
-      'data-dragging:scale-110 data-disabled:cursor-not-allowed',
+      'data-dragging:scale-110 data-disabled:cursor-disabled',
     ],
   },
   variants: {

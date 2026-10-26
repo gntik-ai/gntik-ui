@@ -19,7 +19,7 @@ export const toggleVariants = tv({
     'inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap text-muted-foreground transition-colors select-none',
     'hover:text-foreground data-pressed:bg-secondary data-pressed:text-foreground forced-colors:data-pressed:bg-[Highlight] forced-colors:data-pressed:text-[HighlightText] forced-colors:data-pressed:[&_*]:text-[HighlightText] forced-colors:data-pressed:hover:bg-[Highlight] forced-colors:data-pressed:hover:text-[HighlightText] forced-colors:data-pressed:hover:[&_*]:text-[HighlightText]',
     'focus-visible:relative focus-visible:z-raised focus-ring',
-    'data-disabled:cursor-not-allowed data-disabled:opacity-50 data-disabled:hover:text-muted-foreground',
+    'data-disabled:cursor-disabled data-disabled:opacity-50 data-disabled:hover:text-muted-foreground',
   ],
   variants: {
     variant: {

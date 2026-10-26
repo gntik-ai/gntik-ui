@@ -17,6 +17,7 @@ describe('Menu', () => {
       expect(trigger).toHaveFocus();
       await user.keyboard(key);
       const menu = await screen.findByRole('menu');
+      expect(within(menu).getByRole('menuitem', { name: 'View logs' })).toHaveClass('cursor-interactive');
       expect(trigger).toHaveAttribute('aria-expanded', 'true');
       await waitFor(() => expect(within(menu).getByRole('menuitem', { name: 'View logs' })).toHaveFocus());
     },

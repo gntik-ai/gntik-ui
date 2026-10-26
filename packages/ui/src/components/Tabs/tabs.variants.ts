@@ -5,7 +5,7 @@ export const tabsVariants = tv({
     root: 'flex flex-col gap-4',
     list: 'relative',
     tab: [
-      'group relative z-raised inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap select-none',
+      'group relative z-raised inline-flex shrink-0 cursor-interactive items-center justify-center gap-2 font-medium whitespace-nowrap select-none',
       'text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground',
       'focus-ring',
       'data-disabled:pointer-events-none data-disabled:opacity-50',

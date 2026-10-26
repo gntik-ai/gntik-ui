@@ -24,8 +24,8 @@ export const clickableCardVariants = tv({
     ...TEXT,
     /** The link/button; its ::after covers the card so the whole surface is clickable. */
     action: [
-      'cursor-pointer text-start outline-none after:absolute after:inset-0 after:rounded-[inherit] after:content-[""]',
-      'disabled:cursor-not-allowed aria-disabled:cursor-not-allowed',
+      'cursor-interactive text-start outline-none after:absolute after:inset-0 after:rounded-[inherit] after:content-[""]',
+      'disabled:cursor-disabled aria-disabled:cursor-disabled',
     ],
     chevron:
       'mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none group-hover/card:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover/card:-translate-x-0.5',
@@ -37,8 +37,8 @@ export const selectableCardVariants = tv({
     group: 'grid gap-3',
     root: [
       ...SURFACE,
-      'cursor-pointer hover:border-muted-foreground/40 has-[[data-checked]]:border-primary/60 has-[[data-checked]]:ring-2 has-[[data-checked]]:ring-primary/20',
-      'has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:opacity-60 has-[[data-disabled]]:hover:border-border',
+      'cursor-interactive hover:border-muted-foreground/40 has-[[data-checked]]:border-primary/60 has-[[data-checked]]:ring-2 has-[[data-checked]]:ring-primary/20',
+      'has-[[data-disabled]]:cursor-disabled has-[[data-disabled]]:opacity-60 has-[[data-disabled]]:hover:border-border',
     ],
     ...TEXT,
     control: [
