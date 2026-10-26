@@ -5,8 +5,13 @@ import { createRequire } from 'node:module';
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
 const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
+// The full catalog mounts before the adapter fetches its core, engine and grammar chunks.
+// Cold production loads can exceed Playwright's default five-second assertion window.
+const expectTokens = expect.configure({ timeout: 15_000 });
+
 for (const theme of ['dark', 'light', 'high_contrast']) {
   test(`CodeBlock lazy highlighter / ${theme}`, async ({ page }) => {
+    test.setTimeout(60_000);
     await page.addInitScript((theme) => {
       localStorage.setItem('gntik-theme', theme === 'light' ? '' : theme);
       localStorage.setItem('gntik-section', 'ui-components');
@@ -14,17 +19,17 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await page.goto('/#ui-components');
     const section = page.locator('#ui-CodeBlock');
     const yaml = section.getByRole('region', { name: 'service.yaml', exact: true });
-    await expect(yaml.getByText('name', { exact: true })).toHaveClass('text-primary-text');
-    await expect(yaml.getByText('"api"', { exact: true })).toHaveClass('text-warning-text');
+    await expectTokens(yaml.getByText('name', { exact: true })).toHaveClass('text-primary-text');
+    await expectTokens(yaml.getByText('"api"', { exact: true })).toHaveClass('text-warning-text');
     const python = section.getByRole('region', { name: 'greeting.py', exact: true });
-    await expect(python.getByText('greet', { exact: true })).toHaveClass('font-medium text-foreground');
+    await expectTokens(python.getByText('greet', { exact: true })).toHaveClass('font-medium text-foreground');
     await expect(python.locator('[data-line]')).toHaveCount(5);
     const sql = section.getByRole('region', { name: 'services.sql', exact: true });
-    await expect(sql.getByText('SELECT', { exact: true })).toHaveClass('text-primary-text');
+    await expectTokens(sql.getByText('SELECT', { exact: true })).toHaveClass('text-primary-text');
     const go = section.getByRole('region', { name: 'main.go', exact: true });
-    await expect(go.getByText('func', { exact: true })).toHaveClass('text-primary-text');
+    await expectTokens(go.getByText('func', { exact: true })).toHaveClass('text-primary-text');
     const toml = section.getByRole('region', { name: 'config.toml', exact: true });
-    await expect(toml.getByText('"api"', { exact: true })).toHaveClass('text-warning-text');
+    await expectTokens(toml.getByText('"api"', { exact: true })).toHaveClass('text-warning-text');
     for (const region of [yaml, python, go, sql, toml]) {
       await expect(region.locator('code span[style]:not([aria-hidden="true"])')).toHaveCount(0);
     }
