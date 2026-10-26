@@ -122,6 +122,7 @@ export const PREVIEW_LOADERS = {
     'load-more-footer--cards': () => import('../../../packages/blocks/src/tables/LoadMoreFooter/examples/cards'),
     'data-table--single-selection': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/single-selection'),
+    'data-table--csv-export': () => import('../../../packages/blocks/src/tables/DataTable/examples/csv-export'),
     'data-table--server-pagination': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/server-pagination'),
     'data-table--client-selection': () =>

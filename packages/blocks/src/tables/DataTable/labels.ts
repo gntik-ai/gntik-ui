@@ -2,6 +2,13 @@ import type { PaginationFooterLabels } from '../PaginationFooter/PaginationFoote
 
 /** Per-instance table chrome, including the composed PaginationFooter. Caller data stays caller-owned. */
 export interface DataTableLabels extends PaginationFooterLabels {
+  export?: string;
+  exportAll?: (count: number) => string;
+  exportPage?: string;
+  exportSelected?: (count: number) => string;
+  copySelected?: string;
+  copiedToClipboard?: string;
+  copyFailed?: string;
   booleanTrue: string;
   booleanFalse: string;
   /** Non-virtual table overflow region; virtualized regions keep the caller caption. */

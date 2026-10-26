@@ -28,6 +28,10 @@ export interface DataTableColumn<T> {
   header: string;
   /** Raw value: used to sort, and rendered when `cell` is absent. */
   accessor?: (row: T) => CellValue;
+  /** Raw CSV/clipboard value; nullish results fall back to the accessor. */
+  exportValue?: (row: T) => CellValue;
+  /** Include in CSV/clipboard output (default true). Hidden columns are always omitted. */
+  exportable?: boolean;
   /** Custom cell rendering. */
   cell?: (row: T) => ReactNode;
   sortable?: boolean;

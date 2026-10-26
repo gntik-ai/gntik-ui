@@ -213,6 +213,18 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                 </div>
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'block' && it.id === 'data-table' && (
+                <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">CSV export and clipboard</h4>
+                  <Viewer
+                    kind="block"
+                    id="data-table--csv-export"
+                    title="Data table · CSV export and clipboard"
+                    file="../../../packages/blocks/src/tables/DataTable/examples/csv-export.tsx"
+                    height={height}
+                  />
+                </>
+              )}
               {kind === 'block' && it.id === 'log-viewer' && (
                 <>
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">Full messages and level names</h4>

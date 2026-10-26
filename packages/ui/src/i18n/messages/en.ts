@@ -1,3 +1,4 @@
+import { tableMenuEn } from './table-menu-messages';
 import { layersEn } from './layer-messages';
 import { catalogPreviewEn } from './catalog-preview-messages';
 import { typographyEn } from './typography-messages';
@@ -6,6 +7,7 @@ import { markdownEn } from './markdown-messages';
 import { cspEn } from './csp-messages';
 /** Built-in English labels, accessible names and announcements. See format.ts for interpolation syntax. */
 export const en = {
+  ...tableMenuEn,
   ...layersEn,
   ...cspEn,
   ...catalogPreviewEn,
@@ -467,12 +469,6 @@ export const en = {
   'table.actions': 'Actions',
   'table.rowActions': 'Actions for {label}',
   'table.emptyDescription': 'Nothing matches the current filters.',
-  'table.columns': 'Columns',
-  'table.visibleColumns': 'Visible columns',
-  'table.density': 'Row density',
-  'table.comfortable': 'Comfortable rows',
-  'table.compact': 'Compact rows',
-  'table.editRow': 'Edit {label}',
   'filters.label': 'Filters',
   'filters.savedView': 'Saved view',
   'filters.savedViews': 'Saved views',
