@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'beta',
   description:
-    'Time range field for logs and metrics: quick presets (last 15 minutes, 1 hour, 24 hours, 7 days, 30 days, custom), a relative "Last N minutes/hours/days" mode and an absolute mode with a range Calendar plus start and end TimePickers, validated so the end is after the start. The value is serialisable: `{ mode: "relative", amount, unit }` or `{ mode: "absolute", start, end }`; `resolveTimeRange` turns it into instants.',
+    'Time range field for logs and metrics: quick presets (last 15 minutes, 1 hour, 24 hours, 7 days, 30 days, custom), a relative "Last N minutes/hours/days" mode and an absolute mode with a range Calendar plus start and end TimePickers, validated so the end is after the start. The value is serialisable: `{ mode: "relative", amount, unit }` or `{ mode: "absolute", start, end }`; `resolveTimeRange` turns it into instants. `timeZone` (IANA, UTC or system) defaults to I18nProvider then the browser; invalid names fall back to the browser. Absolute calendar days, today, min/max, time segments and edits use the zone, with compatible DST disambiguation (gaps move forward; overlaps choose the earlier instant). Non-system zones appear in the field text and start/end labels; `hideTimeZone` removes those labels. Relative presets remain instant-based and hidden start/end inputs remain ISO instants. DateTimeRangePickerUtc demonstrates UTC absolute editing and hidden zone labels.',
   primitive: '@base-ui/react/popover + Calendar, TimePicker, NumberInput, Select, ToggleGroup',
   pattern: 'combobox with a dialog popup',
   keyboard: [

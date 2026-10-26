@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from 'react';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
+import { formatTimeZoneLabel, fromZonedParts, isValidTimeZone, zonedParts } from '../../i18n/time-zone';
 import { cn } from '../../utils/cn';
 import { Button } from '../Button';
 import { Calendar } from '../Calendar/Calendar';
@@ -35,6 +36,10 @@ export interface DateTimeRangePickerProps extends DatePickerVariantProps {
   /** "Now" for relative ranges and the calendar. Defaults to the time the popup opens. */
   now?: Date;
   locale?: string;
+  /** Display and edit absolute times in this IANA zone; defaults to the provider, then the browser. */
+  timeZone?: string;
+  /** Hide the zone in the field text and time labels. */
+  hideTimeZone?: boolean;
   /** Clock of the time fields. Defaults to the locale's. */
   hourCycle?: 12 | 24;
   weekStartsOn?: WeekDay;
@@ -65,22 +70,58 @@ interface Draft {
   endTime: string;
 }
 
-function draftFrom(value: TimeRangeValue | null | undefined, now: Date): Draft {
+function draftFrom(value: TimeRangeValue | null | undefined, now: Date, zone: string): Draft {
   const rel = value?.mode === 'relative' ? value : { amount: 1, unit: 'hour' as const };
   const { start, end } = value ? resolveTimeRange(value, now) : { start: null, end: null };
+  const startParts = start && zone !== 'system' ? zonedParts(start, zone) : null;
+  const endParts = end && zone !== 'system' ? zonedParts(end, zone) : null;
   return {
     mode: value?.mode ?? 'relative',
     amount: rel.amount,
     unit: rel.unit,
-    days: { start: start ? startOfDay(start) : null, end: end ? startOfDay(end) : null },
-    startTime: formatTimeOfDay(start ? timeOfDay(start) : { hours: 0, minutes: 0, seconds: 0 }),
-    endTime: formatTimeOfDay(end ? timeOfDay(end) : { hours: 23, minutes: 59, seconds: 0 }),
+    days: {
+      start: startParts
+        ? new Date(startParts.year, startParts.month - 1, startParts.day)
+        : start
+          ? startOfDay(start)
+          : null,
+      end: endParts ? new Date(endParts.year, endParts.month - 1, endParts.day) : end ? startOfDay(end) : null,
+    },
+    startTime: formatTimeOfDay(
+      startParts
+        ? { hours: startParts.hour, minutes: startParts.minute, seconds: startParts.second }
+        : start
+          ? timeOfDay(start)
+          : { hours: 0, minutes: 0, seconds: 0 },
+    ),
+    endTime: formatTimeOfDay(
+      endParts
+        ? { hours: endParts.hour, minutes: endParts.minute, seconds: endParts.second }
+        : end
+          ? timeOfDay(end)
+          : { hours: 23, minutes: 59, seconds: 0 },
+    ),
   };
 }
 
-const at = (day: Date | null, time: string) => {
+const at = (day: Date | null, time: string, zone: string) => {
   const tod = parseTimeOfDay(time);
-  return day && tod ? withTimeOfDay(day, tod) : null;
+  return day && tod
+    ? zone === 'system'
+      ? withTimeOfDay(day, tod)
+      : fromZonedParts(
+          {
+            year: day.getFullYear(),
+            month: day.getMonth() + 1,
+            day: day.getDate(),
+            hour: tod.hours,
+            minute: tod.minutes,
+            second: tod.seconds,
+          },
+          zone,
+          'compatible',
+        )
+    : null;
 };
 
 /**
@@ -95,6 +136,8 @@ export function DateTimeRangePicker({
   presets = DEFAULT_TIME_RANGE_PRESETS,
   now: nowProp,
   locale: localeProp,
+  timeZone: timeZoneProp,
+  hideTimeZone = false,
   hourCycle,
   weekStartsOn,
   min,
@@ -112,7 +155,9 @@ export function DateTimeRangePicker({
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
 }: DateTimeRangePickerProps) {
-  const { t } = useI18n();
+  const { t, timeZone: providerZone } = useI18n();
+  const requestedZone = timeZoneProp ?? providerZone;
+  const zone = isValidTimeZone(requestedZone) ? requestedZone : 'system';
   const providerLocale = useOptionalI18n()?.locale;
   const locale = localeProp ?? providerLocale;
   const uid = useId();
@@ -122,7 +167,7 @@ export function DateTimeRangePicker({
   const open = openProp ?? innerOpen;
   const [openedAt, setOpenedAt] = useState(() => new Date());
   const now = nowProp ?? openedAt;
-  const [draft, setDraft] = useState<Draft>(() => draftFrom(range, now));
+  const [draft, setDraft] = useState<Draft>(() => draftFrom(range, now, zone));
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const presetsRef = useRef<HTMLDivElement | null>(null);
   const s = datePickerVariants({ size });
@@ -152,6 +197,9 @@ export function DateTimeRangePicker({
           hour: 'numeric',
           minute: '2-digit',
           ...(hourCycle ? { hourCycle: hourCycle === 12 ? 'h12' : 'h23' } : {}),
+          ...(zone !== 'system'
+            ? { timeZone: zone, ...(!hideTimeZone ? ({ timeZoneName: 'short' } as const) : {}) }
+            : {}),
         }).formatRange(range.start, range.end);
   const resolved = range ? resolveTimeRange(range, now) : null;
 
@@ -159,7 +207,7 @@ export function DateTimeRangePicker({
     if (next) {
       const opened = new Date();
       setOpenedAt(opened);
-      setDraft(draftFrom(range, nowProp ?? opened));
+      setDraft(draftFrom(range, nowProp ?? opened, zone));
     }
     setInnerOpen(next);
     onOpenChange?.(next);
@@ -171,8 +219,14 @@ export function DateTimeRangePicker({
     setOpen(false);
   };
 
-  const startAt = at(draft.days.start, draft.startTime);
-  const endAt = at(draft.days.end, draft.endTime);
+  const startAt = at(draft.days.start, draft.startTime, zone);
+  const endAt = at(draft.days.end, draft.endTime, zone);
+  const showZone = zone !== 'system' && !hideTimeZone;
+  // Calendar's local-midnight proxies carry zone dates, never absolute instants.
+  const proxyDay = (instant: Date) => {
+    const p = zonedParts(instant, zone);
+    return new Date(p.year, p.month - 1, p.day);
+  };
   const error = timeRangeError(startAt, endAt);
   const showError = draft.mode === 'absolute' && !!draft.days.start && !!draft.days.end && error !== null;
   const errorId = `${uid}-error`;
@@ -280,15 +334,17 @@ export function DateTimeRangePicker({
                   onValueChange={(days) => setDraft((d) => ({ ...d, days }))}
                   locale={locale}
                   weekStartsOn={weekStartsOn}
-                  min={min}
-                  max={max}
-                  today={now}
+                  min={zone === 'system' || !min ? min : proxyDay(min)}
+                  max={zone === 'system' || !max ? max : proxyDay(max)}
+                  today={zone === 'system' ? now : proxyDay(now)}
                   className="p-0"
                 />
                 <div className={v.times()}>
                   <div className={v.timeField()}>
                     <span id={`${uid}-start`} className={v.label()}>
-                      {t('timeRange.startTime')}
+                      {showZone
+                        ? t('timeRange.startTimeIn', { timeZone: formatTimeZoneLabel(zone, startAt ?? now, locale) })
+                        : t('timeRange.startTime')}
                     </span>
                     <TimePicker
                       aria-labelledby={`${uid}-start`}
@@ -302,7 +358,9 @@ export function DateTimeRangePicker({
                   </div>
                   <div className={v.timeField()}>
                     <span id={`${uid}-end`} className={v.label()}>
-                      {t('timeRange.endTime')}
+                      {showZone
+                        ? t('timeRange.endTimeIn', { timeZone: formatTimeZoneLabel(zone, endAt ?? now, locale) })
+                        : t('timeRange.endTime')}
                     </span>
                     <TimePicker
                       aria-labelledby={`${uid}-end`}

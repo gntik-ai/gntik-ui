@@ -5,7 +5,6 @@ import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
 import { cspEs } from './csp-messages';
 import type { Messages } from './en';
-
 /** Built-in Spanish catalog. */
 export const es: Messages = {
   ...layersEs,
@@ -15,11 +14,9 @@ export const es: Messages = {
   ...motionEs,
   ...markdownEs,
   'contact.sendFailed': 'No hemos podido enviar tu mensaje. Inténtalo de nuevo.',
-
   'error.title': 'No se pudieron cargar los despliegues',
   'error.message': 'El servicio no respondió a tiempo. Tus datos están a salvo; vuelve a intentarlo en un momento.',
   'error.support': 'Contactar con soporte',
-
   'emptyState.noAccess.title': 'No tienes acceso a {resource}',
   'emptyState.noAccess.description': 'Pide a {owner} que te asigne un rol con permisos de {resource}.',
   'emptyState.noAccess.request': 'Solicitar acceso',
@@ -729,6 +726,11 @@ export const es: Messages = {
   'timePicker.period': 'a. m./p. m.',
   'timePicker.empty': 'Vacío',
   'datePicker.time': 'Hora',
+  'datePicker.timeIn': 'Hora ({timeZone})',
+  'datePicker.zonedExampleLabel': 'Ejecutar a las',
+  'datePicker.zonedExampleDescription': 'Hora de UTC; los valores enviados incluyen el desfase.',
+  'datePicker.hiddenZoneExampleLabel': 'Ejecutar sin etiquetas de zona',
+  'datePicker.utcDateExampleLabel': 'Fecha UTC',
   'datePicker.done': 'Listo',
   'datePicker.dateTimePlaceholder': 'Elige fecha y hora',
   'timeRange.placeholder': 'Elige un intervalo',
@@ -750,7 +752,11 @@ export const es: Messages = {
   'timeRange.start': 'Inicio',
   'timeRange.end': 'Fin',
   'timeRange.startTime': 'Hora de inicio',
+  'timeRange.startTimeIn': 'Hora de inicio ({timeZone})',
   'timeRange.endTime': 'Hora de fin',
+  'timeRange.endTimeIn': 'Hora de fin ({timeZone})',
+  'timeRange.zonedExampleLabel': 'Intervalo UTC',
+  'timeRange.hiddenZoneExampleLabel': 'Intervalo sin etiquetas de zona',
   'timeRange.apply': 'Aplicar',
   'timeRange.endBeforeStart': 'El fin debe ser posterior al inicio.',
   'timeRange.incomplete': 'Elige un inicio y un fin.',
