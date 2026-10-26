@@ -51,7 +51,8 @@ export function ComboboxInput({
   const triggerLabel = triggerLabelProp ?? t('common.showOptions');
   const autoId = useId();
   const inputId = id ?? autoId;
-  const v = comboboxVariants({ size, variant: useFieldVariant(variant) });
+  const fieldVariant = useFieldVariant(variant);
+  const v = comboboxVariants({ size, variant: fieldVariant });
   return (
     <>
       {label && (
@@ -60,7 +61,13 @@ export function ComboboxInput({
         </label>
       )}
       <BaseCombobox.InputGroup
-        className={(state) => cn(v.inputGroup(), (state.readOnly || props.readOnly) && 'bg-secondary/40', className)}
+        className={(state) =>
+          cn(
+            v.inputGroup(),
+            fieldVariant !== 'outline' && (state.readOnly || props.readOnly) && 'bg-secondary/40',
+            className,
+          )
+        }
       >
         <Search size={15} aria-hidden className={v.searchIcon()} />
         <BaseCombobox.Input
@@ -107,7 +114,8 @@ export function ComboboxChipsInput<Item = unknown>({
   id,
   ...props
 }: ComboboxChipsInputProps<Item>) {
-  const v = comboboxVariants({ variant: useFieldVariant(variant) });
+  const fieldVariant = useFieldVariant(variant);
+  const v = comboboxVariants({ variant: fieldVariant });
   const { t } = useI18n();
   const onKeyDown = useVirtualOptionsKeyDown(props.onKeyDown);
   const removeLabel = removeLabelProp ?? ((l: string) => t('common.removeItem', { label: l }));
@@ -121,7 +129,13 @@ export function ComboboxChipsInput<Item = unknown>({
         </label>
       )}
       <BaseCombobox.InputGroup
-        className={(state) => cn(v.chipsGroup(), (state.readOnly || props.readOnly) && 'bg-secondary/40', className)}
+        className={(state) =>
+          cn(
+            v.chipsGroup(),
+            fieldVariant !== 'outline' && (state.readOnly || props.readOnly) && 'bg-secondary/40',
+            className,
+          )
+        }
       >
         <BaseCombobox.Value>
           {(values: Item[]) => (

@@ -77,13 +77,16 @@ export interface SelectTriggerProps
 
 /** The button that shows the current value and a chevron, and opens the popup. */
 export function SelectTrigger({ variant, size, className, placeholder, children, ref, ...props }: SelectTriggerProps) {
-  const v = selectVariants({ size, variant: useFieldVariant(variant) });
+  const fieldVariant = useFieldVariant(variant);
+  const v = selectVariants({ size, variant: fieldVariant });
   const context = useContext(SelectTriggerContext);
   return useRender({
     ref: [ref ?? null, context?.setTrigger ?? null],
     render: (
       <BaseSelect.Trigger
-        className={(state) => cn(v.trigger(), state.readOnly && 'bg-secondary/40', className)}
+        className={(state) =>
+          cn(v.trigger(), fieldVariant !== 'outline' && state.readOnly && 'bg-secondary/40', className)
+        }
         {...props}
       >
         <BaseSelect.Value className={v.value()} placeholder={placeholder}>

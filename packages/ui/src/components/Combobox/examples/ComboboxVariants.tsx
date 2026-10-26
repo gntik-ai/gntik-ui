@@ -13,16 +13,13 @@ export default function ComboboxVariants() {
         return (
           <div key={variant} className="grid gap-2">
             <Combobox items={['member']}>
-              <ComboboxInput variant={variant} aria-label={props['aria-label']} />
+              <ComboboxInput {...props} />
               <ComboboxContent>
                 {(value: string) => <ComboboxItem value={value}>{t('fieldVariants.option')}</ComboboxItem>}
               </ComboboxContent>
             </Combobox>
             <Combobox items={['member']} multiple>
-              <ComboboxChipsInput
-                variant={variant}
-                aria-label={`${props['aria-label']} ${t('fieldVariants.entries')}`}
-              />
+              <ComboboxChipsInput {...props} aria-label={`${props['aria-label']} ${t('fieldVariants.entries')}`} />
             </Combobox>
           </div>
         );

@@ -210,7 +210,7 @@ export function TimePicker({
                 buffer.current = null;
                 p.onBlur?.(e);
               }}
-              className={cn(s.root(), readOnly && 'bg-secondary/40', className)}
+              className={cn(s.root(), fieldVariant !== 'outline' && readOnly && 'bg-secondary/40', className)}
             >
               {icon && <Clock size={size === 'sm' ? 14 : 15} aria-hidden className={s.icon()} />}
               <div dir="ltr" className={s.segments()}>

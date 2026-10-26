@@ -82,7 +82,11 @@ export function DateTrigger({
                     'aria-invalid': invalid || undefined,
                     ...(aria['aria-label'] ? { 'aria-label': aria['aria-label'] } : {}),
                     ...(aria['aria-describedby'] ? { 'aria-describedby': aria['aria-describedby'] } : {}),
-                    className: cn(s.input(), readOnly && 'bg-secondary/40', canClear && 'pe-16'),
+                    className: cn(
+                      s.input(),
+                      fieldVariant !== 'outline' && readOnly && 'bg-secondary/40',
+                      canClear && 'pe-16',
+                    ),
                   })}
                 />
               )}

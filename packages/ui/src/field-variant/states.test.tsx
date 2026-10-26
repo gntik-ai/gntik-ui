@@ -49,7 +49,13 @@ for (const [name, view, role, wrapped] of controls) {
       render(view({ variant, readOnly: true }));
       const control = screen.getByRole(role, { name: 'Control' });
       const root = wrapped ? control.closest('.border') : control;
-      expect(root?.className).toContain('bg-secondary/40');
+      if (
+        variant === 'outline' &&
+        ['Select', 'Combobox', 'DatePicker', 'DateRangePicker', 'TimePicker'].includes(name)
+      ) {
+        expect(root).toHaveClass('bg-background');
+        expect(root).not.toHaveClass('bg-secondary/40');
+      } else expect(root?.className).toContain('bg-secondary/40');
       if (role === 'group')
         expect(screen.getByRole('spinbutton', { name: 'Hours' })).toHaveAttribute('aria-readonly', 'true');
       else if (name === 'Select') expect(control).toHaveAttribute('aria-readonly', 'true');

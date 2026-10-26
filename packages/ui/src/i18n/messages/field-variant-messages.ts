@@ -8,9 +8,7 @@ export const fieldVariantsEn = {
   'fieldVariants.choice': 'Choice',
   'fieldVariants.option': 'Member',
   'fieldVariants.notes': 'Notes',
-  'fieldVariants.quantity': 'Quantity',
   'fieldVariants.entries': 'Entries',
-  'fieldVariants.time': 'Time',
   'fieldVariants.range': 'Date range',
   'fieldVariants.inlineEdit': 'Edit row',
   'fieldVariants.toolbar': 'Filter toolbar',
@@ -18,7 +16,6 @@ export const fieldVariantsEn = {
   'fieldVariants.filled': 'Filled field',
   'fieldVariants.ghost': 'Ghost field',
   'fieldVariants.readOnly': 'Read-only field',
-  'fieldVariants.disabled': 'Disabled field',
 } as const;
 
 export const fieldVariantsEs = {
@@ -30,9 +27,7 @@ export const fieldVariantsEs = {
   'fieldVariants.choice': 'Opción',
   'fieldVariants.option': 'Miembro',
   'fieldVariants.notes': 'Notas',
-  'fieldVariants.quantity': 'Cantidad',
   'fieldVariants.entries': 'Entradas',
-  'fieldVariants.time': 'Hora',
   'fieldVariants.range': 'Rango de fechas',
   'fieldVariants.inlineEdit': 'Editar fila',
   'fieldVariants.toolbar': 'Barra de filtros',
@@ -40,5 +35,4 @@ export const fieldVariantsEs = {
   'fieldVariants.filled': 'Campo relleno',
   'fieldVariants.ghost': 'Campo sin fondo',
   'fieldVariants.readOnly': 'Campo de solo lectura',
-  'fieldVariants.disabled': 'Campo desactivado',
 } satisfies Record<keyof typeof fieldVariantsEn, string>;

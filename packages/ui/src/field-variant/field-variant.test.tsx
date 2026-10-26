@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { Input } from '../components/Input/Input';
 import { Textarea } from '../components/Textarea/Textarea';
 import { NumberInput } from '../components/NumberInput/NumberInput';
+import { Field } from '../components/Field/Field';
 import { SimpleSelect } from '../components/Select/Select';
 import { Combobox, ComboboxInput } from '../components/Combobox/Combobox';
 import { MultiSelect } from '../components/MultiSelect/MultiSelect';
@@ -11,7 +12,7 @@ import { DatePicker } from '../components/DatePicker/DatePicker';
 import { TimePicker } from '../components/TimePicker/TimePicker';
 
 it.each(['ghost', 'filled'] as const)(
-  'Input renders %s chrome and preserves error and keyboard focus styles',
+  'Input renders %s chrome with invalid state, keyboard focus and focus classes',
   async (variant) => {
     const user = userEvent.setup();
     render(<Input variant={variant} aria-label="Name" invalid />);
@@ -64,7 +65,11 @@ it.each(['ghost', 'filled'] as const)('NumberInput renders %s chrome with error 
 });
 
 it.each(['ghost', 'filled'] as const)('Select renders %s chrome with error styles', (variant) => {
-  render(<SimpleSelect variant={variant} aria-label="Control" items={[]} />);
+  render(
+    <Field invalid>
+      <SimpleSelect variant={variant} aria-label="Control" items={[]} />
+    </Field>,
+  );
   const root = screen.getByRole('combobox');
   expect(root).toHaveClass(
     'border-transparent',
@@ -73,7 +78,13 @@ it.each(['ghost', 'filled'] as const)('Select renders %s chrome with error style
   );
   expect(root).not.toHaveClass('border-border', 'bg-background', 'shadow-sm');
   expect(root).toHaveClass('forced-colors:border-[ButtonText]');
-  expect(root).toHaveClass('focus-visible:border-primary/60', 'data-popup-open:border-primary/60');
+  expect(root).toHaveAttribute('aria-invalid', 'true');
+  expect(root).toHaveClass(
+    'data-invalid:border-destructive/70',
+    'aria-invalid:border-destructive/70',
+    'focus-visible:border-primary/60',
+    'data-popup-open:border-primary/60',
+  );
 });
 
 it.each(['ghost', 'filled'] as const)('Combobox renders %s chrome with error styles', (variant) => {

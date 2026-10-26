@@ -31,7 +31,7 @@ With variant filled, a field control SHALL use bg-secondary with border-transpar
 
 ### Requirement: FieldVariantProvider sets the default variant
 
-Field controls inside FieldVariantProvider SHALL use its variant unless they set variant explicitly. Nested providers SHALL override outer providers. Without a prop or provider the default SHALL be outline, with byte-identical existing slot classes and unchanged snapshots and markup fixtures. FieldVariantProps SHALL retain its existing meaning.
+Field controls inside FieldVariantProvider SHALL use its variant unless they set variant explicitly. Nested providers SHALL override outer providers. Without a prop or provider the default SHALL be outline, with byte-identical existing slot classes and unchanged snapshots and markup fixtures. Existing read-only and disabled outline fields SHALL also keep their byte-identical class strings. Internal DatePicker and DateRangePicker popup controls SHALL stay outlined regardless of the surrounding provider so popup chrome remains visible. FieldVariantProps SHALL retain its existing meaning.
 
 #### Scenario: Editable table
 
@@ -44,6 +44,18 @@ Field controls inside FieldVariantProvider SHALL use its variant unless they set
 - **GIVEN** a ghost provider containing a filled provider
 - **WHEN** an Input has no explicit variant
 - **THEN** the nearest provider determines its chrome
+
+#### Scenario: Read-only default compatibility
+
+- **GIVEN** an existing read-only Select, Combobox, DatePicker, DateRangePicker or TimePicker without a variant
+- **WHEN** it renders without a provider
+- **THEN** its classes stay byte-identical to the original outline field
+
+#### Scenario: Picker popup chrome
+
+- **GIVEN** a DatePicker or DateRangePicker in a ghost provider
+- **WHEN** its popup opens
+- **THEN** its trigger stays ghost and its internal month, year and time fields stay outlined
 
 ### Requirement: Field chrome is documented and localized
 

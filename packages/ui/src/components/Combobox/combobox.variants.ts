@@ -2,6 +2,9 @@ import { fieldControlVariants } from '../../field-variant/field-control-variants
 import { tv, type VariantProps } from '../../utils/tv';
 import { listboxItem, listboxPopup } from '../Select/select.variants';
 
+const invalidField =
+  'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70';
+
 const field = [
   'rounded-md border border-border bg-background text-foreground shadow-sm transition-colors',
   'focus-within:border-primary/60 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-focus-ring',
@@ -44,24 +47,12 @@ export const comboboxVariants = tv({
     variant: {
       outline: {},
       filled: {
-        inputGroup: [
-          fieldControlVariants.filled,
-          'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70',
-        ],
-        chipsGroup: [
-          fieldControlVariants.filled,
-          'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70',
-        ],
+        inputGroup: [fieldControlVariants.filled, invalidField],
+        chipsGroup: [fieldControlVariants.filled, invalidField],
       },
       ghost: {
-        inputGroup: [
-          fieldControlVariants.ghost,
-          'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70',
-        ],
-        chipsGroup: [
-          fieldControlVariants.ghost,
-          'data-invalid:border-destructive/70 has-[input[aria-invalid=true]]:border-destructive/70 has-[input[data-invalid]]:border-destructive/70',
-        ],
+        inputGroup: [fieldControlVariants.ghost, invalidField],
+        chipsGroup: [fieldControlVariants.ghost, invalidField],
       },
     },
 

@@ -14,8 +14,12 @@ export default function DatePickerVariants() {
         return (
           <div key={variant} className="grid gap-2">
             <>
-              <DatePicker {...props} />
-              <DateRangePicker {...props} aria-label={`${props['aria-label']} ${t('fieldVariants.range')}`} />
+              <DatePicker {...props} withTime captionLayout="select" />
+              <DateRangePicker
+                {...props}
+                captionLayout="select"
+                aria-label={`${props['aria-label']} ${t('fieldVariants.range')}`}
+              />
             </>
           </div>
         );

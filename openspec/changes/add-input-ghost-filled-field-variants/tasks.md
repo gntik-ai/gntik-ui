@@ -9,7 +9,7 @@
 ## 2. Tests
 
 - [x] 2.1 Exercise alternate chrome and state semantics through rendered controls, red before green.
-- [x] 2.2 Check provider precedence, nested providers and byte-identical default slots against the immutable base.
+- [x] 2.2 Check provider precedence, nested providers and byte-identical default slots against the immutable base, including rendered read-only and disabled outline controls and internal picker popup chrome.
 - [x] 2.3 Check filled-field foreground and placeholder contrast in every theme.
 - [ ] 2.4 Run browser axe on live examples in all three themes in PR CI.
 
@@ -23,4 +23,4 @@
 ## Worker handoff
 
 - Browser axe, visual and app builds run in PR CI by policy. Structural axe on the new previews and three-theme filled contrast checks run locally.
-- The tokens mirror-install check cannot complete without the public registry: its offline fallback expects gntik-ai-tokens-0.2.1.tgz, which is absent after packing the current package version. Rerun it in PR CI.
+- The other 12 token test files pass locally. The mirror-install check needs PR CI: without registry access, its offline fallback packs version 0.3.0 but tries to read the missing gntik-ai-tokens-0.2.1.tgz (ENOENT).

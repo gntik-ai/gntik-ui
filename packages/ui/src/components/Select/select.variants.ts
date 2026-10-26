@@ -16,6 +16,11 @@ export const listboxItem = [
   'data-disabled:cursor-disabled data-disabled:opacity-45',
 ];
 
+const alternateTrigger = [
+  fieldPickerHover,
+  'focus-visible:border-primary/60 data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
+];
+
 export const selectVariants = tv({
   slots: {
     label: 'mb-2 block text-[13px] font-medium text-foreground',
@@ -46,18 +51,10 @@ export const selectVariants = tv({
     variant: {
       outline: {},
       filled: {
-        trigger: [
-          fieldControlVariants.filled,
-          fieldPickerHover,
-          'focus-visible:border-primary/60 data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
-        ],
+        trigger: [fieldControlVariants.filled, alternateTrigger],
       },
       ghost: {
-        trigger: [
-          fieldControlVariants.ghost,
-          fieldPickerHover,
-          'focus-visible:border-primary/60 data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
-        ],
+        trigger: [fieldControlVariants.ghost, alternateTrigger],
       },
     },
 

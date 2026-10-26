@@ -1,3 +1,4 @@
+import { FieldVariantProvider } from '../../field-variant/FieldVariantProvider';
 import { type ClearableProps } from '../../utils/clear-control';
 import { useId, useRef, useState, type Ref } from 'react';
 import { Calendar, type CalendarSingleProps } from '../Calendar/Calendar';
@@ -229,101 +230,103 @@ export function DatePicker({
         padding="none"
         initialFocus={() => focusCalendarDay(calendarRef.current)}
       >
-        <Calendar
-          key={String(open)}
-          ref={calendarRef}
-          aria-label={t('datePicker.choose')}
-          value={zone === 'system' || !date ? date : proxyDay(date)}
-          onValueChange={(d) => {
-            if (withTime) {
-              if (zone === 'system') {
-                change(withTimeOfDay(d, date ? timeOfDay(date) : { hours: 0, minutes: 0, seconds: 0 }));
-              } else {
-                change(
-                  fromZonedParts(
-                    {
-                      year: d.getFullYear(),
-                      month: d.getMonth() + 1,
-                      day: d.getDate(),
-                      hour: time?.hours ?? 0,
-                      minute: time?.minutes ?? 0,
-                      second: time?.seconds ?? 0,
-                    },
-                    zone,
-                    'compatible',
-                  ),
-                );
-              }
-              return;
-            }
-            change(
-              zone === 'system'
-                ? d
-                : fromZonedParts(
-                    {
-                      year: d.getFullYear(),
-                      month: d.getMonth() + 1,
-                      day: d.getDate(),
-                      hour: 0,
-                      minute: 0,
-                    },
-                    zone,
-                    'compatible',
-                  ),
-            );
-            setOpen(false);
-          }}
-          locale={locale}
-          weekStartsOn={weekStartsOn}
-          min={zone === 'system' || !min ? min : proxyDay(min)}
-          max={zone === 'system' || !max ? max : proxyDay(max)}
-          isDateDisabled={isDateDisabled}
-          maxView={maxView}
-          captionLayout={captionLayout}
-          today={zone === 'system' ? today : proxyDay(today ?? new Date())}
-        />
-        {!withTime && clearAction && <div className={s.timeRow()}>{clearAction}</div>}
-        {withTime && (
-          <div className={s.timeRow()}>
-            <span id={timeLabelId} className={s.timeLabel()}>
-              {zoneLabel ? t('datePicker.timeIn', { timeZone: zoneLabel }) : t('datePicker.time')}
-            </span>
-            <TimePicker
-              aria-labelledby={timeLabelId}
-              value={time ? formatTimeOfDay(time, withSeconds) : null}
-              onValueChange={(v) => {
-                const tod = parseTimeOfDay(v);
-                if (tod) {
+        <FieldVariantProvider variant="outline">
+          <Calendar
+            key={String(open)}
+            ref={calendarRef}
+            aria-label={t('datePicker.choose')}
+            value={zone === 'system' || !date ? date : proxyDay(date)}
+            onValueChange={(d) => {
+              if (withTime) {
+                if (zone === 'system') {
+                  change(withTimeOfDay(d, date ? timeOfDay(date) : { hours: 0, minutes: 0, seconds: 0 }));
+                } else {
                   change(
-                    zone === 'system'
-                      ? withTimeOfDay(date ?? today ?? new Date(), tod)
-                      : fromZonedParts(
-                          {
-                            ...zonedParts(date ?? today ?? new Date(), zone),
-                            hour: tod.hours,
-                            minute: tod.minutes,
-                            second: tod.seconds,
-                            millisecond: 0,
-                          },
-                          zone,
-                          'compatible',
-                        ),
+                    fromZonedParts(
+                      {
+                        year: d.getFullYear(),
+                        month: d.getMonth() + 1,
+                        day: d.getDate(),
+                        hour: time?.hours ?? 0,
+                        minute: time?.minutes ?? 0,
+                        second: time?.seconds ?? 0,
+                      },
+                      zone,
+                      'compatible',
+                    ),
                   );
                 }
-              }}
-              hourCycle={hourCycle}
-              locale={locale}
-              step={timeStep}
-              withSeconds={withSeconds}
-              size="sm"
-              className="w-auto flex-1"
-            />
-            {clearAction}
-            <Button size="sm" onClick={() => setOpen(false)}>
-              {t('datePicker.done')}
-            </Button>
-          </div>
-        )}
+                return;
+              }
+              change(
+                zone === 'system'
+                  ? d
+                  : fromZonedParts(
+                      {
+                        year: d.getFullYear(),
+                        month: d.getMonth() + 1,
+                        day: d.getDate(),
+                        hour: 0,
+                        minute: 0,
+                      },
+                      zone,
+                      'compatible',
+                    ),
+              );
+              setOpen(false);
+            }}
+            locale={locale}
+            weekStartsOn={weekStartsOn}
+            min={zone === 'system' || !min ? min : proxyDay(min)}
+            max={zone === 'system' || !max ? max : proxyDay(max)}
+            isDateDisabled={isDateDisabled}
+            maxView={maxView}
+            captionLayout={captionLayout}
+            today={zone === 'system' ? today : proxyDay(today ?? new Date())}
+          />
+          {!withTime && clearAction && <div className={s.timeRow()}>{clearAction}</div>}
+          {withTime && (
+            <div className={s.timeRow()}>
+              <span id={timeLabelId} className={s.timeLabel()}>
+                {zoneLabel ? t('datePicker.timeIn', { timeZone: zoneLabel }) : t('datePicker.time')}
+              </span>
+              <TimePicker
+                aria-labelledby={timeLabelId}
+                value={time ? formatTimeOfDay(time, withSeconds) : null}
+                onValueChange={(v) => {
+                  const tod = parseTimeOfDay(v);
+                  if (tod) {
+                    change(
+                      zone === 'system'
+                        ? withTimeOfDay(date ?? today ?? new Date(), tod)
+                        : fromZonedParts(
+                            {
+                              ...zonedParts(date ?? today ?? new Date(), zone),
+                              hour: tod.hours,
+                              minute: tod.minutes,
+                              second: tod.seconds,
+                              millisecond: 0,
+                            },
+                            zone,
+                            'compatible',
+                          ),
+                    );
+                  }
+                }}
+                hourCycle={hourCycle}
+                locale={locale}
+                step={timeStep}
+                withSeconds={withSeconds}
+                size="sm"
+                className="w-auto flex-1"
+              />
+              {clearAction}
+              <Button size="sm" onClick={() => setOpen(false)}>
+                {t('datePicker.done')}
+              </Button>
+            </div>
+          )}
+        </FieldVariantProvider>
       </PopoverContent>
     </Popover>
   );
