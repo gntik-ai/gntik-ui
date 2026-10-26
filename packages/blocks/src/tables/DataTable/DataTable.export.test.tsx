@@ -151,7 +151,7 @@ it.each(['rows', 'page', 'selected'] as const)(
   },
 );
 
-it('locks the export trigger while a delegated promise is pending and releases it afterwards', async () => {
+it('preserves keyboard focus while a delegated export is pending and after it settles', async () => {
   let resolve!: () => void;
   const onExport = vi.fn(
     () =>
@@ -160,14 +160,20 @@ it('locks the export trigger while a delegated promise is pending and releases i
       }),
   );
   render(<DataTable rows={rows} columns={columns} csvExport onExport={onExport} />);
-  await choose('All rows (95)');
   const trigger = screen.getByRole('button', { name: 'Export' });
+  trigger.focus();
+  await user.keyboard('{Enter}');
+  await waitFor(() => expect(screen.getByRole('menuitem', { name: 'All rows (95)' })).toHaveFocus());
+  await user.keyboard('{Enter}');
   expect(trigger).toHaveAttribute('aria-busy', 'true');
+  await waitFor(() => expect(trigger).toHaveFocus());
+  await user.keyboard('{Enter}');
   await user.click(trigger);
   expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   expect(onExport).toHaveBeenCalledOnce();
   await act(async () => resolve());
   expect(trigger).not.toHaveAttribute('aria-busy', 'true');
+  expect(trigger).toHaveFocus();
   await choose('Current page');
   expect(onExport).toHaveBeenCalledTimes(2);
   await act(async () => resolve());
@@ -196,6 +202,31 @@ it('offers server export only with a delegate and reports the total count', asyn
     filters: undefined,
   });
   expect(downloadFile).not.toHaveBeenCalled();
+});
+
+it.each([
+  { type: 'include', ids: ['2', '15'] },
+  { type: 'exclude', ids: ['1'] },
+] as const)('does not offer partial clipboard data for a server selection: %j', async (selectionModel) => {
+  render(
+    <DataTable
+      rows={rows.slice(10, 20)}
+      columns={columns}
+      paginationMode="server"
+      page={2}
+      pageSize={10}
+      rowCount={95}
+      csvExport
+      onExport={vi.fn()}
+      selectionModel={{ type: selectionModel.type, ids: [...selectionModel.ids] }}
+    />,
+  );
+  const cell = screen.getByRole('cell', { name: 'Item 15' });
+  expect(fireEvent.keyDown(cell, { key: 'c', ctrlKey: true })).toBe(true);
+  expect(writeText).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name: 'Export' }));
+  expect(await screen.findByRole('menuitem', { name: /Selected rows/ })).toBeVisible();
+  expect(screen.queryByRole('menuitem', { name: 'Copy selected rows' })).not.toBeInTheDocument();
 });
 
 it.each([
@@ -309,6 +340,26 @@ it.each(['input', 'textarea', 'select', 'contenteditable'] as const)(
   },
 );
 
+it('leaves copy inside the inline cell editor to the browser', async () => {
+  render(
+    <DataTable
+      rows={rows.slice(0, 2)}
+      columns={[{ ...columns[0]!, editable: true }]}
+      onCellEdit={() => undefined}
+      csvExport
+      defaultSelectedIds={['1', '2']}
+    />,
+  );
+  screen.getByRole('button', { name: 'Item 1' }).focus();
+  await user.keyboard('{Enter}');
+  const editor = screen.getByRole('textbox', { name: 'Name for Item 1' });
+  expect(editor).toHaveFocus();
+  for (const modifier of ['ctrlKey', 'metaKey']) {
+    expect(fireEvent.keyDown(editor, { key: 'c', [modifier]: true })).toBe(true);
+  }
+  expect(writeText).not.toHaveBeenCalled();
+});
+
 it('uses the Spanish catalog for the entire export menu and copy feedback', async () => {
   render(
     <I18nProvider locale="es">
@@ -379,14 +430,13 @@ it.each([
   expect(writeText).not.toHaveBeenCalled();
 });
 
-it('slugs a supplied caption for the default filename', async () => {
-  render(<DataTable rows={rows.slice(0, 1)} columns={columns} caption=" Deployment history / 2026 " csvExport />);
+it.each([
+  [' Deployment history / 2026 ', 'deployment-history-2026.csv'],
+  ['Facturación', 'facturacion.csv'],
+])('slugs the supplied caption %j for the default filename', async (caption, fileName) => {
+  render(<DataTable rows={rows.slice(0, 1)} columns={columns} caption={caption} csvExport />);
   await choose('All rows (1)');
-  expect(downloadFile).toHaveBeenCalledWith(
-    '\uFEFFName\r\nItem 1',
-    'deployment-history-2026.csv',
-    'text/csv;charset=utf-8',
-  );
+  expect(downloadFile).toHaveBeenCalledWith('\uFEFFName\r\nItem 1', fileName, 'text/csv;charset=utf-8');
 });
 
 it('preserves the toolbar DOM and hidden-toolbar behaviour without csvExport', () => {

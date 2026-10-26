@@ -459,7 +459,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
               scopes={exportApi.scopes}
               busy={exportApi.busy}
               onExport={exportApi.exportRows}
-              onCopy={exportApi.copySelected}
+              onCopy={serverMode ? undefined : exportApi.copySelected}
               labels={labels}
             />
           )}

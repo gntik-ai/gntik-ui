@@ -12,6 +12,8 @@
 - [x] 2.2 Cover all formula triggers in headers, accessors and exportValue for both CSV and TSV.
 - [x] 2.3 Add example axe checks in all three themes and a browser suite for PR CI.
 
+- [x] 2.4 Reproduce and fix pending-export keyboard focus loss, partial server clipboard output and accented caption filenames; cover the real inline editor copy guard.
+
 ## 3. Docs and release
 
 - [x] 3.1 Add metadata and a reachable live CSV example with client, server delegation and single selection.

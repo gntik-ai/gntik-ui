@@ -22,27 +22,30 @@ export function useTableExport<T>(options: {
   const pending = useRef(false);
   const [busy, setBusy] = useState(false);
   const [announcement, setAnnouncement] = useState('');
+  const enabled = !!options.csvExport && (!options.serverMode || !!options.onExport);
   const config = typeof options.csvExport === 'object' ? options.csvExport : {};
-  const columns = options.columns.filter(
-    (column) => column.exportable !== false && (column.accessor || column.exportValue),
-  );
+  const columns = enabled
+    ? options.columns.filter((column) => column.exportable !== false && (column.accessor || column.exportValue))
+    : [];
   const fileName =
     config.fileName ??
     `${
       options.caption
         .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
+        .normalize('NFKD')
+        .replace(/\p{M}/gu, '')
+        .replace(/[^\p{L}\p{N}]+/gu, '-')
         .replace(/^-|-$/g, '') || 'table'
     }.csv`;
-  const selected = new Set(options.selectedIds);
-  const selectedRows = options.sortedRows.filter((row) => selected.has(options.getRowId(row)));
+  const selected = new Set(enabled && !options.serverMode ? options.selectedIds : []);
+  const selectedRows = selected.size ? options.sortedRows.filter((row) => selected.has(options.getRowId(row))) : [];
   const csvColumns = columns.map((column) => ({
     header: column.header,
     value: (row: T) => column.exportValue?.(row) ?? column.accessor?.(row),
   }));
-  const enabled = !!options.csvExport && (!options.serverMode || !!options.onExport);
   const scopes = config.scopes ?? ['rows', 'page', 'selected'];
   const copySelected = async () => {
+    if (!enabled || options.serverMode) return;
     setAnnouncement('');
     try {
       await copyToClipboard(toCsv(selectedRows, csvColumns, { delimiter: '\t' }));
@@ -54,6 +57,7 @@ export function useTableExport<T>(options: {
   const onCopyKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (
       !enabled ||
+      options.serverMode ||
       !scopes.includes('selected') ||
       selectedRows.length === 0 ||
       pending.current ||

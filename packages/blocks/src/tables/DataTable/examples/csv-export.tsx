@@ -35,8 +35,8 @@ export default function CsvExportExample() {
       <section className="space-y-3" aria-label="Delegated server export">
         <p className="text-sm text-muted-foreground">
           For large result sets, onExport handles the request instead of building a file in the browser. The trigger
-          stays busy until it settles. The consumer owns error feedback and fetching all server rows. Clipboard copying
-          uses only row data available to the table.
+          stays focusable and busy until it settles. The consumer owns error feedback and fetching all server rows.
+          Server tables omit clipboard copying because selected rows may be on unloaded pages.
         </p>
         <DataTable
           caption="Server deployments"
@@ -46,7 +46,8 @@ export default function CsvExportExample() {
           page={1}
           pageSize={10}
           rowCount={95}
-          csvExport={{ scopes: ['rows'] }}
+          defaultSelectedIds={[rows[1]!.id, rows[14]!.id]}
+          csvExport
           onExport={async (next) => {
             await new Promise<void>((resolve) => setTimeout(resolve, 500));
             setRequest(next);

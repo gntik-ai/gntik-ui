@@ -17,7 +17,7 @@ export function ExportMenu({
   scopes: readonly string[];
   busy: boolean;
   onExport: (scope: DataTableExportRequest['scope']) => void;
-  onCopy: () => void;
+  onCopy?: () => void;
   labels?: Partial<DataTableLabels>;
 }) {
   const { t, formatNumber } = useI18n();
@@ -26,7 +26,7 @@ export function ExportMenu({
       <MenuTrigger
         disabled={busy}
         aria-busy={busy || undefined}
-        render={<Button variant="secondary" size="sm" icon={Download} />}
+        render={<Button variant="secondary" size="sm" icon={Download} loading={busy} />}
       >
         {labels?.export ?? t('table.export')}
       </MenuTrigger>
@@ -47,7 +47,7 @@ export function ExportMenu({
               t('table.exportSelected', { count: formatNumber(selectedCount) })}
           </MenuItem>
         )}
-        {scopes.includes('selected') && selectedCount > 0 && (
+        {scopes.includes('selected') && selectedCount > 0 && onCopy && (
           <MenuItem disabled={busy} onClick={onCopy}>
             {labels?.copySelected ?? t('table.copySelected')}
           </MenuItem>
