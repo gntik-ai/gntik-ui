@@ -9,7 +9,6 @@
    direction (PreviewScope). The page itself is shared with chat.jsx (package-docs.jsx).
    ============================================================================ */
 import { buildEntries, sortEntries, PackageDocs } from './package-docs.jsx';
-import { providerDocumentation } from '../../../../packages/ui/src/components/CodeBlock/CodeBlock.doc';
 
 const hooksDocs = import.meta.glob('../../../../packages/ui/src/hooks/*.doc.ts', { eager: true, import: 'doc' });
 const hooksExamples = import.meta.glob('../../../../packages/ui/src/hooks/examples/*.tsx', { eager: true });
@@ -19,16 +18,10 @@ const hooksSources = import.meta.glob('../../../../packages/ui/src/hooks/example
   import: 'default',
 });
 
-const componentDocs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', {
+const docs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', {
   eager: true,
   import: 'doc',
 });
-const docs = Object.fromEntries(
-  Object.entries(componentDocs).map(([path, doc]) => [
-    path,
-    doc.name === 'CodeBlock' ? { ...doc, description: `${doc.description} ${providerDocumentation}` } : doc,
-  ]),
-);
 // Whole modules: helper files in examples/ (fixtures, demo routers) have no default export.
 const exampleModules = import.meta.glob('../../../../packages/ui/src/components/*/examples/*.tsx', { eager: true });
 const sources = import.meta.glob('../../../../packages/ui/src/components/*/examples/*.tsx', {

@@ -67,6 +67,8 @@ export function CodeBlock({
   const [loadRevision, setLoadRevision] = useState(0);
   const providerTokens = useMemo(
     () => (!highlight && highlighter && language ? highlightTokens(highlighter, source, language) : null),
+    // The highlighter mutates its grammar cache on load; its identity stays stable.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Recompute after a successful load.
     [source, language, highlight, highlighter, loadRevision],
   );
   useEffect(() => {

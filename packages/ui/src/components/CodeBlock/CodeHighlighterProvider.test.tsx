@@ -19,14 +19,9 @@ function HookBlock() {
 describe('CodeHighlighterProvider', () => {
   it('tokenizes whole source and memoizes across unrelated re-renders', () => {
     const tokenize = vi.fn(() => yamlTokens);
-    const tree = (filename: string) => (
-      <CodeHighlighterProvider highlighter={{ tokenize }}>
-        <CodeBlock code={yaml} language="yaml" filename={filename} />
-      </CodeHighlighterProvider>
-    );
     const highlighter = { tokenize };
-    const view = (filename: string) => (
-      <CodeHighlighterProvider highlighter={highlighter}>
+    const view = (filename: string, instance = highlighter) => (
+      <CodeHighlighterProvider highlighter={instance}>
         <CodeBlock code={yaml} language="yaml" filename={filename} />
       </CodeHighlighterProvider>
     );
@@ -37,7 +32,7 @@ describe('CodeHighlighterProvider', () => {
     rerender(view('two.yaml'));
     expect(tokenize).toHaveBeenCalledTimes(1);
     // Changing the instance invalidates the memo, even with the same tokenize function.
-    rerender(tree('three.yaml'));
+    rerender(view('three.yaml', { tokenize }));
     expect(tokenize).toHaveBeenCalledTimes(2);
   });
 
@@ -181,17 +176,18 @@ describe('lazy provider languages', () => {
     expect(warn).not.toHaveBeenCalled();
   });
 
-  it('isolates caches by instance and ignores load completion after unmount', async () => {
+  it('isolates caches by instance and suppresses late warnings after unmount', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const pending = deferredLoad();
     const first: CodeHighlighter = { tokenize: () => null, load: vi.fn(() => pending.promise) };
     const second: CodeHighlighter = { tokenize: () => null, load: vi.fn(() => pending.promise) };
     const { unmount } = render(
       <>
         <CodeHighlighterProvider highlighter={first}>
-          <CodeBlock code="x" language="yaml" />
+          <CodeBlock code="x" language="unmounted-grammar" />
         </CodeHighlighterProvider>
         <CodeHighlighterProvider highlighter={second}>
-          <CodeBlock code="x" language="yaml" />
+          <CodeBlock code="x" language="unmounted-grammar" />
         </CodeHighlighterProvider>
       </>,
     );
@@ -200,7 +196,26 @@ describe('lazy provider languages', () => {
       expect(second.load).toHaveBeenCalledTimes(1);
     });
     unmount();
+    await act(async () => pending.finish(false));
+    expect(warn).not.toHaveBeenCalled();
+  });
+
+  it('ignores a successful load from a replaced provider instance', async () => {
+    const pending = deferredLoad();
+    const old: CodeHighlighter = { tokenize: () => null, load: vi.fn(() => pending.promise) };
+    const current: CodeHighlighter = { tokenize: vi.fn(() => yamlTokens) };
+    const view = (highlighter: CodeHighlighter) => (
+      <CodeHighlighterProvider highlighter={highlighter}>
+        <CodeBlock code={yaml} language="yaml" />
+      </CodeHighlighterProvider>
+    );
+    const { rerender } = render(view(old));
+    await waitFor(() => expect(old.load).toHaveBeenCalledTimes(1));
+    rerender(view(current));
+    expect(screen.getByText('"api"')).toHaveClass('text-warning-text');
+    expect(current.tokenize).toHaveBeenCalledTimes(1);
     await act(async () => pending.finish(true));
+    expect(current.tokenize).toHaveBeenCalledTimes(1);
   });
 });
 

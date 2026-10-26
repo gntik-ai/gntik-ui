@@ -30,6 +30,9 @@ const scopeKinds: readonly (readonly [string, TokenKind])[] = [
   ['support.class', 'type'],
   ['entity.name.tag', 'property'],
   ['variable.other.property', 'property'],
+  // Delimiters inherit their enclosing construct's colour, as in the built-in tokenizer.
+  ['punctuation.definition.string', 'string'],
+  ['punctuation.definition.comment', 'comment'],
   ['punctuation', 'punctuation'],
 ];
 

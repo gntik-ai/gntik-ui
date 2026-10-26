@@ -1,6 +1,7 @@
 import type { ComponentDoc } from '../../doc';
 
-export const doc: ComponentDoc = {
+// Preserve the lightweight metadata exported by the core runtime entry.
+export const codeBlockDoc: ComponentDoc = {
   name: 'CodeBlock',
   group: 'Display',
   status: 'beta',
@@ -28,6 +29,8 @@ export const doc: ComponentDoc = {
   ],
 };
 
-// Catalog-only adapter instructions: keep optional-peer references out of the core runtime entry.
-export const providerDocumentation =
-  'Providers: install with `pnpm add shiki`, then import `createShikiHighlighter` from `@gntik-ai/ui/code-highlight-shiki` and wrap blocks in `<CodeHighlighterProvider highlighter={highlighter}>`. Keep the instance stable with useMemo or create it outside render. The adapter lazily loads YAML, Python, Go and SQL (yml/py/golang/postgresql aliases), using the JavaScript regex engine without WebAssembly. Other languages retain the built-in tokenizer; unavailable languages stay plain and warn once in development. Add or override grammars with `createShikiHighlighter({ languages: { typescript: loadTypeScriptGrammar } })`. Each async loader returns a Shiki LanguageInput; the example shows a YAML loader override. Custom CodeHighlighter implementations return CodeToken[][] for the whole source or null, with optional load(language): Promise<boolean>; useCodeHighlighter reads the nearest provider. Provider tokens use tokenClass only; invalid text or line counts fall back to the built-in tokenizer. Use maxHeight for long files to keep the panel scrollable; tokenization still runs on the main thread and is memoised.';
+// The catalog and registry read `doc`; this unexported-by-core object is tree-shaken from its bundle.
+export const doc: ComponentDoc = {
+  ...codeBlockDoc,
+  description: `Read-only code panel with optional whole-source grammars: install the optional peer with \`pnpm add shiki\`, then import \`createShikiHighlighter\` from \`@gntik-ai/ui/code-highlight-shiki\` and wrap blocks in \`<CodeHighlighterProvider highlighter={highlighter}>\`. ${codeBlockDoc.description} Keep the instance stable with useMemo or create it outside render. The adapter lazily loads YAML, Python, Go and SQL (yml/py/golang/postgresql aliases), using the JavaScript regex engine without WebAssembly. Other languages retain the built-in tokenizer; unavailable languages stay plain and warn once in development. Add grammars with \`createShikiHighlighter({ languages: { toml: loadTomlGrammar } })\`, as the live example demonstrates. Each async loader returns a Shiki LanguageInput and can also override a default grammar. Custom CodeHighlighter implementations return CodeToken[][] for the whole source or null, with optional load(language): Promise<boolean>; useCodeHighlighter reads the nearest provider. Provider tokens use tokenClass only; invalid text or line counts fall back to the built-in tokenizer. Use maxHeight for long files to keep the panel scrollable; tokenization still runs on the main thread and is memoised.`,
+};

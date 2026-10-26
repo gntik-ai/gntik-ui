@@ -8,12 +8,13 @@ const YAML = 'name: "api"\nreplicas: 2';
 const PYTHON = 'def greet():\n    """First line\n    Second line\n    Third line"""\n    return True';
 const GO = 'package main\n\nfunc main() {\n    println("ready")\n}';
 const SQL = 'SELECT name\nFROM services\nWHERE active = true;';
+const TOML = 'name = "api"\nreplicas = 2';
 
 export default function CodeBlockHighlighter() {
   const highlighter = useMemo(
     () =>
       createShikiHighlighter({
-        languages: { yaml: () => import('shiki/langs/yaml.mjs').then((module) => module.default) },
+        languages: { toml: () => import('shiki/langs/toml.mjs').then((module) => module.default) },
       }),
     [],
   );
@@ -24,6 +25,7 @@ export default function CodeBlockHighlighter() {
         <CodeBlock filename="greeting.py" language="python" code={PYTHON} showLineNumbers maxHeight={240} />
         <CodeBlock filename="main.go" language="go" code={GO} showLineNumbers maxHeight={240} />
         <CodeBlock filename="services.sql" language="sql" code={SQL} showLineNumbers maxHeight={240} />
+        <CodeBlock filename="config.toml" language="toml" code={TOML} showLineNumbers maxHeight={240} />
       </div>
     </CodeHighlighterProvider>
   );

@@ -1,6 +1,6 @@
 import { createShikiHighlighter } from './index';
 
-it('loads YAML lazily and maps keys and quoted string content without altering source', async () => {
+it('loads YAML lazily and maps complete strings and comments without altering source', async () => {
   const highlighter = createShikiHighlighter();
   const code = 'name: "api"\nreplicas: 2\n# comment';
   expect(highlighter.tokenize(code, 'yaml')).toBeNull();
@@ -8,16 +8,9 @@ it('loads YAML lazily and maps keys and quoted string content without altering s
   const lines = highlighter.tokenize(code, 'yaml')!;
   expect(lines.map((line) => line.map((token) => token.value).join('')).join('\n')).toBe(code);
   expect(lines[0]).toContainEqual({ kind: 'property', value: 'name' });
-  expect(
-    lines[0]
-      ?.filter((token) => token.kind === 'string')
-      .map((token) => token.value)
-      .join(''),
-  ).toContain('api');
+  expect(lines[0]).toContainEqual({ kind: 'string', value: '"api"' });
   expect(lines[1]).toContainEqual({ kind: 'number', value: '2' });
-  expect(lines[2]).toContainEqual({ kind: 'comment', value: ' comment' });
-  // Delimiter scopes are innermost, so they remain punctuation.
-  expect(lines[2]).toContainEqual({ kind: 'punctuation', value: '#' });
+  expect(lines[2]).toEqual([{ kind: 'comment', value: '# comment' }]);
   expect(highlighter.tokenize('const x = 1', 'ts')).toBeNull();
   expect(await highlighter.load?.('ts')).toBe(false);
   expect(await highlighter.load?.('cobol')).toBe(false);
@@ -34,6 +27,8 @@ it('preserves Python grammar state across a three-line string and maps function 
   for (const index of [1, 2, 3]) {
     expect(lines[index]?.some((token) => token.kind === 'string')).toBe(true);
   }
+  expect(lines[1]).toContainEqual({ kind: 'string', value: '"""first' });
+  expect(lines[3]).toContainEqual({ kind: 'string', value: '    third"""' });
   expect(lines[4]).toContainEqual({ kind: 'number', value: 'True' });
 });
 

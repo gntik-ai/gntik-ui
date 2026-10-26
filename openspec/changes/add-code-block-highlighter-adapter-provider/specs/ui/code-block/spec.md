@@ -69,13 +69,13 @@ If load resolves false or rejects and the built-in tokenizer does not support th
 
 The optional code-highlight-shiki entry SHALL dynamically load Shiki core, the JavaScript regex engine without WebAssembly and each grammar on demand. The core UI runtime entry SHALL contain no Shiki reference. Shiki SHALL be an optional peer. Defaults SHALL be yaml, python, go and sql, with yml, py, golang and postgresql aliases. The languages option SHALL allow additional or overriding grammar loaders.
 
-Scopes SHALL be evaluated innermost first: comment; string; constant.numeric and constant.language as number; keyword and storage as keyword; entity.name.function and support.function as function; entity.name.type, entity.name.class, support.type and support.class as type; entity.name.tag, support.type.property-name and variable.other.property as property; punctuation; otherwise plain. More specific property-name matches SHALL precede the general support.type match.
+Scopes SHALL be evaluated innermost first: comment; string; constant.numeric and constant.language as number; keyword and storage as keyword; entity.name.function and support.function as function; entity.name.type, entity.name.class, support.type and support.class as type; entity.name.tag, support.type.property-name and variable.other.property as property; punctuation; otherwise plain. More specific property-name matches SHALL precede the general support.type match. String and comment delimiter scopes (punctuation.definition.string and punctuation.definition.comment) SHALL retain the string or comment kind rather than generic punctuation colouring.
 
 #### Scenario: YAML keys and strings
 
 - **WHEN** name: "api" loads as YAML
-- **THEN** name uses the property class and string content uses the string class
-- **AND** delimiters follow their innermost punctuation scope
+- **THEN** name is a property token and the complete quoted string "api" is a string token
+- **AND** string quotes and comment markers use their enclosing string or comment class
 
 #### Scenario: Python multiline strings
 
