@@ -8,6 +8,14 @@ export const doc: ComponentDoc = {
     'Modal window for focused tasks: forms, details, confirmations. Compound parts (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose) in four sizes. Named stacking layers keep nested popups, toasts and tooltips above the modal; see LayeredOverlays.',
   primitive: '@base-ui/react/dialog',
   pattern: 'dialog (modal)',
+  anatomy:
+    '<Dialog>\n  <DialogTrigger>Open</DialogTrigger>\n  <DialogContent><DialogHeader><DialogTitle>Title</DialogTitle><DialogDescription>Description</DialogDescription></DialogHeader><DialogBody>Content</DialogBody><DialogFooter><DialogClose>Close</DialogClose></DialogFooter></DialogContent>\n</Dialog>',
+  dataAttributes: [
+    ['data-starting-style', 'backdrop', 'The part is entering; transition styles apply.'],
+    ['data-ending-style', 'backdrop', 'The part is leaving; transition styles apply.'],
+    ['data-starting-style', 'popup', 'The part is entering; transition styles apply.'],
+    ['data-ending-style', 'popup', 'The part is leaving; transition styles apply.'],
+  ],
   keyboard: [
     ['Enter / Space', 'On the trigger: opens the dialog and moves focus inside'],
     ['Tab / Shift+Tab', 'Cycles focus within the dialog (focus is trapped)'],

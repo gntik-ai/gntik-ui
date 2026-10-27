@@ -8,6 +8,8 @@
    ============================================================================ */
 import { useEffect, useMemo, useState } from 'react';
 import { Table, TableCaption, TableHeader, TableBody, TableRow, TableHead, TableCell, useI18n } from '@gntik-ai/ui';
+import kit from '../../../../kit-registry.json';
+import { itemForDoc } from './routes.js';
 import { CATALOG, loadSource } from '../preview-registry.js';
 import { previewQuery, usePreviewSettings } from '../preview-settings.jsx';
 
@@ -135,32 +137,48 @@ function Viewer({ kind, id, title, file, height }) {
   );
 }
 
-function Gallery({ kicker, title, intro, groups, kind, height, api }) {
+function Gallery({ kicker, title, intro, groups, kind, height, api, item }) {
   const { t } = useI18n();
   const names = groups.map(([g]) => g);
   const [group, setGroup] = useState('All');
-  const shown = group === 'All' ? groups : groups.filter(([g]) => g === group);
+  const shown = item
+    ? groups
+        .map(([g, entries]) => [g, entries.filter((it) => it.routeId === item.id)])
+        .filter(([, entries]) => entries.length)
+    : group === 'All'
+      ? groups
+      : groups.filter(([g]) => g === group);
   return (
     <div>
-      <SectionHead kicker={kicker} title={title} status="done" intro={intro} />
-      <div className="mb-8 flex flex-wrap gap-1.5" role="group" aria-label="Filter by family">
-        {['All', ...names].map((g) => (
-          <button
-            key={g}
-            type="button"
-            aria-pressed={group === g}
-            onClick={() => setGroup(g)}
-            className={
-              'h-7 rounded-md px-2.5 text-[12px] font-medium transition-colors ' +
-              (group === g
-                ? 'bg-primary/14 text-primary-text'
-                : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground')
-            }
-          >
-            {titleCase(g)}
-          </button>
-        ))}
-      </div>
+      <SectionHead kicker={kicker} title={item?.name ?? title} status="done" intro={item?.description ?? intro} />
+      {item && (
+        <a
+          href={'#' + { block: 'blocks', layout: 'layouts', template: 'templates' }[kind]}
+          className="mb-6 inline-block text-primary-text underline"
+        >
+          Back to full gallery
+        </a>
+      )}
+      {!item && (
+        <div className="mb-8 flex flex-wrap gap-1.5" role="group" aria-label="Filter by family">
+          {['All', ...names].map((g) => (
+            <button
+              key={g}
+              type="button"
+              aria-pressed={group === g}
+              onClick={() => setGroup(g)}
+              className={
+                'h-7 rounded-md px-2.5 text-[12px] font-medium transition-colors ' +
+                (group === g
+                  ? 'bg-primary/14 text-primary-text'
+                  : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground')
+              }
+            >
+              {titleCase(g)}
+            </button>
+          ))}
+        </div>
+      )}
       {shown.map(([g, items]) => (
         <section key={g} className="mb-12" aria-labelledby={`${kind}-${g}`}>
           <h2 id={`${kind}-${g}`} className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-primary-text">
@@ -170,7 +188,16 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
             <article key={it.id} className="mb-10" aria-labelledby={`${kind}-${it.id}-t`}>
               <div className="mb-1 flex flex-wrap items-baseline gap-x-3">
                 <h3 id={`${kind}-${it.id}-t`} className="text-[16px] font-semibold tracking-tight text-foreground">
-                  {it.title}
+                  {item ? (
+                    it.title
+                  ) : (
+                    <a
+                      className="hover:underline focus-visible:outline-2 focus-visible:outline-focus-ring"
+                      href={`#${{ block: 'blocks', layout: 'layouts', template: 'templates' }[kind]}/${it.routeId}`}
+                    >
+                      {it.title}
+                    </a>
+                  )}
                 </h3>
                 <span className="font-mono text-[11px] text-muted-foreground">{it.id}</span>
               </div>
@@ -396,12 +423,13 @@ const groupBy = (items, key) => {
   return [...map.entries()];
 };
 
-function BlocksSection() {
+function BlocksSection({ item }) {
   const groups = useMemo(
     () =>
       groupBy(
         CATALOG.blocks.map((b) => ({
           id: b.id,
+          routeId: b.id,
           title: b.meta.name,
           description: b.meta.description,
           uses: b.meta.uses,
@@ -418,6 +446,7 @@ function BlocksSection() {
       kicker="Compositions"
       title="Blocks"
       kind="block"
+      item={item}
       height={360}
       groups={groups}
       intro={`${CATALOG.blocks.length} blocks from @gntik-ai/blocks — page sections composed from the kit, data-driven with sample fixtures. Preview each at desktop, tablet or mobile width in any theme, or copy it into a product with \`gntik-ui add <id>\`.`}
@@ -425,12 +454,13 @@ function BlocksSection() {
   );
 }
 
-function LayoutsSection() {
+function LayoutsSection({ item }) {
   const groups = useMemo(
     () =>
       groupBy(
         CATALOG.layouts.map((l) => ({
           id: l.id,
+          routeId: itemForDoc(`packages/ui/src/layouts/${l.layout}/${l.layout}.doc.ts`, kit.items)?.id,
           title: `${l.doc.name} · ${titleCase(l.example.replace(/([a-z])([A-Z])/g, '$1 $2'))}`,
           description: l.doc.description,
           file: l.file,
@@ -450,6 +480,7 @@ function LayoutsSection() {
       kicker="Compositions"
       title="Layouts"
       kind="layout"
+      item={item}
       height={620}
       groups={groups}
       api={api}
@@ -458,12 +489,13 @@ function LayoutsSection() {
   );
 }
 
-function TemplatesSection() {
+function TemplatesSection({ item }) {
   const groups = useMemo(
     () =>
       groupBy(
         CATALOG.templates.map((t) => ({
           id: t.id,
+          routeId: t.id,
           title: t.meta.name,
           description: `${t.meta.description} · ${t.meta.layout} · ${t.meta.priority}`,
           uses: t.meta.blocks,
@@ -479,6 +511,7 @@ function TemplatesSection() {
       kicker="Compositions"
       title="Page templates"
       kind="template"
+      item={item}
       height={760}
       groups={groups}
       intro={`${CATALOG.templates.length} complete pages from @gntik-ai/templates, built only from layouts and blocks. Switch device and theme per frame; \`gntik-ui add <id>\` copies a template into your app.`}

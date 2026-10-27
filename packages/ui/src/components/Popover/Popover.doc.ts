@@ -8,6 +8,13 @@ export const doc: ComponentDoc = {
     'Non-modal floating panel anchored to a trigger, for short forms, details and filters. Optional arrow, four sides, three paddings. Close the popover before opening a Dialog from it: the popover layer is above the modal layer. Parts: Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose.',
   primitive: '@base-ui/react/popover',
   pattern: 'dialog (non-modal disclosure)',
+  anatomy:
+    '<Popover>\n  <PopoverTrigger>Open</PopoverTrigger>\n  <PopoverContent><PopoverTitle>Title</PopoverTitle><PopoverDescription>Description</PopoverDescription><PopoverClose>Close</PopoverClose></PopoverContent>\n</Popover>',
+  dataAttributes: [
+    ['data-starting-style', 'popup', 'The part is entering; transition styles apply.'],
+    ['data-ending-style', 'popup', 'The part is leaving; transition styles apply.'],
+    ['data-side', 'arrow', 'The side state is present on this part.'],
+  ],
   keyboard: [
     ['Enter / Space', 'On the trigger: toggles the popover and moves focus inside'],
     ['Tab', 'Moves through the popover content'],

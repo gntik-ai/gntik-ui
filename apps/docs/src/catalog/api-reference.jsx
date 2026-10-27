@@ -192,7 +192,7 @@ function a11yNotes(api) {
  * Generated API reference. `folder` is the package folder (e.g. "Button"; for the forms entry, the doc's
  * name, e.g. "FieldArray"); `kind` is component | layout | chat | forms.
  */
-function ApiReference({ folder, kind = 'component', level = 3 }) {
+function ApiReference({ folder, showStyling = false, kind = 'component', level = 3 }) {
   const api = (API_BY_KIND[kind] ?? COMPONENT_API)[folder];
   if (!api) return null;
   const idBase = `api-${kind}-${folder}`;
@@ -204,6 +204,39 @@ function ApiReference({ folder, kind = 'component', level = 3 }) {
       <H level={level} className="text-[14px] font-semibold tracking-tight text-foreground">
         API reference
       </H>
+      {showStyling && api.stylingHooks?.length > 0 && (
+        <>
+          <H level={level + 1} className={sub}>
+            Styling hooks
+          </H>
+          <table aria-label={`${api.name} styling hooks`} className="mt-2 w-full text-left text-[12.5px]">
+            <thead>
+              <tr className="border-b border-border text-muted-foreground">
+                {['Attribute', 'Part', 'Meaning'].map((label) => (
+                  <th scope="col" key={label} className={thApi}>
+                    {label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {api.stylingHooks.map(({ attribute, part }) => (
+                <tr key={attribute + part} className="border-b border-border/60">
+                  <td className={tdApi}>
+                    <code>{attribute}</code>
+                  </td>
+                  <td className={tdApi}>{part}</td>
+                  <td className={tdApi}>
+                    {api.dataAttributes?.find((row) => row[0] === attribute && row[1] === part)?.[2] ??
+                      api.dataAttributes?.find((row) => row[0] === attribute)?.[2] ??
+                      'Present while this state applies.'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
       {main && (
         <>
           <H level={level + 1} className={sub}>

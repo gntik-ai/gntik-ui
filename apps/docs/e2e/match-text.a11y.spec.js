@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { openComponent } from './component-route.helpers.js';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 
@@ -12,13 +13,16 @@ for (const theme of ['dark', '', 'high_contrast']) {
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
     await page.goto('/#ui-components');
+    await openComponent(page, 'match-text');
     const example = page.locator('#ui-match-text');
     await expect(example.locator('mark')).toHaveText('Función');
     await example.getByRole('textbox').fill('stan');
     await expect(example.locator('mark')).toHaveText('stan');
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
-    for (const target of [example, page.locator('#ui-Combobox'), page.locator('#ui-MultiSelect')]) {
+    for (const folder of ['match-text', 'Combobox', 'MultiSelect']) {
+      await openComponent(page, folder);
+      const target = page.locator(`#ui-${folder}`);
       const violations = await target.evaluate(async (element) => {
         // eslint-disable-next-line no-undef
         return (await axe.run(element)).violations.map((violation) => violation.id);

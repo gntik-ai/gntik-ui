@@ -8,6 +8,14 @@ export const doc: ComponentDoc = {
     'Switches between views of the same block without leaving the page. Two variants (underline, pills), optional icons and count badges, a sliding indicator and a full-width layout. Compound parts: Tabs, TabsList, TabsTab, TabsIndicator, TabsPanel.',
   primitive: '@base-ui/react/tabs',
   pattern: 'tabs',
+  anatomy:
+    '<Tabs defaultValue="overview">\n  <TabsList><TabsTab value="overview">Overview</TabsTab></TabsList>\n  <TabsPanel value="overview">Content</TabsPanel>\n</Tabs>',
+  dataAttributes: [
+    ['data-active', 'tab', 'This is the active tab.'],
+    ['data-disabled', 'tab', 'The part is disabled and cannot be activated.'],
+    ['data-active', 'icon', 'This is the active tab.'],
+    ['data-active', 'count', 'This is the active tab.'],
+  ],
   keyboard: [
     ['ArrowRight / ArrowLeft', 'Moves focus to the next / previous tab (wraps around)'],
     ['Home / End', 'Moves focus to the first / last tab'],

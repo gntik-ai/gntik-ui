@@ -1,3 +1,4 @@
+import { openComponent } from './component-route.helpers.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -12,6 +13,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
     await page.goto('/#ui-components');
+    await openComponent(page, 'PeriodPicker');
     const component = page.locator('#ui-PeriodPicker');
     await expect(component).toBeVisible();
     await expect(component.getByRole('combobox')).toHaveCount(4);

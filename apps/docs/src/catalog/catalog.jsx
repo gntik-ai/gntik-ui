@@ -6,6 +6,8 @@
    live preview through PreviewSettingsContext (see preview-settings.jsx).
    Pending sections show a placeholder with their planned scope.
    ============================================================================ */
+import kit from '../../../../kit-registry.json';
+import { parseRoute, resolveRoute } from './routes.js';
 import { DensityProvider } from '@gntik-ai/ui';
 import { DENSITIES, DIRECTIONS, PreviewSettingsContext, readSetting, writeSetting } from '../preview-settings.jsx';
 
@@ -134,8 +136,16 @@ function Pending({ item }) {
 function CatalogShell() {
   const flat = regFlat();
   const ids = flat.map((i) => i.id);
-  const initial = (location.hash || '').replace('#', '') || localStorage.getItem('gntik-section') || 'overview';
-  const [active, setActive] = useState(ids.includes(initial) ? initial : 'overview');
+  const [route, setRoute] = useState(() =>
+    parseRoute(location.hash || '#' + (localStorage.getItem('gntik-section') || 'overview'), ids),
+  );
+  const active = route.section;
+  const resolved = resolveRoute(route, kit.items);
+  const navigate = (section, id) => {
+    if (!ids.includes(section)) return;
+    const hash = '#' + section + (id ? '/' + id : '');
+    if (location.hash !== hash) location.hash = hash;
+  };
   const [theme, setTheme] = useState(localStorage.getItem('gntik-theme') ?? 'dark');
   const [density, setDensity] = useState(() => readSetting('gntik-density', DENSITIES));
   const [dir, setDir] = useState(() => readSetting('gntik-dir', DIRECTIONS));
@@ -155,18 +165,21 @@ function CatalogShell() {
   }, [dir]);
   useEffect(() => {
     localStorage.setItem('gntik-section', active);
-    if (location.hash.replace('#', '') !== active) history.replaceState(null, '', '#' + active);
-    if (mainRef.current) mainRef.current.scrollTop = 0;
-  }, [active]);
+    document.title = `${resolved.item?.name ?? regFind(active)?.label ?? 'Overview'} · Gntik UI`;
+    if (mainRef.current) {
+      mainRef.current.scrollTop = 0;
+      const heading = mainRef.current.querySelector('h1');
+      if (heading) {
+        heading.tabIndex = -1;
+        heading.classList.add('outline-none');
+        heading.focus({ preventScroll: true });
+      }
+    }
+  }, [active, route.id, resolved.item?.name]);
   useEffect(() => {
-    window.__goto = (id) => {
-      if (ids.includes(id)) setActive(id);
-    };
+    window.__goto = navigate;
     window.__setTheme = (t) => setTheme(t);
-    const onHash = () => {
-      const h = location.hash.replace('#', '');
-      if (ids.includes(h)) setActive(h);
-    };
+    const onHash = () => setRoute(parseRoute(location.hash, ids));
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
@@ -202,7 +215,7 @@ function CatalogShell() {
                       return (
                         <button
                           key={it.id}
-                          onClick={() => setActive(it.id)}
+                          onClick={() => navigate(it.id)}
                           className={
                             'relative flex items-center gap-2.5 h-[33px] px-2.5 rounded-lg text-[13px] text-left transition-colors ' +
                             (on
@@ -241,10 +254,12 @@ function CatalogShell() {
             <header className="h-16 shrink-0 flex items-center justify-between px-8 border-b border-border bg-background/80 backdrop-blur">
               <div className="flex items-center gap-3 min-w-0">
                 <span className="font-mono text-[11px] tracking-[0.16em] uppercase text-muted-foreground">
-                  {item?.group}
+                  {resolved.item ? (active === 'ui-components' ? 'Library' : item?.label) : item?.group}
                 </span>
                 <Icon name="chevronRight" size={13} className="text-muted-foreground/60" />
-                <span className="font-sans font-semibold text-[14px] text-foreground truncate">{item?.label}</span>
+                <span className="font-sans font-semibold text-[14px] text-foreground truncate">
+                  {resolved.item?.name ?? item?.label}
+                </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <PreviewToggle label="Preview density" options={DENSITIES} value={density} onChange={setDensity} />
@@ -255,7 +270,14 @@ function CatalogShell() {
             <main ref={mainRef} className="flex-1 overflow-y-auto">
               <div className="max-w-[1120px] mx-auto px-6 sm:px-10 py-12">
                 {Section ? (
-                  <Section />
+                  <>
+                    {resolved.notice && (
+                      <p role="status" className="mb-6 text-muted-foreground">
+                        {resolved.notice}
+                      </p>
+                    )}
+                    <Section key={active + '/' + (resolved.item?.id ?? '')} item={resolved.item} />
+                  </>
                 ) : item ? (
                   <Pending item={item} />
                 ) : (

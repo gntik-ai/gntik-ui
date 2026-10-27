@@ -1,3 +1,4 @@
+import { parseDataAttributes } from './styling-hooks.js';
 // API reference for the kit, generated at build time from the package sources: every
 // component, layout, chat and forms-entry *.doc.ts (name, group, keyboard contract, pattern…),
 // its exported `*Props` interfaces (members + JSDoc), defaults read from the component's
@@ -320,6 +321,30 @@ function buildApi(docPath, doc) {
   const key = folderKey(docPath, docBase);
   const files = Object.keys(sources).filter((p) => folderKey(p, docBase) === key);
   const isCode = (p) => !/\.(test|doc|stories)\.tsx?$|\/index\.ts$|\.variants\.ts$/.test(p);
+  const importedStyles = (path, seen = new Set()) => {
+    if (seen.has(path) || !sources[path]) return '';
+    seen.add(path);
+    const text = sources[path];
+    return (
+      text +
+      '\n' +
+      [...text.matchAll(/from ['"]([.][^'"]+)['"]/g)]
+        .map((m) => {
+          const segments = (path.slice(0, path.lastIndexOf('/') + 1) + m[1]).split('/');
+          const normalized = [];
+          for (const segment of segments) {
+            if (segment === '..' && normalized.length && normalized.at(-1) !== '..') normalized.pop();
+            else if (segment !== '.') normalized.push(segment);
+          }
+          const target = normalized.join('/');
+          return importedStyles(target + '.ts', seen);
+        })
+        .join('\n')
+    );
+  };
+  const stylingHooks = files
+    .filter((p) => p.endsWith('.variants.ts'))
+    .flatMap((p) => parseDataAttributes(sources[p], importedStyles(p)));
   const variantTypes = Object.assign(
     {},
     ...files.filter((p) => p.endsWith('.variants.ts')).map((p) => parseVariants(sources[p])),
@@ -341,7 +366,7 @@ function buildApi(docPath, doc) {
   // The folder's main props first (ButtonProps for Button/), then the parts in source order.
   const mainName = `${doc.name}Props`;
   types.sort((a, b) => (b.name === mainName) - (a.name === mainName));
-  return { ...doc, folder: key.split('/')[1], kind: key.split('/')[0], propTypes: types };
+  return { ...doc, folder: key.split('/')[1], kind: key.split('/')[0], propTypes: types, stylingHooks };
 }
 
 const apiOf = (docs) =>

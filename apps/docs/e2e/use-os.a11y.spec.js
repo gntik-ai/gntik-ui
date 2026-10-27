@@ -1,3 +1,4 @@
+import { openComponent } from './component-route.helpers.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -14,6 +15,7 @@ for (const theme of ['dark', '', 'high_contrast']) {
       Object.defineProperty(navigator, 'userAgentData', { configurable: true, value: undefined });
     }, theme);
     await page.goto('/#ui-components');
+    await openComponent(page, 'Kbd');
     const example = page.locator('#ui-Kbd');
     await expect(example.getByText('useOs(): windows')).toBeVisible();
     await expect(example.getByText('Ctrl', { exact: true })).toHaveCount(2);

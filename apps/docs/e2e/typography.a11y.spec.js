@@ -1,3 +1,4 @@
+import { openComponent } from './component-route.helpers.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -44,6 +45,7 @@ for (const theme of ['dark', '', 'high_contrast']) {
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
     await page.goto('/#ui-components');
+    await openComponent(page, 'Text');
     const example = page.locator('#ui-Text [data-typography-preview]');
     for (const [variant, expected] of Object.entries(text)) {
       await expectType(example.locator(`[data-text-variant="${variant}"]`), expected);

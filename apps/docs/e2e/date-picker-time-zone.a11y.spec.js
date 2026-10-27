@@ -1,3 +1,4 @@
+import { openComponent } from './component-route.helpers.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -13,6 +14,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     test(`${component} UTC example closed and open --${theme}`, async ({ page }) => {
       await page.addInitScript((value) => localStorage.setItem('gntik-theme', value === 'light' ? '' : value), theme);
       await page.goto('/#ui-components');
+      await openComponent(page, component);
       const example = page.locator(`#ui-${component}`).getByText(title, { exact: true }).locator('..');
       await example.scrollIntoViewIfNeeded();
       await expect(example).toBeVisible();

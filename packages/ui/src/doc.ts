@@ -16,6 +16,10 @@ export interface ComponentDoc {
   pattern?: string;
   /** Keyboard contract: key → behaviour. Each row is covered by a test. */
   keyboard?: Array<[key: string, behaviour: string]>;
+  /** JSX skeleton of the public compound parts. */
+  anatomy?: string;
+  /** State attribute, styled part and its meaning. */
+  dataAttributes?: Array<[attribute: string, part: string, meaning: string]>;
   /** Tokens the component reads (for the theming docs). */
   tokens?: string[];
 }

@@ -1,3 +1,4 @@
+import { openComponent } from './component-route.helpers.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -25,6 +26,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
     await page.goto('/#ui-components');
+    await openComponent(page, 'TransferList');
     const preview = page.locator('[data-i18n-catalog]');
     await expect(preview.getByRole('button', { name: 'Añadir marcados' })).toBeVisible();
     await expect(preview.getByRole('navigation', { name: 'Principal' })).toBeVisible();

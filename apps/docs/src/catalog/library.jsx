@@ -8,6 +8,8 @@
    accessibility: api-reference.jsx). Previews follow the topbar density and
    direction (PreviewScope). The page itself is shared with chat.jsx (package-docs.jsx).
    ============================================================================ */
+import kit from '../../../../kit-registry.json';
+import { itemForDoc } from './routes.js';
 import { buildEntries, sortEntries, PackageDocs } from './package-docs.jsx';
 
 const hooksDocs = import.meta.glob('../../../../packages/ui/src/hooks/*.doc.ts', { eager: true, import: 'doc' });
@@ -18,7 +20,7 @@ const hooksSources = import.meta.glob('../../../../packages/ui/src/hooks/example
   import: 'default',
 });
 
-const docs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', {
+const docsByPath = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', {
   eager: true,
   import: 'doc',
 });
@@ -89,7 +91,7 @@ const exampleOwnerOf = (path, folders) => {
   return named[0] ?? [...folders].sort()[0];
 };
 
-const COMPONENTS = sortEntries([
+export const COMPONENTS = sortEntries([
   ...buildEntries({
     docs: hooksDocs,
     examples: withDefault(hooksExamples),
@@ -126,7 +128,7 @@ const COMPONENTS = sortEntries([
     apiKind: 'utils',
   }),
   ...buildEntries({
-    docs,
+    docs: docsByPath,
     examples: withDefault(exampleModules),
     sources,
     folderOf: (path) => path.split('/components/')[1].split('/')[0],
@@ -142,16 +144,30 @@ const COMPONENTS = sortEntries([
     forProduct: forFormsProduct,
     apiKind: 'forms',
   }),
-]);
+]).map((c) => {
+  const docs = [
+    ...Object.keys(hooksDocs),
+    ...Object.keys(themeDocs),
+    ...Object.keys(utilsDocs),
+    ...Object.keys(formsDocs),
+    ...Object.keys(docsByPath),
+  ];
+  const path = docs.find((p) => p.endsWith('/' + c.folder + '.doc.ts'));
+  const item = itemForDoc(path, kit.items);
+  if (!item) throw new Error(`No registry item for ${path}`);
+  return { ...c, id: item.id };
+});
 
-function LibrarySection() {
+function LibrarySection({ item }) {
   return (
     <PackageDocs
       kicker="Library"
       title="@gntik-ai/ui"
       idPrefix="ui"
       entries={COMPONENTS}
-      intro={`${COMPONENTS.length} components on Base UI, styled only with brand tokens. Each example below is the real file from the package — the preview and the code are the same source. Every keyboard row is covered by a test, and every example passes axe.`}
+      indexSection="ui-components"
+      itemId={item?.id}
+      intro={`${COMPONENTS.length} documented entries, styled only with brand tokens. Choose an entry for live examples, source code and its API, keyboard and accessibility reference.`}
     />
   );
 }

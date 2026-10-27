@@ -1,3 +1,4 @@
+import { openComponent } from './component-route.helpers.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -17,6 +18,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
     await page.goto('/#ui-components');
+    await openComponent(page, 'CodeBlock');
     const section = page.locator('#ui-CodeBlock');
     const yaml = section.getByRole('region', { name: 'service.yaml', exact: true });
     await expectTokens(yaml.getByText('name', { exact: true })).toHaveClass('text-primary-text');
