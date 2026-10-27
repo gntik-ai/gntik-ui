@@ -5,6 +5,101 @@ import SectionSettings from './examples/SectionSettings';
 import SectionVariants from './examples/SectionVariants';
 
 describe('Section', () => {
+  it.each([
+    ['none', false, 'p-0', 'mb-3', 'gap-4'],
+    ['sm', false, 'p-4', 'mb-3', 'gap-3'],
+    ['md', false, 'p-5', 'mb-4', 'gap-4'],
+    ['lg', false, 'p-6 sm:p-8', 'mb-5', 'gap-5'],
+    [
+      'none',
+      true,
+      'p-0',
+      'mb-3 border-b border-border pb-3',
+      'gap-0 divide-y divide-border *:py-4 *:first:pt-0 *:last:pb-0',
+    ],
+    [
+      'sm',
+      true,
+      'p-4',
+      'mb-3 border-b border-border pb-3',
+      'gap-0 divide-y divide-border *:py-4 *:first:pt-0 *:last:pb-0',
+    ],
+    [
+      'md',
+      true,
+      'p-5',
+      'mb-4 border-b border-border pb-4',
+      'gap-0 divide-y divide-border *:py-4 *:first:pt-0 *:last:pb-0',
+    ],
+    [
+      'lg',
+      true,
+      'p-6 sm:p-8',
+      'mb-5 border-b border-border pb-5',
+      'gap-0 divide-y divide-border *:py-4 *:first:pt-0 *:last:pb-0',
+    ],
+  ] as const)('keeps exact scalar output for padding %s, divided %s', (padding, divided, root, header, body) => {
+    render(
+      <Section title="Title" padding={padding} divided={divided}>
+        Body
+      </Section>,
+    );
+    expect(screen.getByRole('region').className).toBe(`min-w-0 text-foreground ${root}`);
+    expect(screen.getByRole('heading').parentElement?.className).toBe(
+      `grid grid-cols-[1fr_auto] items-start gap-x-4 ${header}`,
+    );
+    expect(screen.getByText('Body').className).toBe(`flex min-w-0 flex-col ${body}`);
+  });
+
+  it.each([false, true])('maps responsive padding across every slot, divided %s', (divided) => {
+    render(
+      <Section title="Title" padding={{ base: 'sm', md: 'lg' }} divided={divided}>
+        Body
+      </Section>,
+    );
+    expect(screen.getByRole('region')).toHaveClass('p-4', 'md:p-8');
+    expect(screen.getByRole('heading').parentElement).toHaveClass('mb-3', 'md:mb-5');
+    if (divided) {
+      expect(screen.getByText('Body')).toHaveClass('gap-0');
+      expect(screen.getByText('Body')).not.toHaveClass('gap-3');
+      expect(screen.getByText('Body')).not.toHaveClass('md:gap-5');
+      expect(screen.getByRole('heading').parentElement).toHaveClass('pb-3', 'md:pb-5', 'border-b');
+    } else {
+      expect(screen.getByText('Body')).toHaveClass('gap-3', 'md:gap-5');
+      expect(screen.getByRole('heading').parentElement).not.toHaveClass('pb-3');
+    }
+  });
+
+  it.each(['none', 'sm', 'md', 'lg'] as const)(
+    'keeps divided body classes identical for scalar and base-object padding %s',
+    (padding) => {
+      const { rerender } = render(
+        <Section padding={padding} divided>
+          Body
+        </Section>,
+      );
+      const scalarClasses = screen.getByText('Body').className;
+      rerender(
+        <Section padding={{ base: padding }} divided>
+          Body
+        </Section>,
+      );
+      expect(screen.getByText('Body').className).toBe(scalarClasses);
+    },
+  );
+
+  it('lets explicit sm padding replace the sm class from base lg', () => {
+    render(
+      <Section title="Title" padding={{ sm: 'sm', base: 'lg', '2xl': 'md' }}>
+        Body
+      </Section>,
+    );
+    expect(screen.getByRole('region')).toHaveClass('p-6', 'sm:p-4', '2xl:p-5');
+    expect(screen.getByRole('region')).not.toHaveClass('sm:p-8');
+    expect(screen.getByRole('heading').parentElement).toHaveClass('mb-5', 'sm:mb-3', '2xl:mb-4');
+    expect(screen.getByText('Body')).toHaveClass('gap-5', 'sm:gap-3', '2xl:gap-4');
+  });
+
   it('is a region named by its title and described by its description', () => {
     render(<SectionSettings />);
     const region = screen.getByRole('region', { name: 'Notifications' });

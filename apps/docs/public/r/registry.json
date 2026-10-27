@@ -6182,7 +6182,7 @@
       "name": "grid",
       "type": "registry:ui",
       "title": "Grid",
-      "description": "Responsive CSS grid. `cols` takes 1–12 or a per-breakpoint object ({ base, sm, md, lg, xl }) mapped to static classes; `minChildWidth` auto-fills as many columns as fit. GridItem spans columns (also responsive, or `full`). Gap on the spacing scale.",
+      "description": "Responsive CSS grid. `cols` takes 1–12 or a per-breakpoint object ({ base, sm, md, lg, xl, 2xl }) mapped to static classes; `minChildWidth` auto-fills as many columns as fit. GridItem spans columns (also responsive, or `full`). gap, rowGap and columnGap accept scalar or per-breakpoint spacing steps (0–12). Tables contain full literal classes for Tailwind scanning.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0"
@@ -6207,6 +6207,11 @@
           "path": "packages/ui/src/components/Grid/Grid.tsx",
           "type": "registry:ui",
           "target": "components/ui/grid/Grid.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Grid/grid-gap.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/grid/grid-gap.variants.ts"
         },
         {
           "path": "packages/ui/src/components/Grid/grid.variants.ts",
@@ -12922,7 +12927,7 @@
       "name": "section",
       "type": "registry:ui",
       "title": "Section",
-      "description": "A painted content region (<section>, named by its title). Variants plain / card / muted, padding none–lg, optional dividers between children, and a header slot with title, description and actions.",
+      "description": "A painted content region (<section>, named by its title). Variants plain / card / muted, padding none–lg (scalar or per-breakpoint object from base through 2xl), optional dividers between children, and a header slot with title, description and actions. Responsive padding updates root, header, body and divided header spacing together; divided bodies keep gap-0 and use divider padding for spacing. Scalar lg remains p-6 sm:p-8; an explicit sm entry overrides sm:p-8. Static literal tables keep every class visible to Tailwind.",
       "author": "gntik-ai",
       "dependencies": [],
       "registryDependencies": [
@@ -18387,6 +18392,11 @@
           "path": "packages/ui/src/utils/portal.ts",
           "type": "registry:ui",
           "target": "components/utils/portal.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/responsive.ts",
+          "type": "registry:ui",
+          "target": "components/utils/responsive.ts"
         },
         {
           "path": "packages/ui/src/utils/rtl.ts",

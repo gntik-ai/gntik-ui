@@ -1,3 +1,13 @@
+export {
+  BREAKPOINTS,
+  responsiveClasses,
+  responsiveVars,
+  resolveResponsive,
+  isResponsiveObject,
+  type Breakpoint,
+  type Responsive,
+  type ResponsiveClassTable,
+} from './utils/responsive';
 export { useClipboard, type UseClipboardOptions } from './hooks/useClipboard';
 export { foldText, matchText, matchRanges, type MatchTextOptions } from './utils/match-text';
 // @gntik-ai/ui — public API. One export block per component folder (alphabetical).
@@ -6,7 +16,7 @@ export { tv, type VariantProps } from './utils/tv';
 export type { ComponentDoc } from './doc';
 export { getOs, useOs, type Os } from './hooks/useOs';
 export { useMediaQuery, useReducedMotion, usePrefersReducedMotion } from './hooks/useMediaQuery';
-export { useBreakpoint, useBreakpointValue, type Breakpoint, type BreakpointOptions } from './hooks/useBreakpoint';
+export { useBreakpoint, useBreakpointValue, type BreakpointOptions } from './hooks/useBreakpoint';
 
 // i18n
 export * from './i18n';

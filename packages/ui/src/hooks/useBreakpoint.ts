@@ -1,8 +1,8 @@
 import { breakpointQuery } from '@gntik-ai/tokens/runtime';
+import { BREAKPOINTS, resolveResponsive, type Breakpoint } from '../utils/responsive';
 import { useMediaQuery } from './useMediaQuery';
 
-/** Kit viewport breakpoints, in mobile-first order. */
-export type Breakpoint = 'base' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+export type { Breakpoint } from '../utils/responsive';
 
 /** Options shared by the breakpoint hooks. */
 export interface BreakpointOptions {
@@ -10,14 +10,12 @@ export interface BreakpointOptions {
   fallback?: Breakpoint;
 }
 
-const order: readonly Breakpoint[] = ['base', 'sm', 'md', 'lg', 'xl', '2xl'];
-
 /**
  * Return the largest matching kit breakpoint, or `fallback` (base by default)
  * on the server and during hydration. Prefer CSS for responsive layout.
  */
 export function useBreakpoint({ fallback = 'base' }: BreakpointOptions = {}): Breakpoint {
-  const fallbackIndex = order.indexOf(fallback);
+  const fallbackIndex = BREAKPOINTS.indexOf(fallback);
   const sm = useMediaQuery(breakpointQuery('sm'), fallbackIndex >= 1);
   const md = useMediaQuery(breakpointQuery('md'), fallbackIndex >= 2);
   const lg = useMediaQuery(breakpointQuery('lg'), fallbackIndex >= 3);
@@ -34,10 +32,5 @@ export function useBreakpointValue<T>(
   values: Partial<Record<Breakpoint, T>>,
   options?: BreakpointOptions,
 ): T | undefined {
-  const current = useBreakpoint(options);
-  for (let index = order.indexOf(current); index >= 0; index--) {
-    const key = order[index];
-    if (key !== undefined && values[key] !== undefined) return values[key];
-  }
-  return undefined;
+  return resolveResponsive<T>(values, useBreakpoint(options));
 }

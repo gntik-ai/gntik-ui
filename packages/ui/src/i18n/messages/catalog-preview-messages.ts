@@ -1,5 +1,15 @@
 /** Catalog copy for scoped theme and resource previews. */
 export const catalogPreviewEn = {
+  'responsive.item': 'Item {number}',
+  'responsive.fullWidth': 'Full-width summary',
+  'responsive.sectionTitle': 'Responsive spacing',
+  'responsive.sectionDescription': 'Compact on phones, spacious from medium screens.',
+  'responsive.sectionBody': 'Header, body and dividers follow the same padding step.',
+  'responsive.overrideTitle': 'Explicit breakpoint overrides',
+  'responsive.overrideBody': 'The small-screen step overrides the base large padding.',
+  'responsive.utilityDescription': 'Static classes adapt columns; CSS variables adapt the preview width.',
+  'responsive.mobile': 'Sheet on small screens',
+  'responsive.desktop': 'Dialog from medium screens',
   'themeScope.title': 'Light preview',
   'themeScope.description': 'This card and its popup use the light theme.',
   'themeScope.choice': 'Preview choice',
@@ -14,6 +24,16 @@ export const catalogPreviewEn = {
 } as const;
 
 export const catalogPreviewEs = {
+  'responsive.item': 'Elemento {number}',
+  'responsive.fullWidth': 'Resumen de ancho completo',
+  'responsive.sectionTitle': 'Espaciado adaptable',
+  'responsive.sectionDescription': 'Compacto en móviles, amplio desde pantallas medianas.',
+  'responsive.sectionBody': 'El encabezado, el cuerpo y los separadores siguen el mismo nivel de espaciado.',
+  'responsive.overrideTitle': 'Ajustes por punto de interrupción',
+  'responsive.overrideBody': 'El nivel para pantallas pequeñas sustituye el espaciado grande inicial.',
+  'responsive.utilityDescription': 'Las clases estáticas adaptan las columnas; las variables CSS adaptan el ancho.',
+  'responsive.mobile': 'Panel en pantallas pequeñas',
+  'responsive.desktop': 'Diálogo desde pantallas medianas',
   'themeScope.title': 'Vista previa clara',
   'themeScope.description': 'Esta tarjeta y su menú usan el tema claro.',
   'themeScope.choice': 'Opción de vista previa',
