@@ -59,10 +59,34 @@ describe('Section', () => {
     );
     expect(screen.getByRole('region')).toHaveClass('p-4', 'md:p-8');
     expect(screen.getByRole('heading').parentElement).toHaveClass('mb-3', 'md:mb-5');
-    expect(screen.getByText('Body')).toHaveClass('gap-3', 'md:gap-5');
-    if (divided) expect(screen.getByRole('heading').parentElement).toHaveClass('pb-3', 'md:pb-5', 'border-b');
-    else expect(screen.getByRole('heading').parentElement).not.toHaveClass('pb-3');
+    if (divided) {
+      expect(screen.getByText('Body')).toHaveClass('gap-0');
+      expect(screen.getByText('Body')).not.toHaveClass('gap-3');
+      expect(screen.getByText('Body')).not.toHaveClass('md:gap-5');
+      expect(screen.getByRole('heading').parentElement).toHaveClass('pb-3', 'md:pb-5', 'border-b');
+    } else {
+      expect(screen.getByText('Body')).toHaveClass('gap-3', 'md:gap-5');
+      expect(screen.getByRole('heading').parentElement).not.toHaveClass('pb-3');
+    }
   });
+
+  it.each(['none', 'sm', 'md', 'lg'] as const)(
+    'keeps divided body classes identical for scalar and base-object padding %s',
+    (padding) => {
+      const { rerender } = render(
+        <Section padding={padding} divided>
+          Body
+        </Section>,
+      );
+      const scalarClasses = screen.getByText('Body').className;
+      rerender(
+        <Section padding={{ base: padding }} divided>
+          Body
+        </Section>,
+      );
+      expect(screen.getByText('Body').className).toBe(scalarClasses);
+    },
+  );
 
   it('lets explicit sm padding replace the sm class from base lg', () => {
     render(

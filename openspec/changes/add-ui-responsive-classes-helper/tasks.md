@@ -23,8 +23,14 @@
 
 ## Sandbox handoff
 
-- The required library test command stops at the tokens mirror-install integration: the public
+- The follow-up worker rerun still stops at the tokens mirror-install integration: the public
   registry is unreachable and its offline fallback cannot find `gntik-ai-tokens-0.2.1.tgz` (ENOENT).
-  The other 12 token test files pass. The remaining library packages run separately without tokens.
+  The other 12 token test files pass. This environment limit was reproduced with
+  `node test/mirror-install.test.mjs` from `packages/tokens`; the checker reported a passing run
+  in its environment. The remaining library packages run separately without tokens.
+- Fixed responsive padding overriding the divided Section body's `gap-0`. Before the fix,
+  `pnpm --filter @gntik-ai/ui test src/components/Section/Section.test.tsx` failed five assertions
+  at the rendered Section seam. After skipping responsive body gaps for divided Sections, all
+  19 tests pass, including exact scalar/base-object body class parity for every padding step.
 - Browser suites run in PR CI. The new `responsive-values.a11y.spec.js` checks the live Grid,
   Section and helper examples in all three themes, including contrast and catalog reachability.

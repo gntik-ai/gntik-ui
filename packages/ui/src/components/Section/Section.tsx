@@ -83,7 +83,7 @@ export function Section({
           {actions != null && <div className={s.actions()}>{actions}</div>}
         </div>
       )}
-      <div className={cn(s.body(), responsiveClasses(responsivePadding, SECTION_BODY_GAP), bodyClassName)}>
+      <div className={cn(s.body(), !divided && responsiveClasses(responsivePadding, SECTION_BODY_GAP), bodyClassName)}>
         {children}
       </div>
     </section>
