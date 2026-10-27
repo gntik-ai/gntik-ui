@@ -13,8 +13,9 @@ const attributes = new Set(
 
 function safeCss(value: string): boolean {
   // CSS escapes/comments can disguise a protocol. Only local fragment URLs survive.
+  // The child combinator (>) is used by Mermaid's sequence and architecture styles.
   const withoutFragments = value.replace(/url\(\s*(['"]?)#[\w.-]+\1\s*\)/gi, '');
-  return !/[\\@<>]|\/\*|(?:expression|image-set|src)\s*\(|(?:java|vb)script\s*:|(?:https?|data):|url\s*\(/i.test(
+  return !/[\\@<]|\/\*|(?:expression|image-set|src)\s*\(|(?:java|vb)script\s*:|(?:https?|data):|url\s*\(/i.test(
     withoutFragments,
   );
 }

@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-syntax -- Known CSS fixture colours independently verify runtime token mapping. */
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, expect, it, vi } from 'vitest';
+import { MermaidDiagram as ExampleDiagram, mermaidCodeRenderers as exampleRenderers } from '@gntik-ai/chat/mermaid';
 import { Markdown } from '../Markdown';
 import { MermaidDiagram, mermaidCodeRenderers } from './index';
 import MermaidDiagramReply from './examples/MermaidDiagramReply';
@@ -21,6 +22,11 @@ const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text
 beforeEach(() => {
   engine.initialize.mockClear();
   engine.render.mockReset().mockResolvedValue({ svg });
+});
+
+it('shares the source entry and renderer map with the live examples', () => {
+  expect(ExampleDiagram).toBe(MermaidDiagram);
+  expect(exampleRenderers).toBe(mermaidCodeRenderers);
 });
 
 it('loads once for several closed Markdown fences and shows code and status until ready', async () => {
@@ -272,6 +278,31 @@ it('preserves static Mermaid styles while stripping its built-in animation rules
   expect(style?.textContent).toContain('.node');
   expect(style?.textContent).toContain('.edge');
   expect(style?.textContent).not.toMatch(/keyframes|animation/);
+});
+
+it('preserves sequence diagram child selectors and their theme colours', async () => {
+  // Mermaid 12.2.0 sequenceDiagram styles, with known contrast-safe token values.
+  const css = 'text.actor > tspan { fill: #f2f2f2; stroke: none; } .noteText > tspan { fill: #f2f2f2; }';
+  engine.render.mockResolvedValueOnce({
+    svg: `<svg xmlns="http://www.w3.org/2000/svg"><style>${css}</style><text class="noteText"><tspan>Sequence note</tspan></text></svg>`,
+  });
+  render(<MermaidDiagram code="sequenceDiagram\nAlice->>Bob: Hello" />);
+  await screen.findByText('Sequence note');
+  const style = screen.getByRole('region', { name: 'Diagram' }).querySelector('style');
+  expect(style?.textContent).toBe(css);
+});
+
+it.each([
+  '.noteText > tspan { fill: url(https://tracker.invalid/image); }',
+  '@import "https://tracker.invalid/style"; .noteText > tspan { fill: var(--foreground); }',
+  String.raw`.noteText > tspan { fill: u\72l(https://tracker.invalid/image); }`,
+])('discards unsafe sequence diagram CSS: %s', async (css) => {
+  engine.render.mockResolvedValueOnce({
+    svg: `<svg xmlns="http://www.w3.org/2000/svg"><style>${css}</style><text>Safe sequence note</text></svg>`,
+  });
+  render(<MermaidDiagram code="sequenceDiagram\nAlice->>Bob: Hello" />);
+  await screen.findByText('Safe sequence note');
+  expect(screen.getByRole('region', { name: 'Diagram' }).querySelector('style')).toBeNull();
 });
 
 it('reports the code view while streaming and exposes the loaded toolbar and viewport by keyboard', async () => {
