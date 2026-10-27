@@ -17,7 +17,10 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       await expect(example).toBeVisible();
     }
     await expect(page.locator('#ui-responsive')).toContainText('Dialog from medium screens');
-    await expect(page.locator('#ui-responsive')).toContainText("from '@gntik-ai/ui'");
+    const responsive = page.locator('#ui-responsive');
+    await responsive.getByRole('button', { name: 'tsx', exact: true }).click();
+    await expect(responsive.locator('pre code')).toBeVisible();
+    await expect(responsive.locator('pre code')).toContainText("from '@gntik-ai/ui'");
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
     const violations = await page.evaluate(async () => {
