@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 118 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 119 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -1452,6 +1452,45 @@ export default function MarkdownCustom() {
         {t('chat.markdownCustomPartial')}
       </Markdown>
     </div>
+  );
+}
+```
+
+### MermaidDiagram (`mermaid-diagram`)
+
+Opt-in diagrams: install the pinned optional peer mermaid@12.2.0 and import MermaidDiagram or mermaidCodeRenderers from @gntik-ai/chat/mermaid. Pass the stable map to Markdown codeRenderers; it renders closed fences even while the reply streams, and leaves incomplete fences as code. The main chat entry never loads Mermaid. Rendering is client-only: SSR and loading show CodeBlock, followed by a Rendering diagram… status. The first complete diagram dynamically imports mermaid from the consumer app’s own chunk; no CDN is used. Strict CSP apps must allow the generated SVG’s inline styles or keep the code view. Strict security, disabled HTML labels, locked configuration and a second SVG sanitiser remove scripts, HTML foreign objects, event handlers, animation and external resources. Invalid sources fall back to code and Could not render the diagram. Colours read neutral surface and contrast-safe foreground tokens on every theme change. code is required; streaming defaults to false; defaultView is diagram; onViewChange reports user view changes; label defaults to the translated Diagram; className styles the figure. The toolbar toggles diagram/code (aria-pressed), copies source, downloads sanitised diagram.svg and adjusts zoom; drag pans. No canvas transitions run, including under reduced motion. MermaidDiagramReply demonstrates Markdown integration; MermaidDiagramStates shows code-first, custom label, className, callback, failure, streaming and Spanish strings. Full-screen viewing and PNG export are deferred.
+
+- Package: `@gntik-ai/chat` · export `MermaidDiagram` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/MermaidDiagram/MermaidDiagram.doc.ts
+- Primitive: `Button`
+- ARIA pattern: named figure with toggle buttons and a focusable viewport
+- Registry dependencies: markdown
+- Install: `gntik-ui add mermaid-diagram`; own the source with `gntik-ui eject mermaid-diagram`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Moves through toolbar controls, then the diagram viewport or code copy button |
+| Enter / Space | Activates the focused toolbar control |
+| + / - | Zooms the focused viewport in or out |
+| 0 | Resets zoom and pan |
+| Arrow keys | Pans the focused viewport |
+
+Tokens: foreground, secondary, background, border, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { mermaidCodeRenderers } from '@gntik-ai/chat/mermaid';
+import { Markdown } from '@gntik-ai/chat';
+
+/** Opt in through the subpath; a closed fence renders while the reply streams. */
+export default function MermaidDiagramReply() {
+  return (
+    <Markdown streaming codeRenderers={mermaidCodeRenderers}>
+      {'```mermaid\ngraph TD; A-->B; B-->C\n```'}
+    </Markdown>
   );
 }
 ```

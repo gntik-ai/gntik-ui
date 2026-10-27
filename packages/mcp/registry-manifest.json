@@ -15,6 +15,7 @@
     "date-field",
     "download-button",
     "load-more-footer",
+    "mermaid-diagram",
     "period-picker"
   ],
   "items": [
@@ -139,6 +140,7 @@
     {"id":"mega-menu","package":"@gntik-ai/ui","name":"mega-menu","version":"0.5.0","url":"https://ui.gntik.ai/r/mega-menu.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"members-table","package":"@gntik-ai/blocks","name":"members-table","version":"0.6.0","url":"https://ui.gntik.ai/r/members-table.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"menu","package":"@gntik-ai/ui","name":"menu","version":"0.5.0","url":"https://ui.gntik.ai/r/menu.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"mermaid-diagram","package":"@gntik-ai/chat","name":"mermaid-diagram","version":"0.5.0","url":"https://ui.gntik.ai/r/mermaid-diagram.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"message-feedback","package":"@gntik-ai/chat","name":"message-feedback","version":"0.5.0","url":"https://ui.gntik.ai/r/message-feedback.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"messaging","package":"@gntik-ai/templates","name":"messaging","version":"0.6.0","url":"https://ui.gntik.ai/r/messaging.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"meter","package":"@gntik-ai/ui","name":"meter","version":"0.5.0","url":"https://ui.gntik.ai/r/meter.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
