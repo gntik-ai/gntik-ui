@@ -4807,7 +4807,7 @@ export default function ChatLayoutWithPanel() {
 
 ### Grid (`grid`)
 
-Responsive CSS grid. `cols` takes 1–12 or a per-breakpoint object ({ base, sm, md, lg, xl }) mapped to static classes; `minChildWidth` auto-fills as many columns as fit. GridItem spans columns (also responsive, or `full`). Gap on the spacing scale.
+Responsive CSS grid. `cols` takes 1–12 or a per-breakpoint object ({ base, sm, md, lg, xl, 2xl }) mapped to static classes; `minChildWidth` auto-fills as many columns as fit. GridItem spans columns (also responsive, or `full`). gap, rowGap and columnGap accept scalar or per-breakpoint spacing steps (0–12). Tables contain full literal classes for Tailwind scanning.
 
 - Package: `@gntik-ai/ui` · export `Grid` · group Layout · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Grid/Grid.doc.ts
@@ -4935,7 +4935,7 @@ export default function ScrollAreaActivity() {
 
 ### Section (`section`)
 
-A painted content region (<section>, named by its title). Variants plain / card / muted, padding none–lg, optional dividers between children, and a header slot with title, description and actions.
+A painted content region (<section>, named by its title). Variants plain / card / muted, padding none–lg (scalar or per-breakpoint object from base through 2xl), optional dividers between children, and a header slot with title, description and actions. Responsive padding updates root, header, body and divided header spacing together. Scalar lg remains p-6 sm:p-8; an explicit sm entry overrides sm:p-8. Static literal tables keep every class visible to Tailwind.
 
 - Package: `@gntik-ai/ui` · export `Section` · group Layout · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Section/Section.doc.ts
@@ -4948,41 +4948,31 @@ Tokens: card, card-foreground, secondary, border, foreground, muted-foreground, 
 Usage:
 
 ```tsx
-import { Button } from '@gntik-ai/ui';
-import { Switch } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
 import { Section } from '@gntik-ai/ui';
 
-const ROWS = [
-  ['Email digests', 'A weekly summary of activity in your projects.'],
-  ['Deployment alerts', 'Notify me when a deployment fails or rolls back.'],
-  ['Invoice reminders', 'Send a reminder three days before an invoice is due.'],
-] as const;
-
-export default function SectionSettings() {
+export default function SectionResponsivePadding() {
+  const { t } = useI18n();
   return (
-    <Section
-      variant="card"
-      padding="md"
-      divided
-      title="Notifications"
-      description="Choose what reaches your inbox."
-      actions={
-        <Button variant="secondary" size="sm">
-          Reset
-        </Button>
-      }
-      className="max-w-[560px]"
-    >
-      {ROWS.map(([label, hint]) => (
-        <div key={label} className="flex items-start justify-between gap-4">
-          <span>
-            <span className="block text-[13px] font-medium text-foreground">{label}</span>
-            <span className="block text-[12.5px] text-muted-foreground">{hint}</span>
-          </span>
-          <Switch aria-label={label} defaultChecked={label !== 'Invoice reminders'} />
-        </div>
-      ))}
-    </Section>
+    <div data-responsive-example className="space-y-4">
+      <Section
+        variant="card"
+        title={t('responsive.sectionTitle')}
+        description={t('responsive.sectionDescription')}
+        padding={{ base: 'sm', md: 'lg' }}
+        divided
+      >
+        <p>{t('responsive.sectionBody')}</p>
+        <p>{t('responsive.fullWidth')}</p>
+      </Section>
+      <Section
+        variant="muted"
+        title={t('responsive.overrideTitle')}
+        padding={{ base: 'lg', sm: 'sm', md: 'none', lg: 'md', '2xl': 'lg' }}
+      >
+        <p>{t('responsive.overrideBody')}</p>
+      </Section>
+    </div>
   );
 }
 ```

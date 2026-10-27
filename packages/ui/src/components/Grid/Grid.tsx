@@ -1,33 +1,21 @@
 import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
 import type { CSSProperties } from 'react';
+import { responsiveClasses, type Responsive } from '../../utils/responsive';
 import { cn } from '../../utils/cn';
-import { GAP_CLASSES, type SpaceScale } from '../Stack/stack.variants';
+import type { SpaceScale } from '../Stack/stack.variants';
+import { GRID_GAP, ROW_GAP, COLUMN_GAP } from './grid-gap.variants';
 import type { LayoutElement } from '../Stack/Stack';
 import {
   COL_SPAN,
   COL_SPAN_FULL,
   GRID_COLS,
   gridVariants,
-  type GridBreakpoint,
   type GridColumns,
   type GridVariantProps,
 } from './grid.variants';
 
-/** A value per breakpoint (mobile-first: `base` applies below `sm`). */
-export type Responsive<T> = T | Partial<Record<GridBreakpoint, T>>;
-
-const BREAKPOINTS: GridBreakpoint[] = ['base', 'sm', 'md', 'lg', 'xl'];
-
-function responsiveClasses<T>(value: Responsive<T> | undefined, pick: (bp: GridBreakpoint, v: T) => string) {
-  if (value == null) return [];
-  if (typeof value !== 'object') return [pick('base', value)];
-  const map = value as Partial<Record<GridBreakpoint, T>>;
-  return BREAKPOINTS.flatMap((bp) => {
-    const v = map[bp];
-    return v == null ? [] : [pick(bp, v)];
-  });
-}
+export type { Responsive } from '../../utils/responsive';
 
 export interface GridProps extends Omit<useRender.ComponentProps<'div'>, 'className'> {
   className?: string;
@@ -40,28 +28,14 @@ export interface GridProps extends Omit<useRender.ComponentProps<'div'>, 'classN
    */
   minChildWidth?: string | number;
   /** Gap on the spacing scale (0–12). */
-  gap?: SpaceScale;
+  gap?: Responsive<SpaceScale>;
   /** Separate row gap (otherwise `gap` applies to both axes). */
-  rowGap?: SpaceScale;
+  rowGap?: Responsive<SpaceScale>;
+  /** Separate column gap (otherwise gap applies to both axes). */
+  columnGap?: Responsive<SpaceScale>;
   align?: GridVariantProps['align'];
   flow?: GridVariantProps['flow'];
 }
-
-const ROW_GAP: Record<SpaceScale, string> = {
-  0: 'gap-y-0',
-  1: 'gap-y-1',
-  2: 'gap-y-2',
-  3: 'gap-y-3',
-  4: 'gap-y-4',
-  5: 'gap-y-5',
-  6: 'gap-y-6',
-  7: 'gap-y-7',
-  8: 'gap-y-8',
-  9: 'gap-y-9',
-  10: 'gap-y-10',
-  11: 'gap-y-11',
-  12: 'gap-y-12',
-};
 
 /** CSS grid with a responsive column count or an auto-fill minimum child width. */
 export function Grid({
@@ -70,6 +44,7 @@ export function Grid({
   minChildWidth,
   gap = 4,
   rowGap,
+  columnGap,
   align,
   flow,
   className,
@@ -93,9 +68,10 @@ export function Grid({
     props: mergeProps<'div'>(props, {
       className: cn(
         gridVariants({ align, flow }),
-        minChildWidth == null && responsiveClasses(cols, (bp, n) => GRID_COLS[bp][n]),
-        GAP_CLASSES[gap],
-        rowGap != null && ROW_GAP[rowGap],
+        minChildWidth == null && responsiveClasses(cols, GRID_COLS),
+        responsiveClasses(gap, GRID_GAP),
+        responsiveClasses(rowGap, ROW_GAP),
+        responsiveClasses(columnGap, COLUMN_GAP),
         className,
       ),
       style: autoFill || style ? { ...autoFill, ...style } : undefined,

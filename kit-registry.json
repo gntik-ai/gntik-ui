@@ -6439,11 +6439,15 @@
       "package": "@gntik-ai/ui",
       "group": "Layout",
       "status": "stable",
-      "description": "Responsive CSS grid. `cols` takes 1–12 or a per-breakpoint object ({ base, sm, md, lg, xl }) mapped to static classes; `minChildWidth` auto-fills as many columns as fit. GridItem spans columns (also responsive, or `full`). Gap on the spacing scale.",
+      "description": "Responsive CSS grid. `cols` takes 1–12 or a per-breakpoint object ({ base, sm, md, lg, xl, 2xl }) mapped to static classes; `minChildWidth` auto-fills as many columns as fit. GridItem spans columns (also responsive, or `full`). gap, rowGap and columnGap accept scalar or per-breakpoint spacing steps (0–12). Tables contain full literal classes for Tailwind scanning.",
       "files": [
         {
           "path": "packages/ui/src/components/Grid/Grid.tsx",
           "target": "components/ui/grid/Grid.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Grid/grid-gap.variants.ts",
+          "target": "components/ui/grid/grid-gap.variants.ts"
         },
         {
           "path": "packages/ui/src/components/Grid/grid.variants.ts",
@@ -9448,7 +9452,7 @@
       "package": "@gntik-ai/ui",
       "group": "Layout",
       "status": "stable",
-      "description": "A painted content region (<section>, named by its title). Variants plain / card / muted, padding none–lg, optional dividers between children, and a header slot with title, description and actions.",
+      "description": "A painted content region (<section>, named by its title). Variants plain / card / muted, padding none–lg (scalar or per-breakpoint object from base through 2xl), optional dividers between children, and a header slot with title, description and actions. Responsive padding updates root, header, body and divided header spacing together. Scalar lg remains p-6 sm:p-8; an explicit sm entry overrides sm:p-8. Static literal tables keep every class visible to Tailwind.",
       "files": [
         {
           "path": "packages/ui/src/components/Section/Section.tsx",
@@ -11803,6 +11807,10 @@
         {
           "path": "packages/ui/src/utils/portal.ts",
           "target": "components/utils/portal.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/responsive.ts",
+          "target": "components/utils/responsive.ts"
         },
         {
           "path": "packages/ui/src/utils/rtl.ts",

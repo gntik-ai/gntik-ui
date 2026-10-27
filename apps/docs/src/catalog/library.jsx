@@ -117,9 +117,12 @@ const COMPONENTS = sortEntries([
         .split('/')
         .pop()
         .replace(/\.doc\.ts$/, ''),
-    ownerOf: () => 'match-text',
+    ownerOf: (path) => (path.split('/').pop().startsWith('responsive') ? 'responsive' : 'match-text'),
     forProduct: (code) =>
-      code.replace(/from '[^']*(?:match-text|I18nProvider|components\/Input)'/g, "from '@gntik-ai/ui'"),
+      code.replace(
+        /from '[^']*(?:responsive|cn|grid.variants|match-text|I18nProvider|components\/Input)'/g,
+        "from '@gntik-ai/ui'",
+      ),
     apiKind: 'utils',
   }),
   ...buildEntries({

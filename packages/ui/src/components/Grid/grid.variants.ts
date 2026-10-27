@@ -1,6 +1,9 @@
 import { tv, type VariantProps } from '../../utils/tv';
 
-export type GridBreakpoint = 'base' | 'sm' | 'md' | 'lg' | 'xl';
+import type { Breakpoint } from '../../utils/responsive';
+
+/** Compatibility alias for the shared kit breakpoints, now including 2xl. */
+export type GridBreakpoint = Breakpoint;
 export type GridColumns = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
 /** Static `grid-cols-*` per breakpoint so Tailwind sees every class. */
@@ -74,6 +77,20 @@ export const GRID_COLS: Record<GridBreakpoint, Record<GridColumns, string>> = {
     10: 'xl:grid-cols-10',
     11: 'xl:grid-cols-11',
     12: 'xl:grid-cols-12',
+  },
+  '2xl': {
+    1: '2xl:grid-cols-1',
+    2: '2xl:grid-cols-2',
+    3: '2xl:grid-cols-3',
+    4: '2xl:grid-cols-4',
+    5: '2xl:grid-cols-5',
+    6: '2xl:grid-cols-6',
+    7: '2xl:grid-cols-7',
+    8: '2xl:grid-cols-8',
+    9: '2xl:grid-cols-9',
+    10: '2xl:grid-cols-10',
+    11: '2xl:grid-cols-11',
+    12: '2xl:grid-cols-12',
   },
 };
 
@@ -149,6 +166,20 @@ export const COL_SPAN: Record<GridBreakpoint, Record<GridColumns, string>> = {
     11: 'xl:col-span-11',
     12: 'xl:col-span-12',
   },
+  '2xl': {
+    1: '2xl:col-span-1',
+    2: '2xl:col-span-2',
+    3: '2xl:col-span-3',
+    4: '2xl:col-span-4',
+    5: '2xl:col-span-5',
+    6: '2xl:col-span-6',
+    7: '2xl:col-span-7',
+    8: '2xl:col-span-8',
+    9: '2xl:col-span-9',
+    10: '2xl:col-span-10',
+    11: '2xl:col-span-11',
+    12: '2xl:col-span-12',
+  },
 };
 
 export const COL_SPAN_FULL: Record<GridBreakpoint, string> = {
@@ -157,6 +188,7 @@ export const COL_SPAN_FULL: Record<GridBreakpoint, string> = {
   md: 'md:col-span-full',
   lg: 'lg:col-span-full',
   xl: 'xl:col-span-full',
+  '2xl': '2xl:col-span-full',
 };
 
 export const gridVariants = tv({
