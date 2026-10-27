@@ -528,6 +528,8 @@ export const en = {
   'comments.placeholder': 'Add a comment…',
   'comments.submit': 'Comment',
   'comments.write': 'Write a comment',
+  'comments.hintPlain': 'Plain text · ⌘/Ctrl + Enter to post',
+  'comments.hintMarkdown': 'Markdown supported · ⌘/Ctrl + Enter to post',
   'calendar.events': '{count, plural, one {# event} other {# events}}',
   'common.expandItem': 'Expand {label}',
   'common.collapseItem': 'Collapse {label}',

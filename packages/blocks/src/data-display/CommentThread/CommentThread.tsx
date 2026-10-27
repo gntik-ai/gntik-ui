@@ -1,5 +1,5 @@
 import { Avatar, Button, cn, Textarea, Timestamp, type DateInput, useI18n } from '@gntik-ai/ui';
-import { useId, useState, type FormEvent, type KeyboardEvent } from 'react';
+import { useId, useState, type FormEvent, type KeyboardEvent, type ReactNode } from 'react';
 import { COMMENT_AUTHOR, REVIEW_COMMENTS } from './fixtures';
 
 export interface CommentAuthor {
@@ -10,13 +10,19 @@ export interface CommentAuthor {
 export interface ThreadComment {
   id: string;
   author: CommentAuthor;
-  /** Plain text (no markdown); line breaks are kept. */
+  /** Plain text by default, with line breaks kept; pass renderBody to render Markdown. */
   body: string;
   at: DateInput;
 }
 
 export interface CommentThreadProps {
   comments?: readonly ThreadComment[];
+  /**
+   * Render the raw comment in a block container. Bodies are untrusted: use a safe
+   * renderer such as Markdown from @gntik-ai/chat (without allowHtml), never raw HTML.
+   * Defaults to plain text with line breaks kept.
+   */
+  renderBody?: (comment: ThreadComment) => ReactNode;
   /** Author of new comments (the signed-in user). */
   currentUser?: CommentAuthor;
   /** Called with the trimmed text when a comment is posted. */
@@ -27,18 +33,22 @@ export interface CommentThreadProps {
   label?: string;
   placeholder?: string;
   submitLabel?: string;
+  /** Overrides the plain-text or Markdown hint; stays the composer's accessible description. */
+  composerHint?: ReactNode;
   className?: string;
 }
 
-/** Comment thread: avatar, author, plain-text body and Timestamp, with a reply composer (⌘/Ctrl+Enter posts). */
+/** Comment thread: avatar, author, plain text (or Markdown via renderBody) and Timestamp, with a reply composer (⌘/Ctrl+Enter posts). */
 export function CommentThread({
   comments = REVIEW_COMMENTS,
+  renderBody,
   currentUser = COMMENT_AUTHOR,
   onSubmit,
   appendOnSubmit = true,
   label: labelProp,
   placeholder: placeholderProp,
   submitLabel: submitLabelProp,
+  composerHint,
   className,
 }: CommentThreadProps) {
   const { t } = useI18n();
@@ -86,7 +96,13 @@ export function CommentThread({
                 <span className="text-[12.5px] font-semibold text-foreground">{comment.author.name}</span>
                 <Timestamp value={comment.at} className="font-mono text-[11px]" />
               </header>
-              <p className="mt-1 text-[13px] leading-relaxed whitespace-pre-line text-foreground/85">{comment.body}</p>
+              {renderBody ? (
+                <div className="mt-1 text-[13px] leading-relaxed text-foreground/85">{renderBody(comment)}</div>
+              ) : (
+                <p className="mt-1 text-[13px] leading-relaxed whitespace-pre-line text-foreground/85">
+                  {comment.body}
+                </p>
+              )}
             </article>
           </li>
         ))}
@@ -107,7 +123,7 @@ export function CommentThread({
           />
           <div className="flex items-center justify-between gap-2 border-t border-border/60 px-3 py-2">
             <span id={hintId} className="text-[11.5px] text-muted-foreground">
-              Plain text · ⌘/Ctrl + Enter to post
+              {composerHint ?? t(renderBody ? 'comments.hintMarkdown' : 'comments.hintPlain')}
             </span>
             <Button type="submit" size="sm" disabled={!text}>
               {submitLabel}

@@ -66,7 +66,7 @@ export const scorecardComments: ThreadComment[] = [
   {
     id: 'c1',
     author: { name: 'Priya Natarajan' },
-    body: 'Latency is finally under target after the cache rollout in August. Keep an eye on the EU region.',
+    body: 'Latency is finally under target after the cache rollout in August. See [runbook](https://example.test/runbook) for `backoff` settings. Keep an eye on the EU region.',
     at: Date.now() - 3 * DAY,
   },
   {

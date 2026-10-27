@@ -67,6 +67,8 @@ export const PREVIEW_LOADERS = {
     'focus-rings': () => import('../../../packages/ui/src/components/Button/examples/ButtonWithFocusRings'),
     'csp-provider': () => import('../../../packages/ui/src/csp/examples/CSPProviderPreview'),
     'log-viewer--wrap': () => import('../../../packages/blocks/src/builders/LogViewer/examples/Wrap'),
+    'comment-thread--rendered-body': () =>
+      import('../../../packages/blocks/src/data-display/CommentThread/examples/RenderedBody'),
     'theme-scope': () => import('../../../packages/ui/src/theme/examples/ThemeScopeLightCard'),
     'theme-scope--nested': () => import('../../../packages/ui/src/theme/examples/ThemeScopeNested'),
     'layered-overlays': () => import('../../../packages/ui/src/components/Dialog/examples/LayeredOverlays'),

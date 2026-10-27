@@ -243,7 +243,7 @@
       "package": "@gntik-ai/blocks",
       "group": "data-display",
       "status": "beta",
-      "description": "Plain-text comments with avatar, author and Timestamp, plus a reply composer (Textarea + Button, ⌘/Ctrl+Enter posts).",
+      "description": "Plain-text comments by default, with optional renderBody for safe Markdown, avatar, author and Timestamp, plus a reply composer (Textarea + Button, ⌘/Ctrl+Enter posts). renderBody receives the raw comment; use a safe renderer such as @gntik-ai/chat Markdown (without allowHtml). Bodies are untrusted: never inject raw HTML. composerHint overrides the catalog hint and remains the textarea’s accessible description.",
       "files": [
         {
           "path": "packages/blocks/src/data-display/CommentThread/CommentThread.tsx",
@@ -14334,6 +14334,7 @@
       "dependencies": [
         "@gntik-ai/blocks",
         "@gntik-ai/charts",
+        "@gntik-ai/chat",
         "@gntik-ai/icons",
         "@gntik-ai/ui"
       ],

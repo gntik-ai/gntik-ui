@@ -8647,7 +8647,7 @@ import { ChartCard } from '@gntik-ai/blocks';
 
 ### Comment thread (`comment-thread`)
 
-Plain-text comments with avatar, author and Timestamp, plus a reply composer (Textarea + Button, ⌘/Ctrl+Enter posts).
+Plain-text comments by default, with optional renderBody for safe Markdown, avatar, author and Timestamp, plus a reply composer (Textarea + Button, ⌘/Ctrl+Enter posts). renderBody receives the raw comment; use a safe renderer such as @gntik-ai/chat Markdown (without allowHtml). Bodies are untrusted: never inject raw HTML. composerHint overrides the catalog hint and remains the textarea’s accessible description.
 
 - Package: `@gntik-ai/blocks` · export `CommentThread` · group data-display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/data-display/CommentThread/block.meta.ts

@@ -528,6 +528,8 @@ export const es: Messages = {
   'comments.placeholder': 'Añade un comentario…',
   'comments.submit': 'Comentar',
   'comments.write': 'Escribe un comentario',
+  'comments.hintPlain': 'Texto sin formato · ⌘/Ctrl + Intro para publicar',
+  'comments.hintMarkdown': 'Admite Markdown · ⌘/Ctrl + Intro para publicar',
   'calendar.events': '{count, plural, one {# evento} other {# eventos}}',
   'common.expandItem': 'Expandir {label}',
   'common.collapseItem': 'Contraer {label}',
