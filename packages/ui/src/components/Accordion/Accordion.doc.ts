@@ -13,7 +13,7 @@ export const doc: ComponentDoc = {
   dataAttributes: [
     ['data-disabled', 'item', 'The part is disabled and cannot be activated.'],
     ['data-disabled', 'trigger', 'The part is disabled and cannot be activated.'],
-    ['data-panel-open', 'chevron', 'The panel-open state is present on this part.'],
+    ['data-panel-open', 'chevron', 'The associated panel is expanded; the trigger state rotates the chevron.'],
     ['data-starting-style', 'panel', 'The part is entering; transition styles apply.'],
     ['data-ending-style', 'panel', 'The part is leaving; transition styles apply.'],
   ],

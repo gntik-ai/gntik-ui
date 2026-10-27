@@ -8,6 +8,7 @@
    ============================================================================ */
 import kit from '../../../../kit-registry.json';
 import { parseRoute, resolveRoute } from './routes.js';
+import { COMPONENT_ITEMS } from './library.jsx';
 import { DensityProvider } from '@gntik-ai/ui';
 import { DENSITIES, DIRECTIONS, PreviewSettingsContext, readSetting, writeSetting } from '../preview-settings.jsx';
 
@@ -140,7 +141,7 @@ function CatalogShell() {
     parseRoute(location.hash || '#' + (localStorage.getItem('gntik-section') || 'overview'), ids),
   );
   const active = route.section;
-  const resolved = resolveRoute(route, kit.items);
+  const resolved = resolveRoute(route, active === 'ui-components' ? COMPONENT_ITEMS : kit.items);
   const navigate = (section, id) => {
     if (!ids.includes(section)) return;
     const hash = '#' + section + (id ? '/' + id : '');
@@ -165,6 +166,7 @@ function CatalogShell() {
   }, [dir]);
   useEffect(() => {
     localStorage.setItem('gntik-section', active);
+    if (!location.hash) history.replaceState(null, '', '#' + active);
     document.title = `${resolved.item?.name ?? regFind(active)?.label ?? 'Overview'} · Gntik UI`;
     if (mainRef.current) {
       mainRef.current.scrollTop = 0;

@@ -9,7 +9,7 @@
    direction (PreviewScope). The page itself is shared with chat.jsx (package-docs.jsx).
    ============================================================================ */
 import kit from '../../../../kit-registry.json';
-import { itemForDoc } from './routes.js';
+import { componentItemForDoc } from './routes.js';
 import { buildEntries, sortEntries, PackageDocs } from './package-docs.jsx';
 
 const hooksDocs = import.meta.glob('../../../../packages/ui/src/hooks/*.doc.ts', { eager: true, import: 'doc' });
@@ -84,6 +84,14 @@ const docNameOf = (path) =>
     .split('/')
     .pop()
     .replace(/\.doc\.ts$/, '');
+export const COMPONENT_ITEMS = Object.entries({
+  ...hooksDocs,
+  ...themeDocs,
+  ...utilsDocs,
+  ...formsDocs,
+  ...docsByPath,
+}).map(([path, doc]) => componentItemForDoc(path, doc, kit.items));
+const itemByFolder = new Map(COMPONENT_ITEMS.map((item) => [docNameOf(item.docs), item]));
 const exampleOwnerOf = (path, folders) => {
   const base = path.split('/').pop();
   if (base.startsWith('Form') && folders.includes('FormField')) return 'FormField';
@@ -145,16 +153,7 @@ export const COMPONENTS = sortEntries([
     apiKind: 'forms',
   }),
 ]).map((c) => {
-  const docs = [
-    ...Object.keys(hooksDocs),
-    ...Object.keys(themeDocs),
-    ...Object.keys(utilsDocs),
-    ...Object.keys(formsDocs),
-    ...Object.keys(docsByPath),
-  ];
-  const path = docs.find((p) => p.endsWith('/' + c.folder + '.doc.ts'));
-  const item = itemForDoc(path, kit.items);
-  if (!item) throw new Error(`No registry item for ${path}`);
+  const item = itemByFolder.get(c.folder);
   return { ...c, id: item.id };
 });
 

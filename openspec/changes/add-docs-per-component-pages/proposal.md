@@ -12,7 +12,7 @@ of compound parts and styled state attributes.
 - Make the UI library a grouped index and reuse its renderer for individual component pages.
 - Add optional anatomy and dataAttributes to ComponentDoc and display anatomy and styling hooks.
 - Support gallery item routes while preserving the chat section and bare section links.
-- Generate registry identities for flat documented UI entry points so every index row has a kit ID.
+- Reuse registry identities where available and derive docs-only routes for flat documented UI entry points without publishing installable items.
 
 ## Impact
 

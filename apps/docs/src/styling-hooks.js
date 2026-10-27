@@ -1,15 +1,18 @@
 // Source-only state-hook parsing. No evaluation of component code is needed.
+function skipQuoted(source, start) {
+  for (let i = start + 1; i < source.length; i++) {
+    if (source[i] === '\\') i++;
+    else if (source[i] === source[start]) return i;
+  }
+  return source.length;
+}
 function split(source, separator = ',') {
   const parts = [];
   let start = 0;
   let depth = 0;
-  let quote = null;
   for (let i = 0; i < source.length; i++) {
     const ch = source[i];
-    if (quote) {
-      if (ch === '\\') i++;
-      else if (ch === quote) quote = null;
-    } else if (ch === '"' || ch === "'" || ch === '`') quote = ch;
+    if (ch === '"' || ch === "'" || ch === '`') i = skipQuoted(source, i);
     else if ('{[('.includes(ch)) depth++;
     else if ('}])'.includes(ch)) depth--;
     else if (ch === separator && depth === 0) {
@@ -22,13 +25,9 @@ function split(source, separator = ',') {
 }
 function objectBody(source, start) {
   let depth = 0;
-  let quote = null;
   for (let i = start; i < source.length; i++) {
     const ch = source[i];
-    if (quote) {
-      if (ch === '\\') i++;
-      else if (ch === quote) quote = null;
-    } else if (ch === '"' || ch === "'" || ch === '`') quote = ch;
+    if (ch === '"' || ch === "'" || ch === '`') i = skipQuoted(source, i);
     else if (ch === '{') depth++;
     else if (ch === '}' && --depth === 0) return source.slice(start + 1, i);
   }

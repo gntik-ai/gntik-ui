@@ -9,7 +9,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Table, TableCaption, TableHeader, TableBody, TableRow, TableHead, TableCell, useI18n } from '@gntik-ai/ui';
 import kit from '../../../../kit-registry.json';
-import { itemForDoc } from './routes.js';
+import { itemForDoc, SECTION_BY_KIND } from './routes.js';
 import { CATALOG, loadSource } from '../preview-registry.js';
 import { previewQuery, usePreviewSettings } from '../preview-settings.jsx';
 
@@ -152,10 +152,7 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, item }) {
     <div>
       <SectionHead kicker={kicker} title={item?.name ?? title} status="done" intro={item?.description ?? intro} />
       {item && (
-        <a
-          href={'#' + { block: 'blocks', layout: 'layouts', template: 'templates' }[kind]}
-          className="mb-6 inline-block text-primary-text underline"
-        >
+        <a href={'#' + SECTION_BY_KIND[kind]} className="mb-6 inline-block text-primary-text underline">
           Back to full gallery
         </a>
       )}
@@ -193,7 +190,7 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, item }) {
                   ) : (
                     <a
                       className="hover:underline focus-visible:outline-2 focus-visible:outline-focus-ring"
-                      href={`#${{ block: 'blocks', layout: 'layouts', template: 'templates' }[kind]}/${it.routeId}`}
+                      href={`#${SECTION_BY_KIND[kind]}/${it.routeId}`}
                     >
                       {it.title}
                     </a>

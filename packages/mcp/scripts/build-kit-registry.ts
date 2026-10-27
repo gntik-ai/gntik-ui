@@ -133,7 +133,6 @@ interface Source {
   targetBase: string;
   id?: string;
   meta?: Meta;
-  flat?: boolean;
 }
 
 export function collectSources(): Source[] {
@@ -192,24 +191,6 @@ export function collectSources(): Source[] {
     }
   };
   doc('component', '@gntik-ai/ui', path.join(ROOT, 'packages/ui/src/components'), 'components/ui');
-  // Flat documented entry points need registry identities too (forms, hooks and themes).
-  for (const area of ['forms', 'hooks', 'utils', 'theme']) {
-    const dir = path.join(ROOT, 'packages/ui/src', area);
-    for (const file of fs.readdirSync(dir).filter((f) => f.endsWith('.doc.ts'))) {
-      const base = file.replace(/\.doc\.ts$/, '');
-      out.push({
-        kind: 'component',
-        pkg: '@gntik-ai/ui',
-        dir,
-        flat: true,
-        metaFile: path.join(dir, file),
-        metaExport: 'doc',
-        targetBase: `components/${area}`,
-        id: kebab(base),
-      });
-    }
-  }
-
   doc('layout', '@gntik-ai/ui', path.join(ROOT, 'packages/ui/src/layouts'), 'components/layouts');
   doc('component', '@gntik-ai/chat', path.join(ROOT, 'packages/chat/src'), 'components/chat');
   const blocks = path.join(ROOT, 'packages/blocks/src');
@@ -247,7 +228,7 @@ export const idOf = (s: Source) => s.id ?? (s.kind === 'template' ? path.basenam
 
 async function build() {
   const sources = collectSources();
-  const folderToId = new Map(sources.filter((s) => !s.flat).map((s) => [s.dir, idOf(s)] as const));
+  const folderToId = new Map(sources.map((s) => [s.dir, idOf(s)] as const));
   const items: Item[] = [];
   for (const s of sources) {
     const meta = s.meta ?? (await load(s.metaFile, s.metaExport));

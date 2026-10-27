@@ -2,7 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import React from 'react';
+import React, { act } from 'react';
+import { createRoot } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
 const { JSDOM } = require('jsdom');
@@ -11,6 +12,11 @@ test('real catalog index links every doc without previews and Select renders its
   globalThis.React = React;
   globalThis.window = dom.window;
   globalThis.document = dom.window.document;
+  globalThis.location = dom.window.location;
+  globalThis.history = dom.window.history;
+  globalThis.localStorage = dom.window.localStorage;
+  globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+  let root;
   const { createServer } = await import('vite');
   const server = await createServer({
     root: fileURLToPath(new URL('..', import.meta.url)),
@@ -73,11 +79,71 @@ test('real catalog index links every doc without previews and Select renders its
         rows.some((r) => r[0] === attribute && r[1] === part),
         `${part}: ${attribute}`,
       );
+    await server.ssrLoadModule('/src/catalog/registry.jsx');
+    await server.ssrLoadModule('/src/catalog/catalog.jsx');
+    localStorage.setItem('gntik-section', 'ui-components');
+    const container = document.createElement('div');
+    document.body.append(container);
+    root = createRoot(container);
+    await act(async () => root.render(React.createElement(window.CatalogShell)));
+    assert.equal(location.hash, '#ui-components', 'restored sections have shareable URLs');
+    assert.equal(history.length, 1, 'normalizing a restored section does not push history');
+    assert.equal(document.activeElement, container.querySelector('main h1'));
+    await act(async () => {
+      const changed = new Promise((resolve) => window.addEventListener('hashchange', resolve, { once: true }));
+      window.__goto('ui-components', 'use-breakpoint');
+      await changed;
+    });
+    assert.equal(history.length, 2, 'item navigation pushes a history entry');
+    assert.equal(container.querySelector('main h1').textContent, 'Breakpoint values');
+    assert.equal(document.title, 'Breakpoint values · Gntik UI');
+    assert.equal(document.activeElement, container.querySelector('main h1'));
+    const compact = [...container.querySelectorAll('header button')].find((button) => button.textContent === 'Compact');
+    await act(async () => {
+      compact.focus();
+      compact.click();
+    });
+    assert.equal(document.activeElement, compact, 'density changes preserve focus');
+    await act(async () => root.render(React.createElement(window.CatalogShell, { key: 'fresh-item-load' })));
+    assert.equal(location.hash, '#ui-components/use-breakpoint', 'initialization preserves the item segment');
+    assert.equal(container.querySelector('main h1').textContent, 'Breakpoint values');
+    for (const [folder, attribute, meaning] of [
+      ['Accordion', 'data-panel-open', 'The associated panel is expanded; the trigger state rotates the chevron.'],
+      [
+        'Popover',
+        'data-side',
+        'The popup placement side (top, right, bottom or left) positions and orients the arrow.',
+      ],
+    ]) {
+      const reference = new JSDOM(
+        renderToStaticMarkup(
+          React.createElement(window.ApiReference, { folder, kind: 'component', showStyling: true }),
+        ),
+      ).window.document;
+      const row = [...reference.querySelectorAll('tbody tr')].find(
+        (row) => row.querySelector('td')?.textContent === attribute,
+      );
+      assert.equal(row.lastElementChild.textContent, meaning);
+    }
+    const undocumented = new JSDOM(
+      renderToStaticMarkup(
+        React.createElement(window.ApiReference, { folder: 'Button', kind: 'component', showStyling: true }),
+      ),
+    ).window.document;
+    assert.equal(
+      undocumented.querySelector('table[aria-label="Button styling hooks"] tbody tr td:last-child').textContent,
+      'Not documented.',
+    );
   } finally {
+    if (root) await act(async () => root.unmount());
     await server.close();
     dom.window.close();
     delete globalThis.window;
     delete globalThis.document;
     delete globalThis.React;
+    delete globalThis.location;
+    delete globalThis.history;
+    delete globalThis.localStorage;
+    delete globalThis.IS_REACT_ACT_ENVIRONMENT;
   }
 });

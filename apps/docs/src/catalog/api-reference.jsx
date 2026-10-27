@@ -229,7 +229,7 @@ function ApiReference({ folder, showStyling = false, kind = 'component', level =
                   <td className={tdApi}>
                     {api.dataAttributes?.find((row) => row[0] === attribute && row[1] === part)?.[2] ??
                       api.dataAttributes?.find((row) => row[0] === attribute)?.[2] ??
-                      'Present while this state applies.'}
+                      'Not documented.'}
                   </td>
                 </tr>
               ))}
