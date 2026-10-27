@@ -48,11 +48,13 @@ test('PNG, SVG, CSV and script-free print work under strict CSP and a local them
       }
     }).observe(document, { childList: true, subtree: true });
   });
-  await page.route('**/', async (route) => {
+  await page.route('**/chart-export.html', async (route) => {
     const response = await route.fetch();
     await route.fulfill({ response, headers: { ...response.headers(), 'content-security-policy': CSP } });
   });
-  await page.goto('/#bar-charts');
+  // The full catalog eagerly loads unrelated form examples whose Zod schemas probe eval.
+  // Exercise the same export composition without bringing those examples into the CSP page.
+  await page.goto('/chart-export.html');
   const preview = example(page);
   await expect(preview.locator('svg.recharts-surface')).toBeVisible();
   // A real ThemeScope is rendered by the example. Change only its local class, keeping html dark.
