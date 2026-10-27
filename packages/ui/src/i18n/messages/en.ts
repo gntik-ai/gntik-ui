@@ -1,3 +1,4 @@
+import { chatComposerEn } from './chat-composer/en';
 import { fieldVariantsEn } from './field-variant-messages';
 import { tableMenuEn } from './table-menu-messages';
 import { layersEn } from './layer-messages';
@@ -8,6 +9,7 @@ import { markdownEn } from './markdown-messages';
 import { cspEn } from './csp-messages';
 /** Built-in English labels, accessible names and announcements. See format.ts for interpolation syntax. */
 export const en = {
+  ...chatComposerEn,
   ...fieldVariantsEn,
   ...tableMenuEn,
   ...layersEn,
@@ -554,16 +556,6 @@ export const en = {
   'chat.resetZoom': 'Reset zoom',
   'chat.diagram': 'Diagram',
   'chat.renderingDiagram': 'Rendering diagram…',
-  'chat.messageLabel': 'Message',
-  'chat.placeholder': 'Message the assistant…',
-  'chat.send': 'Send message',
-  'chat.stop': 'Stop generating',
-  'chat.attach': 'Attach files',
-  'chat.attachments': 'Attachments',
-  'chat.hintSend': 'to send',
-  'chat.hintNewLine': 'for a new line',
-  'chat.shiftEnter': 'Shift + Enter',
-  'chat.overLimit': 'characters, over the limit',
   'chat.conversation': 'Conversation',
   'chat.messages': 'Messages',
   'chat.details': 'Details',
@@ -629,10 +621,6 @@ export const en = {
   'chat.uploading': 'Uploading {name}',
   'chat.uploadFailed': 'Upload failed',
   'chat.retryUpload': 'Retry uploading {name}',
-  'chat.dropFiles': 'Drop files to attach',
-  'chat.fileTooLarge': '{name} is larger than {max}',
-  'chat.fileTypeNotAllowed': '{name} is not an allowed file type',
-  'chat.tooManyFiles': 'You can attach up to {max} files',
   'chat.model': 'Model',
   'chat.selectModel': 'Select a model',
   'chat.capabilityVision': 'Vision',

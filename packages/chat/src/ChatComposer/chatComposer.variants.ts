@@ -13,6 +13,12 @@ export const chatComposerStyles = {
     'mx-3 mt-3 flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/8 px-2.5 py-1.5 text-[12px] text-destructive-chip-text',
   errorList: 'flex min-w-0 flex-1 flex-col gap-0.5',
   errorDismiss: `-me-1 grid size-5 shrink-0 place-items-center rounded text-destructive-chip-text hover:bg-foreground/10 ${focusRing}`,
+  header: 'border-b border-border px-3.5 py-3',
+  headerRow: 'flex items-center justify-between gap-2 text-[13px] font-medium text-foreground',
+  headerContent: 'mt-2 text-[13px] text-muted-foreground',
+  textRow: 'flex min-w-0 items-start',
+  prefix: 'flex shrink-0 items-center ps-3.5 pt-3',
+  footer: 'border-t border-border px-3.5 py-2 text-[12px] text-muted-foreground',
   attachments: 'flex flex-wrap gap-1.5 px-3 pt-3',
   /** @deprecated Chips render AttachmentChip (see attachmentStyles). */
   chip: 'inline-flex h-7 max-w-60 items-center gap-1.5 rounded-md border border-border bg-secondary/50 ps-2 pe-1 text-[12px] text-foreground',
