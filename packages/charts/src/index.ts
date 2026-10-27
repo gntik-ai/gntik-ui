@@ -82,3 +82,5 @@ export {
   type LiveSeriesPauseProps,
   type UseLiveSeriesOptions,
 } from './live';
+export { exportChartSvg, exportChartPng, type ChartPngOptions, chartTableToCsv, printChart } from './export';
+export { useChartExport, type ChartExport } from './useChartExport';

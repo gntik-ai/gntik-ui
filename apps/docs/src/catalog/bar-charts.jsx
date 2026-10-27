@@ -10,7 +10,7 @@ const chartDocs = import.meta.glob('../../../../packages/charts/src/*.doc.ts', {
 const localeDoc = chartDocs['../../../../packages/charts/src/i18n.doc.ts'];
 
 (function () {
-  const { SectionHead, ChartCard, ChartVariant, ApiReference, BarChart, BarList, chartFmt } = window;
+  const { SectionHead, ChartCard, ChartVariant, ChartExportDemo, ApiReference, BarChart, BarList, chartFmt } = window;
 
   const RUNS = [
     { day: 'Mon', Succeeded: 1240, Failed: 38, Cancelled: 22 },
@@ -271,6 +271,8 @@ const localeDoc = chartDocs['../../../../packages/charts/src/i18n.doc.ts'];
           status="done"
           intro="Counts by category. Stacked for composition, grouped to compare series side by side and horizontal for rankings. Green carries the main series; categoricals cover the rest. Below, two dashboard cards adapted from Tremor Blocks. Standalone charts support English and Spanish labels through ChartLocaleProvider."
         />
+
+        <ChartExportDemo />
 
         <ChartVariant
           title={localeDoc.name}
