@@ -3979,6 +3979,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -4060,6 +4064,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -4222,6 +4230,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -4302,6 +4314,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -4417,6 +4433,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -4498,6 +4518,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -4643,6 +4667,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -4757,6 +4785,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -5124,6 +5156,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -5201,7 +5237,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options.",
+      "description": "Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "files": [
         {
           "path": "packages/ui/src/components/Combobox/Combobox.tsx",
@@ -5232,6 +5268,14 @@
           "target": "components/ui/combobox/useAsyncOptions.ts"
         },
         {
+          "path": "packages/ui/src/field-variant/field-control-variants.ts",
+          "target": "components/field-variant/field-control-variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-variant-context.ts",
+          "target": "components/field-variant/field-variant-context.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -5254,6 +5298,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -5348,6 +5396,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -5473,6 +5525,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -5583,6 +5639,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -5683,6 +5743,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -5729,7 +5793,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged.",
+      "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. The internal calendar selectors and time field in the popup stay outlined, including inside a ghost or filled provider.",
       "files": [
         {
           "path": "packages/ui/src/components/DatePicker/DatePicker.tsx",
@@ -5756,6 +5820,18 @@
           "target": "components/ui/date-picker/index.ts"
         },
         {
+          "path": "packages/ui/src/field-variant/FieldVariantProvider.tsx",
+          "target": "components/field-variant/FieldVariantProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-control-variants.ts",
+          "target": "components/field-variant/field-control-variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-variant-context.ts",
+          "target": "components/field-variant/field-variant-context.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -5778,6 +5854,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -5871,6 +5951,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -5959,6 +6043,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -6050,6 +6138,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -6149,6 +6241,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -6232,6 +6328,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -6409,6 +6509,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -6492,6 +6596,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -6537,7 +6645,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name.",
+      "description": "Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "files": [
         {
           "path": "packages/ui/src/components/Input/Input.tsx",
@@ -6550,6 +6658,14 @@
         {
           "path": "packages/ui/src/components/Input/input.variants.ts",
           "target": "components/ui/input/input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-control-variants.ts",
+          "target": "components/field-variant/field-control-variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-variant-context.ts",
+          "target": "components/field-variant/field-variant-context.ts"
         }
       ],
       "dependencies": [
@@ -6612,6 +6728,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -6705,6 +6825,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -6790,6 +6914,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -6882,6 +7010,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -6971,6 +7103,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -7052,6 +7188,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -7139,6 +7279,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -7307,6 +7451,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -7394,6 +7542,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -7547,6 +7699,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -7631,7 +7787,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
+      "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component. Read-only mode preserves the selection and prevents edits. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "files": [
         {
           "path": "packages/ui/src/components/MultiSelect/MultiSelect.tsx",
@@ -7644,6 +7800,10 @@
         {
           "path": "packages/ui/src/components/MultiSelect/multi-select.variants.ts",
           "target": "components/ui/multi-select/multi-select.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-variant-context.ts",
+          "target": "components/field-variant/field-variant-context.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -7668,6 +7828,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -7764,6 +7928,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -7854,6 +8022,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -7900,7 +8072,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes sm and md like Input; invalid, disabled and read-only states; works inside Field.",
+      "description": "Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes sm and md like Input; invalid, disabled and read-only states; works inside Field. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "files": [
         {
           "path": "packages/ui/src/components/NumberInput/NumberInput.tsx",
@@ -7913,6 +8085,14 @@
         {
           "path": "packages/ui/src/components/NumberInput/number-input.variants.ts",
           "target": "components/ui/number-input/number-input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-control-variants.ts",
+          "target": "components/field-variant/field-control-variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-variant-context.ts",
+          "target": "components/field-variant/field-variant-context.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -7937,6 +8117,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8020,6 +8204,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8106,6 +8294,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8195,6 +8387,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -8280,6 +8476,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8387,6 +8587,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -8473,6 +8677,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -8555,6 +8763,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8646,6 +8858,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8768,6 +8984,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8895,6 +9115,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -8984,6 +9208,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -9109,6 +9337,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -9187,7 +9419,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name. For long lists, use Combobox with virtualized and a flat items array (see ComboboxVirtualized); Select requires its options to stay mounted for typeahead.",
+      "description": "Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name. For long lists, use Combobox with virtualized and a flat items array (see ComboboxVirtualized); Select requires its options to stay mounted for typeahead. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "files": [
         {
           "path": "packages/ui/src/components/Select/Select.tsx",
@@ -9200,6 +9432,14 @@
         {
           "path": "packages/ui/src/components/Select/select.variants.ts",
           "target": "components/ui/select/select.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-control-variants.ts",
+          "target": "components/field-variant/field-control-variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-variant-context.ts",
+          "target": "components/field-variant/field-variant-context.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -9224,6 +9464,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -9399,6 +9643,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -9503,6 +9751,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -9677,6 +9929,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -9826,6 +10082,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -9907,6 +10167,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -10003,6 +10267,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -10079,7 +10347,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field. Opt-in `clearable` reserves space for a reset button and returns focus to the textarea. `onClear` runs after the value change; `clearLabel` overrides the localized name.",
+      "description": "Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field. Opt-in `clearable` reserves space for a reset button and returns focus to the textarea. `onClear` runs after the value change; `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "files": [
         {
           "path": "packages/ui/src/components/Textarea/Textarea.tsx",
@@ -10092,6 +10360,14 @@
         {
           "path": "packages/ui/src/components/Textarea/textarea.variants.ts",
           "target": "components/ui/textarea/textarea.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-control-variants.ts",
+          "target": "components/field-variant/field-control-variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-variant-context.ts",
+          "target": "components/field-variant/field-variant-context.ts"
         }
       ],
       "dependencies": [
@@ -10189,6 +10465,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -10279,6 +10559,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -10323,7 +10607,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`\"HH:mm\"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name.",
+      "description": "Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`\"HH:mm\"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "files": [
         {
           "path": "packages/ui/src/components/TimePicker/TimePicker.tsx",
@@ -10344,6 +10628,14 @@
         {
           "path": "packages/ui/src/components/TimePicker/time-utils.ts",
           "target": "components/ui/time-picker/time-utils.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-control-variants.ts",
+          "target": "components/field-variant/field-control-variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-variant-context.ts",
+          "target": "components/field-variant/field-variant-context.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -10368,6 +10660,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -10457,6 +10753,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -10543,6 +10843,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -10624,6 +10928,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -10740,6 +11048,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -10784,7 +11096,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Free-entry chips for emails, labels or hosts: Enter, Tab or a separator commits, pasted lists are split, `validate` marks bad entries as invalid chips, `maxItems` caps the list. Additions and removals are announced; works inside Field.",
+      "description": "Free-entry chips for emails, labels or hosts: Enter, Tab or a separator commits, pasted lists are split, `validate` marks bad entries as invalid chips, `maxItems` caps the list. Additions and removals are announced; works inside Field. Read-only mode prevents text edits, committing entries and chip removal. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "files": [
         {
           "path": "packages/ui/src/components/TokenInput/TokenInput.tsx",
@@ -10801,6 +11113,14 @@
         {
           "path": "packages/ui/src/components/TokenInput/token-input.variants.ts",
           "target": "components/ui/token-input/token-input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-control-variants.ts",
+          "target": "components/field-variant/field-control-variants.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-variant-context.ts",
+          "target": "components/field-variant/field-variant-context.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -10825,6 +11145,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -10978,6 +11302,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -11062,6 +11390,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11152,6 +11484,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11246,6 +11582,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11354,6 +11694,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11467,6 +11811,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -11563,6 +11911,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -11643,6 +11995,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11735,6 +12091,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -11807,6 +12167,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11891,6 +12255,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11980,6 +12348,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -12075,6 +12447,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -12161,6 +12537,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -12241,6 +12621,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -12327,6 +12711,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -12410,6 +12798,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -12502,6 +12894,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -12585,6 +12981,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -12673,6 +13073,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -12755,6 +13159,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",

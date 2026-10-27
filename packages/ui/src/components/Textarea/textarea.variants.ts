@@ -1,3 +1,4 @@
+import { fieldControlVariants } from '../../field-variant/field-control-variants';
 import { tv, type VariantProps } from '../../utils/tv';
 
 export const textareaVariants = tv({
@@ -10,6 +11,8 @@ export const textareaVariants = tv({
     'read-only:bg-secondary/40',
   ],
   variants: {
+    variant: fieldControlVariants,
+
     size: {
       sm: 'text-[12px] leading-5',
       md: 'text-[13px] leading-6',
@@ -23,7 +26,7 @@ export const textareaVariants = tv({
       false: '',
     },
   },
-  defaultVariants: { size: 'md', resize: 'none', autosize: false },
+  defaultVariants: { variant: 'outline', size: 'md', resize: 'none', autosize: false },
 });
 
 export type TextareaVariantProps = VariantProps<typeof textareaVariants>;

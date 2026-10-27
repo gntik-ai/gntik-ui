@@ -1,3 +1,4 @@
+import { fieldControlVariants, fieldPickerHover } from '../../field-variant/field-control-variants';
 import { tv, type VariantProps } from '../../utils/tv';
 
 /** Shared popup surface for Select and Combobox (portal → positioner → popup). */
@@ -13,6 +14,11 @@ export const listboxItem = [
   'flex cursor-default items-center justify-between gap-2 rounded-[6px] px-2.5 py-1.5 text-[13px] text-foreground outline-none select-none',
   'data-highlighted:bg-secondary/70 data-selected:bg-primary/12 data-selected:data-highlighted:bg-primary/16 forced-colors:data-highlighted:bg-[Highlight] forced-colors:data-highlighted:text-[HighlightText] forced-colors:data-highlighted:[&_*]:text-[HighlightText] forced-colors:data-selected:bg-[Highlight] forced-colors:data-selected:text-[HighlightText] forced-colors:data-selected:[&_*]:text-[HighlightText] forced-colors:data-selected:data-highlighted:bg-[Highlight] forced-colors:data-selected:data-highlighted:text-[HighlightText] forced-colors:data-selected:data-highlighted:[&_*]:text-[HighlightText]',
   'data-disabled:cursor-disabled data-disabled:opacity-45',
+];
+
+const alternateTrigger = [
+  fieldPickerHover,
+  'focus-visible:border-primary/60 data-invalid:border-destructive/70 aria-invalid:border-destructive/70',
 ];
 
 export const selectVariants = tv({
@@ -42,6 +48,16 @@ export const selectVariants = tv({
     ],
   },
   variants: {
+    variant: {
+      outline: {},
+      filled: {
+        trigger: [fieldControlVariants.filled, alternateTrigger],
+      },
+      ghost: {
+        trigger: [fieldControlVariants.ghost, alternateTrigger],
+      },
+    },
+
     size: {
       /** Follows `data-density` (comfortable = md). */
       auto: { trigger: 'h-control pe-2.5 ps-field text-[13px]' },
@@ -50,7 +66,7 @@ export const selectVariants = tv({
       lg: { trigger: 'h-11 pe-3 ps-3.5 text-[14.5px] rounded-lg' },
     },
   },
-  defaultVariants: { size: 'auto' },
+  defaultVariants: { variant: 'outline', size: 'auto' },
 });
 
 export type SelectVariantProps = VariantProps<typeof selectVariants>;

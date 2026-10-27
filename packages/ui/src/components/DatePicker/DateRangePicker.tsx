@@ -1,3 +1,4 @@
+import { FieldVariantProvider } from '../../field-variant/FieldVariantProvider';
 import { type ClearableProps } from '../../utils/clear-control';
 import { Button } from '../Button';
 import { useRef, useState, type Ref } from 'react';
@@ -71,6 +72,7 @@ export function DateRangePicker({
   onClear,
   invalid,
   size,
+  variant,
   className,
   locale: localeProp,
   weekStartsOn,
@@ -148,6 +150,7 @@ export function DateRangePicker({
         onClear={clear}
         invalid={invalid}
         size={size}
+        variant={variant}
         className={className}
         aria-label={ariaLabel}
         aria-describedby={ariaDescribedBy}
@@ -165,56 +168,58 @@ export function DateRangePicker({
         padding="none"
         initialFocus={() => focusCalendarDay(calendarRef.current)}
       >
-        <div className={s.panel()}>
-          {presets.length > 0 && (
-            <div role="group" aria-label={t('datePicker.presets')} className={s.presets()}>
-              {presets.map((p) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  aria-pressed={active?.id === p.id}
-                  className={cn(s.preset())}
-                  onClick={() => pickPreset(p)}
-                >
-                  {p.label}
-                </button>
-              ))}
+        <FieldVariantProvider variant="outline">
+          <div className={s.panel()}>
+            {presets.length > 0 && (
+              <div role="group" aria-label={t('datePicker.presets')} className={s.presets()}>
+                {presets.map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    aria-pressed={active?.id === p.id}
+                    className={cn(s.preset())}
+                    onClick={() => pickPreset(p)}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+            )}
+            <Calendar
+              key={String(open)}
+              ref={calendarRef}
+              mode="range"
+              aria-label={t('datePicker.chooseRange')}
+              value={draft}
+              onValueChange={(r) => {
+                setDraft(r);
+                setCustomActive(true);
+                if (r.start && r.end) apply(r);
+              }}
+              numberOfMonths={numberOfMonths}
+              defaultMonth={
+                draft.end && numberOfMonths === 2
+                  ? new Date(draft.end.getFullYear(), draft.end.getMonth() - 1, 1)
+                  : undefined
+              }
+              locale={locale}
+              weekStartsOn={weekStartsOn}
+              min={min}
+              max={max}
+              isDateDisabled={isDateDisabled}
+              maxView={maxView}
+              captionLayout={captionLayout}
+              today={today}
+            />
+          </div>
+          {clearable && (range.start || range.end) && !disabled && !readOnly && (
+            <div className={s.timeRow()}>
+              <Button size="sm" variant="ghost" onClick={clear}>
+                {t('common.clear')}
+              </Button>
             </div>
           )}
-          <Calendar
-            key={String(open)}
-            ref={calendarRef}
-            mode="range"
-            aria-label={t('datePicker.chooseRange')}
-            value={draft}
-            onValueChange={(r) => {
-              setDraft(r);
-              setCustomActive(true);
-              if (r.start && r.end) apply(r);
-            }}
-            numberOfMonths={numberOfMonths}
-            defaultMonth={
-              draft.end && numberOfMonths === 2
-                ? new Date(draft.end.getFullYear(), draft.end.getMonth() - 1, 1)
-                : undefined
-            }
-            locale={locale}
-            weekStartsOn={weekStartsOn}
-            min={min}
-            max={max}
-            isDateDisabled={isDateDisabled}
-            maxView={maxView}
-            captionLayout={captionLayout}
-            today={today}
-          />
-        </div>
-        {clearable && (range.start || range.end) && !disabled && !readOnly && (
-          <div className={s.timeRow()}>
-            <Button size="sm" variant="ghost" onClick={clear}>
-              {t('common.clear')}
-            </Button>
-          </div>
-        )}
+        </FieldVariantProvider>
       </PopoverContent>
     </Popover>
   );

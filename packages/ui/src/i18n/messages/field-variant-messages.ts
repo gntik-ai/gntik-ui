@@ -1,0 +1,38 @@
+/** Labels for the field chrome live previews. */
+export const fieldVariantsEn = {
+  'fieldVariants.name': 'Name',
+  'fieldVariants.value': 'Workspace',
+  'fieldVariants.search': 'Search fields',
+  'fieldVariants.searchPlaceholder': 'Search…',
+  'fieldVariants.date': 'Date',
+  'fieldVariants.choice': 'Choice',
+  'fieldVariants.option': 'Member',
+  'fieldVariants.notes': 'Notes',
+  'fieldVariants.entries': 'Entries',
+  'fieldVariants.range': 'Date range',
+  'fieldVariants.inlineEdit': 'Edit row',
+  'fieldVariants.toolbar': 'Filter toolbar',
+  'fieldVariants.outline': 'Outlined field',
+  'fieldVariants.filled': 'Filled field',
+  'fieldVariants.ghost': 'Ghost field',
+  'fieldVariants.readOnly': 'Read-only field',
+} as const;
+
+export const fieldVariantsEs = {
+  'fieldVariants.name': 'Nombre',
+  'fieldVariants.value': 'Espacio de trabajo',
+  'fieldVariants.search': 'Buscar campos',
+  'fieldVariants.searchPlaceholder': 'Buscar…',
+  'fieldVariants.date': 'Fecha',
+  'fieldVariants.choice': 'Opción',
+  'fieldVariants.option': 'Miembro',
+  'fieldVariants.notes': 'Notas',
+  'fieldVariants.entries': 'Entradas',
+  'fieldVariants.range': 'Rango de fechas',
+  'fieldVariants.inlineEdit': 'Editar fila',
+  'fieldVariants.toolbar': 'Barra de filtros',
+  'fieldVariants.outline': 'Campo con borde',
+  'fieldVariants.filled': 'Campo relleno',
+  'fieldVariants.ghost': 'Campo sin fondo',
+  'fieldVariants.readOnly': 'Campo de solo lectura',
+} satisfies Record<keyof typeof fieldVariantsEn, string>;

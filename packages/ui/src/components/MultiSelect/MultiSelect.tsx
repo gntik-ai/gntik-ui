@@ -4,6 +4,7 @@ import { useId, useRef, useState, type ReactNode, type Ref } from 'react';
 import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { matchText } from '../../utils/match-text';
+import { useFieldVariant, type FieldControlVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
 import { ComboboxSpecialItem } from '../Combobox/Combobox';
 import { comboboxVariants } from '../Combobox/combobox.variants';
@@ -14,8 +15,6 @@ import type { MeasuredRowOptions } from '../VirtualList/use-measured-rows';
 import { Spinner } from '../Spinner';
 import { multiSelectVariants, type MultiSelectVariantProps } from './multi-select.variants';
 
-const cb = comboboxVariants();
-
 export interface MultiSelectOption {
   value: string;
   label: string;
@@ -25,6 +24,7 @@ export interface MultiSelectOption {
 }
 
 export interface MultiSelectProps extends MultiSelectVariantProps, MeasuredRowOptions {
+  variant?: FieldControlVariant;
   /** Render only the visible option rows. Default false. */
   virtualized?: boolean;
   options: MultiSelectOption[];
@@ -51,6 +51,7 @@ export interface MultiSelectProps extends MultiSelectVariantProps, MeasuredRowOp
   name?: string;
   id?: string;
   disabled?: boolean;
+  readOnly?: boolean;
   invalid?: boolean;
   className?: string;
   ref?: Ref<HTMLInputElement>;
@@ -100,8 +101,10 @@ export function MultiSelect({
   name,
   id,
   disabled,
+  readOnly,
   invalid,
   size = 'md',
+  variant,
   className,
   ref,
   'aria-label': ariaLabel,
@@ -162,6 +165,7 @@ export function MultiSelect({
     ...specials,
   ];
   const busy = !!loadOptions && (remote.loading || !!remote.error);
+  const cb = comboboxVariants({ variant: useFieldVariant(variant) });
   const s = multiSelectVariants({ size });
   const v = comboboxVariants({ size });
 
@@ -218,6 +222,7 @@ export function MultiSelect({
       itemToStringValue={(o: MultiSelectOption | SpecialItem) => o.value}
       name={name}
       disabled={disabled}
+      readOnly={readOnly}
       onInputValueChange={setInput}
       onOpenChange={(next) => {
         setOpen(next);
@@ -230,7 +235,7 @@ export function MultiSelect({
         </label>
       )}
       <BaseCombobox.InputGroup
-        className={cn(cb.chipsGroup(), s.group(), className)}
+        className={cn(cb.chipsGroup(), s.group(), readOnly && 'bg-secondary/40', className)}
         data-invalid={invalid || undefined}
       >
         <BaseCombobox.Chips className={cb.chips()}>

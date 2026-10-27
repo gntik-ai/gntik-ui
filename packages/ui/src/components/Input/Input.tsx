@@ -2,6 +2,7 @@ import { Input as BaseInput } from '@base-ui/react/input';
 import { useState, type ComponentType, type ReactNode, type Ref } from 'react';
 import { useRender } from '@base-ui/react/use-render';
 import { ClearControlButton, resetNativeValue, type ClearableProps } from '../../utils/clear-control';
+import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
 import { inputVariants, INPUT_ICON_SIZE, type InputVariantProps } from './input.variants';
 
@@ -33,6 +34,7 @@ export interface InputProps extends Omit<BaseInput.Props, 'className' | 'size'>,
  */
 export function Input({
   size = 'auto',
+  variant,
   className,
   inputClassName,
   leadingIcon: LeadingIcon,
@@ -49,6 +51,7 @@ export function Input({
   onKeyDown,
   ...props
 }: InputProps) {
+  const fieldVariant = useFieldVariant(variant);
   const [control, setControl] = useState<HTMLInputElement | null>(null);
   const [inner, setInner] = useState(props.defaultValue ?? '');
   const hasValue = String(props.value ?? (control ? control.value : inner)).length > 0;
@@ -82,12 +85,12 @@ export function Input({
             clear();
           }
         }}
-        className={cn(inputVariants({ size }).input(), inputClassName)}
+        className={cn(inputVariants({ size, variant: fieldVariant }).input(), inputClassName)}
         aria-invalid={props['aria-invalid'] ?? (invalid || undefined)}
       />
     ),
   });
-  const s = inputVariants({ size });
+  const s = inputVariants({ size, variant: fieldVariant });
   const px = INPUT_ICON_SIZE[size];
   return (
     <div className={cn(s.root(), className)} data-invalid={invalid || undefined}>

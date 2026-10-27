@@ -3,6 +3,7 @@ import { mergeProps } from '@base-ui/react/merge-props';
 import { useState, type ComponentProps, type Ref } from 'react';
 import { useRender } from '@base-ui/react/use-render';
 import { ClearControlButton, resetNativeValue, type ClearableProps } from '../../utils/clear-control';
+import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
 import { textareaVariants, type TextareaVariantProps } from './textarea.variants';
 
@@ -30,6 +31,7 @@ export interface TextareaProps extends NativeTextareaProps, TextareaVariantProps
  */
 export function Textarea({
   size,
+  variant,
   resize,
   autosize,
   invalid,
@@ -47,6 +49,7 @@ export function Textarea({
   onClear,
   ...rest
 }: TextareaProps) {
+  const fieldVariant = useFieldVariant(variant);
   const [control, setControl] = useState<HTMLTextAreaElement | null>(null);
   const [inner, setInner] = useState(defaultValue ?? '');
   const hasValue = (value ?? (control ? control.value : inner)).length > 0;
@@ -68,7 +71,11 @@ export function Textarea({
             {...mergeProps<'textarea'>(controlProps as ComponentProps<'textarea'>, rest, {
               rows: autosize ? undefined : rows,
               'aria-invalid': invalid || undefined,
-              className: cn(textareaVariants({ size, resize, autosize }), clearable && 'pe-9', className),
+              className: cn(
+                textareaVariants({ variant: fieldVariant, size, resize, autosize }),
+                clearable && 'pe-9',
+                className,
+              ),
             })}
           />
         )}

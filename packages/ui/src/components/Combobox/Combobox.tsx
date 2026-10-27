@@ -3,6 +3,7 @@ import { Check, ChevronDown, Plus, RotateCw, Search, X } from 'lucide-react';
 import { useId, type ReactNode, type Ref } from 'react';
 import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
+import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
 import type { MeasuredRowOptions } from '../VirtualList/use-measured-rows';
 import { WindowedComboboxList, useComboboxWindow, useVirtualOptionsKeyDown } from './WindowedCombobox';
@@ -35,6 +36,7 @@ export interface ComboboxInputProps extends InputBaseProps, ComboboxVariantProps
 /** Single-select field: search icon, text input, optional clear, chevron trigger. */
 export function ComboboxInput({
   size,
+  variant,
   label,
   className,
   showClear = false,
@@ -49,7 +51,8 @@ export function ComboboxInput({
   const triggerLabel = triggerLabelProp ?? t('common.showOptions');
   const autoId = useId();
   const inputId = id ?? autoId;
-  const v = comboboxVariants({ size });
+  const fieldVariant = useFieldVariant(variant);
+  const v = comboboxVariants({ size, variant: fieldVariant });
   return (
     <>
       {label && (
@@ -57,7 +60,15 @@ export function ComboboxInput({
           {label}
         </label>
       )}
-      <BaseCombobox.InputGroup className={cn(v.inputGroup(), className)}>
+      <BaseCombobox.InputGroup
+        className={(state) =>
+          cn(
+            v.inputGroup(),
+            fieldVariant !== 'outline' && (state.readOnly || props.readOnly) && 'bg-secondary/40',
+            className,
+          )
+        }
+      >
         <Search size={15} aria-hidden className={v.searchIcon()} />
         <BaseCombobox.Input
           id={inputId}
@@ -80,6 +91,7 @@ export function ComboboxInput({
 }
 
 export interface ComboboxChipsInputProps<Item> extends InputBaseProps {
+  variant?: ComboboxVariantProps['variant'];
   /** Chip text for a selected item. Defaults to `item.label`, else `String(item)`. */
   getLabel?: (item: Item) => string;
   /** Accessible name of each chip's remove button. */
@@ -93,6 +105,7 @@ function defaultLabel(item: unknown): string {
 
 /** Multi-select field: selected items as removable chips followed by the text input. Use with `<Combobox multiple>`. */
 export function ComboboxChipsInput<Item = unknown>({
+  variant,
   label,
   className,
   placeholder,
@@ -101,6 +114,8 @@ export function ComboboxChipsInput<Item = unknown>({
   id,
   ...props
 }: ComboboxChipsInputProps<Item>) {
+  const fieldVariant = useFieldVariant(variant);
+  const v = comboboxVariants({ variant: fieldVariant });
   const { t } = useI18n();
   const onKeyDown = useVirtualOptionsKeyDown(props.onKeyDown);
   const removeLabel = removeLabelProp ?? ((l: string) => t('common.removeItem', { label: l }));
@@ -113,7 +128,15 @@ export function ComboboxChipsInput<Item = unknown>({
           {label}
         </label>
       )}
-      <BaseCombobox.InputGroup className={cn(s.chipsGroup(), className)}>
+      <BaseCombobox.InputGroup
+        className={(state) =>
+          cn(
+            v.chipsGroup(),
+            fieldVariant !== 'outline' && (state.readOnly || props.readOnly) && 'bg-secondary/40',
+            className,
+          )
+        }
+      >
         <BaseCombobox.Value>
           {(values: Item[]) => (
             <BaseCombobox.Chips className={s.chips()}>

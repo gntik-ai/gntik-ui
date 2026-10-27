@@ -1,3 +1,4 @@
+import { fieldVariantsEn } from './field-variant-messages';
 import { tableMenuEn } from './table-menu-messages';
 import { layersEn } from './layer-messages';
 import { catalogPreviewEn } from './catalog-preview-messages';
@@ -7,6 +8,7 @@ import { markdownEn } from './markdown-messages';
 import { cspEn } from './csp-messages';
 /** Built-in English labels, accessible names and announcements. See format.ts for interpolation syntax. */
 export const en = {
+  ...fieldVariantsEn,
   ...tableMenuEn,
   ...layersEn,
   ...cspEn,

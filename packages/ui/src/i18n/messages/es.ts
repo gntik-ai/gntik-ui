@@ -1,3 +1,4 @@
+import { fieldVariantsEs } from './field-variant-messages';
 import { tableMenuEs } from './table-menu-messages';
 import { layersEs } from './layer-messages';
 import { catalogPreviewEs } from './catalog-preview-messages';
@@ -8,6 +9,7 @@ import { cspEs } from './csp-messages';
 import type { Messages } from './en';
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  ...fieldVariantsEs,
   ...tableMenuEs,
   ...layersEs,
   ...cspEs,

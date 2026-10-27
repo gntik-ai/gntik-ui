@@ -4,6 +4,7 @@ import { useState, type ComponentProps, type MouseEvent, type Ref } from 'react'
 import { useSegments } from './segments';
 import { useI18n, useOptionalI18n } from '../../i18n/I18nProvider';
 import { ClearControlButton, type ClearableProps } from '../../utils/clear-control';
+import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
 import { timePickerVariants, type TimePickerVariantProps } from './time-picker.variants';
 import { dayPeriodLabels, formatTimeOfDay, localeHourCycle, parseTimeOfDay, timeToSeconds } from './time-utils';
@@ -93,18 +94,20 @@ export function TimePicker({
   invalid,
   icon = true,
   size = 'auto',
+  variant,
   className,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
 }: TimePickerProps) {
+  const fieldVariant = useFieldVariant(variant);
   const { t } = useI18n();
   const [control, setControl] = useState<HTMLDivElement | null>(null);
   const providerLocale = useOptionalI18n()?.locale;
   const locale = localeProp ?? providerLocale;
   const hourCycle = hourCycleProp ?? localeHourCycle(locale);
   const [amLabel, pmLabel] = dayPeriodLabels(locale);
-  const s = timePickerVariants({ size });
+  const s = timePickerVariants({ variant: fieldVariant, size });
   const minuteStep = Math.max(1, Math.floor(step));
 
   const keys: SegmentKey[] = [
@@ -207,7 +210,7 @@ export function TimePicker({
                 buffer.current = null;
                 p.onBlur?.(e);
               }}
-              className={cn(s.root(), className)}
+              className={cn(s.root(), fieldVariant !== 'outline' && readOnly && 'bg-secondary/40', className)}
             >
               {icon && <Clock size={size === 'sm' ? 14 : 15} aria-hidden className={s.icon()} />}
               <div dir="ltr" className={s.segments()}>

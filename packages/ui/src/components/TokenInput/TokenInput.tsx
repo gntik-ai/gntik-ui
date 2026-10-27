@@ -1,5 +1,6 @@
 import { Field } from '@base-ui/react/field';
 import { useId, useRef, useState, type ClipboardEvent, type KeyboardEvent, type MouseEvent, type Ref } from 'react';
+import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
 import { TokenInputChip } from './TokenInputChip';
 import { useI18n } from '../../i18n/I18nProvider';
@@ -27,6 +28,7 @@ export interface TokenInputProps extends TokenInputVariantProps {
   name?: string;
   id?: string;
   disabled?: boolean;
+  readOnly?: boolean;
   /** Marks the field invalid. Any invalid chip does this too. */
   invalid?: boolean;
   className?: string;
@@ -62,8 +64,10 @@ export function TokenInput({
   name,
   id,
   disabled,
+  readOnly,
   invalid,
   size = 'md',
+  variant,
   className,
   inputClassName,
   ref,
@@ -73,6 +77,7 @@ export function TokenInput({
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
 }: TokenInputProps) {
+  const fieldVariant = useFieldVariant(variant);
   const i18n = useI18n();
   const listLabel = listLabelProp ?? i18n.t('tokenInput.entries');
   const removeLabel = removeLabelProp ?? ((token: string) => i18n.t('common.removeItem', { label: token }));
@@ -85,7 +90,7 @@ export function TokenInput({
   const errors = tokens.map((t) => validate?.(t) ?? null);
   const hasInvalid = !!invalid || errors.some(Boolean);
   const full = maxItems != null && tokens.length >= maxItems;
-  const s = tokenInputVariants({ size });
+  const s = tokenInputVariants({ variant: fieldVariant, size });
   const splitRe = new RegExp(`[${separators.map(escapeRe).join('')}\\n\\t]+`);
 
   const update = (next: string[], message: string) => {
@@ -96,6 +101,7 @@ export function TokenInput({
 
   /** Commits raw entries; returns whether anything was consumed. */
   const commit = (raws: string[]) => {
+    if (disabled || readOnly) return;
     const next = [...tokens];
     const added: string[] = [];
     let limited = false;
@@ -125,6 +131,7 @@ export function TokenInput({
   };
 
   const remove = (index: number) => {
+    if (disabled || readOnly) return;
     const t = tokens[index];
     if (t === undefined) return;
     update(
@@ -135,6 +142,7 @@ export function TokenInput({
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (disabled || readOnly) return;
     const hasText = draft.trim() !== '';
     if ((e.key === 'Enter' || e.key === 'Tab') && hasText && !e.shiftKey) {
       e.preventDefault();
@@ -149,6 +157,7 @@ export function TokenInput({
   };
 
   const onPaste = (e: ClipboardEvent<HTMLInputElement>) => {
+    if (disabled || readOnly) return;
     const text = e.clipboardData.getData('text');
     if (!splitRe.test(text)) return;
     e.preventDefault();
@@ -169,7 +178,7 @@ export function TokenInput({
 
   return (
     <div
-      className={cn(s.root(), className)}
+      className={cn(s.root(), readOnly && 'bg-secondary/40', className)}
       data-invalid={hasInvalid || undefined}
       data-disabled={disabled || undefined}
       data-full={full || undefined}
@@ -184,7 +193,7 @@ export function TokenInput({
               error={errors[i]}
               disabled={disabled}
               removeLabel={removeLabel(t)}
-              onRemove={() => remove(i)}
+              onRemove={readOnly ? undefined : () => remove(i)}
             >
               {t}
             </TokenInputChip>
@@ -195,6 +204,7 @@ export function TokenInput({
         ref={setRefs}
         id={id}
         disabled={disabled}
+        readOnly={readOnly}
         value={draft}
         onValueChange={(v) => setDraft(v)}
         onKeyDown={onKeyDown}

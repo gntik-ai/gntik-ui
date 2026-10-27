@@ -4,6 +4,7 @@ import { mergeProps } from '@base-ui/react/merge-props';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 import { useState, type ComponentProps, type Ref } from 'react';
 import { ClearControlButton, type ClearableProps } from '../../utils/clear-control';
+import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
 import { PopoverTrigger } from '../Popover';
 import { datePickerVariants, type DatePickerVariantProps } from './date-picker.variants';
@@ -33,6 +34,7 @@ export function DateTrigger({
   disabled,
   invalid,
   size = 'auto',
+  variant,
   className,
   clearable,
   clearLabel,
@@ -40,6 +42,7 @@ export function DateTrigger({
   readOnly,
   ...aria
 }: DateTriggerProps) {
+  const fieldVariant = useFieldVariant(variant);
   const [control, setControl] = useState<HTMLInputElement | null>(null);
   const canClear = clearable && !!text && !disabled && !readOnly;
   const clear = () => {
@@ -47,7 +50,7 @@ export function DateTrigger({
     onClear?.();
     control?.focus();
   };
-  const s = datePickerVariants({ size });
+  const s = datePickerVariants({ variant: fieldVariant, size });
   const px = size === 'sm' ? 14 : 15;
   const trigger = useRender({
     ref: [ref ?? null, setControl],
@@ -79,7 +82,11 @@ export function DateTrigger({
                     'aria-invalid': invalid || undefined,
                     ...(aria['aria-label'] ? { 'aria-label': aria['aria-label'] } : {}),
                     ...(aria['aria-describedby'] ? { 'aria-describedby': aria['aria-describedby'] } : {}),
-                    className: cn(s.input(), canClear && 'pe-16'),
+                    className: cn(
+                      s.input(),
+                      fieldVariant !== 'outline' && readOnly && 'bg-secondary/40',
+                      canClear && 'pe-16',
+                    ),
                   })}
                 />
               )}

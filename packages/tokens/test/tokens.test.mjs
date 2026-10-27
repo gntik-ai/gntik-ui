@@ -134,3 +134,14 @@ test('chip text aliases meet WCAG AA on their tint in every theme', () => {
     }
   }
 });
+
+test('filled field text and placeholders meet AA on secondary in every theme', () => {
+  const brand = parse(css);
+  for (const theme of [':root', '.dark', '.high_contrast']) {
+    const tokens = { ...brand[':root'], ...brand[theme] };
+    for (const text of ['--foreground', '--muted-foreground']) {
+      const contrast = ratio(tokens[text], tokens['--secondary']);
+      assert.ok(contrast >= 4.5, `${theme} ${text} on secondary is ${contrast.toFixed(2)}:1`);
+    }
+  }
+});

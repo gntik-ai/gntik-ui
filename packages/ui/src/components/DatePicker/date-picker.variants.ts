@@ -1,4 +1,10 @@
+import { fieldControlVariants, fieldPickerHover } from '../../field-variant/field-control-variants';
 import { tv, type VariantProps } from '../../utils/tv';
+
+const alternatePickerHover = [
+  fieldPickerHover,
+  'disabled:hover:border-transparent disabled:hover:data-invalid:border-destructive/70 disabled:hover:aria-invalid:border-destructive/70',
+];
 
 /**
  * The trigger is a read-only input styled as the brand field (calendar icon and chevron are
@@ -29,6 +35,14 @@ export const datePickerVariants = tv({
     ],
   },
   variants: {
+    variant: {
+      outline: {},
+      filled: { input: [fieldControlVariants.filled, alternatePickerHover] },
+      ghost: {
+        input: [fieldControlVariants.ghost, alternatePickerHover],
+      },
+    },
+
     size: {
       /** Follows `data-density` (comfortable = md). */
       auto: { input: 'h-control pe-9 ps-9 text-[13px]', icon: 'start-3', chevron: 'end-3' },
@@ -36,7 +50,7 @@ export const datePickerVariants = tv({
       md: { input: 'h-9 pe-9 ps-9 text-[13px]', icon: 'start-3', chevron: 'end-3' },
     },
   },
-  defaultVariants: { size: 'auto' },
+  defaultVariants: { variant: 'outline', size: 'auto' },
 });
 
 export type DatePickerVariantProps = VariantProps<typeof datePickerVariants>;
