@@ -279,3 +279,22 @@ it('memoises labels across provider renders with unchanged inputs', () => {
   rerender();
   expect(result.current).toBe(first);
 });
+
+it('offers export menu and failure labels in English and Spanish', () => {
+  expect(chartLabelSets.en).toMatchObject({
+    exportChart: 'Export chart',
+    exportPng: 'Download PNG',
+    exportSvg: 'Download SVG',
+    exportCsv: 'Download CSV',
+    printChart: 'Print chart',
+    exportError: 'The chart could not be exported.',
+  });
+  expect(chartLabelSets.es).toMatchObject({
+    exportChart: 'Exportar gráfico',
+    exportPng: 'Descargar PNG',
+    exportSvg: 'Descargar SVG',
+    exportCsv: 'Descargar CSV',
+    printChart: 'Imprimir gráfico',
+    exportError: 'No se pudo exportar el gráfico.',
+  });
+});

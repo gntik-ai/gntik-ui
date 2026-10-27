@@ -44,6 +44,7 @@ export default defineConfig({
       input: {
         main: fileURLToPath(new URL('./index.html', import.meta.url)),
         builders: fileURLToPath(new URL('./builders.html', import.meta.url)),
+        chartExport: fileURLToPath(new URL('./chart-export.html', import.meta.url)),
         labels: fileURLToPath(new URL('./block-labels.html', import.meta.url)),
         preview: fileURLToPath(new URL('./preview.html', import.meta.url)),
       },

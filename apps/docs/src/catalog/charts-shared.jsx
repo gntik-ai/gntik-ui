@@ -1,3 +1,7 @@
+import ChartExportExample from '../examples/ChartExport';
+import chartExportSource from '../examples/ChartExport?raw';
+const chartExportDocs = import.meta.glob('../../../../packages/charts/src/*.doc.ts', { eager: true, import: 'doc' });
+
 /* ============================================================================
    Gntik UI · charts-shared.jsx — shared chrome for the Charts sections.
    ChartCard (dashboard card) · ChartDelta · ChartVariant (name + desc +
@@ -90,7 +94,18 @@
     );
   }
 
-  Object.assign(window, { ChartCard, ChartDelta, ChartVariant, ChartSegmented });
+  function ChartExportDemo() {
+    const doc = chartExportDocs['../../../../packages/charts/src/export.doc.ts'];
+    const { ApiReference } = window;
+    return (
+      <ChartVariant title={doc.name} desc={`${doc.description} ${doc.pattern}`} code={chartExportSource}>
+        <ChartExportExample />
+        <ApiReference folder="export" kind="charts" />
+      </ChartVariant>
+    );
+  }
+
+  Object.assign(window, { ChartCard, ChartDelta, ChartVariant, ChartSegmented, ChartExportDemo });
 })();
 
 // ES module marker: the dev server compiles module files with the automatic JSX runtime.

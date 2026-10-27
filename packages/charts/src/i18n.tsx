@@ -35,6 +35,12 @@ export interface ChartLabels {
   radarChart: string;
   barList: string;
   bars: string;
+  exportChart: string;
+  exportPng: string;
+  exportSvg: string;
+  exportCsv: string;
+  printChart: string;
+  exportError: string;
 }
 
 export const en: Readonly<ChartLabels> = {
@@ -70,6 +76,12 @@ export const en: Readonly<ChartLabels> = {
   radarChart: 'Radar chart',
   barList: 'Bar list',
   bars: 'Bars',
+  exportChart: 'Export chart',
+  exportPng: 'Download PNG',
+  exportSvg: 'Download SVG',
+  exportCsv: 'Download CSV',
+  printChart: 'Print chart',
+  exportError: 'The chart could not be exported.',
 };
 
 export const es: Readonly<ChartLabels> = {
@@ -105,6 +117,12 @@ export const es: Readonly<ChartLabels> = {
   radarChart: 'Gráfico de radar',
   barList: 'Lista de barras',
   bars: 'Barras',
+  exportChart: 'Exportar gráfico',
+  exportPng: 'Descargar PNG',
+  exportSvg: 'Descargar SVG',
+  exportCsv: 'Descargar CSV',
+  printChart: 'Imprimir gráfico',
+  exportError: 'No se pudo exportar el gráfico.',
 };
 
 export const chartLabelSets = { en, es };
