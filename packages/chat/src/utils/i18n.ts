@@ -6,6 +6,21 @@ import { interpolate, useI18n, type MessageKey, type MessageVars } from '@gntik-
  * against an older `@gntik-ai/ui` whose catalog does not have them yet.
  */
 const FALLBACK = {
+  'chat.composerReplyTitle': 'Replying to {name}',
+  'chat.composerQuote': 'Can you share the next steps?',
+  'chat.composerAgent': 'Assistant',
+  'chat.composerReview': 'Review your message before sending.',
+  'chat.composerInsert': 'Insert name',
+  'chat.composerClear': 'Clear text',
+  'chat.composerSelect': 'Select text',
+  'chat.composerRead': 'Read text',
+  'chat.composerCurrent': 'Current text: {text}',
+  'chat.composerReadOnly': 'Read-only draft',
+  'chat.composerEdit': 'Edit draft',
+  'chat.composerGreeting': 'Hello ',
+  'chat.ctrlEnter': 'Ctrl + Enter',
+  'chat.cmdEnter': '⌘ + Enter',
+  'chat.closeHeader': 'Close {title}',
   'chat.diagramFailed': 'Could not render the diagram',
   'chat.showDiagram': 'Show diagram',
   'chat.showCode': 'Show code',

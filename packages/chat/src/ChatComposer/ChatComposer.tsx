@@ -1,7 +1,10 @@
-import { formatBytes, Button, IconButton, cn } from '@gntik-ai/ui';
+import { formatBytes, Button, IconButton, cn, useOs } from '@gntik-ai/ui';
 import { ArrowUp, Paperclip, Square, Upload, X } from 'lucide-react';
 import {
+  useCallback,
   useId,
+  useImperativeHandle,
+  useLayoutEffect,
   useRef,
   useState,
   type ChangeEvent,
@@ -19,6 +22,14 @@ import { chatComposerStyles as s } from './chatComposer.variants';
 /** A file in the composer: name and size, plus optional type, preview, progress and error. */
 export type ComposerAttachment = ChatAttachment;
 
+export interface ChatComposerActions {
+  focus(cursor?: 'start' | 'end' | 'all'): void;
+  insert(text: string, at?: 'cursor' | 'start' | 'end'): void;
+  /** Clears text only; attachments are untouched. */
+  clear(): void;
+  getValue(): string;
+}
+
 export interface ChatComposerProps {
   /** Controlled text. Pair with `onValueChange`. */
   value?: string;
@@ -30,6 +41,10 @@ export interface ChatComposerProps {
   streaming?: boolean;
   onStop?: () => void;
   disabled?: boolean;
+  /** Selectable text without sending or attachment editing; Stop remains available. */
+  readOnly?: boolean;
+  /** Enter sends by default; mod+enter accepts both Ctrl and Meta. */
+  submitMode?: 'enter' | 'mod+enter';
   placeholder?: string;
   /** Accessible name of the text box. */
   label?: string;
@@ -55,11 +70,19 @@ export interface ChatComposerProps {
   onReject?: (rejections: AttachmentRejection[]) => void;
   /** Slot left of the send button, e.g. a model Select. */
   modelPicker?: ReactNode;
+  /** Inside the frame, above attachments and text. */
+  header?: ReactNode;
+  /** At the inline start of the text row (follows text direction). */
+  prefix?: ReactNode;
+  /** Inside the frame, below the toolbar and above the hint. */
+  footer?: ReactNode;
   /** Extra tools after the attach button. */
   tools?: ReactNode;
   /** Small line under the box. Defaults to the keyboard hint; pass null to hide it. */
   hint?: ReactNode;
   className?: string;
+  /** Text actions. Controlled parents should apply onValueChange synchronously for caret restoration. */
+  actionsRef?: Ref<ChatComposerActions>;
   ref?: Ref<HTMLTextAreaElement>;
 }
 
@@ -77,6 +100,8 @@ export function ChatComposer({
   streaming = false,
   onStop,
   disabled = false,
+  readOnly = false,
+  submitMode = 'enter',
   placeholder: placeholderProp,
   label: labelProp,
   maxLength,
@@ -89,32 +114,89 @@ export function ChatComposer({
   maxFiles,
   onReject,
   modelPicker,
+  header,
+  prefix,
+  footer,
   tools,
   hint,
   className,
+  actionsRef,
   ref,
 }: ChatComposerProps) {
   const { t, tc, locale } = useChatI18n();
+  const os = useOs();
+  const modEnter = submitMode === 'mod+enter';
   const placeholder = placeholderProp ?? t('chat.placeholder');
   const label = labelProp ?? t('chat.messageLabel');
   const id = useId();
   const [inner, setInner] = useState(defaultValue);
   const text = value ?? inner;
+  const textarea = useRef<HTMLTextAreaElement>(null);
+  const pendingCaret = useRef<{ text: string; offset: number } | null>(null);
+  const setTextareaRef = useCallback(
+    (node: HTMLTextAreaElement | null) => {
+      textarea.current = node;
+      if (typeof ref === 'function') return ref(node);
+      if (ref) ref.current = node;
+    },
+    [ref],
+  );
+  useLayoutEffect(() => {
+    const pending = pendingCaret.current;
+    if (pending && pending.text === text && textarea.current) {
+      textarea.current.setSelectionRange(pending.offset, pending.offset);
+      pendingCaret.current = null;
+    }
+  });
   const fileInput = useRef<HTMLInputElement>(null);
   const dragDepth = useRef(0);
   const [dragging, setDragging] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
-  const canAttach = onAttach !== undefined && !disabled;
+  const canAttach = onAttach !== undefined && !disabled && !readOnly;
 
   const setText = (next: string) => {
     if (value === undefined) setInner(next);
     onValueChange?.(next);
   };
 
+  useImperativeHandle(actionsRef, () => ({
+    focus(cursor) {
+      const box = textarea.current;
+      if (!box) return;
+      box.focus();
+      if (cursor === 'all') box.setSelectionRange(0, text.length);
+      else if (cursor) {
+        const offset = cursor === 'start' ? 0 : text.length;
+        box.setSelectionRange(offset, offset);
+      }
+    },
+    insert(inserted, at = 'cursor') {
+      const box = textarea.current;
+      if (!box) return;
+      const start = at === 'start' ? 0 : at === 'end' ? text.length : box.selectionStart;
+      const end = at === 'cursor' ? box.selectionEnd : start;
+      const next = text.slice(0, start) + inserted + text.slice(end);
+      const offset = start + inserted.length;
+      pendingCaret.current = { text: next, offset };
+      setText(next);
+      box.focus();
+      // A no-op insertion need not cause a render.
+      if (next === text) {
+        box.setSelectionRange(offset, offset);
+        pendingCaret.current = null;
+      }
+    },
+    clear() {
+      pendingCaret.current = null;
+      setText('');
+    },
+    getValue: () => text,
+  }));
+
   const length = text.length;
   const over = maxLength !== undefined && length > maxLength;
   const showCount = maxLength !== undefined && length >= maxLength * 0.8;
-  const canSend = !disabled && !streaming && !over && (text.trim().length > 0 || attachments.length > 0);
+  const canSend = !disabled && !readOnly && !streaming && !over && (text.trim().length > 0 || attachments.length > 0);
 
   const send = () => {
     if (!canSend) return;
@@ -123,7 +205,8 @@ export function ChatComposer({
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+    const submitKey = submitMode === 'mod+enter' ? e.ctrlKey || e.metaKey : !e.shiftKey;
+    if (e.key === 'Enter' && submitKey && !e.nativeEvent.isComposing) {
       e.preventDefault();
       send();
     } else if (e.key === 'Escape' && streaming && onStop) {
@@ -133,7 +216,7 @@ export function ChatComposer({
   };
 
   const addFiles = (files: File[]) => {
-    if (!onAttach || files.length === 0) return;
+    if (!canAttach || !onAttach || files.length === 0) return;
     const { accepted, rejected } = validateFiles(files, { accept, maxSize, maxFiles, current: attachments.length });
     const rejections: AttachmentRejection[] = rejected.map(({ file, reason }) => ({
       file,
@@ -193,12 +276,34 @@ export function ChatComposer({
   const hintNode =
     hint === undefined ? (
       <>
-        <kbd className="font-sans">{t('kbd.enter')}</kbd> {t('chat.hintSend')} ·{' '}
-        <kbd className="font-sans">{t('chat.shiftEnter')}</kbd> {t('chat.hintNewLine')}
+        <kbd className="font-sans">
+          {modEnter ? tc(os === 'macos' || os === 'ios' ? 'chat.cmdEnter' : 'chat.ctrlEnter') : t('kbd.enter')}
+        </kbd>{' '}
+        {t('chat.hintSend')} · <kbd className="font-sans">{modEnter ? t('kbd.enter') : t('chat.shiftEnter')}</kbd>{' '}
+        {t('chat.hintNewLine')}
       </>
     ) : (
       hint
     );
+
+  const textBox = (
+    <textarea
+      ref={setTextareaRef}
+      id={`${id}-input`}
+      rows={1}
+      value={text}
+      onChange={(e) => setText(e.target.value)}
+      onKeyDown={onKeyDown}
+      onPaste={onPaste}
+      disabled={disabled}
+      readOnly={readOnly || undefined}
+      placeholder={placeholder}
+      aria-label={label}
+      aria-invalid={over || undefined}
+      aria-describedby={showCount ? `${id}-count` : undefined}
+      className={prefix != null ? cn(s.textarea, 'min-w-0 flex-1') : s.textarea}
+    />
+  );
 
   return (
     <div className={className}>
@@ -218,10 +323,11 @@ export function ChatComposer({
             {tc('chat.dropFiles')}
           </div>
         )}
+        {header}
         <AttachmentList
           attachments={attachments}
-          onRemove={onRemoveAttachment}
-          onRetry={onRetryAttachment}
+          onRemove={readOnly ? undefined : onRemoveAttachment}
+          onRetry={readOnly ? undefined : onRetryAttachment}
           disabled={disabled}
           className={s.attachments}
         />
@@ -244,24 +350,17 @@ export function ChatComposer({
             </>
           )}
         </div>
-        <textarea
-          ref={ref}
-          id={`${id}-input`}
-          rows={1}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={onKeyDown}
-          onPaste={onPaste}
-          disabled={disabled}
-          placeholder={placeholder}
-          aria-label={label}
-          aria-invalid={over || undefined}
-          aria-describedby={showCount ? `${id}-count` : undefined}
-          className={s.textarea}
-        />
+        {prefix != null ? (
+          <div className={s.textRow}>
+            <div className={s.prefix}>{prefix}</div>
+            {textBox}
+          </div>
+        ) : (
+          textBox
+        )}
         <div className={s.toolbar}>
           <div className={s.tools}>
-            {onAttach && (
+            {onAttach && !readOnly && (
               <>
                 <IconButton
                   size="sm"
@@ -314,6 +413,7 @@ export function ChatComposer({
             )}
           </div>
         </div>
+        {footer != null && <div className={s.footer}>{footer}</div>}
       </form>
       {hintNode !== null && <p className={s.hint}>{hintNode}</p>}
     </div>

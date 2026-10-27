@@ -1,3 +1,4 @@
+import { chatComposerEs } from './chat-composer/es';
 import { fieldVariantsEs } from './field-variant-messages';
 import { tableMenuEs } from './table-menu-messages';
 import { layersEs } from './layer-messages';
@@ -9,6 +10,7 @@ import { cspEs } from './csp-messages';
 import type { Messages } from './en';
 /** Built-in Spanish catalog. */
 export const es: Messages = {
+  ...chatComposerEs,
   ...fieldVariantsEs,
   ...tableMenuEs,
   ...layersEs,
@@ -552,16 +554,6 @@ export const es: Messages = {
   'chat.resetZoom': 'Restablecer zoom',
   'chat.diagram': 'Diagrama',
   'chat.renderingDiagram': 'Renderizando diagrama…',
-  'chat.messageLabel': 'Mensaje',
-  'chat.placeholder': 'Escribe al asistente…',
-  'chat.send': 'Enviar mensaje',
-  'chat.stop': 'Detener la generación',
-  'chat.attach': 'Adjuntar archivos',
-  'chat.attachments': 'Adjuntos',
-  'chat.hintSend': 'para enviar',
-  'chat.hintNewLine': 'para una línea nueva',
-  'chat.shiftEnter': 'Mayús + Intro',
-  'chat.overLimit': 'caracteres, por encima del límite',
   'chat.conversation': 'Conversación',
   'chat.messages': 'Mensajes',
   'chat.details': 'Detalles',
@@ -627,10 +619,6 @@ export const es: Messages = {
   'chat.uploading': 'Subiendo {name}',
   'chat.uploadFailed': 'Error al subir',
   'chat.retryUpload': 'Reintentar la subida de {name}',
-  'chat.dropFiles': 'Suelta archivos para adjuntarlos',
-  'chat.fileTooLarge': '{name} supera {max}',
-  'chat.fileTypeNotAllowed': '{name} no es un tipo de archivo permitido',
-  'chat.tooManyFiles': 'Puedes adjuntar hasta {max} archivos',
   'chat.model': 'Modelo',
   'chat.selectModel': 'Selecciona un modelo',
   'chat.capabilityVision': 'Visión',

@@ -368,6 +368,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -490,6 +500,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -937,6 +957,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -1068,6 +1098,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -1188,6 +1228,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -1421,6 +1471,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -1542,6 +1602,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -1793,6 +1863,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -1900,6 +1980,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -2089,6 +2179,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -2252,7 +2352,7 @@
       "name": "chat-composer",
       "type": "registry:ui",
       "title": "ChatComposer",
-      "description": "Chat input: autosizing textarea, Enter sends and Shift+Enter adds a line, attachments (pick, paste or drag-and-drop files; `accept`, `maxSize` and `maxFiles` validation with messages in an alert; chips with image thumbnails, file-type icons, size, upload progress, error + Retry and Remove), a model-picker slot (e.g. a compact ModelPicker), a character counter near the limit, a disabled state, and a Stop button while a reply streams.",
+      "description": "Chat input with autosizing text, validated attachments, a model picker, tools, a counter and streaming Stop. Optional submitMode=\"mod+enter\" lets Enter add a line and Ctrl/Meta+Enter send; the default remains Enter to send. Both modes ignore IME composition. header renders above attachments (use ChatComposerHeader with title, optional onClose and children); prefix sits at the inline start of the text row, following LTR/RTL direction; footer sits below the toolbar and above the hint. readOnly keeps text focusable and selectable without dimming, disables sending and hides attachment editing; Stop still works. actionsRef exposes focus(start/end/all), insert(text, cursor/start/end), clear() and getValue(); the normal ref still points to the textarea. insert replaces the selection and restores the caret after rendering: controlled parents must apply onValueChange synchronously (debounced updates can lose the caret). clear removes text only, keeping attachments. With none of the new props set, the DOM and keyboard behavior are unchanged. Examples show quote reply with a header and one chip, text actions, multiline submission and read-only drafts.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui",
@@ -2280,6 +2380,11 @@
           "path": "packages/chat/src/ChatComposer/ChatComposer.tsx",
           "type": "registry:ui",
           "target": "components/chat/chat-composer/ChatComposer.tsx"
+        },
+        {
+          "path": "packages/chat/src/ChatComposer/ChatComposerHeader.tsx",
+          "type": "registry:ui",
+          "target": "components/chat/chat-composer/ChatComposerHeader.tsx"
         },
         {
           "path": "packages/chat/src/ChatComposer/chatComposer.variants.ts",
@@ -2741,6 +2846,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -3037,6 +3152,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -3168,6 +3293,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -3514,6 +3649,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -3941,6 +4086,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -4312,6 +4467,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -4461,6 +4626,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -4626,6 +4801,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -4780,6 +4965,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -4954,6 +5149,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -5107,6 +5312,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -5263,6 +5478,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -5378,6 +5603,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -6417,6 +6652,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -6634,6 +6879,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -6890,6 +7145,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -7119,6 +7384,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -7239,6 +7514,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -7365,6 +7650,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -7503,6 +7798,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -7758,6 +8063,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -7878,6 +8193,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -8007,6 +8332,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -8390,6 +8725,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -8551,6 +8896,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -8988,6 +9343,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -9312,6 +9677,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -9440,6 +9815,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -9652,6 +10037,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -9779,6 +10174,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -9898,6 +10303,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -10027,6 +10442,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -10131,6 +10556,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -10363,6 +10798,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -10523,6 +10968,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -10789,6 +11244,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -10905,6 +11370,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -11121,6 +11596,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -11252,6 +11737,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -11445,6 +11940,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -11816,6 +12321,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -12109,6 +12624,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -12580,6 +13105,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -12862,6 +13397,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -13077,6 +13622,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -13437,6 +13992,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -13911,6 +14476,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -14395,6 +14970,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -14608,6 +15193,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -14710,6 +15305,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -14961,6 +15566,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -15295,6 +15910,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -15549,6 +16174,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -15893,6 +16528,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -16012,6 +16657,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -16151,6 +16806,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -16440,6 +17105,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -16560,6 +17235,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -16702,6 +17387,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -16868,6 +17563,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -16995,6 +17700,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -17116,6 +17831,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -17284,6 +18009,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -17459,6 +18194,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -17688,6 +18433,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -17816,6 +18571,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -17987,6 +18752,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -18113,6 +18888,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -18312,6 +19097,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -18567,6 +19362,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -18771,6 +19576,16 @@
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
@@ -18890,6 +19705,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -19061,6 +19886,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
@@ -19252,6 +20087,16 @@
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
