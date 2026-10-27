@@ -1,5 +1,6 @@
 import { CommentThread, KpiRow, PageHeader, type CommentAuthor, type ThreadComment } from '@gntik-ai/blocks';
 import { RadarChart } from '@gntik-ai/charts';
+import { Markdown } from '@gntik-ai/chat';
 import { Download } from '@gntik-ai/icons';
 import {
   Card,
@@ -143,6 +144,7 @@ export default function ScorecardPage(props: Partial<ScorecardProps>) {
                 <CardBody>
                   <CommentThread
                     comments={comments}
+                    renderBody={(comment) => <Markdown className="text-[13px]">{comment.body}</Markdown>}
                     currentUser={currentUser}
                     onSubmit={onComment}
                     label="Scorecard commentary"

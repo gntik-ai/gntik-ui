@@ -3240,7 +3240,7 @@
       "name": "comment-thread",
       "type": "registry:block",
       "title": "Comment thread",
-      "description": "Plain-text comments with avatar, author and Timestamp, plus a reply composer (Textarea + Button, ⌘/Ctrl+Enter posts).",
+      "description": "Plain-text comments by default, with optional renderBody for safe Markdown, avatar, author and Timestamp, plus a reply composer (Textarea + Button, ⌘/Ctrl+Enter posts). renderBody receives the raw comment; use a safe renderer such as @gntik-ai/chat Markdown (without allowHtml). Bodies are untrusted: never inject raw HTML. composerHint overrides the catalog hint and remains the textarea’s accessible description.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui"
@@ -12568,6 +12568,7 @@
       "dependencies": [
         "@gntik-ai/blocks",
         "@gntik-ai/charts",
+        "@gntik-ai/chat",
         "@gntik-ai/icons",
         "@gntik-ai/ui"
       ],
@@ -12577,7 +12578,8 @@
       "css": {
         "@import \"@gntik-ai/ui/styles.css\"": {},
         "@import \"@gntik-ai/blocks/styles.css\"": {},
-        "@import \"@gntik-ai/charts/styles.css\"": {}
+        "@import \"@gntik-ai/charts/styles.css\"": {},
+        "@import \"@gntik-ai/chat/styles.css\"": {}
       },
       "categories": [
         "template",

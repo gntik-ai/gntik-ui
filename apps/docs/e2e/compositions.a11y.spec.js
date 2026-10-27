@@ -25,6 +25,7 @@ const layoutExamples = kit.items
 const cases = [
   ...[
     { kind: 'block', id: 'flow-builder--controlled-graph' },
+    { kind: 'block', id: 'comment-thread--rendered-body' },
     { kind: 'template', id: 'workflow-builder--save-graph' },
   ].flatMap((example) => ['dark', 'light', 'high_contrast'].map((theme) => ({ ...example, theme }))),
   ...[

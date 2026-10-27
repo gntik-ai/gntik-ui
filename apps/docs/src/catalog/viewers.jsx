@@ -213,6 +213,15 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                 </div>
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'block' && it.id === 'comment-thread' && (
+                <Viewer
+                  kind="block"
+                  id="comment-thread--rendered-body"
+                  title={`${it.title} · renderBody / composerHint`}
+                  file="../../../packages/blocks/src/data-display/CommentThread/examples/RenderedBody.tsx"
+                  height={height}
+                />
+              )}
               {kind === 'block' && it.id === 'data-table' && (
                 <>
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">CSV export and clipboard</h4>
