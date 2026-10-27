@@ -6,6 +6,15 @@ import { interpolate, useI18n, type MessageKey, type MessageVars } from '@gntik-
  * against an older `@gntik-ai/ui` whose catalog does not have them yet.
  */
 const FALLBACK = {
+  'chat.diagramFailed': 'Could not render the diagram',
+  'chat.showDiagram': 'Show diagram',
+  'chat.showCode': 'Show code',
+  'chat.downloadSvg': 'Download SVG',
+  'chat.zoomIn': 'Zoom in',
+  'chat.zoomOut': 'Zoom out',
+  'chat.resetZoom': 'Reset zoom',
+  'chat.diagram': 'Diagram',
+  'chat.renderingDiagram': 'Rendering diagram…',
   'chat.surfaceExampleTitle': 'Review your details',
   'chat.surfaceExampleName': 'Name',
   'chat.surfaceExampleSubmit': 'Submit',

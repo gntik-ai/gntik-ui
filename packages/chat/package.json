@@ -19,7 +19,11 @@
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json",
-    "./styles.css": "./src/styles.css"
+    "./styles.css": "./src/styles.css",
+    "./mermaid": {
+      "types": "./dist/mermaid.d.ts",
+      "default": "./dist/mermaid.js"
+    }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
