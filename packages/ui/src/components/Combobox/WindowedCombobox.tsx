@@ -46,21 +46,25 @@ export function WindowedComboboxRoot<Value, Multiple extends boolean | undefined
   const selected = props.value !== undefined ? props.value : value;
   return (
     <WindowContext.Provider
-      value={{
-        active,
-        query: String(props.inputValue ?? query),
-        selected: props.multiple ? (selected as unknown[])?.[0] : selected,
-        equal: (props.isItemEqualToValue as WindowState['equal']) ?? Object.is,
-        batchHighlights: (navigate) => {
-          navigation.current.batching = true;
-          navigation.current.last = null;
-          try {
-            navigate();
-          } finally {
-            finishNavigation();
-          }
-        },
-      }}
+      value={
+        props.virtualized === false
+          ? null
+          : {
+              active,
+              query: String(props.inputValue ?? query),
+              selected: props.multiple ? (selected as unknown[])?.[0] : selected,
+              equal: (props.isItemEqualToValue as WindowState['equal']) ?? Object.is,
+              batchHighlights: (navigate) => {
+                navigation.current.batching = true;
+                navigation.current.last = null;
+                try {
+                  navigate();
+                } finally {
+                  finishNavigation();
+                }
+              },
+            }
+      }
     >
       <BaseCombobox.Root
         {...props}

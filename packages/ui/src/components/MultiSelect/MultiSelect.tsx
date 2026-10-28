@@ -1,12 +1,13 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, ChevronDown, X } from 'lucide-react';
-import { useId, useRef, useState, type ReactNode, type Ref } from 'react';
+import { Fragment, useId, useRef, useState, type ReactNode, type Ref } from 'react';
 import { usePortalContainer } from '../../utils/portal';
 import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
 import { matchText } from '../../utils/match-text';
 import { useFieldVariant, type FieldControlVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
-import { ComboboxSpecialItem } from '../Combobox/Combobox';
+import { isGroup, type OptionGroup } from '../Combobox/groupedItems';
+import { ComboboxGroup, ComboboxGroupLabel, ComboboxCollection, ComboboxSpecialItem } from '../Combobox/Combobox';
 import { comboboxVariants } from '../Combobox/combobox.variants';
 import { createItem, hasExactLabel, isSpecialItem, retryItem, type SpecialItem } from '../Combobox/specialItems';
 import { useAsyncOptions, type LoadOptions } from '../Combobox/useAsyncOptions';
@@ -21,6 +22,8 @@ export interface MultiSelectOption {
   /** Secondary line under the label. */
   description?: string;
   disabled?: boolean;
+  /** Group heading. Ungrouped options appear first; groups follow first-seen order. */
+  group?: string;
 }
 
 export interface MultiSelectProps extends MultiSelectVariantProps, MeasuredRowOptions {
@@ -159,11 +162,23 @@ export function MultiSelect({
   const specials: SpecialItem[] = [];
   if (onCreate && query !== '' && !hasExactLabel(listed, query, (o) => o.label)) specials.push(createItem(query));
   if (loadOptions && remote.error && !remote.loading) specials.push(retryItem(input));
-  const items: Array<MultiSelectOption | SpecialItem> = [
-    ...(showSelectAll && !loadOptions ? [SELECT_ALL] : []),
-    ...listed,
-    ...specials,
-  ];
+  type Item = MultiSelectOption | SpecialItem;
+  const flatItems: Item[] = [...(showSelectAll && !loadOptions ? [SELECT_ALL] : []), ...listed, ...specials];
+  const grouped = listed.some((option) => option.group !== undefined);
+  const groups = new Map<string, MultiSelectOption[]>();
+  for (const option of listed) {
+    if (option.group === undefined) continue;
+    const group = groups.get(option.group) ?? [];
+    group.push(option);
+    groups.set(option.group, group);
+  }
+  const items = grouped
+    ? ([
+        { items: flatItems.filter((o) => !isSpecialItem(o) && o.group === undefined) },
+        ...Array.from(groups, ([value, items]) => ({ value, items })),
+        { items: specials },
+      ] satisfies OptionGroup<Item>[])
+    : flatItems;
   const busy = !!loadOptions && (remote.loading || !!remote.error);
   const cb = comboboxVariants({ variant: useFieldVariant(variant) });
   const s = multiSelectVariants({ size });
@@ -203,11 +218,39 @@ export function MultiSelect({
   const visible = selected.slice(0, maxVisibleChips);
   const hidden = selected.length - visible.length;
 
+  const renderItem = (o: Item) =>
+    isSpecialItem(o) ? (
+      <ComboboxSpecialItem key={`${o.__gntikSpecial}:${o.value}`} item={o} createLabel={createLabel} />
+    ) : o === SELECT_ALL ? (
+      <BaseCombobox.Item key={o.value} value={o} className={cn(cb.item(), s.selectAll())}>
+        <span className={cb.itemContent()}>{allSelected ? deselectAllLabel : selectAllLabel}</span>
+        <span className={s.check()}>{allSelected && <Check size={15} strokeWidth={2.4} aria-hidden />}</span>
+      </BaseCombobox.Item>
+    ) : (
+      <BaseCombobox.Item key={o.value} value={o} disabled={o.disabled} className={cb.item()}>
+        <span className={cb.itemContent()}>
+          {renderOption ? (
+            renderOption(o)
+          ) : (
+            <span className="min-w-0">
+              <span className="block truncate">{o.label}</span>
+              {o.description && <span className={s.description()}>{o.description}</span>}
+            </span>
+          )}
+        </span>
+        <BaseCombobox.ItemIndicator className={cb.indicator()}>
+          <Check size={15} strokeWidth={2.4} aria-hidden />
+        </BaseCombobox.ItemIndicator>
+      </BaseCombobox.Item>
+    );
+
+  const windowed = virtualized && !grouped;
+  // Keep the input mounted when async results switch between flat and grouped options.
   const Root = virtualized ? WindowedComboboxRoot : BaseCombobox.Root;
-  const List = virtualized ? WindowedComboboxList : BaseCombobox.List;
+  const List = windowed ? WindowedComboboxList : BaseCombobox.List;
   return (
     <Root
-      virtualized={virtualized}
+      virtualized={windowed}
       items={items}
       multiple
       value={selected}
@@ -262,7 +305,7 @@ export function MultiSelect({
             aria-invalid={invalid || undefined}
             placeholder={selected.length ? undefined : placeholder}
             className={cb.chipsInput()}
-            onKeyDown={virtualized ? navigateVirtualOptions : undefined}
+            onKeyDown={windowed ? navigateVirtualOptions : undefined}
           />
         </BaseCombobox.Chips>
         {selected.length > 0 && (
@@ -276,7 +319,7 @@ export function MultiSelect({
       </BaseCombobox.InputGroup>
       <BaseCombobox.Portal container={portalContainer}>
         <BaseCombobox.Positioner dir={dir} className={cb.positioner()} side="bottom" align="start" sideOffset={6}>
-          <BaseCombobox.Popup className={cn(cb.popup(), virtualized && 'flex flex-col overflow-hidden')}>
+          <BaseCombobox.Popup className={cn(cb.popup(), windowed && 'flex flex-col overflow-hidden')}>
             {(loadOptions || onCreate) && (
               <BaseCombobox.Status className={cn(cb.status(), !!remote.error && !remote.loading && cb.statusError())}>
                 {remote.loading ? (
@@ -291,35 +334,21 @@ export function MultiSelect({
             )}
             <BaseCombobox.Empty className={cb.empty()}>{busy ? null : emptyText}</BaseCombobox.Empty>
             <List
-              {...(virtualized ? { itemHeight, estimatedItemHeight, overscan } : { className: cb.list() })}
+              {...(windowed ? { itemHeight, estimatedItemHeight, overscan } : { className: cb.list() })}
               aria-busy={remote.loading || undefined}
             >
-              {(o: MultiSelectOption | SpecialItem) =>
-                isSpecialItem(o) ? (
-                  <ComboboxSpecialItem key={`${o.__gntikSpecial}:${o.value}`} item={o} createLabel={createLabel} />
-                ) : o === SELECT_ALL ? (
-                  <BaseCombobox.Item key={o.value} value={o} className={cn(cb.item(), s.selectAll())}>
-                    <span className={cb.itemContent()}>{allSelected ? deselectAllLabel : selectAllLabel}</span>
-                    <span className={s.check()}>
-                      {allSelected && <Check size={15} strokeWidth={2.4} aria-hidden />}
-                    </span>
-                  </BaseCombobox.Item>
+              {(item: Item | OptionGroup<Item>, index: number) =>
+                isGroup<Item>(item) ? (
+                  item.value === undefined ? (
+                    <Fragment key={`ungrouped-${index}`}>{item.items.map(renderItem)}</Fragment>
+                  ) : (
+                    <ComboboxGroup key={item.value} items={item.items}>
+                      <ComboboxGroupLabel>{item.value}</ComboboxGroupLabel>
+                      <ComboboxCollection>{renderItem}</ComboboxCollection>
+                    </ComboboxGroup>
+                  )
                 ) : (
-                  <BaseCombobox.Item key={o.value} value={o} disabled={o.disabled} className={cb.item()}>
-                    <span className={cb.itemContent()}>
-                      {renderOption ? (
-                        renderOption(o)
-                      ) : (
-                        <span className="min-w-0">
-                          <span className="block truncate">{o.label}</span>
-                          {o.description && <span className={s.description()}>{o.description}</span>}
-                        </span>
-                      )}
-                    </span>
-                    <BaseCombobox.ItemIndicator className={cb.indicator()}>
-                      <Check size={15} strokeWidth={2.4} aria-hidden />
-                    </BaseCombobox.ItemIndicator>
-                  </BaseCombobox.Item>
+                  renderItem(item)
                 )
               }
             </List>

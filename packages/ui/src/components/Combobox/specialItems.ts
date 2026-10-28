@@ -1,3 +1,5 @@
+import { isGroup, type OptionGroup } from './groupedItems';
+
 /**
  * Built-in rows the kit adds to a combobox list: "Create “…”" (creatable) and "Retry" (after a
  * failed async load). They are real options, so the keyboard reaches them like any other row,
@@ -30,7 +32,24 @@ export function defaultItemValue(item: unknown): string {
 }
 
 /** Whether an option label already equals the typed text (case-insensitive). */
-export function hasExactLabel<Item>(items: readonly Item[], input: string, toLabel: (item: Item) => string): boolean {
+export function hasExactLabel<Item>(
+  items: readonly (Item | OptionGroup<Item>)[],
+  input: string,
+  toLabel: (item: Item) => string,
+): boolean {
   const q = input.trim().toLocaleLowerCase();
-  return items.some((item) => !isSpecialItem(item) && toLabel(item).trim().toLocaleLowerCase() === q);
+  return items.some((item) =>
+    isGroup<Item>(item)
+      ? hasExactLabel(item.items, input, toLabel)
+      : !isSpecialItem(item) && toLabel(item).trim().toLocaleLowerCase() === q,
+  );
+}
+
+export interface SpecialItemGroup extends OptionGroup<SpecialItem> {
+  readonly __gntikSpecialGroup: true;
+}
+
+/** Trailing unlabelled collection, preserving Base UI's uniform grouped shape. */
+export function isSpecialItemGroup(item: unknown): item is SpecialItemGroup {
+  return isGroup(item) && '__gntikSpecialGroup' in item && item.__gntikSpecialGroup === true;
 }
