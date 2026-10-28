@@ -9,7 +9,10 @@ export const doc: ComponentDoc = {
   primitive: 'MoreMenu · Input · Badge · Kbd · useVirtualWindow',
   pattern: 'navigation with disclosures and roving focus',
   keyboard: [
-    ['Tab / Shift+Tab', 'Enter the nav on the active row, else the first enabled row; the next Tab leaves it'],
+    [
+      'Tab / Shift+Tab',
+      'Enter the nav on the active row, else the first enabled row; the next Tab leaves it, including after using sibling row actions',
+    ],
     ['ArrowDown / ArrowUp', 'Move through headings and enabled rows in visual order; skip collapsed rows'],
     ['Home / End', 'Move to the first / last heading or enabled row'],
     ['Enter / Space', 'Activate an enabled row once, or toggle a group heading'],

@@ -7,6 +7,28 @@ import { ConversationList } from './ConversationList';
 const items = [{ id: 'a', title: 'Budget review', updatedAt: new Date(2026, 2, 10, 9) }];
 
 describe('ConversationList row menus', () => {
+  it('leaves the nav with Tab after opening another row’s actions with the pointer', async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <ConversationList
+          items={[...items, { ...items[0]!, id: 'b', title: 'Project plan' }]}
+          groupBy={false}
+          activeId="b"
+          onRename={vi.fn()}
+        />
+        <button>After</button>
+      </>,
+    );
+    const trigger = screen.getByRole('button', { name: 'More actions for Budget review' });
+    await user.click(trigger);
+    await screen.findByRole('menu');
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(trigger).toHaveFocus());
+    await user.tab();
+    expect(screen.getByRole('button', { name: 'After' })).toHaveFocus();
+  });
+
   it('keeps the actions trigger a sibling outside the tab order, and returns focus with Left or Escape', async () => {
     const user = userEvent.setup();
     const onDelete = vi.fn();

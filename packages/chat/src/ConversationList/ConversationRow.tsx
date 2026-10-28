@@ -159,6 +159,9 @@ export function ConversationRow({
           actions.current.disabled = !!item.disabled;
         }
       }}
+      onFocus={(event) => {
+        if (actions.current?.isSameNode(event.target)) onFocus();
+      }}
       onKeyDown={(event) => {
         if (item.disabled) return;
         if (event.target === actions.current) {
