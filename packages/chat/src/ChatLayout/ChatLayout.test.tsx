@@ -1,3 +1,4 @@
+import { I18nProvider } from '@gntik-ai/ui';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
@@ -12,6 +13,35 @@ function fakeGeometry(el: HTMLElement, scrollHeight: number, clientHeight: numbe
 }
 
 describe('ChatLayout', () => {
+  it('preserves the thread-only DOM without a sidebar', () => {
+    const { container } = render(
+      <ChatLayout header={<h2>Thread</h2>} composer={<textarea aria-label="Message" />}>
+        <p>Hello</p>
+      </ChatLayout>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it.each(['ltr', 'rtl'] as const)('places the optional sidebar before the named thread in %s', (dir) => {
+    const { rerender } = render(
+      <I18nProvider locale="en" dir={dir}>
+        <ChatLayout sidebar={<nav aria-label="History" />} label="Support" panel={<p>Details</p>} />
+      </I18nProvider>,
+    );
+    const sidebar = screen.getByRole('navigation', { name: 'History' }).parentElement!;
+    const thread = screen.getByRole('region', { name: 'Support' });
+    expect(sidebar.nextElementSibling).toBe(thread);
+    expect(sidebar).toHaveStyle({ width: '280px' });
+    expect(sidebar).toHaveClass('hidden', 'md:flex', 'border-e');
+    expect(screen.getByRole('separator')).toBeInTheDocument();
+    rerender(
+      <I18nProvider locale="en" dir={dir}>
+        <ChatLayout sidebar={<nav aria-label="History" />} sidebarWidth={320} label="Support" />
+      </I18nProvider>,
+    );
+    expect(screen.getByRole('navigation').parentElement).toHaveStyle({ width: '320px' });
+  });
+
   it('renders the thread region, composer and panel landmarks', () => {
     render(
       <ChatLayout composer={<textarea aria-label="Message" />} panel={<p>Info</p>} panelLabel="Details">

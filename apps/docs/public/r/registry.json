@@ -2525,7 +2525,7 @@
       "name": "chat-layout",
       "type": "registry:ui",
       "title": "ChatLayout",
-      "description": "Full-height chat frame: scrollable thread with auto-scroll that respects scrolling up, a jump-to-latest button, a composer pinned below and an optional resizable side panel (artifact or details).",
+      "description": "Full-height chat frame: scrollable thread with auto-scroll that respects scrolling up, a jump-to-latest button, a composer pinned below an optional resizable side panel (artifact or details), and an inline-start history sidebar from md up. sidebarWidth defaults to 280px. For small screens, the app puts history in a Drawer; ChatLayout does not open one automatically.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/ui",
@@ -3649,6 +3649,95 @@
           "path": "packages/ui/src/components/ContextMenu/ContextMenu.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/context-menu/ContextMenu.doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "conversation-list",
+      "type": "registry:ui",
+      "title": "ConversationList",
+      "description": "Presentational conversation history with local-calendar recency groups, disclosures, inline rename, sibling row menus, unread counts, New chat and incremental loading. Supply items and handlers; persistence and shortcuts belong to the app. getHref opts into links. groupBy=false preserves input order; a function groups by its returned key. Controlled activeId/collapsedGroups and their default counterparts are supported. Recency collapse keys are today, yesterday, previous7Days and older; custom groups use their returned key. Supply now for stable SSR. Above virtualizeAt (100), measured rows are windowed with the tab stop retained; give the list a bounded height. Uses a roving list of buttons/links, not a listbox: unlike NavList, individual rows are not separate Tab stops. New chat and Load more are separate stops outside the nav. loadingMore keeps Load more focusable but aria-disabled and busy.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "component",
+        "Navigation"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/chat",
+        "status": "beta",
+        "source": "packages/chat/src/ConversationList/ConversationList.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/chat/src/ConversationList/ConversationGroup.tsx",
+          "type": "registry:ui",
+          "target": "components/chat/conversation-list/ConversationGroup.tsx"
+        },
+        {
+          "path": "packages/chat/src/ConversationList/ConversationList.tsx",
+          "type": "registry:ui",
+          "target": "components/chat/conversation-list/ConversationList.tsx"
+        },
+        {
+          "path": "packages/chat/src/ConversationList/ConversationRow.tsx",
+          "type": "registry:ui",
+          "target": "components/chat/conversation-list/ConversationRow.tsx"
+        },
+        {
+          "path": "packages/chat/src/ConversationList/conversationList.variants.ts",
+          "type": "registry:ui",
+          "target": "components/chat/conversation-list/conversationList.variants.ts"
+        },
+        {
+          "path": "packages/chat/src/ConversationList/groupByRecency.ts",
+          "type": "registry:ui",
+          "target": "components/chat/conversation-list/groupByRecency.ts"
+        },
+        {
+          "path": "packages/chat/src/ConversationList/index.ts",
+          "type": "registry:ui",
+          "target": "components/chat/conversation-list/index.ts"
+        },
+        {
+          "path": "packages/chat/src/ConversationList/keyboard.ts",
+          "type": "registry:ui",
+          "target": "components/chat/conversation-list/keyboard.ts"
+        },
+        {
+          "path": "packages/chat/src/ConversationList/types.ts",
+          "type": "registry:ui",
+          "target": "components/chat/conversation-list/types.ts"
+        },
+        {
+          "path": "packages/chat/src/ConversationList/useConversationWindow.ts",
+          "type": "registry:ui",
+          "target": "components/chat/conversation-list/useConversationWindow.ts"
+        },
+        {
+          "path": "packages/chat/src/utils/focus.ts",
+          "type": "registry:ui",
+          "target": "components/chat/utils/focus.ts"
+        },
+        {
+          "path": "packages/chat/src/utils/i18n.ts",
+          "type": "registry:ui",
+          "target": "components/chat/utils/i18n.ts"
+        },
+        {
+          "path": "packages/chat/src/ConversationList/ConversationList.doc.ts",
+          "type": "registry:ui",
+          "target": "components/chat/conversation-list/ConversationList.doc.ts"
         }
       ]
     },
@@ -9577,7 +9666,7 @@
       "name": "messaging",
       "type": "registry:block",
       "title": "Messaging",
-      "description": "Team messaging in the console: SplitLayout conversation list (unread counts, last message) → thread of ChatMessages with Thumbnail attachments, participants AvatarGroup, and a ChatComposer with file attachments; Back on small screens.",
+      "description": "Team messaging in the console: SplitLayout with ConversationList (roving focus, unread counts, last message) → thread of ChatMessages with Thumbnail attachments, participants AvatarGroup, and a ChatComposer with file attachments; Back on small screens.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",

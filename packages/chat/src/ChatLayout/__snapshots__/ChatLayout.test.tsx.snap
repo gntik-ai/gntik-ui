@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ChatLayout > preserves the thread-only DOM without a sidebar 1`] = `
+<div
+  class="flex h-full min-h-0 w-full bg-background text-foreground"
+>
+  <section
+    aria-label="Conversation"
+    class="flex min-w-0 flex-1 flex-col"
+  >
+    <div
+      class="shrink-0 border-b border-border"
+    >
+      <h2>
+        Thread
+      </h2>
+    </div>
+    <div
+      class="relative min-h-0 flex-1"
+    >
+      <div
+        aria-label="Messages"
+        class="h-full overflow-y-auto overscroll-contain focus-ring focus-visible:-outline-offset-2"
+        role="region"
+        tabindex="0"
+      >
+        <div
+          class="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6"
+        >
+          <p>
+            Hello
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="shrink-0 bg-background px-4 pb-4 pt-2 sm:px-6"
+    >
+      <div
+        class="mx-auto w-full max-w-3xl"
+      >
+        <textarea
+          aria-label="Message"
+        />
+      </div>
+    </div>
+  </section>
+</div>
+`;

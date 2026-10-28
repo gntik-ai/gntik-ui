@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Layout',
   status: 'beta',
   description:
-    'Full-height chat frame: scrollable thread with auto-scroll that respects scrolling up, a jump-to-latest button, a composer pinned below and an optional resizable side panel (artifact or details).',
+    'Full-height chat frame: scrollable thread with auto-scroll that respects scrolling up, a jump-to-latest button, a composer pinned below an optional resizable side panel (artifact or details), and an inline-start history sidebar from md up. sidebarWidth defaults to 280px. For small screens, the app puts history in a Drawer; ChatLayout does not open one automatically.',
   pattern: 'window splitter',
   keyboard: [
     ['Tab', 'Moves through the thread, the composer, the resize handle and the panel'],

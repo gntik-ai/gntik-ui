@@ -3,6 +3,7 @@ import { focusRing } from '../utils/focus';
 /** Slot classes for ChatLayout (plain strings: this package does not ship tailwind-variants). */
 export const chatLayoutStyles = {
   root: 'flex h-full min-h-0 w-full bg-background text-foreground',
+  sidebar: 'hidden min-h-0 shrink-0 flex-col overflow-hidden border-e border-border bg-card md:flex',
   thread: 'flex min-w-0 flex-1 flex-col',
   header: 'shrink-0 border-b border-border',
   viewport: 'relative min-h-0 flex-1',

@@ -6,6 +6,7 @@ export * from './ChatDemo';
 export * from './ChatLayout';
 export * from './ChatMessage';
 export * from './Citation';
+export * from './ConversationList';
 export * from './Markdown';
 export * from './MessageFeedback';
 export * from './ModelPicker';

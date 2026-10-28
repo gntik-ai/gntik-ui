@@ -6,6 +6,28 @@ import { interpolate, useI18n, type MessageKey, type MessageVars } from '@gntik-
  * against an older `@gntik-ai/ui` whose catalog does not have them yet.
  */
 const FALLBACK = {
+  'chat.historyExampleBudget': 'Budget review',
+  'chat.historyExamplePlan': 'Project plan',
+  'chat.historyExampleRelease': 'Release notes',
+  'chat.historyExampleEarlier': 'Earlier discussion',
+  'chat.historyExamplePreview': 'Usage for this quarter',
+  'chat.historyExampleEmpty': 'No saved conversations',
+  'chat.historyExampleNumber': 'Conversation {number}',
+  'chat.historyExampleCustomGroups': 'Use custom groups',
+
+  'chat.newChat': 'New chat',
+  'chat.loadMore': 'Load more',
+  'chat.unreadCount': '{count, plural, one {# unread message} other {# unread messages}}',
+
+  'chat.rename': 'Rename',
+  'chat.conversationActions': 'More actions for {title}',
+
+  'chat.conversations': 'Conversations',
+  'chat.today': 'Today',
+  'chat.yesterday': 'Yesterday',
+  'chat.previous7Days': 'Previous 7 days',
+  'chat.older': 'Older',
+
   'chat.composerReplyTitle': 'Replying to {name}',
   'chat.composerQuote': 'Can you share the next steps?',
   'chat.composerAgent': 'Assistant',

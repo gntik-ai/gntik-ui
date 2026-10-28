@@ -9,6 +9,7 @@
   },
   "missingComponents": [
     "agent-surface",
+    "conversation-list",
     "csp-provider",
     "cursor-pager-footer",
     "cursor-pagination",
@@ -68,6 +69,7 @@
     {"id":"confirm-destructive","package":"@gntik-ai/blocks","name":"confirm-destructive","version":"0.6.0","url":"https://ui.gntik.ai/r/confirm-destructive.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"contact","package":"@gntik-ai/templates","name":"contact","version":"0.6.0","url":"https://ui.gntik.ai/r/contact.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"context-menu","package":"@gntik-ai/ui","name":"context-menu","version":"0.5.0","url":"https://ui.gntik.ai/r/context-menu.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"conversation-list","package":"@gntik-ai/chat","name":"conversation-list","version":"0.5.0","url":"https://ui.gntik.ai/r/conversation-list.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"copy-button","package":"@gntik-ai/ui","name":"copy-button","version":"0.5.0","url":"https://ui.gntik.ai/r/copy-button.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"cost-breakdown","package":"@gntik-ai/blocks","name":"cost-breakdown","version":"0.6.0","url":"https://ui.gntik.ai/r/cost-breakdown.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"create-api-key-dialog","package":"@gntik-ai/blocks","name":"create-api-key-dialog","version":"0.6.0","url":"https://ui.gntik.ai/r/create-api-key-dialog.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
