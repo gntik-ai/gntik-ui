@@ -9,8 +9,14 @@ describe('MessagingPage', () => {
     render(<MessagingPage />);
     expect(screen.getByRole('main')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 1, name: 'Messages' })).toBeInTheDocument();
-    const list = screen.getByRole('list', { name: 'Conversations' });
-    expect(within(list).getAllByRole('button')).toHaveLength(conversations.length);
+    const list = screen.getByRole('navigation', { name: 'Conversations' });
+    expect(
+      within(list)
+        .getAllByRole('button')
+        .filter((el) => !el.hasAttribute('aria-haspopup')),
+    ).toHaveLength(conversations.length);
+    expect(within(list).queryByRole('heading')).toBeNull();
+    expect([...list.querySelectorAll<HTMLElement>('button')].filter((el) => el.tabIndex === 0)).toHaveLength(1);
     expect(within(list).getByText('2')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Select a conversation' })).toBeInTheDocument();
     await expectNoAxeViolations();
@@ -20,8 +26,9 @@ describe('MessagingPage', () => {
     const onSend = vi.fn();
     render(<MessagingPage onSend={onSend} />);
     await userEvent.click(
-      within(screen.getByRole('list', { name: 'Conversations' })).getByRole('button', { name: /Release 2\.14/ }),
+      within(screen.getByRole('navigation', { name: 'Conversations' })).getByRole('button', { name: /^Release 2\.14/ }),
     );
+    expect(screen.queryByLabelText('2 unread messages')).toBeNull();
     const log = screen.getByRole('log', { name: 'Messages in Release 2.14' });
     expect(within(log).getAllByRole('article')).toHaveLength(4);
     expect(within(log).getByText('rollback-runbook.pdf')).toBeInTheDocument();
@@ -32,3 +39,13 @@ describe('MessagingPage', () => {
     await expectNoAxeViolations();
   });
 });
+
+it.each(['dark', 'light', 'high_contrast'])(
+  'history and thread are axe clean in %s',
+  { timeout: 15000 },
+  async (theme) => {
+    document.documentElement.className = theme;
+    render(<MessagingPage defaultConversationId="c-release" />);
+    await expectNoAxeViolations();
+  },
+);

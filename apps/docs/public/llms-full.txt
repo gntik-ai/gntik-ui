@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 121 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 122 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -4844,7 +4844,7 @@ import { ChatDemo } from '@gntik-ai/chat';
 
 ### ChatLayout (`chat-layout`)
 
-Full-height chat frame: scrollable thread with auto-scroll that respects scrolling up, a jump-to-latest button, a composer pinned below and an optional resizable side panel (artifact or details).
+Full-height chat frame: scrollable thread with auto-scroll that respects scrolling up, a jump-to-latest button, a composer pinned below an optional resizable side panel (artifact or details), and an inline-start history sidebar from md up. sidebarWidth defaults to 280px. For small screens, the app puts history in a Drawer; ChatLayout does not open one automatically.
 
 - Package: `@gntik-ai/chat` · export `ChatLayout` · group Layout · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ChatLayout/ChatLayout.doc.ts
@@ -5221,6 +5221,109 @@ export default function BreadcrumbsBasic() {
         { label: 'web-frontend', mono: true },
       ]}
     />
+  );
+}
+```
+
+### ConversationList (`conversation-list`)
+
+Presentational conversation history with local-calendar recency groups, disclosures, inline rename, sibling row menus, unread counts, New chat and incremental loading. Supply items and handlers; persistence and shortcuts belong to the app. getHref opts into links. groupBy=false preserves input order; a function groups by its returned key. Controlled activeId/collapsedGroups and their default counterparts are supported. Recency collapse keys are today, yesterday, previous7Days and older; custom groups use their returned key. Supply now for stable SSR. Above virtualizeAt (100), measured rows are windowed with the tab stop retained; give the list a bounded height. Uses a roving list of buttons/links, not a listbox: unlike NavList, individual rows are not separate Tab stops. New chat and Load more are separate stops outside the nav. loadingMore keeps Load more focusable but aria-disabled and busy.
+
+- Package: `@gntik-ai/chat` · export `ConversationList` · group Navigation · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ConversationList/ConversationList.doc.ts
+- Primitive: `MoreMenu · Input · Badge · Kbd · useVirtualWindow`
+- ARIA pattern: navigation with disclosures and roving focus
+- Install: `gntik-ui add conversation-list`; own the source with `gntik-ui eject conversation-list`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Enter the nav on the active row, else the first enabled row; the next Tab leaves it, including after using sibling row actions |
+| ArrowDown / ArrowUp | Move through headings and enabled rows in visual order; skip collapsed rows |
+| Home / End | Move to the first / last heading or enabled row |
+| Enter / Space | Activate an enabled row once, or toggle a group heading |
+| ArrowRight (ArrowLeft in RTL) | From a row, focus its sibling More actions trigger |
+| ArrowLeft (ArrowRight in RTL) / Escape | From the actions trigger, return to the row; Escape in a menu closes it |
+| F2 | Start rename when onRename is provided; the title is selected |
+| Enter in rename | Save a trimmed, nonempty changed title and return focus to the row |
+| Escape in rename | Cancel editing and return focus to the row |
+
+Tokens: foreground, muted-foreground, accent, border, primary, focus-ring
+
+Usage:
+
+```tsx
+import { MessageSquare } from '@gntik-ai/icons';
+import { useEffect, useRef, useState } from 'react';
+import { useChatI18n } from '@gntik-ai/chat';
+import { ConversationList } from '@gntik-ai/chat';
+import { exampleNow, useExampleConversations } from '@gntik-ai/chat';
+
+/** Application state drives this presentational list; no storage or key binding is built in. */
+export default function ConversationListGrouped() {
+  const { tc, t } = useChatI18n();
+  const initial = useExampleConversations();
+  const [items, setItems] = useState(initial);
+  const [active, setActive] = useState<string | null>('a');
+  const [collapsed, setCollapsed] = useState<string[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    [],
+  );
+  return (
+    <div className="h-[440px] max-w-sm rounded-lg border border-border py-2">
+      <ConversationList
+        items={items.map((item) => ({
+          ...item,
+          icon: <MessageSquare size={16} aria-hidden className="shrink-0 text-muted-foreground" />,
+        }))}
+        now={exampleNow}
+        activeId={active}
+        onActiveChange={(id) => {
+          setActive(id);
+          setItems((list) => list.map((item) => (item.id === id ? { ...item, unread: 0 } : item)));
+        }}
+        collapsedGroups={collapsed}
+        onCollapsedGroupsChange={setCollapsed}
+        onRename={(id, title) => setItems((list) => list.map((item) => (item.id === id ? { ...item, title } : item)))}
+        onDelete={(id) => setItems((list) => list.filter((item) => item.id !== id))}
+        itemActions={(item) => [
+          {
+            label: t('common.copy'),
+            onSelect: () => {
+              void navigator.clipboard?.writeText(item.title).catch(() => {});
+            },
+          },
+        ]}
+        emptyState={<p className="p-3 text-sm text-muted-foreground">{tc('chat.historyExampleEmpty')}</p>}
+        onNew={() => {
+          const id = `new-${Date.now()}`;
+          setItems((list) => [{ id, title: tc('chat.newChat'), updatedAt: exampleNow }, ...list]);
+          setActive(id);
+          setCollapsed((keys) => keys.filter((key) => key !== 'today'));
+        }}
+        newShortcut="⌘N"
+        hasMore={hasMore}
+        loadingMore={loading}
+        onLoadMore={() => {
+          setLoading(true);
+          timer.current = setTimeout(() => {
+            setItems((list) => [
+              ...list,
+              { id: 'loaded', title: tc('chat.historyExampleNumber', { number: 5 }), updatedAt: new Date(2026, 0, 1) },
+            ]);
+            setLoading(false);
+            setHasMore(false);
+          }, 600);
+        }}
+      />
+    </div>
   );
 }
 ```
@@ -11749,7 +11852,7 @@ export default function Route() {
 
 ### Messaging (`messaging`)
 
-Team messaging in the console: SplitLayout conversation list (unread counts, last message) → thread of ChatMessages with Thumbnail attachments, participants AvatarGroup, and a ChatComposer with file attachments; Back on small screens.
+Team messaging in the console: SplitLayout with ConversationList (roving focus, unread counts, last message) → thread of ChatMessages with Thumbnail attachments, participants AvatarGroup, and a ChatComposer with file attachments; Back on small screens.
 
 - Package: `@gntik-ai/templates` · export `MessagingPage` · group Work · status experimental
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/messaging/template.meta.ts

@@ -1,10 +1,9 @@
 import { PageHeader } from '@gntik-ai/blocks';
-import { ChatComposer, ChatMessage } from '@gntik-ai/chat';
+import { ChatComposer, ChatMessage, ConversationList } from '@gntik-ai/chat';
 import { MessagesSquare, SquarePen } from '@gntik-ai/icons';
 import {
   Avatar,
   AvatarGroup,
-  Badge,
   EmptyState,
   Heading,
   Page,
@@ -12,9 +11,7 @@ import {
   Text,
   Thumbnail,
   ThumbnailList,
-  Timestamp,
   TooltipProvider,
-  cn,
   type BreadcrumbItem,
 } from '@gntik-ai/ui';
 import { useId, useState } from 'react';
@@ -86,47 +83,22 @@ export default function MessagingPage(props: Partial<MessagingProps>) {
   };
 
   const list = (
-    <ul aria-label="Conversations" className="flex flex-col gap-0.5 p-2">
-      {items.map((c) => {
+    <ConversationList
+      groupBy={false}
+      activeId={selectedId}
+      onActiveChange={openConversation}
+      items={items.map((c) => {
         const last = c.messages[c.messages.length - 1];
-        return (
-          <li key={c.id}>
-            <button
-              type="button"
-              aria-current={c.id === selectedId ? 'true' : undefined}
-              onClick={() => openConversation(c.id)}
-              className="flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-start hover:bg-accent/55 focus-ring aria-[current=true]:bg-accent"
-            >
-              <Avatar size="sm" name={c.title} aria-hidden />
-              <span className="min-w-0 flex-1">
-                <span className="flex items-baseline gap-2">
-                  <span
-                    className={cn(
-                      'min-w-0 flex-1 truncate text-[13px] text-foreground',
-                      c.unread > 0 && 'font-semibold',
-                    )}
-                  >
-                    {c.title}
-                  </span>
-                  {last && <Timestamp value={last.at} tooltip={false} className="shrink-0 font-mono text-[11px]" />}
-                </span>
-                <span className="mt-0.5 flex items-center gap-2">
-                  <span className="min-w-0 flex-1 truncate text-[12px] text-muted-foreground">
-                    {last ? `${last.mine ? 'You' : last.author.split(' ')[0]}: ${last.text}` : 'No messages yet'}
-                  </span>
-                  {c.unread > 0 && (
-                    <Badge tone="primary" size="sm">
-                      {c.unread}
-                      <span className="sr-only"> unread</span>
-                    </Badge>
-                  )}
-                </span>
-              </span>
-            </button>
-          </li>
-        );
+        return {
+          id: c.id,
+          title: c.title,
+          preview: last ? `${last.mine ? 'You' : last.author.split(' ')[0]}: ${last.text}` : 'No messages yet',
+          updatedAt: last?.at ?? 0,
+          unread: c.unread,
+          icon: <Avatar size="sm" name={c.title} aria-hidden />,
+        };
       })}
-    </ul>
+    />
   );
 
   const detail = selected ? (

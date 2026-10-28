@@ -13,6 +13,10 @@ export interface ChatLayoutProps {
   header?: ReactNode;
   /** Optional side panel (artifact preview, details). Omit to hide it and its resize handle. */
   panel?: ReactNode;
+  /** History at the inline start, visible from md up. Use a Drawer separately on small screens. */
+  sidebar?: ReactNode;
+  /** Sidebar width in px. */
+  sidebarWidth?: number;
   /** Accessible name of the side panel landmark. */
   panelLabel?: string;
   /** Initial panel width in px. */
@@ -44,6 +48,8 @@ export function ChatLayout({
   composer,
   header,
   panel,
+  sidebar,
+  sidebarWidth = 280,
   panelLabel: panelLabelProp,
   defaultPanelWidth = 380,
   minPanelWidth = 260,
@@ -101,6 +107,11 @@ export function ChatLayout({
 
   return (
     <div ref={ref} className={cn(s.root, className)}>
+      {sidebar != null && (
+        <div className={s.sidebar} style={{ width: sidebarWidth }}>
+          {sidebar}
+        </div>
+      )}
       <section aria-label={label} className={s.thread}>
         {header && <div className={s.header}>{header}</div>}
         <div className={s.viewport}>
