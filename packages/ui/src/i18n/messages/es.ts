@@ -4,11 +4,11 @@ import { tableMenuEs } from './table-menu-messages';
 import { layersEs } from './layer-messages';
 import { catalogPreviewEs } from './catalog-preview-messages';
 import { typographyEs } from './typography-messages';
+import { editableTextEs } from './editable-text-messages';
 import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
 import { cspEs } from './csp-messages';
 import type { Messages } from './en';
-/** Built-in Spanish catalog. */
 export const es: Messages = {
   ...chatComposerEs,
   ...fieldVariantsEs,
@@ -17,6 +17,7 @@ export const es: Messages = {
   ...cspEs,
   ...catalogPreviewEs,
   ...typographyEs,
+  ...editableTextEs,
   ...motionEs,
   ...markdownEs,
   'contact.sendFailed': 'No hemos podido enviar tu mensaje. Inténtalo de nuevo.',

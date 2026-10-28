@@ -166,3 +166,5 @@ export {
   type FieldVariantProviderProps,
 } from './field-variant';
 export * from './components/Dropzone';
+
+export * from './components/EditableText';

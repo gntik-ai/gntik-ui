@@ -1,14 +1,5 @@
-import { cn, Input } from '@gntik-ai/ui';
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type FocusEvent,
-  type KeyboardEvent,
-  type ReactNode,
-} from 'react';
+import { cn, Input, useInlineEdit } from '@gntik-ai/ui';
+import { useCallback, useId, useRef, type FocusEvent, type KeyboardEvent, type ReactNode } from 'react';
 import type { DataTableLabels } from './labels';
 import type { DataTableColumn } from './data-table-utils';
 
@@ -48,7 +39,6 @@ export interface EditableCellProps<T> {
 }
 
 const GENERIC_ERROR = 'The change could not be saved.';
-type Move = 'self' | 'next' | 'prev' | null;
 
 /** Starting value of the editor for a row. */
 function startValue<T>(row: T, column: DataTableColumn<T>): string | number | null {
@@ -86,22 +76,8 @@ export function EditableCell<T>({
 }: EditableCellProps<T>) {
   const errorId = useId();
   const editor = column.editor ?? { type: 'text' as const };
-  const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [pending, setPending] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const field = useRef<HTMLInputElement | HTMLSelectElement | null>(null);
-  const move = useRef<Move>(null);
-  const busy = useRef(false);
-
-  useEffect(() => {
-    if (editing || !move.current) return;
-    const dir = move.current;
-    move.current = null;
-    if (dir === 'self') trigger.current?.focus();
-    else focusSibling(trigger.current, dir);
-  }, [editing]);
 
   const focusOnMount = useCallback((el: HTMLInputElement | HTMLSelectElement | null) => {
     field.current = el;
@@ -110,19 +86,7 @@ export function EditableCell<T>({
     if (el instanceof HTMLInputElement) el.select();
   }, []);
 
-  const start = () => {
-    const v = startValue(row, column);
-    setDraft(v == null ? '' : String(v));
-    setError(null);
-    setEditing(true);
-  };
-  const cancel = () => {
-    move.current = 'self';
-    setError(null);
-    setEditing(false);
-  };
-
-  const parse = (): { ok: true; value: string | number | null } | { ok: false; message: string } => {
+  const parse = (draft: string): { ok: true; value: string | number | null } | { ok: false; message: string } => {
     if (editor.type !== 'number') return { ok: true, value: draft };
     const text = draft.trim();
     if (text === '') return { ok: true, value: null };
@@ -135,44 +99,21 @@ export function EditableCell<T>({
     return { ok: true, value: n };
   };
 
-  const commit = async (after: Move) => {
-    if (busy.current) return;
-    const parsed = parse();
-    if (!parsed.ok) {
-      setError(parsed.message);
-      field.current?.focus();
-      return;
-    }
-    const previous = startValue(row, column);
-    if (
-      parsed.value === previous ||
-      (previous != null && String(previous) === String(parsed.value) && editor.type !== 'number')
-    ) {
-      move.current = after;
-      setError(null);
-      setEditing(false);
-      return;
-    }
-    busy.current = true;
-    setPending(true);
-    let result: DataTableCellEditResult;
-    try {
-      result = await onCellEdit({ row, rowId, columnId: column.id, value: parsed.value, previous });
-    } catch (err) {
-      result = err instanceof Error && err.message ? err.message : (labels?.editError ?? GENERIC_ERROR);
-    }
-    busy.current = false;
-    setPending(false);
-    if (result === false) result = labels?.editError ?? GENERIC_ERROR;
-    if (typeof result === 'string') {
-      setError(result);
-      if (after) field.current?.focus();
-      return;
-    }
-    move.current = after;
-    setError(null);
-    setEditing(false);
-  };
+  const { editing, draft, setDraft, error, pending, busy, start, cancel, commit } = useInlineEdit({
+    value: startValue(row, column),
+    parse,
+    genericError: labels?.editError ?? GENERIC_ERROR,
+    focusEditor: (after) => {
+      if (after !== null) field.current?.focus();
+    },
+    isEqual: (next, previous) =>
+      next === previous || (previous != null && String(previous) === String(next) && editor.type !== 'number'),
+    onSave: (value, previous) => onCellEdit({ row, rowId, columnId: column.id, value, previous }),
+    onMove: (dir) => {
+      if (dir === 'self') trigger.current?.focus();
+      else focusSibling(trigger.current, dir);
+    },
+  });
 
   const onEditorKeyDown = (e: KeyboardEvent<HTMLInputElement | HTMLSelectElement>) => {
     if (e.key === 'Escape') {

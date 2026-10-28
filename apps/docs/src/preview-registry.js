@@ -91,6 +91,8 @@ export const PREVIEW_LOADERS = {
     'flow-builder--controlled-graph': () =>
       import('../../../packages/blocks/src/builders/FlowBuilder/examples/ControlledGraph'),
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'page-header--editable-title': () =>
+      import('../../../packages/blocks/src/page-chrome/PageHeader/examples/EditableTitle'),
     'page-header--spanish': () => import('../../../packages/blocks/src/page-chrome/PageHeader/examples/Spanish'),
     'confirm-destructive': () =>
       import('../../../packages/blocks/src/feedback/ConfirmDestructive/examples/PlainDeletion'),
