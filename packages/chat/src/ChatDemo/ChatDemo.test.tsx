@@ -2,9 +2,10 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { expectNoAxeViolations } from '../test/a11y';
 import { ChatDemo } from './ChatDemo';
-import { DEMO_REPLY, DEMO_TOOL, chunk } from './demoScript';
+import { DEMO_REASONING, DEMO_REPLY, DEMO_TOOL, chunk } from './demoScript';
 
-const total = DEMO_TOOL.durationMs + (chunk(DEMO_REPLY).length + 2) * 30;
+const reasoningDuration = (chunk(DEMO_REASONING).length + 1) * 30;
+const total = DEMO_TOOL.durationMs + reasoningDuration + (chunk(DEMO_REPLY).length + 2) * 30;
 
 describe('ChatDemo', () => {
   beforeEach(() => vi.useFakeTimers());
@@ -16,7 +17,11 @@ describe('ChatDemo', () => {
     expect(screen.getByRole('article', { name: 'You' })).toHaveTextContent('Summarise deployments');
     expect(screen.getByRole('button', { name: /list_deployments/ })).toHaveTextContent('Running');
     expect(screen.getByRole('button', { name: 'Stop generating' })).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('Assistant is thinking…');
+    expect(screen.getByRole('button', { name: 'Thinking…' })).toHaveAttribute('aria-expanded', 'true');
+    act(() => vi.advanceTimersByTime(DEMO_TOOL.durationMs + reasoningDuration));
     expect(screen.getByRole('status')).toHaveTextContent('Assistant is responding…');
+    expect(screen.getByRole('button', { name: /Thought for/ })).toHaveAttribute('aria-expanded', 'false');
     act(() => vi.advanceTimersByTime(total));
     expect(screen.getByRole('button', { name: /list_deployments/ })).toHaveTextContent('Succeeded');
     expect(screen.getByRole('table')).toBeInTheDocument();
@@ -55,6 +60,9 @@ describe('ChatDemo', () => {
     act(() => vi.advanceTimersByTime(DEMO_TOOL.durationMs + 90));
     expect(vi.getTimerCount()).toBeGreaterThan(0);
     fireEvent.keyDown(box, { key: 'Escape' });
+    // Base UI's shared animation scheduler leaves a cancelled no-op frame queued.
+    act(() => vi.advanceTimersToNextFrame());
+    act(() => vi.advanceTimersToNextFrame());
     expect(vi.getTimerCount()).toBe(0);
     expect(screen.getByRole('button', { name: 'Send message' })).toBeInTheDocument();
   });
@@ -64,10 +72,12 @@ describe('ChatDemo', () => {
     fireEvent.click(screen.getByRole('button', { name: /Find unpaid invoices/ }));
     expect(vi.getTimerCount()).toBeGreaterThan(0);
     unmount();
+    act(() => vi.advanceTimersToNextFrame());
     expect(vi.getTimerCount()).toBe(0);
   });
 
-  it('has no axe violations (empty and answered)', async () => {
+  it.each(['dark', 'light', 'high_contrast'])('has no axe violations (empty and answered) in %s', async (theme) => {
+    document.documentElement.className = theme;
     const { container } = render(<ChatDemo />);
     vi.useRealTimers();
     await expectNoAxeViolations(container);

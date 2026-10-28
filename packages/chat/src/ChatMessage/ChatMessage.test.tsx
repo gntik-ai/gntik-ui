@@ -1,3 +1,4 @@
+import { I18nProvider } from '@gntik-ai/ui';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
@@ -183,4 +184,50 @@ describe('ChatAnnouncer', () => {
     render(<ChatAnnouncer streaming={false} lastReply={'a'.repeat(50)} maxLength={10} />);
     expect(screen.getByRole('status').textContent).toBe(`${'a'.repeat(10)}…`);
   });
+});
+
+it('announces thinking, responding and the reply without reading reasoning tokens', () => {
+  const { rerender } = render(<ChatAnnouncer streaming reasoning lastReply="private reasoning tokens" />);
+  const status = screen.getByRole('status');
+  expect(status).toHaveTextContent('Assistant is thinking…');
+  expect(status).not.toHaveTextContent('private reasoning tokens');
+  rerender(<ChatAnnouncer streaming reasoning lastReply="more private reasoning tokens" />);
+  expect(status).toHaveTextContent('Assistant is thinking…');
+  rerender(<ChatAnnouncer streaming reasoning={false} lastReply="private reasoning tokens" />);
+  expect(status).toHaveTextContent('Assistant is responding…');
+  expect(status).not.toHaveTextContent('private reasoning tokens');
+  rerender(<ChatAnnouncer streaming={false} lastReply="Finished reply." />);
+  expect(status).toHaveTextContent('Finished reply.');
+});
+
+it('localizes thinking status and falls back without changing existing author/responding translations', () => {
+  const { rerender } = render(
+    <I18nProvider locale="es">
+      <ChatAnnouncer streaming reasoning />
+    </I18nProvider>,
+  );
+  expect(screen.getByRole('status')).toHaveTextContent('Asistente está pensando…');
+  const messages = {
+    'chat.thinkingStatus': 'chat.thinkingStatus',
+    'chat.assistant': 'Helper',
+    'chat.responding': '{author} replies…',
+  };
+  rerender(
+    <I18nProvider locale="es" messages={messages}>
+      <ChatAnnouncer streaming reasoning />
+    </I18nProvider>,
+  );
+  expect(screen.getByRole('status')).toHaveTextContent('Helper is thinking…');
+  rerender(
+    <I18nProvider locale="es" messages={messages}>
+      <ChatAnnouncer streaming />
+    </I18nProvider>,
+  );
+  expect(screen.getByRole('status')).toHaveTextContent('Helper replies…');
+  rerender(
+    <I18nProvider locale="es" messages={messages}>
+      <ChatAnnouncer streaming reasoning author="Reviewer" />
+    </I18nProvider>,
+  );
+  expect(screen.getByRole('status')).toHaveTextContent('Reviewer is thinking…');
 });

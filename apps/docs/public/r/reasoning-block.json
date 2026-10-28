@@ -1,0 +1,67 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "reasoning-block",
+  "type": "registry:ui",
+  "title": "ReasoningBlock",
+  "description": "A collapsible reasoning trace above an assistant answer. Opens while streaming, then settles once to defaultOpen unless the reader toggles it. Controlled open always wins. Strings use safe streaming Markdown; other nodes render as provided. Pass durationMs for whole-second elapsed labels, or label to override. Empty completed traces render nothing. Use ChatAnnouncer reasoning for the thinking phase; the trace itself has no live region.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/markdown.json",
+    "https://ui.gntik.ai/r/tool-call-card.json"
+  ],
+  "files": [
+    {
+      "path": "packages/chat/src/ReasoningBlock/ReasoningBlock.tsx",
+      "type": "registry:ui",
+      "target": "components/chat/reasoning-block/ReasoningBlock.tsx",
+      "content": "import { Collapsible, CollapsiblePanel, CollapsibleTrigger, cn } from '@gntik-ai/ui';\nimport { useEffect, useRef, useState, type ReactNode, type Ref } from 'react';\nimport { Markdown } from '../markdown';\nimport { formatElapsed } from '../utils/formatElapsed';\nimport { useChatI18n } from '../utils/i18n';\nimport { reasoningBlockStyles as s } from './reasoningBlock.variants';\n\nexport interface ReasoningBlockProps {\n  children?: string | ReactNode;\n  streaming?: boolean;\n  durationMs?: number;\n  open?: boolean;\n  defaultOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  label?: ReactNode;\n  className?: string;\n  ref?: Ref<HTMLDivElement>;\n}\n\n/** A quiet disclosure for reasoning tokens; announcements belong in ChatAnnouncer. */\nexport function ReasoningBlock({\n  children,\n  streaming = false,\n  durationMs,\n  open,\n  defaultOpen = false,\n  onOpenChange,\n  label,\n  className,\n  ref,\n}: ReasoningBlockProps) {\n  const { tc } = useChatI18n();\n  const [internalOpen, setInternalOpen] = useState(streaming || defaultOpen);\n  const wasStreaming = useRef(streaming);\n  const userToggled = useRef(false);\n\n  useEffect(() => {\n    if (wasStreaming.current === streaming) return;\n    wasStreaming.current = streaming;\n    if (streaming) userToggled.current = false;\n    if (open === undefined && (streaming || !userToggled.current)) {\n      // Synchronise only a stream phase transition, never a token or defaultOpen update.\n      setInternalOpen(streaming || defaultOpen);\n    }\n  }, [streaming, defaultOpen, open]);\n\n  const hasContent =\n    typeof children === 'string' ? children.trim().length > 0 : children != null && typeof children !== 'boolean';\n  if (!streaming && !hasContent) return null;\n\n  return (\n    <Collapsible\n      ref={ref}\n      open={open ?? internalOpen}\n      onOpenChange={(next) => {\n        if (streaming) userToggled.current = true;\n        if (open === undefined) setInternalOpen(next);\n        onOpenChange?.(next);\n      }}\n      className={cn(s.root, className)}\n    >\n      <CollapsibleTrigger className={s.trigger} {...(!hasContent ? { 'aria-controls': undefined } : {})}>\n        <span className={streaming ? s.running : undefined}>\n          {label ??\n            (streaming\n              ? tc('chat.thinking')\n              : durationMs !== undefined\n                ? tc('chat.thoughtFor', { duration: formatElapsed(durationMs) })\n                : tc('chat.reasoning'))}\n        </span>\n      </CollapsibleTrigger>\n      {hasContent && (\n        <CollapsiblePanel aria-busy={streaming}>\n          <div className={s.body}>\n            {typeof children === 'string' ? (\n              <Markdown streaming={streaming} className={s.markdown}>\n                {children}\n              </Markdown>\n            ) : (\n              children\n            )}\n          </div>\n        </CollapsiblePanel>\n      )}\n    </Collapsible>\n  );\n}\n"
+    },
+    {
+      "path": "packages/chat/src/ReasoningBlock/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/reasoning-block/index.ts",
+      "content": "export { ReasoningBlock, type ReasoningBlockProps } from './ReasoningBlock';\nexport { reasoningBlockStyles } from './reasoningBlock.variants';\nexport { doc as reasoningBlockDoc } from './ReasoningBlock.doc';\n"
+    },
+    {
+      "path": "packages/chat/src/ReasoningBlock/reasoningBlock.variants.ts",
+      "type": "registry:ui",
+      "target": "components/chat/reasoning-block/reasoningBlock.variants.ts",
+      "content": "import { toolCallCardStyles } from '../tool-call-card/toolCallCard.variants';\n\nexport const reasoningBlockStyles = {\n  root: toolCallCardStyles.root,\n  trigger: toolCallCardStyles.trigger,\n  running: 'animate-pulse motion-reduce:animate-none',\n  markdown: 'text-[13px] text-muted-foreground',\n  body: 'border-s border-border ps-3 text-[13px] text-muted-foreground',\n} as const;\n"
+    },
+    {
+      "path": "packages/chat/src/utils/formatElapsed.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/formatElapsed.ts",
+      "content": "/** Whole-second reasoning duration, kept separate from ToolCallCard's precision. */\nexport function formatElapsed(ms: number): string {\n  const seconds = Math.round(ms / 1000);\n  if (seconds < 60) return `${seconds} s`;\n  return `${Math.floor(seconds / 60)} m ${String(seconds % 60).padStart(2, '0')} s`;\n}\n"
+    },
+    {
+      "path": "packages/chat/src/utils/i18n.ts",
+      "type": "registry:ui",
+      "target": "components/chat/utils/i18n.ts",
+      "content": "import { interpolate, useI18n, type MessageKey, type MessageVars } from '@gntik-ai/ui';\n\n/**\n * English fallbacks for the chat keys added after the first `@gntik-ai/ui` release. The\n * strings live in the ui catalogs (en + es); these keep the pack readable when it runs\n * against an older `@gntik-ai/ui` whose catalog does not have them yet.\n */\nconst FALLBACK = {\n  'chat.thinking': 'Thinking…',\n  'chat.thoughtFor': 'Thought for {duration}',\n  'chat.reasoning': 'Reasoning',\n  'chat.thinkingStatus': '{author} is thinking…',\n\n  'chat.historyExampleBudget': 'Budget review',\n  'chat.historyExamplePlan': 'Project plan',\n  'chat.historyExampleRelease': 'Release notes',\n  'chat.historyExampleEarlier': 'Earlier discussion',\n  'chat.historyExamplePreview': 'Usage for this quarter',\n  'chat.historyExampleEmpty': 'No saved conversations',\n  'chat.historyExampleNumber': 'Conversation {number}',\n  'chat.historyExampleCustomGroups': 'Use custom groups',\n\n  'chat.newChat': 'New chat',\n  'chat.loadMore': 'Load more',\n  'chat.unreadCount': '{count, plural, one {# unread message} other {# unread messages}}',\n\n  'chat.rename': 'Rename',\n  'chat.conversationActions': 'More actions for {title}',\n\n  'chat.conversations': 'Conversations',\n  'chat.today': 'Today',\n  'chat.yesterday': 'Yesterday',\n  'chat.previous7Days': 'Previous 7 days',\n  'chat.older': 'Older',\n\n  'chat.composerReplyTitle': 'Replying to {name}',\n  'chat.composerQuote': 'Can you share the next steps?',\n  'chat.composerAgent': 'Assistant',\n  'chat.composerReview': 'Review your message before sending.',\n  'chat.composerInsert': 'Insert name',\n  'chat.composerClear': 'Clear text',\n  'chat.composerSelect': 'Select text',\n  'chat.composerRead': 'Read text',\n  'chat.composerCurrent': 'Current text: {text}',\n  'chat.composerReadOnly': 'Read-only draft',\n  'chat.composerEdit': 'Edit draft',\n  'chat.composerGreeting': 'Hello ',\n  'chat.ctrlEnter': 'Ctrl + Enter',\n  'chat.cmdEnter': '⌘ + Enter',\n  'chat.closeHeader': 'Close {title}',\n  'chat.diagramFailed': 'Could not render the diagram',\n  'chat.showDiagram': 'Show diagram',\n  'chat.showCode': 'Show code',\n  'chat.downloadSvg': 'Download SVG',\n  'chat.zoomIn': 'Zoom in',\n  'chat.zoomOut': 'Zoom out',\n  'chat.resetZoom': 'Reset zoom',\n  'chat.diagram': 'Diagram',\n  'chat.renderingDiagram': 'Rendering diagram…',\n  'chat.surfaceExampleTitle': 'Review your details',\n  'chat.surfaceExampleName': 'Name',\n  'chat.surfaceExampleSubmit': 'Submit',\n  'chat.surfaceExampleChoice': 'Language',\n  'chat.surfaceExampleEnglish': 'English',\n  'chat.surfaceExampleSpanish': 'Spanish',\n  'chat.surfaceExampleNotify': 'Send updates',\n  'chat.surfaceExampleBadge': 'Draft',\n  'chat.surfaceExampleNotice': 'Check the information before submitting.',\n  'chat.surfaceExampleStatus': 'Submitted for {name}',\n  'chat.surfaceExamplePatch': 'Update name',\n  'chat.surfaceExampleRemove': 'Remove content',\n  'chat.surfaceExampleReset': 'Reset',\n  'chat.surfaceExampleUnsupported': 'Show unsupported content',\n  'chat.surfaceExampleRejected': 'Unsupported content was rejected.',\n  'chat.surfaceExampleLink': 'Read the documentation',\n  'chat.surfaceUnsupported': 'This content cannot be shown',\n  'chat.surfaceAgentContent': 'Agent content',\n  'chat.typing': '{author} is typing',\n  'chat.feedback': 'Response feedback',\n  'chat.feedbackTitle': 'What went wrong?',\n  'chat.feedbackReason': 'Reason',\n  'chat.feedbackComment': 'Comment (optional)',\n  'chat.feedbackPlaceholder': 'Tell us more…',\n  'chat.feedbackSubmit': 'Send feedback',\n  'chat.feedbackThanks': 'Thanks for your feedback',\n  'chat.feedbackCleared': 'Feedback removed',\n  'chat.reasonInaccurate': 'Inaccurate',\n  'chat.reasonUnhelpful': 'Not helpful',\n  'chat.reasonIncomplete': 'Incomplete',\n  'chat.reasonUnsafe': 'Harmful or unsafe',\n  'chat.reasonOther': 'Other',\n  'chat.regenerate': 'Regenerate',\n  'chat.uploading': 'Uploading {name}',\n  'chat.uploadFailed': 'Upload failed',\n  'chat.retryUpload': 'Retry uploading {name}',\n  'chat.dropFiles': 'Drop files to attach',\n  'chat.fileTooLarge': '{name} is larger than {max}',\n  'chat.fileTypeNotAllowed': '{name} is not an allowed file type',\n  'chat.tooManyFiles': 'You can attach up to {max} files',\n  'chat.model': 'Model',\n  'chat.selectModel': 'Select a model',\n  'chat.capabilityVision': 'Vision',\n  'chat.capabilityTools': 'Tools',\n  'chat.capabilityReasoning': 'Reasoning',\n  'chat.capabilityFiles': 'Files',\n  'chat.capabilityWeb': 'Web search',\n  'chat.capabilityAudio': 'Audio',\n  'chat.contextWindow': '{size} context',\n  'chat.unavailable': 'Unavailable',\n} as const;\n\nexport type ChatMessageKey = keyof typeof FALLBACK;\n\n/** `useI18n()` plus `tc()`, a translator for the newer chat keys with English fallbacks. */\nexport function useChatI18n() {\n  const i18n = useI18n();\n  const tc = (key: ChatMessageKey, vars?: MessageVars) => {\n    const out = i18n.t(key as MessageKey, vars);\n    return out === key ? interpolate(FALLBACK[key], vars, i18n.locale) : out;\n  };\n  return { ...i18n, tc };\n}\n"
+    },
+    {
+      "path": "packages/chat/src/ReasoningBlock/ReasoningBlock.doc.ts",
+      "type": "registry:ui",
+      "target": "components/chat/reasoning-block/ReasoningBlock.doc.ts",
+      "content": "import type { ComponentDoc } from '@gntik-ai/ui';\n\nexport const doc: ComponentDoc = {\n  name: 'ReasoningBlock',\n  group: 'Display',\n  status: 'beta',\n  description:\n    'A collapsible reasoning trace above an assistant answer. Opens while streaming, then settles once to defaultOpen unless the reader toggles it. Controlled open always wins. Strings use safe streaming Markdown; other nodes render as provided. Pass durationMs for whole-second elapsed labels, or label to override. Empty completed traces render nothing. Use ChatAnnouncer reasoning for the thinking phase; the trace itself has no live region.',\n  primitive: '@base-ui/react/collapsible',\n  pattern: 'disclosure',\n  keyboard: [\n    ['Enter', 'Expands or collapses the reasoning trace'],\n    ['Space', 'Expands or collapses the reasoning trace'],\n    ['Tab', 'Moves to links and controls in the open panel'],\n  ],\n  tokens: ['card', 'border', 'secondary', 'muted-foreground', 'focus-ring'],\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "component",
+    "Display"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/chat",
+    "status": "beta",
+    "source": "packages/chat/src/ReasoningBlock/ReasoningBlock.doc.ts"
+  }
+}

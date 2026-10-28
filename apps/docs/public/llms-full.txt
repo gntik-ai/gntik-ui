@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 122 components, 12 layouts, 78 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 123 components, 12 layouts, 78 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -927,7 +927,7 @@ export default function CarouselAutoplay() {
 
 ### ChatMessage (`chat-message`)
 
-One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows a TypingIndicator ("Assistant is typing") until text arrives and a caret after streamed plain text; ChatAnnouncer announces start and end once instead of every token. Copy actions show common.copyFailed when clipboard access is denied or unavailable, with no success icon; successful copies keep their labels and reset after 1600ms. See the bilingual Result feedback live preview.
+One conversation turn for the roles user (end-aligned bubble), participant (another person, e.g. a teammate: start-aligned outlined bubble with their name and avatar via `author` / `avatarSrc`), assistant, system and tool: avatar, author, timestamp, body and hover/focus actions (copy, retry, thumbs feedback). While streaming it is aria-busy, hides its actions and shows a TypingIndicator ("Assistant is typing") until text arrives and a caret after streamed plain text; ChatAnnouncer announces start and end once instead of every token; its optional reasoning prop announces the thinking phase before responding. See the ReasoningBlock streaming example for the full sequence. Copy actions show common.copyFailed when clipboard access is denied or unavailable, with no success icon; successful copies keep their labels and reset after 1600ms. See the bilingual Result feedback live preview.
 
 - Package: `@gntik-ai/chat` · export `ChatMessage` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ChatMessage/ChatMessage.doc.ts
@@ -1543,6 +1543,70 @@ export default function OverflowListLabels() {
           renderOverflowItem={(l) => l}
         />
       </div>
+    </div>
+  );
+}
+```
+
+### ReasoningBlock (`reasoning-block`)
+
+A collapsible reasoning trace above an assistant answer. Opens while streaming, then settles once to defaultOpen unless the reader toggles it. Controlled open always wins. Strings use safe streaming Markdown; other nodes render as provided. Pass durationMs for whole-second elapsed labels, or label to override. Empty completed traces render nothing. Use ChatAnnouncer reasoning for the thinking phase; the trace itself has no live region.
+
+- Package: `@gntik-ai/chat` · export `ReasoningBlock` · group Display · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ReasoningBlock/ReasoningBlock.doc.ts
+- Primitive: `@base-ui/react/collapsible`
+- ARIA pattern: disclosure
+- Registry dependencies: markdown, tool-call-card
+- Install: `gntik-ui add reasoning-block`; own the source with `gntik-ui eject reasoning-block`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Enter | Expands or collapses the reasoning trace |
+| Space | Expands or collapses the reasoning trace |
+| Tab | Moves to links and controls in the open panel |
+
+Tokens: card, border, secondary, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { Button, useI18n } from '@gntik-ai/ui';
+import { useState } from 'react';
+import { ChatAnnouncer, ChatMessage } from '@gntik-ai/chat';
+import { Markdown } from '@gntik-ai/chat';
+import { useChatI18n } from '@gntik-ai/chat';
+import { ReasoningBlock } from '@gntik-ai/chat';
+
+const trace = 'Check the latest deployment, then compare its health checks. [Read the guide](/guide).';
+const answer = 'The deployment succeeded.';
+
+/** Step through the same phases a reasoning model emits, without a backend or timers. */
+export default function ReasoningBlockStreaming() {
+  const { t } = useI18n();
+  const { tc } = useChatI18n();
+  const [phase, setPhase] = useState<'thinking' | 'responding' | 'done'>('thinking');
+  const [open, setOpen] = useState(false);
+  const thinking = phase === 'thinking';
+  const streaming = phase !== 'done';
+  return (
+    <div className="flex max-w-2xl flex-col gap-4">
+      <Button variant="secondary" onClick={() => setPhase(thinking ? 'responding' : streaming ? 'done' : 'thinking')}>
+        {t(thinking ? 'common.next' : streaming ? 'common.finish' : 'common.retry')}
+      </Button>
+      <ChatMessage role="assistant" streaming={streaming}>
+        <ReasoningBlock streaming={thinking} durationMs={thinking ? undefined : 12000} className="mb-3">
+          {trace}
+        </ReasoningBlock>
+        {!thinking && <Markdown streaming={streaming}>{answer}</Markdown>}
+      </ChatMessage>
+      <ChatAnnouncer streaming={streaming} reasoning={thinking} lastReply={answer} />
+      <ReasoningBlock durationMs={65000}>{trace}</ReasoningBlock>
+      <ReasoningBlock defaultOpen>{trace}</ReasoningBlock>
+      <ReasoningBlock open={open} onOpenChange={setOpen} label={<strong>{tc('chat.reasoning')}</strong>}>
+        <p>The application controls this disclosure and supplies its own body and label.</p>
+      </ReasoningBlock>
     </div>
   );
 }
@@ -4818,11 +4882,11 @@ export default function CardVariants() {
 
 ### ChatDemo (`chat-demo`)
 
-Reference composition of the chat pack: suggestions in the empty state, attachments (pick, paste or drop), a compact ModelPicker in the composer, a tool call, a streamed markdown reply with sources (TypingIndicator, caret), Stop, MessageFeedback (copy, regenerate, thumbs with reasons), and a resizable details panel. Streaming is mocked with timers that are cleaned up.
+Reference composition of the chat pack: suggestions in the empty state, attachments (pick, paste or drop), a compact ModelPicker in the composer, a tool call, a reasoning trace followed by a streamed markdown reply with sources (TypingIndicator, caret), Stop, MessageFeedback (copy, regenerate, thumbs with reasons), and a resizable details panel. Streaming is mocked with timers that are cleaned up.
 
 - Package: `@gntik-ai/chat` · export `ChatDemo` · group Layout · status experimental
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ChatDemo/ChatDemo.doc.ts
-- Registry dependencies: attachment, chat-composer, chat-layout, chat-message, citation, markdown, message-feedback, model-picker, suggestion-chips, tool-call-card
+- Registry dependencies: attachment, chat-composer, chat-layout, chat-message, citation, markdown, message-feedback, model-picker, reasoning-block, suggestion-chips, tool-call-card
 - Install: `gntik-ui add chat-demo`; own the source with `gntik-ui eject chat-demo`
 
 Keyboard:
