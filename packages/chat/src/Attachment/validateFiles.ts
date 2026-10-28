@@ -1,3 +1,5 @@
+import { matchesAccept as matchesUiAccept } from '@gntik-ai/ui';
+
 export type AttachmentRejectionReason = 'type' | 'size' | 'count';
 
 export interface AttachmentRejection {
@@ -20,18 +22,7 @@ export interface ValidateFilesOptions {
 
 /** Whether a file matches an `accept` list (extensions, exact MIME types and `type/*`). */
 export function matchesAccept(file: Pick<File, 'name' | 'type'>, accept?: string): boolean {
-  if (!accept?.trim()) return true;
-  const name = file.name.toLowerCase();
-  const type = file.type.toLowerCase();
-  return accept
-    .split(',')
-    .map((a) => a.trim().toLowerCase())
-    .filter(Boolean)
-    .some((rule) => {
-      if (rule.startsWith('.')) return name.endsWith(rule);
-      if (rule.endsWith('/*')) return type.startsWith(rule.slice(0, -1));
-      return type === rule;
-    });
+  return matchesUiAccept(file, accept);
 }
 
 /** Splits files into accepted ones and rejections (without messages) by type, size and count. */

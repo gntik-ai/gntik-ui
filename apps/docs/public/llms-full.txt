@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 119 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 120 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -3216,6 +3216,47 @@ export default function DateTimeRangePickerBasic() {
         />
       </Field>
     </div>
+  );
+}
+```
+
+### Dropzone (`dropzone`)
+
+A file target with accept/reject feedback, a picker, type/size/count validation and a headless useDropzone hook. Accept is an input-style string or string array. With activateOnClick (default), children must contain no interactive content; use activateOnClick=false with DropzoneTrigger for buttons. Safari can expose an empty MIME type while dragging: these files are provisionally accepted and validated on drop. Extension and size rules apply on drop. Mount only one fullScreen zone per page; its window listeners ignore non-file drags. DropzoneCaption uses accept and maxSize for the upload hint. multiple defaults to true. Disabled zones ignore interaction.
+
+- Package: `@gntik-ai/ui` · export `Dropzone` · group Forms · status stable
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Dropzone/Dropzone.doc.ts
+- Primitive: `@base-ui/react/use-render`
+- ARIA pattern: Button
+- Registry dependencies: button, ui-utils
+- Install: `gntik-ui add dropzone`; own the source with `gntik-ui eject dropzone`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab | Focus the clickable zone or its separate trigger. |
+| Enter | Open the file picker. |
+| Space | Open the file picker without scrolling. |
+| Escape | Hide the full-screen overlay. |
+
+Tokens: border, background, foreground, primary, destructive, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { Dropzone, DropzoneAccept, DropzoneIdle, DropzoneReject, DropzoneCaption } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
+
+export default function DropzoneDefault() {
+  const { t } = useI18n();
+  return (
+    <Dropzone accept=".csv,text/csv" maxSize={25_000_000}>
+      <DropzoneIdle>{t('dropzone.label')}</DropzoneIdle>
+      <DropzoneAccept>{t('dropzone.label')}</DropzoneAccept>
+      <DropzoneReject>{t('dropzone.reject')}</DropzoneReject>
+      <DropzoneCaption />
+    </Dropzone>
   );
 }
 ```
@@ -9156,7 +9197,7 @@ import { DialogWizard } from '@gntik-ai/blocks';
 
 ### File upload panel (`file-upload-panel`)
 
-Drag-and-drop zone with a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.
+Drag-and-drop zone with accept/reject MIME feedback (demonstrated in the Labels preview), a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.
 
 - Package: `@gntik-ai/blocks` · export `FileUploadPanel` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/FileUploadPanel/block.meta.ts

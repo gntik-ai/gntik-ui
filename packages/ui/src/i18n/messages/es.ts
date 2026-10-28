@@ -509,6 +509,8 @@ export const es: Messages = {
   'dateRange.label': 'Rango de fechas',
   'dateRange.any': 'Cualquier fecha',
   'common.clearItem': 'Borrar {label}',
+  'dropzone.label': 'Suelta archivos aquí',
+  'dropzone.reject': 'Estos archivos no se aceptan',
   'upload.label': 'Subir archivos',
   'upload.files': 'Archivos',
   'upload.failed': 'Error al subir',

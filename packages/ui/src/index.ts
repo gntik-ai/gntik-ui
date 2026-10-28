@@ -165,3 +165,4 @@ export {
   type FieldControlVariant,
   type FieldVariantProviderProps,
 } from './field-variant';
+export * from './components/Dropzone';

@@ -1,3 +1,5 @@
+import { matchesAccept } from '@gntik-ai/ui';
+
 export type UploadStatus = 'uploading' | 'done' | 'error';
 
 export interface UploadItem {
@@ -41,14 +43,5 @@ export function simulateUpload(_file: File, onProgress: (pct: number) => void): 
 
 /** Matches a file against an `accept` list (".csv", "image/*", "application/pdf"). */
 export function acceptsFile(file: { name: string; type: string }, accept: string | undefined) {
-  if (!accept) return true;
-  const name = file.name.toLowerCase();
-  const type = file.type.toLowerCase();
-  return accept
-    .split(',')
-    .map((a) => a.trim().toLowerCase())
-    .filter(Boolean)
-    .some((a) =>
-      a.startsWith('.') ? name.endsWith(a) : a.endsWith('/*') ? type.startsWith(a.slice(0, -1)) : type === a,
-    );
+  return matchesAccept(file, accept);
 }

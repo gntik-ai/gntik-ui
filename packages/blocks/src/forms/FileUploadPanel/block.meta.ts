@@ -6,7 +6,7 @@ export const meta: BlockMeta = {
   family: 'forms',
   status: 'stable',
   description:
-    'Drag-and-drop zone with a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.',
+    'Drag-and-drop zone with accept/reject MIME feedback (demonstrated in the Labels preview), a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.',
   labels: [
     { key: 'label', type: 'string', state: 'Default content and accessible names' },
     { key: 'drop', type: 'string', state: 'Default content and accessible names' },
