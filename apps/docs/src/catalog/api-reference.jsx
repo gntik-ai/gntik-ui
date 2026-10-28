@@ -15,9 +15,11 @@ import {
   CHART_API,
   THEME_API,
   HOOK_API,
+  BLOCK_API,
 } from '../api-docs.js';
 
 const API_BY_KIND = {
+  block: BLOCK_API,
   hooks: HOOK_API,
   theme: THEME_API,
   component: COMPONENT_API,

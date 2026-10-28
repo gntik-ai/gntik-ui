@@ -13,3 +13,6 @@ export type { MarketingAction } from './actions';
 export * from './ComparisonTable/ComparisonTable';
 export { meta as comparisonTableMeta } from './ComparisonTable/block.meta';
 export { sampleComparisonPlans, sampleComparisonSections } from './ComparisonTable/fixtures';
+export * from './SiteFooter/SiteFooter';
+export { meta as siteFooterMeta } from './SiteFooter/block.meta';
+export { sampleFooterColumns, sampleLegalLinks, sampleSocialLinks } from './SiteFooter/fixtures';

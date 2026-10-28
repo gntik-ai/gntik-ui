@@ -4,6 +4,54 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import test from 'node:test';
 
+test('SiteFooter has a documented API and every gallery example can load', async () => {
+  const { createServer } = await import('vite');
+  const server = await createServer({
+    root: fileURLToPath(new URL('..', import.meta.url)),
+    server: { middlewareMode: true, ws: false, watch: null },
+    optimizeDeps: { noDiscovery: true, include: [] },
+  });
+  try {
+    const { BLOCK_API } = await server.ssrLoadModule('/src/api-docs.js');
+    assert.ok(BLOCK_API?.SiteFooter, 'SiteFooter API must be available in the Blocks gallery');
+    const props = BLOCK_API.SiteFooter.propTypes.find((type) => type.name === 'SiteFooterProps');
+    for (const prop of [
+      'layout',
+      'brand',
+      'description',
+      'columns',
+      'links',
+      'legalLinks',
+      'social',
+      'copyright',
+      'headingLevel',
+      'navLabel',
+      'landmark',
+      'themeSwitcher',
+      'newsletter',
+      'className',
+    ]) {
+      assert.ok(
+        props.props.some((entry) => entry.name === prop),
+        `missing documented footer prop: ${prop}`,
+      );
+    }
+    const { CATALOG, PREVIEW_LOADERS } = await server.ssrLoadModule('/src/preview-registry.js');
+    assert.equal(CATALOG.blocks.filter((block) => block.id === 'site-footer').length, 1);
+    for (const id of [
+      'site-footer',
+      'site-footer--centered',
+      'site-footer--simple',
+      'site-footer--custom',
+      'site-footer--empty',
+    ]) {
+      assert.equal(typeof (await PREVIEW_LOADERS.block[id]()).default, 'function');
+    }
+  } finally {
+    await server.close();
+  }
+});
+
 test('CSP accessibility checks target existing live previews', async () => {
   const { createServer } = await import('vite');
   const server = await createServer({
@@ -76,6 +124,7 @@ test('scheduling locale and display-zone previews have distinct frame titles and
   });
   try {
     await server.ssrLoadModule('/src/catalog/kit.jsx');
+    await server.ssrLoadModule('/src/catalog/api-reference.jsx');
     await server.ssrLoadModule('/src/catalog/viewers.jsx');
     dom.window.document.body.innerHTML = renderToStaticMarkup(React.createElement(dom.window.SECTIONS.blocks));
     for (const id of ['month-calendar', 'week-calendar', 'agenda-list']) {

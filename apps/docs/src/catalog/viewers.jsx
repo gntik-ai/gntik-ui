@@ -213,6 +213,25 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                 </div>
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'block' && it.apiFolder && <ApiReference folder={it.apiFolder} kind="block" level={4} />}
+              {kind === 'block' && it.id === 'site-footer' && (
+                <>
+                  <p className="my-4 text-sm text-muted-foreground">
+                    Use landmark on standalone pages; omit it inside StackedLayout. Social labels name the network. The
+                    newsletter is caller-supplied content. Simple mode inherits the layout footer typography.
+                  </p>
+                  {['Centered', 'Simple', 'Custom', 'Empty'].map((example) => (
+                    <Viewer
+                      key={example}
+                      kind="block"
+                      id={`site-footer--${example.toLowerCase()}`}
+                      title={`${it.title} · ${example}`}
+                      file={`../../../packages/blocks/src/marketing/SiteFooter/examples/${example}.tsx`}
+                      height={height}
+                    />
+                  ))}
+                </>
+              )}
               {kind === 'block' && it.id === 'comment-thread' && (
                 <Viewer
                   kind="block"
@@ -429,6 +448,7 @@ function BlocksSection() {
           labels: b.meta.labels,
           file: b.file,
           family: b.family,
+          apiFolder: b.doc ? b.name : undefined,
         })),
         (b) => b.family,
       ),

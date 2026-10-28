@@ -1,3 +1,4 @@
+import { signUpEn, forgotPasswordEn } from './auth-form-messages';
 import { chatComposerEn } from './chat-composer/en';
 import { fieldVariantsEn } from './field-variant-messages';
 import { tableMenuEn } from './table-menu-messages';
@@ -9,6 +10,8 @@ import { motionEn } from './motion-messages';
 import { markdownEn } from './markdown-messages';
 import { cspEn } from './csp-messages';
 export const en = {
+  ...signUpEn,
+  ...forgotPasswordEn,
   ...chatComposerEn,
   ...fieldVariantsEn,
   ...tableMenuEn,
@@ -19,6 +22,10 @@ export const en = {
   ...editableTextEn,
   ...motionEn,
   ...markdownEn,
+  'footer.label': 'Footer',
+  'footer.legal': 'Legal',
+  'footer.social': 'Social links',
+  'footer.copyright': '© Example, Inc.',
   'contact.sendFailed': "We couldn't send your message. Please try again.",
   'error.title': 'We couldn’t load deployments',
   'error.message': 'The service didn’t respond in time. Your data is safe; try again in a moment.',
@@ -941,22 +948,6 @@ export const en = {
   'inviteMembers.cancel': 'Cancel',
   'inviteMembers.submit': 'Send invitation',
   'inviteMembers.submitMany': 'Send {count} invitations',
-  'forgotPassword.formLabel': 'Reset password request',
-  'forgotPassword.eyebrow': 'Account recovery',
-  'forgotPassword.title': 'Forgot your password?',
-  'forgotPassword.description': "Enter the email you sign in with and we'll send you a reset link.",
-  'forgotPassword.sentTitle': 'Check your email',
-  'forgotPassword.sentDescription':
-    'If an account exists for {email}, you will receive a link to reset your password. It expires in 1 hour.',
-  'forgotPassword.addressFallback': 'that address',
-  'forgotPassword.sentStatus': 'Reset link sent.',
-  'forgotPassword.fallbackError': 'The reset link could not be sent.',
-  'forgotPassword.backToSignIn': 'Back to sign in',
-  'forgotPassword.resend': 'Resend link',
-  'forgotPassword.changeEmail': 'Use a different email',
-  'forgotPassword.identifierLabel': 'Email',
-  'forgotPassword.identifierPlaceholder': 'name@company.com',
-  'forgotPassword.submit': 'Send reset link',
   'mfaChallenge.eyebrow': 'Two-step verification',
   'mfaChallenge.title': 'Enter your verification code',
   'mfaChallenge.backupTitle': 'Use a backup code',
@@ -991,26 +982,6 @@ export const en = {
   'resetPassword.successStatus': 'Password updated.',
   'resetPassword.continue': 'Continue to sign in',
   'resetPassword.fallbackError': 'Your password could not be updated.',
-  'signUp.eyebrow': 'Get started',
-  'signUp.title': 'Create your account',
-  'signUp.description': 'Set up a workspace for your team in a couple of minutes.',
-  'signUp.name': 'Full name',
-  'signUp.namePlaceholder': 'Avery Collins',
-  'signUp.nameRequired': 'Enter your name.',
-  'signUp.email': 'Work email',
-  'signUp.emailPlaceholder': 'name@company.com',
-  'signUp.password': 'Password',
-  'signUp.passwordTooShort': 'Use at least {minimum} characters.',
-  'signUp.termsRequired': 'Accept the terms to continue.',
-  'signUp.terms': 'Terms',
-  'signUp.privacy': 'Privacy Policy',
-  'signUp.termsConsent': 'I agree to the {terms} and {privacy}.',
-  'signUp.submit': 'Create account',
-  'signUp.divider': 'Or sign up with',
-  'signUp.signInPrompt': 'Already have an account?',
-  'signUp.signIn': 'Sign in',
-  'signUp.policyLoading': 'Loading sign-up policy…',
-  'signUp.fallbackError': 'The account could not be created.',
 } as const;
 /** Every built-in message key and the complete string catalog. */
 export type MessageKey = keyof typeof en;
