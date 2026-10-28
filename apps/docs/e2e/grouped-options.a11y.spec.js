@@ -21,6 +21,8 @@ async function checkAxe(page, example) {
 
 for (const theme of ['dark', '', 'high_contrast']) {
   test(`grouped pickers and filtered states are axe clean --${theme || 'light'}`, async ({ page }) => {
+    // Eleven axe scans plus async picker interactions need the same budget as virtualized options.
+    test.setTimeout(90_000);
     await page.addInitScript((value) => {
       localStorage.setItem('gntik-theme', value);
       localStorage.setItem('gntik-section', 'ui-components');
