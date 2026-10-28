@@ -29,6 +29,8 @@ export const DEMO_TOOL = {
   durationMs: 640,
 };
 
+export const DEMO_REASONING = 'I will compare the deployment results, check the rollback, and link the recovery steps.';
+
 export const DEMO_REPLY = `Here is the summary for **web-app** over the last 7 days:
 
 | Status | Count |

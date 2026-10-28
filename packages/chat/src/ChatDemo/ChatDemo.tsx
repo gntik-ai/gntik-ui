@@ -8,9 +8,10 @@ import { DEMO_MODELS, ModelPicker } from '../ModelPicker';
 import { ChatLayout } from '../ChatLayout';
 import { CitationList } from '../Citation';
 import { Markdown } from '../Markdown';
+import { ReasoningBlock } from '../ReasoningBlock';
 import { SuggestionChips } from '../SuggestionChips';
 import { ToolCallCard, type ToolCallStatus } from '../ToolCallCard';
-import { DEMO_REPLY, DEMO_SOURCES, DEMO_SUGGESTIONS, DEMO_TOOL, chunk } from './demoScript';
+import { DEMO_REASONING, DEMO_REPLY, DEMO_SOURCES, DEMO_SUGGESTIONS, DEMO_TOOL, chunk } from './demoScript';
 
 interface DemoMessage {
   id: number;
@@ -18,6 +19,9 @@ interface DemoMessage {
   text: string;
   time: Date;
   streaming?: boolean;
+  reasoning?: string;
+  thinking?: boolean;
+  reasoningDurationMs?: number;
   tool?: { status: ToolCallStatus; durationMs?: number };
   sources?: boolean;
   feedback?: FeedbackValue;
@@ -82,15 +86,27 @@ export function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoP
     setMessages((ms) => [
       ...ms,
       { id: toolId, role: 'tool', text: '', time: now, tool: { status: 'running' } },
-      { id: replyId, role: 'assistant', text: '', time: now, streaming: true },
+      { id: replyId, role: 'assistant', text: '', time: now, streaming: true, reasoning: '', thinking: true },
     ]);
     const pieces = chunk(DEMO_REPLY);
-    const startAt = DEMO_TOOL.durationMs;
+    const thoughts = chunk(DEMO_REASONING);
+    const startAt = DEMO_TOOL.durationMs + (thoughts.length + 1) * tickMs;
     timers.current.push(
       setTimeout(
         () => patch(toolId, (m) => ({ ...m, tool: { status: 'succeeded', durationMs: DEMO_TOOL.durationMs } })),
-        startAt,
+        DEMO_TOOL.durationMs,
       ),
+    );
+    thoughts.forEach((piece, i) => {
+      timers.current.push(
+        setTimeout(
+          () => patch(replyId, (m) => ({ ...m, reasoning: (m.reasoning ?? '') + piece })),
+          DEMO_TOOL.durationMs + (i + 1) * tickMs,
+        ),
+      );
+    });
+    timers.current.push(
+      setTimeout(() => patch(replyId, (m) => ({ ...m, thinking: false, reasoningDurationMs: startAt })), startAt),
     );
     pieces.forEach((piece, i) => {
       timers.current.push(
@@ -119,7 +135,7 @@ export function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoP
     setMessages((ms) =>
       ms.map((m) =>
         m.streaming
-          ? { ...m, streaming: false }
+          ? { ...m, streaming: false, thinking: false }
           : m.tool?.status === 'running'
             ? { ...m, tool: { status: 'failed', durationMs: 0 } }
             : m,
@@ -212,6 +228,9 @@ export function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoP
                     />
                   }
                 >
+                  <ReasoningBlock streaming={m.thinking} durationMs={m.reasoningDurationMs}>
+                    {m.reasoning}
+                  </ReasoningBlock>
                   {m.text && <Markdown streaming={m.streaming}>{m.text}</Markdown>}
                   {m.sources && <CitationList sources={DEMO_SOURCES} className="mt-3" />}
                 </ChatMessage>
@@ -226,7 +245,7 @@ export function ChatDemo({ withPanel = true, tickMs = 30, className }: ChatDemoP
               </ChatMessage>
             );
           })}
-          <ChatAnnouncer streaming={streaming} lastReply={lastReply} />
+          <ChatAnnouncer streaming={streaming} reasoning={messages.some((m) => m.thinking)} lastReply={lastReply} />
         </ChatLayout>
       </div>
     </TooltipProvider>
