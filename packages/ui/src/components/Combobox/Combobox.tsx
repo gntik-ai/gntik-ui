@@ -8,9 +8,10 @@ import { cn } from '../../utils/cn';
 import type { MeasuredRowOptions } from '../VirtualList/use-measured-rows';
 import { WindowedComboboxList, useComboboxWindow, useVirtualOptionsKeyDown } from './WindowedCombobox';
 import { Spinner } from '../Spinner';
+import { selectVariants } from '../Select/select.variants';
 import { comboboxVariants, type ComboboxVariantProps } from './combobox.variants';
 import { useComboboxEnhancement } from './ComboboxRoot';
-import { isSpecialItem, type SpecialItem } from './specialItems';
+import { isSpecialItem, isSpecialItemGroup, type SpecialItem } from './specialItems';
 
 export { Combobox, type ComboboxProps, type ComboboxAsyncProps } from './ComboboxRoot';
 
@@ -203,7 +204,11 @@ export function ComboboxContent({
   let list = children;
   if (enh && typeof children === 'function') {
     list = (item: unknown, index: number) =>
-      isSpecialItem(item) ? (
+      isSpecialItemGroup(item) ? (
+        item.items.map((special) => (
+          <ComboboxSpecialItem key={`${special.__gntikSpecial}:${special.value}`} item={special} />
+        ))
+      ) : isSpecialItem(item) ? (
         <ComboboxSpecialItem key={`${item.__gntikSpecial}:${item.value}`} item={item} />
       ) : (
         children(item, index)
@@ -309,3 +314,55 @@ export function ComboboxItem({ className, children, ...props }: ComboboxItemProp
     </BaseCombobox.Item>
   );
 }
+
+export interface ComboboxGroupProps extends Omit<BaseCombobox.Group.Props, 'className' | 'items'> {
+  className?: string;
+  items?: readonly unknown[];
+}
+
+/** A labelled option group. Pass the filtered group's items to its Collection. */
+export function ComboboxGroup({ className, ...props }: ComboboxGroupProps) {
+  return <BaseCombobox.Group className={cn(className)} {...props} />;
+}
+
+export interface ComboboxGroupLabelProps extends Omit<BaseCombobox.GroupLabel.Props, 'className'> {
+  className?: string;
+}
+
+const groupStyles = selectVariants();
+
+export function ComboboxGroupLabel({ className, ...props }: ComboboxGroupLabelProps) {
+  return <BaseCombobox.GroupLabel className={cn(groupStyles.groupLabel(), className)} {...props} />;
+}
+
+export interface ComboboxSeparatorProps extends Omit<BaseCombobox.Separator.Props, 'className'> {
+  className?: string;
+}
+
+export function ComboboxSeparator({ className, ...props }: ComboboxSeparatorProps) {
+  return <BaseCombobox.Separator className={cn(groupStyles.separator(), className)} {...props} />;
+}
+
+export interface ComboboxCollectionProps<Item = unknown> {
+  children: (item: Item, index: number) => ReactNode;
+  /** Optional container classes. Without this prop the collection renders no element. */
+  className?: string;
+}
+
+/** Render the filtered items of the enclosing Group, or the root collection. */
+export function ComboboxCollection<Item = unknown>({ className, children }: ComboboxCollectionProps<Item>) {
+  const enhancement = useComboboxEnhancement();
+  // With static Content children, Content owns the trailing built-in rows. Keep their
+  // internal collection out of the consumer's group renderer and avoid rendering twice.
+  const collection = (
+    <BaseCombobox.Collection>
+      {(item: Item, index: number) =>
+        enhancement && (isSpecialItemGroup(item) || isSpecialItem(item)) ? null : children(item, index)
+      }
+    </BaseCombobox.Collection>
+  );
+  return className === undefined ? collection : <div className={cn(className)}>{collection}</div>;
+}
+
+/** Locale-aware matching for custom Combobox filters. */
+export const useComboboxFilter = BaseCombobox.useFilter;

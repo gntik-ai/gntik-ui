@@ -7,7 +7,9 @@ import {
   isSpecialItem,
   retryItem,
   type SpecialItem,
+  type SpecialItemGroup,
 } from './specialItems';
+import { isGroup, type OptionGroup } from './groupedItems';
 import { WindowedComboboxRoot } from './WindowedCombobox';
 import { useAsyncOptions, type LoadOptions } from './useAsyncOptions';
 
@@ -16,7 +18,7 @@ export interface ComboboxAsyncProps<Value> {
    * Async options: called (debounced) with the typed query and an `AbortSignal` that fires when the
    * request goes stale. While it is set, the returned options are shown as-is (no client filter).
    */
-  loadOptions?: LoadOptions<Value>;
+  loadOptions?: LoadOptions<Value | OptionGroup<Value>>;
   /** Debounce for `loadOptions`, in ms. Default 250. */
   debounceMs?: number;
   /**
@@ -60,9 +62,12 @@ export const useComboboxEnhancement = () => useContext(EnhancementContext);
 export function Combobox<Value, Multiple extends boolean | undefined = false>(props: ComboboxProps<Value, Multiple>) {
   const { loadOptions, debounceMs, onCreate, createLabel, loadingText, errorText, ...root } = props;
   const flat = root.items === undefined || (Array.isArray(root.items) && !root.items.some(isGroup));
-  if (!flat) return <BaseCombobox.Root {...root} />;
   if (!loadOptions && !onCreate)
-    return root.virtualized && root.items ? <WindowedComboboxRoot {...root} /> : <BaseCombobox.Root {...root} />;
+    return flat && root.virtualized && root.items ? (
+      <WindowedComboboxRoot {...root} />
+    ) : (
+      <BaseCombobox.Root {...root} virtualized={flat ? root.virtualized : false} />
+    );
   return (
     <EnhancedCombobox
       root={root as BaseCombobox.Root.Props<unknown, Multiple>}
@@ -74,10 +79,6 @@ export function Combobox<Value, Multiple extends boolean | undefined = false>(pr
       errorText={errorText}
     />
   );
-}
-
-function isGroup(item: unknown): boolean {
-  return !!item && typeof item === 'object' && Array.isArray((item as { items?: unknown }).items);
 }
 
 type ChangeDetails = BaseCombobox.Root.ChangeEventDetails;
@@ -130,7 +131,9 @@ function EnhancedCombobox<Multiple extends boolean | undefined>({
   const specials: SpecialItem[] = [];
   if (onCreate && query !== '' && !hasExactLabel(base, typed, toLabel)) specials.push(createItem(typed));
   if (loadOptions && remote.error && !remote.loading) specials.push(retryItem(input));
-  const allItems = [...base, ...specials];
+  const grouped = base.some(isGroup) || remote.items.some(isGroup) || (Array.isArray(items) && items.some(isGroup));
+  const trailing: SpecialItemGroup = { __gntikSpecialGroup: true, items: specials };
+  const allItems = grouped ? [...base, trailing] : [...base, ...specials];
 
   const commit = (next: unknown, details: ChangeDetails) => {
     setInnerValue(next);
@@ -165,11 +168,14 @@ function EnhancedCombobox<Multiple extends boolean | undefined>({
     specials,
   };
 
+  const virtualized = root.virtualized && !grouped;
+  // Async results can change collection shape without remounting the input.
   const Root = root.virtualized ? WindowedComboboxRoot : BaseCombobox.Root;
   return (
     <EnhancementContext.Provider value={enhancement}>
       <Root<unknown, Multiple>
         {...rest}
+        virtualized={virtualized}
         multiple={multiple}
         items={allItems}
         value={value as never}
