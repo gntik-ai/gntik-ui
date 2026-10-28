@@ -383,6 +383,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -515,6 +520,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -972,6 +982,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/en.ts"
@@ -1113,6 +1128,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -1243,6 +1263,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -1486,6 +1511,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -1617,6 +1647,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -1878,6 +1913,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -1995,6 +2035,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -2192,6 +2237,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -2861,6 +2911,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -3167,6 +3222,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -3308,6 +3368,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -3664,6 +3729,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4101,6 +4171,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -4482,6 +4557,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -4641,6 +4721,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -4816,6 +4901,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -4980,6 +5070,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5164,6 +5259,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -5327,6 +5427,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5493,6 +5598,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -5618,6 +5728,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -5762,6 +5877,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -5815,6 +5935,152 @@
           "path": "packages/ui/src/components/Dropzone/Dropzone.doc.ts",
           "type": "registry:ui",
           "target": "components/ui/dropzone/Dropzone.doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "editable-text",
+      "type": "registry:ui",
+      "title": "EditableText",
+      "description": "Inline editing for names and titles. value/defaultValue and editing/defaultEditing support controlled or uncontrolled use; onEditingChange requests mode changes, and a controlled value is updated by the owner in onSave. label names the field. activation is click (default), dblclick, or button (static text and a ghost edit icon). The editor inherits surrounding typography. multiline uses an auto-sizing Textarea; maxLength and placeholder pass to the field. trim defaults to true; validate receives the trimmed value and can return an error. onSave accepts void/true, rejects with a string or false, and displays thrown/rejected Error messages. Pending fields stay read-only and show a Spinner. data-editing, data-pending and data-invalid expose state. Disabled prevents activation. submitOnBlur defaults to true, matching table cells, but may save half-typed text when clicking away; set false to cancel instead. Save/cancel restores preview focus, except blur preserves its destination. onCancel runs on Escape or blur cancellation; unchanged values exit without saving. The exported low-level useInlineEdit<T> hook shares draft, start, cancel(after), commit(after), pending, error and busy state with DataTable. It requires value, parse and onSave(next, previous), plus genericError; optional validate, isEqual, focusEditor, onAccepted and onMove adapt parsing, acceptance and focus. focusEditor receives the requested move on save rejection (undefined on parse/validation errors). after is self/next/prev/null; null preserves blur focus. editing/defaultEditing/onEditingChange control mode. LowLevel shows hook composition; use EditableText for standard text editing.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/input.json",
+        "https://ui.gntik.ai/r/spinner.json",
+        "https://ui.gntik.ai/r/textarea.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/EditableText/EditableText.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/EditableText/EditableText.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/editable-text/EditableText.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/EditableText/editable-text.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/editable-text/editable-text.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/EditableText/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/editable-text/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/EditableText/useInlineEdit.ts",
+          "type": "registry:ui",
+          "target": "components/ui/editable-text/useInlineEdit.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
+          "path": "packages/ui/src/components/EditableText/EditableText.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/editable-text/EditableText.doc.ts"
         }
       ]
     },
@@ -6804,6 +7070,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -7031,6 +7302,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7297,6 +7573,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/en.ts"
@@ -7536,6 +7817,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -7666,6 +7952,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7802,6 +8093,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -7950,6 +8246,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8215,6 +8516,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -8345,6 +8651,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8484,6 +8795,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -8877,6 +9193,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -9048,6 +9369,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -9495,6 +9821,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -9829,6 +10160,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -9967,6 +10303,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -10189,6 +10530,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -10326,6 +10672,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -10455,6 +10806,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -10594,6 +10950,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -10708,6 +11069,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -10950,6 +11316,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -11120,6 +11491,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -11396,6 +11772,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -11522,6 +11903,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -11748,6 +12134,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -11889,6 +12280,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -12092,6 +12488,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -12473,6 +12874,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -12776,6 +13182,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -13257,6 +13668,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -13549,6 +13965,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -13774,6 +14195,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -14144,6 +14570,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -14628,6 +15059,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -15122,6 +15558,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -15345,6 +15786,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -15457,6 +15903,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -15718,6 +16169,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -16062,6 +16518,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/en.ts"
@@ -16326,6 +16787,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -16680,6 +17146,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -16809,6 +17280,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -16958,6 +17434,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -17257,6 +17738,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -17387,6 +17873,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -17539,6 +18030,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -17715,6 +18211,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -17852,6 +18353,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -17983,6 +18489,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -18161,6 +18672,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -18346,6 +18862,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -18585,6 +19106,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -18723,6 +19249,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -18904,6 +19435,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -19040,6 +19576,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -19249,6 +19790,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -19519,6 +20065,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -19733,6 +20284,11 @@
           "target": "components/i18n/messages/csp-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/en.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/en.ts"
@@ -19862,6 +20418,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -20043,6 +20604,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",
@@ -20244,6 +20810,11 @@
           "path": "packages/ui/src/i18n/messages/csp-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/en.ts",

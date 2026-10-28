@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 120 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 121 components, 12 layouts, 77 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -3257,6 +3257,53 @@ export default function DropzoneDefault() {
       <DropzoneReject>{t('dropzone.reject')}</DropzoneReject>
       <DropzoneCaption />
     </Dropzone>
+  );
+}
+```
+
+### EditableText (`editable-text`)
+
+Inline editing for names and titles. value/defaultValue and editing/defaultEditing support controlled or uncontrolled use; onEditingChange requests mode changes, and a controlled value is updated by the owner in onSave. label names the field. activation is click (default), dblclick, or button (static text and a ghost edit icon). The editor inherits surrounding typography. multiline uses an auto-sizing Textarea; maxLength and placeholder pass to the field. trim defaults to true; validate receives the trimmed value and can return an error. onSave accepts void/true, rejects with a string or false, and displays thrown/rejected Error messages. Pending fields stay read-only and show a Spinner. data-editing, data-pending and data-invalid expose state. Disabled prevents activation. submitOnBlur defaults to true, matching table cells, but may save half-typed text when clicking away; set false to cancel instead. Save/cancel restores preview focus, except blur preserves its destination. onCancel runs on Escape or blur cancellation; unchanged values exit without saving. The exported low-level useInlineEdit<T> hook shares draft, start, cancel(after), commit(after), pending, error and busy state with DataTable. It requires value, parse and onSave(next, previous), plus genericError; optional validate, isEqual, focusEditor, onAccepted and onMove adapt parsing, acceptance and focus. focusEditor receives the requested move on save rejection (undefined on parse/validation errors). after is self/next/prev/null; null preserves blur focus. editing/defaultEditing/onEditingChange control mode. LowLevel shows hook composition; use EditableText for standard text editing.
+
+- Package: `@gntik-ai/ui` · export `EditableText` · group Forms · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/EditableText/EditableText.doc.ts
+- Primitive: `@base-ui/react/input, @base-ui/react/field, @base-ui/react/button`
+- ARIA pattern: button + textbox + alert
+- Registry dependencies: button, input, spinner, textarea, ui-utils
+- Install: `gntik-ui add editable-text`; own the source with `gntik-ui eject editable-text`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Move between the preview/editor and surrounding controls; blur saves, or cancels with submitOnBlur=false. |
+| Enter | Open the focused preview (including dblclick mode); save a changed single-line value. |
+| Space | Open a click preview or the edit icon button. |
+| Escape | Cancel editing and restore preview focus. |
+| Enter (multiline) | Insert a newline. |
+| Ctrl+Enter / Cmd+Enter | Save a multiline value. |
+
+Tokens: secondary, foreground, destructive-text, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { useI18n } from '@gntik-ai/ui';
+import { EditableText } from '@gntik-ai/ui';
+
+export default function Controlled() {
+  const { t } = useI18n();
+  const [value, setValue] = useState(t('editableText.example.supportAgent'));
+  const [editing, setEditing] = useState(false);
+  return (
+    <EditableText
+      value={value}
+      editing={editing}
+      onEditingChange={setEditing}
+      label={t('editableText.example.agentName')}
+      onSave={(next) => setValue(next)}
+    />
   );
 }
 ```

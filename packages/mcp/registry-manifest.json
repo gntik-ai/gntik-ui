@@ -15,6 +15,7 @@
     "date-field",
     "download-button",
     "dropzone",
+    "editable-text",
     "load-more-footer",
     "mermaid-diagram",
     "period-picker"
@@ -92,6 +93,7 @@
     {"id":"download-button","package":"@gntik-ai/ui","name":"download-button","version":"0.5.0","url":"https://ui.gntik.ai/r/download-button.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"drawer","package":"@gntik-ai/ui","name":"drawer","version":"0.5.0","url":"https://ui.gntik.ai/r/drawer.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"dropzone","package":"@gntik-ai/ui","name":"dropzone","version":"0.5.0","url":"https://ui.gntik.ai/r/dropzone.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"editable-text","package":"@gntik-ai/ui","name":"editable-text","version":"0.5.0","url":"https://ui.gntik.ai/r/editable-text.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"empty-state","package":"@gntik-ai/ui","name":"empty-state","version":"0.5.0","url":"https://ui.gntik.ai/r/empty-state.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"empty-states","package":"@gntik-ai/blocks","name":"empty-states","version":"0.6.0","url":"https://ui.gntik.ai/r/empty-states.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"environment-badge","package":"@gntik-ai/blocks","name":"environment-badge","version":"0.6.0","url":"https://ui.gntik.ai/r/environment-badge.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},

@@ -266,6 +266,15 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                   />
                 </>
               )}
+              {kind === 'block' && it.id === 'page-header' && (
+                <Viewer
+                  kind="block"
+                  id="page-header--editable-title"
+                  title={it.title}
+                  file="../../../packages/blocks/src/page-chrome/PageHeader/examples/EditableTitle.tsx"
+                  height={height}
+                />
+              )}
               {kind === 'block' && it.id === 'flow-builder' && (
                 <Viewer
                   kind="block"
