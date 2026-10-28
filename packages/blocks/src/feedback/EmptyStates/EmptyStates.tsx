@@ -55,7 +55,8 @@ export interface FirstRunEmptyProps extends SharedEmptyProps {
   icon?: LucideIcon;
   title?: ReactNode;
   description?: ReactNode;
-  actionLabel?: string;
+  /** Omit to use labels.action or the localized default. `null` or "" hides the action; onAction is ignored. */
+  actionLabel?: string | null;
   onAction?: () => void;
   /** Secondary link (docs, guide). `null` hides it. */
   secondary?: { label: string; href: string } | null;
@@ -81,7 +82,8 @@ export function FirstRunEmpty({
   const title = titleProp === undefined ? (labels?.title ?? t('emptyState.firstRun.title')) : titleProp;
   const description =
     descriptionProp === undefined ? (labels?.description ?? t('emptyState.firstRun.description')) : descriptionProp;
-  const actionLabel = actionLabelProp ?? labels?.action ?? t('emptyState.firstRun.action');
+  const actionLabel =
+    actionLabelProp === undefined ? (labels?.action ?? t('emptyState.firstRun.action')) : actionLabelProp;
   const secondary =
     secondaryProp === undefined
       ? { label: labels?.guide ?? t('emptyState.firstRun.guide'), href: '#guide' }
@@ -94,7 +96,7 @@ export function FirstRunEmpty({
       description={description}
       bordered={bordered}
       className={cn('mx-auto', className)}
-      primaryAction={<Button onClick={onAction}>{actionLabel}</Button>}
+      primaryAction={actionLabel ? <Button onClick={onAction}>{actionLabel}</Button> : undefined}
       secondaryAction={
         secondary ? (
           <Link
