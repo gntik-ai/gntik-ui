@@ -4,4 +4,4 @@
 '@gntik-ai/chat': patch
 ---
 
-Add Dropzone and useDropzone with shared file validation, picker access and accept/reject feedback, and reuse file drag handling in uploads and chat.
+Add Dropzone and useDropzone with shared file validation, picker access, accept/reject feedback and safe disabled drops, while preserving upload and chat drop behavior.

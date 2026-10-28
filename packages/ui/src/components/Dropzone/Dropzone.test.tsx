@@ -6,7 +6,7 @@ import DropzoneHeadlessCard from './examples/DropzoneHeadlessCard';
 import DropzoneFullScreen from './examples/DropzoneFullScreen';
 import { useDropzone } from './useDropzone';
 import userEvent from '@testing-library/user-event';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { createEvent, fireEvent, render, screen } from '@testing-library/react';
 import { Dropzone, DropzoneAccept, DropzoneReject, DropzoneIdle, DropzoneTrigger, DropzoneCaption } from './Dropzone';
 
 const transfer = (types: string[], mimeTypes: string[]) => ({
@@ -15,6 +15,26 @@ const transfer = (types: string[], mimeTypes: string[]) => ({
 const csvDrag = () => transfer(['Files'], ['text/csv']);
 
 describe('Dropzone', () => {
+  it('cancels disabled file drags and drops without accepting files or changing state', () => {
+    const onDrop = vi.fn();
+    const onReject = vi.fn();
+    render(<Dropzone disabled onDrop={onDrop} onReject={onReject} />);
+    const zone = screen.getByRole('button');
+    const dragOver = createEvent.dragOver(zone, csvDrag()) as DragEvent;
+    fireEvent(zone, dragOver);
+    expect(dragOver.defaultPrevented).toBe(true);
+    expect(dragOver.dataTransfer?.dropEffect).toBe('none');
+    const drop = createEvent.drop(zone, {
+      dataTransfer: { types: ['Files'], files: [new File(['csv'], 'report.csv', { type: 'text/csv' })] },
+    });
+    fireEvent(zone, drop);
+    expect(drop.defaultPrevented).toBe(true);
+    expect(zone).toHaveAttribute('data-drag-state', 'idle');
+    expect(zone).toHaveAttribute('aria-disabled', 'true');
+    expect(onDrop).not.toHaveBeenCalled();
+    expect(onReject).not.toHaveBeenCalled();
+  });
+
   it('shows matching MIME states, keeps state across children, and ignores text drags', () => {
     render(
       <Dropzone accept=".csv,text/csv" maxFiles={1}>

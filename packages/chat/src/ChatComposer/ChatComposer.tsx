@@ -9,6 +9,7 @@ import {
   useState,
   type ChangeEvent,
   type ClipboardEvent,
+  type DragEvent,
   type FormEvent,
   type KeyboardEvent,
   type ReactNode,
@@ -254,7 +255,11 @@ export function ChatComposer({
         onDragEnter: rootProps.onDragEnter,
         onDragOver: rootProps.onDragOver,
         onDragLeave: rootProps.onDragLeave,
-        onDrop: rootProps.onDrop,
+        onDrop: (event: DragEvent<HTMLFormElement>) => {
+          // Preserve the composer's suppression of native text and link drops.
+          event.preventDefault();
+          rootProps.onDrop?.(event);
+        },
       }
     : {};
   const dragging = dragState !== 'idle';

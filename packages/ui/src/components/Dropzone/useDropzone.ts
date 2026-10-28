@@ -93,14 +93,16 @@ export function useDropzone({
       update(event);
     },
     onDragOver(event) {
-      if (disabled || !hasFiles(event)) return;
+      if (!hasFiles(event)) return;
       event.preventDefault();
-      event.dataTransfer.dropEffect = 'copy';
+      event.dataTransfer.dropEffect = disabled ? 'none' : 'copy';
+      if (disabled) return;
       update(event);
     },
     onDrop(event) {
-      if (disabled || !hasFiles(event)) return;
+      if (!hasFiles(event)) return;
       event.preventDefault();
+      if (disabled) return;
       depth.current = 0;
       setState('idle');
       receive(Array.from(event.dataTransfer?.files ?? []));
