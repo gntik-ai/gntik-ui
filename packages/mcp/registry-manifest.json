@@ -19,7 +19,8 @@
     "editable-text",
     "load-more-footer",
     "mermaid-diagram",
-    "period-picker"
+    "period-picker",
+    "site-footer"
   ],
   "items": [
     {"id":"accept-invitation","package":"@gntik-ai/templates","name":"accept-invitation","version":"0.6.0","url":"https://ui.gntik.ai/r/accept-invitation.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
@@ -230,6 +231,7 @@
     {"id":"sign-in-form","package":"@gntik-ai/blocks","name":"sign-in-form","version":"0.6.0","url":"https://ui.gntik.ai/r/sign-in-form.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"sign-up","package":"@gntik-ai/templates","name":"sign-up","version":"0.6.0","url":"https://ui.gntik.ai/r/sign-up.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"sign-up-form","package":"@gntik-ai/blocks","name":"sign-up-form","version":"0.6.0","url":"https://ui.gntik.ai/r/sign-up-form.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"site-footer","package":"@gntik-ai/blocks","name":"site-footer","version":"0.6.0","url":"https://ui.gntik.ai/r/site-footer.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"skeleton","package":"@gntik-ai/ui","name":"skeleton","version":"0.5.0","url":"https://ui.gntik.ai/r/skeleton.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"skeletons","package":"@gntik-ai/blocks","name":"skeletons","version":"0.6.0","url":"https://ui.gntik.ai/r/skeletons.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"slider","package":"@gntik-ai/ui","name":"slider","version":"0.5.0","url":"https://ui.gntik.ai/r/slider.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},

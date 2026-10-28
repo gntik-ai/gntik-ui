@@ -1,3 +1,4 @@
+import { signUpEs, forgotPasswordEs } from './auth-form-messages';
 import { chatComposerEs } from './chat-composer/es';
 import { fieldVariantsEs } from './field-variant-messages';
 import { tableMenuEs } from './table-menu-messages';
@@ -10,6 +11,8 @@ import { markdownEs } from './markdown-messages';
 import { cspEs } from './csp-messages';
 import type { Messages } from './en';
 export const es: Messages = {
+  ...signUpEs,
+  ...forgotPasswordEs,
   ...chatComposerEs,
   ...fieldVariantsEs,
   ...tableMenuEs,
@@ -20,6 +23,10 @@ export const es: Messages = {
   ...editableTextEs,
   ...motionEs,
   ...markdownEs,
+  'footer.label': 'Pie de página',
+  'footer.legal': 'Legal',
+  'footer.social': 'Redes sociales',
+  'footer.copyright': '© Example, Inc.',
   'contact.sendFailed': 'No hemos podido enviar tu mensaje. Inténtalo de nuevo.',
   'error.title': 'No se pudieron cargar los despliegues',
   'error.message': 'El servicio no respondió a tiempo. Tus datos están a salvo; vuelve a intentarlo en un momento.',
@@ -942,23 +949,6 @@ export const es: Messages = {
   'inviteMembers.cancel': 'Cancelar',
   'inviteMembers.submit': 'Enviar invitación',
   'inviteMembers.submitMany': 'Enviar {count} invitaciones',
-  'forgotPassword.formLabel': 'Solicitud de restablecimiento de contraseña',
-  'forgotPassword.eyebrow': 'Recuperación de cuenta',
-  'forgotPassword.title': '¿Has olvidado tu contraseña?',
-  'forgotPassword.description':
-    'Introduce el correo con el que inicias sesión y te enviaremos un enlace de restablecimiento.',
-  'forgotPassword.sentTitle': 'Revisa tu correo',
-  'forgotPassword.sentDescription':
-    'Si existe una cuenta para {email}, recibirás un enlace para restablecer tu contraseña. Caduca en 1 hora.',
-  'forgotPassword.addressFallback': 'esa dirección',
-  'forgotPassword.sentStatus': 'Enlace de restablecimiento enviado.',
-  'forgotPassword.fallbackError': 'No se pudo enviar el enlace de restablecimiento.',
-  'forgotPassword.backToSignIn': 'Volver al inicio de sesión',
-  'forgotPassword.resend': 'Reenviar enlace',
-  'forgotPassword.changeEmail': 'Usar otro correo',
-  'forgotPassword.identifierLabel': 'Correo electrónico',
-  'forgotPassword.identifierPlaceholder': 'nombre@empresa.com',
-  'forgotPassword.submit': 'Enviar enlace de restablecimiento',
   'mfaChallenge.eyebrow': 'Verificación en dos pasos',
   'mfaChallenge.title': 'Introduce tu código de verificación',
   'mfaChallenge.backupTitle': 'Usar un código de respaldo',
@@ -994,24 +984,4 @@ export const es: Messages = {
   'resetPassword.successStatus': 'Contraseña actualizada.',
   'resetPassword.continue': 'Continuar al inicio de sesión',
   'resetPassword.fallbackError': 'No se pudo actualizar tu contraseña.',
-  'signUp.eyebrow': 'Primeros pasos',
-  'signUp.title': 'Crea tu cuenta',
-  'signUp.description': 'Configura un espacio de trabajo para tu equipo en un par de minutos.',
-  'signUp.name': 'Nombre completo',
-  'signUp.namePlaceholder': 'Avery Collins',
-  'signUp.nameRequired': 'Introduce tu nombre.',
-  'signUp.email': 'Correo de trabajo',
-  'signUp.emailPlaceholder': 'nombre@empresa.com',
-  'signUp.password': 'Contraseña',
-  'signUp.passwordTooShort': 'Usa al menos {minimum} caracteres.',
-  'signUp.termsRequired': 'Acepta los términos para continuar.',
-  'signUp.terms': 'Términos',
-  'signUp.privacy': 'Política de privacidad',
-  'signUp.termsConsent': 'Acepto los {terms} y la {privacy}.',
-  'signUp.submit': 'Crear cuenta',
-  'signUp.divider': 'O regístrate con',
-  'signUp.signInPrompt': '¿Ya tienes una cuenta?',
-  'signUp.signIn': 'Iniciar sesión',
-  'signUp.policyLoading': 'Cargando la política de registro…',
-  'signUp.fallbackError': 'No se pudo crear la cuenta.',
 };

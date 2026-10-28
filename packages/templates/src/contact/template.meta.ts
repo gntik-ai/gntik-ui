@@ -8,5 +8,5 @@ export const meta: TemplateMeta = {
   description:
     'Public contact page: StackedLayout with a MegaMenu (MobileNav below lg), a validated contact form (Field, Input, Select, Textarea, ValidationSummary) with a focused success state and a destructive Alert on failed sends. Failed sends keep all values and use submitErrorMessage or localized contact.sendFailed text without exposing backend errors. Includes office cards with address, email, phone and hours.',
   layout: 'StackedLayout',
-  blocks: ['validation-summary'],
+  blocks: ['site-footer', 'validation-summary'],
 };

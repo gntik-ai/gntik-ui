@@ -1,6 +1,6 @@
+import { SiteFooter } from '@gntik-ai/blocks';
 import {
   Button,
-  Link,
   Logo,
   MegaMenu,
   MobileNav,
@@ -61,22 +61,7 @@ export function PublicFrame({
         </>
       }
       subnav={<MegaMenu items={menu} currentHref={currentHref} label="Primary" className="hidden lg:block" />}
-      footer={
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <span>{copyright}</span>
-          <nav aria-label="Footer">
-            <ul className="flex flex-wrap gap-x-4 gap-y-1">
-              {footerLinks.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} tone="muted" underline="hover">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      }
+      footer={<SiteFooter layout="simple" links={footerLinks} copyright={copyright} />}
     >
       {children}
     </StackedLayout>

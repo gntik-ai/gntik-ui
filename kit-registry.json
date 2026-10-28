@@ -3466,6 +3466,31 @@
       "docs": "packages/blocks/src/auth/SignUpForm/block.meta.ts"
     },
     {
+      "id": "site-footer",
+      "kind": "block",
+      "name": "Site footer",
+      "package": "@gntik-ai/blocks",
+      "group": "marketing",
+      "status": "beta",
+      "description": "Public footer with columns, centered and simple layouts. Optional brand, description, newsletter slot, legal and social links, and an icon-only theme switcher at every width. Uses a div by default inside a layout footer; opt into landmark for standalone pages. Empty groups stay absent; navigation names use the English/Spanish catalog or navLabel. Social labels must name the network. Simple mode preserves inherited typography and the public templates’ spacing.",
+      "files": [
+        {
+          "path": "packages/blocks/src/marketing/SiteFooter/SiteFooter.tsx",
+          "target": "components/blocks/marketing/site-footer/SiteFooter.tsx"
+        },
+        {
+          "path": "packages/blocks/src/marketing/SiteFooter/fixtures.ts",
+          "target": "components/blocks/marketing/site-footer/fixtures.ts"
+        }
+      ],
+      "dependencies": [
+        "@gntik-ai/ui",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "docs": "packages/blocks/src/marketing/SiteFooter/block.meta.ts"
+    },
+    {
       "id": "skeletons",
       "kind": "block",
       "name": "Skeletons",
@@ -3963,6 +3988,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -4060,6 +4089,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -4238,6 +4271,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -4334,6 +4371,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -4465,6 +4506,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -4562,6 +4607,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -4723,6 +4772,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -4853,6 +4906,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -5240,6 +5297,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -5400,6 +5461,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -5508,6 +5573,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -5710,6 +5779,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -5836,6 +5909,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -5950,6 +6027,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -6077,6 +6158,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -6182,6 +6267,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -6290,6 +6379,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -6395,6 +6488,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -6510,6 +6607,10 @@
           "target": "components/i18n/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -6609,6 +6710,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -6718,6 +6823,10 @@
           "target": "components/i18n/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -6823,6 +6932,10 @@
         {
           "path": "packages/ui/src/i18n/index.ts",
           "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -7024,6 +7137,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -7121,6 +7238,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -7269,6 +7390,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -7376,6 +7501,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -7477,6 +7606,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -7585,6 +7718,10 @@
           "target": "components/i18n/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -7690,6 +7827,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -7787,6 +7928,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -7890,6 +8035,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -8074,6 +8223,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -8177,6 +8330,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -8403,6 +8560,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -8546,6 +8707,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -8656,6 +8821,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -8760,6 +8929,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -8871,6 +9044,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -8968,6 +9145,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -9070,6 +9251,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -9175,6 +9360,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -9276,6 +9465,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -9399,6 +9592,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -9501,6 +9698,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -9599,6 +9800,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -9706,6 +9911,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -9844,6 +10053,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -9987,6 +10200,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -10092,6 +10309,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -10233,6 +10454,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -10372,6 +10597,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -10563,6 +10792,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -10683,6 +10916,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -10873,6 +11110,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -11038,6 +11279,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -11135,6 +11380,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -11245,6 +11494,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -11457,6 +11710,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -11561,6 +11818,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -11678,6 +11939,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -11779,6 +12044,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -11883,6 +12152,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -11980,6 +12253,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -12112,6 +12389,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -12221,6 +12502,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -12390,6 +12675,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -12490,6 +12779,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -12596,6 +12889,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -12706,6 +13003,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -12830,6 +13131,10 @@
         {
           "path": "packages/ui/src/i18n/index.ts",
           "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -12967,6 +13272,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -13079,6 +13388,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -13175,6 +13488,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -13283,6 +13600,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -13371,6 +13692,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -13471,6 +13796,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -13576,6 +13905,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -13687,6 +14020,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -13789,6 +14126,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -13885,6 +14226,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -13987,6 +14332,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -14086,6 +14435,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -14194,6 +14547,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -14293,6 +14650,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -14397,6 +14758,10 @@
           "target": "components/i18n/format.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
         },
@@ -14495,6 +14860,10 @@
         {
           "path": "packages/ui/src/i18n/format.ts",
           "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "site-footer",
+  "type": "registry:block",
+  "title": "Site footer",
+  "description": "Public footer with columns, centered and simple layouts. Optional brand, description, newsletter slot, legal and social links, and an icon-only theme switcher at every width. Uses a div by default inside a layout footer; opt into landmark for standalone pages. Empty groups stay absent; navigation names use the English/Spanish catalog or navLabel. Social labels must name the network. Simple mode preserves inherited typography and the public templates’ spacing.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui",
+    "lucide-react@^1.48.0"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/marketing/SiteFooter/SiteFooter.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/marketing/site-footer/SiteFooter.tsx",
+      "content": "import type { ComponentType, ReactNode } from 'react';\nimport { IconButton, Link, Logo, ThemeSwitcher, cn, useI18n } from '@gntik-ai/ui';\n\nexport interface SiteFooterLink {\n  label: string;\n  href: string;\n  external?: boolean;\n}\n\nexport interface SiteFooterColumn {\n  title: string;\n  links: SiteFooterLink[];\n}\n\nexport interface SiteFooterSocialLink {\n  /** Use the network name (for example \"RSS feed\") as the accessible name. */\n  label: string;\n  href: string;\n  icon: ComponentType<{ size?: number; 'aria-hidden'?: boolean }>;\n}\n\nexport interface SiteFooterProps {\n  layout?: 'columns' | 'centered' | 'simple';\n  brand?: ReactNode;\n  description?: ReactNode;\n  columns?: SiteFooterColumn[];\n  links?: SiteFooterLink[];\n  legalLinks?: SiteFooterLink[];\n  social?: SiteFooterSocialLink[];\n  copyright?: ReactNode;\n  headingLevel?: 'h2' | 'h3';\n  navLabel?: string;\n  landmark?: boolean;\n  /** Show the icon-only theme control at every viewport width. */\n  themeSwitcher?: boolean;\n  /** Content under the brand blurb in columns and centered layouts; supply your own form. */\n  newsletter?: ReactNode;\n  className?: string;\n}\n\nfunction LinkList({ links, className }: { links: SiteFooterLink[]; className?: string }) {\n  return (\n    <ul className={cn('flex flex-wrap gap-x-4 gap-y-1', className)}>\n      {links.map((link) => (\n        <li key={link.href}>\n          <Link href={link.href} external={link.external} tone=\"muted\" underline=\"hover\">\n            {link.label}\n          </Link>\n        </li>\n      ))}\n    </ul>\n  );\n}\n\n/** Public-page footer. The default div fits inside a layout's existing footer landmark. */\nexport function SiteFooter({\n  layout = 'columns',\n  brand = <Logo size={24} wordmark />,\n  description,\n  columns = [],\n  links = [],\n  legalLinks = [],\n  social = [],\n  copyright,\n  headingLevel: Heading = 'h2',\n  navLabel,\n  landmark = false,\n  themeSwitcher = false,\n  newsletter,\n  className,\n}: SiteFooterProps) {\n  const { t } = useI18n();\n  const populatedColumns = columns.filter((column) => column.links.length > 0);\n  const Root = landmark ? 'footer' : 'div';\n  const copyrightContent = copyright === undefined ? t('footer.copyright') : copyright;\n  const centered = layout === 'centered';\n  const rowNav = links.length > 0 && (\n    <nav aria-label={navLabel ?? t('footer.label')}>\n      <LinkList links={links} className={centered ? 'justify-center' : undefined} />\n    </nav>\n  );\n  const legalNav = legalLinks.length > 0 && (\n    <nav aria-label={t('footer.legal')}>\n      <LinkList links={legalLinks} className={centered ? 'justify-center' : undefined} />\n    </nav>\n  );\n  const socialList = social.length > 0 && (\n    <ul aria-label={t('footer.social')} className={cn('flex flex-wrap gap-2', centered && 'justify-center')}>\n      {social.map((link) => (\n        <li key={link.href}>\n          <IconButton\n            icon={link.icon}\n            label={link.label}\n            render={<a href={link.href} />}\n            role=\"link\"\n            nativeButton={false}\n            size=\"sm\"\n          />\n        </li>\n      ))}\n    </ul>\n  );\n  if (layout === 'simple') {\n    return (\n      <Root className={cn('flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between', className)}>\n        <span>{copyrightContent}</span>\n        {rowNav}\n        {legalNav}\n        {socialList}\n        {themeSwitcher && <ThemeSwitcher size=\"sm\" showLabels={false} />}\n      </Root>\n    );\n  }\n  if (centered) {\n    return (\n      <Root\n        className={cn(\n          'flex min-w-0 flex-col items-center gap-6 px-4 py-12 text-center text-sm wrap-anywhere text-muted-foreground sm:px-6 [&>*]:max-w-full',\n          className,\n        )}\n      >\n        {brand}\n        {description && <div>{description}</div>}\n        {newsletter && <div>{newsletter}</div>}\n        {rowNav}\n        {legalNav}\n        {socialList}\n        <span>{copyrightContent}</span>\n        {themeSwitcher && <ThemeSwitcher size=\"sm\" showLabels={false} />}\n      </Root>\n    );\n  }\n  return (\n    <Root className={cn('min-w-0 px-4 py-12 text-sm wrap-anywhere text-muted-foreground sm:px-6', className)}>\n      <div className=\"grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]\">\n        <div className=\"min-w-0 space-y-4\">\n          {brand}\n          {description && <div>{description}</div>}\n          {newsletter && <div>{newsletter}</div>}\n        </div>\n        {populatedColumns.length > 0 && (\n          <nav aria-label={navLabel ?? t('footer.label')} className=\"grid min-w-0 grid-cols-2 gap-8 lg:grid-cols-4\">\n            {populatedColumns.map((column) => (\n              <div key={column.title} className=\"min-w-0\">\n                <Heading className=\"mb-3 text-sm font-semibold text-foreground\">{column.title}</Heading>\n                <LinkList links={column.links} className=\"flex-col gap-y-2\" />\n              </div>\n            ))}\n          </nav>\n        )}\n      </div>\n      <div className=\"mt-8 flex flex-wrap items-center justify-between gap-3\">\n        <span>{copyrightContent}</span>\n        {legalNav}\n        {socialList}\n        {themeSwitcher && <ThemeSwitcher size=\"sm\" showLabels={false} />}\n      </div>\n    </Root>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/marketing/SiteFooter/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/marketing/site-footer/fixtures.ts",
+      "content": "import { Mail, Rss } from 'lucide-react';\nimport type { SiteFooterColumn, SiteFooterLink, SiteFooterSocialLink } from './SiteFooter';\n\nexport const sampleFooterColumns: SiteFooterColumn[] = [\n  {\n    title: 'Product',\n    links: [\n      { label: 'Overview', href: '/product' },\n      { label: 'Pricing', href: '/pricing' },\n    ],\n  },\n  {\n    title: 'Company',\n    links: [\n      { label: 'About', href: '/about' },\n      { label: 'Contact', href: '/contact' },\n    ],\n  },\n  {\n    title: 'Resources',\n    links: [\n      { label: 'Documentation', href: '/docs' },\n      { label: 'Status', href: '/status' },\n    ],\n  },\n];\n\nexport const sampleLegalLinks: SiteFooterLink[] = [\n  { label: 'Privacy', href: '/privacy' },\n  { label: 'Terms', href: '/terms' },\n];\n\nexport const sampleSocialLinks: SiteFooterSocialLink[] = [\n  { label: 'Email', href: 'mailto:hello@example.com', icon: Mail },\n  { label: 'RSS feed', href: '/feed.xml', icon: Rss },\n];\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "marketing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/marketing/SiteFooter/block.meta.ts"
+  }
+}

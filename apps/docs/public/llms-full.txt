@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 122 components, 12 layouts, 77 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 122 components, 12 layouts, 78 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -9599,6 +9599,25 @@ import { PricingTable } from '@gntik-ai/blocks';
 <PricingTable />
 ```
 
+### Site footer (`site-footer`)
+
+Public footer with columns, centered and simple layouts. Optional brand, description, newsletter slot, legal and social links, and an icon-only theme switcher at every width. Uses a div by default inside a layout footer; opt into landmark for standalone pages. Empty groups stay absent; navigation names use the English/Spanish catalog or navLabel. Social labels must name the network. Simple mode preserves inherited typography and the public templates’ spacing.
+
+- Package: `@gntik-ai/blocks` · export `SiteFooter` · group marketing · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/marketing/SiteFooter/block.meta.ts
+- Composes: Link, Logo, IconButton, ThemeSwitcher
+- Preview: /preview.html?kind=block&id=site-footer
+- Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add site-footer`
+
+Usage:
+
+```tsx
+import { SiteFooter } from '@gntik-ai/blocks';
+
+// Props default to the block fixtures; pass your data.
+<SiteFooter />
+```
+
 ### Bulk action bar (`bulk-action-bar`)
 
 Toolbar that appears while table rows are selected: selection count, bulk actions and clear selection.
@@ -11061,7 +11080,7 @@ Public contact page: StackedLayout with a MegaMenu (MobileNav below lg), a valid
 - Package: `@gntik-ai/templates` · export `ContactPage` · group Overview · status experimental
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/contact/template.meta.ts
 - Layout: StackedLayout
-- Blocks: validation-summary
+- Blocks: site-footer, validation-summary
 - Console shell: no
 - Preview: /preview.html?kind=template&id=contact
 - Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add contact`
@@ -11153,7 +11172,7 @@ Public landing: Hero, FeatureGrid, PricingTable, Faq
 - Package: `@gntik-ai/templates` · export `LandingPage` · group Overview · status experimental
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/landing/template.meta.ts
 - Layout: StackedLayout
-- Blocks: hero, feature-grid, pricing-table, faq
+- Blocks: site-footer, hero, feature-grid, pricing-table, faq
 - Console shell: no
 - Preview: /preview.html?kind=template&id=landing
 - Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add landing`
@@ -11176,7 +11195,7 @@ Public pricing page: StackedLayout with a MegaMenu (MobileNav below lg), Pricing
 - Package: `@gntik-ai/templates` · export `PricingPage` · group Overview · status experimental
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/pricing/template.meta.ts
 - Layout: StackedLayout
-- Blocks: pricing-table, feature-grid, faq
+- Blocks: site-footer, pricing-table, feature-grid, faq
 - Console shell: no
 - Preview: /preview.html?kind=template&id=pricing
 - Install: import from `@gntik-ai/templates`, or copy the source with `gntik-ui add pricing`

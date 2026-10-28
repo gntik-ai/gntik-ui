@@ -6,6 +6,7 @@ const kebab = (s) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 const blockModules = import.meta.glob('../../../packages/blocks/src/*/*/*.tsx');
 const blockLabelExamples = import.meta.glob('../../../packages/blocks/src/*/*/examples/{Spanish,Labels}.tsx');
 const blockMetas = import.meta.glob('../../../packages/blocks/src/*/*/block.meta.ts', { eager: true, import: 'meta' });
+const blockDocs = import.meta.glob('../../../packages/blocks/src/*/*/*.doc.ts', { eager: true, import: 'doc' });
 const templateModules = import.meta.glob('../../../packages/templates/src/*/Page.tsx');
 const templateMetas = import.meta.glob('../../../packages/templates/src/*/template.meta.ts', {
   eager: true,
@@ -27,7 +28,15 @@ const BLOCKS = Object.entries(blockMetas)
     const name = dir.slice(dir.lastIndexOf('/') + 1);
     const family = dir.split('/').at(-2);
     const file = `${dir}/${name}.tsx`;
-    return { id: kebab(name), name, family, meta, file, load: blockModules[file] };
+    return {
+      id: kebab(name),
+      name,
+      family,
+      meta,
+      doc: blockDocs[`${dir}/${name}.doc.ts`],
+      file,
+      load: blockModules[file],
+    };
   })
   .filter((b) => b.load)
   .sort((a, b) => a.family.localeCompare(b.family) || a.name.localeCompare(b.name));
@@ -93,6 +102,11 @@ export const PREVIEW_LOADERS = {
     'flow-builder--controlled-graph': () =>
       import('../../../packages/blocks/src/builders/FlowBuilder/examples/ControlledGraph'),
     ...Object.fromEntries(BLOCKS.map((b) => [b.id, named(b)])),
+    'site-footer': () => import('../../../packages/blocks/src/marketing/SiteFooter/examples/Columns'),
+    'site-footer--centered': () => import('../../../packages/blocks/src/marketing/SiteFooter/examples/Centered'),
+    'site-footer--simple': () => import('../../../packages/blocks/src/marketing/SiteFooter/examples/Simple'),
+    'site-footer--custom': () => import('../../../packages/blocks/src/marketing/SiteFooter/examples/Custom'),
+    'site-footer--empty': () => import('../../../packages/blocks/src/marketing/SiteFooter/examples/Empty'),
     'page-header--editable-title': () =>
       import('../../../packages/blocks/src/page-chrome/PageHeader/examples/EditableTitle'),
     'page-header--spanish': () => import('../../../packages/blocks/src/page-chrome/PageHeader/examples/Spanish'),

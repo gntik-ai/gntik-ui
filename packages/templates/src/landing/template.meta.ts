@@ -7,5 +7,5 @@ export const meta: TemplateMeta = {
   status: 'experimental',
   description: 'Public landing: Hero, FeatureGrid, PricingTable, Faq',
   layout: 'StackedLayout',
-  blocks: ['hero', 'feature-grid', 'pricing-table', 'faq'],
+  blocks: ['site-footer', 'hero', 'feature-grid', 'pricing-table', 'faq'],
 };

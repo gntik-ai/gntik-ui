@@ -17,7 +17,9 @@ const layoutDocs = import.meta.glob('../../../packages/ui/src/layouts/*/*.doc.ts
 const chatDocs = import.meta.glob('../../../packages/chat/src/*/*.doc.ts', { eager: true, import: 'doc' });
 // @gntik-ai/ui/forms: the optional react-hook-form entry keeps its files flat, one *.doc.ts per piece.
 const formsDocs = import.meta.glob('../../../packages/ui/src/forms/*.doc.ts', { eager: true, import: 'doc' });
+const blockDocs = import.meta.glob('../../../packages/blocks/src/*/*/*.doc.ts', { eager: true, import: 'doc' });
 const sources = {
+  ...import.meta.glob('../../../packages/blocks/src/*/*/*.{ts,tsx}', { eager: true, query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/ui/src/hooks/*.ts', { eager: true, query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/ui/src/{theme,csp}/*.{ts,tsx}', {
     eager: true,
@@ -295,6 +297,8 @@ const kebab = (name) => name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase(
  * field-array.variants.ts). Files of the forms entry that no doc claims return `null`.
  */
 function folderKey(path, docBase) {
+  const block = /\/blocks\/src\/[^/]+\/([^/]+)\//.exec(path);
+  if (block) return `block/${block[1]}`;
   if (path.includes('/charts/src/') && docBase && path.split('/').at(-1).startsWith(`${docBase}.`))
     return `charts/${docBase}`;
   let m = /\/ui\/src\/(components|layouts)\/([^/]+)\//.exec(path);
@@ -355,6 +359,7 @@ export const COMPONENT_API = apiOf(componentDocs);
 export const LAYOUT_API = apiOf(layoutDocs);
 export const CHAT_API = apiOf(chatDocs);
 export const FORMS_API = apiOf(formsDocs);
+export const BLOCK_API = apiOf(blockDocs);
 
 // Exposed for tests and quick inspection from the console.
 export const __parse = { parsePropsTypes, parseVariants, parseDefaults, parseMembers };
