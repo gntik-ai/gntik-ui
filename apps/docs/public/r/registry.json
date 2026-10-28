@@ -5682,6 +5682,143 @@
       ]
     },
     {
+      "name": "dropzone",
+      "type": "registry:ui",
+      "title": "Dropzone",
+      "description": "A file target with accept/reject feedback, a picker, type/size/count validation and a headless useDropzone hook. Accept is an input-style string or string array. With activateOnClick (default), children must contain no interactive content; use activateOnClick=false with DropzoneTrigger for buttons. Safari can expose an empty MIME type while dragging: these files are provisionally accepted and validated on drop. Extension and size rules apply on drop. Mount only one fullScreen zone per page; its window listeners ignore non-file drags. DropzoneCaption uses accept and maxSize for the upload hint. multiple defaults to true. Disabled zones ignore interaction.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "stable",
+        "source": "packages/ui/src/components/Dropzone/Dropzone.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/Dropzone/Dropzone.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dropzone/Dropzone.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Dropzone/dropzone.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/dropzone/dropzone.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Dropzone/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/dropzone/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Dropzone/useDropzone.ts",
+          "type": "registry:ui",
+          "target": "components/ui/dropzone/useDropzone.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Dropzone/Dropzone.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/dropzone/Dropzone.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "empty-state",
       "type": "registry:ui",
       "title": "EmptyState",
@@ -6063,7 +6200,7 @@
       "name": "file-upload-panel",
       "type": "registry:block",
       "title": "File upload panel",
-      "description": "Drag-and-drop zone with a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.",
+      "description": "Drag-and-drop zone with accept/reject MIME feedback (demonstrated in the Labels preview), a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/icons",
@@ -19162,6 +19299,11 @@
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/accept-files.ts",
+          "type": "registry:ui",
+          "target": "components/utils/accept-files.ts"
         },
         {
           "path": "packages/ui/src/utils/clear-control.tsx",

@@ -22,7 +22,7 @@ export default function Labels() {
         </Button>
       </div>
       <I18nProvider locale={spanish ? 'es' : 'en'}>
-        <FileUploadPanel labels={custom ? labels : undefined} />
+        <FileUploadPanel accept=".csv,text/csv" labels={custom ? labels : undefined} />
       </I18nProvider>
     </div>
   );

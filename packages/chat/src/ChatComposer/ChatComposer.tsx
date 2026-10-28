@@ -1,4 +1,4 @@
-import { formatBytes, Button, IconButton, cn, useOs } from '@gntik-ai/ui';
+import { formatBytes, Button, IconButton, cn, useOs, useDropzone } from '@gntik-ai/ui';
 import { ArrowUp, Paperclip, Square, Upload, X } from 'lucide-react';
 import {
   useCallback,
@@ -149,8 +149,6 @@ export function ChatComposer({
     }
   });
   const fileInput = useRef<HTMLInputElement>(null);
-  const dragDepth = useRef(0);
-  const [dragging, setDragging] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const canAttach = onAttach !== undefined && !disabled && !readOnly;
 
@@ -246,32 +244,25 @@ export function ChatComposer({
     addFiles(files);
   };
 
-  const hasFiles = (e: DragEvent) => Array.from(e.dataTransfer?.types ?? []).includes('Files');
+  // Keep chat's validation order, current-attachment count and localized rejection API.
+  const { rootProps, dragState } = useDropzone({
+    activateOnClick: false,
+    disabled: !canAttach,
+    onDrop: addFiles,
+  });
   const dropHandlers = canAttach
     ? {
-        onDragEnter: (e: DragEvent<HTMLFormElement>) => {
-          if (!hasFiles(e)) return;
-          e.preventDefault();
-          dragDepth.current += 1;
-          setDragging(true);
-        },
-        onDragOver: (e: DragEvent<HTMLFormElement>) => {
-          if (!hasFiles(e)) return;
-          e.preventDefault();
-          if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
-        },
-        onDragLeave: () => {
-          dragDepth.current = Math.max(0, dragDepth.current - 1);
-          if (dragDepth.current === 0) setDragging(false);
-        },
-        onDrop: (e: DragEvent<HTMLFormElement>) => {
-          e.preventDefault();
-          dragDepth.current = 0;
-          setDragging(false);
-          addFiles(Array.from(e.dataTransfer?.files ?? []));
+        onDragEnter: rootProps.onDragEnter,
+        onDragOver: rootProps.onDragOver,
+        onDragLeave: rootProps.onDragLeave,
+        onDrop: (event: DragEvent<HTMLFormElement>) => {
+          // Preserve the composer's suppression of native text and link drops.
+          event.preventDefault();
+          rootProps.onDrop?.(event);
         },
       }
     : {};
+  const dragging = dragState !== 'idle';
 
   const hintNode =
     hint === undefined ? (

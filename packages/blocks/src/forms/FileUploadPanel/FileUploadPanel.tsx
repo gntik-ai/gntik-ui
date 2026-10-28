@@ -1,7 +1,7 @@
-import { Button, IconButton, Progress, cn, useI18n } from '@gntik-ai/ui';
+import { Button, IconButton, Progress, cn, useI18n, useDropzone, validateFiles } from '@gntik-ai/ui';
 import { CircleAlert, FileText, RotateCcw, Upload, X } from '@gntik-ai/icons';
 import { useId, useRef, useState, type DragEvent } from 'react';
-import { acceptsFile, simulateUpload, uploadItems, type UploadItem } from './fixtures';
+import { simulateUpload, uploadItems, type UploadItem } from './fixtures';
 
 export type { UploadItem, UploadStatus } from './fixtures';
 
@@ -72,7 +72,8 @@ export function FileUploadPanel({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [sources, setSources] = useState<Record<string, File>>({});
   const [items, setItems] = useState<UploadItem[]>(defaultFiles);
-  const [dragging, setDragging] = useState(false);
+  const { rootProps, dragState } = useDropzone({ accept, maxSize, disabled, activateOnClick: false });
+  const dragging = dragState !== 'idle';
   const [announcement, setAnnouncement] = useState('');
   const hintText =
     hint ??
@@ -113,14 +114,16 @@ export function FileUploadPanel({
 
   const addFiles = (list: FileList | File[]) => {
     const files = Array.from(list).slice(0, multiple ? undefined : 1);
+    const { rejected: rejectedFiles } = validateFiles(files, { accept, maxSize });
+    const reasons = new Map(rejectedFiles.map((item) => [item.file, item.reasons]));
     const added: UploadItem[] = [];
     const toStart: Array<[string, File]> = [];
     const kept: Record<string, File> = {};
     for (const file of files) {
       const itemId = nextId();
-      const error = !acceptsFile(file, accept)
+      const error = reasons.get(file)?.includes('type')
         ? (labels?.typeRejected ?? t('upload.typeRejected'))
-        : file.size > maxSize
+        : reasons.get(file)?.includes('size')
           ? (labels?.tooLarge?.(formatBytes(maxSize)) ?? t('upload.tooLarge', { size: formatBytes(maxSize) }))
           : undefined;
       added.push({
@@ -163,9 +166,9 @@ export function FileUploadPanel({
   };
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setDragging(false);
-    if (!disabled && e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+    rootProps.onDrop?.(e);
+    if (!disabled && Array.from(e.dataTransfer?.types ?? []).includes('Files') && e.dataTransfer.files.length)
+      addFiles(e.dataTransfer.files);
   };
 
   return (
@@ -174,17 +177,15 @@ export function FileUploadPanel({
         {label}
       </div>
       <div
+        {...rootProps}
         data-dragging={dragging || undefined}
         data-disabled={disabled || undefined}
-        onDragOver={(e) => {
-          e.preventDefault();
-          if (!disabled) setDragging(true);
-        }}
-        onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
         className={cn(
           'rounded-xl border-2 border-dashed border-border bg-background/40 px-6 py-8 text-center transition-colors motion-reduce:transition-none',
-          'data-[dragging]:border-primary data-[dragging]:bg-primary/10 data-[disabled]:opacity-60',
+          'data-[disabled]:opacity-60',
+          dragState === 'accept' && 'border-primary bg-primary/10',
+          dragState === 'reject' && 'border-destructive bg-destructive/10 text-destructive-text',
         )}
       >
         <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-secondary/70 text-muted-foreground ring-1 ring-border">

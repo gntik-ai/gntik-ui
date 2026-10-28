@@ -509,6 +509,8 @@ export const en = {
   'dateRange.label': 'Date range',
   'dateRange.any': 'Any date',
   'common.clearItem': 'Clear {label}',
+  'dropzone.label': 'Drop files here',
+  'dropzone.reject': 'These files are not accepted',
   'upload.label': 'Upload files',
   'upload.files': 'Files',
   'upload.failed': 'Upload failed',
