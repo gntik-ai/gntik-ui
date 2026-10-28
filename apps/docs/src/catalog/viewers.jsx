@@ -323,6 +323,18 @@ function Gallery({ kicker, title, intro, groups, kind, height, api }) {
                   />
                 </>
               )}
+              {kind === 'block' && it.id === 'empty-states' && (
+                <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">Hidden action</h4>
+                  <Viewer
+                    kind="block"
+                    id="empty-states--hidden-action"
+                    title="Empty states · hidden action"
+                    file="../../../packages/blocks/src/feedback/EmptyStates/examples/HiddenAction.tsx"
+                    height={height}
+                  />
+                </>
+              )}
               {kind === 'block' && it.id === 'page-header' && (
                 <Viewer
                   kind="block"
