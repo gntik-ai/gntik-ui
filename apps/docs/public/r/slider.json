@@ -6,7 +6,7 @@
   "description": "Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form.",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0"
+    "@base-ui/react@^1.9.0"
   ],
   "registryDependencies": [
     "https://ui.gntik.ai/r/gntik-tokens.json",

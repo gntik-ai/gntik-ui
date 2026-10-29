@@ -3,10 +3,10 @@
   "name": "radio-group",
   "type": "registry:ui",
   "title": "RadioGroup",
-  "description": "Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants.",
+  "description": "Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0"
+    "@base-ui/react@^1.9.0"
   ],
   "registryDependencies": [
     "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -35,7 +35,7 @@
       "path": "packages/ui/src/components/RadioGroup/RadioGroup.doc.ts",
       "type": "registry:ui",
       "target": "components/ui/radio-group/RadioGroup.doc.ts",
-      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'RadioGroup',\n  group: 'Forms',\n  status: 'stable',\n  description:\n    'Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants.',\n  primitive: '@base-ui/react/radio-group, @base-ui/react/radio',\n  pattern: 'radio group',\n  keyboard: [\n    ['Tab', 'Enters the group once, on the selected radio (or the first one); Tab again leaves the group'],\n    ['Arrow Down / Arrow Right', 'Moves to the next radio and selects it (wraps)'],\n    ['Arrow Up / Arrow Left', 'Moves to the previous radio and selects it (wraps)'],\n    ['Space', 'Selects the focused radio if it is not already selected'],\n  ],\n  tokens: [\n    'background',\n    'border',\n    'primary',\n    'primary-foreground',\n    'foreground',\n    'muted-foreground',\n    'destructive',\n    'focus-ring',\n  ],\n};\n"
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'RadioGroup',\n  group: 'Forms',\n  status: 'stable',\n  description:\n    'Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).',\n  primitive: '@base-ui/react/radio-group, @base-ui/react/radio',\n  pattern: 'radio group',\n  keyboard: [\n    ['Tab', 'Enters the group once, on the selected radio (or the first one); Tab again leaves the group'],\n    ['Arrow Down / Arrow Right', 'Moves to the next radio and selects it (wraps)'],\n    ['Arrow Up / Arrow Left', 'Moves to the previous radio and selects it (wraps)'],\n    ['Space', 'Selects the focused radio if it is not already selected'],\n  ],\n  tokens: [\n    'background',\n    'border',\n    'primary',\n    'primary-foreground',\n    'foreground',\n    'muted-foreground',\n    'destructive',\n    'focus-ring',\n  ],\n};\n"
     },
     {
       "path": "packages/ui/src/doc.ts",

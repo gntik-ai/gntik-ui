@@ -283,6 +283,8 @@ export const es: Messages = {
   'common.progress': 'Progreso',
   'common.main': 'Principal',
   'common.settings': 'Configuración',
+  'labelPrecedence.visible': 'Enviarme correos',
+  'labelPrecedence.accessible': 'Enviarme correos sobre novedades',
   'common.notifications': 'Notificaciones',
   'common.unread': 'No leída:',
   'common.results': '{count, plural, one {# resultado} other {# resultados}}',

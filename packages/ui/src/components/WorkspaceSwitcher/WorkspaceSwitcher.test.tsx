@@ -58,6 +58,31 @@ describe('WorkspaceSwitcher (menu)', () => {
 });
 
 describe('WorkspaceSwitcher (searchable)', () => {
+  it('highlights the first match arriving after typing and selects it with Enter', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    const { rerender } = render(<WorkspaceSwitcher searchable currentId="" workspaces={[]} onSelect={onSelect} />);
+    await user.click(screen.getByRole('combobox', { name: 'Switch workspace' }));
+    const input = await screen.findByRole('combobox', { name: 'Find a workspace' });
+    await user.type(input, 'team');
+    expect(screen.queryByRole('option')).not.toBeInTheDocument();
+    const first = { id: 'team-a', name: 'Team Alpha' };
+    rerender(
+      <WorkspaceSwitcher
+        searchable
+        currentId=""
+        workspaces={[first, { id: 'team-b', name: 'Team Beta' }]}
+        onSelect={onSelect}
+      />,
+    );
+    const option = await screen.findByRole('option', { name: 'Team Alpha' });
+    await waitFor(() => expect(input).toHaveAttribute('aria-activedescendant', option.id));
+    expect(option).toHaveAttribute('data-highlighted');
+    await user.keyboard('{Enter}');
+    expect(onSelect).toHaveBeenCalledWith(first);
+    await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument());
+  });
+
   async function open() {
     const user = userEvent.setup();
     render(<WorkspaceSwitcherSearch />);

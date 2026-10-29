@@ -4,8 +4,24 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { Checkbox } from './Checkbox';
 import CheckboxList from './examples/CheckboxList';
 import CheckboxSelectAll from './examples/CheckboxSelectAll';
+import CheckboxLabelPrecedence from './examples/CheckboxLabelPrecedence';
 
 describe('Checkbox', () => {
+  it('shows label precedence with consistent visible and accessible labels in the live example', async () => {
+    render(<CheckboxLabelPrecedence />);
+    expect(screen.getByRole('checkbox', { name: 'Email me' })).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'Email me about updates' })).toBeInTheDocument();
+    await expectNoAxeViolations();
+  });
+
+  it.each([
+    [undefined, 'Email me'],
+    ['Notify', 'Notify'],
+  ])('uses accessible name %s / %s when a visible label is present', (ariaLabel, name) => {
+    render(<Checkbox label="Email me" aria-label={ariaLabel} />);
+    expect(screen.getByRole('checkbox', { name })).toHaveAttribute('aria-checked', 'false');
+  });
+
   it('exposes role checkbox with its label and description, and toggles with Space', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

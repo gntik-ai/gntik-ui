@@ -4,6 +4,7 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { Radio, RadioGroup } from './RadioGroup';
 import RadioGroupCards from './examples/RadioGroupCards';
 import RadioGroupList from './examples/RadioGroupList';
+import RadioLabelPrecedence from './examples/RadioLabelPrecedence';
 
 function Sizes() {
   return (
@@ -20,6 +21,25 @@ function Sizes() {
 }
 
 describe('RadioGroup', () => {
+  it('shows label precedence with consistent visible and accessible labels in the live example', async () => {
+    render(<RadioLabelPrecedence />);
+    expect(screen.getByRole('radio', { name: 'Email me' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Email me about updates' })).toBeInTheDocument();
+    await expectNoAxeViolations();
+  });
+
+  it.each([
+    [undefined, 'Email me'],
+    ['Notify', 'Notify'],
+  ])('uses accessible name %s / %s when a visible label is present', (ariaLabel, name) => {
+    render(
+      <RadioGroup aria-label="Notifications">
+        <Radio value="email" label="Email me" aria-label={ariaLabel} />
+      </RadioGroup>,
+    );
+    expect(screen.getByRole('radio', { name })).toHaveAttribute('aria-checked', 'false');
+  });
+
   it('exposes radiogroup and radios with names and descriptions', () => {
     render(<RadioGroupList />);
     const group = screen.getByRole('radiogroup', { name: 'Failure strategy' });

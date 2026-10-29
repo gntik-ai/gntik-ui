@@ -6,7 +6,7 @@
   "description": "Native scroll container with thin token-styled scrollbars that fade in on hover and while scrolling. Vertical, horizontal or both; optional bordered surface. With an aria-label the viewport is a named region, and it joins the Tab order whenever it overflows.",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0"
+    "@base-ui/react@^1.9.0"
   ],
   "registryDependencies": [
     "https://ui.gntik.ai/r/gntik-tokens.json",

@@ -3,8 +3,24 @@ import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { Switch } from './Switch';
 import SwitchSettings from './examples/SwitchSettings';
+import SwitchLabelPrecedence from './examples/SwitchLabelPrecedence';
 
 describe('Switch', () => {
+  it('shows label precedence with consistent visible and accessible labels in the live example', async () => {
+    render(<SwitchLabelPrecedence />);
+    expect(screen.getByRole('switch', { name: 'Email me' })).toBeInTheDocument();
+    expect(screen.getByRole('switch', { name: 'Email me about updates' })).toBeInTheDocument();
+    await expectNoAxeViolations();
+  });
+
+  it.each([
+    [undefined, 'Email me'],
+    ['Notify', 'Notify'],
+  ])('uses accessible name %s / %s when a visible label is present', (ariaLabel, name) => {
+    render(<Switch label="Email me" aria-label={ariaLabel} />);
+    expect(screen.getByRole('switch', { name })).toHaveAttribute('aria-checked', 'false');
+  });
+
   it('exposes role switch with its label and toggles with Space and Enter', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

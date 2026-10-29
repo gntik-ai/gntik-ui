@@ -6,7 +6,7 @@
   "description": "Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined looks, two sizes, icon-only items.",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0"
+    "@base-ui/react@^1.9.0"
   ],
   "registryDependencies": [
     "https://ui.gntik.ai/r/gntik-tokens.json",
