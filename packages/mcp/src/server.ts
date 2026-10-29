@@ -15,7 +15,7 @@ import type { ComponentDoc, DesignSystemIndex, IndexStats } from './types.js';
 import { analyzePage, type Analysis } from './analyze.js';
 import { validatePage, RULES, type ValidationReport } from './validate.js';
 import { readBlock } from './indexer.js';
-import { PALETTES, PALETTE_RULE, paletteRules, paletteCss, paletteThemes } from './palette-tokens.js';
+import { paletteIds, PALETTE_RULE, paletteRules, paletteCss, paletteThemes } from './palette-tokens.js';
 import { loadKit } from './kit.js';
 import { findKitItem, mdKitItem, registerKitTools } from './kit-tools.js';
 
@@ -351,7 +351,7 @@ export function buildServer(ctx: ServerContext): McpServer {
       inputSchema: {
         theme: z.enum(['light', 'dark', 'high_contrast', 'all']).optional().describe('One theme or all (default)'),
         format: z.enum(['css', 'json']).optional().describe('css (default) | json'),
-        palette: z.enum(PALETTES).optional().describe('Named palette; green is the default'),
+        palette: z.enum(paletteIds(ctx.getIndex())).optional().describe('Named palette; green is the default'),
       },
     },
     async ({ theme, format, palette = 'green' }) => {
@@ -360,7 +360,7 @@ export function buildServer(ctx: ServerContext): McpServer {
       const paletteValues = paletteThemes(index, palette);
       if ((format ?? 'css') === 'json') {
         const themes = t === 'all' ? paletteValues : paletteValues.filter((x) => x.theme === t);
-        return text(`${F}json\n${JSON.stringify({ palettes: PALETTES, themes }, null, 2)}\n${F}`);
+        return text(`${F}json\n${JSON.stringify({ palettes: paletteIds(index), themes }, null, 2)}\n${F}`);
       }
       if (t === 'all') return text(`${F}css\n${paletteCss(index, palette)}\n${F}`);
       const th = paletteValues.find((x) => x.theme === t);

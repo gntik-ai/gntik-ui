@@ -244,16 +244,19 @@ const THEME_LABEL: Record<string, string> = {
   '.high_contrast': 'high_contrast',
 };
 
-export function parseTokens(css: string): TokenTheme[] {
+export function parseTokens(css: string, orderedThemes?: readonly string[]): TokenTheme[] {
   const clean = css.replace(/\/\*[\s\S]*?\*\//g, '');
   const themes: TokenTheme[] = [];
-  const blockRe = /(:root|\.dark|\.high_contrast)\s*\{([^}]*)\}/g;
+  const blockRe = /([^{}]+)\{([^{}]*)\}/g;
+  let block = 0;
   let m: RegExpExecArray | null;
   while ((m = blockRe.exec(clean))) {
-    const theme = THEME_LABEL[m[1]] ?? m[1];
+    const selector = m[1].trim();
+    const theme = orderedThemes ? orderedThemes[block++] : THEME_LABEL[selector];
+    if (!theme) continue;
     let entry = themes.find((t) => t.theme === theme);
     if (!entry) {
-      entry = { theme, selector: m[1], tokens: {} };
+      entry = { theme, selector, tokens: {} };
       themes.push(entry);
     }
     const declRe = /--([\w-]+)\s*:\s*([^;]+);/g;

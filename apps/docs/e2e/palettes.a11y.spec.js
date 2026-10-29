@@ -79,17 +79,23 @@ test('high contrast ignores palette boundaries and green stays identical with or
         return Object.fromEntries(keys.map((key) => [key, style.getPropertyValue(key).trim()]));
       }, keys);
       expect(nested).toEqual(green);
+      // An explicit theme scope opts out of high contrast, but palette guards
+      // still disable navy throughout the high-contrast subtree.
+      expect(await channels(page.locator('#light'), '--primary-foreground')).toBe('150 45% 8%');
+      expect(await channels(page.locator('#dark'), '--primary-foreground')).toBe('150 45% 7%');
     }
   }
 });
 
-test('ThemeScope copies navy into a light overlay', async ({ page }) => {
-  await page.goto('/preview.html?kind=block&id=theme-scope&theme=dark&palette=navy');
-  const card = page.locator('[data-scope-example]');
-  await expect(card).toBeVisible();
-  expect(await channels(card)).toBe('223 54% 23%');
-  await card.getByRole('combobox', { name: 'Preview choice' }).click();
-  const listbox = page.locator('[data-theme-scope-portal][data-palette="navy"]').getByRole('listbox');
-  await expect(listbox).toBeVisible();
-  expect(await channels(listbox)).toBe('223 54% 23%');
-});
+for (const theme of ['dark', 'high_contrast'])
+  test(`ThemeScope light overlay composes with navy in ${theme}`, async ({ page }) => {
+    await page.goto(`/preview.html?kind=block&id=theme-scope&theme=${theme}&palette=navy`);
+    const card = page.locator('[data-scope-example]');
+    await expect(card).toBeVisible();
+    const expected = theme === 'high_contrast' ? '145 61% 50%' : '223 54% 23%';
+    expect(await channels(card)).toBe(expected);
+    await card.getByRole('combobox', { name: 'Preview choice' }).click();
+    const listbox = page.locator('[data-theme-scope-portal][data-palette="navy"]').getByRole('listbox');
+    await expect(listbox).toBeVisible();
+    expect(await channels(listbox)).toBe(expected);
+  });

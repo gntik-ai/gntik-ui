@@ -42,7 +42,14 @@ export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '')
   for (const [id, [paletteLight, paletteDark]] of Object.entries(allPalettes)) {
     const target = `[data-palette="${id}"]${guard}`;
     // Repeat aliases on palette boundaries: inherited var() values have already resolved.
-    paletteScopes += '\n' + block(target, { ...paletteLight, ...pairing[':root'] });
+    const lightBlock = block(target, { ...paletteLight, ...pairing[':root'] });
+    // Green already has unscoped theme rules in brand.css. Keep palette resets
+    // scoped so browsers without @scope retain the original green cascade.
+    paletteScopes +=
+      '\n' +
+      (id === 'green'
+        ? `@scope (:root, .light, .dark, .high_contrast) to (.light, .dark, .high_contrast) {\n${lightBlock}}\n`
+        : lightBlock);
     paletteScopes +=
       `\n@scope (:root, .light, .dark, .high_contrast) to (.light, .dark, .high_contrast) {\n` +
       block(`:where(:scope.dark) ${target},\n:where(:scope.dark)${target}`, { ...paletteDark, ...pairing['.dark'] }) +

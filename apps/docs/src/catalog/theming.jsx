@@ -47,6 +47,16 @@ themeScript('gntik-theme', 'dark', { palette: 'navy', paletteStorageKey: 'my-pal
         JavaScript colour consumers use currentPalette and observeTheme from @gntik-ai/tokens/runtime; token values
         remain in CSS.
       </p>
+      <p className="text-sm text-muted-foreground">
+        When importing individual CSS exports, load brand.css, status.css, pairing.css and scope.css before
+        palettes/index.css (or palettes/navy.css). The pairing and scope exports depend on status.css for success text;
+        a palette file needs scope.css to resolve text aliases and nested themes. Palette composition requires CSS
+        @scope support. Green keeps its original light, dark and high-contrast values in browsers without it.
+      </p>
+      <p className="text-sm text-muted-foreground">
+        On a high-contrast page, palettes remain disabled even in an explicit light or dark ThemeScope. These scopes and
+        their portals use the theme’s green values.
+      </p>
     </div>
   );
 }

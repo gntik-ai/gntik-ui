@@ -14,7 +14,7 @@ describe('published theme bootstrap', () => {
     expect(files).toContain('dist');
     const script = readFileSync(file, 'utf8').trim();
     expect(script).toBe(themeScript());
-    expect(script.length).toBeLessThan(1000);
+    expect(script.length).toBeLessThan(700);
     expect(script).not.toMatch(
       /\beval\s*\(|\bFunction\s*\(|document\.write|setAttribute\s*\(\s*['"]on|\bon\w+\s*=|createElement\s*\(\s*['"]script|\b(?:import|export)\b|use client/,
     );

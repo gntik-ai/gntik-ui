@@ -52,6 +52,7 @@
   color-scheme: dark;
 }
 
+@scope (:root, .light, .dark, .high_contrast) to (.light, .dark, .high_contrast) {
 [data-palette="green"]:not(:where(.high_contrast, .high_contrast *)) {
   --primary: 145 61% 50%;
   --primary-foreground: 150 45% 8%;
@@ -95,6 +96,7 @@
   --success-chip-text: var(--success-strong);
   --warning-chip-text: var(--foreground);
   --destructive-chip-text: var(--foreground);
+}
 }
 
 @scope (:root, .light, .dark, .high_contrast) to (.light, .dark, .high_contrast) {

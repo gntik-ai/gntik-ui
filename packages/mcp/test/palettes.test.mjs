@@ -34,11 +34,15 @@ test('get_tokens lists palettes and returns the requested navy theme values', as
   assert.match(await call('get_tokens', { palette: 'navy' }), /--primary:\s*223 54% 23%/);
 });
 
-test('get_rules and scaffold_preset explain named palettes without the former single-green rule', async () => {
+test('get_rules preserves its source verbatim and states the palette amendment explicitly', async () => {
   const rules = await call('get_rules');
+  assert.ok(rules.includes(index.rulesMd), 'the original source rules are returned verbatim');
+  assert.match(rules, /palette amendment supersedes the single-green restriction/i);
   assert.match(rules, /green.*default.*navy/i);
   assert.match(rules, /high contrast.*shared/i);
-  assert.doesNotMatch(rules, /Mono-brand|único color de marca|only brand colour/);
+});
+
+test('scaffold_preset explains named palettes', async () => {
   const preset = await call('scaffold_preset', { name: 'Acme' });
   assert.match(preset, /palette/);
   assert.doesNotMatch(preset, /Colours never change between presets/);
