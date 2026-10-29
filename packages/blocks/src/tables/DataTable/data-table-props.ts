@@ -6,6 +6,15 @@ import type { DataTableCellEditHandler } from './editable-cell';
 import type { DataTableLabels } from './labels';
 import type { DataTableView } from './views';
 
+/** Complete next query, emitted synchronously once per user action in either pagination mode. */
+export interface DataTableQuery {
+  page: number;
+  pageSize: number;
+  sort: SortState | null;
+  filters: unknown;
+  cause: 'page' | 'pageSize' | 'sort' | 'view';
+}
+
 export interface DataTableCsvExportOptions {
   fileName?: string;
   scopes?: Array<'rows' | 'page' | 'selected'>;
@@ -71,6 +80,8 @@ interface DataTableCommonProps<T> {
   sort?: SortState | null;
   defaultSort?: SortState | null;
   onSortChange?: (sort: SortState) => void;
+  /** Use this OR the separate callbacks for fetching, to avoid duplicate requests. Prop changes do not emit queries. */
+  onQueryChange?: (query: DataTableQuery) => void;
   /** Rows arrive sorted (server side): headers still toggle, rows are not re-sorted. */
   manualSorting?: boolean;
 
@@ -176,7 +187,7 @@ interface ClientPaginationProps {
 }
 
 interface ServerPaginationProps {
-  /** Rows arrive as one server page: no client sorting or slicing, and no sortable headers. */
+  /** Rows arrive as one server page without client sorting or slicing. Sortable headers require onSortChange or onQueryChange; sorting requests page 1. */
   paginationMode: 'server';
   /** Total number of rows across all pages; required even for an empty result. */
   rowCount: number;

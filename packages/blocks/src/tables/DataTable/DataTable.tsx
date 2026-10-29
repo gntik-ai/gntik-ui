@@ -27,7 +27,7 @@ import {
   type PinnedColumns,
 } from './column-sizing';
 import { DataTableBody, flattenBody, type DataTableBodyGroup } from './data-table-body';
-import type { DataTableProps } from './data-table-props';
+import type { DataTableProps, DataTableQuery } from './data-table-props';
 import {
   groupKeyOf,
   groupRows,
@@ -53,7 +53,12 @@ import { ExportMenu } from './export-menu';
 import { useTableExport } from './use-table-export';
 
 export type { DataTableLabels } from './labels';
-export type { DataTableProps, DataTableCsvExportOptions, DataTableExportRequest } from './data-table-props';
+export type {
+  DataTableProps,
+  DataTableQuery,
+  DataTableCsvExportOptions,
+  DataTableExportRequest,
+} from './data-table-props';
 
 const defaultRowId = (row: unknown): string => {
   const id = (row as { id?: unknown }).id;
@@ -100,6 +105,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   sort: sortProp,
   defaultSort = null,
   onSortChange,
+  onQueryChange,
   manualSorting = false,
   paginated: paginatedProp,
   paginationMode = 'client',
@@ -159,6 +165,7 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const { t, formatNumber } = useI18n();
   const singleMode = selectionMode === 'single';
   const serverMode = paginationMode === 'server';
+  const sortingEnabled = !serverMode || onSortChange != null || onQueryChange != null;
   const selectable = selectionMode === undefined ? selectableProp : selectionMode === 'multiple';
   const selectionColumn = selectable || singleMode;
   const paginated = paginatedProp ?? (serverMode || !singleMode);
@@ -251,12 +258,43 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     .filter((row) => !isRowDisabled?.(row))
     .map(getRowId);
   const header = selectionState(pageIds, selected);
+  const queryPage = serverMode ? (controlledPage ?? 1) : page;
+  const queryPageSize = serverMode ? (controlledPageSize ?? defaultPageSize) : pageSize;
+  const reportQuery = (cause: DataTableQuery['cause'], next: Partial<DataTableQuery>) =>
+    onQueryChange?.({ page: queryPage, pageSize: queryPageSize, sort, filters, ...next, cause });
+  // A resize that moves the page finishes in the footer's synchronous changePage
+  // callback, so one query follows the legacy callbacks without scheduling or batching.
+  const resizingTo = useRef<number | undefined>(undefined);
+  const changePage = (next: number) => {
+    if (serverMode) onPageChange?.(next);
+    else setPage(next);
+    const nextSize = resizingTo.current;
+    resizingTo.current = undefined;
+    reportQuery(nextSize === undefined ? 'page' : 'pageSize', {
+      page: next,
+      pageSize: nextSize ?? queryPageSize,
+    });
+  };
+  const changePageSize = (next: number) => {
+    const total = serverMode ? (rowCount ?? 0) : rows.length;
+    const pageCount = Math.max(1, Math.ceil(total / Math.max(1, queryPageSize)));
+    const displayedPage = Math.min(Math.max(1, queryPage), pageCount);
+    const from = total === 0 ? 0 : (displayedPage - 1) * queryPageSize + 1;
+    const nextPage = Math.max(1, Math.floor((from - 1) / next) + 1);
+    if (serverMode) onPageSizeChange?.(next);
+    else setPageSize(next);
+    if (nextPage !== displayedPage) resizingTo.current = next;
+    else reportQuery('pageSize', { page: nextPage, pageSize: next });
+  };
   const changeSort = (columnId: string, direction: SortState['direction']) => {
-    if (serverMode) return;
+    if (!sortingEnabled) return;
     const next: SortState = { columnId, direction: sort?.columnId === columnId ? direction : 'ascending' };
     setInnerSort(next);
     onSortChange?.(next);
-    setPage(1);
+    if (serverMode) {
+      if (queryPage !== 1) onPageChange?.(1);
+    } else setPage(1);
+    reportQuery('sort', { page: 1, sort: next });
   };
   const toggleGroup = (key: string) => {
     const next = new Set(collapsed);
@@ -332,7 +370,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const applyState = (state: DataTableViewState) => {
     const nextSort = state.sort ?? null;
     setInnerSort(nextSort);
-    if (nextSort && !serverMode) onSortChange?.(nextSort);
+    const sortChanged = sort?.columnId !== nextSort?.columnId || sort?.direction !== nextSort?.direction;
+    if (nextSort && (!serverMode || sortChanged)) onSortChange?.(nextSort);
     setHiddenList(state.hiddenColumns ?? defaultHidden);
     setWidths(state.columnWidths ?? defaultColumnWidths);
     setPinned(state.pinnedColumns ?? defaultPinnedColumns);
@@ -341,6 +380,12 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     if (nextGroup !== currentState.groupBy) onGroupByChange?.(nextGroup);
     if (state.filters !== filters) onFiltersChange?.(state.filters);
     if (!serverMode) setPage(1);
+    else if (sortChanged && queryPage !== 1) onPageChange?.(1);
+    reportQuery('view', {
+      page: !serverMode || sortChanged ? 1 : queryPage,
+      sort: nextSort,
+      filters: state.filters,
+    });
   };
   const viewsApi = useTableViews({
     views: viewsProp,
@@ -570,9 +615,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
                     <DataTableHeadCell
                       labels={labels}
                       key={c.id}
-                      column={serverMode ? { ...c, sortable: false } : c}
+                      column={sortingEnabled ? c : { ...c, sortable: false }}
                       layout={layout.columns.get(c.id)}
-                      sortDirection={!serverMode && sort?.columnId === c.id ? sort.direction : 'none'}
+                      sortDirection={sortingEnabled && sort?.columnId === c.id ? sort.direction : 'none'}
                       onSortChange={(dir) => changeSort(c.id, dir)}
                       resize={
                         resizable && c.resizable !== false
@@ -641,9 +686,9 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
           className="border-t border-border px-4 py-3"
           total={serverMode ? rowCount : rows.length}
           page={serverMode ? controlledPage : page}
-          onPageChange={serverMode ? onPageChange : setPage}
+          onPageChange={changePage}
           pageSize={serverMode ? controlledPageSize : pageSize}
-          onPageSizeChange={serverMode ? onPageSizeChange : setPageSize}
+          onPageSizeChange={changePageSize}
           pageSizeOptions={pageSizeOptions}
           noun={caption}
         />

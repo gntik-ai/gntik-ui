@@ -1,7 +1,7 @@
 import { Button, Checkbox } from '@gntik-ai/ui';
-import { useEffect, useState } from 'react';
-import { DataTable } from '../DataTable';
-import type { DataTableSelectionModel } from '../data-table-utils';
+import { useState } from 'react';
+import { DataTable, type DataTableQuery } from '../DataTable';
+import type { DataTableSelectionModel, SortState } from '../data-table-utils';
 
 interface Item {
   id: number;
@@ -13,29 +13,33 @@ interface Envelope {
   total: number;
   page: number;
   pageSize: number;
+  sort: SortState | null;
 }
 const columns = [
-  { id: 'id', header: 'Id', accessor: (row: Item) => row.id },
-  { id: 'name', header: 'Name', accessor: (row: Item) => row.name },
+  { id: 'id', header: 'Id', accessor: (row: Item) => row.id, sortable: true },
+  { id: 'name', header: 'Name', accessor: (row: Item) => row.name, sortable: true },
 ];
 
 // Demo endpoint adapter. Replace with the consumer's API returning this envelope.
-function readPage(page: number, pageSize: number): Envelope {
+function readPage({ page, pageSize, sort }: Pick<DataTableQuery, 'page' | 'pageSize' | 'sort'>): Envelope {
   const total = 95;
   const from = (page - 1) * pageSize;
-  return {
-    items: Array.from({ length: Math.max(0, Math.min(pageSize, total - from)) }, (_, i) => ({
-      id: from + i + 1,
-      locked: (from + i + 1) % 10 === 4,
-      name: `Item ${from + i + 1}`,
-    })),
-    total,
-    page,
-    pageSize,
-  };
+  const items = Array.from({ length: total }, (_, i) => ({
+    id: i + 1,
+    locked: (i + 1) % 10 === 4,
+    name: `Item ${i + 1}`,
+  }));
+  // Sorting and slicing belong to the endpoint adapter, never DataTable's server mode.
+  if (sort) {
+    items.sort((a, b) => {
+      const order = sort.columnId === 'id' ? a.id - b.id : a.name.localeCompare(b.name, 'en', { numeric: true });
+      return sort.direction === 'ascending' ? order : -order;
+    });
+  }
+  return { items: items.slice(from, from + pageSize), total, page, pageSize, sort };
 }
-async function requestPage(page: number, pageSize: number): Promise<Envelope> {
-  return readPage(page, pageSize);
+async function requestPage(query: DataTableQuery): Promise<Envelope> {
+  return readPage(query);
 }
 
 /** Known-total, 1-based pages. The consumer owns requests and keeps the old envelope until they resolve. */
@@ -44,17 +48,18 @@ export default function ServerPaginationExample() {
   const [preserveSelection, setPreserveSelection] = useState(true);
   const [hideSelectAll, setHideSelectAll] = useState(false);
   const [review, setReview] = useState('');
-  const [envelope, setEnvelope] = useState(() => readPage(2, 20));
-  const [request, setRequest] = useState({ page: 2, pageSize: 20 });
-  useEffect(() => {
-    let active = true;
-    void requestPage(request.page, request.pageSize).then((next) => {
-      if (active) setEnvelope(next);
-    });
-    return () => {
-      active = false;
-    };
-  }, [request]);
+  const [envelope, setEnvelope] = useState(() => readPage({ page: 2, pageSize: 20, sort: null }));
+  const [sort, setSort] = useState<SortState | null>(null);
+  const changeQuery = (query: DataTableQuery) => {
+    // Show the requested order while the consumer fetches exactly once per action.
+    setSort(query.sort);
+    void requestPage(query)
+      .then(setEnvelope)
+      .catch(() => {
+        // Reset the controlled header to the last confirmed order when a request fails.
+        setSort(envelope.sort);
+      });
+  };
 
   return (
     <div className="space-y-3">
@@ -95,10 +100,8 @@ export default function ServerPaginationExample() {
         page={envelope.page}
         pageSize={envelope.pageSize}
         pageSizeOptions={[10, 20, 50]}
-        onPageChange={(page) => setRequest((previous) => ({ ...previous, page }))}
-        // The footer can also call onPageChange to keep the first row visible (20 to 50 at page 2 requests page 1).
-        // Functional updates batch both callbacks into one request with the new size and page.
-        onPageSizeChange={(pageSize) => setRequest((previous) => ({ ...previous, pageSize }))}
+        sort={sort}
+        onQueryChange={changeQuery}
       />
       <p role="status" className="text-sm text-muted-foreground">
         {review}

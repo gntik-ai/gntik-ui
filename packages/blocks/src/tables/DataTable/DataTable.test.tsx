@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DensityProvider } from '@gntik-ai/ui';
 import { expectNoAxeViolations } from '../../test/a11y';
@@ -39,6 +39,90 @@ describe('DataTable', () => {
     expect(within(bodyRows()[0]!).getByText(`$${min.toFixed(2)}`)).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: /Cost/ }));
     expect(head).toHaveAttribute('aria-sort', 'descending');
+  });
+
+  it('reports a client sort synchronously with the internal first page', () => {
+    const onQueryChange = vi.fn();
+    render(<DataTable defaultPageSize={5} filters={{ status: 'failed' }} onQueryChange={onQueryChange} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
+    onQueryChange.mockClear();
+    fireEvent.click(screen.getByRole('button', { name: /Cost/ }));
+    expect(onQueryChange.mock.calls).toEqual([
+      [
+        {
+          page: 1,
+          pageSize: 5,
+          sort: { columnId: 'cost', direction: 'ascending' },
+          filters: { status: 'failed' },
+          cause: 'sort',
+        },
+      ],
+    ]);
+    expect(screen.getByRole('button', { name: 'Page 1', current: 'page' })).toBeInTheDocument();
+  });
+
+  it('reports each client page with its internal page size', () => {
+    const onQueryChange = vi.fn();
+    render(<DataTable defaultPageSize={5} onQueryChange={onQueryChange} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
+    expect(onQueryChange.mock.calls).toEqual([
+      [{ page: 2, pageSize: 5, sort: null, filters: undefined, cause: 'page' }],
+      [{ page: 3, pageSize: 5, sort: null, filters: undefined, cause: 'page' }],
+    ]);
+  });
+
+  it('reports one client resize query with the keep-first-row page, then uses the new size', async () => {
+    const user = userEvent.setup();
+    const onQueryChange = vi.fn();
+    render(<DataTable defaultPageSize={5} pageSizeOptions={[5, 10, 20]} onQueryChange={onQueryChange} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Page 3' }));
+    onQueryChange.mockClear();
+    await user.click(screen.getByRole('combobox', { name: 'Rows per page' }));
+    await user.click(await screen.findByRole('option', { name: '10' }));
+    expect(onQueryChange.mock.calls).toEqual([
+      [{ page: 2, pageSize: 10, sort: null, filters: undefined, cause: 'pageSize' }],
+    ]);
+    expect(screen.getByRole('button', { name: 'Page 2', current: 'page' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
+    expect(onQueryChange.mock.calls[1]).toEqual([
+      { page: 3, pageSize: 10, sort: null, filters: undefined, cause: 'page' },
+    ]);
+    expect(onQueryChange).toHaveBeenCalledTimes(2);
+  });
+
+  it('reports a client saved view with restored filters and page 1', async () => {
+    const user = userEvent.setup();
+    const onQueryChange = vi.fn();
+    render(
+      <DataTable
+        filters={{ status: 'active' }}
+        defaultViews={[
+          {
+            id: 'saved',
+            name: 'Saved',
+            state: { sort: { columnId: 'cost', direction: 'descending' }, filters: { status: 'failed' } },
+          },
+        ]}
+        onQueryChange={onQueryChange}
+      />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
+    onQueryChange.mockClear();
+    await user.click(screen.getByRole('button', { name: 'Default view' }));
+    await user.click(await screen.findByRole('menuitemradio', { name: 'Saved' }));
+    expect(onQueryChange.mock.calls).toEqual([
+      [
+        {
+          page: 1,
+          pageSize: 10,
+          sort: { columnId: 'cost', direction: 'descending' },
+          filters: { status: 'failed' },
+          cause: 'view',
+        },
+      ],
+    ]);
+    expect(screen.getByRole('button', { name: 'Page 1', current: 'page' })).toBeInTheDocument();
   });
 
   it('selects rows, with select-all and indeterminate', async () => {
