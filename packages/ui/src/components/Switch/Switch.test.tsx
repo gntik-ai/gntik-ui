@@ -3,11 +3,11 @@ import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { Switch } from './Switch';
 import SwitchSettings from './examples/SwitchSettings';
-import SwitchLabelPrecedence from './examples/SwitchLabelPrecedence';
+import SwitchWithAccessibleLabel from './examples/SwitchWithAccessibleLabel';
 
 describe('Switch', () => {
   it('shows label precedence with consistent visible and accessible labels in the live example', async () => {
-    render(<SwitchLabelPrecedence />);
+    render(<SwitchWithAccessibleLabel />);
     expect(screen.getByRole('switch', { name: 'Email me' })).toBeInTheDocument();
     expect(screen.getByRole('switch', { name: 'Email me about updates' })).toBeInTheDocument();
     await expectNoAxeViolations();

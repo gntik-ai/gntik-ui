@@ -2923,16 +2923,32 @@ Tokens: background, border, primary, primary-foreground, foreground, muted-foreg
 Usage:
 
 ```tsx
-import { useI18n } from '@gntik-ai/ui';
-import { Checkbox } from '@gntik-ai/ui';
+import { useId, useState } from 'react';
+import { Checkbox, CheckboxGroup } from '@gntik-ai/ui';
 
-/** An explicit accessible name includes the visible label's words. */
-export default function CheckboxLabelPrecedence() {
-  const { t } = useI18n();
+const OPTIONS = [
+  { value: 'mentions', label: 'Mentions', description: 'When someone mentions you in a comment or review.' },
+  { value: 'deployments', label: 'Deployments', description: 'When a deployment you own succeeds or fails.' },
+  { value: 'billing', label: 'Billing', description: 'Invoices, failed payments and plan changes.' },
+];
+
+export default function CheckboxList() {
+  const [value, setValue] = useState(['mentions', 'deployments']);
+  const id = useId();
   return (
-    <div className="grid gap-4">
-      <Checkbox label={t('labelPrecedence.visible')} />
-      <Checkbox label={t('labelPrecedence.visible')} aria-label={t('labelPrecedence.accessible')} />
+    <div className="grid max-w-lg gap-6">
+      <div>
+        <div id={id} className="mb-3 text-[13px] font-semibold text-foreground">
+          Email notifications
+        </div>
+        <CheckboxGroup aria-labelledby={id} variant="list" value={value} onValueChange={setValue}>
+          {OPTIONS.map((o) => (
+            <Checkbox key={o.value} name="notifications" value={o.value} label={o.label} description={o.description} />
+          ))}
+        </CheckboxGroup>
+      </div>
+      <Checkbox label="I agree to the terms of service" defaultChecked />
+      <Checkbox label="Archived projects (locked)" disabled />
     </div>
   );
 }
@@ -4514,16 +4530,17 @@ Tokens: primary, secondary, background, focus-ring
 Usage:
 
 ```tsx
-import { useI18n } from '@gntik-ai/ui';
+import { useState } from 'react';
 import { Switch } from '@gntik-ai/ui';
 
-/** An explicit accessible name includes the visible label's words. */
-export default function SwitchLabelPrecedence() {
-  const { t } = useI18n();
+export default function SwitchSettings() {
+  const [alerts, setAlerts] = useState(true);
   return (
     <div className="grid gap-4">
-      <Switch label={t('labelPrecedence.visible')} />
-      <Switch label={t('labelPrecedence.visible')} aria-label={t('labelPrecedence.accessible')} />
+      <Switch label="Email alerts" checked={alerts} onCheckedChange={setAlerts} />
+      <Switch label="Weekly digest" size="sm" />
+      <Switch label="Auto-deploy" size="lg" defaultChecked />
+      <Switch label="Audit log (locked)" disabled defaultChecked />
     </div>
   );
 }

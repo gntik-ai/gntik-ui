@@ -4,11 +4,11 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { Checkbox } from './Checkbox';
 import CheckboxList from './examples/CheckboxList';
 import CheckboxSelectAll from './examples/CheckboxSelectAll';
-import CheckboxLabelPrecedence from './examples/CheckboxLabelPrecedence';
+import CheckboxWithAccessibleLabel from './examples/CheckboxWithAccessibleLabel';
 
 describe('Checkbox', () => {
   it('shows label precedence with consistent visible and accessible labels in the live example', async () => {
-    render(<CheckboxLabelPrecedence />);
+    render(<CheckboxWithAccessibleLabel />);
     expect(screen.getByRole('checkbox', { name: 'Email me' })).toBeInTheDocument();
     expect(screen.getByRole('checkbox', { name: 'Email me about updates' })).toBeInTheDocument();
     await expectNoAxeViolations();
