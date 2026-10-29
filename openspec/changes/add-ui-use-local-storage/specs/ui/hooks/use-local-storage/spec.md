@@ -41,7 +41,8 @@ Every hook using a storage/key pair SHALL receive writes by another hook in the 
 
 - **WHEN** another tab writes spacious under the key
 - **THEN** synchronized localStorage consumers return spacious
-- **AND** sync:false consumers keep their previous value
+- **AND** existing sync:false consumers keep their previous value
+- **AND** a newly mounted sync:false consumer starts with spacious
 - **WHEN** another tab clears localStorage with event key null
 - **THEN** synchronized consumers return their defaults
 

@@ -206,6 +206,20 @@ it('applies both updaters in one handler and removes the persisted value', () =>
   expect(localStorage.getItem('counter:batch')).toBeNull();
 });
 
+it('starts a newly mounted sync:false consumer at the latest value without updating an existing isolated consumer', () => {
+  const shared = renderHook(() => useLocalStorage('late:density', 'comfortable'));
+  const earlier = renderHook(() => useLocalStorage('late:density', 'comfortable', { sync: false }));
+  act(() => window.dispatchEvent(new StorageEvent('storage', { key: 'late:density', newValue: '"spacious"' })));
+  expect(shared.result.current[0]).toBe('spacious');
+  const later = renderHook(() => useLocalStorage('late:density', 'comfortable', { sync: false }));
+  expect(later.result.current[0]).toBe('spacious');
+  earlier.rerender();
+  expect(earlier.result.current[0]).toBe('comfortable');
+  act(() => shared.result.current[1]('compact'));
+  expect(earlier.result.current[0]).toBe('compact');
+  expect(later.result.current[0]).toBe('compact');
+});
+
 it('keeps updates in memory and reports denied reads and quota errors', () => {
   const denied = new DOMException('Blocked storage', 'SecurityError');
   const quota = new DOMException('Full storage', 'QuotaExceededError');

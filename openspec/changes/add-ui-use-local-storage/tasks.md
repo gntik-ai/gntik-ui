@@ -28,8 +28,12 @@ Before source changes, `pnpm --filter @gntik-ai/ui test src/layouts/SidebarLayou
 
 ## Validation
 
-All 43 focused tests pass, including the public hook API, the live example's axe check, both hydration regressions and the unchanged SidebarLayout/Resizable suites. Library builds, lint, monorepo typecheck, docs build, docs coverage, registry freshness, both consumer kit-only checks, formatting and strict OpenSpec validation pass.
+All 44 focused tests pass, including the public hook API, the live example's axe check, both hydration regressions and the unchanged SidebarLayout/Resizable suites. Library builds, lint, monorepo typecheck, docs build, docs coverage, registry freshness, both consumer kit-only checks, formatting and strict OpenSpec validation pass.
 
 The prescribed recursive library test command stops at the unchanged tokens mirror-install test. Without registry access, its fallback packs the current 0.3.0 package but tries to read gntik-ai-tokens-0.2.1.tgz, producing ENOENT. This is recorded as environment-limited; the remaining token checks pass with that test excluded. The broader library run excludes tokens to let the other package suites execute; its final result is reported in the structured handoff.
 
 Browser accessibility/visual suites, MCP CLI tests and evals tests remain for PR CI under worker policy. No browser suite was launched. Registry generation leaves registry.json and llms output unchanged and updates kit-registry.json plus the affected shadcn item bundles.
+
+## Final review follow-up
+
+A later-mounted sync:false consumer could inherit the document's pre-event value. The added public-hook regression failed with comfortable instead of spacious before the fix. Per-consumer snapshots now start from the latest raw value and follow only later same-document writes, using a document write version; previously mounted isolated consumers remain unchanged by external events. The final 44-test focused run passes. The full UI suite passed before this follow-up; final focused tests exercise the changed synchronization behavior and both adopting layouts.

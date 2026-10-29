@@ -3,6 +3,7 @@ import { useCallback, useMemo, useRef, useSyncExternalStore, type Dispatch, type
 interface StorageStore {
   raw: string | null | undefined;
   documentRaw: string | null | undefined;
+  documentVersion: number;
   listeners: Map<() => void, boolean>;
 }
 
@@ -13,7 +14,7 @@ const stores: Record<StorageKind, Map<string, StorageStore>> = {
 };
 
 function createStore(): StorageStore {
-  return { raw: undefined, documentRaw: undefined, listeners: new Map() };
+  return { raw: undefined, documentRaw: undefined, documentVersion: 0, listeners: new Map() };
 }
 
 let syncedListeners = 0;
@@ -103,19 +104,26 @@ function useStorage<T>(kind: StorageKind, key: string | undefined, defaultValue:
   const { serialize = JSON.stringify, deserialize = JSON.parse, validate, sync = true, onError } = options;
   const memory = useMemo(() => createStore(), []);
   const storeForKey = useCallback(() => (key === undefined ? memory : getStore(kind, key)), [kind, key, memory]);
-  const snapshots = useRef(new WeakMap<StorageStore, { raw: string | null | undefined; value: T }>());
+  const snapshots = useRef(
+    new WeakMap<StorageStore, { raw: string | null | undefined; value: T; documentVersion: number }>(),
+  );
   const getSnapshot = useCallback(() => {
     const store = storeForKey();
     if (store.raw === undefined) {
       store.raw = readRaw(kind, key, onError);
       store.documentRaw = store.raw;
     }
-    const raw = sync ? store.raw : store.documentRaw;
     const cached = snapshots.current.get(store);
+    // Isolated consumers start current, then only follow same-document writes.
+    const raw =
+      sync || !cached ? store.raw : cached.documentVersion === store.documentVersion ? cached.raw : store.documentRaw;
     if (!cached || cached.raw !== raw) {
       const parsedValue = decode(raw ?? null, defaultValue, { deserialize, validate, onError });
-      snapshots.current.set(store, { raw, value: parsedValue });
+      snapshots.current.set(store, { raw, value: parsedValue, documentVersion: store.documentVersion });
       return parsedValue;
+    }
+    if (cached.documentVersion !== store.documentVersion) {
+      snapshots.current.set(store, { ...cached, documentVersion: store.documentVersion });
     }
     return cached.value;
   }, [kind, key, storeForKey, defaultValue, deserialize, validate, sync, onError]);
@@ -163,6 +171,7 @@ function useStorage<T>(kind: StorageKind, key: string | undefined, defaultValue:
       }
       store.raw = raw;
       store.documentRaw = raw;
+      store.documentVersion++;
       store.listeners.forEach((_, listener) => listener());
     },
     [kind, key, storeForKey, serialize, getSnapshot, onError],
@@ -178,6 +187,7 @@ function useStorage<T>(kind: StorageKind, key: string | undefined, defaultValue:
     }
     store.raw = null;
     store.documentRaw = null;
+    store.documentVersion++;
     store.listeners.forEach((_, listener) => listener());
   }, [kind, key, storeForKey, onError]);
   return [value, setValue, remove] as const;
