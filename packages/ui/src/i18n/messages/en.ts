@@ -8,6 +8,7 @@ import { typographyEn } from './typography-messages';
 import { editableTextEn } from './editable-text-messages';
 import { motionEn } from './motion-messages';
 import { markdownEn } from './markdown-messages';
+import { searchableSelectEn } from './searchable-select-messages';
 import { cspEn } from './csp-messages';
 export const en = {
   ...signUpEn,
@@ -22,6 +23,7 @@ export const en = {
   ...editableTextEn,
   ...motionEn,
   ...markdownEn,
+  ...searchableSelectEn,
   'footer.label': 'Footer',
   'footer.legal': 'Legal',
   'footer.social': 'Social links',
@@ -727,37 +729,6 @@ export const en = {
   'diff.old': 'Old',
   'diff.new': 'New',
   // Batch C: async combobox, terminal
-  'searchableSelect.examples.region': 'Region',
-  'searchableSelect.examples.europe': 'Europe',
-  'searchableSelect.examples.atlantic': 'Atlantic',
-  'searchableSelect.examples.zurich': 'Zürich',
-  'searchableSelect.examples.zagreb': 'Zagreb',
-  'searchableSelect.examples.lisbon': 'Lisbon',
-  'searchableSelect.examples.switzerland': 'Switzerland',
-  'searchableSelect.examples.croatia': 'Croatia',
-  'searchableSelect.examples.portugal': 'Portugal',
-  'searchableSelect.examples.status': 'Status',
-  'searchableSelect.examples.running': 'Running',
-  'searchableSelect.examples.failed': 'Failed',
-  'searchableSelect.examples.queued': 'Queued',
-  'searchableSelect.examples.unavailable': 'Unavailable',
-  'searchableSelect.examples.readonly': 'Read-only region',
-  'searchableSelect.examples.disabled': 'Disabled region',
-  'searchableSelect.examples.nodes': 'Nodes (5,000 options)',
-  'searchableSelect.examples.node': 'Node {number}',
-  'searchableSelect.examples.manage': 'Manage labels…',
-  'searchableSelect.examples.managed': 'Label settings opened.',
-  'searchableSelect.examples.hint': 'Type to filter the options.',
-  'searchableSelect.examples.customEmpty': 'No regions found.',
-  'searchableSelect.examples.pickerCaption': 'Which picker?',
-  'searchableSelect.examples.pickerComponent': 'Component',
-  'searchableSelect.examples.pickerUse': 'Use case',
-  'searchableSelect.examples.pickerSelect': 'Short lists without search',
-  'searchableSelect.examples.pickerCombobox': 'Typed input with autocomplete',
-  'searchableSelect.examples.pickerMultiSelect': 'Selected values as chips in a field',
-  'searchableSelect.examples.pickerSearchableSelect': 'Field, button or toolbar trigger with popup search',
-  'searchableSelect.examples.searchQuery': 'Search: {query}',
-  'searchableSelect.selectedCount': '{count, plural, one {# selected} other {# selected}}',
   'combobox.create': 'Create “{label}”',
   'combobox.loadFailed': 'Couldn’t load options.',
   'terminal.label': 'Terminal output',

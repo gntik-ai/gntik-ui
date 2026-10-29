@@ -18,5 +18,11 @@
 ## 3. Docs and release
 
 - [x] 3.1 Add keyboard and which-picker tables plus a minor @gntik-ai/ui changeset.
-- [x] 3.2 Regenerate registry and run bounded library, lint, typecheck, registry, kit-only and docs coverage checks (the unchanged tokens mirror-install fixture fails in its offline fallback).
+- [x] 3.2 Regenerate registry and run bounded library, lint, typecheck, registry, kit-only and docs coverage checks. The tokens mirror-install check cannot complete without network: its fallback packs local version 0.3.0 but reads a 0.2.1 tarball (ENOENT). Run the other library suites separately; PR CI covers the mirror install.
 - [x] 3.3 Run openspec validate add-ui-searchable-select --strict.
+
+## 4. Checker follow-up
+
+- [x] 4.1 Reproduce the Portal guard failure with `pnpm --filter @gntik-ai/ui test src/utils/portal-coverage.test.ts` (18 actual portals against a floor of 19). Update the floor to 18: WorkspaceSearch now uses the shared ComboboxContent Portal. Keep every portal's scope-container assertions.
+- [x] 4.2 Move SearchableSelect messages into a typed en/es catalog module and remove the unused `searchableSelect.examples.unavailable` key. Both main catalogs are below 1,000 lines.
+- [x] 4.3 Regenerate registry sources so copied components include the split catalog; retain the existing minor UI changeset.

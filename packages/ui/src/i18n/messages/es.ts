@@ -8,6 +8,7 @@ import { typographyEs } from './typography-messages';
 import { editableTextEs } from './editable-text-messages';
 import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
+import { searchableSelectEs } from './searchable-select-messages';
 import { cspEs } from './csp-messages';
 import type { Messages } from './en';
 export const es: Messages = {
@@ -23,6 +24,7 @@ export const es: Messages = {
   ...editableTextEs,
   ...motionEs,
   ...markdownEs,
+  ...searchableSelectEs,
   'footer.label': 'Pie de página',
   'footer.legal': 'Legal',
   'footer.social': 'Redes sociales',
@@ -727,37 +729,6 @@ export const es: Messages = {
   'diff.old': 'Anterior',
   'diff.new': 'Nuevo',
   // Batch C: async combobox, terminal
-  'searchableSelect.examples.region': 'Región',
-  'searchableSelect.examples.europe': 'Europa',
-  'searchableSelect.examples.atlantic': 'Atlántico',
-  'searchableSelect.examples.zurich': 'Zúrich',
-  'searchableSelect.examples.zagreb': 'Zagreb',
-  'searchableSelect.examples.lisbon': 'Lisboa',
-  'searchableSelect.examples.switzerland': 'Suiza',
-  'searchableSelect.examples.croatia': 'Croacia',
-  'searchableSelect.examples.portugal': 'Portugal',
-  'searchableSelect.examples.status': 'Estado',
-  'searchableSelect.examples.running': 'En ejecución',
-  'searchableSelect.examples.failed': 'Fallido',
-  'searchableSelect.examples.queued': 'En cola',
-  'searchableSelect.examples.unavailable': 'No disponible',
-  'searchableSelect.examples.readonly': 'Región de solo lectura',
-  'searchableSelect.examples.disabled': 'Región deshabilitada',
-  'searchableSelect.examples.nodes': 'Nodos (5000 opciones)',
-  'searchableSelect.examples.node': 'Nodo {number}',
-  'searchableSelect.examples.manage': 'Gestionar etiquetas…',
-  'searchableSelect.examples.managed': 'Configuración de etiquetas abierta.',
-  'searchableSelect.examples.hint': 'Escribe para filtrar las opciones.',
-  'searchableSelect.examples.customEmpty': 'No se encontraron regiones.',
-  'searchableSelect.examples.pickerCaption': '¿Qué selector usar?',
-  'searchableSelect.examples.pickerComponent': 'Componente',
-  'searchableSelect.examples.pickerUse': 'Uso',
-  'searchableSelect.examples.pickerSelect': 'Listas cortas sin búsqueda',
-  'searchableSelect.examples.pickerCombobox': 'Entrada de texto con autocompletado',
-  'searchableSelect.examples.pickerMultiSelect': 'Valores seleccionados como etiquetas en un campo',
-  'searchableSelect.examples.pickerSearchableSelect': 'Campo, botón o barra de herramientas con búsqueda emergente',
-  'searchableSelect.examples.searchQuery': 'Búsqueda: {query}',
-  'searchableSelect.selectedCount': '{count, plural, one {# seleccionado} other {# seleccionados}}',
   'combobox.create': 'Crear «{label}»',
   'combobox.loadFailed': 'No se pudieron cargar las opciones.',
   'terminal.label': 'Salida de terminal',
