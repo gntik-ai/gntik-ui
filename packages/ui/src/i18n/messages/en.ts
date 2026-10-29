@@ -8,6 +8,7 @@ import { typographyEn } from './typography-messages';
 import { editableTextEn } from './editable-text-messages';
 import { motionEn } from './motion-messages';
 import { markdownEn } from './markdown-messages';
+import { searchableSelectEn } from './searchable-select-messages';
 import { cspEn } from './csp-messages';
 export const en = {
   ...signUpEn,
@@ -22,6 +23,7 @@ export const en = {
   ...editableTextEn,
   ...motionEn,
   ...markdownEn,
+  ...searchableSelectEn,
   'footer.label': 'Footer',
   'footer.legal': 'Legal',
   'footer.social': 'Social links',

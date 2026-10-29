@@ -92,10 +92,14 @@ export function WindowedComboboxRoot<Value, Multiple extends boolean | undefined
 export function WindowedComboboxList<Item = unknown>({
   children,
   'aria-busy': busy,
+  'aria-label': ariaLabel,
+  'aria-labelledby': labelledBy,
   ...options
 }: MeasuredRowOptions & {
   children: (item: Item, index: number) => ReactNode;
   'aria-busy'?: boolean;
+  'aria-label'?: string;
+  'aria-labelledby'?: string;
 }) {
   const state = useComboboxWindow();
   const items = BaseCombobox.useFilteredItems<Item>();
@@ -120,6 +124,8 @@ export function WindowedComboboxList<Item = unknown>({
     <BaseCombobox.List
       data-virtualized=""
       aria-busy={busy}
+      aria-label={ariaLabel}
+      aria-labelledby={labelledBy}
       ref={setViewport}
       className="max-h-64 min-h-0 overflow-y-auto outline-none data-empty:hidden"
       style={{ height: Math.min(total, 256) }}

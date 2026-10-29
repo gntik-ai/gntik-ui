@@ -66,6 +66,7 @@ export * from './components/ChoiceCard';
 export * from './components/CodeBlock';
 export * from './components/Collapsible';
 export * from './components/Combobox';
+export * from './components/SearchableSelect';
 export * from './components/CommandPalette';
 export * from './components/ContextMenu';
 export * from './components/CopyButton';

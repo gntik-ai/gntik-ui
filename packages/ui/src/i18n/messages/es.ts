@@ -8,6 +8,7 @@ import { typographyEs } from './typography-messages';
 import { editableTextEs } from './editable-text-messages';
 import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
+import { searchableSelectEs } from './searchable-select-messages';
 import { cspEs } from './csp-messages';
 import type { Messages } from './en';
 export const es: Messages = {
@@ -23,6 +24,7 @@ export const es: Messages = {
   ...editableTextEs,
   ...motionEs,
   ...markdownEs,
+  ...searchableSelectEs,
   'footer.label': 'Pie de página',
   'footer.legal': 'Legal',
   'footer.social': 'Redes sociales',

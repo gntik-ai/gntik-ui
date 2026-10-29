@@ -61,5 +61,6 @@ it('every Base UI Portal uses its enclosing component scope container', () => {
     }
     visit(source);
   }
-  expect(count).toBeGreaterThanOrEqual(19);
+  // WorkspaceSearch now reuses ComboboxContent's scoped Portal instead of owning one.
+  expect(count).toBeGreaterThanOrEqual(18);
 });

@@ -21,6 +21,7 @@
     "mermaid-diagram",
     "period-picker",
     "reasoning-block",
+    "searchable-select",
     "site-footer"
   ],
   "items": [
@@ -208,6 +209,7 @@
     {"id":"scorecard","package":"@gntik-ai/templates","name":"scorecard","version":"0.6.0","url":"https://ui.gntik.ai/r/scorecard.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"scroll-area","package":"@gntik-ai/ui","name":"scroll-area","version":"0.5.0","url":"https://ui.gntik.ai/r/scroll-area.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"search-results","package":"@gntik-ai/templates","name":"search-results","version":"0.6.0","url":"https://ui.gntik.ai/r/search-results.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"searchable-select","package":"@gntik-ai/ui","name":"searchable-select","version":"0.5.0","url":"https://ui.gntik.ai/r/searchable-select.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"secret-field","package":"@gntik-ai/ui","name":"secret-field","version":"0.5.0","url":"https://ui.gntik.ai/r/secret-field.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"section","package":"@gntik-ai/ui","name":"section","version":"0.5.0","url":"https://ui.gntik.ai/r/section.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"section-header","package":"@gntik-ai/blocks","name":"section-header","version":"0.6.0","url":"https://ui.gntik.ai/r/section-header.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
