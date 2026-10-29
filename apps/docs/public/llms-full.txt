@@ -5593,7 +5593,7 @@ export default function MobileNavBasic() {
 
 ### NavList (`nav-list`)
 
-Vertical navigation for sidebars and settings pages: labelled (optionally foldable) groups of items with icon, label and badge, nested collapsible sub-items, and aria-current="page" on the active item with the brand accent bar. `collapsed` turns it into an icon rail with tooltips (nested sections open as flyout menus). Links render through LinkProvider, so client routers work.
+Vertical navigation for sidebars and settings pages: labelled (optionally foldable) groups of items with icon, label and badge, nested collapsible sub-items, and aria-current="page" on the active item with the brand accent bar. `collapsed` turns it into an icon rail with tooltips (nested sections open as flyout menus). Links render through LinkProvider, so client routers work. Matching defaults to strict href equality (including query/hash). Opt in with list-wide match="prefix" or item.match; an item override takes precedence. Prefix matching ignores query/hash and a trailing slash, respects segment boundaries, and matches / only at the root. Item.pattern accepts a string or array: :name matches one non-empty segment and a final * matches zero or more remaining segments; other * segments are literal, never regular expressions. One computed item wins across groups and descendants: exact href first, then the longest matching href or pattern by segment count, with document-order ties. Explicit current:false excludes an item; any current:true suppresses computation. Matched descendants open their section and activate its rail flyout. NavListRouteMatching demonstrates /functions/fn-42, inherited prefix matching, exact overrides and dynamic project patterns. Exported matchesNavPath, matchesNavPattern, resolveCurrentNavItem and isNavItemCurrent are pure and router-agnostic.
 
 - Package: `@gntik-ai/ui` · export `NavList` · group Navigation · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/NavList/NavList.doc.ts
@@ -5616,41 +5616,101 @@ Tokens: chrome, accent, accent-foreground, primary, primary-text, secondary, bor
 Usage:
 
 ```tsx
-import { Bell, Building2, CreditCard, Plug, Shield, User } from '@gntik-ai/icons';
-import { useState } from 'react';
+import { Braces, FileText, Folder, Home, PanelLeft, PanelsTopLeft } from '@gntik-ai/icons';
+import { useState, type ComponentPropsWithRef } from 'react';
+import { useI18n } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
+import { LinkProvider } from '@gntik-ai/ui';
+import { SimpleSelect } from '@gntik-ai/ui';
+import { TooltipProvider } from '@gntik-ai/ui';
 import { NavList, type NavGroup } from '@gntik-ai/ui';
+// Keep preview navigation local, without requiring a router or reloading the catalog.
+function PreviewLink({ onClick, ...props }: ComponentPropsWithRef<'a'>) {
+  return (
+    <a
+      {...props}
+      onClick={(event) => {
+        event.preventDefault();
+        onClick?.(event);
+      }}
+    />
+  );
+}
 
-export default function NavListSettings() {
-  const [active, setActive] = useState('members');
-  const item = (id: string, label: string, extra: Partial<NavGroup['items'][number]> = {}) => ({
-    id,
-    label,
-    current: active === id,
-    onClick: () => setActive(id),
-    ...extra,
-  });
+const locations = [
+  '/',
+  '/?tab=a',
+  '/functions/fn-42',
+  '/functions-v2',
+  '/functions/templates/7',
+  '/projects/42',
+  '/projects/42/runs/7',
+  '/audit',
+  '/audit?page=2',
+];
+
+/** Opt-in matching against a real detail location, independent of any router. */
+export default function NavListRouteMatching() {
+  const { t } = useI18n();
+  const [currentHref, setCurrentHref] = useState('/functions/fn-42');
+  const [collapsed, setCollapsed] = useState(false);
   const groups: NavGroup[] = [
     {
       items: [
-        item('profile', 'Profile', { icon: User }),
-        item('notifications', 'Notifications', { icon: Bell, badge: 4 }),
-        item('security', 'Security', { icon: Shield }),
-      ],
-    },
-    {
-      label: 'Organization',
-      items: [
+        { label: t('navRoute.home'), href: '/', icon: Home },
+        { label: t('navRoute.functions'), href: '/functions', match: 'prefix', icon: Braces },
+        { label: t('navRoute.templates'), href: '/functions/templates', icon: PanelsTopLeft },
+        { label: t('navRoute.audit'), href: '/audit', match: 'exact', icon: FileText },
         {
-          label: 'Workspace',
-          icon: Building2,
-          items: [item('general', 'General'), item('members', 'Members'), item('roles', 'Roles')],
+          label: t('navRoute.projects'),
+          icon: Folder,
+          items: [
+            {
+              label: t('navRoute.project'),
+              href: '/projects',
+              match: 'exact',
+              pattern: ['/projects/:id', '/projects/:id/*'],
+            },
+          ],
         },
-        { label: 'Billing', icon: CreditCard, items: [item('plan', 'Plan'), item('invoices', 'Invoices')] },
-        item('integrations', 'Integrations', { icon: Plug, disabled: true }),
       ],
     },
   ];
-  return <NavList groups={groups} label="Settings" className="w-60" />;
+  return (
+    <LinkProvider component={PreviewLink}>
+      <TooltipProvider>
+        <div data-example="nav-list-route-matching" className="grid w-full max-w-sm gap-4">
+          <SimpleSelect
+            label={t('navRoute.location')}
+            items={locations.map((value) => ({ value, label: value }))}
+            value={currentHref}
+            onValueChange={(value) => {
+              if (value) setCurrentHref(value);
+            }}
+          />
+          <Button
+            variant="secondary"
+            icon={PanelLeft}
+            aria-expanded={!collapsed}
+            onClick={() => setCollapsed(!collapsed)}
+          >
+            {t(collapsed ? 'nav.expandSidebar' : 'nav.collapseSidebar')}
+          </Button>
+          <NavList
+            key={currentHref}
+            groups={groups}
+            onNavigate={(item) => {
+              if (item.href) setCurrentHref(item.href);
+            }}
+            currentHref={currentHref}
+            match="prefix"
+            collapsed={collapsed}
+            label={t('navRoute.navigation')}
+          />
+        </div>
+      </TooltipProvider>
+    </LinkProvider>
+  );
 }
 ```
 

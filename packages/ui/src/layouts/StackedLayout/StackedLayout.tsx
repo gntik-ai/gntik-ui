@@ -1,8 +1,8 @@
-import { createElement, type MouseEvent, type ReactNode } from 'react';
+import { createElement, useMemo, type MouseEvent, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
 import { useLinkComponent } from '../../components/Link';
 import { MobileNav } from '../../components/MobileNav';
-import { isNavItemCurrent, type NavItem } from '../../components/NavList';
+import { resolveCurrentNavItem, type NavItem } from '../../components/NavList';
 import { SkipLink } from '../../components/VisuallyHidden';
 import { useI18n } from '../../i18n/I18nProvider';
 import { stackedLayoutVariants, type StackedLayoutVariantProps } from './stacked-layout.variants';
@@ -108,6 +108,7 @@ export function StackedLayout({
   const navLabel = navLabelProp ?? t('common.main');
   const skipLinkLabel = skipLinkLabelProp ?? t('skip.main');
   const s = stackedLayoutVariants({ fullScreen, width });
+  const currentItem = useMemo(() => resolveCurrentNavItem([{ items: links }], currentHref), [links, currentHref]);
   return (
     <div className={cn(s.root(), className)}>
       <SkipLink targetId={mainId} className={s.skip()}>
@@ -141,7 +142,7 @@ export function StackedLayout({
                     <DesktopLink
                       key={item.id ?? item.href ?? item.label}
                       item={item}
-                      current={isNavItemCurrent(item, currentHref)}
+                      current={item.current ?? item === currentItem}
                       className={s.link()}
                       onNavigate={onNavigate}
                     />

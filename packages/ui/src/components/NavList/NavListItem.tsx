@@ -6,7 +6,13 @@ import { cn } from '../../utils/cn';
 import { useLinkComponent } from '../Link';
 import { Menu, MenuContent, MenuGroup, MenuGroupLabel, MenuItem, MenuTrigger, menuVariants } from '../Menu';
 import { SimpleTooltip } from '../Tooltip';
-import { isNavItemCurrent, navItemContainsCurrent, navItemKey, useNavListContext, type NavItem } from './nav-context';
+import {
+  isResolvedNavItemCurrent,
+  navItemContainsCurrent,
+  navItemKey,
+  useNavListContext,
+  type NavItem,
+} from './nav-context';
 import { navListVariants } from './nav-list.variants';
 
 const ICON_SIZE = { 0: 17, 1: 15 } as const;
@@ -34,8 +40,8 @@ function Badge({ item, current }: { item: NavItem; current: boolean }) {
 
 function NavLeaf({ item, depth }: { item: NavItem; depth: number }) {
   const RouterLink = useLinkComponent();
-  const { collapsed, currentHref, onNavigate } = useNavListContext();
-  const current = isNavItemCurrent(item, currentHref);
+  const { collapsed, currentKey, onNavigate } = useNavListContext();
+  const current = isResolvedNavItemCurrent(item, currentKey);
   const rail = collapsed && depth === 0;
   const s = navListVariants({ collapsed: rail, current });
   const IconCmp = item.icon;
@@ -87,11 +93,11 @@ function NavLeaf({ item, depth }: { item: NavItem; depth: number }) {
 
 /** Expanded mode: a collapsible section whose sub-items sit on a vertical guide line. */
 function NavParent({ item, depth }: { item: NavItem; depth: number }) {
-  const { currentHref } = useNavListContext();
+  const { currentKey } = useNavListContext();
   const s = navListVariants({ collapsed: false });
   const IconCmp = item.icon;
   return (
-    <Collapsible.Root defaultOpen={item.defaultOpen ?? navItemContainsCurrent(item, currentHref)}>
+    <Collapsible.Root defaultOpen={item.defaultOpen ?? navItemContainsCurrent(item, currentKey)}>
       <Collapsible.Trigger className={cn('group', depth === 0 ? cn(s.item(), s.parent()) : s.subItem(), 'w-full')}>
         {IconCmp && (
           <IconCmp
@@ -118,8 +124,8 @@ function NavParent({ item, depth }: { item: NavItem; depth: number }) {
 /** Rail mode: the parent's icon opens a flyout menu listing its sub-items. */
 function NavRailFlyout({ item }: { item: NavItem }) {
   const RouterLink = useLinkComponent();
-  const { currentHref, onNavigate } = useNavListContext();
-  const active = navItemContainsCurrent(item, currentHref);
+  const { currentKey, onNavigate } = useNavListContext();
+  const active = navItemContainsCurrent(item, currentKey);
   const s = navListVariants({ collapsed: true });
   const m = menuVariants();
   const IconCmp = item.icon;
@@ -133,7 +139,7 @@ function NavRailFlyout({ item }: { item: NavItem }) {
         <MenuGroup>
           <MenuGroupLabel>{item.label}</MenuGroupLabel>
           {(item.items ?? []).map((child) => {
-            const current = isNavItemCurrent(child, currentHref);
+            const current = isResolvedNavItemCurrent(child, currentKey);
             const ChildIcon = child.icon;
             return child.href !== undefined ? (
               <BaseMenu.LinkItem
@@ -156,6 +162,8 @@ function NavRailFlyout({ item }: { item: NavItem }) {
                 key={navItemKey(child)}
                 icon={ChildIcon}
                 disabled={child.disabled}
+                aria-current={current ? 'page' : undefined}
+                className={current ? 'font-semibold text-primary-text' : undefined}
                 onClick={(event) => {
                   child.onClick?.(event);
                   onNavigate?.(child);

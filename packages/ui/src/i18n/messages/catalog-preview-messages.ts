@@ -1,5 +1,13 @@
 /** Catalog copy for scoped theme and resource previews. */
 export const catalogPreviewEn = {
+  'navRoute.home': 'Home',
+  'navRoute.functions': 'Functions',
+  'navRoute.templates': 'Templates',
+  'navRoute.audit': 'Audit',
+  'navRoute.projects': 'Projects',
+  'navRoute.project': 'Project',
+  'navRoute.location': 'Location',
+  'navRoute.navigation': 'Route matching',
   'responsive.item': 'Item {number}',
   'responsive.fullWidth': 'Full-width summary',
   'responsive.sectionTitle': 'Responsive spacing',
@@ -24,6 +32,14 @@ export const catalogPreviewEn = {
 } as const;
 
 export const catalogPreviewEs = {
+  'navRoute.home': 'Inicio',
+  'navRoute.functions': 'Funciones',
+  'navRoute.templates': 'Plantillas',
+  'navRoute.audit': 'Auditoría',
+  'navRoute.projects': 'Proyectos',
+  'navRoute.project': 'Proyecto',
+  'navRoute.location': 'Ubicación',
+  'navRoute.navigation': 'Coincidencia de rutas',
   'responsive.item': 'Elemento {number}',
   'responsive.fullWidth': 'Resumen de ancho completo',
   'responsive.sectionTitle': 'Espaciado adaptable',
