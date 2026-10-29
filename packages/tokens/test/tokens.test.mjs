@@ -1,3 +1,4 @@
+import { PALETTES } from '../src/palettes.js';
 // Colours are frozen (CLAUDE.md): brand.css must keep exactly the values
 // recorded in frozen-values.json for :root, .dark and .high_contrast.
 import { test } from 'node:test';
@@ -61,7 +62,8 @@ test('pairing aliases resolve to existing tokens and meet WCAG AA', () => {
   const aliases = parse(pairing);
   for (const theme of [':root', '.dark', '.high_contrast']) {
     // Themes inherit :root, so resolve against the merged set.
-    const tokens = { ...brand[':root'], ...brand[theme] };
+    const status = parse(fs.readFileSync(new URL('../src/status.css', import.meta.url), 'utf8'));
+    const tokens = { ...brand[':root'], ...brand[theme], ...status[':root'], ...status[theme] };
     for (const [alias, value] of Object.entries(aliases[theme])) {
       const m = /^var\((--[\w-]+)\)$/.exec(value);
       assert.ok(m, `${theme} ${alias} must be var(--token), got ${value}`);
@@ -121,7 +123,8 @@ test('chip text aliases meet WCAG AA on their tint in every theme', () => {
     '--destructive-chip-text': '--destructive',
   };
   for (const theme of [':root', '.dark', '.high_contrast']) {
-    const tokens = { ...brand[':root'], ...brand[theme] };
+    const status = parse(fs.readFileSync(new URL('../src/status.css', import.meta.url), 'utf8'));
+    const tokens = { ...brand[':root'], ...brand[theme], ...status[':root'], ...status[theme] };
     for (const [alias, tone] of Object.entries(TONE)) {
       const text = hslToRgb(tokens[/var\((--[\w-]+)\)/.exec(aliases[theme][alias])[1]]);
       for (const surface of ['--background', '--card', '--popover']) {
@@ -138,10 +141,93 @@ test('chip text aliases meet WCAG AA on their tint in every theme', () => {
 test('filled field text and placeholders meet AA on secondary in every theme', () => {
   const brand = parse(css);
   for (const theme of [':root', '.dark', '.high_contrast']) {
-    const tokens = { ...brand[':root'], ...brand[theme] };
+    const status = parse(fs.readFileSync(new URL('../src/status.css', import.meta.url), 'utf8'));
+    const tokens = { ...brand[':root'], ...brand[theme], ...status[':root'], ...status[theme] };
     for (const text of ['--foreground', '--muted-foreground']) {
       const contrast = ratio(tokens[text], tokens['--secondary']);
       assert.ok(contrast >= 4.5, `${theme} ${text} on secondary is ${contrast.toFixed(2)}:1`);
+    }
+  }
+});
+
+test('light success aliases use the independent success-strong status token', () => {
+  const aliases = parse(pairing)[':root'];
+  assert.equal(aliases['--success-text'], 'var(--success-strong)');
+  assert.equal(aliases['--success-chip-text'], 'var(--success-strong)');
+  const status = parse(fs.readFileSync(new URL('../src/status.css', import.meta.url), 'utf8'));
+  assert.equal(status[':root']['--success-strong'], '153 55% 22%');
+  assert.equal(status['.dark']['--success-strong'], '145 61% 50%');
+});
+
+// Palette files are tested as shipped, independently of the export pipeline.
+const paletteBlocks = (text) =>
+  [...text.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+    .filter(([, selector]) => !selector.trim().startsWith('@'))
+    .map(([, , body]) =>
+      Object.fromEntries([...body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, k, v]) => [k, v.trim()])),
+    );
+function assertComplete(palette, theme, actual) {
+  const expected = Object.keys(frozen['.dark']).concat('--success-strong');
+  for (const key of expected) assert.ok(key in actual, `${palette} ${theme} missing ${key}`);
+  for (const key of Object.keys(actual)) assert.ok(expected.includes(key), `${palette} ${theme} unexpected ${key}`);
+}
+
+for (const palette of PALETTES.filter((id) => id !== 'green'))
+  test(`${palette} ships complete light and dark palettes`, () => {
+    const blocks = paletteBlocks(fs.readFileSync(new URL(`../src/palettes/${palette}.css`, import.meta.url), 'utf8'));
+    assert.equal(blocks.length, 2);
+    assertComplete(palette, 'light', blocks[0]);
+    assertComplete(palette, 'dark', blocks[1]);
+    if (palette !== 'navy') return;
+    assert.equal(blocks[0]['--primary'], '223 54% 23%');
+    assert.equal(blocks[0]['--background'], '222 28% 96%');
+    assert.equal(blocks[1]['--primary'], '221 90% 78%');
+    assert.equal(blocks[0]['--success-strong'], '150 60% 24%');
+  });
+
+test('completeness failures name palette, theme and missing or extra token', () => {
+  const fixture = { ...frozen['.dark'], '--success-strong': '145 61% 50%' };
+  delete fixture['--chrome'];
+  assert.throws(() => assertComplete('fixture', 'dark', fixture), /fixture dark missing --chrome/);
+  fixture['--chrome'] = '222 38% 5%';
+  fixture['--extra'] = '0 0% 0%';
+  assert.throws(() => assertComplete('fixture', 'dark', fixture), /fixture dark unexpected --extra/);
+});
+
+test('every palette passes text, chips, focus, button and hue separation contracts', () => {
+  for (const palette of PALETTES) {
+    const blocks =
+      palette === 'green'
+        ? [frozen[':root'], frozen['.dark']]
+        : paletteBlocks(fs.readFileSync(new URL(`../src/palettes/${palette}.css`, import.meta.url), 'utf8'));
+    for (const [index, tokens] of blocks.entries()) {
+      const theme = index === 0 ? 'light' : 'dark';
+      const aliases = parse(pairing)[index === 0 ? ':root' : '.dark'];
+      const colors = { '--success-strong': index === 0 ? '153 55% 22%' : '145 61% 50%', ...tokens };
+      const label = `${palette} ${theme}`;
+      for (const [alias, value] of Object.entries(aliases)) {
+        const color = colors[/var\((--[\w-]+)\)/.exec(value)[1]];
+        if (alias === '--focus-ring') {
+          assert.ok(ratio(color, colors['--background']) >= 3, `${label} ${alias}`);
+        } else
+          for (const surface of ['--background', '--card', '--popover']) {
+            if (alias.endsWith('-chip-text')) {
+              const tone = alias.replace('-chip-text', '');
+              for (const alpha of [0.1, 0.15, 0.2]) {
+                const tint = hslToRgb(colors[surface]).map(
+                  (v, i) => v * (1 - alpha) + hslToRgb(colors[tone])[i] * alpha,
+                );
+                assert.ok(rgbRatio(hslToRgb(color), tint) >= 4.5, `${label} ${alias} ${surface} ${alpha}`);
+              }
+            } else assert.ok(ratio(color, colors[surface]) >= 4.5, `${label} ${alias} ${surface}`);
+          }
+      }
+      assert.ok(ratio(colors['--primary-foreground'], colors['--primary']) >= 4.5, `${label} primary-foreground`);
+      const hue = parseFloat(colors['--primary']);
+      for (const token of ['--info', '--warning', '--destructive']) {
+        const distance = Math.abs(hue - parseFloat(colors[token]));
+        assert.ok(Math.min(distance, 360 - distance) >= 30, `${label} primary vs ${token}`);
+      }
     }
   }
 });

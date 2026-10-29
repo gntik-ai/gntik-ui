@@ -11718,7 +11718,8 @@
         }
       ],
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "@gntik-ai/tokens"
       ],
       "registryDependencies": [
         "ui-utils"

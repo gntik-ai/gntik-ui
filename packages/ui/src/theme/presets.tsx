@@ -1,12 +1,15 @@
+import type { PaletteId } from '@gntik-ai/tokens/runtime';
 import type { ReactNode } from 'react';
 import { MUSEMATIC_MARK_PATH } from './musematic-mark';
 
 /**
- * A brand preset is a product skin: name and logo only. Colours never change
- * between presets — every product renders the frozen tokens of @gntik-ai/tokens.
+ * A brand preset supplies name, logo and an optional named kit palette.
+ * Green is the default; high contrast is shared by every palette.
  */
 export interface BrandPreset {
   id: string;
+  /** Named palette from @gntik-ai/tokens; green when omitted. */
+  palette?: PaletteId;
   /** Product name, used in the wordmark and as the logo's accessible name. */
   name: string;
   /** Renders the square mark at `size` px. */

@@ -72,6 +72,29 @@ describe('CodeEditor', () => {
     await waitFor(() => expect(m.editorApi.setTheme).toHaveBeenLastCalledWith('gntik-light'));
   });
 
+  it('repaints the Monaco theme when only the palette changes', async () => {
+    const computed = vi.mocked(window.getComputedStyle).getMockImplementation()!;
+    vi.spyOn(window, 'getComputedStyle').mockImplementation((el) => {
+      const style = computed(el);
+      return {
+        getPropertyValue: (name: string) =>
+          name === '--primary' && document.documentElement.dataset.palette === 'navy'
+            ? '221 90% 78%'
+            : style.getPropertyValue(name),
+      } as CSSStyleDeclaration;
+    });
+    const m = createMockMonaco();
+    render(<CodeEditor value="" loader={m.loader} />);
+    await waitFor(() => expect(m.editorApi.setTheme).toHaveBeenLastCalledWith('gntik-dark'));
+    document.documentElement.dataset.palette = 'navy';
+    await waitFor(() => {
+      const themes = m.editorApi.defineTheme.mock.calls.filter(([id]) => id === 'gntik-dark');
+      const data = themes.at(-1)?.[1] as { colors: Record<string, string> };
+      expect(data.colors['editorCursor.foreground']).toMatch(/^#94b4f9$/);
+    });
+    document.documentElement.removeAttribute('data-palette');
+  });
+
   it('disposes the editor on unmount and stops following the theme', async () => {
     const m = createMockMonaco();
     const { unmount } = render(<CodeEditor value="" loader={m.loader} />);

@@ -13,12 +13,12 @@
    ============================================================================ */
 :root {
   --primary-text: var(--accent-foreground);
-  --success-text: var(--accent-foreground);
+  --success-text: var(--success-strong);
   --warning-text: var(--foreground);
   --destructive-text: var(--destructive);
   --focus-ring: var(--brand-secondary);
   --primary-chip-text: var(--accent-foreground);
-  --success-chip-text: var(--accent-foreground);
+  --success-chip-text: var(--success-strong);
   --warning-chip-text: var(--foreground);
   --destructive-chip-text: var(--foreground);
 }

@@ -1,3 +1,4 @@
+import { PALETTES } from '@gntik-ai/tokens/runtime';
 import { readFileSync } from 'node:fs';
 import {
   CHART_COLORS,
@@ -54,14 +55,27 @@ const brandPath = decodeURIComponent(new URL('../../tokens/src/brand.css', impor
 );
 const brand = parse(readFileSync(brandPath, 'utf8'));
 const THEMES = [':root', '.dark', '.high_contrast'] as const;
-const tokensOf = (theme: string): Vars => ({
-  ...brand[':root'],
-  ...brand[theme],
-});
+const paletteValues = (palette: string): Vars[] => {
+  if (palette === 'green') return [brand[':root']!, brand['.dark']!];
+  const file = brandPath.replace('brand.css', `palettes/${palette}.css`);
+  return [
+    ...readFileSync(file, 'utf8')
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .matchAll(/([^{}]+)\{([^{}]*)\}/g),
+  ]
+    .filter(([, selector]) => !selector!.trim().startsWith('@'))
+    .map(([, , body]) =>
+      Object.fromEntries([...body!.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, k, v]) => [k!, v!.trim()])),
+    );
+};
+const tokensOf = (palette: string, theme: string): Vars =>
+  theme === '.high_contrast'
+    ? { ...brand[':root'], ...brand[theme] }
+    : paletteValues(palette)[theme === ':root' ? 0 : 1]!;
 
-describe('categorical palette (colour-blind safety)', () => {
+describe.each(PALETTES)('categorical palette %s (colour-blind safety)', (palette) => {
   it.each(THEMES)('adjacent SAFE_CHART_COLORS differ in luminance by ≥ 1.5:1 in %s', (theme) => {
-    const tokens = tokensOf(theme);
+    const tokens = tokensOf(palette, theme);
     for (let i = 1; i < SAFE_CHART_COLORS.length; i++) {
       const a = tokens[SERIES_TOKENS[SAFE_CHART_COLORS[i - 1]!]]!;
       const b = tokens[SERIES_TOKENS[SAFE_CHART_COLORS[i]!]]!;
@@ -70,7 +84,7 @@ describe('categorical palette (colour-blind safety)', () => {
   });
 
   it.each(THEMES)('every categorical colour stands out from the card (≥ 2:1, non-text) in %s', (theme) => {
-    const tokens = tokensOf(theme);
+    const tokens = tokensOf(palette, theme);
     for (const c of SAFE_CHART_COLORS)
       expect(ratio(tokens[SERIES_TOKENS[c]]!, tokens['--card']!)).toBeGreaterThanOrEqual(2);
   });
@@ -142,4 +156,11 @@ describe('chartFmt (extended)', () => {
     expect(chartFmt.bytes(1536)).toBe('1.5 kB');
     expect(chartFmt.bytes(2_000_000_000)).toBe('2 GB');
   });
+});
+
+it('rejects the darker navy dark candidate next to violet', () => {
+  const tokens = tokensOf('navy', '.dark');
+  const contrast = ratio('221 85% 72%', tokens['--category-violet']!);
+  expect(contrast).toBeCloseTo(1.35, 2);
+  expect(contrast).toBeLessThan(1.5);
 });

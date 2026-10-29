@@ -18155,7 +18155,8 @@
       "description": "ThemeProvider (persisted page mode, optional forcedMode), ThemeScope (nested themes and themed portals), themeScript, Logo and brand presets.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.8.0",
+        "@gntik-ai/tokens"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",

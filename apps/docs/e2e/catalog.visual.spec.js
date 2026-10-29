@@ -24,22 +24,26 @@ const SLOW = { monaco: 4000, reactflow: 1500 };
 const VIEWPORT_ONLY = new Set(['ui-components', 'chat-components', 'layouts', 'blocks', 'templates']);
 
 const cases = [
-  ...ids.map((id) => ({ id, theme: 'dark' })),
+  ...ids.filter((id) => id !== 'theming').map((id) => ({ id, theme: 'dark', palette: 'green' })),
+  ...['theming', 'buttons', 'area-charts'].flatMap((id) =>
+    ['dark', ''].map((theme) => ({ id, theme, palette: 'navy' })),
+  ),
   ...THEME_SAMPLE.flatMap((id) => [
     { id, theme: '' },
     { id, theme: 'high_contrast' },
   ]),
 ];
 
-for (const { id, theme } of cases) {
-  const name = `${id}--${theme || 'light'}`;
+for (const { id, theme, palette = 'green' } of cases) {
+  const name = `${id}--${theme || 'light'}${palette === 'green' ? '' : '--navy'}`;
   test(name, async ({ page }) => {
     await page.addInitScript(
-      ([t, s]) => {
+      ([t, s, p]) => {
         localStorage.setItem('gntik-theme', t);
+        localStorage.setItem('gntik-palette', p);
         localStorage.setItem('gntik-section', s);
       },
-      [theme, id],
+      [theme, id, palette],
     );
     await page.goto(`/#${id}`);
     await page.locator('main h1').first().waitFor();

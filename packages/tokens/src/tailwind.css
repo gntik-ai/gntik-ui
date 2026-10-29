@@ -8,8 +8,10 @@
    Themes switch by class on <html>: "" (light) · "dark" · "high_contrast".
    ============================================================================ */
 @import "./brand.css";
+@import "./status.css";
 @import "./pairing.css";
 @import "./scope.css";
+@import "./palettes/index.css";
 @import "./motion.css";
 @import "./cursor.css";
 @import "./layers.css";

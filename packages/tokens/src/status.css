@@ -1,0 +1,13 @@
+/* Status colours stay independent of the brand palette. */
+:root {
+  --success-strong: 153 55% 22%;
+}
+.light {
+  --success-strong: 153 55% 22%;
+}
+.dark {
+  --success-strong: 145 61% 50%;
+}
+.high_contrast {
+  --success-strong: 136 100% 48%;
+}

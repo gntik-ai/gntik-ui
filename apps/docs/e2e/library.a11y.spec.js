@@ -10,15 +10,22 @@ const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 const baselineFile = new URL('./a11y-baseline.json', import.meta.url);
 const baseline = JSON.parse(fs.readFileSync(baselineFile, 'utf8'));
 
-for (const theme of ['dark', '', 'high_contrast']) {
+for (const [palette, theme] of [
+  ['green', 'dark'],
+  ['green', ''],
+  ['green', 'high_contrast'],
+  ['navy', 'dark'],
+  ['navy', ''],
+]) {
   const name = theme || 'light';
-  test(`ui-components a11y --${name}`, async ({ page }) => {
+  test(`ui-components a11y --${palette}-${name}`, async ({ page }) => {
     await page.addInitScript(
-      ([t]) => {
+      ([t, p]) => {
         localStorage.setItem('gntik-theme', t);
+        localStorage.setItem('gntik-palette', p);
         localStorage.setItem('gntik-section', 'ui-components');
       },
-      [theme],
+      [theme, palette],
     );
     await page.goto('/#ui-components');
     await page.locator('main h1').first().waitFor();
@@ -32,10 +39,10 @@ for (const theme of ['dark', '', 'high_contrast']) {
       });
       return r.violations.flatMap((v) => v.nodes.map((n) => `${v.id} :: ${n.target.join(' ')}`));
     });
-    const known = new Set(baseline[name] ?? []);
+    const known = new Set(baseline[palette === 'green' ? name : `${palette}-${name}`] ?? []);
     const fresh = violations.filter((v) => !known.has(v));
     if (process.env.A11Y_UPDATE) {
-      baseline[name] = [...new Set(violations)].sort();
+      baseline[palette === 'green' ? name : `${palette}-${name}`] = [...new Set(violations)].sort();
       fs.writeFileSync(baselineFile, JSON.stringify(baseline, null, 2) + '\n');
     }
     expect(fresh, `new axe violations in ${name}`).toEqual([]);

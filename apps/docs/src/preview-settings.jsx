@@ -12,7 +12,7 @@ export const DIRECTIONS = [
   ['ltr', 'LTR'],
   ['rtl', 'RTL'],
 ];
-export const DEFAULT_PREVIEW = { density: 'comfortable', dir: 'ltr' };
+export const DEFAULT_PREVIEW = { density: 'comfortable', dir: 'ltr', palette: 'green' };
 
 export const PreviewSettingsContext = createContext(DEFAULT_PREVIEW);
 export const usePreviewSettings = () => useContext(PreviewSettingsContext);
@@ -34,9 +34,10 @@ export function writeSetting(key, value) {
 }
 
 /** Extra preview.html query for non-default settings (default URLs stay unchanged). */
-export const previewQuery = ({ density, dir }) =>
+export const previewQuery = ({ density, dir, palette = 'green' }) =>
   (density !== DEFAULT_PREVIEW.density ? `&density=${density}` : '') +
-  (dir !== DEFAULT_PREVIEW.dir ? `&dir=${dir}` : '');
+  (dir !== DEFAULT_PREVIEW.dir ? `&dir=${dir}` : '') +
+  (palette !== DEFAULT_PREVIEW.palette ? `&palette=${palette}` : '');
 
 /** Wraps a live kit preview so it follows the topbar density and direction. */
 export function PreviewScope({ children }) {

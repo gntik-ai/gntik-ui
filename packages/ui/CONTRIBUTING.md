@@ -13,6 +13,11 @@ Each component lives in `src/components/<Name>/`:
 
 Rules:
 
+- Palettes come only from `@gntik-ai/tokens`: green (default) and navy. `brand.css` and
+  green values remain frozen. A preset may select a named palette; components never define
+  colour values. Every palette covers light/dark colours and shadows and passes the same
+  contrast checks. High contrast and categorical accents are shared.
+
 - Token classes only (`bg-primary`, `text-muted-foreground`, `border-border`…). No hex/rgb, no
   Tailwind palette colours, no gradients, no glow, no `dark:` variants (themes swap the tokens).
 - A state shown only by background, tint or shadow needs a `forced-colors:` fallback using CSS

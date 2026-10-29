@@ -14,6 +14,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PALETTES } from '../src/palettes.js';
+import { readPalettes } from './palette-model.mjs';
 
 const SRC = new URL('../src/', import.meta.url);
 const read = (f) => fs.readFileSync(new URL(f, SRC), 'utf8');
@@ -104,6 +106,8 @@ const ext = (cssVar, extra = {}) => ({ 'ai.gntik': { cssVar, ...extra } });
 export function readModel() {
   const brand = parseBlocks(read('brand.css'));
   const pairing = parseBlocks(read('pairing.css'));
+  const status = parseBlocks(read('status.css'));
+  const palettes = readPalettes(read);
   const layers = parseBlocks(read('layers.css'))[':root'];
   const motion = parseBlocks(read('motion.css'))[':root'];
   const typeVars = parseBlocks(read('typography.css'))[':root'];
@@ -117,13 +121,23 @@ export function readModel() {
   const root = brand[':root'];
   const themes = {};
   for (const t of THEMES) {
-    const vars = { ...root, ...brand[SELECTOR[t]] };
+    const vars = { ...root, ...brand[SELECTOR[t]], ...status[':root'], ...status[SELECTOR[t]] };
     const aliases = { ...pairing[':root'], ...pairing[SELECTOR[t]] };
     themes[t] = {
       colors: Object.fromEntries(Object.entries(vars).filter(([, v]) => isColor(v))),
       aliases: Object.fromEntries(Object.entries(aliases).map(([k, v]) => [k, /^var\((--[\w-]+)\)$/.exec(v)[1]])),
       shadows: Object.fromEntries(Object.entries(vars).filter(([k]) => k.startsWith('--shadow-'))),
     };
+  }
+  for (const [id, values] of Object.entries(palettes)) {
+    for (const [index, theme] of ['light', 'dark'].entries()) {
+      const vars = values[index];
+      themes[`${id}_${theme}`] = {
+        colors: Object.fromEntries(Object.entries(vars).filter(([, v]) => isColor(v))),
+        aliases: themes[theme].aliases,
+        shadows: Object.fromEntries(Object.entries(vars).filter(([k]) => k.startsWith('--shadow-'))),
+      };
+    }
   }
   const fonts = Object.fromEntries(Object.entries(root).filter(([k]) => k.startsWith('--font-')));
   const radii = Object.fromEntries(
@@ -180,7 +194,7 @@ export function toDtcg(model) {
     else if (k.startsWith('--ease-'))
       doc.easing[name(k).replace('ease-', '')] = { $value: v.match(/[\d.]+/g).map(Number), $extensions: ext(k) };
   }
-  for (const t of THEMES) {
+  for (const t of Object.keys(model.themes)) {
     const { colors, aliases, shadows } = model.themes[t];
     const color = { $type: 'color' };
     for (const [k, v] of Object.entries(colors)) color[name(k)] = { $value: colorValue(v), $extensions: ext(k) };
@@ -189,7 +203,7 @@ export function toDtcg(model) {
     const shadow = { $type: 'shadow' };
     for (const [k, v] of Object.entries(shadows))
       shadow[name(k).replace('shadow-', '')] = { $value: shadowLayers(v), $extensions: ext(k) };
-    doc[t] = { $description: `Theme "${t}" (${SELECTOR[t]})`, color, shadow };
+    doc[t] = { $description: `Theme "${t}" (${SELECTOR[t] ?? t.replace('_', ' / ')})`, color, shadow };
   }
   return doc;
 }
@@ -200,7 +214,7 @@ export function toFigma(model) {
   const varId = (k) => `var_${name(k)}`;
   const payload = {
     variableCollections: [{ action: 'CREATE', id: collectionId, name: 'gntik', initialModeId: modeId(THEMES[0]) }],
-    variableModes: THEMES.map((t, i) =>
+    variableModes: Object.keys(model.themes).map((t, i) =>
       i === 0
         ? { action: 'UPDATE', id: modeId(t), name: t, variableCollectionId: collectionId }
         : { action: 'CREATE', id: modeId(t), name: t, variableCollectionId: collectionId },
@@ -226,7 +240,7 @@ export function toFigma(model) {
     addVar(k, `color/${name(k)}`, 'COLOR', ['ALL_FILLS', 'STROKE_COLOR', 'EFFECT_COLOR'], `hsl(var(${k}))`);
   for (const k of Object.keys(first.aliases))
     addVar(k, `color/${name(k)}`, 'COLOR', ['TEXT_FILL', 'STROKE_COLOR'], `hsl(var(${k}))`);
-  for (const t of THEMES) {
+  for (const t of Object.keys(model.themes)) {
     for (const [k, v] of Object.entries(model.themes[t].colors)) {
       const [r, g, b] = hslToRgb(v);
       setValue(k, t, { r, g, b, a: 1 });
@@ -241,16 +255,16 @@ export function toFigma(model) {
       ['CORNER_RADIUS'],
       `var(${k})`,
     );
-    for (const t of THEMES) setValue(k, t, css === 'var(--radius)' ? alias('--radius') : px);
+    for (const t of Object.keys(model.themes)) setValue(k, t, css === 'var(--radius)' ? alias('--radius') : px);
   }
   for (const [k, v] of Object.entries(model.fonts)) {
     addVar(k, `font/${name(k).replace('font-', '')}`, 'STRING', ['FONT_FAMILY'], `var(${k})`);
-    for (const t of THEMES) setValue(k, t, fontStack(v)[0]);
+    for (const t of Object.keys(model.themes)) setValue(k, t, fontStack(v)[0]);
   }
   for (const [k, v] of Object.entries(model.motion)) {
     if (!k.startsWith('--duration-')) continue; // Figma variables have no easing type
     addVar(k, `motion/${name(k)}`, 'FLOAT', [], `var(${k})`);
-    for (const t of THEMES) setValue(k, t, parseFloat(v));
+    for (const t of Object.keys(model.themes)) setValue(k, t, parseFloat(v));
   }
   for (const [role, type] of Object.entries(model.typography)) {
     const size = toPx(type.size, {});
@@ -262,7 +276,7 @@ export function toFigma(model) {
     for (const [property, field, scope, value] of fields) {
       const key = `--type-${role}-${property}`;
       addVar(key, `type/${role}/${field}`, 'FLOAT', [scope], `var(${key})`);
-      for (const theme of THEMES) setValue(key, theme, value);
+      for (const theme of Object.keys(model.themes)) setValue(key, theme, value);
     }
   }
   return payload; // Shadows have no Figma variable type: publish them as effect styles from tokens.json.
@@ -309,6 +323,8 @@ export function toTs(model) {
   const j = (v) => JSON.stringify(v, null, 2);
   const body = (ts) => `// Generated by @gntik-ai/tokens/scripts/export-tokens.mjs from brand.css. Do not edit.
 export const themes = ${j(THEMES)}${ts ? ' as const' : ''};
+export const PALETTES = ${j(PALETTES)}${ts ? ' as const' : ''};
+${ts ? 'export type PaletteId = (typeof PALETTES)[number];' : ''}
 export const colorTokens = ${j(colorNames)}${ts ? ' as const' : ''};
 ${
   ts
@@ -335,6 +351,8 @@ export const motion = ${j(motion)}${ts ? ' as const' : ''};
   const dts = `// Generated by @gntik-ai/tokens/scripts/export-tokens.mjs. Do not edit.
 export declare const themes: readonly ${j(THEMES).replace(/\n\s*/g, ' ')};
 export type Theme = (typeof themes)[number];
+export declare const PALETTES: readonly ["green", "navy"];
+export type PaletteId = (typeof PALETTES)[number];
 export declare const colorTokens: readonly [${colorNames.map((n) => `"${n}"`).join(', ')}];
 export type ColorToken = (typeof colorTokens)[number];
 export declare const colors: Record<Theme, Record<ColorToken, string>>;
