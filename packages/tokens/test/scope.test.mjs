@@ -6,6 +6,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
+import { readPalettes } from '../scripts/palette-model.mjs';
+
 const read = (path) => readFileSync(new URL(path, import.meta.url), 'utf8');
 const frozen = JSON.parse(read('./frozen-values.json'));
 const declarations = (css, selector) => {
@@ -39,16 +41,44 @@ test('generation is byte-idempotent without writing to the source checkout', asy
   const directory = mkdtempSync(join(tmpdir(), 'theme-scope-'));
   t.after(() => rmSync(directory, { recursive: true, force: true }));
   mkdirSync(join(directory, 'scripts'));
+  mkdirSync(join(directory, 'src'));
+  copyFileSync(new URL('../scripts/palette-model.mjs', import.meta.url), join(directory, 'scripts/palette-model.mjs'));
+  copyFileSync(new URL('../src/palettes.js', import.meta.url), join(directory, 'src/palettes.js'));
   const generator = join(directory, 'scripts/build-scope.mjs');
   copyFileSync(new URL('../scripts/build-scope.mjs', import.meta.url), generator);
   // Importing the renderer must work without a writable or even present src directory.
   const { renderScope } = await import(pathToFileURL(generator).href);
   const pairing = read('../src/pairing.css');
   const expected = read('../src/scope.css');
-  assert.equal(renderScope(brand, pairing), expected);
-  assert.equal(renderScope(brand, pairing), expected);
+  assert.equal(
+    renderScope(
+      brand,
+      pairing,
+      readPalettes((file) => read('../src/' + file)),
+      read('../src/status.css'),
+    ),
+    expected,
+  );
+  assert.equal(
+    renderScope(
+      brand,
+      pairing,
+      readPalettes((file) => read('../src/' + file)),
+      read('../src/status.css'),
+    ),
+    expected,
+  );
 
   assert.equal(read('../src/scope.css'), expected);
   assert.equal(read('../src/pairing.css'), pairing);
   assert.equal(read('../src/brand.css'), brand);
+});
+
+test('generated palette scopes reapply navy values and aliases at theme boundaries', () => {
+  const css = read('../src/scope.css');
+  assert.match(css, /@scope \(\[data-palette="navy"\]\) to \(\[data-palette\]\)/);
+  assert.match(css, /--primary: 223 54% 23%;/);
+  assert.match(css, /--primary: 221 90% 78%;/);
+  assert.match(css, /--success-text: var\(--success-strong\);/);
+  assert.match(css, /:where\(\.high_contrast\) :is\(\[data-palette\], \.light, \.dark\)/);
 });

@@ -6,7 +6,8 @@
    live preview through PreviewSettingsContext (see preview-settings.jsx).
    Pending sections show a placeholder with their planned scope.
    ============================================================================ */
-import { DensityProvider } from '@gntik-ai/ui';
+import { PALETTES } from '@gntik-ai/tokens/runtime';
+import { DensityProvider, Select, SelectTrigger, SelectContent, SelectItem } from '@gntik-ai/ui';
 import { DENSITIES, DIRECTIONS, PreviewSettingsContext, readSetting, writeSetting } from '../preview-settings.jsx';
 
 const { Icon, LogoMark, StatusTag, REGISTRY, regFlat, regFind, regCounts, useState, useEffect, useRef } = window;
@@ -137,12 +138,22 @@ function CatalogShell() {
   const initial = (location.hash || '').replace('#', '') || localStorage.getItem('gntik-section') || 'overview';
   const [active, setActive] = useState(ids.includes(initial) ? initial : 'overview');
   const [theme, setTheme] = useState(localStorage.getItem('gntik-theme') ?? 'dark');
+  const [palette, setPalette] = useState(() =>
+    readSetting(
+      'gntik-palette',
+      PALETTES.map((id) => [id, id]),
+    ),
+  );
   const [density, setDensity] = useState(() => readSetting('gntik-density', DENSITIES));
   const [dir, setDir] = useState(() => readSetting('gntik-dir', DIRECTIONS));
-  const previewSettings = { density, dir };
+  const previewSettings = { density, dir, palette };
   const mainRef = useRef(null);
   const c = regCounts();
 
+  useEffect(() => {
+    document.documentElement.dataset.palette = palette;
+    writeSetting('gntik-palette', palette);
+  }, [palette]);
   useEffect(() => {
     document.documentElement.className = theme;
     localStorage.setItem('gntik-theme', theme);
@@ -249,6 +260,20 @@ function CatalogShell() {
               <div className="flex items-center gap-2 shrink-0">
                 <PreviewToggle label="Preview density" options={DENSITIES} value={density} onChange={setDensity} />
                 <PreviewToggle label="Preview direction" options={DIRECTIONS} value={dir} onChange={setDir} />
+                <Select
+                  value={palette}
+                  onValueChange={(value) => value && setPalette(value)}
+                  items={PALETTES.map((id) => ({ value: id, label: id === 'navy' ? 'Navy' : 'Green' }))}
+                >
+                  <SelectTrigger aria-label="Colour palette" className="w-24" />
+                  <SelectContent>
+                    {PALETTES.map((id) => (
+                      <SelectItem key={id} value={id}>
+                        {id === 'navy' ? 'Navy' : 'Green'}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <ThemeSwitch theme={theme} setTheme={setTheme} />
               </div>
             </header>

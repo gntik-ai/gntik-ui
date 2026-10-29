@@ -62,3 +62,8 @@ server. Blocks and templates carry the same field in `block.meta.ts` / `template
 `@gntik-ai/tokens` has no lab stage. Colour values in `brand.css` are frozen
 (`test/frozen-values.json`); new tokens (e.g. motion) arrive as `beta` in a separate file and
 become stable after one release cycle without changes.
+
+Named colour palettes ship only from the tokens package (green default, navy opt-in). Each
+palette covers every light/dark colour and shadow token plus success-strong, passes the same
+contrast checks, and shares high contrast and categorical accents. Brand presets may select
+a palette; components keep using token classes.

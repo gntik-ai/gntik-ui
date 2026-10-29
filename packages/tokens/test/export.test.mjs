@@ -107,11 +107,11 @@ test('figma-variables.json: one "gntik" collection, three modes, values and alia
   );
   assert.deepEqual(
     figma.variableModes.map((m) => m.name),
-    THEMES,
+    [...THEMES, 'navy_light', 'navy_dark'],
   );
   const ids = new Set(figma.variables.map((v) => v.id));
   assert.equal(ids.size, figma.variables.length);
-  assert.equal(figma.variableModeValues.length, figma.variables.length * THEMES.length);
+  assert.equal(figma.variableModeValues.length, figma.variables.length * (THEMES.length + 2));
   for (const mv of figma.variableModeValues) {
     assert.ok(ids.has(mv.variableId));
     if (mv.value?.type === 'VARIABLE_ALIAS') assert.ok(ids.has(mv.value.id), `${mv.variableId} alias target`);
@@ -212,5 +212,20 @@ test('TypeScript, JavaScript and declarations expose all eleven CSS type roles',
     const source = fs.readFileSync(path.join(out, file), 'utf8');
     assert.match(source, /export (?:declare )?const typeScale/);
     for (const role of Object.keys(mod.typeScale)) assert.ok(source.includes(`"${role}"`), `${file}: ${role}`);
+  }
+});
+
+test('palette exports include the named palette ids and navy design-tool modes', async () => {
+  const mod = await import(path.join(out, 'tokens.js'));
+  assert.deepEqual(mod.PALETTES, ['green', 'navy']);
+  assert.match(fs.readFileSync(path.join(out, 'tokens.d.ts'), 'utf8'), /export type PaletteId/);
+  assert.deepEqual(dtcg.navy_light.color.primary.$value.components, [223, 54, 23]);
+  assert.deepEqual(dtcg.navy_dark.color.primary.$value.components, [221, 90, 78]);
+  assert.equal(dtcg.navy_light.color['success-text'].$value, '{navy_light.color.success-strong}');
+  assert.equal(dtcg.navy_light.shadow.sm.$value[0].color.components[0], 222);
+  for (const mode of ['navy_light', 'navy_dark']) {
+    assert.ok(figma.variableModes.some((v) => v.name === mode));
+    const color = figma.variableModeValues.find((v) => v.variableId === 'var_primary' && v.modeId === `mode_${mode}`);
+    assert.ok(color);
   }
 });

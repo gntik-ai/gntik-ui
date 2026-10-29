@@ -15,6 +15,7 @@ const REGISTRY = [
   ]},
   { group: 'Foundations', icon: 'palette', items: [
     { id: 'foundations', label: 'Foundations', icon: 'palette', status: 'done', blurb: 'Tokens: color, typography, spacing, radii, shadows and icons.' },
+    { id: 'theming', label: 'Theming', icon: 'palette', status: 'done', blurb: 'Named green and navy palettes, theme scopes, persistence and first paint.' },
     { id: 'theme-builder', label: 'Theme builder', icon: 'palette', status: 'done', blurb: 'Product name + SVG mark → BrandPreset: previews in 3 themes and a console, contrast checks, export.' },
   ]},
   { group: 'Library', icon: 'bricks', items: [

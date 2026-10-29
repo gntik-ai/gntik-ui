@@ -1,3 +1,6 @@
+import { PALETTES } from './palettes.js';
+export { PALETTES };
+
 // @gntik-ai/tokens/runtime — the one adapter that canvas/SVG libraries (Recharts,
 // React Flow, Monaco) use to read brand tokens at runtime. Values always come
 // from the live CSS variables of brand.css, so a theme switch re-skins them.
@@ -50,12 +53,21 @@ export function currentTheme(el) {
   return c.contains('high_contrast') ? 'high_contrast' : c.contains('dark') ? 'dark' : 'light';
 }
 
-/** Calls `cb` whenever the theme class on <html> changes. Returns an unsubscribe function. */
+/** Nearest palette id, with green as the default (also on the server). */
+export function currentPalette(el) {
+  if (typeof document === 'undefined') return 'green';
+  const id = (el || document.documentElement).closest('[data-palette]')?.getAttribute('data-palette');
+  return PALETTES.includes(id) ? id : 'green';
+}
+
+/** Calls cb when a theme or palette on the target or its ancestors changes. */
 export function observeTheme(cb, el) {
   if (typeof MutationObserver === 'undefined' || typeof document === 'undefined') return () => {};
   const target = el || document.documentElement;
   const o = new MutationObserver(() => cb(currentTheme(target)));
-  o.observe(target, { attributes: true, attributeFilter: ['class'] });
+  for (let ancestor = target; ancestor; ancestor = ancestor.parentElement) {
+    o.observe(ancestor, { attributes: true, attributeFilter: ['class', 'data-palette'] });
+  }
   return () => o.disconnect();
 }
 

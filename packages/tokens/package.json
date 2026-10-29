@@ -28,7 +28,10 @@
     "./package.json": "./package.json",
     "./scope.css": "./src/scope.css",
     "./typography.css": "./src/typography.css",
-    "./layers.css": "./src/layers.css"
+    "./layers.css": "./src/layers.css",
+    "./status.css": "./src/status.css",
+    "./palettes/navy.css": "./src/palettes/navy.css",
+    "./palettes/index.css": "./src/palettes/index.css"
   },
   "sideEffects": [
     "*.css"

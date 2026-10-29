@@ -1,4 +1,6 @@
+import { PALETTES } from '@gntik-ai/tokens/runtime';
 import { readFileSync } from 'node:fs';
+import { parsePalette } from '../../tokens/scripts/palette-model.mjs';
 import {
   CHART_COLORS,
   SAFE_CHART_COLORS,
@@ -54,23 +56,33 @@ const brandPath = decodeURIComponent(new URL('../../tokens/src/brand.css', impor
 );
 const brand = parse(readFileSync(brandPath, 'utf8'));
 const THEMES = [':root', '.dark', '.high_contrast'] as const;
-const tokensOf = (theme: string): Vars => ({
-  ...brand[':root'],
-  ...brand[theme],
-});
+const paletteValues = (palette: string): Vars[] => {
+  if (palette === 'green') return [brand[':root']!, brand['.dark']!];
+  const file = brandPath.replace('brand.css', `palettes/${palette}.css`);
+  return parsePalette(readFileSync(file, 'utf8'));
+};
+const tokensOf = (palette: string, theme: string): Vars =>
+  theme === '.high_contrast'
+    ? { ...brand[':root'], ...brand[theme] }
+    : paletteValues(palette)[theme === ':root' ? 0 : 1]!;
 
-describe('categorical palette (colour-blind safety)', () => {
+function assertAdjacentContrast(tokens: Vars, label: string): void {
+  for (let i = 1; i < SAFE_CHART_COLORS.length; i++) {
+    const previous = SAFE_CHART_COLORS[i - 1]!;
+    const current = SAFE_CHART_COLORS[i]!;
+    const contrast = ratio(tokens[SERIES_TOKENS[previous]]!, tokens[SERIES_TOKENS[current]]!);
+    if (!(contrast >= 1.5)) throw new Error(`${label} ${previous} → ${current}: ${contrast.toFixed(2)}:1 below 1.5:1`);
+  }
+}
+
+describe.each(PALETTES)('categorical palette %s (colour-blind safety)', (palette) => {
   it.each(THEMES)('adjacent SAFE_CHART_COLORS differ in luminance by ≥ 1.5:1 in %s', (theme) => {
-    const tokens = tokensOf(theme);
-    for (let i = 1; i < SAFE_CHART_COLORS.length; i++) {
-      const a = tokens[SERIES_TOKENS[SAFE_CHART_COLORS[i - 1]!]]!;
-      const b = tokens[SERIES_TOKENS[SAFE_CHART_COLORS[i]!]]!;
-      expect(ratio(a, b), `${theme} ${SAFE_CHART_COLORS[i - 1]} → ${SAFE_CHART_COLORS[i]}`).toBeGreaterThanOrEqual(1.5);
-    }
+    const tokens = tokensOf(palette, theme);
+    assertAdjacentContrast(tokens, `${palette} ${theme}`);
   });
 
   it.each(THEMES)('every categorical colour stands out from the card (≥ 2:1, non-text) in %s', (theme) => {
-    const tokens = tokensOf(theme);
+    const tokens = tokensOf(palette, theme);
     for (const c of SAFE_CHART_COLORS)
       expect(ratio(tokens[SERIES_TOKENS[c]]!, tokens['--card']!)).toBeGreaterThanOrEqual(2);
   });
@@ -142,4 +154,9 @@ describe('chartFmt (extended)', () => {
     expect(chartFmt.bytes(1536)).toBe('1.5 kB');
     expect(chartFmt.bytes(2_000_000_000)).toBe('2 GB');
   });
+});
+
+it('rejects the darker navy dark candidate next to violet', () => {
+  const candidate = { ...tokensOf('navy', '.dark'), '--primary': '221 85% 72%' };
+  expect(() => assertAdjacentContrast(candidate, 'navy dark')).toThrow(/navy dark primary → violet: 1\.35:1/);
 });

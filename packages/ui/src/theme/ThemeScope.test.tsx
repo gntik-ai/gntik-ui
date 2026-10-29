@@ -133,3 +133,38 @@ it('defaults to no portal outside a scope and creates no portal during SSR', () 
   ).toContain('data-theme-scope="light"');
   expect(document.querySelector('[data-theme-scope-portal]')).toBeNull();
 });
+
+it('carries the nearest DOM palette into an initially open portal and follows palette changes', async () => {
+  const { rerender } = render(
+    <ThemeProvider palette="green">
+      <div data-palette="navy">
+        <ThemeScope theme="light">
+          <FruitSelect />
+        </ThemeScope>
+      </div>
+    </ThemeProvider>,
+  );
+  const listbox = await screen.findByRole('listbox');
+  const portal = listbox.closest('[data-theme-scope-portal]');
+  expect(portal).toHaveAttribute('data-palette', 'navy');
+  rerender(
+    <ThemeProvider palette="green">
+      <div data-palette="green">
+        <ThemeScope theme="light">
+          <FruitSelect />
+        </ThemeScope>
+      </div>
+    </ThemeProvider>,
+  );
+  await vi.waitFor(() => expect(portal).toHaveAttribute('data-palette', 'green'));
+});
+
+it('carries a palette selected on the ThemeScope itself into its portal', async () => {
+  render(
+    <ThemeScope theme="light" data-palette="navy">
+      <FruitSelect />
+    </ThemeScope>,
+  );
+  const listbox = await screen.findByRole('listbox');
+  expect(listbox.closest('[data-theme-scope-portal]')).toHaveAttribute('data-palette', 'navy');
+});

@@ -15,6 +15,7 @@ import type { ComponentDoc, DesignSystemIndex, IndexStats } from './types.js';
 import { analyzePage, type Analysis } from './analyze.js';
 import { validatePage, RULES, type ValidationReport } from './validate.js';
 import { readBlock } from './indexer.js';
+import { paletteIds, PALETTE_RULE, paletteRules, paletteCss, paletteThemes } from './palette-tokens.js';
 import { loadKit } from './kit.js';
 import { findKitItem, mdKitItem, registerKitTools } from './kit-tools.js';
 
@@ -95,15 +96,14 @@ function mdOverview(index: DesignSystemIndex): string {
   const count = (k: string) => kit.filter((i) => i.kind === k).length;
   return [
     '# gntik-ui — the product-agnostic design system of gntik-ai',
-    `**Brand:** green primary \`hsl(${primary})\` · Geist + Geist Mono · radius 0.625rem · 3 themes (dark default · light · high_contrast). Colour values are frozen; products differ only by a brand preset (name + logo).`,
+    `**Brand:** green primary \`hsl(${primary})\` · Geist + Geist Mono · radius 0.625rem · 3 themes (dark default · light · high_contrast). Green values stay frozen; presets may select a named palette (green default, navy opt-in).`,
     kit.length
       ? `**Kit (packages):** ${count('component')} components · ${count('layout')} layouts (@gntik-ai/ui, @gntik-ai/chat) · ${count('block')} blocks (@gntik-ai/blocks) · ${count('template')} page templates (@gntik-ai/templates).`
       : '**Kit (packages):** kit-registry.json not found next to this server.',
     `**Catalog (copy-paste reference):** ${index.stats.components} entries in ${index.stats.groups} groups · ${index.stats.snippets} canonical snippets · ${index.stats.tokens} tokens. Groups: ${groups.join(' · ')}`,
     '**How it works:** all styling comes from `@gntik-ai/tokens` (HSL channels, 3 themes). Components use ONLY token classes (`bg-primary`, `text-foreground`, `border-border`, `bg-card`…). Re-skinning = tokens; markup never changes.',
     '## Hard rules',
-    index.rulesMd ??
-      '- Sober: no gradients, no glow; flat shadows.\n- Mono-brand green; the primary is never a severity colour.\n- No hard-coded colours: always classes that resolve to tokens.',
+    paletteRules(index.rulesMd),
     '## Building a page',
     [
       '1. A template fits? `list_kit kind=template` → `scaffold_page template=<id>` (console templates render inside ConsoleShell).',
@@ -351,17 +351,19 @@ export function buildServer(ctx: ServerContext): McpServer {
       inputSchema: {
         theme: z.enum(['light', 'dark', 'high_contrast', 'all']).optional().describe('One theme or all (default)'),
         format: z.enum(['css', 'json']).optional().describe('css (default) | json'),
+        palette: z.enum(paletteIds(ctx.getIndex())).optional().describe('Named palette; green is the default'),
       },
     },
-    async ({ theme, format }) => {
+    async ({ theme, format, palette = 'green' }) => {
       const index = ctx.getIndex();
       const t = theme ?? 'all';
+      const paletteValues = paletteThemes(index, palette);
       if ((format ?? 'css') === 'json') {
-        const themes = t === 'all' ? index.themes : index.themes.filter((x) => x.theme === t);
-        return text(`${F}json\n${JSON.stringify(themes, null, 2)}\n${F}`);
+        const themes = t === 'all' ? paletteValues : paletteValues.filter((x) => x.theme === t);
+        return text(`${F}json\n${JSON.stringify({ palettes: paletteIds(index), themes }, null, 2)}\n${F}`);
       }
-      if (t === 'all') return text(`${F}css\n${index.tokensCss}\n${F}`);
-      const th = index.themes.find((x) => x.theme === t);
+      if (t === 'all') return text(`${F}css\n${paletteCss(index, palette)}\n${F}`);
+      const th = paletteValues.find((x) => x.theme === t);
       if (!th) return text(`Unknown theme: ${t}`);
       const body = Object.entries(th.tokens)
         .map(([k, v]) => `  --${k}:${v};`)
@@ -412,6 +414,8 @@ export function buildServer(ctx: ServerContext): McpServer {
         index.tailwindConfig
           ? `${F}css\n${index.tailwindConfig}\n${F}`
           : '(not found: packages/tokens/src/tailwind.css)',
+        '## Colour palettes',
+        PALETTE_RULE,
         '## Theme switching',
         'Class on `<html>`: none = light · `dark` · `high_contrast` (ThemeProvider handles it). For strict CSP, copy `@gntik-ai/ui/theme-bootstrap.js` to same-origin static assets and load it synchronously in <head> before stylesheets and the app bundle (no async, defer or type="module"). The file uses storage key `gntik-theme` and default mode `dark`; custom storageKey/defaultMode need a file generated from `themeScript(storageKey, defaultMode)`. Inline `themeScript()` is still an option when CSP permits it. Fonts: Geist + Geist Mono (self-hosted with @fontsource/geist and @fontsource/geist-mono).',
         'Both install paths use the item ids and per-package release pins in [registry-manifest.json](https://github.com/gntik-ai/gntik-ui/blob/main/packages/mcp/registry-manifest.json). The live registry follows main. Run release fidelity when packages publish; release workflow wiring remains a maintainer follow-up.',
@@ -432,8 +436,8 @@ export function buildServer(ctx: ServerContext): McpServer {
     async () => {
       const index = ctx.getIndex();
       const out = [
-        '# Hard rules (catalog CLAUDE.md)',
-        index.rulesMd ?? '(rules section not found — the validate_page checks apply)',
+        '# Hard rules',
+        paletteRules(index.rulesMd),
         '## Kit conventions',
         '- Brand-coloured text: `text-primary-text`, `text-success-text`, `text-warning-text`, `text-destructive-text`; on tinted chips/badges `text-<tone>-chip-text`.\n- Focus: `focus-ring` (keyboard focus); `focus-ring-inset` (flush rows and clipped containers). Upgrade @gntik-ai/tokens to the minor release introducing these utilities before copying migrated sources.\n- Inline links are underlined.\n- Copy is English and product-agnostic; product data lives in fixtures.',
         '## What `validate_page` checks',

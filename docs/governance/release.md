@@ -95,5 +95,8 @@ transforms whose version range the upgrade crosses; `gntik-ui upgrade --list` sh
 - The catalog and registry show the Deprecated badge and list the replacement first.
 - When the replacement is mechanical, the codemod ships with the deprecation, not with the
   removal, so teams can migrate early.
+- Named palettes: new palettes ship as a minor tokens release with full light/dark completeness
+  and contrast tests. Green stays the default; high contrast and categorical accents are shared.
+  Products opt in through ThemeProvider or BrandPreset.palette.
 - Tokens: colour values in `brand.css` are frozen and never deprecated; a token _name_ is
   deprecated by aliasing it to its replacement in `pairing.css` for a full major.

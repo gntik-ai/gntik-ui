@@ -9,10 +9,10 @@ CI catches most of it — the rubric is for what CI cannot see.
 - **must** Token classes only: no hex/rgb, no Tailwind palette colours, no `dark:` (ESLint
   enforces in class strings; check `style={}` and SVG `fill` by eye).
 - **must** Sober: no gradients, no glow, flat brand-tinted shadows (`shadow-sm|md|lg`).
-- **must** Green (`primary`) is the only brand colour and never signals severity; status uses
+- **must** Brand colours come from named kit palettes (green default, navy opt-in). Primary never signals severity; status uses
   `destructive` / `warning` / `info` / `success`.
 - **must** Brand-coloured text uses `text-*-text`; text on tinted chips uses `text-*-chip-text`.
-- **must** `brand.css` values unchanged (frozen test). New tokens go in their own file.
+- **must** `brand.css` values unchanged (frozen test). New tokens go in their own file. Palettes cover all light/dark colour and shadow tokens, pass contrast checks, and share high contrast and categorical accents.
 - **should** Radii, spacing and type sizes match the legacy catalog section it ports.
 - **should** Motion uses `duration-fast|normal|slow` and `ease-standard|emphasized|exit`.
 

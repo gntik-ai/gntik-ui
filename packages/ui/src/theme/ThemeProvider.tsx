@@ -5,9 +5,11 @@ import {
   useEffect,
   useMemo,
   useState,
+  useRef,
   useSyncExternalStore,
   type ReactNode,
 } from 'react';
+import { PALETTES, type PaletteId } from '@gntik-ai/tokens/runtime';
 import { gntikPreset, type BrandPreset } from './presets';
 import type { MotionMode, ResolvedTheme, ThemeMode } from './theme-script';
 
@@ -16,9 +18,15 @@ export { themeScript, type MotionMode, type ThemeMode, type ResolvedTheme } from
 /** Theme class per resolved mode. Light is the token default (:root), so it adds no class. */
 const THEME_CLASS: Record<ResolvedTheme, string> = { dark: 'dark', light: '', high_contrast: 'high_contrast' };
 const ALL_CLASSES = ['dark', 'high_contrast'];
+function isPalette(value: string): value is PaletteId {
+  return PALETTES.some((id) => id === value);
+}
+
 const SYSTEM_QUERIES = ['(prefers-color-scheme: light)', '(prefers-contrast: more)'];
 
 interface ThemeContextValue {
+  palette: PaletteId;
+  setPalette: (palette: PaletteId) => void;
   motion: MotionMode;
   setMotion: (motion: MotionMode) => void;
   mode: ThemeMode;
@@ -28,6 +36,8 @@ interface ThemeContextValue {
 }
 
 const DEFAULT_THEME: ThemeContextValue = {
+  palette: 'green',
+  setPalette: () => {},
   motion: 'system',
   setMotion: () => {},
   mode: 'dark',
@@ -90,7 +100,11 @@ export interface ThemeProviderProps {
   initialMode?: ThemeMode;
   /** Apply this theme while retaining the user's stored page preference. */
   forcedMode?: ResolvedTheme;
-  /** Brand preset (name + logo). Colours are the same for every preset. */
+  /** Named colour palette; defaults to brand.palette, then green. */
+  palette?: PaletteId;
+  /** Palette storage is opt-in. Null (default) keeps the choice in memory. */
+  paletteStorageKey?: string | null;
+  /** Brand preset (name, logo and optional palette). */
   brand?: BrandPreset;
   /** localStorage key; pass `null` to disable persistence. */
   storageKey?: string | null;
@@ -113,9 +127,47 @@ export function ThemeProvider({
   initialMode,
   forcedMode,
   brand = gntikPreset,
+  palette: paletteProp,
+  paletteStorageKey = null,
   storageKey = 'gntik-theme',
   target = () => (typeof document === 'undefined' ? null : document.documentElement),
 }: ThemeProviderProps) {
+  const defaultPalette = paletteProp ?? brand.palette ?? 'green';
+  const [localPalette, setLocalPalette] = useState<PaletteId | null>(null);
+  const getStoredPalette = useCallback(() => {
+    if (paletteStorageKey == null) return null;
+    try {
+      return localStorage.getItem(paletteStorageKey);
+    } catch {
+      return null;
+    }
+  }, [paletteStorageKey]);
+  const storedPalette = useSyncExternalStore(subscribeStored, getStoredPalette, serverStored);
+  const paletteChoice = storedPalette ?? localPalette ?? defaultPalette;
+  const palette = isPalette(paletteChoice) ? paletteChoice : 'green';
+  const warnedPalettes = useRef(new Set<string>());
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      !isPalette(paletteChoice) &&
+      !warnedPalettes.current.has(paletteChoice)
+    ) {
+      warnedPalettes.current.add(paletteChoice);
+      console.warn(`Unknown palette "${paletteChoice}"; using green.`);
+    }
+  }, [paletteChoice]);
+  const setPalette = useCallback(
+    (next: PaletteId) => {
+      setLocalPalette(next);
+      if (paletteStorageKey == null) return;
+      try {
+        localStorage.setItem(paletteStorageKey, next);
+      } catch {}
+      storeListeners.forEach((listener) => listener());
+    },
+    [paletteStorageKey],
+  );
+
   const [localMotion, setLocalMotion] = useState<MotionMode>(defaultMotion);
   const getStoredMotion = useCallback(() => {
     if (motionStorageKey == null) return null;
@@ -162,7 +214,8 @@ export function ThemeProvider({
     if (cls) el.classList.add(cls);
     el.style.colorScheme = resolved === 'light' ? 'light' : 'dark';
     el.dataset.brand = brand.id;
-  }, [resolved, brand.id, target]);
+    el.dataset.palette = palette;
+  }, [resolved, brand.id, palette, target]);
 
   const setMode = useCallback(
     (next: ThemeMode) => {
@@ -177,8 +230,8 @@ export function ThemeProvider({
   );
 
   const value = useMemo(
-    () => ({ mode, resolved, setMode, brand, motion, setMotion }),
-    [mode, resolved, setMode, brand, motion, setMotion],
+    () => ({ mode, resolved, setMode, brand, motion, setMotion, palette, setPalette }),
+    [mode, resolved, setMode, brand, motion, setMotion, palette, setPalette],
   );
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }

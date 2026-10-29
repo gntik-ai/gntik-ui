@@ -159,6 +159,19 @@ describe('useChartTheme (token adapter wiring)', () => {
     expect(result.current.color('primary')).toBe('hsl(145 61% 40%)');
   });
 
+  it('re-reads resolved chart colours on a palette change without changing the theme', async () => {
+    document.documentElement.dataset.palette = 'green';
+    const { result } = renderHook(() => useChartTheme({ resolved: true }));
+    const previousTheme = result.current.theme;
+    act(() => {
+      setTokens({ '--primary': '223 54% 23%' });
+      document.documentElement.dataset.palette = 'navy';
+    });
+    await waitFor(() => expect(result.current.color('primary')).toBe('hsl(223 54% 23%)'));
+    expect(result.current.theme).toBe(previousTheme);
+    document.documentElement.removeAttribute('data-palette');
+  });
+
   it('server-renders coloured legend swatches and hydrates without a mismatch', async () => {
     document.documentElement.classList.add('dark');
     const ui = <AreaChart aria-label="Requests" data={data} index="month" categories={['requests', 'errors']} />;
