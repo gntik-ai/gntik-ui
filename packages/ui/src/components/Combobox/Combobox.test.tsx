@@ -2,7 +2,14 @@ import { fireEvent, render, screen, waitFor, within } from '@testing-library/rea
 import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
 import { expectNoAxeViolations } from '../../test/a11y';
-import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from './Combobox';
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxTrigger,
+  ComboboxPopupInput,
+} from './Combobox';
 import ComboboxBasic from './examples/ComboboxBasic';
 import ComboboxMembers from './examples/ComboboxMembers';
 import ComboboxMultiple from './examples/ComboboxMultiple';
@@ -307,4 +314,29 @@ it('measures variable option rows rather than treating the estimate as a fixed h
   } finally {
     geometry.mockRestore();
   }
+});
+
+it('opens a trigger popup with a search header and filters while the input keeps focus', async () => {
+  const user = userEvent.setup();
+  render(
+    <Combobox items={fruits}>
+      <ComboboxTrigger aria-label="Fruit">Fruit</ComboboxTrigger>
+      <ComboboxContent header={<ComboboxPopupInput />} footer={<span>Footer</span>}>
+        {(fruit: string) => (
+          <ComboboxItem key={fruit} value={fruit}>
+            {fruit}
+          </ComboboxItem>
+        )}
+      </ComboboxContent>
+    </Combobox>,
+  );
+  await user.tab();
+  await user.keyboard('{Enter}');
+  const input = await screen.findByRole('combobox', { name: 'Search' });
+  await waitFor(() => expect(input).toHaveFocus());
+  await user.keyboard('ban');
+  expect(await screen.findByRole('option', { name: 'Banana' })).toBeInTheDocument();
+  expect(screen.getAllByRole('option')).toHaveLength(1);
+  expect(screen.getByText('Footer')).toBeInTheDocument();
+  expect(input).toHaveFocus();
 });

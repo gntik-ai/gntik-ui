@@ -1,15 +1,14 @@
-import { matchText } from '../../utils/match-text';
-import { Combobox } from '@base-ui/react/combobox';
-import { Check, Plus, Search } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useMemo } from 'react';
-import { usePortalContainer } from '../../utils/portal';
-import { usePortalDir, useI18n } from '../../i18n/I18nProvider';
+import { matchText } from '../../utils/match-text';
+import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { SearchableSelect } from '../SearchableSelect/SearchableSelect';
+import { SearchableSelectPresentation } from '../SearchableSelect/SearchableSelectPresentation';
 import { workspaceSwitcherVariants } from './workspace-switcher.variants';
 import { triggerLabel, WorkspaceOptionBody, WorkspaceTriggerContent, type Workspace } from './parts';
 import type { WorkspaceSwitcherProps } from './WorkspaceSwitcher';
 
-const CREATE_ID = '__create-workspace__';
 const s = workspaceSwitcherVariants();
 
 interface WorkspaceSearchProps extends WorkspaceSwitcherProps {
@@ -18,7 +17,7 @@ interface WorkspaceSearchProps extends WorkspaceSwitcherProps {
   label: string;
 }
 
-/** Searchable variant of WorkspaceSwitcher: a combobox with the input inside its popup. */
+/** Searchable workspace picker, sharing the kit's popup search and selection behavior. */
 export function WorkspaceSearch({
   className,
   workspaces,
@@ -30,69 +29,57 @@ export function WorkspaceSearch({
   searchPlaceholder: searchPlaceholderProp,
   emptyText: emptyTextProp,
 }: WorkspaceSearchProps) {
-  const portalContainer = usePortalContainer();
   const { t, locale } = useI18n();
-  const searchPlaceholder = searchPlaceholderProp ?? t('workspace.search');
-  const emptyText = emptyTextProp ?? t('workspace.empty');
-  const dir = usePortalDir();
-  const createEntry = useMemo<Workspace>(() => ({ id: CREATE_ID, name: createLabel }), [createLabel]);
-  const items = useMemo(
-    () => (onCreate ? [...workspaces, createEntry] : workspaces),
-    [workspaces, onCreate, createEntry],
+  const options = useMemo(
+    () =>
+      workspaces.map((workspace) => ({
+        value: workspace.id,
+        label: workspace.name,
+        description: workspace.meta,
+      })),
+    [workspaces],
   );
   return (
-    <Combobox.Root<Workspace>
-      items={items}
-      value={current ?? null}
-      onValueChange={(next) => {
-        if (!next) return;
-        if (next.id === CREATE_ID) onCreate?.();
-        else onSelect(next);
+    <SearchableSelectPresentation.Provider
+      value={{
+        popupLabel: label,
+        popupClassName: s.searchPopup(),
+        listClassName: s.searchList(),
+        emptyClassName: s.searchEmpty(),
+        optionClassName: s.searchItem(),
+        sideOffset: 8,
+        renderOption: (id) => {
+          const workspace = workspaces.find((item) => item.id === id);
+          return workspace && <WorkspaceOptionBody workspace={workspace} current={id === current?.id} />;
+        },
+        renderAction: () => (
+          <span className={s.optionBody()}>
+            <span className={s.createIcon()}>
+              <Plus size={15} aria-hidden />
+            </span>
+            <span className={s.optionName()}>{createLabel}</span>
+          </span>
+        ),
       }}
-      itemToStringLabel={(w) => w.name}
-      isItemEqualToValue={(a, b) => a.id === b.id}
-      filter={(w, query) => w.id === CREATE_ID || matchText(`${w.name} ${w.meta ?? ''}`, query, { locale })}
-      autoHighlight
     >
-      <Combobox.Trigger aria-label={triggerLabel(current, label)} className={cn(s.trigger(), className)}>
-        <WorkspaceTriggerContent workspace={current} />
-      </Combobox.Trigger>
-      <Combobox.Portal container={portalContainer}>
-        <Combobox.Positioner dir={dir} className="z-popover outline-none" align="start" sideOffset={8}>
-          <Combobox.Popup className={s.searchPopup()} aria-label={label}>
-            <div className={s.searchField()}>
-              <Search size={15} aria-hidden className={s.searchIcon()} />
-              <Combobox.Input
-                aria-label={searchPlaceholder.replace(/…$/, '')}
-                placeholder={searchPlaceholder}
-                className={s.searchInput()}
-              />
-            </div>
-            <Combobox.Empty className={s.searchEmpty()}>{emptyText}</Combobox.Empty>
-            <Combobox.List className={s.searchList()}>
-              {(w: Workspace) =>
-                w.id === CREATE_ID ? (
-                  <Combobox.Item key={w.id} value={w} className={s.searchItem()}>
-                    <span className={s.optionBody()}>
-                      <span className={s.createIcon()}>
-                        <Plus size={15} aria-hidden />
-                      </span>
-                      <span className={s.optionName()}>{w.name}</span>
-                    </span>
-                  </Combobox.Item>
-                ) : (
-                  <Combobox.Item key={w.id} value={w} className={s.searchItem()}>
-                    <WorkspaceOptionBody workspace={w} current={w.id === current?.id} />
-                    <Combobox.ItemIndicator className={s.searchIndicator()}>
-                      <Check size={15} aria-hidden />
-                    </Combobox.ItemIndicator>
-                  </Combobox.Item>
-                )
-              }
-            </Combobox.List>
-          </Combobox.Popup>
-        </Combobox.Positioner>
-      </Combobox.Portal>
-    </Combobox.Root>
+      <SearchableSelect
+        options={options}
+        value={current?.id ?? null}
+        onValueChange={(id) => {
+          const workspace = workspaces.find((item) => item.id === id);
+          if (workspace) onSelect(workspace);
+        }}
+        aria-label={triggerLabel(current, label)}
+        trigger={
+          <button type="button" className={cn(s.trigger(), className)}>
+            <WorkspaceTriggerContent workspace={current} />
+          </button>
+        }
+        searchPlaceholder={searchPlaceholderProp ?? t('workspace.search')}
+        emptyText={emptyTextProp ?? t('workspace.empty')}
+        filter={(option, query) => matchText(`${option.label} ${option.description ?? ''}`, query, { locale })}
+        actions={onCreate ? [{ id: 'create-workspace', label: createLabel, onSelect: onCreate }] : undefined}
+      />
+    </SearchableSelectPresentation.Provider>
   );
 }

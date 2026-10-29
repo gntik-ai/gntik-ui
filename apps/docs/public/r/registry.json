@@ -3183,7 +3183,7 @@
       "name": "combobox",
       "type": "registry:ui",
       "title": "Combobox",
-      "description": "Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.",
+      "description": "ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.8.0",
@@ -14324,6 +14324,148 @@
       ]
     },
     {
+      "name": "searchable-select",
+      "type": "registry:ui",
+      "title": "SearchableSelect",
+      "description": "A button-triggered picker with search inside the popup. Options have value, label, description, icon, keywords and disabled; groups have label and options. getOptionKey defaults to String(value); supply a stable key for object values. Single value/defaultValue/onValueChange use Value | null; multiple uses Value[]. name, required, disabled and readOnly use the Combobox form contract; an empty selection submits nothing. label names the field and list; without it supply aria-label. The default trigger shows the selected icon and label or a localized count. trigger renders a kit Button through the Base UI render prop. size is auto (density), sm, md or lg. placeholder, searchPlaceholder and emptyText override catalog defaults. Search matches labels, descriptions and keywords without case or accent differences; filter replaces matching and onSearchChange reports queries. actions always follow options and run onSelect without entering selection or form values. Opt-in virtualized windows flat lists using the existing Combobox root; itemHeight and overscan configure the window. Groups retain full rendering. Mounted options expose aria-posinset/aria-setsize and the keyboard highlight stays rendered and scrolled into view. Browser find and screen-reader browse mode reach mounted options only. See the field example for the which-picker table: Select for short lists; Combobox for typed input; MultiSelect for chips in a field; SearchableSelect for field, button or toolbar triggers with popup search. The examples cover field and toolbar triggers, grouped regions, 5,000 options, and action rows. Built-in strings follow I18nProvider (en/es).",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.8.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/combobox.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "stable",
+        "source": "packages/ui/src/components/SearchableSelect/SearchableSelect.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/SearchableSelect/SearchableSelect.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/searchable-select/SearchableSelect.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/SearchableSelect/SearchableSelectPresentation.ts",
+          "type": "registry:ui",
+          "target": "components/ui/searchable-select/SearchableSelectPresentation.ts"
+        },
+        {
+          "path": "packages/ui/src/components/SearchableSelect/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/searchable-select/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/SearchableSelect/searchable-select.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/searchable-select/searchable-select.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
+          "path": "packages/ui/src/components/SearchableSelect/SearchableSelect.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/searchable-select/SearchableSelect.doc.ts"
+        }
+      ]
+    },
+    {
       "name": "secret-field",
       "type": "registry:ui",
       "title": "SecretField",
@@ -21377,6 +21519,7 @@
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/avatar.json",
         "https://ui.gntik.ai/r/menu.json",
+        "https://ui.gntik.ai/r/searchable-select.json",
         "https://ui.gntik.ai/r/select.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],

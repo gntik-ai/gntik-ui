@@ -1,6 +1,10 @@
 export {
   Combobox,
   ComboboxInput,
+  ComboboxTrigger,
+  ComboboxPopupInput,
+  type ComboboxTriggerProps,
+  type ComboboxPopupInputProps,
   ComboboxChipsInput,
   ComboboxContent,
   ComboboxItem,

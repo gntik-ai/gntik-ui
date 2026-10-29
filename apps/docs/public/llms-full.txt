@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 123 components, 12 layouts, 78 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 124 components, 12 layouts, 78 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -3019,7 +3019,7 @@ export default function ClickableCardList() {
 
 ### Combobox (`combobox`)
 
-Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.
+ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.
 
 - Package: `@gntik-ai/ui` · export `Combobox` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Combobox/Combobox.doc.ts
@@ -3032,6 +3032,7 @@ Keyboard:
 
 | Key | Behaviour |
 | --- | --- |
+| Enter / Space / ArrowDown on ComboboxTrigger | Opens the popup and focuses ComboboxPopupInput in the header |
 | Home / End, PageUp / PageDown | Virtualized: jumps to the first / last option or moves by a viewport |
 | Type a character | Opens the popup and filters the options |
 | ArrowDown / ArrowUp | Opens the popup and moves the highlight between options |
@@ -4259,6 +4260,68 @@ export default function ScheduleInputBasic() {
         now={now}
         name="schedule"
       />
+    </div>
+  );
+}
+```
+
+### SearchableSelect (`searchable-select`)
+
+A button-triggered picker with search inside the popup. Options have value, label, description, icon, keywords and disabled; groups have label and options. getOptionKey defaults to String(value); supply a stable key for object values. Single value/defaultValue/onValueChange use Value | null; multiple uses Value[]. name, required, disabled and readOnly use the Combobox form contract; an empty selection submits nothing. label names the field and list; without it supply aria-label. The default trigger shows the selected icon and label or a localized count. trigger renders a kit Button through the Base UI render prop. size is auto (density), sm, md or lg. placeholder, searchPlaceholder and emptyText override catalog defaults. Search matches labels, descriptions and keywords without case or accent differences; filter replaces matching and onSearchChange reports queries. actions always follow options and run onSelect without entering selection or form values. Opt-in virtualized windows flat lists using the existing Combobox root; itemHeight and overscan configure the window. Groups retain full rendering. Mounted options expose aria-posinset/aria-setsize and the keyboard highlight stays rendered and scrolled into view. Browser find and screen-reader browse mode reach mounted options only. See the field example for the which-picker table: Select for short lists; Combobox for typed input; MultiSelect for chips in a field; SearchableSelect for field, button or toolbar triggers with popup search. The examples cover field and toolbar triggers, grouped regions, 5,000 options, and action rows. Built-in strings follow I18nProvider (en/es).
+
+- Package: `@gntik-ai/ui` · export `SearchableSelect` · group Forms · status stable
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/SearchableSelect/SearchableSelect.doc.ts
+- Primitive: `@base-ui/react/combobox`
+- ARIA pattern: button-triggered combobox + popup search + listbox
+- Registry dependencies: combobox, ui-utils
+- Install: `gntik-ui add searchable-select`; own the source with `gntik-ui eject searchable-select`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Enter / Space / ArrowDown on trigger | Opens the popup and focuses its search input |
+| Type a character | Filters the options, hides empty groups and highlights the first match |
+| ArrowDown / ArrowUp | Moves the highlight while focus stays in the search input |
+| Enter | Single: selects and closes; multiple: toggles and keeps the query and popup |
+| Escape | Closes without changing the value and returns focus to the trigger |
+| Enter on an action | Runs its callback once, closes and returns focus without changing the value |
+| Home / End / PageUp / PageDown | Virtualized: moves to the first/last option or by one viewport |
+
+Tokens: background, foreground, border, popover, popover-foreground, primary-text, secondary, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Settings } from '@gntik-ai/icons';
+import { SearchableSelect } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
+import { useRegions } from '@gntik-ai/ui';
+
+export default function SearchableSelectActions() {
+  const { t } = useI18n();
+  const [managed, setManaged] = useState(false);
+  return (
+    <div data-example="searchable-select-actions" className="grid w-full max-w-sm gap-2">
+      <SearchableSelect
+        options={useRegions()}
+        label={t('searchableSelect.examples.region')}
+        emptyText={t('searchableSelect.examples.customEmpty')}
+        searchPlaceholder={t('common.searchPlaceholder')}
+        placeholder={t('common.selectPlaceholder')}
+        actions={[
+          {
+            id: 'manage',
+            label: t('searchableSelect.examples.manage'),
+            icon: Settings,
+            onSelect: () => setManaged(true),
+          },
+        ]}
+      />
+      <p role="status" className="text-sm text-muted-foreground">
+        {managed ? t('searchableSelect.examples.managed') : ''}
+      </p>
     </div>
   );
 }
@@ -6013,7 +6076,7 @@ Two-line workspace picker (logo, name, plan/role meta) for the topbar or sidebar
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/WorkspaceSwitcher/WorkspaceSwitcher.doc.ts
 - Primitive: `@base-ui/react/menu · @base-ui/react/combobox`
 - ARIA pattern: menu button (short lists) / select-only combobox with search (long lists)
-- Registry dependencies: avatar, menu, select, ui-utils
+- Registry dependencies: avatar, menu, searchable-select, select, ui-utils
 - Install: `gntik-ui add workspace-switcher`; own the source with `gntik-ui eject workspace-switcher`
 
 Keyboard:

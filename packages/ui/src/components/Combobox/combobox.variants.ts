@@ -67,3 +67,12 @@ export const comboboxVariants = tv({
 });
 
 export type ComboboxVariantProps = VariantProps<typeof comboboxVariants>;
+
+/** New popup-search slots are separate so comboboxVariants keeps its original public output. */
+export const comboboxPopupInputVariants = tv({
+  slots: {
+    field: 'flex shrink-0 items-center gap-2 border-b border-border px-3',
+    input:
+      'h-10 w-full min-w-0 bg-transparent text-[13px] text-foreground outline-none placeholder:text-muted-foreground',
+  },
+});

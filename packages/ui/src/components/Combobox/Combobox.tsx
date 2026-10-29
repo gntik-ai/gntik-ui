@@ -8,8 +8,8 @@ import { cn } from '../../utils/cn';
 import type { MeasuredRowOptions } from '../VirtualList/use-measured-rows';
 import { WindowedComboboxList, useComboboxWindow, useVirtualOptionsKeyDown } from './WindowedCombobox';
 import { Spinner } from '../Spinner';
-import { selectVariants } from '../Select/select.variants';
-import { comboboxVariants, type ComboboxVariantProps } from './combobox.variants';
+import { selectVariants, type SelectVariantProps } from '../Select/select.variants';
+import { comboboxVariants, comboboxPopupInputVariants, type ComboboxVariantProps } from './combobox.variants';
 import { useComboboxEnhancement } from './ComboboxRoot';
 import { isSpecialItem, isSpecialItemGroup, type SpecialItem } from './specialItems';
 
@@ -88,6 +88,57 @@ export function ComboboxInput({
         </BaseCombobox.Trigger>
       </BaseCombobox.InputGroup>
     </>
+  );
+}
+
+export interface ComboboxTriggerProps extends Omit<BaseCombobox.Trigger.Props, 'className'>, SelectVariantProps {
+  className?: string;
+}
+
+/** Field-style button, or a custom button supplied through `render`. */
+export function ComboboxTrigger({ size, variant, className, children, render, ...props }: ComboboxTriggerProps) {
+  const fieldVariant = useFieldVariant(variant);
+  const v = selectVariants({ size, variant: fieldVariant });
+  return (
+    <BaseCombobox.Trigger
+      aria-haspopup="listbox"
+      render={render}
+      className={cn(!render && v.trigger(), className)}
+      {...props}
+    >
+      {render ? (
+        children
+      ) : (
+        <>
+          <span className={v.value()}>{children}</span>
+          <ChevronDown size={15} aria-hidden className={v.icon()} />
+        </>
+      )}
+    </BaseCombobox.Trigger>
+  );
+}
+
+export interface ComboboxPopupInputProps extends Omit<BaseCombobox.Input.Props, 'className' | 'size'> {
+  className?: string;
+}
+
+/** Search field for a ComboboxContent header. */
+export function ComboboxPopupInput({ className, placeholder, ...props }: ComboboxPopupInputProps) {
+  const { t } = useI18n();
+  const popup = comboboxPopupInputVariants();
+  const text = placeholder ?? t('common.searchPlaceholder');
+  const onKeyDown = useVirtualOptionsKeyDown(props.onKeyDown);
+  return (
+    <div className={popup.field()}>
+      <Search size={15} aria-hidden className={s.searchIcon()} />
+      <BaseCombobox.Input
+        aria-label={text.replace(/(?:…|\.\.\.)$/, '')}
+        placeholder={text}
+        className={cn(popup.input(), className)}
+        {...props}
+        onKeyDown={onKeyDown}
+      />
+    </div>
   );
 }
 
@@ -171,12 +222,19 @@ export function ComboboxChipsInput<Item = unknown>({
 export interface ComboboxContentProps
   extends Omit<BaseCombobox.Popup.Props, 'className' | 'children'>, MeasuredRowOptions {
   className?: string;
+  /** Optional list and empty-state styling. */
+  listClassName?: string;
+  emptyClassName?: string;
   /** Shown (and announced) when no item matches the query. */
   emptyText?: ReactNode;
   side?: BaseCombobox.Positioner.Props['side'];
   align?: BaseCombobox.Positioner.Props['align'];
   sideOffset?: number;
   container?: BaseCombobox.Portal.Props['container'];
+  /** Optional content above the status and list, e.g. ComboboxPopupInput. */
+  header?: ReactNode;
+  /** Optional content below the list. */
+  footer?: ReactNode;
   /** List children: a render function `(item) => <ComboboxItem …/>`, or static items. */
   children?: BaseCombobox.List.Props['children'];
 }
@@ -185,11 +243,15 @@ export interface ComboboxContentProps
 export function ComboboxContent({
   className,
   emptyText: emptyTextProp,
+  listClassName,
+  emptyClassName,
   side = 'bottom',
   align = 'start',
   sideOffset = 6,
   container,
   children,
+  header,
+  footer,
   itemHeight,
   estimatedItemHeight,
   overscan,
@@ -223,6 +285,7 @@ export function ComboboxContent({
       </>
     );
   }
+  const hasSlots = header !== undefined || footer !== undefined;
   const busy = !!enh && (enh.loading || !!enh.error);
   const errorText =
     typeof enh?.errorText === 'function' ? enh.errorText(enh.error) : (enh?.errorText ?? t('combobox.loadFailed'));
@@ -232,11 +295,12 @@ export function ComboboxContent({
         <BaseCombobox.Popup
           className={cn(
             s.popup(),
-            windowed && typeof list === 'function' && 'flex flex-col overflow-hidden',
+            ((windowed && typeof list === 'function') || hasSlots) && 'flex flex-col overflow-hidden',
             className,
           )}
           {...props}
         >
+          {header}
           {enh && (
             <BaseCombobox.Status className={cn(s.status(), !!enh.error && !enh.loading && s.statusError())}>
               {enh.loading ? (
@@ -249,9 +313,11 @@ export function ComboboxContent({
               ) : null}
             </BaseCombobox.Status>
           )}
-          <BaseCombobox.Empty className={s.empty()}>{busy ? null : emptyText}</BaseCombobox.Empty>
+          <BaseCombobox.Empty className={cn(s.empty(), emptyClassName)}>{busy ? null : emptyText}</BaseCombobox.Empty>
           {windowed && typeof list === 'function' ? (
             <WindowedComboboxList
+              aria-label={hasSlots ? props['aria-label'] : undefined}
+              aria-labelledby={hasSlots ? props['aria-labelledby'] : undefined}
               aria-busy={enh?.loading || undefined}
               itemHeight={itemHeight}
               estimatedItemHeight={estimatedItemHeight}
@@ -260,10 +326,16 @@ export function ComboboxContent({
               {list}
             </WindowedComboboxList>
           ) : (
-            <BaseCombobox.List className={s.list()} aria-busy={enh?.loading || undefined}>
+            <BaseCombobox.List
+              className={cn(s.list(), hasSlots && 'max-h-64 min-h-0 overflow-y-auto', listClassName)}
+              aria-label={hasSlots ? props['aria-label'] : undefined}
+              aria-labelledby={hasSlots ? props['aria-labelledby'] : undefined}
+              aria-busy={enh?.loading || undefined}
+            >
               {list}
             </BaseCombobox.List>
           )}
+          {footer}
         </BaseCombobox.Popup>
       </BaseCombobox.Positioner>
     </BaseCombobox.Portal>
