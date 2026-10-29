@@ -13579,6 +13579,11 @@
           "target": "components/ui/resizable/resizable.variants.ts"
         },
         {
+          "path": "packages/ui/src/hooks/useLocalStorage.ts",
+          "type": "registry:ui",
+          "target": "components/hooks/useLocalStorage.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "type": "registry:ui",
           "target": "components/i18n/I18nProvider.tsx"
@@ -15480,6 +15485,11 @@
         "source": "packages/ui/src/layouts/SidebarLayout/SidebarLayout.doc.ts"
       },
       "files": [
+        {
+          "path": "packages/ui/src/hooks/useLocalStorage.ts",
+          "type": "registry:lib",
+          "target": "components/hooks/useLocalStorage.ts"
+        },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "type": "registry:component",

@@ -65,27 +65,14 @@ export function movePair(sizes: number[], panels: PanelConstraints[], i: number,
   return setPair(sizes, i, resolvePair(target, a, b, sa + sb));
 }
 
-const storageKey = (id: string) => `gntik-ui:resizable:${id}`;
-
-/** Reads persisted sizes; returns null when missing, malformed or not matching the panel count. */
-export function loadSizes(autoSaveId: string | undefined, count: number): number[] | null {
-  if (!autoSaveId) return null;
-  try {
-    const raw = localStorage.getItem(storageKey(autoSaveId));
-    if (!raw) return null;
-    const parsed: unknown = JSON.parse(raw);
-    if (!Array.isArray(parsed) || parsed.length !== count) return null;
-    if (!parsed.every((n): n is number => typeof n === 'number' && Number.isFinite(n) && n >= 0)) return null;
-    const sum = parsed.reduce((a, b) => a + b, 0);
-    return Math.abs(sum - 100) < 1 ? parsed : null;
-  } catch {
-    return null;
-  }
+/** Validates the released percentage-array format. The group also checks the panel count. */
+export function isStoredSizes(value: unknown): value is number[] {
+  if (!Array.isArray(value)) return false;
+  if (!value.every((n): n is number => typeof n === 'number' && Number.isFinite(n) && n >= 0)) return false;
+  return Math.abs(value.reduce((a, b) => a + b, 0) - 100) < 1;
 }
 
-export function saveSizes(autoSaveId: string | undefined, sizes: number[]) {
-  if (!autoSaveId) return;
-  try {
-    localStorage.setItem(storageKey(autoSaveId), JSON.stringify(sizes.map((s) => Math.round(s * 100) / 100)));
-  } catch {}
+/** Byte-compatible with layouts saved by previous releases. */
+export function serializeSizes(sizes: number[] | null): string {
+  return JSON.stringify(sizes?.map((s) => Math.round(s * 100) / 100) ?? null);
 }

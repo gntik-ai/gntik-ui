@@ -14,12 +14,13 @@ import {
   type Ref,
 } from 'react';
 import { cn } from '../../utils/cn';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import {
   defaultSizes,
   isCollapsed,
-  loadSizes,
+  isStoredSizes,
   movePair,
-  saveSizes,
+  serializeSizes,
   setPair,
   clamp,
   type PanelConstraints,
@@ -61,6 +62,7 @@ export interface ResizablePanelGroupProps extends DivProps {
 
 interface GroupState {
   signature: string;
+  storedSizes: number[] | null;
   sizes: number[];
   restore: Record<string, number>;
 }
@@ -96,20 +98,29 @@ export function ResizablePanelGroup({
     }
     slots.push(panels.length - 1);
   }
-  const signature = panels.map((p) => `${p.id}:${p.minSize}:${p.maxSize}`).join('|');
+  const [storedSizes, setStoredSizes] = useLocalStorage<number[] | null>(
+    autoSaveId ? `gntik-ui:resizable:${autoSaveId}` : undefined,
+    null,
+    { validate: isStoredSizes, serialize: serializeSizes },
+  );
+  const signature = JSON.stringify([autoSaveId, panels.map((p) => [p.id, p.minSize, p.maxSize])]);
   const initial = (): GroupState => ({
     signature,
-    sizes: loadSizes(autoSaveId, panels.length) ?? defaultSizes(panels),
+    storedSizes,
+    sizes: storedSizes?.length === panels.length ? storedSizes : defaultSizes(panels),
     restore: {},
   });
   const [state, setState] = useState<GroupState>(initial);
   // Panels added / removed / re-constrained: fall back to the (persisted or) default layout.
-  const current = state.signature === signature ? state : initial();
+  const current =
+    state.signature === signature && state.storedSizes === storedSizes
+      ? state
+      : { ...initial(), restore: state.signature === signature ? state.restore : {} };
 
   const update: GroupContextValue['update'] = (sizes, options) => {
-    setState({ signature, sizes, restore: options?.restore ?? current.restore });
+    setState({ signature, storedSizes, sizes, restore: options?.restore ?? current.restore });
     onLayout?.(sizes);
-    if (options?.persist) saveSizes(autoSaveId, sizes);
+    if (options?.persist && autoSaveId) setStoredSizes(sizes);
   };
 
   const ctx: GroupContextValue = { direction, panels, sizes: current.sizes, restore: current.restore, update };

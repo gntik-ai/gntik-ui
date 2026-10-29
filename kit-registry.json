@@ -10236,6 +10236,10 @@
           "target": "components/ui/resizable/resizable.variants.ts"
         },
         {
+          "path": "packages/ui/src/hooks/useLocalStorage.ts",
+          "target": "components/hooks/useLocalStorage.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -14473,6 +14477,10 @@
       "status": "beta",
       "description": "Application shell: a collapsible sidebar (expanded, 64px icon rail or off-canvas) with header, body and footer slots, a topbar (workspace switcher, breadcrumb, ⌘K, notifications, theme, user menu) and the main region. Below lg the sidebar moves into a left Drawer opened from the topbar menu button. The collapsed state is controllable and can persist in localStorage (storageKey). Fills its container; fullScreen switches to h-dvh.",
       "files": [
+        {
+          "path": "packages/ui/src/hooks/useLocalStorage.ts",
+          "target": "components/hooks/useLocalStorage.ts"
+        },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"

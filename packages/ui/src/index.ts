@@ -9,6 +9,12 @@ export {
   type ResponsiveClassTable,
 } from './utils/responsive';
 export { useClipboard, type UseClipboardOptions } from './hooks/useClipboard';
+export {
+  useLocalStorage,
+  useSessionStorage,
+  readLocalStorageValue,
+  type UseStorageOptions,
+} from './hooks/useLocalStorage';
 export { foldText, matchText, matchRanges, type MatchTextOptions } from './utils/match-text';
 // @gntik-ai/ui — public API. One export block per component folder (alphabetical).
 export { cn } from './utils/cn';
