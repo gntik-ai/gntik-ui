@@ -36,6 +36,15 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await page.getByRole('button', { name: 'Review selection' }).click();
     await expect(page.getByRole('status')).toContainText('43');
     await scan(page);
+    // The documented server example requests sorted pages through onQueryChange.
+    await page.getByRole('button', { name: 'Name', exact: true }).click();
+    await expect(page.getByRole('columnheader', { name: 'Name' })).toHaveAttribute('aria-sort', 'ascending');
+    await expect(page.locator('[aria-current="page"]')).toHaveText('1');
+    await scan(page);
+    await page.getByRole('button', { name: 'Name', exact: true }).click();
+    await expect(page.getByRole('columnheader', { name: 'Name' })).toHaveAttribute('aria-sort', 'descending');
+    await expect(page.getByRole('checkbox', { name: 'Select 95', exact: true })).toBeVisible();
+    await scan(page);
   });
 
   test(`matching client selection keeps keyboard focus and is accessible in ${theme}`, async ({ page }) => {

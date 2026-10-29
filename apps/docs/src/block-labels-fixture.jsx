@@ -83,7 +83,6 @@ function ServerPaginationFixture() {
         pageSizeOptions={[10, 20, 50]}
         onPageChange={record('page')}
         onPageSizeChange={record('pageSize')}
-        onSortChange={record('sort')}
       />
       {[1, 3, 5].map((next) => (
         <Button key={next} onClick={() => setPage(next)}>
