@@ -1,6 +1,7 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
+import { StackedLayout } from './StackedLayout';
 import StackedLayoutNarrow from './examples/StackedLayoutNarrow';
 import StackedLayoutTabs from './examples/StackedLayoutTabs';
 import StackedLayoutMegaMenu from './examples/StackedLayoutMegaMenu';
@@ -79,4 +80,19 @@ describe('StackedLayout', () => {
     render(<StackedLayoutMegaMenu />);
     await expectNoAxeViolations();
   });
+});
+
+it('StackedLayout marks only the longest prefix top link on a nested route', () => {
+  render(
+    <StackedLayout
+      currentHref="/projects/templates/7"
+      links={[
+        { label: 'Projects', href: '/projects', match: 'prefix' },
+        { label: 'Templates', href: '/projects/templates', match: 'prefix' },
+      ]}
+    />,
+  );
+  const nav = screen.getByRole('navigation', { name: 'Main' });
+  expect(within(nav).getAllByRole('link', { current: 'page' })).toHaveLength(1);
+  expect(within(nav).getByRole('link', { name: 'Templates' })).toHaveAttribute('aria-current', 'page');
 });

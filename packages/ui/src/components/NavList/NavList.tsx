@@ -1,8 +1,16 @@
 import { Collapsible } from '@base-ui/react/collapsible';
 import { ChevronDown } from 'lucide-react';
-import { useId, type HTMLAttributes, type Ref } from 'react';
+import { useId, useMemo, type HTMLAttributes, type Ref } from 'react';
 import { cn } from '../../utils/cn';
-import { NavContext, navItemKey, useNavListContext, type NavGroup, type NavItem } from './nav-context';
+import {
+  NavContext,
+  navItemKey,
+  resolveCurrentNavItem,
+  useNavListContext,
+  type NavGroup,
+  type NavItem,
+  type NavMatch,
+} from './nav-context';
 import { navListVariants } from './nav-list.variants';
 
 export type { NavItem, NavGroup, NavIcon } from './nav-context';
@@ -13,8 +21,10 @@ export interface NavListProps extends Omit<HTMLAttributes<HTMLElement>, 'classNa
   className?: string;
   ref?: Ref<HTMLElement>;
   groups: NavGroup[];
-  /** The current location; the item with this `href` gets aria-current="page". */
+  /** The current location, used to resolve the item with aria-current="page". */
   currentHref?: string;
+  /** Default href matching for items without their own match. Defaults to strict exact matching. */
+  match?: NavMatch;
   /** Icon rail: labels hide and become tooltips, group headings become dividers. */
   collapsed?: boolean;
   /** Accessible name of the <nav> landmark. */
@@ -82,6 +92,7 @@ function NavGroupSection({ group }: { group: NavGroup }) {
 export function NavList({
   groups,
   currentHref,
+  match = 'exact',
   collapsed = false,
   label: labelProp,
   onNavigate,
@@ -91,8 +102,9 @@ export function NavList({
   const { t } = useI18n();
   const label = labelProp ?? t('common.main');
   const s = navListVariants();
+  const currentKey = useMemo(() => resolveCurrentNavItem(groups, currentHref, match), [groups, currentHref, match]);
   return (
-    <NavContext.Provider value={{ collapsed, currentHref, onNavigate }}>
+    <NavContext.Provider value={{ collapsed, currentHref, currentKey, onNavigate }}>
       <nav aria-label={label} data-collapsed={collapsed || undefined} className={cn(s.root(), className)} {...props}>
         {groups.map((group, i) => (
           <NavGroupSection key={group.id ?? group.label ?? i} group={group} />
