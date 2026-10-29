@@ -1,5 +1,5 @@
 import { Button, Checkbox } from '@gntik-ai/ui';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { DataTable, type DataTableQuery } from '../DataTable';
 import type { DataTableSelectionModel, SortState } from '../data-table-utils';
 
@@ -43,21 +43,29 @@ async function requestPage(query: DataTableQuery): Promise<Envelope> {
 }
 
 /** Known-total, 1-based pages. The consumer owns requests and keeps the old envelope until they resolve. */
-export default function ServerPaginationExample() {
+export default function ServerPaginationExample({ request = requestPage }: { request?: typeof requestPage }) {
   const [selection, setSelection] = useState<DataTableSelectionModel>({ type: 'include', ids: [] });
   const [preserveSelection, setPreserveSelection] = useState(true);
   const [hideSelectAll, setHideSelectAll] = useState(false);
   const [review, setReview] = useState('');
   const [envelope, setEnvelope] = useState(() => readPage({ page: 2, pageSize: 20, sort: null }));
   const [sort, setSort] = useState<SortState | null>(null);
+  const latestRequest = useRef(0);
+  const confirmedSort = useRef(envelope.sort);
   const changeQuery = (query: DataTableQuery) => {
+    const requestId = ++latestRequest.current;
     // Show the requested order while the consumer fetches exactly once per action.
     setSort(query.sort);
-    void requestPage(query)
-      .then(setEnvelope)
+    void request(query)
+      .then((next) => {
+        if (requestId !== latestRequest.current) return;
+        confirmedSort.current = next.sort;
+        setEnvelope(next);
+      })
       .catch(() => {
+        if (requestId !== latestRequest.current) return;
         // Reset the controlled header to the last confirmed order when a request fails.
-        setSort(envelope.sort);
+        setSort(confirmedSort.current);
       });
   };
 

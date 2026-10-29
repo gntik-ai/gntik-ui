@@ -280,7 +280,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
     const pageCount = Math.max(1, Math.ceil(total / Math.max(1, queryPageSize)));
     const displayedPage = Math.min(Math.max(1, queryPage), pageCount);
     const from = total === 0 ? 0 : (displayedPage - 1) * queryPageSize + 1;
-    const nextPage = Math.max(1, Math.floor((from - 1) / next) + 1);
+    // Match the footer's comparison before goTo clamps the page (empty results yield 0).
+    const nextPage = Math.floor((from - 1) / next) + 1;
     if (serverMode) onPageSizeChange?.(next);
     else setPageSize(next);
     if (nextPage !== displayedPage) resizingTo.current = next;
@@ -370,7 +371,8 @@ export function DataTable<T = (typeof DEPLOYMENT_ROWS)[number]>({
   const applyState = (state: DataTableViewState) => {
     const nextSort = state.sort ?? null;
     setInnerSort(nextSort);
-    const sortChanged = sort?.columnId !== nextSort?.columnId || sort?.direction !== nextSort?.direction;
+    const sortChanged =
+      sortingEnabled && (sort?.columnId !== nextSort?.columnId || sort?.direction !== nextSort?.direction);
     if (nextSort && (!serverMode || sortChanged)) onSortChange?.(nextSort);
     setHiddenList(state.hiddenColumns ?? defaultHidden);
     setWidths(state.columnWidths ?? defaultColumnWidths);

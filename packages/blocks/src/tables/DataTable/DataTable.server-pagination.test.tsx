@@ -1,7 +1,7 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { DataTable, type DataTableProps } from './DataTable';
+import { DataTable, type DataTableProps, type DataTableQuery } from './DataTable';
 import ServerPaginationExample from './examples/server-pagination';
 import { expectNoAxeViolations } from '../../test/a11y';
 import type { DataTableColumn } from './data-table-utils';
@@ -165,6 +165,43 @@ describe('DataTable controlled server pagination', () => {
     expect(renderedIds()).toHaveLength(20);
   });
 
+  it('reports one complete resize query for an empty server result', async () => {
+    const user = userEvent.setup();
+    const calls: string[] = [];
+    const onPageSizeChange = vi.fn(() => calls.push('size'));
+    const onPageChange = vi.fn(() => calls.push('page'));
+    const onQueryChange = vi.fn(() => calls.push('query'));
+    render(
+      <DataTable
+        {...server}
+        rows={[]}
+        rowCount={0}
+        page={1}
+        sort={{ columnId: 'name', direction: 'ascending' }}
+        filters={{ status: 'failed' }}
+        onPageSizeChange={onPageSizeChange}
+        onPageChange={onPageChange}
+        onQueryChange={onQueryChange}
+      />,
+    );
+    await user.click(screen.getByRole('combobox', { name: 'Rows per page' }));
+    await user.click(await screen.findByRole('option', { name: '50' }));
+    expect(onQueryChange.mock.calls).toEqual([
+      [
+        {
+          page: 1,
+          pageSize: 50,
+          sort: { columnId: 'name', direction: 'ascending' },
+          filters: { status: 'failed' },
+          cause: 'pageSize',
+        },
+      ],
+    ]);
+    expect(onPageSizeChange.mock.calls).toEqual([[50]]);
+    expect(onPageChange.mock.calls).toEqual([[1]]);
+    expect(calls).toEqual(['size', 'page', 'query']);
+  });
+
   it('requests a new size and only the footer keep-first-row page, without slicing', async () => {
     const user = userEvent.setup();
     const onPageChange = vi.fn();
@@ -268,6 +305,22 @@ describe('DataTable controlled server pagination', () => {
     expect(renderedIds()).toEqual(before);
   });
 
+  it('keeps the server page when a saved view changes an unhandled sort', async () => {
+    const user = userEvent.setup();
+    const onPageChange = vi.fn();
+    render(
+      <DataTable
+        {...server}
+        defaultViews={[{ id: 'saved', name: 'Saved', state: { sort: { columnId: 'id', direction: 'ascending' } } }]}
+        onPageChange={onPageChange}
+      />,
+    );
+    await user.click(screen.getByRole('button', { name: 'Default view' }));
+    await user.click(await screen.findByRole('menuitemradio', { name: 'Saved' }));
+    expect(onPageChange).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: 'Page 2', current: 'page' })).toBeInTheDocument();
+  });
+
   it.each([
     { savedSort: { columnId: 'id', direction: 'ascending' as const }, page: 2, expectedPage: 1, changed: true },
     { savedSort: { columnId: 'name', direction: 'ascending' as const }, page: 2, expectedPage: 2, changed: false },
@@ -348,4 +401,80 @@ it('server pagination example sorts through its query handler and stays accessib
   expect(await screen.findByRole('checkbox', { name: 'Select 95' })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Page 1', current: 'page' })).toBeInTheDocument();
   await expectNoAxeViolations(container);
+});
+
+it.each(['success', 'failure'])(
+  'server pagination example ignores an older %s after a newer query completes',
+  async (outcome) => {
+    type Response = {
+      items: Array<{ id: number; name: string; locked: boolean }>;
+      total: number;
+      page: number;
+      pageSize: number;
+      sort: DataTableQuery['sort'];
+    };
+    const pending: Array<{ resolve: () => void; reject: () => void }> = [];
+    const request = (query: DataTableQuery) =>
+      new Promise<Response>((resolve, reject) => {
+        pending.push({
+          resolve: () =>
+            resolve({
+              items: [{ id: query.sort?.direction === 'descending' ? 95 : 1, name: 'Result', locked: false }],
+              total: 95,
+              page: query.page,
+              pageSize: query.pageSize,
+              sort: query.sort,
+            }),
+          reject: () => reject(new Error('Request failed')),
+        });
+      });
+    render(<ServerPaginationExample request={request} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Name' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Name' }));
+    await act(async () => pending[1]!.resolve());
+    expect(screen.getByRole('checkbox', { name: 'Select 95' })).toBeInTheDocument();
+    await act(async () => {
+      if (outcome === 'success') pending[0]!.resolve();
+      else pending[0]!.reject();
+    });
+    expect(screen.getByRole('checkbox', { name: 'Select 95' })).toBeInTheDocument();
+    expect(screen.queryByRole('checkbox', { name: 'Select 1' })).not.toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: 'Name' })).toHaveAttribute('aria-sort', 'descending');
+  },
+);
+
+it('server pagination example restores the latest confirmed sort when a request fails before rerender', async () => {
+  const confirmed = {
+    items: [{ id: 1, name: 'Item 1', locked: false }],
+    total: 95,
+    page: 1,
+    pageSize: 20,
+    sort: { columnId: 'name', direction: 'ascending' as const },
+  };
+  let confirm!: () => void;
+  let fail!: () => void;
+  const request = vi
+    .fn<() => Promise<typeof confirmed>>()
+    .mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          confirm = () => resolve(confirmed);
+        }),
+    )
+    .mockImplementationOnce(
+      () =>
+        new Promise((_, reject) => {
+          fail = () => reject(new Error('Request failed'));
+        }),
+    );
+  render(<ServerPaginationExample request={request} />);
+  fireEvent.click(screen.getByRole('button', { name: 'Name' }));
+  await act(async () => {
+    confirm();
+    await Promise.resolve();
+    fireEvent.click(screen.getByRole('button', { name: 'Name' }));
+    fail();
+  });
+  expect(screen.getByRole('columnheader', { name: 'Name' })).toHaveAttribute('aria-sort', 'ascending');
+  expect(screen.getByRole('checkbox', { name: 'Select 1' })).toBeInTheDocument();
 });
