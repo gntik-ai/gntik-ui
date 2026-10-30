@@ -4,7 +4,7 @@ export const tokenVariants = tv({
   slots: {
     root: [
       'inline-flex max-w-full shrink-0 items-center gap-1.5 rounded-md border align-middle whitespace-nowrap select-none',
-      'data-disabled:opacity-60 border-tone/(--token-border-alpha) bg-tone/(--token-bg-alpha) text-tone-chip-text',
+      'data-disabled:bg-secondary data-disabled:text-foreground border-tone/(--token-border-alpha) bg-tone/(--token-bg-alpha) text-tone-chip-text',
     ],
     leading: 'inline-flex shrink-0 items-center text-tone-text [&_svg]:shrink-0',
     label: 'min-w-0 truncate font-medium',

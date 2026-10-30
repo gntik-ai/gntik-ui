@@ -22,6 +22,15 @@ function setup(props: Partial<Parameters<typeof TokenInput>[0]> = {}) {
 }
 
 describe('TokenInput', () => {
+  it('keeps disabled chip labels readable and remove buttons disabled', () => {
+    const { input } = setup({ disabled: true, defaultValue: ['Billing owner'] });
+    const chip = screen.getByRole('listitem');
+    expect(chip).toHaveClass('data-disabled:bg-secondary', 'data-disabled:text-foreground');
+    expect(chip.className).not.toMatch(/opacity-/);
+    expect(input).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Remove Billing owner' })).toBeDisabled();
+  });
+
   it('is labelled and described by its Field', async () => {
     const { user, input } = setup();
     await user.click(screen.getByText('Labels'));

@@ -85,6 +85,20 @@ describe('diffLines', () => {
 });
 
 describe('DiffViewer', () => {
+  it.each(['unified', 'split'] as const)('keeps changed line numbers readable in %s view', (mode) => {
+    render(<DiffViewer mode={mode} oldValue="before" newValue="after" />);
+    const region = screen.getByRole('region', { name: 'Diff' });
+    for (const type of ['added', 'removed']) {
+      const row = region.querySelector(`[data-type="${type}"]`);
+      const numbers = row?.querySelectorAll('.tabular-nums');
+      expect(numbers?.length).toBeGreaterThan(0);
+      for (const number of numbers ?? []) {
+        expect(number).toHaveClass('text-foreground');
+        expect(number).not.toHaveClass('text-muted-foreground');
+      }
+    }
+  });
+
   it('marks changes with +/− markers and screen-reader text, not colour alone', () => {
     render(<DiffViewer oldValue={'a\nb'} newValue={'a\nc'} />);
     const region = screen.getByRole('region', { name: 'Diff' });

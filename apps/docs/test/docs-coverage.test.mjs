@@ -13,6 +13,15 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../.
 const SRC = path.join(ROOT, 'apps/docs/src');
 const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 
+test('the repaired component pages have no accessibility baseline suppressions', () => {
+  const baseline = JSON.parse(fs.readFileSync(path.join(ROOT, 'apps/docs/e2e/a11y-baseline.json'), 'utf8'));
+  const repaired = /^(ChoiceCard|DiffViewer|Field|Textarea|ThemeProvider|Token|TokenInput|Toolbar)(?: |$)/;
+  assert.deepEqual(
+    Object.keys(baseline).filter((key) => repaired.test(key)),
+    [],
+  );
+});
+
 // ---- Known gaps ------------------------------------------------------------------------------------
 // Shrink-only: a gap listed here is tolerated, a new one fails, and a listed gap that was closed must be
 // removed (assertKnownGaps fails on stale entries), so this list can only get shorter.

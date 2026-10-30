@@ -32,14 +32,14 @@ export const diffViewerVariants = tv({
       added: {
         row: 'bg-success/10',
         half: 'bg-success/10',
-        number: 'bg-success/15',
+        number: 'bg-success/15 text-foreground',
         marker: 'text-success-text',
         word: 'bg-success/30',
       },
       removed: {
         row: 'bg-destructive/10',
         half: 'bg-destructive/10',
-        number: 'bg-destructive/15',
+        number: 'bg-destructive/15 text-foreground',
         marker: 'text-destructive-text',
         word: 'bg-destructive/30',
       },

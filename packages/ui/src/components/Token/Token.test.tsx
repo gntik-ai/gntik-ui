@@ -6,6 +6,14 @@ import TokenFilters from './examples/TokenFilters';
 import TokenRecipients from './examples/TokenRecipients';
 
 describe('Token', () => {
+  it('keeps disabled labels readable without dimming the chip', () => {
+    render(<Token label="Billing owner" disabled onRemove={() => {}} />);
+    const root = screen.getByText('Billing owner').parentElement;
+    expect(root).toHaveClass('data-disabled:bg-secondary', 'data-disabled:text-foreground');
+    expect(root?.className).not.toMatch(/opacity-/);
+    expect(screen.getByRole('button', { name: 'Remove Billing owner' })).toBeDisabled();
+  });
+
   it.each(['neutral', 'primary', 'success', 'warning', 'destructive'] as const)('exposes the %s tone', (tone) => {
     render(<Token tone={tone} label="Status" />);
     expect(screen.getByText('Status').parentElement).toHaveAttribute('data-tone', tone);

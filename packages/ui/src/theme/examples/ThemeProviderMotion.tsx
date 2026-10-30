@@ -42,7 +42,7 @@ export default function ThemeProviderMotion() {
   const target = useCallback(() => ref.current, []);
   return (
     <div className="space-y-4">
-      <div ref={ref} data-testid="motion-scope" className="space-y-3">
+      <div ref={ref} data-testid="motion-scope" className="space-y-3 rounded-lg bg-background p-4 text-foreground">
         <ThemeProvider
           forcedMode={resolved}
           defaultMotion="reduce"
