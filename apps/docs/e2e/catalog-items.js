@@ -32,9 +32,17 @@ export const componentPages = paths.flatMap((dir) =>
 export async function openComponent(page, folder) {
   const item = componentPages.find((p) => p.folder === folder);
   if (!item) throw new Error(`No documented component ${folder}`);
-  await page.evaluate((id) => window.__goto('ui-components', id), item.id);
+  const navigated = await page.evaluate((id) => {
+    if (location.hash === `#ui-components/${id}`) return false;
+    window.__goto('ui-components', id);
+    return true;
+  }, item.id);
   await expect(page.locator(`#ui-${folder}`)).toBeVisible();
   // Visibility can precede the route effect that focuses the heading. Wait for
-  // that effect before callers open a popup, including same-page navigation.
-  await expect(page.getByRole('heading', { level: 1, name: item.name, exact: true })).toBeFocused();
+  // that effect before callers open a popup. Staying on the current page must
+  // not schedule another focus effect or disturb the previous example's focus.
+  if (navigated) {
+    await expect(page).toHaveTitle(`${item.name} · Gntik UI`);
+    await expect(page.getByRole('heading', { level: 1, name: item.name, exact: true })).toBeFocused();
+  }
 }
