@@ -9,6 +9,7 @@ For individual CSS exports, import these paths in order:
 @import '@gntik-ai/tokens/brand.css';
 @import '@gntik-ai/tokens/status.css';
 @import '@gntik-ai/tokens/pairing.css';
+@import '@gntik-ai/tokens/tone.css';
 @import '@gntik-ai/tokens/scope.css';
 @import '@gntik-ai/tokens/palettes/index.css';
 ```
@@ -27,3 +28,26 @@ The named ids are exported as `PALETTES` and `PaletteId` from
 `@gntik-ai/tokens/tokens` and `@gntik-ai/tokens/runtime`. JavaScript colour consumers
 read live values with the runtime's `tokenChannels`, `tokenColor` or `tokenHex`,
 and subscribe to theme and palette changes with `observeTheme`.
+
+## Shared semantic tones
+
+`data-tone` supports `primary`, `success`, `warning`, `destructive`, `info`,
+`neutral`, `violet`, `cyan`, `amber` and `rose`. It sets inherited HSL-channel
+variables `--tone`, `--tone-text` and `--tone-chip-text` from existing tokens.
+Unknown names (including flow states such as `failed`) clear these variables,
+even inside a known tone; `bg-tone/15` then paints no tint. Descendants without
+`data-tone` inherit the closest tone.
+
+```html
+<span data-tone="success" class="bg-tone/15 text-tone-chip-text">Healthy</span>
+<div data-tone="warning" class="border border-tone/45 text-tone-text">Check usage</div>
+```
+
+Use `bg-tone`, `border-tone` and `text-tone` for the raw tone, `text-tone-text`
+on background/card/popover surfaces, and `text-tone-chip-text` on 10–20% tints.
+The info, neutral and category text aliases use foreground. Neutral's raw tone
+is muted-foreground; categories use their category tokens. Badge, Alert, Token
+and Progress expose their tone on the root and retain their role-specific
+surfaces, icons and opacity strengths. Import `tone.css` after brand and pairing
+when using standalone CSS; the Tailwind bridge includes it automatically.
+The Badge docs include a live Shared Tone Utilities example for product markup.

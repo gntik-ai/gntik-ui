@@ -16,11 +16,11 @@ export interface ProgressProps extends Omit<BaseProgress.Root.Props, 'className'
  * Task progress bar (role="progressbar") on Base UI Progress. `value={null}` makes it
  * indeterminate: a pulsing segment that holds still under reduced motion.
  */
-export function Progress({ tone, size, label, showValue = false, className, ...props }: ProgressProps) {
+export function Progress({ tone = 'primary', size, label, showValue = false, className, ...props }: ProgressProps) {
   const s = progressVariants({ tone, size });
   const indeterminate = props.value == null;
   return (
-    <BaseProgress.Root className={cn(s.root(), className)} {...props}>
+    <BaseProgress.Root data-tone={tone} className={cn(s.root(), className)} {...props}>
       {(label != null || (showValue && !indeterminate)) && (
         <div className={s.header()}>
           {label != null ? <BaseProgress.Label className={s.label()}>{label}</BaseProgress.Label> : <span />}

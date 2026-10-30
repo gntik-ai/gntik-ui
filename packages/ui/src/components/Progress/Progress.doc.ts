@@ -9,6 +9,9 @@ export const doc: ComponentDoc = {
   primitive: '@base-ui/react/progress',
   pattern: 'progressbar',
   tokens: [
+    'tone',
+    'tone-text',
+    'tone-chip-text',
     'primary',
     'success',
     'success-text',

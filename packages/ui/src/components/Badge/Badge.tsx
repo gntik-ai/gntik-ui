@@ -18,7 +18,7 @@ export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'class
 
 /** Compact label for status, counts and categories. Optionally removable (tags). */
 export function Badge({
-  tone,
+  tone = 'neutral',
   variant,
   size,
   shape,
@@ -34,7 +34,7 @@ export function Badge({
   const label =
     removeLabel ?? (typeof children === 'string' ? t('common.removeItem', { label: children }) : t('common.remove'));
   return (
-    <span className={cn(s.root(), onRemove && 'pe-1.5', className)} {...props}>
+    <span data-tone={tone} className={cn(s.root(), onRemove && 'pe-1.5', className)} {...props}>
       {dot && <span aria-hidden className={s.dot()} />}
       {children}
       {onRemove && (

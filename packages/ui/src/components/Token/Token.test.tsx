@@ -6,10 +6,22 @@ import TokenFilters from './examples/TokenFilters';
 import TokenRecipients from './examples/TokenRecipients';
 
 describe('Token', () => {
+  it.each(['neutral', 'primary', 'success', 'warning', 'destructive'] as const)('exposes the %s tone', (tone) => {
+    render(<Token tone={tone} label="Status" />);
+    expect(screen.getByText('Status').parentElement).toHaveAttribute('data-tone', tone);
+  });
+
+  it('keeps the default neutral surface and leading colour', () => {
+    render(<Token label="Status" icon={<span>Icon</span>} />);
+    expect(screen.getByText('Status').parentElement).toHaveAttribute('data-tone', 'neutral');
+    expect(screen.getByText('Status').parentElement).toHaveClass('border-border', 'bg-background');
+    expect(screen.getByText('Icon').parentElement).toHaveClass('text-muted-foreground');
+  });
+
   it('renders label, prefix and tone classes, merging className', () => {
     render(<Token tone="success" prefix="Status:" label="Paid" className="ms-2" />);
     const root = screen.getByText('Paid').parentElement as HTMLElement;
-    expect(root).toHaveClass('text-success-chip-text', 'ms-2');
+    expect(root).toHaveClass('text-tone-chip-text', 'ms-2');
     expect(screen.getByText('Status:')).toHaveClass('text-muted-foreground');
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });

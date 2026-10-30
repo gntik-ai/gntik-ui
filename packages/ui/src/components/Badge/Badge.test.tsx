@@ -6,6 +6,27 @@ import BadgeTones from './examples/BadgeTones';
 import BadgeRemovable from './examples/BadgeRemovable';
 
 describe('Badge', () => {
+  it.each([
+    'neutral',
+    'primary',
+    'success',
+    'warning',
+    'destructive',
+    'info',
+    'violet',
+    'cyan',
+    'amber',
+    'rose',
+  ] as const)('exposes the %s tone to descendant utilities', (tone) => {
+    render(<Badge tone={tone}>Status</Badge>);
+    expect(screen.getByText('Status')).toHaveAttribute('data-tone', tone);
+  });
+
+  it('exposes the default neutral tone', () => {
+    render(<Badge>Status</Badge>);
+    expect(screen.getByText('Status')).toHaveAttribute('data-tone', 'neutral');
+  });
+
   it('renders its label with tone classes and merges className', () => {
     render(
       <Badge tone="success" className="ms-2">
@@ -13,7 +34,7 @@ describe('Badge', () => {
       </Badge>,
     );
     const badge = screen.getByText('Healthy');
-    expect(badge).toHaveClass('bg-success/15', 'text-success-chip-text', 'ms-2');
+    expect(badge).toHaveClass('bg-tone/(--badge-bg-alpha)', 'text-tone-chip-text', 'ms-2');
   });
 
   it('uses text-foreground (not the raw tone) for info and category tones', () => {
@@ -25,8 +46,8 @@ describe('Badge', () => {
         </Badge>
       </>,
     );
-    expect(screen.getByText('Queued')).toHaveClass('text-foreground');
-    expect(screen.getByText('Design')).toHaveClass('text-foreground', 'border-category-violet/45');
+    expect(screen.getByText('Queued')).toHaveClass('text-tone-chip-text');
+    expect(screen.getByText('Design')).toHaveClass('text-tone-text', 'border-tone/(--badge-border-alpha)');
   });
 
   it('Tab focuses the remove button, which is named after the label', async () => {

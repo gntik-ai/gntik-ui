@@ -1,0 +1,67 @@
+/* Shared semantic tones. Values inherit into descendants without data-tone.
+   Reset at every explicit boundary so unknown values cannot inherit a tone. */
+[data-tone] {
+  --tone: initial;
+  --tone-text: initial;
+  --tone-chip-text: initial;
+}
+
+[data-tone="primary"] {
+  --tone: var(--primary);
+  --tone-text: var(--primary-text);
+  --tone-chip-text: var(--primary-chip-text);
+}
+
+[data-tone="success"] {
+  --tone: var(--success);
+  --tone-text: var(--success-text);
+  --tone-chip-text: var(--success-chip-text);
+}
+
+[data-tone="warning"] {
+  --tone: var(--warning);
+  --tone-text: var(--warning-text);
+  --tone-chip-text: var(--warning-chip-text);
+}
+
+[data-tone="destructive"] {
+  --tone: var(--destructive);
+  --tone-text: var(--destructive-text);
+  --tone-chip-text: var(--destructive-chip-text);
+}
+
+[data-tone="info"] {
+  --tone: var(--info);
+  --tone-text: var(--foreground);
+  --tone-chip-text: var(--foreground);
+}
+
+[data-tone="neutral"] {
+  --tone: var(--muted-foreground);
+  --tone-text: var(--foreground);
+  --tone-chip-text: var(--foreground);
+}
+
+[data-tone="violet"] {
+  --tone: var(--category-violet);
+  --tone-text: var(--foreground);
+  --tone-chip-text: var(--foreground);
+}
+
+[data-tone="cyan"] {
+  --tone: var(--category-cyan);
+  --tone-text: var(--foreground);
+  --tone-chip-text: var(--foreground);
+}
+
+[data-tone="amber"] {
+  --tone: var(--category-amber);
+  --tone-text: var(--foreground);
+  --tone-chip-text: var(--foreground);
+}
+
+[data-tone="rose"] {
+  --tone: var(--category-rose);
+  --tone-text: var(--foreground);
+  --tone-chip-text: var(--foreground);
+}

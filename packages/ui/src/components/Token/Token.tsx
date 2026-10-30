@@ -31,7 +31,7 @@ export function Token({
   label,
   prefix,
   icon,
-  tone,
+  tone = 'neutral',
   size,
   onRemove,
   removeLabel,
@@ -52,7 +52,7 @@ export function Token({
     }
   };
   return (
-    <span data-disabled={disabled || undefined} className={cn(s.root(), className)} {...props}>
+    <span data-tone={tone} data-disabled={disabled || undefined} className={cn(s.root(), className)} {...props}>
       {icon != null && <span className={s.leading()}>{icon}</span>}
       {prefix != null && <span className="shrink-0 text-muted-foreground">{prefix}</span>}
       <span className={s.label()}>{label}</span>

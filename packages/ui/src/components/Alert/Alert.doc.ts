@@ -13,6 +13,9 @@ export const doc: ComponentDoc = {
     ['Space', 'Activates the dismiss button'],
   ],
   tokens: [
+    'tone',
+    'tone-text',
+    'tone-chip-text',
     'info',
     'success',
     'success-text',

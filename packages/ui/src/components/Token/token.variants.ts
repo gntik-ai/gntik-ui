@@ -4,9 +4,9 @@ export const tokenVariants = tv({
   slots: {
     root: [
       'inline-flex max-w-full shrink-0 items-center gap-1.5 rounded-md border align-middle whitespace-nowrap select-none',
-      'data-disabled:opacity-60',
+      'data-disabled:opacity-60 border-tone/(--token-border-alpha) bg-tone/(--token-bg-alpha) text-tone-chip-text',
     ],
-    leading: 'inline-flex shrink-0 items-center [&_svg]:shrink-0',
+    leading: 'inline-flex shrink-0 items-center text-tone-text [&_svg]:shrink-0',
     label: 'min-w-0 truncate font-medium',
     remove: [
       'grid shrink-0 cursor-interactive place-items-center rounded text-muted-foreground transition-colors motion-reduce:transition-none',
@@ -17,14 +17,11 @@ export const tokenVariants = tv({
   },
   variants: {
     tone: {
-      neutral: { root: 'border-border bg-background text-foreground', leading: 'text-muted-foreground' },
-      primary: { root: 'border-primary/35 bg-primary/10 text-primary-chip-text', leading: 'text-primary-text' },
-      success: { root: 'border-success/35 bg-success/10 text-success-chip-text', leading: 'text-success-text' },
-      warning: { root: 'border-warning/40 bg-warning/12 text-warning-chip-text', leading: 'text-warning-text' },
-      destructive: {
-        root: 'border-destructive/35 bg-destructive/10 text-destructive-chip-text',
-        leading: 'text-destructive-text',
-      },
+      neutral: { root: 'border-border bg-background', leading: 'text-muted-foreground' },
+      primary: { root: '[--token-border-alpha:35%] [--token-bg-alpha:10%]' },
+      success: { root: '[--token-border-alpha:35%] [--token-bg-alpha:10%]' },
+      warning: { root: '[--token-border-alpha:40%] [--token-bg-alpha:12%]' },
+      destructive: { root: '[--token-border-alpha:35%] [--token-bg-alpha:10%]' },
     },
     size: {
       /** Follows `data-density` (comfortable = md). */

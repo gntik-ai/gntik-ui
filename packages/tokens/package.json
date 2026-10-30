@@ -12,6 +12,7 @@
     "./brand.css": "./src/brand.css",
     "./tailwind.css": "./src/tailwind.css",
     "./pairing.css": "./src/pairing.css",
+    "./tone.css": "./src/tone.css",
     "./runtime": {
       "types": "./src/runtime.d.ts",
       "default": "./src/runtime.js"

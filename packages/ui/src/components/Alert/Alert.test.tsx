@@ -6,6 +6,22 @@ import AlertTones from './examples/AlertTones';
 import AlertDismissible from './examples/AlertDismissible';
 
 describe('Alert', () => {
+  it.each(['info', 'success', 'warning', 'destructive'] as const)('exposes the %s tone', (tone) => {
+    render(<Alert tone={tone} title="Status" />);
+    expect(screen.getByRole(tone === 'destructive' ? 'alert' : 'status')).toHaveAttribute('data-tone', tone);
+  });
+
+  it('keeps the default info icon and dismiss colours', () => {
+    render(<Alert title="Status" onDismiss={() => {}} />);
+    const root = screen.getByRole('status');
+    expect(root).toHaveAttribute('data-tone', 'info');
+    expect(root.querySelector('svg')).toHaveClass('text-info');
+    expect(screen.getByRole('button', { name: 'Dismiss' })).toHaveClass(
+      'text-muted-foreground',
+      'hover:text-foreground',
+    );
+  });
+
   it('uses role status for non-destructive tones and alert for destructive', () => {
     render(<AlertTones />);
     expect(screen.getAllByRole('status')).toHaveLength(3);
@@ -20,8 +36,8 @@ describe('Alert', () => {
         <Alert tone="info" title="Note" />
       </>,
     );
-    expect(screen.getByText('Warn')).toHaveClass('text-warning-text');
-    expect(screen.getByText('Note')).toHaveClass('text-foreground');
+    expect(screen.getByText('Warn')).toHaveClass('text-tone-text');
+    expect(screen.getByText('Note')).toHaveClass('text-tone-text');
   });
 
   it('Tab reaches the actions and then the dismiss button', async () => {
