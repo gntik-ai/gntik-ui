@@ -1,4 +1,26 @@
 import { test, expect } from '@playwright/test';
+import { openComponent } from './catalog-items.js';
+
+test('component navigation is ready for popup interactions on initial and repeated visits', async ({ page }) => {
+  await page.goto('/#ui-components/searchable-select');
+  for (const [folder, selector] of [
+    ['SearchableSelect', '[data-example="searchable-select-field"]'],
+    ['SearchableSelect', '[data-example="searchable-select-toolbar"]'],
+    ['Combobox', '[data-example="combobox-popup-search"]'],
+  ]) {
+    await openComponent(page, folder);
+    const trigger = page.locator(selector).getByRole('combobox').first();
+    await trigger.click();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    const popup = page.locator(`[id="${await trigger.getAttribute('aria-controls')}"]`);
+    const input = popup.getByRole('combobox');
+    await expect(input).toBeFocused();
+    await openComponent(page, folder);
+    await expect(input).toBeFocused();
+    await input.press('Escape');
+    await expect(trigger).toBeFocused();
+  }
+});
 
 test('direct component links set title, breadcrumb and heading focus', async ({ page }) => {
   await page.goto('/#ui-components/select');

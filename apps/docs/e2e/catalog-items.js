@@ -38,11 +38,13 @@ export async function openComponent(page, folder) {
     return true;
   }, item.id);
   await expect(page.locator(`#ui-${folder}`)).toBeVisible();
+  // A direct load already has the target hash while its first route effect may
+  // still be pending. The title is set by that effect, so await it on every visit.
+  await expect(page).toHaveTitle(`${item.name} · Gntik UI`);
   // Visibility can precede the route effect that focuses the heading. Wait for
   // that effect before callers open a popup. Staying on the current page must
   // not schedule another focus effect or disturb the previous example's focus.
   if (navigated) {
-    await expect(page).toHaveTitle(`${item.name} · Gntik UI`);
     await expect(page.getByRole('heading', { level: 1, name: item.name, exact: true })).toBeFocused();
   }
 }
