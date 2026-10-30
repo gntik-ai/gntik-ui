@@ -29,6 +29,42 @@ function deferred<T>() {
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 describe('Toast actions', () => {
+  it('stays paused across overlapping hover and close-button focus until both leave', async () => {
+    vi.useFakeTimers();
+    try {
+      render(
+        <ToastProvider>
+          <Trigger options={{ title: 'Saved draft', timeout: 1000 }} />
+          <Toaster />
+        </ToastProvider>,
+      );
+      const trigger = screen.getByRole('button', { name: 'Show' });
+      fireEvent.click(trigger);
+      await act(async () => vi.advanceTimersByTime(100));
+      const toast = screen.getByRole('dialog', { name: 'Saved draft' });
+      fireEvent.mouseEnter(toast);
+      await act(async () => vi.advanceTimersByTime(2000));
+      expect(toast).toBeInTheDocument();
+      expect(toast).not.toHaveAttribute('data-ending-style');
+      const close = screen.getByRole('button', { name: 'Dismiss notification' });
+      act(() => close.focus());
+      expect(close).toHaveFocus();
+      fireEvent.mouseLeave(toast);
+      await act(async () => vi.advanceTimersByTime(2000));
+      expect(toast).toBeInTheDocument();
+      expect(toast).not.toHaveAttribute('data-ending-style');
+      act(() => trigger.focus());
+      await act(async () => vi.advanceTimersByTime(899));
+      expect(toast).toBeInTheDocument();
+      await act(async () => vi.advanceTimersByTime(101));
+      expect(toast).toHaveAttribute('data-ending-style');
+      await act(async () => vi.advanceTimersByTime(32));
+      expect(screen.queryByRole('dialog', { name: 'Saved draft' })).not.toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('primary and dismiss actions are reachable with F6 → Tab and run their handlers', async () => {
     const user = userEvent.setup();
     render(<ToastActions />);
@@ -50,25 +86,42 @@ describe('Toast actions', () => {
   });
 
   it('does not auto-dismiss while an action has focus, and resumes after', async () => {
-    const user = userEvent.setup();
-    render(
-      <ToastProvider>
-        <Trigger options={{ title: 'Saved draft', timeout: 150, action: { label: 'Open', onClick: () => {} } }} />
-        <Toaster />
-      </ToastProvider>,
-    );
-    await user.click(screen.getByRole('button', { name: 'Show' }));
-    const region = await screen.findByRole('region', { name: 'Notifications' });
-    fireEvent.keyDown(document.body, { key: 'F6' });
-    await waitFor(() => expect(region).toHaveFocus());
-    await user.tab();
-    await act(() => sleep(400));
-    expect(screen.getByRole('dialog', { name: 'Saved draft' })).toBeInTheDocument();
-    await user.click(document.body);
-    fireEvent.blur(document.activeElement ?? document.body);
-    await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Saved draft' })).not.toBeInTheDocument(), {
-      timeout: 2000,
-    });
+    vi.useFakeTimers();
+    try {
+      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+      render(
+        <ToastProvider>
+          <Trigger options={{ title: 'Saved draft', timeout: 150, action: { label: 'Open', onClick: () => {} } }} />
+          <Toaster />
+        </ToastProvider>,
+      );
+      const trigger = screen.getByRole('button', { name: 'Show' });
+      fireEvent.click(trigger);
+      const region = screen.getByRole('region', { name: 'Notifications' });
+      fireEvent.keyDown(document.body, { key: 'F6' });
+      expect(region).toHaveFocus();
+      const action = screen.getByRole('button', { name: 'Open' });
+      await act(async () => {
+        const tab = user.tab();
+        await vi.runAllTimersAsync();
+        await tab;
+      });
+      expect(screen.getByRole('dialog', { name: 'Saved draft' })).toHaveFocus();
+      await act(async () => {
+        const tab = user.tab();
+        await vi.runAllTimersAsync();
+        await tab;
+      });
+      expect(action).toHaveFocus();
+      await act(async () => vi.advanceTimersByTime(400));
+      expect(screen.getByRole('dialog', { name: 'Saved draft' })).toBeInTheDocument();
+      act(() => trigger.focus());
+      await act(async () => vi.advanceTimersByTime(150));
+      await act(async () => vi.advanceTimersByTime(32));
+      expect(screen.queryByRole('dialog', { name: 'Saved draft' })).not.toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('pauses auto-dismiss while hovered', async () => {

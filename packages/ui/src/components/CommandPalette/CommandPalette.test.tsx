@@ -61,6 +61,30 @@ const options = (dialog: HTMLElement) => within(dialog).getAllByRole('option');
 const highlighted = (dialog: HTMLElement) => dialog.querySelector('[role="option"][data-highlighted]');
 
 describe('CommandPalette', () => {
+  it('highlights the first match arriving after typing and selects it with Enter', async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    const { rerender } = render(<CommandPalette defaultOpen groups={[]} onSelect={onSelect} />);
+    const input = await screen.findByRole('combobox');
+    await waitFor(() => expect(input).toHaveFocus());
+    await user.type(input, 'proj');
+    expect(screen.queryByRole('option')).not.toBeInTheDocument();
+    const first = { id: 'projects', label: 'Projects' };
+    rerender(
+      <CommandPalette
+        defaultOpen
+        groups={[{ label: 'Results', items: [first, { id: 'create', label: 'Create project' }] }]}
+        onSelect={onSelect}
+      />,
+    );
+    const option = await screen.findByRole('option', { name: 'Projects' });
+    await waitFor(() => expect(input).toHaveAttribute('aria-activedescendant', option.id));
+    expect(option).toHaveAttribute('data-highlighted');
+    await user.keyboard('{Enter}');
+    expect(onSelect).toHaveBeenCalledWith(first);
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
   it('ranks prefix > word start > subsequence and searches keywords', () => {
     expect(scoreCommand({ id: 'a', label: 'Projects' }, 'pro')).toBeGreaterThan(
       scoreCommand({ id: 'b', label: 'Create project' }, 'pro'),

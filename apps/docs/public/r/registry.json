@@ -81,7 +81,7 @@
       "description": "A stack of collapsible sections separated by dividers, flush or inside a card. Single (default) or multiple open items; the chevron rotates and the height animates. Compound parts: Accordion, AccordionItem, AccordionTrigger, AccordionPanel.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -319,7 +319,7 @@
       "description": "Inline banner in four tones (info, success, warning, destructive) with title, description, an action row and an optional dismiss button. Destructive alerts use role=\"alert\"; the others role=\"status\".",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -466,7 +466,7 @@
       "description": "Confirmation that interrupts the user and demands a decision: tone icon (destructive, warning, info), title, consequence and Cancel + confirm actions. An outside press does not dismiss it. Parts: AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -695,7 +695,7 @@
       "description": "A box locked to a width / height ratio (16:9 by default) for images, video and embeds; direct children fill it (object-cover). Radius none–xl and an optional bordered placeholder surface.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -952,7 +952,7 @@
       "description": "Sign-in, sign-up and reset shell in three variants: `split` (brand panel on the chrome surface + form; the panel hides below `lg` and the logo moves above the form), `card` (form centred in a card) and `full-bleed` (form straight on the chrome surface). The logo defaults to the ThemeProvider brand preset (Logo with wordmark). The form is first in the DOM, so it is first in tab order on every screen size. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -1095,7 +1095,7 @@
       "description": "Person or entity avatar: image with an initials (or icon) fallback, five sizes (xs–xl), round or rounded, tinted tones and an optional presence dot. AvatarGroup stacks avatars with a \"+N more\" overflow.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -1241,7 +1241,7 @@
       "description": "Compact label for status, counts and categories. Semantic tones (neutral, primary, success, warning, destructive, info) plus four category tones, in soft, outline or solid; optional dot and remove button for tags.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -1497,7 +1497,7 @@
       "description": "Mobile sheet that rests at snap points (a peek height and expanded by default): drag or swipe it between heights or down to close, or use the handle from the keyboard. Modal like a dialog: focus is trapped, Escape closes and focus returns to the trigger. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -1644,7 +1644,7 @@
       "description": "Location trail in a nav landmark: chevron or slash separators, an optional icon-only root, and the current page marked with aria-current. With `maxItems` the middle collapses into an ellipsis button that expands the full trail in place.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -1831,7 +1831,7 @@
       "description": "Triggers an action. Five variants (primary, secondary, soft, ghost, destructive), three sizes, icons and a loading state. IconButton is the square, icon-only form. Requires the matching tokens minor for cursor utilities: set --cursor-interactive: default on :root to use the arrow. Disabled and loading buttons keep the disabled cursor, receive pointer events, ignore activation and suppress hover styles.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -1888,7 +1888,7 @@
       "description": "The public localeWeekStart(locale?) helper returns the locale first weekday (0–6, Monday fallback), matching scheduling blocks. Day or range selection with one or two months, inclusive min/max bounds and Intl names. The clickable month heading opens a month grid, then the year heading opens a shared 12-year page (2020–2031 for 2026). Set maxView=\"day\" for the previous static header, or \"month\" to stop at months; the default is \"year\". Optional view/defaultView/onViewChange control or report the view (initially \"day\"). captionLayout=\"select\" uses labelled kit month/year selects; yearRange={from,to} defaults to the current year ±10, clipped to min/max and including the visible year. Picking a month returns to days, preserving and clamping the focused day, and calls onMonthChange once with the first day. DatePicker and DateRangePicker forward maxView and captionLayout and reopen in the day view.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -2066,7 +2066,7 @@
       "description": "Editor shell for a full-bleed canvas (flow editor, code editor, map): top bar · left palette · canvas with a floating toolbar · right inspector · collapsible bottom console. Palette and inspector toggle from the top bar; each panel is controllable (`paletteOpen`, `inspectorOpen`, `consoleOpen`). Below `lg` the side panels and toggles hide and a read-only notice (\"Open on a larger screen to edit\") shows over the canvas. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -2259,7 +2259,7 @@
       "description": "Scroll-snap media strip: one, two, three or auto-width slides per view, previous/next buttons, optional picker dots, arrow keys on the focused strip. No autoplay by default; `autoplay` adds a pause control, pauses on hover and focus, and starts paused under reduced motion. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "@gntik-ai/tokens",
         "lucide-react@^1.48.0"
       ],
@@ -2760,10 +2760,10 @@
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
-      "description": "Checkbox with optional label and description, including the indeterminate state. CheckboxGroup shares state across several checkboxes (plain or bordered list layout) and supports a parent \"select all\" checkbox.",
+      "description": "Checkbox with optional label and description, including the indeterminate state. CheckboxGroup shares state across several checkboxes (plain or bordered list layout) and supports a parent \"select all\" checkbox. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -2815,7 +2815,7 @@
       "description": "Cards as controls. ClickableCard: the whole card is one link or button (a stretched title, so there is a single focus target with a short name) with icon, description, meta and a chevron. SelectableCard inside SelectableCardGroup: option cards with radio (single) or checkbox (multiple) semantics on Base UI RadioGroup / CheckboxGroup, with a check indicator, title, description, meta and disabled state.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -2926,7 +2926,7 @@
       "description": "Read-only code panel with optional whole-source grammars: install the optional peer with `pnpm add shiki`, then import `createShikiHighlighter` from `@gntik-ai/ui/code-highlight-shiki` and wrap blocks in `<CodeHighlighterProvider highlighter={highlighter}>`. Read-only code panel with a filename / language header, a copy button (\"Copied\" feedback plus a polite live announcement), optional line numbers, highlighted lines, a soft-wrap toggle and a max height. Default colouring is a minimal tokenizer for ts/tsx/js/json/bash/css that only uses contrast-safe text tokens; use CodeHighlighterProvider for whole-source grammars, or pass `highlight` for a per-line override. Code is the inline variant for running text. Keep the instance stable with useMemo or create it outside render. The adapter lazily loads YAML, Python, Go and SQL (yml/py/golang/postgresql aliases), using the JavaScript regex engine without WebAssembly. Other languages retain the built-in tokenizer; unavailable languages stay plain and warn once in development. Add grammars with `createShikiHighlighter({ languages: { toml: loadTomlGrammar } })`, as the live example demonstrates. Each async loader returns a Shiki LanguageInput and can also override a default grammar. Custom CodeHighlighter implementations return CodeToken[][] for the whole source or null, with optional load(language): Promise<boolean>; useCodeHighlighter reads the nearest provider. Provider tokens use tokenClass only; invalid text or line counts fall back to the built-in tokenizer. Use maxHeight for long files to keep the panel scrollable; tokenization still runs on the main thread and is memoised.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -3189,7 +3189,7 @@
       "description": "A single show/hide section: an inline toggle (\"Advanced settings\") or a full-width row in the Accordion family. The chevron rotates and the height animates. Compound parts: Collapsible, CollapsibleTrigger, CollapsiblePanel.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -3241,7 +3241,7 @@
       "description": "ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -3426,7 +3426,7 @@
       "description": "⌘K / Ctrl+K command palette: a modal dialog with a search input over grouped commands (icon, label, description, shortcut keys). Commands are data with an onSelect. Fuzzy-ish ranking (prefix, word start, substring, subsequence; keywords and descriptions count), recent items while the query is empty, an empty state and footer hints. useCommandPaletteShortcut() exposes the shortcut on its own.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -3748,7 +3748,7 @@
       "description": "Menu that opens at the pointer on right click or long press, and from the keyboard with Shift+F10 or the ContextMenu key on the focused area. Uses the Menu item parts (icons, shortcuts, destructive tone, checkbox/radio items, groups, submenus).",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -3884,7 +3884,7 @@
       "description": "Copies a string, or the result of a (possibly async) getter, to the clipboard. Icon form (with tooltip) or labelled form, a \"Copied\" success state that resets after 2 s, a polite announcement (through LiveAnnouncer when present) and a fallback to execCommand when the Clipboard API is missing. Optional failureLabel and failureAnnouncement override failure feedback; failurePoliteness changes the LiveAnnouncer failure priority (assertive by default). `copyToClipboard` is exported too.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -4273,7 +4273,7 @@
       "description": "CSPProvider passes the app server nonce to Base UI and kit inline elements; useCSP exposes the settings for custom elements. Disable style elements to use static CSS.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json"
@@ -4346,7 +4346,7 @@
       "description": "See the cursor-pager-footer block example for data-table paginated={false} with a consumer-owned token stack. Stateless Previous/Next navigation for consumer-owned cursor stacks, with no page numbers, ranges or invented totals. Supply a plain-text summary (null keeps it empty) or shownCount with required labels.shownSummary and labels.totalSummary; only a positive exact total uses totalSummary. A pageSizeOptions select requires pageSize, onPageSizeChange, labels.rowsPerPage and labels.rowsPerPageLabel. Flat previousLabel, nextLabel and ariaLabel override labels.previous, labels.next and labels.navLabel, then provider catalog defaults. loading and busy are aliases: rendered buttons stay focusable and aria-disabled with aria-busy, while the select stays enabled. loadingLabel defaults to the catalog; null keeps the summary during busy. One persistent polite status writes once per changed text; mount, empty text and unchanged commits do not announce. Removal of the focused control moves focus to Next, Previous, the select or the nav root, in that order, even while busy; focus elsewhere never moves.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -4721,7 +4721,7 @@
       "description": "Typed local date and date-time entry in Intl locale order. DateField and DateRangeField expose named spinbuttons, calendar/min/max/disabled-date validation, ISO or numeric locale paste, and hidden form values. Granularity adds hours, minutes or seconds; a 12-hour clock adds AM/PM. Two-digit years remain literal (26 means year 26); empty segments use the TimePicker placeholder. forceLeadingZeros pads supplied values; typed segments are padded. Works inside Field. DatePicker triggers remain read-only.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -4885,7 +4885,7 @@
       "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. The internal calendar selectors and time field in the popup stay outlined, including inside a ghost or filled provider.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -5095,7 +5095,7 @@
       "description": "Time range field for logs and metrics: quick presets (last 15 minutes, 1 hour, 24 hours, 7 days, 30 days, custom), a relative \"Last N minutes/hours/days\" mode and an absolute mode with a range Calendar plus start and end TimePickers, validated so the end is after the start. The value is serialisable: `{ mode: \"relative\", amount, unit }` or `{ mode: \"absolute\", start, end }`; `resolveTimeRange` turns it into instants. `timeZone` (IANA, UTC or system) defaults to I18nProvider then the browser; invalid names fall back to the browser. Absolute calendar days, today, min/max, time segments and edits use the zone, with compatible DST disambiguation (gaps move forward; overlaps choose the earlier instant). Non-system zones appear in the field text and start/end labels; `hideTimeZone` removes those labels. Relative presets remain instant-based and hidden start/end inputs remain ISO instants. DateTimeRangePickerUtc demonstrates UTC absolute editing and hidden zone labels.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -5288,7 +5288,7 @@
       "description": "Modal window for focused tasks: forms, details, confirmations. Compound parts (Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogBody, DialogFooter, DialogClose) in four sizes. Named stacking layers keep nested popups, toasts and tooltips above the modal; see LayeredOverlays.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -5473,7 +5473,7 @@
       "description": "Compares two texts, or two JSON values pretty-printed with sorted keys, line by line (Myers diff, no dependencies). Split or unified layout with a switch, line numbers, added/removed tints plus +/− markers and screen-reader text (never colour alone), word-level highlights inside paired lines, long unchanged runs collapsed behind \"Expand N lines\", +/− stats and optional file or version labels. The pure `diffLines`, `diffWords`, `diffJson` and `stableStringify` are exported.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -5673,7 +5673,7 @@
       "description": "Documentation shell: top bar · left nav (a NavList) · article · right table of contents. The `Outline` sub-component is the table of contents: scroll-spy with IntersectionObserver (rooted in the article column, guarded where it is missing) marks the heading in view with aria-current=\"location\", and activating a link moves focus to the heading. Below `lg` the nav hides and the table of contents moves into a Collapsible above the article. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "@gntik-ai/tokens"
       ],
       "registryDependencies": [
@@ -5827,7 +5827,7 @@
       "description": "Saves required data (a string, Blob, or sync/async getter) as fileName. mimeType defaults to the Blob type, otherwise text/plain;charset=utf-8; extensions are not inferred. Inherits Button props, with a Download icon and translated default label. Async getters use Button loading, stay focusable and ignore repeat activation. onDownloaded fires after saving; onDownloadError receives failures, announced politely through LiveAnnouncer or a local status region. The static CSV, async success/failure and one-time JSON examples demonstrate these states and callbacks. downloadFile(data, fileName, mimeType?) is also exported; it removes the temporary anchor, revokes its URL on the next task, and does nothing without object URL support. Browsers differ: iOS Safari may open a tab. Exports are held in memory; use a server export for very large row sets. toCsv(rows, columns, options?) accepts columns with header and value (a row key or getter). Defaults: comma delimiter, header true, BOM false, CRLF, escapeFormulas true. Options also accept semicolon or tab delimiters, header false, BOM true, LF and escapeFormulas false. Null/undefined become empty cells, Dates use ISO, numbers/booleans retain their values and objects use JSON. Text starting with =, +, -, @, TAB or CR gets an apostrophe before CSV quoting; legitimate + or - text also changes. Disabling escapeFormulas is unsafe for spreadsheets. escapeCsvCell(text, delimiter?) always protects formulas and quotes delimiters, double quotes, CR and LF. It shares a name with the templates package helper: import explicitly from @gntik-ai/ui. Its CR-led cells are deliberately quoted, unlike the legacy audit-log helper.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -5986,7 +5986,7 @@
       "description": "Panel that slides in from the right, left or bottom edge for details, edit forms and navigation. Fixed header and footer, scrollable body, swipe to dismiss. Under RTL (I18nProvider) `right` and `left` mirror to the inline end and start. Parts: Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerBody, DrawerFooter, DrawerClose.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -6133,7 +6133,7 @@
       "description": "A file target with accept/reject feedback, a picker, type/size/count validation and a headless useDropzone hook. Accept is an input-style string or string array. With activateOnClick (default), children must contain no interactive content; use activateOnClick=false with DropzoneTrigger for buttons. Safari can expose an empty MIME type while dragging: these files are provisionally accepted and validated on drop. Extension and size rules apply on drop. Mount only one fullScreen zone per page; its window listeners ignore non-file drags. DropzoneCaption uses accept and maxSize for the upload hint. multiple defaults to true. Disabled zones ignore interaction.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -6285,7 +6285,7 @@
       "description": "Inline editing for names and titles. value/defaultValue and editing/defaultEditing support controlled or uncontrolled use; onEditingChange requests mode changes, and a controlled value is updated by the owner in onSave. label names the field. activation is click (default), dblclick, or button (static text and a ghost edit icon). The editor inherits surrounding typography. multiline uses an auto-sizing Textarea; maxLength and placeholder pass to the field. trim defaults to true; validate receives the trimmed value and can return an error. onSave accepts void/true, rejects with a string or false, and displays thrown/rejected Error messages. Pending fields stay read-only and show a Spinner. data-editing, data-pending and data-invalid expose state. Disabled prevents activation. submitOnBlur defaults to true, matching table cells, but may save half-typed text when clicking away; set false to cancel instead. Save/cancel restores preview focus, except blur preserves its destination. onCancel runs on Escape or blur cancellation; unchanged values exit without saving. The exported low-level useInlineEdit<T> hook shares draft, start, cancel(after), commit(after), pending, error and busy state with DataTable. It requires value, parse and onSave(next, previous), plus genericError; optional validate, isEqual, focusEditor, onAccepted and onMove adapt parsing, acceptance and focus. focusEditor receives the requested move on save rejection (undefined on parse/validation errors). after is self/next/prev/null; null preserves blur focus. editing/defaultEditing/onEditingChange control mode. LowLevel shows hook composition; use EditableText for standard text editing.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -6767,7 +6767,7 @@
       "description": "Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -7173,7 +7173,7 @@
       "description": "Responsive CSS grid. `cols` takes 1–12 or a per-breakpoint object ({ base, sm, md, lg, xl, 2xl }) mapped to static classes; `minChildWidth` auto-fills as many columns as fit. GridItem spans columns (also responsive, or `full`). gap, rowGap and columnGap accept scalar or per-breakpoint spacing steps (0–12). Tables contain full literal classes for Tailwind scanning.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -7356,7 +7356,7 @@
       "description": "Rich preview of a link destination — a member, project or resource — shown on hover or keyboard focus after a short delay. Parts: HoverCard, HoverCardTrigger (a real link), HoverCardContent. The preview is supplementary: never put the only copy of an action or fact inside it.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -7599,7 +7599,7 @@
       "description": "Inline \"i\" help button that opens a small popover with an explanation, next to a form label, a stat or a table header. Named \"More information about {label}\"; works with click, keyboard and (optionally) hover, so the help is never hover-only.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -7825,7 +7825,7 @@
       "description": "Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -7886,7 +7886,7 @@
       "description": "Main area with a pinnable right panel (properties, details, comments). Pinned, the panel docks beside the content; unpinned, it overlays it (flat shadow) and Escape closes it. Open and pinned states are controllable; an InspectorToggle placed in the main area opens and closes it. Below lg the panel opens as a bottom Drawer. Fills its container.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "@gntik-ai/tokens",
         "lucide-react@^1.48.0"
       ],
@@ -8119,7 +8119,7 @@
       "description": "Collapsible JSON inspector built on TreeList: objects and arrays expand, values use contrast-safe type tokens, `search` highlights matches and expands their ancestors, `maxDepth` caps nesting, and a toolbar copies the selected node path or value. Optional `maxDisplayChars` (finite integer >= 1) measures UTF-16 units: strings as-is, other values as two-space JSON. Over-cap values become read-only text with an ellipsis (dropping a trailing high surrogate) and a warning Badge labelled by `labels.truncated`. Search has no effect in this fallback; Copy value copies the full measured text, as explained by `labels.copyFullHint`, and Copy path is disabled. `maxHeight` bounds the scrollable body. Only in capped mode, null, undefined and empty strings show `emptyContent` (default a muted dash). Leaving the cap unset preserves existing behavior. The cap limits rendering, not serialization cost. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -8275,7 +8275,7 @@
       "description": "Columns of cards you reorder within a column and move across columns by pointer drag or keyboard. Controlled (`columns` + `onMove`, with `moveKanbanCard` to apply a move); every pick-up, move, drop and cancel is announced through a LiveAnnouncer. Built on the dependency-free `useSortable` hook (pointer + keyboard, press-and-hold on touch). Cards lift with a border and shadow only; nothing animates under reduced motion. Density-aware card padding (`size: \"auto\"`).",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -8427,7 +8427,7 @@
       "description": "Keyboard key chip (<kbd>) for shortcuts and hints, in three sizes. Use mod in Kbd or KbdCombo for ⌘ on macOS/iOS and Ctrl elsewhere; explicit keys stay unchanged. Symbol keys and Ctrl are announced by name, unless label overrides the spoken name. useOs() reports the detected OS (undetermined during SSR); getOs() detects it outside React. Both and the Os type are exported from @gntik-ai/ui.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -8578,7 +8578,7 @@
       "description": "Editable list of key/value rows (environment variables, headers, labels): add and remove rows (no reordering), per-row validation (required key, key pattern, duplicate keys, optional required value and a custom `validate`), secret rows whose values are masked with a reveal toggle, bulk paste of `.env` text (comments ignored, existing keys updated) and \"Copy as .env\". Controlled (`value` + `onChange`) or uncontrolled. `parseEnv`, `serializeEnv`, `validateKeyValueRows` and `createKeyValueRow` are exported.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -8872,7 +8872,7 @@
       "description": "Full-screen image and video viewer: previous / next, zoom (buttons, keys or double click) with a scrollable stage, captions, a thumbnail strip and an announced position. Modal: focus is trapped, Escape closes and focus returns to the opener. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -9019,7 +9019,7 @@
       "description": "Styled anchor in brand green, underlined by default so inline links do not rely on colour (WCAG 1.4.1); standalone links (nav, cards, actions) pass underline=\"hover\" or \"none\". `external` adds the external icon, a hidden \"opens in a new tab\" hint and safe rel/target. LinkProvider supplies the app router link so internal links navigate client-side; `render` swaps the element per link.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -9166,7 +9166,7 @@
       "description": "Repeatable key/value rows for environment variables, headers or labels: add, remove and reorder (buttons or Alt+Arrow), paste `KEY=value` lines to bulk-add, per-row validation with duplicate-key detection, optional masked values with a reveal toggle. Changes are announced. Use ListInput for standalone pairs without a form library; use FieldArray from @gntik-ai/ui/forms for arbitrary object fields managed by react-hook-form. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -9577,7 +9577,7 @@
       "description": "Top navigation with wide panels: items with sections open a panel of link columns with descriptions and optional featured content; plain items are links. Hover or click opens, the panel resizes between items, router links come from LinkProvider and the current page is marked. Use it as the StackedLayout sub-nav row; `megaMenuNavItems` feeds MobileNav. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -9761,7 +9761,7 @@
       "description": "Dropdown list of actions or options: items with icon, shortcut hint and destructive tone, checkbox and radio items, labelled groups, separators and submenus. MoreMenu is the row-actions shorthand (icon button + items array).",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -10095,7 +10095,7 @@
       "description": "Usage meter for quotas and limits: label, value text, and a level set by thresholds (healthy → warning near the cap → destructive at or over it), with an optional note under the bar. `higherIsBetter` inverts the thresholds for scores and health (low = warning / destructive).",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -10224,7 +10224,7 @@
       "description": "Small-screen navigation: a menu icon button opens a Drawer sheet (chrome surface) with the NavList groups and an optional footer slot. Activating an item closes the sheet; focus is trapped while open and returns to the button.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -10568,7 +10568,7 @@
       "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component. Read-only mode preserves the selection and prevents edits. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. MultiSelectOption.group adds headings in first-seen order after ungrouped options; filtering removes empty groups. ComboboxGroup, ComboboxGroupLabel and ComboboxCollection provide the shared grouped presentation. Select all selects or clears enabled options across every group. Grouped options retain full rendering even with virtualized. See MultiSelectGrouped for mixed groups, a disabled option and creation.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -10718,7 +10718,7 @@
       "description": "Vertical navigation for sidebars and settings pages: labelled (optionally foldable) groups of items with icon, label and badge, nested collapsible sub-items, and aria-current=\"page\" on the active item with the brand accent bar. `collapsed` turns it into an icon rail with tooltips (nested sections open as flyout menus). Links render through LinkProvider, so client routers work. Matching defaults to strict href equality (including query/hash). Opt in with list-wide match=\"prefix\" or item.match; an item override takes precedence. Prefix matching ignores query/hash and a trailing slash, respects segment boundaries, and matches / only at the root. Item.pattern accepts a string or array: :name matches one non-empty segment and a final * matches zero or more remaining segments; other * segments are literal, never regular expressions. One computed item wins across groups and descendants: exact href first, then the longest matching href or pattern by segment count, with document-order ties. Explicit current:false excludes an item; any current:true suppresses computation. Matched descendants open their section and activate its rail flyout. NavListRouteMatching demonstrates /functions/fn-42, inherited prefix matching, exact overrides and dynamic project patterns. Exported matchesNavPath, matchesNavPattern, resolveCurrentNavItem and isNavItemCurrent are pure and router-agnostic.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -10959,7 +10959,7 @@
       "description": "Bell icon button with an unread-count badge that opens a popover of notifications: title, body, relative time and a tone dot for unread items, a mark-all-read action, an optional footer (View all) and an empty state.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -11108,7 +11108,7 @@
       "description": "Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes sm and md like Input; invalid, disabled and read-only states; works inside Field. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -11265,7 +11265,7 @@
       "description": "One-time / verification code input: 4–8 character boxes, numeric or alphanumeric, optional group separator. Typing auto-advances, paste fills every slot, onComplete fires when full; invalid and disabled states; works inside Field.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -11411,7 +11411,7 @@
       "description": "Row of chips or avatars that renders items up to `max` (or to the available width with `responsive`, measured by ResizeObserver) and a \"+N more\" button that opens a Popover listing the rest. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -11563,7 +11563,7 @@
       "description": "The page inside any shell: a header (a custom slot such as the blocks PageHeader, or a simple h1 + description + actions), the body, and an optional sticky action bar (a labelled region) pinned to the bottom of the scroll container. Widths: narrow 640 · default 1120 · wide 1440 · full. It renders no <main>; the shell owns it.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -11797,7 +11797,7 @@
       "description": "Moves through pages of results. Pagination is numbered (first, last, siblings of the current page and ellipses, constant width) and page-size agnostic: page, pageCount, onPageChange. PaginationCompact is the table-footer form: \"1–10 of 97\" with previous/next.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -11982,7 +11982,7 @@
       "description": "Password field on Input with a reveal toggle (aria-pressed) and an optional 4-segment strength meter. Strength comes from a small built-in heuristic or a `strength` prop (0–4); its text is linked to the input with aria-describedby. Works inside Field.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -12250,7 +12250,7 @@
       "description": "Whole ISO weeks, months, calendar quarters or years, single or range. PeriodPicker is a field and Base UI popover; PeriodCalendar is inline. Single values are the first day of a whole period at local midnight, not a single-day selection. Ranges include the last day of the final period. Weeks always run Monday–Sunday and use the ISO week-year, regardless of locale. Month names use Intl; quarter/week labels and presets use the en/es i18n catalogs. Form values: YYYY-MM, YYYY-Qn, YYYY or YYYY-Www; ranges submit <name>-start and <name>-end. Defaults are this and last complete period; presets=[] hides them. Min/max compare period overlap; disabled periods remain focusable. Range fields apply on the second pick; Escape discards an unfinished range. Calendar and DatePicker remain day-only.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -12420,7 +12420,7 @@
       "description": "Roles (columns) × permissions (rows grouped in sections) editor. Cells are tri-state — allowed, denied, inherited — shown with an icon and a word, never colour alone; inherited cells are dashed and can say what they resolve to. Read-only columns (e.g. owner) and per-cell disabled reasons in a tooltip; controlled `value` + `onChange`; one tab stop with grid arrow-key navigation.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -12660,7 +12660,7 @@
       "description": "Non-modal floating panel anchored to a trigger, for short forms, details and filters. Optional arrow, four sides, three paddings. Close the popover before opening a Dialog from it: the popover layer is above the modal layer. Parts: Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -12807,7 +12807,7 @@
       "description": "Structured filter input: pick a field, an operator and a value from suggestions (or type `status=failed`, `cost>100`), add free text, and edit committed terms from the keyboard. Emits a typed query AST (`{ type: \"and\", terms }`) with parse / format / match helpers; fields, operators and values are props.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -13050,7 +13050,7 @@
       "description": "Printable document frame for invoices, reports and receipts: an A4 or Letter page (`size`) with margins (`margin`), header and footer slots and a `PageBreak` helper. On screen it is a paper sheet (bg-card / text-card-foreground, border, shadow-sm) on a muted backdrop in the current theme; `print:` variants drop the chrome (no backdrop, border, shadow or outer padding) and an `@page` rule sets paper size and margins (`pageRule`). The header and footer print once, at the top and end of the document. The consuming app should print with the light theme (ThemeProvider `defaultMode=\"light\"`, or `setMode('light')` before `window.print()`); no print-only colours are defined.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -13232,7 +13232,7 @@
       "description": "Progress bar for a running task: optional label and formatted value, four tones (primary, success, warning, destructive), three heights, and an indeterminate state (value null) that stops pulsing under reduced motion.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -13412,7 +13412,7 @@
       "description": "Visual filter editor: nested AND/OR groups of field / operator / value conditions. Typed fields (text, number, enum, date, boolean) offer their operators and value editor (Input, NumberInput, Select / MultiSelect, DatePicker, ranges for \"between\"); add and remove conditions and groups up to `maxDepth`. The value is a serialisable tree; `queryToString(tree)` makes it human-readable and `evaluateQuery(tree, record)` tests a record. Inverted numeric or date \"between\" ranges show an inline error and are ignored by evaluation. Before sending a query to a backend, check each condition with `isConditionComplete` and `isConditionValid`; validation preserves the entered values.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -13612,10 +13612,10 @@
       "name": "radio-group",
       "type": "registry:ui",
       "title": "RadioGroup",
-      "description": "Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants.",
+      "description": "Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -13805,7 +13805,7 @@
       "description": "Split layouts with draggable dividers: ResizablePanelGroup (horizontal or vertical), ResizablePanel (default / min / max size in %, collapsible) and ResizeHandle (optional grip). Pointer drag and full keyboard support; the layout can be remembered in localStorage with `autoSaveId`. No extra dependencies.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -14293,7 +14293,7 @@
       "description": "Cron schedule editor: presets (hourly at minute, daily at, weekly on days at, monthly on day at) that write a 5-field cron expression, plus a raw cron field (*, lists, ranges, steps, names, macros) with validation and an error message, a plain-language summary (\"Every weekday at 09:00\") and the next runs in a time zone. Pure helpers: parseCron, describeCron, nextRuns. Display timeZone defaults to I18nProvider (system when unset); use the same zone on server and client. The TimeZone example shows the provider default and UTC overrides",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -14506,7 +14506,7 @@
       "description": "Native scroll container with thin token-styled scrollbars that fade in on hover and while scrolling. Vertical, horizontal or both; optional bordered surface. With an aria-label the viewport is a named region, and it joins the Tab order whenever it overflows.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -14605,7 +14605,7 @@
       "description": "A button-triggered picker with search inside the popup. Options have value, label, description, icon, keywords and disabled; groups have label and options. getOptionKey defaults to String(value); supply a stable key for object values. Single value/defaultValue/onValueChange use Value | null; multiple uses Value[]. name, required, disabled and readOnly use the Combobox form contract; an empty selection submits nothing. label names the field and list; without it supply aria-label. The default trigger shows the selected icon and label or a localized count. trigger renders a kit Button through the Base UI render prop. size is auto (density), sm, md or lg. placeholder, searchPlaceholder and emptyText override catalog defaults. Search matches labels, descriptions and keywords without case or accent differences; filter replaces matching and onSearchChange reports queries. actions always follow options and run onSelect without entering selection or form values. Opt-in virtualized windows flat lists using the existing Combobox root; itemHeight and overscan configure the window. Groups retain full rendering. Mounted options expose aria-posinset/aria-setsize and the keyboard highlight stays rendered and scrolled into view. Browser find and screen-reader browse mode reach mounted options only. See the field example for the which-picker table: Select for short lists; Combobox for typed input; MultiSelect for chips in a field; SearchableSelect for field, button or toolbar triggers with popup search. The examples cover field and toolbar triggers, grouped regions, 5,000 options, and action rows. Built-in strings follow I18nProvider (en/es).",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -14752,7 +14752,7 @@
       "description": "A secret value (API key, token, connection string) on Input: masked by default (fixed-length mask, optional visible prefix/suffix), a reveal toggle (aria-pressed), a CopyButton that copies the real value and announces it, an optional Rotate action behind an AlertDialog confirmation, and optional created / last-used meta. Optional showLabel, hideLabel, copyLabel and copiedAnnouncement override i18n defaults. Read-only by default (`editable` turns it into a password field). While masked and read-only the secret is not in the DOM, and it is never put in a title or tooltip. `maskSecret` is exported too.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -14993,7 +14993,7 @@
       "description": "Pick one value from a short list in a popup, with SimpleSelect ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name. For long lists, use Combobox with virtualized and a flat items array (see ComboboxVirtualized); Select requires its options to stay mounted for typeahead. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -15147,7 +15147,7 @@
       "description": "Thin rule between content. Horizontal or vertical, default / subtle / strong weight, and an optional label (plain text, mono kicker or pill) placed at the start, centre or end of a horizontal line.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -15403,7 +15403,7 @@
       "description": "Settings shell: section nav (NavList groups) on the left · a content column with the page title and form sections · a sticky save bar slot (Discard · Save changes). Set saveBar='none' to remove the bar wrapper and its reserved space. Omitted or null slots render no wrapper; empty strings and fragments retain their empty wrapper. The current section is controllable with `value` / `onValueChange`; `href` items navigate as links and still report the change. Below `lg` the nav becomes a Select at the top of the page. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -15901,7 +15901,7 @@
       "description": "Application shell: a collapsible sidebar (expanded, 64px icon rail or off-canvas) with header, body and footer slots, a topbar (workspace switcher, breadcrumb, ⌘K, notifications, theme, user menu) and the main region. Below lg the sidebar moves into a left Drawer opened from the topbar menu button. The collapsed state is controllable and can persist in localStorage (storageKey). Fills its container; fullScreen switches to h-dvh.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -16390,7 +16390,7 @@
       "description": "Pick a number or a range on a track. Single or range thumbs (one per value), optional visible label and live value readout, two sizes, works inside Field and Form.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -16441,7 +16441,7 @@
       "description": "Inline trend in pure SVG (no chart library): line or bars, optional area fill and min / max / last markers, fixed width and height. Coloured with token classes (stroke-primary, fill-primary/14…) so it follows the theme, and exposed as role=\"img\" with a generated summary (\"Requests: trending up 12% from 140 to 157…\").",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -16676,7 +16676,7 @@
       "description": "A primary action joined to a menu of secondary actions. Two real buttons in a role=\"group\": the action, and a chevron menu button (aria-haspopup=\"menu\", aria-expanded) that opens the kit Menu. Takes Button's variants and sizes (`auto` follows the density), `actions` for a simple list or `menu` for custom MenuItems.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -16820,7 +16820,7 @@
       "description": "Master–detail layout: a resizable list pane beside a detail pane, built on ResizablePanelGroup (sizes can persist with autoSaveId). Below lg only one pane shows: the list, or the detail with a Back button; `showDetail` is controllable so selecting an item can switch panes. Both panes are labelled regions. Fills its container.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -17044,7 +17044,7 @@
       "description": "Flex layout primitives: Stack (any direction), HStack, VStack and Center. Gap on the spacing scale (0–12), align, justify, wrap and inline; render as any block tag with `as`, or any element with `render`. Paints nothing.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -17095,7 +17095,7 @@
       "description": "Top-navigation shell: a chrome navbar (brand · primary links or a custom `nav` slot such as a MegaMenu · actions), an optional tab sub-nav row, an optional page-header band and centered content (narrow 640 · default 1120 · wide 1440 · full) with an optional footer. Below lg the links collapse into a MobileNav drawer. Fills its container; fullScreen switches to h-dvh.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -17454,7 +17454,7 @@
       "description": "Full-page status for 404, 403, 500 and maintenance: a centred message with a `heading` slot replacing `title` for exactly one page h1; `titleRef` on the built-in h1 enables focus() with tabIndex=-1 outside the Tab order. With no heading, `title` remains required and renders as today. Supply either title or a non-empty heading, never both; the slot must contain exactly one h1. The slot is full width within the centred column and uses the foreground token. For a PageHeader slot, set as=\"div\", breadcrumbs={null}, meta={[]}, tabs={null}, actions={[]}, status=\"\" and description={null} to disable demo fixtures; keep the description on StatusLayout so it appears once. Pass titleRef to PageHeader (or a ref and tabIndex=-1 to a generic h1) and call ref.current.focus() on route load when needed. Keep slot links and actions empty so the primary action stays first in main’s Tab order. Code stays above the heading, with description, illustration or icon halo, primary and secondary actions, optional Logo header and footer unchanged. `tone` colours the code and halo with severity tokens; brand green is only for positive states. Fills its container; `fullScreen` switches to `h-dvh`.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -17721,7 +17721,7 @@
       "description": "Wizard progress as an ordered list of steps (complete · current · upcoming · error), horizontal or vertical, with optional descriptions. Completed steps can be made clickable to go back; `compact` collapses it to \"Step 2 of 5\" with a thin bar. The current step carries aria-current=\"step\".",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -17990,10 +17990,10 @@
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",
-      "description": "On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form.",
+      "description": "On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -18083,7 +18083,7 @@
       "description": "Styled semantic table parts: Table, TableHeader, TableBody, TableFooter, TableRow (selected state), TableHead (optional sort button with aria-sort), TableCell and TableCaption. Compact or comfortable density and an optional sticky header.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -18235,7 +18235,7 @@
       "description": "Switches between views of the same block without leaving the page. Two variants (underline, pills), optional icons and count badges, a sliding indicator and a full-width layout. Compound parts: Tabs, TabsList, TabsTab, TabsIndicator, TabsPanel.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -18381,7 +18381,7 @@
       "description": "Streamed command output (build, deploy, job logs). ANSI SGR colours map to contrast-safe tokens (`parseAnsi` is exported), `\\r` progress lines rewrite in place, and a line cap drops the oldest output. It follows the tail until the user scrolls up, then offers “Jump to latest” with the count of new lines. Optional line numbers and timestamps, a wrap toggle, copy all and search with highlighted matches. The output is a `role=\"log\"` with aria-live off unless `live` opts in. Stream through the `ref` handle (`write`, `writeln`, `clear`) or pass `lines`.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -18540,7 +18540,7 @@
       "description": "Named type roles for body copy, labels, captions and headings on the brand scale. Text uses text-body, text-label, text-supporting, text-caption and text-display; code stays relative at 0.92em within its parent. Heading sizes display, xl, lg, md, sm, xs and 2xs use text-display and text-heading-* independently of semantic level 1–6 (level 2 defaults to text-heading-lg). Eleven roles come from typography.css, also exported as DTCG typography, Figma type/* variables and typeScale with pixel dimensions and unitless leading. font-*, leading-* and tracking-* utilities override role defaults; body, supporting and caption inherit weight and tracking. A font-size className such as text-[32px] replaces the entire role, including its leading, weight and tracking: unlike the previous separate variant classes, those defaults no longer remain. Supply explicit utilities when needed, for example text-[32px] font-bold tracking-tight for display, text-[12px] font-medium leading-tight for label, or text-[16px] font-semibold tracking-tight leading-snug for Heading. Both components support contrast-safe tones, truncation, line clamping and as / render.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -18591,7 +18591,7 @@
       "description": "Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field. Opt-in `clearable` reserves space for a reset button and returns focus to the textarea. `onClear` runs after the value change; `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -18652,7 +18652,7 @@
       "description": "ThemeProvider (persisted page mode, optional forcedMode), ThemeScope (nested themes and themed portals), themeScript, Logo and brand presets.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "@gntik-ai/tokens"
       ],
       "registryDependencies": [
@@ -18708,7 +18708,7 @@
       "description": "Theme control bound to useTheme(): a segmented Light · Dark · High contrast · System control (labels or icon-only), and ThemeCycleButton, a compact icon button that cycles modes for toolbars.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -18853,7 +18853,7 @@
       "description": "File or image preview tile: image or file-type icon with extension tag, name and size caption, upload progress (progressbar + shimmer that holds still under reduced motion), error state with retry, and a remove button. ThumbnailList lays tiles out as a wrapping list. Sizes use the shared formatBytes export (decimal SI by default); ThumbnailSizes demonstrates localized labels, IEC base, bits, display widths and precision. Built-in labels and sizes follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -19005,7 +19005,7 @@
       "description": "Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`\"HH:mm\"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -19210,7 +19210,7 @@
       "description": "Elapsed time since a start, live while running (\"1:02:05\" or compact \"2m 14s\"), with paused and stopped states. Renders role=\"timer\" around a <time dateTime=\"PT…\"> duration; silent by default, `announce` speaks it politely once a minute. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -19361,7 +19361,7 @@
       "description": "A date in a <time dateTime> element: relative (\"3 minutes ago\", Intl.RelativeTimeFormat) or absolute (Intl.DateTimeFormat), localised with `locale`. Accepts a Date, ISO string or epoch ms. Relative labels refresh on an adaptive interval that is cleared on unmount. The full date shows in a tooltip on hover or focus and is also part of the accessible text. Display timeZone defaults to I18nProvider (system when unset); use the same zone on server and client. The TimeZone example shows the provider default and UTC overrides",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -19513,7 +19513,7 @@
       "description": "Short-lived notification stacked bottom-right. Five tones (neutral, success, info, warning, destructive) plus loading, title, description, a primary action and a dismiss action next to the close button; auto-dismiss pauses while the stack is hovered or focused. `toast.promise(task, { loading, success, error })` updates one toast in place (errors are announced assertively). Mount ToastProvider + Toaster once and queue with the useToast() hook.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -19656,7 +19656,7 @@
       "description": "Toggle is a two-state (pressed) button; ToggleGroup sets Toggles side by side with shared state: a segmented control (single) or a toolbar of independent options (multiple). Segmented and joined looks, two sizes, icon-only items.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -19707,7 +19707,7 @@
       "description": "Removable chip for active filters and recipient inputs: label with an optional muted prefix (\"Region:\"), a leading icon or avatar slot, tones (neutral, primary, success, warning, destructive), sizes sm and md, and an accessible \"Remove {label}\" button. Disabled tokens keep their label but cannot be removed.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -19892,7 +19892,7 @@
       "description": "Free-entry chips for emails, labels or hosts: Enter, Tab or a separator commits, pasted lists are split, `validate` marks bad entries as invalid chips, `maxItems` caps the list. Additions and removals are announced; works inside Field. Read-only mode prevents text edits, committing entries and chip removal. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -20113,7 +20113,7 @@
       "description": "Action bar above tables and lists: search, filters and actions with a single Tab stop and arrow-key navigation. Start / center / end lanes, groups, separators, links and inputs; buttons use the kit Button styles. Variants: bar, floating, plain.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -20160,7 +20160,7 @@
       "description": "Short visual hint that appears on hover or keyboard focus. Solid inverted chip for labels (optional shortcut), rich variant on the popover surface for a few lines. Parts: TooltipProvider, Tooltip, TooltipTrigger, TooltipContent, plus the SimpleTooltip shorthand. Never the only source of essential information.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -20306,7 +20306,7 @@
       "description": "Onboarding steps anchored to elements (selector, ref or getter): a non-modal popover with a step counter and Back / Next / Skip, positioned at each target and outlined with the focus ring (no overlay, no glow). Focus moves into the step and returns when the tour ends; missing targets centre the step. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "@gntik-ai/tokens",
         "lucide-react@^1.48.0"
       ],
@@ -20500,7 +20500,7 @@
       "description": "Two lists, available and selected, for picking and ordering a subset (columns, scopes, members): search each side, check several items, move them with the middle buttons, Enter or a double click, and reorder the selected side. Moves are announced. Opt-in virtualized windows both panes with shared row measurement, keeps the active option mounted and preserves full-data bulk actions and keyboard reordering. Find-in-page and screen-reader browse mode reach rendered rows only. Built-in defaults follow I18nProvider (en/es); labels overrides win per key. The catalog defaults example demonstrates the shared component labels, including overlays, lists, navigation and file controls.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -20650,7 +20650,7 @@
       "description": "Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -20894,7 +20894,7 @@
       "description": "cn() class merging and tv() variants helpers used by every component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "clsx@^2.1.1",
         "lucide-react@^1.48.0",
         "tailwind-merge@^3.7.0",
@@ -21163,7 +21163,7 @@
       "description": "Account menu for topbars and sidebar footers: avatar trigger (optionally with the name), or showEmail for a full-width name/email trigger in a sidebar footer. Disable showEmail in a collapsed rail. Opens a name/email header, data-driven items (buttons or router links), a Theme submenu bound to useTheme(), and a destructive Sign out.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -21388,7 +21388,7 @@
       "description": "Windowed list for thousands of rows: only the visible rows plus `overscan` are mounted, with a fixed `itemHeight` or measured rows from an estimate. One roving tab stop, aria-setsize/posinset on every row, `scrollToIndex` through a ref, and a single-select `listbox` mode. No dependencies. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -21544,7 +21544,7 @@
       "description": "Screen-reader-only content (sr-only), with a `focusable` variant that appears while focused. SkipLink is the canonical use: the first Tab stop on a page, revealed on focus, that moves focus to the main content.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0"
+        "@base-ui/react@^1.9.0"
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -21749,7 +21749,7 @@
       "description": "Focus-mode shell: title and Exit, Stepper, step body, Back / Next and Finish. mode=\"page\" is the unchanged default (container height, or fullScreen for h-dvh). mode=\"overlay\" is a controlled Base UI modal: open/onOpenChange keep the parent page mounted without navigation; size defaults to \"fullscreen\" at every viewport, while \"dialog\" reuses Dialog xl sizing and fills mobile viewports. Use page for a dedicated flow, fullscreen for a focused in-page flow, or the dialog-wizard block (default \"dialog\") for a compact create flow. Closing never resets the consumer-controlled current step or data. Exit, Escape and Cancel on step zero use confirmExit (default true). Outside presses are ignored unless closeOnInteractOutside is true, then use the same exit confirmation. returnFocusRef overrides focus return to the opener. Each step focuses its heading, first control or body, then announces via a separate polite live region. Supply stepAnnouncement({position,total,label}) from your i18n (required for rich step labels); positions are one-based. All action labels, stepsSummaryLabel and pendingLabel are overridable with i18n fallbacks. finishPending or nextLoading disables Finish and shows pendingLabel in overlay mode. stepsInteractive defaults to true; false omits onStepClick so completed steps are display-only. stepStatusText and formatStepCount pass through to both Stepper variants for localized status words and position text. backDisabled locks Back using aria-disabled while keeping it focusable, including on step zero; it cannot activate Cancel. This does not affect Exit. Below lg, Stepper uses its compact summary. An empty stepAnnouncement suppresses the overlay live region so a composition can announce through its nearest LiveAnnouncer instead; heading focus is preserved.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [
@@ -21942,7 +21942,7 @@
       "description": "Two-line workspace picker (logo, name, plan/role meta) for the topbar or sidebar header. Short lists open a menu with the current workspace checked; long lists (or `searchable`) open a combobox with a search field. An optional \"Create workspace\" action closes the list.",
       "author": "gntik-ai",
       "dependencies": [
-        "@base-ui/react@^1.8.0",
+        "@base-ui/react@^1.9.0",
         "lucide-react@^1.48.0"
       ],
       "registryDependencies": [

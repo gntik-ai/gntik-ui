@@ -2902,7 +2902,7 @@ export default function ChatComposerFull() {
 
 ### Checkbox (`checkbox`)
 
-Checkbox with optional label and description, including the indeterminate state. CheckboxGroup shares state across several checkboxes (plain or bordered list layout) and supports a parent "select all" checkbox.
+Checkbox with optional label and description, including the indeterminate state. CheckboxGroup shares state across several checkboxes (plain or bordered list layout) and supports a parent "select all" checkbox. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).
 
 - Package: `@gntik-ai/ui` · export `Checkbox` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Checkbox/Checkbox.doc.ts
@@ -4159,7 +4159,7 @@ export default function QueryBuilderBasic() {
 
 ### RadioGroup (`radio-group`)
 
-Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants.
+Single choice from a short list. RadioGroup + Radio with optional label, description and trailing content per option, in plain, list (bordered rows) and card variants. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).
 
 - Package: `@gntik-ai/ui` · export `RadioGroup` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/RadioGroup/RadioGroup.doc.ts
@@ -4508,7 +4508,7 @@ export default function SliderRange() {
 
 ### Switch (`switch`)
 
-On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form.
+On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).
 
 - Package: `@gntik-ai/ui` · export `Switch` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Switch/Switch.doc.ts

@@ -6,7 +6,7 @@
   "description": "A stack of collapsible sections separated by dividers, flush or inside a card. Single (default) or multiple open items; the chevron rotates and the height animates. Compound parts: Accordion, AccordionItem, AccordionTrigger, AccordionPanel.",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0",
+    "@base-ui/react@^1.9.0",
     "lucide-react@^1.48.0"
   ],
   "registryDependencies": [

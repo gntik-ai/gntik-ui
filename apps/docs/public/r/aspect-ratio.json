@@ -6,7 +6,7 @@
   "description": "A box locked to a width / height ratio (16:9 by default) for images, video and embeds; direct children fill it (object-cover). Radius none–xl and an optional bordered placeholder surface.",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0"
+    "@base-ui/react@^1.9.0"
   ],
   "registryDependencies": [
     "https://ui.gntik.ai/r/gntik-tokens.json",

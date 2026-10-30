@@ -6,7 +6,7 @@
   "description": "Accessible form field scaffolding: Field, FieldLabel, FieldDescription, FieldError and FieldItem wire ids and aria-describedby for any kit control; Fieldset and FieldsetLegend group related fields under one name.",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0",
+    "@base-ui/react@^1.9.0",
     "lucide-react@^1.48.0"
   ],
   "registryDependencies": [

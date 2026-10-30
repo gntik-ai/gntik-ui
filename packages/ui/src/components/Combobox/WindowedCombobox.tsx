@@ -1,5 +1,6 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { useRender } from '@base-ui/react/use-render';
+import { flushSync } from 'react-dom';
 import {
   cloneElement,
   createContext,
@@ -19,6 +20,7 @@ interface WindowState {
   query: string;
   selected: unknown;
   equal: (a: unknown, b: unknown) => boolean;
+  allowEmpty: boolean;
   batchHighlights: (navigate: () => void) => void;
 }
 const WindowContext = createContext<WindowState | null>(null);
@@ -31,6 +33,7 @@ export function WindowedComboboxRoot<Value, Multiple extends boolean | undefined
   const [active, setActive] = useState(-1);
   const [query, setQuery] = useState(String(props.defaultInputValue ?? ''));
   const [value, setValue] = useState<unknown>(props.defaultValue);
+  const [loopNavigation, setLoopNavigation] = useState(false);
   type Highlight = Parameters<NonNullable<typeof props.onItemHighlighted>>;
   const navigation = useRef<{ batching: boolean; last: Highlight | null }>({ batching: false, last: null });
   const reportHighlight = (...args: Highlight) => {
@@ -54,12 +57,17 @@ export function WindowedComboboxRoot<Value, Multiple extends boolean | undefined
               query: String(props.inputValue ?? query),
               selected: props.multiple ? (selected as unknown[])?.[0] : selected,
               equal: (props.isItemEqualToValue as WindowState['equal']) ?? Object.is,
+              allowEmpty: !props.autoHighlight,
               batchHighlights: (navigate) => {
                 navigation.current.batching = true;
                 navigation.current.last = null;
                 try {
+                  // Endpoint/page targets are already clamped. Allow a shorter route
+                  // across the boundary without changing ordinary arrow-key behavior.
+                  if (props.loopFocus === false) flushSync(() => setLoopNavigation(true));
                   navigate();
                 } finally {
+                  if (props.loopFocus === false) flushSync(() => setLoopNavigation(false));
                   finishNavigation();
                 }
               },
@@ -68,6 +76,7 @@ export function WindowedComboboxRoot<Value, Multiple extends boolean | undefined
     >
       <BaseCombobox.Root
         {...props}
+        loopFocus={loopNavigation || props.loopFocus}
         onItemHighlighted={(item, details) => {
           if (navigation.current.batching) navigation.current.last = [item, details];
           else reportHighlight(item, details);
@@ -140,12 +149,29 @@ export function WindowedComboboxList<Item = unknown>({
             : event.key === 'End'
               ? items.length - 1
               : Math.max(0, Math.min(items.length - 1, active + (event.key === 'PageDown' ? pageSize : -pageSize)));
-        const key = target > active ? 'ArrowDown' : 'ArrowUp';
+        let steps = Math.abs(target - active);
+        let key = target > active ? 'ArrowDown' : 'ArrowUp';
+        // Use the shorter path around a looping list: End/Home must not render every
+        // intervening row in a large collection. Without autoHighlight, the loop also
+        // includes the unhighlighted input position.
+        const length = items.length + Number(state.allowEmpty);
+        if (active < 0 && target === items.length - 1) {
+          // Enter the list from its far end, including autoHighlight before a query.
+          steps = 1;
+          key = 'ArrowUp';
+        } else if ((active >= 0 || state.allowEmpty) && length - steps < steps) {
+          steps = length - steps;
+          key = key === 'ArrowDown' ? 'ArrowUp' : 'ArrowDown';
+        }
         // Base UI reserves Home/End for the input caret and has no public highlight setter.
         // Keep its navigation/selection state authoritative, reporting only the final highlight.
         state.batchHighlights(() => {
-          for (let i = 0; i < Math.abs(target - active); i++) {
-            event.currentTarget.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+          for (let i = 0; i < steps; i++) {
+            // 1.9 reconciles navigation against the committed active index on every key.
+            // Commit each step before dispatching the next, while reporting only the final one.
+            flushSync(() => {
+              event.currentTarget.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+            });
           }
         });
       }}

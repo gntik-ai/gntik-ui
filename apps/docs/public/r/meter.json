@@ -6,7 +6,7 @@
   "description": "Usage meter for quotas and limits: label, value text, and a level set by thresholds (healthy → warning near the cap → destructive at or over it), with an optional note under the bar. `higherIsBetter` inverts the thresholds for scores and health (low = warning / destructive).",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0"
+    "@base-ui/react@^1.9.0"
   ],
   "registryDependencies": [
     "https://ui.gntik.ai/r/gntik-tokens.json",

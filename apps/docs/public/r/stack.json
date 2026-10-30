@@ -6,7 +6,7 @@
   "description": "Flex layout primitives: Stack (any direction), HStack, VStack and Center. Gap on the spacing scale (0–12), align, justify, wrap and inline; render as any block tag with `as`, or any element with `render`. Paints nothing.",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0"
+    "@base-ui/react@^1.9.0"
   ],
   "registryDependencies": [
     "https://ui.gntik.ai/r/gntik-tokens.json",

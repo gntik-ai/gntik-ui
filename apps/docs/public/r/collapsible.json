@@ -6,7 +6,7 @@
   "description": "A single show/hide section: an inline toggle (\"Advanced settings\") or a full-width row in the Accordion family. The chevron rotates and the height animates. Compound parts: Collapsible, CollapsibleTrigger, CollapsiblePanel.",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0",
+    "@base-ui/react@^1.9.0",
     "lucide-react@^1.48.0"
   ],
   "registryDependencies": [

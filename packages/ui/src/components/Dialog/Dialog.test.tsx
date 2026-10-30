@@ -2,8 +2,26 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../../test/a11y';
 import DialogForm from './examples/DialogForm';
+import LayeredOverlays from './examples/LayeredOverlays';
 
 describe('Dialog', () => {
+  it('Escape closes only the top-most nested dialog and restores focus to its trigger', async () => {
+    const user = userEvent.setup();
+    render(<LayeredOverlays />);
+    await user.click(screen.getByRole('button', { name: 'Open dialog' }));
+    const outer = await screen.findByRole('dialog', { name: 'Layered dialog' });
+    const nestedTrigger = screen.getByRole('button', { name: 'Open nested dialog' });
+    await user.click(nestedTrigger);
+    await screen.findByRole('dialog', { name: 'Nested dialog' });
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Nested dialog' })).not.toBeInTheDocument());
+    expect(screen.getByRole('dialog', { name: 'Layered dialog' })).toBe(outer);
+    expect(nestedTrigger).toHaveFocus();
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(screen.getByRole('button', { name: 'Open dialog' })).toHaveFocus();
+  });
+
   it('opens from the keyboard, labels itself and moves focus inside', async () => {
     const user = userEvent.setup();
     render(<DialogForm />);

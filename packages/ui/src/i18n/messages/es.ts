@@ -287,6 +287,9 @@ export const es: Messages = {
   'common.unread': 'No leída:',
   'common.results': '{count, plural, one {# resultado} other {# resultados}}',
   'common.trend': 'Tendencia',
+  // Accessible label examples
+  'labelPrecedence.visible': 'Enviarme correos',
+  'labelPrecedence.accessible': 'Enviarme correos sobre novedades',
   'skip.main': 'Saltar al contenido principal',
   'skip.content': 'Saltar al contenido',
   'skip.canvas': 'Saltar al lienzo',

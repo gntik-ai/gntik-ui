@@ -3,10 +3,10 @@
   "name": "switch",
   "type": "registry:ui",
   "title": "Switch",
-  "description": "On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form.",
+  "description": "On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0"
+    "@base-ui/react@^1.9.0"
   ],
   "registryDependencies": [
     "https://ui.gntik.ai/r/gntik-tokens.json",
@@ -35,7 +35,7 @@
       "path": "packages/ui/src/components/Switch/Switch.doc.ts",
       "type": "registry:ui",
       "target": "components/ui/switch/Switch.doc.ts",
-      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Switch',\n  group: 'Forms',\n  status: 'stable',\n  description:\n    'On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form.',\n  primitive: '@base-ui/react/switch',\n  pattern: 'switch',\n  keyboard: [\n    ['Space', 'Toggles the switch'],\n    ['Enter', 'Toggles the switch'],\n    ['Tab', 'Moves focus to and from the switch'],\n  ],\n  tokens: ['primary', 'secondary', 'background', 'focus-ring'],\n};\n"
+      "content": "import type { ComponentDoc } from '../../doc';\n\nexport const doc: ComponentDoc = {\n  name: 'Switch',\n  group: 'Forms',\n  status: 'stable',\n  description:\n    'On/off setting that applies immediately. Three sizes, optional inline label, works inside Field and Form. An explicit aria-label takes precedence over the visible label; keep both consistent for WCAG 2.5.3 (label in name).',\n  primitive: '@base-ui/react/switch',\n  pattern: 'switch',\n  keyboard: [\n    ['Space', 'Toggles the switch'],\n    ['Enter', 'Toggles the switch'],\n    ['Tab', 'Moves focus to and from the switch'],\n  ],\n  tokens: ['primary', 'secondary', 'background', 'focus-ring'],\n};\n"
     },
     {
       "path": "packages/ui/src/doc.ts",

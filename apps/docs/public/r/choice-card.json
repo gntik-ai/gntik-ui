@@ -6,7 +6,7 @@
   "description": "Cards as controls. ClickableCard: the whole card is one link or button (a stretched title, so there is a single focus target with a short name) with icon, description, meta and a chevron. SelectableCard inside SelectableCardGroup: option cards with radio (single) or checkbox (multiple) semantics on Base UI RadioGroup / CheckboxGroup, with a check indicator, title, description, meta and disabled state.",
   "author": "gntik-ai",
   "dependencies": [
-    "@base-ui/react@^1.8.0",
+    "@base-ui/react@^1.9.0",
     "lucide-react@^1.48.0"
   ],
   "registryDependencies": [
