@@ -19,5 +19,9 @@
     "color-contrast :: .grid-cols-2.grid[data-type=\"changed\"]:nth-child(11) > .bg-destructive\\/10.grid-cols-\\[auto_1\\.25rem_minmax\\(0\\,1fr\\)\\][data-type=\"removed\"] > .bg-destructive\\/15.text-end.tabular-nums"
   ],
   "Textarea navy-dark": ["target-size :: .justify-center"],
-  "Textarea navy-light": ["target-size :: .justify-center"]
+  "Textarea navy-light": ["target-size :: .justify-center"],
+  "Badge navy-light": [
+    "color-contrast :: .gap-3.grid > .flex-wrap.gap-2.flex:nth-child(3) > .bg-success.text-primary-foreground[data-tone=\"success\"]",
+    "color-contrast :: .flex-wrap.gap-2.flex:nth-child(3) > .bg-warning.text-primary-foreground[data-tone=\"warning\"]"
+  ]
 }
