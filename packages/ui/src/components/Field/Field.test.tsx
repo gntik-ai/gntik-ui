@@ -7,6 +7,22 @@ import FieldValidation from './examples/FieldValidation';
 import FieldsetAddress from './examples/FieldsetAddress';
 
 describe('Field', () => {
+  it('keeps disabled descriptions readable without dimming the field', () => {
+    render(
+      <Field disabled>
+        <FieldLabel>Managed value</FieldLabel>
+        <Input />
+        <FieldDescription>Set by your administrator.</FieldDescription>
+      </Field>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Managed value' });
+    expect(input).toBeDisabled();
+    const description = screen.getByText('Set by your administrator.');
+    expect(description.parentElement).toHaveAttribute('data-disabled');
+    expect(description.parentElement?.className).not.toMatch(/opacity-/);
+    expect(description).toHaveClass('text-muted-foreground');
+  });
+
   it('focuses the control when its label is clicked', async () => {
     const user = userEvent.setup();
     render(

@@ -3,6 +3,11 @@ import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { Textarea } from './Textarea';
 
+it('gives the clear control a target of at least 24 by 24 pixels', () => {
+  render(<Textarea clearable aria-label="Notes" defaultValue="Notes" />);
+  expect(screen.getByRole('button', { name: 'Clear Notes' })).toHaveClass('min-h-6', 'min-w-6');
+});
+
 it.each([false, true])('clears Textarea with controlled=%s, reserves space and returns focus', async (controlled) => {
   const calls: string[] = [];
   function Example() {

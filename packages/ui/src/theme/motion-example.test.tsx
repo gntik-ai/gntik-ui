@@ -3,6 +3,13 @@ import { expectNoAxeViolations } from '../test/a11y';
 import { ThemeProvider } from './ThemeProvider';
 import ThemeProviderMotion from './examples/ThemeProviderMotion';
 
+it('pairs the local theme text and label with a matching surface outside a provider', () => {
+  render(<ThemeProviderMotion />);
+  const scope = screen.getByTestId('motion-scope');
+  expect(scope).toHaveClass('bg-background', 'text-foreground');
+  expect(scope).toContainElement(screen.getByRole('switch', { name: 'Reduce motion' }));
+});
+
 it.each(['dark', 'light', 'high_contrast'] as const)(
   'motion preview keeps the %s theme and is axe clean',
   async (theme) => {

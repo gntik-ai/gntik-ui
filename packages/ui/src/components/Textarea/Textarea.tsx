@@ -88,7 +88,7 @@ export function Textarea({
       {textarea}
       {hasValue && !disabled && !rest.readOnly && (
         <ClearControlButton
-          className="absolute top-2 end-2"
+          className="absolute top-2 end-2 min-h-6 min-w-6"
           control={control}
           clearLabel={clearLabel}
           onClick={() => {

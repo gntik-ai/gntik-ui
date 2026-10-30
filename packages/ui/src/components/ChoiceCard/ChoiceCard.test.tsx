@@ -7,6 +7,15 @@ import SelectableCardPlans from './examples/SelectableCardPlans';
 import SelectableCardRegions from './examples/SelectableCardRegions';
 
 describe('ClickableCard', () => {
+  it('keeps disabled descriptions readable on a distinct surface', () => {
+    render(<ClickableCard title="Archived projects" description="Unavailable" disabled />);
+    const root = screen.getByRole('button', { name: 'Archived projects' }).closest('[data-disabled]');
+    expect(root).toHaveClass('data-disabled:bg-secondary');
+    expect(root?.className).not.toMatch(/opacity-/);
+    expect(screen.getByText('Unavailable')).toHaveClass('text-muted-foreground');
+    expect(screen.getByRole('button', { name: 'Archived projects' })).toBeDisabled();
+  });
+
   it('has a single focus target named by the title and described by the description', async () => {
     const user = userEvent.setup();
     render(<ClickableCardList />);
@@ -41,6 +50,16 @@ describe('ClickableCard', () => {
 });
 
 describe('SelectableCardGroup', () => {
+  it('keeps disabled option descriptions readable on a distinct surface', () => {
+    render(<SelectableCardPlans />);
+    const control = screen.getByRole('radio', { name: 'Isolated' });
+    const card = control.closest('label');
+    expect(card).toHaveClass('has-[[data-disabled]]:bg-secondary');
+    expect(card?.className).not.toMatch(/opacity-/);
+    expect(control).toHaveAttribute('aria-disabled', 'true');
+    expect(control).toHaveAttribute('tabindex', '-1');
+  });
+
   it('radio: names, descriptions and checked state', () => {
     render(<SelectableCardPlans />);
     expect(screen.getByRole('radiogroup', { name: 'Deployment plan' })).toBeInTheDocument();

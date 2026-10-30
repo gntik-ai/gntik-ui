@@ -1,25 +1,4 @@
 {
-  "ChoiceCard dark": ["color-contrast :: #_r_3_"],
-  "ChoiceCard light": ["color-contrast :: #_r_3_"],
-  "DiffViewer light": [
-    "color-contrast :: .grid-cols-2.grid[data-type=\"changed\"]:nth-child(11) > .bg-destructive\\/10.grid-cols-\\[auto_1\\.25rem_minmax\\(0\\,1fr\\)\\][data-type=\"removed\"] > .bg-destructive\\/15.text-end.tabular-nums",
-    "color-contrast :: .grid-cols-2.grid[data-type=\"changed\"]:nth-child(11) > .bg-success\\/10.grid-cols-\\[auto_1\\.25rem_minmax\\(0\\,1fr\\)\\][data-type=\"added\"] > .bg-success\\/15.text-end.tabular-nums"
-  ],
-  "Field light": ["color-contrast :: #base-ui-_r_b_"],
-  "Textarea dark": ["target-size :: .justify-center"],
-  "Textarea high_contrast": ["target-size :: .justify-center"],
-  "Textarea light": ["target-size :: .justify-center"],
-  "ThemeProvider light": ["color-contrast :: #base-ui-_r_1_-label", "color-contrast :: .text-sm:nth-child(2)"],
-  "TokenInput dark": ["color-contrast :: .group\\/chip.max-w-full[data-disabled=\"\"] > .truncate"],
-  "TokenInput high_contrast": ["color-contrast :: .group\\/chip.max-w-full[data-disabled=\"\"] > .truncate"],
-  "TokenInput light": ["color-contrast :: .group\\/chip.max-w-full[data-disabled=\"\"] > .truncate"],
-  "Token light": ["color-contrast :: span[data-disabled=\"true\"] > .max-w-\\[120px\\].min-w-0.truncate"],
-  "Toolbar dark": ["color-contrast :: .text-destructive-text"],
-  "DiffViewer navy-light": [
-    "color-contrast :: .grid-cols-2.grid[data-type=\"changed\"]:nth-child(11) > .bg-destructive\\/10.grid-cols-\\[auto_1\\.25rem_minmax\\(0\\,1fr\\)\\][data-type=\"removed\"] > .bg-destructive\\/15.text-end.tabular-nums"
-  ],
-  "Textarea navy-dark": ["target-size :: .justify-center"],
-  "Textarea navy-light": ["target-size :: .justify-center"],
   "Badge navy-light": [
     "color-contrast :: .gap-3.grid > .flex-wrap.gap-2.flex:nth-child(3) > .bg-success.text-primary-foreground[data-tone=\"success\"]",
     "color-contrast :: .flex-wrap.gap-2.flex:nth-child(3) > .bg-warning.text-primary-foreground[data-tone=\"warning\"]"

@@ -19,7 +19,7 @@ export const clickableCardVariants = tv({
     root: [
       ...SURFACE,
       'hover:border-muted-foreground/40 hover:bg-secondary/30',
-      'data-disabled:opacity-60 data-disabled:hover:border-border data-disabled:hover:bg-background',
+      'data-disabled:bg-secondary data-disabled:hover:border-border data-disabled:hover:bg-secondary',
     ],
     ...TEXT,
     /** The link/button; its ::after covers the card so the whole surface is clickable. */
@@ -38,7 +38,7 @@ export const selectableCardVariants = tv({
     root: [
       ...SURFACE,
       'cursor-interactive hover:border-muted-foreground/40 has-[[data-checked]]:border-primary/60 has-[[data-checked]]:ring-2 has-[[data-checked]]:ring-primary/20',
-      'has-[[data-disabled]]:cursor-disabled has-[[data-disabled]]:opacity-60 has-[[data-disabled]]:hover:border-border',
+      'has-[[data-disabled]]:cursor-disabled has-[[data-disabled]]:bg-secondary has-[[data-disabled]]:hover:border-border',
     ],
     ...TEXT,
     control: [
