@@ -28,7 +28,7 @@ describe('ConversationList content and incremental loading', () => {
       </I18nProvider>,
     );
     expect(screen.getByLabelText(unreadLabel)).toHaveTextContent('3');
-    expect(screen.getByLabelText(unreadLabel).className).toContain('bg-primary');
+    expect(screen.getByLabelText(unreadLabel).className).toContain('bg-tone/(--badge-bg-alpha)');
     expect(screen.getByText('Usage for this quarter')).toBeVisible();
     expect(screen.queryByText('0')).toBeNull();
     expect(screen.getAllByText('3')).toHaveLength(1);

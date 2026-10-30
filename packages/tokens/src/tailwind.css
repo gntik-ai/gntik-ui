@@ -10,6 +10,7 @@
 @import "./brand.css";
 @import "./status.css";
 @import "./pairing.css";
+@import "./tone.css";
 @import "./scope.css";
 @import "./palettes/index.css";
 @import "./motion.css";
@@ -84,6 +85,9 @@
   --color-category-violet: hsl(var(--category-violet));
   --color-category-amber: hsl(var(--category-amber));
   --color-category-cyan: hsl(var(--category-cyan));
+  --color-tone: hsl(var(--tone));
+  --color-tone-text: hsl(var(--tone-text));
+  --color-tone-chip-text: hsl(var(--tone-chip-text));
   --color-primary-text: hsl(var(--primary-text));
   --color-success-text: hsl(var(--success-text));
   --color-warning-text: hsl(var(--warning-text));

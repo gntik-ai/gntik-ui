@@ -128,7 +128,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 {
   "base": "",
   "header": "flex items-center justify-between gap-3",
-  "indicator": "block h-full rounded-full transition-[width] duration-400 ease-out motion-reduce:transition-none data-[indeterminate]:w-2/5 data-[indeterminate]:animate-pulse motion-reduce:data-[indeterminate]:animate-none bg-primary",
+  "indicator": "block h-full rounded-full transition-[width] duration-400 ease-out motion-reduce:transition-none bg-tone data-[indeterminate]:w-2/5 data-[indeterminate]:animate-pulse motion-reduce:data-[indeterminate]:animate-none",
   "label": "text-[12.5px] font-medium text-foreground",
   "root": "grid w-full gap-1.5",
   "track": "relative w-full overflow-hidden rounded-full bg-secondary h-2",

@@ -776,7 +776,7 @@ export default function AvatarGroupMembers() {
 
 ### Badge (`badge`)
 
-Compact label for status, counts and categories. Semantic tones (neutral, primary, success, warning, destructive, info) plus four category tones, in soft, outline or solid; optional dot and remove button for tags.
+Compact label for status, counts and categories. Semantic tones (neutral, primary, success, warning, destructive, info) plus four category tones, in soft, outline or solid; optional dot and remove button for tags. The root exposes data-tone for shared bg-tone, border-tone, text-tone-text and text-tone-chip-text utilities; unknown tone names clear inherited tone variables.
 
 - Package: `@gntik-ai/ui` · export `Badge` · group Display · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Badge/Badge.doc.ts
@@ -792,7 +792,7 @@ Keyboard:
 | Enter | Activates the remove button |
 | Space | Activates the remove button |
 
-Tokens: primary, primary-text, success, success-text, warning, warning-text, destructive, destructive-text, info, category-violet, category-cyan, category-amber, category-rose, muted-foreground, focus-ring
+Tokens: tone, tone-text, tone-chip-text, primary, primary-text, success, success-text, warning, warning-text, destructive, destructive-text, info, category-violet, category-cyan, category-amber, category-rose, muted-foreground, focus-ring
 
 Usage:
 
@@ -2183,7 +2183,7 @@ Keyboard:
 | Space | Removes the token |
 | Backspace | Removes the token while its remove button is focused (also Delete) |
 
-Tokens: border, background, foreground, muted-foreground, secondary, primary, primary-text, success-text, warning-text, destructive-text, focus-ring
+Tokens: tone, tone-text, tone-chip-text, border, background, foreground, muted-foreground, secondary, primary, primary-text, success-text, warning-text, destructive-text, focus-ring
 
 Usage:
 
@@ -2372,7 +2372,7 @@ Keyboard:
 | Enter | Activates the dismiss button |
 | Space | Activates the dismiss button |
 
-Tokens: info, success, success-text, warning, warning-text, destructive, destructive-text, foreground, focus-ring
+Tokens: tone, tone-text, tone-chip-text, info, success, success-text, warning, warning-text, destructive, destructive-text, foreground, focus-ring
 
 Usage:
 
@@ -2545,7 +2545,7 @@ Progress bar for a running task: optional label and formatted value, four tones 
 - Registry dependencies: ui-utils
 - Install: `gntik-ui add progress`; own the source with `gntik-ui eject progress`
 
-Tokens: primary, success, success-text, warning, warning-text, destructive, destructive-text, secondary, foreground
+Tokens: tone, tone-text, tone-chip-text, primary, success, success-text, warning, warning-text, destructive, destructive-text, secondary, foreground
 
 Usage:
 

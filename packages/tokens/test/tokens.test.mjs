@@ -226,3 +226,86 @@ test('every palette passes text, chips, focus, button and hue separation contrac
     }
   }
 });
+
+// Public CSS API: supported semantic tones and their existing token references.
+const toneReferences = {
+  primary: ['primary', 'primary-text', 'primary-chip-text'],
+  success: ['success', 'success-text', 'success-chip-text'],
+  warning: ['warning', 'warning-text', 'warning-chip-text'],
+  destructive: ['destructive', 'destructive-text', 'destructive-chip-text'],
+  info: ['info', 'foreground', 'foreground'],
+  neutral: ['muted-foreground', 'foreground', 'foreground'],
+  violet: ['category-violet', 'foreground', 'foreground'],
+  cyan: ['category-cyan', 'foreground', 'foreground'],
+  amber: ['category-amber', 'foreground', 'foreground'],
+  rose: ['category-rose', 'foreground', 'foreground'],
+};
+
+function toneRules() {
+  const source = fs.readFileSync(new URL('../src/tone.css', import.meta.url), 'utf8');
+  return [...source.matchAll(/\[data-tone(?:="([\w-]+)")?\]\s*\{([^}]+)\}/g)].map(([, tone, body]) => ({
+    tone,
+    declarations: Object.fromEntries(
+      [...body.matchAll(/(--[\w-]+):\s*([^;]+);/g)].map(([, key, value]) => [key, value]),
+    ),
+  }));
+}
+
+test('data-tone exposes exactly the ten supported tones and resets inherited tones first', () => {
+  const [reset, ...rules] = toneRules();
+  assert.equal(reset.tone, undefined);
+  assert.deepEqual(reset.declarations, {
+    '--tone': 'initial',
+    '--tone-text': 'initial',
+    '--tone-chip-text': 'initial',
+  });
+  assert.deepEqual(rules.map(({ tone }) => tone).sort(), Object.keys(toneReferences).sort());
+  for (const { tone, declarations } of rules) {
+    assert.deepEqual(
+      declarations,
+      Object.fromEntries(
+        ['--tone', '--tone-text', '--tone-chip-text'].map((key, i) => [key, `var(--${toneReferences[tone][i]})`]),
+      ),
+    );
+  }
+  const bridge = fs.readFileSync(new URL('../src/tailwind.css', import.meta.url), 'utf8');
+  assert.match(bridge, /@import ["']\.\/tone\.css["'];/);
+  for (const name of ['tone', 'tone-text', 'tone-chip-text']) {
+    assert.ok(bridge.includes(`--color-${name}: hsl(var(--${name}));`));
+  }
+  const manifest = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+  assert.equal(manifest.exports['./tone.css'], './src/tone.css');
+});
+
+test('shared tone text meets AA on surfaces and chip text on 10–20% tints in every theme', () => {
+  const brand = parse(css);
+  const status = parse(fs.readFileSync(new URL('../src/status.css', import.meta.url), 'utf8'));
+  const aliases = parse(pairing);
+  for (const theme of [':root', '.dark', '.high_contrast']) {
+    const tokens = {
+      ...brand[':root'],
+      ...brand[theme],
+      ...status[':root'],
+      ...status[theme],
+      ...aliases[':root'],
+      ...aliases[theme],
+    };
+    const resolve = (value) => {
+      const reference = /^var\((--[\w-]+)\)$/.exec(value);
+      return reference ? resolve(tokens[reference[1]]) : value;
+    };
+    for (const { tone, declarations } of toneRules().slice(1)) {
+      const color = hslToRgb(resolve(declarations['--tone']));
+      const text = resolve(declarations['--tone-text']);
+      const chip = hslToRgb(resolve(declarations['--tone-chip-text']));
+      for (const surface of ['--background', '--card', '--popover']) {
+        assert.ok(ratio(text, tokens[surface]) >= 4.5, `${theme} ${tone} text on ${surface}`);
+        for (const alpha of [0.1, 0.15, 0.2]) {
+          // Mixing a tone with transparent preserves its channels; painting that alpha tint composites in sRGB.
+          const tint = hslToRgb(tokens[surface]).map((channel, i) => channel * (1 - alpha) + color[i] * alpha);
+          assert.ok(rgbRatio(chip, tint) >= 4.5, `${theme} ${tone} chip on ${alpha * 100}% ${surface}`);
+        }
+      }
+    }
+  }
+});

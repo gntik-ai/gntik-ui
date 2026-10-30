@@ -14,6 +14,9 @@ export const doc: ComponentDoc = {
     ['Backspace', 'Removes the token while its remove button is focused (also Delete)'],
   ],
   tokens: [
+    'tone',
+    'tone-text',
+    'tone-chip-text',
     'border',
     'background',
     'foreground',

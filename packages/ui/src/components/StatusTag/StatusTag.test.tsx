@@ -11,19 +11,23 @@ describe('StatusTag', () => {
         <StatusTag status="failed" />
       </>,
     );
-    expect(screen.getByText('Running')).toHaveClass('text-success-chip-text');
-    expect(screen.getByText('Failed')).toHaveClass('text-destructive-chip-text');
+    expect(screen.getByText('Running')).toHaveClass('text-tone-chip-text');
+    expect(screen.getByText('Running')).toHaveAttribute('data-tone', 'success');
+    expect(screen.getByText('Failed')).toHaveClass('text-tone-chip-text');
+    expect(screen.getByText('Failed')).toHaveAttribute('data-tone', 'destructive');
     expect(screen.getByText('Running')).toHaveAttribute('data-status', 'running');
   });
 
   it('uses the statuses dictionary prop before the defaults', () => {
     render(<StatusTag status="paused" statuses={{ paused: { label: 'On hold', tone: 'warning' } }} />);
-    expect(screen.getByText('On hold')).toHaveClass('text-warning-chip-text');
+    expect(screen.getByText('On hold')).toHaveClass('text-tone-chip-text');
+    expect(screen.getByText('On hold')).toHaveAttribute('data-tone', 'warning');
   });
 
   it('falls back to a neutral tag with the raw key for unknown states', () => {
     render(<StatusTag status="archived" />);
-    expect(screen.getByText('archived')).toHaveClass('text-foreground');
+    expect(screen.getByText('archived')).toHaveClass('text-tone-chip-text');
+    expect(screen.getByText('archived')).toHaveAttribute('data-tone', 'neutral');
   });
 
   it('dot is decorative', () => {

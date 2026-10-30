@@ -53,6 +53,7 @@ export function Alert({
   const body = description ?? children;
   return (
     <div
+      data-tone={tone}
       role={role ?? (tone === 'destructive' ? 'alert' : 'status')}
       aria-labelledby={title != null ? `${id}-title` : undefined}
       aria-describedby={body != null ? `${id}-desc` : undefined}

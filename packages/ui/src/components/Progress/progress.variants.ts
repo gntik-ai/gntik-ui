@@ -5,20 +5,21 @@ export const progressVariants = tv({
     root: 'grid w-full gap-1.5',
     header: 'flex items-center justify-between gap-3',
     label: 'text-[12.5px] font-medium text-foreground',
-    value: 'font-mono text-[11.5px] font-semibold tabular-nums',
+    value: 'font-mono text-[11.5px] font-semibold tabular-nums text-tone-text',
     track:
       'relative w-full overflow-hidden rounded-full bg-secondary forced-colors:outline forced-colors:-outline-offset-1 forced-colors:outline-[CanvasText]',
     indicator: [
       'block h-full rounded-full transition-[width] duration-400 ease-out motion-reduce:transition-none forced-colors:bg-[Highlight]',
+      'bg-tone',
       'data-[indeterminate]:w-2/5 data-[indeterminate]:animate-pulse motion-reduce:data-[indeterminate]:animate-none',
     ],
   },
   variants: {
     tone: {
-      primary: { indicator: 'bg-primary', value: 'text-foreground' },
-      success: { indicator: 'bg-success', value: 'text-success-text' },
-      warning: { indicator: 'bg-warning', value: 'text-warning-text' },
-      destructive: { indicator: 'bg-destructive', value: 'text-destructive-text' },
+      primary: { value: 'text-foreground' },
+      success: {},
+      warning: {},
+      destructive: {},
     },
     size: {
       sm: { track: 'h-1.5' },
