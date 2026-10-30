@@ -1,3 +1,4 @@
+import { openComponent } from './catalog-items.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -11,16 +12,18 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-theme', value === 'light' ? '' : value);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/grid');
     for (const id of ['Grid', 'Section', 'responsive']) {
+      await openComponent(page, id);
       const example = page.locator(`#ui-${id} [data-responsive-example]`);
       await expect(example).toBeVisible();
     }
     await expect(page.locator('#ui-responsive')).toContainText('Dialog from medium screens');
     const responsive = page.locator('#ui-responsive');
-    await responsive.getByRole('button', { name: 'tsx', exact: true }).click();
-    await expect(responsive.locator('pre code')).toBeVisible();
-    await expect(responsive.locator('pre code')).toContainText("from '@gntik-ai/ui'");
+    const example = responsive.locator('[data-component-preview]').locator('..');
+    await example.getByRole('button', { name: 'tsx', exact: true }).click();
+    await expect(example.locator('pre code')).toBeVisible();
+    await expect(example.locator('pre code')).toContainText("from '@gntik-ai/ui'");
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
     const violations = await page.evaluate(async () => {

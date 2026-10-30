@@ -15,6 +15,16 @@ export const doc: ComponentDoc = {
     ['Enter', 'Runs the highlighted command and closes the palette'],
     ['Escape', 'Closes the palette and returns focus'],
   ],
+  dataAttributes: [
+    ['data-starting-style', 'backdrop', 'The part is entering.'],
+    ['data-ending-style', 'backdrop', 'The part is leaving.'],
+    ['data-starting-style', 'popup', 'The part is entering.'],
+    ['data-ending-style', 'popup', 'The part is leaving.'],
+    ['data-highlighted', 'item', 'The item is highlighted for keyboard or pointer navigation.'],
+    ['data-disabled', 'item', 'The control cannot be changed or activated.'],
+    ['data-highlighted', 'itemIcon', 'The item is highlighted for keyboard or pointer navigation.'],
+    ['data-highlighted', 'itemArrow', 'The item is highlighted for keyboard or pointer navigation.'],
+  ],
   tokens: [
     'popover',
     'popover-foreground',

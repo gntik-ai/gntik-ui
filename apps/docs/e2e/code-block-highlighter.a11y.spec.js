@@ -16,7 +16,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-theme', theme === 'light' ? '' : theme);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/code-block');
     const section = page.locator('#ui-CodeBlock');
     const yaml = section.getByRole('region', { name: 'service.yaml', exact: true });
     await expectTokens(yaml.getByText('name', { exact: true })).toHaveClass('text-primary-text');

@@ -12,5 +12,16 @@ export const doc: ComponentDoc = {
     ['Click on label', 'Moves focus to the field control'],
     ['Tab', 'Moves focus to the control; its description and error are announced via aria-describedby'],
   ],
+  anatomy: `<Field name="value">
+  <FieldLabel>Label</FieldLabel>
+  <Input />
+  <FieldDescription>Hint</FieldDescription>
+  <FieldError />
+</Field>`,
+  dataAttributes: [
+    ['data-disabled', 'root', 'The control cannot be changed or activated.'],
+    ['data-disabled', 'label', 'The control cannot be changed or activated.'],
+    ['data-disabled', 'fieldset', 'The control cannot be changed or activated.'],
+  ],
   tokens: ['foreground', 'muted-foreground', 'destructive-text'],
 };

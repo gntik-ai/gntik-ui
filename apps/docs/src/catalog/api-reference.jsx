@@ -190,35 +190,89 @@ function a11yNotes(api) {
   return notes;
 }
 
+export function Anatomy({ anatomy, level = 2 }) {
+  if (!anatomy) return null;
+  const { CodeBlock } = window;
+  return (
+    <section className="mt-8">
+      <H level={level} className="mb-3 text-[17px] font-semibold text-foreground">
+        Anatomy
+      </H>
+      <CodeBlock code={anatomy} open />
+    </section>
+  );
+}
+
+function StylingHooks({ api, level }) {
+  if (!api.stylingHooks?.length) return null;
+  return (
+    <section className="mt-8">
+      <H level={level} className="text-[14px] font-semibold text-foreground">
+        Styling hooks
+      </H>
+      <table aria-label={`${api.name} styling hooks`} className="mt-2 w-full text-left text-[12.5px]">
+        <thead>
+          <tr className="border-b border-border text-muted-foreground">
+            {['Attribute', 'Part', 'Meaning'].map((title) => (
+              <th key={title} scope="col" className={thApi}>
+                {title}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {api.stylingHooks.map(({ attribute, part }) => {
+            const meaning = api.dataAttributes?.find(([a, p]) => a === attribute && p === part)?.[2];
+            return (
+              <tr key={`${attribute}-${part}`} className="border-b border-border/60">
+                <th scope="row" className={tdApi + ' font-mono text-left font-normal'}>
+                  {attribute}
+                </th>
+                <td className={tdApi + ' font-mono'}>{part}</td>
+                <td className={tdApi}>{meaning ?? '—'}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </section>
+  );
+}
+
 /**
  * Generated API reference. `folder` is the package folder (e.g. "Button"; for the forms entry, the doc's
  * name, e.g. "FieldArray"); `kind` is component | layout | chat | forms.
  */
-function ApiReference({ folder, kind = 'component', level = 3 }) {
+function ApiReference({ folder, kind = 'component', level = 3, page = false }) {
   const api = (API_BY_KIND[kind] ?? COMPONENT_API)[folder];
   if (!api) return null;
   const idBase = `api-${kind}-${folder}`;
   const [main, ...parts] = api.propTypes;
   const notes = a11yNotes(api);
+  const sectionLevel = page ? level : level + 1;
   const sub = 'mt-6 text-[13px] font-semibold text-foreground';
   return (
     <div className="mt-8 border-t border-border pt-6">
-      <H level={level} className="text-[14px] font-semibold tracking-tight text-foreground">
-        API reference
-      </H>
+      {page ? (
+        <p className="text-[14px] font-semibold tracking-tight text-foreground">API reference</p>
+      ) : (
+        <H level={level} className="text-[14px] font-semibold tracking-tight text-foreground">
+          API reference
+        </H>
+      )}
       {main && (
         <>
-          <H level={level + 1} className={sub}>
+          <H level={sectionLevel} className={sub}>
             Props
           </H>
-          <PropsTable type={main} level={level + 2} idBase={idBase} />
+          <PropsTable type={main} level={sectionLevel + 1} idBase={idBase} />
           {parts.length > 0 && (
             <details className="group mt-4">
               <summary className="cursor-pointer select-none rounded text-[12.5px] font-medium text-primary-text underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring">
                 {parts.length} more {parts.length === 1 ? 'part' : 'parts'}: {parts.map((t) => t.component).join(', ')}
               </summary>
               {parts.map((t) => (
-                <PropsTable key={t.name} type={t} level={level + 2} idBase={idBase} />
+                <PropsTable key={t.name} type={t} level={sectionLevel + 1} idBase={idBase} />
               ))}
             </details>
           )}
@@ -226,7 +280,7 @@ function ApiReference({ folder, kind = 'component', level = 3 }) {
       )}
       {api.keyboard?.length > 0 && (
         <>
-          <H level={level + 1} className={sub}>
+          <H level={sectionLevel} className={sub}>
             Keyboard
           </H>
           <KeyboardTable rows={api.keyboard} label={`${api.name} keyboard interactions`} />
@@ -234,7 +288,7 @@ function ApiReference({ folder, kind = 'component', level = 3 }) {
       )}
       {notes.length > 0 && (
         <>
-          <H level={level + 1} className={sub}>
+          <H level={sectionLevel} className={sub}>
             Accessibility
           </H>
           <ul className="mt-2 list-disc space-y-1 ps-5 text-[12.5px] leading-5 text-foreground marker:text-muted-foreground">
@@ -244,6 +298,7 @@ function ApiReference({ folder, kind = 'component', level = 3 }) {
           </ul>
         </>
       )}
+      <StylingHooks api={api} level={sectionLevel} />
     </div>
   );
 }

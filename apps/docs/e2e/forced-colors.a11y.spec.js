@@ -1,9 +1,10 @@
+import { openComponent } from './catalog-items.js';
 import { test, expect } from '@playwright/test';
 
 // These are real catalog examples using the package components, not DOM replicas.
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('gntik-section', 'ui-components'));
-  await page.goto('/#ui-components');
+  await page.goto('/#ui-components/switch');
   await expect(page.locator('#ui-Switch')).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
 });
@@ -52,6 +53,7 @@ test('switch state, thumb and track geometry survive forced colours', async ({ p
 test('radio circles, dots and checked cards retain their markers', async ({ page }) => {
   const c = await forceColours(page);
   // aria-checked is the public state; the indicator is the visible circle's child.
+  await openComponent(page, 'RadioGroup');
   const group = page.locator('#ui-RadioGroup').getByRole('radiogroup', { name: 'Deployment plan', exact: true });
   const selected = group.getByRole('radio', { name: 'Dedicated', exact: true });
   const empty = group.getByRole('radio', { name: 'Shared', exact: true });
@@ -86,6 +88,7 @@ for (const [name, variant, sliding] of [
 ]) {
   test(`${variant} tabs keep only the active marker (indicator=${sliding})`, async ({ page }) => {
     const c = await forceColours(page);
+    await openComponent(page, 'Tabs');
     const list = page.locator('#ui-Tabs').getByRole('tablist', { name, exact: true });
     const tabs = list.getByRole('tab');
     for (const index of [0, 1]) {
@@ -123,6 +126,7 @@ for (const [name, variant, sliding] of [
 test('fills, separators, dots and selection retain system colours', async ({ page }) => {
   const c = await forceColours(page);
   for (const id of ['Progress', 'Meter']) {
+    await openComponent(page, id);
     const root = page
       .locator(`#ui-${id}`)
       .getByRole(id === 'Progress' ? 'progressbar' : 'meter')
@@ -142,13 +146,17 @@ test('fills, separators, dots and selection retain system colours', async ({ pag
       })
       .toBeLessThan(0.01);
   }
+  await openComponent(page, 'Separator');
   await colour(page.locator('#ui-Separator').getByRole('separator').first(), 'backgroundColor', c.CanvasText);
+  await openComponent(page, 'StatusDot');
   await colour(page.locator('#ui-StatusDot [data-tone] > span').first(), 'backgroundColor', c.CanvasText);
   for (const ping of await page.locator('#ui-StatusDot [data-pulse]').all()) await expect(ping).toBeHidden();
+  await openComponent(page, 'Table');
   const row = page.locator('#ui-Table tr[data-selected]').first();
   await row.hover();
   await colour(row, 'backgroundColor', c.Highlight);
   await colour(row, 'color', c.HighlightText);
+  await openComponent(page, 'Select');
   const select = page.locator('#ui-Select').getByRole('combobox', { name: 'Deployment region', exact: true });
   await select.click();
   await select.press('ArrowDown');

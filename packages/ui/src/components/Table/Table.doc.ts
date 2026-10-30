@@ -4,6 +4,12 @@ export const doc: ComponentDoc = {
   name: 'Table',
   group: 'Display',
   status: 'stable',
+  anatomy: `<Table>
+  <TableCaption>Records</TableCaption>
+  <TableHeader><TableRow><TableHead>Name</TableHead></TableRow></TableHeader>
+  <TableBody><TableRow><TableCell>Example</TableCell></TableRow></TableBody>
+  <TableFooter><TableRow><TableCell>Total</TableCell></TableRow></TableFooter>
+</Table>`,
   description:
     'Styled semantic table parts: Table, TableHeader, TableBody, TableFooter, TableRow (selected state), TableHead (optional sort button with aria-sort), TableCell and TableCaption. Compact or comfortable density and an optional sticky header.',
   pattern: 'table (sortable columns)',

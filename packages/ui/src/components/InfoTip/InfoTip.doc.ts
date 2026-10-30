@@ -13,5 +13,6 @@ export const doc: ComponentDoc = {
     ['Enter', 'Opens the help popover (Space too)'],
     ['Escape', 'Closes the popover and returns focus to the button'],
   ],
+  dataAttributes: [['data-popup-open', 'trigger', 'The associated popup is open.']],
   tokens: ['muted-foreground', 'foreground', 'popover', 'popover-foreground', 'border', 'focus-ring'],
 };

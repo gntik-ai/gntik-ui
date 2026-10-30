@@ -197,6 +197,75 @@ function parseVariants(src) {
   return byType;
 }
 
+/** State selectors used by tv() slots, including shared arrays and group-data prefixes. */
+function parseDataAttributes(src, shared = '') {
+  const definitions = {};
+  for (const text of [shared, src]) {
+    for (const m of text.matchAll(/(?:export\s+)?const (\w+)\s*=\s*/g)) {
+      definitions[m[1]] = splitTop(text.slice(m.index + m[0].length), [';'])[0];
+    }
+  }
+  const expand = (value, seen = new Set()) => {
+    let expanded = value;
+    // Resolve identifiers outside strings, without evaluating package code.
+    for (let i = 0; i < value.length; i++) {
+      if (["'", '"', '`'].includes(value[i])) {
+        i = skipString(value, i);
+        continue;
+      }
+      const m = /^[A-Za-z_$][\w$]*/.exec(value.slice(i));
+      if (!m) continue;
+      if (definitions[m[0]] && !seen.has(m[0])) {
+        expanded += ' ' + expand(definitions[m[0]], new Set([...seen, m[0]]));
+      }
+      i += m[0].length - 1;
+    }
+    return expanded;
+  };
+  const rows = new Map();
+  const add = (part, value) => {
+    for (const m of expand(value).matchAll(
+      /(?:group-)?data-(?:\[([a-z][\w-]*)(?:=[^\]]+)?\]|([a-z][\w-]*))(?::|\])/g,
+    )) {
+      const attribute = `data-${m[1] ?? m[2]}`;
+      rows.set(`${attribute}/${part}`, { attribute, part });
+    }
+  };
+  for (const m of src.matchAll(/(?:export\s+)?const (\w+)\s*=\s*tv\(/g)) {
+    const open = src.indexOf('{', m.index + m[0].length);
+    const obj = src.slice(open, matchClose(src, open));
+    const slotsAt = /\bslots:\s*\{/.exec(obj);
+    if (slotsAt) {
+      const start = obj.indexOf('{', slotsAt.index);
+      const slots = splitTop(obj.slice(start + 1, matchClose(obj, start) - 1), [',']);
+      for (const slot of slots) {
+        const pair = /^\s*(\w+):([\s\S]*)/.exec(slot);
+        if (!pair) continue;
+        add(pair[1], pair[2]);
+        // Slot overrides inside style variants can carry additional state selectors.
+        for (const override of obj.matchAll(new RegExp(`\\b${pair[1]}:\\s*`, 'g'))) {
+          add(pair[1], splitTop(obj.slice(override.index + override[0].length), [','])[0]);
+        }
+      }
+    } else {
+      add('root', obj);
+    }
+  }
+  return [...rows.values()];
+}
+
+function validateDataAttributes(doc, source) {
+  for (const [attribute] of doc.dataAttributes ?? []) {
+    if (
+      !doc.stylingHooks?.some((hook) => hook.attribute === attribute) &&
+      !new RegExp(`\\b${attribute.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\w-])`).test(source) &&
+      !source.includes(`data-[${attribute.replace(/^data-/, '')}]`)
+    ) {
+      throw new Error(`${doc.name}: ${attribute} is absent from variants and source`);
+    }
+  }
+}
+
 /** Defaults written in the component's parameter destructuring: `({ size = 'auto', … })`. */
 function parseDefaults(src, componentName) {
   const re = new RegExp(
@@ -345,7 +414,22 @@ function buildApi(docPath, doc) {
   // The folder's main props first (ButtonProps for Button/), then the parts in source order.
   const mainName = `${doc.name}Props`;
   types.sort((a, b) => (b.name === mainName) - (a.name === mainName));
-  return { ...doc, folder: key.split('/')[1], kind: key.split('/')[0], propTypes: types };
+  const stylingHooks = files
+    .filter((p) => p.endsWith('.variants.ts'))
+    .flatMap((p) => {
+      const shared = [...sources[p].matchAll(/from ['"]([.][^'"]+)['"]/g)]
+        .map((m) => {
+          const segments = p.split('/').slice(0, -1);
+          for (const segment of m[1].split('/')) {
+            if (segment === '..') segments.pop();
+            else if (segment !== '.') segments.push(segment);
+          }
+          return sources[segments.join('/') + '.ts'] ?? '';
+        })
+        .join('\n');
+      return parseDataAttributes(sources[p], shared);
+    });
+  return { ...doc, folder: key.split('/')[1], kind: key.split('/')[0], propTypes: types, stylingHooks };
 }
 
 const apiOf = (docs) =>
@@ -362,4 +446,11 @@ export const FORMS_API = apiOf(formsDocs);
 export const BLOCK_API = apiOf(blockDocs);
 
 // Exposed for tests and quick inspection from the console.
-export const __parse = { parsePropsTypes, parseVariants, parseDefaults, parseMembers };
+export const __parse = {
+  parsePropsTypes,
+  parseVariants,
+  parseDefaults,
+  parseMembers,
+  parseDataAttributes,
+  validateDataAttributes,
+};

@@ -14,6 +14,20 @@ export const doc: ComponentDoc = {
     ['Arrow Up / Arrow Left', 'Moves to the previous radio and selects it (wraps)'],
     ['Space', 'Selects the focused radio if it is not already selected'],
   ],
+  anatomy: `<RadioGroup aria-label="Options">
+  <Radio value="first">First</Radio>
+  <Radio value="second">Second</Radio>
+</RadioGroup>`,
+  dataAttributes: [
+    ['data-checked', 'radio', 'The control is checked.'],
+    ['data-invalid', 'radio', 'The control value is invalid.'],
+    ['data-disabled', 'radio', 'The control cannot be changed or activated.'],
+    ['data-unchecked', 'indicator', 'The control is unchecked.'],
+    ['data-disabled', 'indicator', 'The control cannot be changed or activated.'],
+    ['data-checked', 'item', 'The control is checked.'],
+    ['data-disabled', 'item', 'The control cannot be changed or activated.'],
+    ['data-disabled', 'label', 'The control cannot be changed or activated.'],
+  ],
   tokens: [
     'background',
     'border',

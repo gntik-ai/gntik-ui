@@ -37,7 +37,7 @@ export default function MegaMenuStacked() {
           brand={<Logo size={24} wordmark />}
           subnav={<MegaMenu items={items} currentHref="#projects" />}
         >
-          <h1 className="text-xl font-bold tracking-tight">Projects</h1>
+          <h4 className="text-xl font-bold tracking-tight">Projects</h4>
           <p className="mt-1 text-[13px] text-muted-foreground">
             Hover or focus a section in the navigation to open its panel.
           </p>

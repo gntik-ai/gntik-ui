@@ -12,5 +12,10 @@ export const doc: ComponentDoc = {
     ['Tab', 'Focuses the scrollable viewport (only when its content overflows)'],
     ['ArrowUp / ArrowDown / PageUp / PageDown / Home / End', 'Scrolls the focused viewport natively'],
   ],
+  dataAttributes: [
+    ['data-hovering', 'scrollbar', 'The pointer is over the part.'],
+    ['data-scrolling', 'scrollbar', 'The area is being scrolled.'],
+    ['data-orientation', 'scrollbar', 'The attribute value specifies the horizontal or vertical orientation.'],
+  ],
   tokens: ['border', 'muted-foreground', 'card', 'focus-ring'],
 };

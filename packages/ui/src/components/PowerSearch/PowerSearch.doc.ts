@@ -19,6 +19,17 @@ export const doc: ComponentDoc = {
     ['Delete / Backspace (on a term)', 'Removes the term'],
     ['Escape', 'Closes the suggestions; again clears the term being built'],
   ],
+  dataAttributes: [
+    ['data-disabled', 'root', 'The control cannot be changed or activated.'],
+    ['data-chip-body', 'chip', 'The part contains the chip content.'],
+    ['data-disabled', 'input', 'The control cannot be changed or activated.'],
+    ['data-chip-body', 'input', 'The part contains the chip content.'],
+    ['data-starting-style', 'popup', 'The part is entering.'],
+    ['data-ending-style', 'popup', 'The part is leaving.'],
+    ['data-highlighted', 'item', 'The item is highlighted for keyboard or pointer navigation.'],
+    ['data-selected', 'item', 'The item is selected.'],
+    ['data-disabled', 'item', 'The control cannot be changed or activated.'],
+  ],
   tokens: [
     'background',
     'border',

@@ -13,5 +13,18 @@ export const doc: ComponentDoc = {
     ['Tab', 'Moves through the popover content'],
     ['Escape', 'Closes the popover and returns focus to the trigger'],
   ],
+  anatomy: `<Popover>
+  <PopoverTrigger>Open</PopoverTrigger>
+  <PopoverContent>
+    <PopoverTitle>Title</PopoverTitle>
+    <PopoverDescription>Description</PopoverDescription>
+    <PopoverClose>Close</PopoverClose>
+  </PopoverContent>
+</Popover>`,
+  dataAttributes: [
+    ['data-starting-style', 'popup', 'The part is entering.'],
+    ['data-ending-style', 'popup', 'The part is leaving.'],
+    ['data-side', 'arrow', 'The attribute value specifies the placement side.'],
+  ],
   tokens: ['popover', 'popover-foreground', 'border', 'muted-foreground', 'secondary', 'focus-ring'],
 };

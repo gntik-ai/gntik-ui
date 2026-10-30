@@ -1,3 +1,4 @@
+import { openComponent } from './catalog-items.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -12,7 +13,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-theme', theme === 'light' ? '' : theme);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/input');
     await page.locator('#ui-Input').waitFor();
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
@@ -38,10 +39,12 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await search.press('Escape');
     await expect(search).toHaveValue('');
     await expect(search).toBeFocused();
+    await openComponent(page, 'Select');
     const region = page.locator('#ui-Select').getByRole('combobox', { name: 'Region', exact: true });
     await region.focus();
     await region.press('Delete');
     await expect(region).toBeFocused();
+    await openComponent(page, 'DatePicker');
     const expiry = page.locator('#ui-DatePicker').getByRole('combobox', { name: 'Expiry', exact: true });
     await expiry.click();
     const popup = page.getByRole('dialog');
@@ -55,8 +58,10 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     await popup.getByRole('button', { name: 'Clear', exact: true }).click();
     await expect(expiry).toHaveValue('');
     await expect(expiry).toBeFocused();
+    await openComponent(page, 'Textarea');
     await page.locator('#ui-Textarea').getByRole('button', { name: 'Reset notes' }).click();
     await expect(page.locator('#ui-Textarea').getByRole('textbox', { name: 'Notes', exact: true })).toBeFocused();
+    await openComponent(page, 'TimePicker');
     await page.locator('#ui-TimePicker').getByRole('button', { name: 'Reset start time' }).click();
     await expect(page.locator('#ui-TimePicker [data-segment="hour"]').last()).toBeFocused();
     await check();

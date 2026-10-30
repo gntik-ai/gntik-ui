@@ -11,7 +11,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-theme', theme === 'light' ? '' : theme);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/calendar');
     const calendar = page.locator('#ui-Calendar').getByRole('group', { name: 'Calendar', exact: true }).first();
     await expect(calendar).toBeVisible();
     await expect(calendar.getByRole('grid')).toHaveAccessibleName('March 2026');

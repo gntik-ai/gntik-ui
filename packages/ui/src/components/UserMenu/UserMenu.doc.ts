@@ -15,6 +15,7 @@ export const doc: ComponentDoc = {
     ['Enter', 'Runs the highlighted item (or selects a theme) and closes the menu'],
     ['Escape', 'Closes the menu and returns focus to the avatar'],
   ],
+  dataAttributes: [['data-popup-open', 'trigger', 'The associated popup is open.']],
   tokens: [
     'popover',
     'border',

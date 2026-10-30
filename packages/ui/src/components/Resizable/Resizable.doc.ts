@@ -4,6 +4,11 @@ export const doc: ComponentDoc = {
   name: 'Resizable',
   group: 'Layout',
   status: 'stable',
+  anatomy: `<ResizablePanelGroup>
+  <ResizablePanel defaultSize={50}>Draft</ResizablePanel>
+  <ResizeHandle aria-label="Resize draft and preview" />
+  <ResizablePanel>Preview</ResizablePanel>
+</ResizablePanelGroup>`,
   description:
     'Split layouts with draggable dividers: ResizablePanelGroup (horizontal or vertical), ResizablePanel (default / min / max size in %, collapsible) and ResizeHandle (optional grip). Pointer drag and full keyboard support; the layout can be remembered in localStorage with `autoSaveId`. No extra dependencies.',
   pattern: 'window splitter',

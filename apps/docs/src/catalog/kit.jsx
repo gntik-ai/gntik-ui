@@ -453,7 +453,10 @@ function CodeBlock({ code, lang = 'tsx', open: openInit = false }) {
         </button>
       </div>
       {open && (
-        <pre className="m-0 p-4 overflow-x-auto text-[12.5px] leading-relaxed text-foreground/85 bg-background/40">
+        <pre
+          tabIndex={0}
+          className="focus-ring m-0 p-4 overflow-x-auto text-[12.5px] leading-relaxed text-foreground/85 bg-background/40"
+        >
           <code>{code}</code>
         </pre>
       )}

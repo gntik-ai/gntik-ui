@@ -9,6 +9,7 @@
    literal strings) and calls buildEntries + PackageDocs.
    ============================================================================ */
 import { useMemo, useState } from 'react';
+import { Anatomy } from './api-reference.jsx';
 import { PreviewScope } from '../preview-settings.jsx';
 
 export const GROUP_ORDER = ['Actions', 'Forms', 'Overlays', 'Navigation', 'Display', 'Feedback', 'Layout', 'Theme'];
@@ -52,12 +53,27 @@ export const sortEntries = (entries) =>
     (a, b) => GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group) || a.name.localeCompare(b.name),
   );
 
-function ComponentEntry({ c, idPrefix }) {
+export function ComponentEntry({ c, idPrefix, page = false }) {
   const { CodeBlock, ApiReference } = window;
+  const Heading = page ? 'h1' : 'h2';
   return (
     <section id={idPrefix + '-' + c.folder} className="mb-14 scroll-mt-6">
+      {page && (
+        <a href="#ui-components" className="mb-6 inline-block text-[13px] text-primary-text underline focus-ring">
+          Back to Library
+        </a>
+      )}
       <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <h2 className="text-[17px] font-semibold tracking-tight text-foreground">{c.name}</h2>
+        <Heading
+          tabIndex={page ? -1 : undefined}
+          className={
+            page
+              ? 'text-[2rem] font-bold tracking-tight text-foreground'
+              : 'text-[17px] font-semibold tracking-tight text-foreground'
+          }
+        >
+          {c.name}
+        </Heading>
         <span className="font-mono text-[11px] text-muted-foreground">{c.group}</span>
         {c.primitive && <span className="font-mono text-[11px] text-muted-foreground">· {c.primitive}</span>}
         <span className="rounded-full bg-primary/14 px-2 py-0.5 text-[11px] font-medium text-primary-text">
@@ -67,10 +83,24 @@ function ComponentEntry({ c, idPrefix }) {
       <p className="mb-4 max-w-3xl text-[13px] leading-6 text-muted-foreground" style={{ textWrap: 'pretty' }}>
         {c.description}
       </p>
+      {page && (
+        <>
+          <CodeBlock
+            code={`import { ${c.importName ?? c.name} } from '${c.apiKind === 'forms' ? '@gntik-ai/ui/forms' : '@gntik-ai/ui'}'`}
+            open
+          />
+          <Anatomy anatomy={c.anatomy} />
+          <h2 className="mb-4 mt-8 text-[17px] font-semibold text-foreground">Examples</h2>
+        </>
+      )}
       {c.examples.map(({ title, Comp, code }) => (
         <div key={title} className="mb-6">
-          <div className="mb-2 text-[12.5px] font-medium text-foreground">{title}</div>
-          <div className="rounded-lg border border-border bg-card p-6 sm:p-8">
+          {page ? (
+            <h3 className="mb-2 text-[12.5px] font-medium text-foreground">{title}</h3>
+          ) : (
+            <div className="mb-2 text-[12.5px] font-medium text-foreground">{title}</div>
+          )}
+          <div data-component-preview="" className="rounded-lg border border-border bg-card p-6 sm:p-8">
             <PreviewScope>
               <Comp />
             </PreviewScope>
@@ -78,7 +108,7 @@ function ComponentEntry({ c, idPrefix }) {
           <CodeBlock code={code} />
         </div>
       ))}
-      <ApiReference folder={c.folder} kind={c.apiKind} level={3} />
+      <ApiReference folder={c.folder} kind={c.apiKind} level={page ? 2 : 3} page={page} />
     </section>
   );
 }

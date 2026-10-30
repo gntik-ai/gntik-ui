@@ -11,7 +11,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-theme', theme === 'light' ? '' : theme);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/user-menu');
     const component = page.locator('#ui-UserMenu');
     const trigger = component.getByRole('button', { name: 'Account menu for Ana López' });
     await expect(trigger).toBeVisible();

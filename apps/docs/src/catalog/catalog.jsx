@@ -6,6 +6,8 @@
    live preview through PreviewSettingsContext (see preview-settings.jsx).
    Pending sections show a placeholder with their planned scope.
    ============================================================================ */
+import { ITEM_PAGES } from './item-inventory.js';
+import { parseRoute, routeHash } from './routes.js';
 import { PALETTES } from '@gntik-ai/tokens/runtime';
 import { DensityProvider, Select, SelectTrigger, SelectContent, SelectItem } from '@gntik-ai/ui';
 import { DENSITIES, DIRECTIONS, PreviewSettingsContext, readSetting, writeSetting } from '../preview-settings.jsx';
@@ -135,8 +137,10 @@ function Pending({ item }) {
 function CatalogShell() {
   const flat = regFlat();
   const ids = flat.map((i) => i.id);
-  const initial = (location.hash || '').replace('#', '') || localStorage.getItem('gntik-section') || 'overview';
-  const [active, setActive] = useState(ids.includes(initial) ? initial : 'overview');
+  const [route, setRoute] = useState(() =>
+    parseRoute(location.hash || routeHash(localStorage.getItem('gntik-section') || 'overview'), ids, ITEM_PAGES),
+  );
+  const active = route.section;
   const [theme, setTheme] = useState(localStorage.getItem('gntik-theme') ?? 'dark');
   const [palette, setPalette] = useState(() =>
     readSetting(
@@ -166,18 +170,21 @@ function CatalogShell() {
   }, [dir]);
   useEffect(() => {
     localStorage.setItem('gntik-section', active);
-    if (location.hash.replace('#', '') !== active) history.replaceState(null, '', '#' + active);
-    if (mainRef.current) mainRef.current.scrollTop = 0;
-  }, [active]);
+    document.title = route.item ? `${route.item.name} · Gntik UI` : 'Gntik UI — component library';
+    if (mainRef.current) {
+      mainRef.current.scrollTop = 0;
+      if (route.item) mainRef.current.querySelector('h1')?.focus({ preventScroll: true });
+    }
+  }, [route, active]);
   useEffect(() => {
-    window.__goto = (id) => {
-      if (ids.includes(id)) setActive(id);
+    window.__goto = (section, id) => {
+      if (!ids.includes(section)) return;
+      const hash = routeHash(section, id);
+      if (location.hash !== hash) location.hash = hash;
+      else setRoute(parseRoute(hash, ids, ITEM_PAGES));
     };
     window.__setTheme = (t) => setTheme(t);
-    const onHash = () => {
-      const h = location.hash.replace('#', '');
-      if (ids.includes(h)) setActive(h);
-    };
+    const onHash = () => setRoute(parseRoute(location.hash, ids, ITEM_PAGES));
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
@@ -213,7 +220,7 @@ function CatalogShell() {
                       return (
                         <button
                           key={it.id}
-                          onClick={() => setActive(it.id)}
+                          onClick={() => window.__goto(it.id)}
                           className={
                             'relative flex items-center gap-2.5 h-[33px] px-2.5 rounded-lg text-[13px] text-left transition-colors ' +
                             (on
@@ -252,10 +259,12 @@ function CatalogShell() {
             <header className="h-16 shrink-0 flex items-center justify-between px-8 border-b border-border bg-background/80 backdrop-blur">
               <div className="flex items-center gap-3 min-w-0">
                 <span className="font-mono text-[11px] tracking-[0.16em] uppercase text-muted-foreground">
-                  {item?.group}
+                  {route.item ? (active === 'ui-components' ? 'Library' : item?.label) : item?.group}
                 </span>
                 <Icon name="chevronRight" size={13} className="text-muted-foreground/60" />
-                <span className="font-sans font-semibold text-[14px] text-foreground truncate">{item?.label}</span>
+                <span className="font-sans font-semibold text-[14px] text-foreground truncate">
+                  {route.item?.name ?? item?.label}
+                </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <PreviewToggle label="Preview density" options={DENSITIES} value={density} onChange={setDensity} />
@@ -279,8 +288,22 @@ function CatalogShell() {
             </header>
             <main ref={mainRef} className="flex-1 overflow-y-auto">
               <div className="max-w-[1120px] mx-auto px-6 sm:px-10 py-12">
+                {route.id && !route.item && (
+                  <p
+                    role="status"
+                    className="mb-6 rounded-md border border-border bg-card p-3 text-[13px] text-foreground"
+                  >
+                    No{' '}
+                    {
+                      { 'ui-components': 'component', blocks: 'block', layouts: 'layout', templates: 'template' }[
+                        active
+                      ]
+                    }{' '}
+                    named {route.id}
+                  </p>
+                )}
                 {Section ? (
-                  <Section />
+                  <Section key={active + '/' + (route.item?.id ?? '')} itemId={route.item?.id} />
                 ) : item ? (
                   <Pending item={item} />
                 ) : (

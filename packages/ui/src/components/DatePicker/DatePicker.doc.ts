@@ -16,6 +16,10 @@ export const doc: ComponentDoc = {
     ['Escape', 'Closes the popup and returns focus to the field'],
     ['Tab', '`withTime`: from the calendar to the time segments and Done (see TimePicker for their keys)'],
   ],
+  dataAttributes: [
+    ['data-popup-open', 'input', 'The associated popup is open.'],
+    ['data-invalid', 'input', 'The control value is invalid.'],
+  ],
   tokens: [
     'background',
     'border',

@@ -11,7 +11,7 @@ for (const theme of ['dark', '', 'high_contrast']) {
       localStorage.setItem('gntik-theme', value);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/nav-list');
     const example = page.locator('[data-example="nav-list-route-matching"]');
     await expect(example.getByRole('link', { name: 'Functions' })).toHaveAttribute('aria-current', 'page');
     await page.evaluate(() => document.fonts.ready);

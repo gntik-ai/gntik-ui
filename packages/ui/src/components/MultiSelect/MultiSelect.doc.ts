@@ -20,6 +20,7 @@ export const doc: ComponentDoc = {
       'Creates and selects an option from the typed text / loads the options again after an error',
     ],
   ],
+  dataAttributes: [['data-invalid', 'group', 'The control value is invalid.']],
   tokens: [
     'background',
     'border',

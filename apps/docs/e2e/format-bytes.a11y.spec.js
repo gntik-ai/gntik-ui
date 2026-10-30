@@ -12,7 +12,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     }, theme);
     for (const [section, selector] of [
       ['file-upload', '[data-format-bytes-components]'],
-      ['ui-components', '[data-format-bytes-preview]'],
+      ['ui-components/thumbnail', '[data-format-bytes-preview]'],
     ]) {
       await page.goto(`/#${section}`);
       const preview = page.locator(selector);

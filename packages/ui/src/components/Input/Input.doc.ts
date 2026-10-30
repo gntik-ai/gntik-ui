@@ -13,6 +13,10 @@ export const doc: ComponentDoc = {
     ['Tab', 'Moves focus into the input; trailing addon buttons follow in tab order'],
     ['Click on label', 'Inside a Field, focuses the input'],
   ],
+  dataAttributes: [
+    ['data-invalid', 'root', 'The control value is invalid.'],
+    ['data-invalid', 'input', 'The control value is invalid.'],
+  ],
   tokens: [
     'background',
     'border',

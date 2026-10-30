@@ -17,6 +17,11 @@ export const doc: ComponentDoc = {
     ['ArrowLeft / ArrowRight', 'Moves to the previous / next segment'],
     ['Backspace / Delete', 'Clears the segment (the value becomes null)'],
   ],
+  dataAttributes: [
+    ['data-invalid', 'root', 'The control value is invalid.'],
+    ['data-disabled', 'root', 'The control cannot be changed or activated.'],
+    ['data-placeholder', 'segment', 'No value has been entered or selected.'],
+  ],
   tokens: [
     'background',
     'border',

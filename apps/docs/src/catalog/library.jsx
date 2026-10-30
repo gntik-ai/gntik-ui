@@ -8,7 +8,9 @@
    accessibility: api-reference.jsx). Previews follow the topbar density and
    direction (PreviewScope). The page itself is shared with chat.jsx (package-docs.jsx).
    ============================================================================ */
-import { buildEntries, sortEntries, PackageDocs } from './package-docs.jsx';
+import { buildEntries, sortEntries, ComponentEntry } from './package-docs.jsx';
+import { ComponentIndex } from './component-index.jsx';
+import { UI_PAGES } from './item-inventory.js';
 
 const hooksDocs = import.meta.glob('../../../../packages/ui/src/hooks/*.doc.ts', { eager: true, import: 'doc' });
 const hooksExamples = import.meta.glob('../../../../packages/ui/src/hooks/examples/*.tsx', { eager: true });
@@ -144,16 +146,22 @@ const COMPONENTS = sortEntries([
   }),
 ]);
 
-function LibrarySection() {
-  return (
-    <PackageDocs
-      kicker="Library"
-      title="@gntik-ai/ui"
-      idPrefix="ui"
-      entries={COMPONENTS}
-      intro={`${COMPONENTS.length} components on Base UI, styled only with brand tokens. Each example below is the real file from the package — the preview and the code are the same source. Every keyboard row is covered by a test, and every example passes axe.`}
-    />
-  );
+const entryImports = {
+  ChoiceCard: 'ClickableCard, SelectableCardGroup, SelectableCard',
+  Resizable: 'ResizablePanelGroup, ResizablePanel, ResizeHandle',
+  Toast: 'ToastProvider, Toaster, useToast',
+  responsive: 'responsiveClasses',
+  'match-text': 'matchText',
+};
+const entries = COMPONENTS.map((c) => ({
+  ...c,
+  id: UI_PAGES.find((p) => p.folder === c.folder).id,
+  importName: c.apiKind === 'hooks' ? c.folder : (entryImports[c.folder] ?? c.name),
+}));
+
+function LibrarySection({ itemId }) {
+  const component = entries.find((c) => c.id === itemId);
+  return component ? <ComponentEntry c={component} idPrefix="ui" page /> : <ComponentIndex entries={entries} />;
 }
 
 window.SECTIONS = window.SECTIONS || {};
