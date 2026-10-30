@@ -114,8 +114,9 @@ export function FileUploadPanel({
     current.current = items;
   }, [items]);
   const changeItems = (next: UploadItem[], reason: UploadChange['reason'], ids: string[]) => {
+    // Accumulate callbacks in the same batch until the parent supplies its next list.
+    current.current = next;
     if (files === undefined) {
-      current.current = next;
       setItems(next);
     }
     onFilesChange?.(next, { reason, ids });
@@ -272,7 +273,7 @@ export function FileUploadPanel({
   const completeRemoval = (item: UploadItem) => {
     if (!mounted.current) return;
     setSources((current) => Object.fromEntries(Object.entries(current).filter(([k]) => k !== item.id)));
-    const cancelling = item.status === 'uploading' && item.file !== undefined;
+    const cancelling = item.status === 'uploading' && (item.file !== undefined || attempts.current.has(item.id));
     attempts.current.get(item.id)?.abort();
     attempts.current.delete(item.id);
     changeItems(
@@ -387,6 +388,7 @@ export function FileUploadPanel({
               key={item.id}
               labels={labels}
               item={item}
+              cancellable={item.status === 'uploading' && (item.file !== undefined || sources[item.id] !== undefined)}
               removing={removing.has(item.id)}
               onRemove={() => remove(item)}
               onRetry={retryFor(item.id)}
@@ -405,12 +407,14 @@ function FileRow({
   item,
   onRemove,
   onRetry,
+  cancellable,
   removing,
   labels,
 }: {
   item: UploadItem;
   onRemove: () => void;
   onRetry?: () => void;
+  cancellable: boolean;
   removing: boolean;
   labels?: Partial<FileUploadPanelLabels>;
 }) {
@@ -472,7 +476,7 @@ function FileRow({
         icon={X}
         size="sm"
         label={
-          item.status === 'uploading' && item.file !== undefined
+          cancellable
             ? (labels?.cancel?.(item.name) ?? t('upload.cancel', { name: item.name }))
             : (labels?.remove?.(item.name) ?? t('common.removeItem', { label: item.name }))
         }

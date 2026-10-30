@@ -29,6 +29,13 @@ When files is set, FileUploadPanel SHALL render exactly that list and SHALL requ
 - **THEN** the panel retains its original fractional progress and displays 41% then 42%
 - **AND** the callback receives the picked File and progress reporter
 
+#### Scenario: Concurrent controlled callbacks
+
+- **GIVEN** the parent stores each requested list in state and supplies it through files
+- **WHEN** two uploads report progress and finish before React renders the next supplied list
+- **THEN** each request preserves the preceding changes and both files finish uploaded
+- **AND** an async beforeUpload followed by an immediately resolved upload retains the added file
+
 ### Requirement: Manual upload mode keeps picked files without uploading
 
 With uploadMode="manual", accepted files SHALL be listed with status pending and the text "{size} · ready to upload", and onUpload MUST NOT be called; each item SHALL carry its File for the app to submit. A 4,300-byte pending file SHALL read "4.2 KB · ready to upload", with locale-aware number formatting.
@@ -79,6 +86,14 @@ FileUploadPanel SHALL pass an AbortSignal to onUpload and SHALL abort it when th
 - **WHEN** onUpload rejects with an AbortError or resolves after cancel
 - **THEN** no error row appears
 - **AND** no completion or failure is announced
+
+#### Scenario: Parent omits the source File
+
+- **GIVEN** an upload started by the panel is still in flight
+- **AND** the parent supplies the controlled item without its optional file property
+- **WHEN** the user activates Cancel upload of report.csv
+- **THEN** the signal is aborted and reason cancel is requested
+- **AND** the panel announces Upload of report.csv cancelled.
 
 #### Scenario: Unmount
 

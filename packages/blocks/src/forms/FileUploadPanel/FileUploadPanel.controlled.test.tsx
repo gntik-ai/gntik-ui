@@ -1,8 +1,80 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import { useState } from 'react';
 import { FileUploadPanel, type UploadItem } from './FileUploadPanel';
 
 const pick = (container: HTMLElement, files: File[]) =>
   fireEvent.change(container.querySelector('input[type="file"]')!, { target: { files } });
+
+it('preserves progress and completion for concurrent controlled uploads in one React batch', async () => {
+  const uploads = new Map<string, { progress: (pct: number) => void; finish: () => void }>();
+  const onUpload = (file: File, progress: (pct: number) => void) =>
+    new Promise<void>((finish) => uploads.set(file.name, { progress, finish }));
+  function ControlledPanel() {
+    const [files, setFiles] = useState<UploadItem[]>([]);
+    return <FileUploadPanel files={files} onFilesChange={setFiles} onUpload={onUpload} />;
+  }
+  const { container } = render(<ControlledPanel />);
+  pick(container, [new File(['a'], 'a.csv'), new File(['b'], 'b.csv')]);
+  act(() => {
+    uploads.get('a.csv')!.progress(50);
+    uploads.get('b.csv')!.progress(50);
+  });
+  expect(screen.getByRole('progressbar', { name: 'Uploading a.csv' })).toHaveAttribute('aria-valuenow', '50');
+  expect(screen.getByRole('progressbar', { name: 'Uploading b.csv' })).toHaveAttribute('aria-valuenow', '50');
+  await act(async () => {
+    uploads.get('a.csv')!.finish();
+    uploads.get('b.csv')!.finish();
+  });
+  expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+  expect(screen.getAllByText('1 B · uploaded')).toHaveLength(2);
+});
+
+it('retains a controlled addition when preprocessing and upload complete before the next render', async () => {
+  function ControlledPanel() {
+    const [files, setFiles] = useState<UploadItem[]>([]);
+    return (
+      <FileUploadPanel
+        files={files}
+        onFilesChange={setFiles}
+        beforeUpload={async () => true}
+        onUpload={async () => {}}
+      />
+    );
+  }
+  const { container } = render(<ControlledPanel />);
+  await act(async () => pick(container, [new File(['a'], 'report.csv')]));
+  expect(screen.getByText('report.csv')).toBeVisible();
+  expect(screen.getByText('1 B · uploaded')).toBeVisible();
+  expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+});
+
+it('cancels an active controlled upload even when the parent omits the File from its list', () => {
+  let signal!: AbortSignal;
+  const onFilesChange = vi.fn();
+  function ControlledPanel() {
+    const [files, setFiles] = useState<UploadItem[]>([]);
+    return (
+      <FileUploadPanel
+        files={files}
+        onFilesChange={(next, change) => {
+          onFilesChange(next, change);
+          setFiles(next.map((item) => ({ ...item, file: undefined })));
+        }}
+        onUpload={(_file, _progress, context) => {
+          signal = context.signal;
+          return new Promise<void>(() => {});
+        }}
+      />
+    );
+  }
+  const { container } = render(<ControlledPanel />);
+  pick(container, [new File(['a'], 'report.csv')]);
+  fireEvent.click(screen.getByRole('button', { name: 'Cancel upload of report.csv' }));
+  expect(signal.aborted).toBe(true);
+  expect(onFilesChange.mock.lastCall).toEqual([[], { reason: 'cancel', ids: [expect.any(String)] }]);
+  expect(screen.queryByText('report.csv')).not.toBeInTheDocument();
+  expect(screen.getByRole('status')).toHaveTextContent('Upload of report.csv cancelled.');
+});
 
 it('requests a controlled addition with the File and renders only the supplied list', () => {
   const onFilesChange = vi.fn();
