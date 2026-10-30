@@ -15,6 +15,27 @@ export const doc: ComponentDoc = {
     ['ArrowRight', 'Opens the submenu of a submenu trigger; ArrowLeft closes it'],
     ['Escape', 'Closes the menu'],
   ],
+  anatomy: `<ContextMenu>
+  <ContextMenuTrigger>Context target</ContextMenuTrigger>
+  <ContextMenuContent><MenuItem>Action</MenuItem></ContextMenuContent>
+</ContextMenu>`,
+  dataAttributes: [
+    ['data-popup-open', 'trigger', 'The associated popup is open.'],
+    ['data-starting-style', 'positioner', 'The part is entering.'],
+    ['data-ending-style', 'positioner', 'The part is leaving.'],
+    ['data-instant', 'positioner', 'The state changes without a transition.'],
+    ['data-checked', 'positioner', 'The control is checked.'],
+    ['data-popup-open', 'positioner', 'The associated popup is open.'],
+    ['data-highlighted', 'positioner', 'The item is highlighted for keyboard or pointer navigation.'],
+    ['data-disabled', 'positioner', 'The control cannot be changed or activated.'],
+    ['data-starting-style', 'popup', 'The part is entering.'],
+    ['data-ending-style', 'popup', 'The part is leaving.'],
+    ['data-instant', 'popup', 'The state changes without a transition.'],
+    ['data-checked', 'popup', 'The control is checked.'],
+    ['data-popup-open', 'popup', 'The associated popup is open.'],
+    ['data-highlighted', 'popup', 'The item is highlighted for keyboard or pointer navigation.'],
+    ['data-disabled', 'popup', 'The control cannot be changed or activated.'],
+  ],
   tokens: [
     'popover',
     'popover-foreground',

@@ -8,6 +8,14 @@ export const doc: ComponentDoc = {
     'Person or entity avatar: image with an initials (or icon) fallback, five sizes (xs–xl), round or rounded, tinted tones and an optional presence dot. AvatarGroup stacks avatars with a "+N more" overflow.',
   primitive: '@base-ui/react/avatar',
   pattern: 'img',
+  anatomy: `<AvatarGroup>
+  <Avatar name="Alex Morgan" />
+  <Avatar name="Sam Rivera" />
+</AvatarGroup>`,
+  dataAttributes: [
+    ['data-error', 'image', 'The operation has failed.'],
+    ['data-loading', 'image', 'The operation is loading.'],
+  ],
   tokens: [
     'primary',
     'primary-foreground',

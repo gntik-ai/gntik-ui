@@ -15,5 +15,11 @@ export const doc: ComponentDoc = {
     ['Home / End', 'Moves the focused thumb to the minimum / maximum'],
     ['Tab', 'Moves focus between thumbs'],
   ],
+  dataAttributes: [
+    ['data-disabled', 'root', 'The control cannot be changed or activated.'],
+    ['data-disabled', 'control', 'The control cannot be changed or activated.'],
+    ['data-dragging', 'thumb', 'The part is being dragged.'],
+    ['data-disabled', 'thumb', 'The control cannot be changed or activated.'],
+  ],
   tokens: ['primary', 'secondary', 'background', 'foreground', 'muted-foreground', 'focus-ring'],
 };

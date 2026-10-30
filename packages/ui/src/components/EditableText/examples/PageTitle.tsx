@@ -4,12 +4,12 @@ import { EditableText } from '../EditableText';
 export default function PageTitle() {
   const { t } = useI18n();
   return (
-    <h1 className="text-heading-xl font-bold">
+    <h4 className="text-heading-xl font-bold">
       <EditableText
         defaultValue={t('editableText.example.supportAgent')}
         label={t('editableText.example.agentName')}
         onSave={() => {}}
       />
-    </h1>
+    </h4>
   );
 }

@@ -1,3 +1,4 @@
+import { openComponent } from './catalog-items.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -12,7 +13,7 @@ for (const theme of ['dark', '', 'high_contrast']) {
       localStorage.setItem('gntik-theme', value);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/searchable-select');
     await expect(page.locator('#ui-SearchableSelect')).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
@@ -26,6 +27,14 @@ for (const theme of ['dark', '', 'high_contrast']) {
       '#ui-WorkspaceSwitcher',
     ];
     for (const selector of examples) {
+      await openComponent(
+        page,
+        selector === '#ui-WorkspaceSwitcher'
+          ? 'WorkspaceSwitcher'
+          : selector.includes('combobox-popup')
+            ? 'Combobox'
+            : 'SearchableSelect',
+      );
       const example = page.locator(selector);
       const trigger =
         selector === '#ui-WorkspaceSwitcher'
@@ -38,6 +47,9 @@ for (const theme of ['dark', '', 'high_contrast']) {
       });
       expect(closed).toEqual([]);
       await trigger.click();
+      // Base UI 1.9 sets aria-controls only once the popup is open.
+      await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+      await expect(trigger).toHaveAttribute('aria-controls', /.+/);
       const popup = page.locator(`[id="${await trigger.getAttribute('aria-controls')}"]`);
       const input = popup.getByRole('combobox');
       await expect(input).toBeFocused();

@@ -11,7 +11,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-theme', theme === 'light' ? '' : theme);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/date-field');
     const component = page.locator('#ui-DateField');
     await expect(component).toBeVisible();
     await expect(component.getByRole('spinbutton')).toHaveCount(21);

@@ -11,7 +11,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-theme', theme === 'light' ? '' : theme);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/query-builder');
     const example = page.locator('#ui-QueryBuilder').getByRole('group', { name: 'Query', exact: true });
     await expect(example).toBeVisible();
     const message = "'From' must not be after 'To'.";

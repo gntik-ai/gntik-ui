@@ -13,5 +13,22 @@ export const doc: ComponentDoc = {
     ['Tab / Shift+Tab', 'Cycles focus within the dialog (focus is trapped)'],
     ['Escape', 'Closes the dialog and returns focus to the trigger'],
   ],
+  anatomy: `<Dialog>
+  <DialogTrigger>Open</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Title</DialogTitle>
+      <DialogDescription>Description</DialogDescription>
+    </DialogHeader>
+    <DialogBody>Content</DialogBody>
+    <DialogFooter><DialogClose>Close</DialogClose></DialogFooter>
+  </DialogContent>
+</Dialog>`,
+  dataAttributes: [
+    ['data-starting-style', 'backdrop', 'The part is entering.'],
+    ['data-ending-style', 'backdrop', 'The part is leaving.'],
+    ['data-starting-style', 'popup', 'The part is entering.'],
+    ['data-ending-style', 'popup', 'The part is leaving.'],
+  ],
   tokens: ['popover', 'popover-foreground', 'border', 'background', 'muted-foreground', 'focus-ring'],
 };

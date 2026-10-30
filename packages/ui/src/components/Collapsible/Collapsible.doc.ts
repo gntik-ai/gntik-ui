@@ -12,5 +12,15 @@ export const doc: ComponentDoc = {
     ['Enter / Space', 'Expands or collapses the panel'],
     ['Tab', 'Moves focus from the trigger into the open panel content'],
   ],
+  anatomy: `<Collapsible>
+  <CollapsibleTrigger>Toggle details</CollapsibleTrigger>
+  <CollapsiblePanel>Content</CollapsiblePanel>
+</Collapsible>`,
+  dataAttributes: [
+    ['data-disabled', 'trigger', 'The control cannot be changed or activated.'],
+    ['data-panel-open', 'chevron', 'The associated panel is open.'],
+    ['data-starting-style', 'panel', 'The part is entering.'],
+    ['data-ending-style', 'panel', 'The part is leaving.'],
+  ],
   tokens: ['border', 'secondary', 'foreground', 'muted-foreground', 'focus-ring'],
 };

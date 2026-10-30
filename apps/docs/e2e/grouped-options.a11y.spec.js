@@ -1,3 +1,4 @@
+import { openComponent } from './catalog-items.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -27,13 +28,14 @@ for (const theme of ['dark', '', 'high_contrast']) {
       localStorage.setItem('gntik-theme', value);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/combobox');
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
     for (const [selector, labels] of [
       ['[data-example="combobox-grouped"]', ['City by region', 'Remote city by region']],
       ['[data-example="multi-select-grouped"]', ['Cities by region']],
     ]) {
+      await openComponent(page, selector.includes('multi-select') ? 'MultiSelect' : 'Combobox');
       const example = page.locator(selector);
       await expect(example).toBeVisible();
       await checkAxe(page, selector);

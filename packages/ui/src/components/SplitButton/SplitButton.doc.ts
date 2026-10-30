@@ -16,6 +16,10 @@ export const doc: ComponentDoc = {
     ['Enter', 'In the menu: runs the highlighted action and closes the menu'],
     ['Escape', 'Closes the menu and returns focus to the menu button'],
   ],
+  dataAttributes: [
+    ['data-popup-open', 'trigger', 'The associated popup is open.'],
+    ['data-popup-open', 'chevron', 'The associated popup is open.'],
+  ],
   tokens: [
     'primary',
     'primary-foreground',

@@ -24,7 +24,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       localStorage.setItem('gntik-theme', value === 'light' ? '' : value);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/transfer-list');
     const preview = page.locator('[data-i18n-catalog]');
     await expect(preview.getByRole('button', { name: 'Añadir marcados' })).toBeVisible();
     await expect(preview.getByRole('navigation', { name: 'Principal' })).toBeVisible();

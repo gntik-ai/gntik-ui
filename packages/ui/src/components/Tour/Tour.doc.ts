@@ -14,5 +14,11 @@ export const doc: ComponentDoc = {
     ['ArrowRight / ArrowLeft', 'Next / previous step (mirrored in RTL)'],
     ['Escape', 'Ends the tour and returns focus'],
   ],
+  dataAttributes: [
+    ['data-starting-style', 'popup', 'The part is entering.'],
+    ['data-ending-style', 'popup', 'The part is leaving.'],
+    ['data-side', 'arrow', 'The attribute value specifies the placement side.'],
+    ['data-current', 'dot', 'The item represents the current location.'],
+  ],
   tokens: ['popover', 'popover-foreground', 'border', 'primary', 'primary-text', 'muted-foreground', 'focus-ring'],
 };

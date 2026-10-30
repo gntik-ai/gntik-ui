@@ -8,6 +8,7 @@ export const doc: ComponentDoc = {
     'Progress bar for a running task: optional label and formatted value, four tones (primary, success, warning, destructive), three heights, and an indeterminate state (value null) that stops pulsing under reduced motion.',
   primitive: '@base-ui/react/progress',
   pattern: 'progressbar',
+  dataAttributes: [['data-indeterminate', 'indicator', 'The control has a mixed or unknown value.']],
   tokens: [
     'tone',
     'tone-text',

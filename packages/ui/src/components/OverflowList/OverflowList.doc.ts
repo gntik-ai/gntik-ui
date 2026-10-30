@@ -13,5 +13,6 @@ export const doc: ComponentDoc = {
     ['Enter / Space', 'On the "+N more" button: opens the popover with the hidden items'],
     ['Escape', 'Closes the popover and returns focus to the button'],
   ],
+  dataAttributes: [['data-popup-open', 'trigger', 'The associated popup is open.']],
   tokens: ['card', 'border', 'secondary', 'muted-foreground', 'foreground', 'popover', 'focus-ring'],
 };

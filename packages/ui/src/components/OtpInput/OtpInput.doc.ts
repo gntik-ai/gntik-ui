@@ -14,6 +14,11 @@ export const doc: ComponentDoc = {
     ['ArrowLeft / ArrowRight', 'Moves between slots'],
     ['Paste (⌘V / Ctrl+V)', 'Fills the slots from the clipboard, dropping invalid characters'],
   ],
+  dataAttributes: [
+    ['data-disabled', 'root', 'The control cannot be changed or activated.'],
+    ['data-filled', 'slot', 'The control contains a value.'],
+    ['data-invalid', 'slot', 'The control value is invalid.'],
+  ],
   tokens: [
     'background',
     'border',

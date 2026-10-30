@@ -43,7 +43,7 @@ for (const theme of ['dark', '', 'high_contrast']) {
       localStorage.setItem('gntik-theme', value);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/text');
     const example = page.locator('#ui-Text [data-typography-preview]');
     for (const [variant, expected] of Object.entries(text)) {
       await expectType(example.locator(`[data-text-variant="${variant}"]`), expected);

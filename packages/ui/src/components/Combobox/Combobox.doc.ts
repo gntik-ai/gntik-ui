@@ -21,6 +21,29 @@ export const doc: ComponentDoc = {
       'Creates an item from the typed text (onCreate) / loads the options again after an error',
     ],
   ],
+  anatomy: `<Combobox>
+  <ComboboxInput />
+  <ComboboxContent>
+    <ComboboxGroup>
+      <ComboboxGroupLabel>Group</ComboboxGroupLabel>
+      <ComboboxItem value="option">Option</ComboboxItem>
+    </ComboboxGroup>
+  </ComboboxContent>
+</Combobox>`,
+  dataAttributes: [
+    ['data-disabled', 'inputGroup', 'The control cannot be changed or activated.'],
+    ['data-invalid', 'inputGroup', 'The control value is invalid.'],
+    ['data-popup-open', 'chevron', 'The associated popup is open.'],
+    ['data-disabled', 'chipsGroup', 'The control cannot be changed or activated.'],
+    ['data-invalid', 'chipsGroup', 'The control value is invalid.'],
+    ['data-highlighted', 'chip', 'The item is highlighted for keyboard or pointer navigation.'],
+    ['data-starting-style', 'popup', 'The part is entering.'],
+    ['data-ending-style', 'popup', 'The part is leaving.'],
+    ['data-empty', 'list', 'There are no items to show.'],
+    ['data-highlighted', 'item', 'The item is highlighted for keyboard or pointer navigation.'],
+    ['data-selected', 'item', 'The item is selected.'],
+    ['data-disabled', 'item', 'The control cannot be changed or activated.'],
+  ],
   tokens: [
     'background',
     'border',

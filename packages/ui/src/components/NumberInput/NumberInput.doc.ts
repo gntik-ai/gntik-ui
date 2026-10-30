@@ -14,6 +14,14 @@ export const doc: ComponentDoc = {
     ['Home / End', 'Sets the value to min / max (when defined)'],
     ['Click on label', 'Inside a Field, focuses the input'],
   ],
+  dataAttributes: [
+    ['data-invalid', 'group', 'The control value is invalid.'],
+    ['data-disabled', 'group', 'The control cannot be changed or activated.'],
+    ['data-readonly', 'group', 'The value can be read but cannot be changed.'],
+    ['data-invalid', 'input', 'The control value is invalid.'],
+    ['data-disabled', 'input', 'The control cannot be changed or activated.'],
+    ['data-readonly', 'input', 'The value can be read but cannot be changed.'],
+  ],
   tokens: [
     'background',
     'border',

@@ -12,6 +12,10 @@ export interface ComponentDoc {
   description: string;
   /** Headless primitive it is built on, if any (e.g. "@base-ui/react/dialog"). */
   primitive?: string;
+  /** JSX skeleton showing the public compound parts. */
+  anatomy?: string;
+  /** State attribute, styled part and product-agnostic meaning. */
+  dataAttributes?: Array<[attribute: string, part: string, meaning: string]>;
   /** WAI-ARIA pattern the a11y contract test checks. */
   pattern?: string;
   /** Keyboard contract: key → behaviour. Each row is covered by a test. */

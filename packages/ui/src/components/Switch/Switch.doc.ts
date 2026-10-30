@@ -13,5 +13,11 @@ export const doc: ComponentDoc = {
     ['Enter', 'Toggles the switch'],
     ['Tab', 'Moves focus to and from the switch'],
   ],
+  dataAttributes: [
+    ['data-checked', 'root', 'The control is checked.'],
+    ['data-disabled', 'root', 'The control cannot be changed or activated.'],
+    ['data-checked', 'thumb', 'The control is checked.'],
+    ['data-disabled', 'thumb', 'The control cannot be changed or activated.'],
+  ],
   tokens: ['primary', 'secondary', 'background', 'focus-ring'],
 };

@@ -13,7 +13,7 @@ for (const theme of ['dark', '', 'high_contrast']) {
       Object.defineProperty(navigator, 'platform', { configurable: true, value: 'Win32' });
       Object.defineProperty(navigator, 'userAgentData', { configurable: true, value: undefined });
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/kbd');
     const example = page.locator('#ui-Kbd');
     await expect(example.getByText('useOs(): windows')).toBeVisible();
     await expect(example.getByText('Ctrl', { exact: true })).toHaveCount(2);

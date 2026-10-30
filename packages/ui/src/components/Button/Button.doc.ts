@@ -16,6 +16,7 @@ export const doc: ComponentDoc = {
       'Moves focus; a loading button stays focusable. Use focus-ring, or focus-ring-inset for flush or clipped rows. These keyboard-only utilities require the tokens minor release that introduces them.',
     ],
   ],
+  dataAttributes: [['data-disabled', 'root', 'The control cannot be changed or activated.']],
   tokens: [
     'primary',
     'primary-foreground',

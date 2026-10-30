@@ -17,6 +17,12 @@ export const doc: ComponentDoc = {
     ['Enter / Space on a thumbnail', 'Shows that item'],
     ['Escape', 'Closes the viewer and returns focus'],
   ],
+  dataAttributes: [
+    ['data-starting-style', 'backdrop', 'The part is entering.'],
+    ['data-ending-style', 'backdrop', 'The part is leaving.'],
+    ['data-starting-style', 'popup', 'The part is entering.'],
+    ['data-ending-style', 'popup', 'The part is leaving.'],
+  ],
   tokens: [
     'background',
     'chrome',

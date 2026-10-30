@@ -13,6 +13,19 @@ export const doc: ComponentDoc = {
     ['Tab / Shift+Tab', 'Cycles focus between the actions (focus is trapped)'],
     ['Escape', 'Closes the dialog and returns focus to the trigger'],
   ],
+  anatomy: `<AlertDialog>
+  <AlertDialogTrigger>Confirm action</AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Title</AlertDialogTitle>
+      <AlertDialogDescription>Description</AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Confirm</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>`,
   tokens: [
     'popover',
     'popover-foreground',

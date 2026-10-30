@@ -11,7 +11,7 @@ for (const theme of ['dark', '', 'high_contrast']) {
       localStorage.setItem('gntik-theme', value);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/json-viewer');
     const viewer = page.locator('#ui-JsonViewer');
     await viewer.getByRole('region', { name: 'Capped result payload' }).waitFor();
     await page.evaluate(() => document.fonts.ready);

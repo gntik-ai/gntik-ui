@@ -13,5 +13,15 @@ export const doc: ComponentDoc = {
     ['Escape', 'Closes the preview; focus stays on the link'],
     ['Enter', 'Follows the link'],
   ],
+  anatomy: `<HoverCard>
+  <HoverCardTrigger>Details</HoverCardTrigger>
+  <HoverCardContent>Content</HoverCardContent>
+</HoverCard>`,
+  dataAttributes: [
+    ['data-popup-open', 'trigger', 'The associated popup is open.'],
+    ['data-starting-style', 'popup', 'The part is entering.'],
+    ['data-ending-style', 'popup', 'The part is leaving.'],
+    ['data-side', 'arrow', 'The attribute value specifies the placement side.'],
+  ],
   tokens: ['popover', 'popover-foreground', 'border', 'foreground', 'muted-foreground', 'focus-ring'],
 };

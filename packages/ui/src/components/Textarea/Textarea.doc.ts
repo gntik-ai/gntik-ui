@@ -12,6 +12,7 @@ export const doc: ComponentDoc = {
     ['Tab', 'Moves focus into and out of the textarea'],
     ['Enter', 'Inserts a new line (does not submit the form)'],
   ],
+  dataAttributes: [['data-invalid', 'root', 'The control value is invalid.']],
   tokens: [
     'background',
     'border',

@@ -14,5 +14,14 @@ export const doc: ComponentDoc = {
     ['Space / Enter', 'Toggles the focused item'],
     ['Tab', 'Moves focus into and out of the group (one tab stop)'],
   ],
+  anatomy: `<ToggleGroup aria-label="Options">
+  <Toggle value="first">First</Toggle>
+  <Toggle value="second">Second</Toggle>
+</ToggleGroup>`,
+  dataAttributes: [
+    ['data-orientation', 'root', 'The attribute value specifies the horizontal or vertical orientation.'],
+    ['data-disabled', 'root', 'The control cannot be changed or activated.'],
+    ['data-pressed', 'root', 'The toggle is pressed.'],
+  ],
   tokens: ['card', 'border', 'secondary', 'foreground', 'muted-foreground', 'primary', 'focus-ring'],
 };

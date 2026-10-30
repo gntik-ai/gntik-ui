@@ -14,5 +14,21 @@ export const doc: ComponentDoc = {
     ['Enter / Space', 'Activates the focused tab and shows its panel'],
     ['Tab', 'Moves focus from the active tab into its panel'],
   ],
+  anatomy: `<Tabs defaultValue="first">
+  <TabsList>
+    <TabsTab value="first">First</TabsTab>
+    <TabsTab value="second">Second</TabsTab>
+    <TabsIndicator />
+  </TabsList>
+  <TabsPanel value="first">First panel</TabsPanel>
+  <TabsPanel value="second">Second panel</TabsPanel>
+</Tabs>`,
+  dataAttributes: [
+    ['data-active', 'list', 'The part is active.'],
+    ['data-active', 'tab', 'The part is active.'],
+    ['data-disabled', 'tab', 'The control cannot be changed or activated.'],
+    ['data-active', 'icon', 'The part is active.'],
+    ['data-active', 'count', 'The part is active.'],
+  ],
   tokens: ['primary', 'primary-text', 'border', 'secondary', 'card', 'muted-foreground', 'foreground', 'focus-ring'],
 };

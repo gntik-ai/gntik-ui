@@ -13,6 +13,11 @@ export const doc: ComponentDoc = {
     ['Tab / Shift+Tab', 'Reaches each toast’s primary action, dismiss action and close button'],
     ['Enter / Space', 'On the close button or dismiss action: dismisses the toast (an action also runs its handler)'],
   ],
+  dataAttributes: [
+    ['data-starting-style', 'root', 'The part is entering.'],
+    ['data-ending-style', 'root', 'The part is leaving.'],
+    ['data-limited', 'root', 'The visible items have been limited.'],
+  ],
   tokens: [
     'popover',
     'popover-foreground',

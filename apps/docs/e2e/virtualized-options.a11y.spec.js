@@ -1,3 +1,4 @@
+import { openComponent } from './catalog-items.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -53,15 +54,17 @@ for (const theme of ['dark', '', 'high_contrast']) {
       localStorage.setItem('gntik-theme', value);
       localStorage.setItem('gntik-section', 'ui-components');
     }, theme);
-    await page.goto('/#ui-components');
+    await page.goto('/#ui-components/combobox');
     const section = page.locator('#ui-Combobox');
     const input = section.getByRole('combobox', { name: 'Nodes (10,000 options)' });
     await expect(input).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     await page.addScriptTag({ content: AXE });
-    for (const selector of ['#ui-Combobox', '#ui-MultiSelect', '#ui-TransferList']) {
-      await checkAxe(page, selector);
+    for (const folder of ['Combobox', 'MultiSelect', 'TransferList']) {
+      await openComponent(page, folder);
+      await checkAxe(page, `#ui-${folder}`);
     }
+    await openComponent(page, 'Combobox');
     await input.click();
     const list = await controlledList(page, input);
     expect(await list.getByRole('option').count()).toBeLessThanOrEqual(20);
@@ -113,6 +116,7 @@ for (const theme of ['dark', '', 'high_contrast']) {
     await remote.press('Escape');
     await expect(remote).toHaveAttribute('aria-expanded', 'false');
 
+    await openComponent(page, 'MultiSelect');
     const multi = page.locator('#ui-MultiSelect').getByRole('combobox', { name: 'Nodes (5,000 options)' });
     await multi.click();
     const multiList = await controlledList(page, multi);
@@ -120,6 +124,7 @@ for (const theme of ['dark', '', 'high_contrast']) {
     await checkAxe(page, '#ui-MultiSelect');
     await multi.press('Escape');
     await expect(multi).toHaveAttribute('aria-expanded', 'false');
+    await openComponent(page, 'TransferList');
     await checkAxe(page, '#ui-TransferList');
   });
 }

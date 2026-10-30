@@ -14,6 +14,12 @@ export const doc: ComponentDoc = {
     ['Enter / Space', 'On a group heading or nested section: expands or collapses it'],
     ['Enter / Space (rail)', 'Opens a nested section as a flyout menu (arrow keys move, Escape closes)'],
   ],
+  dataAttributes: [
+    ['data-panel-closed', 'groupChevron', 'The associated panel is closed.'],
+    ['data-starting-style', 'panel', 'The part is entering.'],
+    ['data-ending-style', 'panel', 'The part is leaving.'],
+    ['data-panel-closed', 'parentChevron', 'The associated panel is closed.'],
+  ],
   tokens: [
     'chrome',
     'accent',

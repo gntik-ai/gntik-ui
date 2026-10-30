@@ -12,5 +12,17 @@ export const doc: ComponentDoc = {
     ['Tab', 'Focusing the trigger shows the tooltip; moving focus away hides it'],
     ['Escape', 'Hides the tooltip while focus stays on the trigger'],
   ],
+  anatomy: `<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger>Target</TooltipTrigger>
+    <TooltipContent>Explanation</TooltipContent>
+  </Tooltip>
+</TooltipProvider>`,
+  dataAttributes: [
+    ['data-starting-style', 'popup', 'The part is entering.'],
+    ['data-ending-style', 'popup', 'The part is leaving.'],
+    ['data-instant', 'popup', 'The state changes without a transition.'],
+    ['data-side', 'arrow', 'The attribute value specifies the placement side.'],
+  ],
   tokens: ['foreground', 'background', 'popover', 'popover-foreground', 'border'],
 };

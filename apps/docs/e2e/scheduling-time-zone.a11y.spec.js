@@ -1,3 +1,4 @@
+import { openComponent } from './catalog-items.js';
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -37,6 +38,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       ['Timestamp', 'Timestamp Time Zone'],
       ['ScheduleInput', 'Schedule Input Time Zone'],
     ]) {
+      await openComponent(page, component);
       const section = page.locator(`#ui-${component}`);
       const example = section.getByText(title, { exact: true }).locator('..');
       await example.scrollIntoViewIfNeeded();

@@ -21,6 +21,11 @@ export const doc: ComponentDoc = {
     ['A / P', 'On the AM/PM segment: selects AM / PM'],
     ['Paste', 'Fills from ISO date/date-time or locale-ordered numeric date; ignores other text'],
   ],
+  dataAttributes: [
+    ['data-invalid', 'root', 'The control value is invalid.'],
+    ['data-disabled', 'root', 'The control cannot be changed or activated.'],
+    ['data-placeholder', 'root', 'No value has been entered or selected.'],
+  ],
   tokens: [
     'background',
     'border',

@@ -15,6 +15,12 @@ export const doc: ComponentDoc = {
     ['Enter', 'Switches to the highlighted workspace (or runs Create workspace) and closes'],
     ['Escape', 'Closes the list and returns focus to the trigger'],
   ],
+  dataAttributes: [
+    ['data-popup-open', 'trigger', 'The associated popup is open.'],
+    ['data-highlighted', 'searchItem', 'The item is highlighted for keyboard or pointer navigation.'],
+    ['data-selected', 'searchItem', 'The item is selected.'],
+    ['data-disabled', 'searchItem', 'The control cannot be changed or activated.'],
+  ],
   tokens: [
     'card',
     'border',

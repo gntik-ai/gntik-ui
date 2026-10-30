@@ -15,6 +15,14 @@ export const doc: ComponentDoc = {
     ['Paste', 'Splits the clipboard on separators and new lines into chips'],
     ['Tab to a chip button, Enter', 'Removes that chip'],
   ],
+  dataAttributes: [
+    ['data-invalid', 'root', 'The control value is invalid.'],
+    ['data-disabled', 'root', 'The control cannot be changed or activated.'],
+    ['data-invalid', 'input', 'The control value is invalid.'],
+    ['data-disabled', 'input', 'The control cannot be changed or activated.'],
+    ['data-invalid', 'chip', 'The control value is invalid.'],
+    ['data-disabled', 'chip', 'The control cannot be changed or activated.'],
+  ],
   tokens: [
     'background',
     'border',

@@ -14,5 +14,18 @@ export const doc: ComponentDoc = {
     ['Home / End', 'Moves focus to the first / last trigger'],
     ['Tab', 'Moves focus through the triggers and any focusable content in open panels'],
   ],
+  anatomy: `<Accordion>
+  <AccordionItem value="item">
+    <AccordionTrigger>Heading</AccordionTrigger>
+    <AccordionPanel>Content</AccordionPanel>
+  </AccordionItem>
+</Accordion>`,
+  dataAttributes: [
+    ['data-disabled', 'item', 'The control cannot be changed or activated.'],
+    ['data-disabled', 'trigger', 'The control cannot be changed or activated.'],
+    ['data-panel-open', 'chevron', 'The associated panel is open.'],
+    ['data-starting-style', 'panel', 'The part is entering.'],
+    ['data-ending-style', 'panel', 'The part is leaving.'],
+  ],
   tokens: ['border', 'card', 'secondary', 'foreground', 'muted-foreground', 'focus-ring'],
 };

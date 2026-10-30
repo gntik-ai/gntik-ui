@@ -13,6 +13,14 @@ export const doc: ComponentDoc = {
     ['Tab / Shift+Tab', 'Moves focus out of the toolbar (one Tab stop)'],
     ['Enter / Space', 'Activates the focused button'],
   ],
+  anatomy: `<Toolbar aria-label="Actions">
+  <ToolbarStart>
+    <ToolbarGroup><ToolbarButton>Action</ToolbarButton></ToolbarGroup>
+  </ToolbarStart>
+  <ToolbarCenter>Context</ToolbarCenter>
+  <ToolbarEnd><ToolbarLink href="#">Help</ToolbarLink></ToolbarEnd>
+</Toolbar>`,
+  dataAttributes: [['data-disabled', 'input', 'The control cannot be changed or activated.']],
   tokens: [
     'border',
     'secondary',
