@@ -432,11 +432,7 @@ export default function ToolbarBulkActions() {
           <ToolbarButton icon={RefreshCw}>Reassign</ToolbarButton>
         </ToolbarGroup>
         <ToolbarSeparator />
-        <ToolbarButton
-          variant="ghost"
-          icon={Trash2}
-          className="text-destructive-chip-text hover:text-destructive-chip-text"
-        >
+        <ToolbarButton variant="destructive" icon={Trash2}>
           Delete
         </ToolbarButton>
       </ToolbarCenter>

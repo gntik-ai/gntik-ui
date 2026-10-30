@@ -27,9 +27,9 @@ function Basic({ onBold }: { onBold?: () => void }) {
 const btn = (name: string) => screen.getByRole('button', { name });
 
 describe('Toolbar', () => {
-  it('keeps the destructive action readable on the tinted toolbar surface', () => {
+  it('keeps the destructive action distinct with its contrast-safe background and text pair', () => {
     render(<ToolbarBulkActions />);
-    expect(btn('Delete')).toHaveClass('text-destructive-chip-text', 'hover:text-destructive-chip-text');
+    expect(btn('Delete')).toHaveClass('bg-destructive', 'text-destructive-foreground');
   });
 
   it('exposes role toolbar with its label, orientation and a separator', () => {
