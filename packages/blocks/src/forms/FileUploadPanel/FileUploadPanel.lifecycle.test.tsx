@@ -5,6 +5,14 @@ import { FileUploadPanel, type FileUploadPanelLabels } from './FileUploadPanel';
 import ManualForm from './examples/ManualForm';
 import AutoCancel from './examples/AutoCancel';
 
+it('keeps the removal-veto toggle name stable as its pressed state changes', () => {
+  render(<AutoCancel />);
+  const button = screen.getByRole('button', { name: 'Keep files' });
+  expect(button).toHaveAttribute('aria-pressed', 'false');
+  fireEvent.click(button);
+  expect(screen.getByRole('button', { name: 'Keep files' })).toHaveAttribute('aria-pressed', 'true');
+});
+
 const pick = (container: HTMLElement, files: File[]) =>
   fireEvent.change(container.querySelector('input[type="file"]')!, { target: { files } });
 

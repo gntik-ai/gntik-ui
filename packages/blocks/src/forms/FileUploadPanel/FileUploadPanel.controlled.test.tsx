@@ -5,6 +5,31 @@ import { FileUploadPanel, type UploadItem } from './FileUploadPanel';
 const pick = (container: HTMLElement, files: File[]) =>
   fireEvent.change(container.querySelector('input[type="file"]')!, { target: { files } });
 
+it('discards a declined controlled addition before accepting a later pick', () => {
+  const onFilesChange = vi.fn();
+  function ControlledPanel() {
+    const [files, setFiles] = useState<UploadItem[]>([]);
+    return (
+      <FileUploadPanel
+        files={files}
+        uploadMode="manual"
+        onFilesChange={(next, change) => {
+          onFilesChange(next, change);
+          if (next.some((item) => item.name === 'accepted.csv')) setFiles(next);
+        }}
+      />
+    );
+  }
+  const { container } = render(<ControlledPanel />);
+  pick(container, [new File(['a'], 'declined.csv')]);
+  expect(screen.queryByRole('list')).not.toBeInTheDocument();
+  pick(container, [new File(['b'], 'accepted.csv')]);
+  expect(onFilesChange).toHaveBeenCalledTimes(2);
+  expect(onFilesChange.mock.lastCall![0].map((item: UploadItem) => item.name)).toEqual(['accepted.csv']);
+  expect(screen.queryByText('declined.csv')).not.toBeInTheDocument();
+  expect(screen.getByText('accepted.csv')).toBeVisible();
+});
+
 it('preserves progress and completion for concurrent controlled uploads in one React batch', async () => {
   const uploads = new Map<string, { progress: (pct: number) => void; finish: () => void }>();
   const onUpload = (file: File, progress: (pct: number) => void) =>
@@ -246,6 +271,54 @@ it('aborts in-flight uploads on unmount', async () => {
   expect(onFilesChange).not.toHaveBeenCalled();
 });
 
+it.each(['replace', 'parent removal'] as const)(
+  'aborts an upload removed by %s and ignores its later callbacks',
+  async (action) => {
+    let signal!: AbortSignal;
+    let report!: (pct: number) => void;
+    let finish!: () => void;
+    const onFilesChange = vi.fn();
+    function ControlledPanel() {
+      const [files, setFiles] = useState<UploadItem[]>([]);
+      return (
+        <>
+          <button onClick={() => setFiles([])}>Clear files</button>
+          <FileUploadPanel
+            files={files}
+            multiple={false}
+            onFilesChange={(next, change) => {
+              onFilesChange(next, change);
+              setFiles(next);
+            }}
+            onUpload={(file, progress, context) => {
+              if (file.name !== 'report.csv') return new Promise<void>(() => {});
+              signal = context.signal;
+              report = progress;
+              return new Promise<void>((resolve) => {
+                finish = resolve;
+              });
+            }}
+          />
+        </>
+      );
+    }
+    const { container } = render(<ControlledPanel />);
+    pick(container, [new File(['x'], 'report.csv')]);
+    if (action === 'replace') pick(container, [new File(['y'], 'next.csv')]);
+    else fireEvent.click(screen.getByRole('button', { name: 'Clear files' }));
+    expect(screen.queryByText('report.csv')).not.toBeInTheDocument();
+    expect(signal.aborted).toBe(true);
+    const announcement = screen.getByRole('status').textContent;
+    onFilesChange.mockClear();
+    await act(async () => {
+      report(80);
+      finish();
+    });
+    expect(onFilesChange).not.toHaveBeenCalled();
+    expect(screen.getByRole('status').textContent).toBe(announcement);
+  },
+);
+
 it('calls onRemove before removal, supports a synchronous veto and preserves focus', () => {
   const item: UploadItem = { id: 'one', name: 'report.csv', size: 1, progress: 100, status: 'done' };
   const onRemove = vi.fn(() => {
@@ -268,6 +341,53 @@ it('calls onRemove before removal, supports a synchronous veto and preserves foc
   expect(screen.queryByText('report.csv')).not.toBeInTheDocument();
   expect(onFilesChange.mock.lastCall![1]).toEqual({ reason: 'remove', ids: ['one'] });
 });
+
+it.each(['done', 'error'] as const)(
+  'removes a %s upload after async removal approval without announcing cancellation',
+  async (status) => {
+    let finishUpload!: () => void;
+    let failUpload!: (error: Error) => void;
+    let allowRemoval!: () => void;
+    const onFilesChange = vi.fn();
+    function ControlledPanel() {
+      const [files, setFiles] = useState<UploadItem[]>([]);
+      return (
+        <FileUploadPanel
+          files={files}
+          onFilesChange={(next, change) => {
+            onFilesChange(next, change);
+            setFiles(next);
+          }}
+          onUpload={() =>
+            new Promise<void>((resolve, reject) => {
+              finishUpload = resolve;
+              failUpload = reject;
+            })
+          }
+          onRemove={() =>
+            new Promise<void>((resolve) => {
+              allowRemoval = resolve;
+            })
+          }
+        />
+      );
+    }
+    const { container } = render(<ControlledPanel />);
+    pick(container, [new File(['x'], 'report.csv')]);
+    const itemId = onFilesChange.mock.calls[0]![0][0].id;
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel upload of report.csv' }));
+    expect(screen.getByRole('button', { name: 'Cancel upload of report.csv' })).toBeDisabled();
+    await act(async () => {
+      if (status === 'done') finishUpload();
+      else failUpload(new Error('Offline'));
+    });
+    expect(screen.getByRole('button', { name: 'Remove report.csv' })).toBeDisabled();
+    await act(async () => allowRemoval());
+    expect(onFilesChange.mock.lastCall).toEqual([[], { reason: 'remove', ids: [itemId] }]);
+    expect(screen.getByRole('status')).toHaveTextContent(/^report.csv removed\.$/);
+    expect(screen.queryByText('report.csv')).not.toBeInTheDocument();
+  },
+);
 
 it.each(['veto', 'reject', 'allow'] as const)(
   'disables removal while pending and handles async %s',

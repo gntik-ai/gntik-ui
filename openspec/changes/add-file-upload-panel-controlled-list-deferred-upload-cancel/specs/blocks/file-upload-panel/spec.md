@@ -36,6 +36,13 @@ When files is set, FileUploadPanel SHALL render exactly that list and SHALL requ
 - **THEN** each request preserves the preceding changes and both files finish uploaded
 - **AND** an async beforeUpload followed by an immediately resolved upload retains the added file
 
+#### Scenario: Parent declines a controlled request
+
+- **GIVEN** the parent keeps the same files array after declining an addition
+- **WHEN** a later file is picked and accepted
+- **THEN** the next requested list contains only the accepted file
+- **AND** the declined item does not reappear
+
 ### Requirement: Manual upload mode keeps picked files without uploading
 
 With uploadMode="manual", accepted files SHALL be listed with status pending and the text "{size} · ready to upload", and onUpload MUST NOT be called; each item SHALL carry its File for the app to submit. A 4,300-byte pending file SHALL read "4.2 KB · ready to upload", with locale-aware number formatting.
@@ -100,6 +107,12 @@ FileUploadPanel SHALL pass an AbortSignal to onUpload and SHALL abort it when th
 - **WHEN** the panel unmounts with an upload in flight
 - **THEN** that upload's signal is aborted
 
+#### Scenario: Uploading row leaves the list
+
+- **WHEN** a new pick replaces an uploading row with multiple=false or the controlled parent removes it
+- **THEN** the removed row's signal is aborted
+- **AND** its later progress and settle callbacks request no changes and announce nothing
+
 ### Requirement: onRemove can veto a removal
 
 FileUploadPanel SHALL call onRemove before removing a row. A return or resolved value of false, or a rejection, MUST keep the row; while a returned promise is pending the row's remove button SHALL be disabled. A rejection SHALL be announced as "{name} could not be removed." Returning undefined SHALL remove synchronously.
@@ -115,6 +128,13 @@ FileUploadPanel SHALL call onRemove before removing a row. A return or resolved 
 - **WHEN** onRemove returns a promise that rejects
 - **THEN** the remove button is disabled until it settles
 - **AND** the row stays and report.csv could not be removed. is announced
+
+#### Scenario: Upload settles while removal awaits approval
+
+- **GIVEN** onRemove returns a pending promise for an uploading row
+- **WHEN** the upload completes or fails before removal is approved
+- **THEN** approval removes the current row with reason remove
+- **AND** the panel announces report.csv removed. instead of cancellation
 
 ### Requirement: Localized accessible examples
 

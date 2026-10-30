@@ -13,7 +13,7 @@ export default function AutoCancel() {
         rejects empty files and renames .txt files to .csv.
       </p>
       <Button variant="secondary" aria-pressed={locked} onClick={() => setLocked(!locked)}>
-        Keep files: {locked ? 'on' : 'off'}
+        Keep files
       </Button>
       <FileUploadPanel
         accept=".csv,.txt"

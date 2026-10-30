@@ -36,3 +36,12 @@ Final focused validation: 44 FileUploadPanel tests pass, including unchanged exi
 - Follow-up validation: all 47 focused upload tests pass, including the four unchanged regression files and axe states in all three themes. Library build, lint, monorepo typecheck, registry generation/check, docs coverage and both kit-only checks pass.
 - The full blocks unit suite also passes. The remaining-library run passed CLI, codemods, icons, charts, editor and flow; its UI and dependent suites had not completed at handoff and remain with PR CI.
 - The aggregate library tests stop at the existing offline tokens mirror fixture: ENOENT for gntik-ai-tokens-0.2.1.tgz (the local package produces 0.3.0). Browser suites remain with PR CI.
+
+## Second checker follow-up
+
+- Reproduced both blocking findings through the public component callbacks with `pnpm --filter @gntik-ai/blocks exec vitest run src/forms/FileUploadPanel/FileUploadPanel.controlled.test.tsx --configLoader runner`, red before each fix: a declined file leaked into the next addition, and an upload that completed or failed during async removal approval reported cancel instead of remove.
+- Confirmed causes: the pending-list ref reset only when the files array identity changed, and removal retained the row captured at click time. Reset the ref after every render while retaining same-batch updates, and resolve removals against the current row by id.
+- Added red-before-green coverage for replacement and parent-driven removal aborting uploads and ignoring their late callbacks. Centralized the cancellation predicate used by button names and removal feedback.
+- Added a failing accessibility-name test before making the AutoCancel toggle label constant; aria-pressed conveys its state.
+- All 53 focused upload tests pass, including the four unchanged regression files and axe checks in dark, light and high_contrast. Library build, lint, monorepo typecheck, registry regeneration/check, docs coverage, both kit-only checks and strict OpenSpec validation pass.
+- The aggregate library test cannot complete offline: the untouched tokens mirror-install fixture expects gntik-ai-tokens-0.2.1.tgz, while its local pack produces version 0.3.0, causing ENOENT. The other 12 tokens test files pass. Browser suites and MCP/evals tests remain with PR CI.

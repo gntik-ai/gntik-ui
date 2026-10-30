@@ -99,6 +99,7 @@ export function FileUploadPanel({
   const [internalItems, setItems] = useState<UploadItem[]>(defaultFiles);
   const items = files ?? internalItems;
   const current = useRef(items);
+  const rendered = useRef(items);
   const mounted = useRef(false);
   const attempts = useRef(new Map<string, AbortController>());
   useLayoutEffect(() => {
@@ -112,9 +113,16 @@ export function FileUploadPanel({
   }, []);
   useLayoutEffect(() => {
     current.current = items;
-  }, [items]);
+    for (const item of rendered.current) {
+      if (items.some((entry) => entry.id === item.id)) continue;
+      attempts.current.get(item.id)?.abort();
+      attempts.current.delete(item.id);
+    }
+    rendered.current = items;
+  });
   const changeItems = (next: UploadItem[], reason: UploadChange['reason'], ids: string[]) => {
-    // Accumulate callbacks in the same batch until the parent supplies its next list.
+    // Accumulate within a React batch, then respect the parent's list on every commit,
+    // including when it declines a request by keeping the same array.
     current.current = next;
     if (files === undefined) {
       setItems(next);
@@ -155,7 +163,11 @@ export function FileUploadPanel({
     attempts.current.get(itemId)?.abort();
     const controller = new AbortController();
     attempts.current.set(itemId, controller);
-    const active = () => mounted.current && !controller.signal.aborted && attempts.current.get(itemId) === controller;
+    const active = () =>
+      mounted.current &&
+      !controller.signal.aborted &&
+      attempts.current.get(itemId) === controller &&
+      current.current.some((item) => item.id === itemId);
     let previous = 0;
     const failed = (error: unknown) => {
       if (!active()) return;
@@ -270,10 +282,15 @@ export function FileUploadPanel({
     });
   };
 
-  const completeRemoval = (item: UploadItem) => {
+  const canCancel = (item: UploadItem) =>
+    item.status === 'uploading' && (item.file !== undefined || sources[item.id] !== undefined);
+
+  const completeRemoval = (itemId: string) => {
     if (!mounted.current) return;
+    const item = current.current.find((entry) => entry.id === itemId);
+    if (!item) return;
     setSources((current) => Object.fromEntries(Object.entries(current).filter(([k]) => k !== item.id)));
-    const cancelling = item.status === 'uploading' && (item.file !== undefined || attempts.current.has(item.id));
+    const cancelling = canCancel(item);
     attempts.current.get(item.id)?.abort();
     attempts.current.delete(item.id);
     changeItems(
@@ -301,13 +318,13 @@ export function FileUploadPanel({
         setRemoving(new Set(removalRequests.current));
         void result
           .then((allowed) => {
-            if (allowed !== false) completeRemoval(item);
+            if (allowed !== false) completeRemoval(item.id);
           }, failed)
           .finally(() => {
             removalRequests.current.delete(item.id);
             if (mounted.current) setRemoving(new Set(removalRequests.current));
           });
-      } else if (result !== false) completeRemoval(item);
+      } else if (result !== false) completeRemoval(item.id);
     } catch {
       failed();
     }
@@ -388,7 +405,7 @@ export function FileUploadPanel({
               key={item.id}
               labels={labels}
               item={item}
-              cancellable={item.status === 'uploading' && (item.file !== undefined || sources[item.id] !== undefined)}
+              cancellable={canCancel(item)}
               removing={removing.has(item.id)}
               onRemove={() => remove(item)}
               onRetry={retryFor(item.id)}
