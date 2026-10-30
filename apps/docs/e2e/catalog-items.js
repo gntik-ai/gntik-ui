@@ -34,4 +34,7 @@ export async function openComponent(page, folder) {
   if (!item) throw new Error(`No documented component ${folder}`);
   await page.evaluate((id) => window.__goto('ui-components', id), item.id);
   await expect(page.locator(`#ui-${folder}`)).toBeVisible();
+  // Visibility can precede the route effect that focuses the heading. Wait for
+  // that effect before callers open a popup, including same-page navigation.
+  await expect(page.getByRole('heading', { level: 1, name: item.name, exact: true })).toBeFocused();
 }

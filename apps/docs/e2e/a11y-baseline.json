@@ -14,5 +14,10 @@
   "TokenInput high_contrast": ["color-contrast :: .group\\/chip.max-w-full[data-disabled=\"\"] > .truncate"],
   "TokenInput light": ["color-contrast :: .group\\/chip.max-w-full[data-disabled=\"\"] > .truncate"],
   "Token light": ["color-contrast :: span[data-disabled=\"true\"] > .max-w-\\[120px\\].min-w-0.truncate"],
-  "Toolbar dark": ["color-contrast :: .text-destructive-text"]
+  "Toolbar dark": ["color-contrast :: .text-destructive-text"],
+  "DiffViewer navy-light": [
+    "color-contrast :: .grid-cols-2.grid[data-type=\"changed\"]:nth-child(11) > .bg-destructive\\/10.grid-cols-\\[auto_1\\.25rem_minmax\\(0\\,1fr\\)\\][data-type=\"removed\"] > .bg-destructive\\/15.text-end.tabular-nums"
+  ],
+  "Textarea navy-dark": ["target-size :: .justify-center"],
+  "Textarea navy-light": ["target-size :: .justify-center"]
 }
