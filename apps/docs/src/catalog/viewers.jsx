@@ -133,6 +133,24 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
               {kind === 'block' && it.apiFolder && <ApiReference folder={it.apiFolder} kind="block" level={4} />}
+              {kind === 'block' && it.id === 'file-upload-panel' && (
+                <>
+                  <Viewer
+                    kind="block"
+                    id="file-upload-panel--manual-form"
+                    title="File upload panel · controlled manual submission"
+                    file="../../../packages/blocks/src/forms/FileUploadPanel/examples/ManualForm.tsx"
+                    height={height}
+                  />
+                  <Viewer
+                    kind="block"
+                    id="file-upload-panel--auto-cancel"
+                    title="File upload panel · preprocessing, cancel and removal veto"
+                    file="../../../packages/blocks/src/forms/FileUploadPanel/examples/AutoCancel.tsx"
+                    height={height}
+                  />
+                </>
+              )}
               {kind === 'block' && it.id === 'site-footer' && (
                 <>
                   <p className="my-4 text-sm text-muted-foreground">

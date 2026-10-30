@@ -1,6 +1,6 @@
 import { Button, IconButton, Progress, cn, useI18n, useDropzone, validateFiles } from '@gntik-ai/ui';
 import { CircleAlert, FileText, RotateCcw, Upload, X } from '@gntik-ai/icons';
-import { useId, useRef, useState, type DragEvent } from 'react';
+import { useId, useRef, useState, useLayoutEffect, type DragEvent } from 'react';
 import { simulateUpload, uploadItems, type UploadItem } from './fixtures';
 
 export type { UploadItem, UploadStatus } from './fixtures';
@@ -24,6 +24,15 @@ export interface FileUploadPanelLabels {
   uploaded: (size: string) => string;
   retry: (name: string) => string;
   remove: (name: string) => string;
+  ready?: (size: string) => string;
+  cancel?: (name: string) => string;
+  cancelled?: (name: string) => string;
+  removeFailed?: (name: string) => string;
+}
+
+export interface UploadChange {
+  reason: 'add' | 'progress' | 'done' | 'error' | 'remove' | 'cancel';
+  ids: string[];
 }
 
 export interface FileUploadPanelProps {
@@ -35,9 +44,21 @@ export interface FileUploadPanelProps {
   multiple?: boolean;
   /** Initial list (e.g. files already uploaded). */
   defaultFiles?: UploadItem[];
+  /** Controlled list; changes are requested through onFilesChange. */
+  files?: UploadItem[];
+  onFilesChange?: (files: UploadItem[], change: UploadChange) => void;
+  /** Manual mode retains File objects for a later form submission. */
+  uploadMode?: 'auto' | 'manual';
+  /** Runs after built-in validation. False drops, a File replaces, and rejection adds a non-retryable error. */
+  beforeUpload?: (file: File) => boolean | File | void | Promise<boolean | File | void>;
   /** Uploads one file and reports progress (0–100). Defaults to a demo simulation. */
-  onUpload?: (file: File, onProgress: (pct: number) => void) => Promise<void>;
-  onRemove?: (item: UploadItem) => void;
+  onUpload?: (
+    file: File,
+    onProgress: (pct: number) => void,
+    context: { signal: AbortSignal; id: string },
+  ) => Promise<void>;
+  /** Called before removal; false or rejection keeps the row. */
+  onRemove?: (item: UploadItem) => void | boolean | Promise<void | boolean>;
   /** Visible label of the panel. */
   label?: string;
   /** Hint under the drop text; defaults to the accepted types and size limit. */
@@ -59,6 +80,10 @@ export function FileUploadPanel({
   maxSize = 25_000_000,
   multiple = true,
   defaultFiles = uploadItems,
+  files,
+  onFilesChange,
+  uploadMode = 'auto',
+  beforeUpload,
   onUpload = simulateUpload,
   onRemove,
   label: labelProp,
@@ -71,9 +96,35 @@ export function FileUploadPanel({
   const id = useId();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [sources, setSources] = useState<Record<string, File>>({});
-  const [items, setItems] = useState<UploadItem[]>(defaultFiles);
+  const [internalItems, setItems] = useState<UploadItem[]>(defaultFiles);
+  const items = files ?? internalItems;
+  const current = useRef(items);
+  const mounted = useRef(false);
+  const attempts = useRef(new Map<string, AbortController>());
+  useLayoutEffect(() => {
+    mounted.current = true;
+    const active = attempts.current;
+    return () => {
+      mounted.current = false;
+      for (const controller of active.values()) controller.abort();
+      active.clear();
+    };
+  }, []);
+  useLayoutEffect(() => {
+    current.current = items;
+  }, [items]);
+  const changeItems = (next: UploadItem[], reason: UploadChange['reason'], ids: string[]) => {
+    if (files === undefined) {
+      current.current = next;
+      setItems(next);
+    }
+    onFilesChange?.(next, { reason, ids });
+  };
   const { rootProps, dragState } = useDropzone({ accept, maxSize, disabled, activateOnClick: false });
   const dragging = dragState !== 'idle';
+  const [removing, setRemoving] = useState<Set<string>>(new Set());
+  const removalRequests = useRef(new Set<string>());
+  const [preparing, setPreparing] = useState(0);
   const [announcement, setAnnouncement] = useState('');
   const hintText =
     hint ??
@@ -92,77 +143,183 @@ export function FileUploadPanel({
       size: formatBytes(maxSize),
     });
 
-  const patch = (itemId: string, next: Partial<UploadItem>) =>
-    setItems((list) => list.map((x) => (x.id === itemId ? { ...x, ...next } : x)));
+  const patch = (itemId: string, next: Partial<UploadItem>, reason: UploadChange['reason']) =>
+    changeItems(
+      current.current.map((x) => (x.id === itemId ? { ...x, ...next } : x)),
+      reason,
+      [itemId],
+    );
 
   const start = (itemId: string, file: File) => {
-    patch(itemId, { status: 'uploading', progress: 0, error: undefined });
-    onUpload(file, (pct) => patch(itemId, { progress: pct })).then(
-      () => {
-        patch(itemId, { status: 'done', progress: 100 });
+    attempts.current.get(itemId)?.abort();
+    const controller = new AbortController();
+    attempts.current.set(itemId, controller);
+    const active = () => mounted.current && !controller.signal.aborted && attempts.current.get(itemId) === controller;
+    let previous = 0;
+    const failed = (error: unknown) => {
+      if (!active()) return;
+      attempts.current.delete(itemId);
+      patch(
+        itemId,
+        { status: 'error', error: error instanceof Error ? error.message : (labels?.failed ?? t('upload.failed')) },
+        'error',
+      );
+      setAnnouncement(labels?.error?.(file.name) ?? t('upload.error', { name: file.name }));
+    };
+    try {
+      void onUpload(
+        file,
+        (pct) => {
+          if (!active()) return;
+          const progress = Math.floor(pct);
+          // Keep the existing uncontrolled display precise when there is no list observer.
+          const legacyProgress = files === undefined && onFilesChange === undefined;
+          if (previous === progress && !legacyProgress) return;
+          previous = progress;
+          patch(itemId, { progress: legacyProgress ? pct : progress }, 'progress');
+        },
+        { signal: controller.signal, id: itemId },
+      ).then(() => {
+        if (!active()) return;
+        attempts.current.delete(itemId);
+        patch(itemId, { status: 'done', progress: 100 }, 'done');
         setAnnouncement(labels?.done?.(file.name) ?? t('upload.done', { name: file.name }));
-      },
-      (e: unknown) => {
-        patch(itemId, {
-          status: 'error',
-          error: e instanceof Error ? e.message : (labels?.failed ?? t('upload.failed')),
-        });
-        setAnnouncement(labels?.error?.(file.name) ?? t('upload.error', { name: file.name }));
-      },
-    );
+      }, failed);
+    } catch (error) {
+      failed(error);
+    }
   };
 
   const addFiles = (list: FileList | File[]) => {
-    const files = Array.from(list).slice(0, multiple ? undefined : 1);
-    const { rejected: rejectedFiles } = validateFiles(files, { accept, maxSize });
+    const picked = Array.from(list).slice(0, multiple ? undefined : 1);
+    const { rejected: rejectedFiles } = validateFiles(picked, { accept, maxSize });
     const reasons = new Map(rejectedFiles.map((item) => [item.file, item.reasons]));
-    const added: UploadItem[] = [];
-    const toStart: Array<[string, File]> = [];
-    const kept: Record<string, File> = {};
-    for (const file of files) {
-      const itemId = nextId();
-      const error = reasons.get(file)?.includes('type')
+    type Prepared = { file: File; error?: string } | null;
+    const prepared: Prepared[] = picked.map((file) => ({
+      file,
+      error: reasons.get(file)?.includes('type')
         ? (labels?.typeRejected ?? t('upload.typeRejected'))
         : reasons.get(file)?.includes('size')
           ? (labels?.tooLarge?.(formatBytes(maxSize)) ?? t('upload.tooLarge', { size: formatBytes(maxSize) }))
-          : undefined;
-      added.push({
-        id: itemId,
-        name: file.name,
-        size: file.size,
-        progress: 0,
-        status: error ? 'error' : 'uploading',
-        error,
-      });
-      if (!error) {
-        kept[itemId] = file;
-        toStart.push([itemId, file]);
+          : undefined,
+    }));
+    const append = (results: Prepared[]) => {
+      if (!mounted.current) return;
+      const added: UploadItem[] = [];
+      const toStart: Array<[string, File]> = [];
+      const kept: Record<string, File> = {};
+      for (const result of results) {
+        if (!result) continue;
+        const { file, error } = result;
+        const itemId = nextId();
+        added.push({
+          id: itemId,
+          file,
+          name: file.name,
+          size: file.size,
+          progress: 0,
+          status: error !== undefined ? 'error' : uploadMode === 'manual' ? 'pending' : 'uploading',
+          error,
+        });
+        if (error === undefined) {
+          kept[itemId] = file;
+          if (uploadMode === 'auto') toStart.push([itemId, file]);
+        }
       }
+      if (!added.length) return;
+      changeItems(
+        multiple ? [...current.current, ...added] : added,
+        'add',
+        added.map((item) => item.id),
+      );
+      setSources((current) => ({ ...current, ...kept }));
+      const rejected = added.filter((a) => a.status === 'error').length;
+      setAnnouncement(
+        [
+          labels?.added?.(added.length - rejected) ?? t('upload.added', { count: added.length - rejected }),
+          rejected ? (labels?.rejected?.(rejected) ?? t('upload.rejected', { count: rejected })) : '',
+        ]
+          .filter(Boolean)
+          .join(' '),
+      );
+      for (const [itemId, file] of toStart) start(itemId, file);
+    };
+    if (!beforeUpload) {
+      append(prepared);
+      return;
     }
-    setItems((current) => (multiple ? [...current, ...added] : added));
-    setSources((current) => ({ ...current, ...kept }));
-    const rejected = added.filter((a) => a.error).length;
-    setAnnouncement(
-      [
-        labels?.added?.(added.length - rejected) ?? t('upload.added', { count: added.length - rejected }),
-        rejected ? (labels?.rejected?.(rejected) ?? t('upload.rejected', { count: rejected })) : '',
-      ]
-        .filter(Boolean)
-        .join(' '),
+    setPreparing((count) => count + 1);
+    void Promise.all(
+      prepared.map(async (result): Promise<Prepared> => {
+        if (!result || result.error !== undefined) return result;
+        try {
+          const transformed = await beforeUpload(result.file);
+          return transformed === false ? null : { file: transformed instanceof File ? transformed : result.file };
+        } catch (error) {
+          return {
+            file: result.file,
+            error: error instanceof Error ? error.message : (labels?.failed ?? t('upload.failed')),
+          };
+        }
+      }),
+    ).then((results) => {
+      if (!mounted.current) return;
+      setPreparing((count) => count - 1);
+      append(results);
+    });
+  };
+
+  const completeRemoval = (item: UploadItem) => {
+    if (!mounted.current) return;
+    setSources((current) => Object.fromEntries(Object.entries(current).filter(([k]) => k !== item.id)));
+    const cancelling = item.status === 'uploading' && item.file !== undefined;
+    attempts.current.get(item.id)?.abort();
+    attempts.current.delete(item.id);
+    changeItems(
+      current.current.filter((x) => x.id !== item.id),
+      cancelling ? 'cancel' : 'remove',
+      [item.id],
     );
-    for (const [itemId, file] of toStart) start(itemId, file);
+    setAnnouncement(
+      cancelling
+        ? (labels?.cancelled?.(item.name) ?? t('upload.cancelled', { name: item.name }))
+        : (labels?.removed?.(item.name) ?? t('upload.removed', { name: item.name })),
+    );
   };
 
   const remove = (item: UploadItem) => {
-    setSources((current) => Object.fromEntries(Object.entries(current).filter(([k]) => k !== item.id)));
-    setItems((list) => list.filter((x) => x.id !== item.id));
-    setAnnouncement(labels?.removed?.(item.name) ?? t('upload.removed', { name: item.name }));
-    onRemove?.(item);
+    if (removalRequests.current.has(item.id)) return;
+    const failed = () => {
+      if (mounted.current)
+        setAnnouncement(labels?.removeFailed?.(item.name) ?? t('upload.removeFailed', { name: item.name }));
+    };
+    try {
+      const result = onRemove?.(item);
+      if (result && typeof result === 'object' && 'then' in result) {
+        removalRequests.current.add(item.id);
+        setRemoving(new Set(removalRequests.current));
+        void result
+          .then((allowed) => {
+            if (allowed !== false) completeRemoval(item);
+          }, failed)
+          .finally(() => {
+            removalRequests.current.delete(item.id);
+            if (mounted.current) setRemoving(new Set(removalRequests.current));
+          });
+      } else if (result !== false) completeRemoval(item);
+    } catch {
+      failed();
+    }
   };
 
   const retryFor = (itemId: string) => {
     const file = sources[itemId];
-    return file ? () => start(itemId, file) : undefined;
+    return file
+      ? () => {
+          patch(itemId, { status: 'uploading', progress: 0, error: undefined }, 'progress');
+          start(itemId, file);
+        }
+      : undefined;
   };
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
@@ -172,7 +329,12 @@ export function FileUploadPanel({
   };
 
   return (
-    <div role="group" aria-labelledby={`${id}-label`} className={cn('w-full', className)}>
+    <div
+      role="group"
+      aria-busy={preparing > 0 || undefined}
+      aria-labelledby={`${id}-label`}
+      className={cn('w-full', className)}
+    >
       <div id={`${id}-label`} className="mb-2 text-[13px] font-medium text-foreground">
         {label}
       </div>
@@ -225,6 +387,7 @@ export function FileUploadPanel({
               key={item.id}
               labels={labels}
               item={item}
+              removing={removing.has(item.id)}
               onRemove={() => remove(item)}
               onRetry={retryFor(item.id)}
             />
@@ -242,16 +405,21 @@ function FileRow({
   item,
   onRemove,
   onRetry,
+  removing,
   labels,
 }: {
   item: UploadItem;
   onRemove: () => void;
   onRetry?: () => void;
+  removing: boolean;
   labels?: Partial<FileUploadPanelLabels>;
 }) {
   const { t, formatBytes } = useI18n();
   const err = item.status === 'error';
   const done = item.status === 'done';
+  // Pending rows use binary sizing with the compact labels required by the deferred-upload API.
+  const readySize =
+    item.status === 'pending' ? formatBytes(item.size, { base: 1024 }).replace(/([KMGTPE])iB\b/, '$1B') : '';
   return (
     <li className="flex items-center gap-3 rounded-lg border border-border bg-card px-3.5 py-2.5 shadow-sm">
       <span
@@ -280,7 +448,10 @@ function FileRow({
             {err
               ? (labels?.notUploaded?.(item.error ?? labels?.failed ?? t('upload.failed')) ??
                 t('upload.notUploaded', { error: item.error ?? labels?.failed ?? t('upload.failed') }))
-              : (labels?.uploaded?.(formatBytes(item.size)) ?? t('upload.uploaded', { size: formatBytes(item.size) }))}
+              : item.status === 'pending'
+                ? (labels?.ready?.(readySize) ?? t('upload.ready', { size: readySize }))
+                : (labels?.uploaded?.(formatBytes(item.size)) ??
+                  t('upload.uploaded', { size: formatBytes(item.size) }))}
           </div>
         )}
       </div>
@@ -300,8 +471,13 @@ function FileRow({
       <IconButton
         icon={X}
         size="sm"
-        label={labels?.remove?.(item.name) ?? t('common.removeItem', { label: item.name })}
+        label={
+          item.status === 'uploading' && item.file !== undefined
+            ? (labels?.cancel?.(item.name) ?? t('upload.cancel', { name: item.name }))
+            : (labels?.remove?.(item.name) ?? t('common.removeItem', { label: item.name }))
+        }
         onClick={onRemove}
+        disabled={removing}
       />
     </li>
   );
