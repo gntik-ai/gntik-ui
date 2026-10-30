@@ -47,6 +47,9 @@ for (const theme of ['dark', '', 'high_contrast']) {
       });
       expect(closed).toEqual([]);
       await trigger.click();
+      // Base UI 1.9 sets aria-controls only once the popup is open.
+      await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+      await expect(trigger).toHaveAttribute('aria-controls', /.+/);
       const popup = page.locator(`[id="${await trigger.getAttribute('aria-controls')}"]`);
       const input = popup.getByRole('combobox');
       await expect(input).toBeFocused();
