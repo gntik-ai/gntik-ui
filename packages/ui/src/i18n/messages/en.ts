@@ -247,12 +247,13 @@ export const en = {
   'common.progress': 'Progress',
   'common.main': 'Main',
   'common.settings': 'Settings',
-  'labelPrecedence.visible': 'Email me',
-  'labelPrecedence.accessible': 'Email me about updates',
   'common.notifications': 'Notifications',
   'common.unread': 'Unread:',
   'common.results': '{count, plural, one {# result} other {# results}}',
   'common.trend': 'Trend',
+  // Accessible label examples
+  'labelPrecedence.visible': 'Email me',
+  'labelPrecedence.accessible': 'Email me about updates',
   // Skip links and landmarks
   'skip.main': 'Skip to main content',
   'skip.content': 'Skip to content',

@@ -2,7 +2,7 @@ import { useI18n } from '../../../i18n/I18nProvider';
 import { Radio, RadioGroup } from '../RadioGroup';
 
 /** An explicit accessible name includes the visible label's words. */
-export default function RadioLabelPrecedence() {
+export default function RadioGroupWithAccessibleLabel() {
   const { t } = useI18n();
   return (
     <RadioGroup aria-label={t('common.notifications')}>

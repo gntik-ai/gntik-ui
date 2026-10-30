@@ -88,6 +88,7 @@ describe('Toast actions', () => {
   it('does not auto-dismiss while an action has focus, and resumes after', async () => {
     vi.useFakeTimers();
     try {
+      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
       render(
         <ToastProvider>
           <Trigger options={{ title: 'Saved draft', timeout: 150, action: { label: 'Open', onClick: () => {} } }} />
@@ -100,7 +101,17 @@ describe('Toast actions', () => {
       fireEvent.keyDown(document.body, { key: 'F6' });
       expect(region).toHaveFocus();
       const action = screen.getByRole('button', { name: 'Open' });
-      act(() => action.focus());
+      await act(async () => {
+        const tab = user.tab();
+        await vi.runAllTimersAsync();
+        await tab;
+      });
+      expect(screen.getByRole('dialog', { name: 'Saved draft' })).toHaveFocus();
+      await act(async () => {
+        const tab = user.tab();
+        await vi.runAllTimersAsync();
+        await tab;
+      });
       expect(action).toHaveFocus();
       await act(async () => vi.advanceTimersByTime(400));
       expect(screen.getByRole('dialog', { name: 'Saved draft' })).toBeInTheDocument();

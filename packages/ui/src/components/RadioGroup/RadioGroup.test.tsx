@@ -4,7 +4,7 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { Radio, RadioGroup } from './RadioGroup';
 import RadioGroupCards from './examples/RadioGroupCards';
 import RadioGroupList from './examples/RadioGroupList';
-import RadioLabelPrecedence from './examples/RadioLabelPrecedence';
+import RadioGroupWithAccessibleLabel from './examples/RadioGroupWithAccessibleLabel';
 
 function Sizes() {
   return (
@@ -22,7 +22,7 @@ function Sizes() {
 
 describe('RadioGroup', () => {
   it('shows label precedence with consistent visible and accessible labels in the live example', async () => {
-    render(<RadioLabelPrecedence />);
+    render(<RadioGroupWithAccessibleLabel />);
     expect(screen.getByRole('radio', { name: 'Email me' })).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Email me about updates' })).toBeInTheDocument();
     await expectNoAxeViolations();
