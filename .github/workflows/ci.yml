@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - run: corepack enable
@@ -46,7 +46,7 @@ jobs:
   # job builds what it needs, and a red PR then reports every failing suite in one cycle.
   a11y:
     name: a11y (${{ matrix.shard }}/3)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -65,7 +65,7 @@ jobs:
         run: pnpm --filter @gntik-ai/docs exec playwright test a11y --shard=${{ matrix.shard }}/3
 
   visual:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Baselines are recorded on this runner image (see visual-update below): fonts and
     # antialiasing differ between machines, so CI is the reference renderer.
     continue-on-error: true
@@ -94,7 +94,7 @@ jobs:
   visual-update:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
