@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { I18nProvider } from '@gntik-ai/ui';
+import { useLayoutEffect } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { expectNoAxeViolations } from '../test/a11y';
 import ToolCallCardStates from './examples/ToolCallCardStates';
@@ -364,4 +365,38 @@ describe('ToolCallCard approval', () => {
     expect(composer).toHaveFocus();
     expect(screen.getAllByText('delete_project needs your approval')).toHaveLength(1);
   });
+
+  it.each(['running', 'awaiting-approval'] as const)(
+    'commits an empty live region before announcing approval from %s',
+    (initialStatus) => {
+      const commits: Array<{ region: HTMLElement | null; text: string | null }> = [];
+      function ObservedCard({ status }: { status: 'running' | 'awaiting-approval' }) {
+        // Observe the public DOM after commit, before passive effects can populate the region.
+        useLayoutEffect(() => {
+          const region = screen.queryByRole('status');
+          commits.push({ region, text: region?.textContent ?? null });
+        }, [status]);
+        return <ToolCallCard name="delete_project" status={status} />;
+      }
+
+      const { rerender } = render(<ObservedCard status={initialStatus} />);
+      if (initialStatus === 'running') {
+        expect(commits.at(-1)?.region).toBeNull();
+        rerender(<ObservedCard status="awaiting-approval" />);
+      }
+      const firstRegion = screen.getByRole('status');
+      expect(commits.at(-1)?.region).toBe(firstRegion);
+      expect(commits.at(-1)?.text).toBe('');
+      expect(firstRegion).toHaveTextContent('delete_project needs your approval');
+
+      rerender(<ObservedCard status="running" />);
+      expect(screen.queryByRole('status')).not.toBeInTheDocument();
+      rerender(<ObservedCard status="awaiting-approval" />);
+      const nextRegion = screen.getByRole('status');
+      expect(nextRegion).not.toBe(firstRegion);
+      expect(commits.at(-1)?.region).toBe(nextRegion);
+      expect(commits.at(-1)?.text).toBe('');
+      expect(nextRegion).toHaveTextContent('delete_project needs your approval');
+    },
+  );
 });

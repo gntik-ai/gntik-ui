@@ -1,6 +1,6 @@
 import { Collapsible, CollapsiblePanel, CollapsibleTrigger, Spinner, StatusTag, cn } from '@gntik-ai/ui';
 import { Ban, CircleAlert, Hand, Wrench } from 'lucide-react';
-import { useState, type ReactNode, type Ref } from 'react';
+import { useEffect, useState, type ReactNode, type Ref } from 'react';
 import { useChatI18n, type ChatMessageKey } from '../utils/i18n';
 import { formatDuration } from '../utils/format';
 import { JsonView } from './JsonView';
@@ -85,16 +85,21 @@ export function ToolCallCard({
   const awaiting = status === 'awaiting-approval';
   const [expanded, setExpanded] = useState(awaiting || (defaultOpen ?? (status === 'failed' || status === 'denied')));
   const [previousStatus, setPreviousStatus] = useState(status);
-  const [announcement, setAnnouncement] = useState(awaiting ? tc('toolCall.approvalRequested', { name }) : '');
+  const [announcement, setAnnouncement] = useState('');
   if (previousStatus !== status) {
     setPreviousStatus(status);
+    setAnnouncement('');
     if (awaiting) {
       setExpanded(true);
-      setAnnouncement(tc('toolCall.approvalRequested', { name }));
-    } else {
-      setAnnouncement('');
     }
   }
+  useEffect(() => {
+    if (awaiting && !announcement) {
+      // Commit the live region empty before inserting its text, once per approval entry.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setAnnouncement(tc('toolCall.approvalRequested', { name }));
+    }
+  }, [awaiting, announcement, name, tc]);
   const failed = status === 'failed';
   return (
     <Collapsible

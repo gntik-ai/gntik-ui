@@ -14,4 +14,6 @@
 - [x] Add one changeset for chat minor and ui minor, noting the widened ToolCallStatus union.
 - [x] Regenerate registry artifacts and run bounded repository checks and strict OpenSpec validation.
 
-The final chat run passed 356 tests (one existing skip), including all 28 ToolCallCard tests. The remaining library suites passed separately. The combined library test command cannot complete offline: the untouched tokens mirror test falls back to packing version 0.3.0 but tries to read a 0.2.1 tarball (ENOENT). PR CI must rerun that integration check with network access. Browser accessibility/contrast and visual suites, app builds and MCP/evals tests run in PR CI under worker policy.
+The announcement regression was reproduced with `pnpm --filter @gntik-ai/chat test src/ToolCallCard/ToolCallCard.test.tsx`: both initial approval and entry from running committed the live region with its text already present. The regression tests observe the public DOM before passive effects, verifying an empty region first and the same node receiving the message afterward, including on re-entry. The fix defers the announcement to a post-commit effect and preserves the legacy DOM and focus behavior.
+
+The combined library test command cannot complete offline: the untouched tokens mirror test falls back to packing version 0.3.0 but tries to read a 0.2.1 tarball (ENOENT). PR CI must rerun that integration check with network access. Browser accessibility/contrast and visual suites, app builds and MCP/evals tests run in PR CI under worker policy.
