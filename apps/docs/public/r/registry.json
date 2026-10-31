@@ -16733,7 +16733,7 @@
       "name": "shell-sidebar",
       "type": "registry:block",
       "title": "Sidebar shell",
-      "description": "Console starter: app sidebar, topbar and an empty Page with a title, description and a first-run empty state.",
+      "description": "Console starter: app sidebar, topbar and an empty Page. Optional tenant selection, workspace context, a named busy region, account-menu content and a brand slot are shared through ConsoleShell.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",

@@ -23,6 +23,9 @@ const layoutExamples = kit.items
   });
 
 const cases = [
+  ...['tenants', 'platform-wide', 'context-region', 'user-menu-children', 'brand'].flatMap((example) =>
+    ['dark', 'light', 'high_contrast'].map((theme) => ({ kind: 'template', id: `shell-sidebar--${example}`, theme })),
+  ),
   ...[
     { kind: 'block', id: 'flow-builder--controlled-graph' },
     { kind: 'block', id: 'comment-thread--rendered-body' },
@@ -107,6 +110,46 @@ for (const { kind, id, theme } of cases) {
   test(name, async ({ page }, testInfo) => {
     await page.goto(`/preview.html?kind=${kind}&id=${encodeURIComponent(id)}&theme=${theme}`);
     await page.locator('#root > *').first().waitFor();
+    if (id === 'shell-sidebar--tenants') {
+      const tenant = page.getByRole('combobox', { name: 'Organization', exact: true });
+      await tenant.focus();
+      await page.keyboard.press('Tab');
+      await expect(page.getByRole('button', { name: 'Clear Organization', exact: true })).toBeFocused();
+      await page.keyboard.press('Tab');
+      await expect(page.getByRole('combobox', { name: /Team spaces/ })).toBeFocused();
+      await page.keyboard.press('Tab');
+      await expect(page.getByRole('navigation', { name: 'Main', exact: true }).getByRole('link').first()).toBeFocused();
+      await tenant.click();
+      await expect(page.getByRole('listbox', { name: 'Organization', exact: true })).toBeVisible();
+    }
+    if (id === 'shell-sidebar--platform-wide') {
+      await expect(page.getByRole('complementary').getByText('Platform console', { exact: true })).toBeVisible();
+      await expect(page.getByRole('combobox')).toHaveCount(0);
+      await expect(page.getByRole('complementary').getByRole('region')).toHaveCount(0);
+    }
+    if (id === 'shell-sidebar--context-region') {
+      const region = page.getByRole('region', { name: 'Active context' });
+      await expect(region).toHaveAttribute('aria-busy', 'true');
+      await page.getByRole('button', { name: 'Finish context update' }).click();
+      await expect(region).toHaveAttribute('aria-busy', 'false');
+      await expect(region.getByRole('status')).toHaveText('Context ready');
+    }
+    if (id === 'shell-sidebar--user-menu-children') {
+      await page
+        .getByRole('complementary')
+        .getByRole('button', { name: /Dana Whitfield/ })
+        .click();
+      const menu = page.getByRole('menu');
+      await expect(menu.getByRole('menuitem', { name: 'Account settings' })).toBeVisible();
+      await expect(menu.getByRole('menuitemradio', { name: 'English' })).toBeVisible();
+    }
+    if (id === 'shell-sidebar--brand') {
+      await page.setViewportSize({ width: 390, height: 844 });
+      const topbar = page.getByRole('banner').filter({ has: page.getByRole('button', { name: 'Open navigation' }) });
+      await expect(topbar.getByText('Console identity', { exact: true })).toBeVisible();
+      await page.getByRole('button', { name: 'Open navigation' }).click();
+      await expect(page.getByRole('dialog').getByText('Console identity', { exact: true })).toBeVisible();
+    }
     if (id.startsWith('cursor-pager-footer')) {
       const nav = page.getByRole('navigation', { name: 'Pagination' });
       await expect(nav).toBeVisible();

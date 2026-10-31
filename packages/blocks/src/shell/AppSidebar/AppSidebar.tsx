@@ -4,6 +4,7 @@ import {
   Logo,
   Meter,
   NavList,
+  SimpleSelect,
   UserMenu,
   WorkspaceSwitcher,
   cn,
@@ -13,7 +14,7 @@ import {
   type UserMenuUser,
   type Workspace,
 } from '@gntik-ai/ui';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import {
   appSidebarNavGroups,
   appSidebarUsage,
@@ -30,6 +31,23 @@ export interface AppSidebarHeaderProps {
   currentWorkspaceId?: string;
   onWorkspaceChange?: (workspace: Workspace) => void;
   onCreateWorkspace?: () => void;
+  /** Omit to hide the tenant picker. Clearing selects the platform-wide context. */
+  tenants?: { id: string; name: string }[];
+  currentTenantId?: string | null;
+  onTenantSelect?: (id: string | null) => void;
+  tenantLabel?: string;
+  tenantEmptyText?: string;
+  workspaceLabel?: string;
+  workspaceEmptyText?: string;
+  /** Platform-wide mode: hide all context controls and status. */
+  hideWorkspaceContext?: boolean;
+  /** Opt into a named section around the controls and status. */
+  contextRegionLabel?: string;
+  /** Consumer-owned loading state; reset when the context finishes changing. */
+  contextBusy?: boolean;
+  contextStatus?: ReactNode;
+  /** Product-owned identity, rendered in place of the default logo. */
+  brand?: ReactNode;
   className?: string;
 }
 
@@ -40,23 +58,79 @@ export function AppSidebarHeader({
   currentWorkspaceId,
   onWorkspaceChange,
   onCreateWorkspace,
+  tenants,
+  currentTenantId,
+  onTenantSelect,
+  tenantLabel = 'Tenant',
+  tenantEmptyText = 'No tenants',
+  workspaceLabel,
+  workspaceEmptyText,
+  hideWorkspaceContext,
+  contextRegionLabel,
+  contextBusy,
+  contextStatus,
+  brand,
   className,
 }: AppSidebarHeaderProps) {
   const [current, setCurrent] = useState(currentWorkspaceId ?? workspaces?.[0]?.id ?? '');
   const currentId = currentWorkspaceId ?? current;
-  if (collapsed) return <Logo size={26} className={className} />;
-  if (!workspaces || workspaces.length === 0) return <Logo size={24} wordmark className={cn('px-1', className)} />;
+  if (collapsed) return brand ?? <Logo size={26} className={className} />;
+  if (hideWorkspaceContext) return brand ?? <Logo size={24} wordmark className={cn('px-1', className)} />;
+  // Stack the existing slot parent only for opted-in content, without adding a wrapper.
+  const stackParent = '[:has(>_&)]:flex-col [:has(>_&)]:items-stretch [:has(>_&)]:gap-2';
+  const workspaceControl =
+    !workspaces || workspaces.length === 0 ? (
+      brand == null && (
+        <Logo size={24} wordmark className={cn('px-1', contextStatus != null && stackParent, className)} />
+      )
+    ) : (
+      <WorkspaceSwitcher
+        label={workspaceLabel}
+        emptyText={workspaceEmptyText}
+        className={cn('w-full', (brand != null || contextStatus != null) && stackParent, className)}
+        workspaces={workspaces}
+        currentId={currentId}
+        onCreate={onCreateWorkspace}
+        onSelect={(w) => {
+          setCurrent(w.id);
+          onWorkspaceChange?.(w);
+        }}
+      />
+    );
+  // Preserve the original tree path as well as its DOM: Base UI derives IDs from it during SSR.
+  if (!tenants && brand == null && !contextRegionLabel && contextStatus == null) return workspaceControl;
+  const controls = (
+    <>
+      {tenants && (
+        <SimpleSelect
+          items={tenants.map(({ id, name }) => ({ value: id, label: name }))}
+          value={currentTenantId}
+          onValueChange={(id) => onTenantSelect?.(id)}
+          aria-label={tenantLabel}
+          placeholder={tenants.length === 0 ? tenantEmptyText : 'Select tenant'}
+          clearable
+          className="w-full [&+button]:min-h-6 [&+button]:min-w-6 [:has(>_*_>_&)]:flex-col [:has(>_*_>_&)]:items-stretch [:has(>_*_>_&)]:gap-2"
+        />
+      )}
+      {workspaceControl}
+      {contextStatus}
+    </>
+  );
   return (
-    <WorkspaceSwitcher
-      className={cn('w-full', className)}
-      workspaces={workspaces}
-      currentId={currentId}
-      onCreate={onCreateWorkspace}
-      onSelect={(w) => {
-        setCurrent(w.id);
-        onWorkspaceChange?.(w);
-      }}
-    />
+    <>
+      {brand}
+      {contextRegionLabel ? (
+        <section
+          aria-label={contextRegionLabel}
+          aria-busy={contextBusy}
+          className={cn('flex w-full min-w-0 flex-col gap-2', brand != null && stackParent)}
+        >
+          {controls}
+        </section>
+      ) : (
+        controls
+      )}
+    </>
   );
 }
 
@@ -101,6 +175,8 @@ export interface AppSidebarFooterProps {
   /** Signed-in user; `null` hides the user menu. */
   user?: UserMenuUser | null;
   userMenuItems?: UserMenuEntry[];
+  /** Extra content inside the account menu popup, before sign out. */
+  userMenuChildren?: ReactNode;
   onSignOut?: () => void;
   className?: string;
 }
@@ -113,6 +189,7 @@ export function AppSidebarFooter({
   helpLabel = 'Help & docs',
   user = appSidebarUser,
   userMenuItems,
+  userMenuChildren,
   onSignOut,
   className,
 }: AppSidebarFooterProps) {
@@ -152,7 +229,9 @@ export function AppSidebarFooter({
           onSignOut={onSignOut}
           showName={!collapsed}
           className={collapsed ? undefined : 'w-full justify-start'}
-        />
+        >
+          {userMenuChildren}
+        </UserMenu>
       )}
     </div>
   );
@@ -174,10 +253,6 @@ export interface AppSidebarProps
  */
 export function AppSidebar({
   collapsed = false,
-  workspaces,
-  currentWorkspaceId,
-  onWorkspaceChange,
-  onCreateWorkspace,
   navGroups,
   navLabel,
   currentHref,
@@ -187,19 +262,15 @@ export function AppSidebar({
   helpLabel,
   user,
   userMenuItems,
+  userMenuChildren,
   onSignOut,
   className,
+  ...headerProps
 }: AppSidebarProps) {
   return (
     <div className={cn('flex h-full min-h-0 flex-col bg-chrome', collapsed ? 'w-16' : 'w-[248px]', className)}>
       <div className={cn('flex shrink-0 items-center pt-4 pb-3', collapsed ? 'justify-center px-2' : 'px-3')}>
-        <AppSidebarHeader
-          collapsed={collapsed}
-          workspaces={workspaces}
-          currentWorkspaceId={currentWorkspaceId}
-          onWorkspaceChange={onWorkspaceChange}
-          onCreateWorkspace={onCreateWorkspace}
-        />
+        <AppSidebarHeader collapsed={collapsed} {...headerProps} />
       </div>
       <div className={cn('min-h-0 flex-1 overflow-y-auto pt-1 pb-3', collapsed ? 'px-2' : 'px-3')}>
         <AppSidebarNav
@@ -218,6 +289,7 @@ export function AppSidebar({
           helpLabel={helpLabel}
           user={user}
           userMenuItems={userMenuItems}
+          userMenuChildren={userMenuChildren}
           onSignOut={onSignOut}
         />
       </div>

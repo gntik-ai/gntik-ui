@@ -10069,7 +10069,7 @@ Application sidebar: workspace switcher (or logo) header, NavList body with icon
 
 - Package: `@gntik-ai/blocks` · export `AppSidebar` · group shell · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/shell/AppSidebar/block.meta.ts
-- Composes: WorkspaceSwitcher, Logo, NavList, Meter, Link, UserMenu
+- Composes: SimpleSelect, WorkspaceSwitcher, Logo, NavList, Meter, Link, UserMenu
 - Preview: /preview.html?kind=block&id=app-sidebar
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add app-sidebar`
 
@@ -11954,7 +11954,7 @@ export default function Route() {
 
 ### Sidebar shell (`shell-sidebar`)
 
-Console starter: app sidebar, topbar and an empty Page with a title, description and a first-run empty state.
+Console starter: app sidebar, topbar and an empty Page. Optional tenant selection, workspace context, a named busy region, account-menu content and a brand slot are shared through ConsoleShell.
 
 - Package: `@gntik-ai/templates` · export `ShellSidebarPage` · group Shells · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/shell-sidebar/template.meta.ts

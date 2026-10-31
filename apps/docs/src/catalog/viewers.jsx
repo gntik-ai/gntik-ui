@@ -132,6 +132,34 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                 </div>
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'template' && it.id === 'shell-sidebar' && (
+                <>
+                  <p className="my-4 max-w-3xl text-[13px] leading-6 text-muted-foreground">
+                    Pass optional context and brand props through shell. Tenant selection comes before workspace
+                    selection; clear the tenant to select the platform context. The rail hides context controls; expand
+                    it or open the mobile drawer to switch tenants. contextRegionLabel adds a named section; without it,
+                    contextStatus follows the controls without a wrapper. The consumer owns contextBusy and must reset
+                    it after loading. hideWorkspaceContext hides controls and status while keeping the brand.
+                    userMenuChildren extends the footer menu; usage=null and helpHref="" hide usage and help.
+                  </p>
+                  {[
+                    ['tenants', 'Tenants'],
+                    ['platform-wide', 'PlatformWide'],
+                    ['context-region', 'ContextRegion'],
+                    ['user-menu-children', 'UserMenuChildren'],
+                    ['brand', 'Brand'],
+                  ].map(([id, example]) => (
+                    <Viewer
+                      key={id}
+                      kind="template"
+                      id={`shell-sidebar--${id}`}
+                      title={`${it.title} · ${titleCase(id)}`}
+                      file={`../../../packages/templates/src/shell-sidebar/examples/${example}.tsx`}
+                      height={height}
+                    />
+                  ))}
+                </>
+              )}
               {kind === 'block' && it.apiFolder && <ApiReference folder={it.apiFolder} kind="block" level={4} />}
               {kind === 'block' && it.id === 'file-upload-panel' && (
                 <>
