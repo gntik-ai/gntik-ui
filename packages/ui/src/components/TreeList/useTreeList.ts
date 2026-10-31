@@ -1,10 +1,26 @@
 import { useMemo, useRef, useState } from 'react';
-import { allIds, flattenVisible, isBranch, type ChildState, type TreeNode } from './tree-model';
+import {
+  allIds,
+  flattenVisible,
+  flattenFiltered,
+  filterTree,
+  isBranch,
+  type ChildState,
+  type TreeNode,
+  type TreeMatcher,
+} from './tree-model';
+
+import { matchText } from '../../utils/match-text';
+
+const defaultMatcher: TreeMatcher = (node, query) => matchText(node.label, query);
 
 export type TreeSelectionMode = 'none' | 'single' | 'multiple';
 
 export interface UseTreeListOptions {
   nodes: TreeNode[];
+  /** Search loaded labels. Matching branches retain their whole subtree. Debounce large trees. */
+  filter?: string;
+  filterNode?: TreeMatcher;
   expanded?: string[];
   defaultExpanded?: string[];
   onExpandedChange?: (ids: string[]) => void;
@@ -18,6 +34,8 @@ export interface UseTreeListOptions {
 /** State, async loading and selection for TreeList (controlled or uncontrolled). */
 export function useTreeList({
   nodes,
+  filter = '',
+  filterNode = defaultMatcher,
   expanded: expandedProp,
   defaultExpanded = [],
   onExpandedChange,
@@ -35,9 +53,33 @@ export function useTreeList({
 
   const expandedIds = expandedProp ?? expandedState;
   const selectedIds = selectedProp ?? selectedState;
-  const expanded = useMemo(() => new Set(expandedIds), [expandedIds]);
+  const baseExpanded = useMemo(() => new Set(expandedIds), [expandedIds]);
+  const model = useMemo(
+    () => (filter ? filterTree(nodes, loaded, filter, filterNode) : null),
+    [nodes, loaded, filter, filterNode],
+  );
+  const [filterState, setFilterState] = useState<{
+    model: typeof model;
+    expanded: Set<string>;
+    filter: string;
+    matcher: TreeMatcher;
+  }>({ model: null, expanded: new Set(), filter: '', matcher: filterNode });
+  // Reset on a new query/data, then leave the user free to collapse its ancestors.
+  const sameQuery = filterState.filter === filter && filterState.matcher === filterNode;
+  const filterExpanded =
+    filterState.model === model
+      ? filterState.expanded
+      : new Set([
+          ...(sameQuery ? filterState.expanded : baseExpanded),
+          ...[...(model?.ancestors ?? [])].filter((id) => !sameQuery || !filterState.model?.ancestors.has(id)),
+        ]);
+  if (filterState.model !== model) setFilterState({ model, expanded: filterExpanded, filter, matcher: filterNode });
+  const expanded = model ? filterExpanded : baseExpanded;
   const selected = useMemo(() => new Set(selectedIds), [selectedIds]);
-  const visible = useMemo(() => flattenVisible(nodes, expanded, loaded), [nodes, expanded, loaded]);
+  const visible = useMemo(
+    () => (model ? flattenFiltered(nodes, expanded, loaded, model.included) : flattenVisible(nodes, expanded, loaded)),
+    [nodes, expanded, loaded, model],
+  );
 
   const setExpanded = (ids: string[]) => {
     if (expandedProp === undefined) setExpandedState(ids);
@@ -63,7 +105,11 @@ export function useTreeList({
   const setOpen = (node: TreeNode, open: boolean) => {
     if (!isBranch(node) || expanded.has(node.id) === open) return;
     if (open) load(node);
-    setExpanded(open ? [...expandedIds, node.id] : expandedIds.filter((id) => id !== node.id));
+    const next = new Set(expanded);
+    if (open) next.add(node.id);
+    else next.delete(node.id);
+    if (model) setFilterState({ model, expanded: next, filter, matcher: filterNode });
+    else setExpanded([...next]);
   };
 
   const select = (node: TreeNode, mode: 'replace' | 'toggle' = 'replace') => {
@@ -75,7 +121,12 @@ export function useTreeList({
   };
 
   const selectAll = () => {
-    if (selectionMode === 'multiple') setSelected(allIds(nodes, loaded));
+    if (selectionMode === 'multiple')
+      setSelected(
+        model
+          ? [...new Set([...selectedIds, ...visible.filter((v) => !v.node.disabled).map((v) => v.node.id)])]
+          : allIds(nodes, loaded),
+      );
   };
 
   /** Re-requests children after a failed load. */
@@ -84,10 +135,13 @@ export function useTreeList({
   const focusId =
     activeId !== undefined && visible.some((v) => v.node.id === activeId)
       ? activeId
-      : (visible.find((v) => selected.has(v.node.id))?.node.id ?? visible[0]?.node.id);
+      : model
+        ? visible[0]?.node.id
+        : (visible.find((v) => selected.has(v.node.id))?.node.id ?? visible[0]?.node.id);
 
   return {
     visible,
+    matched: model?.matched,
     expanded,
     selected,
     loaded,

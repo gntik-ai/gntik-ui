@@ -1,6 +1,6 @@
 import { useClipboard } from '../../hooks/useClipboard';
 import { useI18n } from '../../i18n/I18nProvider';
-import { matchRanges } from '../../utils/match-text';
+import { highlight } from '../../utils/highlight';
 import { Check, Copy } from 'lucide-react';
 import { useMemo, useState, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
@@ -62,22 +62,6 @@ export interface JsonViewerProps {
 }
 
 const s = jsonViewerVariants();
-
-function highlight(text: string, query: string, locale?: string): ReactNode {
-  const out: ReactNode[] = [];
-  let from = 0;
-  for (const [start, end] of matchRanges(text, query, { locale })) {
-    out.push(text.slice(from, start));
-    out.push(
-      <mark key={start} className={s.mark()}>
-        {text.slice(start, end)}
-      </mark>,
-    );
-    from = end;
-  }
-  out.push(text.slice(from));
-  return out;
-}
 
 function preview(value: unknown, labels: JsonViewerLabels, query: string, locale?: string): ReactNode {
   const type = jsonType(value);

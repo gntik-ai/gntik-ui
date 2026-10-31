@@ -1,3 +1,4 @@
+import { highlightMarkClass } from '../../utils/highlight';
 import { tv, type VariantProps } from '../../utils/tv';
 
 /** Value colours: contrast-safe text tokens only (same mapping as CodeBlock's JSON tokens). */
@@ -27,7 +28,7 @@ export const jsonViewerVariants = tv({
     truncated: 'px-3 pt-2',
     emptyValue: 'px-1.5 py-2 text-muted-foreground',
     row: 'min-w-0 truncate whitespace-pre',
-    mark: 'rounded-[3px] bg-warning/16 text-warning-chip-text',
+    mark: highlightMarkClass,
     empty: 'px-3 py-6 text-center font-sans text-[12.5px] text-muted-foreground',
   },
 });

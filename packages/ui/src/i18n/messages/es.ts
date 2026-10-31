@@ -1,3 +1,4 @@
+import { treeListEs } from './tree-list-messages';
 import { toolCallEs } from './tool-call-es';
 import { signUpEs, forgotPasswordEs, resetPasswordEs } from './auth-form-messages';
 import { chatComposerEs } from './chat-composer/es';
@@ -15,6 +16,7 @@ import { logoCloudEs } from './logo-cloud-messages';
 import type { Messages } from './en';
 export const es: Messages = {
   ...toolCallEs,
+  ...treeListEs,
   ...signUpEs,
   ...forgotPasswordEs,
   ...resetPasswordEs,
@@ -147,6 +149,7 @@ export const es: Messages = {
   'timer.unitHours': 'h',
   'timer.unitMinutes': 'min',
   'timer.unitSeconds': 's',
+  'treeList.matches': '{count, plural, one {# coincidencia} other {# coincidencias}}',
   'treeList.error': 'No se pudieron cargar los elementos.',
   'transferList.available': 'Disponibles',
   'transferList.selected': 'Seleccionados',

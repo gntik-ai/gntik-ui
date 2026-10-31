@@ -1,3 +1,4 @@
+import { treeListEn } from './tree-list-messages';
 import { toolCallEn } from './tool-call-en';
 import { signUpEn, forgotPasswordEn, resetPasswordEn } from './auth-form-messages';
 import { chatComposerEn } from './chat-composer/en';
@@ -14,6 +15,7 @@ import { cspEn } from './csp-messages';
 import { logoCloudEn } from './logo-cloud-messages';
 export const en = {
   ...toolCallEn,
+  ...treeListEn,
   ...signUpEn,
   ...forgotPasswordEn,
   ...resetPasswordEn,
@@ -139,6 +141,7 @@ export const en = {
   'timer.unitHours': 'h',
   'timer.unitMinutes': 'm',
   'timer.unitSeconds': 's',
+  'treeList.matches': '{count, plural, one {# match} other {# matches}}',
   'treeList.error': 'Could not load items.',
   'transferList.available': 'Available',
   'transferList.selected': 'Selected',
