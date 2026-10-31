@@ -20,9 +20,12 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
       await component.getByRole('button', { name: trigger, exact: true }).click();
       await expect(page.getByRole('menu')).toBeVisible();
       await page.addScriptTag({ content: AXE });
-      const violations = await page.evaluate(async () => {
+      const violations = await component.evaluate(async (element) => {
+        // Include the documented examples and their portalled popups in the audit.
+        // The catalog sidebar is outside the Menu examples' accessibility contract.
+        const context = [element, ...document.querySelectorAll('[role="menu"]')];
         // eslint-disable-next-line no-undef
-        const result = await axe.run(document.body, {
+        const result = await axe.run(context, {
           runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
         });
         return result.violations.map(
