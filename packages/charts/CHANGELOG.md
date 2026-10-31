@@ -1,5 +1,26 @@
 # @gntik-ai/charts
 
+## 0.12.0
+
+### Minor Changes
+
+- 817065a: Add theme-aware SVG and PNG exports, script-free printing, formula-safe CSV downloads and an optional export hook.
+
+### Patch Changes
+
+- 01125b0: Add an in-app reduced-motion preference, scoped motion utilities and an appearance settings switch.
+- e12e80a: Add named z-index layers and move kit overlays and sticky surfaces onto them; toasts and popups stay above modals, and app z-50 now sits under kit overlays.
+- b2e70bb: Add keyboard-only focus-ring and focus-ring-inset utilities and migrate kit outlines; upgrade @gntik-ai/tokens to this minor release before copying migrated registry sources.
+- Updated dependencies [01125b0]
+- Updated dependencies [e12e80a]
+- Updated dependencies [3860511]
+- Updated dependencies [e7d905b]
+- Updated dependencies [36ea76d]
+- Updated dependencies [cd9b1bd]
+- Updated dependencies [8a8df93]
+- Updated dependencies [b2e70bb]
+  - @gntik-ai/tokens@0.4.0
+
 ## 0.11.0
 
 ### Patch Changes

@@ -1,5 +1,20 @@
 # @gntik-ai/flow
 
+## 0.12.0
+
+### Patch Changes
+
+- e12e80a: Add named z-index layers and move kit overlays and sticky surfaces onto them; toasts and popups stay above modals, and app z-50 now sits under kit overlays.
+- Updated dependencies [01125b0]
+- Updated dependencies [e12e80a]
+- Updated dependencies [3860511]
+- Updated dependencies [e7d905b]
+- Updated dependencies [36ea76d]
+- Updated dependencies [cd9b1bd]
+- Updated dependencies [8a8df93]
+- Updated dependencies [b2e70bb]
+  - @gntik-ai/tokens@0.4.0
+
 ## 0.11.0
 
 ### Patch Changes
