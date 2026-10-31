@@ -1,3 +1,4 @@
+import { toolCallEn } from './tool-call-en';
 import { signUpEn, forgotPasswordEn, resetPasswordEn } from './auth-form-messages';
 import { chatComposerEn } from './chat-composer/en';
 import { fieldVariantsEn } from './field-variant-messages';
@@ -12,6 +13,7 @@ import { searchableSelectEn } from './searchable-select-messages';
 import { cspEn } from './csp-messages';
 import { logoCloudEn } from './logo-cloud-messages';
 export const en = {
+  ...toolCallEn,
   ...signUpEn,
   ...forgotPasswordEn,
   ...resetPasswordEn,
@@ -623,12 +625,6 @@ export const en = {
   'chat.taskDone': 'Done',
   'chat.taskNotDone': 'Not done',
   'chat.openSource': 'Open source',
-  'toolCall.calling': 'Calling',
-  'toolCall.called': 'Called',
-  'toolCall.failed': 'Failed to call',
-  'toolCall.arguments': 'Arguments',
-  'toolCall.result': 'Result',
-  'toolCall.waiting': 'Waiting for the result…',
   'chat.surfaceExampleTitle': 'Review your details',
   'chat.surfaceExampleName': 'Name',
   'chat.surfaceExampleSubmit': 'Submit',

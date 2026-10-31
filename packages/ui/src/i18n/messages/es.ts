@@ -1,3 +1,4 @@
+import { toolCallEs } from './tool-call-es';
 import { signUpEs, forgotPasswordEs, resetPasswordEs } from './auth-form-messages';
 import { chatComposerEs } from './chat-composer/es';
 import { fieldVariantsEs } from './field-variant-messages';
@@ -13,6 +14,7 @@ import { cspEs } from './csp-messages';
 import { logoCloudEs } from './logo-cloud-messages';
 import type { Messages } from './en';
 export const es: Messages = {
+  ...toolCallEs,
   ...signUpEs,
   ...forgotPasswordEs,
   ...resetPasswordEs,
@@ -621,12 +623,6 @@ export const es: Messages = {
   'chat.taskDone': 'Hecho',
   'chat.taskNotDone': 'Pendiente',
   'chat.openSource': 'Abrir fuente',
-  'toolCall.calling': 'Llamando a',
-  'toolCall.called': 'Se llamó a',
-  'toolCall.failed': 'Falló la llamada a',
-  'toolCall.arguments': 'Argumentos',
-  'toolCall.result': 'Resultado',
-  'toolCall.waiting': 'Esperando el resultado…',
   'chat.surfaceExampleTitle': 'Revisa tus datos',
   'chat.surfaceExampleName': 'Nombre',
   'chat.surfaceExampleSubmit': 'Enviar',
