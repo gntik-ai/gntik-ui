@@ -21,10 +21,12 @@ it('uses Base UI panel states and keeps closing children mounted and inert until
   rerender(<TreeList nodes={nodes} expanded={['folder']} />);
   const group = screen.getByRole('group');
   expect(group).toHaveAttribute('data-starting-style');
+  expect(group).toHaveClass('transition-[height]', 'duration-(--duration-normal)', 'ease-(--ease-standard)');
   await waitFor(() => expect(group).not.toHaveAttribute('data-starting-style'));
   fireEvent.transitionEnd(group, { propertyName: 'height' });
   rerender(<TreeList nodes={nodes} expanded={[]} />);
   await waitFor(() => expect(group).toHaveAttribute('data-ending-style'));
+  expect(group).toHaveClass('transition-[height]', 'motion-reduce:transition-none');
   expect(group).toHaveAttribute('inert');
   expect(group).toHaveAttribute('aria-hidden', 'true');
   expect(group.querySelector('[data-id="child"]')).toHaveAttribute('tabindex', '-1');
@@ -71,4 +73,5 @@ it('keeps the measured height until an opening transition actually finishes', as
   expect(group.style.getPropertyValue('--collapsible-panel-height')).toBe('240px');
   await act(async () => finish(animation));
   await waitFor(() => expect(group.style.getPropertyValue('--collapsible-panel-height')).toBe(''));
+  expect(group).toHaveAttribute('class', 'm-0 list-none p-0');
 });

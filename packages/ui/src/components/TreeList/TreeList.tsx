@@ -284,7 +284,7 @@ export function TreeList({
           {t('treeList.matches', { count: tree.matched?.size ?? 0 })}
         </span>
       )}
-      {filter && tree.matched?.size === 0 && <p>{t('common.noMatches')}</p>}
+      {filter && tree.matched?.size === 0 && <p className={s.empty()}>{t('common.noMatches')}</p>}
       <ul
         hidden={filter && tree.matched?.size === 0 ? true : undefined}
         role="tree"

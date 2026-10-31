@@ -29,9 +29,18 @@ it('does not flatten again on unrelated renders, focus or selection with an empt
 });
 
 it('preserves the JsonViewer DOM (apart from permitted branch state attributes)', () => {
+  // Snapshot seeded by rendering these fixtures with JsonViewer, TreeList,
+  // useTreeList and variants from base 1aacf7b2a6fb945ffb785a11372de99c4809afd9.
+  // Include both search highlighting and a nested branch that remains collapsed.
   const { container } = render(
-    <JsonViewer data={{ outer: { name: 'Función' }, other: 2 }} search="funcion" toolbar={false} />,
+    <JsonViewer
+      data={{ outer: { name: 'Función', nested: { hidden: true } }, other: 2 }}
+      search="funcion"
+      toolbar={false}
+    />,
   );
+  expect(screen.getByRole('treeitem', { name: /^nested:/ })).toHaveAttribute('aria-expanded', 'false');
+  expect(screen.queryByText('hidden')).toBeNull();
   const copy = container.cloneNode(true) as HTMLElement;
   copy.querySelectorAll('[data-open], [data-closed]').forEach((el) => {
     el.removeAttribute('data-open');

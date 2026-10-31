@@ -10,7 +10,11 @@ import {
   type MouseEvent,
 } from 'react';
 import { useLinkComponent } from '../Link/Link';
+import { cn } from '../../utils/cn';
+import { treeListVariants } from './tree-list.variants';
 import type { TreeNode } from './tree-model';
+
+const s = treeListVariants();
 
 /** Keep the last open contents mounted for the panel's exit transition. */
 const Contents = memo(
@@ -38,7 +42,10 @@ export function TreeListGroup({
   return (
     <Collapsible.Panel
       render={(props, state) => {
-        // Keep the established resting markup. Base UI measures height only for transitions.
+        // Base UI exposes pixel dimensions until the transition finishes, then
+        // resets them to auto. Keep its ref, transient state attributes and measured
+        // styles for that lifecycle; omit its generated id/open flags and resting
+        // styles to preserve TreeList/JsonViewer's established DOM.
         const {
           style,
           id: generatedId,
@@ -53,18 +60,16 @@ export function TreeListGroup({
           '--collapsible-panel-height'
         ];
         const measured = measuredHeight !== undefined && measuredHeight !== 'auto';
+        const transitioning =
+          measured || !open || state.transitionStatus === 'starting' || state.transitionStatus === 'ending';
         return (
           <ul
             {...rest}
             ref={props.ref}
             role="group"
             id={id}
-            className={className}
-            style={
-              measured || !open || state.transitionStatus === 'starting' || state.transitionStatus === 'ending'
-                ? style
-                : undefined
-            }
+            className={cn(className, transitioning && s.groupMotion())}
+            style={transitioning ? style : undefined}
             inert={!open || undefined}
             aria-hidden={!open || undefined}
           >
@@ -107,6 +112,8 @@ export function TreeListItem({ node, branch, open, currentHref, groupId, itemPro
         {createElement(RouterLink, {
           ...(itemProps as ComponentPropsWithRef<'a'>),
           href: node.disabled ? undefined : node.href,
+          onClickCapture: blockDisabled,
+          onAuxClickCapture: blockDisabled,
           'aria-current': node.href === currentHref ? 'page' : undefined,
           'aria-owns': open ? groupId : undefined,
           children: row,
@@ -114,14 +121,7 @@ export function TreeListItem({ node, branch, open, currentHref, groupId, itemPro
         {group}
       </>
     );
-  const rootProps =
-    node.href === undefined
-      ? itemProps
-      : {
-          role: 'none',
-          onClickCapture: blockDisabled,
-          onAuxClickCapture: blockDisabled,
-        };
+  const rootProps = node.href === undefined ? itemProps : { role: 'none' };
   return branch ? (
     <Collapsible.Root open={open} render={<li {...rootProps} />}>
       {children}

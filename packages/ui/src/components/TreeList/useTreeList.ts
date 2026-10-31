@@ -132,6 +132,8 @@ export function useTreeList({
   /** Re-requests children after a failed load. */
   const retry = (node: TreeNode) => load(node);
 
+  // Filtering intentionally falls back to the first visible node, as specified,
+  // even if another visible node is selected. Preserve selected-first otherwise.
   const focusId =
     activeId !== undefined && visible.some((v) => v.node.id === activeId)
       ? activeId

@@ -89,6 +89,31 @@ it('blocks a disabled link middle click', () => {
   expect(navigate).not.toHaveBeenCalled();
 });
 
+it('allows enabled child links and rows inside an expanded disabled link branch', async () => {
+  const user = userEvent.setup();
+  render(
+    <LinkProvider component={RouterLink}>
+      <TreeList
+        nodes={[
+          {
+            ...node,
+            disabled: true,
+            children: [
+              { id: 'link', label: 'Child link', href: '/docs/child' },
+              { id: 'row', label: 'Child row' },
+            ],
+          },
+        ]}
+        defaultExpanded={['guide']}
+      />
+    </LinkProvider>,
+  );
+  await user.click(screen.getByText('Child link'));
+  expect(navigate).toHaveBeenLastCalledWith('/docs/child');
+  await user.click(screen.getByText('Child row'));
+  expect(screen.getByRole('treeitem', { name: 'Child row' })).toHaveAttribute('aria-selected', 'true');
+});
+
 it('passes original nodes to action and lazy loading during filtering', async () => {
   const user = userEvent.setup();
   const original: TreeNode = { id: 'remote', label: 'Remote', hasChildren: true };

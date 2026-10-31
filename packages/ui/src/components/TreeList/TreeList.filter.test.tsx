@@ -156,6 +156,13 @@ it.each(['Control', 'Meta'])(
   },
 );
 
+it('uses the first visible tab stop while filtering even when a later visible node is selected', () => {
+  render(<TreeList nodes={nodes} filter="md" defaultSelected={['readme']} />);
+  expect(item('docs')).toHaveAttribute('tabindex', '0');
+  expect(item('readme')).toHaveAttribute('tabindex', '-1');
+  expect(item('readme')).toHaveAttribute('aria-selected', 'true');
+});
+
 it('uses accent-insensitive default label matching', () => {
   const { container } = render(
     <TreeList

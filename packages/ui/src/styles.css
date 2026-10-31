@@ -5,19 +5,3 @@
    compiled output, so component classes are generated in the app's CSS. */
 @import "@gntik-ai/tokens/tailwind.css";
 @source "../dist";
-
-/* TreeList panels keep their resting DOM and use Base UI's transient panel states. */
-[role='tree'] [role='group'] {
-  height: var(--collapsible-panel-height, auto);
-  overflow: hidden;
-  transition: height var(--duration-normal) var(--ease-standard);
-}
-[role='tree'] [role='group'][data-starting-style],
-[role='tree'] [role='group'][data-ending-style] {
-  height: 0;
-}
-@media (prefers-reduced-motion: reduce) {
-  [role='tree'] [role='group'] {
-    transition: none;
-  }
-}
