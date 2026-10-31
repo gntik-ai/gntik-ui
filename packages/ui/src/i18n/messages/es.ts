@@ -12,6 +12,7 @@ import { searchableSelectEs } from './searchable-select-messages';
 import { cspEs } from './csp-messages';
 import type { Messages } from './en';
 export const es: Messages = {
+  'logoCloud.caption': 'Equipos de empresas de todos los tamaños confían en nosotros',
   ...signUpEs,
   ...forgotPasswordEs,
   ...chatComposerEs,

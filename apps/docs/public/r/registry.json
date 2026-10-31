@@ -9493,6 +9493,44 @@
       ]
     },
     {
+      "name": "logo-cloud",
+      "type": "registry:block",
+      "title": "Logo cloud",
+      "description": "Static customer marks in a centred wrapping row or responsive grid with a localized caption above or beside the logos. Apps supply single-colour currentColor SVGs. Marks inherit muted-foreground; use the high_contrast theme or text-foreground on the root or an item for thin marks. Empty logo arrays render nothing. No animation, filters or masks.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "block",
+        "marketing"
+      ],
+      "meta": {
+        "kind": "block",
+        "package": "@gntik-ai/blocks",
+        "status": "beta",
+        "source": "packages/blocks/src/marketing/LogoCloud/block.meta.ts"
+      },
+      "files": [
+        {
+          "path": "packages/blocks/src/marketing/LogoCloud/LogoCloud.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/marketing/logo-cloud/LogoCloud.tsx"
+        },
+        {
+          "path": "packages/blocks/src/marketing/LogoCloud/fixtures.ts",
+          "type": "registry:lib",
+          "target": "components/blocks/marketing/logo-cloud/fixtures.ts"
+        }
+      ]
+    },
+    {
       "name": "markdown",
       "type": "registry:ui",
       "title": "Markdown",

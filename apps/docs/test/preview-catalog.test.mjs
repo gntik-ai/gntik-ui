@@ -4,6 +4,33 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import test from 'node:test';
 
+test('LogoCloud has a documented API and loadable live examples', async () => {
+  const { createServer } = await import('vite');
+  const server = await createServer({
+    root: fileURLToPath(new URL('..', import.meta.url)),
+    server: { middlewareMode: true, ws: false, watch: null },
+    optimizeDeps: { noDiscovery: true, include: [] },
+  });
+  try {
+    const { BLOCK_API } = await server.ssrLoadModule('/src/api-docs.js');
+    assert.ok(BLOCK_API?.LogoCloud, 'LogoCloud API must be available in the Blocks gallery');
+    const props = BLOCK_API.LogoCloud.propTypes.find((type) => type.name === 'LogoCloudProps');
+    for (const prop of ['logos', 'caption', 'captionPlacement', 'layout', 'columns', 'logoHeight', 'className']) {
+      assert.ok(
+        props.props.some((entry) => entry.name === prop),
+        `missing LogoCloud prop: ${prop}`,
+      );
+    }
+    const { CATALOG, PREVIEW_LOADERS } = await server.ssrLoadModule('/src/preview-registry.js');
+    assert.equal(CATALOG.blocks.filter((block) => block.id === 'logo-cloud').length, 1);
+    for (const suffix of ['', '--grid', '--caption-start', '--under-hero', '--custom', '--empty']) {
+      assert.equal(typeof (await PREVIEW_LOADERS.block[`logo-cloud${suffix}`]()).default, 'function');
+    }
+  } finally {
+    await server.close();
+  }
+});
+
 test('SiteFooter has a documented API and every gallery example can load', async () => {
   const { createServer } = await import('vite');
   const server = await createServer({

@@ -11,6 +11,7 @@ import { markdownEn } from './markdown-messages';
 import { searchableSelectEn } from './searchable-select-messages';
 import { cspEn } from './csp-messages';
 export const en = {
+  'logoCloud.caption': 'Trusted by teams at companies of every size',
   ...signUpEn,
   ...forgotPasswordEn,
   ...chatComposerEn,
