@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ToastProvider, Toaster } from '@gntik-ai/ui';
 
 describe('Sidebar shell examples', () => {
   it('demonstrates the brand slot in the sidebar, rail and mobile topbar', async () => {
@@ -41,10 +42,16 @@ describe('Sidebar shell examples', () => {
   });
   it('demonstrates platform-wide context with a brand and no context controls', async () => {
     const { default: PlatformWide } = await import('./examples/PlatformWide');
-    render(<PlatformWide />);
+    render(
+      <ToastProvider>
+        <PlatformWide />
+        <Toaster />
+      </ToastProvider>,
+    );
     expect(screen.getAllByText('Platform console').length).toBeGreaterThan(0);
     expect(screen.queryByRole('combobox')).toBeNull();
-    expect(screen.queryByRole('region')).toBeNull();
+    expect(within(screen.getByRole('complementary')).queryByRole('region')).toBeNull();
+    expect(screen.getByRole('region', { name: 'Notifications' })).toBeInTheDocument();
   });
   it('demonstrates tenant selection, clearing and custom workspace copy', async () => {
     const { default: Tenants } = await import('./examples/Tenants');

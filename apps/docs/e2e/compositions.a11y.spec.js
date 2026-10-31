@@ -125,7 +125,7 @@ for (const { kind, id, theme } of cases) {
     if (id === 'shell-sidebar--platform-wide') {
       await expect(page.getByRole('complementary').getByText('Platform console', { exact: true })).toBeVisible();
       await expect(page.getByRole('combobox')).toHaveCount(0);
-      await expect(page.getByRole('region')).toHaveCount(0);
+      await expect(page.getByRole('complementary').getByRole('region')).toHaveCount(0);
     }
     if (id === 'shell-sidebar--context-region') {
       const region = page.getByRole('region', { name: 'Active context' });

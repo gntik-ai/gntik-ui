@@ -109,7 +109,7 @@ export function AppSidebarHeader({
           aria-label={tenantLabel}
           placeholder={tenants.length === 0 ? tenantEmptyText : 'Select tenant'}
           clearable
-          className="w-full [:has(>_*_>_&)]:flex-col [:has(>_*_>_&)]:items-stretch [:has(>_*_>_&)]:gap-2"
+          className="w-full [&+button]:min-h-6 [&+button]:min-w-6 [:has(>_*_>_&)]:flex-col [:has(>_*_>_&)]:items-stretch [:has(>_*_>_&)]:gap-2"
         />
       )}
       {workspaceControl}
