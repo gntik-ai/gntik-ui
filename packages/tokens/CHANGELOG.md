@@ -1,5 +1,20 @@
 # @gntik-ai/tokens
 
+## 0.4.0
+
+### Minor Changes
+
+- 01125b0: Add an in-app reduced-motion preference, scoped motion utilities and an appearance settings switch.
+- e12e80a: Add named z-index layers and move kit overlays and sticky surfaces onto them; toasts and popups stay above modals, and app z-50 now sits under kit overlays.
+- 3860511: Add eleven named typography roles, Tailwind utilities and design-tool exports, and adopt them in Text and Heading.
+  
+  Font-size overrides through Text or Heading className now replace the entire role, including its weight, tracking and leading defaults. Add explicit utilities to keep those styles, for example `text-[32px] font-bold tracking-tight` for display text or `text-[12px] font-medium leading-tight` for labels. Preserve the sign-in brand headline's bold weight and tight tracking at its custom size.
+- e7d905b: Add selectable green and navy palettes with scoped themes, optional persistence and palette-aware runtime updates; individual pairing/scope CSS imports now require status.css, and palette files require scope.css for aliases and nested themes.
+- 36ea76d: Add interactive and disabled cursor tokens across UI controls; upgrade UI with the matching tokens minor, set `:root { --cursor-interactive: default }` to restore arrows, and note that disabled Buttons now receive pointer events rather than allowing click-through while remaining inert and suppressing hover styles.
+- cd9b1bd: Add SSR-safe media query and breakpoint hooks with shared breakpoint tokens, and use them for responsive panels and reduced-motion behaviour. Preserve upward log scrolling when wrapped rows finish measuring.
+- 8a8df93: Add shared data-tone colour utilities and use them in Badge, Alert, Token and Progress while preserving existing colours.
+- b2e70bb: Add keyboard-only focus-ring and focus-ring-inset utilities and migrate kit outlines; upgrade @gntik-ai/tokens to this minor release before copying migrated registry sources.
+
 ## 0.3.0
 
 ### Minor Changes
