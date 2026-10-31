@@ -2225,7 +2225,7 @@ export default function TokenFilters() {
 
 ### ToolCallCard (`tool-call-card`)
 
-A tool invocation in an assistant turn: name, status (running, succeeded, failed), duration and a collapsible body with the arguments and the result or error as small collapsible JSON views. Failed calls open by default.
+A tool invocation in an assistant turn: name, status (awaiting-approval, running, succeeded, failed, denied), duration and collapsible arguments, result or error. Failed and denied calls open by default. Entering awaiting-approval opens arguments unless open is controlled, announces the request politely once per entry and keeps focus where it was. The approval group remains visible even when collapsed. onApprove() and onDeny(reason?) report a decision; the caller must update status and decision (ToolCallDecision: outcome approved or denied, optional reason). Promise callbacks show loading and keep the disabled actions focusable until settled; rejection enables retry and the caller reports errors. askDenyReason defaults to true: Deny asks for a trimmed optional reason (empty becomes undefined); false denies immediately. destructive uses Run {name}, destructive tone and a reversibility hint. approveLabel and denyLabel override text; approvalPrompt accepts a ReactNode naming the group. The live example includes normal, destructive and controlled-closed approval, custom labels and prompt, immediate denial and recorded decisions. Approval must be enforced server-side: the backend must refuse unapproved calls; this card is not a security boundary.
 
 - Package: `@gntik-ai/chat` · export `ToolCallCard` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ToolCallCard/ToolCallCard.doc.ts
@@ -2239,16 +2239,55 @@ Keyboard:
 | --- | --- |
 | Enter | Expands or collapses the card (or a JSON section) |
 | Space | Expands or collapses the card (or a JSON section) |
-| Tab | Moves to the JSON sections and their scrollable code |
+| Tab | Moves to JSON sections, scrollable code and approval controls; busy actions remain focusable |
+| Enter / Space on Approve | Calls onApprove once; pending callbacks disable further decisions |
+| Enter / Space on Deny | Focuses Reason (optional), or calls onDeny immediately with askDenyReason=false |
+| Enter in Reason (optional) | Calls onDeny once with the trimmed reason or undefined; ignores IME composition |
+| Escape in the reason step / Cancel | Cancels locally and focuses Deny without reporting a decision |
 
-Tokens: card, border, secondary, muted-foreground, success-text, destructive, destructive-text, focus-ring
+Tokens: card, border, secondary, muted-foreground, success-text, destructive, destructive-text, focus-ring, warning, warning-chip-text
 
 Usage:
 
 ```tsx
-import { ToolCallCard } from '@gntik-ai/chat';
+import { useState } from 'react';
+import { useChatI18n } from '@gntik-ai/chat';
+import { ToolCallCard, type ToolCallDecision, type ToolCallStatus } from '@gntik-ai/chat';
+
+function ApprovalExample({ destructive = false, immediate = false }: { destructive?: boolean; immediate?: boolean }) {
+  const { t, tc } = useChatI18n();
+  const [status, setStatus] = useState<ToolCallStatus>('awaiting-approval');
+  const [decision, setDecision] = useState<ToolCallDecision>();
+  const name = destructive ? 'delete_project' : 'read_project';
+  return (
+    <ToolCallCard
+      name={name}
+      status={status}
+      args={{ id: 'p1' }}
+      destructive={destructive}
+      askDenyReason={!immediate}
+      approveLabel={immediate ? t('common.yes') : undefined}
+      denyLabel={immediate ? t('common.no') : undefined}
+      approvalPrompt={immediate ? <strong>{tc('toolCall.approvalPrompt')}</strong> : undefined}
+      open={immediate ? false : undefined}
+      decision={decision}
+      result={status === 'succeeded' ? { ok: true } : undefined}
+      onApprove={async () => {
+        await new Promise<void>((resolve) => setTimeout(resolve, 800));
+        setDecision({ outcome: 'approved' });
+        setStatus('succeeded');
+      }}
+      onDeny={async (reason) => {
+        await new Promise<void>((resolve) => setTimeout(resolve, 800));
+        setDecision({ outcome: 'denied', reason });
+        setStatus('denied');
+      }}
+    />
+  );
+}
 
 export default function ToolCallCardStates() {
+  const { tc } = useChatI18n();
   return (
     <div className="flex max-w-2xl flex-col gap-3">
       <ToolCallCard name="list_deployments" status="running" args={{ project: 'web-app', since: '2026-10-01' }} />
@@ -2266,6 +2305,22 @@ export default function ToolCallCardStates() {
         durationMs={2310}
         args={{ email: 'alex@example.com', role: 'admin' }}
         error="Seat limit reached: the plan allows 20 members."
+      />
+      <ApprovalExample />
+      <ApprovalExample destructive />
+      <ApprovalExample immediate />
+      <ToolCallCard
+        name="delete_project"
+        status="denied"
+        args={{ id: 'p1' }}
+        decision={{ outcome: 'denied', reason: tc('toolCall.exampleDenyReason') }}
+      />
+      <ToolCallCard
+        name="read_project"
+        status="succeeded"
+        defaultOpen
+        decision={{ outcome: 'approved' }}
+        result={{ id: 'p1' }}
       />
     </div>
   );

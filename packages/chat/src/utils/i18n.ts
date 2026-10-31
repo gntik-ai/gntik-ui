@@ -6,6 +6,24 @@ import { interpolate, useI18n, type MessageKey, type MessageVars } from '@gntik-
  * against an older `@gntik-ai/ui` whose catalog does not have them yet.
  */
 const FALLBACK = {
+  'toolCall.calling': 'Calling',
+  'toolCall.called': 'Called',
+  'toolCall.failed': 'Failed to call',
+  'toolCall.awaitingApproval': 'Wants to call',
+  'toolCall.denied': 'Denied call to',
+  'toolCall.statusAwaitingApproval': 'Needs approval',
+  'toolCall.statusDenied': 'Denied',
+  'toolCall.approvalPrompt': 'Allow this tool call?',
+  'toolCall.denyReason': 'Reason (optional)',
+  'toolCall.approveDestructive': 'Run {name}',
+  'toolCall.destructiveHint': 'This action may not be reversible.',
+  'toolCall.approved': 'Approved',
+  'toolCall.deniedReason': 'Denied: {reason}',
+  'toolCall.exampleDenyReason': 'Wrong project',
+  'toolCall.approve': 'Approve',
+  'toolCall.deny': 'Deny',
+  'toolCall.approvalRequested': '{name} needs your approval',
+
   'chat.thinking': 'Thinking…',
   'chat.thoughtFor': 'Thought for {duration}',
   'chat.reasoning': 'Reasoning',
