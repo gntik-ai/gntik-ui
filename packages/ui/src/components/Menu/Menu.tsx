@@ -1,8 +1,9 @@
 import { Menu as BaseMenu } from '@base-ui/react/menu';
-import { Check, ChevronRight } from 'lucide-react';
-import type { ComponentType, ReactNode } from 'react';
+import { Check, ChevronRight, ExternalLink } from 'lucide-react';
+import { createElement, type ComponentType, type ReactNode } from 'react';
+import { useLinkComponent } from '../Link';
 import { usePortalContainer } from '../../utils/portal';
-import { usePortalDir } from '../../i18n/I18nProvider';
+import { useI18n, usePortalDir } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 import { menuVariants } from './menu.variants';
 
@@ -92,6 +93,59 @@ export function MenuItem({ icon: IconCmp, shortcut, destructive, className, chil
         </span>
       )}
     </BaseMenu.Item>
+  );
+}
+
+export interface MenuLinkItemProps extends Omit<BaseMenu.LinkItem.Props, 'className'> {
+  className?: string;
+  href: string;
+  icon?: IconComponent;
+  shortcut?: string;
+  destructive?: boolean;
+  /** Opens in a new tab, announces it and bypasses the router link. */
+  external?: boolean;
+  /** Whether activation closes the menu. Defaults to true. */
+  closeOnClick?: boolean;
+}
+
+/** Navigation item. Renders an anchor with the same layout as an action. */
+export function MenuLinkItem({
+  icon: IconCmp,
+  shortcut,
+  destructive,
+  className,
+  children,
+  render,
+  external = false,
+  closeOnClick = true,
+  ...props
+}: MenuLinkItemProps) {
+  const v = menuVariants({ destructive });
+  const RouterLink = useLinkComponent();
+  const { t } = useI18n();
+  const resolvedRender = render ?? (RouterLink && !external ? createElement(RouterLink) : undefined);
+  return (
+    <BaseMenu.LinkItem
+      closeOnClick={closeOnClick}
+      render={resolvedRender}
+      className={cn(v.item(), 'no-underline', className)}
+      {...props}
+      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    >
+      {IconCmp && <IconCmp size={15} aria-hidden className={v.itemIcon()} />}
+      <span className={v.itemLabel()}>{children}</span>
+      {shortcut && (
+        <span aria-hidden className={v.shortcut()}>
+          {shortcut}
+        </span>
+      )}
+      {external && (
+        <>
+          <ExternalLink size={12} className={v.itemIcon()} aria-hidden />
+          <span className="sr-only"> {t('link.external')}</span>
+        </>
+      )}
+    </BaseMenu.LinkItem>
   );
 }
 

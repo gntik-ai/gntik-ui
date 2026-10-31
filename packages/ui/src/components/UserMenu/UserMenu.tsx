@@ -1,15 +1,14 @@
-import { Menu as BaseMenu } from '@base-ui/react/menu';
 import { ChevronsUpDown, LogOut, Palette } from 'lucide-react';
-import { createElement, type ComponentType, type ReactNode } from 'react';
+import { type ComponentType, type ReactNode } from 'react';
 import { useTheme, type ThemeMode } from '../../theme/ThemeProvider';
 import { cn } from '../../utils/cn';
 import { Avatar, getInitials } from '../Avatar';
-import { useLinkComponent } from '../Link';
 import {
   Menu,
   MenuContent,
   MenuGroup,
   MenuItem,
+  MenuLinkItem,
   MenuRadioGroup,
   MenuRadioItem,
   MenuSeparator,
@@ -17,7 +16,6 @@ import {
   MenuSubContent,
   MenuSubTrigger,
   MenuTrigger,
-  menuVariants,
 } from '../Menu';
 import { useThemeOptions, type ThemeOption } from '../ThemeSwitcher/ThemeSwitcher';
 import { useI18n } from '../../i18n/I18nProvider';
@@ -68,31 +66,22 @@ export interface UserMenuProps {
 }
 
 function ActionItem({ action }: { action: UserMenuAction }) {
-  const RouterLink = useLinkComponent();
-  const m = menuVariants({ destructive: action.destructive });
-  const IconCmp = action.icon;
   if (action.href !== undefined) {
     return (
-      <BaseMenu.LinkItem
+      <MenuLinkItem
         href={action.href}
-        closeOnClick
-        render={RouterLink ? createElement(RouterLink) : undefined}
-        className={cn(m.item(), 'no-underline')}
+        icon={action.icon}
+        shortcut={action.shortcut}
+        destructive={action.destructive}
         onClick={action.onSelect}
       >
-        {IconCmp && <IconCmp size={15} aria-hidden className={m.itemIcon()} />}
-        <span className={m.itemLabel()}>{action.label}</span>
-        {action.shortcut && (
-          <span aria-hidden className={m.shortcut()}>
-            {action.shortcut}
-          </span>
-        )}
-      </BaseMenu.LinkItem>
+        {action.label}
+      </MenuLinkItem>
     );
   }
   return (
     <MenuItem
-      icon={IconCmp}
+      icon={action.icon}
       shortcut={action.shortcut}
       destructive={action.destructive}
       disabled={action.disabled}

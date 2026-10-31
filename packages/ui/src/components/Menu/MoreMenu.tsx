@@ -1,7 +1,7 @@
 import { MoreHorizontal } from 'lucide-react';
 import { IconButton, type ButtonProps } from '../Button';
 import { useI18n } from '../../i18n/I18nProvider';
-import { Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger, type MenuItemProps } from './Menu';
+import { Menu, MenuContent, MenuItem, MenuLinkItem, MenuSeparator, MenuTrigger, type MenuItemProps } from './Menu';
 
 export interface MoreMenuAction {
   label: string;
@@ -9,6 +9,9 @@ export interface MoreMenuAction {
   shortcut?: string;
   destructive?: boolean;
   disabled?: boolean;
+  /** Navigation destination; disabled links fall back to disabled action items. */
+  href?: string;
+  external?: boolean;
   onSelect?: () => void;
 }
 
@@ -44,6 +47,18 @@ export function MoreMenu({
         {items.map((item, i) =>
           item === 'separator' ? (
             <MenuSeparator key={`sep-${i}`} />
+          ) : item.href !== undefined && !item.disabled ? (
+            <MenuLinkItem
+              key={item.label}
+              href={item.href}
+              external={item.external}
+              icon={item.icon}
+              shortcut={item.shortcut}
+              destructive={item.destructive}
+              onClick={item.onSelect}
+            >
+              {item.label}
+            </MenuLinkItem>
           ) : (
             <MenuItem
               key={item.label}

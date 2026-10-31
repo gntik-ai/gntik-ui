@@ -6,6 +6,7 @@ import {
   MenuGroup,
   MenuGroupLabel,
   MenuItem,
+  MenuLinkItem,
   MenuSeparator,
   MenuSub,
   MenuSubContent,
@@ -20,7 +21,9 @@ export default function MenuAccount() {
       <MenuContent className="w-60">
         <MenuGroup>
           <MenuGroupLabel>Account</MenuGroupLabel>
-          <MenuItem icon={User}>Profile</MenuItem>
+          <MenuLinkItem href="/account" icon={User}>
+            Profile
+          </MenuLinkItem>
           <MenuItem icon={Settings} shortcut="⌘,">
             Preferences
           </MenuItem>

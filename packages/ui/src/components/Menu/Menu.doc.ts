@@ -5,13 +5,13 @@ export const doc: ComponentDoc = {
   group: 'Overlays',
   status: 'stable',
   description:
-    'Dropdown list of actions or options: items with icon, shortcut hint and destructive tone, checkbox and radio items, labelled groups, separators and submenus. MoreMenu is the row-actions shorthand (icon button + items array).',
+    'Dropdown list of actions or options: items with icon, shortcut hint and destructive tone, checkbox and radio items, labelled groups, separators and submenus. MoreMenu is the row-actions shorthand (icon button + items array), including href and external link actions. Link items: reserve MenuLinkItem for navigation and MenuItem for actions. Internal links use LinkProvider; adapters must forward ref, role and event handlers to the anchor. Caller render takes precedence. external bypasses the router and announces a new tab. closeOnClick defaults to true; set false to keep the menu open. Disabled MoreMenu links become disabled action items.',
   primitive: '@base-ui/react/menu',
   pattern: 'menu button',
   keyboard: [
     ['Enter / Space / ArrowDown', 'On the trigger: opens the menu and focuses the first item'],
     ['ArrowDown / ArrowUp', 'Moves between items (wraps)'],
-    ['Enter', 'Activates the highlighted item'],
+    ['Enter', 'Activates the highlighted item; a link follows its href and closes the menu by default'],
     ['ArrowRight', 'Opens the submenu of a submenu trigger; ArrowLeft closes it'],
     ['Escape', 'Closes the menu and returns focus to the trigger'],
   ],
@@ -21,6 +21,8 @@ export const doc: ComponentDoc = {
     <MenuGroup>
       <MenuGroupLabel>Group</MenuGroupLabel>
       <MenuItem>Action</MenuItem>
+      <MenuLinkItem href="/runs/42" shortcut="⌘O">Open run</MenuLinkItem>
+      <MenuLinkItem href="https://docs.example.test" external>Documentation</MenuLinkItem>
     </MenuGroup>
     <MenuSeparator />
     <MenuCheckboxItem>Setting</MenuCheckboxItem>

@@ -8866,7 +8866,7 @@
       "package": "@gntik-ai/ui",
       "group": "Overlays",
       "status": "stable",
-      "description": "Dropdown list of actions or options: items with icon, shortcut hint and destructive tone, checkbox and radio items, labelled groups, separators and submenus. MoreMenu is the row-actions shorthand (icon button + items array).",
+      "description": "Dropdown list of actions or options: items with icon, shortcut hint and destructive tone, checkbox and radio items, labelled groups, separators and submenus. MoreMenu is the row-actions shorthand (icon button + items array), including href and external link actions. Link items: reserve MenuLinkItem for navigation and MenuItem for actions. Internal links use LinkProvider; adapters must forward ref, role and event handlers to the anchor. Caller render takes precedence. external bypasses the router and announces a new tab. closeOnClick defaults to true; set false to keep the menu open. Disabled MoreMenu links become disabled action items.",
       "files": [
         {
           "path": "packages/ui/src/components/Menu/Menu.tsx",
@@ -8979,6 +8979,7 @@
       ],
       "registryDependencies": [
         "button",
+        "link",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Menu/Menu.doc.ts"
@@ -14706,7 +14707,6 @@
       ],
       "registryDependencies": [
         "avatar",
-        "link",
         "menu",
         "theme",
         "theme-switcher",
