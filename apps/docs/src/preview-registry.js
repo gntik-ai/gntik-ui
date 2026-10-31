@@ -73,6 +73,10 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 
 export const PREVIEW_LOADERS = {
   block: {
+    'file-upload-panel--manual-form': () =>
+      import('../../../packages/blocks/src/forms/FileUploadPanel/examples/ManualForm'),
+    'file-upload-panel--auto-cancel': () =>
+      import('../../../packages/blocks/src/forms/FileUploadPanel/examples/AutoCancel'),
     'stack-responsive-toolbar': () =>
       import('../../../packages/ui/src/components/Stack/examples/StackResponsiveToolbar'),
     'shared-tone-utilities': () => import('../../../packages/ui/src/components/Badge/examples/SharedToneUtilities'),

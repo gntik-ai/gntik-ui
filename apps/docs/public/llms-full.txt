@@ -9534,7 +9534,7 @@ import { DialogWizard } from '@gntik-ai/blocks';
 
 ### File upload panel (`file-upload-panel`)
 
-Drag-and-drop zone with accept/reject MIME feedback (demonstrated in the Labels preview), a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.
+Controlled files/onFilesChange (add, progress, done, error, remove, cancel) or defaultFiles; manual uploadMode retains pending File objects for form submission. beforeUpload drops false, replaces a File or rejects without Retry; batches preserve pick order and expose aria-busy. onUpload receives {signal, id}: forward signal to fetch/XHR to stop the transport. Unmount and cancel abort; retry gets a fresh signal. onRemove runs before removal: false or rejection keeps a row, and promises disable its button. Pending rows use locale-aware binary sizes with compact unit labels (4,300 bytes: 4.2 KB); existing uploaded rows retain decimal sizes. Live examples: /preview.html?kind=block&id=file-upload-panel--manual-form and /preview.html?kind=block&id=file-upload-panel--auto-cancel. Drag-and-drop zone with accept/reject MIME feedback (demonstrated in the Labels preview), a Browse button, type and size validation, and a file list with progress, retry and remove. Optional labels?: Partial<FileUploadPanelLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=file-upload-panel--labels.
 
 - Package: `@gntik-ai/blocks` · export `FileUploadPanel` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/FileUploadPanel/block.meta.ts
@@ -9546,6 +9546,10 @@ Labels (optional Partial per instance; explicit keys override provider translati
 
 | Key | Type | State / surface |
 | --- | --- | --- |
+| `ready` | `(size: string) => string` | Pending manual upload |
+| `cancel` | `(name: string) => string` | Uploading cancel action |
+| `cancelled` | `(name: string) => string` | Cancellation feedback |
+| `removeFailed` | `(name: string) => string` | Removal rejection |
 | `label` | `string` | Default content and accessible names |
 | `drop` | `string` | Default content and accessible names |
 | `browse` | `string` | Default content and accessible names |

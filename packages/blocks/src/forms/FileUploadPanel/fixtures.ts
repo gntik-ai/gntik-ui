@@ -1,9 +1,11 @@
 import { matchesAccept } from '@gntik-ai/ui';
 
-export type UploadStatus = 'uploading' | 'done' | 'error';
+export type UploadStatus = 'pending' | 'uploading' | 'done' | 'error';
 
 export interface UploadItem {
   id: string;
+  /** Picked source file, absent for previously uploaded items. */
+  file?: File;
   name: string;
   /** Size in bytes. */
   size: number;
@@ -28,16 +30,36 @@ export const uploadItems: UploadItem[] = [
 ];
 
 /** Demo uploader: reports progress in steps and resolves after ~1.5 s. */
-export function simulateUpload(_file: File, onProgress: (pct: number) => void): Promise<void> {
-  return new Promise((resolve) => {
+export function simulateUpload(
+  _file: File,
+  onProgress: (pct: number) => void,
+  context?: { signal: AbortSignal; id: string },
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const signal = context?.signal;
+    let timer: ReturnType<typeof setTimeout>;
+    const abort = () => {
+      clearTimeout(timer);
+      signal?.removeEventListener('abort', abort);
+      reject(new DOMException('Aborted', 'AbortError'));
+    };
+    if (signal?.aborted) {
+      abort();
+      return;
+    }
+    signal?.addEventListener('abort', abort, { once: true });
     let pct = 0;
     const step = () => {
+      if (signal?.aborted) return;
       pct = Math.min(100, pct + 20);
       onProgress(pct);
-      if (pct >= 100) resolve();
-      else setTimeout(step, 250);
+      if (signal?.aborted) return;
+      if (pct >= 100) {
+        signal?.removeEventListener('abort', abort);
+        resolve();
+      } else timer = setTimeout(step, 250);
     };
-    setTimeout(step, 250);
+    timer = setTimeout(step, 250);
   });
 }
 
