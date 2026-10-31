@@ -10336,7 +10336,7 @@
       "name": "menu",
       "type": "registry:ui",
       "title": "Menu",
-      "description": "Dropdown list of actions or options: items with icon, shortcut hint and destructive tone, checkbox and radio items, labelled groups, separators and submenus. MoreMenu is the row-actions shorthand (icon button + items array).",
+      "description": "Dropdown list of actions or options: items with icon, shortcut hint and destructive tone, checkbox and radio items, labelled groups, separators and submenus. MoreMenu is the row-actions shorthand (icon button + items array), including href and external link actions. Link items: reserve MenuLinkItem for navigation and MenuItem for actions. Internal links use LinkProvider; adapters must forward ref, role and event handlers to the anchor. Caller render takes precedence. external bypasses the router and announces a new tab. closeOnClick defaults to true; set false to keep the menu open. Disabled MoreMenu links become disabled action items.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.9.0",
@@ -10345,6 +10345,7 @@
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/link.json",
         "https://ui.gntik.ai/r/ui-utils.json"
       ],
       "categories": [
@@ -22452,7 +22453,6 @@
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
         "https://ui.gntik.ai/r/avatar.json",
-        "https://ui.gntik.ai/r/link.json",
         "https://ui.gntik.ai/r/menu.json",
         "https://ui.gntik.ai/r/theme.json",
         "https://ui.gntik.ai/r/theme-switcher.json",

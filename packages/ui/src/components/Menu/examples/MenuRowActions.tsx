@@ -9,10 +9,18 @@ export default function MenuRowActions() {
       <MoreMenu
         label="Deployment actions"
         items={[
-          { label: 'View logs', icon: Eye, shortcut: '⌘L', onSelect: () => setLast('Opening logs') },
+          {
+            label: 'View logs',
+            href: '/logs?run=42',
+            icon: Eye,
+            shortcut: '⌘L',
+            onSelect: () => setLast('Opening logs'),
+          },
           { label: 'Restart', icon: RotateCw, shortcut: '⌘R', onSelect: () => setLast('Restarted') },
           { label: 'Duplicate', icon: Copy, shortcut: '⌘D', onSelect: () => setLast('Duplicated') },
           'separator',
+          { label: 'Documentation', href: 'https://docs.example.test', external: true },
+          { label: 'Archived logs', href: '/logs?run=41', disabled: true },
           { label: 'Pause', icon: Pause, onSelect: () => setLast('Paused') },
           'separator',
           { label: 'Delete deployment', icon: Trash2, destructive: true, onSelect: () => setLast('Deleted') },
