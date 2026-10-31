@@ -21,8 +21,11 @@ import type { ReactNode } from 'react';
 
 export interface ConsoleShellProps
   extends
-    Pick<AppSidebarHeaderProps, 'currentWorkspaceId' | 'onWorkspaceChange' | 'onCreateWorkspace'>,
-    Pick<AppSidebarFooterProps, 'usage' | 'helpHref' | 'helpLabel' | 'userMenuItems' | 'onSignOut'>,
+    Omit<AppSidebarHeaderProps, 'collapsed' | 'className' | 'workspaces'>,
+    Pick<
+      AppSidebarFooterProps,
+      'usage' | 'helpHref' | 'helpLabel' | 'userMenuItems' | 'userMenuChildren' | 'onSignOut'
+    >,
     Pick<SidebarLayoutProps, 'sidebarLabel' | 'collapseMode'> {
   /** Page content (usually a <Page>). */
   children: ReactNode;
@@ -59,11 +62,14 @@ export function ConsoleShell({
   helpHref,
   helpLabel,
   userMenuItems,
+  userMenuChildren,
+  brand,
   onSignOut,
   topbar,
   storageKey,
   sidebarLabel,
   collapseMode,
+  ...contextProps
 }: ConsoleShellProps) {
   const { locale } = useI18n();
   return (
@@ -80,6 +86,8 @@ export function ConsoleShell({
             currentWorkspaceId={currentWorkspaceId}
             onWorkspaceChange={onWorkspaceChange}
             onCreateWorkspace={onCreateWorkspace}
+            brand={brand}
+            {...contextProps}
           />
         )}
         sidebar={({ collapsed }) => <AppSidebarNav groups={nav} currentHref={currentHref} collapsed={collapsed} />}
@@ -91,10 +99,20 @@ export function ConsoleShell({
             helpHref={helpHref}
             helpLabel={helpLabel}
             userMenuItems={userMenuItems}
+            userMenuChildren={userMenuChildren}
             onSignOut={onSignOut}
           />
         )}
-        topbar={<AppTopbar breadcrumbs={breadcrumbs} user={user} {...topbar} />}
+        topbar={
+          brand == null ? (
+            <AppTopbar breadcrumbs={breadcrumbs} user={user} {...topbar} />
+          ) : (
+            <>
+              <div className="min-w-0 shrink-0 lg:hidden">{brand}</div>
+              <AppTopbar breadcrumbs={breadcrumbs} user={user} {...topbar} />
+            </>
+          )
+        }
       >
         {children}
       </SidebarLayout>

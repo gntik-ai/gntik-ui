@@ -217,6 +217,13 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),
   },
   template: {
+    'shell-sidebar--tenants': () => import('../../../packages/templates/src/shell-sidebar/examples/Tenants'),
+    'shell-sidebar--platform-wide': () => import('../../../packages/templates/src/shell-sidebar/examples/PlatformWide'),
+    'shell-sidebar--context-region': () =>
+      import('../../../packages/templates/src/shell-sidebar/examples/ContextRegion'),
+    'shell-sidebar--user-menu-children': () =>
+      import('../../../packages/templates/src/shell-sidebar/examples/UserMenuChildren'),
+    'shell-sidebar--brand': () => import('../../../packages/templates/src/shell-sidebar/examples/Brand'),
     'resource-detail--spanish': () => import('../../../packages/templates/src/resource-detail/examples/Spanish'),
     'resource-detail--embedded-custom-tabs': () =>
       import('../../../packages/templates/src/resource-detail/examples/embedded-custom-tabs'),
