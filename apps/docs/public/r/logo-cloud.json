@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "logo-cloud",
+  "type": "registry:block",
+  "title": "Logo cloud",
+  "description": "Static customer marks in a centred wrapping row or responsive grid with a localized caption above or beside the logos. Apps supply single-colour currentColor SVGs. Marks inherit muted-foreground; use the high_contrast theme or text-foreground on the root or an item for thin marks. Empty logo arrays render nothing. No animation, filters or masks.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "packages/blocks/src/marketing/LogoCloud/LogoCloud.tsx",
+      "type": "registry:component",
+      "target": "components/blocks/marketing/logo-cloud/LogoCloud.tsx",
+      "content": "import { useId, type ReactNode } from 'react';\nimport { cn, useI18n } from '@gntik-ai/ui';\n\nexport interface LogoCloudItem {\n  id: string;\n  name: string;\n  /** Supply a single-colour SVG painted with currentColor. */\n  mark: ReactNode;\n  /** Optional token colour override for this mark. Otherwise inherits the root colour. */\n  className?: string;\n}\n\nexport interface LogoCloudProps {\n  /** Customer marks. Empty arrays render nothing. */\n  logos: LogoCloudItem[];\n  /** Accessible list name; defaults to the active locale's catalog caption. */\n  caption?: ReactNode;\n  /** Above at every width, or beside the logos from md. */\n  captionPlacement?: 'above' | 'start';\n  /** A centred wrapping row (default) or a responsive grid. */\n  layout?: 'row' | 'grid';\n  /** Desktop column count in grid layout; phones always use two columns. */\n  columns?: 3 | 4 | 6;\n  /** Mark height in pixels. Width remains automatic and constrained to the available space. */\n  logoHeight?: number;\n  /** Root utilities; text-foreground overrides the default muted mark colour. */\n  className?: string;\n}\n\nconst gridColumns = { 3: 'md:grid-cols-3', 4: 'md:grid-cols-4', 6: 'md:grid-cols-6' };\n\n/** Static social proof. Marks inherit the root token colour unless an item overrides it. */\nexport function LogoCloud({\n  logos,\n  caption,\n  captionPlacement = 'above',\n  layout = 'row',\n  columns = 4,\n  logoHeight = 28,\n  className,\n}: LogoCloudProps) {\n  const captionId = useId();\n  const { t } = useI18n();\n  if (logos.length === 0) return null;\n  return (\n    <div\n      className={cn(\n        'flex min-w-0 flex-col items-center gap-6 px-4 py-10 text-muted-foreground sm:px-6',\n        captionPlacement === 'start' && 'md:flex-row md:items-center',\n        className,\n      )}\n    >\n      <div\n        id={captionId}\n        className={cn(\n          'min-w-0 text-center text-sm wrap-anywhere',\n          captionPlacement === 'start' && 'md:max-w-64 md:shrink-0 md:text-start',\n        )}\n      >\n        {caption ?? t('logoCloud.caption')}\n      </div>\n      <ul\n        aria-labelledby={captionId}\n        className={cn(\n          'm-0 w-full min-w-0 list-none items-center gap-x-8 gap-y-6 p-0',\n          layout === 'grid' ? cn('grid grid-cols-2', gridColumns[columns]) : 'flex flex-wrap justify-center',\n        )}\n      >\n        {logos.map((logo) => (\n          <li key={logo.id} className={cn('flex min-w-0 max-w-full justify-center', logo.className)}>\n            <div\n              role=\"img\"\n              aria-label={logo.name}\n              className=\"flex min-w-0 max-w-full justify-center\"\n              style={{ height: logoHeight }}\n            >\n              <span\n                aria-hidden=\"true\"\n                className=\"inline-flex h-full min-w-0 max-w-full [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full\"\n              >\n                {logo.mark}\n              </span>\n            </div>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "packages/blocks/src/marketing/LogoCloud/fixtures.ts",
+      "type": "registry:lib",
+      "target": "components/blocks/marketing/logo-cloud/fixtures.ts",
+      "content": "import { createElement } from 'react';\nimport type { LogoCloudItem } from './LogoCloud';\n\n/** Neutral placeholder marks, never customer assets. Supply your own currentColor SVGs. */\nexport const sampleLogos: LogoCloudItem[] = (\n  [\n    ['acme', 'Acme', 96, 'M14 0 28 28H0z'],\n    ['example', 'Example', 128, 'M0 0h28v28H0z'],\n    ['sample', 'Sample', 118, 'M14 0 28 14 14 28 0 14z'],\n    ['demo', 'Demo', 100, 'M0 0h12v28H0zM16 0h12v28H16z'],\n    ['placeholder', 'Placeholder', 166, 'M0 0h28v12H0zM0 16h28v12H0z'],\n    ['studio', 'Studio', 108, 'M0 0h12v16h16v12H0z'],\n  ] as const\n).map(([id, name, width, path]) => ({\n  id,\n  name,\n  mark: createElement(\n    'svg',\n    { viewBox: `0 0 ${width} 28`, fill: 'currentColor', focusable: 'false' },\n    createElement('path', { d: path }),\n    createElement('text', { x: 36, y: 21, fontSize: 20, fontWeight: 600 }, name),\n  ),\n}));\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "block",
+    "marketing"
+  ],
+  "meta": {
+    "kind": "block",
+    "package": "@gntik-ai/blocks",
+    "status": "beta",
+    "source": "packages/blocks/src/marketing/LogoCloud/block.meta.ts"
+  }
+}

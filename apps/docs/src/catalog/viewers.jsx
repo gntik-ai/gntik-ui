@@ -169,6 +169,31 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                   ))}
                 </>
               )}
+              {kind === 'block' && it.id === 'logo-cloud' && (
+                <>
+                  <p className="my-4 text-sm text-muted-foreground">
+                    Supply single-colour SVG marks using currentColor. For thin marks use the high_contrast theme or
+                    text-foreground on the root or an item. Empty logo arrays render nothing. Grid previews show six,
+                    three and four desktop columns; phones always show two.
+                  </p>
+                  {[
+                    ['Grid', 'grid'],
+                    ['CaptionStart', 'caption-start'],
+                    ['UnderHero', 'under-hero'],
+                    ['Custom', 'custom'],
+                    ['Empty', 'empty'],
+                  ].map(([example, suffix]) => (
+                    <Viewer
+                      key={suffix}
+                      kind="block"
+                      id={`logo-cloud--${suffix}`}
+                      title={`${it.title} · ${example}`}
+                      file={`../../../packages/blocks/src/marketing/LogoCloud/examples/${example}.tsx`}
+                      height={height}
+                    />
+                  ))}
+                </>
+              )}
               {kind === 'block' && it.id === 'comment-thread' && (
                 <Viewer
                   kind="block"

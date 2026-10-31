@@ -1,4 +1,4 @@
-import { signUpEs, forgotPasswordEs } from './auth-form-messages';
+import { signUpEs, forgotPasswordEs, resetPasswordEs } from './auth-form-messages';
 import { chatComposerEs } from './chat-composer/es';
 import { fieldVariantsEs } from './field-variant-messages';
 import { tableMenuEs } from './table-menu-messages';
@@ -10,10 +10,13 @@ import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
 import { searchableSelectEs } from './searchable-select-messages';
 import { cspEs } from './csp-messages';
+import { logoCloudEs } from './logo-cloud-messages';
 import type { Messages } from './en';
 export const es: Messages = {
   ...signUpEs,
   ...forgotPasswordEs,
+  ...resetPasswordEs,
+  ...logoCloudEs,
   ...chatComposerEs,
   ...fieldVariantsEs,
   ...tableMenuEs,
@@ -983,18 +986,4 @@ export const es: Messages = {
   'mfaChallenge.resent': 'Se ha enviado un nuevo código.',
   'mfaChallenge.backToSignIn': 'Volver al inicio de sesión',
   'mfaChallenge.fallbackError': 'Ese código no ha funcionado. Inténtalo de nuevo.',
-  'resetPassword.eyebrow': 'Recuperación de cuenta',
-  'resetPassword.title': 'Establece una contraseña nueva',
-  'resetPassword.description': 'Usa al menos {minimum} caracteres. Evita contraseñas que uses en otros sitios.',
-  'resetPassword.newPassword': 'Nueva contraseña',
-  'resetPassword.confirmPassword': 'Confirmar contraseña',
-  'resetPassword.passwordTooShort': 'Usa al menos {minimum} caracteres.',
-  'resetPassword.passwordMismatch': 'Las contraseñas no coinciden.',
-  'resetPassword.submit': 'Actualizar contraseña',
-  'resetPassword.successTitle': 'Contraseña actualizada',
-  'resetPassword.successDescription':
-    'Ya puedes iniciar sesión con tu nueva contraseña. Se han cerrado las demás sesiones.',
-  'resetPassword.successStatus': 'Contraseña actualizada.',
-  'resetPassword.continue': 'Continuar al inicio de sesión',
-  'resetPassword.fallbackError': 'No se pudo actualizar tu contraseña.',
 };

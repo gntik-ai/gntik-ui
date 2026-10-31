@@ -1,4 +1,4 @@
-import { signUpEn, forgotPasswordEn } from './auth-form-messages';
+import { signUpEn, forgotPasswordEn, resetPasswordEn } from './auth-form-messages';
 import { chatComposerEn } from './chat-composer/en';
 import { fieldVariantsEn } from './field-variant-messages';
 import { tableMenuEn } from './table-menu-messages';
@@ -10,9 +10,12 @@ import { motionEn } from './motion-messages';
 import { markdownEn } from './markdown-messages';
 import { searchableSelectEn } from './searchable-select-messages';
 import { cspEn } from './csp-messages';
+import { logoCloudEn } from './logo-cloud-messages';
 export const en = {
   ...signUpEn,
   ...forgotPasswordEn,
+  ...resetPasswordEn,
+  ...logoCloudEn,
   ...chatComposerEn,
   ...fieldVariantsEn,
   ...tableMenuEn,
@@ -982,19 +985,6 @@ export const en = {
   'mfaChallenge.resent': 'A new code was sent.',
   'mfaChallenge.backToSignIn': 'Back to sign in',
   'mfaChallenge.fallbackError': 'That code did not work. Try again.',
-  'resetPassword.eyebrow': 'Account recovery',
-  'resetPassword.title': 'Set a new password',
-  'resetPassword.description': 'Use at least {minimum} characters. Avoid passwords you use elsewhere.',
-  'resetPassword.newPassword': 'New password',
-  'resetPassword.confirmPassword': 'Confirm password',
-  'resetPassword.passwordTooShort': 'Use at least {minimum} characters.',
-  'resetPassword.passwordMismatch': "Passwords don't match.",
-  'resetPassword.submit': 'Update password',
-  'resetPassword.successTitle': 'Password updated',
-  'resetPassword.successDescription': 'You can now sign in with your new password. Other sessions were signed out.',
-  'resetPassword.successStatus': 'Password updated.',
-  'resetPassword.continue': 'Continue to sign in',
-  'resetPassword.fallbackError': 'Your password could not be updated.',
 } as const;
 /** Every built-in message key and the complete string catalog. */
 export type MessageKey = keyof typeof en;

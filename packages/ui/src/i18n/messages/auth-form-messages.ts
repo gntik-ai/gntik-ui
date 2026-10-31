@@ -82,3 +82,36 @@ export const forgotPasswordEs = {
   'forgotPassword.identifierPlaceholder': 'nombre@empresa.com',
   'forgotPassword.submit': 'Enviar enlace de restablecimiento',
 } as const;
+
+export const resetPasswordEn = {
+  'resetPassword.eyebrow': 'Account recovery',
+  'resetPassword.title': 'Set a new password',
+  'resetPassword.description': 'Use at least {minimum} characters. Avoid passwords you use elsewhere.',
+  'resetPassword.newPassword': 'New password',
+  'resetPassword.confirmPassword': 'Confirm password',
+  'resetPassword.passwordTooShort': 'Use at least {minimum} characters.',
+  'resetPassword.passwordMismatch': "Passwords don't match.",
+  'resetPassword.submit': 'Update password',
+  'resetPassword.successTitle': 'Password updated',
+  'resetPassword.successDescription': 'You can now sign in with your new password. Other sessions were signed out.',
+  'resetPassword.successStatus': 'Password updated.',
+  'resetPassword.continue': 'Continue to sign in',
+  'resetPassword.fallbackError': 'Your password could not be updated.',
+} as const;
+
+export const resetPasswordEs = {
+  'resetPassword.eyebrow': 'Recuperación de cuenta',
+  'resetPassword.title': 'Establece una contraseña nueva',
+  'resetPassword.description': 'Usa al menos {minimum} caracteres. Evita contraseñas que uses en otros sitios.',
+  'resetPassword.newPassword': 'Nueva contraseña',
+  'resetPassword.confirmPassword': 'Confirmar contraseña',
+  'resetPassword.passwordTooShort': 'Usa al menos {minimum} caracteres.',
+  'resetPassword.passwordMismatch': 'Las contraseñas no coinciden.',
+  'resetPassword.submit': 'Actualizar contraseña',
+  'resetPassword.successTitle': 'Contraseña actualizada',
+  'resetPassword.successDescription':
+    'Ya puedes iniciar sesión con tu nueva contraseña. Se han cerrado las demás sesiones.',
+  'resetPassword.successStatus': 'Contraseña actualizada.',
+  'resetPassword.continue': 'Continuar al inicio de sesión',
+  'resetPassword.fallbackError': 'No se pudo actualizar tu contraseña.',
+} as const;

@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 124 components, 12 layouts, 78 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 124 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -9769,6 +9769,26 @@ import { Hero } from '@gntik-ai/blocks';
 
 // Props default to the block fixtures; pass your data.
 <Hero />
+```
+
+### Logo cloud (`logo-cloud`)
+
+Static customer marks in a centred wrapping row or responsive grid with a localized caption above or beside the logos. Apps supply single-colour currentColor SVGs. Marks inherit muted-foreground; use the high_contrast theme or text-foreground on the root or an item for thin marks. Empty logo arrays render nothing. No animation, filters or masks.
+
+- Package: `@gntik-ai/blocks` · export `LogoCloud` · group marketing · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/marketing/LogoCloud/block.meta.ts
+- Preview: /preview.html?kind=block&id=logo-cloud
+- Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add logo-cloud`
+
+Usage:
+
+```tsx
+import { LogoCloud } from '@gntik-ai/blocks';
+import { sampleLogos } from '@gntik-ai/blocks';
+
+export default function CaptionStart() {
+  return <LogoCloud logos={sampleLogos} captionPlacement="start" />;
+}
 ```
 
 ### Pricing table (`pricing-table`)

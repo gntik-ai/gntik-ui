@@ -16,3 +16,6 @@ export { sampleComparisonPlans, sampleComparisonSections } from './ComparisonTab
 export * from './SiteFooter/SiteFooter';
 export { meta as siteFooterMeta } from './SiteFooter/block.meta';
 export { sampleFooterColumns, sampleLegalLinks, sampleSocialLinks } from './SiteFooter/fixtures';
+export * from './LogoCloud/LogoCloud';
+export { meta as logoCloudMeta } from './LogoCloud/block.meta';
+export { sampleLogos } from './LogoCloud/fixtures';
