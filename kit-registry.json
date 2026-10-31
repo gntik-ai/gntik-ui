@@ -4104,6 +4104,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -4221,6 +4225,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -4419,6 +4427,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -4535,6 +4547,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -4686,6 +4702,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -4803,6 +4823,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -4984,6 +5008,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -5134,6 +5162,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -5546,6 +5578,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -5726,6 +5762,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -5854,6 +5894,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -6076,6 +6120,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -6222,6 +6270,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -6356,6 +6408,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -6503,6 +6559,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -6628,6 +6688,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -6756,6 +6820,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -6881,6 +6949,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -7016,6 +7088,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -7135,6 +7211,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -7264,6 +7344,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -7389,6 +7473,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -7610,6 +7698,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -7727,6 +7819,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -7895,6 +7991,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -8022,6 +8122,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -8143,6 +8247,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -8271,6 +8379,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -8396,6 +8508,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -8513,6 +8629,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -8636,6 +8756,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -8840,6 +8964,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -8963,6 +9091,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -9210,6 +9342,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -9373,6 +9509,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -9503,6 +9643,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -9627,6 +9771,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -9758,6 +9906,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -9875,6 +10027,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -9997,6 +10153,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -10122,6 +10282,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -10243,6 +10407,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -10386,6 +10554,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -10508,6 +10680,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -10626,6 +10802,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -10753,6 +10933,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -10911,6 +11095,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -11117,6 +11305,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -11242,6 +11434,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -11403,6 +11599,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -11524,6 +11724,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -11685,6 +11889,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -11896,6 +12104,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -12036,6 +12248,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -12250,6 +12466,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -12435,6 +12655,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -12552,6 +12776,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -12682,6 +12910,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -12915,6 +13147,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -13039,6 +13275,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -13176,6 +13416,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -13297,6 +13541,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -13421,6 +13669,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -13538,6 +13790,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -13690,6 +13946,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -13819,6 +14079,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -14016,6 +14280,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -14136,6 +14404,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -14264,6 +14536,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -14291,11 +14567,15 @@
       "package": "@gntik-ai/ui",
       "group": "Navigation",
       "status": "beta",
-      "description": "Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component.",
+      "description": "Hierarchical list on the WAI-ARIA tree pattern (role tree / treeitem / group, aria-expanded, aria-level): roving focus, arrow keys, Home/End and typeahead, single or multiple selection, icons per node and children loaded on first expand with loading and error states. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. filter (default empty) searches loaded labels with case- and accent-insensitive matching; filterNode can override matching. Matches and ancestors are shown, and matching branches keep their whole subtree reachable when expanded. Unloaded lazy children are not searched; debounce filter for large trees. Filtering preserves selection and uses a separate expansion set that never calls onExpandedChange; clearing restores previous expansion. While filtering, a missing focus target falls back to the first visible node, even when a later node is selected. Plain matched labels are highlighted; rich content and containment-only ancestors are not. A status announces match counts only during filtering, and no matches hides the tree. Optional node.href renders a LinkProvider anchor treeitem owning its group; currentHref marks the current page. Disabled links cannot navigate. Groups animate height with motion tokens and toggle immediately under reduced motion. TreeListFilter demonstrates filtering, custom files-only matching, highlights and empty results; TreeListNavigation demonstrates link nodes, currentHref, disabled links and filtering. See TransferList for Spanish catalog defaults.",
       "files": [
         {
           "path": "packages/ui/src/components/TreeList/TreeList.tsx",
           "target": "components/ui/tree-list/TreeList.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/TreeList/TreeListItem.tsx",
+          "target": "components/ui/tree-list/TreeListItem.tsx"
         },
         {
           "path": "packages/ui/src/components/TreeList/index.ts",
@@ -14394,6 +14674,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -14407,6 +14691,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "link",
         "spinner",
         "ui-utils"
       ],
@@ -14538,6 +14823,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -14560,6 +14849,10 @@
         {
           "path": "packages/ui/src/utils/density-merge.ts",
           "target": "components/utils/density-merge.ts"
+        },
+        {
+          "path": "packages/ui/src/utils/highlight.tsx",
+          "target": "components/utils/highlight.tsx"
         },
         {
           "path": "packages/ui/src/utils/match-text.ts",
@@ -14693,6 +14986,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -14824,6 +15121,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -14940,6 +15241,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -15068,6 +15373,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -15177,6 +15486,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -15297,6 +15610,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -15422,6 +15739,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -15553,6 +15874,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -15675,6 +16000,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -15791,6 +16120,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -15911,6 +16244,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -16036,6 +16373,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -16164,6 +16505,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -16283,6 +16628,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
@@ -16407,6 +16756,10 @@
           "target": "components/i18n/messages/tool-call-es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "target": "components/i18n/messages/typography-messages.ts"
         },
@@ -16525,6 +16878,10 @@
         {
           "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
           "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",

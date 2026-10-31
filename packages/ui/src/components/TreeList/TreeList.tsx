@@ -1,9 +1,11 @@
 import { useI18n } from '../../i18n/I18nProvider';
 import { Check, ChevronRight } from 'lucide-react';
 import { useId, useRef, type HTMLAttributes, type KeyboardEvent, type MouseEvent, type Ref } from 'react';
+import { highlight } from '../../utils/highlight';
 import { cn } from '../../utils/cn';
 import { Spinner } from '../Spinner';
 import { childrenOf, type TreeNode, type VisibleNode } from './tree-model';
+import { TreeListItem, TreeListGroup } from './TreeListItem';
 import { treeListVariants } from './tree-list.variants';
 import { useTreeList, type UseTreeListOptions } from './useTreeList';
 
@@ -16,6 +18,8 @@ export interface TreeListLabels {
 export interface TreeListProps
   extends UseTreeListOptions, Omit<HTMLAttributes<HTMLUListElement>, 'className' | 'children' | 'onSelect'> {
   className?: string;
+  /** Marks the current navigation destination. */
+  currentHref?: string;
   ref?: Ref<HTMLUListElement>;
   /** Called on Enter or double click of a node (e.g. open a file). */
   onAction?: (node: TreeNode) => void;
@@ -34,6 +38,9 @@ const s = treeListVariants();
  */
 export function TreeList({
   nodes,
+  filter = '',
+  filterNode,
+  currentHref,
   expanded,
   defaultExpanded,
   onExpandedChange,
@@ -49,7 +56,7 @@ export function TreeList({
   onKeyDown,
   ...props
 }: TreeListProps) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const labels: TreeListLabels = {
     error: t('treeList.error'),
     loading: t('common.loading'),
@@ -58,6 +65,8 @@ export function TreeList({
   };
   const tree = useTreeList({
     nodes,
+    filter,
+    filterNode,
     expanded,
     defaultExpanded,
     onExpandedChange,
@@ -67,7 +76,7 @@ export function TreeList({
     onSelectedChange,
     loadChildren,
   });
-  const items = useRef(new Map<string, HTMLLIElement>());
+  const items = useRef(new Map<string, HTMLElement>());
   const typeahead = useRef({ text: '', at: 0 });
   const baseId = useId();
   const byId = new Map(tree.visible.map((v, i) => [v.node.id, { ...v, rowId: `${baseId}-${i}` }]));
@@ -117,6 +126,11 @@ export function TreeList({
         if (current.expanded) return tree.setOpen(node, false);
         return focus(current.parentId);
       case 'Enter':
+        if (node.href !== undefined) {
+          event.preventDefault();
+          if (!node.disabled) items.current.get(node.id)?.click();
+          return;
+        }
         event.preventDefault();
         tree.select(node, multi ? 'toggle' : 'replace');
         if (onAction && !node.disabled) onAction(node);
@@ -146,11 +160,19 @@ export function TreeList({
   };
 
   const handleClick = (event: MouseEvent, v: VisibleNode) => {
-    event.stopPropagation();
-    if (v.node.disabled) return;
+    if (v.node.href === undefined) event.stopPropagation();
+    if (v.node.disabled) {
+      event.preventDefault();
+      return;
+    }
+    if (v.node.href !== undefined && (event.ctrlKey || event.metaKey || event.button !== 0)) return;
     focus(v.node.id);
     const onChevron = (event.target as HTMLElement).closest('[data-chevron]');
-    if (onChevron || tree.selectionMode === 'none') return tree.setOpen(v.node, !v.expanded);
+    if (onChevron || (tree.selectionMode === 'none' && v.node.href === undefined)) {
+      event.preventDefault();
+      return tree.setOpen(v.node, !v.expanded);
+    }
+    if (v.node.href !== undefined) return;
     tree.select(v.node, multi ? 'toggle' : 'replace');
   };
 
@@ -160,96 +182,119 @@ export function TreeList({
       if (!v) return null;
       const isSelected = tree.selected.has(node.id);
       const childState = tree.loaded[node.id];
-      const kids = v.expanded ? childrenOf(node, tree.loaded) : undefined;
+      const kids = childrenOf(node, tree.loaded);
       const v2 = treeListVariants({ selected: isSelected, expanded: v.expanded, disabled: node.disabled });
       const Icon = (v.expanded && node.openIcon) || node.icon;
       const pad = { paddingInlineStart: `${(v.level - 1) * indent + 6}px` };
+      const groupId = node.href !== undefined && (kids || childState) ? `${v.rowId}-group` : undefined;
       return (
-        <li
+        <TreeListItem
           key={node.id}
-          ref={(el) => {
-            if (el) items.current.set(node.id, el);
-            else items.current.delete(node.id);
+          node={node}
+          branch={v.branch}
+          open={v.expanded}
+          currentHref={currentHref}
+          groupId={groupId}
+          itemProps={{
+            ref: (el) => {
+              if (el) items.current.set(node.id, el);
+              else items.current.delete(node.id);
+            },
+            role: 'treeitem',
+            'aria-labelledby': v.rowId,
+            'data-id': node.id,
+            'aria-level': v.level,
+            'aria-posinset': v.posinset,
+            'aria-setsize': v.setsize,
+            'aria-expanded': v.branch ? v.expanded : undefined,
+            'aria-selected': tree.selectionMode === 'none' ? undefined : isSelected,
+            'aria-disabled': node.disabled || undefined,
+            'aria-busy': childState?.status === 'loading' || undefined,
+            tabIndex: node.id === tree.focusId ? 0 : -1,
+            onFocus: (e) => {
+              if (e.target === e.currentTarget) tree.setActiveId(node.id);
+            },
+            className: s.item(),
           }}
-          role="treeitem"
-          aria-labelledby={v.rowId}
-          data-id={node.id}
-          aria-level={v.level}
-          aria-posinset={v.posinset}
-          aria-setsize={v.setsize}
-          aria-expanded={v.branch ? v.expanded : undefined}
-          aria-selected={tree.selectionMode === 'none' ? undefined : isSelected}
-          aria-disabled={node.disabled || undefined}
-          aria-busy={childState?.status === 'loading' || undefined}
-          tabIndex={node.id === tree.focusId ? 0 : -1}
-          onFocus={(e) => {
-            if (e.target === e.currentTarget) tree.setActiveId(node.id);
-          }}
-          className={s.item()}
-        >
-          <div
-            data-row
-            id={v.rowId}
-            className={v2.row()}
-            style={pad}
-            onClick={(e) => handleClick(e, v)}
-            onDoubleClick={() => onAction && !node.disabled && onAction(node)}
-          >
-            <span data-chevron aria-hidden className={v2.chevron()}>
-              {v.branch && <ChevronRight size={14} />}
-            </span>
-            {multi && (
-              <span aria-hidden className={v2.check()}>
-                {isSelected && <Check size={11} strokeWidth={3} />}
+          row={
+            <div
+              data-row
+              id={v.rowId}
+              className={v2.row()}
+              style={pad}
+              onClick={(e) => handleClick(e, v)}
+              onDoubleClick={() => onAction && !node.disabled && onAction(node)}
+            >
+              <span data-chevron aria-hidden className={v2.chevron()}>
+                {v.branch && <ChevronRight size={14} />}
               </span>
-            )}
-            {Icon && <Icon size={15} aria-hidden className={v2.icon()} />}
-            <span className={s.label()}>{node.content ?? node.label}</span>
-            {node.meta != null && <span className={s.meta()}>{node.meta}</span>}
-          </div>
-          {v.expanded && (kids || childState) && (
-            <ul role="group" className={s.group()}>
-              {kids && renderLevel(kids)}
-              {!kids && childState?.status === 'loading' && (
-                <li role="none" className={s.status()} style={{ paddingInlineStart: `${v.level * indent + 6}px` }}>
-                  <Spinner size={13} /> {labels.loading}
-                </li>
+              {multi && (
+                <span aria-hidden className={v2.check()}>
+                  {isSelected && <Check size={11} strokeWidth={3} />}
+                </span>
               )}
-              {!kids && childState?.status === 'error' && (
-                <li
-                  role="none"
-                  className={cn(s.status(), 'text-destructive-text')}
-                  style={{ paddingInlineStart: `${v.level * indent + 6}px` }}
-                >
-                  {labels.error}
-                  <button
-                    type="button"
-                    tabIndex={-1}
-                    className="underline underline-offset-2"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      tree.retry(node);
-                    }}
+              {Icon && <Icon size={15} aria-hidden className={v2.icon()} />}
+              <span className={s.label()}>
+                {node.content ?? (tree.matched?.has(node.id) ? highlight(node.label, filter, locale) : node.label)}
+              </span>
+              {node.meta != null && <span className={s.meta()}>{node.meta}</span>}
+            </div>
+          }
+          group={
+            v.branch &&
+            (kids || childState) && (
+              <TreeListGroup open={v.expanded} id={groupId} className={s.group()}>
+                {v.expanded && kids && renderLevel(kids)}
+                {!kids && childState?.status === 'loading' && (
+                  <li role="none" className={s.status()} style={{ paddingInlineStart: `${v.level * indent + 6}px` }}>
+                    <Spinner size={13} /> {labels.loading}
+                  </li>
+                )}
+                {!kids && childState?.status === 'error' && (
+                  <li
+                    role="none"
+                    className={cn(s.status(), 'text-destructive-text')}
+                    style={{ paddingInlineStart: `${v.level * indent + 6}px` }}
                   >
-                    {labels.retry}
-                  </button>
-                </li>
-              )}
-            </ul>
-          )}
-        </li>
+                    {labels.error}
+                    <button
+                      type="button"
+                      tabIndex={-1}
+                      className="underline underline-offset-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        tree.retry(node);
+                      }}
+                    >
+                      {labels.retry}
+                    </button>
+                  </li>
+                )}
+              </TreeListGroup>
+            )
+          }
+        />
       );
     });
 
   return (
-    <ul
-      role="tree"
-      aria-multiselectable={multi || undefined}
-      className={cn(s.root(), className)}
-      onKeyDown={handleKeyDown}
-      {...props}
-    >
-      {renderLevel(nodes)}
-    </ul>
+    <>
+      {filter && (
+        <span role="status" className="sr-only">
+          {t('treeList.matches', { count: tree.matched?.size ?? 0 })}
+        </span>
+      )}
+      {filter && tree.matched?.size === 0 && <p className={s.empty()}>{t('common.noMatches')}</p>}
+      <ul
+        hidden={filter && tree.matched?.size === 0 ? true : undefined}
+        role="tree"
+        aria-multiselectable={multi || undefined}
+        className={cn(s.root(), className)}
+        onKeyDown={handleKeyDown}
+        {...props}
+      >
+        {renderLevel(nodes)}
+      </ul>
+    </>
   );
 }

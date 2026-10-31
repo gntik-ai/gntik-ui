@@ -5,7 +5,7 @@ import type { TreeNode } from '../tree-model';
 
 const folder = { icon: Folder, openIcon: FolderOpen };
 
-const NODES: TreeNode[] = [
+export const treeListFileNodes: TreeNode[] = [
   {
     id: 'src',
     label: 'src',
@@ -48,7 +48,7 @@ export default function TreeListFiles() {
     <div className="grid w-full max-w-xs gap-3">
       <TreeList
         aria-label="Repository files"
-        nodes={NODES}
+        nodes={treeListFileNodes}
         defaultExpanded={['src']}
         defaultSelected={['index']}
         loadChildren={loadRemote}
