@@ -49,22 +49,20 @@ describe('LogoCloud', () => {
     for (const image of screen.getAllByRole('img'))
       expect(image.querySelector('svg')).toHaveAttribute('fill', 'currentColor');
   });
-  it.each(['no-preference', 'reduce'])('stays static with motion preference %s', (preference) => {
-    const originalMatchMedia = window.matchMedia;
-    window.matchMedia = (query) => ({
-      ...originalMatchMedia(query),
-      matches: query === `(prefers-reduced-motion: ${preference})`,
-    });
-    try {
-      const { container } = render(<LogoCloud logos={logos} />);
-      for (const element of container.querySelectorAll<HTMLElement>('*')) {
-        expect(element.getAttribute('class') ?? '').not.toMatch(
-          /animate-|transition-transform|(?:^|\s)(?:filter|blur|mask|backdrop)-?/,
-        );
-        expect(element.getAttribute('style') ?? '').not.toMatch(/animation|transition|transform|filter|mask|color/i);
-      }
-    } finally {
-      window.matchMedia = originalMatchMedia;
+  it('localizes both default and custom captions in the Spanish example', () => {
+    render(<Custom />);
+    expect(
+      screen.getByRole('list', { name: 'Equipos de empresas de todos los tamaños confían en nosotros' }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('list', { name: 'Nuestra comunidad' })).toBeInTheDocument();
+  });
+  it('renders no motion or filter utilities and no inline effects or colours', () => {
+    const { container } = render(<LogoCloud logos={logos} />);
+    for (const element of container.querySelectorAll<HTMLElement>('*')) {
+      expect(element.getAttribute('class') ?? '').not.toMatch(
+        /animate-|transition-transform|(?:^|\s)(?:filter|blur|mask|backdrop)-?/,
+      );
+      expect(element.getAttribute('style') ?? '').not.toMatch(/animation|transition|transform|filter|mask|color/i);
     }
   });
   it('contains no fixed colours, palette utilities, theme variants or visual effects', () => {

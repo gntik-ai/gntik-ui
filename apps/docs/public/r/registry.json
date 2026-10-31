@@ -418,6 +418,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -565,6 +570,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -1037,6 +1047,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -1193,6 +1208,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -1338,6 +1358,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -1596,6 +1621,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -1742,6 +1772,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -2018,6 +2053,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -2150,6 +2190,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -2362,6 +2407,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -3052,6 +3102,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -3378,6 +3433,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -3534,6 +3594,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -3996,6 +4061,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -4446,6 +4516,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -4842,6 +4917,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -5016,6 +5096,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -5206,6 +5291,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -5385,6 +5475,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -5584,6 +5679,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -5762,6 +5862,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -5943,6 +6048,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -6083,6 +6193,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -6242,6 +6357,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -6396,6 +6516,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -7455,6 +7580,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -7697,6 +7827,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -7978,6 +8113,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -8232,6 +8372,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -8377,6 +8522,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -8528,6 +8678,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -8691,6 +8846,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -8971,6 +9131,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -9116,6 +9281,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -9270,6 +9440,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -9716,6 +9891,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -9902,6 +10082,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -10364,6 +10549,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -10713,6 +10903,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -10866,6 +11061,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -11103,6 +11303,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -11255,6 +11460,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -11399,6 +11609,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -11553,6 +11768,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -11682,6 +11902,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -11939,6 +12164,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -12124,6 +12354,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -12415,6 +12650,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -12556,6 +12796,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -12797,6 +13042,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -12953,6 +13203,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -13171,6 +13426,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -13567,6 +13827,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -13950,6 +14215,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -14446,6 +14716,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -14747,6 +15022,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -14898,6 +15178,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -15140,6 +15425,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -15525,6 +15815,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -16029,6 +16324,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -16577,6 +16877,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -16815,6 +17120,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -16942,6 +17252,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -17223,6 +17538,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -17582,6 +17902,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -17861,6 +18186,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -18230,6 +18560,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -18374,6 +18709,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -18538,6 +18878,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -18853,6 +19198,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -18998,6 +19348,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -19165,6 +19520,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -19356,6 +19716,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -19508,6 +19873,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -19654,6 +20024,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -19847,6 +20222,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -20047,6 +20427,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -20301,6 +20686,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -20454,6 +20844,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -20650,6 +21045,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -20801,6 +21201,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -21025,6 +21430,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -21310,6 +21720,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -21539,6 +21954,11 @@
           "target": "components/i18n/messages/layer-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/markdown-messages.ts"
@@ -21683,6 +22103,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -21879,6 +22304,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
@@ -22096,6 +22526,11 @@
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
