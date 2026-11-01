@@ -1,0 +1,11 @@
+data: {"id":"completion-1","choices":[{"delta":{"role":"assistant","reasoning_content":"Let me "}}]}
+
+data: {"id":"completion-1","choices":[{"delta":{"reasoning_content":"think."}}]}
+
+data: {"id":"completion-1","choices":[{"delta":{"content":"Hel"}}]}
+
+data: {"id":"completion-1","choices":[{"delta":{"content":"lo"},"finish_reason":"stop"}]}
+
+data: [DONE]
+
+: keep-alive after completion

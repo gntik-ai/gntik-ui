@@ -1,4 +1,4 @@
-import type { CitationSource, Suggestion } from '@gntik-ai/chat';
+import type { ChatAdapter, ChatChunk, CitationSource, Suggestion } from '@gntik-ai/chat';
 import type { BreadcrumbItem } from '@gntik-ai/ui';
 
 /** Mock tool call the assistant runs before answering. */
@@ -68,4 +68,72 @@ export function chunkReply(text: string, size = 6): string[] {
   const out: string[] = [];
   for (let i = 0; i < text.length; i += size) out.push(text.slice(i, i + size));
   return out;
+}
+
+/** Demo-only backend substitute. All chunk timers are scheduled eagerly and cleared on abort. */
+export function createScriptedAdapter(
+  reply: string,
+  tool: AssistantTool,
+  tickMs: number,
+  sources: CitationSource[],
+): ChatAdapter {
+  return {
+    async sendMessage({ signal }) {
+      const timers = new Set<ReturnType<typeof setTimeout>>();
+      let close: (() => void) | undefined;
+      const clear = () => {
+        timers.forEach(clearTimeout);
+        timers.clear();
+        signal.removeEventListener('abort', abort);
+      };
+      const abort = () => {
+        clear();
+        close?.();
+        close = undefined;
+      };
+      return new ReadableStream<ChatChunk>({
+        start(controller) {
+          close = () => controller.close();
+          if (signal.aborted) {
+            abort();
+            return;
+          }
+          signal.addEventListener('abort', abort, { once: true });
+          const later = (chunk: ChatChunk, ms: number) => {
+            const timer = setTimeout(() => {
+              timers.delete(timer);
+              controller.enqueue(chunk);
+              if (chunk.type === 'finish') {
+                clear();
+                close?.();
+                close = undefined;
+              }
+            }, ms);
+            timers.add(timer);
+          };
+          controller.enqueue({ type: 'start' });
+          controller.enqueue({
+            type: 'tool-input-available',
+            toolCallId: 'scripted-tool',
+            toolName: tool.name,
+            input: tool.args,
+          });
+          later({ type: 'tool-output-available', toolCallId: 'scripted-tool', output: tool.result }, tool.durationMs);
+          const pieces = chunkReply(reply);
+          pieces.forEach((delta, i) =>
+            later({ type: 'text-delta', id: 'reply', delta }, tool.durationMs + (i + 1) * tickMs),
+          );
+          const end = tool.durationMs + (pieces.length + 1) * tickMs;
+          sources.forEach((source, i) =>
+            later({ type: 'source-url', sourceId: String(i), title: source.title, url: source.url ?? '' }, end),
+          );
+          later({ type: 'finish' }, end);
+        },
+        cancel() {
+          clear();
+          close = undefined;
+        },
+      });
+    },
+  };
 }

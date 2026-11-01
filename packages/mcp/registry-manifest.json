@@ -24,7 +24,8 @@
     "read-sse",
     "reasoning-block",
     "searchable-select",
-    "site-footer"
+    "site-footer",
+    "use-chat"
   ],
   "items": [
     {"id":"accept-invitation","package":"@gntik-ai/templates","name":"accept-invitation","version":"0.6.0","url":"https://ui.gntik.ai/r/accept-invitation.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
@@ -296,6 +297,7 @@
     {"id":"ui-utils","package":"@gntik-ai/ui","name":"ui-utils","version":"0.5.0","url":"https://ui.gntik.ai/r/ui-utils.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"upgrade-required","package":"@gntik-ai/templates","name":"upgrade-required","version":"0.6.0","url":"https://ui.gntik.ai/r/upgrade-required.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"usage-analytics","package":"@gntik-ai/templates","name":"usage-analytics","version":"0.6.0","url":"https://ui.gntik.ai/r/usage-analytics.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"use-chat","package":"@gntik-ai/chat","name":"use-chat","version":"0.5.0","url":"https://ui.gntik.ai/r/use-chat.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"user-menu","package":"@gntik-ai/ui","name":"user-menu","version":"0.5.0","url":"https://ui.gntik.ai/r/user-menu.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"validation-summary","package":"@gntik-ai/blocks","name":"validation-summary","version":"0.6.0","url":"https://ui.gntik.ai/r/validation-summary.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"verify-email","package":"@gntik-ai/templates","name":"verify-email","version":"0.6.0","url":"https://ui.gntik.ai/r/verify-email.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},

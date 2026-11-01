@@ -16,3 +16,4 @@ export * from './SuggestionChips';
 export * from './ToolCallCard';
 export * from './TypingIndicator';
 export * from './useChatScroll';
+export * from './useChat';

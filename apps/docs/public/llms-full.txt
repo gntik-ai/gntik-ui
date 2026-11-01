@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 125 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 126 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -2884,6 +2884,66 @@ export default function TypingIndicatorStates() {
       <TypingIndicator />
       <TypingIndicator showLabel />
       <TypingIndicator size="sm" author="Reviewer" showLabel />
+    </div>
+  );
+}
+```
+
+### useChat (`use-chat`)
+
+Experimental streaming conversation runtime: useChat({ adapter, id, initialMessages, initialCursor, flushIntervalMs, generateId, onFinish, onError }) returns messages, isStreaming, error, sendMessage(text, attachments?), stop(), regenerate(messageId?), setMessages(next), loadOlder(), hasOlder and isLoadingOlder. Busy sends are ignored. Messages hold text, reasoning, tool, source, file and step parts. applyChunk is a pure UI-message-stream v1 reducer; unknown chunk types are ignored. Stop and unmount abort the adapter signal and retain partial parts; failed replies call onError once. State updates batch every 50 ms (0 commits every chunk). A changed conversation id aborts and resets. createEchoAdapter runs locally; createHttpChatAdapter reads UI-stream SSE and createOpenAICompatibleAdapter maps text-only chat-completions SSE. Both reuse readSSE and check HTTP status first. Their URL must be the product backend: provider keys stay server-side. Map pending/streaming to ChatMessage.streaming, and terminal replies to onRetry; ChatMessage has no status prop. See the chat runtime guide on this page for the protocol, history, abort and part mapping.
+
+- Package: `@gntik-ai/chat` · export `useChat` · group Feedback · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/useChat/useChat.doc.ts
+- Registry dependencies: attachment, citation, read-sse, tool-call-card
+- Install: `gntik-ui add use-chat`; own the source with `gntik-ui eject use-chat`
+
+Usage:
+
+```tsx
+import { ChatComposer } from '@gntik-ai/chat';
+import { ChatAnnouncer, ChatMessage } from '@gntik-ai/chat';
+import { Markdown } from '@gntik-ai/chat';
+import { createEchoAdapter, useChat } from '@gntik-ai/chat';
+
+const adapter = createEchoAdapter();
+
+/** A backend-free, keyboard-accessible echo conversation with Stop and Retry. */
+export default function UseChatEcho() {
+  const { messages, isStreaming, sendMessage, stop, regenerate, error } = useChat({ adapter });
+  const lastReply = [...messages]
+    .reverse()
+    .find((m) => m.role === 'assistant' && m.status === 'done')
+    ?.parts.filter((p) => p.type === 'text')
+    .map((p) => p.text)
+    .join('');
+  return (
+    <div className="flex max-w-2xl flex-col gap-4">
+      {messages.map((message) => {
+        const text = message.parts
+          .filter((p) => p.type === 'text')
+          .map((p) => p.text)
+          .join('');
+        const streaming = message.status === 'pending' || message.status === 'streaming';
+        return (
+          <ChatMessage
+            key={message.id}
+            role={message.role}
+            streaming={streaming}
+            copyText={text}
+            onRetry={message.role === 'assistant' && !isStreaming ? () => regenerate(message.id) : undefined}
+          >
+            {text && <Markdown streaming={streaming}>{text}</Markdown>}
+          </ChatMessage>
+        );
+      })}
+      {error && (
+        <p role="alert" className="text-destructive-text">
+          {error.message}
+        </p>
+      )}
+      <ChatComposer onSubmit={sendMessage} streaming={isStreaming} onStop={stop} />
+      <ChatAnnouncer streaming={isStreaming} lastReply={lastReply} />
     </div>
   );
 }
@@ -10758,7 +10818,7 @@ import { SessionsDevices } from '@gntik-ai/blocks';
 
 ### Assistant chat (`assistant-chat`)
 
-Workspace assistant in the console: @gntik-ai/chat ChatLayout with suggestions, ChatMessage turns, a ToolCallCard, a mock-streamed markdown reply with Citations, Stop / Retry / feedback and a ChatComposer; a details panel lists the context sources. Streaming timers are cleared on Stop and unmount.
+Workspace assistant in the console: @gntik-ai/chat ChatLayout with suggestions, ChatMessage turns, a ToolCallCard, adapter-streamed markdown replies with Citations, Stop / Retry / feedback and a ChatComposer; a details panel lists the context sources. Pass an optional adapter for a backend, or use the scripted demo; Stop and unmount abort both.
 
 - Package: `@gntik-ai/templates` · export `AssistantChatPage` · group AI · status experimental
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/assistant-chat/template.meta.ts
