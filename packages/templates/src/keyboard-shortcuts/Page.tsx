@@ -10,9 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
   Page,
+  useHotkeys,
   type BreadcrumbItem,
 } from '@gntik-ai/ui';
-import type { ReactElement } from 'react';
+import { useRef, useState, type ReactElement } from 'react';
 import { ConsoleShell, type ConsoleShellProps } from '../shared/ConsoleShell';
 import { shortcutBreadcrumbs, shortcutGroups, type ShortcutGroup } from './data';
 import { ShortcutSheet } from './ShortcutSheet';
@@ -37,6 +38,8 @@ export default function KeyboardShortcutsPage(props: Partial<KeyboardShortcutsPr
     currentHref = '/help/shortcuts',
     shell,
   } = props;
+  const sheet = useRef<HTMLDivElement>(null);
+  useHotkeys({ '/': () => sheet.current?.querySelector('input')?.focus() });
   return (
     <ConsoleShell breadcrumbs={breadcrumbs} currentHref={currentHref} {...shell}>
       <Page
@@ -52,7 +55,10 @@ export default function KeyboardShortcutsPage(props: Partial<KeyboardShortcutsPr
           />
         }
       >
-        <ShortcutSheet groups={groups} />
+        <div ref={sheet}>
+          <ShortcutSheet groups={groups} />
+        </div>
+        <KeyboardShortcutsDialog groups={groups} title={title} trigger={null} />
       </Page>
     </ConsoleShell>
   );
@@ -77,10 +83,18 @@ export function KeyboardShortcutsDialog({
   trigger = <Button variant="secondary" icon={Keyboard} />,
   title = 'Keyboard shortcuts',
 }: KeyboardShortcutsDialogProps) {
+  const [openState, setOpenState] = useState(defaultOpen ?? false);
+  const content = useRef<HTMLDivElement>(null);
+  const setOpen = (next: boolean) => {
+    setOpenState(next);
+    onOpenChange?.(next);
+  };
+  useHotkeys({ '?': () => setOpen(true) });
+  useHotkeys({ '/': () => content.current?.querySelector('input')?.focus() }, { ref: content });
   return (
-    <Dialog open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
+    <Dialog open={open ?? openState} onOpenChange={setOpen}>
       {trigger && <DialogTrigger render={trigger}>{title}</DialogTrigger>}
-      <DialogContent size="lg">
+      <DialogContent size="lg" ref={content}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>Search by action or key.</DialogDescription>

@@ -13,7 +13,7 @@ export interface GlobalSearchProps {
   onSelect?: (item: CommandItem, group: GlobalSearchGroup) => void;
   /** Group headings. */
   labels?: Partial<Record<GlobalSearchGroup, string>>;
-  /** Registers ⌘K / Ctrl+K. */
+  /** Registers ⌘K on macOS/iOS and Ctrl+K on other platforms. */
   shortcut?: boolean;
   open?: boolean;
   defaultOpen?: boolean;

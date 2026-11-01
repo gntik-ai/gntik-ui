@@ -21,6 +21,16 @@ export { cn } from './utils/cn';
 export { tv, type VariantProps } from './utils/tv';
 export type { ComponentDoc } from './doc';
 export { getOs, useOs, type Os } from './hooks/useOs';
+export {
+  useHotkeys,
+  useRegisteredHotkeys,
+  setCharacterHotkeysEnabled,
+  type HotkeyHandler,
+  type HotkeyDefinition,
+  type HotkeyMap,
+  type UseHotkeysOptions,
+  type RegisteredHotkey,
+} from './hooks/useHotkeys';
 export { useMediaQuery, useReducedMotion, usePrefersReducedMotion } from './hooks/useMediaQuery';
 export { useBreakpoint, useBreakpointValue, type BreakpointOptions } from './hooks/useBreakpoint';
 
