@@ -10,6 +10,7 @@ export * from './ConversationList';
 export * from './Markdown';
 export * from './MessageFeedback';
 export * from './ModelPicker';
+export * from './readSSE';
 export * from './ReasoningBlock';
 export * from './SuggestionChips';
 export * from './ToolCallCard';

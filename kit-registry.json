@@ -11173,6 +11173,36 @@
       "docs": "packages/ui/src/components/RadioGroup/RadioGroup.doc.ts"
     },
     {
+      "id": "read-sse",
+      "kind": "component",
+      "name": "readSSE",
+      "package": "@gntik-ai/chat",
+      "group": "Feedback",
+      "status": "beta",
+      "description": "Reads a streamed fetch response as an async iterator, for chat replies and live log tails where EventSource cannot be used (POST bodies, auth headers). `readSSE(response, { signal, maxBufferSize })` follows the WHATWG event-stream rules: streaming UTF-8, BOM, CRLF/LF/CR endings across chunk boundaries, comments, multi-line data, a persistent id and a digits-only retry. `readTextParts` splits on a separator (a line feed by default) for NDJSON. Aborting the signal, leaving the loop early or a stream error cancels the reader once, so the connection closes. An unterminated final block is dropped, as EventSource does. There is no reconnection: keep the last id and retry and send Last-Event-ID yourself. maxBufferSize bounds memory, not time, so abort a stream that goes quiet.",
+      "files": [
+        {
+          "path": "packages/chat/src/readSSE/eventStreamParser.ts",
+          "target": "components/chat/read-sse/eventStreamParser.ts"
+        },
+        {
+          "path": "packages/chat/src/readSSE/index.ts",
+          "target": "components/chat/read-sse/index.ts"
+        },
+        {
+          "path": "packages/chat/src/readSSE/readSSE.ts",
+          "target": "components/chat/read-sse/readSSE.ts"
+        },
+        {
+          "path": "packages/chat/src/readSSE/streamText.ts",
+          "target": "components/chat/read-sse/streamText.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "docs": "packages/chat/src/readSSE/readSSE.doc.ts"
+    },
+    {
       "id": "reasoning-block",
       "kind": "component",
       "name": "ReasoningBlock",
