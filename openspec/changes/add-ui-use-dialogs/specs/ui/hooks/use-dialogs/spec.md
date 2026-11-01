@@ -6,7 +6,7 @@ useDialogs and DialogsProvider: promise-based confirm, alert, prompt and custom 
 
 ### Requirement: Confirm resolves to the user's choice
 
-`confirm(message, options)` SHALL render an alert dialog with the title, message and tone, and SHALL resolve `true` when the confirm button is activated and `false` on Cancel or Escape. The dialog SHALL be removed from the DOM once the promise settles.
+`confirm(message, options)` SHALL render an alert dialog with the title, message and tone, and SHALL resolve `true` when the confirm button is activated and `false` on Cancel, Escape or an outside press on the topmost dialog. The dialog SHALL be removed from the DOM once the promise settles.
 
 #### Scenario: Revoke a key
 
@@ -18,6 +18,12 @@ useDialogs and DialogsProvider: promise-based confirm, alert, prompt and custom 
 
 - **WHEN** the user presses Escape in the confirm dialog
 - **THEN** the promise resolves false
+
+#### Scenario: Outside press
+
+- **WHEN** the user presses outside the topmost idle confirm dialog
+- **THEN** the promise resolves false
+- **AND** the dialog is removed
 
 ### Requirement: Typed confirmation gates the confirm button
 

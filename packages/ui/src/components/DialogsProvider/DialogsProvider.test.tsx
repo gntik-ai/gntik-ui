@@ -6,6 +6,7 @@ import { Button } from '../Button';
 import { Dialog, DialogContent, DialogTitle } from '../Dialog';
 import { Menu, MenuContent, MenuItem, MenuTrigger } from '../Menu';
 import { expectNoAxeViolations } from '../../test/a11y';
+import DialogsAlert from './examples/DialogsAlert';
 import DialogsAsyncConfirm from './examples/DialogsAsyncConfirm';
 import DialogsCustomDialog from './examples/DialogsCustomDialog';
 import DialogsPrompt from './examples/DialogsPrompt';
@@ -138,6 +139,67 @@ describe('DialogsProvider', () => {
       start(() => api().confirm(message, { title: 'Revoke API key' }));
       await screen.findByRole('alertdialog', { name: 'Revoke API key' });
       expect(screen.getByRole('button', { name: 'Confirm' })).toBeInTheDocument();
+    });
+  });
+
+  describe('outside press', () => {
+    const outsidePress = async (user: ReturnType<typeof userEvent.setup>) => {
+      const dialog = await screen.findByRole('alertdialog');
+      const viewport = dialog.parentElement;
+      if (!viewport) throw new Error('alertdialog has no viewport');
+      await user.click(viewport);
+    };
+
+    it('an idle confirm resolves false on an outside press and leaves the DOM', async () => {
+      const user = userEvent.setup();
+      const api = mount();
+      const { state } = start(() => api().confirm('Stops now.', { title: 'Revoke' }));
+      await outsidePress(user);
+      await waitFor(() => expect(state.value).toBe(false));
+      expect(state.count).toBe(1);
+      expect(dialogsInDom()).toBe(0);
+    });
+
+    it('a pending confirm ignores an outside press', async () => {
+      const user = userEvent.setup();
+      const task = deferred();
+      const api = mount();
+      const { state } = start(() =>
+        api().confirm('Stops now.', { title: 'Revoke', confirmLabel: 'Revoke', onConfirm: () => task.promise }),
+      );
+      await screen.findByRole('alertdialog');
+      await user.click(screen.getByRole('button', { name: 'Revoke' }));
+      await waitFor(() => expect(screen.getByRole('button', { name: 'Revoke' })).toHaveAttribute('aria-busy', 'true'));
+      await outsidePress(user);
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      expect(screen.getByRole('alertdialog')).toBeInTheDocument();
+      expect(state.count).toBe(0);
+      await act(async () => task.resolve());
+      await waitFor(() => expect(state.value).toBe(true));
+    });
+
+    it('a stacked confirm closes alone on an outside press; the dialog below stays open', async () => {
+      const user = userEvent.setup();
+      const api = mount();
+      const custom = start(() => api().open(RenameDialog, { name: 'a' }));
+      await screen.findByRole('dialog', { name: 'Rename' });
+      const top = start(() => api().confirm('Discard?', { title: 'Discard' }));
+      await screen.findByRole('alertdialog', { name: 'Discard' });
+      await outsidePress(user);
+      await waitFor(() => expect(top.state.value).toBe(false));
+      expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+      expect(screen.getByRole('dialog', { name: 'Rename' })).toBeInTheDocument();
+      expect(custom.state.count).toBe(0);
+    });
+
+    it('a press inside the confirm popup does not dismiss it', async () => {
+      const user = userEvent.setup();
+      const api = mount();
+      const { state } = start(() => api().confirm('Stops now.', { title: 'Revoke' }));
+      await user.click(await screen.findByText('Stops now.'));
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      expect(screen.getByRole('alertdialog')).toBeInTheDocument();
+      expect(state.count).toBe(0);
     });
   });
 
@@ -537,6 +599,17 @@ describe('DialogsProvider', () => {
       await expectNoAxeViolations();
       await user.click(screen.getByRole('button', { name: 'Rotate' }));
       await waitFor(() => expect(screen.getByText('Key rotated')).toBeInTheDocument(), { timeout: 3000 });
+    });
+
+    it('alert: the acknowledgment dialog has no axe violations and OK dismisses it', async () => {
+      const user = userEvent.setup();
+      render(<DialogsAlert />);
+      await user.click(screen.getByRole('button', { name: 'Save settings' }));
+      await screen.findByRole('alertdialog', { name: 'Settings saved' });
+      await expectNoAxeViolations();
+      await user.click(screen.getByRole('button', { name: 'OK' }));
+      await waitFor(() => expect(screen.getByText('Acknowledged')).toBeInTheDocument());
+      expect(dialogsInDom()).toBe(0);
     });
 
     it('prompt: the opened dialog has no axe violations', async () => {

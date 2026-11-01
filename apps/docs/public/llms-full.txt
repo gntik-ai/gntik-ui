@@ -6883,7 +6883,7 @@ export default function DialogForm() {
 
 ### DialogsProvider (`dialogs-provider`)
 
-Opt-in host for promise-based dialogs. Mount DialogsProvider once and call useDialogs() anywhere below it: `await confirm(message, options)` resolves a boolean, `alert` resolves once acknowledged, `prompt` resolves the entered text or null, and `open(Component, payload)` renders your own dialog and resolves with the value passed to `onClose`. `update(dialog, payload)` re-renders an open dialog, `close(dialog, result)` resolves it and `closeAll()` (or unmounting the provider) resolves every open dialog with its cancel value: false, null or undefined. Confirmations support a typed confirmation and an async `onConfirm` that keeps the dialog open with a pending button and shows a failure inline. Dialogs stack in call order; only the topmost acts on Escape. Focus returns to `returnFocus`, else to the element focused when the call was made, else to the trigger of the menu that started it, and only once the stack is empty. A custom `open()` component that never calls `onClose` leaves its promise pending until `closeAll()` or unmount; keep the declarative AlertDialog for dialogs owned by one screen.
+Opt-in host for promise-based dialogs. Mount DialogsProvider once and call useDialogs() anywhere below it: `await confirm(message, options)` resolves a boolean, `alert` resolves once acknowledged, `prompt` resolves the entered text or null, and `open(Component, payload)` renders your own dialog and resolves with the value passed to `onClose`. `update(dialog, payload)` re-renders an open dialog, `close(dialog, result)` resolves it and `closeAll()` (or unmounting the provider) resolves every open dialog with its cancel value: false, null or undefined. Confirmations support a typed confirmation and an async `onConfirm` that keeps the dialog open with a pending button and shows a failure inline. Dialogs stack in call order; only the topmost acts on Escape or an outside press (a confirm resolves false, a prompt null; a pending onConfirm ignores both). Focus returns to `returnFocus`, else to the element focused when the call was made, else to the trigger of the menu that started it, and only once the stack is empty. A custom `open()` component that never calls `onClose` leaves its promise pending until `closeAll()` or unmount; keep the declarative AlertDialog for dialogs owned by one screen.
 
 - Package: `@gntik-ai/ui` · export `DialogsProvider` · group Overlays · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/DialogsProvider/DialogsProvider.doc.ts
@@ -6906,53 +6906,41 @@ Tokens: popover, popover-foreground, border, background, muted-foreground, destr
 Usage:
 
 ```tsx
-import { KeyRound } from '@gntik-ai/icons';
-import { useRef, useState } from 'react';
+import { Save } from '@gntik-ai/icons';
+import { useState } from 'react';
 import { Button } from '@gntik-ai/ui';
 import { DialogsProvider, useDialogs } from '@gntik-ai/ui';
 
-const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
-
-function RotateKey() {
-  const { confirm } = useDialogs();
-  const attempts = useRef(0);
-  const [rotated, setRotated] = useState(false);
+function SaveSettings() {
+  const { alert } = useDialogs();
+  const [acknowledged, setAcknowledged] = useState(false);
   return (
     <div className="flex flex-col items-center gap-3">
       <Button
         variant="secondary"
-        icon={KeyRound}
+        icon={Save}
         onClick={async () => {
-          const ok = await confirm('The old key keeps working for one hour after rotation.', {
-            title: 'Rotate API key?',
-            tone: 'warning',
-            confirmLabel: 'Rotate',
-            onConfirm: async () => {
-              await wait(900);
-              // The first attempt fails so the inline error and the retry are visible.
-              attempts.current += 1;
-              if (attempts.current === 1) {
-                throw new Error('Key in use by a running deployment. Try again.');
-              }
-            },
+          setAcknowledged(false);
+          await alert('New sessions use these settings. Open sessions keep the old ones until they end.', {
+            title: 'Settings saved',
           });
-          if (ok) setRotated(true);
+          setAcknowledged(true);
         }}
       >
-        Rotate key
+        Save settings
       </Button>
       <p aria-live="polite" className="h-4 text-[12px] text-muted-foreground">
-        {rotated ? 'Key rotated' : ''}
+        {acknowledged ? 'Acknowledged' : ''}
       </p>
     </div>
   );
 }
 
-/** While the action runs the dialog stays open; a failure is shown inline and can be retried. */
-export default function DialogsAsyncConfirm() {
+/** `alert()` resolves once the single OK action is activated; Escape acknowledges it too. */
+export default function DialogsAlert() {
   return (
     <DialogsProvider>
-      <RotateKey />
+      <SaveSettings />
     </DialogsProvider>
   );
 }

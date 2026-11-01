@@ -1,4 +1,4 @@
-import { useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { useI18n } from '../../i18n/I18nProvider';
 import { Alert } from '../Alert';
 import {
@@ -51,18 +51,30 @@ const errorMessage = (error: unknown) => (error instanceof Error ? error.message
 /** `confirm()`: kit AlertDialog with an optional typed confirmation and a pending state. */
 export function ConfirmView({ entry, host }: ViewProps<'confirm'>) {
   const { t } = useI18n();
+  const { id } = entry;
   const { message, options } = entry.spec;
   const tone = options.tone ?? 'destructive';
   const [typed, setTyped] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const busyRef = useRef(false);
+  const popupRef = useRef<HTMLDivElement>(null);
   const matches = options.typeToConfirm === undefined || typed === options.typeToConfirm;
 
   const dismiss = () => {
     if (busyRef.current || !host.canDismiss(entry.id)) return;
     host.settle(entry.id, false);
   };
+  // Base UI's AlertDialog never dismisses on an outside press, so the guarded press is handled here.
+  useEffect(() => {
+    const onPointerDown = (event: PointerEvent) => {
+      const popup = popupRef.current;
+      if (!popup || !(event.target instanceof Node) || popup.contains(event.target)) return;
+      if (!busyRef.current && host.canDismiss(id)) host.settle(id, false);
+    };
+    document.addEventListener('pointerdown', onPointerDown, true);
+    return () => document.removeEventListener('pointerdown', onPointerDown, true);
+  }, [host, id]);
   const fail = (reason: unknown) => {
     busyRef.current = false;
     setBusy(false);
@@ -94,7 +106,7 @@ export function ConfirmView({ entry, host }: ViewProps<'confirm'>) {
 
   return (
     <AlertDialog open onOpenChange={(open) => !open && dismiss()}>
-      <AlertDialogContent finalFocus={host.finalFocus(entry)}>
+      <AlertDialogContent ref={popupRef} finalFocus={host.finalFocus(entry)}>
         <AlertDialogHeader tone={tone}>
           <AlertDialogTitle>{options.title ?? message}</AlertDialogTitle>
           {options.title !== undefined && <AlertDialogDescription>{message}</AlertDialogDescription>}
