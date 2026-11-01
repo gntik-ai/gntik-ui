@@ -7,7 +7,7 @@ export default function ChatRuntimeGuide() {
   const copy = chatRuntimeMessages[locale.split('-')[0]] ?? chatRuntimeMessages.en;
   const { CodeBlock } = window;
   return (
-    <section id="chat-runtime" className="space-y-4 text-foreground">
+    <section id="guide-chat-runtime" className="space-y-4 text-foreground">
       <h2 className="text-xl font-semibold">{copy.title}</h2>
       <p>{copy.intro}</p>
       <h3 className="text-lg font-semibold">{copy.backendTitle}</h3>
