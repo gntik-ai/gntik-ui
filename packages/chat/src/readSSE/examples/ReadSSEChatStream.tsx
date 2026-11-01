@@ -1,7 +1,37 @@
 import { Button } from '@gntik-ai/ui';
 import { useEffect, useRef, useState } from 'react';
 import { readSSE } from '../readSSE';
-import { fakeStreamResponse } from './fakeServer';
+
+// Stands in for fetch(url) so the example runs without a backend; in an app, pass the real response.
+const encoder = new TextEncoder();
+
+/**
+ * Stands in for `fetch(url)` in the docs, so the examples need no backend: a streamed Response that
+ * sends one chunk every `delayMs`, then closes, or fails with a network error when `failAfter` is set.
+ */
+function fakeStreamResponse(
+  chunks: string[],
+  { delayMs = 200, failAfter }: { delayMs?: number; failAfter?: number } = {},
+) {
+  let index = 0;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const stream = new ReadableStream<Uint8Array>({
+    pull(controller) {
+      return new Promise<void>((resolve) => {
+        timer = setTimeout(() => {
+          if (index === failAfter) controller.error(new TypeError('network error'));
+          else if (index < chunks.length) controller.enqueue(encoder.encode(chunks[index++]));
+          else controller.close();
+          resolve();
+        }, delayMs);
+      });
+    },
+    cancel() {
+      clearTimeout(timer);
+    },
+  });
+  return new Response(stream, { headers: { 'Content-Type': 'text/event-stream' } });
+}
 
 // What an OpenAI-style endpoint sends: JSON deltas, then a plain [DONE] the caller stops on.
 const REPLY = ['The ', 'deployment ', 'finished ', 'without ', 'errors.'].map(

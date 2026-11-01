@@ -13,4 +13,4 @@
 
 - [x] 3.1 Add a changeset: minor for `@gntik-ai/chat`.
 - [x] 3.2 Run `pnpm registry` and commit the generated files.
-- [ ] 3.3 Run `openspec validate add-chat-read-sse --strict` (the tool is not available in the agent sandbox; run in review).
+- [x] 3.3 Run `openspec validate add-chat-read-sse --strict`.

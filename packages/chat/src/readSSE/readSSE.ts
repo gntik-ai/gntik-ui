@@ -54,6 +54,14 @@ export async function* readSSE(source: StreamSource, options: ReadSSEOptions = {
   }
 }
 
+/** Length of the longest suffix of `text` that is a proper prefix of `separator` (a separator still arriving). */
+function partialSeparatorLength(text: string, separator: string): number {
+  for (let length = Math.min(separator.length - 1, text.length); length > 0; length--) {
+    if (text.endsWith(separator.slice(0, length))) return length;
+  }
+  return 0;
+}
+
 /**
  * Reads a streamed response as text parts split on `separator` (default a line feed), for protocols
  * that are not SSE, such as NDJSON log tails. Parts do not include the separator; empty parts are
@@ -87,7 +95,8 @@ export async function* readTextParts(source: StreamSource, options: ReadTextPart
       yield part;
     }
     pending = pending.slice(start);
-    if (pending.length > maxBufferSize) throw tooLarge();
+    // A trailing partial separator belongs to the next chunk's match, not to the part, so it is not counted.
+    if (pending.length - partialSeparatorLength(pending, separator) > maxBufferSize) throw tooLarge();
   }
   if (pending !== '') yield pending;
 }

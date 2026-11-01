@@ -197,7 +197,8 @@ export function exportNamesOf(root: string, item: KitItem): string[] {
     return [m?.[1] ?? `${pascal(item.id)}Page`];
   }
   if (item.id === 'ui-utils') return ['cn', 'tv'];
-  return [/^[A-Z]\w*$/.test(item.name) ? item.name : pascal(item.id)];
+  // An identifier is the export itself: a component (`Button`) or a function (`readSSE`).
+  return [/^[A-Za-z]\w*$/.test(item.name) ? item.name : pascal(item.id)];
 }
 
 export function exportNameOf(root: string, item: KitItem): string {

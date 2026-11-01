@@ -298,6 +298,25 @@ describe('maxBufferSize', () => {
     expect(ok).toStrictEqual([m('€'.repeat(10))]);
   });
 
+  it('delivers a message completed before an oversized block however the bytes are chunked', async () => {
+    const body = 'data: a\n\n' + 'data: ' + 'x'.repeat(40) + '\n';
+    for (const chunks of [[body], ['data: a\n\n', 'data: ' + 'x'.repeat(40) + '\n'], [...body]]) {
+      const cancel = vi.fn();
+      const received: SSEMessage[] = [];
+      let failure: unknown;
+      try {
+        for await (const message of readSSE(streamOf(chunks, { cancel, hang: true }), { maxBufferSize: 32 })) {
+          received.push(message);
+        }
+      } catch (error) {
+        failure = error;
+      }
+      expect(received).toStrictEqual([m('a')]);
+      expect(failure).toBeInstanceOf(RangeError);
+      expect(cancel).toHaveBeenCalledTimes(1);
+    }
+  });
+
   it('defaults to 1,048,576 characters', async () => {
     const big = 'data: ' + 'x'.repeat(1_048_576) + '\n';
     await expect(collect(readSSE(streamOf([big], { hang: true })))).rejects.toBeInstanceOf(RangeError);
@@ -365,6 +384,21 @@ describe('readTextParts', () => {
     const cancel = vi.fn();
     await expect(
       collect(readTextParts(streamOf(['x'.repeat(20), 'x'.repeat(20)], { cancel, hang: true }), { maxBufferSize: 32 })),
+    ).rejects.toBeInstanceOf(RangeError);
+    expect(cancel).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not count a separator still arriving against the part limit', async () => {
+    const whole = await collect(readTextParts(streamOf(['abc||']), { separator: '||', maxBufferSize: 3 }));
+    const split = await collect(readTextParts(streamOf(['abc|', '|']), { separator: '||', maxBufferSize: 3 }));
+    expect(whole).toStrictEqual(['abc']);
+    expect(split).toStrictEqual(whole);
+  });
+
+  it('still rejects a part longer than the limit when a partial separator follows it', async () => {
+    const cancel = vi.fn();
+    await expect(
+      collect(readTextParts(streamOf(['abcd|', '|'], { cancel, hang: true }), { separator: '||', maxBufferSize: 3 })),
     ).rejects.toBeInstanceOf(RangeError);
     expect(cancel).toHaveBeenCalledTimes(1);
   });

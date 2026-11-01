@@ -12,8 +12,11 @@ export interface SSEMessage {
 
 /** Incremental parser for the `text/event-stream` format (WHATWG HTML, "Server-sent events"). */
 export interface EventStreamParser {
-  /** Feeds decoded text and returns the messages it completed. Throws a RangeError past the limit. */
-  write(text: string): SSEMessage[];
+  /**
+   * Feeds decoded text and yields each message as soon as its block ends, so a message completed before
+   * an oversized block is still delivered. Throws a RangeError past the limit.
+   */
+  write(text: string): Generator<SSEMessage>;
 }
 
 const DIGITS = /^[0-9]+$/;
@@ -45,34 +48,32 @@ export function createEventStreamParser(maxBufferSize: number): EventStreamParse
     }
   }
 
-  function dispatch(out: SSEMessage[]) {
+  function dispatch(): SSEMessage | undefined {
+    let message: SSEMessage | undefined;
     if (dataLines.length > 0) {
-      const message: SSEMessage = { event: event || 'message', data: dataLines.join('\n'), id: lastEventId };
+      message = { event: event || 'message', data: dataLines.join('\n'), id: lastEventId };
       if (retry !== undefined) {
         message.retry = retry;
         retry = undefined;
       }
-      out.push(message);
     }
     event = '';
     dataLines = [];
     blockSize = 0;
+    return message;
   }
 
-  function endLine(out: SSEMessage[]) {
-    if (line === '') {
-      dispatch(out);
-      return;
-    }
+  function endLine(): SSEMessage | undefined {
+    if (line === '') return dispatch();
     blockSize += line.length + 1;
     if (blockSize > maxBufferSize) throw tooLarge();
     field(line);
     line = '';
+    return undefined;
   }
 
   return {
-    write(text) {
-      const out: SSEMessage[] = [];
+    *write(text) {
       let start = 0;
       if (skipLineFeed && text !== '') {
         skipLineFeed = false;
@@ -82,7 +83,7 @@ export function createEventStreamParser(maxBufferSize: number): EventStreamParse
         const code = text.charCodeAt(i);
         if (code !== 10 && code !== 13) continue;
         line += text.slice(start, i);
-        endLine(out);
+        const message = endLine();
         line = '';
         start = i + 1;
         if (code === 13) {
@@ -91,10 +92,10 @@ export function createEventStreamParser(maxBufferSize: number): EventStreamParse
             i++;
           } else if (start === text.length) skipLineFeed = true;
         }
+        if (message) yield message;
       }
       line += text.slice(start);
       if (blockSize + line.length > maxBufferSize) throw tooLarge();
-      return out;
     },
   };
 }
