@@ -85,6 +85,7 @@ export * from './components/DatePicker';
 export * from './components/DateField';
 export * from './components/DateTimeRangePicker';
 export * from './components/Dialog';
+export * from './components/DialogsProvider';
 export * from './components/DiffViewer';
 export * from './components/Drawer';
 export * from './components/EmptyState';
