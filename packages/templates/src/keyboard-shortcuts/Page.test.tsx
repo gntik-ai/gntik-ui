@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../test/a11y';
 import KeyboardShortcutsPage, { KeyboardShortcutsDialog } from './Page';
@@ -43,6 +43,28 @@ describe('platform shortcut hints', () => {
 });
 
 describe('KeyboardShortcutsPage', () => {
+  it.each(['dark', 'light', 'high_contrast'])(
+    'opens help and focuses search without intercepting typing in %s',
+    async (theme) => {
+      document.documentElement.className = theme;
+      const user = userEvent.setup();
+      render(<KeyboardShortcutsPage />);
+      fireEvent.keyDown(document.body, { key: '/' });
+      expect(screen.getByRole('searchbox', { name: 'Search shortcuts' })).toHaveFocus();
+      screen.getByRole('searchbox').blur();
+      fireEvent.keyDown(document.body, { key: '?', shiftKey: true });
+      const dialog = await screen.findByRole('dialog', { name: 'Keyboard shortcuts' });
+      const search = within(dialog).getByRole('searchbox', { name: 'Search shortcuts' });
+      await user.type(search, '?');
+      expect(search).toHaveValue('?');
+      expect(dialog).toBeInTheDocument();
+      const close = within(dialog).getByRole('button', { name: 'Close' });
+      close.focus();
+      fireEvent.keyDown(close, { key: '/' });
+      expect(search).toHaveFocus();
+      await expectNoAxeViolations();
+    },
+  );
   it('renders the console page with every group', { timeout: 15000 }, async () => {
     render(<KeyboardShortcutsPage />);
     expect(screen.getByRole('main')).toBeInTheDocument();

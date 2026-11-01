@@ -23,6 +23,7 @@ describe('GlobalSearch', () => {
   });
 
   it('⌘K opens it with recent and grouped results; choosing one reports its group', async () => {
+    vi.stubGlobal('navigator', { platform: 'MacIntel' });
     const user = userEvent.setup();
     const onSelect = vi.fn();
     render(<GlobalSearch onSelect={onSelect} />);

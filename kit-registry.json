@@ -5793,7 +5793,7 @@
       "package": "@gntik-ai/ui",
       "group": "Overlays",
       "status": "beta",
-      "description": "⌘K / Ctrl+K command palette: a modal dialog with a search input over grouped commands (icon, label, description, shortcut keys). Commands are data with an onSelect. Fuzzy-ish ranking (prefix, word start, substring, subsequence; keywords and descriptions count), recent items while the query is empty, an empty state and footer hints. useCommandPaletteShortcut() exposes the shortcut on its own.",
+      "description": "⌘K on macOS/iOS or Ctrl+K elsewhere opens a command palette: a modal dialog with a search input over grouped commands (icon, label, description, shortcut keys). Commands are data with an onSelect. Fuzzy-ish ranking (prefix, word start, substring, subsequence; keywords and descriptions count), recent items while the query is empty, an empty state and footer hints. useCommandPaletteShortcut() exposes the shortcut on its own through useHotkeys.",
       "files": [
         {
           "path": "packages/ui/src/components/CommandPalette/CommandPalette.tsx",
@@ -5814,6 +5814,22 @@
         {
           "path": "packages/ui/src/components/CommandPalette/useCommandPaletteShortcut.ts",
           "target": "components/ui/command-palette/useCommandPaletteShortcut.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/hotkey-registry.ts",
+          "target": "components/hooks/hotkey-registry.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/parse-hotkey.ts",
+          "target": "components/hooks/parse-hotkey.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useHotkeys.ts",
+          "target": "components/hooks/useHotkeys.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useOs.ts",
+          "target": "components/hooks/useOs.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",

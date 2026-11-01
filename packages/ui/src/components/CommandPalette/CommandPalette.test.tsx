@@ -61,6 +61,19 @@ const options = (dialog: HTMLElement) => within(dialog).getAllByRole('option');
 const highlighted = (dialog: HTMLElement) => dialog.querySelector('[role="option"][data-highlighted]');
 
 describe('CommandPalette', () => {
+  beforeEach(() => vi.spyOn(navigator, 'platform', 'get').mockReturnValue('MacIntel'));
+  afterEach(() => vi.restoreAllMocks());
+
+  it('uses only the platform command key and toggles while open on macOS', async () => {
+    const user = userEvent.setup();
+    render(<CommandPaletteBasic />);
+    await user.keyboard('{Control>}k{/Control}');
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    await user.keyboard('{Meta>}k{/Meta}');
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    await user.keyboard('{Meta>}k{/Meta}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
   it('highlights the first match arriving after typing and selects it with Enter', async () => {
     const user = userEvent.setup();
     const onSelect = vi.fn();
@@ -101,6 +114,7 @@ describe('CommandPalette', () => {
   it.each([['{Meta>}k{/Meta}'], ['{Control>}k{/Control}']])(
     '%s opens the palette with groups and recent items',
     async (combo) => {
+      if (combo.includes('Control')) vi.spyOn(navigator, 'platform', 'get').mockReturnValue('Win32');
       const { dialog } = await openWithShortcut(combo);
       expect(within(dialog).getByText('Recent')).toBeInTheDocument();
       expect(within(dialog).getByText('Actions')).toBeInTheDocument();
@@ -167,12 +181,13 @@ describe('CommandPalette', () => {
     await user.keyboard('{Escape}');
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     expect(trigger).toHaveFocus();
-    await user.keyboard('{Control>}k{/Control}');
+    await user.keyboard('{Meta>}k{/Meta}');
     const again = await screen.findByRole('dialog');
     expect(within(again).getByRole('combobox')).toHaveValue('');
   });
 
-  it('open palette has no axe violations', async () => {
+  it.each(['dark', 'light', 'high_contrast'])('open palette has no axe violations in %s', async (theme) => {
+    document.documentElement.className = theme;
     const { user } = await openWithShortcut();
     await expectNoAxeViolations();
     await user.keyboard('zzzz');
