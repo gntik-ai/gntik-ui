@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-conversations",
+  "type": "registry:ui",
+  "title": "useConversations",
+  "description": "Experimental local conversation state beside useChat. ChatConversation reuses ConversationSummary (id, title, required updatedAt, preview, unread, icon, disabled) plus optional metadata. Options: defaultConversations (empty), defaultActiveId (null), controlled activeId, onActiveChange(id | null), onConversationsChange(list). Returns conversations, activeId, setActiveId, addConversation(item, placement?), setConversation(id, patch | updater), removeConversation, getConversation, setConversations, getMessages and setMessages. Add prepends by default, append opts out, duplicates return false. Patches cannot change id; unknown ids are ignored. Removal selects the next item, then previous, then null; controlled ids pass through unchanged until the prop changes, even when absent from the list. List and selection callbacks run once per change, never on mount. getMessages is not reactive: setMessages stores an array by reference without rendering; missing ids share a frozen empty array. Render previews from preview and updatedAt, and supply timestamps yourself. Removal drops stored messages. Each hook instance is independent; persistence belongs to the product. The echo example shows adding, renaming, removing, switching and restoring histories. Its owning-id ref skips stale write-back during the useChat id-reset effect.",
+  "author": "gntik-ai",
+  "dependencies": [
+    "@gntik-ai/ui"
+  ],
+  "registryDependencies": [
+    "https://ui.gntik.ai/r/gntik-tokens.json",
+    "https://ui.gntik.ai/r/conversation-list.json",
+    "https://ui.gntik.ai/r/use-chat.json"
+  ],
+  "files": [
+    {
+      "path": "packages/chat/src/useConversations/index.ts",
+      "type": "registry:ui",
+      "target": "components/chat/use-conversations/index.ts",
+      "content": "export { useConversations } from './useConversations';\nexport type { ChatConversation, UseConversationsOptions } from './useConversations';\nexport { doc as useConversationsDoc } from './useConversations.doc';\n"
+    },
+    {
+      "path": "packages/chat/src/useConversations/useConversations.ts",
+      "type": "registry:ui",
+      "target": "components/chat/use-conversations/useConversations.ts",
+      "content": "import { useCallback, useRef, useState } from 'react';\nimport type { ConversationSummary } from '../conversation-list';\nimport type { ChatThreadMessage } from '../use-chat';\n\nconst EMPTY_MESSAGES: never[] = [];\nObject.freeze(EMPTY_MESSAGES);\n\n/** A conversation summary with optional product-owned metadata.\n * @experimental\n */\nexport type ChatConversation = ConversationSummary & { metadata?: Record<string, unknown> };\n\n/** Configuration for local conversation state. Defaults are read on mount.\n * @experimental\n */\nexport interface UseConversationsOptions {\n  defaultConversations?: ChatConversation[];\n  defaultActiveId?: string | null;\n  activeId?: string | null;\n  onActiveChange?: (id: string | null) => void;\n  onConversationsChange?: (conversations: ChatConversation[]) => void;\n}\n\n/** Local conversation summaries, selection and per-conversation messages.\n * `getMessages` is not reactive: `setMessages` stores the supplied array by reference without\n * rendering. Missing ids return one frozen empty array; treat it as read-only. Render list\n * previews from `preview` / `updatedAt`, updating them with `setConversation` as needed.\n * Conversations must supply `updatedAt`; the hook never stamps time. Controlled `activeId`\n * passes through even if missing from the list; selection requests ignore unknown ids.\n * Removing the active item selects its next neighbour, then previous, then null.\n * Callbacks run once in the mutating handler, never on mount.\n * @experimental\n */\nexport function useConversations<TMessage = ChatThreadMessage>(options: UseConversationsOptions = {}) {\n  const [conversations, commitConversations] = useState(options.defaultConversations ?? []);\n  const current = useRef(conversations);\n  const [internalActiveId, commitActiveId] = useState(options.defaultActiveId ?? null);\n  const currentActiveId = useRef(internalActiveId);\n  const activeId = options.activeId === undefined ? internalActiveId : options.activeId;\n  const messages = useRef(new Map<string, TMessage[]>());\n  const getMessages = useCallback((id: string): TMessage[] => messages.current.get(id) ?? EMPTY_MESSAGES, []);\n  const setMessages = useCallback((id: string, next: TMessage[]) => {\n    messages.current.set(id, next);\n  }, []);\n\n  const setActiveId = (id: string | null) => {\n    if (id !== null && !current.current.some((item) => item.id === id)) return;\n    const previous = options.activeId === undefined ? currentActiveId.current : options.activeId;\n    if (id === previous) return;\n    if (options.activeId === undefined) {\n      currentActiveId.current = id;\n      commitActiveId(id);\n    }\n    options.onActiveChange?.(id);\n  };\n\n  const addConversation = (conversation: ChatConversation, placement: 'prepend' | 'append' = 'prepend') => {\n    if (current.current.some((item) => item.id === conversation.id)) return false;\n    const next = placement === 'append' ? [...current.current, conversation] : [conversation, ...current.current];\n    current.current = next;\n    commitConversations(next);\n    options.onConversationsChange?.(next);\n    return true;\n  };\n  const getConversation = (id: string) => current.current.find((item) => item.id === id);\n  const setConversation = (\n    id: string,\n    patch:\n      | Partial<Omit<ChatConversation, 'id'>>\n      | ((conversation: ChatConversation) => Partial<Omit<ChatConversation, 'id'>>),\n  ) => {\n    const conversation = getConversation(id);\n    if (!conversation) return;\n    const changes = typeof patch === 'function' ? patch(conversation) : patch;\n    const next = current.current.map((item) => (item.id === id ? { ...item, ...changes, id } : item));\n    current.current = next;\n    commitConversations(next);\n    options.onConversationsChange?.(next);\n  };\n  const removeConversation = (id: string) => {\n    const index = current.current.findIndex((item) => item.id === id);\n    if (index < 0) return;\n    const previousActiveId = options.activeId === undefined ? currentActiveId.current : options.activeId;\n    const next = current.current.filter((item) => item.id !== id);\n    messages.current.delete(id);\n    current.current = next;\n    commitConversations(next);\n    if (id === previousActiveId) setActiveId(next[index]?.id ?? next[index - 1]?.id ?? null);\n    options.onConversationsChange?.(next);\n  };\n  const setConversations = (next: ChatConversation[]) => {\n    current.current = next;\n    commitConversations(next);\n    options.onConversationsChange?.(next);\n  };\n\n  return {\n    conversations,\n    activeId,\n    setActiveId,\n    addConversation,\n    getConversation,\n    setConversation,\n    removeConversation,\n    setConversations,\n    getMessages,\n    setMessages,\n  };\n}\n"
+    },
+    {
+      "path": "packages/chat/src/useConversations/useConversations.doc.ts",
+      "type": "registry:ui",
+      "target": "components/chat/use-conversations/useConversations.doc.ts",
+      "content": "import type { ComponentDoc } from '@gntik-ai/ui';\n\nexport const doc: ComponentDoc = {\n  name: 'useConversations',\n  group: 'Feedback',\n  status: 'experimental',\n  description:\n    'Experimental local conversation state beside useChat. ChatConversation reuses ConversationSummary (id, title, required updatedAt, preview, unread, icon, disabled) plus optional metadata. Options: defaultConversations (empty), defaultActiveId (null), controlled activeId, onActiveChange(id | null), onConversationsChange(list). Returns conversations, activeId, setActiveId, addConversation(item, placement?), setConversation(id, patch | updater), removeConversation, getConversation, setConversations, getMessages and setMessages. Add prepends by default, append opts out, duplicates return false. Patches cannot change id; unknown ids are ignored. Removal selects the next item, then previous, then null; controlled ids pass through unchanged until the prop changes, even when absent from the list. List and selection callbacks run once per change, never on mount. getMessages is not reactive: setMessages stores an array by reference without rendering; missing ids share a frozen empty array. Render previews from preview and updatedAt, and supply timestamps yourself. Removal drops stored messages. Each hook instance is independent; persistence belongs to the product. The echo example shows adding, renaming, removing, switching and restoring histories. Its owning-id ref skips stale write-back during the useChat id-reset effect.',\n};\n"
+    }
+  ],
+  "css": {
+    "@import \"@gntik-ai/ui/styles.css\"": {}
+  },
+  "categories": [
+    "component",
+    "Feedback"
+  ],
+  "meta": {
+    "kind": "component",
+    "package": "@gntik-ai/chat",
+    "status": "experimental",
+    "source": "packages/chat/src/useConversations/useConversations.doc.ts"
+  }
+}
