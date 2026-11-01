@@ -98,5 +98,7 @@ export async function* readTextParts(source: StreamSource, options: ReadTextPart
     // A trailing partial separator belongs to the next chunk's match, not to the part, so it is not counted.
     if (pending.length - partialSeparatorLength(pending, separator) > maxBufferSize) throw tooLarge();
   }
+  // The stream ended, so a trailing partial separator is now part of the text and counts toward the limit.
+  if (pending.length > maxBufferSize) throw tooLarge();
   if (pending !== '') yield pending;
 }

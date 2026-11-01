@@ -288,6 +288,22 @@ describe('maxBufferSize', () => {
     expect(await collect(readSSE(streamOf([body]), { maxBufferSize: 32 }))).toHaveLength(50);
   });
 
+  it('counts both characters of a CRLF line ending, also when split across chunks', async () => {
+    for (const chunks of [['data:x\r\n'], ['data:x\r', '\n'], ['data:x', '\r\n']]) {
+      const cancel = vi.fn();
+      await expect(
+        collect(readSSE(streamOf(chunks, { cancel, hang: true }), { maxBufferSize: 7 })),
+      ).rejects.toBeInstanceOf(RangeError);
+      expect(cancel).toHaveBeenCalledTimes(1);
+      expect(await collect(readSSE(streamOf(chunks), { maxBufferSize: 8 }))).toStrictEqual([]);
+    }
+  });
+
+  it('does not count the LF that follows the CR of a blank line', async () => {
+    const body = ['data:x\r\n\r', '\ndata:y\r\n\r\n'];
+    expect(await collect(readSSE(streamOf(body), { maxBufferSize: 8 }))).toStrictEqual([m('x'), m('y')]);
+  });
+
   it('measures characters, not bytes', async () => {
     // 10 characters in 30 bytes, plus "data: " and a newline: 17 characters (37 bytes) pending.
     const body = 'data: ' + '€'.repeat(10) + '\n';
@@ -393,6 +409,15 @@ describe('readTextParts', () => {
     const split = await collect(readTextParts(streamOf(['abc|', '|']), { separator: '||', maxBufferSize: 3 }));
     expect(whole).toStrictEqual(['abc']);
     expect(split).toStrictEqual(whole);
+  });
+
+  it('rejects a final part longer than the limit once the stream ends on a partial separator', async () => {
+    await expect(
+      collect(readTextParts(streamOf(['abc|']), { separator: '||', maxBufferSize: 3 })),
+    ).rejects.toBeInstanceOf(RangeError);
+    expect(await collect(readTextParts(streamOf(['abc|']), { separator: '||', maxBufferSize: 4 }))).toStrictEqual([
+      'abc|',
+    ]);
   });
 
   it('still rejects a part longer than the limit when a partial separator follows it', async () => {

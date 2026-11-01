@@ -24,6 +24,7 @@ const DIGITS = /^[0-9]+$/;
 export function createEventStreamParser(maxBufferSize: number): EventStreamParser {
   let line = ''; // text of the current line, not yet terminated
   let skipLineFeed = false; // the last line ended in CR; a following LF belongs to it
+  let countSkippedLineFeed = false; // that CR ended a non-blank line, so its LF still counts toward the block
   let blockSize = 0; // characters of the lines of the current block, terminators included
   let event = '';
   let dataLines: string[] = [];
@@ -63,9 +64,9 @@ export function createEventStreamParser(maxBufferSize: number): EventStreamParse
     return message;
   }
 
-  function endLine(): SSEMessage | undefined {
+  function endLine(terminatorLength: number): SSEMessage | undefined {
     if (line === '') return dispatch();
-    blockSize += line.length + 1;
+    blockSize += line.length + terminatorLength;
     if (blockSize > maxBufferSize) throw tooLarge();
     field(line);
     line = '';
@@ -77,20 +78,26 @@ export function createEventStreamParser(maxBufferSize: number): EventStreamParse
       let start = 0;
       if (skipLineFeed && text !== '') {
         skipLineFeed = false;
-        if (text.charCodeAt(0) === 10) start = 1;
+        if (text.charCodeAt(0) === 10) {
+          start = 1;
+          if (countSkippedLineFeed && ++blockSize > maxBufferSize) throw tooLarge();
+        }
       }
       for (let i = start; i < text.length; i++) {
         const code = text.charCodeAt(i);
         if (code !== 10 && code !== 13) continue;
         line += text.slice(start, i);
-        const message = endLine();
+        const crlf = code === 13 && text.charCodeAt(i + 1) === 10;
+        const nonBlank = line !== '';
+        const message = endLine(crlf ? 2 : 1);
         line = '';
         start = i + 1;
-        if (code === 13) {
-          if (text.charCodeAt(start) === 10) {
-            start++;
-            i++;
-          } else if (start === text.length) skipLineFeed = true;
+        if (crlf) {
+          start++;
+          i++;
+        } else if (code === 13 && start === text.length) {
+          skipLineFeed = true;
+          countSkippedLineFeed = nonBlank;
         }
         if (message) yield message;
       }
