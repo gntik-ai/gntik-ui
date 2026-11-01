@@ -5,6 +5,7 @@
    are one file), followed by the generated API reference. A new chat component
    shows up here with no registration (package-docs.jsx has the shared page).
    ============================================================================ */
+import ChatRuntimeGuide from './chat-runtime.jsx';
 import { buildEntries, sortEntries, PackageDocs } from './package-docs.jsx';
 
 const docs = import.meta.glob('../../../../packages/chat/src/*/*.doc.ts', { eager: true, import: 'doc' });
@@ -38,13 +39,16 @@ const ENTRIES = sortEntries(
 
 function ChatSection() {
   return (
-    <PackageDocs
-      kicker="Chat"
-      title="@gntik-ai/chat"
-      idPrefix="chat"
-      entries={ENTRIES}
-      intro={`${ENTRIES.length} components for AI assistant screens: messages with streaming Markdown, a composer with attachments, tool calls, citations, feedback, a model picker and a typing indicator. They build on @gntik-ai/ui, so install both. Each example below is the real file from the package — the preview and the code are the same source. Every keyboard row is covered by a test, and every example passes axe.`}
-    />
+    <>
+      <PackageDocs
+        kicker="Chat"
+        title="@gntik-ai/chat"
+        idPrefix="chat"
+        entries={ENTRIES}
+        intro={`${ENTRIES.length} components for AI assistant screens: messages with streaming Markdown, a composer with attachments, tool calls, citations, feedback, a model picker and a typing indicator. They build on @gntik-ai/ui, so install both. Each example below is the real file from the package — the preview and the code are the same source. Every keyboard row is covered by a test, and every example passes axe.`}
+      />
+      <ChatRuntimeGuide />
+    </>
   );
 }
 

@@ -217,6 +217,7 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),
   },
   template: {
+    'assistant-chat--adapter': () => import('../../../packages/templates/src/assistant-chat/examples/AdapterChat'),
     'shell-sidebar--tenants': () => import('../../../packages/templates/src/shell-sidebar/examples/Tenants'),
     'shell-sidebar--platform-wide': () => import('../../../packages/templates/src/shell-sidebar/examples/PlatformWide'),
     'shell-sidebar--context-region': () =>

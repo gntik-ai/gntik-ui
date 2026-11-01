@@ -1,0 +1,17 @@
+data: {"type":"start"}
+
+data: {"type":"text-start","id":"x"}
+
+data: {"type":"text-delta","id":"x","delta":"Hello"}
+
+data: {"type":"tool-input-available","toolCallId":"t1","toolName":"search","input":{"q":"test"}}
+
+data: {"type":"tool-output-available","toolCallId":"t1","output":["found"]}
+
+data: {"type":"source-url","sourceId":"s1","url":"https://example.com","title":"Example"}
+
+data: {"type":"finish"}
+
+data: [DONE]
+
+: keep-alive after completion

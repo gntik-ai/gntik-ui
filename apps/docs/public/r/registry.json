@@ -822,7 +822,7 @@
       "name": "assistant-chat",
       "type": "registry:block",
       "title": "Assistant chat",
-      "description": "Workspace assistant in the console: @gntik-ai/chat ChatLayout with suggestions, ChatMessage turns, a ToolCallCard, a mock-streamed markdown reply with Citations, Stop / Retry / feedback and a ChatComposer; a details panel lists the context sources. Streaming timers are cleared on Stop and unmount.",
+      "description": "Workspace assistant in the console: @gntik-ai/chat ChatLayout with suggestions, ChatMessage turns, a ToolCallCard, adapter-streamed markdown replies with Citations, Stop / Retry / feedback and a ChatComposer; a details panel lists the context sources. Pass an optional adapter for a backend, or use the scripted demo; Stop and unmount abort both.",
       "author": "gntik-ai",
       "dependencies": [
         "@gntik-ai/blocks",
@@ -22931,6 +22931,83 @@
           "path": "packages/templates/src/usage-analytics/data.ts",
           "type": "registry:lib",
           "target": "app/templates/usage-analytics/data.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-chat",
+      "type": "registry:ui",
+      "title": "useChat",
+      "description": "Experimental streaming conversation runtime: useChat({ adapter, id, initialMessages, initialCursor, flushIntervalMs, generateId, onFinish, onError }) returns messages, isStreaming, error, sendMessage(text, attachments?), stop(), regenerate(messageId?), setMessages(next), loadOlder(), hasOlder and isLoadingOlder. Busy sends are ignored. Messages hold text, reasoning, tool, source, file and step parts. applyChunk is a pure UI-message-stream v1 reducer; unknown chunk types are ignored. Stop and unmount abort the adapter signal and retain partial parts; failed replies call onError once. State updates batch every 50 ms (0 commits every chunk). A changed conversation id aborts and resets. createEchoAdapter runs locally; createHttpChatAdapter reads UI-stream SSE and createOpenAICompatibleAdapter maps text-only chat-completions SSE. Both reuse readSSE and check HTTP status first. Their URL must be the product backend: provider keys stay server-side. Map pending/streaming to ChatMessage.streaming, and terminal replies to onRetry; ChatMessage has no status prop. See the chat runtime guide on this page for the protocol, history, abort and part mapping.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@gntik-ai/ui"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/attachment.json",
+        "https://ui.gntik.ai/r/citation.json",
+        "https://ui.gntik.ai/r/read-sse.json",
+        "https://ui.gntik.ai/r/tool-call-card.json"
+      ],
+      "css": {
+        "@import \"@gntik-ai/ui/styles.css\"": {}
+      },
+      "categories": [
+        "component",
+        "Feedback"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/chat",
+        "status": "experimental",
+        "source": "packages/chat/src/useChat/useChat.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/chat/src/useChat/adapters/echo.ts",
+          "type": "registry:ui",
+          "target": "components/chat/use-chat/adapters/echo.ts"
+        },
+        {
+          "path": "packages/chat/src/useChat/adapters/http.ts",
+          "type": "registry:ui",
+          "target": "components/chat/use-chat/adapters/http.ts"
+        },
+        {
+          "path": "packages/chat/src/useChat/adapters/openai-compatible.ts",
+          "type": "registry:ui",
+          "target": "components/chat/use-chat/adapters/openai-compatible.ts"
+        },
+        {
+          "path": "packages/chat/src/useChat/applyChunk.ts",
+          "type": "registry:ui",
+          "target": "components/chat/use-chat/applyChunk.ts"
+        },
+        {
+          "path": "packages/chat/src/useChat/chunkSource.ts",
+          "type": "registry:ui",
+          "target": "components/chat/use-chat/chunkSource.ts"
+        },
+        {
+          "path": "packages/chat/src/useChat/index.ts",
+          "type": "registry:ui",
+          "target": "components/chat/use-chat/index.ts"
+        },
+        {
+          "path": "packages/chat/src/useChat/types.ts",
+          "type": "registry:ui",
+          "target": "components/chat/use-chat/types.ts"
+        },
+        {
+          "path": "packages/chat/src/useChat/useChat.ts",
+          "type": "registry:ui",
+          "target": "components/chat/use-chat/useChat.ts"
+        },
+        {
+          "path": "packages/chat/src/useChat/useChat.doc.ts",
+          "type": "registry:ui",
+          "target": "components/chat/use-chat/useChat.doc.ts"
         }
       ]
     },
