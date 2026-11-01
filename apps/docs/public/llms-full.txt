@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 124 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 125 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -2626,6 +2626,84 @@ export default function ProgressBars() {
           Advance
         </Button>
       </div>
+    </div>
+  );
+}
+```
+
+### readSSE (`read-sse`)
+
+Reads a streamed fetch response as an async iterator, for chat replies and live log tails where EventSource cannot be used (POST bodies, auth headers). `readSSE(response, { signal, maxBufferSize })` follows the WHATWG event-stream rules: streaming UTF-8, BOM, CRLF/LF/CR endings across chunk boundaries, comments, multi-line data, a persistent id and a digits-only retry. `readTextParts` splits on a separator (a line feed by default) for NDJSON. Aborting the signal, leaving the loop early or a stream error cancels the reader once, so the connection closes. An unterminated final block is dropped, as EventSource does. There is no reconnection: keep the last id and retry and send Last-Event-ID yourself. maxBufferSize bounds memory, not time, so abort a stream that goes quiet.
+
+- Package: `@gntik-ai/chat` · export `ReadSse` · group Feedback · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/readSSE/readSSE.doc.ts
+- Install: `gntik-ui add read-sse`; own the source with `gntik-ui eject read-sse`
+
+Usage:
+
+```tsx
+import { Button } from '@gntik-ai/ui';
+import { useEffect, useRef, useState } from 'react';
+import { readSSE } from '@gntik-ai/chat';
+import { fakeStreamResponse } from '@gntik-ai/chat';
+
+// What an OpenAI-style endpoint sends: JSON deltas, then a plain [DONE] the caller stops on.
+const REPLY = ['The ', 'deployment ', 'finished ', 'without ', 'errors.'].map(
+  (delta) => `data: ${JSON.stringify({ delta })}\n\n`,
+);
+const BODY = [': keep-alive\n\n', ...REPLY, 'data: [DONE]\n\n'];
+
+const STATUS = {
+  idle: 'Ready.',
+  streaming: 'Streaming…',
+  done: 'Done.',
+  stopped: 'Stopped.',
+  error: 'The stream failed.',
+} as const;
+
+/** Reads a chat reply token by token, with a Stop button wired to the same AbortController. */
+export default function ReadSSEChatStream() {
+  const [text, setText] = useState('');
+  const [status, setStatus] = useState<keyof typeof STATUS>('idle');
+  const controllerRef = useRef<AbortController | null>(null);
+  useEffect(() => () => controllerRef.current?.abort(), []);
+
+  async function send() {
+    const controller = new AbortController();
+    controllerRef.current = controller;
+    setText('');
+    setStatus('streaming');
+    try {
+      // In an app: const response = await fetch('/api/chat', { method: 'POST', body, signal: controller.signal });
+      const response = fakeStreamResponse(BODY);
+      for await (const message of readSSE(response, { signal: controller.signal })) {
+        if (message.data === '[DONE]') break;
+        const { delta } = JSON.parse(message.data) as { delta: string };
+        setText((current) => current + delta);
+      }
+      setStatus('done');
+    } catch {
+      setStatus(controller.signal.aborted ? 'stopped' : 'error');
+    }
+  }
+
+  const streaming = status === 'streaming';
+  return (
+    <div className="flex max-w-xl flex-col gap-3">
+      <div className="flex gap-2">
+        <Button onClick={send} disabled={streaming}>
+          Send
+        </Button>
+        <Button variant="secondary" onClick={() => controllerRef.current?.abort()} disabled={!streaming}>
+          Stop
+        </Button>
+      </div>
+      <p className="min-h-6 text-foreground" aria-busy={streaming}>
+        {text}
+      </p>
+      <p role="status" className="text-sm text-muted-foreground">
+        {STATUS[status]}
+      </p>
     </div>
   );
 }

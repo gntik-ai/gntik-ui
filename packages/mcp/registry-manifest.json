@@ -21,6 +21,7 @@
     "logo-cloud",
     "mermaid-diagram",
     "period-picker",
+    "read-sse",
     "reasoning-block",
     "searchable-select",
     "site-footer"
@@ -196,6 +197,7 @@
     {"id":"query-builder","package":"@gntik-ai/ui","name":"query-builder","version":"0.5.0","url":"https://ui.gntik.ai/r/query-builder.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"quota-meters","package":"@gntik-ai/blocks","name":"quota-meters","version":"0.6.0","url":"https://ui.gntik.ai/r/quota-meters.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"radio-group","package":"@gntik-ai/ui","name":"radio-group","version":"0.5.0","url":"https://ui.gntik.ai/r/radio-group.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"read-sse","package":"@gntik-ai/chat","name":"read-sse","version":"0.5.0","url":"https://ui.gntik.ai/r/read-sse.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"reasoning-block","package":"@gntik-ai/chat","name":"reasoning-block","version":"0.5.0","url":"https://ui.gntik.ai/r/reasoning-block.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"reset-password","package":"@gntik-ai/templates","name":"reset-password","version":"0.6.0","url":"https://ui.gntik.ai/r/reset-password.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"reset-password-form","package":"@gntik-ai/blocks","name":"reset-password-form","version":"0.6.0","url":"https://ui.gntik.ai/r/reset-password-form.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
