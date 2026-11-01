@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 126 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 127 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -2944,6 +2944,136 @@ export default function UseChatEcho() {
       )}
       <ChatComposer onSubmit={sendMessage} streaming={isStreaming} onStop={stop} />
       <ChatAnnouncer streaming={isStreaming} lastReply={lastReply} />
+    </div>
+  );
+}
+```
+
+### useConversations (`use-conversations`)
+
+Experimental local conversation state beside useChat. ChatConversation reuses ConversationSummary (id, title, required updatedAt, preview, unread, icon, disabled) plus optional metadata. Options: defaultConversations (empty), defaultActiveId (null), controlled activeId, onActiveChange(id | null), onConversationsChange(list). Returns conversations, activeId, setActiveId, addConversation(item, placement?), setConversation(id, patch | updater), removeConversation, getConversation, setConversations, getMessages and setMessages. Add prepends by default, append opts out, duplicates return false. Patches cannot change id; unknown ids are ignored. Removal selects the next item, then previous, then null; controlled ids pass through unchanged until the prop changes, even when absent from the list. List and selection callbacks run once per change, never on mount. getMessages is not reactive: setMessages stores an array by reference without rendering; missing ids share a frozen empty array. Render previews from preview and updatedAt, and supply timestamps yourself. Removal drops stored messages. Each hook instance is independent; persistence belongs to the product. The echo example shows adding, renaming, removing, switching and restoring histories. Its owning-id ref skips stale write-back during the useChat id-reset effect.
+
+- Package: `@gntik-ai/chat` · export `useConversations` · group Feedback · status experimental
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/useConversations/useConversations.doc.ts
+- Registry dependencies: conversation-list, use-chat
+- Install: `gntik-ui add use-conversations`; own the source with `gntik-ui eject use-conversations`
+
+Usage:
+
+```tsx
+import { useEffect, useRef } from 'react';
+import { Button, Input } from '@gntik-ai/ui';
+import { ChatComposer } from '@gntik-ai/chat';
+import { ChatAnnouncer, ChatMessage } from '@gntik-ai/chat';
+import { Markdown } from '@gntik-ai/chat';
+import { createEchoAdapter, useChat } from '@gntik-ai/chat';
+import { useConversations, type ChatConversation } from '@gntik-ai/chat';
+
+const adapter = createEchoAdapter();
+const initial: ChatConversation[] = [
+  { id: 'c1', title: 'First chat', updatedAt: '2026-11-01' },
+  { id: 'c2', title: 'Second chat', updatedAt: '2026-11-01' },
+];
+
+/** Local histories; persistence belongs to the product. */
+export default function UseConversationsEcho() {
+  const {
+    conversations,
+    activeId,
+    setActiveId,
+    addConversation,
+    setConversation,
+    removeConversation,
+    getMessages,
+    setMessages,
+  } = useConversations({ defaultConversations: initial, defaultActiveId: 'c1' });
+  const nextId = useRef(3);
+  const { messages, isStreaming, sendMessage, stop, error } = useChat({
+    adapter,
+    id: activeId ?? undefined,
+    initialMessages: activeId === null ? undefined : getMessages(activeId),
+  });
+  const owningId = useRef(activeId);
+  useEffect(() => {
+    if (owningId.current !== activeId) {
+      // useChat resets in an effect: this render still contains the previous id's messages.
+      owningId.current = activeId;
+      return;
+    }
+    if (activeId !== null) setMessages(activeId, messages);
+  }, [activeId, messages, setMessages]);
+
+  const selected = conversations.find((item) => item.id === activeId);
+  const lastReply = messages
+    .filter((message) => message.role === 'assistant')
+    .at(-1)
+    ?.parts.filter((part) => part.type === 'text')
+    .map((part) => part.text)
+    .join('');
+
+  return (
+    <div className="flex max-w-2xl flex-col gap-4">
+      <nav aria-label="Conversations">
+        <ul className="flex flex-wrap gap-2">
+          {conversations.map((conversation) => (
+            <li key={conversation.id}>
+              <Button
+                variant="secondary"
+                aria-pressed={activeId === conversation.id}
+                onClick={() => setActiveId(conversation.id)}
+              >
+                {conversation.title}
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <Button
+        variant="secondary"
+        onClick={() => {
+          const number = nextId.current++;
+          const id = `c${number}`;
+          addConversation({ id, title: `Chat ${number}`, updatedAt: new Date() });
+          setActiveId(id);
+        }}
+      >
+        New chat
+      </Button>
+      {selected ? (
+        <>
+          <Input
+            aria-label="Conversation title"
+            value={selected.title}
+            onValueChange={(title) => setConversation(selected.id, { title, updatedAt: new Date() })}
+          />
+          <Button variant="secondary" onClick={() => removeConversation(selected.id)}>
+            Remove chat
+          </Button>
+          <section aria-label="Messages" className="flex flex-col gap-4">
+            {messages.map((message) => {
+              const text = message.parts
+                .filter((part) => part.type === 'text')
+                .map((part) => part.text)
+                .join('');
+              const streaming = message.status === 'pending' || message.status === 'streaming';
+              return (
+                <ChatMessage key={message.id} role={message.role} streaming={streaming} copyText={text}>
+                  {text && <Markdown streaming={streaming}>{text}</Markdown>}
+                </ChatMessage>
+              );
+            })}
+          </section>
+          {error && (
+            <p role="alert" className="text-destructive-text">
+              {error.message}
+            </p>
+          )}
+          <ChatComposer key={activeId} onSubmit={sendMessage} streaming={isStreaming} onStop={stop} />
+          <ChatAnnouncer streaming={isStreaming} lastReply={lastReply} />
+        </>
+      ) : (
+        <p className="text-muted-foreground">Create a conversation to start chatting.</p>
+      )}
     </div>
   );
 }

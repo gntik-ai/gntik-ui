@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 126 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 127 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -66,6 +66,7 @@ Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the br
 - [Toast](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Toast/Toast.doc.ts): Short-lived notification stacked bottom-right. (Feedback, @gntik-ai/ui; id `toast`)
 - [TypingIndicator](https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/TypingIndicator/TypingIndicator.doc.ts): Three pulsing dots shown while a reply is being written, with the text "Assistant is typing" for screen readers (or visible with `showLabel`). (Feedback, @gntik-ai/chat; id `typing-indicator`)
 - [useChat](https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/useChat/useChat.doc.ts): ), setMessages(next), loadOlder(), hasOlder and isLoadingOlder. (Feedback, @gntik-ai/chat; id `use-chat`)
+- [useConversations](https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/useConversations/useConversations.doc.ts): Experimental local conversation state beside useChat. (Feedback, @gntik-ai/chat; id `use-conversations`)
 - [Calendar](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Calendar/Calendar.doc.ts): ) helper returns the locale first weekday (0–6, Monday fallback), matching scheduling blocks. (Forms, @gntik-ai/ui; id `calendar`)
 - [ChatComposer](https://github.com/gntik-ai/gntik-ui/blob/main/packages/chat/src/ChatComposer/ChatComposer.doc.ts): Chat input with autosizing text, validated attachments, a model picker, tools, a counter and streaming Stop. (Forms, @gntik-ai/chat; id `chat-composer`)
 - [Checkbox](https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Checkbox/Checkbox.doc.ts): Checkbox with optional label and description, including the indeterminate state. (Forms, @gntik-ai/ui; id `checkbox`)
