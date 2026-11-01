@@ -62,7 +62,9 @@ function onKeyDown(event: KeyboardEvent) {
   const typing = target?.closest(
     'input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="menu"], [role="listbox"], [role="tree"]',
   );
-  const modal = target?.closest('[aria-modal="true"]') ?? document.activeElement?.closest('[aria-modal="true"]');
+  // Base UI's modal popups expose dialog roles without an aria-modal attribute.
+  const modalSelector = '[aria-modal="true"], [role="dialog"], [role="alertdialog"]';
+  const modal = target?.closest(modalSelector) ?? document.activeElement?.closest(modalSelector);
   const matches: { value: HotkeyDefinition; scoped: boolean }[] = [];
   for (const registration of [...registrations].reverse()) {
     const { options } = registration.getState();

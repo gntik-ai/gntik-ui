@@ -42,9 +42,21 @@ export type HotkeyMap = Record<string, HotkeyHandler | HotkeyDefinition>;
  */
 export function useHotkeys(hotkeys: HotkeyMap, options: UseHotkeysOptions = {}): void {
   const state = useRef({ hotkeys, options });
+  const metadata = useRef('');
   useEffect(() => {
     state.current = { hotkeys, options };
-    refreshHotkeys();
+    const signature = JSON.stringify(
+      Object.entries(hotkeys).map(([source, value]) => [
+        source,
+        typeof value === 'function' ? undefined : value.description,
+        typeof value === 'function' ? undefined : value.group,
+      ]),
+    );
+    // Handler/options updates stay local; only binding or metadata changes rebuild the store.
+    if (signature !== metadata.current) {
+      metadata.current = signature;
+      refreshHotkeys();
+    }
   });
   useEffect(() => registerHotkeys(() => state.current), []);
 }

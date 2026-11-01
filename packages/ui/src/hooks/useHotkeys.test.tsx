@@ -1,6 +1,9 @@
 import { act, cleanup, fireEvent, render, renderHook } from '@testing-library/react';
 import { useRef } from 'react';
 import { renderToString } from 'react-dom/server';
+import { Dialog, DialogContent, DialogTitle } from '../components/Dialog';
+import { AlertDialog, AlertDialogContent, AlertDialogTitle } from '../components/AlertDialog';
+import { Menu, MenuContent, MenuItem, MenuTrigger } from '../components/Menu';
 import { setCharacterHotkeysEnabled, useHotkeys, useRegisteredHotkeys, type HotkeyDefinition } from './useHotkeys';
 
 afterEach(() => {
@@ -60,7 +63,7 @@ it('supports disabled bindings and optional default prevention', () => {
   expect(handler).toHaveBeenCalledTimes(1);
 });
 
-it.each(['input', 'textarea', 'select', 'editable', 'menu', 'listbox', 'tree'])(
+it.each(['input', 'textarea', 'select', 'editable', 'listbox', 'tree'])(
   'guards character keys while typing in %s but allows mod+s',
   (kind) => {
     vi.stubGlobal('navigator', { platform: 'MacIntel' });
@@ -69,18 +72,34 @@ it.each(['input', 'textarea', 'select', 'editable', 'menu', 'listbox', 'tree'])(
     renderHook(() => useHotkeys({ '?': character, '/': character, 'mod+s': save }));
     const target = document.createElement(['input', 'textarea', 'select'].includes(kind) ? kind : 'div');
     if (kind === 'editable') target.setAttribute('contenteditable', 'true');
-    else if (['menu', 'listbox', 'tree'].includes(kind)) target.setAttribute('role', kind);
-    const child = kind === 'menu' ? document.createElement('button') : target;
-    if (child !== target) target.append(child);
+    else if (['listbox', 'tree'].includes(kind)) target.setAttribute('role', kind);
     document.body.append(target);
-    fireEvent.keyDown(child, { key: '?', shiftKey: true });
-    fireEvent.keyDown(child, { key: '/' });
-    fireEvent.keyDown(child, { key: 's', metaKey: true });
+    fireEvent.keyDown(target, { key: '?', shiftKey: true });
+    fireEvent.keyDown(target, { key: '/' });
+    fireEvent.keyDown(target, { key: 's', metaKey: true });
     target.remove();
     expect(character).not.toHaveBeenCalled();
     expect(save).toHaveBeenCalledTimes(1);
   },
 );
+
+it('guards character hotkeys inside an open kit Menu', async () => {
+  const character = vi.fn();
+  renderHook(() => useHotkeys({ '?': character, '/': character }));
+  const view = render(
+    <Menu open>
+      <MenuTrigger>Actions</MenuTrigger>
+      <MenuContent>
+        <MenuItem>Open</MenuItem>
+      </MenuContent>
+    </Menu>,
+  );
+  const item = await view.findByRole('menuitem', { name: 'Open' });
+  item.focus();
+  fireEvent.keyDown(item, { key: '?', shiftKey: true });
+  fireEvent.keyDown(item, { key: '/' });
+  expect(character).not.toHaveBeenCalled();
+});
 
 it('allows opting out of the typing and repeat guards, but never handles IME or prevented events', () => {
   const ordinary = vi.fn();
@@ -193,33 +212,43 @@ it('prioritizes scopes over globals, then the most recently mounted equal, only 
   expect(older).not.toHaveBeenCalled();
 });
 
-it('blocks global characters in a modal but preserves mod+k and scoped characters', () => {
-  vi.stubGlobal('navigator', { platform: 'MacIntel' });
-  const character = vi.fn();
-  const command = vi.fn();
-  const scoped = vi.fn();
-  function Modal() {
-    const ref = useRef<HTMLDivElement>(null);
-    useHotkeys({ '/': scoped }, { ref });
-    return (
-      <div ref={ref} role="dialog" aria-modal="true">
-        <button>Focus</button>
-      </div>
-    );
-  }
-  renderHook(() => useHotkeys({ 'g d': character, '?': character, 'mod+k': command }));
-  const view = render(<Modal />);
-  const target = view.getByRole('button');
-  target.focus();
-  fireEvent.keyDown(target, { key: 'g' });
-  fireEvent.keyDown(target, { key: 'd' });
-  fireEvent.keyDown(target, { key: '?', shiftKey: true });
-  fireEvent.keyDown(target, { key: 'k', metaKey: true });
-  fireEvent.keyDown(target, { key: '/' });
-  expect(character).not.toHaveBeenCalled();
-  expect(command).toHaveBeenCalledTimes(1);
-  expect(scoped).toHaveBeenCalledTimes(1);
-});
+it.each(['Dialog', 'AlertDialog'] as const)(
+  'blocks global characters in an open kit %s but preserves mod+k and scoped characters',
+  async (kind) => {
+    vi.stubGlobal('navigator', { platform: 'MacIntel' });
+    const character = vi.fn();
+    const command = vi.fn();
+    const scoped = vi.fn();
+    const Root = kind === 'Dialog' ? Dialog : AlertDialog;
+    const Content = kind === 'Dialog' ? DialogContent : AlertDialogContent;
+    const Title = kind === 'Dialog' ? DialogTitle : AlertDialogTitle;
+    function Modal() {
+      const ref = useRef<HTMLDivElement>(null);
+      useHotkeys({ '/': scoped }, { ref });
+      return (
+        <Root open>
+          <Content ref={ref}>
+            <Title>Hotkey scope</Title>
+            <button>Focus</button>
+          </Content>
+        </Root>
+      );
+    }
+    renderHook(() => useHotkeys({ 'g d': character, '?': character, 'mod+k': command }));
+    const view = render(<Modal />);
+    const target = await view.findByRole('button', { name: 'Focus' });
+    target.focus();
+    expect(target).toHaveFocus();
+    fireEvent.keyDown(target, { key: 'g' });
+    fireEvent.keyDown(target, { key: 'd' });
+    fireEvent.keyDown(target, { key: '?', shiftKey: true });
+    fireEvent.keyDown(target, { key: 'k', metaKey: true });
+    fireEvent.keyDown(target, { key: '/' });
+    expect(character).not.toHaveBeenCalled();
+    expect(command).toHaveBeenCalledTimes(1);
+    expect(scoped).toHaveBeenCalledTimes(1);
+  },
+);
 
 it('switches global character bindings off and on while preserving commands', () => {
   vi.stubGlobal('navigator', { platform: 'MacIntel' });
