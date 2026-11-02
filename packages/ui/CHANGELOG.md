@@ -1,5 +1,67 @@
 # @gntik-ai/ui
 
+## 0.12.0
+
+### Minor Changes
+
+- 061c035: Add DownloadButton, downloadFile and safe CSV serialization with spreadsheet formula protection.
+- 999e562: Add accessible EditableText with async saves and a shared inline editing hook that preserves DataTable cell editing.
+- 7e30223: Add the localized SiteFooter block with three layouts, social links and optional theme controls, and reuse it in public templates.
+- 87bc7c2: Add CSPProvider and useCSP to forward app nonces to inline elements, support disabling style elements, and retain native scrollbar hiding with static classes.
+- 83304af: Add Dropzone and useDropzone with shared file validation, picker access, accept/reject feedback and safe disabled drops, while preserving upload and chat drop behavior.
+- 56328a3: Upgrade Base UI to 1.9.0, preserve virtualized keyboard navigation, and document accessible label precedence.
+- 8ac6dd2: Add a collapsible reasoning trace with streaming labels, elapsed time, safe Markdown and localized thinking announcements.
+- cf75c90: Add an app-wide CodeBlock highlighter provider and an optional lazy Shiki adapter with token-safe colours.
+- c08a0a1: Add optional component anatomy and styling-hook documentation with deep-linkable catalog pages.
+- 834d3a8: Add provider display time zones, DST-safe conversion helpers and zone-aware scheduling calendars while preserving existing runtime and cron behavior.
+- e5d1b97: Add filled and ghost field variants with a shared FieldVariantProvider default, preserving existing outline and read-only styling, outlined date-popup controls, and accessible focus and error states.
+- 01125b0: Add an in-app reduced-motion preference, scoped motion utilities and an appearance settings switch.
+- b7ea024: Add router-aware MenuLinkItem navigation and href/external actions in MoreMenu, shared with UserMenu.
+- e12e80a: Add named z-index layers and move kit overlays and sticky surfaces onto them; toasts and popups stay above modals, and app z-50 now sits under kit overlays.
+- 3860511: Add eleven named typography roles, Tailwind utilities and design-tool exports, and adopt them in Text and Heading.
+  
+  Font-size overrides through Text or Heading className now replace the entire role, including its weight, tracking and leading defaults. Add explicit utilities to keep those styles, for example `text-[32px] font-bold tracking-tight` for display text or `text-[12px] font-medium leading-tight` for labels. Preserve the sign-in brand headline's bold weight and tight tracking at its custom size.
+- 7bcabbd: Add opt-in prefix and dynamic route pattern matching to NavList and StackedLayout with one computed current item.
+- c9370fd: Add responsive class, CSS variable and value helpers, 2xl Grid columns and spans, responsive Grid gaps and Section padding; GridBreakpoint now includes 2xl, so exhaustive consumer Record<GridBreakpoint, ...> tables must add a 2xl entry.
+- 217b4e1: Add responsive layout and spacing-scale padding props to Stack, HStack and VStack.
+- a69fe31: Add labelled Combobox and MultiSelect option groups with filtering, async loading and creatable rows.
+- 5e0f529: Add SearchableSelect with popup search, groups, multiple selection, action rows and virtualization, plus composable Combobox trigger, popup input and header/footer slots.
+- e7d905b: Add selectable green and navy palettes with scoped themes, optional persistence and palette-aware runtime updates; individual pairing/scope CSS imports now require status.css, and palette files require scope.css for aliases and nested themes.
+- 3ffe148: Add useClipboard for custom copy actions and share fallback writes and accurate feedback across kit copy controls.
+- 36ea76d: Add interactive and disabled cursor tokens across UI controls; upgrade UI with the matching tokens minor, set `:root { --cursor-interactive: default }` to restore arrows, and note that disabled Buttons now receive pointer events rather than allowing click-through while remaining inert and suppressing hover styles.
+- 5131991: Add shared, scoped hotkeys and a shortcut registry; wire keyboard-shortcut help and search, and use Command+K on macOS/iOS (Ctrl+K no longer opens the command palette there).
+- cd9b1bd: Add SSR-safe media query and breakpoint hooks with shared breakpoint tokens, and use them for responsive panels and reduced-motion behaviour. Preserve upward log scrolling when wrapped rows finish measuring.
+- c064156: Add safe, synchronized storage hooks and restore persisted sidebar and panel layouts without hydration mismatches.
+- e545f3e: Add a static LogoCloud marketing block with responsive layouts and localized English and Spanish captions.
+- 1eb473d: Add optional ToolCallCard approval actions, denial reasons and decision records with English and Spanish catalogs; ToolCallStatus is widened with awaiting-approval and denied, so exhaustive consumer maps and switches may need updating.
+- 18b64f6: Add TreeList text filtering with highlighted matches, restored expansion, navigation links and motion-aware groups.
+- 8ea8e6f: Add DialogsProvider and useDialogs for promise-based confirm, alert, prompt and custom dialogs.
+- 0124118: Add timeZone and hideTimeZone to DatePicker and DateTimeRangePicker; provider-inherited zones now also control picker wall times, zone labels and DatePicker form offsets.
+
+### Patch Changes
+
+- 34ab430: Add composer header, prefix and footer slots, Mod+Enter submission, selectable read-only drafts and text actions with translated hints and header controls.
+- e8c3141: Add opt-in, lazily loaded Mermaid diagrams with token themes for flowcharts and sequence diagrams, sanitised SVG, accessible controls and English/Spanish labels.
+- 68b6d35: Add optional comment body rendering and localized composer hints, with safe Markdown in scorecard commentary.
+- 52eee4d: A rejected contact onSubmit now shows a visitor-facing error with localized default text or submitErrorMessage, preserving form values for another attempt.
+- dc1f24f: Add controlled and deferred file uploads, preprocessing, abortable uploads and removal vetoes with localized labels, preserving batched controlled updates without retaining declined changes and using the current row for asynchronous removals; UploadStatus adds 'pending' (update exhaustive switches), and onRemove now runs before removal and can veto it.
+- 5ec552c: Add accessible conversation history with recency groups, row actions that preserve a single Tab stop, windowing, an optional chat sidebar, and localized messaging history.
+- 0ad5913: Add opt-in DataTable CSV export, delegated exports and safe copying of selected rows with English and Spanish labels, preserved keyboard focus while busy and complete client-only clipboard output.
+- db3ef71: Keep checked, active, selected and fill indicators visible in operating system forced colours.
+- 8e812fe: Add safe Markdown component overrides, code renderers, custom block tags, plugins and opt-in sanitised HTML with translated live examples, preserving streaming code focus, document-wide references and GFM footnote navigation.
+- 8b4238e: Fix disabled text and diff contrast, theme preview surfaces, destructive toolbar text and the Textarea clear target size.
+- 8a8df93: Add shared data-tone colour utilities and use them in Badge, Alert, Token and Progress while preserving existing colours.
+- b2e70bb: Add keyboard-only focus-ring and focus-ring-inset utilities and migrate kit outlines; upgrade @gntik-ai/tokens to this minor release before copying migrated registry sources.
+- Updated dependencies [01125b0]
+- Updated dependencies [e12e80a]
+- Updated dependencies [3860511]
+- Updated dependencies [e7d905b]
+- Updated dependencies [36ea76d]
+- Updated dependencies [cd9b1bd]
+- Updated dependencies [8a8df93]
+- Updated dependencies [b2e70bb]
+  - @gntik-ai/tokens@0.4.0
+
 ## 0.11.0
 
 ### Minor Changes
