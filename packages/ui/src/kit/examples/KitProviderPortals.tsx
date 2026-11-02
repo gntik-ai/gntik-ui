@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../../components/Button';
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/Popover';
+import { Dropzone } from '../../components/Dropzone';
 import { useI18n } from '../../i18n/I18nProvider';
 import { useTheme } from '../../theme/ThemeProvider';
 import { KitProvider } from '../KitProvider';
@@ -23,6 +24,7 @@ export default function KitProviderPortals() {
           <PopoverTrigger render={<Button variant="secondary" />}>{t('kit.route')}</PopoverTrigger>
           <PopoverContent aria-label={t('kit.scopeTitle')}>{t('kit.scopeHint')}</PopoverContent>
         </Popover>
+        <Dropzone fullScreen />
       </KitProvider>
       <div
         ref={setPortalContainer}
@@ -30,6 +32,7 @@ export default function KitProviderPortals() {
         className="rounded-lg border border-border bg-background p-3 text-foreground"
       >
         <p className="text-sm text-muted-foreground">{t('kit.scopeTitle')}</p>
+        <p className="text-sm text-muted-foreground">{t('dropzone.label')}</p>
       </div>
     </div>
   );
