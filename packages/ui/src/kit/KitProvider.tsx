@@ -20,7 +20,7 @@ const KitContext = createContext(false);
 export interface KitProviderProps {
   /** Application content. */
   children?: ReactNode;
-  /** Theme and persistence settings; defaults to dark and the gntik preset. */
+  /** Theme and persistence settings; nested themes target a subtree wrapper. Defaults to dark and the gntik preset. */
   theme?: Omit<ThemeProviderProps, 'children'>;
   /** Locale, translations and direction; omitted preserves the parent context. */
   i18n?: Omit<I18nProviderProps, 'children'>;
@@ -30,9 +30,9 @@ export interface KitProviderProps {
   link?: LinkProviderProps['component'];
   /** Tooltip timing; false keeps an app-owned provider. */
   tooltip?: Omit<TooltipProviderProps, 'children'> | false;
-  /** Toast queue and stack settings; false keeps an app-owned setup. */
+  /** Toast queue and stack settings; false keeps an app-owned setup. Nested providers reuse the outer settings. */
   toast?: (Omit<ToastProviderProps, 'children'> & { toaster?: ToasterProps }) | false;
-  /** Whether to supply live announcement regions. Defaults to true. */
+  /** Whether to supply live announcement regions. Defaults to true; nested providers reuse the outer settings. */
   announcer?: boolean;
   /** Nonce and inline-style policy, supplied by the app server. */
   csp?: Omit<CSPProviderProps, 'children'>;
@@ -50,7 +50,7 @@ function Scope({
 }: {
   children: ReactNode;
   wrapperRef: Ref<HTMLDivElement>;
-  portalRef: Ref<HTMLDivElement>;
+  portalRef?: Ref<HTMLDivElement>;
   densityProps?: Omit<DensityProviderProps, 'children'>;
 }) {
   const { locale, dir } = useI18n();
@@ -68,7 +68,7 @@ function Scope({
       children: (
         <>
           {children}
-          <div ref={portalRef} data-kit-portal="" />
+          {portalRef && <div ref={portalRef} data-kit-portal="" />}
         </>
       ),
     },
@@ -90,6 +90,7 @@ export function KitProvider({
   scoped = false,
 }: KitProviderProps) {
   const nested = useContext(KitContext);
+  const wrapsSubtree = scoped || (nested && theme !== undefined);
   const inheritedTheme = useTheme();
   const inheritedPortal = usePortalContainer();
   const wrapper = useRef<HTMLDivElement>(null);
@@ -116,11 +117,11 @@ export function KitProvider({
         {content}
       </PortalContainerContext.Provider>
     );
-  if (scoped)
+  if (wrapsSubtree)
     content = (
       <Scope
         wrapperRef={wrapper}
-        portalRef={setPortalHost}
+        portalRef={scoped ? setPortalHost : undefined}
         densityProps={typeof density === 'object' ? density : undefined}
       >
         {content}
@@ -129,7 +130,7 @@ export function KitProvider({
   if (link) content = <LinkProvider component={link}>{content}</LinkProvider>;
   if (density) {
     const settings = typeof density === 'string' ? { density } : density;
-    content = scoped ? (
+    content = wrapsSubtree ? (
       <DensityContext.Provider value={settings.density}>{content}</DensityContext.Provider>
     ) : (
       <DensityProvider {...settings}>{content}</DensityProvider>
@@ -137,7 +138,7 @@ export function KitProvider({
   }
   if (i18n)
     content = (
-      <I18nProvider {...i18n} applyTo={scoped ? 'none' : i18n.applyTo}>
+      <I18nProvider {...i18n} applyTo={wrapsSubtree ? 'none' : i18n.applyTo}>
         {content}
       </I18nProvider>
     );
@@ -154,7 +155,7 @@ export function KitProvider({
         }
       : {};
     content = (
-      <ThemeProvider {...inherited} {...theme} target={scoped ? target : theme?.target}>
+      <ThemeProvider {...inherited} {...theme} target={wrapsSubtree ? target : theme?.target}>
         {content}
       </ThemeProvider>
     );

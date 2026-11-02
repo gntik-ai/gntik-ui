@@ -1,4 +1,3 @@
-import { kitEn } from './kit-messages';
 import { treeListEn } from './tree-list-messages';
 import { toolCallEn } from './tool-call-en';
 import { signUpEn, forgotPasswordEn, resetPasswordEn } from './auth-form-messages';
@@ -15,7 +14,6 @@ import { searchableSelectEn } from './searchable-select-messages';
 import { cspEn } from './csp-messages';
 import { logoCloudEn } from './logo-cloud-messages';
 export const en = {
-  ...kitEn,
   ...toolCallEn,
   ...treeListEn,
   ...signUpEn,

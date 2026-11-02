@@ -48,6 +48,16 @@ export default function KitProviderScoped() {
       csp={{ disableStyleElements: true }}
     >
       <Panel />
+      <KitProvider theme={{ forcedMode: 'dark' }}>
+        <p className="bg-background p-4 text-foreground">
+          <NestedThemeLabel />
+        </p>
+      </KitProvider>
     </KitProvider>
   );
+}
+
+function NestedThemeLabel() {
+  const { t } = useI18n();
+  return t('themeScope.nested');
 }
