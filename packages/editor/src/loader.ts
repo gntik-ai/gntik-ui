@@ -63,12 +63,17 @@ export function useBrandTheme(
 ): void {
   useEffect(() => {
     if (!monaco) return undefined;
+    let previousFont: string | undefined;
     const apply = () => {
       defineBrandThemes(monaco);
       monaco.editor.setTheme(brandThemeFor());
       if (host?.current && instance?.current) {
-        instance.current.updateOptions(editorTypography(host.current, fontFamily));
-        monaco.editor.remeasureFonts();
+        const typography = editorTypography(host.current, fontFamily);
+        if (typography.fontFamily !== previousFont) {
+          instance.current.updateOptions(typography);
+          monaco.editor.remeasureFonts();
+          previousFont = typography.fontFamily;
+        }
       }
     };
     apply();

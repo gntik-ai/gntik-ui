@@ -4,20 +4,18 @@ import { readPalettes, TYPOGRAPHY_KEYS } from './palette-model.mjs';
 
 function parse(css) {
   return Object.fromEntries(
-    [...css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/(:root|\.dark|\.high_contrast)\s*\{([^}]*)\}/g)].map(
-      ([, selector, body]) => [
-        selector,
-        Object.fromEntries(
-          [...body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, key, value]) => [key, value.trim()]),
-        ),
-      ],
-    ),
+    [
+      ...css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/(:where\(:root\)|:root|\.dark|\.high_contrast)\s*\{([^}]*)\}/g),
+    ].map(([, selector, body]) => [
+      selector,
+      Object.fromEntries([...body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, key, value]) => [key, value.trim()])),
+    ]),
   );
 }
 
 export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '', typographyCss = '') {
   const brand = parse(brandCss);
-  const defaults = { ...brand[':root'], ...parse(typographyCss)[':root'] };
+  const defaults = { ...brand[':root'], ...parse(typographyCss)[':where(:root)'] };
   const typography = (values) =>
     Object.fromEntries(Object.entries(values).filter(([key]) => TYPOGRAPHY_KEYS.includes(key)));
   const colours = (values) =>
@@ -51,7 +49,6 @@ export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '',
         ...typography(defaults),
         ...typography(paletteLight),
         ...typography(paletteDark),
-        'font-family': 'var(--font-sans)',
       });
     const target = `[data-palette="${id}"]${guard}`;
     // Repeat aliases on palette boundaries: inherited var() values have already resolved.

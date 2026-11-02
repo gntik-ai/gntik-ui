@@ -38,6 +38,11 @@ uppercase labels for both green and navy. Define typography on the palette
 boundary independently of its guarded colour rules so it also applies in high
 contrast. Keep shared high-contrast colours unchanged.
 
+Typography defaults have zero specificity, so a palette on `html` can override
+them even when `typography.css` is imported last. Font inheritance and `em`/`i`
+styles use the base layer; explicit utilities such as `font-mono` and
+`not-italic` still take precedence.
+
 ```css
 @import '@gntik-ai/tokens/fonts/inter.css';
 
@@ -57,6 +62,10 @@ The consumer's bundler copies the files to its own origin; there are no remote
 font hosts. Inter is optional and never replaces Geist by default. If it cannot
 load, the next family in the sans stack is used. Italic files are not shipped:
 set emphasis to `normal` for an upright palette.
+
+For kit maintenance, `pnpm --filter @gntik-ai/tokens fonts:sync` refreshes the
+committed upright subsets, stylesheet and licence from the installed
+`@fontsource-variable/inter` development dependency without network access.
 
 Set `data-palette` on a `ThemeScope` to carry the palette into its body portal.
 Sans fonts resolve again at each palette and portal boundary; nested palettes

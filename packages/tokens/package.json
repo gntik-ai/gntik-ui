@@ -50,6 +50,7 @@
   },
   "scripts": {
     "build": "node scripts/export-tokens.mjs",
+    "fonts:sync": "node scripts/sync-inter.mjs",
     "test": "node --test test/*.test.mjs"
   },
   "devDependencies": {

@@ -57,7 +57,6 @@
   --font-mono: "Geist Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
   --font-style-emphasis: italic;
   --text-transform-label: uppercase;
-  font-family: var(--font-sans);
 }
 
 @scope (:root, .light, .dark, .high_contrast) to (.light, .dark, .high_contrast) {
@@ -251,7 +250,6 @@
   --font-mono: "Geist Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
   --font-style-emphasis: italic;
   --text-transform-label: uppercase;
-  font-family: var(--font-sans);
 }
 
 [data-palette="navy"]:not(:where(.high_contrast, .high_contrast *)) {

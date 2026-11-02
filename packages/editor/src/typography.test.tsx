@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { CodeEditor } from './CodeEditor';
 import { DiffEditor } from './DiffEditor';
@@ -23,6 +23,38 @@ beforeEach(() => {
 afterEach(() => vi.restoreAllMocks());
 
 for (const kind of ['code', 'diff'] as const) {
+  it(`${kind} remeasures fonts only when its resolved font changes`, async () => {
+    const m = createMockMonaco();
+    const { container } = render(
+      <section data-palette="navy">
+        {kind === 'code' ? (
+          <CodeEditor loader={m.loader} />
+        ) : (
+          <DiffEditor original="a" modified="b" loader={m.loader} />
+        )}
+      </section>,
+    );
+    const create = kind === 'code' ? m.editorApi.create : m.editorApi.createDiffEditor;
+    await waitFor(() => expect(create).toHaveBeenCalledOnce());
+    const section = container.querySelector('section')!;
+    m.editorApi.remeasureFonts.mockClear();
+    await act(async () => {
+      section.classList.add('expanded');
+    });
+    expect(m.editorApi.remeasureFonts).not.toHaveBeenCalled();
+
+    await act(async () => {
+      section.dataset.palette = 'green';
+    });
+    const instance = kind === 'code' ? m.codeEditors[0]! : m.diffEditors[0]!;
+    expect(instance.updateOptions).toHaveBeenLastCalledWith({ fontFamily: '"Geist Mono", monospace' });
+    expect(m.editorApi.remeasureFonts).toHaveBeenCalledOnce();
+    await act(async () => {
+      section.classList.remove('expanded');
+    });
+    expect(m.editorApi.remeasureFonts).toHaveBeenCalledOnce();
+  });
+
   it(`${kind} resolves the scoped font when options explicitly leave fontFamily undefined`, async () => {
     const m = createMockMonaco();
     const preview = (fontSize: number) => (

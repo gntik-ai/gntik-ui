@@ -18,7 +18,8 @@ const roles = {
 };
 
 test('eleven type roles preserve the specified values, units and inheritance', () => {
-  const vars = parseBlocks(fs.readFileSync(new URL('../src/typography.css', import.meta.url), 'utf8'))[':root'];
+  const css = parseBlocks(fs.readFileSync(new URL('../src/typography.css', import.meta.url), 'utf8'));
+  const vars = { ...css[':where(:root)'], ...css[':root'] };
   const expected = { '--font-style-emphasis': 'italic', '--text-transform-label': 'uppercase' };
   for (const [role, values] of Object.entries(roles)) {
     ['size', 'leading', 'tracking', 'weight'].forEach((property, i) => {
