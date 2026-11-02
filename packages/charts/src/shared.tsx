@@ -18,6 +18,7 @@ export interface BaseChartProps<T extends object> extends ChartStateProps {
   title?: string;
   /** Longer description rendered inside the SVG (`<desc>`). */
   description?: string;
+  /** Series colours, cycled. Default: the palette's chart series, else the categorical accents. */
   colors?: readonly ChartColor[];
   valueFormatter?: ValueFormatter;
   showLegend?: boolean;

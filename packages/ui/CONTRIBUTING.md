@@ -13,7 +13,7 @@ Each component lives in `src/components/<Name>/`:
 
 Rules:
 
-- Palettes come only from `@gntik-ai/tokens`: green (default) and navy. `brand.css` and
+- Palettes come only from `@gntik-ai/tokens`: green (default), navy and corporate. `brand.css` and
   green values remain frozen. A preset may select a named palette; components never define
   colour values. Every palette covers light/dark colours and shadows and passes the same
   contrast checks. High contrast and categorical accents are shared.

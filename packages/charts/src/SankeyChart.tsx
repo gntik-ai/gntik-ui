@@ -2,7 +2,6 @@ import { useChartLabels } from './i18n';
 import { Sankey, Tooltip, type SankeyLinkProps as LinkProps, type SankeyNodeProps as NodeProps } from 'recharts';
 import { tooltipContent } from './ChartTooltip';
 import { identity, type ValueFormatter } from './format';
-import { SAFE_CHART_COLORS } from './palette';
 import { accessibleName, ChartFrame } from './shared';
 import { ChartDataTable, resolveState, type ChartStateProps } from './states';
 import { seriesColor, useChartTheme, type ChartColor } from './theme';
@@ -64,7 +63,7 @@ export function resolveSankeyLinks(
 export function SankeyChart({
   nodes,
   links,
-  colors = SAFE_CHART_COLORS,
+  colors,
   valueFormatter = identity,
   height = 320,
   nodeWidth = 10,

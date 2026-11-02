@@ -4,7 +4,15 @@ import { readFileSync } from 'node:fs';
 import { themeScript } from '../../../packages/ui/src/theme/theme-script.ts';
 
 const source = new URL('../../../packages/tokens/src/', import.meta.url);
-const css = ['brand.css', 'status.css', 'pairing.css', 'scope.css', 'palettes/navy.css', 'typography.css']
+const css = [
+  'brand.css',
+  'status.css',
+  'pairing.css',
+  'scope.css',
+  'palettes/navy.css',
+  'palettes/corporate.css',
+  'typography.css',
+]
   .map((file) => readFileSync(new URL(file, source), 'utf8'))
   .join('\n');
 const channels = (locator, token = '--primary') =>
@@ -99,3 +107,23 @@ for (const theme of ['dark', 'high_contrast'])
     await expect(listbox).toBeVisible();
     expect(await channels(listbox)).toBe(expected);
   });
+
+test('corporate chart series reach corporate scopes only, not nested palettes or high contrast', async ({ page }) => {
+  await page.route('**/series-fixture', (route) =>
+    route.fulfill({
+      contentType: 'text/html',
+      body: `<!doctype html><html lang="en" class="dark" data-palette="corporate"><head><title>Series scope</title><style>${css}</style></head><body><main>
+      <div id="light" class="light">Light inside corporate</div>
+      <div id="green" data-palette="green">Green island<div id="navy" data-palette="navy">Navy island</div></div>
+      <div id="contrast" class="high_contrast">High contrast subtree</div>
+      </main></body></html>`,
+    }),
+  );
+  await page.goto('/series-fixture');
+  const series = (selector) => channels(page.locator(selector), '--chart-series-1');
+  expect(await series('html')).toBe('218.9 100% 54.5%');
+  expect(await series('#light')).toBe('218.9 100% 18%');
+  for (const selector of ['#green', '#navy', '#contrast']) expect(await series(selector), selector).toBe('');
+  await page.locator('html').evaluate((el) => (el.className = 'high_contrast'));
+  expect(await series('html')).toBe('');
+});

@@ -33,6 +33,7 @@
     "./layers.css": "./src/layers.css",
     "./status.css": "./src/status.css",
     "./palettes/navy.css": "./src/palettes/navy.css",
+    "./palettes/corporate.css": "./src/palettes/corporate.css",
     "./palettes/index.css": "./src/palettes/index.css",
     "./fonts/inter.css": "./fonts/inter.css"
   },

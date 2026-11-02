@@ -1,7 +1,7 @@
 # Tokens and palettes
 
 Import `@gntik-ai/tokens/tailwind.css` (after Tailwind CSS) or `@gntik-ai/ui/styles.css`
-for the complete token layer, including green and navy palettes.
+for the complete token layer, including the green, navy and corporate palettes.
 
 For individual CSS exports, import these paths in order:
 
@@ -18,7 +18,7 @@ For individual CSS exports, import these paths in order:
 `pairing.css` and `scope.css` depend on `status.css` for `--success-strong`.
 The palette files supply colour values; they require `scope.css` to re-resolve
 pairing aliases at palette boundaries and compose with nested light/dark scopes.
-`palettes/navy.css` can replace `palettes/index.css` when only navy is needed.
+`palettes/navy.css` or `palettes/corporate.css` can replace `palettes/index.css` when only one is needed.
 
 Set `data-palette="navy"` on the document or a subtree. Palette composition uses
 CSS `@scope`; green retains its original theme values in browsers without it.
@@ -34,7 +34,7 @@ and subscribe to theme and palette changes with `observeTheme`.
 
 Palettes can override `--font-sans`, `--font-mono`, `--font-style-emphasis` and
 `--text-transform-label`. Defaults remain Geist, Geist Mono, italic emphasis and
-uppercase labels for both green and navy. Define typography on the palette
+uppercase labels for green and navy. Define typography on the palette
 boundary independently of its guarded colour rules so it also applies in high
 contrast. Keep shared high-contrast colours unchanged.
 
@@ -124,3 +124,16 @@ and Progress expose their tone on the root and retain their role-specific
 surfaces, icons and opacity strengths. Import `tone.css` after brand and pairing
 when using standalone CSS; the Tailwind bridge includes it automatically.
 The Badge docs include a live Shared Tone Utilities example for product markup.
+
+## Corporate palette
+
+`data-palette="corporate"` is an opt-in palette with complete light and dark colours, shadows,
+Inter typography (`--font-sans` starts with `Inter`, emphasis is upright and labels keep their
+written case) and the optional `--chart-series-1` to `--chart-series-12` tokens. Import
+`@gntik-ai/tokens/fonts/inter.css` to self-host Inter. Hue follows the supplied identity colours;
+only lightness (and saturation of neutral tints) is adjusted to meet contrast, and borders reach 3:1.
+
+Chart series tokens exist only in this palette. Charts with no explicit `colors` use
+`--chart-series-N` and fall back to the categorical accents when it is undefined: other palettes,
+nested palette islands and high contrast clear it. Identity rules: one highlight colour per page,
+sentence case, no italics. High contrast keeps the shared colours.

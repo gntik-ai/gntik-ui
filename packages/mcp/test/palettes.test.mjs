@@ -28,10 +28,19 @@ after(() => client.close());
 test('get_tokens lists palettes and returns the requested navy theme values', async () => {
   const output = await call('get_tokens', { format: 'json', palette: 'navy', theme: 'dark' });
   const data = JSON.parse(/```json\n([\s\S]+)\n```/.exec(output)[1]);
-  assert.deepEqual(data.palettes, ['green', 'navy']);
+  assert.deepEqual(data.palettes, ['green', 'navy', 'corporate']);
   assert.equal(data.themes[0].tokens.primary, '221 90% 78%');
   assert.equal(data.themes[0].palette, 'navy');
   assert.match(await call('get_tokens', { palette: 'navy' }), /--primary:\s*223 54% 23%/);
+});
+
+test('get_tokens returns complete corporate light and dark values with its typography', async () => {
+  const output = await call('get_tokens', { format: 'json', palette: 'corporate', theme: 'dark' });
+  const data = JSON.parse(/```json\n([\s\S]+)\n```/.exec(output)[1]);
+  assert.equal(data.themes[0].palette, 'corporate');
+  assert.equal(data.themes[0].tokens.primary, '196.8 31.6% 64%');
+  assert.match(await call('get_tokens', { palette: 'corporate' }), /--font-sans:\s*"Inter"/);
+  assert.match(await call('get_tokens', { palette: 'corporate' }), /--chart-series-12:/);
 });
 
 test('get_rules preserves its source verbatim and states the palette amendment explicitly', async () => {
@@ -39,6 +48,7 @@ test('get_rules preserves its source verbatim and states the palette amendment e
   assert.ok(rules.includes(index.rulesMd), 'the original source rules are returned verbatim');
   assert.match(rules, /palette amendment supersedes the single-green restriction/i);
   assert.match(rules, /green.*default.*navy/i);
+  assert.match(rules, /corporate/i);
   assert.match(rules, /high contrast.*shared/i);
 });
 

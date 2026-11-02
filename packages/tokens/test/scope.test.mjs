@@ -26,8 +26,29 @@ test('light restores exactly the frozen theme overrides and root pairing aliases
 
 test('each non-light scope declares a dark color scheme', () => {
   const css = read('../src/scope.css');
-  for (const selector of ['.dark', '.high_contrast']) {
-    assert.deepEqual(declarations(css, selector), { 'color-scheme': 'dark' });
+  assert.deepEqual(declarations(css, '.dark'), { 'color-scheme': 'dark' });
+  const { 'color-scheme': scheme, ...rest } = declarations(css, '.high_contrast');
+  assert.equal(scheme, 'dark');
+  // High contrast ignores palette colours, so it only clears inherited chart series.
+  assert.deepEqual(Object.values(rest), Array(12).fill('initial'));
+  assert.deepEqual(
+    Object.keys(rest),
+    Array.from({ length: 12 }, (_, index) => `--chart-series-${index + 1}`),
+  );
+});
+
+test('chart series tokens reach only corporate and are cleared everywhere else', () => {
+  const css = read('../src/scope.css');
+  const seriesOf = (block) => Object.keys(block).filter((key) => key.startsWith('--chart-series-'));
+  const blocks = [...css.matchAll(/(\[data-palette="(\w+)"\][^{}]*)\{([^{}]*)\}/g)].filter(([, selector]) =>
+    selector.includes(':not('),
+  );
+  assert.ok(blocks.length >= 6, 'green, navy and corporate each have a light and a dark block');
+  for (const [, selector, id, body] of blocks) {
+    const values = Object.fromEntries([...body.matchAll(/(--chart-series-\d+):\s*([^;]+);/g)].map((m) => [m[1], m[2]]));
+    assert.equal(seriesOf(values).length, 12, `${selector} declares all twelve series tokens`);
+    for (const value of Object.values(values))
+      assert.equal(id === 'corporate' ? value !== 'initial' : value === 'initial', true, `${id}: ${value}`);
   }
 });
 

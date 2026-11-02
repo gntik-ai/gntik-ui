@@ -20,6 +20,17 @@ export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '',
     Object.fromEntries(Object.entries(values).filter(([key]) => TYPOGRAPHY_KEYS.includes(key)));
   const colours = (values) =>
     Object.fromEntries(Object.entries(values).filter(([key]) => !TYPOGRAPHY_KEYS.includes(key)));
+  // A palette may add chart series tokens. Every other palette, and high contrast, clears them,
+  // so charts fall back to their default tokens instead of inheriting an outer palette's series.
+  const seriesKeys = [
+    ...new Set(Object.values(palettes).flatMap((blocks) => blocks.flatMap((values) => Object.keys(values)))),
+  ]
+    .filter((key) => /^--chart-series-\d+$/.test(key))
+    .sort((a, b) => parseInt(a.slice(15), 10) - parseInt(b.slice(15), 10));
+  const clearSeries = (values) =>
+    Object.keys(values).some((key) => seriesKeys.includes(key))
+      ? {}
+      : Object.fromEntries(seriesKeys.map((key) => [key, 'initial']));
   const pairing = parse(pairingCss);
   const overridden = new Set([...Object.keys(brand['.dark']), ...Object.keys(brand['.high_contrast'])]);
   const light = {
@@ -52,7 +63,11 @@ export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '',
       });
     const target = `[data-palette="${id}"]${guard}`;
     // Repeat aliases on palette boundaries: inherited var() values have already resolved.
-    const lightBlock = block(target, { ...colours(paletteLight), ...pairing[':root'] });
+    const lightBlock = block(target, {
+      ...colours(paletteLight),
+      ...clearSeries(paletteLight),
+      ...pairing[':root'],
+    });
     // Green already has unscoped theme rules in brand.css. Keep palette resets
     // scoped so browsers without @scope retain the original green cascade.
     paletteScopes +=
@@ -64,6 +79,7 @@ export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '',
       `\n@scope (:root, .light, .dark, .high_contrast) to (.light, .dark, .high_contrast) {\n` +
       block(`:where(:scope.dark) ${target},\n:where(:scope.dark)${target}`, {
         ...colours(paletteDark),
+        ...clearSeries(paletteDark),
         ...pairing['.dark'],
       }) +
       '}\n';
@@ -89,7 +105,10 @@ export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '',
     '\n' +
     block('.dark', { 'color-scheme': 'dark' }) +
     '\n' +
-    block('.high_contrast', { 'color-scheme': 'dark' }) +
+    block('.high_contrast', {
+      'color-scheme': 'dark',
+      ...Object.fromEntries(seriesKeys.map((key) => [key, 'initial'])),
+    }) +
     paletteScopes
   );
 }

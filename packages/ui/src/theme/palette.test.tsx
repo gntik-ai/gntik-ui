@@ -102,3 +102,29 @@ it('restores stored palettes in the head script and uses the default when storag
   window.eval(themeScript('theme-choice', 'dark', { paletteStorageKey: 'palette-choice' }));
   expect(document.documentElement).toHaveAttribute('data-palette', 'green');
 });
+
+it('keeps the corporate palette through ThemeProvider, storage and the head script, never falling back to green', async () => {
+  localStorage.setItem('palette-choice', 'corporate');
+  const { result } = renderHook(() => useTheme(), {
+    wrapper: ({ children }) => (
+      <ThemeProvider palette="green" paletteStorageKey="palette-choice">
+        {children}
+      </ThemeProvider>
+    ),
+  });
+  expect(result.current.palette).toBe('corporate');
+  expect(document.documentElement).toHaveAttribute('data-palette', 'corporate');
+  act(() => result.current.setPalette('navy'));
+  act(() => result.current.setPalette('corporate'));
+  expect(document.documentElement).toHaveAttribute('data-palette', 'corporate');
+  expect(localStorage.getItem('palette-choice')).toBe('corporate');
+  document.documentElement.removeAttribute('data-palette');
+  const { themeScript } = await import('./theme-script');
+  window.eval(themeScript('theme-choice', 'light', { palette: 'corporate', paletteStorageKey: null }));
+  expect(document.documentElement).toHaveAttribute('data-palette', 'corporate');
+  window.eval(themeScript('theme-choice', 'light', { palette: 'green', paletteStorageKey: 'palette-choice' }));
+  expect(document.documentElement).toHaveAttribute('data-palette', 'corporate');
+  localStorage.setItem('palette-choice', 'unknown-id');
+  window.eval(themeScript('theme-choice', 'light', { paletteStorageKey: 'palette-choice' }));
+  expect(document.documentElement).toHaveAttribute('data-palette', 'green');
+});

@@ -5,7 +5,7 @@
    and in a mini console, checks its contrast against the chrome and background
    tokens, and exports the preset. Colours are frozen: it never edits a token.
    ============================================================================ */
-import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import {
   Alert,
   Badge,
@@ -22,9 +22,13 @@ import {
   ToggleGroup,
 } from '@gntik-ai/ui';
 import { AppSidebarNav, KPI_ITEMS, KpiRow } from '@gntik-ai/blocks';
+import { BarChart } from '@gntik-ai/charts';
 import { Download, Upload } from '@gntik-ai/icons';
+import { currentPalette, observeTheme } from '@gntik-ai/tokens/runtime';
 import brandCss from '../../../../packages/tokens/src/brand.css?raw';
 import pairingCss from '../../../../packages/tokens/src/pairing.css?raw';
+import corporateCss from '../../../../packages/tokens/src/palettes/corporate.css?raw';
+import { parsePalette } from '../../../../packages/tokens/scripts/palette-model.mjs';
 
 const { SectionHead, CodeBlock } = window;
 
@@ -58,6 +62,23 @@ const THEME_VARS = Object.fromEntries(
     },
   ]),
 );
+/** The corporate palette replaces light and dark values; high contrast keeps the shared ones. */
+const [CORPORATE_LIGHT, CORPORATE_DARK] = parsePalette(corporateCss);
+const CORPORATE_VARS = {
+  ...THEME_VARS,
+  light: { ...THEME_VARS.light, ...CORPORATE_LIGHT },
+  dark: { ...THEME_VARS.dark, ...CORPORATE_DARK },
+};
+const themeVars = (palette) => (palette === 'corporate' ? CORPORATE_VARS : THEME_VARS);
+
+const subscribePalette = (notify) => observeTheme(notify);
+/** The palette chosen in the catalog toolbar (data-palette on html). */
+const usePalette = () =>
+  useSyncExternalStore(
+    subscribePalette,
+    () => currentPalette(),
+    () => 'green',
+  );
 
 function hslToRgb(channels) {
   const [h = 0, s = 0, l = 0] = (channels || '').split(/\s+/).map((x) => parseFloat(x) || 0);
@@ -218,10 +239,11 @@ function useMarkColours(src) {
   return result.src === src ? result.colours : [];
 }
 
-function ContrastTable({ colours }) {
+function ContrastTable({ colours, palette }) {
+  const vars = themeVars(palette);
   const rows = THEME_LIST.flatMap(([t, label]) =>
     ['--chrome', '--background'].map((token) => {
-      const surface = hslToRgb(THEME_VARS[t][token]);
+      const surface = hslToRgb(vars[t][token]);
       const best = Math.max(0, ...colours.map((c) => contrast(c.rgb, surface)));
       return { key: t + token, label, token, best };
     }),
@@ -286,8 +308,9 @@ const camel = (s) =>
     .replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase())
     .replace(/^(\d)/, '_$1');
 
-function presetModule(name, src) {
+function presetModule(name, src, palette) {
   const id = slug(name);
+  const corporate = palette === 'corporate';
   return `import type { BrandPreset } from '@gntik-ai/ui';
 
 /** ${name} mark (sanitised SVG). Artwork is the one place literal colours live. */
@@ -295,12 +318,12 @@ const MARK_SRC =
   '${src}';
 
 /**
- * ${name} — brand preset: name and logo only. Colours are the frozen tokens of
- * @gntik-ai/tokens, the same for every product.
+ * ${name} — brand preset: ${corporate ? 'name, logo and palette' : 'name and logo only'}. Colours are the ${corporate ? 'corporate palette' : 'frozen tokens'} of
+ * @gntik-ai/tokens${corporate ? '' : ', the same for every product'}.
  */
 export const ${camel(name)}Preset: BrandPreset = {
   id: '${id}',
-  name: ${JSON.stringify(name.trim() || 'Product')},
+  name: ${JSON.stringify(name.trim() || 'Product')},${corporate ? "\n  palette: 'corporate'," : ''}
   mark: (size) => (
     <img src={MARK_SRC} width={size} height={size} alt="" aria-hidden="true" draggable={false} className="block shrink-0" />
   ),
@@ -379,6 +402,7 @@ function ThemeBuilderSection() {
   const [svgText, setSvgText] = useState(sampleMark);
   const [consoleTheme, setConsoleTheme] = useState('dark');
   const [copied, setCopied] = useState(false);
+  const palette = usePalette();
 
   const result = useMemo(() => sanitizeSvg(svgText), [svgText]);
   const shown = result.error ? null : result;
@@ -404,7 +428,7 @@ function ThemeBuilderSection() {
       },
     [shown, productName],
   );
-  const moduleCode = shown ? presetModule(productName, shown.src) : '';
+  const moduleCode = shown ? presetModule(productName, shown.src, palette) : '';
   const fileName = `${slug(productName)}-preset.tsx`;
 
   const readFile = (file) => {
@@ -552,7 +576,7 @@ function ThemeBuilderSection() {
                   The mark’s main colours (each ≥ 5% of its area) against the chrome (sidebar, topbar) and background
                   tokens. A logo needs at least one substantial part at 3:1 (WCAG 1.4.11) to stay recognisable.
                 </p>
-                <ContrastTable colours={colours} />
+                <ContrastTable colours={colours} palette={palette} />
               </div>
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-2">
@@ -585,7 +609,77 @@ function ThemeBuilderSection() {
           )}
         </div>
       </div>
+      <CorporatePaletteSection />
     </div>
+  );
+}
+
+/* ── Corporate palette ────────────────────────────────────────────────────── */
+const CHART_ROWS = ['Q1', 'Q2', 'Q3', 'Q4'].map((q, i) => ({
+  q,
+  ...Object.fromEntries(['a', 'b', 'c', 'd', 'e', 'f', 'g'].map((key, j) => [key, 20 + ((i * 7 + j * 11) % 40)])),
+}));
+
+function CorporatePaletteSection() {
+  return (
+    <section aria-labelledby="corporate-palette" className="mt-14 grid gap-4 border-t border-border pt-10">
+      <h2 id="corporate-palette" className="text-[18px] font-semibold text-foreground">
+        Corporate palette
+      </h2>
+      <p className="max-w-3xl text-[13px] leading-6 text-muted-foreground">
+        An opt-in palette for products that follow a corporate identity: a deep blue main colour, a family of blues for
+        neutrals and borders, and a set of highlight colours. Select Corporate in the toolbar, set{' '}
+        <code className="font-mono text-[12px] text-foreground">palette: &apos;corporate&apos;</code> on a preset, or
+        put <code className="font-mono text-[12px] text-foreground">data-palette=&quot;corporate&quot;</code> on a
+        subtree. High contrast keeps the shared values, and every other palette is unchanged.
+      </p>
+      <ul className="grid max-w-3xl list-disc gap-1.5 pl-5 text-[13px] leading-6 text-foreground">
+        <li>Use one highlight colour per page. Highlights are subtle touch points, not fills for large areas.</li>
+        <li>Write in sentence case. Use all caps only for headings of up to three words.</li>
+        <li>No italics: the palette sets emphasis to upright and labels to their written case.</li>
+        <li>
+          The typeface is Inter, self-hosted. Import{' '}
+          <code className="font-mono text-[12px]">@gntik-ai/tokens/fonts/inter.css</code> once in your global CSS.
+        </li>
+        <li>
+          Field borders and the focus ring reach 3:1 against the surfaces, so dividers are darker than in the other
+          palettes.
+        </li>
+        <li>
+          Charts with no <code className="font-mono text-[12px]">colors</code> use the main blues for series 1 to 5 and
+          highlight colours from series 6. Several highlights in one chart conflict with the one-highlight rule: prefer
+          at most five series, or pass explicit <code className="font-mono text-[12px]">colors</code>.
+        </li>
+      </ul>
+      <CodeBlock
+        code={`import '@gntik-ai/tokens/fonts/inter.css';
+// In the document head, before styles and hydration:
+themeScript('gntik-theme', 'dark', { palette: 'corporate' });
+<ThemeProvider palette="corporate"><App /></ThemeProvider>`}
+      />
+      <div data-palette="corporate" className="grid gap-4 lg:grid-cols-2">
+        {['light', 'dark'].map((theme) => (
+          <ThemeScope
+            key={theme}
+            theme={theme}
+            className="grid gap-3 rounded-lg border border-border bg-background p-5 text-foreground"
+          >
+            <h3 className="text-[14px] font-semibold">Corporate {theme}</h3>
+            <div>
+              <Button>Primary action</Button>
+            </div>
+            <BarChart
+              aria-label={`Seven default chart series, corporate ${theme}`}
+              data={CHART_ROWS}
+              index="q"
+              categories={['a', 'b', 'c', 'd', 'e', 'f', 'g']}
+              height={180}
+              showLegend={false}
+            />
+          </ThemeScope>
+        ))}
+      </div>
+    </section>
   );
 }
 

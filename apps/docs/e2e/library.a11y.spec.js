@@ -18,6 +18,9 @@ for (const component of componentPages) {
     ['green', 'high_contrast'],
     ['navy', 'dark'],
     ['navy', ''],
+    ['corporate', 'dark'],
+    ['corporate', ''],
+    ['corporate', 'high_contrast'],
   ]) {
     const name = theme || 'light';
     test(`${component.name} a11y --${palette}-${name}`, async ({ page }) => {

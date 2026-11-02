@@ -1,0 +1,107 @@
+/* Corporate: opt-in palette with complete light and dark colour, shadow, typography and chart series values. ThemeScope composition is generated in scope.css.
+   Hue follows the supplied identity colours; lightness (and, for neutral tints, saturation) is adjusted only to meet contrast.
+   Typography needs the optional Inter stylesheet from @gntik-ai/tokens/fonts/inter.css. */
+[data-palette="corporate"]:not(:where(.high_contrast, .high_contrast *)) {
+  --primary: 218.9 100% 17.8%;
+  --primary-foreground: 0 0% 100%;
+  --brand-secondary: 218.1 76.5% 13.3%;
+  --brand-accent: 202.2 100% 26.5%;
+  --ring: 193.9 100% 33.9%;
+  --background: 201.4 24% 96%;
+  --foreground: 218.1 76.5% 13.3%;
+  --card: 0 0% 100%;
+  --card-foreground: 218.1 76.5% 13.3%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 218.1 76.5% 13.3%;
+  --muted: 201.4 24% 92%;
+  --muted-foreground: 196.8 31.6% 32%;
+  --secondary: 201.4 24% 90%;
+  --secondary-foreground: 218.1 76.5% 16%;
+  --accent: 196.8 32% 90%;
+  --accent-foreground: 202.2 100% 26.5%;
+  --border: 196.8 31.6% 46%;
+  --input: 196.8 31.6% 46%;
+  --chrome: 201.4 24% 97%;
+  --destructive: 348.7 100% 43%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 78.1 100% 37.1%;
+  --warning: 18.9 100% 49.8%;
+  --info: 187.5 100% 39%;
+  --category-rose: 348.7 100% 43.5%;
+  --category-violet: 308.9 74.6% 37%;
+  --category-amber: 18.9 100% 50%;
+  --category-cyan: 187.5 100% 39%;
+  --shadow-sm: 0 1px 2px -1px hsl(218 55% 4% / .16),0 1px 1px hsl(218 55% 4% / .08);
+  --shadow-md: 0 4px 12px -2px hsl(218 55% 4% / .12),0 12px 32px -12px hsl(218 55% 4% / .18);
+  --shadow-lg: 0 2px 4px -2px hsl(218 55% 4% / .2),0 16px 40px -16px hsl(218 55% 4% / .2);
+  --success-strong: 78.1 100% 20%;
+  --font-sans: "Inter","Geist","Helvetica Neue",Arial,sans-serif;
+  --font-style-emphasis: normal;
+  --text-transform-label: none;
+  --chart-series-1: 218.9 100% 18%;
+  --chart-series-2: 202.2 100% 26%;
+  --chart-series-3: 193.9 100% 30%;
+  --chart-series-4: 196.8 31.6% 51.5%;
+  --chart-series-5: 201.4 24.1% 69%;
+  --chart-series-6: 78.1 100% 30%;
+  --chart-series-7: 59.7 100% 36%;
+  --chart-series-8: 18.9 100% 49.5%;
+  --chart-series-9: 348.7 100% 36.5%;
+  --chart-series-10: 326.6 80.2% 50%;
+  --chart-series-11: 308.9 74.6% 37%;
+  --chart-series-12: 187.5 100% 39%;
+}
+
+@scope (:root, .light, .dark, .high_contrast) to (.light, .dark, .high_contrast) {
+:where(:scope.dark) [data-palette="corporate"]:not(:where(.high_contrast, .high_contrast *)),
+:where(:scope.dark)[data-palette="corporate"]:not(:where(.high_contrast, .high_contrast *)) {
+  --primary: 196.8 31.6% 64%;
+  --primary-foreground: 218.1 76.5% 8%;
+  --brand-secondary: 202.2 100% 26.5%;
+  --brand-accent: 201.4 24.1% 77.3%;
+  --ring: 196.8 31.6% 53.5%;
+  --background: 218.1 76.5% 13.3%;
+  --foreground: 201.4 24% 95%;
+  --card: 218.9 100% 17.8%;
+  --card-foreground: 201.4 24% 95%;
+  --popover: 218.9 100% 15.5%;
+  --popover-foreground: 201.4 24% 95%;
+  --muted: 218.9 100% 21%;
+  --muted-foreground: 201.4 24.1% 76%;
+  --secondary: 218.9 100% 21%;
+  --secondary-foreground: 201.4 24% 95%;
+  --accent: 202.2 100% 18%;
+  --accent-foreground: 201.4 24.1% 77.3%;
+  --border: 202.2 100% 37%;
+  --input: 202.2 100% 37%;
+  --chrome: 218.1 76.5% 9%;
+  --destructive: 348.7 100% 44.7%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 78.1 100% 37.1%;
+  --warning: 18.9 100% 62%;
+  --info: 187.5 100% 39%;
+  --category-rose: 348.7 100% 64.5%;
+  --category-violet: 308.9 74.6% 37%;
+  --category-amber: 18.9 100% 39%;
+  --category-cyan: 187.5 100% 44%;
+  --shadow-sm: 0 1px 2px -1px hsl(218 70% 2% / .55),0 1px 1px hsl(218 70% 2% / .35);
+  --shadow-md: 0 4px 14px -2px hsl(218 80% 1% / .6),0 14px 36px -14px hsl(218 80% 1% / .55);
+  --shadow-lg: 0 2px 4px -2px hsl(218 80% 1% / .6),0 16px 40px -16px hsl(218 80% 1% / .55);
+  --success-strong: 78.1 100% 37.1%;
+  --font-sans: "Inter","Geist","Helvetica Neue",Arial,sans-serif;
+  --font-style-emphasis: normal;
+  --text-transform-label: none;
+  --chart-series-1: 218.9 100% 54.5%;
+  --chart-series-2: 202.2 100% 28%;
+  --chart-series-3: 193.9 100% 32%;
+  --chart-series-4: 196.8 31.6% 55%;
+  --chart-series-5: 201.4 24.1% 77.5%;
+  --chart-series-6: 78.1 100% 34%;
+  --chart-series-7: 59.7 100% 44%;
+  --chart-series-8: 18.9 100% 50%;
+  --chart-series-9: 348.7 100% 36.5%;
+  --chart-series-10: 326.6 80.2% 50%;
+  --chart-series-11: 308.9 74.6% 37%;
+  --chart-series-12: 187.5 100% 39%;
+}
+}

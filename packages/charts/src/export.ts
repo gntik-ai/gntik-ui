@@ -1,9 +1,19 @@
-import { tokenColor } from '@gntik-ai/tokens/runtime';
+import { tokenChannels, tokenColor } from '@gntik-ai/tokens/runtime';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 function resolveColours(value: string, figure: HTMLElement): string {
   const resolved = value
+    // `var(--palette-token, var(--default-token))`: the default applies when the palette leaves the token unset.
+    .replace(
+      /hsla?\(\s*var\((--[\w-]+)\s*,\s*var\((--[\w-]+)\)\)\s*(?:\/\s*([\d.]+%?))?\s*\)/g,
+      (_, token: string, fallback: string, alpha?: string) =>
+        tokenColor(
+          tokenChannels(token, figure) ? token : fallback,
+          alpha === undefined ? undefined : parseFloat(alpha) / (alpha.endsWith('%') ? 100 : 1),
+          figure,
+        ),
+    )
     .replace(/hsla?\(\s*var\((--[\w-]+)\)\s*(?:\/\s*([\d.]+%?))?\s*\)/g, (_, token: string, alpha?: string) =>
       tokenColor(token, alpha === undefined ? undefined : parseFloat(alpha) / (alpha.endsWith('%') ? 100 : 1), figure),
     )

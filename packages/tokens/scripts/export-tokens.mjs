@@ -43,6 +43,7 @@ export function parseBlocks(text) {
   return out;
 }
 
+const CHART_SERIES = /^--chart-series-\d+$/;
 const HSL = /^(-?[\d.]+)\s+([\d.]+)%\s+([\d.]+)%$/;
 const isColor = (v) => HSL.test(v);
 
@@ -243,6 +244,7 @@ export function toFigma(model) {
     addVar(k, `color/${name(k)}`, 'COLOR', ['TEXT_FILL', 'STROKE_COLOR'], `hsl(var(${k}))`);
   for (const t of Object.keys(model.themes)) {
     for (const [k, v] of Object.entries(model.themes[t].colors)) {
+      if (CHART_SERIES.test(k)) continue; // Chart series are CSS-only: no Figma variable exists for them.
       const [r, g, b] = hslToRgb(v);
       setValue(k, t, { r, g, b, a: 1 });
     }

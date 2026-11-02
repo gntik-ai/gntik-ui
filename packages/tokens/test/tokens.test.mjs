@@ -161,8 +161,10 @@ test('light success aliases use the independent success-strong status token', ()
 });
 
 // Palette files are tested as shipped, independently of the export pipeline.
+const SERIES_KEYS = Array.from({ length: 12 }, (_, index) => `--chart-series-${index + 1}`);
 function assertComplete(palette, theme, actual) {
-  const expected = Object.keys(frozen['.dark']).concat('--success-strong');
+  const series = palette === 'corporate' ? SERIES_KEYS : [];
+  const expected = Object.keys(frozen['.dark']).concat('--success-strong', series);
   for (const key of expected) assert.ok(key in actual, `${palette} ${theme} missing ${key}`);
   for (const key of Object.keys(actual))
     assert.ok(expected.includes(key) || TYPOGRAPHY_KEYS.includes(key), `${palette} ${theme} unexpected ${key}`);
@@ -174,12 +176,29 @@ for (const palette of PALETTES.filter((id) => id !== 'green'))
     assert.equal(blocks.length, 2);
     assertComplete(palette, 'light', blocks[0]);
     assertComplete(palette, 'dark', blocks[1]);
-    if (palette !== 'navy') return;
+    if (palette === 'corporate') {
+      for (const block of blocks) {
+        assert.match(block['--font-sans'], /^"Inter"/);
+        assert.equal(block['--font-style-emphasis'], 'normal');
+        assert.equal(block['--text-transform-label'], 'none');
+      }
+      return;
+    }
     assert.equal(blocks[0]['--primary'], '223 54% 23%');
     assert.equal(blocks[0]['--background'], '222 28% 96%');
     assert.equal(blocks[1]['--primary'], '221 90% 78%');
     assert.equal(blocks[0]['--success-strong'], '150 60% 24%');
   });
+
+test('chart series tokens belong to corporate only', () => {
+  const fixture = { ...frozen['.dark'], '--success-strong': '145 61% 50%', '--chart-series-1': '0 0% 50%' };
+  for (const palette of ['green', 'navy'])
+    assert.throws(
+      () => assertComplete(palette, 'dark', fixture),
+      new RegExp(`${palette} dark unexpected --chart-series-1`),
+    );
+  assert.throws(() => assertComplete('corporate', 'dark', fixture), /corporate dark missing --chart-series-2/);
+});
 
 test('completeness failures name palette, theme and missing or extra token', () => {
   const fixture = { ...frozen['.dark'], '--success-strong': '145 61% 50%' };
@@ -188,6 +207,30 @@ test('completeness failures name palette, theme and missing or extra token', () 
   fixture['--chrome'] = '222 38% 5%';
   fixture['--extra'] = '0 0% 0%';
   assert.throws(() => assertComplete('fixture', 'dark', fixture), /fixture dark unexpected --extra/);
+});
+
+// Known primary/status hue conflicts, as (palette, theme, token) triples. Corporate's dark primary and
+// info are both blues from the supplied identity colours. Green and navy have none.
+const HUE_CONFLICTS = new Set(['corporate dark --info']);
+function assertHueSeparated(palette, theme, token, distance, label = `${palette} ${theme}`) {
+  if (HUE_CONFLICTS.has(`${palette} ${theme} ${token}`)) return;
+  assert.ok(distance >= 30, `${label} primary vs ${token}`);
+}
+
+test('hue separation skips only allowlisted triples and fails on any other conflict', () => {
+  assertHueSeparated('corporate', 'dark', '--info', 9);
+  for (const [palette, theme, token] of [
+    ['corporate', 'light', '--info'],
+    ['corporate', 'dark', '--warning'],
+    ['green', 'dark', '--info'],
+    ['navy', 'dark', '--info'],
+    ['navy', 'light', '--destructive'],
+  ])
+    assert.throws(
+      () => assertHueSeparated(palette, theme, token, 9),
+      new RegExp(`${palette} ${theme} primary vs ${token}`),
+    );
+  assert.deepEqual([...HUE_CONFLICTS], ['corporate dark --info']);
 });
 
 test('every palette passes text, chips, focus, button and hue separation contracts', () => {
@@ -222,7 +265,7 @@ test('every palette passes text, chips, focus, button and hue separation contrac
       const hue = parseFloat(colors['--primary']);
       for (const token of ['--info', '--warning', '--destructive']) {
         const distance = Math.abs(hue - parseFloat(colors[token]));
-        assert.ok(Math.min(distance, 360 - distance) >= 30, `${label} primary vs ${token}`);
+        assertHueSeparated(palette, theme, token, Math.min(distance, 360 - distance), label);
       }
     }
   }

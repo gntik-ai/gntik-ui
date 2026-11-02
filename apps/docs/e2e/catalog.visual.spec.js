@@ -25,8 +25,8 @@ const VIEWPORT_ONLY = new Set(['ui-components', 'chat-components', 'layouts', 'b
 
 const cases = [
   ...ids.filter((id) => id !== 'theming').map((id) => ({ id, theme: 'dark', palette: 'green' })),
-  ...['theming', 'buttons', 'area-charts'].flatMap((id) =>
-    ['dark', ''].map((theme) => ({ id, theme, palette: 'navy' })),
+  ...['navy', 'corporate'].flatMap((palette) =>
+    ['theming', 'buttons', 'area-charts'].flatMap((id) => ['dark', ''].map((theme) => ({ id, theme, palette }))),
   ),
   ...THEME_SAMPLE.flatMap((id) => [
     { id, theme: '' },
@@ -35,7 +35,7 @@ const cases = [
 ];
 
 for (const { id, theme, palette = 'green' } of cases) {
-  const name = `${id}--${theme || 'light'}${palette === 'green' ? '' : '--navy'}`;
+  const name = `${id}--${theme || 'light'}${palette === 'green' ? '' : `--${palette}`}`;
   test(name, async ({ page }) => {
     await page.addInitScript(
       ([t, s, p]) => {
