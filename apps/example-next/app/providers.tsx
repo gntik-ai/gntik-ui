@@ -1,7 +1,7 @@
 'use client';
 import NextLink from 'next/link';
 import { useEffect, type ComponentPropsWithRef, type ReactNode } from 'react';
-import { CSPProvider, LinkProvider, ThemeProvider, TooltipProvider, gntikPreset, useTheme } from '@gntik-ai/ui';
+import { KitProvider, gntikPreset, useTheme } from '@gntik-ai/ui';
 import { themeCookieValue, type ThemeMode } from './theme-script';
 
 /** Kit links (NavList, breadcrumbs, Link) navigate client-side through next/link. */
@@ -28,13 +28,13 @@ export function Providers({
   children: ReactNode;
 }) {
   return (
-    <CSPProvider nonce={nonce} disableStyleElements>
-      <ThemeProvider brand={gntikPreset} defaultMode={initialMode} storageKey={null}>
-        <ThemeCookieSync />
-        <LinkProvider component={RouterLink}>
-          <TooltipProvider>{children}</TooltipProvider>
-        </LinkProvider>
-      </ThemeProvider>
-    </CSPProvider>
+    <KitProvider
+      csp={{ nonce, disableStyleElements: true }}
+      theme={{ brand: gntikPreset, initialMode, storageKey: null }}
+      link={RouterLink}
+    >
+      <ThemeCookieSync />
+      {children}
+    </KitProvider>
   );
 }

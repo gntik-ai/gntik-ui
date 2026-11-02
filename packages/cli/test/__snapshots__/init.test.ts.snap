@@ -1,0 +1,80 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`init > Next: patches existing files and prints the layout with suppressHydrationWarning 1`] = `
+[
+  {
+    "code": "'use client';
+import type { ReactNode } from 'react';
+import { KitProvider, gntikPreset, themeScript } from '@gntik-ai/ui';
+
+export function Providers({ children }: { children: ReactNode }) {
+  return (
+    <>
+      {/* Applies the stored theme before first paint (no flash). */}
+      <script dangerouslySetInnerHTML={{ __html: themeScript() }} />
+      <KitProvider theme={{ brand: gntikPreset }}>{children}</KitProvider>
+    </>
+  );
+}
+",
+    "file": "app/providers.tsx",
+  },
+  {
+    "code": "import type { ReactNode } from 'react';
+import { Providers } from './providers';
+import './globals.css';
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    // The theme script sets the class before React hydrates.
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className="bg-background text-foreground antialiased">
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}
+",
+    "file": "app/layout.tsx",
+  },
+]
+`;
+
+exports[`init > Vite --dry-run: detects the project and writes nothing 1`] = `
+[
+  {
+    "code": "import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { KitProvider, gntikPreset } from '@gntik-ai/ui';
+import App from './App';
+import './index.css';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <KitProvider theme={{ brand: gntikPreset }}>
+      <App />
+    </KitProvider>
+  </StrictMode>,
+);
+",
+    "file": "src/main.tsx",
+  },
+  {
+    "code": "import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import { themeScript } from '@gntik-ai/ui';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(),
+    // Inlines the theme script in <head> so the stored theme applies before first paint.
+    { name: 'gntik-theme', transformIndexHtml: () => [{ tag: 'script', children: themeScript(), injectTo: 'head-prepend' }] },
+  ],
+});
+",
+    "file": "vite.config.ts",
+  },
+]
+`;

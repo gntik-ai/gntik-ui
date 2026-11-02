@@ -1,6 +1,6 @@
 import registry from '../../../../kit-registry.json';
 
-const docs = import.meta.glob('../../../../packages/ui/src/{components/*,forms,hooks,utils,theme,csp}/*.doc.ts', {
+const docs = import.meta.glob('../../../../packages/ui/src/{components/*,forms,hooks,utils,theme,csp,kit}/*.doc.ts', {
   eager: true,
   import: 'doc',
 });

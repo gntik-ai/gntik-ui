@@ -32,7 +32,7 @@ Detects the framework (Vite, Next, generic), package manager and CSS entry, then
   - puts @import "tailwindcss", the Geist fonts and "@gntik-ai/ui/styles.css" at the top of the CSS entry
   - writes gntik-ui.json (aliases for components, blocks, templates; brand preset); kept if present
     unless --overwrite
-  - prints the ThemeProvider + themeScript wiring for the framework
+  - prints the KitProvider + themeScript wiring for the framework
   - installs @gntik-ai/ui @gntik-ai/tokens and the fonts (skipped with --no-install or --dry-run)
 
 ${GLOBAL}`,

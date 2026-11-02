@@ -138,7 +138,7 @@ function templatePage(kit: KitRegistry, id: string, input: ScaffoldPageInput): S
       shell
         ? 'Console template: it renders inside ConsoleShell (SidebarLayout + AppSidebar + AppTopbar); share one `shell` object across pages.'
         : 'Standalone template (no console frame).',
-      'Wrap the app once in <ThemeProvider brand={yourPreset}> and import "@gntik-ai/templates/styles.css" in the global CSS.',
+      'Wrap the app once in <KitProvider theme={{ brand: yourPreset }}> and import "@gntik-ai/templates/styles.css" in the global CSS.',
       `Source and props: get_template id=${id}.`,
     ],
   };
@@ -414,7 +414,7 @@ export function scaffoldPreset(input: ScaffoldPresetInput): Scaffold {
     '',
   ].join('\n');
   notes.push(
-    `Use it once at the root: <ThemeProvider brand={${constName}}> (ThemeProvider from @gntik-ai/ui); <Logo /> and the auth layouts pick it up.`,
+    `Use it once at the root: <KitProvider theme={{ brand: ${constName} }}> (KitProvider from @gntik-ai/ui); <Logo /> and the auth layouts pick it up.`,
     'The file contains JSX: save it as .tsx.',
   );
   return { ok: true, filename: `${id}-preset.tsx`, code, notes };
