@@ -143,7 +143,7 @@ it('Tab reaches every large MultiSelect chip remove button', async () => {
   }
 });
 
-it('keeps password and secret field large sizing outside the public API', () => {
-  expectTypeOf<SecretFieldProps['size']>().toEqualTypeOf<'auto' | 'sm' | 'md' | undefined>();
-  expectTypeOf<PasswordInputProps['size']>().toEqualTypeOf<'auto' | 'sm' | 'md' | undefined>();
+it('includes large password and secret field sizes in the public API', () => {
+  expectTypeOf<SecretFieldProps['size']>().toEqualTypeOf<'auto' | 'sm' | 'md' | 'lg' | undefined>();
+  expectTypeOf<PasswordInputProps['size']>().toEqualTypeOf<'auto' | 'sm' | 'md' | 'lg' | undefined>();
 });

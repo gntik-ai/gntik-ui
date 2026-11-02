@@ -1,7 +1,7 @@
 import { useI18n, Alert, Button, Field, FieldError, FieldLabel, PasswordInput, cn } from '@gntik-ai/ui';
 import { CircleCheck } from '@gntik-ai/icons';
 import { useState, type ReactNode } from 'react';
-import { AuthHeader, authFormClass, useAsyncSubmit } from '../shared';
+import { AuthHeader, authFormClass, useAsyncSubmit, type AuthFieldSizeProps } from '../shared';
 
 export interface ResetPasswordFormLabels {
   eyebrow: string;
@@ -19,7 +19,7 @@ export interface ResetPasswordFormLabels {
   fallbackError: string;
 }
 
-export interface ResetPasswordFormProps {
+export interface ResetPasswordFormProps extends AuthFieldSizeProps {
   labels?: Partial<ResetPasswordFormLabels>;
   /** Saves the new password. A returned promise shows the loading state; a rejection shows in the alert. */
   onSubmit?: (password: string) => void | Promise<void>;
@@ -34,6 +34,7 @@ export interface ResetPasswordFormProps {
 /** New password + confirmation with length and mismatch validation, then a success state. */
 export function ResetPasswordForm({
   labels,
+  fieldSize = 'auto',
   onSubmit,
   error: errorProp,
   minPasswordLength = 8,
@@ -99,7 +100,7 @@ export function ResetPasswordForm({
         {alert && <Alert tone="destructive" description={alert} />}
         <Field invalid={passwordInvalid}>
           <FieldLabel>{labels?.newPassword ?? t('resetPassword.newPassword')}</FieldLabel>
-          <PasswordInput showStrength value={password} onValueChange={setPassword} required />
+          <PasswordInput size={fieldSize} showStrength value={password} onValueChange={setPassword} required />
           <FieldError match={passwordInvalid}>
             {labels?.passwordTooShort?.(minPasswordLength) ??
               t('resetPassword.passwordTooShort', { minimum: minPasswordLength })}
@@ -108,6 +109,7 @@ export function ResetPasswordForm({
         <Field invalid={confirmInvalid}>
           <FieldLabel>{labels?.confirmPassword ?? t('resetPassword.confirmPassword')}</FieldLabel>
           <PasswordInput
+            size={fieldSize}
             autoComplete="new-password"
             value={confirm}
             onValueChange={setConfirm}

@@ -52,6 +52,29 @@ describe('PasswordInput', () => {
     expect(screen.getByLabelText('Pass')).toHaveAccessibleDescription('Strength: Good');
   });
 
+  it('scales the large field, reveal toggle, icon and strength text while preserving accessible state', async () => {
+    const user = userEvent.setup();
+    render(<PasswordInput size="lg" aria-label="Password" showStrength defaultValue="Correct-Horse-9" />);
+    expect(screen.getByLabelText('Password').parentElement).toHaveClass('h-11');
+    const toggle = screen.getByRole('button', { name: 'Show password' });
+    expect(toggle).toHaveClass('size-9');
+    expect(toggle).toHaveClass('[&_svg]:size-[17px]');
+    expect(toggle.querySelector('svg')).toBeInTheDocument();
+    expect(screen.getByText('Strength:')).toHaveClass('text-[13px]');
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    toggle.focus();
+    await user.keyboard('{Enter}');
+    expect(screen.getByRole('button', { name: 'Hide password' })).toHaveAttribute('aria-pressed', 'true');
+    await user.keyboard(' ');
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it.each([undefined, 'auto', 'sm', 'md'] as const)('keeps existing toggle and strength metrics at %s', (size) => {
+    render(<PasswordInput size={size} aria-label="Password" showStrength defaultValue="x" />);
+    expect(screen.getByRole('button', { name: 'Show password' })).toHaveClass('size-7');
+    expect(screen.getByText('Strength:')).toHaveClass('text-[12px]');
+  });
+
   it('scores with the built-in heuristic', () => {
     expect(scorePassword('')).toBe(0);
     expect(scorePassword('password')).toBe(0);

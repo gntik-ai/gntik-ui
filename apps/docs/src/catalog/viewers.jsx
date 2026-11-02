@@ -132,6 +132,22 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                 </div>
               )}
               <Viewer kind={kind} id={it.id} title={it.title} file={it.file} height={height} />
+              {kind === 'block' &&
+                [
+                  'sign-in-form',
+                  'sign-up-form',
+                  'reset-password-form',
+                  'forgot-password-form',
+                  'mfa-challenge',
+                ].includes(it.id) && (
+                  <Viewer
+                    kind="block"
+                    id={`${it.id}--large-fields`}
+                    title={`${it.title}: ${t('fieldSizes.lg')}`}
+                    file={`${it.file.slice(0, it.file.lastIndexOf('/'))}/examples/LargeFields.tsx`}
+                    height={height}
+                  />
+                )}
               {kind === 'template' && it.id === 'shell-sidebar' && (
                 <>
                   <p className="my-4 max-w-3xl text-[13px] leading-6 text-muted-foreground">

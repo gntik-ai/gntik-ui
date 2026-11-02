@@ -206,6 +206,13 @@ export const PREVIEW_LOADERS = {
     'subordinate-list--empty': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/empty'),
     'subordinate-list--error': () => import('../../../packages/blocks/src/tables/SubordinateList/examples/error'),
     'status-timeline--empty': () => import('../../../packages/blocks/src/data-display/StatusTimeline/examples/Empty'),
+    'sign-in-form--large-fields': () => import('../../../packages/blocks/src/auth/SignInForm/examples/LargeFields'),
+    'sign-up-form--large-fields': () => import('../../../packages/blocks/src/auth/SignUpForm/examples/LargeFields'),
+    'reset-password-form--large-fields': () =>
+      import('../../../packages/blocks/src/auth/ResetPasswordForm/examples/LargeFields'),
+    'forgot-password-form--large-fields': () =>
+      import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/LargeFields'),
+    'mfa-challenge--large-fields': () => import('../../../packages/blocks/src/auth/MfaChallenge/examples/LargeFields'),
     'sign-up-form--custom-fields': () => import('../../../packages/blocks/src/auth/SignUpForm/examples/CustomFields'),
     'sign-up-form--no-terms': () => import('../../../packages/blocks/src/auth/SignUpForm/examples/NoTerms'),
     'sign-up-form--unavailable': () => import('../../../packages/blocks/src/auth/SignUpForm/examples/Unavailable'),

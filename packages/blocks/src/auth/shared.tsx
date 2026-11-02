@@ -1,6 +1,11 @@
 import { cn, en, useI18n, type I18n } from '@gntik-ai/ui';
 import { useState, type ReactNode } from 'react';
 
+export interface AuthFieldSizeProps {
+  /** Field size: auto follows density (default); lg matches the 44px submit button. */
+  fieldSize?: 'auto' | 'lg';
+}
+
 export interface AuthHeaderProps {
   eyebrow?: ReactNode;
   title: ReactNode;

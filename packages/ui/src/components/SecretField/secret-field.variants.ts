@@ -17,6 +17,7 @@ export const secretFieldVariants = tv({
       auto: { input: 'text-[12.5px]' },
       sm: { input: 'text-[12px]', toggle: 'size-6' },
       md: { input: 'text-[12.5px]' },
+      lg: { input: 'text-[14.5px]', toggle: 'size-9 [&_svg]:size-[17px]' },
     },
   },
   defaultVariants: { size: 'auto' },

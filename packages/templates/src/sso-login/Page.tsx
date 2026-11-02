@@ -129,6 +129,7 @@ export default function SsoLoginPage({
             <Field invalid={invalid}>
               <FieldLabel>Work email</FieldLabel>
               <Input
+                size="lg"
                 type="email"
                 leadingIcon={Building2}
                 autoComplete="email"

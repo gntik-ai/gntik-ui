@@ -25,6 +25,7 @@ import {
   type AuthValidationMessages,
   type AuthFormAccessibilityProps,
   type AuthHeaderProps,
+  type AuthFieldSizeProps,
 } from '../shared';
 
 export interface SignInValues {
@@ -57,7 +58,7 @@ export interface SignInFormLabels extends Required<AuthValidationMessages> {
   fallbackError: string;
 }
 
-export interface SignInFormProps extends AuthFormAccessibilityProps {
+export interface SignInFormProps extends AuthFormAccessibilityProps, AuthFieldSizeProps {
   labels?: Partial<SignInFormLabels>;
   /** React 19 ref for focus after a server response. */
   ref?: Ref<SignInFormRef>;
@@ -100,6 +101,7 @@ const linkHandler = (fn?: () => void) =>
 /** Email + password sign-in with remember me, forgot-password link, SSO slot, error alert and loading. */
 export function SignInForm({
   labels,
+  fieldSize = 'auto',
   identifier,
   messages,
   passwordHelp,
@@ -186,6 +188,7 @@ export function SignInForm({
         <Field invalid={emailInvalid || fieldInvalid?.identifier === true}>
           <FieldLabel>{identifier?.label ?? labels?.identifierLabel ?? t('signIn.identifierLabel')}</FieldLabel>
           <Input
+            size={fieldSize}
             ref={identifierInput}
             aria-describedby={fieldInvalid?.identifier ? feedbackId : undefined}
             type={identifier?.type ?? 'email'}
@@ -211,6 +214,7 @@ export function SignInForm({
             </Link>
           </div>
           <PasswordInput
+            size={fieldSize}
             ref={passwordInput}
             aria-describedby={fieldInvalid?.password ? feedbackId : undefined}
             leadingIcon={Lock}

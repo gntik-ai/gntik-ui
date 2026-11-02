@@ -20,6 +20,7 @@ import { SsoButtons } from '../SsoButtons/SsoButtons';
 import {
   AuthDivider,
   AuthHeader,
+  type AuthFieldSizeProps,
   EMAIL_RE,
   authFormClass,
   authSignUpFieldError,
@@ -63,7 +64,7 @@ export interface SignUpFormLabels extends AuthSignUpFieldLabels {
   emailInvalid: string;
 }
 
-export interface SignUpFormProps {
+export interface SignUpFormProps extends AuthFieldSizeProps {
   labels?: Partial<SignUpFormLabels>;
   /** Ordered text/email inputs before Password. Omit to keep the default fields and payload. */
   fields?: readonly AuthSignUpField[];
@@ -97,6 +98,7 @@ export interface SignUpFormProps {
 /** Account creation: name, work email, password with a strength meter and a required terms checkbox. */
 export function SignUpForm({
   labels,
+  fieldSize = 'auto',
   fields,
   messages,
   unavailable,
@@ -227,6 +229,7 @@ export function SignUpForm({
               <Field key={field.id} invalid={invalid}>
                 <FieldLabel>{field.label}</FieldLabel>
                 <Input
+                  size={fieldSize}
                   id={`${fieldPrefix}-field-${field.id}`}
                   type={field.type ?? 'text'}
                   autoComplete={field.autoComplete}
@@ -245,6 +248,7 @@ export function SignUpForm({
             <Field invalid={nameInvalid}>
               <FieldLabel>{labels?.name ?? t('signUp.name')}</FieldLabel>
               <Input
+                size={fieldSize}
                 leadingIcon={User}
                 autoComplete="name"
                 placeholder={labels?.namePlaceholder ?? t('signUp.namePlaceholder')}
@@ -257,6 +261,7 @@ export function SignUpForm({
             <Field invalid={emailInvalid}>
               <FieldLabel>{labels?.email ?? t('signUp.email')}</FieldLabel>
               <Input
+                size={fieldSize}
                 type="email"
                 leadingIcon={Mail}
                 autoComplete="email"
@@ -272,6 +277,7 @@ export function SignUpForm({
         <Field invalid={passwordInvalid}>
           <FieldLabel>{labels?.password ?? t('signUp.password')}</FieldLabel>
           <PasswordInput
+            size={fieldSize}
             id={fields !== undefined ? passwordId : undefined}
             showStrength
             strength={password.length > 0 && password.length < minPasswordLength ? 0 : undefined}

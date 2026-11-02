@@ -3,7 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { Search } from 'lucide-react';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { Field, FieldLabel } from '../Field';
-import { Input } from './Input';
+import { Input, InputKbd } from './Input';
+import { IconButton } from '../Button';
+import { CopyButton } from '../CopyButton';
 import InputAddons from './examples/InputAddons';
 import InputStates from './examples/InputStates';
 
@@ -65,6 +67,69 @@ describe('Input', () => {
   it('applies the small size', () => {
     render(<Input aria-label="Small" size="sm" />);
     expect(screen.getByRole('textbox', { name: 'Small' }).parentElement).toHaveClass('h-8');
+  });
+
+  it('scales keyboard hints and implicit icon addons only inside large fields', () => {
+    const { container } = render(
+      <>
+        <Input
+          size="lg"
+          aria-label="Large"
+          leadingAddon={<IconButton icon={Search} label="Search" />}
+          trailingAddon={
+            <>
+              <InputKbd>⌘K</InputKbd>
+              <CopyButton value="fixture" tooltip={false} />
+            </>
+          }
+        />
+        <Input
+          size="lg"
+          aria-label="Explicit"
+          trailingAddon={<IconButton icon={Search} label="Small action" size="sm" />}
+        />
+        <IconButton icon={Search} label="Standalone" />
+        <InputKbd>Standalone hint</InputKbd>
+      </>,
+    );
+    expect(screen.getByLabelText('Large').parentElement).toHaveClass('h-11');
+    expect(container.querySelector('kbd')).toHaveClass('h-[22px]');
+    expect(screen.getByRole('button', { name: 'Search' })).toHaveClass('size-9');
+    expect(screen.getByRole('button', { name: 'Copy' })).toHaveClass('size-9');
+    expect(screen.getByRole('button', { name: 'Small action' })).toHaveClass('size-8');
+    expect(screen.getByRole('button', { name: 'Standalone' })).toHaveClass('size-control');
+    expect(screen.getByText('Standalone hint')).toHaveClass('h-[18px]');
+  });
+
+  it.each(['auto', 'sm', 'md', 'lg'] as const)('honors explicit %s addon sizes inside a large Input', (size) => {
+    render(
+      <Input
+        size="lg"
+        aria-label="Field"
+        leadingAddon={<IconButton size={size} icon={Search} label="Action" />}
+        trailingAddon={<CopyButton size={size} value="fixture" tooltip={false} />}
+      />,
+    );
+    const metric = { auto: 'size-control', sm: 'size-8', md: 'size-9', lg: 'size-11' }[size];
+    expect(screen.getByRole('button', { name: 'Action' })).toHaveClass(metric);
+    expect(screen.getByRole('button', { name: 'Copy' })).toHaveClass(metric);
+  });
+
+  it.each([undefined, 'auto', 'sm', 'md'] as const)('keeps compact hints and implicit addons at %s', (size) => {
+    render(
+      <Input
+        size={size}
+        aria-label="Field"
+        trailingAddon={
+          <>
+            <InputKbd>⌘K</InputKbd>
+            <IconButton icon={Search} label="Action" />
+          </>
+        }
+      />,
+    );
+    expect(screen.getByText('⌘K')).toHaveClass('h-[18px]');
+    expect(screen.getByRole('button', { name: 'Action' })).toHaveClass('size-control');
   });
 
   it('examples have no axe violations', async () => {

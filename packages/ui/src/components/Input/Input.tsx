@@ -4,6 +4,7 @@ import { useRender } from '@base-ui/react/use-render';
 import { ClearControlButton, resetNativeValue, type ClearableProps } from '../../utils/clear-control';
 import { useFieldVariant } from '../../field-variant/field-variant-context';
 import { cn } from '../../utils/cn';
+import { InputSizeContext, useInputSize } from '../../utils/input-size-context';
 import { inputVariants, INPUT_ICON_SIZE, type InputVariantProps } from './input.variants';
 
 type IconComponent = ComponentType<{ size?: number; 'aria-hidden'?: boolean; className?: string }>;
@@ -93,25 +94,29 @@ export function Input({
   const s = inputVariants({ size, variant: fieldVariant });
   const px = INPUT_ICON_SIZE[size];
   return (
-    <div className={cn(s.root(), className)} data-invalid={invalid || undefined}>
-      {LeadingIcon && <LeadingIcon size={px} aria-hidden className={s.icon()} />}
-      {leadingAddon != null && <span className={s.addon()}>{leadingAddon}</span>}
-      {input}
-      {trailingAddon != null && <span className={s.addon()}>{trailingAddon}</span>}
-      {clearable && hasValue && !props.disabled && !props.readOnly && (
-        <ClearControlButton control={control} clearLabel={clearLabel} onClick={clear} />
-      )}
-      {TrailingIcon && <TrailingIcon size={px} aria-hidden className={s.icon()} />}
-    </div>
+    <InputSizeContext value={size}>
+      <div className={cn(s.root(), className)} data-invalid={invalid || undefined}>
+        {LeadingIcon && <LeadingIcon size={px} aria-hidden className={s.icon()} />}
+        {leadingAddon != null && <span className={s.addon()}>{leadingAddon}</span>}
+        {input}
+        {trailingAddon != null && <span className={s.addon()}>{trailingAddon}</span>}
+        {clearable && hasValue && !props.disabled && !props.readOnly && (
+          <ClearControlButton control={control} clearLabel={clearLabel} onClick={clear} />
+        )}
+        {TrailingIcon && <TrailingIcon size={px} aria-hidden className={s.icon()} />}
+      </div>
+    </InputSizeContext>
   );
 }
 
 /** Keyboard-shortcut hint for a trailing addon, e.g. `<InputKbd>⌘K</InputKbd>`. */
 export function InputKbd({ className, children }: { className?: string; children: ReactNode }) {
+  const size = useInputSize();
   return (
     <kbd
       className={cn(
-        'inline-flex h-[18px] items-center rounded border border-border bg-card px-1.5 font-mono text-[10px] font-medium text-muted-foreground',
+        'inline-flex items-center rounded border border-border bg-card px-1.5 font-mono text-[10px] font-medium text-muted-foreground',
+        size === 'lg' ? 'h-[22px]' : 'h-[18px]',
         className,
       )}
     >

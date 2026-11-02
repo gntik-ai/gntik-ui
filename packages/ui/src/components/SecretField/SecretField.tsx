@@ -30,7 +30,7 @@ export interface SecretFieldProps
       'value' | 'defaultValue' | 'type' | 'readOnly' | 'trailingAddon' | 'title' | 'onValueChange' | 'size'
     >,
     MaskOptions {
-  size?: Exclude<InputProps['size'], 'lg'>;
+  size?: 'auto' | 'sm' | 'md' | 'lg';
   ref?: Ref<HTMLInputElement>;
   /** The secret. While hidden and read-only it is not rendered into the DOM at all. */
   value: string;
@@ -166,7 +166,7 @@ function SecretFieldInner({
           trailingAddon={
             <span className={s.actions()}>
               <IconButton
-                size="sm"
+                size={size === 'lg' ? 'md' : 'sm'}
                 className={s.toggle()}
                 icon={revealed ? EyeOff : Eye}
                 label={revealed ? (hideLabel ?? t('secret.hide')) : (showLabel ?? t('secret.show'))}
@@ -176,7 +176,7 @@ function SecretFieldInner({
               />
               {copyable && (
                 <CopyButton
-                  size="sm"
+                  size={size === 'lg' ? 'md' : 'sm'}
                   className={s.toggle()}
                   value={() => value}
                   label={copyLabel ?? t('secret.copy')}

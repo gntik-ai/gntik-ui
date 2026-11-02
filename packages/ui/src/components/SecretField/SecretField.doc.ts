@@ -5,7 +5,7 @@ export const doc: ComponentDoc = {
   group: 'Forms',
   status: 'beta',
   description:
-    'A secret value (API key, token, connection string) on Input: masked by default (fixed-length mask, optional visible prefix/suffix), a reveal toggle (aria-pressed), a CopyButton that copies the real value and announces it, an optional Rotate action behind an AlertDialog confirmation, and optional created / last-used meta. Optional showLabel, hideLabel, copyLabel and copiedAnnouncement override i18n defaults. Read-only by default (`editable` turns it into a password field). While masked and read-only the secret is not in the DOM, and it is never put in a title or tooltip. `maskSecret` is exported too.',
+    'A secret value (API key, token, connection string) on Input: masked by default (fixed-length mask, optional visible prefix/suffix), a reveal toggle (aria-pressed), a CopyButton that copies the real value and announces it, an optional Rotate action behind an AlertDialog confirmation, and optional created / last-used meta. Optional showLabel, hideLabel, copyLabel and copiedAnnouncement override i18n defaults. Read-only by default (`editable` turns it into a password field). While masked and read-only the secret is not in the DOM, and it is never put in a title or tooltip. `maskSecret` is exported too. Size lg renders a 44px field, 36px reveal and copy controls with 17px icons, and a large Rotate button. Auto (default), sm and md retain their existing metrics. See SecretFieldLarge.',
   primitive: '@base-ui/react/input',
   pattern: 'read-only textbox + toggle button + button',
   keyboard: [

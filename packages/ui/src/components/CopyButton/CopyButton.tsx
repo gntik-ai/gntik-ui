@@ -58,7 +58,7 @@ export function CopyButton({
   onCopy,
   onCopyError,
   variant = 'ghost',
-  size = 'auto',
+  size,
   className,
   disabled,
   ...props

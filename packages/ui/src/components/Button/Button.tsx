@@ -1,5 +1,6 @@
 import { Button as BaseButton } from '@base-ui/react/button';
 import type { ComponentType, ReactNode, Ref } from 'react';
+import { useInputSize } from '../../utils/input-size-context';
 import { cn } from '../../utils/cn';
 import { rtlIconClass } from '../../utils/rtl';
 import { Spinner } from '../Spinner/Spinner';
@@ -65,12 +66,14 @@ export interface IconButtonProps extends Omit<ButtonProps, 'icon' | 'trailingIco
 export function IconButton({
   icon: IconCmp,
   label,
-  size = 'auto',
+  size: sizeProp,
   variant = 'ghost',
   loading,
   className,
   ...props
 }: IconButtonProps) {
+  const inputSize = useInputSize();
+  const size = sizeProp ?? (inputSize === 'lg' ? 'md' : 'auto');
   const px = buttonIconSize(size, useDensity());
   return (
     <Button

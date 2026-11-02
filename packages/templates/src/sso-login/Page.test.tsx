@@ -4,6 +4,12 @@ import { expectNoAxeViolations } from '../test/a11y';
 import SsoLoginPage from './Page';
 
 describe('SsoLoginPage', () => {
+  it('matches the 44px work email field to the SSO button', () => {
+    render(<SsoLoginPage />);
+    expect(screen.getByLabelText('Work email').parentElement).toHaveClass('h-11');
+    expect(screen.getByRole('button', { name: 'Continue with SSO' })).toHaveClass('h-11');
+  });
+
   it('renders the work email step', async () => {
     const { container } = render(<SsoLoginPage />);
     expect(screen.getByRole('main')).toBeInTheDocument();

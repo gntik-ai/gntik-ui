@@ -11,7 +11,7 @@ export interface PasswordInputProps extends Omit<
   InputProps,
   'type' | 'trailingAddon' | 'value' | 'defaultValue' | 'size'
 > {
-  size?: Exclude<InputProps['size'], 'lg'>;
+  size?: 'auto' | 'sm' | 'md' | 'lg';
   value?: string;
   defaultValue?: string;
   /** Whether the password is shown as text (controlled). */
@@ -75,7 +75,7 @@ export function PasswordInput({
   const current = value ?? innerValue;
   const visible = visibleProp ?? innerVisible;
   const score = strength ?? scorePassword(current);
-  const s = passwordInputVariants({ level: score });
+  const s = passwordInputVariants({ level: score, size });
 
   const toggle = () => {
     setInnerVisible(!visible);
@@ -100,7 +100,7 @@ export function PasswordInput({
       }}
       trailingAddon={
         <IconButton
-          size="sm"
+          size={size === 'lg' ? 'md' : 'sm'}
           className={s.toggle()}
           icon={visible ? EyeOff : Eye}
           label={visible ? hideLabel : showLabel}

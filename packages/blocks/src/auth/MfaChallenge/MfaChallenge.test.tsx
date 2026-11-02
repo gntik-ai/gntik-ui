@@ -4,6 +4,15 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { MfaChallenge } from './MfaChallenge';
 
 describe('MfaChallenge', () => {
+  it('uses 44px OTP slots and a large backup field', async () => {
+    render(<MfaChallenge fieldSize="lg" />);
+    expect(screen.getAllByRole('textbox')).toHaveLength(6);
+    screen.getAllByRole('textbox').forEach((slot) => expect(slot).toHaveClass('h-11'));
+    await userEvent.click(screen.getByRole('button', { name: 'Use a backup code' }));
+    expect(screen.getByLabelText('Backup code').parentElement).toHaveClass('h-11');
+    expect(screen.getByRole('button', { name: 'Verify' })).toHaveClass('h-11');
+  });
+
   it('renders the code step with a resend countdown', async () => {
     const { container } = render(<MfaChallenge destination="a•••@example.com" onResend={() => {}} />);
     expect(screen.getByText(/sent a 6-digit code to a•••@example.com/)).toBeInTheDocument();
