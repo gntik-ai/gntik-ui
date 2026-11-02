@@ -6858,6 +6858,158 @@
       "docs": "packages/ui/src/components/Dialog/Dialog.doc.ts"
     },
     {
+      "id": "dialogs-provider",
+      "kind": "component",
+      "name": "DialogsProvider",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "stable",
+      "description": "Opt-in host for promise-based dialogs. Mount DialogsProvider once and call useDialogs() anywhere below it: `await confirm(message, options)` resolves a boolean, `alert` resolves once acknowledged, `prompt` resolves the entered text or null, and `open(Component, payload)` renders your own dialog and resolves with the value passed to `onClose`. `update(dialog, payload)` re-renders an open dialog, `close(dialog, result)` resolves it and `closeAll()` (or unmounting the provider) resolves every open dialog with its cancel value: false, null or undefined. Confirmations support a typed confirmation and an async `onConfirm` that keeps the dialog open with a pending button and shows a failure inline. Dialogs stack in call order; only the topmost acts on Escape or an outside press (a confirm resolves false, a prompt null; a pending onConfirm ignores both). Focus returns to `returnFocus`, else to the element focused when the call was made, else to the trigger of the menu that started it, and only once the stack is empty. A custom `open()` component that never calls `onClose` leaves its promise pending until `closeAll()` or unmount; keep the declarative AlertDialog for dialogs owned by one screen.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/DialogsProvider/DialogsProvider.tsx",
+          "target": "components/ui/dialogs-provider/DialogsProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/DialogsProvider/dialogViews.tsx",
+          "target": "components/ui/dialogs-provider/dialogViews.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/DialogsProvider/dialogs.variants.ts",
+          "target": "components/ui/dialogs-provider/dialogs.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DialogsProvider/dialogsFocus.ts",
+          "target": "components/ui/dialogs-provider/dialogsFocus.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DialogsProvider/dialogsStore.ts",
+          "target": "components/ui/dialogs-provider/dialogsStore.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DialogsProvider/index.ts",
+          "target": "components/ui/dialogs-provider/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DialogsProvider/types.ts",
+          "target": "components/ui/dialogs-provider/types.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DialogsProvider/useDialogs.ts",
+          "target": "components/ui/dialogs-provider/useDialogs.ts"
+        },
+        {
+          "path": "packages/ui/src/components/DialogsProvider/useDismissGuard.ts",
+          "target": "components/ui/dialogs-provider/useDismissGuard.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "target": "components/i18n/time-zone.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "alert",
+        "alert-dialog",
+        "button",
+        "dialog",
+        "field",
+        "input",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/DialogsProvider/DialogsProvider.doc.ts"
+    },
+    {
       "id": "diff-viewer",
       "kind": "component",
       "name": "DiffViewer",

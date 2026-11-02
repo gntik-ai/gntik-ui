@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 127 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 128 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -6877,6 +6877,71 @@ export default function DialogForm() {
         </form>
       </DialogContent>
     </Dialog>
+  );
+}
+```
+
+### DialogsProvider (`dialogs-provider`)
+
+Opt-in host for promise-based dialogs. Mount DialogsProvider once and call useDialogs() anywhere below it: `await confirm(message, options)` resolves a boolean, `alert` resolves once acknowledged, `prompt` resolves the entered text or null, and `open(Component, payload)` renders your own dialog and resolves with the value passed to `onClose`. `update(dialog, payload)` re-renders an open dialog, `close(dialog, result)` resolves it and `closeAll()` (or unmounting the provider) resolves every open dialog with its cancel value: false, null or undefined. Confirmations support a typed confirmation and an async `onConfirm` that keeps the dialog open with a pending button and shows a failure inline. Dialogs stack in call order; only the topmost acts on Escape or an outside press (a confirm resolves false, a prompt null; a pending onConfirm ignores both). Focus returns to `returnFocus`, else to the element focused when the call was made, else to the trigger of the menu that started it, and only once the stack is empty. A custom `open()` component that never calls `onClose` leaves its promise pending until `closeAll()` or unmount; keep the declarative AlertDialog for dialogs owned by one screen.
+
+- Package: `@gntik-ai/ui` · export `DialogsProvider` · group Overlays · status stable
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/DialogsProvider/DialogsProvider.doc.ts
+- Primitive: `@base-ui/react/alert-dialog`
+- ARIA pattern: alertdialog
+- Registry dependencies: alert, alert-dialog, button, dialog, field, input, ui-utils
+- Install: `gntik-ui add dialogs-provider`; own the source with `gntik-ui eject dialogs-provider`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Tab / Shift+Tab | Cycles focus inside the topmost dialog (focus is trapped) |
+| Escape | Cancels the topmost dialog only (false, null or undefined); ignored while an onConfirm promise is pending |
+| Enter | In a prompt field: submits when the value is valid. In a typed-confirmation field: confirms when the text matches |
+| Enter / Space | On a button: activates it |
+
+Tokens: popover, popover-foreground, border, background, muted-foreground, destructive, destructive-text, warning, info, focus-ring
+
+Usage:
+
+```tsx
+import { Save } from '@gntik-ai/icons';
+import { useState } from 'react';
+import { Button } from '@gntik-ai/ui';
+import { DialogsProvider, useDialogs } from '@gntik-ai/ui';
+
+function SaveSettings() {
+  const { alert } = useDialogs();
+  const [acknowledged, setAcknowledged] = useState(false);
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <Button
+        variant="secondary"
+        icon={Save}
+        onClick={async () => {
+          setAcknowledged(false);
+          await alert('New sessions use these settings. Open sessions keep the old ones until they end.', {
+            title: 'Settings saved',
+          });
+          setAcknowledged(true);
+        }}
+      >
+        Save settings
+      </Button>
+      <p aria-live="polite" className="h-4 text-[12px] text-muted-foreground">
+        {acknowledged ? 'Acknowledged' : ''}
+      </p>
+    </div>
+  );
+}
+
+/** `alert()` resolves once the single OK action is activated; Escape acknowledges it too. */
+export default function DialogsAlert() {
+  return (
+    <DialogsProvider>
+      <SaveSettings />
+    </DialogsProvider>
   );
 }
 ```
