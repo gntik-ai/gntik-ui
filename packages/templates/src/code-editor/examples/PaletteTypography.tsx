@@ -26,7 +26,6 @@ const previewPalette = `
   --font-mono: "Courier New", monospace;
   --font-style-emphasis: normal;
   --text-transform-label: none;
-  font-family: var(--font-sans);
 }`;
 const original = '// Original comment\nconst count = 1;';
 const modified = '// Modified comment\nconst count = 2;';

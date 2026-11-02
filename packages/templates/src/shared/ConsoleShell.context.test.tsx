@@ -11,13 +11,22 @@ const tenants = [
 ];
 
 describe('ConsoleShell context', () => {
-  it('keeps default shell markup identical to 0.11.0 apart from palette label utilities, including generated IDs', () => {
-    // Captured with the original shell and sidebar from base dbf5a248e551cace019a26c105a8d76f866b2647.
-    // The palette utility has the same uppercase default; retain the original hash for all other markup.
-    const html = renderToStaticMarkup(<ConsoleShell>Content</ConsoleShell>).replaceAll('label-case', 'uppercase');
+  it('keeps default shell markup stable, including palette label utilities and generated IDs', () => {
+    const html = renderToStaticMarkup(<ConsoleShell>Content</ConsoleShell>);
     expect(createHash('sha256').update(html).digest('hex')).toBe(
-      '096157f995d4136849fadc68b67ab79e189a43554e684366a9876d963a1b639c',
+      '841b9bccf1601461bbf56ed0ebed6719a765250344c9a01c6703fc1e7735f6a5',
     );
+  });
+  it('applies palette label case only to the navigation group labels', () => {
+    render(<ConsoleShell>Content</ConsoleShell>);
+    const navigation = screen.getByRole('navigation', { name: 'Main' });
+    for (const label of ['Workspace', 'Admin']) {
+      expect(within(navigation).getByText(label, { exact: true })).toHaveClass('label-case');
+    }
+    expect(Array.from(navigation.querySelectorAll('.label-case'), (element) => element.textContent)).toEqual([
+      'Workspace',
+      'Admin',
+    ]);
   });
   it('keeps context out of the rail and renders expanded context and portalled menu extras in the drawer', async () => {
     const user = userEvent.setup();

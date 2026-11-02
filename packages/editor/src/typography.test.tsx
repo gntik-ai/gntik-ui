@@ -1,7 +1,8 @@
-import { act, render, waitFor } from '@testing-library/react';
+import { act, render, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { CodeEditor } from './CodeEditor';
 import { DiffEditor } from './DiffEditor';
+import { BASE_OPTIONS, useBrandTheme } from './index';
 import { createMockMonaco } from './test/mockMonaco';
 import { mockTokens } from './test/tokens';
 
@@ -22,7 +23,38 @@ beforeEach(() => {
 });
 afterEach(() => vi.restoreAllMocks());
 
+it('keeps Geist Mono defaults for custom surfaces using useBrandTheme without a host', () => {
+  const m = createMockMonaco();
+  renderHook(() => useBrandTheme(m.monaco));
+  expect(BASE_OPTIONS).toHaveProperty('fontFamily', 'Geist Mono, ui-monospace, SFMono-Regular, Menlo, monospace');
+  expect(m.editorApi.setTheme).toHaveBeenCalled();
+});
+
 for (const kind of ['code', 'diff'] as const) {
+  it(`${kind} retains Geist Mono when no font token resolves`, async () => {
+    const computed = vi.mocked(window.getComputedStyle).getMockImplementation()!;
+    vi.spyOn(window, 'getComputedStyle').mockImplementation((element) => {
+      const style = computed(element);
+      return {
+        getPropertyValue: (name: string) => (name === '--font-mono' ? '' : style.getPropertyValue(name)),
+      } as CSSStyleDeclaration;
+    });
+    const m = createMockMonaco();
+    render(
+      kind === 'code' ? (
+        <CodeEditor options={{ fontFamily: undefined }} loader={m.loader} />
+      ) : (
+        <DiffEditor original="a" modified="b" options={{ fontFamily: undefined }} loader={m.loader} />
+      ),
+    );
+    const create = kind === 'code' ? m.editorApi.create : m.editorApi.createDiffEditor;
+    await waitFor(() => expect(create).toHaveBeenCalledOnce());
+    const expected = { fontFamily: 'Geist Mono, ui-monospace, SFMono-Regular, Menlo, monospace' };
+    expect(create.mock.calls[0]?.[1]).toMatchObject(expected);
+    const instance = kind === 'code' ? m.codeEditors[0]! : m.diffEditors[0]!;
+    expect(instance.updateOptions).toHaveBeenCalledWith(expect.objectContaining(expected));
+  });
+
   it(`${kind} remeasures fonts only when its resolved font changes`, async () => {
     const m = createMockMonaco();
     const { container } = render(

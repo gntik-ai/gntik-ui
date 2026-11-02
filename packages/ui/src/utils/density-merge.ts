@@ -6,6 +6,8 @@
 export const densityMergeConfig = {
   extend: {
     classGroups: {
+      'font-style': ['font-emphasis'],
+      'text-transform': ['label-case'],
       cursor: [{ cursor: ['interactive', 'disabled'] }],
       'focus-ring': ['focus-ring', 'focus-ring-inset'],
       z: [

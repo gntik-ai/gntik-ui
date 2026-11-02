@@ -47,6 +47,7 @@ async function coloursFollowHtml(page) {
 test('palette typography follows ThemeScope, its Select portal and every emphasis renderer', async ({ page }) => {
   await ready(page);
   const scope = page.locator('[data-typography-scope]');
+  await expect(scope).toHaveCSS('font-family', /Inter/);
   await expect(scope.getByText('Scoped emphasis', { exact: true })).toHaveCSS('font-family', /Inter/);
   await expect(scope.getByText('Scoped emphasis', { exact: true })).toHaveCSS('font-style', 'normal');
   await expect(scope.getByText('scoped italic', { exact: true })).toHaveCSS('font-style', 'normal');
@@ -59,6 +60,7 @@ test('palette typography follows ThemeScope, its Select portal and every emphasi
   const portal = page.locator('[data-theme-scope-portal][data-palette="navy"]');
   await expect(portal.getByRole('listbox')).toBeVisible();
   await expect(portal).toHaveCSS('font-family', /Inter/);
+  await expect(portal.getByText('Portal emphasis', { exact: true })).toHaveCSS('font-family', /Inter/);
   await expect(portal.getByText('Portal emphasis', { exact: true })).toHaveCSS('font-style', 'normal');
   await expect(portal.getByText('Available choices', { exact: true })).toHaveCSS('text-transform', 'none');
   await page.keyboard.press('Escape');

@@ -49,7 +49,7 @@ export function useMonaco(loader: MonacoLoader = loadMonaco): MonacoState {
 
 /** Resolve typography locally; editor colours and Monaco's theme remain global. */
 export function editorTypography(host: Element, fontFamily?: string) {
-  return { fontFamily: fontFamily ?? (tokenChannels('font-mono', host) || undefined) };
+  return { fontFamily: fontFamily ?? (tokenChannels('font-mono', host) || BASE_OPTIONS.fontFamily) };
 }
 
 type TypographyEditor = { updateOptions: (options: { fontFamily?: string }) => void };
@@ -87,6 +87,7 @@ export const BASE_OPTIONS = {
   // Keep the labelled input focusable before the first click in Chromium.
   // Monaco 0.57's native EditContext can expose a zero-size textbox instead.
   editContext: false,
+  fontFamily: 'Geist Mono, ui-monospace, SFMono-Regular, Menlo, monospace',
   fontSize: 13,
   lineHeight: 21,
   fontLigatures: false,
