@@ -40,6 +40,12 @@ export const numberInputVariants = tv({
     },
 
     size: {
+      lg: {
+        group: 'h-11 text-[14.5px] rounded-lg',
+        input: 'px-4 text-[14.5px]',
+        unit: 'pe-4 text-[13px]',
+        stepper: 'w-11',
+      },
       /** Follows `data-density` (comfortable = md). */
       auto: {
         group: 'h-control text-[13px]',
@@ -62,4 +68,4 @@ export const numberInputVariants = tv({
 export type NumberInputVariantProps = VariantProps<typeof numberInputVariants>;
 
 /** Stepper icon size (px) per size. */
-export const NUMBER_INPUT_ICON_SIZE = { auto: 14, sm: 13, md: 14 } as const;
+export const NUMBER_INPUT_ICON_SIZE = { auto: 14, sm: 13, md: 14, lg: 17 } as const;

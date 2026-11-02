@@ -212,7 +212,7 @@ export function TimePicker({
               }}
               className={cn(s.root(), fieldVariant !== 'outline' && readOnly && 'bg-secondary/40', className)}
             >
-              {icon && <Clock size={size === 'sm' ? 14 : 15} aria-hidden className={s.icon()} />}
+              {icon && <Clock size={size === 'lg' ? 17 : size === 'sm' ? 14 : 15} aria-hidden className={s.icon()} />}
               <div dir="ltr" className={s.segments()}>
                 {keys.map((key, i) => {
                   const n = display(key);

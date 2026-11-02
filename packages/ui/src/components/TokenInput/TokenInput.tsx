@@ -66,7 +66,7 @@ export function TokenInput({
   disabled,
   readOnly,
   invalid,
-  size = 'md',
+  size = 'auto',
   variant,
   className,
   inputClassName,

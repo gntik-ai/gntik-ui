@@ -57,6 +57,7 @@ export const comboboxVariants = tv({
     },
 
     size: {
+      lg: { input: 'h-11 text-[14.5px]' },
       /** Follows `data-density` (comfortable = md). */
       auto: { input: 'h-control text-[13px]' },
       sm: { input: 'h-8 text-[12.5px]' },

@@ -4064,6 +4064,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -4189,6 +4193,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -4395,6 +4403,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -4519,6 +4531,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -4678,6 +4694,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -4803,6 +4823,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -4992,6 +5016,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -5150,6 +5178,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -5570,6 +5602,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -5758,6 +5794,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -5910,6 +5950,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -6140,6 +6184,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -6294,6 +6342,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -6438,6 +6490,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -6512,7 +6568,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. The internal calendar selectors and time field in the popup stay outlined, including inside a ghost or filled provider.",
+      "description": "Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. The internal calendar selectors and time field in the popup stay outlined, including inside a ghost or filled provider. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.",
       "files": [
         {
           "path": "packages/ui/src/components/DatePicker/DatePicker.tsx",
@@ -6589,6 +6645,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -6726,6 +6786,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -6858,6 +6922,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -7011,6 +7079,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -7149,6 +7221,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -7292,6 +7368,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -7419,6 +7499,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -7556,6 +7640,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -7689,6 +7777,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -7918,6 +8010,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -8045,6 +8141,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -8118,7 +8218,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
+      "description": "Single-line text input with auto, sm, md and lg sizes with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.",
       "files": [
         {
           "path": "packages/ui/src/components/Input/Input.tsx",
@@ -8217,6 +8317,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -8354,6 +8458,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -8483,6 +8591,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -8619,6 +8731,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -8746,6 +8862,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -8889,6 +9009,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -9014,6 +9138,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -9145,6 +9273,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -9357,6 +9489,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -9488,6 +9624,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -9743,6 +9883,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -9855,7 +9999,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component. Read-only mode preserves the selection and prevents edits. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. MultiSelectOption.group adds headings in first-seen order after ungrouped options; filtering removes empty groups. ComboboxGroup, ComboboxGroupLabel and ComboboxCollection provide the shared grouped presentation. Select all selects or clears enabled options across every group. Grouped options retain full rendering even with virtualized. See MultiSelectGrouped for mixed groups, a disabled option and creation.",
+      "description": "Searchable multi-select: selected options as removable chips (extra ones collapse into \"+N\"), a \"Select all\" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component. Read-only mode preserves the selection and prevents edits. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. MultiSelectOption.group adds headings in first-seen order after ungrouped options; filtering removes empty groups. ComboboxGroup, ComboboxGroupLabel and ComboboxCollection provide the shared grouped presentation. Select all selects or clears enabled options across every group. Grouped options retain full rendering even with virtualized. See MultiSelectGrouped for mixed groups, a disabled option and creation. Size auto (default) follows density: comfortable fields are at least 36px with 12px field padding and 22px chips; compact fields are at least 32px with 10px field padding and 20px chips. Vertical padding is half the control height minus chip height and both borders (6px comfortable, 5px compact). Wrapping grows the field. Explicit sm/md retain their existing metrics; lg stays at least 44px in either density with 28px chips and 14.5px field text. See Input FieldSizes for a live comparison of every field size and density. Large chip remove buttons are reachable with Tab, including wrapped chips.",
       "files": [
         {
           "path": "packages/ui/src/components/MultiSelect/MultiSelect.tsx",
@@ -9912,6 +10056,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -10052,6 +10200,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -10186,6 +10338,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -10260,7 +10416,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes sm and md like Input; invalid, disabled and read-only states; works inside Field. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
+      "description": "Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes auto, sm, md and lg like Input; invalid, disabled and read-only states; works inside Field. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.",
       "files": [
         {
           "path": "packages/ui/src/components/NumberInput/NumberInput.tsx",
@@ -10321,6 +10477,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -10448,6 +10608,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -10578,6 +10742,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -10711,6 +10879,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -10840,6 +11012,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -10991,6 +11167,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -11121,6 +11301,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -11247,6 +11431,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -11382,6 +11570,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -11548,6 +11740,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -11792,6 +11988,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -11925,6 +12125,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -12094,6 +12298,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -12225,6 +12433,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -12331,7 +12543,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Pick one value from a popup list using compound parts or SimpleSelect. SimpleSelect exposes ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name. For long lists, use Combobox with virtualized and a flat items array (see ComboboxVirtualized); Select requires its options to stay mounted for typeahead. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
+      "description": "Pick one value from a popup list using compound parts or SimpleSelect. SimpleSelect exposes ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name. For long lists, use Combobox with virtualized and a flat items array (see ComboboxVirtualized); Select requires its options to stay mounted for typeahead. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.",
       "files": [
         {
           "path": "packages/ui/src/components/Select/Select.tsx",
@@ -12392,6 +12604,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -12611,6 +12827,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -12759,6 +12979,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -12981,6 +13205,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -13174,6 +13402,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -13299,6 +13531,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -13439,6 +13675,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -13543,7 +13783,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field. Opt-in `clearable` reserves space for a reset button and returns focus to the textarea. `onClear` runs after the value change; `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
+      "description": "Multi-line text input with auto, sm, md and lg sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field. Opt-in `clearable` reserves space for a reset button and returns focus to the textarea. `onClear` runs after the value change; `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto (default) uses density field padding: 12px comfortable and 10px compact, with 13px text and 24px line height. Textarea height follows its rows; it is not a single-line control. Explicit sm/md stay fixed; lg uses 14.5px text, 24px line height and 16px horizontal padding. See Input FieldSizes for every size and density.",
       "files": [
         {
           "path": "packages/ui/src/components/Textarea/Textarea.tsx",
@@ -13676,6 +13916,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -13812,6 +14056,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -13884,7 +14132,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`\"HH:mm\"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
+      "description": "Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`\"HH:mm\"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.",
       "files": [
         {
           "path": "packages/ui/src/components/TimePicker/TimePicker.tsx",
@@ -13953,6 +14201,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -14086,6 +14338,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -14216,6 +14472,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -14341,6 +14601,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -14501,6 +14765,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -14573,7 +14841,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Free-entry chips for emails, labels or hosts: Enter, Tab or a separator commits, pasted lists are split, `validate` marks bad entries as invalid chips, `maxItems` caps the list. Additions and removals are announced; works inside Field. Read-only mode prevents text edits, committing entries and chip removal. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.",
+      "description": "Free-entry chips for emails, labels or hosts: Enter, Tab or a separator commits, pasted lists are split, `validate` marks bad entries as invalid chips, `maxItems` caps the list. Additions and removals are announced; works inside Field. Read-only mode prevents text edits, committing entries and chip removal. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto (default) follows density: comfortable fields are at least 36px with 12px field padding and 22px chips; compact fields are at least 32px with 10px field padding and 20px chips. Vertical padding is half the control height minus chip height and both borders (6px comfortable, 5px compact). Wrapping grows the field. Explicit sm/md retain their existing metrics; lg stays at least 44px in either density with 28px chips and 14.5px field text. See Input FieldSizes for a live comparison of every field size and density.",
       "files": [
         {
           "path": "packages/ui/src/components/TokenInput/TokenInput.tsx",
@@ -14638,6 +14906,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -14843,6 +15115,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -14971,6 +15247,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -15105,6 +15385,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -15247,6 +15531,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -15400,6 +15688,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -15645,6 +15937,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -15784,6 +16080,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -15908,6 +16208,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -16044,6 +16348,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -16161,6 +16469,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -16289,6 +16601,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -16422,6 +16738,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -16561,6 +16881,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -16691,6 +17015,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -16815,6 +17143,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -16943,6 +17275,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -17076,6 +17412,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -17212,6 +17552,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -17339,6 +17683,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
@@ -17471,6 +17819,10 @@
           "target": "components/i18n/messages/es.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
@@ -17597,6 +17949,10 @@
         {
           "path": "packages/ui/src/i18n/messages/es.ts",
           "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",

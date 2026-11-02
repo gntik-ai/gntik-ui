@@ -34,11 +34,22 @@ export const tokenInputVariants = tv({
     },
 
     size: {
+      lg: {
+        root: 'min-h-11 px-4 py-1.5 text-[14.5px] rounded-lg',
+        input: 'h-7 px-1 text-[14.5px]',
+        chip: 'h-7 text-[13px]',
+      },
+      // Reserve exactly one density chip row plus the field's two 1px borders.
+      auto: {
+        root: 'min-h-(--control-h-md) px-field py-[calc((var(--control-h-md)-var(--chip-h)-2px)/2)]',
+        input: 'h-chip px-1 text-[13px]',
+        chip: 'h-chip text-[12px]',
+      },
       sm: { root: 'min-h-8 px-1.5 py-1', input: 'h-6 px-1 text-[12px]', chip: 'h-5.5 text-[11.5px]' },
       md: { root: 'min-h-9 px-2 py-1.5', input: 'h-6 px-1 text-[13px]', chip: 'h-6 text-[12px]' },
     },
   },
-  defaultVariants: { variant: 'outline', size: 'md' },
+  defaultVariants: { variant: 'outline', size: 'auto' },
 });
 
 export type TokenInputVariantProps = VariantProps<typeof tokenInputVariants>;
