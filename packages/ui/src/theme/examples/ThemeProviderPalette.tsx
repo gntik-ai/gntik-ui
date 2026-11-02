@@ -8,6 +8,7 @@ import { CodeBlock } from '../../components/CodeBlock/CodeBlock';
 import { Select, SelectContent, SelectItem, SelectLabel, SelectTrigger } from '../../components/Select/Select';
 
 const navyPreset = { ...gntikPreset, palette: 'navy' as const };
+const PALETTE_LABELS = { green: 'Green', navy: 'Navy', corporate: 'Corporate' } as const;
 
 function PalettePreview() {
   const { palette, setPalette } = useTheme();
@@ -17,7 +18,7 @@ function PalettePreview() {
       <div className="flex gap-2">
         {PALETTES.map((id) => (
           <Button key={id} aria-pressed={palette === id} onClick={() => setPalette(id)}>
-            {id === 'navy' ? 'Navy' : 'Green'}
+            {PALETTE_LABELS[id]}
           </Button>
         ))}
       </div>

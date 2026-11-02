@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { currentTheme, observeTheme, tokenColor, type Theme } from '@gntik-ai/tokens/runtime';
+import { currentTheme, observeTheme, tokenChannels, tokenColor, type Theme } from '@gntik-ai/tokens/runtime';
 
 /** Series colour name → brand token. Green primary is the hero; the rest are categorical accents. */
 export const SERIES_TOKENS = {
@@ -20,6 +20,9 @@ export type ChartColor = keyof typeof SERIES_TOKENS;
  */
 export const CHART_COLORS: readonly ChartColor[] = ['primary', 'violet', 'cyan', 'rose', 'amber'];
 
+/** Palettes may define `--chart-series-1`…`--chart-series-12`; series beyond that wrap around. */
+const SERIES_COUNT = 12;
+
 export interface ChartTheme {
   /** Active theme ("dark" | "light" | "high_contrast"); "dark" on the server and during hydration. */
   theme: Theme;
@@ -34,6 +37,11 @@ export interface ChartTheme {
   surface: string;
   /** Colour for a series name, with optional alpha (0–1). */
   color: (name: ChartColor, alpha?: number) => string;
+  /**
+   * Default colour for the i-th series (0-based): the palette's `--chart-series-N` token, or the
+   * matching `CHART_COLORS` accent when the palette defines none.
+   */
+  series: (index: number, alpha?: number) => string;
 }
 
 type ColorFn = (token: string, alpha?: number) => string;
@@ -41,7 +49,22 @@ type ColorFn = (token: string, alpha?: number) => string;
 /** `hsl(var(--token))`: resolved by the browser (SVG fill/stroke and inline styles), so it is SSR-safe and follows theme switches. */
 const cssVarColor: ColorFn = (token, alpha) => (alpha == null ? `hsl(var(${token}))` : `hsl(var(${token}) / ${alpha})`);
 
-function buildTheme(theme: Theme, c: ColorFn): ChartTheme {
+type SeriesFn = (index: number, alpha?: number) => string;
+
+const seriesName = (index: number) => `--chart-series-${(index % SERIES_COUNT) + 1}`;
+const defaultToken = (index: number) => SERIES_TOKENS[CHART_COLORS[index % CHART_COLORS.length] ?? 'primary'];
+
+/** Unset series tokens fall through `var()` to today's accent token, so other palettes are unchanged. */
+const cssVarSeries: SeriesFn = (index, alpha) => {
+  const channels = `var(${seriesName(index)}, var(${defaultToken(index)}))`;
+  return alpha == null ? `hsl(${channels})` : `hsl(${channels} / ${alpha})`;
+};
+
+/** Resolved colours cannot use a `var()` fallback, so an undefined (empty) series token uses the accent. */
+const resolvedSeries: SeriesFn = (index, alpha) =>
+  tokenColor(tokenChannels(seriesName(index)) ? seriesName(index) : defaultToken(index), alpha);
+
+function buildTheme(theme: Theme, c: ColorFn, series: SeriesFn): ChartTheme {
   return {
     theme,
     grid: c('--border'),
@@ -51,6 +74,7 @@ function buildTheme(theme: Theme, c: ColorFn): ChartTheme {
     barCursor: c('--secondary', 0.55),
     surface: c('--card'),
     color: (name, alpha) => c(SERIES_TOKENS[name] ?? SERIES_TOKENS.primary, alpha),
+    series,
   };
 }
 
@@ -61,7 +85,7 @@ let resolvedSnapshot: ChartTheme | null = null;
 function varTheme(theme: Theme): ChartTheme {
   let t = varThemes.get(theme);
   if (!t) {
-    t = buildTheme(theme, cssVarColor);
+    t = buildTheme(theme, cssVarColor, cssVarSeries);
     varThemes.set(theme, t);
   }
   return t;
@@ -81,7 +105,7 @@ const getVarSnapshot = () => varTheme(currentTheme());
 function getResolvedSnapshot() {
   const theme = currentTheme();
   if (!resolvedSnapshot || resolvedSnapshot.theme !== theme)
-    resolvedSnapshot = buildTheme(theme, (token, alpha) => tokenColor(token, alpha));
+    resolvedSnapshot = buildTheme(theme, (token, alpha) => tokenColor(token, alpha), resolvedSeries);
   return resolvedSnapshot;
 }
 
@@ -104,8 +128,9 @@ export function useChartTheme({ resolved = false }: UseChartThemeOptions = {}): 
   return useSyncExternalStore(subscribe, resolved ? getResolvedSnapshot : getVarSnapshot, getServerSnapshot);
 }
 
-/** Colour for the i-th series, cycling through `colors`. */
-export function seriesColor(t: ChartTheme, colors: readonly ChartColor[], i: number): string {
+/** Colour for the i-th series: cycles an explicit `colors`, else the palette's default series. */
+export function seriesColor(t: ChartTheme, colors: readonly ChartColor[] | undefined, i: number): string {
+  if (!colors) return t.series(i);
   const name = colors.length ? colors[i % colors.length] : undefined;
   return t.color(name ?? 'primary');
 }

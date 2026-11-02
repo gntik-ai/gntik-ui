@@ -12,6 +12,8 @@ import { PALETTES } from '@gntik-ai/tokens/runtime';
 import { DensityProvider, Select, SelectTrigger, SelectContent, SelectItem } from '@gntik-ai/ui';
 import { DENSITIES, DIRECTIONS, PreviewSettingsContext, readSetting, writeSetting } from '../preview-settings.jsx';
 
+const PALETTE_LABELS = { green: 'Green', navy: 'Navy', corporate: 'Corporate' };
+
 const { Icon, LogoMark, StatusTag, REGISTRY, regFlat, regFind, regCounts, useState, useEffect, useRef } = window;
 
 const DOT = { done: 'bg-primary', wip: 'bg-warning', todo: 'bg-muted-foreground/40' };
@@ -272,13 +274,13 @@ function CatalogShell() {
                 <Select
                   value={palette}
                   onValueChange={(value) => value && setPalette(value)}
-                  items={PALETTES.map((id) => ({ value: id, label: id === 'navy' ? 'Navy' : 'Green' }))}
+                  items={PALETTES.map((id) => ({ value: id, label: PALETTE_LABELS[id] }))}
                 >
                   <SelectTrigger aria-label="Colour palette" className="w-24" />
                   <SelectContent>
                     {PALETTES.map((id) => (
                       <SelectItem key={id} value={id}>
-                        {id === 'navy' ? 'Navy' : 'Green'}
+                        {PALETTE_LABELS[id]}
                       </SelectItem>
                     ))}
                   </SelectContent>

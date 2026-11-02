@@ -107,11 +107,11 @@ test('figma-variables.json: one "gntik" collection, three modes, values and alia
   );
   assert.deepEqual(
     figma.variableModes.map((m) => m.name),
-    [...THEMES, 'navy_light', 'navy_dark'],
+    [...THEMES, 'navy_light', 'navy_dark', 'corporate_light', 'corporate_dark'],
   );
   const ids = new Set(figma.variables.map((v) => v.id));
   assert.equal(ids.size, figma.variables.length);
-  assert.equal(figma.variableModeValues.length, figma.variables.length * (THEMES.length + 2));
+  assert.equal(figma.variableModeValues.length, figma.variables.length * (THEMES.length + 4));
   for (const mv of figma.variableModeValues) {
     assert.ok(ids.has(mv.variableId));
     if (mv.value?.type === 'VARIABLE_ALIAS') assert.ok(ids.has(mv.value.id), `${mv.variableId} alias target`);
@@ -217,7 +217,7 @@ test('TypeScript, JavaScript and declarations expose all eleven CSS type roles',
 
 test('palette exports include the named palette ids and navy design-tool modes', async () => {
   const mod = await import(path.join(out, 'tokens.js'));
-  assert.deepEqual(mod.PALETTES, ['green', 'navy']);
+  assert.deepEqual(mod.PALETTES, ['green', 'navy', 'corporate']);
   assert.match(fs.readFileSync(path.join(out, 'tokens.d.ts'), 'utf8'), /export type PaletteId/);
   assert.deepEqual(dtcg.navy_light.color.primary.$value.components, [223, 54, 23]);
   assert.deepEqual(dtcg.navy_dark.color.primary.$value.components, [221, 90, 78]);
@@ -225,6 +225,23 @@ test('palette exports include the named palette ids and navy design-tool modes',
   assert.equal(dtcg.navy_light.shadow.sm.$value[0].color.components[0], 222);
   for (const mode of ['navy_light', 'navy_dark']) {
     assert.ok(figma.variableModes.some((v) => v.name === mode));
+    const color = figma.variableModeValues.find((v) => v.variableId === 'var_primary' && v.modeId === `mode_${mode}`);
+    assert.ok(color);
+  }
+});
+
+test('corporate exports its own modes while chart series stay out of Figma', () => {
+  assert.deepEqual(dtcg.corporate_light.color.primary.$value.components, [218.9, 100, 17.8]);
+  assert.ok(dtcg.corporate_dark.color['chart-series-1'], 'DTCG keeps the series colours');
+  assert.equal(
+    figma.variables.some((v) => v.name.startsWith('color/chart-series')),
+    false,
+  );
+  assert.equal(
+    figma.variableModeValues.some((v) => v.variableId.startsWith('var_chart-series')),
+    false,
+  );
+  for (const mode of ['corporate_light', 'corporate_dark']) {
     const color = figma.variableModeValues.find((v) => v.variableId === 'var_primary' && v.modeId === `mode_${mode}`);
     assert.ok(color);
   }

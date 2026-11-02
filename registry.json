@@ -645,7 +645,13 @@
       "group": "Foundations",
       "status": "done",
       "blurb": "Product name + SVG mark → BrandPreset: previews in 3 themes and a console, contrast checks, export.",
-      "snippets": [],
+      "snippets": [
+        {
+          "name": "inline_1",
+          "lang": "tsx",
+          "code": "import '@gntik-ai/tokens/fonts/inter.css';\n// In the document head, before styles and hydration:\nthemeScript('gntik-theme', 'dark', { palette: 'corporate' });\n<ThemeProvider palette=\"corporate\"><App /></ThemeProvider>"
+        }
+      ],
       "file": "apps/docs/src/catalog/theme-builder.jsx",
       "header": "Gntik UI · theme-builder.jsx — brand preset builder.\nA product name + an SVG mark → a BrandPreset module (packages/ui/src/theme/\npresets.tsx shape). Previews the mark as Logo + wordmark in the three themes\nand in a mini console, checks its contrast against the chrome and background\ntokens, and exports the preset. Colours are frozen: it never edits a token.",
       "intro": "Turn a product name and an SVG mark into a BrandPreset for ThemeProvider. Preview it in the three themes and in a console frame, check its contrast against the shell surfaces, then export the module."
@@ -2835,8 +2841,8 @@
   "stats": {
     "groups": 19,
     "components": 68,
-    "withSnippets": 60,
-    "snippets": 197,
+    "withSnippets": 61,
+    "snippets": 198,
     "tokens": 103
   }
 }

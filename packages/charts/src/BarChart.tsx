@@ -14,7 +14,7 @@ import {
 } from './shared';
 import { resolveState } from './states';
 import { useCartesianExtras, type CartesianExtrasProps } from './cartesian-extras';
-import { CHART_COLORS, seriesColor, useChartTheme } from './theme';
+import { seriesColor, useChartTheme } from './theme';
 
 export interface BarChartProps<T extends object> extends CartesianExtrasProps, BaseChartProps<T> {
   categories: ReadonlyArray<DataKey<T>>;
@@ -31,7 +31,7 @@ export function BarChart<T extends object>({
   data,
   index,
   categories,
-  colors = CHART_COLORS,
+  colors,
   valueFormatter = identity,
   stacked = false,
   layout = 'horizontal',

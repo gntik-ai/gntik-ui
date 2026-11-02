@@ -204,6 +204,34 @@ it('resolves alpha, stop-colour, colour and inline style tokens against the figu
   document.documentElement.style.removeProperty('--primary');
 });
 
+it('exports series colours from the palette token, or the accent token when the palette has none', async () => {
+  const figure = chart();
+  // jsdom does not inherit custom properties, so the active palette is installed on the figure.
+  const root = figure.style;
+  root.setProperty('--category-violet', '262 62% 55%');
+  const source = figure.querySelector('svg.recharts-surface')!;
+  const mark = (id: string, fill: string) => {
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('id', id);
+    rect.setAttribute('fill', fill);
+    source.append(rect);
+  };
+  mark('plain', 'hsl(var(--chart-series-1, var(--primary)))');
+  mark('alpha', 'hsl(var(--chart-series-2, var(--category-violet)) / 0.5)');
+  const exported = async () =>
+    new DOMParser().parseFromString(await text(await exportChartSvg(figure)), 'image/svg+xml');
+  let svg = await exported();
+  expect(svg.querySelector('#plain')?.getAttribute('fill')).toBe('hsl(145 61% 40%)');
+  expect(svg.querySelector('#alpha')?.getAttribute('fill')).toBe('hsl(262 62% 55% / 0.5)');
+  root.setProperty('--chart-series-1', '218.9 100% 18%');
+  root.setProperty('--chart-series-2', '202.2 100% 26%');
+  svg = await exported();
+  expect(svg.querySelector('#plain')?.getAttribute('fill')).toBe('hsl(218.9 100% 18%)');
+  expect(svg.querySelector('#alpha')?.getAttribute('fill')).toBe('hsl(202.2 100% 26% / 0.5)');
+  for (const key of ['--primary', '--category-violet', '--chart-series-1', '--chart-series-2'])
+    root.removeProperty(key);
+});
+
 it('releases the SVG URL when PNG image loading fails', async () => {
   const figure = chart();
   vi.stubGlobal(

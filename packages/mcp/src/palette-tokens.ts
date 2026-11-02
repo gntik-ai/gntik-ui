@@ -4,7 +4,7 @@ import type { DesignSystemIndex, TokenTheme } from './types.js';
 import { parseTokens } from './indexer.js';
 
 export const PALETTE_RULE =
-  'Named palettes come only from @gntik-ai/tokens: green is the default, navy is opt-in. Each palette covers every light/dark colour and shadow token and passes contrast checks. High contrast and categorical accents are shared; brand.css stays frozen. Presets may select a palette; components use token classes only.';
+  'Named palettes come only from @gntik-ai/tokens: green is the default; navy and corporate are opt-in. Each palette covers every light/dark colour and shadow token and passes contrast checks. Corporate also sets Inter typography, upright emphasis, unchanged label case and chart series tokens, and follows the identity rules: one highlight colour per page, sentence case, no italics. High contrast is shared, as are categorical accents outside corporate; brand.css stays frozen. Presets may select a palette; components use token classes only.';
 
 export function paletteRules(rules?: string): string {
   return (

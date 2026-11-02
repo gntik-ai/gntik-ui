@@ -5,7 +5,7 @@ import { tooltipContent } from './ChartTooltip';
 import { cx, identity, type ValueFormatter } from './format';
 import { accessibleName, field, numField, type DataKey } from './shared';
 import { ChartDataTable, chartStateView, resolveState, type ChartStateProps } from './states';
-import { CHART_COLORS, seriesColor, useChartTheme, type ChartColor } from './theme';
+import { seriesColor, useChartTheme, type ChartColor } from './theme';
 
 export interface DonutChartProps<T extends object> extends ChartStateProps {
   data: readonly T[];
@@ -38,7 +38,7 @@ export function DonutChart<T extends object>({
   data,
   index,
   category,
-  colors = CHART_COLORS,
+  colors,
   valueFormatter = identity,
   variant = 'donut',
   showLegend = true,

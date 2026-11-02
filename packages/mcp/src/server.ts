@@ -96,7 +96,7 @@ function mdOverview(index: DesignSystemIndex): string {
   const count = (k: string) => kit.filter((i) => i.kind === k).length;
   return [
     '# gntik-ui — the product-agnostic design system of gntik-ai',
-    `**Brand:** green primary \`hsl(${primary})\` · Geist + Geist Mono · radius 0.625rem · 3 themes (dark default · light · high_contrast). Green values stay frozen; presets may select a named palette (green default, navy opt-in).`,
+    `**Brand:** green primary \`hsl(${primary})\` · Geist + Geist Mono · radius 0.625rem · 3 themes (dark default · light · high_contrast). Green values stay frozen; presets may select a named palette (green default; navy and corporate opt-in).`,
     kit.length
       ? `**Kit (packages):** ${count('component')} components · ${count('layout')} layouts (@gntik-ai/ui, @gntik-ai/chat) · ${count('block')} blocks (@gntik-ai/blocks) · ${count('template')} page templates (@gntik-ai/templates).`
       : '**Kit (packages):** kit-registry.json not found next to this server.',

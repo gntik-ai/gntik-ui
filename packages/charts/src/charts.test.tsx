@@ -102,7 +102,7 @@ describe('DonutChart', () => {
     const total = () => screen.getByText('jobs').previousElementSibling;
     expect(total()).toHaveTextContent('100');
     const sector = container.querySelector('.recharts-pie-sector path');
-    expect(sector?.getAttribute('fill')).toBe('hsl(var(--primary))');
+    expect(sector?.getAttribute('fill')).toBe('hsl(var(--chart-series-1, var(--primary)))');
     fireEvent.click(screen.getByRole('button', { name: /Ingest/ }));
     expect(total()).toHaveTextContent('60');
   });
@@ -176,8 +176,8 @@ describe('useChartTheme (token adapter wiring)', () => {
     document.documentElement.classList.add('dark');
     const ui = <AreaChart aria-label="Requests" data={data} index="month" categories={['requests', 'errors']} />;
     const html = renderToString(ui);
-    expect(html).toContain('background:hsl(var(--primary))');
-    expect(html).toContain('background:hsl(var(--category-violet))');
+    expect(html).toContain('background:hsl(var(--chart-series-1, var(--primary)))');
+    expect(html).toContain('background:hsl(var(--chart-series-2, var(--category-violet)))');
     const container = document.createElement('div');
     container.innerHTML = html;
     document.body.appendChild(container);
@@ -186,7 +186,7 @@ describe('useChartTheme (token adapter wiring)', () => {
     expect(errors).not.toHaveBeenCalled();
     errors.mockRestore();
     const swatch = container.querySelector('button[aria-pressed] span[aria-hidden]');
-    expect(swatch).toHaveStyle({ background: 'hsl(var(--primary))' });
+    expect(swatch).toHaveStyle({ background: 'hsl(var(--chart-series-1, var(--primary)))' });
     act(() => root.unmount());
     container.remove();
   });

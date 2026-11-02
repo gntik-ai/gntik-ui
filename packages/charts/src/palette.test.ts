@@ -92,6 +92,30 @@ describe.each(PALETTES)('categorical palette %s (colour-blind safety)', (palette
   });
 });
 
+describe('corporate chart series tokens', () => {
+  const keys = Array.from({ length: 12 }, (_, index) => `--chart-series-${index + 1}`);
+
+  it.each([':root', '.dark'] as const)('define twelve series, 1.5:1 apart and 2:1 on the card in %s', (theme) => {
+    const tokens = tokensOf('corporate', theme);
+    keys.forEach((key, index) => {
+      expect(tokens[key], `${theme} ${key}`).toBeDefined();
+      expect(ratio(tokens[key]!, tokens['--card']!), `${theme} ${key} on card`).toBeGreaterThanOrEqual(2);
+      if (index > 0)
+        expect(
+          ratio(tokens[keys[index - 1]!]!, tokens[key]!),
+          `${theme} ${key} next to previous`,
+        ).toBeGreaterThanOrEqual(1.5);
+    });
+  });
+
+  it('stay out of green, navy and the shared high contrast values', () => {
+    for (const palette of ['green', 'navy'])
+      for (const theme of [':root', '.dark'] as const)
+        expect(tokensOf(palette, theme)['--chart-series-1']).toBeUndefined();
+    expect(tokensOf('corporate', '.high_contrast')['--chart-series-1']).toBeUndefined();
+  });
+});
+
 describe('ramps', () => {
   it('sequentialRamp mixes the token into the card, ending at the plain token', () => {
     const r = sequentialRamp(4);

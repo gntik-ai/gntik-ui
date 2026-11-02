@@ -3,7 +3,6 @@ import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart as RRadar
 import { ChartLegend, useHiddenSeries } from './ChartLegend';
 import { tooltipContent } from './ChartTooltip';
 import { formatAny, identity } from './format';
-import { SAFE_CHART_COLORS } from './palette';
 import { accessibleName, cartesianTable, ChartFrame, type BaseChartProps, type DataKey } from './shared';
 import { resolveState } from './states';
 import { seriesColor, useChartTheme } from './theme';
@@ -24,7 +23,7 @@ export function RadarChart<T extends object>({
   data,
   index,
   categories,
-  colors = SAFE_CHART_COLORS,
+  colors,
   valueFormatter = identity,
   max,
   showLegend = true,
