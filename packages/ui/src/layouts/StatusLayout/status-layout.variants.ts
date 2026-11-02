@@ -9,7 +9,7 @@ export const statusLayoutVariants = tv({
     content: 'flex w-full max-w-md flex-col items-center',
     illustration: 'mb-6 flex justify-center text-muted-foreground',
     iconHalo: 'grid size-14 place-items-center rounded-full bg-secondary text-muted-foreground ring-1 ring-border',
-    code: 'font-mono text-[12px] font-semibold tracking-[0.2em] uppercase',
+    code: 'font-mono text-[12px] font-semibold tracking-[0.2em] label-case',
     title: 'mt-3 text-[24px] font-semibold tracking-[-0.02em] text-balance text-foreground',
     heading: 'mt-3 w-full text-foreground',
     description: 'mt-2 text-[14px] leading-relaxed text-pretty text-muted-foreground',

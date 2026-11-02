@@ -13,5 +13,5 @@ export const modelPickerStyles = {
   itemName: 'font-medium text-foreground',
   itemDescription: 'text-[11.5px] leading-4 text-muted-foreground',
   badges: 'flex flex-wrap gap-1',
-  reason: 'text-[11.5px] leading-4 text-muted-foreground italic',
+  reason: 'text-[11.5px] leading-4 text-muted-foreground font-emphasis',
 } as const;

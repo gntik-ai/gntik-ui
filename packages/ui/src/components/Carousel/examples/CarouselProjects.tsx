@@ -14,7 +14,7 @@ export default function CarouselProjects() {
       {projects.map((p) => (
         <article key={p.name} className="h-full rounded-xl border border-border bg-card p-4 shadow-sm">
           <h3 className="font-mono text-[13px] font-semibold text-foreground">{p.name}</h3>
-          <p className="mt-0.5 text-[11.5px] tracking-wide text-muted-foreground uppercase">{p.env}</p>
+          <p className="mt-0.5 text-[11.5px] tracking-wide text-muted-foreground label-case">{p.env}</p>
           <p className="mt-3 text-[12.5px] leading-5 text-muted-foreground">{p.note}</p>
         </article>
       ))}

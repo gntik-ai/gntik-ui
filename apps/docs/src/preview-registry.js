@@ -224,6 +224,8 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),
   },
   template: {
+    'code-editor--palette-typography': () =>
+      import('../../../packages/templates/src/code-editor/examples/PaletteTypography'),
     'assistant-chat--adapter': () => import('../../../packages/templates/src/assistant-chat/examples/AdapterChat'),
     'shell-sidebar--tenants': () => import('../../../packages/templates/src/shell-sidebar/examples/Tenants'),
     'shell-sidebar--platform-wide': () => import('../../../packages/templates/src/shell-sidebar/examples/PlatformWide'),

@@ -15,7 +15,7 @@ export const citationStyles = {
   snippet: 'mt-1 line-clamp-4 text-[12.5px] leading-relaxed text-muted-foreground',
   open: `mt-2.5 inline-flex items-center gap-1 rounded-sm text-[12.5px] font-medium text-primary-text hover:underline ${focusRing}`,
   list: 'flex flex-col gap-1.5',
-  heading: 'mb-1 text-[11.5px] font-semibold tracking-wide text-muted-foreground uppercase',
+  heading: 'mb-1 text-[11.5px] font-semibold tracking-wide text-muted-foreground label-case',
   item: 'flex gap-2.5 rounded-lg border border-border bg-card px-3 py-2.5',
   itemBody: 'min-w-0 flex-1',
   itemTitle: `rounded-sm text-[13px] font-medium text-foreground hover:text-primary-text hover:underline ${focusRing}`,

@@ -15,7 +15,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PALETTES } from '../src/palettes.js';
-import { readPalettes } from './palette-model.mjs';
+import { readPalettes, TYPOGRAPHY_KEYS } from './palette-model.mjs';
 
 const SRC = new URL('../src/', import.meta.url);
 const read = (f) => fs.readFileSync(new URL(f, SRC), 'utf8');
@@ -114,6 +114,7 @@ export function readModel() {
   const typography = {};
   for (const [key, value] of Object.entries(typeVars)) {
     const match = /^--type-(.+)-(size|leading|tracking|weight)$/.exec(key);
+    if (TYPOGRAPHY_KEYS.includes(key)) continue;
     if (!match) throw new Error(`Unknown typography variable: ${key}`);
     const [, role, property] = match;
     (typography[role] ??= {})[property] = value;

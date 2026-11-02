@@ -12,7 +12,7 @@ export function BrandPanel({ eyebrow, headline, features }: BrandPanelCopy) {
   return (
     <Stack gap={8}>
       <Stack gap={4}>
-        <Text variant="caption" tone="primary" className="font-mono tracking-[0.18em] uppercase">
+        <Text variant="caption" tone="primary" className="font-mono tracking-[0.18em] label-case">
           {eyebrow}
         </Text>
         <Text variant="display" className="text-[32px] font-bold tracking-tight text-balance">

@@ -150,7 +150,7 @@ export default function SearchResultsPage(props: Partial<SearchResultsProps>) {
                 <div key={facet.id}>
                   <p
                     id={`${id}-${facet.id}`}
-                    className="mb-2.5 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase"
+                    className="mb-2.5 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground label-case"
                   >
                     {facet.label}
                   </p>

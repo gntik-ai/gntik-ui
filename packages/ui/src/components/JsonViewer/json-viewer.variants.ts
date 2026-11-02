@@ -7,7 +7,7 @@ export const jsonTypeClass = {
   string: 'text-warning-text',
   number: 'text-destructive-text',
   boolean: 'font-semibold text-foreground',
-  null: 'italic text-muted-foreground',
+  null: 'font-emphasis text-muted-foreground',
   summary: 'text-muted-foreground',
   punctuation: 'text-muted-foreground',
 } as const;

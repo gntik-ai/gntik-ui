@@ -3,7 +3,7 @@ import { focusRing } from '../utils/focus';
 /** Slot classes for SuggestionChips. */
 export const suggestionChipsStyles = {
   root: 'w-full',
-  heading: 'mb-2.5 text-[12px] font-semibold tracking-wide text-muted-foreground uppercase',
+  heading: 'mb-2.5 text-[12px] font-semibold tracking-wide text-muted-foreground label-case',
   grid: 'grid gap-2 sm:grid-cols-2',
   row: 'flex flex-wrap gap-2',
   card: [

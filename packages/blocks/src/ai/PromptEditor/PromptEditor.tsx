@@ -132,7 +132,7 @@ export function PromptEditor({
         </div>
         <div className="flex flex-col gap-5 border-t border-border bg-secondary/20 p-4 md:border-t-0 md:border-s">
           <div>
-            <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">
+            <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground label-case">
               Variables
             </SubTag>
             {variables.length === 0 ? (
@@ -168,7 +168,7 @@ export function PromptEditor({
             )}
           </div>
           <div className="flex flex-col gap-4">
-            <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">
+            <SubTag className="text-[12px] font-semibold tracking-wide text-muted-foreground label-case">
               Parameters
             </SubTag>
             <Slider

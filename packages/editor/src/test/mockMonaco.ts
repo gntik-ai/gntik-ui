@@ -68,11 +68,13 @@ export function createMockMonaco() {
       codeEditors.push(ed);
       return ed;
     }),
-    createDiffEditor: vi.fn(() => {
-      const ed = fakeDiffEditor();
-      diffEditors.push(ed);
-      return ed;
-    }),
+    createDiffEditor: vi.fn<(el: HTMLElement, options: { fontFamily?: string }) => ReturnType<typeof fakeDiffEditor>>(
+      () => {
+        const ed = fakeDiffEditor();
+        diffEditors.push(ed);
+        return ed;
+      },
+    ),
   };
 
   const monaco = { editor: editorApi } as unknown as Monaco;

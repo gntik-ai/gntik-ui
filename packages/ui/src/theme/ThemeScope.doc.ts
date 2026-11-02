@@ -5,7 +5,17 @@ export const doc: ComponentDoc = {
   group: 'Theme',
   status: 'stable',
   description:
-    'Apply light, dark or high_contrast to a subtree and its overlays. theme is required; className and Base UI render customize the wrapper. Nested useTheme().resolved follows the scope; mode and setMode still control the page. Explicit overlay containers take precedence. Each scope owns a themed body portal, removed on unmount. CSS classes, including .light, reapply the active palette tokens. The nearest data-palette scope is exposed through useTheme().palette and copied to the body portal, including live palette changes. Charts, flow and editor runtime colors still follow html.',
+    'Apply light, dark or high_contrast to a subtree and its overlays. theme is required; className and Base UI render customize the wrapper. Nested useTheme().resolved follows the scope; mode and setMode still control the page. Explicit overlay containers take precedence. Each scope owns a themed body portal, removed on unmount. CSS classes, including .light, reapply the active palette tokens. The nearest data-palette scope is exposed through useTheme().palette and copied to the body portal, including live palette changes. Palette typography (font-sans, font-mono, font-style-emphasis and text-transform-label) also follows the scope and its portal, including in high contrast. The Typography in palettes preview on the Code editor template page demonstrates these overrides and nested editors. Charts, flow and editor runtime colors still follow html.',
   primitive: '@base-ui/react/use-render',
-  tokens: ['background', 'foreground', 'primary-text', 'popover', 'popover-foreground'],
+  tokens: [
+    'background',
+    'foreground',
+    'primary-text',
+    'popover',
+    'popover-foreground',
+    'font-sans',
+    'font-mono',
+    'font-style-emphasis',
+    'text-transform-label',
+  ],
 };

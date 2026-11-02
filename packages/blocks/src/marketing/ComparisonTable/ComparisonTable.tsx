@@ -128,7 +128,7 @@ export function ComparisonTable({
       {(hasTitle || eyebrow || description) && (
         <div className="mx-auto mb-10 max-w-2xl text-center">
           {eyebrow && (
-            <p className="font-mono text-[12px] font-semibold tracking-wide text-primary-text uppercase">{eyebrow}</p>
+            <p className="font-mono text-[12px] font-semibold tracking-wide text-primary-text label-case">{eyebrow}</p>
           )}
           {hasTitle && (
             <Heading

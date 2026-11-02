@@ -21,7 +21,7 @@ export const toolCallCardStyles = {
   body: 'flex flex-col gap-2 border-t border-border px-3 pb-3 pt-1',
   error: 'rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-[12.5px] text-destructive-chip-text',
   json: {
-    trigger: 'mx-0 h-7 px-1 text-[11.5px] font-semibold tracking-wide text-muted-foreground uppercase',
+    trigger: 'mx-0 h-7 px-1 text-[11.5px] font-semibold tracking-wide text-muted-foreground label-case',
     content: 'pt-1',
     pre: 'max-h-64 overflow-auto rounded-md border border-border bg-secondary/40 p-2.5 font-mono text-[12px] leading-5 text-foreground',
   },

@@ -6,7 +6,8 @@
   "type": "module",
   "files": [
     "src",
-    "dist"
+    "dist",
+    "fonts"
   ],
   "exports": {
     "./brand.css": "./src/brand.css",
@@ -32,7 +33,8 @@
     "./layers.css": "./src/layers.css",
     "./status.css": "./src/status.css",
     "./palettes/navy.css": "./src/palettes/navy.css",
-    "./palettes/index.css": "./src/palettes/index.css"
+    "./palettes/index.css": "./src/palettes/index.css",
+    "./fonts/inter.css": "./fonts/inter.css"
   },
   "sideEffects": [
     "*.css"
@@ -48,6 +50,10 @@
   },
   "scripts": {
     "build": "node scripts/export-tokens.mjs",
+    "fonts:sync": "node scripts/sync-inter.mjs",
     "test": "node --test test/*.test.mjs"
+  },
+  "devDependencies": {
+    "@fontsource-variable/inter": "^5.2.0"
   }
 }

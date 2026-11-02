@@ -5,7 +5,7 @@ import type { BadgeTone } from '../Badge/badge.variants';
 export const statusTagVariants = tv({
   base: 'tracking-wide',
   variants: {
-    uppercase: { true: 'uppercase', false: '' },
+    uppercase: { true: 'label-case', false: '' },
   },
   defaultVariants: { uppercase: false },
 });

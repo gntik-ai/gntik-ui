@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "@gntik-ai/tokens/tailwind.css";
 @import "@fontsource/geist/400.css";
+@import "@gntik-ai/tokens/fonts/inter.css";
 @import "@fontsource/geist/500.css";
 @import "@fontsource/geist/600.css";
 @import "@fontsource/geist/700.css";

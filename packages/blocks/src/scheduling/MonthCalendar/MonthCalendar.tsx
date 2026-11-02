@@ -155,7 +155,7 @@ export function MonthCalendar({
               key={weekday(day, timeZone)}
               role="columnheader"
               aria-label={formatWeekday(day, locale, 'long', timeZone)}
-              className="py-2 text-center text-[11px] font-medium tracking-wide text-muted-foreground uppercase"
+              className="py-2 text-center text-[11px] font-medium tracking-wide text-muted-foreground label-case"
             >
               {formatWeekday(day, locale, 'short', timeZone)}
             </div>

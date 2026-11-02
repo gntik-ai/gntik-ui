@@ -8,7 +8,7 @@ export default function ResizableWorkspace() {
       <ResizablePanelGroup autoSaveId="example-workspace">
         <ResizablePanel id="workspace-nav" defaultSize={28} minSize={18} maxSize={45} collapsible>
           <nav aria-label="Projects" className="h-full p-3">
-            <p className="px-2 pb-2 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">Projects</p>
+            <p className="px-2 pb-2 font-mono text-[11px] tracking-wider text-muted-foreground label-case">Projects</p>
             <ul className="grid gap-0.5">
               {PROJECTS.map((p, i) => (
                 <li key={p}>

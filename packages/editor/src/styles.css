@@ -8,3 +8,8 @@
   min-height: 1px;
   z-index: 1;
 }
+
+/* Monaco's global italic class also covers inherited language rules. */
+[data-slot="editor"] .monaco-editor .mtki {
+  font-style: var(--font-style-emphasis);
+}

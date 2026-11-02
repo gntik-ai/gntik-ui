@@ -31,11 +31,11 @@ export const markdownStyles = {
   th: 'border-b border-border bg-secondary/50 px-3 py-2 font-semibold',
   td: 'border-b border-border px-3 py-2 align-top [tr:last-child_&]:border-b-0',
   checkbox: 'me-1.5 align-[-2px] accent-primary',
-  image: 'text-muted-foreground italic',
+  image: 'text-muted-foreground font-emphasis',
   code: {
     root: 'my-3 overflow-hidden rounded-lg border border-border bg-secondary/40',
     header: 'flex h-9 items-center justify-between border-b border-border bg-secondary/50 ps-3 pe-1.5',
-    lang: 'font-mono text-[11px] tracking-wide text-muted-foreground uppercase',
+    lang: 'font-mono text-[11px] tracking-wide text-muted-foreground label-case',
     pre: 'overflow-x-auto p-3 font-mono text-[12.5px] leading-6',
   },
 } as const;

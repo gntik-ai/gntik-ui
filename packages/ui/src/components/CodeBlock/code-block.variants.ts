@@ -7,7 +7,7 @@ export const codeBlockVariants = tv({
     header: 'flex h-9 items-center justify-between gap-2 border-b border-border/70 pe-1.5 ps-3',
     heading: 'flex min-w-0 items-center gap-2',
     filename: 'truncate font-mono text-[11.5px] text-foreground',
-    language: 'shrink-0 font-mono text-[11px] tracking-wide text-muted-foreground uppercase',
+    language: 'shrink-0 font-mono text-[11px] tracking-wide text-muted-foreground label-case',
     actions: 'flex shrink-0 items-center gap-0.5',
     button: [
       'inline-flex h-7 cursor-interactive items-center gap-1.5 rounded-md px-2 font-mono text-[11px] text-muted-foreground transition-colors motion-reduce:transition-none',
@@ -40,7 +40,7 @@ export const tokenClass: Record<TokenKind, string> = {
   property: 'text-primary-text',
   string: 'text-warning-text',
   number: 'text-destructive-text',
-  comment: 'text-muted-foreground italic',
+  comment: 'text-muted-foreground font-emphasis',
   type: 'font-semibold text-foreground',
   function: 'font-medium text-foreground',
   punctuation: 'text-muted-foreground',

@@ -1,22 +1,25 @@
 // Generated scopes repeat aliases so var() resolves against the island's tokens.
 import { readFileSync, writeFileSync } from 'node:fs';
-import { readPalettes } from './palette-model.mjs';
+import { readPalettes, TYPOGRAPHY_KEYS } from './palette-model.mjs';
 
 function parse(css) {
   return Object.fromEntries(
-    [...css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/(:root|\.dark|\.high_contrast)\s*\{([^}]*)\}/g)].map(
-      ([, selector, body]) => [
-        selector,
-        Object.fromEntries(
-          [...body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, key, value]) => [key, value.trim()]),
-        ),
-      ],
-    ),
+    [
+      ...css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/(:where\(:root\)|:root|\.dark|\.high_contrast)\s*\{([^}]*)\}/g),
+    ].map(([, selector, body]) => [
+      selector,
+      Object.fromEntries([...body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, key, value]) => [key, value.trim()])),
+    ]),
   );
 }
 
-export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '') {
+export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '', typographyCss = '') {
   const brand = parse(brandCss);
+  const defaults = { ...brand[':root'], ...parse(typographyCss)[':where(:root)'] };
+  const typography = (values) =>
+    Object.fromEntries(Object.entries(values).filter(([key]) => TYPOGRAPHY_KEYS.includes(key)));
+  const colours = (values) =>
+    Object.fromEntries(Object.entries(values).filter(([key]) => !TYPOGRAPHY_KEYS.includes(key)));
   const pairing = parse(pairingCss);
   const overridden = new Set([...Object.keys(brand['.dark']), ...Object.keys(brand['.high_contrast'])]);
   const light = {
@@ -40,9 +43,16 @@ export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '')
   };
   let paletteScopes = '';
   for (const [id, [paletteLight, paletteDark]] of Object.entries(allPalettes)) {
+    paletteScopes +=
+      '\n' +
+      block(`[data-palette="${id}"]`, {
+        ...typography(defaults),
+        ...typography(paletteLight),
+        ...typography(paletteDark),
+      });
     const target = `[data-palette="${id}"]${guard}`;
     // Repeat aliases on palette boundaries: inherited var() values have already resolved.
-    const lightBlock = block(target, { ...paletteLight, ...pairing[':root'] });
+    const lightBlock = block(target, { ...colours(paletteLight), ...pairing[':root'] });
     // Green already has unscoped theme rules in brand.css. Keep palette resets
     // scoped so browsers without @scope retain the original green cascade.
     paletteScopes +=
@@ -52,13 +62,16 @@ export function renderScope(brandCss, pairingCss, palettes = {}, statusCss = '')
         : lightBlock);
     paletteScopes +=
       `\n@scope (:root, .light, .dark, .high_contrast) to (.light, .dark, .high_contrast) {\n` +
-      block(`:where(:scope.dark) ${target},\n:where(:scope.dark)${target}`, { ...paletteDark, ...pairing['.dark'] }) +
+      block(`:where(:scope.dark) ${target},\n:where(:scope.dark)${target}`, {
+        ...colours(paletteDark),
+        ...pairing['.dark'],
+      }) +
       '}\n';
     // A theme boundary within the palette must reapply that palette, rather than green.
     paletteScopes +=
       `\n@scope ([data-palette="${id}"]) to ([data-palette]) {\n` +
-      block(`.light${guard}`, { ...paletteLight, ...pairing[':root'] }) +
-      block(`.dark${guard}`, { ...paletteDark, ...pairing['.dark'] }) +
+      block(`.light${guard}`, { ...colours(paletteLight), ...pairing[':root'] }) +
+      block(`.dark${guard}`, { ...colours(paletteDark), ...pairing['.dark'] }) +
       '}\n';
   }
   // Shared high contrast is never copied into an individual palette.
@@ -90,6 +103,7 @@ if (import.meta.main) {
       readFileSync(new URL('pairing.css', source), 'utf8'),
       readPalettes((file) => readFileSync(new URL(file, source), 'utf8')),
       readFileSync(new URL('status.css', source), 'utf8'),
+      readFileSync(new URL('typography.css', source), 'utf8'),
     ),
   );
 }

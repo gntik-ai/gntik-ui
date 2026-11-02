@@ -1,3 +1,9 @@
+/* Palette declarations win on html regardless of stylesheet import order. */
+:where(:root) {
+  --font-style-emphasis: italic;
+  --text-transform-label: uppercase;
+}
+
 /* Named type roles. Omitted weight and tracking inherit from the surrounding text. */
 :root {
   --type-display-size: 2.875rem;
@@ -46,4 +52,15 @@
 
   --type-caption-size: 12px;
   --type-caption-leading: 1.375;
+}
+
+/* Re-resolve inherited font tokens at palette and portal boundaries. */
+@layer base {
+  :where([data-palette], [data-theme-scope-portal]) {
+    font-family: var(--font-sans);
+  }
+
+  :where(em, i) {
+    font-style: var(--font-style-emphasis);
+  }
 }

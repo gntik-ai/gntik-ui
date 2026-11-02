@@ -51,15 +51,15 @@ export default function PrintLayoutInvoice() {
       >
         <dl className="mb-8 grid grid-cols-3 gap-4 text-[12px]">
           <div>
-            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">Billed to</dt>
+            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground label-case">Billed to</dt>
             <dd className="mt-1 font-medium">Acme Workspace</dd>
           </div>
           <div>
-            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">Period</dt>
+            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground label-case">Period</dt>
             <dd className="mt-1">1 – 30 Sep 2026</dd>
           </div>
           <div>
-            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">Issued</dt>
+            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground label-case">Issued</dt>
             <dd className="mt-1">1 Oct 2026</dd>
           </div>
         </dl>

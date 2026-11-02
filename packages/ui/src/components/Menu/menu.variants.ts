@@ -27,7 +27,7 @@ export const menuVariants = tv({
     radioIndicator: 'ms-auto shrink-0 text-primary-text',
     subTrigger: [...itemBase, 'data-popup-open:bg-secondary/70'],
     subChevron: 'ms-auto shrink-0 text-muted-foreground rtl:-scale-x-100',
-    groupLabel: 'px-2.5 pt-2 pb-1 font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase',
+    groupLabel: 'px-2.5 pt-2 pb-1 font-mono text-[10px] tracking-[0.12em] text-muted-foreground label-case',
     separator: '-mx-1.5 my-1.5 h-px bg-border',
   },
   variants: {

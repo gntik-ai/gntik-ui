@@ -11,7 +11,7 @@ export const canvasLayoutVariants = tv({
     palette: 'hidden w-60 shrink-0 flex-col overflow-y-auto border-e border-border bg-card lg:flex',
     inspector: 'hidden w-72 shrink-0 flex-col overflow-y-auto border-s border-border bg-card lg:flex',
     panelTitle:
-      'flex h-10 shrink-0 items-center border-b border-border px-3 font-mono text-[10.5px] font-semibold tracking-[0.14em] text-muted-foreground uppercase',
+      'flex h-10 shrink-0 items-center border-b border-border px-3 font-mono text-[10.5px] font-semibold tracking-[0.14em] text-muted-foreground label-case',
     panelBody: 'flex-1 p-3',
     center: 'flex min-w-0 flex-1 flex-col',
     main: 'relative min-h-0 flex-1 overflow-hidden outline-none',
@@ -23,7 +23,7 @@ export const canvasLayoutVariants = tv({
     console: 'flex shrink-0 flex-col border-t border-border bg-card',
     consoleBar: 'flex h-9 shrink-0 items-center gap-2 px-2',
     consoleToggle: [
-      'inline-flex h-7 items-center gap-1.5 rounded-md px-2 font-mono text-[10.5px] font-semibold tracking-[0.14em] text-muted-foreground uppercase',
+      'inline-flex h-7 items-center gap-1.5 rounded-md px-2 font-mono text-[10.5px] font-semibold tracking-[0.14em] text-muted-foreground label-case',
       'transition-colors hover:bg-secondary hover:text-foreground motion-reduce:transition-none',
       'focus-ring',
     ],

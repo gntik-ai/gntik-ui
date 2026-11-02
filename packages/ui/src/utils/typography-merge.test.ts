@@ -1,6 +1,24 @@
 import { cn } from './cn';
 import { tv } from './tv';
 
+describe('palette typography merging', () => {
+  it('keeps emphasis independent of the font family through cn and tv', () => {
+    expect(cn('font-mono', 'font-emphasis')).toBe('font-mono font-emphasis');
+    expect(cn('font-emphasis', 'font-mono')).toBe('font-emphasis font-mono');
+    const variants = tv({ base: 'font-mono', variants: { emphasis: { true: 'font-emphasis' } } });
+    expect(variants({ emphasis: true })).toBe('font-mono font-emphasis');
+  });
+
+  it('lets explicit emphasis and label case override token utilities in caller order', () => {
+    expect(cn('italic', 'font-emphasis')).toBe('font-emphasis');
+    expect(cn('font-emphasis', 'not-italic')).toBe('not-italic');
+    expect(cn('uppercase', 'label-case')).toBe('label-case');
+    expect(cn('label-case', 'normal-case')).toBe('normal-case');
+    const variants = tv({ base: 'font-emphasis label-case' });
+    expect(variants({ class: 'not-italic normal-case' })).toBe('not-italic normal-case');
+  });
+});
+
 const roles = [
   'display',
   'heading-xl',

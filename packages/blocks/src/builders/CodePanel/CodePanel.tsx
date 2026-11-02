@@ -198,7 +198,7 @@ export function CodePanel({
       </Tabs>
       <div className="border-t border-border">
         <div className="flex items-center gap-3 bg-secondary/35 px-3 py-2">
-          <ProblemsHeading className="text-[12px] font-semibold tracking-wide text-foreground uppercase">
+          <ProblemsHeading className="text-[12px] font-semibold tracking-wide text-foreground label-case">
             Problems
           </ProblemsHeading>
           <span className="font-mono text-[11px] text-muted-foreground">

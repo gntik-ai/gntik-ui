@@ -3,7 +3,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const listInputVariants = tv({
   slots: {
     root: 'flex min-w-0 flex-col gap-2',
-    head: 'grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_auto] gap-2 px-0.5 font-mono text-[10.5px] font-medium tracking-wider text-muted-foreground uppercase',
+    head: 'grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_auto] gap-2 px-0.5 font-mono text-[10.5px] font-medium tracking-wider text-muted-foreground label-case',
     list: 'flex flex-col gap-2',
     row: 'flex flex-col gap-1',
     fields: 'grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_auto] items-center gap-2',

@@ -21,7 +21,7 @@ export default function AuthLayoutSplit() {
       <AuthLayout
         brand={
           <>
-            <p className="mb-5 font-mono text-[11px] tracking-[0.18em] text-primary-text uppercase">Control plane</p>
+            <p className="mb-5 font-mono text-[11px] tracking-[0.18em] text-primary-text label-case">Control plane</p>
             <p className="text-[32px] leading-[1.08] font-bold tracking-[-0.03em] text-balance">
               Ship with confidence, <span className="text-primary-text">not guesswork.</span>
             </p>
@@ -44,7 +44,7 @@ export default function AuthLayoutSplit() {
           </>
         }
       >
-        <p className="mb-2.5 font-mono text-[11px] tracking-[0.2em] text-primary-text uppercase">Secure access</p>
+        <p className="mb-2.5 font-mono text-[11px] tracking-[0.2em] text-primary-text label-case">Secure access</p>
         <h1 className="text-[27px] font-semibold tracking-[-0.025em]">Sign in to your workspace</h1>
         <p className="mt-2 mb-6 text-[14px] leading-relaxed text-muted-foreground">
           Use your workspace credentials to continue.
