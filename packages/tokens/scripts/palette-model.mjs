@@ -1,5 +1,7 @@
 import { PALETTES } from '../src/palettes.js';
 
+export const TYPOGRAPHY_KEYS = ['--font-sans', '--font-mono', '--font-style-emphasis', '--text-transform-label'];
+
 /** The two leaf declaration blocks in a palette are light, then dark. */
 export function parsePalette(css) {
   return [...css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/([^{}]+)\{([^{}]*)\}/g)]

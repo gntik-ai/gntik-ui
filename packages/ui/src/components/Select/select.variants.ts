@@ -38,7 +38,7 @@ export const selectVariants = tv({
     item: listboxItem,
     itemText: 'flex min-w-0 items-center gap-2 truncate',
     indicator: 'flex shrink-0 text-primary-text',
-    groupLabel: 'px-2.5 pt-2 pb-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase',
+    groupLabel: 'px-2.5 pt-2 pb-1 text-[11px] font-medium tracking-wide text-muted-foreground label-case',
     separator: '-mx-1 my-1 h-px bg-border',
     status: 'flex items-center justify-center gap-2 px-2.5 py-2 text-[12.5px] text-muted-foreground',
     statusError: 'flex-wrap text-destructive-text',

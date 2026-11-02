@@ -14,7 +14,7 @@ export const stepperVariants = tv({
     connectorFill: 'rounded-full bg-primary transition-[width,height] duration-300 motion-reduce:transition-none',
     compact: 'flex w-full flex-col gap-2',
     compactRow: 'flex items-baseline justify-between gap-3',
-    compactCount: 'font-mono text-[11px] tracking-wide text-muted-foreground uppercase',
+    compactCount: 'font-mono text-[11px] tracking-wide text-muted-foreground label-case',
     compactLabel: 'text-[13px] font-semibold text-foreground',
     compactTrack: 'h-1 w-full overflow-hidden rounded-full bg-secondary',
     compactFill: 'h-full rounded-full bg-primary transition-[width] duration-300 motion-reduce:transition-none',

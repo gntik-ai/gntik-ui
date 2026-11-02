@@ -23,7 +23,7 @@ describe('Separator', () => {
     expect(screen.getByText('Members')).toBeInTheDocument();
     rerender(<Separator label="Members" labelPosition="start" labelStyle="kicker" />);
     expect(screen.getAllByRole('separator')).toHaveLength(1);
-    expect(screen.getByText('Members')).toHaveClass('uppercase');
+    expect(screen.getByText('Members')).toHaveClass('label-case');
     rerender(<Separator label="Members" labelPosition="end" />);
     expect(screen.getAllByRole('separator')).toHaveLength(1);
   });

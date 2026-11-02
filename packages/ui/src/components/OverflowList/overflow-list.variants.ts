@@ -13,7 +13,7 @@ export const overflowListVariants = tv({
       'focus-ring',
     ],
     popup: 'max-h-72 w-60 overflow-y-auto p-1.5',
-    popupTitle: 'px-2 pt-1 pb-1.5 font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase',
+    popupTitle: 'px-2 pt-1 pb-1.5 font-mono text-[10px] tracking-[0.12em] text-muted-foreground label-case',
     popupList: 'm-0 grid list-none gap-0.5 p-0',
     popupItem: 'flex min-h-8 items-center gap-2 rounded-md px-2 text-[13px] text-foreground',
   },

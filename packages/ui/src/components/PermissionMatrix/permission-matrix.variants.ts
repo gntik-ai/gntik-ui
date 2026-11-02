@@ -17,7 +17,7 @@ export const permissionMatrixVariants = tv({
     roleIcon: 'shrink-0 text-muted-foreground',
     roleDescription: 'block text-[11px] font-normal text-muted-foreground',
     section:
-      'bg-card px-3 pt-4 pb-1.5 text-start font-mono text-[11px] font-semibold tracking-wide text-muted-foreground uppercase',
+      'bg-card px-3 pt-4 pb-1.5 text-start font-mono text-[11px] font-semibold tracking-wide text-muted-foreground label-case',
     rowHead: 'border-t border-border/60 px-3 py-2 text-start align-middle font-normal',
     permLabel: 'block text-[13px] font-medium text-foreground',
     permDescription: 'block text-[12px] text-muted-foreground',

@@ -56,6 +56,7 @@ test('generation is byte-idempotent without writing to the source checkout', asy
       pairing,
       readPalettes((file) => read('../src/' + file)),
       read('../src/status.css'),
+      read('../src/typography.css'),
     ),
     expected,
   );
@@ -65,6 +66,7 @@ test('generation is byte-idempotent without writing to the source checkout', asy
       pairing,
       readPalettes((file) => read('../src/' + file)),
       read('../src/status.css'),
+      read('../src/typography.css'),
     ),
     expected,
   );

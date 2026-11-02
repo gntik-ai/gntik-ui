@@ -10,7 +10,7 @@ export const tourVariants = tv({
       'data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0',
     ],
     arrow: ['size-2.5 rotate-45 rounded-[2px] border-border bg-popover', ...POPOVER_ARROW_SIDES],
-    counter: 'font-mono text-[10.5px] font-medium tracking-wider text-primary-text uppercase',
+    counter: 'font-mono text-[10.5px] font-medium tracking-wider text-primary-text label-case',
     title: 'mt-1 pe-6 text-[14px] font-semibold tracking-tight text-foreground',
     description: 'mt-1.5 text-[12.5px] leading-5 text-muted-foreground text-pretty',
     footer: 'mt-4 flex items-center gap-2',

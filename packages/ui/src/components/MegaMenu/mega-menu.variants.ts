@@ -28,7 +28,7 @@ export const megaMenuVariants = tv({
     columns:
       'grid min-w-0 flex-1 grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-[repeat(var(--mega-cols),minmax(13rem,1fr))]',
     section: 'flex min-w-0 flex-col gap-1',
-    sectionTitle: 'px-2.5 pb-1 font-mono text-[10.5px] font-medium tracking-wider text-muted-foreground uppercase',
+    sectionTitle: 'px-2.5 pb-1 font-mono text-[10.5px] font-medium tracking-wider text-muted-foreground label-case',
     links: 'flex flex-col gap-0.5',
     link: [
       'flex min-w-0 items-start gap-3 rounded-lg px-2.5 py-2 text-start no-underline transition-colors motion-reduce:transition-none',

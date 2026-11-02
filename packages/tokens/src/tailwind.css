@@ -246,3 +246,7 @@
 @utility z-skip-link { z-index: var(--z-skip-link); }
 @utility z-toast { z-index: var(--z-toast); }
 @utility z-tooltip { z-index: var(--z-tooltip); }
+
+/* Palette-controlled typography; defaults preserve the existing rendering. */
+@utility font-emphasis { font-style: var(--font-style-emphasis); }
+@utility label-case { text-transform: var(--text-transform-label); }

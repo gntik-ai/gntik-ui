@@ -75,7 +75,7 @@ export function PaymentMethodCard({
       <div className="flex flex-wrap items-center gap-4 px-5 py-4">
         <span
           aria-hidden
-          className="grid h-10 w-14 shrink-0 place-items-center rounded-md border border-border bg-secondary font-mono text-[10.5px] font-semibold tracking-wide text-foreground uppercase"
+          className="grid h-10 w-14 shrink-0 place-items-center rounded-md border border-border bg-secondary font-mono text-[10.5px] font-semibold tracking-wide text-foreground label-case"
         >
           {method.brand.slice(0, 4)}
         </span>

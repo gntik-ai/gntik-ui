@@ -222,7 +222,7 @@ export function ansiClassName(style: AnsiStyle): string {
     if (style.bg) classes.push(ANSI_BG_CLASS[baseOf(style.bg)]);
   }
   if (style.bold || style.fg?.startsWith('bright')) classes.push('font-semibold');
-  if (style.italic) classes.push('italic');
+  if (style.italic) classes.push('font-emphasis');
   if (style.underline) classes.push('underline');
   if (style.strikethrough) classes.push('line-through');
   return classes.join(' ');

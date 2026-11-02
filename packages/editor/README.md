@@ -246,3 +246,9 @@ The production docs example is `/builders.html?item=code-panel&mode=edit&theme=d
 inline-schema errors alongside consumer markers, no CSP violations or external requests,
 and axe in dark, light and high_contrast for the code panel, flow builder and workflow page
 in edit and run modes. Build the docs before running that Playwright file.
+
+## Palette typography
+
+CodeEditor and both DiffEditor panes resolve `--font-mono` from their host, including in high contrast and nested palette scopes. Changing an ancestor's class or `data-palette` updates the existing instance and remeasures fonts. `options.fontFamily` takes precedence; removing it restores the host token. The optional host on `useBrandTheme` preserves existing callers. `--font-style-emphasis` controls Monaco's italic tokens, including inherited language rules; the global comment theme remains italic.
+
+Colours and the active Monaco theme still follow html. Monaco's `setTheme` is global. Widgets positioned with `fixedOverflowWidgets`, such as suggest and hover, may render outside the scope and miss its typography. See the docs Code editor template's **Typography in palettes** live preview.

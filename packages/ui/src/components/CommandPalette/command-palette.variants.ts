@@ -25,7 +25,8 @@ export const commandPaletteVariants = tv({
     results: 'min-h-0 flex-1 overflow-y-auto overscroll-contain py-2',
     list: 'outline-none',
     group: 'px-2 pb-1.5',
-    groupLabel: 'px-2.5 pt-2 pb-1 font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground uppercase select-none',
+    groupLabel:
+      'px-2.5 pt-2 pb-1 font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground label-case select-none',
     item: [
       'group flex min-h-9 w-full cursor-interactive items-center gap-3 rounded-lg px-2.5 py-1.5 text-start text-foreground outline-none select-none',
       'data-highlighted:bg-accent data-highlighted:text-accent-foreground forced-colors:data-highlighted:bg-[Highlight] forced-colors:data-highlighted:text-[HighlightText] forced-colors:data-highlighted:[&&_*]:text-[HighlightText]',

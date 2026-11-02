@@ -118,7 +118,7 @@ export default function CanvasLayoutFlowEditor() {
               style={{ left: n.x, top: n.y }}
               className="absolute w-40 rounded-lg border border-border bg-card px-3 py-2 text-start shadow-sm transition-colors aria-pressed:border-primary focus-ring motion-reduce:transition-none"
             >
-              <span className="block font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
+              <span className="block font-mono text-[10px] tracking-wide text-muted-foreground label-case">
                 {n.kind}
               </span>
               <span className="block text-[12.5px] font-medium">{n.label}</span>

@@ -79,7 +79,7 @@ export function ActivityFeed({
           <div key={group.key}>
             <GroupTag
               id={headingId}
-              className="mb-3 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase"
+              className="mb-3 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground label-case"
             >
               {group.label}
             </GroupTag>

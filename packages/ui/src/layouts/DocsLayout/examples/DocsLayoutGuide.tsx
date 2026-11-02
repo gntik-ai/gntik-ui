@@ -57,7 +57,7 @@ export default function DocsLayoutGuide() {
           </div>
         }
       >
-        <p className="font-mono text-[11px] tracking-[0.18em] text-primary-text uppercase">Get started</p>
+        <p className="font-mono text-[11px] tracking-[0.18em] text-primary-text label-case">Get started</p>
         <h1 className="mt-2 text-[28px] font-bold tracking-[-0.02em]">Deploy a project</h1>
         <p className={`mt-3 ${PARAGRAPH}`}>Go from a repository to a running deployment in a few minutes.</p>
         <h2 id="deploy-prerequisites" className={H2}>

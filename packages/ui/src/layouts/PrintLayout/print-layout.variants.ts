@@ -17,7 +17,7 @@ export const printLayoutVariants = tv({
     footer: 'border-t border-border pt-4 text-[11px] text-muted-foreground',
     pageBreak: ['relative my-10 border-t border-dashed border-border', 'break-after-page print:my-0 print:border-0'],
     pageBreakLabel:
-      'absolute -top-2 left-1/2 -translate-x-1/2 bg-card px-2 font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase print:hidden',
+      'absolute -top-2 left-1/2 -translate-x-1/2 bg-card px-2 font-mono text-[10px] tracking-[0.14em] text-muted-foreground label-case print:hidden',
   },
   variants: {
     size: {

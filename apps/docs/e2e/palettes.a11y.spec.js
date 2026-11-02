@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { themeScript } from '../../../packages/ui/src/theme/theme-script.ts';
 
 const source = new URL('../../../packages/tokens/src/', import.meta.url);
-const css = ['brand.css', 'status.css', 'pairing.css', 'scope.css', 'palettes/navy.css']
+const css = ['brand.css', 'status.css', 'pairing.css', 'scope.css', 'palettes/navy.css', 'typography.css']
   .map((file) => readFileSync(new URL(file, source), 'utf8'))
   .join('\n');
 const channels = (locator, token = '--primary') =>

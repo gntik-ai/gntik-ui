@@ -16,7 +16,7 @@ import type { ConsoleEntry, PaletteItem } from './fixtures';
 export type PanelHeading = 'h3' | 'h4' | 'h5';
 
 const panelTitle =
-  'px-3 pt-3 pb-2 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground uppercase';
+  'px-3 pt-3 pb-2 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted-foreground label-case';
 
 export interface NodePaletteProps {
   items: PaletteItem[];
@@ -185,7 +185,7 @@ export function RunConsole({ entries, onClear, titleAs: TitleTag = 'h3' }: RunCo
           entries.map((e) => (
             <p key={e.id} className="flex gap-3 py-0.5">
               <span className="shrink-0 text-muted-foreground tabular-nums">{e.time}</span>
-              <span className={cn('w-14 shrink-0 uppercase', CONSOLE_LEVEL[e.level])}>{e.level}</span>
+              <span className={cn('w-14 shrink-0 label-case', CONSOLE_LEVEL[e.level])}>{e.level}</span>
               <span className="min-w-0 text-foreground">{e.message}</span>
             </p>
           ))

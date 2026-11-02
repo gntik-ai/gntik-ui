@@ -26,7 +26,7 @@ export const docsLayoutVariants = tv({
 export const outlineVariants = tv({
   slots: {
     root: 'flex flex-col gap-2',
-    heading: 'px-2 font-mono text-[10.5px] font-semibold tracking-[0.14em] text-muted-foreground uppercase',
+    heading: 'px-2 font-mono text-[10.5px] font-semibold tracking-[0.14em] text-muted-foreground label-case',
     list: 'm-0 flex list-none flex-col border-s border-border p-0',
     link: [
       '-ms-px block border-s-2 border-transparent py-1 pe-2 text-[12.5px] leading-snug text-muted-foreground',

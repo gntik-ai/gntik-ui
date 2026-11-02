@@ -124,7 +124,7 @@ export function AgendaList({
               <div key={key}>
                 <SubTag
                   id={headingId}
-                  className="border-b border-border bg-secondary/30 px-4 py-2 font-mono text-[11px] tracking-wide text-muted-foreground uppercase sm:px-5"
+                  className="border-b border-border bg-secondary/30 px-4 py-2 font-mono text-[11px] tracking-wide text-muted-foreground label-case sm:px-5"
                 >
                   {dayLabel(first.start)}
                 </SubTag>

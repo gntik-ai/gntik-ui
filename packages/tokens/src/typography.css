@@ -1,5 +1,8 @@
 /* Named type roles. Omitted weight and tracking inherit from the surrounding text. */
 :root {
+  --font-style-emphasis: italic;
+  --text-transform-label: uppercase;
+
   --type-display-size: 2.875rem;
   --type-display-leading: 1.04;
   --type-display-tracking: -0.025em;
@@ -46,4 +49,15 @@
 
   --type-caption-size: 12px;
   --type-caption-leading: 1.375;
+}
+
+/* Re-resolve inherited font tokens at palette and portal boundaries. */
+[data-palette],
+[data-theme-scope-portal] {
+  font-family: var(--font-sans);
+}
+
+em,
+i {
+  font-style: var(--font-style-emphasis);
 }

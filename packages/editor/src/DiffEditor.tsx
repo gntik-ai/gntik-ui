@@ -3,6 +3,7 @@ import type { editor } from 'monaco-editor';
 import { EditorFrame } from './EditorFrame';
 import {
   BASE_OPTIONS,
+  editorTypography,
   kickLayout,
   loadMonaco,
   useBrandTheme,
@@ -60,8 +61,6 @@ export function DiffEditor({
     latest.current = { original, modified, language, readOnly, sideBySide, ariaLabel, options, onChange, onMount };
   });
 
-  useBrandTheme(monaco);
-
   useEffect(() => {
     if (!monaco || !host.current) return undefined;
     const p = latest.current;
@@ -73,6 +72,7 @@ export function DiffEditor({
       renderMarginRevertIcon: false,
       useInlineViewWhenSpaceIsLimited: false,
       ...p.options,
+      ...editorTypography(host.current, p.options?.fontFamily),
       readOnly: p.readOnly,
       renderSideBySide: p.sideBySide,
       originalAriaLabel: `${p.ariaLabel}, original`,
@@ -122,8 +122,16 @@ export function DiffEditor({
   }, [language, monaco]);
 
   useEffect(() => {
-    instance.current?.updateOptions({ ...options, readOnly, renderSideBySide: sideBySide });
+    if (!host.current) return;
+    instance.current?.updateOptions({
+      ...options,
+      ...editorTypography(host.current, options?.fontFamily),
+      readOnly,
+      renderSideBySide: sideBySide,
+    });
   }, [options, readOnly, sideBySide, monaco]);
+
+  useBrandTheme(monaco, host, instance, options?.fontFamily);
 
   return <EditorFrame state={state} height={height} label="diff editor" className={className} hostRef={host} />;
 }

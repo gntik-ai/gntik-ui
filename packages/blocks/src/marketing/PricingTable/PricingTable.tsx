@@ -132,7 +132,7 @@ export function PricingTable({
       {hasHeader && (
         <div className="mx-auto max-w-2xl text-center">
           {eyebrow && (
-            <p className="font-mono text-[12px] font-semibold tracking-wide text-primary-text uppercase">{eyebrow}</p>
+            <p className="font-mono text-[12px] font-semibold tracking-wide text-primary-text label-case">{eyebrow}</p>
           )}
           {hasTitle && (
             <Heading

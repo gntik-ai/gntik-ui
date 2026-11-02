@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { observeTheme } from '@gntik-ai/tokens/runtime';
+import { useEffect, useState, type RefObject } from 'react';
+import { observeTheme, tokenChannels } from '@gntik-ai/tokens/runtime';
 import type * as MonacoNamespace from 'monaco-editor';
 import { brandThemeFor, defineBrandThemes } from './theme';
 
@@ -47,26 +47,41 @@ export function useMonaco(loader: MonacoLoader = loadMonaco): MonacoState {
   return entry && entry.loader === loader ? entry.state : { status: 'loading', monaco: null };
 }
 
-/** Registers the brand themes, applies the active one and re-skins on every <html> theme switch. */
-export function useBrandTheme(monaco: Monaco | null): void {
+/** Resolve typography locally; editor colours and Monaco's theme remain global. */
+export function editorTypography(host: Element, fontFamily?: string) {
+  return { fontFamily: fontFamily ?? (tokenChannels('font-mono', host) || undefined) };
+}
+
+type TypographyEditor = { updateOptions: (options: { fontFamily?: string }) => void };
+
+/** Registers global themes and follows typography on the host's palette ancestors. */
+export function useBrandTheme(
+  monaco: Monaco | null,
+  host?: RefObject<HTMLElement | null>,
+  instance?: RefObject<TypographyEditor | null>,
+  fontFamily?: string,
+): void {
   useEffect(() => {
     if (!monaco) return undefined;
     const apply = () => {
       defineBrandThemes(monaco);
       monaco.editor.setTheme(brandThemeFor());
+      if (host?.current && instance?.current) {
+        instance.current.updateOptions(editorTypography(host.current, fontFamily));
+        monaco.editor.remeasureFonts();
+      }
     };
     apply();
-    return observeTheme(apply);
-  }, [monaco]);
+    return observeTheme(apply, host?.current ?? undefined);
+  }, [monaco, host, instance, fontFamily]);
 }
 
-/** Brand defaults shared by both editors (Geist Mono, flat chrome, no overview ruler). */
+/** Brand defaults shared by both editors (flat chrome, no overview ruler). */
 export const BASE_OPTIONS = {
   automaticLayout: true,
   // Keep the labelled input focusable before the first click in Chromium.
   // Monaco 0.57's native EditContext can expose a zero-size textbox instead.
   editContext: false,
-  fontFamily: 'Geist Mono, ui-monospace, SFMono-Regular, Menlo, monospace',
   fontSize: 13,
   lineHeight: 21,
   fontLigatures: false,

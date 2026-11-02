@@ -55,7 +55,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "empty": "px-4 py-10 text-center text-[13px] text-muted-foreground empty:hidden",
   "footer": "flex h-9 shrink-0 items-center gap-4 border-t border-border px-4 text-muted-foreground",
   "group": "px-2 pb-1.5",
-  "groupLabel": "px-2.5 pt-2 pb-1 font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground uppercase select-none",
+  "groupLabel": "px-2.5 pt-2 pb-1 font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground label-case select-none",
   "hint": "flex items-center gap-1.5 text-[11px]",
   "input": "h-full min-w-0 flex-1 bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground",
   "inputIcon": "shrink-0 text-muted-foreground",
@@ -79,7 +79,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 {
   "base": "",
   "checkbox": "grid size-[18px] shrink-0 place-items-center rounded-[5px] border border-border text-primary-foreground transition-colors group-data-checked:border-primary group-data-checked:bg-primary",
-  "groupLabel": "px-2.5 pt-2 pb-1 font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase",
+  "groupLabel": "px-2.5 pt-2 pb-1 font-mono text-[10px] tracking-[0.12em] text-muted-foreground label-case",
   "item": "relative flex h-item w-full cursor-interactive items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none transition-colors data-disabled:pointer-events-none data-disabled:opacity-50 text-destructive-text data-highlighted:bg-destructive/10 data-highlighted:text-destructive-chip-text",
   "itemIcon": "shrink-0 text-destructive-text",
   "itemLabel": "min-w-0 flex-1 truncate",
@@ -97,7 +97,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 {
   "base": "",
   "checkbox": "grid size-[18px] shrink-0 place-items-center rounded-[5px] border border-border text-primary-foreground transition-colors group-data-checked:border-primary group-data-checked:bg-primary",
-  "groupLabel": "px-2.5 pt-2 pb-1 font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase",
+  "groupLabel": "px-2.5 pt-2 pb-1 font-mono text-[10px] tracking-[0.12em] text-muted-foreground label-case",
   "item": "relative flex h-item w-full cursor-interactive items-center gap-2.5 rounded-[7px] px-2.5 text-start text-[13px] outline-none select-none text-foreground transition-colors data-highlighted:bg-secondary/70 data-disabled:pointer-events-none data-disabled:opacity-50",
   "itemIcon": "shrink-0 text-muted-foreground",
   "itemLabel": "min-w-0 flex-1 truncate",
@@ -181,7 +181,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 exports[`forced colours > preserves the base non-forced output at the public variants seam > Select 1`] = `
 {
   "base": "",
-  "groupLabel": "px-2.5 pt-2 pb-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase",
+  "groupLabel": "px-2.5 pt-2 pb-1 text-[11px] font-medium tracking-wide text-muted-foreground label-case",
   "icon": "flex shrink-0 text-muted-foreground transition-transform motion-reduce:transition-none group-data-popup-open:rotate-180",
   "indicator": "flex shrink-0 text-primary-text",
   "item": "flex cursor-default items-center justify-between gap-2 rounded-[6px] px-2.5 py-1.5 text-[13px] text-foreground outline-none select-none data-highlighted:bg-secondary/70 data-selected:bg-primary/12 data-selected:data-highlighted:bg-primary/16 data-disabled:cursor-disabled data-disabled:opacity-45",
@@ -267,10 +267,10 @@ exports[`forced colours > preserves the base non-forced output at the public var
   "cell": "border-b border-border px-4 align-middle py-3 text-start",
   "container": "relative w-full overflow-auto focus-ring",
   "footer": "font-medium [&>tr>td]:border-t [&>tr>td]:border-b-0 [&>tr>td]:border-border [&>tr>td]:bg-secondary/30",
-  "head": "border-b border-border px-4 align-middle text-[11.5px] font-medium tracking-wide whitespace-nowrap text-muted-foreground uppercase h-10 bg-secondary/30 text-start",
+  "head": "border-b border-border px-4 align-middle text-[11.5px] font-medium tracking-wide whitespace-nowrap text-muted-foreground label-case h-10 bg-secondary/30 text-start",
   "header": "",
   "row": "transition-colors motion-reduce:transition-none hover:bg-accent/30 data-[selected]:bg-primary/8 data-[selected]:hover:bg-primary/12",
-  "sortButton": "inline-flex cursor-interactive items-center gap-1 rounded-sm uppercase tracking-wide transition-colors motion-reduce:transition-none hover:text-foreground focus-ring",
+  "sortButton": "inline-flex cursor-interactive items-center gap-1 rounded-sm label-case tracking-wide transition-colors motion-reduce:transition-none hover:text-foreground focus-ring",
   "table": "w-full border-separate border-spacing-0 text-start text-[13px] text-foreground",
 }
 `;

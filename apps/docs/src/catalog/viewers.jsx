@@ -327,6 +327,15 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                   />
                 </>
               )}
+              {kind === 'template' && it.id === 'code-editor' && (
+                <Viewer
+                  kind="template"
+                  id="code-editor--palette-typography"
+                  title="Typography in palettes"
+                  file="../../../packages/templates/src/code-editor/examples/PaletteTypography.tsx"
+                  height={height}
+                />
+              )}
               {kind === 'template' && it.id === 'workflow-builder' && (
                 <Viewer
                   kind="template"

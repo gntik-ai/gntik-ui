@@ -6,13 +6,14 @@ export const navListVariants = tv({
   slots: {
     root: 'flex flex-col gap-4',
     group: 'flex flex-col gap-0.5',
-    groupLabel: 'px-2.5 pt-1 pb-1 font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground uppercase select-none',
+    groupLabel:
+      'px-2.5 pt-1 pb-1 font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground label-case select-none',
     groupTrigger: [
       'group mb-0.5 flex w-full cursor-interactive items-center justify-between rounded-md px-2.5 py-1 transition-colors select-none hover:bg-accent/40 motion-reduce:transition-none',
       focus,
     ],
     groupTriggerLabel:
-      'font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground uppercase group-hover:text-foreground',
+      'font-mono text-[9.5px] tracking-[0.14em] text-muted-foreground label-case group-hover:text-foreground',
     groupChevron:
       'shrink-0 text-muted-foreground transition-transform duration-200 group-data-panel-closed:-rotate-90 motion-reduce:transition-none',
     railDivider: 'mx-auto mb-1 h-px w-5 bg-border',

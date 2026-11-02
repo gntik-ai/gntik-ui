@@ -1,5 +1,5 @@
 import { PALETTES } from '../src/palettes.js';
-import { parsePalette as paletteBlocks } from '../scripts/palette-model.mjs';
+import { parsePalette as paletteBlocks, TYPOGRAPHY_KEYS } from '../scripts/palette-model.mjs';
 // Colours are frozen (CLAUDE.md): brand.css must keep exactly the values
 // recorded in frozen-values.json for :root, .dark and .high_contrast.
 import { test } from 'node:test';
@@ -164,7 +164,8 @@ test('light success aliases use the independent success-strong status token', ()
 function assertComplete(palette, theme, actual) {
   const expected = Object.keys(frozen['.dark']).concat('--success-strong');
   for (const key of expected) assert.ok(key in actual, `${palette} ${theme} missing ${key}`);
-  for (const key of Object.keys(actual)) assert.ok(expected.includes(key), `${palette} ${theme} unexpected ${key}`);
+  for (const key of Object.keys(actual))
+    assert.ok(expected.includes(key) || TYPOGRAPHY_KEYS.includes(key), `${palette} ${theme} unexpected ${key}`);
 }
 
 for (const palette of PALETTES.filter((id) => id !== 'green'))

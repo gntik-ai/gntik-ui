@@ -30,7 +30,7 @@ export const powerSearchVariants = tv({
     ],
     positioner: 'z-popover outline-none',
     popup: [...listboxPopup, 'min-w-64'],
-    group: 'px-2.5 pt-1.5 pb-1 font-mono text-[10px] font-medium tracking-wider text-muted-foreground uppercase',
+    group: 'px-2.5 pt-1.5 pb-1 font-mono text-[10px] font-medium tracking-wider text-muted-foreground label-case',
     item: listboxItem,
     itemMain: 'flex min-w-0 items-baseline gap-2',
     itemCode: 'shrink-0 font-mono text-[12px] text-foreground',

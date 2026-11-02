@@ -44,7 +44,7 @@ export default function VirtualListLogs() {
         renderItem={(l) => (
           <>
             <span className="shrink-0 text-muted-foreground tabular-nums">{l.time}</span>
-            <span className={`w-10 shrink-0 font-semibold uppercase ${levelClass[l.level]}`}>{l.level}</span>
+            <span className={`w-10 shrink-0 font-semibold label-case ${levelClass[l.level]}`}>{l.level}</span>
             <span className="min-w-0 truncate text-foreground">{l.message}</span>
           </>
         )}

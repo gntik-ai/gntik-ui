@@ -99,7 +99,7 @@ function SpanPanel({
         ))}
       </dl>
       <section aria-label="Input">
-        <h3 className="mb-2 text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">Input</h3>
+        <h3 className="mb-2 text-[12px] font-semibold tracking-wide text-muted-foreground label-case">Input</h3>
         {detail?.input === undefined ? (
           <p className="text-[12.5px] text-muted-foreground">No input recorded.</p>
         ) : (
@@ -113,7 +113,7 @@ function SpanPanel({
         )}
       </section>
       <section aria-label="Output">
-        <h3 className="mb-2 text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">Output</h3>
+        <h3 className="mb-2 text-[12px] font-semibold tracking-wide text-muted-foreground label-case">Output</h3>
         {detail?.output === undefined ? (
           <p className="text-[12.5px] text-muted-foreground">
             {running ? 'Waiting for the span to finish…' : 'No output recorded.'}

@@ -3,6 +3,7 @@ import type { editor } from 'monaco-editor';
 import { EditorFrame } from './EditorFrame';
 import {
   BASE_OPTIONS,
+  editorTypography,
   kickLayout,
   loadMonaco,
   useBrandTheme,
@@ -59,14 +60,13 @@ export function CodeEditor({
     latest.current = { value, defaultValue, language, readOnly, ariaLabel, options, onChange, onMount };
   });
 
-  useBrandTheme(monaco);
-
   useEffect(() => {
     if (!monaco || !host.current) return undefined;
     const p = latest.current;
     const ed = monaco.editor.create(host.current, {
       ...BASE_OPTIONS,
       ...p.options,
+      ...editorTypography(host.current, p.options?.fontFamily),
       value: p.value ?? p.defaultValue,
       language: p.language,
       readOnly: p.readOnly,
@@ -104,8 +104,16 @@ export function CodeEditor({
   }, [language, monaco]);
 
   useEffect(() => {
-    instance.current?.updateOptions({ ...options, readOnly, ariaLabel });
+    if (!host.current) return;
+    instance.current?.updateOptions({
+      ...options,
+      ...editorTypography(host.current, options?.fontFamily),
+      readOnly,
+      ariaLabel,
+    });
   }, [options, readOnly, ariaLabel, monaco]);
+
+  useBrandTheme(monaco, host, instance, options?.fontFamily);
 
   return <EditorFrame state={state} height={height} label="code editor" className={className} hostRef={host} />;
 }

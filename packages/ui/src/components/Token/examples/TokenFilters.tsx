@@ -13,7 +13,7 @@ export default function TokenFilters() {
   const remove = (index: number) => setFilters((list) => list.filter((_, i) => i !== index));
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase">Filters</span>
+      <span className="font-mono text-[10px] tracking-[0.14em] text-muted-foreground label-case">Filters</span>
       {filters.map((f, i) => (
         <Token key={`${f.key}-${f.value}`} prefix={`${f.key}:`} label={f.value} onRemove={() => remove(i)} />
       ))}

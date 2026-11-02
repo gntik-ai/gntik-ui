@@ -2203,7 +2203,7 @@ export default function TokenFilters() {
   const remove = (index: number) => setFilters((list) => list.filter((_, i) => i !== index));
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase">Filters</span>
+      <span className="font-mono text-[10px] tracking-[0.14em] text-muted-foreground label-case">Filters</span>
       {filters.map((f, i) => (
         <Token key={`${f.key}-${f.value}`} prefix={`${f.key}:`} label={f.value} onRemove={() => remove(i)} />
       ))}
@@ -2399,7 +2399,7 @@ export default function VirtualListLogs() {
         renderItem={(l) => (
           <>
             <span className="shrink-0 text-muted-foreground tabular-nums">{l.time}</span>
-            <span className={`w-10 shrink-0 font-semibold uppercase ${levelClass[l.level]}`}>{l.level}</span>
+            <span className={`w-10 shrink-0 font-semibold label-case ${levelClass[l.level]}`}>{l.level}</span>
             <span className="min-w-0 truncate text-foreground">{l.message}</span>
           </>
         )}
@@ -7968,7 +7968,7 @@ export default function CanvasLayoutFlowEditor() {
               style={{ left: n.x, top: n.y }}
               className="absolute w-40 rounded-lg border border-border bg-card px-3 py-2 text-start shadow-sm transition-colors aria-pressed:border-primary focus-ring motion-reduce:transition-none"
             >
-              <span className="block font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
+              <span className="block font-mono text-[10px] tracking-wide text-muted-foreground label-case">
                 {n.kind}
               </span>
               <span className="block text-[12.5px] font-medium">{n.label}</span>
@@ -8064,7 +8064,7 @@ export default function DocsLayoutGuide() {
           </div>
         }
       >
-        <p className="font-mono text-[11px] tracking-[0.18em] text-primary-text uppercase">Get started</p>
+        <p className="font-mono text-[11px] tracking-[0.18em] text-primary-text label-case">Get started</p>
         <h1 className="mt-2 text-[28px] font-bold tracking-[-0.02em]">Deploy a project</h1>
         <p className={`mt-3 ${PARAGRAPH}`}>Go from a repository to a running deployment in a few minutes.</p>
         <h2 id="deploy-prerequisites" className={H2}>
@@ -8315,15 +8315,15 @@ export default function PrintLayoutInvoice() {
       >
         <dl className="mb-8 grid grid-cols-3 gap-4 text-[12px]">
           <div>
-            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">Billed to</dt>
+            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground label-case">Billed to</dt>
             <dd className="mt-1 font-medium">Acme Workspace</dd>
           </div>
           <div>
-            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">Period</dt>
+            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground label-case">Period</dt>
             <dd className="mt-1">1 – 30 Sep 2026</dd>
           </div>
           <div>
-            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground uppercase">Issued</dt>
+            <dt className="font-mono text-[10.5px] tracking-wide text-muted-foreground label-case">Issued</dt>
             <dd className="mt-1">1 Oct 2026</dd>
           </div>
         </dl>
@@ -11559,7 +11559,7 @@ export default function Route() {
 
 ### Code editor (`code-editor`)
 
-Full-screen code editor: CanvasLayout top bar (breadcrumb, title, status, branch, Save), a file TreeList with a context menu (open, copy path, close tab, delete) in the palette, and the CodePanel block (file tabs, Monaco editor or diff, problems list) as the canvas.
+Full-screen code editor: CanvasLayout top bar (breadcrumb, title, status, branch, Save), a file TreeList with a context menu (open, copy path, close tab, delete) in the palette, and the CodePanel block (file tabs, Monaco editor or diff, problems list) as the canvas. The Typography in palettes example demonstrates opt-in Inter, upright emphasis, sentence-case labels, scoped and nested editor mono fonts, and shared page-theme editor colours.
 
 - Package: `@gntik-ai/templates` · export `CodeEditorPage` · group Builders · status experimental
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/code-editor/template.meta.ts

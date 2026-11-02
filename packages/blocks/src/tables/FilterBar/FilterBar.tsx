@@ -202,7 +202,7 @@ export function FilterBar({
       </div>
       {hasAny && (
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.14em] text-muted-foreground uppercase">
+          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.14em] text-muted-foreground label-case">
             <ListFilter size={12} aria-hidden />
             {labels?.filters ?? 'Filters'}
           </span>

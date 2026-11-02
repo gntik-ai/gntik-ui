@@ -11,9 +11,10 @@ const tenants = [
 ];
 
 describe('ConsoleShell context', () => {
-  it('keeps default shell markup byte-identical to 0.11.0, including generated IDs', () => {
+  it('keeps default shell markup identical to 0.11.0 apart from palette label utilities, including generated IDs', () => {
     // Captured with the original shell and sidebar from base dbf5a248e551cace019a26c105a8d76f866b2647.
-    const html = renderToStaticMarkup(<ConsoleShell>Content</ConsoleShell>);
+    // The palette utility has the same uppercase default; retain the original hash for all other markup.
+    const html = renderToStaticMarkup(<ConsoleShell>Content</ConsoleShell>).replaceAll('label-case', 'uppercase');
     expect(createHash('sha256').update(html).digest('hex')).toBe(
       '096157f995d4136849fadc68b67ab79e189a43554e684366a9876d963a1b639c',
     );

@@ -188,7 +188,7 @@ export default function DocsArticlePage(props: Partial<DocsArticleProps>) {
       }
     >
       {breadcrumbs && <Breadcrumbs items={breadcrumbs} className="mb-4" />}
-      <p className="font-mono text-[11px] tracking-[0.18em] text-primary-text uppercase">{eyebrow}</p>
+      <p className="font-mono text-[11px] tracking-[0.18em] text-primary-text label-case">{eyebrow}</p>
       <h1 className="mt-2 text-[28px] font-bold tracking-[-0.02em] text-foreground">{title}</h1>
       <p className={`mt-3 ${P}`}>{lead}</p>
       <Text variant="caption" tone="muted" className="mt-2">
