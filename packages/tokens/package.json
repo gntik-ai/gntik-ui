@@ -49,5 +49,8 @@
   "scripts": {
     "build": "node scripts/export-tokens.mjs",
     "test": "node --test test/*.test.mjs"
+  },
+  "devDependencies": {
+    "@fontsource-variable/inter": "^5.2.0"
   }
 }
