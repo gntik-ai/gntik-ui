@@ -15,11 +15,15 @@ import { selectVariants } from '../components/Select/select.variants';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/Table/Table';
 import { toggleVariants } from '../components/ToggleGroup/toggle-group.variants';
 import { tokenVariants } from '../components/Token/token.variants';
+import { multiSelectVariants } from '../components/MultiSelect/multi-select.variants';
+import { tokenInputVariants } from '../components/TokenInput/token-input.variants';
+import { textareaVariants } from '../components/Textarea/textarea.variants';
 import { cn } from '../utils/cn';
 import { DensityProvider, useDensity } from './index';
 
 /** Density utility → [its variable, the original class it replaces in comfortable]. */
 const EQUIVALENT: Record<string, [string, string]> = {
+  'min-h-(--control-h-md)': ['--control-h-md', 'min-h-9'],
   'h-control-sm': ['--control-h-sm', 'h-8'],
   'h-control': ['--control-h-md', 'h-9'],
   'w-control': ['--control-h-md', 'w-9'],
@@ -90,6 +94,16 @@ describe('density tokens ↔ classes', () => {
       }
     }
   });
+});
+
+it('auto chip fields use density metrics rather than fixed md padding', () => {
+  expect(multiSelectVariants().group()).toContain('min-h-(--control-h-md)');
+  expect(multiSelectVariants().group()).toContain('ps-field');
+  expect(tokenInputVariants().root()).toContain('min-h-(--control-h-md)');
+  expect(tokenInputVariants().root()).toContain('px-field');
+  expect(asComfortable(textareaVariants()).split(' ').sort()).toEqual(
+    textareaVariants({ size: 'md' }).split(' ').sort(),
+  );
 });
 
 describe('comfortable class output is unchanged', () => {

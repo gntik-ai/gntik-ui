@@ -93,7 +93,7 @@ export function SelectTrigger({ variant, size, className, placeholder, children,
           {children}
         </BaseSelect.Value>
         <BaseSelect.Icon className={v.icon()}>
-          <ChevronDown size={15} aria-hidden />
+          <ChevronDown size={size === 'lg' ? 17 : 15} aria-hidden />
         </BaseSelect.Icon>
       </BaseSelect.Trigger>
     ),

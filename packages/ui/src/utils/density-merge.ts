@@ -44,6 +44,7 @@ export const densityMergeConfig = {
           ],
         },
       ],
+      'min-h': [{ 'min-h': ['(--control-h-md)'] }],
       h: [{ h: ['control-sm', 'control', 'control-lg', 'item', 'tab', 'chip', 'token', 'row'] }],
       w: [{ w: ['control-sm', 'control', 'control-lg'] }],
       size: [{ size: ['control-sm', 'control', 'control-lg'] }],

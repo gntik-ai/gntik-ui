@@ -3372,7 +3372,7 @@ export default function ClickableCardList() {
 
 ### Combobox (`combobox`)
 
-ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.
+ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews. ComboboxInput also accepts lg with a fixed 44px input and 14.5px text; listbox metrics stay unchanged. See Input FieldSizes for all field sizes and both densities.
 
 - Package: `@gntik-ai/ui` · export `Combobox` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Combobox/Combobox.doc.ts
@@ -3508,7 +3508,7 @@ export default function DateFieldBasic() {
 
 ### DatePicker (`date-picker`)
 
-Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. The internal calendar selectors and time field in the popup stay outlined, including inside a ghost or filled provider.
+Date field with a focusable trigger ref: a read-only input with the Intl-formatted date that opens a Popover with a Calendar. DateRangePicker (alias DateRangeInput) adds presets — Today, Last 7 days, Last 30 days, This month, Last month, Custom — beside a two-month range calendar. Min/max, disabled dates, locale, sizes, invalid state; works inside Field. `withTime` adds a TimePicker under the calendar (date + time value, 12/24h, minute step), closed with Done. DatePicker and DateRangePicker accept ref on their input; calling focus leaves the popup closed. Both pickers support `clearable`, `onClear` and `clearLabel`: reset from the field button, Delete/Backspace, or the popup Clear action. Clearing closes the popup and restores field focus. `readOnly` prevents edits. DatePicker accepts `timeZone` (IANA, UTC or system), defaulting to I18nProvider then the browser; invalid names fall back to the browser. Calendar days, today, min/max, time segments and edits use that wall clock while values stay Date instants. isDateDisabled receives a local-midnight proxy of the zoned calendar day. DST gaps move forward and overlaps choose the earlier occurrence. Non-system zones appear in field text and time labels unless `hideTimeZone` is true. With time, hidden values include the wall time and UTC offset (and seconds with `withSeconds`); date-only values submit YYYY-MM-DD and emit zoned midnight. Custom formatOptions retain their format but use the effective zone. DatePickerUtc demonstrates UTC, seconds, hidden zone labels and a provider-inherited date-only zone; DateRangePicker is unchanged. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. The internal calendar selectors and time field in the popup stay outlined, including inside a ghost or filled provider. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.
 
 - Package: `@gntik-ai/ui` · export `DatePicker` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/DatePicker/DatePicker.doc.ts
@@ -3794,7 +3794,7 @@ export default function FieldValidation() {
 
 ### Input (`input`)
 
-Single-line text input in two sizes (sm, md) with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.
+Single-line text input with auto, sm, md and lg sizes with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.
 
 - Package: `@gntik-ai/ui` · export `Input` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Input/Input.doc.ts
@@ -3816,35 +3816,121 @@ Tokens: background, border, foreground, muted-foreground, primary, destructive, 
 Usage:
 
 ```tsx
-import { Eye, EyeOff, Lock, Search, Zap } from '@gntik-ai/icons';
-import { useState } from 'react';
-import { IconButton } from '@gntik-ai/ui';
-import { Input, InputKbd } from '@gntik-ai/ui';
+import { Search } from '@gntik-ai/icons';
+import { DensityProvider } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
+import { Input } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
+import { SimpleSelect } from '@gntik-ai/ui';
+import { MultiSelect } from '@gntik-ai/ui';
+import { TokenInput } from '@gntik-ai/ui';
+import { Textarea } from '@gntik-ai/ui';
+import { NumberInput } from '@gntik-ai/ui';
+import { DatePicker } from '@gntik-ai/ui';
+import { DateRangePicker } from '@gntik-ai/ui';
+import { TimePicker } from '@gntik-ai/ui';
+import { Combobox, ComboboxInput, ComboboxContent, ComboboxItem } from '@gntik-ai/ui';
 
-export default function InputAddons() {
-  const [show, setShow] = useState(false);
+/** One row per size; auto omits size to exercise the default. Popup metrics stay fixed. */
+export default function FieldSizes() {
+  const { t } = useI18n();
+  const options = [
+    { value: 'member', label: t('fieldVariants.option') },
+    { value: 'owner', label: t('fieldSizes.owner') },
+    { value: 'editor', label: t('fieldSizes.editor') },
+  ];
   return (
-    <div className="grid max-w-3xl grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-      <Input leadingIcon={Search} placeholder="Search projects…" aria-label="Search projects" />
-      <Input leadingIcon={Zap} trailingAddon={<InputKbd>⌘K</InputKbd>} placeholder="Go to…" aria-label="Go to" />
-      <Input leadingAddon="app.example.com/" defaultValue="billing" aria-label="Workspace URL" />
-      <Input trailingAddon="req/s" defaultValue="2000" inputMode="numeric" aria-label="Rate limit" />
-      <Input
-        className="pe-1.5 sm:col-span-2"
-        leadingIcon={Lock}
-        type={show ? 'text' : 'password'}
-        defaultValue="sk-live-example-token"
-        aria-label="API token"
-        trailingAddon={
-          <IconButton
-            size="sm"
-            className="size-7"
-            icon={show ? EyeOff : Eye}
-            label={show ? 'Hide token' : 'Show token'}
-            onClick={() => setShow((v) => !v)}
-          />
-        }
-      />
+    <div className="grid min-w-0 gap-6" data-field-sizes>
+      {(['comfortable', 'compact'] as const).map((density) => (
+        <DensityProvider key={density} density={density}>
+          <div role="group" aria-label={t(`fieldSizes.${density}`)} className="grid min-w-0 gap-4">
+            <p className="text-[13px] font-semibold text-foreground">{t(`fieldSizes.${density}`)}</p>
+            {(['sm', 'auto', 'md', 'lg'] as const).map((size) => {
+              const sizing = size === 'auto' ? {} : { size };
+              return (
+                <div
+                  key={size}
+                  role="group"
+                  aria-label={t(`fieldSizes.${size}`)}
+                  data-field-size={size}
+                  className="grid min-w-0 gap-2"
+                >
+                  <p className="text-[12px] text-muted-foreground">{t(`fieldSizes.${size}`)}</p>
+                  <div className="flex items-start gap-3 overflow-x-auto pb-2" data-field-row>
+                    <div className="w-64 shrink-0">
+                      <Input
+                        {...sizing}
+                        leadingIcon={Search}
+                        aria-label={t('fieldVariants.name')}
+                        defaultValue={t('fieldVariants.value')}
+                      />
+                    </div>
+                    <div className="w-64 shrink-0">
+                      <SimpleSelect
+                        {...sizing}
+                        aria-label={t('fieldVariants.choice')}
+                        items={options}
+                        defaultValue="member"
+                      />
+                    </div>
+                    <div className="w-64 shrink-0">
+                      <MultiSelect
+                        {...sizing}
+                        aria-label={t('fieldVariants.option')}
+                        options={options}
+                        defaultValue={['member']}
+                      />
+                    </div>
+                    <div className="w-64 shrink-0">
+                      <TokenInput
+                        {...sizing}
+                        aria-label={t('fieldVariants.entries')}
+                        defaultValue={[t('fieldVariants.option')]}
+                      />
+                    </div>
+                    <div className="w-64 shrink-0">
+                      <NumberInput {...sizing} aria-label={t('fieldSizes.count')} defaultValue={1} />
+                    </div>
+                    <div className="w-64 shrink-0">
+                      <DatePicker {...sizing} aria-label={t('fieldVariants.date')} />
+                    </div>
+                    <div className="w-64 shrink-0">
+                      <DateRangePicker {...sizing} aria-label={t('fieldVariants.range')} />
+                    </div>
+                    <div className="w-64 shrink-0">
+                      <TimePicker {...sizing} aria-label={t('fieldSizes.time')} defaultValue="09:00" />
+                    </div>
+                    <div className="w-64 shrink-0">
+                      <Combobox items={options}>
+                        <ComboboxInput {...sizing} aria-label={t('fieldVariants.search')} />
+                        <ComboboxContent>
+                          {(option: (typeof options)[number]) => (
+                            <ComboboxItem key={option.value} value={option}>
+                              {option.label}
+                            </ComboboxItem>
+                          )}
+                        </ComboboxContent>
+                      </Combobox>
+                    </div>
+                    <Button {...sizing} icon={Search}>
+                      {t('fieldSizes.action')}
+                    </Button>
+                  </div>
+                  <Textarea {...sizing} aria-label={t('fieldVariants.notes')} rows={2} />
+                </div>
+              );
+            })}
+          </div>
+        </DensityProvider>
+      ))}
+      <div className="w-72" data-field-wrapping>
+        <MultiSelect
+          size="lg"
+          label={t('fieldSizes.wrapping')}
+          options={options}
+          defaultValue={['member', 'owner', 'editor']}
+        />
+      </div>
     </div>
   );
 }
@@ -4004,7 +4090,7 @@ export default function ModelPickerProviders() {
 
 ### MultiSelect (`multi-select`)
 
-Searchable multi-select: selected options as removable chips (extra ones collapse into "+N"), a "Select all" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component. Read-only mode preserves the selection and prevents edits. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. MultiSelectOption.group adds headings in first-seen order after ungrouped options; filtering removes empty groups. ComboboxGroup, ComboboxGroupLabel and ComboboxCollection provide the shared grouped presentation. Select all selects or clears enabled options across every group. Grouped options retain full rendering even with virtualized. See MultiSelectGrouped for mixed groups, a disabled option and creation.
+Searchable multi-select: selected options as removable chips (extra ones collapse into "+N"), a "Select all" row, a clear button and rows with descriptions. Built on Base UI Combobox (multiple) with the Combobox house styles; works inside Field. Optional async options (`loadOptions`, debounced and abortable, with loading/error states) and creatable rows (`onCreate`). Opt-in virtualized renders only visible rows, with itemHeight, estimatedItemHeight (default 32) and overscan (default 4). Select all applies to the full enabled data set. Keyboard highlights stay mounted; find-in-page and browse mode reach rendered rows only. Built-in labels follow I18nProvider (en/es); caller overrides take precedence. See the TransferList catalog defaults example for a live Spanish preview of this component. Read-only mode preserves the selection and prevents edits. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. MultiSelectOption.group adds headings in first-seen order after ungrouped options; filtering removes empty groups. ComboboxGroup, ComboboxGroupLabel and ComboboxCollection provide the shared grouped presentation. Select all selects or clears enabled options across every group. Grouped options retain full rendering even with virtualized. See MultiSelectGrouped for mixed groups, a disabled option and creation. Size auto (default) follows density: comfortable fields are at least 36px with 12px field padding and 22px chips; compact fields are at least 32px with 10px field padding and 20px chips. Vertical padding is half the control height minus chip height and both borders (6px comfortable, 5px compact). Wrapping grows the field. Explicit sm/md retain their existing metrics; lg stays at least 44px in either density with 28px chips and 14.5px field text. See Input FieldSizes for a live comparison of every field size and density. Large chip remove buttons are reachable with Tab, including wrapped chips.
 
 - Package: `@gntik-ai/ui` · export `MultiSelect` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/MultiSelect/MultiSelect.doc.ts
@@ -4087,7 +4173,7 @@ export default function MultiSelectAsync() {
 
 ### NumberInput (`number-input`)
 
-Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes sm and md like Input; invalid, disabled and read-only states; works inside Field. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.
+Numeric input with − / + steppers, a unit suffix, min/max/step clamping, locale formatting and an optional scrub label (drag to change). Sizes auto, sm, md and lg like Input; invalid, disabled and read-only states; works inside Field. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.
 
 - Package: `@gntik-ai/ui` · export `NumberInput` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/NumberInput/NumberInput.doc.ts
@@ -4738,7 +4824,7 @@ export default function SecretFieldBasic() {
 
 ### Select (`select`)
 
-Pick one value from a popup list using compound parts or SimpleSelect. SimpleSelect exposes ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name. For long lists, use Combobox with virtualized and a flat items array (see ComboboxVirtualized); Select requires its options to stay mounted for typeahead. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.
+Pick one value from a popup list using compound parts or SimpleSelect. SimpleSelect exposes ref and triggerRef aliases for its trigger button. Compound parts (Select, SelectLabel, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupLabel, SelectSeparator) plus a one-line SimpleSelect. Three trigger sizes; rich rows (avatar, status dot) via item children. SimpleSelect can load its options on first open (`loadOptions(query, { signal })`) with announced loading, empty and error states. Creatable lives in Combobox / MultiSelect (a select has no text input). SimpleSelect `clearable` adds a sibling reset button; Delete or Backspace on its trigger clears to null and retains focus. `onClear` runs after the value change; `clearLabel` overrides the localized name. For long lists, use Combobox with virtualized and a flat items array (see ComboboxVirtualized); Select requires its options to stay mounted for typeahead. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.
 
 - Package: `@gntik-ai/ui` · export `Select` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Select/Select.doc.ts
@@ -4901,7 +4987,7 @@ export default function SwitchSettings() {
 
 ### Textarea (`textarea`)
 
-Multi-line text input in two sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field. Opt-in `clearable` reserves space for a reset button and returns focus to the textarea. `onClear` runs after the value change; `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.
+Multi-line text input with auto, sm, md and lg sizes, with optional CSS autosize (field-sizing: content) and vertical resize. Renders through Base UI Field.Control, so it works inside Field. Opt-in `clearable` reserves space for a reset button and returns focus to the textarea. `onClear` runs after the value change; `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto (default) uses density field padding: 12px comfortable and 10px compact, with 13px text and 24px line height. Textarea height follows its rows; it is not a single-line control. Explicit sm/md stay fixed; lg uses 14.5px text, 24px line height and 16px horizontal padding. See Input FieldSizes for every size and density.
 
 - Package: `@gntik-ai/ui` · export `Textarea` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Textarea/Textarea.doc.ts
@@ -4953,7 +5039,7 @@ export default function TextareaAutosize() {
 
 ### TimePicker (`time-picker`)
 
-Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`"HH:mm"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.
+Accessible time field with a ref to its hours segment: hour and minute spinbutton segments, optional seconds, a 12-hour clock with AM/PM by locale or prop, minute step, min/max validation, controlled or uncontrolled (`"HH:mm"` strings). Digits type and auto-advance; arrows spin. Works inside Field; DatePicker `withTime` and DateTimeRangePicker reuse it. Opt-in `clearable` resets every segment to its placeholder and focuses hours. `onClear` runs after emitting null; `clearLabel` overrides the localized button name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.
 
 - Package: `@gntik-ai/ui` · export `TimePicker` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/TimePicker/TimePicker.doc.ts
@@ -5011,7 +5097,7 @@ export default function TimePickerBasic() {
 
 ### TokenInput (`token-input`)
 
-Free-entry chips for emails, labels or hosts: Enter, Tab or a separator commits, pasted lists are split, `validate` marks bad entries as invalid chips, `maxItems` caps the list. Additions and removals are announced; works inside Field. Read-only mode prevents text edits, committing entries and chip removal. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries.
+Free-entry chips for emails, labels or hosts: Enter, Tab or a separator commits, pasted lists are split, `validate` marks bad entries as invalid chips, `maxItems` caps the list. Additions and removals are announced; works inside Field. Read-only mode prevents text edits, committing entries and chip removal. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto (default) follows density: comfortable fields are at least 36px with 12px field padding and 22px chips; compact fields are at least 32px with 10px field padding and 20px chips. Vertical padding is half the control height minus chip height and both borders (6px comfortable, 5px compact). Wrapping grows the field. Explicit sm/md retain their existing metrics; lg stays at least 44px in either density with 28px chips and 14.5px field text. See Input FieldSizes for a live comparison of every field size and density.
 
 - Package: `@gntik-ai/ui` · export `TokenInput` · group Forms · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/TokenInput/TokenInput.doc.ts

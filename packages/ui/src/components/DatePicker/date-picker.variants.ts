@@ -44,6 +44,7 @@ export const datePickerVariants = tv({
     },
 
     size: {
+      lg: { input: 'h-11 pe-11 ps-11 text-[14.5px] rounded-lg', icon: 'start-4', chevron: 'end-4' },
       /** Follows `data-density` (comfortable = md). */
       auto: { input: 'h-control pe-9 ps-9 text-[13px]', icon: 'start-3', chevron: 'end-3' },
       sm: { input: 'h-8 pe-8 ps-8 text-[12px]', icon: 'start-2.5', chevron: 'end-2.5' },

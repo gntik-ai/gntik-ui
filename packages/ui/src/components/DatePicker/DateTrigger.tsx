@@ -51,7 +51,7 @@ export function DateTrigger({
     control?.focus();
   };
   const s = datePickerVariants({ variant: fieldVariant, size });
-  const px = size === 'sm' ? 14 : 15;
+  const px = size === 'lg' ? 17 : size === 'sm' ? 14 : 15;
   const trigger = useRender({
     ref: [ref ?? null, setControl],
     render: (

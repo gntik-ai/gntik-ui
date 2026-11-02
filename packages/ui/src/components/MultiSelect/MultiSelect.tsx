@@ -106,7 +106,7 @@ export function MultiSelect({
   disabled,
   readOnly,
   invalid,
-  size = 'md',
+  size = 'auto',
   variant,
   className,
   ref,
@@ -283,9 +283,17 @@ export function MultiSelect({
       >
         <BaseCombobox.Chips className={cb.chips()}>
           {visible.map((o) => (
-            <BaseCombobox.Chip key={o.value} className={cb.chip()} aria-label={o.label}>
+            <BaseCombobox.Chip key={o.value} className={cn(cb.chip(), s.chip())} aria-label={o.label}>
               {o.label}
-              <BaseCombobox.ChipRemove aria-label={removeLabel(o.label)} className={cb.chipRemove()}>
+              <BaseCombobox.ChipRemove
+                onKeyDown={(event) => {
+                  // Let Tab follow the remove buttons instead of the chip's arrow-key focus handler.
+                  if (size === 'lg' && event.key === 'Tab') event.stopPropagation();
+                }}
+                tabIndex={size === 'lg' && !disabled && !readOnly ? 0 : undefined}
+                aria-label={removeLabel(o.label)}
+                className={cb.chipRemove()}
+              >
                 <X size={11} strokeWidth={2.4} aria-hidden />
               </BaseCombobox.ChipRemove>
             </BaseCombobox.Chip>
@@ -304,17 +312,17 @@ export function MultiSelect({
             aria-describedby={ariaDescribedBy}
             aria-invalid={invalid || undefined}
             placeholder={selected.length ? undefined : placeholder}
-            className={cb.chipsInput()}
+            className={cn(cb.chipsInput(), s.input())}
             onKeyDown={windowed ? navigateVirtualOptions : undefined}
           />
         </BaseCombobox.Chips>
         {selected.length > 0 && (
-          <BaseCombobox.Clear aria-label={clearLabel} className={v.iconButton()}>
-            <X size={14} aria-hidden />
+          <BaseCombobox.Clear aria-label={clearLabel} className={cn(v.iconButton(), s.iconButton())}>
+            <X size={size === 'lg' ? 17 : 14} aria-hidden />
           </BaseCombobox.Clear>
         )}
-        <BaseCombobox.Trigger aria-label={triggerLabel} className={cn('group', v.iconButton())}>
-          <ChevronDown size={15} aria-hidden className={cb.chevron()} />
+        <BaseCombobox.Trigger aria-label={triggerLabel} className={cn('group', v.iconButton(), s.iconButton())}>
+          <ChevronDown size={size === 'lg' ? 17 : 15} aria-hidden className={cb.chevron()} />
         </BaseCombobox.Trigger>
       </BaseCombobox.InputGroup>
       <BaseCombobox.Portal container={portalContainer}>

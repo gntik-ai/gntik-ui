@@ -7,7 +7,11 @@ import { scorePassword, type PasswordStrength } from './password-strength';
 import { useI18n } from '../../i18n/I18nProvider';
 import { PASSWORD_SEGMENT_FILL, passwordInputVariants } from './password-input.variants';
 
-export interface PasswordInputProps extends Omit<InputProps, 'type' | 'trailingAddon' | 'value' | 'defaultValue'> {
+export interface PasswordInputProps extends Omit<
+  InputProps,
+  'type' | 'trailingAddon' | 'value' | 'defaultValue' | 'size'
+> {
+  size?: Exclude<InputProps['size'], 'lg'>;
   value?: string;
   defaultValue?: string;
   /** Whether the password is shown as text (controlled). */

@@ -25,8 +25,12 @@ type DateInput = Date | number | string;
 
 export interface SecretFieldProps
   extends
-    Omit<InputProps, 'value' | 'defaultValue' | 'type' | 'readOnly' | 'trailingAddon' | 'title' | 'onValueChange'>,
+    Omit<
+      InputProps,
+      'value' | 'defaultValue' | 'type' | 'readOnly' | 'trailingAddon' | 'title' | 'onValueChange' | 'size'
+    >,
     MaskOptions {
+  size?: Exclude<InputProps['size'], 'lg'>;
   ref?: Ref<HTMLInputElement>;
   /** The secret. While hidden and read-only it is not rendered into the DOM at all. */
   value: string;

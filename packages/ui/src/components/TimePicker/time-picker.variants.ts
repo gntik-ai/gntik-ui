@@ -30,6 +30,7 @@ export const timePickerVariants = tv({
     },
 
     size: {
+      lg: { root: 'h-11 gap-3 px-4 text-[14.5px] rounded-lg' },
       /** Follows `data-density` (comfortable = md). */
       auto: { root: 'h-control gap-tight px-field text-[13px]' },
       sm: { root: 'h-8 gap-2 px-2.5 text-[12px]' },

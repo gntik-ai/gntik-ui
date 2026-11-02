@@ -14,6 +14,8 @@ export const textareaVariants = tv({
     variant: fieldControlVariants,
 
     size: {
+      lg: 'px-4 text-[14.5px] leading-6 rounded-lg',
+      auto: 'px-field text-[13px] leading-6',
       sm: 'text-[12px] leading-5',
       md: 'text-[13px] leading-6',
     },
@@ -26,7 +28,7 @@ export const textareaVariants = tv({
       false: '',
     },
   },
-  defaultVariants: { variant: 'outline', size: 'md', resize: 'none', autosize: false },
+  defaultVariants: { variant: 'outline', size: 'auto', resize: 'none', autosize: false },
 });
 
 export type TextareaVariantProps = VariantProps<typeof textareaVariants>;

@@ -30,7 +30,7 @@ export interface TextareaProps extends NativeTextareaProps, TextareaVariantProps
  * `autosize` grows the box with its content via CSS `field-sizing: content`.
  */
 export function Textarea({
-  size,
+  size = 'auto',
   variant,
   resize,
   autosize,

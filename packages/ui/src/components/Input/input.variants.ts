@@ -28,6 +28,7 @@ export const inputVariants = tv({
       ghost: { root: fieldControlVariants.ghost },
     },
     size: {
+      lg: { root: 'h-11 gap-3 px-4 text-[14.5px] rounded-lg', input: 'text-[14.5px]' },
       /** Follows `data-density` (comfortable = md). */
       auto: { root: 'h-control gap-tight px-field text-[13px]', input: 'text-[13px]' },
       sm: { root: 'h-8 gap-2 px-2.5 text-[12px]', input: 'text-[12px]' },
@@ -40,4 +41,4 @@ export const inputVariants = tv({
 export type InputVariantProps = VariantProps<typeof inputVariants>;
 
 /** Icon size (px) per input size. */
-export const INPUT_ICON_SIZE = { auto: 15, sm: 14, md: 15 } as const;
+export const INPUT_ICON_SIZE = { auto: 15, sm: 14, md: 15, lg: 17 } as const;
