@@ -6,6 +6,13 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { SignInForm, type SignInFormRef } from './SignInForm';
 
 describe('SignInForm', () => {
+  it('matches large identifier and password fields to the submit button', () => {
+    render(<SignInForm fieldSize="lg" sso={null} />);
+    expect(screen.getByLabelText('Email').parentElement).toHaveClass('h-11');
+    expect(screen.getByLabelText('Password').parentElement).toHaveClass('h-11');
+    expect(screen.getByRole('button', { name: 'Sign in' })).toHaveClass('h-11');
+  });
+
   it('can hide or replace the sign-up prompt alongside the SSO slot', () => {
     const { rerender } = render(<SignInForm sso={null} signUpPrompt={null} />);
     expect(screen.queryByText(/New here/)).not.toBeInTheDocument();

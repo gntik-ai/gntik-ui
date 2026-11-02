@@ -1834,7 +1834,7 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "Email (default) or username-or-email password recovery; onSubmit receives the trimmed identifier. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. ref.focus accepts identifier. title/description and sentTitle/sentDescription configure request and sent copy; sentTitle, sentDescription, sentStatus and resendActions accept null to hide inbox copy, announcements and resend/change-identifier actions. Preview: forgot-password-form--username-or-email. Optional labels?: Partial<ForgotPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=forgot-password-form--labels.",
+      "description": "Email (default) or username-or-email password recovery; onSubmit receives the trimmed identifier. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. ref.focus accepts identifier. title/description and sentTitle/sentDescription configure request and sent copy; sentTitle, sentDescription, sentStatus and resendActions accept null to hide inbox copy, announcements and resend/change-identifier actions. Preview: forgot-password-form--username-or-email. Optional labels?: Partial<ForgotPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=forgot-password-form--labels. Optional fieldSize: auto (default, follows density) or lg (44px fields matching the submit button). Preview: forgot-password-form--large-fields.",
       "labels": [
         {
           "key": "formLabel",
@@ -2482,7 +2482,7 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "Second-factor step with a one-time code (auto-submit), a backup-code mode and resend with a countdown. Optional labels?: Partial<MfaChallengeLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=mfa-challenge--labels.",
+      "description": "Second-factor step with a one-time code (auto-submit), a backup-code mode and resend with a countdown. Optional labels?: Partial<MfaChallengeLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=mfa-challenge--labels. Optional fieldSize: auto (default, follows density) or lg (44px fields matching the submit button). Preview: mfa-challenge--large-fields. Large OTP slots use the existing md step (44px); backup-code inputs use lg.",
       "labels": [
         {
           "key": "eyebrow",
@@ -3049,7 +3049,7 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "New password with a strength meter and a confirmation field with mismatch validation, then a success state. Optional labels?: Partial<ResetPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=reset-password-form--labels.",
+      "description": "New password with a strength meter and a confirmation field with mismatch validation, then a success state. Optional labels?: Partial<ResetPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=reset-password-form--labels. Optional fieldSize: auto (default, follows density) or lg (44px fields matching the submit button). Preview: reset-password-form--large-fields.",
       "labels": [
         {
           "key": "eyebrow",
@@ -3248,7 +3248,7 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "Email (default) or text identifier and password sign-in. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. passwordHelp/passwordHelpId describe the password. Text submissions add values.identifier and retain values.email; email-mode payloads are unchanged. sso and signUpPrompt accept replacements or null. Preview: sign-in-form--username. Optional labels?: Partial<SignInFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-in-form--labels.",
+      "description": "Email (default) or text identifier and password sign-in. Supports identifier (type, autoComplete, label, help/helpId, placeholder, minLength/maxLength), messages (identifierRequired/identifierInvalid/identifierTooShort/passwordRequired), and React 19 ref.focus. The kit owns inline validation and focuses the first invalid field; consumers supply messages, not a second inline validator. Server errors use error + fieldInvalid + feedbackId; aria-describedby describes the form, while flagged inputs also retain their help and error ids. headingLevel (h1/h2/h3/null) suppresses the heading without losing the form name; aria-label/aria-labelledby override the default name. passwordHelp/passwordHelpId describe the password. Text submissions add values.identifier and retain values.email; email-mode payloads are unchanged. sso and signUpPrompt accept replacements or null. Preview: sign-in-form--username. Optional labels?: Partial<SignInFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-in-form--labels. Optional fieldSize: auto (default, follows density) or lg (44px fields matching the submit button). Preview: sign-in-form--large-fields.",
       "labels": [
         {
           "key": "eyebrow",
@@ -3367,7 +3367,7 @@
       "package": "@gntik-ai/blocks",
       "group": "auth",
       "status": "stable",
-      "description": "Account creation with default name/email fields or ordered text/email fields (values.fields), a password strength meter and required consent (terms=false opts out). minPasswordLength defaults to 8 and drives length validation and the insufficient-length meter; optional passwordHelp can receive the minimum. Configured fields support help, required, autoComplete and validation messages, with a linked validation summary on invalid submit. policyLoading renders skeletons without a form; unavailable replaces the form with consumer title, message and optional action. loading remains submitting; error is form-level feedback. Examples: custom-fields, no-terms, unavailable, loading, submitting and error. Optional labels?: Partial<SignUpFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-up-form--labels.",
+      "description": "Account creation with default name/email fields or ordered text/email fields (values.fields), a password strength meter and required consent (terms=false opts out). minPasswordLength defaults to 8 and drives length validation and the insufficient-length meter; optional passwordHelp can receive the minimum. Configured fields support help, required, autoComplete and validation messages, with a linked validation summary on invalid submit. policyLoading renders skeletons without a form; unavailable replaces the form with consumer title, message and optional action. loading remains submitting; error is form-level feedback. Examples: custom-fields, no-terms, unavailable, loading, submitting and error. Optional labels?: Partial<SignUpFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=sign-up-form--labels. Optional fieldSize: auto (default, follows density) or lg (44px fields matching the submit button). Preview: sign-up-form--large-fields.",
       "labels": [
         {
           "key": "eyebrow",
@@ -8218,7 +8218,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "stable",
-      "description": "Single-line text input with auto, sm, md and lg sizes with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged.",
+      "description": "Single-line text input with auto, sm, md and lg sizes with optional leading/trailing icons and addons (prefixes, units, keyboard hints, icon buttons). Invalid, disabled and read-only states; works inside Field. Opt-in `clearable` adds a labelled reset button; `clearOnEscape` consumes Escape only while the editable input has text. `onClear` runs after the value change and `clearLabel` overrides the localized name. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Size auto follows density (36px comfortable, 32px compact); explicit sm/md stay fixed. Size lg stays 44px with 14.5px text in either density. See Input FieldSizes for a live comparison. Large field icons and steppers are 17px; popup metrics are unchanged. At lg, InputKbd is 22px tall and implicit IconButton and icon CopyButton addons use md (36px); explicit addon sizes win. Standalone addons and all other Input sizes keep their current metrics. See InputLargeAddons.",
       "files": [
         {
           "path": "packages/ui/src/components/Input/Input.tsx",
@@ -10955,7 +10955,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "Password field on Input with a reveal toggle (aria-pressed) and an optional 4-segment strength meter. Strength comes from a small built-in heuristic or a `strength` prop (0–4); its text is linked to the input with aria-describedby. Works inside Field.",
+      "description": "Password field on Input with a reveal toggle (aria-pressed) and an optional 4-segment strength meter. Strength comes from a small built-in heuristic or a `strength` prop (0–4); its text is linked to the input with aria-describedby. Works inside Field. Size lg renders a 44px field, a 36px reveal toggle with a 17px icon, and 13px strength text. Auto (default), sm and md retain the 28px toggle and 12px strength text. See PasswordInputLarge.",
       "files": [
         {
           "path": "packages/ui/src/components/PasswordInput/PasswordInput.tsx",
@@ -12374,7 +12374,7 @@
       "package": "@gntik-ai/ui",
       "group": "Forms",
       "status": "beta",
-      "description": "A secret value (API key, token, connection string) on Input: masked by default (fixed-length mask, optional visible prefix/suffix), a reveal toggle (aria-pressed), a CopyButton that copies the real value and announces it, an optional Rotate action behind an AlertDialog confirmation, and optional created / last-used meta. Optional showLabel, hideLabel, copyLabel and copiedAnnouncement override i18n defaults. Read-only by default (`editable` turns it into a password field). While masked and read-only the secret is not in the DOM, and it is never put in a title or tooltip. `maskSecret` is exported too.",
+      "description": "A secret value (API key, token, connection string) on Input: masked by default (fixed-length mask, optional visible prefix/suffix), a reveal toggle (aria-pressed), a CopyButton that copies the real value and announces it, an optional Rotate action behind an AlertDialog confirmation, and optional created / last-used meta. Optional showLabel, hideLabel, copyLabel and copiedAnnouncement override i18n defaults. Read-only by default (`editable` turns it into a password field). While masked and read-only the secret is not in the DOM, and it is never put in a title or tooltip. `maskSecret` is exported too. Size lg renders a 44px field, 36px reveal and copy controls with 17px icons, and a large Rotate button. Auto (default), sm and md retain their existing metrics. See SecretFieldLarge.",
       "files": [
         {
           "path": "packages/ui/src/components/SecretField/SecretField.tsx",
@@ -15768,6 +15768,10 @@
         {
           "path": "packages/ui/src/utils/highlight.tsx",
           "target": "components/utils/highlight.tsx"
+        },
+        {
+          "path": "packages/ui/src/utils/input-size-context.ts",
+          "target": "components/utils/input-size-context.ts"
         },
         {
           "path": "packages/ui/src/utils/match-text.ts",

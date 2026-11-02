@@ -4,6 +4,13 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { ResetPasswordForm } from './ResetPasswordForm';
 
 describe('ResetPasswordForm', () => {
+  it('matches both large password fields to the submit button', () => {
+    render(<ResetPasswordForm fieldSize="lg" />);
+    expect(screen.getByLabelText('New password').parentElement).toHaveClass('h-11');
+    expect(screen.getByLabelText('Confirm password').parentElement).toHaveClass('h-11');
+    expect(document.querySelector('button[type="submit"]')).toHaveClass('h-11');
+  });
+
   it('renders the form', async () => {
     const { container } = render(<ResetPasswordForm />);
     expect(screen.getByRole('form', { name: 'Set a new password' })).toBeInTheDocument();

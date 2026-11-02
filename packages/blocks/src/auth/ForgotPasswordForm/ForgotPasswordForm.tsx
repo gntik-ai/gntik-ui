@@ -11,6 +11,7 @@ import {
   type AuthValidationMessages,
   type AuthFormAccessibilityProps,
   type AuthHeaderProps,
+  type AuthFieldSizeProps,
 } from '../shared';
 
 export interface ForgotPasswordFormRef {
@@ -35,7 +36,7 @@ export interface ForgotPasswordFormLabels extends Required<Omit<AuthValidationMe
   submit: string;
 }
 
-export interface ForgotPasswordFormProps extends AuthFormAccessibilityProps {
+export interface ForgotPasswordFormProps extends AuthFormAccessibilityProps, AuthFieldSizeProps {
   labels?: Partial<ForgotPasswordFormLabels>;
   /** React 19 ref for focus after a server response; available in the request state. */
   ref?: Ref<ForgotPasswordFormRef>;
@@ -67,6 +68,7 @@ export interface ForgotPasswordFormProps extends AuthFormAccessibilityProps {
 /** Request a reset link by email, then a "check your inbox" state with resend and a way back. */
 export function ForgotPasswordForm({
   labels,
+  fieldSize = 'auto',
   identifier,
   messages,
   ref,
@@ -217,6 +219,7 @@ export function ForgotPasswordForm({
         <Field invalid={emailInvalid || fieldInvalid?.identifier === true}>
           <FieldLabel>{identifier?.label ?? labels?.identifierLabel ?? t('forgotPassword.identifierLabel')}</FieldLabel>
           <Input
+            size={fieldSize}
             ref={identifierInput}
             aria-describedby={fieldInvalid?.identifier ? feedbackId : undefined}
             type={identifier?.type ?? 'email'}

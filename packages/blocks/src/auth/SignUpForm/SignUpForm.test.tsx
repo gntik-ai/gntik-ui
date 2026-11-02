@@ -4,6 +4,28 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { SignUpForm } from './SignUpForm';
 
 describe('SignUpForm', () => {
+  it('sizes default and configured sign-up fields to match the large submit button', () => {
+    const { container, rerender } = render(<SignUpForm fieldSize="lg" sso={null} />);
+    const expectLargeFields = () => {
+      const fields = container.querySelectorAll('input:not([type="checkbox"])');
+      expect(fields).toHaveLength(3);
+      fields.forEach((field) => expect(field.parentElement).toHaveClass('h-11'));
+      expect(screen.getByRole('button', { name: 'Create account' })).toHaveClass('h-11');
+    };
+    expectLargeFields();
+    rerender(
+      <SignUpForm
+        fieldSize="lg"
+        fields={[
+          { id: 'username', label: 'Username' },
+          { id: 'email', label: 'Email', type: 'email' },
+        ]}
+        sso={null}
+      />,
+    );
+    expectLargeFields();
+  });
+
   it('renders the default form', async () => {
     const { container } = render(<SignUpForm />);
     expect(screen.getByRole('form', { name: 'Create account' })).toBeInTheDocument();

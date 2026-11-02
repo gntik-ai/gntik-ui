@@ -12,6 +12,12 @@ export const passwordInputVariants = tv({
     level: 'font-medium',
   },
   variants: {
+    size: {
+      auto: {},
+      sm: {},
+      md: {},
+      lg: { toggle: 'size-9 [&_svg]:size-[17px]', text: 'text-[13px]' },
+    },
     level: {
       0: { level: 'text-destructive-text' },
       1: { level: 'text-destructive-text' },

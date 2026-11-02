@@ -25,6 +25,32 @@ function renderField(props: Partial<Parameters<typeof SecretField>[0]> = {}) {
 }
 
 describe('SecretField', () => {
+  it('scales large secret actions and rotate while retaining reveal and copy behavior', async () => {
+    const user = userEvent.setup();
+    const writeText = mockClipboard();
+    renderField({ size: 'lg', onRotate: vi.fn() });
+    expect(screen.getByLabelText('API key').parentElement).toHaveClass('h-11');
+    const show = screen.getByRole('button', { name: 'Show secret' });
+    expect(show).toHaveClass('size-9', '[&_svg]:size-[17px]');
+    expect(screen.getByRole('button', { name: 'Copy secret' })).toHaveClass('size-9');
+    expect(screen.getByRole('button', { name: 'Rotate' })).toHaveClass('h-11');
+    expect(show).toHaveAttribute('aria-pressed', 'false');
+    await user.click(show);
+    expect(screen.getByRole('button', { name: 'Hide secret' })).toHaveAttribute('aria-pressed', 'true');
+    await user.click(screen.getByRole('button', { name: 'Copy secret' }));
+    expect(writeText).toHaveBeenCalledWith(SECRET);
+  });
+
+  it.each([undefined, 'auto', 'md', 'sm'] as const)('preserves secret actions at %s', (size) => {
+    renderField({ size, onRotate: vi.fn(), confirmRotate: false });
+    const metric = size === 'sm' ? 'size-6' : 'size-7';
+    expect(screen.getByRole('button', { name: 'Show secret' })).toHaveClass(metric);
+    expect(screen.getByRole('button', { name: 'Copy secret' })).toHaveClass(metric);
+    expect(screen.getByRole('button', { name: 'Rotate' })).toHaveClass(
+      size === 'sm' ? 'h-8' : size === 'md' ? 'h-9' : 'h-control',
+    );
+  });
+
   it('uses caller reveal, hide, copy and success announcement labels', async () => {
     const user = userEvent.setup();
     const writeText = mockClipboard();

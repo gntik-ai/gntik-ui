@@ -6,7 +6,7 @@ export const meta: BlockMeta = {
   family: 'auth',
   status: 'stable',
   description:
-    'New password with a strength meter and a confirmation field with mismatch validation, then a success state. Optional labels?: Partial<ResetPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=reset-password-form--labels.',
+    'New password with a strength meter and a confirmation field with mismatch validation, then a success state. Optional labels?: Partial<ResetPasswordFormLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=reset-password-form--labels. Optional fieldSize: auto (default, follows density) or lg (44px fields matching the submit button). Preview: reset-password-form--large-fields.',
   labels: [
     { key: 'eyebrow', type: 'string', state: 'Default content and accessible names' },
     { key: 'title', type: 'string', state: 'Default content and accessible names' },

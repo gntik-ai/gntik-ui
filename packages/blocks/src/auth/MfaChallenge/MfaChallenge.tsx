@@ -11,7 +11,7 @@ import {
   cn,
 } from '@gntik-ai/ui';
 import { useEffect, useState, type ReactNode } from 'react';
-import { AuthHeader, authFormClass, useAsyncSubmit } from '../shared';
+import { AuthHeader, authFormClass, useAsyncSubmit, type AuthFieldSizeProps } from '../shared';
 
 export type MfaMethod = 'code' | 'backup';
 
@@ -38,7 +38,7 @@ export interface MfaChallengeLabels {
   fallbackError: string;
 }
 
-export interface MfaChallengeProps {
+export interface MfaChallengeProps extends AuthFieldSizeProps {
   labels?: Partial<MfaChallengeLabels>;
   /** Verifies the code. A returned promise shows the loading state; a rejection shows in the alert. */
   onVerify?: (code: string, method: MfaMethod) => void | Promise<void>;
@@ -67,6 +67,7 @@ export interface MfaChallengeProps {
  */
 export function MfaChallenge({
   labels,
+  fieldSize = 'auto',
   onVerify,
   onResend,
   resendCooldown = 30,
@@ -148,6 +149,7 @@ export function MfaChallenge({
           <Field invalid={invalid}>
             <FieldLabel>{labels?.codeLabel ?? t('mfaChallenge.codeLabel')}</FieldLabel>
             <OtpInput
+              size={fieldSize === 'lg' ? 'md' : undefined}
               length={length}
               value={code}
               onValueChange={setCode}
@@ -164,6 +166,7 @@ export function MfaChallenge({
           <Field invalid={invalid}>
             <FieldLabel>{labels?.backupLabel ?? t('mfaChallenge.backupLabel')}</FieldLabel>
             <Input
+              size={fieldSize}
               value={backup}
               onValueChange={setBackup}
               placeholder={labels?.backupPlaceholder ?? t('mfaChallenge.backupPlaceholder')}

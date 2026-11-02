@@ -6,6 +6,12 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { ForgotPasswordForm, type ForgotPasswordFormRef } from './ForgotPasswordForm';
 
 describe('ForgotPasswordForm', () => {
+  it('matches the large recovery identifier to the submit button', () => {
+    render(<ForgotPasswordForm fieldSize="lg" />);
+    expect(screen.getByLabelText('Email').parentElement).toHaveClass('h-11');
+    expect(document.querySelector('button[type="submit"]')).toHaveClass('h-11');
+  });
+
   it('can hide or replace inbox copy and both resend actions', () => {
     const { rerender } = render(
       <ForgotPasswordForm defaultSent sentTitle={null} sentDescription={null} sentStatus={null} resendActions={null} />,

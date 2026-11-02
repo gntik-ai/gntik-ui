@@ -6,7 +6,7 @@ export const meta: BlockMeta = {
   family: 'auth',
   status: 'stable',
   description:
-    'Second-factor step with a one-time code (auto-submit), a backup-code mode and resend with a countdown. Optional labels?: Partial<MfaChallengeLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=mfa-challenge--labels.',
+    'Second-factor step with a one-time code (auto-submit), a backup-code mode and resend with a countdown. Optional labels?: Partial<MfaChallengeLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=mfa-challenge--labels. Optional fieldSize: auto (default, follows density) or lg (44px fields matching the submit button). Preview: mfa-challenge--large-fields. Large OTP slots use the existing md step (44px); backup-code inputs use lg.',
   labels: [
     { key: 'eyebrow', type: 'string', state: 'Default content and accessible names' },
     { key: 'title', type: 'string', state: 'Default content and accessible names' },
