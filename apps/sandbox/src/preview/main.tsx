@@ -12,15 +12,7 @@ import {
   type ReactNode,
 } from 'react';
 import { createRoot } from 'react-dom/client';
-import {
-  LinkProvider,
-  ThemeProvider,
-  ToastProvider,
-  Toaster,
-  TooltipProvider,
-  presets,
-  type ResolvedTheme,
-} from '@gntik-ai/ui';
+import { KitProvider, presets, type ResolvedTheme } from '@gntik-ai/ui';
 import { isRenderMessage, type BrandId, type PreviewMessage, type SandboxError } from '../protocol';
 import { build, toSandboxError } from './runtime';
 
@@ -122,27 +114,24 @@ function Preview() {
   if (!job) return <p className="p-6 text-[13px] text-muted-foreground">Waiting for code…</p>;
   const { App } = job;
   return (
-    <ThemeProvider key={job.theme} defaultMode={job.theme} storageKey={null} brand={presets[job.brand]}>
-      <TooltipProvider>
-        <ToastProvider>
-          <LinkProvider component={InertLink}>
-            {!App && <p className="p-6 text-[13px] text-muted-foreground">Fix the error to see the preview.</p>}
-            {App && (
-              <PreviewBoundary key={job.id} report={!job.error}>
-                {job.error ? (
-                  <App />
-                ) : (
-                  <Mounted>
-                    <App />
-                  </Mounted>
-                )}
-              </PreviewBoundary>
-            )}
-          </LinkProvider>
-          <Toaster />
-        </ToastProvider>
-      </TooltipProvider>
-    </ThemeProvider>
+    <KitProvider
+      key={job.theme}
+      theme={{ defaultMode: job.theme, storageKey: null, brand: presets[job.brand] }}
+      link={InertLink}
+    >
+      {!App && <p className="p-6 text-[13px] text-muted-foreground">Fix the error to see the preview.</p>}
+      {App && (
+        <PreviewBoundary key={job.id} report={!job.error}>
+          {job.error ? (
+            <App />
+          ) : (
+            <Mounted>
+              <App />
+            </Mounted>
+          )}
+        </PreviewBoundary>
+      )}
+    </KitProvider>
   );
 }
 

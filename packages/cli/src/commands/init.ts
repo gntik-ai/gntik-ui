@@ -65,14 +65,14 @@ export function themeSnippet(framework: Framework, entry: string, css: string, b
         file: providers,
         code: `'use client';
 import type { ReactNode } from 'react';
-import { ThemeProvider, ${preset}, themeScript } from '@gntik-ai/ui';
+import { KitProvider, ${preset}, themeScript } from '@gntik-ai/ui';
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <>
       {/* Applies the stored theme before first paint (no flash). */}
       <script dangerouslySetInnerHTML={{ __html: themeScript() }} />
-      <ThemeProvider brand={${preset}}>{children}</ThemeProvider>
+      <KitProvider theme={{ brand: ${preset} }}>{children}</KitProvider>
     </>
   );
 }
@@ -103,15 +103,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       file: entry,
       code: `import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ThemeProvider, ${preset} } from '@gntik-ai/ui';
+import { KitProvider, ${preset} } from '@gntik-ai/ui';
 import App from './App';
 import '${cssImport(entry)}';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider brand={${preset}}>
+    <KitProvider theme={{ brand: ${preset} }}>
       <App />
-    </ThemeProvider>
+    </KitProvider>
   </StrictMode>,
 );
 `,

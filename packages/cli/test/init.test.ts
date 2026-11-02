@@ -1,3 +1,4 @@
+import ts from 'typescript';
 import { existsSync } from 'node:fs';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -44,7 +45,16 @@ describe('init', () => {
     expect(existsSync(path.join(dir, 'gntik-ui.json'))).toBe(false);
     expect(await read(dir, 'src/index.css')).toBe('body { margin: 0; }\n');
     expect(r.json.snippet.map((s: { file: string }) => s.file)).toEqual(['src/main.tsx', 'vite.config.ts']);
-    expect(r.json.snippet[0].code).toContain('<ThemeProvider brand={gntikPreset}>');
+    expect(r.json.snippet[0].code).toContain('<KitProvider theme={{ brand: gntikPreset }}>');
+    for (const snippet of r.json.snippet) {
+      const { diagnostics } = ts.transpileModule(snippet.code, {
+        fileName: snippet.file,
+        reportDiagnostics: true,
+        compilerOptions: { jsx: ts.JsxEmit.ReactJSX },
+      });
+      expect(diagnostics).toEqual([]);
+    }
+    expect(r.json.snippet).toMatchSnapshot();
   });
 
   it('Vite: writes CSS imports and config without registry setup, then installs', async () => {
@@ -93,6 +103,16 @@ describe('init', () => {
     expect(css).toContain(':root { --x: 1; }');
     expect(JSON.parse(await read(dir, 'gntik-ui.json')).aliases.components).toBe('components');
     const layout = r.json.snippet.find((s: { file: string }) => s.file === 'app/layout.tsx');
+    expect(r.json.snippet[0].code).toContain('<KitProvider theme={{ brand: gntikPreset }}>');
+    for (const snippet of r.json.snippet) {
+      const { diagnostics } = ts.transpileModule(snippet.code, {
+        fileName: snippet.file,
+        reportDiagnostics: true,
+        compilerOptions: { jsx: ts.JsxEmit.ReactJSX },
+      });
+      expect(diagnostics).toEqual([]);
+    }
+    expect(r.json.snippet).toMatchSnapshot();
     expect(layout.code).toContain('suppressHydrationWarning');
     expect(layout.code).toContain("import './globals.css';");
     expect(r.json.snippet[0].code).toContain('themeScript()');

@@ -1,3 +1,4 @@
+export { KitProvider, useApp, type KitProviderProps } from './kit';
 export {
   BREAKPOINTS,
   responsiveClasses,

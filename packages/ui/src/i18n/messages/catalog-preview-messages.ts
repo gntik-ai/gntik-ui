@@ -1,5 +1,8 @@
+import { kitEn, kitEs } from './kit-messages';
+
 /** Catalog copy for scoped theme and resource previews. */
 export const catalogPreviewEn = {
+  ...kitEn,
   'navRoute.home': 'Home',
   'navRoute.functions': 'Functions',
   'navRoute.templates': 'Templates',
@@ -32,6 +35,7 @@ export const catalogPreviewEn = {
 } as const;
 
 export const catalogPreviewEs = {
+  ...kitEs,
   'navRoute.home': 'Inicio',
   'navRoute.functions': 'Funciones',
   'navRoute.templates': 'Plantillas',

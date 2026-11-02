@@ -1,4 +1,4 @@
-import { LinkProvider, musematicPreset, ThemeProvider } from '@gntik-ai/ui';
+import { musematicPreset, KitProvider } from '@gntik-ai/ui';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
@@ -11,11 +11,9 @@ const THEME_KEY = 'musematic-theme';
 function Root() {
   useAnchorInterception();
   return (
-    <ThemeProvider brand={musematicPreset} defaultMode="dark" storageKey={THEME_KEY}>
-      <LinkProvider component={RouterLink}>
-        <App />
-      </LinkProvider>
-    </ThemeProvider>
+    <KitProvider theme={{ brand: musematicPreset, defaultMode: 'dark', storageKey: THEME_KEY }} link={RouterLink}>
+      <App />
+    </KitProvider>
   );
 }
 

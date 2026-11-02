@@ -15,14 +15,14 @@ pnpm --filter @gntik-ai/example-vite preview   # serves dist/ (SPA fallback for 
 - `gntik-ui.json` (framework, CSS entry, brand, aliases).
 - `src/index.css`: Tailwind, Geist + Geist Mono, `@gntik-ai/ui/styles.css`, plus the extra Geist
   weights and `@gntik-ai/templates/styles.css` (blocks, charts, chat… sources) for the templates.
-- `src/main.tsx`: `<ThemeProvider brand={gntikPreset}>` (dark by default, persisted).
+- `src/main.tsx`: `<KitProvider theme={{ brand: gntikPreset }}>` (dark by default, persisted).
 - `vite.config.ts`: inlines `themeScript()` in `<head>` so the stored theme applies before first paint.
 
 ## Layout
 
 | File             | Role                                                                                                                   |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `src/App.tsx`    | Route table + `LinkProvider` (kit links navigate client-side)                                                          |
+| `src/App.tsx`    | Route table (KitProvider supplies router links at the root)                                                            |
 | `src/router.tsx` | ~60-line history router (`usePath`, `navigate`, `RouterLink`, `matchPath`) — swap for React Router when you outgrow it |
 | `src/shell.tsx`  | The console frame every signed-in page shares: nav, workspaces, user, ⌘K, notifications                                |
 | `src/pages/*`    | One small wrapper per route: a template + data + callbacks                                                             |

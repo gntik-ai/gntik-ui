@@ -1,10 +1,9 @@
-import { LinkProvider } from '@gntik-ai/ui';
 import { Fragment, useEffect, type ReactNode } from 'react';
 import { ForgotPassword, SignIn, SignUp } from './pages/auth';
 import { Home, Inbox, NewProject, Onboarding, ProjectDetail, Projects, Search } from './pages/console';
 import { Settings } from './pages/settings';
 import { Forbidden, Maintenance, NotFound, ServerError } from './pages/status';
-import { matchPath, navigate, RouterLink, usePath } from './router';
+import { matchPath, navigate, usePath } from './router';
 
 /** Redirects on mount (e.g. /settings → /settings/profile). */
 function Redirect({ to }: { to: string }) {
@@ -45,9 +44,5 @@ export default function App() {
     }
   }
   // Keyed by path: templates keep local state (forms, tabs), so each route starts fresh.
-  return (
-    <LinkProvider component={RouterLink}>
-      <Fragment key={path}>{page}</Fragment>
-    </LinkProvider>
-  );
+  return <Fragment key={path}>{page}</Fragment>;
 }

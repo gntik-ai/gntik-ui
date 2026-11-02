@@ -25,8 +25,8 @@ It shows the kit working with Server Components, client templates and no theme f
 - `app/layout.tsx` (Server Component) reads the theme cookie, puts the class on `<html>`
   (`suppressHydrationWarning`) and inlines the theme script in `<head>`. The script is needed for
   `system`, which only the browser can resolve.
-- `app/providers.tsx` (`'use client'`): `ThemeProvider` (gntik preset, dark default, mode from the
-  cookie), `LinkProvider` wired to `next/link` (kit links and nav navigate client-side) and
+- `app/providers.tsx` (`'use client'`): `KitProvider` (gntik preset, dark default, mode from the
+  cookie), `link` wired to `next/link` (kit links and nav navigate client-side) and
   `TooltipProvider`.
 - Each route is a Server Component `page.tsx` (metadata, `notFound()`, request time) that renders a
   small `'use client'` `view.tsx`, which passes the data and the router callbacks to the template.

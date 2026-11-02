@@ -47,9 +47,12 @@ const utilsSources = import.meta.glob('../../../../packages/ui/src/utils/example
   import: 'default',
 });
 
-const themeDocs = import.meta.glob('../../../../packages/ui/src/{theme,csp}/*.doc.ts', { eager: true, import: 'doc' });
-const themeExamples = import.meta.glob('../../../../packages/ui/src/{theme,csp}/examples/*.tsx', { eager: true });
-const themeSources = import.meta.glob('../../../../packages/ui/src/{theme,csp}/examples/*.tsx', {
+const themeDocs = import.meta.glob('../../../../packages/ui/src/{theme,csp,kit}/*.doc.ts', {
+  eager: true,
+  import: 'doc',
+});
+const themeExamples = import.meta.glob('../../../../packages/ui/src/{theme,csp,kit}/examples/*.tsx', { eager: true });
+const themeSources = import.meta.glob('../../../../packages/ui/src/{theme,csp,kit}/examples/*.tsx', {
   eager: true,
   query: '?raw',
   import: 'default',

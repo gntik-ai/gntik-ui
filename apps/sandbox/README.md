@@ -33,7 +33,7 @@ changing it), like any product would.
   styles are already on the page). Anything else throws a readable error. The **default
   export** is rendered.
 - **Isolation.** The preview is a same-origin iframe (`preview.html`) with its own
-  `ThemeProvider` (no persistence), so the theme class, breakpoints (the frame width) and
+  `KitProvider` (no persistence), so the theme class, breakpoints (the frame width) and
   crashes stay inside it. The shell posts `{ code, theme, brand }` (debounced 250 ms); the
   frame answers `rendered` or `error`. Compile errors, evaluation errors, render errors (error
   boundary) and uncaught errors from handlers/promises all land in the shell's `ErrorPanel`;

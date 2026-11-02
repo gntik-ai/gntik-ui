@@ -1,4 +1,4 @@
-import { falconePreset, LinkProvider, ThemeProvider } from '@gntik-ai/ui';
+import { falconePreset, KitProvider } from '@gntik-ai/ui';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
@@ -11,11 +11,9 @@ const THEME_KEY = 'falcone-theme';
 function Root() {
   useAnchorInterception();
   return (
-    <ThemeProvider brand={falconePreset} defaultMode="dark" storageKey={THEME_KEY}>
-      <LinkProvider component={RouterLink}>
-        <App />
-      </LinkProvider>
-    </ThemeProvider>
+    <KitProvider theme={{ brand: falconePreset, defaultMode: 'dark', storageKey: THEME_KEY }} link={RouterLink}>
+      <App />
+    </KitProvider>
   );
 }
 

@@ -176,6 +176,15 @@ export function collectSources(): Source[] {
     targetBase: 'components/csp',
     id: 'csp-provider',
   });
+  out.push({
+    kind: 'component',
+    pkg: '@gntik-ai/ui',
+    dir: path.join(ROOT, 'packages/ui/src/kit'),
+    metaFile: path.join(ROOT, 'packages/ui/src/kit/KitProvider.doc.ts'),
+    metaExport: 'doc',
+    targetBase: 'components/kit',
+    id: 'kit-provider',
+  });
   const doc = (kind: Kind, pkg: string, base: string, targetBase: string) => {
     for (const name of subdirs(base)) {
       const f = path.join(base, name, `${name}.doc.ts`);

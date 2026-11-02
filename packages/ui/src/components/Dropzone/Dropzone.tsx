@@ -5,6 +5,7 @@ import { createContext, useContext, type HTMLAttributes } from 'react';
 import { useI18n } from '../../i18n';
 import { Button, type ButtonProps } from '../Button/Button';
 import { cn } from '../../utils/cn';
+import { usePortalContainer } from '../../utils/portal';
 import { useDropzone, type UseDropzoneOptions, type DragState } from './useDropzone';
 import { dropzoneVariants } from './dropzone.variants';
 
@@ -43,6 +44,7 @@ export function Dropzone({
   ...props
 }: DropzoneProps) {
   const { t } = useI18n();
+  const portalContainer = usePortalContainer();
   const zone = useDropzone({
     accept,
     maxSize,
@@ -69,7 +71,7 @@ export function Dropzone({
   });
   return (
     <Context.Provider value={{ ...zone, disabled, activateOnClick, accept, maxSize }}>
-      {fullScreen ? zone.dragState !== 'idle' && createPortal(element, document.body) : element}
+      {fullScreen ? zone.dragState !== 'idle' && createPortal(element, portalContainer ?? document.body) : element}
       <input {...zone.inputProps} />
       <span role="status" aria-live="polite" className="sr-only">
         {zone.announcement}

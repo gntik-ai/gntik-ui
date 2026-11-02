@@ -64,3 +64,25 @@ it('every Base UI Portal uses its enclosing component scope container', () => {
   // WorkspaceSearch now reuses ComboboxContent's scoped Portal instead of owning one.
   expect(count).toBeGreaterThanOrEqual(18);
 });
+
+it('the full-screen Dropzone React portal uses the shared container with a body fallback', () => {
+  const path = join(import.meta.dirname, '../components/Dropzone/Dropzone.tsx');
+  const source = ts.createSourceFile(path, readFileSync(path, 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  let hookBinding: string | undefined;
+  const destinations: string[] = [];
+  function visit(node: ts.Node) {
+    if (
+      ts.isVariableDeclaration(node) &&
+      node.initializer &&
+      ts.isCallExpression(node.initializer) &&
+      node.initializer.expression.getText(source) === 'usePortalContainer'
+    )
+      hookBinding = node.name.getText(source);
+    if (ts.isCallExpression(node) && node.expression.getText(source) === 'createPortal')
+      destinations.push(node.arguments[1]?.getText(source) ?? '');
+    ts.forEachChild(node, visit);
+  }
+  visit(source);
+  expect(hookBinding).toBeDefined();
+  expect(destinations).toEqual([`${hookBinding} ?? document.body`]);
+});

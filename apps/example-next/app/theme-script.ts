@@ -1,7 +1,7 @@
 /**
  * Theme wiring for SSR. In this app the theme lives in a cookie (not the kit's localStorage key):
  * the root layout reads it, renders the right class on <html> and hands the same mode to
- * ThemeProvider (`defaultMode`, `storageKey={null}`), so server HTML and hydration always agree on
+ * KitProvider (`theme={{ initialMode, storageKey: null }}`), so server HTML and hydration always agree on
  * theme-aware parts (Logo, ThemeSwitcher, user menu). `ThemeCookieSync` writes it back on change.
  *
  * `themeScript` is the cookie flavour of `themeScript()` from @gntik-ai/ui. It is inlined because
