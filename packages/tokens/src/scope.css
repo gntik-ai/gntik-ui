@@ -50,18 +50,6 @@
 
 .high_contrast {
   color-scheme: dark;
-  --chart-series-1: initial;
-  --chart-series-2: initial;
-  --chart-series-3: initial;
-  --chart-series-4: initial;
-  --chart-series-5: initial;
-  --chart-series-6: initial;
-  --chart-series-7: initial;
-  --chart-series-8: initial;
-  --chart-series-9: initial;
-  --chart-series-10: initial;
-  --chart-series-11: initial;
-  --chart-series-12: initial;
 }
 
 [data-palette="green"] {
@@ -106,18 +94,6 @@
   --shadow-md: 0 4px 12px -2px hsl(152 40% 4% / .12),0 12px 32px -12px hsl(152 40% 4% / .18);
   --shadow-lg: 0 2px 4px -2px hsl(152 40% 4% / .2),0 16px 40px -16px hsl(152 40% 4% / .2);
   --success-strong: 153 55% 22%;
-  --chart-series-1: initial;
-  --chart-series-2: initial;
-  --chart-series-3: initial;
-  --chart-series-4: initial;
-  --chart-series-5: initial;
-  --chart-series-6: initial;
-  --chart-series-7: initial;
-  --chart-series-8: initial;
-  --chart-series-9: initial;
-  --chart-series-10: initial;
-  --chart-series-11: initial;
-  --chart-series-12: initial;
   --primary-text: var(--accent-foreground);
   --success-text: var(--success-strong);
   --warning-text: var(--foreground);
@@ -166,18 +142,6 @@
   --shadow-md: 0 4px 14px -2px hsl(152 70% 1% / .6),0 14px 36px -14px hsl(152 70% 1% / .55);
   --shadow-lg: 0 2px 4px -2px hsl(152 70% 1% / .6),0 16px 40px -16px hsl(152 70% 1% / .55);
   --success-strong: 145 61% 50%;
-  --chart-series-1: initial;
-  --chart-series-2: initial;
-  --chart-series-3: initial;
-  --chart-series-4: initial;
-  --chart-series-5: initial;
-  --chart-series-6: initial;
-  --chart-series-7: initial;
-  --chart-series-8: initial;
-  --chart-series-9: initial;
-  --chart-series-10: initial;
-  --chart-series-11: initial;
-  --chart-series-12: initial;
   --primary-text: var(--primary);
   --success-text: var(--success);
   --warning-text: var(--warning);
@@ -322,18 +286,6 @@
   --shadow-md: 0 4px 12px -2px hsl(222 40% 4% / .12),0 12px 32px -12px hsl(222 40% 4% / .18);
   --shadow-lg: 0 2px 4px -2px hsl(222 40% 4% / .2),0 16px 40px -16px hsl(222 40% 4% / .2);
   --success-strong: 150 60% 24%;
-  --chart-series-1: initial;
-  --chart-series-2: initial;
-  --chart-series-3: initial;
-  --chart-series-4: initial;
-  --chart-series-5: initial;
-  --chart-series-6: initial;
-  --chart-series-7: initial;
-  --chart-series-8: initial;
-  --chart-series-9: initial;
-  --chart-series-10: initial;
-  --chart-series-11: initial;
-  --chart-series-12: initial;
   --primary-text: var(--accent-foreground);
   --success-text: var(--success-strong);
   --warning-text: var(--foreground);
@@ -381,18 +333,6 @@
   --shadow-md: 0 4px 14px -2px hsl(222 70% 1% / .6),0 14px 36px -14px hsl(222 70% 1% / .55);
   --shadow-lg: 0 2px 4px -2px hsl(222 70% 1% / .6),0 16px 40px -16px hsl(222 70% 1% / .55);
   --success-strong: 145 61% 50%;
-  --chart-series-1: initial;
-  --chart-series-2: initial;
-  --chart-series-3: initial;
-  --chart-series-4: initial;
-  --chart-series-5: initial;
-  --chart-series-6: initial;
-  --chart-series-7: initial;
-  --chart-series-8: initial;
-  --chart-series-9: initial;
-  --chart-series-10: initial;
-  --chart-series-11: initial;
-  --chart-series-12: initial;
   --primary-text: var(--primary);
   --success-text: var(--success);
   --warning-text: var(--warning);
@@ -526,9 +466,9 @@
   --chrome: 201.4 24% 97%;
   --destructive: 348.7 100% 43%;
   --destructive-foreground: 0 0% 100%;
-  --success: 78.1 100% 37.1%;
-  --warning: 18.9 100% 49.8%;
-  --info: 187.5 100% 39%;
+  --success: 78.1 100% 24%;
+  --warning: 18.9 100% 40%;
+  --info: 187.5 100% 26%;
   --category-rose: 348.7 100% 43.5%;
   --category-violet: 308.9 74.6% 37%;
   --category-amber: 18.9 100% 50%;
@@ -644,9 +584,9 @@
   --chrome: 201.4 24% 97%;
   --destructive: 348.7 100% 43%;
   --destructive-foreground: 0 0% 100%;
-  --success: 78.1 100% 37.1%;
-  --warning: 18.9 100% 49.8%;
-  --info: 187.5 100% 39%;
+  --success: 78.1 100% 24%;
+  --warning: 18.9 100% 40%;
+  --info: 187.5 100% 26%;
   --category-rose: 348.7 100% 43.5%;
   --category-violet: 308.9 74.6% 37%;
   --category-amber: 18.9 100% 50%;
@@ -780,4 +720,19 @@
   --destructive-chip-text: var(--foreground);
   --success-strong: var(--success);
 }
+}
+
+[data-palette="corporate"] :is([data-palette]:not([data-palette="corporate"]), .high_contrast) {
+  --chart-series-1: initial;
+  --chart-series-2: initial;
+  --chart-series-3: initial;
+  --chart-series-4: initial;
+  --chart-series-5: initial;
+  --chart-series-6: initial;
+  --chart-series-7: initial;
+  --chart-series-8: initial;
+  --chart-series-9: initial;
+  --chart-series-10: initial;
+  --chart-series-11: initial;
+  --chart-series-12: initial;
 }

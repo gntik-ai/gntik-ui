@@ -29,27 +29,31 @@ test('each non-light scope declares a dark color scheme', () => {
   assert.deepEqual(declarations(css, '.dark'), { 'color-scheme': 'dark' });
   const { 'color-scheme': scheme, ...rest } = declarations(css, '.high_contrast');
   assert.equal(scheme, 'dark');
-  // High contrast ignores palette colours, so it only clears inherited chart series.
-  assert.deepEqual(Object.values(rest), Array(12).fill('initial'));
-  assert.deepEqual(
-    Object.keys(rest),
-    Array.from({ length: 12 }, (_, index) => `--chart-series-${index + 1}`),
-  );
+  // High contrast declares nothing but its scheme here, so documents without corporate are unchanged.
+  assert.deepEqual(rest, {});
 });
 
-test('chart series tokens reach only corporate and are cleared everywhere else', () => {
+test('chart series tokens reach only corporate and are cleared only inside a corporate subtree', () => {
   const css = read('../src/scope.css');
-  const seriesOf = (block) => Object.keys(block).filter((key) => key.startsWith('--chart-series-'));
+  const seriesIn = (body) =>
+    Object.fromEntries([...body.matchAll(/(--chart-series-\d+):\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
   const blocks = [...css.matchAll(/(\[data-palette="(\w+)"\][^{}]*)\{([^{}]*)\}/g)].filter(([, selector]) =>
     selector.includes(':not('),
   );
   assert.ok(blocks.length >= 6, 'green, navy and corporate each have a light and a dark block');
   for (const [, selector, id, body] of blocks) {
-    const values = Object.fromEntries([...body.matchAll(/(--chart-series-\d+):\s*([^;]+);/g)].map((m) => [m[1], m[2]]));
-    assert.equal(seriesOf(values).length, 12, `${selector} declares all twelve series tokens`);
-    for (const value of Object.values(values))
-      assert.equal(id === 'corporate' ? value !== 'initial' : value === 'initial', true, `${id}: ${value}`);
+    const values = seriesIn(body);
+    if (id === 'corporate' && selector.includes(':not(:where(.high_contrast')) {
+      assert.equal(Object.keys(values).length, 12, `${selector} declares all twelve series tokens`);
+      for (const value of Object.values(values)) assert.notEqual(value, 'initial', selector);
+    } else if (id !== 'corporate') assert.deepEqual(values, {}, `${selector} must not touch chart series`);
   }
+  const reset = css.split(
+    '[data-palette="corporate"] :is([data-palette]:not([data-palette="corporate"]), .high_contrast) {',
+  )[1];
+  const cleared = seriesIn(reset.split('}')[0]);
+  assert.deepEqual(Object.keys(cleared).length, 12);
+  assert.deepEqual([...new Set(Object.values(cleared))], ['initial']);
 });
 
 test('generation is byte-idempotent without writing to the source checkout', async (t) => {
