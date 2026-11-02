@@ -10,6 +10,7 @@ import DialogsAlert from './examples/DialogsAlert';
 import DialogsAsyncConfirm from './examples/DialogsAsyncConfirm';
 import DialogsCustomDialog from './examples/DialogsCustomDialog';
 import DialogsPrompt from './examples/DialogsPrompt';
+import DialogsProgrammatic from './examples/DialogsProgrammatic';
 import DialogsRowMenu from './examples/DialogsRowMenu';
 import DialogsTypedConfirm from './examples/DialogsTypedConfirm';
 import { doc } from './DialogsProvider.doc';
@@ -632,6 +633,30 @@ describe('DialogsProvider', () => {
       await user.click(screen.getByRole('button', { name: 'Cancel' }));
       await screen.findByRole('alertdialog', { name: 'Discard changes?' });
       await expectNoAxeViolations();
+    });
+
+    it('programmatic: update() advances the dialog, close() resolves it and returnFocus receives focus', async () => {
+      const user = userEvent.setup();
+      render(<DialogsProgrammatic />);
+      await user.click(screen.getByRole('button', { name: 'Start deployment' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Deploying' });
+      expect(dialog).toHaveAccessibleDescription('Step 1 of 3');
+      await expectNoAxeViolations();
+      await waitFor(() => expect(dialog).toHaveAccessibleDescription('Step 2 of 3'), { timeout: 3000 });
+      await waitFor(() => expect(screen.getByText('Deployment: Deployed')).toBeInTheDocument(), { timeout: 4000 });
+      expect(dialogsInDom()).toBe(0);
+      expect(screen.getByRole('button', { name: 'Deployment log' })).toHaveFocus();
+    });
+
+    it('programmatic: closeAll() from inside the dialog settles it and leaves nothing open', async () => {
+      const user = userEvent.setup();
+      render(<DialogsProgrammatic />);
+      await user.click(screen.getByRole('button', { name: 'Start deployment' }));
+      await screen.findByRole('dialog', { name: 'Deploying' });
+      await user.click(screen.getByRole('button', { name: 'Close all dialogs' }));
+      await waitFor(() => expect(screen.getByText('Deployment: Closed')).toBeInTheDocument());
+      expect(dialogsInDom()).toBe(0);
+      expect(screen.getByRole('button', { name: 'Deployment log' })).toHaveFocus();
     });
   });
 });
