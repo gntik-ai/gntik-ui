@@ -3,6 +3,21 @@ import { expectNoAxeViolations } from '../test/a11y';
 import { I18nProvider } from '../i18n/I18nProvider';
 import FieldSizes from '../components/Input/examples/FieldSizes';
 
+it('compares only the fields in the shared size scale in each row', () => {
+  render(<FieldSizes />);
+  const comfortable = within(screen.getByRole('group', { name: 'Comfortable' }));
+  for (const size of ['Small', 'Auto', 'Medium', 'Large']) {
+    const row = within(comfortable.getByRole('group', { name: size }));
+    expect(row.getAllByRole('combobox').map((field) => field.getAttribute('aria-label'))).toEqual([
+      'Choice',
+      'Member',
+      'Date',
+      'Date range',
+    ]);
+    expect(row.getByRole('button', { name: 'Apply' })).toBeInTheDocument();
+  }
+});
+
 it.each(['dark', 'light', 'high_contrast'])(
   'FieldSizes exposes every size and has no axe violations in %s',
   async (theme) => {

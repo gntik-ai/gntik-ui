@@ -31,7 +31,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
         const row = scope.locator(`[data-field-size="${size}"] [data-field-row]`);
         const expected = size === 'lg' ? 44 : size === 'sm' || (size === 'auto' && density === 'compact') ? 32 : 36;
         const heights = await row.evaluate((element) => {
-          const fields = [...element.children].slice(0, 8).map((wrapper, index) => {
+          const fields = [...element.children].slice(0, -1).map((wrapper, index) => {
             const root = wrapper.firstElementChild;
             if (index === 4) return root.querySelector('[role="group"]');
             if (index === 5 || index === 6) return root.querySelector('input');
@@ -40,9 +40,17 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
           fields.push(element.lastElementChild);
           return fields.map((field) => field.getBoundingClientRect().height);
         });
-        // Explicit TokenInput sizes retain the legacy 24px input plus padding and borders.
+        expect(heights).toHaveLength(9);
+        // Legacy chip fields keep their taller contents: MultiSelect has 28px icon
+        // buttons; TokenInput has a 24px input with more vertical padding.
         heights.forEach((height, index) =>
-          expect(height).toBe(index === 3 && size === 'md' ? 38 : index === 3 && size === 'sm' ? 34 : expected),
+          expect(height).toBe(
+            (index === 2 || index === 3) && size === 'md'
+              ? 38
+              : (index === 2 || index === 3) && size === 'sm'
+                ? 34
+                : expected,
+          ),
         );
         if (size === 'auto' || size === 'lg') {
           const tokens = row.getByRole('listitem');
@@ -56,11 +64,8 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
           const icons = row.locator(
             'svg.lucide-search, svg.lucide-chevron-down, svg.lucide-minus, svg.lucide-plus, svg.lucide-calendar-days, svg.lucide-clock',
           );
-          // ComboboxInput remains a separate input-height example with its original icon metrics.
           const widths = await icons.evaluateAll((elements) =>
-            elements
-              .filter((element) => !element.closest('[data-field-row] > div:nth-child(9)'))
-              .map((element) => element.getBoundingClientRect().width),
+            elements.map((element) => element.getBoundingClientRect().width),
           );
           expect(widths.length).toBeGreaterThan(8);
           for (const width of widths) expect(width).toBe(17);

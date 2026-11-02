@@ -11,7 +11,6 @@ import { NumberInput } from '../../NumberInput/NumberInput';
 import { DatePicker } from '../../DatePicker/DatePicker';
 import { DateRangePicker } from '../../DatePicker/DateRangePicker';
 import { TimePicker } from '../../TimePicker/TimePicker';
-import { Combobox, ComboboxInput, ComboboxContent, ComboboxItem } from '../../Combobox/Combobox';
 
 /** One row per size; auto omits size to exercise the default. Popup metrics stay fixed. */
 export default function FieldSizes() {
@@ -81,18 +80,6 @@ export default function FieldSizes() {
                     </div>
                     <div className="w-64 shrink-0">
                       <TimePicker {...sizing} aria-label={t('fieldSizes.time')} defaultValue="09:00" />
-                    </div>
-                    <div className="w-64 shrink-0">
-                      <Combobox items={options}>
-                        <ComboboxInput {...sizing} aria-label={t('fieldVariants.search')} />
-                        <ComboboxContent>
-                          {(option: (typeof options)[number]) => (
-                            <ComboboxItem key={option.value} value={option}>
-                              {option.label}
-                            </ComboboxItem>
-                          )}
-                        </ComboboxContent>
-                      </Combobox>
                     </div>
                     <Button {...sizing} icon={Search}>
                       {t('fieldSizes.action')}

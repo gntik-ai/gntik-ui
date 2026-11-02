@@ -9,6 +9,8 @@ export const doc: ComponentDoc = {
   primitive: '@base-ui/react/combobox',
   pattern: 'combobox (multi-select listbox)',
   keyboard: [
+    ['Tab / Shift+Tab', 'Size lg: moves through every chip remove button, including wrapped chips'],
+    ['ArrowLeft / ArrowRight', 'Moves between chips (sm, md and auto use this instead of Tab stops)'],
     ['Home / End, PageUp / PageDown', 'Virtualized: jumps to the first / last option or moves by a viewport'],
     ['Type a character', 'Opens the popup and filters the options'],
     ['ArrowDown / ArrowUp', 'Moves the highlight between options'],
