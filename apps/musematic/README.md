@@ -5,7 +5,7 @@ from gntik-ui alone. Every page is a kit template fed with musematic data, or a 
 kit layouts and blocks. The app owns no styles, no colours and no widgets: only
 `src/data/` (domain fixtures), a route table and a tiny router.
 
-- Brand: `ThemeProvider brand={musematicPreset}` (dark by default, persisted under
+- Brand: `KitProvider theme={{ brand: musematicPreset }}` (dark by default, persisted under
   `musematic-theme`); `themeScript()` is inlined in `<head>` by `vite.config.ts`.
 - Router: `src/router.tsx` (history API), wired to the kit through `LinkProvider`.
 - CSS: `src/index.css` = Tailwind + `@gntik-ai/templates/styles.css` + Geist fonts. Nothing else.

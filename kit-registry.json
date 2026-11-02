@@ -4072,6 +4072,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -4193,6 +4197,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -4395,6 +4403,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -4515,6 +4527,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -4670,6 +4686,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -4791,6 +4811,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -4976,6 +5000,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -5130,6 +5158,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -5546,6 +5578,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -5730,6 +5766,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -5878,6 +5918,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -6104,6 +6148,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -6254,6 +6302,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -6392,6 +6444,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -6543,6 +6599,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -6674,6 +6734,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -6802,6 +6866,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -6951,6 +7019,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -7085,6 +7157,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -7224,6 +7300,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -7347,6 +7427,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -7480,6 +7564,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -7609,6 +7697,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -7834,6 +7926,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -7955,6 +8051,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -8127,6 +8227,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -8258,6 +8362,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -8383,6 +8491,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -8515,6 +8627,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -8573,6 +8689,143 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/KeyValueEditor/KeyValueEditor.doc.ts"
+    },
+    {
+      "id": "kit-provider",
+      "kind": "component",
+      "name": "KitProvider",
+      "package": "@gntik-ai/ui",
+      "group": "Theme",
+      "status": "stable",
+      "description": "One app root for theme, locale, density, router links, tooltips, toasts, dialogs, CSP and live announcements. useApp() exposes toast, confirm and announce inside React. By default: dark with the gntik preset, tooltips, one ToastProvider and Toaster, DialogsProvider and LiveAnnouncer. Optional i18n, density, link and csp props add their providers only when supplied; no wrapper is added by default. Nested KitProviders apply only supplied settings and reuse the outer toast queue, stack, dialogs and live regions. Pass toast={false} if you keep your own ToastProvider and Toaster; useApp then requires that ToastProvider above its caller. tooltip={false} and announcer={false} also keep app-owned providers. portalContainer supplies the existing shared overlay destination; an explicit overlay container wins. Scoped mode targets a wrapper for theme, motion, palette, lang, dir and density, with an inner portal host. It does not isolate CSS: :root tokens and Tailwind preflight remain global, and hosts must scope their own --primary/--background tokens. For SSR, pass theme={{ initialMode }} from a cookie and keep themeScript() settings consistent. Separate providers remain supported.",
+      "files": [
+        {
+          "path": "packages/ui/src/density/DensityProvider.tsx",
+          "target": "components/density/DensityProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/density/density-context.ts",
+          "target": "components/density/density-context.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
+          "path": "packages/ui/src/kit/KitProvider.tsx",
+          "target": "components/kit/KitProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/kit/index.ts",
+          "target": "components/kit/index.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "csp-provider",
+        "dialogs-provider",
+        "link",
+        "live-announcer",
+        "theme",
+        "toast",
+        "tooltip",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/kit/KitProvider.doc.ts"
     },
     {
       "id": "lightbox",
@@ -8642,6 +8895,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -8765,6 +9022,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -8892,6 +9153,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -9100,6 +9365,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -9227,6 +9496,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -9478,6 +9751,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -9645,6 +9922,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -9779,6 +10060,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -9907,6 +10192,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -10042,6 +10331,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -10163,6 +10456,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -10289,6 +10586,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -10418,6 +10719,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -10543,6 +10848,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -10690,6 +10999,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -10816,6 +11129,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -10938,6 +11255,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -11069,6 +11390,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -11231,6 +11556,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -11471,6 +11800,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -11600,6 +11933,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -11765,6 +12102,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -11890,6 +12231,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -12055,6 +12400,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -12270,6 +12619,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -12414,6 +12767,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -12632,6 +12989,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -12821,6 +13182,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -12942,6 +13307,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -13076,6 +13445,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -13313,6 +13686,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -13441,6 +13818,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -13582,6 +13963,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -13707,6 +14092,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -13835,6 +14224,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -13956,6 +14349,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -14112,6 +14509,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -14245,6 +14646,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -14446,6 +14851,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -14570,6 +14979,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -14700,6 +15113,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -14838,6 +15255,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -14987,6 +15408,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -15228,6 +15653,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -15363,6 +15792,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -15483,6 +15916,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -15615,6 +16052,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -15728,6 +16169,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -15852,6 +16297,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -15981,6 +16430,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -16116,6 +16569,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -16242,6 +16699,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -16362,6 +16823,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -16486,6 +16951,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -16615,6 +17084,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -16747,6 +17220,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -16870,6 +17347,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
@@ -16998,6 +17479,10 @@
           "target": "components/i18n/messages/index.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",
           "target": "components/i18n/messages/layer-messages.ts"
         },
@@ -17120,6 +17605,10 @@
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/layer-messages.ts",

@@ -8,7 +8,7 @@ template fed with Falcone data, or a composition of kit layouts and blocks. The 
 styles, no colours and no widgets: only `src/data/` (domain fixtures), a route table and a tiny
 router.
 
-- Brand: `ThemeProvider brand={falconePreset}` (dark by default, persisted under
+- Brand: `KitProvider theme={{ brand: falconePreset }}` (dark by default, persisted under
   `falcone-theme`); `themeScript()` is inlined in `<head>` by `vite.config.ts`.
   **`falconePreset` is a placeholder** — a token-coloured "F" monogram until Falcone's real logo
   artwork lands in `@gntik-ai/ui` (`packages/ui/src/theme/presets.tsx`). Nothing in this app

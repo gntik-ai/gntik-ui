@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 128 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 129 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -7540,6 +7540,62 @@ export default function CSPProviderPreview() {
         <Preview />
       </div>
     </CSPProvider>
+  );
+}
+```
+
+### KitProvider (`kit-provider`)
+
+One app root for theme, locale, density, router links, tooltips, toasts, dialogs, CSP and live announcements. useApp() exposes toast, confirm and announce inside React. By default: dark with the gntik preset, tooltips, one ToastProvider and Toaster, DialogsProvider and LiveAnnouncer. Optional i18n, density, link and csp props add their providers only when supplied; no wrapper is added by default. Nested KitProviders apply only supplied settings and reuse the outer toast queue, stack, dialogs and live regions. Pass toast={false} if you keep your own ToastProvider and Toaster; useApp then requires that ToastProvider above its caller. tooltip={false} and announcer={false} also keep app-owned providers. portalContainer supplies the existing shared overlay destination; an explicit overlay container wins. Scoped mode targets a wrapper for theme, motion, palette, lang, dir and density, with an inner portal host. It does not isolate CSS: :root tokens and Tailwind preflight remain global, and hosts must scope their own --primary/--background tokens. For SSR, pass theme={{ initialMode }} from a cookie and keep themeScript() settings consistent. Separate providers remain supported.
+
+- Package: `@gntik-ai/ui` · export `KitProvider` · group Theme · status stable
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/kit/KitProvider.doc.ts
+- Registry dependencies: csp-provider, dialogs-provider, link, live-announcer, theme, toast, tooltip, ui-utils
+- Install: `gntik-ui add kit-provider`; own the source with `gntik-ui eject kit-provider`
+
+Tokens: background, foreground, border
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Button } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
+import { useDensity } from '@gntik-ai/ui';
+import { useTheme } from '@gntik-ai/ui';
+import { KitProvider, useApp } from '@gntik-ai/ui';
+
+function Actions() {
+  const { toast, confirm, announce } = useApp();
+  const { t } = useI18n();
+  const [result, setResult] = useState('');
+  const density = useDensity();
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button onClick={() => toast.add({ title: t('kit.saved'), tone: 'success' })}>{t('common.save')}</Button>
+      <Button variant="secondary" onClick={() => announce(t('kit.moved'))}>
+        {t('kit.announce')}
+      </Button>
+      <Button
+        variant="secondary"
+        onClick={async () => setResult(t((await confirm(t('kit.confirmMessage'))) ? 'kit.confirmed' : 'kit.cancelled'))}
+      >
+        {t('dialogs.confirm')}
+      </Button>
+      <span className="text-sm text-muted-foreground">{density}</span>
+      <output className="text-sm text-foreground">{result}</output>
+    </div>
+  );
+}
+
+export default function KitProviderBasic() {
+  const { resolved } = useTheme();
+  return (
+    <KitProvider scoped theme={{ forcedMode: resolved, storageKey: null }}>
+      <KitProvider density="compact">
+        <Actions />
+      </KitProvider>
+    </KitProvider>
   );
 }
 ```

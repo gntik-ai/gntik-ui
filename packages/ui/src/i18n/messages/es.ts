@@ -1,3 +1,4 @@
+import { kitEs } from './kit-messages';
 import { treeListEs } from './tree-list-messages';
 import { toolCallEs } from './tool-call-es';
 import { signUpEs, forgotPasswordEs, resetPasswordEs } from './auth-form-messages';
@@ -15,6 +16,7 @@ import { cspEs } from './csp-messages';
 import { logoCloudEs } from './logo-cloud-messages';
 import type { Messages } from './en';
 export const es: Messages = {
+  ...kitEs,
   ...toolCallEs,
   ...treeListEs,
   ...signUpEs,

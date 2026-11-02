@@ -1,13 +1,14 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ThemeProvider, gntikPreset } from '@gntik-ai/ui';
+import { KitProvider, gntikPreset } from '@gntik-ai/ui';
 import App from './App';
+import { RouterLink } from './router';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider brand={gntikPreset}>
+    <KitProvider theme={{ brand: gntikPreset }} link={RouterLink}>
       <App />
-    </ThemeProvider>
+    </KitProvider>
   </StrictMode>,
 );
