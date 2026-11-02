@@ -7,15 +7,16 @@ import { comboboxVariants as v4 } from '../components/Combobox/combobox.variants
 import { tokenInputVariants as v6 } from '../components/TokenInput/token-input.variants';
 import { datePickerVariants as v7 } from '../components/DatePicker/date-picker.variants';
 import { timePickerVariants as v8 } from '../components/TimePicker/time-picker.variants';
-it('keeps every changed default slot byte-identical to the immutable base', () => {
+it('keeps original outline slots byte-identical at their original sizes', () => {
   expect({
     'Input.root': v0().root(),
-    'Textarea.root': v1(),
+    // These controls now default to density-aware auto; md preserves the frozen outline baseline.
+    'Textarea.root': v1({ size: 'md' }),
     'NumberInput.group': v2().group(),
     'Select.trigger': v3().trigger(),
     'Combobox.inputGroup': v4().inputGroup(),
     'Combobox.chipsGroup': v4().chipsGroup(),
-    'TokenInput.root': v6().root(),
+    'TokenInput.root': v6({ size: 'md' }).root(),
     'DatePicker.input': v7().input(),
     'TimePicker.root': v8().root(),
   }).toEqual(original);
