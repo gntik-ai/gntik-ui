@@ -41,6 +41,6 @@ export interface HookDoc {
    * values in backticks: the SSR test checks that the example's server output contains each one.
    */
   server: string;
-  /** Further hooks from the same module that this doc and its example cover, e.g. "useSessionStorage". */
+  /** Non-hook helpers exported next to the hook that this doc covers, e.g. "readLocalStorageValue". Every `use*` hook has its own doc. */
   also?: string[];
 }

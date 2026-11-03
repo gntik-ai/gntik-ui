@@ -38,12 +38,12 @@ describe('hook examples on the server', () => {
   });
 
   it('has an example for every hook doc', () => {
-    const withoutExample = docs.filter(({ base }) => !examples.some((e) => e.base.startsWith(base)));
+    const withoutExample = docs.filter(({ base }) => !examples.some((e) => e.base.startsWith(`${base}Example`)));
     expect(withoutExample.map(({ doc }) => doc.name)).toEqual([]);
   });
 
   describe.each(docs)('$doc.name', ({ base, doc }) => {
-    const own = examples.filter((e) => e.base.startsWith(base));
+    const own = examples.filter((e) => e.base.startsWith(`${base}Example`));
 
     it('renders every example with renderToString', () => {
       expect(own.length).toBeGreaterThan(0);

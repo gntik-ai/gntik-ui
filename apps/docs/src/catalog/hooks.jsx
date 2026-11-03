@@ -22,11 +22,36 @@ const sources = import.meta.glob('../../../../packages/ui/src/hooks/examples/*.t
 const baseOf = (path, suffix) => path.split('/').pop().replace(suffix, '');
 const HOOKS_META = Object.values(meta)[0];
 
-// Examples import from '../useName' and '../index'; a product imports them from the entry.
-const forProduct = (code) =>
+// Examples import hooks from '../useName' and everything else from deeper relative paths such as
+// '../../i18n/I18nProvider'; a product imports the first from the entry and the rest from the root.
+const rewriteImports = (code) =>
   code
     .replace(/from '\.\.\/(?:index|use[A-Za-z]+)'/g, "from '@gntik-ai/ui/hooks'")
-    .replace(/from '\.\.\/(\.\.\/)?[A-Za-z]+(\/[A-Za-z.]+)?'/g, "from '@gntik-ai/ui'");
+    .replace(/from '(?:\.\.\/)+[^']+'/g, "from '@gntik-ai/ui'");
+
+// Several relative imports collapse onto one package path: keep one import per module.
+const mergeImports = (code) => {
+  const names = new Map();
+  const statement = /^import \{([^}]+)\} from '(@gntik-ai\/ui(?:\/hooks)?)';\n/gm;
+  for (const [, list, from] of code.matchAll(statement)) {
+    const all = names.get(from) ?? [];
+    names.set(from, [
+      ...all,
+      ...list
+        .split(',')
+        .map((n) => n.trim())
+        .filter(Boolean),
+    ]);
+  }
+  const written = new Set();
+  return code.replace(statement, (_, __, from) => {
+    if (written.has(from)) return '';
+    written.add(from);
+    return `import { ${[...new Set(names.get(from))].sort().join(', ')} } from '${from}';\n`;
+  });
+};
+
+const forProduct = (code) => mergeImports(rewriteImports(code));
 
 const ENTRIES = Object.entries(docs)
   .map(([path, doc]) => {
@@ -36,7 +61,7 @@ const ENTRIES = Object.entries(docs)
       folder,
       id: HOOK_PAGES.find((p) => p.folder === folder).id,
       examples: Object.entries(examples)
-        .filter(([p, m]) => baseOf(p, '.tsx').startsWith(folder) && typeof m.default === 'function')
+        .filter(([p, m]) => baseOf(p, '.tsx').startsWith(`${folder}Example`) && typeof m.default === 'function')
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([p, m]) => ({ key: p, Comp: m.default, code: forProduct(sources[p]) })),
     };
@@ -47,7 +72,7 @@ function HookEntry({ c, page = false }) {
   const { CodeBlock, ApiReference } = window;
   const Heading = page ? 'h1' : 'h2';
   const Sub = page ? 'h2' : 'h3';
-  const covered = [c.name, ...(c.also ?? [])].filter((n) => /^use[A-Z]/.test(n));
+  const covered = [c.name, ...(c.also ?? [])];
   return (
     <section id={`ui-${c.folder}`} className="mb-14 scroll-mt-6">
       {page && (
@@ -69,7 +94,7 @@ function HookEntry({ c, page = false }) {
         >
           {c.name}
         </Heading>
-        <span className="rounded-full bg-primary/14 px-2 py-0.5 text-[11px] font-medium text-primary-text">
+        <span className="rounded-full bg-primary/14 px-2 py-0.5 text-[11px] font-medium text-primary-chip-text">
           {c.status}
         </span>
         {!page && (

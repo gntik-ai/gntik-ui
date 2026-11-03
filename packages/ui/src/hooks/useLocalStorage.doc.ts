@@ -8,5 +8,5 @@ export const doc: HookDoc = {
   signature: 'useLocalStorage<T>(key, defaultValue, options?): [value, setValue, remove]',
   server:
     'Returns the default value (`comfortable` in the example) without reading storage, then restores the stored value after hydration. readLocalStorageValue returns the fallback.',
-  also: ['useSessionStorage', 'readLocalStorageValue'],
+  also: ['readLocalStorageValue'],
 };

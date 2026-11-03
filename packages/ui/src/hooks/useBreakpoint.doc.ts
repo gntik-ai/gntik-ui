@@ -8,5 +8,4 @@ export const doc: HookDoc = {
   signature: 'useBreakpoint({ fallback = "base" }?): Breakpoint',
   server:
     'Returns the fallback breakpoint (`base` in the example); useBreakpointValue resolves its values against that fallback (`drawer`).',
-  also: ['useBreakpointValue'],
 };

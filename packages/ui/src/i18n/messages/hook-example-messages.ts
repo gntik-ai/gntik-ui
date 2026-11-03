@@ -63,6 +63,11 @@ export const hookExampleEn = {
   'hooksExample.virtualWindow.rows': 'Rendered rows: {start} to {end} of {total}',
   'hooksExample.virtualWindow.row': 'Row {number}',
   'hooksExample.virtualWindow.list': 'Rows',
+  'hooksExample.sessionStorage.hint': 'Other tabs have their own session, so this count does not follow them.',
+  'hooksExample.registeredHotkeys.dashboard': 'Go to dashboard',
+  'hooksExample.registeredHotkeys.newItem': 'Create a new item',
+  'hooksExample.reducedMotion.hint': 'Change your system motion preference to see the value update.',
+  'hooksExample.reducedMotion.alias': 'usePrefersReducedMotion is the same function as useReducedMotion.',
 };
 
 export const hookExampleEs: Record<keyof typeof hookExampleEn, string> = {
@@ -132,4 +137,10 @@ export const hookExampleEs: Record<keyof typeof hookExampleEn, string> = {
   'hooksExample.virtualWindow.rows': 'Filas renderizadas: {start} a {end} de {total}',
   'hooksExample.virtualWindow.row': 'Fila {number}',
   'hooksExample.virtualWindow.list': 'Filas',
+  'hooksExample.sessionStorage.hint': 'Otras pestañas tienen su propia sesión, así que este contador no las sigue.',
+  'hooksExample.registeredHotkeys.dashboard': 'Ir al panel',
+  'hooksExample.registeredHotkeys.newItem': 'Crear un elemento nuevo',
+  'hooksExample.reducedMotion.hint':
+    'Cambia la preferencia de movimiento del sistema para ver cómo se actualiza el valor.',
+  'hooksExample.reducedMotion.alias': 'usePrefersReducedMotion es la misma función que useReducedMotion.',
 };

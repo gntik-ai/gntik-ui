@@ -202,7 +202,14 @@ test('component and utility pages show imports readers can use', async () => {
 test('the Hooks page lists every HookDoc with signature, server behaviour, a live example and source', async () => {
   await catalog(async ({ render, server }) => {
     const { HOOK_PAGES } = await server.ssrLoadModule('/src/catalog/item-inventory.js');
-    assert.ok(HOOK_PAGES.length >= 11, `expected the hook docs, found ${HOOK_PAGES.length}`);
+    const entry = await server.ssrLoadModule('/../../packages/ui/src/hooks/index.ts');
+    const hookNames = Object.keys(entry).filter((name) => /^use[A-Z]/.test(name));
+    assert.ok(hookNames.length >= 16, `expected the exported hooks, found ${hookNames.length}`);
+    assert.deepEqual(
+      hookNames.filter((name) => !HOOK_PAGES.some((page) => page.name === name)),
+      [],
+      'every exported hook has its own page',
+    );
     const doc = render('ui-hooks');
     for (const page of HOOK_PAGES) {
       const { doc: hookDoc } = await server.ssrLoadModule(`/../../packages/ui/src/hooks/${page.folder}.doc.ts`);
@@ -213,6 +220,7 @@ test('the Hooks page lists every HookDoc with signature, server behaviour, a liv
       assert.ok(text.includes(hookDoc.server), `${page.name}: server behaviour`);
       assert.ok(section.querySelectorAll('[data-component-preview]').length >= 1, `${page.name}: live example`);
       assert.match(section.textContent, /from '@gntik-ai\/ui(\/hooks)?'/, `${page.name}: example source`);
+      assert.doesNotMatch(section.textContent, /from '\.{1,2}\//, `${page.name}: example source has relative imports`);
       assert.ok(section.querySelector(`a[href="#ui-hooks/${page.id}"]`), `${page.name}: link to its page`);
     }
   });
