@@ -24169,9 +24169,13 @@
       ],
       "registryDependencies": [
         "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/combobox.json",
         "https://ui.gntik.ai/r/copy-button.json",
         "https://ui.gntik.ai/r/live-announcer.json",
-        "https://ui.gntik.ai/r/ui-utils.json"
+        "https://ui.gntik.ai/r/overflow-list.json",
+        "https://ui.gntik.ai/r/toast.json",
+        "https://ui.gntik.ai/r/ui-utils.json",
+        "https://ui.gntik.ai/r/virtual-list.json"
       ],
       "categories": [
         "component",
@@ -24188,6 +24192,11 @@
           "path": "packages/ui/src/hooks/hotkey-registry.ts",
           "type": "registry:ui",
           "target": "components/hooks/hotkey-registry.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/index.ts",
+          "type": "registry:ui",
+          "target": "components/hooks/index.ts"
         },
         {
           "path": "packages/ui/src/hooks/parse-hotkey.ts",

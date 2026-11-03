@@ -5290,7 +5290,7 @@ Behaviour hooks of @gntik-ai/ui, importable from @gntik-ai/ui/hooks or the packa
 
 - Package: `@gntik-ai/ui` · export `Hooks` · group Hooks · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/hooks/hooks.meta.ts
-- Registry dependencies: copy-button, live-announcer, ui-utils
+- Registry dependencies: combobox, copy-button, live-announcer, overflow-list, toast, ui-utils, virtual-list
 - Install: `gntik-ui add ui-hooks`; own the source with `gntik-ui eject ui-hooks`
 
 Usage:

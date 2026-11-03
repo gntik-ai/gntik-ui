@@ -156,9 +156,10 @@ export function collectSources(): Source[] {
     },
   });
   // The hook modules of @gntik-ai/ui/hooks. kind stays "component" (the CLI rejects unknown kinds); the
-  // group "Hooks" is what `gntik-ui search hook` and the docs sidebar key on. The index.ts barrel is npm-only:
-  // it re-exports hooks that live in the toast, combobox, overflow-list, virtual-list and live-announcer
-  // items, and copying it would make every eject of a hook user pull in those five.
+  // group "Hooks" is what `gntik-ui search hook` and the docs sidebar key on. The index.ts barrel is part of
+  // the item so the CLI can name the hooks and the local entry; the hooks it re-exports from the toast,
+  // combobox, overflow-list, virtual-list and live-announcer items resolve to @gntik-ai/ui unless those items
+  // are ejected too (`eject --deps`).
   out.push({
     kind: 'component',
     pkg: '@gntik-ai/ui',
@@ -167,7 +168,6 @@ export function collectSources(): Source[] {
     metaExport: 'meta',
     targetBase: 'components/hooks',
     id: 'ui-hooks',
-    exclude: ['index.ts'],
   });
   out.push({
     kind: 'component',

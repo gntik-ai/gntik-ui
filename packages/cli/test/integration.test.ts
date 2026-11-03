@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { cli, viteProject } from './helpers.js';
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -29,6 +29,34 @@ describe.skipIf(!hasRegistry)('against the repo kit-registry.json', () => {
     expect(r.code).toBe(0);
     const hooks = r.json.items.find((i: { id: string }) => i.id === 'ui-hooks');
     expect(hooks).toMatchObject({ id: 'ui-hooks', kind: 'component', group: 'Hooks' });
+  });
+
+  it('add ui-hooks recommends importing the hooks from the hooks subpath', async () => {
+    const dir = await viteProject();
+    const r = await cli(['add', 'ui-hooks', '--json', '--dry-run', '--no-install', '--cwd', dir, '--registry', REPO]);
+    expect(r.code).toBe(0);
+    expect(r.json.imports).toHaveLength(1);
+    expect(r.json.imports[0]).toMatch(/^import \{ .*\buseToast\b.*\buseFitCount\b.* \} from '@gntik-ai\/ui\/hooks';$/);
+    expect(r.json.imports[0]).not.toMatch(/\bHooks\b/);
+  });
+
+  it('eject ui-hooks names the hooks and a local entry, and finds subpath usages', async () => {
+    const dir = await viteProject();
+    await writeFile(
+      path.join(dir, 'src/App.tsx'),
+      "import { useToast } from '@gntik-ai/ui/hooks';\nimport { useOs } from '@gntik-ai/ui';\nexport default () => null;\n",
+    );
+    const r = await cli(['eject', 'ui-hooks', '--json', '--dry-run', '--no-install', '--cwd', dir, '--registry', REPO]);
+    expect(r.code).toBe(0);
+    expect(r.json.localImport).toBe('src/components/hooks');
+    expect(r.json.exports).toEqual(expect.arrayContaining(['useToast', 'useFitCount', 'useClipboard']));
+    expect(r.json.exports).not.toContain('Hooks');
+    expect(
+      r.json.usages
+        .map((u: { names: string[] }) => u.names)
+        .flat()
+        .sort(),
+    ).toEqual(['useOs', 'useToast']);
   });
 
   it('every file listed in the registry exists', async () => {

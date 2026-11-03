@@ -15891,6 +15891,10 @@
           "target": "components/hooks/hotkey-registry.ts"
         },
         {
+          "path": "packages/ui/src/hooks/index.ts",
+          "target": "components/hooks/index.ts"
+        },
+        {
           "path": "packages/ui/src/hooks/parse-hotkey.ts",
           "target": "components/hooks/parse-hotkey.ts"
         },
@@ -16028,9 +16032,13 @@
         "@gntik-ai/tokens"
       ],
       "registryDependencies": [
+        "combobox",
         "copy-button",
         "live-announcer",
-        "ui-utils"
+        "overflow-list",
+        "toast",
+        "ui-utils",
+        "virtual-list"
       ],
       "docs": "packages/ui/src/hooks/hooks.meta.ts"
     },

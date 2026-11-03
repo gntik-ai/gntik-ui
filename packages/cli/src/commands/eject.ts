@@ -12,7 +12,7 @@ import {
 import { CliError } from '../errors.js';
 import { CONFIG_FILE, mapTarget } from '../project.js';
 import type { RegistryItem } from '../registry.js';
-import { copySection, exportNames, projectContext } from './add.js';
+import { copySection, exportNames, importSpecifier, projectContext } from './add.js';
 
 const SKIP_DIRS = new Set(['node_modules', '.git', 'dist', 'build', '.next', 'out', 'coverage', '.turbo', '.vercel']);
 const CODE = /\.(tsx?|jsx?|mts|mjs)$/;
@@ -97,7 +97,11 @@ export async function eject(ctx: Context, positionals: string[]): Promise<Comman
     : '';
   const indexContent = plan.files.find((f) => f.source === indexFile?.path)?.content;
   const names = exportNames(item, indexContent);
-  const usages = await findUsages(ctx.cwd, item.package, names, localEntry, new Set(plan.files.map((f) => f.target)));
+  const skip = new Set(plan.files.map((f) => f.target));
+  const specifiers = [...new Set([item.package, importSpecifier(item)])];
+  const usages = (
+    await Promise.all(specifiers.map((spec) => findUsages(ctx.cwd, spec, names, localEntry, skip)))
+  ).flat();
 
   const install = conflicts.length
     ? { packages: [], dev: [], commands: [], ran: false, exitCode: null }
@@ -107,7 +111,7 @@ export async function eject(ctx: Context, positionals: string[]): Promise<Comman
       ]);
 
   const nextSteps = [
-    `Import ${names.join(', ')} from the local copy (${localEntry}) instead of '${item.package}'.`,
+    `Import ${names.join(', ')} from the local copy (${localEntry}) instead of '${importSpecifier(item)}'.`,
     ...(usages.length ? [`Update the ${usages.length} import(s) listed under usages.`] : []),
     'The copy no longer receives kit updates; diff against the registry when upgrading.',
   ];
