@@ -115,6 +115,30 @@ describe('getActivePage', () => {
     expect(settings?.breadcrumbs).toEqual([{ label: 'ABC', href: '/projects/abc' }, { label: 'ABC settings' }]);
   });
 
+  it('fills ancestor paths and titles from the pathname when a static child sits under a dynamic route', () => {
+    const tree: NavRoute[] = [
+      {
+        path: '/projects/:id/*',
+        title: (p) => `Project ${p.id}`,
+        children: [
+          {
+            path: '/projects/acme/settings',
+            title: 'Settings',
+            hideInMenu: true,
+            children: [{ path: '/projects/acme/settings/details', title: 'Details', hideInMenu: true }],
+          },
+        ],
+      },
+    ];
+    const page = getActivePage(tree, '/projects/acme/settings/details');
+    expect(page?.menuHref).toBe('/projects/acme');
+    expect(page?.breadcrumbs).toEqual([
+      { label: 'Project acme', href: '/projects/acme' },
+      { label: 'Settings', href: '/projects/acme/settings' },
+      { label: 'Details' },
+    ]);
+  });
+
   it('resolves a hidden detail route with params, menuHref and breadcrumbs, ignoring query and hash', () => {
     const page = getActivePage(routes, '/functions/fn-42?tab=logs#top');
     expect(page).toMatchObject({

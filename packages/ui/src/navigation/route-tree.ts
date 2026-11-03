@@ -81,6 +81,24 @@ function fillPath(path: string, params: Record<string, string>): string {
   return `/${segments.join('/')}`;
 }
 
+/**
+ * Params of a route that is an ancestor (or the match) of `path`: the route's pattern is applied to
+ * the leading segments of the pathname, so `/projects/:id` yields `{ id: 'acme' }` for
+ * `/projects/acme/settings/details`.
+ */
+function routeParams(route: NavRoute, path: string): Record<string, string> {
+  if (!isDynamic(route.path)) return {};
+  const pattern = route.path.replace(/\/\*$/, '');
+  const depth = pattern.split('/').filter(Boolean).length;
+  const leading = `/${path.split('/').filter(Boolean).slice(0, depth).join('/')}`;
+  return extractNavParams(pattern, leading);
+}
+
+function ancestorCrumb(ancestor: NavRoute, path: string): BreadcrumbItem {
+  const params = routeParams(ancestor, path);
+  return { label: resolveTitle(ancestor, params), href: fillPath(ancestor.path, params) };
+}
+
 interface Menu {
   groups: NavGroup[];
   /** Routes that appear as an item in the groups. */
@@ -178,13 +196,12 @@ export function getActivePage(
   if (!found) return null;
 
   const { route, ancestors } = found;
-  const params = isDynamic(route.path) ? extractNavParams(route.path, path) : {};
+  const params = routeParams(route, path);
   const title = resolveTitle(route, params);
 
   const trail: BreadcrumbItem[] = [];
   for (const ancestor of ancestors) {
-    if (!ancestor.hideInBreadcrumb)
-      trail.push({ label: resolveTitle(ancestor, params), href: fillPath(ancestor.path, params) });
+    if (!ancestor.hideInBreadcrumb) trail.push(ancestorCrumb(ancestor, path));
   }
   if (!route.hideInBreadcrumb) trail.push({ label: title });
 
@@ -197,6 +214,6 @@ export function getActivePage(
     params,
     breadcrumbs: home ? [home, ...trail] : trail,
   };
-  if (menuRoute) page.menuHref = fillPath(menuRoute.path, params);
+  if (menuRoute) page.menuHref = fillPath(menuRoute.path, routeParams(menuRoute, path));
   return page;
 }
