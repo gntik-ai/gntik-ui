@@ -50,6 +50,17 @@ describe('NavigationProvider document title', () => {
     expect(document.title).toBe('Console');
   });
 
+  it('does not write a newly mounted override once documentTitle turns false', () => {
+    const { rerender } = render(<Provider pathname="/functions/fn-42" />);
+    expect(document.title).toBe('fn-42 · Console');
+    rerender(
+      <Provider pathname="/functions/fn-42" documentTitle={false}>
+        <EditPage title="Edit fn-42" />
+      </Provider>,
+    );
+    expect(document.title).toBe('fn-42 · Console');
+  });
+
   it('uses a custom separator', () => {
     render(
       <NavigationProvider routes={routes} pathname="/logs" appTitle="Console" titleSeparator=" | ">

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useRef, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useInsertionEffect, useMemo, useRef, type ReactNode } from 'react';
 import type { BreadcrumbItem } from '../components/Breadcrumbs/Breadcrumbs';
 import type { NavGroup } from '../components/NavList/nav-context';
 import { getActivePage, navFromRoutes, type ActivePage, type NavRoute } from './route-tree';
@@ -111,8 +111,12 @@ export function NavigationProvider({
   );
 
   const pageTitle = activePage?.title;
-  useEffect(() => {
+  // Child effects (useDocumentTitle) run before this component's own, so the settings are refreshed
+  // in an insertion effect: it only assigns a ref, runs before any passive effect and not on the server.
+  useInsertionEffect(() => {
     settings.current = { pageTitle, appTitle, separator: titleSeparator, enabled: documentTitle };
+  }, [pageTitle, appTitle, titleSeparator, documentTitle]);
+  useEffect(() => {
     writeTitle(settings.current, overrides.current);
   }, [pageTitle, appTitle, titleSeparator, documentTitle]);
 

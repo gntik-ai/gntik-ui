@@ -87,21 +87,26 @@ interface Menu {
   inMenu: Set<NavRoute>;
 }
 
-function menuItems(routes: readonly NavRoute[], inMenu: Set<NavRoute>): NavItem[] {
+/** Menu labels are only resolved when `labelOf` is given; visibility alone never calls a title function. */
+function menuItems(
+  routes: readonly NavRoute[],
+  inMenu: Set<NavRoute>,
+  labelOf: (route: NavRoute) => string,
+): NavItem[] {
   const items: NavItem[] = [];
   for (const route of routes) {
     if (route.hideInMenu) continue;
     const children = route.hideChildrenInMenu ? [] : (route.children ?? []);
     if (route.flatMenu) {
-      items.push(...menuItems(children, inMenu));
+      items.push(...menuItems(children, inMenu, labelOf));
       continue;
     }
-    const item: NavItem = { label: resolveTitle(route, {}), href: route.path };
+    const item: NavItem = { label: labelOf(route), href: route.path };
     if (route.match) item.match = route.match;
     if (isDynamic(route.path)) item.pattern = route.path;
     if (route.icon) item.icon = route.icon;
     if (route.badge !== undefined) item.badge = route.badge;
-    const nested = menuItems(children, inMenu);
+    const nested = menuItems(children, inMenu, labelOf);
     if (nested.length > 0) item.items = nested;
     inMenu.add(route);
     items.push(item);
@@ -109,11 +114,11 @@ function menuItems(routes: readonly NavRoute[], inMenu: Set<NavRoute>): NavItem[
   return items;
 }
 
-function buildMenu(routes: readonly NavRoute[]): Menu {
+function buildMenu(routes: readonly NavRoute[], labelOf: (route: NavRoute) => string): Menu {
   const inMenu = new Set<NavRoute>();
   const byGroup = new Map<string, NavGroup>();
   for (const route of routes) {
-    const items = menuItems([route], inMenu);
+    const items = menuItems([route], inMenu, labelOf);
     if (items.length === 0) continue;
     const key = route.group ?? '';
     let group = byGroup.get(key);
@@ -133,7 +138,7 @@ function buildMenu(routes: readonly NavRoute[]): Menu {
  * in its group. Pure and router-agnostic: safe in Node and during server rendering.
  */
 export function navFromRoutes(routes: readonly NavRoute[]): NavGroup[] {
-  return buildMenu(routes).groups;
+  return buildMenu(routes, (route) => resolveTitle(route, {})).groups;
 }
 
 interface Candidate {
@@ -183,7 +188,7 @@ export function getActivePage(
   }
   if (!route.hideInBreadcrumb) trail.push({ label: title });
 
-  const { inMenu } = buildMenu(routes);
+  const { inMenu } = buildMenu(routes, () => '');
   const menuRoute = [route, ...[...ancestors].reverse()].find((r) => inMenu.has(r));
   const page: ActivePage = {
     route,

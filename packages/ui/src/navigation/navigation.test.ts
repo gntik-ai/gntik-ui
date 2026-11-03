@@ -96,6 +96,25 @@ describe('navFromRoutes', () => {
 });
 
 describe('getActivePage', () => {
+  it('passes the route params to every functional title, without evaluating unrelated menu labels', () => {
+    const tree: NavRoute[] = [
+      { path: '/logs', title: 'Logs' },
+      {
+        path: '/projects/:id',
+        title: (p) => p.id!.toUpperCase(),
+        children: [
+          { path: '/projects/:id/settings', title: (p) => `${p.id!.toUpperCase()} settings`, hideInMenu: true },
+        ],
+      },
+    ];
+    const page = getActivePage(tree, '/logs');
+    expect(page?.title).toBe('Logs');
+    const settings = getActivePage(tree, '/projects/abc/settings');
+    expect(settings?.title).toBe('ABC settings');
+    expect(settings?.menuHref).toBe('/projects/abc');
+    expect(settings?.breadcrumbs).toEqual([{ label: 'ABC', href: '/projects/abc' }, { label: 'ABC settings' }]);
+  });
+
   it('resolves a hidden detail route with params, menuHref and breadcrumbs, ignoring query and hash', () => {
     const page = getActivePage(routes, '/functions/fn-42?tab=logs#top');
     expect(page).toMatchObject({
