@@ -3,25 +3,39 @@ import { Input } from '../../components/Input';
 import { useI18n } from '../../i18n/I18nProvider';
 import { useAsyncOptions, type LoadOptions } from '../index';
 
-const FRUIT = ['Apple', 'Apricot', 'Banana', 'Blueberry', 'Cherry', 'Grape', 'Lemon', 'Mango', 'Orange', 'Pear'];
+const FRUIT_KEYS = [
+  'apple',
+  'apricot',
+  'banana',
+  'blueberry',
+  'cherry',
+  'grape',
+  'lemon',
+  'mango',
+  'orange',
+  'pear',
+] as const;
 
 // Stands in for a request: resolves later, and gives up when the query goes stale.
-const loadFruit: LoadOptions<string> = (query, { signal }) =>
-  new Promise((resolve, reject) => {
-    const timer = setTimeout(
-      () => resolve(FRUIT.filter((name) => name.toLowerCase().includes(query.trim().toLowerCase()))),
-      200,
-    );
-    signal.addEventListener('abort', () => {
-      clearTimeout(timer);
-      reject(new DOMException('Aborted', 'AbortError'));
+const fruitLoader =
+  (names: readonly string[]): LoadOptions<string> =>
+  (query, { signal }) =>
+    new Promise((resolve, reject) => {
+      const timer = setTimeout(
+        () => resolve(names.filter((name) => name.toLowerCase().includes(query.trim().toLowerCase()))),
+        200,
+      );
+      signal.addEventListener('abort', () => {
+        clearTimeout(timer);
+        reject(new DOMException('Aborted', 'AbortError'));
+      });
     });
-  });
 
 export default function AsyncOptionsExample() {
   const { t } = useI18n();
   const [query, setQuery] = useState('');
-  const { items, loading } = useAsyncOptions(loadFruit, query, { debounceMs: 150 });
+  const names = FRUIT_KEYS.map((key) => t(`hooksExample.asyncOptions.fruit.${key}`));
+  const { items, loading } = useAsyncOptions(fruitLoader(names), query, { debounceMs: 150 });
   return (
     <div className="flex max-w-sm flex-col gap-3 text-sm text-foreground">
       <Input

@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import type { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 import type { HookDoc } from '../doc';
+import { I18nProvider } from '../i18n/I18nProvider';
 
 const here = __dirname;
 const docs = await Promise.all(
@@ -55,5 +56,22 @@ describe('hook examples on the server', () => {
       const printed = own.map(({ Example }) => textOf(renderToString(<Example />))).join('\n');
       for (const value of values) expect(printed, value).toContain(value);
     });
+  });
+
+  it('translates the labels shown inside the examples', () => {
+    const fit = examples.find((e) => e.base === 'useFitCountExample')?.Example;
+    if (!fit) throw new Error('useFitCountExample is missing');
+    const html = renderToString(
+      <I18nProvider locale="es">
+        {(() => {
+          const Fit = fit;
+          return <Fit />;
+        })()}
+      </I18nProvider>,
+    );
+    const printed = textOf(html);
+    expect(printed).toContain('Diseño');
+    expect(printed).toContain('Accesibilidad');
+    expect(printed).not.toContain('Accessibility');
   });
 });

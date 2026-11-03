@@ -2,11 +2,12 @@ import { useRef } from 'react';
 import { useI18n } from '../../i18n/I18nProvider';
 import { useFitCount } from '../index';
 
-const TAGS = ['Design', 'Frontend', 'Accessibility', 'Release', 'Documentation', 'Infrastructure'];
+const TAG_KEYS = ['design', 'frontend', 'accessibility', 'release', 'documentation', 'infrastructure'] as const;
 const chip = 'whitespace-nowrap rounded-md border border-border bg-card px-2 py-1 text-foreground';
 
 export default function FitCountExample() {
   const { t } = useI18n();
+  const TAGS = TAG_KEYS.map((key) => t(`hooksExample.fitCount.tag.${key}`));
   const container = useRef<HTMLDivElement>(null);
   const measure = useRef<HTMLDivElement>(null);
   const fit = useFitCount(true, container, measure, TAGS.length);
