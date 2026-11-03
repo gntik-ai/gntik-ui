@@ -68,6 +68,21 @@ test('the component index links every documented entry without live previews', a
   });
 });
 
+test('Foundations explains the opt-in base layer and its document and app-root hooks', async () => {
+  await catalog(async ({ render, server }) => {
+    await server.ssrLoadModule('/src/catalog/foundations.jsx');
+    const doc = render('foundations');
+    const text = doc.body.textContent;
+    assert.match(text, /opt-in/i);
+    assert.match(text, /@layer base/);
+    assert.match(text, /utilities.*override/i);
+    assert.match(text, /data-scroll-gutter="stable"/);
+    assert.match(text, /Next\.js App Router/);
+    assert.match(text, /data-app-root/);
+    assert.match(text, /#root.*#__next/);
+  });
+});
+
 test('Select has a single page heading, anatomy, examples, API and part-specific styling hooks', async () => {
   await catalog(async ({ render }) => {
     const doc = render('ui-components', { itemId: 'select' });

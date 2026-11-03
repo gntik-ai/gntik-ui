@@ -3,7 +3,6 @@
 // Each viewer embeds this page in an iframe, so breakpoints follow the frame width and every
 // frame can show its own theme. Density and direction apply to the whole document (no wrapper
 // elements, so the default render is unchanged).
-import './styles.css';
 import { StrictMode, Suspense, lazy, useMemo } from 'react';
 import { createRoot } from 'react-dom/client';
 import { DensityProvider, I18nProvider, ThemeProvider, ToastProvider, Toaster, TooltipProvider } from '@gntik-ai/ui';

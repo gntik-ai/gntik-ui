@@ -36,7 +36,6 @@
 html, body { margin: 0; padding: 0; height: 100%; }
 svg { display: block; }
 
-
 /* Preview surface: subtle dot grid */
 .preview-surface {
   background-color: hsl(var(--background));

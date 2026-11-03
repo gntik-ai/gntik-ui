@@ -47,6 +47,7 @@ export default defineConfig({
         chartExport: fileURLToPath(new URL('./chart-export.html', import.meta.url)),
         labels: fileURLToPath(new URL('./block-labels.html', import.meta.url)),
         preview: fileURLToPath(new URL('./preview.html', import.meta.url)),
+        previewWithoutBase: fileURLToPath(new URL('./preview-without-base.html', import.meta.url)),
       },
     },
   },

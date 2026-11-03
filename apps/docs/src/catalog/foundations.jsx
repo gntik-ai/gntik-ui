@@ -5,6 +5,7 @@
 import layersCss from '@gntik-ai/tokens/layers.css?raw';
 import typographyCss from '@gntik-ai/tokens/typography.css?raw';
 import { useI18n } from '@gntik-ai/ui';
+import { baseLayerMessages } from '../i18n/base-layer-messages';
 
 // Docs build directly from source, without generating the token package's dist exports.
 const namedLayers = [...layersCss.matchAll(/--z-([\w-]+):\s*(-?\d+);/g)].map(([, name, value]) => [name, value]);
@@ -44,7 +45,8 @@ for (const [, role, property, value] of typographyCss.matchAll(
   );
 
   function FoundationsSection() {
-    const { t } = useI18n();
+    const { t, locale } = useI18n();
+    const baseCopy = baseLayerMessages[locale.split('-')[0]] ?? baseLayerMessages.en;
     const surface = [
       ['Background', 'bg-background', '--background'],
       ['Foreground', 'bg-foreground', '--foreground'],
@@ -209,10 +211,23 @@ for (const [, role, property, value] of typographyCss.matchAll(
           intro="The base of the system: color, typography, spacing, radii and shadows — all as tokens in tokens/brand.css. Change the brand block and the whole catalog reskins. Three themes: light · dark · high_contrast."
         />
 
-        <CodeBlock
-          lang="css"
-          code={'@import "tailwindcss";\n@import "@gntik-ai/ui/styles.css";\n@import "@gntik-ai/tokens/base.css";'}
-        />
+        <Block title={baseCopy.title}>
+          <div className="space-y-4 text-foreground">
+            <p>{baseCopy.overview}</p>
+            <CodeBlock
+              lang="css"
+              code={'@import "tailwindcss";\n@import "@gntik-ai/ui/styles.css";\n@import "@gntik-ai/tokens/base.css";'}
+            />
+            <p>{baseCopy.gutter}</p>
+            <p>{baseCopy.root}</p>
+            <CodeBlock
+              lang="tsx"
+              code={
+                '<html data-scroll-gutter="stable">\n  <body>\n    <div data-app-root>{children}</div>\n  </body>\n</html>'
+              }
+            />
+          </div>
+        </Block>
 
         <Block title="Brand / logo" hint="do not recolour · clear-space ≥ height of the m">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

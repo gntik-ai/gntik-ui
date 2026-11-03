@@ -5,7 +5,8 @@ import { createRequire } from 'node:module';
 const require = createRequire(new URL('../../../packages/ui/package.json', import.meta.url));
 const axeSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
-const preview = (id, theme = 'dark') => `/preview.html?kind=block&id=${id}&theme=${theme}`;
+const preview = (id, theme = 'dark', base = true) =>
+  `/preview${base ? '' : '-without-base'}.html?kind=block&id=${id}&theme=${theme}`;
 
 async function expectAccessible(page) {
   await page.addScriptTag({ content: axeSource });
@@ -17,28 +18,6 @@ async function expectAccessible(page) {
     return result.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`);
   });
   expect(violations).toEqual([]);
-}
-
-// Model omitting only base.css in the already compiled docs entry. The compiler
-// test separately verifies that importing ui/styles.css never includes these rules.
-async function omitBase(page) {
-  await page.evaluate(() => {
-    const selectors = new Set([
-      'body',
-      '::selection',
-      'html',
-      'html[data-scroll-gutter="stable"]',
-      ':where(#root, #__next, [data-app-root])',
-    ]);
-    const remove = (rules) => {
-      for (let i = rules.cssRules.length - 1; i >= 0; i--) {
-        const rule = rules.cssRules[i];
-        if (selectors.has(rule.selectorText)) rules.deleteRule(i);
-        else if (rule.cssRules) remove(rule);
-      }
-    };
-    for (const sheet of document.styleSheets) remove(sheet);
-  });
 }
 
 for (const theme of ['dark', 'light', 'high_contrast']) {
@@ -89,9 +68,18 @@ test('theme changes apply live and a body utility overrides the base layer', asy
   await page.locator('html').evaluate((html) => {
     html.className = 'high_contrast';
   });
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(0, 0, 0)');
-  await expect(page.locator('body')).toHaveCSS('color', 'rgb(255, 255, 255)');
-  expect(before).not.toEqual(['rgb(0, 0, 0)', 'rgb(255, 255, 255)']);
+  const contrast = await page.evaluate(() => {
+    const probe = document.createElement('div');
+    probe.style.cssText = 'background-color:hsl(var(--background));color:hsl(var(--foreground))';
+    document.body.append(probe);
+    const style = getComputedStyle(probe);
+    const colors = [style.backgroundColor, style.color];
+    probe.remove();
+    return colors;
+  });
+  await expect(page.locator('body')).toHaveCSS('background-color', contrast[0]);
+  await expect(page.locator('body')).toHaveCSS('color', contrast[1]);
+  expect(before).not.toEqual(contrast);
   await page.locator('body').evaluate((body) => body.classList.add('bg-card'));
   const card = await page.evaluate(() => {
     const probe = document.createElement('div');
@@ -102,7 +90,7 @@ test('theme changes apply live and a body utility overrides the base layer', asy
     return color;
   });
   await expect(page.locator('body')).toHaveCSS('background-color', card);
-  expect(card).not.toBe('rgb(0, 0, 0)');
+  expect(card).not.toBe(contrast[0]);
 });
 
 test('root isolation keeps a z-index 9999 child beneath a portalled Popover', async ({ page }) => {
@@ -141,13 +129,12 @@ for (const [base, theme] of [
 ]) {
   for (const [id, trigger, role] of overlays) {
     test(`${id} backdrop covers the viewport / base=${base} / ${theme}`, async ({ page }) => {
-      await page.goto(preview(id, theme));
+      await page.goto(preview(id, theme, base));
       const opener = page.getByRole('button', { name: trigger, exact: true });
       await expect(opener).toBeVisible();
       if (!base) {
-        await omitBase(page);
         await expect(page.locator('body')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
-        await expect(page.locator('body')).toHaveCSS('isolation', 'auto');
+        await expect(page.locator('#root')).toHaveCSS('isolation', 'auto');
         const selection = await page
           .locator('body')
           .evaluate((body) => getComputedStyle(body, '::selection').backgroundColor);

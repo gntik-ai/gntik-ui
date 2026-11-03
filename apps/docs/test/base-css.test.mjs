@@ -15,7 +15,9 @@ test('all five Vite apps opt in without handwritten body classes', async () => {
     assert.match(css, /@import ["']@gntik-ai\/tokens\/base\.css["'];/, app);
     assert.match(await read(`../../${app}/index.html`), /<body>/, app);
   }
-  assert.match(await read('../preview.html'), /<body>/);
+  for (const entry of ['preview', 'chart-export', 'block-labels']) {
+    assert.match(await read(`../${entry}.html`), /<body>/, entry);
+  }
 });
 
 test('compiling ui styles keeps the baseline opt-in and emits the fixed backdrop fallback', async () => {
@@ -25,7 +27,9 @@ test('compiling ui styles keeps the baseline opt-in and emits the fixed backdrop
     async loadStylesheet(id, directory) {
       const file = id.startsWith('.')
         ? path.resolve(directory, id)
-        : createRequire(path.join(directory, 'package.json')).resolve(id);
+        : createRequire(path.join(directory, 'package.json')).resolve(
+            id === 'tailwindcss' ? 'tailwindcss/index.css' : id,
+          );
       return { path: file, base: path.dirname(file), content: await fs.readFile(file, 'utf8') };
     },
   };
@@ -44,4 +48,13 @@ test('compiling ui styles keeps the baseline opt-in and emits the fixed backdrop
   assert.match(withBase, /@layer base\s*\{[\s\S]*?body\s*\{\s*background-color: hsl\(var\(--background\)\)/);
   assert.match(withBase, /@layer utilities[\s\S]*\.bg-card\s*\{\s*background-color: hsl\(var\(--card\)\)/);
   assert.match(withBase, /::selection/);
+
+  // Compile the real opt-out preview entry too: the browser must load a page
+  // whose stylesheet never imported base.css, rather than deleting CSSOM rules.
+  const optOut = (
+    await compile(await read('../src/base-layer-without-base.css'), { ...options, base: path.join(base, 'src') })
+  ).build(classes);
+  assert.doesNotMatch(optOut, /::selection|isolation: isolate|background-color: hsl\(var\(--background\)\)/);
+  assert.match(optOut, /position: var\(--backdrop-position,\s*fixed\);/);
+  assert.match(optOut, /min-height: 100dvh;/);
 });
