@@ -20,6 +20,7 @@ const REGISTRY = [
   ]},
   { group: 'Library', icon: 'bricks', items: [
     { id: 'ui-components', label: '@gntik-ai/ui', icon: 'bricks', status: 'done', blurb: 'Package components on Base UI: live examples, keyboard contract and source.' },
+    { id: 'ui-hooks', label: 'Hooks', icon: 'bricks', status: 'done', blurb: 'Behaviour hooks from @gntik-ai/ui/hooks: signature, what they return on the server, a live example and source.' },
   ]},
   { group: 'Chat', icon: 'chat', items: [
     { id: 'chat-components', label: '@gntik-ai/chat', icon: 'chat', status: 'done', blurb: 'Chat pack: messages, composer, tool calls, citations, attachments and model picker, with live examples.' },

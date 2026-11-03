@@ -23,6 +23,10 @@
       "default": "./dist/theme-script.js"
     },
     "./theme-bootstrap.js": "./dist/theme-bootstrap.js",
+    "./hooks": {
+      "types": "./dist/hooks.d.ts",
+      "default": "./dist/hooks.js"
+    },
     "./forms": {
       "types": "./dist/forms.d.ts",
       "default": "./dist/forms.js"

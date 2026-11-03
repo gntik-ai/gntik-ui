@@ -1,4 +1,4 @@
-export const itemSections = ['ui-components', 'blocks', 'layouts', 'templates'];
+export const itemSections = ['ui-components', 'ui-hooks', 'blocks', 'layouts', 'templates'];
 
 export const routeHash = (section, id) => `#${section}${id ? `/${encodeURIComponent(id)}` : ''}`;
 
@@ -12,7 +12,9 @@ export function parseRoute(hash, sections, items) {
     return fallback;
   }
   if (value.startsWith('ui-')) {
-    const legacy = items.find((i) => i.section === 'ui-components' && i.folder === value.slice(3));
+    const legacy = items.find(
+      (i) => (i.section === 'ui-components' || i.section === 'ui-hooks') && i.folder === value.slice(3),
+    );
     if (legacy) return { section: legacy.section, id: legacy.id, item: legacy };
   }
   const [section, id, extra] = value.split('/');

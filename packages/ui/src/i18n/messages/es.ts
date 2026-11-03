@@ -14,6 +14,7 @@ import { markdownEs } from './markdown-messages';
 import { searchableSelectEs } from './searchable-select-messages';
 import { cspEs } from './csp-messages';
 import { logoCloudEs } from './logo-cloud-messages';
+import { hookExampleEs } from './hook-example-messages';
 import type { Messages } from './en';
 export const es: Messages = {
   ...fieldSizesEs,
@@ -23,6 +24,7 @@ export const es: Messages = {
   ...forgotPasswordEs,
   ...resetPasswordEs,
   ...logoCloudEs,
+  ...hookExampleEs,
   ...chatComposerEs,
   ...fieldVariantsEs,
   ...tableMenuEs,

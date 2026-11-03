@@ -24,6 +24,13 @@ describe.skipIf(!hasRegistry)('against the repo kit-registry.json', () => {
     expect(r.json.keyboard.map((k: { key: string }) => k.key).join(' ')).toMatch(/Esc/);
   });
 
+  it('search hook finds the ui-hooks item, a kind this CLI already accepts', async () => {
+    const r = await cli(['search', 'hook', '--json', '--registry', REPO]);
+    expect(r.code).toBe(0);
+    const hooks = r.json.items.find((i: { id: string }) => i.id === 'ui-hooks');
+    expect(hooks).toMatchObject({ id: 'ui-hooks', kind: 'component', group: 'Hooks' });
+  });
+
   it('every file listed in the registry exists', async () => {
     const r = await cli(['list', '--json', '--registry', REPO]);
     for (const { id } of r.json.items) {

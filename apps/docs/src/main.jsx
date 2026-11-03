@@ -9,6 +9,7 @@ import './catalog/install.jsx';
 import './catalog/strict-csp.jsx';
 import './catalog/api-reference.jsx';
 import './catalog/library.jsx';
+import './catalog/hooks.jsx';
 import './catalog/chat.jsx';
 import './catalog/viewers.jsx';
 import './catalog/app-shell.jsx';

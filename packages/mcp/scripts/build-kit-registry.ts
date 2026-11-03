@@ -7,6 +7,7 @@
  * Conventions it relies on:
  *   packages/ui/src/components/<Name>/<Name>.doc.ts      → kind "component"
  *   packages/ui/src/layouts/<Name>/<Name>.doc.ts         → kind "layout"
+ *   packages/ui/src/hooks/                               → kind "component", id ui-hooks, group Hooks
  *   packages/chat/src/<Name>/<Name>.doc.ts               → kind "component" (package @gntik-ai/chat)
  *   packages/blocks/src/<family>/<Name>/block.meta.ts    → kind "block"
  *   packages/templates/src/<id>/template.meta.ts         → kind "template"
@@ -133,6 +134,8 @@ interface Source {
   targetBase: string;
   id?: string;
   meta?: Meta;
+  /** Files (relative to `dir`) that stay out of the item, e.g. a barrel that reaches into other items. */
+  exclude?: string[];
 }
 
 export function collectSources(): Source[] {
@@ -151,6 +154,20 @@ export function collectSources(): Source[] {
       group: 'Utilities',
       description: 'cn() class merging and tv() variants helpers used by every component.',
     },
+  });
+  // The hook modules of @gntik-ai/ui/hooks. kind stays "component" (the CLI rejects unknown kinds); the
+  // group "Hooks" is what `gntik-ui search hook` and the docs sidebar key on. The index.ts barrel is npm-only:
+  // it re-exports hooks that live in the toast, combobox, overflow-list, virtual-list and live-announcer
+  // items, and copying it would make every eject of a hook user pull in those five.
+  out.push({
+    kind: 'component',
+    pkg: '@gntik-ai/ui',
+    dir: path.join(ROOT, 'packages/ui/src/hooks'),
+    metaFile: path.join(ROOT, 'packages/ui/src/hooks/hooks.meta.ts'),
+    metaExport: 'meta',
+    targetBase: 'components/hooks',
+    id: 'ui-hooks',
+    exclude: ['index.ts'],
   });
   out.push({
     kind: 'component',
@@ -242,7 +259,9 @@ async function build() {
   for (const s of sources) {
     const meta = s.meta ?? (await load(s.metaFile, s.metaExport));
     const id = idOf(s);
-    const own = walk(s.dir).filter((f) => isSource(path.basename(f)));
+    const own = walk(s.dir).filter(
+      (f) => isSource(path.basename(f)) && !s.exclude?.includes(path.relative(s.dir, f).split(path.sep).join('/')),
+    );
     const { dependencies, registryDependencies, files } = scanImports(own, folderToId, id);
     // Shared helpers live outside the item folder: keep their path relative to the package src.
     const srcRoot = s.dir.slice(0, s.dir.indexOf(`${path.sep}src${path.sep}`) + 5);

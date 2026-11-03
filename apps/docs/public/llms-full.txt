@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 129 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 130 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -69,7 +69,7 @@ Copies a string, or the result of a (possibly async) getter, to the clipboard. I
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/CopyButton/CopyButton.doc.ts
 - Primitive: `@base-ui/react/button`
 - ARIA pattern: button + status
-- Registry dependencies: button, live-announcer, tooltip, ui-utils
+- Registry dependencies: button, live-announcer, tooltip, ui-hooks, ui-utils
 - Install: `gntik-ui add copy-button`; own the source with `gntik-ui eject copy-button`
 
 Keyboard:
@@ -884,7 +884,7 @@ Scroll-snap media strip: one, two, three or auto-width slides per view, previous
 - Package: `@gntik-ai/ui` · export `Carousel` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Carousel/Carousel.doc.ts
 - ARIA pattern: APG carousel (region with aria-roledescription="carousel", slides as labelled groups)
-- Registry dependencies: ui-utils
+- Registry dependencies: ui-hooks, ui-utils
 - Install: `gntik-ui add carousel`; own the source with `gntik-ui eject carousel`
 
 Keyboard:
@@ -1040,7 +1040,7 @@ Read-only code panel with optional whole-source grammars: install the optional p
 - Package: `@gntik-ai/ui` · export `CodeBlock` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/CodeBlock/CodeBlock.doc.ts
 - ARIA pattern: button · region
-- Registry dependencies: copy-button, live-announcer, ui-utils
+- Registry dependencies: ui-hooks, ui-utils
 - Install: `gntik-ui add code-block`; own the source with `gntik-ui eject code-block`
 
 Keyboard:
@@ -1186,7 +1186,7 @@ Collapsible JSON inspector built on TreeList: objects and arrays expand, values 
 - Package: `@gntik-ai/ui` · export `JsonViewer` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/JsonViewer/JsonViewer.doc.ts
 - ARIA pattern: tree view
-- Registry dependencies: badge, copy-button, live-announcer, tree-list, ui-utils
+- Registry dependencies: badge, tree-list, ui-hooks, ui-utils
 - Install: `gntik-ui add json-viewer`; own the source with `gntik-ui eject json-viewer`
 
 Keyboard:
@@ -1306,7 +1306,7 @@ Keyboard key chip (<kbd>) for shortcuts and hints, in three sizes. Use mod in Kb
 
 - Package: `@gntik-ai/ui` · export `Kbd` · group Display · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Kbd/Kbd.doc.ts
-- Registry dependencies: ui-utils
+- Registry dependencies: ui-hooks, ui-utils
 - Install: `gntik-ui add kbd`; own the source with `gntik-ui eject kbd`
 
 Tokens: border, card, muted-foreground
@@ -1859,7 +1859,7 @@ Streamed command output (build, deploy, job logs). ANSI SGR colours map to contr
 - Package: `@gntik-ai/ui` · export `Terminal` · group Display · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Terminal/Terminal.doc.ts
 - ARIA pattern: log · button · searchbox
-- Registry dependencies: copy-button, live-announcer, ui-utils
+- Registry dependencies: ui-hooks, ui-utils
 - Install: `gntik-ui add terminal`; own the source with `gntik-ui eject terminal`
 
 Keyboard:
@@ -5284,6 +5284,53 @@ export default function TransferListCatalogDefaults() {
 }
 ```
 
+### Hooks (`ui-hooks`)
+
+Behaviour hooks of @gntik-ai/ui, importable from @gntik-ai/ui/hooks or the package root: clipboard, storage state, operating system, hotkeys, media queries, breakpoints, announcements, toasts, async options, overflow fitting and virtual windows. Each is safe to render on the server and documents the value it returns there.
+
+- Package: `@gntik-ai/ui` · export `Hooks` · group Hooks · status stable
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/hooks/hooks.meta.ts
+- Registry dependencies: copy-button, live-announcer, ui-utils
+- Install: `gntik-ui add ui-hooks`; own the source with `gntik-ui eject ui-hooks`
+
+Usage:
+
+```tsx
+import { useState } from 'react';
+import { Button } from '@gntik-ai/ui';
+import { LiveAnnouncer } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
+import { useAnnounce } from '@gntik-ai/ui';
+
+function SaveDraft() {
+  const { t } = useI18n();
+  const announce = useAnnounce();
+  const [sent, setSent] = useState(0);
+  return (
+    <div className="flex flex-col items-start gap-3 text-sm text-foreground">
+      <Button
+        onClick={() => {
+          announce(t('hooksExample.announce.message'));
+          setSent((count) => count + 1);
+        }}
+      >
+        {t('hooksExample.announce.send')}
+      </Button>
+      <p>{t('hooksExample.announce.sent', { count: sent })}</p>
+      <p className="text-muted-foreground">{t('hooksExample.announce.hint')}</p>
+    </div>
+  );
+}
+
+export default function AnnounceExample() {
+  return (
+    <LiveAnnouncer>
+      <SaveDraft />
+    </LiveAnnouncer>
+  );
+}
+```
+
 ### AspectRatio (`aspect-ratio`)
 
 A box locked to a width / height ratio (16:9 by default) for images, video and embeds; direct children fill it (object-cover). Radius none–xl and an optional bordered placeholder surface.
@@ -5490,7 +5537,7 @@ Split layouts with draggable dividers: ResizablePanelGroup (horizontal or vertic
 - Package: `@gntik-ai/ui` · export `Resizable` · group Layout · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Resizable/Resizable.doc.ts
 - ARIA pattern: window splitter
-- Registry dependencies: ui-utils
+- Registry dependencies: ui-hooks, ui-utils
 - Install: `gntik-ui add resizable`; own the source with `gntik-ui eject resizable`
 
 Keyboard:
@@ -6689,7 +6736,7 @@ export default function BottomSheetDetails() {
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/CommandPalette/CommandPalette.doc.ts
 - Primitive: `@base-ui/react/dialog + @base-ui/react/autocomplete (inline)`
 - ARIA pattern: modal dialog with a combobox and listbox
-- Registry dependencies: kbd, ui-utils
+- Registry dependencies: kbd, ui-hooks, ui-utils
 - Install: `gntik-ui add command-palette`; own the source with `gntik-ui eject command-palette`
 
 Keyboard:
@@ -7465,7 +7512,7 @@ Onboarding steps anchored to elements (selector, ref or getter): a non-modal pop
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Tour/Tour.doc.ts
 - Primitive: `@base-ui/react/popover`
 - ARIA pattern: non-modal dialog (popover) per step
-- Registry dependencies: button, popover, ui-utils
+- Registry dependencies: button, popover, ui-hooks, ui-utils
 - Install: `gntik-ui add tour`; own the source with `gntik-ui eject tour`
 
 Keyboard:
@@ -7989,7 +8036,7 @@ Documentation shell: top bar · left nav (a NavList) · article · right table o
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/layouts/DocsLayout/DocsLayout.doc.ts
 - Primitive: `@base-ui/react/collapsible (small-screen table of contents)`
 - ARIA pattern: landmarks (header, nav, main, "On this page" nav) + disclosure
-- Registry dependencies: collapsible, ui-utils, visually-hidden
+- Registry dependencies: collapsible, ui-hooks, ui-utils, visually-hidden
 - Install: `gntik-ui add docs-layout`; own the source with `gntik-ui eject docs-layout`
 
 Keyboard:
@@ -8106,7 +8153,7 @@ Main area with a pinnable right panel (properties, details, comments). Pinned, t
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/layouts/InspectorLayout/InspectorLayout.doc.ts
 - Primitive: `@base-ui/react/drawer (small screens)`
 - ARIA pattern: disclosure (toggle → complementary panel) + toggle button (pin)
-- Registry dependencies: button, drawer, ui-utils
+- Registry dependencies: button, drawer, ui-hooks, ui-utils
 - Install: `gntik-ui add inspector-layout`; own the source with `gntik-ui eject inspector-layout`
 
 Keyboard:
@@ -8514,7 +8561,7 @@ Application shell: a collapsible sidebar (expanded, 64px icon rail or off-canvas
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/layouts/SidebarLayout/SidebarLayout.doc.ts
 - Primitive: `@base-ui/react/drawer`
 - ARIA pattern: landmarks (complementary sidebar, banner topbar, main) + skip link + disclosure toggle
-- Registry dependencies: button, drawer, ui-utils, visually-hidden
+- Registry dependencies: button, drawer, ui-hooks, ui-utils, visually-hidden
 - Install: `gntik-ui add sidebar-layout`; own the source with `gntik-ui eject sidebar-layout`
 
 Keyboard:

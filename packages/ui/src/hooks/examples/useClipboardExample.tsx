@@ -7,10 +7,11 @@ import { useClipboard } from '../useClipboard';
 
 function ClipboardRow() {
   const { t } = useI18n();
-  const { copy } = useClipboard({ announce: true });
+  const { copy, status } = useClipboard({ announce: true });
   return (
     <div className="flex items-center justify-between gap-6 rounded-md border border-border bg-card p-4 text-foreground">
       <code className="text-sm">run_42</code>
+      <span className="text-xs text-muted-foreground">{t('hooksExample.clipboard.status', { status })}</span>
       <Menu>
         <MenuTrigger render={<Button variant="secondary" />}>{t('common.moreActions')}</MenuTrigger>
         <MenuContent>

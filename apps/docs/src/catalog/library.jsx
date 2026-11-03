@@ -1,7 +1,7 @@
 /* ============================================================================
    Gntik UI · library.jsx — @gntik-ai/ui package components, rendered live.
    Reads every component folder in packages/ui: its *.doc.ts (name, group,
-   keyboard contract, tokens) and its examples/*.tsx, which are both the
+   keyboard contract, tokens; hooks have their own page, hooks.jsx) and its examples/*.tsx, which are both the
    preview and the copyable code (one file, no drift). Also reads the optional
    @gntik-ai/ui/forms entry (packages/ui/src/forms: FieldArray and its examples).
    Below the examples, the generated API reference (props, keyboard,
@@ -11,14 +11,6 @@
 import { buildEntries, sortEntries, ComponentEntry } from './package-docs.jsx';
 import { ComponentIndex } from './component-index.jsx';
 import { UI_PAGES } from './item-inventory.js';
-
-const hooksDocs = import.meta.glob('../../../../packages/ui/src/hooks/*.doc.ts', { eager: true, import: 'doc' });
-const hooksExamples = import.meta.glob('../../../../packages/ui/src/hooks/examples/*.tsx', { eager: true });
-const hooksSources = import.meta.glob('../../../../packages/ui/src/hooks/examples/*.tsx', {
-  eager: true,
-  query: '?raw',
-  import: 'default',
-});
 
 const docs = import.meta.glob('../../../../packages/ui/src/components/*/*.doc.ts', {
   eager: true,
@@ -96,15 +88,6 @@ const exampleOwnerOf = (path, folders) => {
 
 const COMPONENTS = sortEntries([
   ...buildEntries({
-    docs: hooksDocs,
-    examples: withDefault(hooksExamples),
-    sources: hooksSources,
-    folderOf: docNameOf,
-    ownerOf: exampleOwnerOf,
-    forProduct,
-    apiKind: 'hooks',
-  }),
-  ...buildEntries({
     docs: themeDocs,
     examples: withDefault(themeExamples),
     sources: themeSources,
@@ -159,7 +142,7 @@ const entryImports = {
 const entries = COMPONENTS.map((c) => ({
   ...c,
   id: UI_PAGES.find((p) => p.folder === c.folder).id,
-  importName: c.apiKind === 'hooks' ? c.folder : (entryImports[c.folder] ?? c.name),
+  importName: entryImports[c.folder] ?? c.name,
 }));
 
 function LibrarySection({ itemId }) {

@@ -4072,6 +4072,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -4201,6 +4205,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -4411,6 +4419,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -4539,6 +4551,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -4702,6 +4718,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -4831,6 +4851,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -5024,6 +5048,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -5136,10 +5164,6 @@
           "target": "components/ui/carousel/index.ts"
         },
         {
-          "path": "packages/ui/src/hooks/useMediaQuery.ts",
-          "target": "components/hooks/useMediaQuery.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -5186,6 +5210,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -5242,10 +5270,10 @@
       ],
       "dependencies": [
         "@base-ui/react",
-        "@gntik-ai/tokens",
         "lucide-react"
       ],
       "registryDependencies": [
+        "ui-hooks",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Carousel/Carousel.doc.ts"
@@ -5558,10 +5586,6 @@
           "target": "components/ui/code-block/tokenize.ts"
         },
         {
-          "path": "packages/ui/src/hooks/useClipboard.ts",
-          "target": "components/hooks/useClipboard.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -5608,6 +5632,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -5667,8 +5695,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "copy-button",
-        "live-announcer",
+        "ui-hooks",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/CodeBlock/CodeBlock.doc.ts"
@@ -5802,6 +5829,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -5896,22 +5927,6 @@
           "target": "components/ui/command-palette/useCommandPaletteShortcut.ts"
         },
         {
-          "path": "packages/ui/src/hooks/hotkey-registry.ts",
-          "target": "components/hooks/hotkey-registry.ts"
-        },
-        {
-          "path": "packages/ui/src/hooks/parse-hotkey.ts",
-          "target": "components/hooks/parse-hotkey.ts"
-        },
-        {
-          "path": "packages/ui/src/hooks/useHotkeys.ts",
-          "target": "components/hooks/useHotkeys.ts"
-        },
-        {
-          "path": "packages/ui/src/hooks/useOs.ts",
-          "target": "components/hooks/useOs.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -5958,6 +5973,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -6018,6 +6037,7 @@
       ],
       "registryDependencies": [
         "kbd",
+        "ui-hooks",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/CommandPalette/CommandPalette.doc.ts"
@@ -6140,10 +6160,6 @@
           "target": "components/ui/copy-button/index.ts"
         },
         {
-          "path": "packages/ui/src/hooks/useClipboard.ts",
-          "target": "components/hooks/useClipboard.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -6190,6 +6206,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -6252,6 +6272,7 @@
         "button",
         "live-announcer",
         "tooltip",
+        "ui-hooks",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/CopyButton/CopyButton.doc.ts"
@@ -6348,6 +6369,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -6496,6 +6521,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -6655,6 +6684,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -6794,6 +6827,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -6930,6 +6967,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -7087,6 +7128,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -7229,6 +7274,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -7376,6 +7425,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -7507,6 +7560,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -7648,6 +7705,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -7785,6 +7846,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8018,6 +8083,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -8149,6 +8218,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -8275,10 +8348,6 @@
           "target": "components/ui/json-viewer/json-viewer.variants.ts"
         },
         {
-          "path": "packages/ui/src/hooks/useClipboard.ts",
-          "target": "components/hooks/useClipboard.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -8325,6 +8394,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8385,9 +8458,8 @@
       ],
       "registryDependencies": [
         "badge",
-        "copy-button",
-        "live-announcer",
         "tree-list",
+        "ui-hooks",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/JsonViewer/JsonViewer.doc.ts"
@@ -8464,6 +8536,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8549,10 +8625,6 @@
           "target": "components/ui/kbd/kbd.variants.ts"
         },
         {
-          "path": "packages/ui/src/hooks/useOs.ts",
-          "target": "components/hooks/useOs.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -8599,6 +8671,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8657,6 +8733,7 @@
         "@base-ui/react"
       ],
       "registryDependencies": [
+        "ui-hooks",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Kbd/Kbd.doc.ts"
@@ -8737,6 +8814,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -8870,6 +8951,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -9017,6 +9102,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -9146,6 +9235,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -9281,6 +9374,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -9497,6 +9594,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -9632,6 +9733,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -9891,6 +9996,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -10066,6 +10175,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -10208,6 +10321,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -10344,6 +10461,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -10487,6 +10608,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -10616,6 +10741,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -10750,6 +10879,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -10887,6 +11020,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -11020,6 +11157,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11175,6 +11316,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -11309,6 +11454,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -11439,6 +11588,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11578,6 +11731,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11748,6 +11905,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -11944,10 +12105,6 @@
           "target": "components/ui/resizable/resizable.variants.ts"
         },
         {
-          "path": "packages/ui/src/hooks/useLocalStorage.ts",
-          "target": "components/hooks/useLocalStorage.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -11994,6 +12151,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -12053,6 +12214,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
+        "ui-hooks",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Resizable/Resizable.doc.ts"
@@ -12133,6 +12295,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -12306,6 +12472,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -12439,6 +12609,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -12612,6 +12786,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -12835,6 +13013,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -12987,6 +13169,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -13213,6 +13399,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -13410,6 +13600,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -13541,6 +13735,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -13631,10 +13829,6 @@
           "target": "components/ui/terminal/terminal.variants.ts"
         },
         {
-          "path": "packages/ui/src/hooks/useClipboard.ts",
-          "target": "components/hooks/useClipboard.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -13681,6 +13875,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -13740,8 +13938,7 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "copy-button",
-        "live-announcer",
+        "ui-hooks",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Terminal/Terminal.doc.ts"
@@ -13926,6 +14123,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -14062,6 +14263,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -14211,6 +14416,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -14344,6 +14553,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -14480,6 +14693,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -14609,6 +14826,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -14773,6 +14994,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -14914,6 +15139,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -15123,6 +15352,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -15205,10 +15438,6 @@
           "target": "components/ui/tour/tour.variants.ts"
         },
         {
-          "path": "packages/ui/src/hooks/useMediaQuery.ts",
-          "target": "components/hooks/useMediaQuery.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -15255,6 +15484,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -15311,12 +15544,12 @@
       ],
       "dependencies": [
         "@base-ui/react",
-        "@gntik-ai/tokens",
         "lucide-react"
       ],
       "registryDependencies": [
         "button",
         "popover",
+        "ui-hooks",
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/Tour/Tour.doc.ts"
@@ -15393,6 +15626,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -15541,6 +15778,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -15637,6 +15878,163 @@
       "docs": "packages/chat/src/TypingIndicator/TypingIndicator.doc.ts"
     },
     {
+      "id": "ui-hooks",
+      "kind": "component",
+      "name": "Hooks",
+      "package": "@gntik-ai/ui",
+      "group": "Hooks",
+      "status": "stable",
+      "description": "Behaviour hooks of @gntik-ai/ui, importable from @gntik-ai/ui/hooks or the package root: clipboard, storage state, operating system, hotkeys, media queries, breakpoints, announcements, toasts, async options, overflow fitting and virtual windows. Each is safe to render on the server and documents the value it returns there.",
+      "files": [
+        {
+          "path": "packages/ui/src/hooks/hotkey-registry.ts",
+          "target": "components/hooks/hotkey-registry.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/parse-hotkey.ts",
+          "target": "components/hooks/parse-hotkey.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useBreakpoint.ts",
+          "target": "components/hooks/useBreakpoint.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useClipboard.ts",
+          "target": "components/hooks/useClipboard.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useHotkeys.ts",
+          "target": "components/hooks/useHotkeys.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useLocalStorage.ts",
+          "target": "components/hooks/useLocalStorage.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useMediaQuery.ts",
+          "target": "components/hooks/useMediaQuery.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useOs.ts",
+          "target": "components/hooks/useOs.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "target": "components/i18n/time-zone.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react",
+        "@gntik-ai/tokens"
+      ],
+      "registryDependencies": [
+        "copy-button",
+        "live-announcer",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/hooks/hooks.meta.ts"
+    },
+    {
       "id": "ui-utils",
       "kind": "component",
       "name": "UI utilities",
@@ -15696,6 +16094,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -15949,6 +16351,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -16092,6 +16498,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -16220,6 +16630,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -16360,6 +16774,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -16481,6 +16899,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -16615,6 +17037,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -16700,10 +17126,6 @@
       "description": "Documentation shell: top bar · left nav (a NavList) · article · right table of contents. The `Outline` sub-component is the table of contents: scroll-spy with IntersectionObserver (rooted in the article column, guarded where it is missing) marks the heading in view with aria-current=\"location\", and activating a link moves focus to the heading. Below `lg` the nav hides and the table of contents moves into a Collapsible above the article. Fills its container; `fullScreen` switches to `h-dvh`.",
       "files": [
         {
-          "path": "packages/ui/src/hooks/useMediaQuery.ts",
-          "target": "components/hooks/useMediaQuery.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -16750,6 +17172,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -16821,11 +17247,11 @@
         }
       ],
       "dependencies": [
-        "@base-ui/react",
-        "@gntik-ai/tokens"
+        "@base-ui/react"
       ],
       "registryDependencies": [
         "collapsible",
+        "ui-hooks",
         "ui-utils",
         "visually-hidden"
       ],
@@ -16840,10 +17266,6 @@
       "status": "beta",
       "description": "Main area with a pinnable right panel (properties, details, comments). Pinned, the panel docks beside the content; unpinned, it overlays it (flat shadow) and Escape closes it. Open and pinned states are controllable; an InspectorToggle placed in the main area opens and closes it. Below lg the panel opens as a bottom Drawer. Fills its container.",
       "files": [
-        {
-          "path": "packages/ui/src/hooks/useMediaQuery.ts",
-          "target": "components/hooks/useMediaQuery.ts"
-        },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
@@ -16891,6 +17313,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -16959,12 +17385,12 @@
       ],
       "dependencies": [
         "@base-ui/react",
-        "@gntik-ai/tokens",
         "lucide-react"
       ],
       "registryDependencies": [
         "button",
         "drawer",
+        "ui-hooks",
         "ui-utils"
       ],
       "docs": "packages/ui/src/layouts/InspectorLayout/InspectorLayout.doc.ts"
@@ -17025,6 +17451,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -17155,6 +17585,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -17289,6 +17723,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -17374,10 +17812,6 @@
       "description": "Application shell: a collapsible sidebar (expanded, 64px icon rail or off-canvas) with header, body and footer slots, a topbar (workspace switcher, breadcrumb, ⌘K, notifications, theme, user menu) and the main region. Below lg the sidebar moves into a left Drawer opened from the topbar menu button. The collapsed state is controllable and can persist in localStorage (storageKey). Fills its container; fullScreen switches to h-dvh.",
       "files": [
         {
-          "path": "packages/ui/src/hooks/useLocalStorage.ts",
-          "target": "components/hooks/useLocalStorage.ts"
-        },
-        {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
           "target": "components/i18n/I18nProvider.tsx"
         },
@@ -17424,6 +17858,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -17501,6 +17939,7 @@
       "registryDependencies": [
         "button",
         "drawer",
+        "ui-hooks",
         "ui-utils",
         "visually-hidden"
       ],
@@ -17562,6 +18001,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -17695,6 +18138,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
@@ -17831,6 +18278,10 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/index.ts",
           "target": "components/i18n/messages/index.ts"
         },
@@ -17961,6 +18412,10 @@
         {
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/index.ts",
