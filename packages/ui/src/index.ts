@@ -9,31 +9,13 @@ export {
   type Responsive,
   type ResponsiveClassTable,
 } from './utils/responsive';
-export { useClipboard, type UseClipboardOptions } from './hooks/useClipboard';
-export {
-  useLocalStorage,
-  useSessionStorage,
-  readLocalStorageValue,
-  type UseStorageOptions,
-} from './hooks/useLocalStorage';
 export { foldText, matchText, matchRanges, type MatchTextOptions } from './utils/match-text';
 // @gntik-ai/ui — public API. One export block per component folder (alphabetical).
 export { cn } from './utils/cn';
 export { tv, type VariantProps } from './utils/tv';
-export type { ComponentDoc } from './doc';
-export { getOs, useOs, type Os } from './hooks/useOs';
-export {
-  useHotkeys,
-  useRegisteredHotkeys,
-  setCharacterHotkeysEnabled,
-  type HotkeyHandler,
-  type HotkeyDefinition,
-  type HotkeyMap,
-  type UseHotkeysOptions,
-  type RegisteredHotkey,
-} from './hooks/useHotkeys';
-export { useMediaQuery, useReducedMotion, usePrefersReducedMotion } from './hooks/useMediaQuery';
-export { useBreakpoint, useBreakpointValue, type BreakpointOptions } from './hooks/useBreakpoint';
+export type { ComponentDoc, HookDoc } from './doc';
+// Hooks (also published as @gntik-ai/ui/hooks)
+export * from './hooks';
 
 // i18n
 export * from './i18n';

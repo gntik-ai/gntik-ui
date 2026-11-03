@@ -14,6 +14,7 @@ import { markdownEn } from './markdown-messages';
 import { searchableSelectEn } from './searchable-select-messages';
 import { cspEn } from './csp-messages';
 import { logoCloudEn } from './logo-cloud-messages';
+import { hookExampleEn } from './hook-example-messages';
 export const en = {
   ...fieldSizesEn,
   ...toolCallEn,
@@ -22,6 +23,7 @@ export const en = {
   ...forgotPasswordEn,
   ...resetPasswordEn,
   ...logoCloudEn,
+  ...hookExampleEn,
   ...chatComposerEn,
   ...fieldVariantsEn,
   ...tableMenuEn,

@@ -21,6 +21,7 @@ export default function HotkeysExample() {
       <CommandPalette groups={[]}>
         <CommandPaletteTrigger />
       </CommandPalette>
+      <p className="text-muted-foreground">{t('hooksExample.hotkeys.registered', { count: registered.length })}</p>
       <ul className="flex flex-col gap-2">
         {registered.map((entry, index) => (
           <li key={`${entry.hotkey}-${index}`} className="flex items-center gap-2">

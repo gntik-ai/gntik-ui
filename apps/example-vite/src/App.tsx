@@ -1,6 +1,7 @@
 import { Fragment, useEffect, type ReactNode } from 'react';
 import { ForgotPassword, SignIn, SignUp } from './pages/auth';
 import { Home, Inbox, NewProject, Onboarding, ProjectDetail, Projects, Search } from './pages/console';
+import { Hooks } from './pages/hooks';
 import { Settings } from './pages/settings';
 import { Forbidden, Maintenance, NotFound, ServerError } from './pages/status';
 import { matchPath, navigate, usePath } from './router';
@@ -24,6 +25,7 @@ const routes: Route[] = [
   ['/projects/new', () => <NewProject />],
   ['/projects/:id', ({ id = '' }) => <ProjectDetail id={id} />],
   ['/inbox', () => <Inbox />],
+  ['/hooks', () => <Hooks />],
   ['/search', () => <Search />],
   ['/settings', () => <Redirect to="/settings/profile" />],
   ['/settings/:page', ({ page = '' }) => <Settings page={page} />],

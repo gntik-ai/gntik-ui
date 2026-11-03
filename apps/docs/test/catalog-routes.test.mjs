@@ -2,9 +2,10 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { parseRoute, routeHash } from '../src/catalog/routes.js';
 
-const sections = ['overview', 'ui-components', 'blocks', 'layouts', 'templates'];
+const sections = ['overview', 'ui-components', 'ui-hooks', 'blocks', 'layouts', 'templates'];
 const items = [
   { section: 'ui-components', id: 'select', name: 'Select', folder: 'Select' },
+  { section: 'ui-hooks', id: 'use-clipboard', name: 'useClipboard', folder: 'useClipboard' },
   { section: 'layouts', id: 'canvas-layout', name: 'CanvasLayout' },
 ];
 
@@ -31,6 +32,15 @@ test('unknown items retain their section and id for a named notice', () => {
 
 test('legacy folder anchors open the matching component page', () => {
   assert.deepEqual(parseRoute('#ui-Select', sections, items), parseRoute('#ui-components/select', sections, items));
+});
+
+test('hook pages resolve under the Hooks section and by their legacy anchor', () => {
+  assert.equal(parseRoute('#ui-hooks/use-clipboard', sections, items).item, items[1]);
+  assert.deepEqual(
+    parseRoute('#ui-useClipboard', sections, items),
+    parseRoute('#ui-hooks/use-clipboard', sections, items),
+  );
+  assert.deepEqual(parseRoute('#ui-hooks', sections, items), { section: 'ui-hooks', id: null, item: null });
 });
 
 test('malformed and unknown section hashes fall back safely', () => {

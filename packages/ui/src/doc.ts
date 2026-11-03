@@ -23,3 +23,24 @@ export interface ComponentDoc {
   /** Tokens the component reads (for the theming docs). */
   tokens?: string[];
 }
+
+/**
+ * Hook documentation contract. Every hook in `src/hooks/index.ts` has a `hooks/<useName>.doc.ts`
+ * exporting `doc: HookDoc`; the registry build, the docs Hooks page and the coverage test read it.
+ */
+export interface HookDoc {
+  /** Public hook name, e.g. "useClipboard". */
+  name: string;
+  /** Lifecycle badge. */
+  status: ComponentDoc['status'];
+  description: string;
+  /** Call signature, e.g. "useClipboard(options?): { copy, status, copied, error, reset }". */
+  signature: string;
+  /**
+   * What the hook returns without a DOM (server render and first hydration render). Put literal
+   * values in backticks: the SSR test checks that the example's server output contains each one.
+   */
+  server: string;
+  /** Non-hook helpers exported next to the hook that this doc covers, e.g. "readLocalStorageValue". Every `use*` hook has its own doc. */
+  also?: string[];
+}

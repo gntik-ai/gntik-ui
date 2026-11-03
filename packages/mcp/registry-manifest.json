@@ -27,6 +27,7 @@
     "reasoning-block",
     "searchable-select",
     "site-footer",
+    "ui-hooks",
     "use-chat",
     "use-conversations"
   ],
@@ -299,6 +300,7 @@
     {"id":"tree-list","package":"@gntik-ai/ui","name":"tree-list","version":"0.5.0","url":"https://ui.gntik.ai/r/tree-list.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"truncated-collection-footer","package":"@gntik-ai/blocks","name":"truncated-collection-footer","version":"0.6.0","url":"https://ui.gntik.ai/r/truncated-collection-footer.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"typing-indicator","package":"@gntik-ai/chat","name":"typing-indicator","version":"0.5.0","url":"https://ui.gntik.ai/r/typing-indicator.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"ui-hooks","package":"@gntik-ai/ui","name":"ui-hooks","version":"0.5.0","url":"https://ui.gntik.ai/r/ui-hooks.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"ui-utils","package":"@gntik-ai/ui","name":"ui-utils","version":"0.5.0","url":"https://ui.gntik.ai/r/ui-utils.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"upgrade-required","package":"@gntik-ai/templates","name":"upgrade-required","version":"0.6.0","url":"https://ui.gntik.ai/r/upgrade-required.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"usage-analytics","package":"@gntik-ai/templates","name":"usage-analytics","version":"0.6.0","url":"https://ui.gntik.ai/r/usage-analytics.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},

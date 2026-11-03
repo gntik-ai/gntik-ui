@@ -31,7 +31,7 @@ export function projectContext(ctx: Context): ProjectContext {
   return { info, config: loaded ?? defaultConfig(info), configured: loaded !== null };
 }
 
-/** Public export names of a component: from its index file, else its name. */
+/** Public export names of a component: from its index file, else its name. Hooks (`useX`) count as names. */
 export function exportNames(item: RegistryItem, indexSource?: string): string[] {
   const names = new Set<string>();
   if (indexSource) {
@@ -40,12 +40,17 @@ export function exportNames(item: RegistryItem, indexSource?: string): string[] 
         const p = part.trim();
         if (!p || p.startsWith('type ')) continue;
         const name = (p.split(/\s+as\s+/)[1] ?? p).trim();
-        if (/^[A-Z]/.test(name)) names.add(name);
+        if (/^[A-Z]/.test(name) || /^use[A-Z]/.test(name)) names.add(name);
       }
     }
   }
   if (!names.size) names.add(item.name.replace(/[^A-Za-z0-9_$]/g, ''));
   return [...names];
+}
+
+/** Module specifier a package-mode item is imported from: hooks have their own subpath. */
+export function importSpecifier(item: RegistryItem) {
+  return item.group === 'Hooks' ? `${item.package}/hooks` : item.package;
 }
 
 export function importLine(names: string[], from: string) {
@@ -55,7 +60,7 @@ export function importLine(names: string[], from: string) {
 async function packageImport(ctx: Context, item: RegistryItem, read: (p: string) => Promise<string>) {
   const index = item.files.find((f) => /\/index\.[jt]sx?$/.test(f.path));
   const src = index ? await read(index.path).catch(() => undefined) : undefined;
-  return importLine(exportNames(item, src), item.package);
+  return importLine(exportNames(item, src), importSpecifier(item));
 }
 
 export function copySection(plan: CopyPlan, conflicts: string[], ctx: Context): string[] {

@@ -53,6 +53,7 @@ async function catalog(run) {
   await server.ssrLoadModule('/src/catalog/kit.jsx');
   await server.ssrLoadModule('/src/catalog/api-reference.jsx');
   await server.ssrLoadModule('/src/catalog/library.jsx');
+  await server.ssrLoadModule('/src/catalog/hooks.jsx');
   context = { server, render };
   await run(context);
 }
@@ -183,20 +184,75 @@ test('every component page keeps the catalog heading hierarchy', async () => {
   });
 });
 
-test('component, utility and hook pages show imports readers can use', async () => {
+test('component and utility pages show imports readers can use', async () => {
   await catalog(async ({ render }) => {
     for (const [id, names] of [
       ['choice-card', 'ClickableCard, SelectableCardGroup, SelectableCard'],
       ['resizable', 'ResizablePanelGroup, ResizablePanel, ResizeHandle'],
       ['toast', 'ToastProvider, Toaster, useToast'],
-      ['use-clipboard', 'useClipboard'],
-      ['use-media-query', 'useMediaQuery'],
       ['match-text', 'matchText'],
       ['responsive', 'responsiveClasses'],
     ]) {
       const doc = render('ui-components', { itemId: id });
       assert.equal(doc.querySelector('pre code').textContent, `import { ${names} } from '@gntik-ai/ui'`, id);
     }
+  });
+});
+
+test('the Hooks page lists every HookDoc with signature, server behaviour, a live example and source', async () => {
+  await catalog(async ({ render, server }) => {
+    const { HOOK_PAGES } = await server.ssrLoadModule('/src/catalog/item-inventory.js');
+    const entry = await server.ssrLoadModule('/../../packages/ui/src/hooks/index.ts');
+    const hookNames = Object.keys(entry).filter((name) => /^use[A-Z]/.test(name));
+    assert.ok(hookNames.length >= 16, `expected the exported hooks, found ${hookNames.length}`);
+    assert.deepEqual(
+      hookNames.filter((name) => !HOOK_PAGES.some((page) => page.name === name)),
+      [],
+      'every exported hook has its own page',
+    );
+    const doc = render('ui-hooks');
+    for (const page of HOOK_PAGES) {
+      const { doc: hookDoc } = await server.ssrLoadModule(`/../../packages/ui/src/hooks/${page.folder}.doc.ts`);
+      const section = doc.getElementById(`ui-${page.folder}`);
+      assert.ok(section, `${page.name} has no entry on the Hooks page`);
+      const text = section.textContent;
+      assert.ok(text.includes(hookDoc.signature), `${page.name}: signature`);
+      assert.ok(text.includes(hookDoc.server), `${page.name}: server behaviour`);
+      assert.ok(section.querySelectorAll('[data-component-preview]').length >= 1, `${page.name}: live example`);
+      assert.match(section.textContent, /from '@gntik-ai\/ui(\/hooks)?'/, `${page.name}: example source`);
+      assert.doesNotMatch(section.textContent, /from '\.{1,2}\//, `${page.name}: example source has relative imports`);
+      assert.ok(section.querySelector(`a[href="#ui-hooks/${page.id}"]`), `${page.name}: link to its page`);
+    }
+  });
+});
+
+test('every hook page imports from the hooks entry and keeps the heading hierarchy', async () => {
+  await catalog(async ({ render, server }) => {
+    const { HOOK_PAGES } = await server.ssrLoadModule('/src/catalog/item-inventory.js');
+    for (const item of HOOK_PAGES) {
+      const doc = render('ui-hooks', { itemId: item.id });
+      const headings = [...doc.querySelectorAll('h1,h2,h3,h4,h5,h6')];
+      assert.equal(headings[0].textContent, item.name);
+      for (let i = 1; i < headings.length; i++) {
+        assert.ok(
+          Number(headings[i].tagName.slice(1)) <= Number(headings[i - 1].tagName.slice(1)) + 1,
+          `${item.name}: ${headings[i - 1].tagName} ${headings[i - 1].textContent} → ${headings[i].tagName} ${headings[i].textContent}`,
+        );
+      }
+      const importLine = doc.querySelector('pre code').textContent;
+      assert.match(
+        importLine,
+        new RegExp(`^import \\{ [^}]*\\b${item.name}\\b[^}]* \\} from '@gntik-ai/ui/hooks'$`),
+        item.name,
+      );
+    }
+  });
+});
+
+test('hook docs are no longer listed with the components', async () => {
+  await catalog(async ({ render }) => {
+    const doc = render('ui-components');
+    assert.equal(doc.querySelectorAll('a[href^="#ui-components/use-"]').length, 0);
   });
 });
 

@@ -6,7 +6,6 @@ const kebab = (name) => name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase(
 const uiRoot = new URL('../../../packages/ui/src/', import.meta.url);
 const paths = [
   'forms',
-  'hooks',
   'utils',
   'theme',
   'csp',

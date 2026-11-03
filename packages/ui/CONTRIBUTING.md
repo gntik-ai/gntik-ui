@@ -64,3 +64,27 @@ Its default gap remains 4. Section accepts responsive `padding` steps `none`, `s
 updating root padding, header margin, body gap and divided-header bottom padding together. Scalar
 `lg` stays `p-6 sm:p-8`; at a named breakpoint `lg` uses that breakpoint's `p-8`. An explicit
 `sm` entry overrides the `sm:p-8` emitted by base `lg`. Section's default padding remains `none`.
+
+## Adding a hook
+
+Behaviour hooks are published as `@gntik-ai/ui/hooks` and, with the same functions, from the package root. Each hook lives in `src/hooks/`:
+
+| File                       | Purpose                                                                                                          |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `<useName>.ts`             | The hook, as a named export with TSDoc. No `window` or `document` access at import or during render.             |
+| `<useName>.doc.ts`         | `export const doc: HookDoc` — name, status, description, signature and `server`; `also` lists sibling exports.   |
+| `examples/<useName>*.tsx`  | Default-exported live examples (the docs show and copy them). Visible strings come from the i18n catalog.        |
+| `<useName>.test.tsx`       | Behaviour tests at the public seam. The shared `hooks-ssr.test.tsx` renders every example with `renderToString`. |
+| `index.ts` (add the lines) | Named re-exports of the hook and its types. Never `export *`, and never import from a component barrel.          |
+
+Rules:
+
+- `server` says what the hook returns without a DOM. Put each literal value in backticks (`` `undetermined` ``): the SSR test fails
+  unless the example's server render prints it, so the doc cannot drift from the code.
+- A hook that must stay in a component folder (`useToast`, `useFitCount`…) is re-exported from `hooks/index.ts` by its source file
+  (`../components/Toast/Toast`), not from the component's `index.ts`, so importing one hook does not pull in the component's other
+  modules. Export each hook from exactly one defining module.
+- `hooks-entry.test.ts` fails and names any hook exported from `hooks/index.ts` that no `HookDoc` covers (`name` or `also`). Provider hooks
+  (`useI18n`, `useTheme`, `useDensity`, `useLinkComponent`) and component-bound hooks stay with their provider or component.
+- Run `pnpm registry` afterwards: the hook files belong to the `ui-hooks` registry item (kind `component`, group `Hooks`).
+- Add a changeset: a new hook is a `minor` bump of `@gntik-ai/ui`.
