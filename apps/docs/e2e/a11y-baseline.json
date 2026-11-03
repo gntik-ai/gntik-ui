@@ -1,6 +1,8 @@
 {
   "Badge navy-light": [
     "color-contrast :: .gap-3.grid > .flex-wrap.gap-2.flex:nth-child(3) > .bg-success.text-primary-foreground[data-tone=\"success\"]",
-    "color-contrast :: .flex-wrap.gap-2.flex:nth-child(3) > .bg-warning.text-primary-foreground[data-tone=\"warning\"]"
+    "color-contrast :: .flex-wrap.gap-2.flex:nth-child(3) > .bg-warning.text-primary-foreground[data-tone=\"warning\"]",
+    "color-contrast :: .gap-3.grid > .flex-wrap.gap-2:nth-child(3) > .bg-success.text-primary-foreground[data-tone=\"success\"]",
+    "color-contrast :: .flex-wrap.gap-2:nth-child(3) > .bg-warning.text-primary-foreground[data-tone=\"warning\"]"
   ]
 }
