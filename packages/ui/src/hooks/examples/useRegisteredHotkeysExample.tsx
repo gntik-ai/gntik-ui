@@ -5,7 +5,7 @@ import { useHotkeys, useRegisteredHotkeys } from '../useHotkeys';
 export default function RegisteredHotkeysExample() {
   const { t } = useI18n();
   useHotkeys({
-    'g d': { handler: () => undefined, description: t('hooksExample.registeredHotkeys.dashboard') },
+    'g h': { handler: () => undefined, description: t('hooksExample.registeredHotkeys.dashboard') },
     'alt+n': { handler: () => undefined, description: t('hooksExample.registeredHotkeys.newItem') },
   });
   const registered = useRegisteredHotkeys();

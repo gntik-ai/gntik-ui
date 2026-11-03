@@ -26,7 +26,9 @@ export default function FitCountExample() {
           </span>
         ))}
         {shown < TAGS.length && (
-          <span className={chip}>{t('hooksExample.fitCount.more', { count: TAGS.length - shown })}</span>
+          <span role="listitem" className={chip}>
+            {t('hooksExample.fitCount.more', { count: TAGS.length - shown })}
+          </span>
         )}
         <div
           ref={measure}
