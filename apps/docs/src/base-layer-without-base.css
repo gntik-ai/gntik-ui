@@ -1,0 +1,5 @@
+/* Browser contract fixture: kit utilities without the optional page baseline. */
+@import 'tailwindcss';
+@import '../../../packages/ui/src/styles.css';
+
+@source '../../../packages/ui/src';

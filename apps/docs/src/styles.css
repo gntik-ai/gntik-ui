@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@gntik-ai/tokens/tailwind.css";
+@import "@gntik-ai/tokens/base.css";
 @import "@fontsource/geist/400.css";
 @import "@gntik-ai/tokens/fonts/inter.css";
 @import "@fontsource/geist/500.css";
@@ -33,15 +34,7 @@
 }
 
 html, body { margin: 0; padding: 0; height: 100%; }
-body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; background: hsl(var(--background)); color: hsl(var(--foreground)); }
 svg { display: block; }
-::selection { background: hsl(var(--primary) / 0.28); }
-
-/* Sober scrollbars per theme */
-*::-webkit-scrollbar { width: 11px; height: 11px; }
-*::-webkit-scrollbar-track { background: transparent; }
-*::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 6px; border: 3px solid transparent; background-clip: content-box; }
-*::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.5); background-clip: content-box; }
 
 /* Preview surface: subtle dot grid */
 .preview-surface {

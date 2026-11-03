@@ -3,7 +3,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const drawerVariants = tv({
   slots: {
     backdrop: [
-      'fixed inset-0 z-overlay bg-background/70 backdrop-blur-[3px] transition-opacity duration-300 motion-reduce:transition-none',
+      '[position:var(--backdrop-position,fixed)] min-h-dvh inset-0 z-overlay bg-background/70 backdrop-blur-[3px] transition-opacity duration-300 motion-reduce:transition-none',
       'opacity-[calc(1-var(--drawer-swipe-progress,0))] data-swiping:duration-0',
       'data-starting-style:opacity-0 data-ending-style:opacity-0',
     ],

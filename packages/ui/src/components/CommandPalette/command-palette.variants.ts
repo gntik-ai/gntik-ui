@@ -9,7 +9,7 @@ export const commandPaletteVariants = tv({
     ],
     triggerText: 'text-[13px]',
     backdrop: [
-      'fixed inset-0 z-overlay bg-background/70 backdrop-blur-sm transition-opacity duration-150 motion-reduce:transition-none',
+      '[position:var(--backdrop-position,fixed)] min-h-dvh inset-0 z-overlay bg-background/70 backdrop-blur-sm transition-opacity duration-150 motion-reduce:transition-none',
       'data-starting-style:opacity-0 data-ending-style:opacity-0',
     ],
     viewport: 'fixed inset-0 z-modal flex items-start justify-center px-4 pt-[12vh] pb-4',

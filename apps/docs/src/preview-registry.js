@@ -91,6 +91,13 @@ export const PREVIEW_LOADERS = {
     'theme-scope--nested': () => import('../../../packages/ui/src/theme/examples/ThemeScopeNested'),
     'layered-overlays': () => import('../../../packages/ui/src/components/Dialog/examples/LayeredOverlays'),
     'motion-dialog': () => import('../../../packages/ui/src/components/Dialog/examples/DialogForm'),
+    'base-alert-dialog': () => import('../../../packages/ui/src/components/AlertDialog/examples/AlertDialogDelete'),
+    'base-drawer': () => import('../../../packages/ui/src/components/Drawer/examples/DrawerEditForm'),
+    'base-bottom-sheet': () => import('../../../packages/ui/src/components/BottomSheet/examples/BottomSheetDetails'),
+    'base-command-palette': () =>
+      import('../../../packages/ui/src/components/CommandPalette/examples/CommandPaletteBasic'),
+    'base-lightbox': () => import('../../../packages/ui/src/components/Lightbox/examples/LightboxGallery'),
+    'base-popover': () => import('../../../packages/ui/src/components/Popover/examples/PopoverDetails'),
     'theme-provider--motion': () => import('../../../packages/ui/src/theme/examples/ThemeProviderMotion'),
     'theme-provider--forced': () => import('../../../packages/ui/src/theme/examples/ThemeProviderForced'),
     ...Object.fromEntries(

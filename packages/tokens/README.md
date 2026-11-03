@@ -2,6 +2,24 @@
 
 Import `@gntik-ai/tokens/tailwind.css` (after Tailwind CSS) or `@gntik-ai/ui/styles.css`
 for the complete token layer, including the green, navy and corporate palettes.
+Opt in separately to `@gntik-ai/tokens/base.css` for page defaults:
+
+```css
+@import 'tailwindcss';
+@import '@gntik-ai/ui/styles.css';
+@import '@gntik-ai/tokens/base.css';
+```
+
+`base.css` follows the active theme for body colours and fonts, selection and
+scrollbars. All rules are in `@layer base`, so utilities and unlayered app CSS
+can override them. Neither the Tailwind bridge nor UI or templates styles import
+it automatically. Set `data-scroll-gutter="stable"` on `html` to reserve scrollbar
+space; otherwise the gutter stays `auto`.
+
+The base layer isolates `#root`, `#__next` and `[data-app-root]` below portalled
+popups. With Next.js App Router, wrap the app tree in `<div data-app-root>` inside
+`body`. Keep portal containers on `body` for the Safari backdrop setup; positioned
+or transformed ancestors can interfere with it.
 
 For individual CSS exports, import these paths in order:
 

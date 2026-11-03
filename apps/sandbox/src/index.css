@@ -8,6 +8,7 @@
 
 /* Tokens, the Tailwind bridge and the sources of every kit package (ui, blocks, charts, chat, flow, editor, templates). */
 @import "@gntik-ai/templates/styles.css";
+@import "@gntik-ai/tokens/base.css";
 
 /* The example gallery (src/examples) is scanned like any source file, so its classes exist.
    User code can only use classes that are already generated (see README · Tailwind classes). */

@@ -9,6 +9,35 @@ import { cli, nextProject, tempProject, viteProject } from './helpers.js';
 const read = (dir: string, f: string) => readFile(path.join(dir, f), 'utf8');
 
 describe('init', () => {
+  it('upgrades the original CSS head with one base import and reports the next run unchanged', async () => {
+    const dir = await viteProject();
+    const original = [
+      '@import "tailwindcss";',
+      '@import "@fontsource/geist";',
+      '@import "@fontsource/geist-mono";',
+      '@import "@gntik-ai/ui/styles.css";',
+      '',
+      'body { margin: 0; }',
+      '',
+    ].join('\n');
+    await writeFile(path.join(dir, 'src/index.css'), original);
+    const first = await cli(['init', '--json', '--no-install', '--cwd', dir]);
+    expect(first.code).toBe(0);
+    expect(first.json.changes).toContainEqual({ file: 'src/index.css', action: 'patch' });
+    const css = await read(dir, 'src/index.css');
+    expect(css).toBe(
+      original.replace(
+        '@import "@gntik-ai/ui/styles.css";',
+        '@import "@gntik-ai/ui/styles.css";\n@import "@gntik-ai/tokens/base.css";',
+      ),
+    );
+    const second = await cli(['init', '--json', '--no-install', '--cwd', dir]);
+    expect(second.code).toBe(0);
+    expect(second.json.changes).toContainEqual({ file: 'src/index.css', action: 'unchanged' });
+    expect(await read(dir, 'src/index.css')).toBe(css);
+    expect(patchCss(`${css}\n@import url('@gntik-ai/tokens/base.css');\n`)).toBe(css);
+  });
+
   it('help describes setup without registry configuration', async () => {
     for (const args of [['--help'], ['init', '--help']]) {
       const r = await cli(args);
@@ -114,6 +143,8 @@ describe('init', () => {
     }
     expect(r.json.snippet).toMatchSnapshot();
     expect(layout.code).toContain('suppressHydrationWarning');
+    expect(layout.code).toContain('<body>');
+    expect(layout.code).not.toMatch(/<body[^>]*className/);
     expect(layout.code).toContain("import './globals.css';");
     expect(r.json.snippet[0].code).toContain('themeScript()');
     expect(r.json.install).toMatchObject({
