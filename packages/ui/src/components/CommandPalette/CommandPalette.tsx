@@ -53,7 +53,11 @@ function CommandRow({ entry, onRun }: { entry: CommandEntry; onRun: (item: Comma
       {IconCmp && <IconCmp size={16} aria-hidden className={v.itemIcon()} />}
       <span className={v.itemText()}>
         <span className={v.itemLabel()}>{item.label}</span>
-        {item.description && <span className={v.itemDescription()}>{item.description}</span>}
+        {item.description && (
+          <span className={v.itemDescription({ class: 'group-data-highlighted:text-accent-foreground' })}>
+            {item.description}
+          </span>
+        )}
       </span>
       {item.shortcut?.length ? (
         <KbdCombo size="sm" keys={item.shortcut} />
@@ -178,7 +182,7 @@ export function CommandPalette({
                 <Autocomplete.Empty className={s.empty()}>
                   {count === 0 && query.trim() ? emptyText(query.trim()) : null}
                 </Autocomplete.Empty>
-                <Autocomplete.List className={s.list()}>
+                <Autocomplete.List tabIndex={0} className={s.list({ class: 'focus-ring-inset' })}>
                   {(group: CommandEntryGroup) => (
                     <Autocomplete.Group key={group.value} items={group.items} className={s.group()}>
                       <Autocomplete.GroupLabel className={s.groupLabel()}>{group.value}</Autocomplete.GroupLabel>

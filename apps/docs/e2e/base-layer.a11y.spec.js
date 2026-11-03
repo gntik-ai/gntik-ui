@@ -152,6 +152,14 @@ for (const [base, theme] of [
       expect(box.width).toBe(viewport.width);
       expect(box.height).toBeGreaterThanOrEqual(viewport.height);
       if (base) await expectAccessible(page);
+      if (id === 'base-command-palette') {
+        const input = page.getByRole('combobox');
+        await expect(input).toBeFocused();
+        await page.keyboard.press('Tab');
+        await expect(page.getByRole('listbox')).toBeFocused();
+        await page.keyboard.press('Shift+Tab');
+        await expect(input).toBeFocused();
+      }
     });
   }
 }
