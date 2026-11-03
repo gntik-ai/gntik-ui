@@ -2,6 +2,7 @@ export { NavList, type NavListProps } from './NavList';
 export {
   matchesNavPath,
   matchesNavPattern,
+  extractNavParams,
   resolveCurrentNavItem,
   isNavItemCurrent,
   type NavItem,

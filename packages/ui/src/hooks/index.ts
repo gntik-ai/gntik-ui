@@ -16,6 +16,7 @@ export {
 } from './useHotkeys';
 export { useMediaQuery, useReducedMotion, usePrefersReducedMotion } from './useMediaQuery';
 export { useBreakpoint, useBreakpointValue, type BreakpointOptions } from './useBreakpoint';
+export { useDocumentTitle } from '../navigation/useDocumentTitle';
 export { useAnnounce, type Announce, type AnnouncePoliteness } from '../components/LiveAnnouncer/LiveAnnouncer';
 export {
   useToast,

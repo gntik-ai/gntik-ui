@@ -82,6 +82,7 @@ export const PREVIEW_LOADERS = {
     'shared-tone-utilities': () => import('../../../packages/ui/src/components/Badge/examples/SharedToneUtilities'),
     'focus-rings': () => import('../../../packages/ui/src/components/Button/examples/ButtonWithFocusRings'),
     'csp-provider': () => import('../../../packages/ui/src/csp/examples/CSPProviderPreview'),
+    'navigation-provider': () => import('../../../packages/ui/src/navigation/examples/NavigationProviderRouteTree'),
     'log-viewer--wrap': () => import('../../../packages/blocks/src/builders/LogViewer/examples/Wrap'),
     'empty-states--hidden-action': () =>
       import('../../../packages/blocks/src/feedback/EmptyStates/examples/HiddenAction'),

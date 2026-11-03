@@ -13,6 +13,7 @@ import { motionEn } from './motion-messages';
 import { markdownEn } from './markdown-messages';
 import { searchableSelectEn } from './searchable-select-messages';
 import { cspEn } from './csp-messages';
+import { navigationEn } from './navigation-messages';
 import { logoCloudEn } from './logo-cloud-messages';
 import { hookExampleEn } from './hook-example-messages';
 export const en = {
@@ -29,6 +30,7 @@ export const en = {
   ...tableMenuEn,
   ...layersEn,
   ...cspEn,
+  ...navigationEn,
   ...catalogPreviewEn,
   ...typographyEn,
   ...editableTextEn,

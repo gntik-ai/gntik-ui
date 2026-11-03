@@ -11,6 +11,7 @@ import {
 import {
   SidebarLayout,
   useI18n,
+  useNavigation,
   type BreadcrumbItem,
   type NavGroup,
   type SidebarLayoutProps,
@@ -29,10 +30,11 @@ export interface ConsoleShellProps
     Pick<SidebarLayoutProps, 'sidebarLabel' | 'collapseMode'> {
   /** Page content (usually a <Page>). */
   children: ReactNode;
-  /** Sidebar navigation; defaults to the AppSidebar sample groups. */
+  /** Sidebar navigation; defaults to the NavigationProvider's groups, else the AppSidebar sample groups. */
   nav?: NavGroup[];
-  /** Href of the current page, marks the active nav item. */
+  /** Href of the current page, marks the active nav item; defaults to the NavigationProvider's active menu item. */
   currentHref?: string;
+  /** Topbar trail; defaults to the NavigationProvider's active page. `null` hides it. */
   breadcrumbs?: BreadcrumbItem[] | null;
   workspaces?: Workspace[] | null;
   user?: UserMenuUser | null;
@@ -46,13 +48,15 @@ export interface ConsoleShellProps
  * The console frame shared by the templates: SidebarLayout with the AppSidebar header, nav and
  * footer, and the AppTopbar (breadcrumb, ⌘K search, notifications, theme, user menu).
  * Templates fill it with a Page; products swap the nav, workspaces, user, usage meter, help
- * link and user-menu items.
+ * link and user-menu items. Inside a NavigationProvider, an omitted `nav`, `currentHref` or
+ * `breadcrumbs` comes from the route tree; explicit props always win, and without a provider the
+ * defaults are unchanged.
  */
 export function ConsoleShell({
   children,
-  nav,
-  currentHref,
-  breadcrumbs,
+  nav: navProp,
+  currentHref: currentHrefProp,
+  breadcrumbs: breadcrumbsProp,
   workspaces,
   currentWorkspaceId,
   onWorkspaceChange,
@@ -72,6 +76,12 @@ export function ConsoleShell({
   ...contextProps
 }: ConsoleShellProps) {
   const { locale } = useI18n();
+  const navigation = useNavigation();
+  const nav = navProp ?? navigation?.groups;
+  const currentHref =
+    currentHrefProp ?? (navigation ? (navigation.activePage?.menuHref ?? navigation.pathname) : undefined);
+  const breadcrumbs =
+    breadcrumbsProp === undefined && navigation ? (navigation.activePage?.breadcrumbs ?? null) : breadcrumbsProp;
   return (
     <ChartLocaleProvider locale={locale}>
       <SidebarLayout

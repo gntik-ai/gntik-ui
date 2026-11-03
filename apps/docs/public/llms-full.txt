@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 130 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 131 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -5290,7 +5290,7 @@ Behaviour hooks of @gntik-ai/ui, importable from @gntik-ai/ui/hooks or the packa
 
 - Package: `@gntik-ai/ui` · export `Hooks` · group Hooks · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/hooks/hooks.meta.ts
-- Registry dependencies: combobox, copy-button, live-announcer, overflow-list, toast, ui-utils, virtual-list
+- Registry dependencies: combobox, copy-button, live-announcer, navigation-provider, overflow-list, toast, ui-utils, virtual-list
 - Install: `gntik-ui add ui-hooks`; own the source with `gntik-ui eject ui-hooks`
 
 Usage:
@@ -6125,6 +6125,119 @@ export default function MobileNavBasic() {
       <span className="text-[14px] font-semibold tracking-tight text-foreground">Acme Cloud</span>
       <span className="ms-auto font-mono text-[11px] text-muted-foreground">{current.slice(1)}</span>
     </div>
+  );
+}
+```
+
+### NavigationProvider (`navigation-provider`)
+
+One route tree for the sidebar groups, the active page, the breadcrumb trail and the document title, independent of the router. A NavRoute has a path (NavItem.pattern syntax: /functions/:id, /projects/:id/*), a title (a string or a function of the params), optional icon, badge, group, children, match and the flags hideInMenu, hideChildrenInMenu, flatMenu, hideInBreadcrumb and target: '_blank'. navFromRoutes(routes) returns NavList groups in route order, labelled by each top-level route's group; hidden routes are left out and flatMenu children take their parent's place. getActivePage(routes, pathname, { home }) resolves the pathname with NavList's rules (exact path first, then the longest prefix or pattern at a segment boundary, query and hash ignored; external routes never match) and returns { route, title, path, params, breadcrumbs, menuHref } or null. menuHref is the nearest route visible in the menu, so /functions/fn-42 keeps Functions current. NavigationProvider({ routes, pathname, appTitle, titleSeparator = ' · ', documentTitle = true, home }) takes the pathname from your router, exposes useNavigation() ({ routes, groups, pathname, activePage }, or null outside a provider) and useActivePage(), and writes document.title as '<page><separator><appTitle>' in an effect after each pathname change ('<appTitle>' alone when no route matches). useDocumentTitle(title) overrides it while a page is mounted. Inside a provider, ConsoleShell derives nav, currentHref and breadcrumbs when you omit them; explicit props, including breadcrumbs={null}, win. In Next.js pass documentTitle={false} when route metadata sets titles, so the two do not fight on client navigation. The helpers are pure and run in Node; links render through LinkProvider.
+
+- Package: `@gntik-ai/ui` · export `NavigationProvider` · group Navigation · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/navigation/NavigationProvider.doc.ts
+- Registry dependencies: breadcrumbs, nav-list
+- Install: `gntik-ui add navigation-provider`; own the source with `gntik-ui eject navigation-provider`
+
+Usage:
+
+```tsx
+import { useMemo, useState, type ComponentPropsWithRef } from 'react';
+import { Breadcrumbs } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
+import { LinkProvider } from '@gntik-ai/ui';
+import { NavList } from '@gntik-ai/ui';
+import { useI18n } from '@gntik-ai/ui';
+import { NavigationProvider, useNavigation } from '@gntik-ai/ui';
+import type { NavRoute } from '@gntik-ai/ui';
+
+/** Preview-only router: links update state instead of reloading the catalog. */
+function previewLink(navigate: (href: string) => void) {
+  return function PreviewLink({ href = '', onClick, ...props }: ComponentPropsWithRef<'a'>) {
+    return (
+      <a
+        href={href}
+        {...props}
+        onClick={(event) => {
+          onClick?.(event);
+          if (event.defaultPrevented) return;
+          event.preventDefault();
+          navigate(href);
+        }}
+      />
+    );
+  };
+}
+
+function Shell({ navigate }: { navigate: (href: string) => void }) {
+  const { t } = useI18n();
+  const navigation = useNavigation();
+  const page = navigation?.activePage ?? null;
+  const detail = page?.route.path === '/functions/:id';
+  return (
+    <div className="grid w-full max-w-sm gap-4 text-sm text-foreground">
+      <NavList
+        groups={navigation?.groups ?? []}
+        currentHref={page?.menuHref ?? navigation?.pathname}
+        label={t('navigation.example.sections')}
+      />
+      <Breadcrumbs items={page?.breadcrumbs ?? []} aria-label={t('navigation.example.trail')} />
+      <div className="grid gap-1" role="status">
+        <p>
+          {t('navigation.example.documentTitle', {
+            value: page ? `${page.title} · ${t('navigation.example.appTitle')}` : t('navigation.example.appTitle'),
+          })}
+        </p>
+        <p>
+          {t('navigation.example.params', {
+            value:
+              page && Object.keys(page.params).length > 0
+                ? JSON.stringify(page.params)
+                : t('navigation.example.noParams'),
+          })}
+        </p>
+        <p>{t('navigation.example.menuItem', { value: page?.menuHref ?? '—' })}</p>
+      </div>
+      <Button variant="secondary" onClick={() => navigate(detail ? '/functions' : '/functions/fn-42?tab=logs')}>
+        {t(detail ? 'navigation.example.openList' : 'navigation.example.openDetail')}
+      </Button>
+    </div>
+  );
+}
+
+/**
+ * One route tree drives the sidebar, the highlighted item, the breadcrumbs and the title. The
+ * preview sets documentTitle={false}: the catalog keeps its own tab title.
+ */
+export default function NavigationProviderRouteTree() {
+  const { t } = useI18n();
+  const [pathname, setPathname] = useState('/functions/fn-42?tab=logs');
+  const routes = useMemo<NavRoute[]>(
+    () => [
+      {
+        path: '/functions',
+        title: t('navigation.example.functions'),
+        group: t('navigation.example.build'),
+        hideChildrenInMenu: true,
+        children: [{ path: '/functions/:id', title: (params) => params.id ?? '' }],
+      },
+      { path: '/workflows', title: t('navigation.example.workflows'), group: t('navigation.example.build') },
+      { path: '/logs', title: t('navigation.example.logs'), group: t('navigation.example.operate') },
+    ],
+    [t],
+  );
+  const Link = useMemo(() => previewLink(setPathname), []);
+  return (
+    <LinkProvider component={Link}>
+      <NavigationProvider
+        routes={routes}
+        pathname={pathname}
+        appTitle={t('navigation.example.appTitle')}
+        documentTitle={false}
+        home={{ label: t('navigation.example.home'), href: '/functions' }}
+      >
+        <Shell navigate={setPathname} />
+      </NavigationProvider>
+    </LinkProvider>
   );
 }
 ```
