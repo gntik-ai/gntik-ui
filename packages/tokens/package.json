@@ -10,6 +10,7 @@
     "fonts"
   ],
   "exports": {
+    "./base.css": "./src/base.css",
     "./brand.css": "./src/brand.css",
     "./tailwind.css": "./src/tailwind.css",
     "./pairing.css": "./src/pairing.css",

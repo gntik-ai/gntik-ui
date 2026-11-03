@@ -3,7 +3,7 @@ import { tv, type VariantProps } from '../../utils/tv';
 export const dialogVariants = tv({
   slots: {
     backdrop: [
-      'fixed inset-0 z-overlay bg-background/75 backdrop-blur-[3px] transition-opacity duration-normal',
+      '[position:var(--backdrop-position,fixed)] min-h-dvh inset-0 z-overlay bg-background/75 backdrop-blur-[3px] transition-opacity duration-normal',
       'data-starting-style:opacity-0 data-ending-style:opacity-0',
     ],
     viewport: 'fixed inset-0 z-modal flex items-start justify-center overflow-y-auto p-5 sm:p-8',

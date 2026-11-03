@@ -49,7 +49,7 @@ exports[`forced colours > preserves the base non-forced output at the public var
 
 exports[`forced colours > preserves the base non-forced output at the public variants seam > CommandPalette 1`] = `
 {
-  "backdrop": "fixed inset-0 z-overlay bg-background/70 backdrop-blur-sm transition-opacity duration-150 motion-reduce:transition-none data-starting-style:opacity-0 data-ending-style:opacity-0",
+  "backdrop": "[position:var(--backdrop-position,fixed)] min-h-dvh inset-0 z-overlay bg-background/70 backdrop-blur-sm transition-opacity duration-150 motion-reduce:transition-none data-starting-style:opacity-0 data-ending-style:opacity-0",
   "base": "",
   "count": "ms-auto font-mono text-[10.5px]",
   "empty": "px-4 py-10 text-center text-[13px] text-muted-foreground empty:hidden",

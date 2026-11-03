@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     // The theme script sets the class before React hydrates.
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className="bg-background text-foreground antialiased">
+      <body>
         <Providers>{children}</Providers>
       </body>
     </html>

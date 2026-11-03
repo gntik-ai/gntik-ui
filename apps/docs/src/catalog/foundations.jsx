@@ -209,6 +209,11 @@ for (const [, role, property, value] of typographyCss.matchAll(
           intro="The base of the system: color, typography, spacing, radii and shadows — all as tokens in tokens/brand.css. Change the brand block and the whole catalog reskins. Three themes: light · dark · high_contrast."
         />
 
+        <CodeBlock
+          lang="css"
+          code={'@import "tailwindcss";\n@import "@gntik-ai/ui/styles.css";\n@import "@gntik-ai/tokens/base.css";'}
+        />
+
         <Block title="Brand / logo" hint="do not recolour · clear-space ≥ height of the m">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="rounded-lg border border-border bg-card p-6 flex flex-col items-center justify-center gap-4">

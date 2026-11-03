@@ -20,8 +20,15 @@ export const CSS_IMPORTS = [
   '@import "@fontsource/geist";',
   '@import "@fontsource/geist-mono";',
   '@import "@gntik-ai/ui/styles.css";',
+  '@import "@gntik-ai/tokens/base.css";',
 ];
-const IMPORT_TARGETS = ['tailwindcss', '@fontsource/geist', '@fontsource/geist-mono', '@gntik-ai/ui/styles.css'];
+const IMPORT_TARGETS = [
+  'tailwindcss',
+  '@fontsource/geist',
+  '@fontsource/geist-mono',
+  '@gntik-ai/ui/styles.css',
+  '@gntik-ai/tokens/base.css',
+];
 
 export type ChangeAction = 'create' | 'patch' | 'unchanged';
 export interface Change {
@@ -88,7 +95,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     // The theme script sets the class before React hydrates.
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className="bg-background text-foreground antialiased">
+      <body>
         <Providers>{children}</Providers>
       </body>
     </html>
