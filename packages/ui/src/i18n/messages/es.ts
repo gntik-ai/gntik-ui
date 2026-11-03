@@ -13,6 +13,7 @@ import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
 import { searchableSelectEs } from './searchable-select-messages';
 import { cspEs } from './csp-messages';
+import { navigationEs } from './navigation-messages';
 import { logoCloudEs } from './logo-cloud-messages';
 import { hookExampleEs } from './hook-example-messages';
 import type { Messages } from './en';
@@ -30,6 +31,7 @@ export const es: Messages = {
   ...tableMenuEs,
   ...layersEs,
   ...cspEs,
+  ...navigationEs,
   ...catalogPreviewEs,
   ...typographyEs,
   ...editableTextEs,

@@ -6,7 +6,10 @@
 
 const chartDocs = import.meta.glob('../../../packages/charts/src/*.doc.ts', { eager: true, import: 'doc' });
 const utilsDocs = import.meta.glob('../../../packages/ui/src/utils/*.doc.ts', { eager: true, import: 'doc' });
-const themeDocs = import.meta.glob('../../../packages/ui/src/{theme,csp,kit}/*.doc.ts', { eager: true, import: 'doc' });
+const themeDocs = import.meta.glob('../../../packages/ui/src/{theme,csp,kit,navigation}/*.doc.ts', {
+  eager: true,
+  import: 'doc',
+});
 const hooksDocs = import.meta.glob('../../../packages/ui/src/hooks/*.doc.ts', { eager: true, import: 'doc' });
 const componentDocs = import.meta.glob('../../../packages/ui/src/components/*/*.doc.ts', {
   eager: true,
@@ -21,7 +24,7 @@ const blockDocs = import.meta.glob('../../../packages/blocks/src/*/*/*.doc.ts', 
 const sources = {
   ...import.meta.glob('../../../packages/blocks/src/*/*/*.{ts,tsx}', { eager: true, query: '?raw', import: 'default' }),
   ...import.meta.glob('../../../packages/ui/src/hooks/*.ts', { eager: true, query: '?raw', import: 'default' }),
-  ...import.meta.glob('../../../packages/ui/src/{theme,csp,kit}/*.{ts,tsx}', {
+  ...import.meta.glob('../../../packages/ui/src/{theme,csp,kit,navigation}/*.{ts,tsx}', {
     eager: true,
     query: '?raw',
     import: 'default',
@@ -379,7 +382,7 @@ function folderKey(path, docBase) {
     return `forms/${docBase}`;
   m = /\/ui\/src\/utils\/([^/]+)$/.exec(path);
   if (m && docBase && m[1].startsWith(`${docBase}.`)) return `utils/${docBase}`;
-  m = /\/ui\/src\/(?:theme|csp|kit)\/([^/]+)$/.exec(path);
+  m = /\/ui\/src\/(?:theme|csp|kit|navigation)\/([^/]+)$/.exec(path);
   if (m && docBase && m[1].startsWith(`${docBase}.`)) return `theme/${docBase}`;
   m = /\/ui\/src\/hooks\/([^/]+)$/.exec(path);
   if (m && docBase && m[1].startsWith(`${docBase}.`)) return `hooks/${docBase}`;

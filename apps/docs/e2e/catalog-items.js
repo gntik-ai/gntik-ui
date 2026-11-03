@@ -9,6 +9,7 @@ const paths = [
   'utils',
   'theme',
   'csp',
+  'navigation',
   ...fs.readdirSync(new URL('components/', uiRoot)).map((f) => `components/${f}`),
 ];
 export const componentPages = paths.flatMap((dir) =>

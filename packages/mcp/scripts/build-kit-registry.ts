@@ -202,6 +202,15 @@ export function collectSources(): Source[] {
     targetBase: 'components/kit',
     id: 'kit-provider',
   });
+  out.push({
+    kind: 'component',
+    pkg: '@gntik-ai/ui',
+    dir: path.join(ROOT, 'packages/ui/src/navigation'),
+    metaFile: path.join(ROOT, 'packages/ui/src/navigation/NavigationProvider.doc.ts'),
+    metaExport: 'doc',
+    targetBase: 'components/navigation',
+    id: 'navigation-provider',
+  });
   const doc = (kind: Kind, pkg: string, base: string, targetBase: string) => {
     for (const name of subdirs(base)) {
       const f = path.join(base, name, `${name}.doc.ts`);

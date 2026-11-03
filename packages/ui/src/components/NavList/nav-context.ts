@@ -4,7 +4,7 @@ export type NavIcon = ComponentType<{ size?: number; 'aria-hidden'?: boolean; cl
 export type NavMatch = 'exact' | 'prefix';
 
 /** Path-only comparison for opt-in matching; exact matching deliberately skips normalization. */
-function navPath(href: string): string {
+export function navPath(href: string): string {
   const path = href.split(/[?#]/, 1)[0] ?? '';
   return path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path;
 }
@@ -36,6 +36,26 @@ export function matchesNavPattern(pattern: string, currentHref: string): boolean
     } else if (segment !== value) return false;
   }
   return segments.length === path.length;
+}
+
+function decodeSegment(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+/** The values of the `:name` segments of `pattern` in `currentHref`, decoded. Empty when the pattern does not match. */
+export function extractNavParams(pattern: string, currentHref: string): Record<string, string> {
+  if (!matchesNavPattern(pattern, currentHref)) return {};
+  const segments = navSegments(pattern);
+  const path = navSegments(currentHref);
+  const params: Record<string, string> = {};
+  segments.forEach((segment, i) => {
+    if (segment.startsWith(':') && segment.length > 1) params[segment.slice(1)] = decodeSegment(path[i] ?? '');
+  });
+  return params;
 }
 
 export interface NavItem {
