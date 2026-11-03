@@ -58,11 +58,12 @@ function composeTitle(page: string | undefined, appTitle: string | undefined, se
   return page || appTitle || undefined;
 }
 
-/** Write the innermost override, or the route title, to `document.title`. Effects and handlers only. */
-function writeTitle(settings: TitleSettings | null, overrides: ReadonlyMap<object, string>) {
+/** Write the highest-ranked (innermost) override, or the route title, to `document.title`. Effects and handlers only. */
+function writeTitle(settings: TitleSettings | null, overrides: ReadonlyMap<object, { rank: number; title: string }>) {
   if (!settings?.enabled || typeof document === 'undefined') return;
-  const stack = [...overrides.values()];
-  const page = stack.length > 0 ? stack[stack.length - 1] : settings.pageTitle;
+  let top: { rank: number; title: string } | undefined;
+  for (const entry of overrides.values()) if (!top || entry.rank > top.rank) top = entry;
+  const page = top ? top.title : settings.pageTitle;
   const next = composeTitle(page, settings.appTitle, settings.separator);
   if (next !== undefined && document.title !== next) document.title = next;
 }
@@ -92,12 +93,14 @@ export function NavigationProvider({
   );
 
   const settings = useRef<TitleSettings | null>(null);
-  const overrides = useRef(new Map<object, string>());
+  const overrides = useRef(new Map<object, { rank: number; title: string }>());
+  const ranks = useRef(0);
 
   const overridesApi = useMemo<TitleOverrides>(
     () => ({
-      set: (owner, title) => {
-        overrides.current.set(owner, title);
+      rank: () => ++ranks.current,
+      set: (owner, rank, title) => {
+        overrides.current.set(owner, { rank, title });
         writeTitle(settings.current, overrides.current);
       },
       remove: (owner) => {

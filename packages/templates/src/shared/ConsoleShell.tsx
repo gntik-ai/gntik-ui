@@ -78,8 +78,9 @@ export function ConsoleShell({
   const { locale } = useI18n();
   const navigation = useNavigation();
   const nav = navProp ?? navigation?.groups;
-  const currentHref =
-    currentHrefProp ?? (navigation ? (navigation.activePage?.menuHref ?? navigation.pathname) : undefined);
+  // No visible menu item for the active page (or no active page) leaves every item unmarked; the
+  // raw pathname would re-activate routes getActivePage excludes, such as external ones.
+  const currentHref = currentHrefProp ?? (navigation ? (navigation.activePage?.menuHref ?? '') : undefined);
   const breadcrumbs =
     breadcrumbsProp === undefined && navigation ? (navigation.activePage?.breadcrumbs ?? null) : breadcrumbsProp;
   return (

@@ -73,6 +73,21 @@ describe('ConsoleShell inside a NavigationProvider', () => {
     const sidebar = screen.getByRole('navigation', { name: 'Main' });
     expect(within(sidebar).queryByRole('link', { current: 'page' })).toBeNull();
   });
+
+  it('does not mark an external route current even when its path is the pathname', () => {
+    const external: NavRoute[] = [
+      { path: '/logs', title: 'Logs', group: 'Operate' },
+      { path: '/docs', title: 'Docs', group: 'Operate', target: '_blank' },
+    ];
+    render(
+      <NavigationProvider routes={external} pathname="/docs">
+        <ConsoleShell>Content</ConsoleShell>
+      </NavigationProvider>,
+    );
+    const sidebar = screen.getByRole('navigation', { name: 'Main' });
+    expect(within(sidebar).getByRole('link', { name: 'Docs' })).toBeInTheDocument();
+    expect(within(sidebar).queryByRole('link', { current: 'page' })).toBeNull();
+  });
 });
 
 describe('ConsoleShell outside a NavigationProvider', () => {

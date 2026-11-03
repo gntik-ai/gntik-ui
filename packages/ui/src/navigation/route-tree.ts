@@ -92,7 +92,7 @@ function menuItems(routes: readonly NavRoute[], inMenu: Set<NavRoute>): NavItem[
   for (const route of routes) {
     if (route.hideInMenu) continue;
     const children = route.hideChildrenInMenu ? [] : (route.children ?? []);
-    if (route.flatMenu && children.length > 0) {
+    if (route.flatMenu) {
       items.push(...menuItems(children, inMenu));
       continue;
     }

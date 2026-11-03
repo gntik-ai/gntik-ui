@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { TitleOverridesContext } from './title-context';
 
 /**
@@ -12,6 +12,7 @@ import { TitleOverridesContext } from './title-context';
 export function useDocumentTitle(title: string | undefined): void {
   const overrides = useContext(TitleOverridesContext);
   const owner = useRef<object>({});
+  const [rank] = useState(() => overrides?.rank() ?? 0);
 
   useEffect(() => {
     const key = owner.current;
@@ -21,8 +22,8 @@ export function useDocumentTitle(title: string | undefined): void {
   useEffect(() => {
     if (!overrides) return;
     if (title === undefined) overrides.remove(owner.current);
-    else overrides.set(owner.current, title);
-  }, [overrides, title]);
+    else overrides.set(owner.current, rank, title);
+  }, [overrides, rank, title]);
 
   useEffect(() => {
     if (overrides || title === undefined || typeof document === 'undefined') return;

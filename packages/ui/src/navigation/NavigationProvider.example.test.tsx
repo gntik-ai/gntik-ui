@@ -38,3 +38,22 @@ it('translates the example', () => {
   );
   expect(screen.getByText('Título del documento: fn-42 · Consola')).toBeInTheDocument();
 });
+
+it('shows flatMenu, hideInBreadcrumb and hideInMenu in the route tree', async () => {
+  const user = userEvent.setup();
+  render(<NavigationProviderRouteTree />);
+  const sidebar = screen.getByRole('navigation', { name: 'Console sections' });
+  expect(within(sidebar).getByRole('link', { name: 'Logs' })).toHaveAttribute('href', '/observe/logs');
+  expect(within(sidebar).getByRole('link', { name: 'Traces' })).toBeInTheDocument();
+  expect(within(sidebar).queryByRole('link', { name: 'Observe' })).toBeNull();
+  expect(within(sidebar).queryByRole('link', { name: 'Account' })).toBeNull();
+
+  await user.click(within(sidebar).getByRole('link', { name: 'Traces' }));
+  const trail = screen.getByRole('navigation', { name: 'Page trail' });
+  expect(within(trail).queryByText('Observe')).toBeNull();
+  expect(within(trail).getByText('Traces')).toHaveAttribute('aria-current', 'page');
+
+  await user.click(screen.getByRole('button', { name: 'Open account (not in the menu)' }));
+  expect(screen.getByText('Document title: Account · Console')).toBeInTheDocument();
+  expect(within(sidebar).queryByRole('link', { current: 'page' })).toBeNull();
+});

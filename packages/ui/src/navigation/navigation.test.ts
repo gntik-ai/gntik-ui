@@ -62,6 +62,28 @@ describe('navFromRoutes', () => {
     expect(group!.items.map((i) => i.label)).toEqual(['Home', 'Logs', 'Traces']);
   });
 
+  it('leaves out a flatMenu parent whatever is left of its children', () => {
+    const items = (tree: NavRoute[]) => navFromRoutes(tree).flatMap((g) => g.items.map((i) => i.label));
+    expect(
+      items([
+        { path: '/a', title: 'A', flatMenu: true },
+        { path: '/b', title: 'B' },
+      ]),
+    ).toEqual(['B']);
+    expect(
+      items([
+        { path: '/a', title: 'A', flatMenu: true, hideChildrenInMenu: true, children: [{ path: '/a/x', title: 'X' }] },
+        { path: '/b', title: 'B' },
+      ]),
+    ).toEqual(['B']);
+    expect(
+      items([
+        { path: '/a', title: 'A', flatMenu: true, children: [{ path: '/a/x', title: 'X', hideInMenu: true }] },
+        { path: '/b', title: 'B' },
+      ]),
+    ).toEqual(['B']);
+  });
+
   it('carries icon, badge and match onto the item, and uses the path as pattern for dynamic paths', () => {
     const icon = () => null;
     const [group] = navFromRoutes([

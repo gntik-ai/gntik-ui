@@ -125,6 +125,27 @@ describe('NavigationProvider document title', () => {
     expect(document.title).toBe('Logs · Console');
   });
 
+  it('lets a nested child win over its parent when both mount together', () => {
+    function Parent({ children }: { children?: ReactNode }) {
+      useDocumentTitle('Outer');
+      return <>{children}</>;
+    }
+    const { rerender } = render(
+      <Provider pathname="/logs">
+        <Parent>
+          <EditPage title="Inner" />
+        </Parent>
+      </Provider>,
+    );
+    expect(document.title).toBe('Inner · Console');
+    rerender(
+      <Provider pathname="/logs">
+        <Parent />
+      </Provider>,
+    );
+    expect(document.title).toBe('Outer · Console');
+  });
+
   it('follows an override whose text changes and ignores an undefined one', () => {
     const { rerender } = render(
       <Provider pathname="/logs">

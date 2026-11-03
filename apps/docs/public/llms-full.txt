@@ -6173,6 +6173,7 @@ function Shell({ navigate }: { navigate: (href: string) => void }) {
   const navigation = useNavigation();
   const page = navigation?.activePage ?? null;
   const detail = page?.route.path === '/functions/:id';
+  const account = page?.route.path === '/account';
   return (
     <div className="grid w-full max-w-sm gap-4 text-sm text-foreground">
       <NavList
@@ -6197,16 +6198,22 @@ function Shell({ navigate }: { navigate: (href: string) => void }) {
         </p>
         <p>{t('navigation.example.menuItem', { value: page?.menuHref ?? '—' })}</p>
       </div>
-      <Button variant="secondary" onClick={() => navigate(detail ? '/functions' : '/functions/fn-42?tab=logs')}>
-        {t(detail ? 'navigation.example.openList' : 'navigation.example.openDetail')}
-      </Button>
+      <div className="flex flex-wrap gap-2">
+        <Button variant="secondary" onClick={() => navigate(detail ? '/functions' : '/functions/fn-42?tab=logs')}>
+          {t(detail ? 'navigation.example.openList' : 'navigation.example.openDetail')}
+        </Button>
+        <Button variant="secondary" onClick={() => navigate(account ? '/functions' : '/account')}>
+          {t(account ? 'navigation.example.openList' : 'navigation.example.openAccount')}
+        </Button>
+      </div>
     </div>
   );
 }
 
 /**
- * One route tree drives the sidebar, the highlighted item, the breadcrumbs and the title. The
- * preview sets documentTitle={false}: the catalog keeps its own tab title.
+ * One route tree drives the sidebar, the highlighted item, the breadcrumbs and the title. Observe
+ * is a flatMenu route (its children sit at its level) that hideInBreadcrumb leaves out of the trail,
+ * and Account is hideInMenu: reachable, but with no sidebar item. The preview sets documentTitle={false}: the catalog keeps its own tab title.
  */
 export default function NavigationProviderRouteTree() {
   const { t } = useI18n();
@@ -6221,7 +6228,18 @@ export default function NavigationProviderRouteTree() {
         children: [{ path: '/functions/:id', title: (params) => params.id ?? '' }],
       },
       { path: '/workflows', title: t('navigation.example.workflows'), group: t('navigation.example.build') },
-      { path: '/logs', title: t('navigation.example.logs'), group: t('navigation.example.operate') },
+      {
+        path: '/observe',
+        title: t('navigation.example.observe'),
+        group: t('navigation.example.operate'),
+        flatMenu: true,
+        hideInBreadcrumb: true,
+        children: [
+          { path: '/observe/logs', title: t('navigation.example.logs') },
+          { path: '/observe/traces', title: t('navigation.example.traces') },
+        ],
+      },
+      { path: '/account', title: t('navigation.example.account'), hideInMenu: true },
     ],
     [t],
   );
