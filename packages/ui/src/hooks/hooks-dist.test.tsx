@@ -20,11 +20,15 @@ it('starts dist/hooks.js with the use client banner', () => {
   expect(readFileSync(dist('hooks.js'), 'utf8').startsWith("'use client';")).toBe(true);
 });
 
+const GENERIC_HOOKS = ['useAnnounce', 'useToast', 'useAsyncOptions', 'useFitCount', 'useVirtualWindow'] as const;
+
 it('exports from the subpath the very functions the root exports', async () => {
   const [hooks, root] = await Promise.all([load('hooks.js'), load('index.js')]);
-  const names = Object.keys(hooks);
-  expect(names).toEqual(expect.arrayContaining(['useAnnounce', 'useToast', 'useAsyncOptions', 'useFitCount']));
-  for (const name of names) expect(root[name], name).toBe(hooks[name]);
+  for (const name of GENERIC_HOOKS) {
+    expect(typeof hooks[name], name).toBe('function');
+    expect(root[name], name).toBe(hooks[name]);
+  }
+  for (const name of Object.keys(hooks)) expect(root[name], name).toBe(hooks[name]);
 });
 
 it('shows a toast for useToast from the subpath under a ToastProvider from the root', async () => {
