@@ -6,6 +6,8 @@
    points at). The index lists every hook in full; each hook also has its own sub-page.
    ============================================================================ */
 import { Fragment } from 'react';
+import { useI18n } from '@gntik-ai/ui';
+import { hooksMessages } from '../i18n/hooks-messages';
 import { HOOK_PAGES } from './item-inventory.js';
 import { PreviewScope } from '../preview-settings.jsx';
 import { routeHash } from './routes.js';
@@ -70,6 +72,8 @@ const ENTRIES = Object.entries(docs)
 
 function HookEntry({ c, page = false }) {
   const { CodeBlock, ApiReference } = window;
+  const { locale } = useI18n();
+  const copy = hooksMessages[locale.split('-')[0]] ?? hooksMessages.en;
   const Heading = page ? 'h1' : 'h2';
   const Sub = page ? 'h2' : 'h3';
   const covered = [c.name, ...(c.also ?? [])];
@@ -80,7 +84,7 @@ function HookEntry({ c, page = false }) {
           href={routeHash('ui-hooks')}
           className="mb-6 inline-block text-[13px] text-primary-text underline focus-ring"
         >
-          Back to Hooks
+          {copy.back}
         </a>
       )}
       <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -99,7 +103,7 @@ function HookEntry({ c, page = false }) {
         </span>
         {!page && (
           <a href={routeHash('ui-hooks', c.id)} className="text-[12px] text-primary-text underline focus-ring">
-            Open page
+            {copy.openPage}
           </a>
         )}
       </div>
@@ -107,13 +111,13 @@ function HookEntry({ c, page = false }) {
         {c.description}
       </p>
       <CodeBlock code={`import { ${covered.join(', ')} } from '@gntik-ai/ui/hooks'`} open />
-      <Sub className="mb-2 mt-6 text-[13px] font-semibold text-foreground">Signature</Sub>
+      <Sub className="mb-2 mt-6 text-[13px] font-semibold text-foreground">{copy.signature}</Sub>
       <CodeBlock code={c.signature} open />
-      <Sub className="mb-2 mt-6 text-[13px] font-semibold text-foreground">On the server</Sub>
+      <Sub className="mb-2 mt-6 text-[13px] font-semibold text-foreground">{copy.server}</Sub>
       <p className="max-w-3xl text-[13px] leading-6 text-muted-foreground" style={{ textWrap: 'pretty' }}>
         {c.server}
       </p>
-      <Sub className="mb-2 mt-6 text-[13px] font-semibold text-foreground">Example</Sub>
+      <Sub className="mb-2 mt-6 text-[13px] font-semibold text-foreground">{copy.example}</Sub>
       {c.examples.map(({ key, Comp, code }) => (
         <Fragment key={key}>
           <div data-component-preview="" className="mb-2 rounded-lg border border-border bg-card p-6 sm:p-8">
@@ -131,15 +135,17 @@ function HookEntry({ c, page = false }) {
 
 function HooksSection({ itemId }) {
   const { SectionHead } = window;
+  const { locale } = useI18n();
+  const copy = hooksMessages[locale.split('-')[0]] ?? hooksMessages.en;
   const hook = ENTRIES.find((c) => c.id === itemId);
   if (hook) return <HookEntry c={hook} page />;
   return (
     <div>
       <SectionHead
-        kicker="Library"
+        kicker={copy.kicker}
         title={HOOKS_META.name}
         status="done"
-        intro={`${ENTRIES.length} hooks. ${HOOKS_META.description}`}
+        intro={`${copy.count(ENTRIES.length)} ${HOOKS_META.description}`}
       />
       {ENTRIES.map((c) => (
         <HookEntry key={c.id} c={c} />
