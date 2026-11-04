@@ -27,5 +27,9 @@ docs-coverage, library and docs builds, lint, typecheck, registry:check and both
 consumer kit-only checks. The library unit gate stops in the unchanged tokens
 mirror-install test: the public registry is unavailable, and its offline fallback
 looks for a 0.2.1 tarball after packing the current 0.3.0 package (ENOENT).
+The initial full blocks run passed 1208 tests and exposed two pinned PageHeader
+HTML mismatches. Allowing only the three approved container-class changes in the
+expected HTML preserves the original fixture; all six compatibility cases pass
+after this correction.
 Browser layout, axe and visual checks run in PR CI. No visual baselines are
 updated on the worker.
