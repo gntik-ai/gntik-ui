@@ -9,6 +9,7 @@
   },
   "missingComponents": [
     "agent-surface",
+    "autocomplete",
     "conversation-list",
     "csp-provider",
     "cursor-pager-footer",
@@ -48,6 +49,7 @@
     {"id":"attachment","package":"@gntik-ai/chat","name":"attachment","version":"0.5.0","url":"https://ui.gntik.ai/r/attachment.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"audit-log","package":"@gntik-ai/templates","name":"audit-log","version":"0.6.0","url":"https://ui.gntik.ai/r/audit-log.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"auth-layout","package":"@gntik-ai/ui","name":"auth-layout","version":"0.5.0","url":"https://ui.gntik.ai/r/auth-layout.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
+    {"id":"autocomplete","package":"@gntik-ai/ui","name":"autocomplete","version":"0.5.0","url":"https://ui.gntik.ai/r/autocomplete.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"avatar","package":"@gntik-ai/ui","name":"avatar","version":"0.5.0","url":"https://ui.gntik.ai/r/avatar.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"badge","package":"@gntik-ai/ui","name":"badge","version":"0.5.0","url":"https://ui.gntik.ai/r/badge.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},
     {"id":"blockquote","package":"@gntik-ai/ui","name":"blockquote","version":"0.5.0","url":"https://ui.gntik.ai/r/blockquote.json","releaseCommit":"b464709587664cf6588df02504fc88c02a7751c5"},

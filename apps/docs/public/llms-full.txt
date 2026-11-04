@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 131 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 132 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -3079,6 +3079,69 @@ export default function UseConversationsEcho() {
 }
 ```
 
+### Autocomplete (`autocomplete`)
+
+A text field whose value is whatever the user types, with suggestions that fill the input when picked. Use Autocomplete when any text is valid and the list is only a hint; use Combobox when the value must be a listed item. Blur, Tab and Enter never replace or clear the typed text, and Enter with nothing highlighted submits the owning form (set `name` for the form value). `onItemSelect` receives the full item when a suggestion is picked. Suggestions are `items` (flat, or groups `{ label, items }`; groups with no match are hidden) filtered by the typed text, or `loadOptions(query, { signal })` for async suggestions: debounced (`debounceMs`, default 250), stale requests aborted, with an announced loading state, an error message and a Retry row that keeps the text and the popup. Async results are shown as returned. `limit` caps the rendered suggestions across groups and a status line reads how many more match. `mode="both"` selects the rest of the first matching suggestion as you type; Backspace removes it, and Tab or blur keep only what was typed. `clearable` adds a Clear button while the field is not empty. Inside Field the label, description and error are wired, and `invalid` and `disabled` follow the field. FieldVariantProvider supplies the chrome; `size` is auto, sm or md.
+
+- Package: `@gntik-ai/ui` · export `Autocomplete` · group Forms · status stable
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Autocomplete/Autocomplete.doc.ts
+- Primitive: `@base-ui/react/autocomplete`
+- ARIA pattern: combobox (list autocomplete)
+- Registry dependencies: combobox, select, spinner, ui-utils
+- Install: `gntik-ui add autocomplete`; own the source with `gntik-ui eject autocomplete`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Type a character | Opens the popup and filters the suggestions; the typed text stays the value |
+| ArrowDown / ArrowUp | Moves the highlight between suggestions |
+| Enter on a highlighted option | Fills the input with the option, reports it with onItemSelect and closes |
+| Enter with nothing highlighted | Keeps the typed text and submits the owning form |
+| Escape | Closes the popup and keeps the text; with the popup closed it never clears the text |
+| Tab | Leaves the field with the typed text as the value |
+| Enter (mode both) | Accepts the inline completion and reports its item with onItemSelect |
+
+Tokens: background, border, destructive, popover, popover-foreground, secondary, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { useI18n } from '@gntik-ai/ui';
+import { Autocomplete } from '@gntik-ai/ui';
+
+const HOSTS = ['db.internal', 'db.replica', 'cache.internal', 'queue.internal', 'search.internal', 'web.internal'];
+
+/** Stands in for `fetch('/api/hosts?q=…', { signal })`: resolves after a short delay, honours abort. */
+function searchHosts(query: string, { signal }: { signal: AbortSignal }): Promise<string[]> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      resolve(HOSTS.filter((host) => host.includes(query.toLowerCase())));
+    }, 300);
+    signal.addEventListener('abort', () => {
+      clearTimeout(timer);
+      reject(new DOMException('Aborted', 'AbortError'));
+    });
+  });
+}
+
+export default function AutocompleteAsync() {
+  const { t } = useI18n();
+  return (
+    <div className="w-full max-w-sm">
+      <Autocomplete<string>
+        label={t('autocomplete.examples.host')}
+        placeholder={t('autocomplete.examples.hostPlaceholder')}
+        loadOptions={searchHosts}
+        debounceMs={250}
+        name="host"
+      />
+      <p className="mt-2 text-[12px] text-muted-foreground">{t('autocomplete.examples.hostHint')}</p>
+    </div>
+  );
+}
+```
+
 ### Calendar (`calendar`)
 
 The public localeWeekStart(locale?) helper returns the locale first weekday (0–6, Monday fallback), matching scheduling blocks. Day or range selection with one or two months, inclusive min/max bounds and Intl names. The clickable month heading opens a month grid, then the year heading opens a shared 12-year page (2020–2031 for 2026). Set maxView="day" for the previous static header, or "month" to stop at months; the default is "year". Optional view/defaultView/onViewChange control or report the view (initially "day"). captionLayout="select" uses labelled kit month/year selects; yearRange={from,to} defaults to the current year ±10, clipped to min/max and including the visible year. Picking a month returns to days, preserving and clamping the focused day, and calls onMonthChange once with the first day. DatePicker and DateRangePicker forward maxView and captionLayout and reopen in the day view.
@@ -3372,7 +3435,7 @@ export default function ClickableCardList() {
 
 ### Combobox (`combobox`)
 
-ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.
+Use Combobox when the value must be a listed item; to accept any text with suggestions as hints, use Autocomplete. ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.
 
 - Package: `@gntik-ai/ui` · export `Combobox` · group Forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/Combobox/Combobox.doc.ts

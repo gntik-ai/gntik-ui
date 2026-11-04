@@ -368,6 +368,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -555,6 +560,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -1067,6 +1077,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -1209,6 +1224,206 @@
       ]
     },
     {
+      "name": "autocomplete",
+      "type": "registry:ui",
+      "title": "Autocomplete",
+      "description": "A text field whose value is whatever the user types, with suggestions that fill the input when picked. Use Autocomplete when any text is valid and the list is only a hint; use Combobox when the value must be a listed item. Blur, Tab and Enter never replace or clear the typed text, and Enter with nothing highlighted submits the owning form (set `name` for the form value). `onItemSelect` receives the full item when a suggestion is picked. Suggestions are `items` (flat, or groups `{ label, items }`; groups with no match are hidden) filtered by the typed text, or `loadOptions(query, { signal })` for async suggestions: debounced (`debounceMs`, default 250), stale requests aborted, with an announced loading state, an error message and a Retry row that keeps the text and the popup. Async results are shown as returned. `limit` caps the rendered suggestions across groups and a status line reads how many more match. `mode=\"both\"` selects the rest of the first matching suggestion as you type; Backspace removes it, and Tab or blur keep only what was typed. `clearable` adds a Clear button while the field is not empty. Inside Field the label, description and error are wired, and `invalid` and `disabled` follow the field. FieldVariantProvider supplies the chrome; `size` is auto, sm or md.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/combobox.json",
+        "https://ui.gntik.ai/r/select.json",
+        "https://ui.gntik.ai/r/spinner.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "stable",
+        "source": "packages/ui/src/components/Autocomplete/Autocomplete.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/Autocomplete/Autocomplete.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/autocomplete/Autocomplete.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/Autocomplete/autocomplete.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/autocomplete/autocomplete.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Autocomplete/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/autocomplete/index.ts"
+        },
+        {
+          "path": "packages/ui/src/field-variant/field-variant-context.ts",
+          "type": "registry:ui",
+          "target": "components/field-variant/field-variant-context.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
+          "path": "packages/ui/src/components/Autocomplete/Autocomplete.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/autocomplete/Autocomplete.doc.ts"
+        },
+        {
+          "path": "packages/ui/src/doc.ts",
+          "type": "registry:ui",
+          "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
@@ -1261,6 +1476,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -1448,6 +1668,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -1746,6 +1971,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -1932,6 +2162,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -2248,6 +2483,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -2420,6 +2660,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -2667,6 +2912,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -3386,6 +3636,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -3662,7 +3917,7 @@
       "name": "combobox",
       "type": "registry:ui",
       "title": "Combobox",
-      "description": "ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.",
+      "description": "Use Combobox when the value must be a listed item; to accept any text with suggestions as hints, use Autocomplete. ComboboxTrigger offers a field-style button (size auto/sm/md/lg), or a custom element through render. ComboboxContent accepts optional header and footer slots; put ComboboxPopupInput in header to focus search on open. The popup input uses the localized search placeholder and shares virtualized keyboard navigation. Optional listClassName and emptyClassName customize presentation. With no slots the original input/list structure is preserved. See ComboboxPopupSearch for the trigger, header and footer together. Searchable select: typing filters the list. Single select (ComboboxInput) or multi-select with removable chips (ComboboxChipsInput), an announced empty state, and rich rows via ComboboxItem children. Async options (`loadOptions(query, { signal })`: debounced, stale requests aborted, announced loading and error states with a Retry row) and creatable (`onCreate(input)` adds a “Create …” row). Opt-in `virtualized` windows flat items arrays (including async, Create and Retry rows); grouped items and static children retain full rendering. ComboboxContent accepts itemHeight (fixed pixels), estimatedItemHeight (default 32) and overscan (default 4). Keyboard highlights stay mounted; filtering resets scroll and reopening reveals the selection. Find-in-page and screen-reader browse mode reach mounted rows only; keyboard navigation reaches all options. Optional variant: outline (default), filled (secondary surface), or ghost (transparent chrome). FieldVariantProvider supplies the default; explicit props win. Ghost is for obvious editing contexts such as an edit-mode row or toolbar. Alternate variants retain focus, invalid and forced-colors boundaries. Grouped `{ value, items }` collections use ComboboxGroup, ComboboxGroupLabel, ComboboxSeparator and ComboboxCollection. Pass each filtered group's items to ComboboxGroup; ComboboxCollection renders its options (renderless unless className supplies a container). Labels and separators share Select styles. useComboboxFilter exposes Base UI's locale-aware matching for custom filters. Filtering hides empty groups and labels; keyboard navigation crosses groups. Async results may be grouped, and Create/Retry rows stay outside groups. See ComboboxGrouped for grouped creatable and async previews.",
       "author": "gntik-ai",
       "dependencies": [
         "@base-ui/react@^1.9.0",
@@ -3750,6 +4005,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -3949,6 +4209,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -4442,6 +4707,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -4932,6 +5202,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -5368,6 +5643,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -5582,6 +5862,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -5812,6 +6097,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -6031,6 +6321,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -6293,6 +6588,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -6485,6 +6785,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -6700,6 +7005,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -6921,6 +7231,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -7101,6 +7416,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -7300,6 +7620,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -7494,6 +7819,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -8593,6 +8923,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -8875,6 +9210,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -9191,6 +9531,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -9479,6 +9824,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -9666,6 +10016,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -9851,6 +10206,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -10049,6 +10409,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -10285,6 +10650,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -10557,6 +10927,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -10742,6 +11117,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -10936,6 +11316,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -11422,6 +11807,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -11649,6 +12039,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -12151,6 +12546,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -12540,6 +12940,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -12733,6 +13138,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -13060,6 +13470,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -13252,6 +13667,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -13436,6 +13856,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -13630,6 +14055,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -13799,6 +14229,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -14096,6 +14531,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -14321,6 +14761,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -14652,6 +15097,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -14833,6 +15283,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -15114,6 +15569,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -15310,6 +15770,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -15568,6 +16033,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -16002,6 +16472,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -16476,6 +16951,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -17007,6 +17487,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -17348,6 +17833,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -17539,6 +18029,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -17821,6 +18316,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -18246,6 +18746,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -18786,6 +19291,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -19374,6 +19884,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -19652,6 +20167,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -19819,6 +20339,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -20140,6 +20665,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -20539,6 +21069,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -20858,6 +21393,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -21267,6 +21807,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -21451,6 +21996,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -21649,6 +22199,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -22004,6 +22559,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -22189,6 +22749,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -22396,6 +22961,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -22627,6 +23197,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -22819,6 +23394,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -23005,6 +23585,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -23238,6 +23823,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -23478,6 +24068,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -23782,6 +24377,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -23970,6 +24570,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -24206,6 +24811,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -24403,6 +25013,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -24730,6 +25345,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -24896,6 +25516,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -25352,6 +25977,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -25621,6 +26251,11 @@
           "target": "components/i18n/messages/auth-form-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/catalog-preview-messages.ts"
@@ -25805,6 +26440,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -26041,6 +26681,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
@@ -26298,6 +26943,11 @@
           "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
