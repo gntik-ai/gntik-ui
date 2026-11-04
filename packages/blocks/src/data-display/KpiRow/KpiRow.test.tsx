@@ -3,6 +3,17 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { KpiRow } from './KpiRow';
 
 describe('KpiRow', () => {
+  it('keeps the named description list and list styling inside a separately styled wrapper', () => {
+    const { container } = render(<KpiRow label="Usage" className="gap-6" containerClassName="col-span-2" />);
+    const list = screen.getByLabelText('Usage');
+    expect(list.tagName).toBe('DL');
+    expect(list).toHaveClass('gap-6');
+    expect(list).not.toHaveClass('col-span-2');
+    expect(list.parentElement).toBe(container.firstElementChild);
+    expect(list.parentElement).toHaveClass('col-span-2');
+    expect(list.parentElement).not.toHaveClass('gap-6');
+  });
+
   it('renders the default KPIs as a description list with sparklines', async () => {
     const { container } = render(<KpiRow />);
     expect(screen.getByText('Active projects')).toBeInTheDocument();

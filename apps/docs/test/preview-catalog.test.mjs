@@ -177,3 +177,26 @@ test('scheduling locale and display-zone previews have distinct frame titles and
     else delete globalThis.React;
   }
 });
+
+test('container-responsive blocks expose their panel examples and wrapper props in the catalog', async () => {
+  const { createServer } = await import('vite');
+  const server = await createServer({
+    root: fileURLToPath(new URL('..', import.meta.url)),
+    server: { middlewareMode: true, ws: false, watch: null },
+    optimizeDeps: { noDiscovery: true, include: [] },
+  });
+  try {
+    const { PREVIEW_LOADERS } = await server.ssrLoadModule('/src/preview-registry.js');
+    for (const id of ['kpi-row', 'resource-card-grid', 'page-header', 'form-section', 'chart-card']) {
+      assert.equal(typeof (await PREVIEW_LOADERS.block[`${id}--container-panel`]()).default, 'function');
+    }
+    assert.equal(typeof (await PREVIEW_LOADERS.block['kpi-row--standard-frame']()).default, 'function');
+    const { BLOCK_API } = await server.ssrLoadModule('/src/api-docs.js');
+    for (const name of ['KpiRow', 'ResourceCardGrid']) {
+      const props = BLOCK_API[name].propTypes.find((type) => type.name === `${name}Props`);
+      assert.ok(props.props.some((entry) => entry.name === 'containerClassName'));
+    }
+  } finally {
+    await server.close();
+  }
+});

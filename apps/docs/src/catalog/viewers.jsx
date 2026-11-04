@@ -313,6 +313,16 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                   />
                 </>
               )}
+              {kind === 'block' &&
+                ['kpi-row', 'resource-card-grid', 'page-header', 'form-section', 'chart-card'].includes(it.id) && (
+                  <Viewer
+                    kind="block"
+                    id={`${it.id}--container-panel`}
+                    title={`${it.title} · container width`}
+                    file={`${it.file.slice(0, it.file.lastIndexOf('/'))}/examples/ContainerPanel.tsx`}
+                    height={720}
+                  />
+                )}
               {kind === 'block' && it.id === 'page-header' && (
                 <Viewer
                   kind="block"

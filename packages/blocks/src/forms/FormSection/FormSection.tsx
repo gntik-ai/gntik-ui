@@ -25,13 +25,13 @@ export interface FormSectionProps extends Omit<HTMLAttributes<HTMLElement>, 'tit
 
 function SampleFields() {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-6">
-      <Field className="sm:col-span-4">
+    <div className="grid grid-cols-1 gap-4 @2xl:grid-cols-6">
+      <Field className="@2xl:col-span-4">
         <FieldLabel>Project name</FieldLabel>
         <Input defaultValue="billing-dashboard" />
         <FieldDescription>Lowercase letters, numbers and dashes.</FieldDescription>
       </Field>
-      <Field className="sm:col-span-6">
+      <Field className="@2xl:col-span-6">
         <FieldLabel>Description</FieldLabel>
         <Textarea rows={3} defaultValue="Usage and invoice reporting for every workspace." />
       </Field>
@@ -41,7 +41,7 @@ function SampleFields() {
 
 /**
  * Two-column form section: title and help on the left, fields on the right. Stacks into a
- * single column on small screens.
+ * single column in narrow containers.
  */
 export function FormSection({
   labels,
@@ -62,26 +62,24 @@ export function FormSection({
   return (
     <section
       aria-labelledby={title != null ? `${id}-title` : undefined}
-      className={cn(
-        'grid grid-cols-1 gap-x-10 gap-y-5 md:grid-cols-3',
-        divided && 'border-t border-border pt-8',
-        className,
-      )}
+      className={cn('@container w-full min-w-0', divided && 'border-t border-border pt-8', className)}
       {...props}
     >
-      <div className="min-w-0">
-        {title != null && (
-          <Heading id={`${id}-title`} className="text-[14px] font-semibold tracking-tight text-foreground">
-            {title}
-          </Heading>
-        )}
-        {description != null && (
-          <p className="mt-1 text-[13px] leading-6 text-pretty text-muted-foreground">{description}</p>
-        )}
-      </div>
-      <div className="min-w-0 md:col-span-2">
-        {children ?? <SampleFields />}
-        {actions != null && <div className="mt-6 flex flex-wrap items-center justify-end gap-2.5">{actions}</div>}
+      <div className="grid grid-cols-1 gap-x-10 gap-y-5 @2xl:grid-cols-3">
+        <div className="min-w-0">
+          {title != null && (
+            <Heading id={`${id}-title`} className="text-[14px] font-semibold tracking-tight text-foreground">
+              {title}
+            </Heading>
+          )}
+          {description != null && (
+            <p className="mt-1 text-[13px] leading-6 text-pretty text-muted-foreground">{description}</p>
+          )}
+        </div>
+        <div className="min-w-0 @2xl:col-span-2">
+          {children ?? <SampleFields />}
+          {actions != null && <div className="mt-6 flex flex-wrap items-center justify-end gap-2.5">{actions}</div>}
+        </div>
       </div>
     </section>
   );

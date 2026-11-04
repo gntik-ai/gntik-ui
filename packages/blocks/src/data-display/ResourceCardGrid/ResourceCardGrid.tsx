@@ -26,14 +26,20 @@ export interface ResourceCardGridProps {
   onAction?: (action: ResourceAction, item: ResourceCard) => void;
   /** Replaces the default menu entirely. Return an empty array to hide the menu. */
   getActions?: (item: ResourceCard) => Array<MoreMenuAction | 'separator'>;
-  /** Columns at the widest breakpoint. */
+  /** Maximum columns, chosen from this block's container width. */
   columns?: 2 | 3 | 4;
   /** Heading level of each card's name, to fit the page outline (default h3). */
   titleAs?: 'h2' | 'h3' | 'h4';
   className?: string;
+  /** Styles the container wrapper, including placement in a parent grid. */
+  containerClassName?: string;
 }
 
-const COLS = { 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-3 xl:grid-cols-4' } as const;
+const COLS = {
+  2: '@xl:grid-cols-2',
+  3: '@xl:grid-cols-2 @4xl:grid-cols-3',
+  4: '@xl:grid-cols-2 @3xl:grid-cols-3 @4xl:grid-cols-4',
+} as const;
 
 /** Responsive grid of resource cards: icon or avatar, name, status, meta figures and a row-actions MoreMenu. */
 export function ResourceCardGrid({
@@ -44,6 +50,7 @@ export function ResourceCardGrid({
   columns = 3,
   titleAs: TitleTag = 'h3',
   className,
+  containerClassName,
 }: ResourceCardGridProps) {
   const defaults = (item: ResourceCard): Array<MoreMenuAction | 'separator'> => [
     { label: 'Open', icon: ExternalLink, onSelect: () => onAction?.('open', item) },
@@ -53,46 +60,48 @@ export function ResourceCardGrid({
     { label: 'Delete', icon: Trash2, destructive: true, onSelect: () => onAction?.('delete', item) },
   ];
   return (
-    <ul aria-label={label} className={cn('grid grid-cols-1 gap-4 sm:grid-cols-2', COLS[columns], className)}>
-      {items.map((item) => {
-        const actions = getActions ? getActions(item) : defaults(item);
-        const IconCmp = item.icon;
-        return (
-          <li key={item.id} className="flex min-w-0 flex-col rounded-xl border border-border bg-card p-5 shadow-sm">
-            <div className="flex items-start justify-between gap-3">
-              {item.avatar ? (
-                <Avatar name={item.avatar.name} src={item.avatar.src} size="md" shape="rounded" />
-              ) : (
-                <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-muted-foreground">
-                  {IconCmp && <IconCmp size={20} aria-hidden />}
-                </span>
-              )}
-              <div className="flex items-center gap-2">
-                {item.status && <StatusTag status={item.status} />}
-                {actions.length > 0 && (
-                  <MoreMenu items={actions} label={`Actions for ${item.name}`} variant="ghost" size="sm" />
+    <div className={cn('@container w-full min-w-0', containerClassName)}>
+      <ul aria-label={label} className={cn('grid grid-cols-1 gap-4', COLS[columns], className)}>
+        {items.map((item) => {
+          const actions = getActions ? getActions(item) : defaults(item);
+          const IconCmp = item.icon;
+          return (
+            <li key={item.id} className="flex min-w-0 flex-col rounded-xl border border-border bg-card p-5 shadow-sm">
+              <div className="flex items-start justify-between gap-3">
+                {item.avatar ? (
+                  <Avatar name={item.avatar.name} src={item.avatar.src} size="md" shape="rounded" />
+                ) : (
+                  <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-muted-foreground">
+                    {IconCmp && <IconCmp size={20} aria-hidden />}
+                  </span>
+                )}
+                <div className="flex items-center gap-2">
+                  {item.status && <StatusTag status={item.status} />}
+                  {actions.length > 0 && (
+                    <MoreMenu items={actions} label={`Actions for ${item.name}`} variant="ghost" size="sm" />
+                  )}
+                </div>
+              </div>
+              <div className="mt-4 min-w-0">
+                <TitleTag className="truncate text-[14px] font-semibold text-foreground">{item.name}</TitleTag>
+                {item.description && (
+                  <p className="mt-0.5 truncate text-[12.5px] text-muted-foreground">{item.description}</p>
                 )}
               </div>
-            </div>
-            <div className="mt-4 min-w-0">
-              <TitleTag className="truncate text-[14px] font-semibold text-foreground">{item.name}</TitleTag>
-              {item.description && (
-                <p className="mt-0.5 truncate text-[12.5px] text-muted-foreground">{item.description}</p>
+              {item.meta && item.meta.length > 0 && (
+                <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-border pt-4">
+                  {item.meta.map((m) => (
+                    <div key={m.label} className="flex min-w-0 flex-col-reverse">
+                      <dt className="truncate text-[11px] text-muted-foreground">{m.label}</dt>
+                      <dd className="truncate font-mono text-[14px] text-foreground tabular-nums">{m.value}</dd>
+                    </div>
+                  ))}
+                </dl>
               )}
-            </div>
-            {item.meta && item.meta.length > 0 && (
-              <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-border pt-4">
-                {item.meta.map((m) => (
-                  <div key={m.label} className="flex min-w-0 flex-col-reverse">
-                    <dt className="truncate text-[11px] text-muted-foreground">{m.label}</dt>
-                    <dd className="truncate font-mono text-[14px] text-foreground tabular-nums">{m.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
-          </li>
-        );
-      })}
-    </ul>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
