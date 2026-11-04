@@ -16209,7 +16209,7 @@
       "package": "@gntik-ai/ui",
       "group": "Hooks",
       "status": "stable",
-      "description": "Behaviour hooks of @gntik-ai/ui, importable from @gntik-ai/ui/hooks or the package root: clipboard, storage state, operating system, hotkeys, media queries, breakpoints, announcements, toasts, async options, overflow fitting and virtual windows. Each is safe to render on the server and documents the value it returns there.",
+      "description": "Behaviour hooks of @gntik-ai/ui, importable from @gntik-ai/ui/hooks or the package root: clipboard, URL query state, storage state, operating system, hotkeys, media queries, breakpoints, announcements, toasts, async options, overflow fitting and virtual windows. Each is safe to render on the server and documents the value it returns there.",
       "files": [
         {
           "path": "packages/ui/src/hooks/hotkey-registry.ts",
@@ -16222,6 +16222,14 @@
         {
           "path": "packages/ui/src/hooks/parse-hotkey.ts",
           "target": "components/hooks/parse-hotkey.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/url-param.ts",
+          "target": "components/hooks/url-param.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/url-state-store.ts",
+          "target": "components/hooks/url-state-store.ts"
         },
         {
           "path": "packages/ui/src/hooks/useBreakpoint.ts",
@@ -16246,6 +16254,10 @@
         {
           "path": "packages/ui/src/hooks/useOs.ts",
           "target": "components/hooks/useOs.ts"
+        },
+        {
+          "path": "packages/ui/src/hooks/useUrlState.ts",
+          "target": "components/hooks/useUrlState.ts"
         },
         {
           "path": "packages/ui/src/i18n/I18nProvider.tsx",
@@ -19902,7 +19914,7 @@
       "package": "@gntik-ai/templates",
       "group": "Resources",
       "status": "beta",
-      "description": "List page for any resource: header with the create action, filter bar with saved views, a selectable sortable table with pagination, a sticky bulk action bar and a no-results state.",
+      "description": "List page for any resource: header with the create action, filter bar with saved views, a selectable sortable table with pagination, a sticky bulk action bar and a no-results state. Opt-in syncUrl preserves query, filters and sort in shared links and browser history.",
       "files": [
         {
           "path": "packages/templates/src/resource-index/Page.tsx",

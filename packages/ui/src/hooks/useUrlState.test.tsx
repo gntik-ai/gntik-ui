@@ -1,0 +1,495 @@
+import { act, cleanup, renderHook } from '@testing-library/react';
+import { renderToString } from 'react-dom/server';
+import { hydrateRoot } from 'react-dom/client';
+import { UrlStateProvider, type UrlStateAdapter, useUrlState, urlParam } from './useUrlState';
+
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+  vi.useRealTimers();
+});
+
+it('infers typed values from a shared link without writing history', () => {
+  history.replaceState(null, '', '/?q=api&status=failed&status=running&page=3');
+  const replace = vi.spyOn(history, 'replaceState');
+  const push = vi.spyOn(history, 'pushState');
+  const { result } = renderHook(() =>
+    useUrlState({
+      q: urlParam.string(),
+      status: urlParam.array(urlParam.string()),
+      page: urlParam.integer(1, { history: 'push', min: 1 }),
+    }),
+  );
+  const value: { q: string; status: string[]; page: number } = result.current[0];
+  expect(value).toEqual({ q: 'api', status: ['failed', 'running'], page: 3 });
+  expect(replace).not.toHaveBeenCalled();
+  expect(push).not.toHaveBeenCalled();
+});
+
+it.each(['abc', '-2', '1e3', '3.5', ''])(
+  'reads invalid page %s and failed custom values as defaults, dropping invalid array items',
+  (page) => {
+    history.replaceState(
+      null,
+      '',
+      `/?page=${page}&custom=bad&status=failed&status=unknown&status=running&enabled=false&tab=bad`,
+    );
+    const replace = vi.spyOn(history, 'replaceState');
+    const { result } = renderHook(() =>
+      useUrlState({
+        page: urlParam.integer(1, { min: 1 }),
+        custom: urlParam.custom({
+          default: 'safe',
+          parse: () => {
+            throw new Error('Invalid');
+          },
+          serialize: String,
+        }),
+        status: urlParam.array(urlParam.enum(['failed', 'running'], 'running')),
+        enabled: urlParam.boolean(true),
+        tab: urlParam.enum(['all', 'recent'], 'all'),
+      }),
+    );
+    expect(result.current[0]).toEqual({
+      page: 1,
+      custom: 'safe',
+      status: ['failed', 'running'],
+      enabled: false,
+      tab: 'all',
+    });
+    expect(replace).not.toHaveBeenCalled();
+  },
+);
+
+it.each([
+  ['4', 4],
+  ['5', 1],
+] as const)('reads page %s with an inclusive upper bound as %i without rewriting', (page, expected) => {
+  history.replaceState(null, '', `/?page=${page}`);
+  const replace = vi.spyOn(history, 'replaceState');
+  const { result } = renderHook(() => useUrlState({ page: urlParam.integer(1, { max: 4 }) }));
+  expect(result.current[0].page).toBe(expected);
+  expect(replace).not.toHaveBeenCalled();
+});
+
+it('shares pending values immediately, coalesces patches and omits defaults while preserving foreign params and hash', () => {
+  vi.useFakeTimers();
+  history.replaceState({ kept: true }, '', '/list?q=api&utm_source=x#details');
+  const replace = vi.spyOn(history, 'replaceState');
+  const push = vi.spyOn(history, 'pushState');
+  const schema = { q: urlParam.string(), page: urlParam.integer(1) };
+  const a = renderHook(() => useUrlState(schema));
+  const b = renderHook(() => useUrlState(schema));
+  act(() => {
+    a.result.current[1]({ q: '' });
+    b.result.current[1]((prev) => ({ page: prev.page + 1 }));
+  });
+  expect(a.result.current[0]).toEqual({ q: '', page: 2 });
+  expect(b.result.current[0]).toEqual(a.result.current[0]);
+  expect(replace).not.toHaveBeenCalled();
+  act(() => vi.advanceTimersByTime(50));
+  expect(replace).toHaveBeenCalledTimes(1);
+  expect(push).not.toHaveBeenCalled();
+  expect(location.pathname + location.search + location.hash).toBe('/list?utm_source=x&page=2#details');
+  expect(history.state).toEqual({ kept: true });
+  act(() => a.result.current[1]({ q: '', page: 2 }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(replace).toHaveBeenCalledTimes(1);
+});
+
+it('uses call then key then replace history precedence and latches one push in a batch', () => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/?page=3');
+  const push = vi.spyOn(history, 'pushState');
+  const replace = vi.spyOn(history, 'replaceState');
+  const { result } = renderHook(() =>
+    useUrlState({ q: urlParam.string(), page: urlParam.integer(1, { history: 'push' }) }),
+  );
+  act(() => {
+    result.current[1]({ page: 4 });
+    result.current[1]({ q: 'api' });
+  });
+  act(() => vi.advanceTimersByTime(50));
+  expect(push).toHaveBeenCalledTimes(1);
+  expect(replace).not.toHaveBeenCalled();
+  act(() => result.current[1]({ page: 5 }, { history: 'replace' }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(replace).toHaveBeenCalledTimes(1);
+  act(() => result.current[1]({ q: 'logs' }, { history: 'push' }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(push).toHaveBeenCalledTimes(2);
+});
+
+it.each([undefined, 'replace'] as const)('inherits array item history unless overridden with %s', (historyMode) => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/');
+  const push = vi.spyOn(history, 'pushState');
+  const replace = vi.spyOn(history, 'replaceState');
+  const { result } = renderHook(() =>
+    useUrlState({ status: urlParam.array(urlParam.string('', { history: 'push' }), { history: historyMode }) }),
+  );
+  act(() => result.current[1]({ status: ['failed'] }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(push).toHaveBeenCalledTimes(historyMode === 'replace' ? 0 : 1);
+  expect(replace).toHaveBeenCalledTimes(historyMode === 'replace' ? 1 : 0);
+  expect(location.search).toBe('?status=failed');
+});
+
+it('drops a delayed write after moving to another route', () => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/old?q=api');
+  const { result } = renderHook(() => useUrlState({ q: urlParam.string() }));
+  act(() => result.current[1]({ q: 'pending' }));
+  history.replaceState(null, '', '/new?q=other');
+  const replace = vi.spyOn(history, 'replaceState');
+  act(() => vi.advanceTimersByTime(50));
+  expect(location.pathname + location.search).toBe('/new?q=other');
+  expect(result.current[0].q).toBe('other');
+  expect(replace).not.toHaveBeenCalled();
+});
+
+it('restores both consumers when one renders on another route before the write timer fires', () => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/old?q=api');
+  const a = renderHook(() => useUrlState({ q: urlParam.string() }));
+  const b = renderHook(() => useUrlState({ q: urlParam.string() }));
+  act(() => a.result.current[1]({ q: 'pending' }));
+  history.replaceState(null, '', '/new?q=other');
+  const replace = vi.spyOn(history, 'replaceState');
+  a.rerender();
+  expect(a.result.current[0].q).toBe('other');
+  act(() => vi.advanceTimersByTime(500));
+  expect(b.result.current[0].q).toBe('other');
+  expect(replace).not.toHaveBeenCalled();
+});
+
+it('replaces while typing and every consumer sees each value before the write lands', () => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/');
+  const replace = vi.spyOn(history, 'replaceState');
+  const push = vi.spyOn(history, 'pushState');
+  const a = renderHook(() => useUrlState({ q: urlParam.string() }));
+  const b = renderHook(() => useUrlState({ q: urlParam.string() }));
+  for (const q of ['d', 'de', 'dep', 'depl', 'deplo', 'deploy']) {
+    act(() => a.result.current[1]({ q }));
+    expect(a.result.current[0].q).toBe(q);
+    expect(b.result.current[0].q).toBe(q);
+    expect(new URLSearchParams(location.search).get('q')).not.toBe(q);
+    act(() => vi.advanceTimersByTime(50));
+  }
+  expect(push).not.toHaveBeenCalled();
+  expect(replace.mock.calls.length).toBeLessThanOrEqual(6);
+  expect(new URLSearchParams(location.search).get('q')).toBe('deploy');
+});
+
+it('shares updates when an adapter notifies synchronously inside setSearch', () => {
+  vi.useFakeTimers();
+  let search = '';
+  const listeners = new Set<() => void>();
+  const adapter: UrlStateAdapter = {
+    getSearch: () => search,
+    subscribe(listener) {
+      listeners.add(listener);
+      return () => {
+        listeners.delete(listener);
+      };
+    },
+    setSearch(next) {
+      search = next;
+      listeners.forEach((listener) => listener());
+    },
+  };
+  const a = renderHook(() => useUrlState({ q: urlParam.string() }, { adapter }));
+  const b = renderHook(() => useUrlState({ q: urlParam.string() }, { adapter }));
+  for (const character of 'deploy') {
+    const q = a.result.current[0].q + character;
+    act(() => a.result.current[1]({ q }));
+    expect(a.result.current[0].q).toBe(q);
+    expect(b.result.current[0].q).toBe(q);
+    act(() => vi.advanceTimersByTime(100));
+    expect(a.result.current[0].q).toBe(q);
+    expect(b.result.current[0].q).toBe(q);
+  }
+  act(() => vi.runAllTimers());
+  expect(new URLSearchParams(search).get('q')).toBe('deploy');
+  expect(a.result.current[0].q).toBe('deploy');
+  expect(b.result.current[0].q).toBe('deploy');
+});
+
+it('cancels pending input on external navigation after a batch returns to its original search', () => {
+  vi.useFakeTimers();
+  let search = '';
+  let navigate = () => {};
+  const adapter: UrlStateAdapter = {
+    getSearch: () => search,
+    subscribe(listener) {
+      navigate = listener;
+      return () => {
+        navigate = () => {};
+      };
+    },
+    setSearch(next) {
+      search = next;
+    },
+  };
+  const { result } = renderHook(() => useUrlState({ q: urlParam.string() }, { adapter }));
+  act(() => result.current[1]({ q: 'api' }));
+  act(() => vi.advanceTimersByTime(50));
+  act(() => {
+    result.current[1]({ q: 'temporary' });
+    result.current[1]({ q: 'api' });
+  });
+  act(() => vi.advanceTimersByTime(50));
+  act(() => result.current[1]({ q: 'deploy' }));
+  act(() => navigate());
+  expect(result.current[0].q).toBe('api');
+  act(() => vi.advanceTimersByTime(50));
+  expect(adapter.getSearch()).toBe('?q=api');
+});
+
+it('restores every consumer on Back and Forward and discards a pending write on popstate', async () => {
+  history.replaceState(null, '', '/?page=3');
+  const schema = { page: urlParam.integer(1, { history: 'push' }) };
+  const a = renderHook(() => useUrlState(schema, { throttleMs: 0 }));
+  const b = renderHook(() => useUrlState(schema));
+  await act(async () => {
+    a.result.current[1]({ page: 4 });
+    await new Promise((resolve) => setTimeout(resolve, 10));
+  });
+  expect(a.result.current[0].page).toBe(4);
+  await act(async () => {
+    const popped = new Promise<void>((resolve) => window.addEventListener('popstate', () => resolve(), { once: true }));
+    history.back();
+    await popped;
+  });
+  expect(a.result.current[0].page).toBe(3);
+  expect(b.result.current[0].page).toBe(3);
+  await act(async () => {
+    const popped = new Promise<void>((resolve) => window.addEventListener('popstate', () => resolve(), { once: true }));
+    history.forward();
+    await popped;
+  });
+  expect(a.result.current[0].page).toBe(4);
+  expect(b.result.current[0].page).toBe(4);
+  vi.useFakeTimers();
+  act(() => a.result.current[1]({ page: 5 }));
+  act(() => window.dispatchEvent(new PopStateEvent('popstate')));
+  const replace = vi.spyOn(history, 'replaceState');
+  const push = vi.spyOn(history, 'pushState');
+  act(() => vi.runAllTimers());
+  expect(a.result.current[0].page).toBe(4);
+  expect(replace).not.toHaveBeenCalled();
+  expect(push).not.toHaveBeenCalled();
+});
+
+it.each(['replaceState', 'pushState'] as const)('keeps failed %s writes in shared memory', (method) => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/');
+  vi.spyOn(history, method).mockImplementation(() => {
+    throw new DOMException('Rate limit', 'SecurityError');
+  });
+  const a = renderHook(() => useUrlState({ q: urlParam.string() }));
+  const b = renderHook(() => useUrlState({ q: urlParam.string() }));
+  act(() => a.result.current[1]({ q: 'retained' }, { history: method === 'pushState' ? 'push' : 'replace' }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(a.result.current[0].q).toBe('retained');
+  expect(b.result.current[0].q).toBe('retained');
+  expect(location.search).toBe('');
+});
+
+it('retains a failed push in the next successful write so Back restores the previous page', async () => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/?page=1');
+  const push = vi.spyOn(history, 'pushState').mockImplementationOnce(() => {
+    throw new DOMException('Rate limit', 'SecurityError');
+  });
+  const replace = vi.spyOn(history, 'replaceState');
+  const { result } = renderHook(() => useUrlState({ q: urlParam.string(), page: urlParam.integer(1) }));
+  act(() => result.current[1]({ page: 2 }, { history: 'push' }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(result.current[0].page).toBe(2);
+  act(() => result.current[1]({ q: 'api' }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(push).toHaveBeenCalledTimes(2);
+  expect(replace).not.toHaveBeenCalled();
+  expect(new URLSearchParams(location.search).get('page')).toBe('2');
+  vi.useRealTimers();
+  await act(async () => {
+    const popped = new Promise<void>((resolve) => window.addEventListener('popstate', () => resolve(), { once: true }));
+    history.back();
+    await popped;
+  });
+  expect(result.current[0]).toEqual({ q: '', page: 1 });
+});
+
+it('cancels writes when its last subscriber leaves and cleans up the listener', () => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/');
+  const remove = vi.spyOn(window, 'removeEventListener');
+  const replace = vi.spyOn(history, 'replaceState');
+  const { result, unmount } = renderHook(() => useUrlState({ q: urlParam.string() }));
+  act(() => result.current[1]({ q: 'discard' }));
+  unmount();
+  act(() => vi.runAllTimers());
+  expect(replace).not.toHaveBeenCalled();
+  expect(remove.mock.calls.some(([name]) => name === 'popstate')).toBe(true);
+});
+
+function memoryAdapter(initial: string): UrlStateAdapter {
+  let search = initial;
+  const listeners = new Set<() => void>();
+  return {
+    getSearch: () => search,
+    subscribe(listener) {
+      listeners.add(listener);
+      return () => {
+        listeners.delete(listener);
+      };
+    },
+    setSearch(next) {
+      search = next;
+      listeners.forEach((listener) => listener());
+    },
+  };
+}
+
+it('cancels pending input when a memory adapter navigates to the last acknowledged search', () => {
+  vi.useFakeTimers();
+  const adapter = memoryAdapter('');
+  const a = renderHook(() => useUrlState({ q: urlParam.string() }, { adapter }));
+  const b = renderHook(() => useUrlState({ q: urlParam.string() }, { adapter }));
+  act(() => a.result.current[1]({ q: 'a' }));
+  act(() => vi.advanceTimersByTime(50));
+  act(() => a.result.current[1]({ q: 'pending' }));
+  // A navigation notification can carry the same search as the previous write.
+  act(() => adapter.setSearch('?q=a', 'push'));
+  act(() => vi.runAllTimers());
+  expect(adapter.getSearch()).toBe('?q=a');
+  expect(a.result.current[0].q).toBe('a');
+  expect(b.result.current[0].q).toBe('a');
+});
+
+it('uses only the memoized adapter, honors option over provider, and keeps prefixes isolated', () => {
+  vi.useFakeTimers();
+  const adapter = memoryAdapter('?a.q=logs&b.q=other');
+  const unused = memoryAdapter('?a.q=wrong');
+  const add = vi.spyOn(window, 'addEventListener');
+  const replace = vi.spyOn(history, 'replaceState');
+  const push = vi.spyOn(history, 'pushState');
+  const a = renderHook(() => useUrlState({ q: urlParam.string() }, { adapter, prefix: 'a.' }), {
+    wrapper: ({ children }) => <UrlStateProvider adapter={unused}>{children}</UrlStateProvider>,
+  });
+  const b = renderHook(() => useUrlState({ q: urlParam.string() }, { prefix: 'b.' }), {
+    wrapper: ({ children }) => <UrlStateProvider adapter={adapter}>{children}</UrlStateProvider>,
+  });
+  expect(a.result.current[0].q).toBe('logs');
+  act(() => a.result.current[1]({ q: 'errors' }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(new URLSearchParams(adapter.getSearch()).get('a.q')).toBe('errors');
+  expect(b.result.current[0].q).toBe('other');
+  expect(replace).not.toHaveBeenCalled();
+  expect(push).not.toHaveBeenCalled();
+  expect(add.mock.calls.some(([name]) => name === 'popstate')).toBe(false);
+});
+
+it('keeps value identity with inline schemas until search changes; compares object defaults by serialization', () => {
+  vi.useFakeTimers();
+  const adapter = memoryAdapter('?q=first&q=second&count=2');
+  const { result, rerender } = renderHook(() =>
+    useUrlState(
+      {
+        q: urlParam.string(),
+        count: urlParam.custom({
+          default: { n: 1 },
+          parse: (raw) => ({ n: Number(raw) }),
+          serialize: (value) => String(value.n),
+        }),
+      },
+      { adapter },
+    ),
+  );
+  const initial = result.current[0];
+  expect(initial.q).toBe('first');
+  rerender();
+  expect(result.current[0]).toBe(initial);
+  act(() => result.current[1]({ q: 'single', count: { n: 1 } }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(adapter.getSearch()).toBe('?q=single');
+  expect(result.current[0]).not.toBe(initial);
+});
+
+it('removes the last parameter without leaving a question mark', () => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/list?q=api#details');
+  const { result } = renderHook(() => useUrlState({ q: urlParam.string() }));
+  act(() => result.current[1]({ q: '' }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(location.pathname + location.search + location.hash).toBe('/list#details');
+});
+
+it('ignores undefined patch entries for scalar and array parameters', () => {
+  vi.useFakeTimers();
+  const adapter = memoryAdapter('?q=api&status=failed');
+  const { result } = renderHook(() =>
+    useUrlState(
+      {
+        q: urlParam.string(),
+        status: urlParam.array(urlParam.string()),
+        page: urlParam.integer(1),
+      },
+      { adapter },
+    ),
+  );
+  act(() => result.current[1]({ q: undefined, status: undefined, page: 2 }));
+  expect(result.current[0]).toEqual({ q: 'api', status: ['failed'], page: 2 });
+  act(() => vi.runAllTimers());
+  expect(adapter.getSearch()).toBe('?q=api&status=failed&page=2');
+});
+
+it('renders defaults on the server and hydrates a deep link without mismatches', async () => {
+  history.replaceState(null, '', '/?q=api');
+  const seen: string[] = [];
+  function Example() {
+    const [value] = useUrlState({ q: urlParam.string('default') });
+    seen.push(value.q);
+    return <span>{value.q}</span>;
+  }
+  const container = document.createElement('div');
+  container.innerHTML = renderToString(<Example />);
+  expect(container.textContent).toBe('default');
+  const recover = vi.fn();
+  const root = hydrateRoot(container, <Example />, { onRecoverableError: recover });
+  await act(async () => {});
+  expect(container.textContent).toBe('api');
+  expect(seen.slice(0, 2)).toEqual(['default', 'default']);
+  expect(recover).not.toHaveBeenCalled();
+  act(() => root.unmount());
+  function Custom() {
+    const [value] = useUrlState({ q: urlParam.string() }, { adapter: memoryAdapter('?q=custom') });
+    return <span>{value.q}</span>;
+  }
+  expect(renderToString(<Custom />)).toContain('custom');
+});
+
+it('makes no history call for an unchanged value even when a foreign param has noncanonical encoding', () => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/?q=api&utm_source=a%20b');
+  const replace = vi.spyOn(history, 'replaceState');
+  const { result } = renderHook(() => useUrlState({ q: urlParam.string() }));
+  act(() => result.current[1]({ q: 'api' }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(replace).not.toHaveBeenCalled();
+});
+
+it('does not write when a batch returns to its original search', () => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/?q=api');
+  const replace = vi.spyOn(history, 'replaceState');
+  const { result } = renderHook(() => useUrlState({ q: urlParam.string() }));
+  act(() => {
+    result.current[1]({ q: 'temporary' });
+    result.current[1]({ q: 'api' });
+  });
+  act(() => vi.advanceTimersByTime(50));
+  expect(replace).not.toHaveBeenCalled();
+});

@@ -20,7 +20,15 @@ it('starts dist/hooks.js with the use client banner', () => {
   expect(readFileSync(dist('hooks.js'), 'utf8').startsWith("'use client';")).toBe(true);
 });
 
-const GENERIC_HOOKS = ['useAnnounce', 'useToast', 'useAsyncOptions', 'useFitCount', 'useVirtualWindow'] as const;
+const GENERIC_HOOKS = [
+  'useUrlState',
+  'UrlStateProvider',
+  'useAnnounce',
+  'useToast',
+  'useAsyncOptions',
+  'useFitCount',
+  'useVirtualWindow',
+] as const;
 
 it('exports from the subpath the very functions the root exports', async () => {
   const [hooks, root] = await Promise.all([load('hooks.js'), load('index.js')]);

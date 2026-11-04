@@ -32,3 +32,17 @@ export {
 } from '../components/Combobox/useAsyncOptions';
 export { useFitCount } from '../components/OverflowList/useFitCount';
 export { useVirtualWindow, type VirtualWindow } from '../components/VirtualList/use-virtual-window';
+export {
+  useUrlState,
+  urlParam,
+  UrlStateProvider,
+  type UrlStateAdapter,
+  type UrlStateSchema,
+  type UrlStateValues,
+  type UrlParam,
+  type UrlParamOptions,
+  type UrlHistoryMode,
+  type UseUrlStateOptions,
+  type SetUrlStateOptions,
+  type SetUrlState,
+} from './useUrlState';

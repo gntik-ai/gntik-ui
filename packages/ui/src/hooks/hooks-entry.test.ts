@@ -24,7 +24,15 @@ const BEFORE_ENTRY = [
   'useBreakpoint',
   'useBreakpointValue',
 ];
-const GENERIC = ['useAnnounce', 'useToast', 'useAsyncOptions', 'useFitCount', 'useVirtualWindow'];
+const GENERIC = [
+  'useUrlState',
+  'UrlStateProvider',
+  'useAnnounce',
+  'useToast',
+  'useAsyncOptions',
+  'useFitCount',
+  'useVirtualWindow',
+];
 
 describe('hooks entry', () => {
   it.each([...BEFORE_ENTRY, ...GENERIC])('exports %s from the entry and the root, as the same function', (name) => {

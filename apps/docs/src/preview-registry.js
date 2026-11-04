@@ -232,6 +232,7 @@ export const PREVIEW_LOADERS = {
       import('../../../packages/blocks/src/auth/ForgotPasswordForm/examples/UsernameOrEmail'),
   },
   template: {
+    'resource-index--url-synced': () => import('../../../packages/templates/src/resource-index/examples/UrlSynced'),
     'code-editor--palette-typography': () =>
       import('../../../packages/templates/src/code-editor/examples/PaletteTypography'),
     'assistant-chat--adapter': () => import('../../../packages/templates/src/assistant-chat/examples/AdapterChat'),

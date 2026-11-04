@@ -5286,7 +5286,7 @@ export default function TransferListCatalogDefaults() {
 
 ### Hooks (`ui-hooks`)
 
-Behaviour hooks of @gntik-ai/ui, importable from @gntik-ai/ui/hooks or the package root: clipboard, storage state, operating system, hotkeys, media queries, breakpoints, announcements, toasts, async options, overflow fitting and virtual windows. Each is safe to render on the server and documents the value it returns there.
+Behaviour hooks of @gntik-ai/ui, importable from @gntik-ai/ui/hooks or the package root: clipboard, URL query state, storage state, operating system, hotkeys, media queries, breakpoints, announcements, toasts, async options, overflow fitting and virtual windows. Each is safe to render on the server and documents the value it returns there.
 
 - Package: `@gntik-ai/ui` · export `Hooks` · group Hooks · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/hooks/hooks.meta.ts
@@ -12369,7 +12369,7 @@ export default function Route() {
 
 ### Resource index (`resource-index`)
 
-List page for any resource: header with the create action, filter bar with saved views, a selectable sortable table with pagination, a sticky bulk action bar and a no-results state.
+List page for any resource: header with the create action, filter bar with saved views, a selectable sortable table with pagination, a sticky bulk action bar and a no-results state. Opt-in syncUrl preserves query, filters and sort in shared links and browser history.
 
 - Package: `@gntik-ai/templates` · export `ResourceIndexPage` · group Resources · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/templates/src/resource-index/template.meta.ts

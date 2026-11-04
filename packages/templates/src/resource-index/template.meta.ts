@@ -6,7 +6,7 @@ export const meta: TemplateMeta = {
   priority: 'P1',
   status: 'beta',
   description:
-    'List page for any resource: header with the create action, filter bar with saved views, a selectable sortable table with pagination, a sticky bulk action bar and a no-results state.',
+    'List page for any resource: header with the create action, filter bar with saved views, a selectable sortable table with pagination, a sticky bulk action bar and a no-results state. Opt-in syncUrl preserves query, filters and sort in shared links and browser history.',
   layout: 'SidebarLayout + Page',
   blocks: [
     'app-sidebar',
