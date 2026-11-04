@@ -20,6 +20,12 @@ The hook SHALL start requests from committed state, coalescing synchronous table
 - **WHEN** the table resizes to 50 or changes sort
 - **THEN** one request uses page 1 and the new size or sort
 
+#### Scenario: Resize preserves the reader's position
+
+- **GIVEN** page 5 at size 20
+- **WHEN** DataTable resizes to 50 and computes page 2
+- **THEN** exactly one request uses page 2 and pageSize 50
+
 #### Scenario: Filters and views
 
 - **WHEN** filters change by JSON.stringify value
@@ -69,6 +75,28 @@ The first cursor SHALL be null. loadMore SHALL request nextCursor and append its
 - **GIVEN** the first result has nextCursor c2
 - **WHEN** loadMore fails then onRetry succeeds with nextCursor null
 - **THEN** both attempts request c2, rows accumulate once and hasMore is false
+
+#### Scenario: Re-enable an appended segment
+
+- **GIVEN** a cursor segment has already been appended
+- **WHEN** enabled changes from false to true, with or without a cache entry
+- **THEN** that segment replaces itself without increasing lastAppend.seq
+- **AND** the next new segment increases lastAppend.seq once
+
+#### Scenario: Upstream cancellation of an append
+
+- **GIVEN** an append rejects with AbortError without the hook aborting its signal
+- **WHEN** loadMore is called again directly or through the footer
+- **THEN** the aborted cursor is retried without losing the accumulated prefix
+- **AND** error stays null and onError is not called
+
+#### Scenario: Background refresh and exhausted-list failure
+
+- **WHEN** a cursor segment revalidates in the background
+- **THEN** isFetching is true without a Loading more footer state
+- **AND** loadMore does not start another request while revalidation is pending
+- **WHEN** a refresh fails after cursor exhaustion in the catalog example
+- **THEN** the example offers a retry while retaining the displayed rows
 
 ### Requirement: Lifecycle cancellation is safe
 

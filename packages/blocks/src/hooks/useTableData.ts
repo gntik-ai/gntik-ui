@@ -71,12 +71,13 @@ interface Snapshot<T> {
   sort: SortState | null;
   isLoading: boolean;
   isFetching: boolean;
+  footerLoading: boolean;
   error: unknown;
   lastAppend: { seq: number; count: number };
 }
 
 /** Data and props for a server DataTable; params describes the requested page, including while old rows remain. */
-export interface UseTableDataResult<T, F = unknown> extends Snapshot<T> {
+export interface UseTableDataResult<T, F = unknown> extends Omit<Snapshot<T>, 'footerLoading'> {
   /** Requested values; the AbortSignal is passed only to getRows. */
   params: Query<F>;
   tableProps: TableProps<T>;
@@ -134,6 +135,7 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
     sort: params.sort,
     isLoading: enabled,
     isFetching: false,
+    footerLoading: false,
     error: null,
     lastAppend: { seq: 0, count: 0 },
   }));
@@ -150,6 +152,7 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
   const mounted = useRef(false);
   const confirmedSort = useRef(params.sort);
   const confirmedKey = useRef<string | null>(null);
+  const abortedAppendKey = useRef<string | null>(null);
   const hasData = useRef(false);
   const publish = useCallback((next: Snapshot<T>) => {
     data.current = next;
@@ -171,15 +174,24 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
       const { options: current, params: query, key: queryKey, prefix: previousRows } = latest.current;
       if (current.enabled === false) {
         abort();
-        publish({ ...resolved.current, error: data.current.error, isLoading: false, isFetching: false });
+        publish({
+          ...resolved.current,
+          error: data.current.error,
+          isLoading: false,
+          isFetching: false,
+          footerLoading: false,
+        });
         return;
       }
       // Poll only a confirmed segment; failed query changes and appends need an explicit retry.
       if (background && queryKey !== confirmedKey.current) return;
       if (!force && active.current?.key === queryKey) return;
       abort();
+      abortedAppendKey.current = null;
       const cacheTime = current.cacheTime ?? 30000;
       const cached = cacheTime > 0 ? cache.current.get(queryKey) : undefined;
+      // A non-null cursor can also replace an already displayed segment on re-enable.
+      const addsSegment = query.cursor !== null && queryKey !== confirmedKey.current;
       if (cached && !force) {
         confirmedSort.current = cached.value.sort;
         confirmedKey.current = queryKey;
@@ -190,7 +202,7 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
           // Cache the segment separately: a first-page refetch can change its prefix.
           rows: appended ? [...previousRows, ...cached.pageRows] : cached.pageRows,
           lastAppend:
-            appended && !background
+            addsSegment && !background
               ? { seq: data.current.lastAppend.seq + 1, count: cached.pageRows.length }
               : data.current.lastAppend,
         };
@@ -206,6 +218,7 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
         sort: query.sort,
         isLoading: !keep || !hasData.current,
         isFetching: true,
+        footerLoading: !background && !(cached && !force),
       });
       const valid = () => mounted.current && active.current === attempt && !attempt.controller.signal.aborted;
       const fail = (error: unknown) => {
@@ -213,6 +226,7 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
         active.current = null;
         cache.current.delete(queryKey);
         const aborted = typeof error === 'object' && error !== null && 'name' in error && error.name === 'AbortError';
+        if (aborted && query.cursor !== null) abortedAppendKey.current = queryKey;
         const failure = error ?? new Error('Unable to load rows.');
         publish({
           ...data.current,
@@ -222,6 +236,7 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
           sort: confirmedSort.current,
           isLoading: false,
           isFetching: false,
+          footerLoading: false,
           error: aborted ? null : failure,
         });
         if (!aborted) latest.current.options.onError?.(failure);
@@ -243,11 +258,12 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
             pageSize: query.pageSize,
             sort: query.sort,
             lastAppend:
-              appended && !background && (!cached || force)
+              addsSegment && !background && (!cached || force)
                 ? { seq: data.current.lastAppend.seq + 1, count: result.rows.length }
                 : data.current.lastAppend,
             isLoading: false,
             isFetching: false,
+            footerLoading: false,
             error: null,
           };
           if (cacheTime > 0) cache.current.set(queryKey, { value: next, pageRows: result.rows, at: Date.now() });
@@ -294,7 +310,6 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
     change({
       page:
         query.cause === 'sort' ||
-        query.cause === 'pageSize' ||
         (query.cause === 'view' &&
           (JSON.stringify(query.sort) !== JSON.stringify(params.sort) ||
             JSON.stringify(query.filters) !== JSON.stringify(params.filters)))
@@ -311,19 +326,18 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
     refetch();
   };
   const loadMore = () => {
-    if (
-      active.current ||
-      key !== confirmedKey.current ||
-      data.current.error != null ||
-      !snapshot.nextCursor ||
-      !enabled
-    )
+    if (active.current || data.current.error != null || !snapshot.nextCursor || !enabled) return;
+    if (key !== confirmedKey.current) {
+      // Upstream cancellation is silent, so the ordinary Load more control must retry it.
+      if (key === abortedAppendKey.current) retry();
       return;
+    }
     change({ page: params.page + 1, cursor: snapshot.nextCursor }, false, snapshot.rows);
   };
   const hasMore = Boolean(snapshot.nextCursor);
+  const { footerLoading, ...state } = snapshot;
   return {
-    ...snapshot,
+    ...state,
     params,
     hasMore,
     loadMore,
@@ -355,7 +369,7 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
             : 'Unable to load rows.',
       nextCursor: snapshot.nextCursor,
       hasMore,
-      loading: snapshot.isFetching,
+      loading: footerLoading,
       loadedCount: snapshot.rows.length,
       lastAppend: snapshot.lastAppend,
     },

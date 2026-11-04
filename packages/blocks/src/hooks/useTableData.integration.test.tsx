@@ -72,3 +72,18 @@ it('shows the requested aria-sort immediately and rolls back after rejection', a
   expect(screen.getByRole('columnheader', { name: 'Name' })).toHaveAttribute('aria-sort', 'none');
   expect(screen.getByText('Item 21')).toBeInTheDocument();
 });
+
+it('preserves the first visible row when DataTable resizes page five', async () => {
+  const user = userEvent.setup();
+  const getRows = vi.fn<(params: TableDataParams) => Promise<typeof page>>().mockResolvedValue(page);
+  function Table() {
+    const { tableProps } = useTableData({ getRows, initialPage: 5 });
+    return <DataTable {...tableProps} columns={columns} selectionMode="none" />;
+  }
+  render(<Table />);
+  await screen.findByText('Item 21');
+  await user.click(screen.getByRole('combobox', { name: 'Rows per page' }));
+  await user.click(await screen.findByRole('option', { name: '50' }));
+  expect(getRows).toHaveBeenCalledTimes(2);
+  expect(getRows.mock.calls[1]![0]).toMatchObject({ page: 2, pageSize: 50, sort: null });
+});

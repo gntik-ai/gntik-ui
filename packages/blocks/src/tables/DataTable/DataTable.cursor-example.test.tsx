@@ -47,3 +47,21 @@ it('demonstrates an error and retry through the live preview controls', async ()
   await screen.findByText('Item 35');
   expect(screen.queryByRole('button', { name: 'Load more' })).not.toBeInTheDocument();
 });
+
+it('offers a retry after refetch fails on an exhausted list', async () => {
+  const user = userEvent.setup();
+  const getRows = vi
+    .fn<(params: TableDataParams<{ search: string }>) => Promise<TableDataResult<{ id: number; name: string }>>>()
+    .mockResolvedValueOnce({ rows: [{ id: 1, name: 'First item' }], nextCursor: null })
+    .mockRejectedValueOnce(new Error('Service unavailable'))
+    .mockResolvedValueOnce({ rows: [{ id: 2, name: 'Refreshed item' }], nextCursor: null });
+  render(<CursorLoadMoreExample getRows={getRows} />);
+  await screen.findByText('First item');
+  await user.click(screen.getByRole('button', { name: 'Refetch' }));
+  await screen.findByRole('heading', { name: 'Service unavailable' });
+  expect(screen.getByText('First item')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Try again' }));
+  await screen.findByText('Refreshed item');
+  expect(getRows.mock.calls.map(([params]) => params.cursor)).toEqual([null, null, null]);
+  expect(screen.queryByText('First item')).not.toBeInTheDocument();
+});

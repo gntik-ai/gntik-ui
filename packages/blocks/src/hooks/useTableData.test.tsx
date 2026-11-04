@@ -270,6 +270,31 @@ it('appends cursor pages atomically, retries the failed cursor, and reloads from
   expect(result.current.lastAppend.seq).toBe(1);
 });
 
+it.each(['loadMore', 'footer'] as const)('can %s after an upstream abort of a cursor append', async (control) => {
+  const { calls, getRows } = endpoint();
+  const onError = vi.fn();
+  const { result } = renderHook(() => useTableData({ getRows, onError }));
+  await act(async () => calls[0]!.resolve({ rows: [row(1)], nextCursor: 'c2' }));
+  act(() => result.current.loadMore());
+  await act(async () => calls[1]!.resolve({ rows: [row(2)], nextCursor: 'c3' }));
+  act(() => result.current.loadMore());
+  await act(async () => calls[2]!.reject(new DOMException('Upstream cancelled', 'AbortError')));
+  expect(calls[2]!.params.signal.aborted).toBe(false);
+  expect(result.current).toMatchObject({ rows: [row(1), row(2)], error: null, hasMore: true, isFetching: false });
+  expect(result.current.loadMoreProps).toMatchObject({ loading: false, error: '', nextCursor: 'c3' });
+  expect(onError).not.toHaveBeenCalled();
+  act(() => {
+    if (control === 'footer') result.current.loadMoreProps.onLoadMore?.('c3');
+    else result.current.loadMore();
+  });
+  expect(getRows).toHaveBeenCalledTimes(4);
+  expect(calls[3]!.params).toMatchObject({ page: 3, cursor: 'c3' });
+  expect(calls[3]!.params.signal).not.toBe(calls[2]!.params.signal);
+  await act(async () => calls[3]!.resolve({ rows: [row(3)], nextCursor: null }));
+  expect(result.current.rows).toEqual([row(1), row(2), row(3)]);
+  expect(result.current.loadMoreProps.lastAppend).toEqual({ seq: 2, count: 1 });
+});
+
 it.each(['sort', 'filters'] as const)(
   'refuses loadMore after a failed %s change until the query is retried',
   async (change) => {
@@ -312,6 +337,10 @@ it('revalidates an appended cursor segment without duplicating or dropping the p
     await act(async () => calls[1]!.resolve({ rows: [row(2)], nextCursor: 'c3' }));
     act(() => vi.advanceTimersByTime(2000));
     expect(calls[2]!.params.cursor).toBe('c2');
+    expect(result.current.isFetching).toBe(true);
+    expect(result.current.loadMoreProps.loading).toBe(false);
+    act(() => result.current.loadMore());
+    expect(getRows).toHaveBeenCalledTimes(3);
     await act(async () => calls[2]!.resolve({ rows: [row(3)], nextCursor: 'c3' }));
     expect(result.current.rows).toEqual([row(1), row(3)]);
     expect(result.current.lastAppend).toEqual({ seq: 1, count: 1 });
@@ -444,6 +473,34 @@ it('uses the fresh cache when re-enabled after an explicit refetch has settled',
   expect(getRows).toHaveBeenCalledTimes(2);
   expect(result.current).toMatchObject({ rows: [row(2)], isFetching: false, isLoading: false });
 });
+
+it.each([0, 30000])(
+  'does not announce an append when re-enabling an existing segment (cacheTime=%s)',
+  async (cacheTime) => {
+    const { calls, getRows } = endpoint();
+    const { result, rerender } = renderHook(({ enabled }) => useTableData({ getRows, enabled, cacheTime }), {
+      initialProps: { enabled: true },
+    });
+    await act(async () => calls[0]!.resolve({ rows: [row(1)], nextCursor: 'c2' }));
+    act(() => result.current.loadMore());
+    await act(async () => calls[1]!.resolve({ rows: [row(2)], nextCursor: 'c3' }));
+    expect(result.current.lastAppend).toEqual({ seq: 1, count: 1 });
+    rerender({ enabled: false });
+    rerender({ enabled: true });
+    if (cacheTime === 0) {
+      expect(calls[2]!.params.cursor).toBe('c2');
+      await act(async () => calls[2]!.resolve({ rows: [row(2)], nextCursor: 'c3' }));
+    } else {
+      expect(getRows).toHaveBeenCalledTimes(2);
+    }
+    expect(result.current.rows).toEqual([row(1), row(2)]);
+    expect(result.current.loadMoreProps.lastAppend).toEqual({ seq: 1, count: 1 });
+    act(() => result.current.loadMore());
+    await act(async () => calls.at(-1)!.resolve({ rows: [row(3)], nextCursor: null }));
+    expect(result.current.rows).toEqual([row(1), row(2), row(3)]);
+    expect(result.current.loadMoreProps.lastAppend).toEqual({ seq: 2, count: 1 });
+  },
+);
 
 it('never calls the endpoint or reads document while server rendering', () => {
   const { getRows } = endpoint();

@@ -70,18 +70,18 @@ export default function CursorLoadMoreExample({ getRows = readCursor }: { getRow
         </Button>
       </div>
       <DataTable {...data.tableProps} columns={columns} caption="Cursor items" selectionMode="none" paginated={false} />
-      {data.error != null && data.nextCursor === undefined && (
+      {data.error != null && !data.hasMore && (
         <ErrorPanel
-          title="Unable to load items"
+          title={data.loadMoreProps.error}
           code={null}
           requestId=""
           details=""
           secondaryAction={null}
-          onRetry={data.refetch}
+          onRetry={data.loadMoreProps.onRetry}
           retrying={data.isFetching}
         />
       )}
-      <LoadMoreFooter {...data.loadMoreProps} />
+      <LoadMoreFooter {...data.loadMoreProps} error={data.hasMore ? data.loadMoreProps.error : ''} />
     </div>
   );
 }
