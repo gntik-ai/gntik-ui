@@ -73,6 +73,20 @@ const named = (b) => () => b.load().then((m) => ({ default: m[b.name] ?? m.defau
 
 export const PREVIEW_LOADERS = {
   block: {
+    'kpi-row--container-panel': () =>
+      import('../../../packages/blocks/src/data-display/KpiRow/examples/ContainerPanel'),
+    'resource-card-grid--container-panel': () =>
+      import('../../../packages/blocks/src/data-display/ResourceCardGrid/examples/ContainerPanel'),
+    'page-header--container-panel': () =>
+      import('../../../packages/blocks/src/page-chrome/PageHeader/examples/ContainerPanel'),
+    'form-section--container-panel': () =>
+      import('../../../packages/blocks/src/forms/FormSection/examples/ContainerPanel'),
+    'chart-card--container-panel': () =>
+      import('../../../packages/blocks/src/data-display/ChartCard/examples/ContainerPanel'),
+    'kpi-row--standard-frame': () =>
+      import('../../../packages/blocks/src/data-display/KpiRow/examples/ContainerPanel').then((module) => ({
+        default: module.StandardFrame,
+      })),
     'file-upload-panel--manual-form': () =>
       import('../../../packages/blocks/src/forms/FileUploadPanel/examples/ManualForm'),
     'file-upload-panel--auto-cancel': () =>

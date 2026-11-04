@@ -10311,7 +10311,7 @@ import { FileUploadPanel } from '@gntik-ai/blocks';
 
 ### Form section (`form-section`)
 
-Two-column settings section: title and help on the left, fields on the right; stacks on small screens. Optional labels?: Partial<FormSectionLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=form-section--labels.
+Two-column settings section: title and help on the left, fields on the right; stacks in narrow containers. Optional labels?: Partial<FormSectionLabels> overrides built-in copy; explicit props and validation messages win, then labels, then I18nProvider (en/es). No provider preserves English; fixtures and caller content stay unchanged. Interactive preview: /preview.html?kind=block&id=form-section--labels.
 
 - Package: `@gntik-ai/blocks` · export `FormSection` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/FormSection/block.meta.ts
@@ -10581,7 +10581,7 @@ import { BulkActionBar } from '@gntik-ai/blocks';
 
 ### Page header (`page-header`)
 
-Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu on small screens, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as="div" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1. The tablist name follows I18nProvider (en/es); the Spanish preview keeps caller content unchanged. Optional labels?: Partial<PageHeaderLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview. wrapTitle?: boolean (default false) wraps the full title, including long words, while preserving titleRef focus behavior. The default title remains truncated. See the Spanish live preview for a wrapping title.
+Screen header with breadcrumb, title and status, description, meta row, actions that fold into a MoreMenu in narrow containers, and optional navigation tabs. titleRef targets the h1 for titleRef.current.focus(), adding tabIndex=-1 only when supplied so the title stays outside the Tab order. In a StatusLayout heading slot use as="div" and disable breadcrumb, meta, tabs, actions, status and description fixtures; the slot supplies the page’s only h1. The tablist name follows I18nProvider (en/es); the Spanish preview keeps caller content unchanged. Optional labels?: Partial<PageHeaderLabels> overrides each built-in label. Explicit content props win over labels, then I18nProvider (en/es); no provider keeps English. Imported fixtures and machine data stay unchanged. See the Catalog labels live preview. wrapTitle?: boolean (default false) wraps the full title, including long words, while preserving titleRef focus behavior. The default title remains truncated. See the Spanish live preview for a wrapping title.
 
 - Package: `@gntik-ai/blocks` · export `PageHeader` · group page-chrome · status beta
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/page-chrome/PageHeader/block.meta.ts

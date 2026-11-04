@@ -58,7 +58,7 @@ export interface PageHeaderProps {
   meta?: PageHeaderMetaItem[];
   /**
    * Header actions in visual order. The primary one (first with `variant: 'primary'`, else the
-   * last) stays visible on small screens; the rest fold into a MoreMenu.
+   * last) stays visible in narrow containers; the rest fold into a MoreMenu.
    */
   actions?: PageChromeAction[];
   /** Resource-level navigation tabs under the header; `null` hides them. */
@@ -110,7 +110,7 @@ export function PageHeader({
   );
 
   return (
-    <Root className={cn('min-w-0', className)}>
+    <Root className={cn('@container w-full min-w-0', className)}>
       {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} maxItems={4} className="mb-2.5" />}
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0 flex-1">
@@ -144,8 +144,8 @@ export function PageHeader({
         </div>
         {actions.length > 0 && (
           <>
-            <div className="hidden shrink-0 items-center gap-2.5 sm:flex">{actions.map(renderAction)}</div>
-            <div className="flex shrink-0 items-center gap-2 sm:hidden">
+            <div className="hidden shrink-0 items-center gap-2.5 @xl:flex">{actions.map(renderAction)}</div>
+            <div className="flex shrink-0 items-center gap-2 @xl:hidden">
               {folded.length > 0 && (
                 <MoreMenu items={folded.map(toMenuAction)} label={labels?.moreActions ?? t('pageHeader.moreActions')} />
               )}

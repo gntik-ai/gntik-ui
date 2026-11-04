@@ -160,7 +160,7 @@ export function ChartCard<T extends object = CostPoint>({
   const { locale } = useI18n();
   return (
     <ChartLocaleProvider locale={locale}>
-      <Card className={className}>
+      <Card className={cn('@container w-full min-w-0', className)}>
         <CardHeader className="pb-2">
           <CardTitle as={titleAs}>{title}</CardTitle>
           {description && <CardDescription>{description}</CardDescription>}
@@ -202,7 +202,7 @@ export function ChartCard<T extends object = CostPoint>({
             {active.summary.delta && <TrendDelta {...active.summary.delta} />}
           </p>
         )}
-        <div className={cn('px-3 pb-4 pt-3 sm:px-4', !footer && 'pb-5')}>
+        <div className={cn('px-3 pb-4 pt-3 @sm:px-4', !footer && 'pb-5')}>
           {kind === 'heatmap' ? (
             <Heatmap
               data={data}

@@ -5,6 +5,17 @@ import { expectNoAxeViolations } from '../../test/a11y';
 import { FormSection } from './FormSection';
 
 describe('FormSection', () => {
+  it('keeps section styling, landmark props and the divider outside its layout grid', () => {
+    render(<FormSection className="mt-8" divided data-testid="settings" />);
+    const section = screen.getByRole('region', { name: 'General' });
+    expect(section.tagName).toBe('SECTION');
+    expect(section).toHaveAttribute('data-testid', 'settings');
+    expect(section).toHaveClass('mt-8', 'border-t');
+    expect(section).not.toHaveClass('grid');
+    expect(section.firstElementChild).toHaveClass('grid');
+    expect(section.firstElementChild).not.toHaveClass('mt-8', 'border-t');
+  });
+
   it('renders the default section as a named region', async () => {
     const { container } = render(<FormSection />);
     expect(screen.getByRole('region', { name: 'General' })).toBeInTheDocument();
