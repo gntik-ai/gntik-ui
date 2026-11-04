@@ -39,7 +39,7 @@ export interface UseTableDataOptions<T, F = unknown> {
   revalidateInterval?: number;
   /** False aborts work and clears loading (default true). */
   enabled?: boolean;
-  /** Called once for each current non-abort failure. */
+  /** Called once per current non-abort failure; nullish reasons become an Error. */
   onError?: (error: unknown) => void;
 }
 
@@ -82,9 +82,9 @@ export interface UseTableDataResult<T, F = unknown> extends Snapshot<T> {
   tableProps: TableProps<T>;
   loadMoreProps: LoadMoreFooterProps;
   hasMore: boolean;
-  /** Append the next cursor page, ignoring calls during active work or after exhaustion. */
+  /** Append the next cursor page; after a failure, retry the query before loading more. */
   loadMore: () => void;
-  /** Bypass cache freshness; cursor lists restart at the first page. */
+  /** Bypass cache freshness and replace active work; cursor lists restart at the first page. */
   refetch: () => void;
   /** Clear this instance's cache and refetch. */
   invalidate: () => void;
@@ -146,8 +146,10 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
   });
   const cache = useRef(new Map<string, { value: Snapshot<T>; pageRows: T[]; at: number }>());
   const active = useRef<{ key: string; controller: AbortController } | null>(null);
+  const forcedRevision = useRef(-1);
   const mounted = useRef(false);
   const confirmedSort = useRef(params.sort);
+  const confirmedKey = useRef<string | null>(null);
   const hasData = useRef(false);
   const publish = useCallback((next: Snapshot<T>) => {
     data.current = next;
@@ -169,15 +171,18 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
       const { options: current, params: query, key: queryKey, prefix: previousRows } = latest.current;
       if (current.enabled === false) {
         abort();
-        publish({ ...data.current, isLoading: false, isFetching: false });
+        publish({ ...resolved.current, error: data.current.error, isLoading: false, isFetching: false });
         return;
       }
-      if (active.current?.key === queryKey) return;
+      // Poll only a confirmed segment; failed query changes and appends need an explicit retry.
+      if (background && queryKey !== confirmedKey.current) return;
+      if (!force && active.current?.key === queryKey) return;
       abort();
       const cacheTime = current.cacheTime ?? 30000;
       const cached = cacheTime > 0 ? cache.current.get(queryKey) : undefined;
       if (cached && !force) {
         confirmedSort.current = cached.value.sort;
+        confirmedKey.current = queryKey;
         hasData.current = true;
         const appended = query.cursor !== null;
         resolved.current = {
@@ -208,6 +213,7 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
         active.current = null;
         cache.current.delete(queryKey);
         const aborted = typeof error === 'object' && error !== null && 'name' in error && error.name === 'AbortError';
+        const failure = error ?? new Error('Unable to load rows.');
         publish({
           ...data.current,
           rows: resolved.current.rows,
@@ -216,15 +222,16 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
           sort: confirmedSort.current,
           isLoading: false,
           isFetching: false,
-          error: aborted ? null : error,
+          error: aborted ? null : failure,
         });
-        if (!aborted) latest.current.options.onError?.(error);
+        if (!aborted) latest.current.options.onError?.(failure);
       };
       try {
         Promise.resolve(current.getRows({ ...query, signal: attempt.controller.signal })).then((result) => {
           if (!valid()) return;
           active.current = null;
           confirmedSort.current = query.sort;
+          confirmedKey.current = queryKey;
           hasData.current = true;
           const appended = query.cursor !== null;
           const next = {
@@ -254,7 +261,10 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
     [abort, publish],
   );
   useEffect(() => {
-    start(request.force);
+    // A forced reload belongs to this query change, not later enabled toggles.
+    const force = request.force && forcedRevision.current !== request.revision;
+    if (force && enabled) forcedRevision.current = request.revision;
+    start(force);
   }, [key, request.revision, request.force, enabled, start]);
 
   const interval = options.revalidateInterval ?? 0;
@@ -301,7 +311,14 @@ export function useTableData<T, F = unknown>(options: UseTableDataOptions<T, F>)
     refetch();
   };
   const loadMore = () => {
-    if (active.current || !snapshot.nextCursor || !enabled) return;
+    if (
+      active.current ||
+      key !== confirmedKey.current ||
+      data.current.error != null ||
+      !snapshot.nextCursor ||
+      !enabled
+    )
+      return;
     change({ page: params.page + 1, cursor: snapshot.nextCursor }, false, snapshot.rows);
   };
   const hasMore = Boolean(snapshot.nextCursor);

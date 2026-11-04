@@ -105,6 +105,23 @@ it('handles synchronous throws and abort rejections without reporting an abort a
   expect(onError).toHaveBeenCalledTimes(1);
 });
 
+it.each([undefined, null])('exposes a nullish rejection (%s) as a failure with a footer message', async (reason) => {
+  const { calls, getRows } = endpoint();
+  const onError = vi.fn();
+  const { result } = renderHook(() => useTableData({ getRows, onError }));
+  await settle(calls[0]!, 1);
+  act(() => result.current.tableProps.onPageChange(2));
+  await act(async () => calls[1]!.reject(reason));
+  expect(result.current).toMatchObject({ rows: [row(1)], isFetching: false, isLoading: false });
+  expect(result.current.error).toEqual(new Error('Unable to load rows.'));
+  expect(result.current.loadMoreProps.error).toBe('Unable to load rows.');
+  expect(onError).toHaveBeenCalledExactlyOnceWith(result.current.error);
+  act(() => result.current.refetch());
+  await settle(calls[2]!, 21);
+  expect(result.current.error).toBeNull();
+  expect(result.current.loadMoreProps.error).toBe('');
+});
+
 it('uses fresh cached pages, aborts outstanding work, and refreshes expired pages without loading placeholders', async () => {
   vi.useFakeTimers();
   try {
@@ -253,6 +270,37 @@ it('appends cursor pages atomically, retries the failed cursor, and reloads from
   expect(result.current.lastAppend.seq).toBe(1);
 });
 
+it.each(['sort', 'filters'] as const)(
+  'refuses loadMore after a failed %s change until the query is retried',
+  async (change) => {
+    const { calls, getRows } = endpoint();
+    const { result, rerender } = renderHook(({ status }) => useTableData({ getRows, filters: { status } }), {
+      initialProps: { status: 'all' },
+    });
+    await act(async () => calls[0]!.resolve({ rows: [row(1)], nextCursor: 'old-cursor' }));
+    const sort = { columnId: 'name', direction: 'ascending' as const };
+    if (change === 'sort') act(() => result.current.tableProps.onSortChange(sort));
+    else rerender({ status: 'running' });
+    await act(async () => calls[1]!.reject(new Error('Query failed')));
+    expect(result.current.tableProps.sort).toBeNull();
+    act(() => result.current.loadMore());
+    expect(getRows).toHaveBeenCalledTimes(2);
+    expect(result.current.rows).toEqual([row(1)]);
+    act(() => result.current.loadMoreProps.onRetry?.());
+    expect(calls[2]!.params).toMatchObject({
+      page: 1,
+      cursor: null,
+      sort: change === 'sort' ? sort : null,
+      filters: { status: change === 'filters' ? 'running' : 'all' },
+    });
+    await act(async () => calls[2]!.resolve({ rows: [row(2)], nextCursor: 'new-cursor' }));
+    act(() => result.current.loadMore());
+    expect(calls[3]!.params.cursor).toBe('new-cursor');
+    await act(async () => calls[3]!.resolve({ rows: [row(3)], nextCursor: null }));
+    expect(result.current.rows).toEqual([row(2), row(3)]);
+  },
+);
+
 it('revalidates an appended cursor segment without duplicating or dropping the prefix', async () => {
   vi.useFakeTimers();
   Object.defineProperty(document, 'hidden', { configurable: true, value: false });
@@ -270,6 +318,37 @@ it('revalidates an appended cursor segment without duplicating or dropping the p
     act(() => result.current.loadMore());
     await act(async () => calls[3]!.resolve({ rows: [row(4)], nextCursor: null }));
     expect(result.current.rows).toEqual([row(1), row(3), row(4)]);
+  } finally {
+    Reflect.deleteProperty(document, 'hidden');
+    vi.useRealTimers();
+  }
+});
+
+it('leaves a failed cursor append for an explicit retry instead of appending silently on a poll', async () => {
+  vi.useFakeTimers();
+  Object.defineProperty(document, 'hidden', { configurable: true, value: false });
+  try {
+    const { calls, getRows } = endpoint();
+    const { result } = renderHook(() => useTableData({ getRows, revalidateInterval: 1000 }));
+    await act(async () => calls[0]!.resolve({ rows: [row(1)], nextCursor: 'c2' }));
+    act(() => result.current.loadMore());
+    await act(async () => calls[1]!.reject(new Error('Append failed')));
+    act(() => vi.advanceTimersByTime(2000));
+    expect(getRows).toHaveBeenCalledTimes(2);
+    expect(result.current.loadMoreProps).toMatchObject({
+      loading: false,
+      error: 'Append failed',
+      lastAppend: { seq: 0, count: 0 },
+    });
+    act(() => result.current.loadMoreProps.onRetry?.());
+    await act(async () => calls[2]!.resolve({ rows: [row(2)], nextCursor: null }));
+    expect(result.current.rows).toEqual([row(1), row(2)]);
+    expect(result.current.lastAppend).toEqual({ seq: 1, count: 1 });
+    act(() => vi.advanceTimersByTime(1000));
+    expect(calls[3]!.params.cursor).toBe('c2');
+    await act(async () => calls[3]!.resolve({ rows: [row(3)], nextCursor: null }));
+    expect(result.current.rows).toEqual([row(1), row(3)]);
+    expect(result.current.lastAppend).toEqual({ seq: 1, count: 1 });
   } finally {
     Reflect.deleteProperty(document, 'hidden');
     vi.useRealTimers();
@@ -317,6 +396,31 @@ it('survives StrictMode effect replay and disabling aborts work without leaving 
   expect(result.current.rows).toEqual([row(2)]);
 });
 
+it.each([false, true])(
+  'restores confirmed data and sort when disabled (keepPreviousData=%s)',
+  async (keepPreviousData) => {
+    const { calls, getRows } = endpoint();
+    const confirmedSort = { columnId: 'name', direction: 'descending' as const };
+    const { result, rerender } = renderHook(
+      ({ enabled }) => useTableData({ getRows, enabled, initialPage: 2, initialSort: confirmedSort, keepPreviousData }),
+      { initialProps: { enabled: true } },
+    );
+    await settle(calls[0]!, 21);
+    act(() => result.current.tableProps.onSortChange({ columnId: 'name', direction: 'ascending' }));
+    rerender({ enabled: false });
+    expect(calls[1]!.params.signal.aborted).toBe(true);
+    expect(result.current.tableProps).toMatchObject({
+      rows: [row(21)],
+      page: 2,
+      pageSize: 20,
+      rowCount: 95,
+      sort: confirmedSort,
+      loading: false,
+    });
+    expect(result.current.isFetching).toBe(false);
+  },
+);
+
 it('applies only the surviving StrictMode mount request', async () => {
   const { calls, getRows } = endpoint();
   const { result } = renderHook(() => useTableData({ getRows }), { wrapper: StrictMode });
@@ -325,6 +429,20 @@ it('applies only the surviving StrictMode mount request', async () => {
   await settle(calls[1]!, 2);
   await settle(calls[0]!, 1);
   expect(result.current.rows).toEqual([row(2)]);
+});
+
+it('uses the fresh cache when re-enabled after an explicit refetch has settled', async () => {
+  const { calls, getRows } = endpoint();
+  const { result, rerender } = renderHook(({ enabled }) => useTableData({ getRows, enabled }), {
+    initialProps: { enabled: true },
+  });
+  await settle(calls[0]!, 1);
+  act(() => result.current.refetch());
+  await settle(calls[1]!, 2);
+  rerender({ enabled: false });
+  rerender({ enabled: true });
+  expect(getRows).toHaveBeenCalledTimes(2);
+  expect(result.current).toMatchObject({ rows: [row(2)], isFetching: false, isLoading: false });
 });
 
 it('never calls the endpoint or reads document while server rendering', () => {
@@ -392,6 +510,29 @@ it('invalidates all fresh pages and deduplicates only while a matching request i
   act(() => result.current.tableProps.onPageChange(1));
   expect(getRows).toHaveBeenCalledTimes(4);
 });
+
+it.each(['invalidate', 'refetch'] as const)(
+  '%s aborts and replaces an active request, ignoring its late result and cache write',
+  async (reload) => {
+    const { calls, getRows } = endpoint();
+    const { result } = renderHook(() => useTableData({ getRows, initialPage: 2 }));
+    await settle(calls[0]!, 21);
+    act(() => result.current.tableProps.onPageChange(3));
+    act(() => result.current[reload]());
+    expect(getRows).toHaveBeenCalledTimes(3);
+    expect(calls[1]!.params.signal.aborted).toBe(true);
+    expect(calls[2]!.params).toMatchObject({ page: 3, pageSize: 20, sort: null });
+    expect(calls[2]!.params.signal).not.toBe(calls[1]!.params.signal);
+    await settle(calls[2]!, 42);
+    await settle(calls[1]!, 41);
+    expect(result.current.rows).toEqual([row(42)]);
+    act(() => result.current.tableProps.onPageChange(4));
+    await settle(calls[3]!, 61);
+    act(() => result.current.tableProps.onPageChange(3));
+    expect(getRows).toHaveBeenCalledTimes(4);
+    expect(result.current.rows).toEqual([row(42)]);
+  },
+);
 
 it.each(['resolve', 'reject'] as const)(
   'a late superseded %s cannot clear or replace the current failure',
