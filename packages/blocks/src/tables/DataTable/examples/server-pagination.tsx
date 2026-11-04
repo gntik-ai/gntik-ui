@@ -1,6 +1,8 @@
 import { Button, Checkbox } from '@gntik-ai/ui';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { DataTable, type DataTableQuery } from '../DataTable';
+import { useTableData } from '../../../hooks/useTableData';
+import { ErrorPanel } from '../../../feedback/ErrorPanel/ErrorPanel';
 import type { DataTableSelectionModel, SortState } from '../data-table-utils';
 
 interface Item {
@@ -38,36 +40,24 @@ function readPage({ page, pageSize, sort }: Pick<DataTableQuery, 'page' | 'pageS
   }
   return { items: items.slice(from, from + pageSize), total, page, pageSize, sort };
 }
-async function requestPage(query: DataTableQuery): Promise<Envelope> {
+async function requestPage(query: DataTableQuery & { signal: AbortSignal }): Promise<Envelope> {
   return readPage(query);
 }
 
-/** Known-total, 1-based pages. The consumer owns requests and keeps the old envelope until they resolve. */
+/** Known-total pages with aborts, per-instance caching, retained rows and retryable errors. */
 export default function ServerPaginationExample({ request = requestPage }: { request?: typeof requestPage }) {
   const [selection, setSelection] = useState<DataTableSelectionModel>({ type: 'include', ids: [] });
   const [preserveSelection, setPreserveSelection] = useState(true);
   const [hideSelectAll, setHideSelectAll] = useState(false);
   const [review, setReview] = useState('');
-  const [envelope, setEnvelope] = useState(() => readPage({ page: 2, pageSize: 20, sort: null }));
-  const [sort, setSort] = useState<SortState | null>(null);
-  const latestRequest = useRef(0);
-  const confirmedSort = useRef(envelope.sort);
-  const changeQuery = (query: DataTableQuery) => {
-    const requestId = ++latestRequest.current;
-    // Show the requested order while the consumer fetches exactly once per action.
-    setSort(query.sort);
-    void request(query)
-      .then((next) => {
-        if (requestId !== latestRequest.current) return;
-        confirmedSort.current = next.sort;
-        setEnvelope(next);
-      })
-      .catch(() => {
-        if (requestId !== latestRequest.current) return;
-        // Reset the controlled header to the last confirmed order when a request fails.
-        setSort(confirmedSort.current);
-      });
-  };
+  const data = useTableData<Item>({
+    initialPage: 2,
+    getRows: async (params) => {
+      // Wrap an existing endpoint and pass signal through to fetch (or another fetcher).
+      const response = await request({ ...params, cause: 'page' });
+      return { rows: response.items, rowCount: response.total };
+    },
+  });
 
   return (
     <div className="space-y-3">
@@ -102,15 +92,21 @@ export default function ServerPaginationExample({ request = requestPage }: { req
           </Button>
         )}
         columns={columns}
-        rows={envelope.items}
-        paginationMode="server"
-        rowCount={envelope.total}
-        page={envelope.page}
-        pageSize={envelope.pageSize}
+        {...data.tableProps}
         pageSizeOptions={[10, 20, 50]}
-        sort={sort}
-        onQueryChange={changeQuery}
       />
+      {data.error != null && (
+        <ErrorPanel
+          title="Unable to load items"
+          message="Your previous rows are still available."
+          code={null}
+          requestId=""
+          details=""
+          secondaryAction={null}
+          onRetry={data.refetch}
+          retrying={data.isFetching}
+        />
+      )}
       <p role="status" className="text-sm text-muted-foreground">
         {review}
       </p>

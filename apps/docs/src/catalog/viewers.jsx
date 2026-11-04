@@ -249,6 +249,28 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
               )}
               {kind === 'block' && it.id === 'data-table' && (
                 <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">Server requests with useTableData</h4>
+                  <p className="mb-4 text-[13px] leading-relaxed text-muted-foreground">
+                    Import useTableData from @gntik-ai/blocks (npm only; copy-install does not include the hook).
+                    Numbered pages retain previous rows during requests; cursor lists append with LoadMoreFooter.
+                    Filters must be JSON-serialisable. Requests abort on query changes and unmount; errors retain rows
+                    and offer retry. Refetch bypasses the cache; invalidate clears it. The cursor preview also shows
+                    filters, enabling requests, retained rows, and foreground polling every 15 seconds.
+                  </p>
+                  <Viewer
+                    kind="block"
+                    id="data-table--server-pagination"
+                    title="Data table · cached server pages"
+                    file="../../../packages/blocks/src/tables/DataTable/examples/server-pagination.tsx"
+                    height={height}
+                  />
+                  <Viewer
+                    kind="block"
+                    id="data-table--cursor-load-more"
+                    title="Data table · cursor requests and retry"
+                    file="../../../packages/blocks/src/tables/DataTable/examples/cursor-load-more.tsx"
+                    height={height}
+                  />
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">CSV export and clipboard</h4>
                   <Viewer
                     kind="block"

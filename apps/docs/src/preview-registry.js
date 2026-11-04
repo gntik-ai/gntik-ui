@@ -165,6 +165,8 @@ export const PREVIEW_LOADERS = {
     'data-table--single-selection': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/single-selection'),
     'data-table--csv-export': () => import('../../../packages/blocks/src/tables/DataTable/examples/csv-export'),
+    'data-table--cursor-load-more': () =>
+      import('../../../packages/blocks/src/tables/DataTable/examples/cursor-load-more'),
     'data-table--server-pagination': () =>
       import('../../../packages/blocks/src/tables/DataTable/examples/server-pagination'),
     'data-table--client-selection': () =>
