@@ -1,9 +1,9 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Autocomplete } from './Autocomplete';
 
-// Real timers: Testing Library's async helpers hang under Vitest fake timers, and the
-// acceptance criteria are about the default 250 ms debounce.
+// Real timers, except the debounce test: Testing Library's async helpers (waitFor) hang under
+// Vitest fake timers, so only that test fakes them and drives the clock by hand.
 const options = () => screen.queryAllByRole('option');
 const statusText = () =>
   screen
@@ -53,18 +53,25 @@ const box = () => screen.getByRole<HTMLInputElement>('combobox', { name: 'Model'
 
 describe('Autocomplete async (loadOptions)', () => {
   it('debounces: ab then abc within 250 ms loads once, with abc', async () => {
-    const user = userEvent.setup();
-    const load = vi.fn<Load>(async () => ['model-alpha']);
-    render(<Harness loadOptions={load} />);
-    await user.type(box(), 'ab');
-    await sleep(100);
-    await user.type(box(), 'c');
-    await sleep(150);
-    expect(load).not.toHaveBeenCalled();
-    await waitFor(() => expect(load).toHaveBeenCalledTimes(1));
-    await sleep(400);
-    expect(load).toHaveBeenCalledTimes(1);
-    expect(load.mock.calls[0]?.[0]).toBe('abc');
+    // Only timers are faked, so the 250 ms window does not depend on how loaded the runner is.
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    try {
+      const load = vi.fn<Load>(async () => ['model-alpha']);
+      render(<Harness loadOptions={load} />);
+      act(() => box().focus());
+      fireEvent.input(box(), { target: { value: 'ab' }, inputType: 'insertText' });
+      await act(() => vi.advanceTimersByTimeAsync(100));
+      fireEvent.input(box(), { target: { value: 'abc' }, inputType: 'insertText' });
+      await act(() => vi.advanceTimersByTimeAsync(249));
+      expect(load).not.toHaveBeenCalled();
+      await act(() => vi.advanceTimersByTimeAsync(1));
+      expect(load).toHaveBeenCalledTimes(1);
+      await act(() => vi.advanceTimersByTimeAsync(1000));
+      expect(load).toHaveBeenCalledTimes(1);
+      expect(load.mock.calls[0]?.[0]).toBe('abc');
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('aborts the running request when the user keeps typing', async () => {
