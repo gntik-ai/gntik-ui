@@ -205,15 +205,24 @@ export function Autocomplete<Item = string>({
     if (completion !== null) inputRef.current?.setSelectionRange(value.length, completion.length);
   }, [completion, value.length]);
 
-  // A disabled Field disables the input from inside Base; mirror it so the hidden form value drops out too.
+  // The input can show an inline completion and Base names it after the enclosing Field, whenever the Field
+  // registers. The native form value is the committed text, on a hidden input, so the visible input is unnamed
+  // as soon as its name is read.
+  const [formName, setFormName] = useState(name);
   const [inputDisabled, setInputDisabled] = useState(false);
   useLayoutEffect(() => {
     const input = inputRef.current;
     if (!input) return;
-    const sync = () => setInputDisabled(input.disabled);
+    const sync = () => {
+      if (input.name) {
+        setFormName(input.name);
+        input.name = '';
+      }
+      setInputDisabled(input.disabled);
+    };
     sync();
     const observer = new MutationObserver(sync);
-    observer.observe(input, { attributes: true, attributeFilter: ['disabled'] });
+    observer.observe(input, { attributes: true, attributeFilter: ['name', 'disabled'] });
     return () => observer.disconnect();
   }, []);
 
@@ -313,7 +322,7 @@ export function Autocomplete<Item = string>({
         </label>
       )}
       {/* The native form value is the committed text: the input itself can show an inline completion. */}
-      {name && <input type="hidden" name={name} value={value} disabled={disabled || inputDisabled} />}
+      {formName && <input type="hidden" name={formName} value={value} disabled={disabled || inputDisabled} />}
       <BaseAutocomplete.Root
         items={entries}
         filter={null}
@@ -325,6 +334,7 @@ export function Autocomplete<Item = string>({
         }}
         // Inline completion is built in the wrapper; Base's own `both` would replace the text on highlight.
         mode="list"
+        name={name}
         open={open}
         onOpenChange={(next) => {
           if (!next && keepOpen.current) {

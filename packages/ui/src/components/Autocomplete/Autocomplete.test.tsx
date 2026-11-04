@@ -530,6 +530,72 @@ describe('Autocomplete in a Field', () => {
     expect(screen.getByRole('button', { name: 'Clear' })).toBeDisabled();
   });
 
+  it('a named Field submits the typed text once, not the inline completion', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    render(
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit(new FormData(e.currentTarget));
+        }}
+      >
+        <Field name="region">
+          <FieldLabel>Region</FieldLabel>
+          <Autocomplete items={regions} mode="both" />
+        </Field>
+        <button type="submit">Save</button>
+      </form>,
+    );
+    const box = input();
+    await user.type(box, 'us-w');
+    await waitFor(() => expect(box).toHaveValue('us-west-2'));
+    box.form!.requestSubmit();
+    expect(onSubmit.mock.calls[0]?.[0].getAll('region')).toEqual(['us-w']);
+  });
+
+  it('the name prop inside a named Field still submits the typed text once', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    render(
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit(new FormData(e.currentTarget));
+        }}
+      >
+        <Field name="region">
+          <FieldLabel>Region</FieldLabel>
+          <Autocomplete items={regions} mode="both" name="region" />
+        </Field>
+      </form>,
+    );
+    const box = input();
+    await user.type(box, 'us-w');
+    await waitFor(() => expect(box).toHaveValue('us-west-2'));
+    box.form!.requestSubmit();
+    expect(onSubmit.mock.calls[0]?.[0].getAll('region')).toEqual(['us-w']);
+  });
+
+  it('a disabled named Field submits nothing', () => {
+    const onSubmit = vi.fn();
+    render(
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit(new FormData(e.currentTarget));
+        }}
+      >
+        <Field name="region" disabled>
+          <FieldLabel>Region</FieldLabel>
+          <Autocomplete items={regions} defaultValue="us-w" />
+        </Field>
+      </form>,
+    );
+    input().form!.requestSubmit();
+    expect(onSubmit.mock.calls[0]?.[0].getAll('region')).toEqual([]);
+  });
+
   it('standalone invalid sets aria-invalid and a destructive border class', () => {
     const { container } = render(<Harness invalid />);
     expect(input()).toHaveAttribute('aria-invalid', 'true');
