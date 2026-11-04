@@ -55,7 +55,7 @@ const same = (a: readonly string[], b: readonly string[]) =>
 
 /**
  * Typed URL query state, shared per adapter. Returns [values, setValues]; the setter merges a
- * patch or updater. Defaults are omitted, foreign keys and hashes survive. Use a memoized router
+ * patch or updater; undefined entries are ignored. Defaults are omitted, foreign keys and hashes survive. Use a memoized router
  * adapter with a router. SSR and initial hydration use defaults with the browser adapter.
  */
 export function useUrlState<S extends UrlStateSchema>(schema: S, options: UseUrlStateOptions = {}) {
@@ -92,7 +92,7 @@ export function useUrlState<S extends UrlStateSchema>(schema: S, options: UseUrl
       let changed = false;
       for (const [key, value] of Object.entries(resolved)) {
         const param = schema[key];
-        if (!param) continue;
+        if (!param || value === undefined) continue;
         const serialized = param.serialize(value);
         const next = same(serialized, param.serialize(param.default)) ? [] : serialized;
         const name = prefix + key;

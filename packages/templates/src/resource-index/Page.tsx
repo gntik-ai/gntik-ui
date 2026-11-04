@@ -265,8 +265,10 @@ function decodeFilters(raw: readonly string[], fields: readonly FilterField[]): 
     );
 }
 function decodeSort<T>(raw: string, columns: ReadonlyArray<DataTableColumn<T>>): SortState | null {
-  const [columnId, direction, extra] = raw.split(':');
-  if (extra !== undefined || (direction !== 'asc' && direction !== 'desc')) return null;
+  const colon = raw.lastIndexOf(':');
+  const columnId = raw.slice(0, colon);
+  const direction = raw.slice(colon + 1);
+  if (colon < 0 || (direction !== 'asc' && direction !== 'desc')) return null;
   const column = columns.find((column) => column.id === columnId && column.sortable && column.accessor);
   return column ? { columnId: column.id, direction: direction === 'asc' ? 'ascending' : 'descending' } : null;
 }

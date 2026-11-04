@@ -1,6 +1,6 @@
 ## Purpose
 
-Router-agnostic typed list state in URL query parameters, surviving reload, shared links and navigation.
+useUrlState: router-agnostic list state (search, filters, sort, page, tab) kept in the URL query string with typed parsing, so lists survive reloads, Back and shared links.
 
 ## ADDED Requirements
 
@@ -22,7 +22,7 @@ useUrlState(schema) SHALL infer each value from its codec. urlParam SHALL provid
 
 ### Requirement: Default values are left out of the URL and other parameters are kept
 
-Writes SHALL merge patches or updater results against the current pending snapshot, compare defaults by serialized form, remove all copies of changed keys, and preserve foreign keys and hashes. An unchanged search SHALL cause no history call. Values SHALL retain identity until the search changes, including with inline schemas. Prefixes SHALL isolate keys.
+Writes SHALL ignore undefined patch entries and merge patches or updater results against the current pending snapshot, compare defaults by serialized form, remove all copies of changed keys, and preserve foreign keys and hashes. An unchanged search SHALL cause no history call. Values SHALL retain identity until the search changes, including with inline schemas. Prefixes SHALL isolate keys.
 
 #### Scenario: Clear search
 
@@ -31,9 +31,9 @@ Writes SHALL merge patches or updater results against the current pending snapsh
 - **THEN** /list?utm_source=x#details remains
 - **AND** removing the last key leaves no question mark
 
-### Requirement: Typing replaces history and navigation pushes one entry
+### Requirement: Typing replaces the history entry and navigation pushes one
 
-throttleMs SHALL default to 50. Values SHALL update immediately for every hook before the delayed write. Updates in a window SHALL merge into one call; any push SHALL make that call a push. History precedence SHALL be call option, key option, then replace. Failed browser writes SHALL be caught and retained in shared memory.
+throttleMs SHALL default to 50. Values SHALL update immediately for every hook before the delayed write. Updates in a window SHALL merge into one call; any push SHALL make that call a push. History precedence SHALL be call option, key option, then replace. Failed browser writes SHALL be caught and retained in shared memory, including their push history mode until a successful write.
 
 #### Scenario: Search while typing
 
@@ -46,7 +46,24 @@ throttleMs SHALL default to 50. Values SHALL update immediately for every hook b
 - **GIVEN** page 3 with push history
 - **WHEN** page changes to 4
 - **THEN** exactly one history entry is added
-- **AND** Back restores page 3
+
+### Requirement: Back and forward restore the state in every hook
+
+After a history navigation or a write by another hook, every hook reading an affected key SHALL re-render with the value now in the URL. Router acknowledgements of the store's own writes SHALL preserve newer pending updates; router adapters SHALL keep the latest requested snapshot when earlier commits arrive.
+
+#### Scenario: Back
+
+- **GIVEN** page was changed from 3 to 4 with push
+- **WHEN** the user presses Back
+- **THEN** every hook returns page 3
+- **AND** Forward restores page 4 in every hook
+
+#### Scenario: Delayed router commit during typing
+
+- **GIVEN** two hooks sharing a router adapter and a newer pending query
+- **WHEN** the router acknowledges an earlier write
+- **THEN** both hooks retain the newer query
+- **AND** typing deploy ends with q=deploy in both hooks and the URL
 
 ### Requirement: Navigation and lifetime govern pending writes
 
@@ -58,7 +75,7 @@ One store per adapter SHALL be held in a WeakMap. Its snapshot SHALL use pending
 - **WHEN** popstate arrives or the pathname changes
 - **THEN** the old update never overwrites the restored or new route
 
-### Requirement: Adapters replace browser history and support server rendering
+### Requirement: A router adapter replaces the browser history
 
 UrlStateAdapter SHALL expose getSearch, subscribe and setSearch. UrlStateProvider SHALL supply a memoized adapter; an explicit option SHALL win. Custom adapters SHALL own all reads and writes without browser history or popstate access. The default adapter SHALL avoid module-scope window access, return empty search on the server, preserve history.state on replace, and write pathname plus search plus hash. Custom server snapshots SHALL read getSearch. Documentation SHALL include React Router and Next.js App Router recipes, memoization, short URLs and the initial-default SSR limitation.
 

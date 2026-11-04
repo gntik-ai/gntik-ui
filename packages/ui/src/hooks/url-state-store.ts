@@ -1,6 +1,9 @@
 import type { UrlHistoryMode } from './url-param';
 
-/** Memoize adapters for their lifetime. A router adapter must notify subscribers on navigation. */
+/**
+ * Memoize adapters for their lifetime. setSearch must update getSearch synchronously.
+ * Notify on navigation and commits; an older own commit must retain the latest requested search.
+ */
 export interface UrlStateAdapter {
   getSearch(): string;
   subscribe(onChange: () => void): () => void;
@@ -29,6 +32,7 @@ const stores = new WeakMap<UrlStateAdapter, ReturnType<typeof createStore>>();
 function createStore(adapter: UrlStateAdapter) {
   const listeners = new Set<() => void>();
   let pending: string | undefined;
+  let lastWritten: string | undefined;
   let historyMode: UrlHistoryMode = 'replace';
   let pathname: string | undefined;
   const currentPath = () =>
@@ -40,18 +44,22 @@ function createStore(adapter: UrlStateAdapter) {
     if (timer !== undefined) clearTimeout(timer);
     timer = undefined;
     pending = undefined;
+    lastWritten = undefined;
     historyMode = 'replace';
   };
   return {
     getSearch: () => {
-      if (pending !== undefined && pathname !== currentPath()) cancel();
+      // Keep the timer alive so it can notify every consumer outside React's render phase.
+      if (pending !== undefined && pathname !== currentPath()) return adapter.getSearch();
       return pending ?? adapter.getSearch();
     },
     subscribe(listener: () => void) {
       listeners.add(listener);
       if (listeners.size === 1)
         unsubscribe = adapter.subscribe(() => {
-          cancel();
+          // Router commits can acknowledge our previous write while newer input is pending.
+          // Browser popstate always represents navigation, even when the search is unchanged.
+          if (adapter === browserAdapter || adapter.getSearch() !== lastWritten) cancel();
           notify();
         });
       return () => {
@@ -64,6 +72,7 @@ function createStore(adapter: UrlStateAdapter) {
       };
     },
     setSearch(search: string, mode: UrlHistoryMode, throttleMs: number) {
+      if (pending !== undefined && pathname !== currentPath()) cancel();
       if (pending === undefined) pathname = currentPath();
       pending = search;
       if (mode === 'push') historyMode = 'push';
@@ -80,16 +89,20 @@ function createStore(adapter: UrlStateAdapter) {
           const next = pending;
           if (next === undefined) return;
           if (next === adapter.getSearch()) {
-            cancel();
+            pending = undefined;
+            historyMode = 'replace';
             notify();
             return;
           }
           const writeMode = historyMode;
-          historyMode = 'replace';
+          const previousWritten = lastWritten;
+          lastWritten = next;
           try {
             adapter.setSearch(next, writeMode);
             pending = undefined;
+            historyMode = 'replace';
           } catch {
+            lastWritten = previousWritten;
             /* SecurityError: retain the shared in-memory snapshot until navigation. */
           }
           notify();

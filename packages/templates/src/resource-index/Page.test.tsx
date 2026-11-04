@@ -254,6 +254,30 @@ describe('ResourceIndexPage URL state', () => {
     expect(push).not.toHaveBeenCalled();
   });
 
+  it('round-trips sorting for a column whose id contains a colon', async () => {
+    history.replaceState(null, '', '/');
+    render(
+      <ResourceIndexPage
+        syncUrl
+        rows={rows}
+        columns={[{ id: 'resource:name', header: 'Name', accessor: (row) => row.name, sortable: true }]}
+        savedViews={[]}
+      />,
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Name' }));
+    await waitFor(() => expect(new URLSearchParams(location.search).get('sort')).toBe('resource:name:asc'));
+    expect(screen.getByRole('columnheader', { name: /Name/ })).toHaveAttribute('aria-sort', 'ascending');
+    await userEvent.click(screen.getByRole('button', { name: 'Name' }));
+    await waitFor(() => expect(new URLSearchParams(location.search).get('sort')).toBe('resource:name:desc'));
+    expect(screen.getByRole('columnheader', { name: /Name/ })).toHaveAttribute('aria-sort', 'descending');
+    expect(
+      within(screen.getByRole('table', { name: 'Deployments' }))
+        .getAllByRole('row')
+        .slice(1)
+        .map((row) => within(row).getAllByRole('cell')[1]?.textContent),
+    ).toEqual(['api zeta', 'api running', 'api alpha']);
+  });
+
   it('keeps URL access disabled by default while local search and sorting still work', async () => {
     history.replaceState(null, '', '/?q=ignore&f=status:failed&sort=name:desc');
     const replace = vi.spyOn(history, 'replaceState');
