@@ -378,6 +378,25 @@ function Gallery({ kicker, title, intro, groups, kind, height, api, itemId }) {
                   height={height}
                 />
               )}
+              {kind === 'template' && it.id === 'resource-index' && (
+                <>
+                  <h4 className="my-4 text-[15px] font-semibold text-foreground">URL-synchronized list</h4>
+                  <p className="my-4 text-[13px] leading-6 text-muted-foreground">
+                    Enable syncUrl to share search, filters and sort. Search and sort replace history; filters push, so
+                    Back restores the previous filters. Deep links can use
+                    ?q=api&amp;f=status:failed&amp;sort=name:desc. Use UrlStateProvider with a router adapter. Server
+                    rendering initially shows defaults; the saved-view label itself stays local. Page and page size stay
+                    local.
+                  </p>
+                  <Viewer
+                    kind="template"
+                    id="resource-index--url-synced"
+                    title="Resource index · URL state"
+                    file="../../../packages/templates/src/resource-index/examples/UrlSynced.tsx"
+                    height={height}
+                  />
+                </>
+              )}
               {kind === 'template' && it.id === 'resource-detail' && (
                 <>
                   <h4 className="my-4 text-[15px] font-semibold text-foreground">Catalog labels</h4>

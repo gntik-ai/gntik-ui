@@ -1,4 +1,4 @@
-import { useI18n } from '@gntik-ai/ui';
+import { useI18n, useUrlState, urlParam, type UrlStateAdapter } from '@gntik-ai/ui';
 import {
   BulkActionBar,
   DataTable,
@@ -9,6 +9,7 @@ import {
   type DataTableColumn,
   type FilterField,
   type SavedView,
+  type SortState,
 } from '@gntik-ai/blocks';
 import { Archive, Download, Plus, Trash2 } from '@gntik-ai/icons';
 import { Link, Page, Stack, type BreadcrumbItem } from '@gntik-ai/ui';
@@ -60,9 +61,27 @@ export interface ResourceIndexProps<T extends object = ResourceRow> {
   onBulkAction: (action: ResourceBulkAction, ids: string[]) => void;
   /** Local Archive without `onBulkAction`; defaults to `status: 'paused'` on rows that have a status. */
   archiveRow: (row: T) => T;
+  /**
+   * Keep q, repeated f=field:value and sort=column:asc|desc in the URL (default false).
+   * Filters push history; query and sort replace. Use UrlStateProvider with a router.
+   * Saved-view selection itself is local and may show a stale label after Back.
+   * Page and page size remain local. Default-adapter SSR initially renders unfiltered rows.
+   */
+  syncUrl?: boolean;
   loading: boolean;
   shell: Omit<ConsoleShellProps, 'children'>;
 }
+
+const urlSchema = {
+  q: urlParam.string(),
+  f: urlParam.array(urlParam.string(), { history: 'push' }),
+  sort: urlParam.string(),
+};
+const inertAdapter: UrlStateAdapter = {
+  getSearch: () => '',
+  subscribe: () => () => {},
+  setSearch: () => {},
+};
 
 const defaultRowId = (row: object): string => {
   const id = (row as { id?: unknown }).id;
@@ -91,12 +110,20 @@ export default function ResourceIndexPage<T extends object = ResourceRow>({
   onBulkAction,
   archiveRow = defaultArchive,
   loading = false,
+  syncUrl = false,
   shell,
 }: Partial<ResourceIndexProps<T>>) {
   const { locale } = useI18n();
   const [rows, setRows] = useState<readonly T[]>(initialRows);
-  const [query, setQuery] = useState('');
-  const [filters, setFilters] = useState<ActiveFilter[]>([]);
+  const [localQuery, setLocalQuery] = useState('');
+  const [localFilters, setLocalFilters] = useState<ActiveFilter[]>([]);
+  const [url, setUrl] = useUrlState(urlSchema, { adapter: syncUrl ? undefined : inertAdapter });
+  const query = syncUrl ? url.q : localQuery;
+  const filters = syncUrl ? decodeFilters(url.f, filterFields) : localFilters;
+  const sort = syncUrl ? decodeSort(url.sort, columns) : undefined;
+  const setQuery = (q: string) => (syncUrl ? setUrl({ q }) : setLocalQuery(q));
+  const setFilters = (next: ActiveFilter[]) =>
+    syncUrl ? setUrl({ f: next.map(({ field, value }) => `${field}:${value}`) }) : setLocalFilters(next);
   const [selected, setSelected] = useState<string[]>([]);
   const visible = filterResources(rows, query, filters, columns, locale);
   const visibleSelected = selected.filter((id) => visible.some((r) => getRowId(r) === id));
@@ -160,6 +187,12 @@ export default function ResourceIndexPage<T extends object = ResourceRow>({
             rows={visible}
             columns={tableColumns}
             getRowId={getRowId}
+            sort={sort}
+            onSortChange={
+              syncUrl
+                ? (next) => setUrl({ sort: `${next.columnId}:${next.direction === 'ascending' ? 'asc' : 'desc'}` })
+                : undefined
+            }
             caption={title}
             loading={loading}
             selectedIds={visibleSelected}
@@ -215,4 +248,25 @@ function linkColumns<T>(
       },
     };
   });
+}
+
+function decodeFilters(raw: readonly string[], fields: readonly FilterField[]): ActiveFilter[] {
+  return raw
+    .flatMap((entry) => {
+      const colon = entry.indexOf(':');
+      if (colon < 0) return [];
+      const field = fields.find((field) => field.id === entry.slice(0, colon));
+      const value = field?.options.find((option) => option.toLowerCase() === entry.slice(colon + 1).toLowerCase());
+      return field && value !== undefined ? [{ field: field.id, value }] : [];
+    })
+    .filter(
+      (filter, index, all) =>
+        all.findIndex((other) => other.field === filter.field && other.value === filter.value) === index,
+    );
+}
+function decodeSort<T>(raw: string, columns: ReadonlyArray<DataTableColumn<T>>): SortState | null {
+  const [columnId, direction, extra] = raw.split(':');
+  if (extra !== undefined || (direction !== 'asc' && direction !== 'desc')) return null;
+  const column = columns.find((column) => column.id === columnId && column.sortable && column.accessor);
+  return column ? { columnId: column.id, direction: direction === 'asc' ? 'ascending' : 'descending' } : null;
 }

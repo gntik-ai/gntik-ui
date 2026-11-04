@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expectNoAxeViolations } from '../test/a11y';
 import type { DataTableColumn } from '@gntik-ai/blocks';
@@ -116,5 +116,158 @@ describe('ResourceIndexPage', () => {
     const first = resourceRows[0]!;
     await userEvent.click(screen.getByRole('button', { name: first.name }));
     expect(onRowClick).toHaveBeenCalledWith(first);
+  });
+});
+
+describe('ResourceIndexPage URL state', () => {
+  const rows = [
+    { id: 'a', name: 'api alpha', status: 'failed' },
+    { id: 'b', name: 'api zeta', status: 'failed' },
+    { id: 'c', name: 'api running', status: 'running' },
+  ];
+  const columns: DataTableColumn<(typeof rows)[number]>[] = [
+    { id: 'name', header: 'Name', accessor: (row) => row.name, sortable: true },
+    { id: 'status', header: 'Status', accessor: (row) => row.status, sortable: false },
+  ];
+  const fields = [{ id: 'status', label: 'Status', options: ['Failed', 'Running'] }];
+  afterEach(() => {
+    cleanup();
+    vi.restoreAllMocks();
+    history.replaceState(null, '', '/');
+  });
+
+  it('reads a deep link, canonicalizes filter casing and controls descending row order', async () => {
+    history.replaceState(null, '', '/?q=api&f=status:failed&sort=name:desc');
+    const replace = vi.spyOn(history, 'replaceState');
+    const push = vi.spyOn(history, 'pushState');
+    render(<ResourceIndexPage syncUrl rows={rows} columns={columns} filterFields={fields} savedViews={[]} />);
+    expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('api');
+    const table = screen.getByRole('table', { name: 'Deployments' });
+    expect(
+      within(table)
+        .getAllByRole('row')
+        .slice(1)
+        .map((row) => within(row).getAllByRole('cell')[1]?.textContent),
+    ).toEqual(['api zeta', 'api alpha']);
+    expect(screen.getByRole('columnheader', { name: /Name/ })).toHaveAttribute('aria-sort', 'descending');
+    await userEvent.click(screen.getByRole('button', { name: 'Add filter' }));
+    expect(await screen.findByRole('menuitemcheckbox', { name: 'Failed' })).toHaveAttribute('aria-checked', 'true');
+    expect(replace).not.toHaveBeenCalled();
+    expect(push).not.toHaveBeenCalled();
+  });
+
+  it('pushes filter changes and Back restores the checked options and rows', async () => {
+    history.replaceState(null, '', '/?q=api&f=status:failed&sort=name:desc');
+    const push = vi.spyOn(history, 'pushState');
+    render(<ResourceIndexPage syncUrl rows={rows} columns={columns} filterFields={fields} savedViews={[]} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Add filter' }));
+    await userEvent.click(await screen.findByRole('menuitemcheckbox', { name: 'Running' }));
+    await waitFor(() =>
+      expect(new URLSearchParams(location.search).getAll('f')).toEqual(['status:Failed', 'status:Running']),
+    );
+    expect(push).toHaveBeenCalledTimes(1);
+    await act(async () => {
+      const popped = new Promise<void>((resolve) =>
+        window.addEventListener('popstate', () => resolve(), { once: true }),
+      );
+      history.back();
+      await popped;
+    });
+    expect(screen.getByRole('menuitemcheckbox', { name: 'Running' })).toHaveAttribute('aria-checked', 'false');
+    expect(screen.getByRole('menuitemcheckbox', { name: 'Failed' })).toHaveAttribute('aria-checked', 'true');
+    const table = screen.getByRole('table', { name: 'Deployments' });
+    expect(within(table).getAllByRole('row')).toHaveLength(3);
+  });
+
+  it('merges both clearAll patches into one push while preserving foreign keys and hash', async () => {
+    history.replaceState(null, '', '/?q=api&f=status:failed&utm_source=x#details');
+    const push = vi.spyOn(history, 'pushState');
+    const replace = vi.spyOn(history, 'replaceState');
+    render(<ResourceIndexPage syncUrl rows={rows} columns={columns} filterFields={fields} savedViews={[]} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Clear all' }));
+    expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('');
+    await waitFor(() => expect(location.search).toBe('?utm_source=x'));
+    expect(location.hash).toBe('#details');
+    expect(push).toHaveBeenCalledTimes(1);
+    expect(replace).not.toHaveBeenCalled();
+  });
+
+  it('merges the filters and query of a saved view into one history entry', async () => {
+    history.replaceState(null, '', '/');
+    const push = vi.spyOn(history, 'pushState');
+    render(
+      <ResourceIndexPage
+        syncUrl
+        rows={rows}
+        columns={columns}
+        filterFields={fields}
+        savedViews={[
+          { value: 'failed', label: 'Failed APIs', query: 'api', filters: [{ field: 'status', value: 'Failed' }] },
+        ]}
+      />,
+    );
+    await userEvent.click(screen.getByRole('combobox', { name: 'Saved view' }));
+    await userEvent.click(await screen.findByRole('option', { name: 'Failed APIs' }));
+    await waitFor(() => expect(new URLSearchParams(location.search).get('q')).toBe('api'));
+    expect(new URLSearchParams(location.search).getAll('f')).toEqual(['status:Failed']);
+    expect(push).toHaveBeenCalledTimes(1);
+  });
+
+  it.each(['missing:desc', 'status:asc', 'name:invalid'])(
+    'ignores invalid filters and sort %s without rewriting',
+    (sort) => {
+      history.replaceState(null, '', `/?f=unknown:value&f=status:unknown&sort=${sort}`);
+      const replace = vi.spyOn(history, 'replaceState');
+      const push = vi.spyOn(history, 'pushState');
+      render(<ResourceIndexPage syncUrl rows={rows} columns={columns} filterFields={fields} savedViews={[]} />);
+      expect(within(screen.getByRole('table', { name: 'Deployments' })).getAllByRole('row')).toHaveLength(4);
+      expect(screen.queryByRole('button', { name: /Remove filter Status/ })).toBeNull();
+      expect(screen.getByRole('columnheader', { name: /Name/ })).toHaveAttribute('aria-sort', 'none');
+      expect(replace).not.toHaveBeenCalled();
+      expect(push).not.toHaveBeenCalled();
+    },
+  );
+
+  it('splits a filter at the first colon, retaining colons in valid values', () => {
+    history.replaceState(null, '', '/?f=status:needs:review');
+    render(
+      <ResourceIndexPage
+        syncUrl
+        rows={[{ id: 'x', name: 'review', status: 'needs:review' }, ...rows]}
+        columns={columns}
+        filterFields={[{ id: 'status', label: 'Status', options: ['Needs:Review'] }]}
+        savedViews={[]}
+      />,
+    );
+    expect(within(screen.getByRole('table', { name: 'Deployments' })).getAllByRole('row')).toHaveLength(2);
+    expect(screen.getByRole('button', { name: /Remove filter Status.*Needs:Review/ })).toBeInTheDocument();
+  });
+
+  it('replaces a controlled sort change', async () => {
+    history.replaceState(null, '', '/?sort=name:desc');
+    const replace = vi.spyOn(history, 'replaceState');
+    const push = vi.spyOn(history, 'pushState');
+    render(<ResourceIndexPage syncUrl rows={rows} columns={columns} filterFields={fields} savedViews={[]} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Name' }));
+    await waitFor(() => expect(new URLSearchParams(location.search).get('sort')).toBe('name:asc'));
+    expect(replace).toHaveBeenCalledTimes(1);
+    expect(push).not.toHaveBeenCalled();
+  });
+
+  it('keeps URL access disabled by default while local search and sorting still work', async () => {
+    history.replaceState(null, '', '/?q=ignore&f=status:failed&sort=name:desc');
+    const replace = vi.spyOn(history, 'replaceState');
+    const push = vi.spyOn(history, 'pushState');
+    const add = vi.spyOn(window, 'addEventListener');
+    render(<ResourceIndexPage rows={rows} columns={columns} filterFields={fields} savedViews={[]} />);
+    expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('');
+    await userEvent.type(screen.getByRole('searchbox', { name: 'Search' }), 'zeta');
+    expect(within(screen.getByRole('table', { name: 'Deployments' })).getAllByRole('row')).toHaveLength(2);
+    await userEvent.clear(screen.getByRole('searchbox', { name: 'Search' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Name' }));
+    expect(screen.getByRole('columnheader', { name: /Name/ })).toHaveAttribute('aria-sort', 'ascending');
+    expect(replace).not.toHaveBeenCalled();
+    expect(push).not.toHaveBeenCalled();
+    expect(add.mock.calls.some(([name]) => name === 'popstate')).toBe(false);
   });
 });

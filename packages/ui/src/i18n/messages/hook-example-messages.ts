@@ -1,4 +1,11 @@
 export const hookExampleEn = {
+  'hooksExample.url.search': 'Search resources',
+  'hooksExample.url.shared': 'Shared query',
+  'hooksExample.url.empty': 'Empty',
+  'hooksExample.url.page': 'Current page',
+  'hooksExample.url.next': 'Next page',
+  'hooksExample.url.clear': 'Clear search',
+  'hooksExample.url.hint': 'This preview uses memory; an app can use browser history or a router adapter.',
   'hooksExample.clipboard.status': 'Copy status: {status}',
   'hooksExample.mediaQuery.wide': 'Wide-screen behaviour: {state}',
   'hooksExample.mediaQuery.motion': 'Motion preference: {state}',
@@ -71,6 +78,13 @@ export const hookExampleEn = {
 };
 
 export const hookExampleEs: Record<keyof typeof hookExampleEn, string> = {
+  'hooksExample.url.search': 'Buscar recursos',
+  'hooksExample.url.shared': 'Consulta compartida',
+  'hooksExample.url.empty': 'Vacío',
+  'hooksExample.url.page': 'Página actual',
+  'hooksExample.url.next': 'Página siguiente',
+  'hooksExample.url.clear': 'Borrar búsqueda',
+  'hooksExample.url.hint': 'Esta vista usa memoria; una aplicación puede usar el historial o un adaptador de rutas.',
   'hooksExample.clipboard.status': 'Estado de copia: {status}',
   'hooksExample.mediaQuery.wide': 'Comportamiento en pantalla ancha: {state}',
   'hooksExample.mediaQuery.motion': 'Preferencia de movimiento: {state}',

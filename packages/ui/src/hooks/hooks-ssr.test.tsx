@@ -5,6 +5,7 @@ import type { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 import type { HookDoc } from '../doc';
 import { I18nProvider } from '../i18n/I18nProvider';
+import { useUrlState, urlParam } from './useUrlState';
 
 const here = __dirname;
 const docs = await Promise.all(
@@ -74,4 +75,19 @@ describe('hook examples on the server', () => {
     expect(printed).toContain('Accesibilidad');
     expect(printed).not.toContain('Accessibility');
   });
+});
+
+it('renders the URL hook defaults without a browser adapter accessing window', () => {
+  function Defaults() {
+    const [value] = useUrlState({
+      q: urlParam.string('all'),
+      page: urlParam.integer(1),
+      filters: urlParam.array(urlParam.string()),
+    });
+    return <span>{JSON.stringify(value)}</span>;
+  }
+  const html = renderToString(<Defaults />);
+  expect(html).toContain('all');
+  expect(html).toContain('1');
+  expect(html).toContain('[]');
 });
