@@ -83,7 +83,7 @@ export const urlParam = {
   array<T>(item: UrlParam<T>, options: UrlParamOptions = {}): UrlParam<T[]> {
     return {
       default: [],
-      history: options.history,
+      history: options.history ?? item.history,
       parse: (values) =>
         values.flatMap((value) => {
           try {

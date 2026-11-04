@@ -46,10 +46,27 @@ Red-before-green commands used the public hook, adapter boundary and accessible 
 
 All these regressions pass after the fixes: 29 focused hook/router tests and 17 resource-index tests. The router tests execute the actual documentation recipes, mock only the router boundary, and verify two consumers and external navigation. The original spec requirement titles and the explicit Back/Forward requirement are restored. The existing single minor changeset remains sufficient for this ChangeSet; no dependency, lockfile or package version change is needed.
 
-The optional codec-options design observation identified no broken standard or acceptance criterion. The existing codec API is retained; an array parameter has its own explicit history option.
+The initial follow-up retained explicit array history options. The later independent-checker follow-up below adds inheritance from the item codec, with an explicit array option taking precedence.
 
 ## Validation
 
 The final library build, monorepo lint and typecheck, registry freshness, both kit-only checks, docs coverage, formatting and strict OpenSpec validation pass. Direct final checks pass 30 hook/router/example tests, six URL-specific server/axe tests, five built-entry tests, and all 17 resource-index tests. The built-entry import exceeded its normal 15-second allowance under parallel worker load; its isolated rerun passes with a 60-second test allowance.
 
 The required recursive library test command stops at the unchanged tokens fixture described below. A second recursive sweep excluding tokens passed charts, CLI, codemods, editor, flow and icons, then produced no UI verdict for about nine minutes (about ten minutes overall). It was interrupted without an assertion verdict and is SKIPPED; PR CI must complete the broad UI, chat, blocks and templates suites. The affected hook, docs and resource-index checks above pass independently. Final verification is also recorded in the structured implementation result. The tokens mirror test remains unavailable without network: its fallback reads gntik-ai-tokens-0.2.1.tgz, but packing the current package produces a different-version tarball (ENOENT in test/mirror-install.test.mjs:93). This follow-up reproduced the unavailable fixture directly; no token files were changed. Browser suites are SKIPPED: browser suites run in PR CI. Full app builds, MCP CLI and eval tests also remain in PR CI under worker policy. No deployment, publication, visual baseline update or remote Git write was performed.
+
+## Independent-checker follow-up at 74890f93
+
+The assigned branch and clean worktree matched the supplied lease and previous HEAD. The regressions use the public hook and the actual documentation providers, with only the router boundary mocked. Consumers stay mounted across route changes. The router harness now models push/replace entries, Back and superseding an in-flight navigation.
+
+- `pnpm --filter @gntik-ai/ui exec vitest run src/hooks/useUrlState.test.tsx src/hooks/useUrlState.routers.test.tsx -t 'last acknowledged search'` failed three assertions before the fix: memory and both router adapters wrote pending input over navigation carrying the last acknowledged search. The store retained its acknowledgement marker indefinitely; it now consumes that marker when acknowledged, so later notifications cancel pending input.
+- `pnpm --filter @gntik-ai/ui exec vitest run src/hooks/useUrlState.routers.test.tsx -t 'in-flight write was superseded'` failed for both recipes before the fix: Back returned q=d but both hooks retained page 2. Removing only the matching queue entry left superseded requests available to misclassify navigation. Both recipes now remove every request through the acknowledged entry.
+- `pnpm --filter @gntik-ai/ui exec vitest run src/hooks/useUrlState.test.tsx -t 'inherits array item history'` failed before inheritance was added: pushState was called zero times instead of once. Arrays now use their own history option or the item codec's history.
+- Added direct assertions for Forward in both consumers and the inclusive integer max boundary. The two focused hook/router files pass all 38 tests, including the existing newer-input and delayed-acknowledgement regressions.
+
+The existing single minor changeset covers this follow-up; dependencies and package versions are unchanged. Final validation evidence follows after the bounded toolchain checks.
+
+### Final follow-up validation
+
+PASS: the required library build, monorepo lint and typecheck, registry generation and freshness, both kit-only checks, strict OpenSpec validation, docs coverage, formatting and diff whitespace checks. The affected public-seam checks pass all 184 hook/export/SSR/accessibility tests in seven files (including built entries) and all 17 resource-index tests. The built-entry suite uses a 60-second test allowance to accommodate worker load.
+
+SKIPPED: the required recursive library test sweep stops in the unchanged tokens mirror fixture. A direct diagnostic run confirms ENOENT at test/mirror-install.test.mjs:93 for gntik-ai-tokens-0.2.1.tgz: the public registry is unavailable and the local fallback packs version 0.3.0. No test assertion in the changed code failed. PR CI must complete the broad library sweep, full app builds, MCP CLI and eval tests. Browser suites, including pnpm a11y, are SKIPPED because browser suites run in PR CI. No dependencies, lockfiles, protected configuration or visual baselines changed, and no remote Git write or deployment was performed.

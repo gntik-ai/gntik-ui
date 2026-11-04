@@ -61,6 +61,17 @@ it.each(['abc', '-2', '1e3', '3.5', ''])(
   },
 );
 
+it.each([
+  ['4', 4],
+  ['5', 1],
+] as const)('reads page %s with an inclusive upper bound as %i without rewriting', (page, expected) => {
+  history.replaceState(null, '', `/?page=${page}`);
+  const replace = vi.spyOn(history, 'replaceState');
+  const { result } = renderHook(() => useUrlState({ page: urlParam.integer(1, { max: 4 }) }));
+  expect(result.current[0].page).toBe(expected);
+  expect(replace).not.toHaveBeenCalled();
+});
+
 it('shares pending values immediately, coalesces patches and omits defaults while preserving foreign params and hash', () => {
   vi.useFakeTimers();
   history.replaceState({ kept: true }, '', '/list?q=api&utm_source=x#details');
@@ -107,6 +118,21 @@ it('uses call then key then replace history precedence and latches one push in a
   act(() => result.current[1]({ q: 'logs' }, { history: 'push' }));
   act(() => vi.advanceTimersByTime(50));
   expect(push).toHaveBeenCalledTimes(2);
+});
+
+it.each([undefined, 'replace'] as const)('inherits array item history unless overridden with %s', (historyMode) => {
+  vi.useFakeTimers();
+  history.replaceState(null, '', '/');
+  const push = vi.spyOn(history, 'pushState');
+  const replace = vi.spyOn(history, 'replaceState');
+  const { result } = renderHook(() =>
+    useUrlState({ status: urlParam.array(urlParam.string('', { history: 'push' }), { history: historyMode }) }),
+  );
+  act(() => result.current[1]({ status: ['failed'] }));
+  act(() => vi.advanceTimersByTime(50));
+  expect(push).toHaveBeenCalledTimes(historyMode === 'replace' ? 0 : 1);
+  expect(replace).toHaveBeenCalledTimes(historyMode === 'replace' ? 1 : 0);
+  expect(location.search).toBe('?status=failed');
 });
 
 it('drops a delayed write after moving to another route', () => {
@@ -224,7 +250,7 @@ it('recognizes a delayed router acknowledgement after a batch returns to its ori
   expect(adapter.getSearch()).toBe('?q=deploy');
 });
 
-it('restores every consumer on Back and discards a pending write on popstate', async () => {
+it('restores every consumer on Back and Forward and discards a pending write on popstate', async () => {
   history.replaceState(null, '', '/?page=3');
   const schema = { page: urlParam.integer(1, { history: 'push' }) };
   const a = renderHook(() => useUrlState(schema, { throttleMs: 0 }));
@@ -241,13 +267,20 @@ it('restores every consumer on Back and discards a pending write on popstate', a
   });
   expect(a.result.current[0].page).toBe(3);
   expect(b.result.current[0].page).toBe(3);
+  await act(async () => {
+    const popped = new Promise<void>((resolve) => window.addEventListener('popstate', () => resolve(), { once: true }));
+    history.forward();
+    await popped;
+  });
+  expect(a.result.current[0].page).toBe(4);
+  expect(b.result.current[0].page).toBe(4);
   vi.useFakeTimers();
   act(() => a.result.current[1]({ page: 5 }));
   act(() => window.dispatchEvent(new PopStateEvent('popstate')));
   const replace = vi.spyOn(history, 'replaceState');
   const push = vi.spyOn(history, 'pushState');
   act(() => vi.runAllTimers());
-  expect(a.result.current[0].page).toBe(3);
+  expect(a.result.current[0].page).toBe(4);
   expect(replace).not.toHaveBeenCalled();
   expect(push).not.toHaveBeenCalled();
 });
@@ -322,6 +355,22 @@ function memoryAdapter(initial: string): UrlStateAdapter {
     },
   };
 }
+
+it('cancels pending input when a memory adapter navigates to the last acknowledged search', () => {
+  vi.useFakeTimers();
+  const adapter = memoryAdapter('');
+  const a = renderHook(() => useUrlState({ q: urlParam.string() }, { adapter }));
+  const b = renderHook(() => useUrlState({ q: urlParam.string() }, { adapter }));
+  act(() => a.result.current[1]({ q: 'a' }));
+  act(() => vi.advanceTimersByTime(50));
+  act(() => a.result.current[1]({ q: 'pending' }));
+  // A navigation notification can carry the same search as the previous write.
+  act(() => adapter.setSearch('?q=a', 'push'));
+  act(() => vi.runAllTimers());
+  expect(adapter.getSearch()).toBe('?q=a');
+  expect(a.result.current[0].q).toBe('a');
+  expect(b.result.current[0].q).toBe('a');
+});
 
 it('uses only the memoized adapter, honors option over provider, and keeps prefixes isolated', () => {
   vi.useFakeTimers();

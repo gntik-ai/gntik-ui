@@ -60,6 +60,9 @@ function createStore(adapter: UrlStateAdapter) {
           // Router commits can acknowledge our previous write while newer input is pending.
           // Browser popstate always represents navigation, even when the search is unchanged.
           if (adapter === browserAdapter || adapter.getSearch() !== lastWritten) cancel();
+          // Consume acknowledgements once: a later notification with the same search
+          // can be navigation to another route and must cancel pending input.
+          else lastWritten = undefined;
           notify();
         });
       return () => {
