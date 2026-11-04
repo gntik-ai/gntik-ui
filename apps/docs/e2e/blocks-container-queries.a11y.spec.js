@@ -123,7 +123,8 @@ test('PageHeader folds only when its own slot is narrow', async ({ page }) => {
 
 async function formLayout(section, stacked) {
   const title = await section.getByRole('heading', { name: 'General', exact: true }).boundingBox();
-  const field = await section.getByLabel('Project name', { exact: true }).boundingBox();
+  // Input's border and horizontal padding belong to its wrapper, which fills the field column.
+  const field = await section.getByLabel('Project name', { exact: true }).locator('..').boundingBox();
   const description = await section.getByLabel('Description', { exact: true }).boundingBox();
   const root = await section.boundingBox();
   expect(title).not.toBeNull();

@@ -25,6 +25,8 @@ and visibility classes for the outer block, such as `col-span-2` or `hidden`, in
 longer merge with the internal container variants; competing declarations depend
 on CSS order. Prefer container variants for responsive list styling.
 FormSection keeps `className`, landmark attributes and `divided` on its section;
+its layout grid now lives in an inner element, so grid utilities such as `gap-x-*`
+or `grid-cols-*` passed through `className` no longer style that grid.
 PageHeader and ChartCard keep `className` on their roots.
 
 Inline-size containment removes intrinsic width. Containers use `w-full min-w-0`
