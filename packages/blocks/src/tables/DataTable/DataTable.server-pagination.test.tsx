@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { flushSync } from 'react-dom';
 import { describe, expect, it, vi } from 'vitest';
 import { DataTable, type DataTableProps, type DataTableQuery } from './DataTable';
 import ServerPaginationExample from './examples/server-pagination';
@@ -429,13 +430,14 @@ it.each(['success', 'failure'])(
         });
       });
     render(<ServerPaginationExample request={request} />);
+    await act(async () => pending[0]!.resolve());
     fireEvent.click(screen.getByRole('button', { name: 'Name' }));
     fireEvent.click(screen.getByRole('button', { name: 'Name' }));
-    await act(async () => pending[1]!.resolve());
+    await act(async () => pending[2]!.resolve());
     expect(screen.getByRole('checkbox', { name: 'Select 95' })).toBeInTheDocument();
     await act(async () => {
-      if (outcome === 'success') pending[0]!.resolve();
-      else pending[0]!.reject();
+      if (outcome === 'success') pending[1]!.resolve();
+      else pending[1]!.reject();
     });
     expect(screen.getByRole('checkbox', { name: 'Select 95' })).toBeInTheDocument();
     expect(screen.queryByRole('checkbox', { name: 'Select 1' })).not.toBeInTheDocument();
@@ -454,7 +456,8 @@ it('server pagination example restores the latest confirmed sort when a request 
   let confirm!: () => void;
   let fail!: () => void;
   const request = vi
-    .fn<() => Promise<typeof confirmed>>()
+    .fn<() => Promise<Omit<typeof confirmed, 'sort'> & { sort: DataTableQuery['sort'] }>>()
+    .mockResolvedValueOnce({ ...confirmed, items: [{ id: 21, name: 'Item 21', locked: false }], page: 2, sort: null })
     .mockImplementationOnce(
       () =>
         new Promise((resolve) => {
@@ -468,11 +471,15 @@ it('server pagination example restores the latest confirmed sort when a request 
         }),
     );
   render(<ServerPaginationExample request={request} />);
+  await screen.findByRole('checkbox', { name: 'Select 21' });
   fireEvent.click(screen.getByRole('button', { name: 'Name' }));
   await act(async () => {
     confirm();
+    // The adapter maps the envelope before the hook settles it.
     await Promise.resolve();
-    fireEvent.click(screen.getByRole('button', { name: 'Name' }));
+    await Promise.resolve();
+    // Requests start only after commit; reject immediately after committing this query.
+    flushSync(() => fireEvent.click(screen.getByRole('button', { name: 'Name' })));
     fail();
   });
   expect(screen.getByRole('columnheader', { name: 'Name' })).toHaveAttribute('aria-sort', 'ascending');
