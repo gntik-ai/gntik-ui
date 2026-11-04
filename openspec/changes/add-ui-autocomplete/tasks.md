@@ -16,4 +16,4 @@
 - [x] 3.1 Add the when-to-use sentence to the Autocomplete and Combobox docs.
 - [x] 3.2 Add a changeset: minor for `@gntik-ai/ui`.
 - [x] 3.3 Run `pnpm registry` and commit the generated files.
-- [ ] 3.4 Run `openspec validate add-ui-autocomplete --strict` (the CLI is not available in the sandbox; run in PR CI or locally).
+- [x] 3.4 Run `openspec validate add-ui-autocomplete --strict`.

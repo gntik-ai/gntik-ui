@@ -11,6 +11,7 @@ import AutocompleteAsync from './examples/AutocompleteAsync';
 import AutocompleteGrouped from './examples/AutocompleteGrouped';
 import AutocompleteInline from './examples/AutocompleteInline';
 import AutocompleteRegions from './examples/AutocompleteRegions';
+import AutocompleteStates from './examples/AutocompleteStates';
 
 const models = ['gpt-4o', 'gpt-4o-mini'];
 const regions = ['us-east-1', 'us-west-2', 'eu-west-1'];
@@ -401,6 +402,18 @@ describe('Autocomplete inline completion (mode="both")', () => {
     expect(input()).toHaveAttribute('aria-autocomplete', 'list');
   });
 
+  it('keeps the typed text when a suggestion is highlighted and typing continues', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(<Harness mode="both" onValueChange={onValueChange} />);
+    await user.type(input(), 'west');
+    await user.keyboard('{ArrowDown}');
+    expect(input()).toHaveValue('west');
+    await user.keyboard('x');
+    expect(input()).toHaveValue('westx');
+    expect(onValueChange).toHaveBeenLastCalledWith('westx');
+  });
+
   it('does not complete during IME composition', async () => {
     render(<Harness mode="both" />);
     fireEvent.compositionStart(input());
@@ -566,6 +579,7 @@ describe('Autocomplete a11y', () => {
     async: AutocompleteAsync,
     grouped: AutocompleteGrouped,
     inline: AutocompleteInline,
+    states: AutocompleteStates,
   };
 
   for (const theme of ['dark', 'light', 'high_contrast']) {
@@ -578,7 +592,7 @@ describe('Autocomplete a11y', () => {
           </Themed>,
         );
         await expectNoAxeViolations(container);
-        await user.click(within(container).getByRole('combobox'));
+        await user.click(within(container).getAllByRole('combobox')[0]!);
         await user.keyboard('{ArrowDown}');
         await screen.findByRole('listbox');
         await expectNoAxeViolations(document.body);

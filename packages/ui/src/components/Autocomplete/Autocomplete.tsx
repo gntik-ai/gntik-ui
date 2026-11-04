@@ -308,7 +308,8 @@ export function Autocomplete<Item = string>({
         onItemHighlighted={(item: unknown) => {
           highlightedRef.current = item ?? undefined;
         }}
-        mode={mode}
+        // Inline completion is built in the wrapper; Base's own `both` would replace the text on highlight.
+        mode="list"
         open={open}
         onOpenChange={(next) => {
           if (!next && keepOpen.current) {
@@ -327,6 +328,7 @@ export function Autocomplete<Item = string>({
             aria-label={ariaLabel}
             aria-labelledby={label ? `${inputId}-label` : undefined}
             aria-invalid={invalid || undefined}
+            aria-autocomplete={mode}
             placeholder={placeholder}
             className={cn(v.input(), extra.input())}
             onKeyDown={onKeyDown}

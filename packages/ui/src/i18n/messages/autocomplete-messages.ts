@@ -17,6 +17,13 @@ export const autocompleteEn = {
   'autocomplete.examples.inline': 'Environment variable',
   'autocomplete.examples.inlineHint': 'The rest of the first match is selected; Backspace removes it.',
   'autocomplete.examples.inlinePlaceholder': 'LOG_LEVEL',
+  'autocomplete.examples.statesSm': 'Small',
+  'autocomplete.examples.statesMd': 'Medium',
+  'autocomplete.examples.statesInvalid': 'Invalid',
+  'autocomplete.examples.statesDisabled': 'Disabled',
+  'autocomplete.examples.statesFieldLabel': 'Model id',
+  'autocomplete.examples.statesFieldDescription': 'Any model your provider serves.',
+  'autocomplete.examples.statesFieldError': 'Enter a model id.',
 } as const;
 
 export const autocompleteEs = {
@@ -37,4 +44,11 @@ export const autocompleteEs = {
   'autocomplete.examples.inline': 'Variable de entorno',
   'autocomplete.examples.inlineHint': 'El resto de la primera coincidencia queda seleccionado; Retroceso lo quita.',
   'autocomplete.examples.inlinePlaceholder': 'LOG_LEVEL',
+  'autocomplete.examples.statesSm': 'Pequeño',
+  'autocomplete.examples.statesMd': 'Mediano',
+  'autocomplete.examples.statesInvalid': 'No válido',
+  'autocomplete.examples.statesDisabled': 'Deshabilitado',
+  'autocomplete.examples.statesFieldLabel': 'Id de modelo',
+  'autocomplete.examples.statesFieldDescription': 'Cualquier modelo que sirva tu proveedor.',
+  'autocomplete.examples.statesFieldError': 'Introduce un id de modelo.',
 } satisfies Record<keyof typeof autocompleteEn, string>;
