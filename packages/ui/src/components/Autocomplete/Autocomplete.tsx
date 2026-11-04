@@ -205,6 +205,18 @@ export function Autocomplete<Item = string>({
     if (completion !== null) inputRef.current?.setSelectionRange(value.length, completion.length);
   }, [completion, value.length]);
 
+  // A disabled Field disables the input from inside Base; mirror it so the hidden form value drops out too.
+  const [inputDisabled, setInputDisabled] = useState(false);
+  useLayoutEffect(() => {
+    const input = inputRef.current;
+    if (!input) return;
+    const sync = () => setInputDisabled(input.disabled);
+    sync();
+    const observer = new MutationObserver(sync);
+    observer.observe(input, { attributes: true, attributeFilter: ['disabled'] });
+    return () => observer.disconnect();
+  }, []);
+
   const commit = (next: string) => {
     if (valueProp === undefined) setInner(next);
     if (next !== value) onValueChange?.(next);
@@ -299,6 +311,8 @@ export function Autocomplete<Item = string>({
           {label}
         </label>
       )}
+      {/* The native form value is the committed text: the input itself can show an inline completion. */}
+      {name && <input type="hidden" name={name} value={value} disabled={disabled || inputDisabled} />}
       <BaseAutocomplete.Root
         items={entries}
         filter={null}
@@ -318,7 +332,6 @@ export function Autocomplete<Item = string>({
           }
           setOpen(next);
         }}
-        name={name}
         disabled={disabled}
       >
         <BaseAutocomplete.InputGroup className={cn(v.inputGroup(), extra.invalidGroup(), className)}>

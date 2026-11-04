@@ -8,6 +8,7 @@ import { Field, FieldDescription, FieldLabel } from '../Field';
 import { Autocomplete, type AutocompleteProps } from './Autocomplete';
 import { doc } from './Autocomplete.doc';
 import AutocompleteAsync from './examples/AutocompleteAsync';
+import AutocompleteItems from './examples/AutocompleteItems';
 import AutocompleteGrouped from './examples/AutocompleteGrouped';
 import AutocompleteInline from './examples/AutocompleteInline';
 import AutocompleteRegions from './examples/AutocompleteRegions';
@@ -379,6 +380,25 @@ describe('Autocomplete inline completion (mode="both")', () => {
     expect(onItemSelect).not.toHaveBeenCalled();
   });
 
+  it('requestSubmit without blur submits the typed text, not the completion', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    render(
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit(new FormData(e.currentTarget));
+        }}
+      >
+        <Harness mode="both" name="region" />
+      </form>,
+    );
+    await user.type(input(), 'us-w');
+    await waitFor(() => expect(input()).toHaveValue('us-west-2'));
+    input().form!.requestSubmit();
+    expect(onSubmit.mock.calls[0]?.[0].get('region')).toBe('us-w');
+  });
+
   it('blur drops the completion', async () => {
     const user = userEvent.setup();
     render(
@@ -479,7 +499,10 @@ describe('Autocomplete in a Field', () => {
   it('standalone invalid sets aria-invalid and a destructive border class', () => {
     const { container } = render(<Harness invalid />);
     expect(input()).toHaveAttribute('aria-invalid', 'true');
-    expect(container.innerHTML).toContain('border-destructive');
+    // The destructive border is keyed on the input's aria-invalid: its group must carry that rule and contain that input.
+    const group = container.querySelector('[class*="has-[input[aria-invalid=true]]:border-destructive"]');
+    expect(group).not.toBeNull();
+    expect(group!.querySelector('input[aria-invalid="true"]')).toBe(input());
   });
 
   it('standalone disabled disables the input', () => {
@@ -573,6 +596,31 @@ function Themed({ theme, children }: { theme: string; children: ReactNode }) {
   );
 }
 
+describe('Autocomplete live examples', () => {
+  it('object items: itemToString fills the input, renderItem shapes the row, onItemSelect gets the item', async () => {
+    const user = userEvent.setup();
+    render(<AutocompleteItems />);
+    await user.type(screen.getByRole('combobox', { name: 'Model' }), 'sma');
+    const option = await screen.findByRole('option');
+    expect(option).toHaveTextContent('model-smallSmall');
+    await user.click(option);
+    expect(screen.getByRole('combobox', { name: 'Model' })).toHaveValue('model-small');
+    expect(screen.getByText('Picked a Small model.')).toBeInTheDocument();
+  });
+
+  it('async: the first request fails with a Retry row that succeeds and keeps the text', async () => {
+    const user = userEvent.setup();
+    render(<AutocompleteAsync />);
+    const box = screen.getByRole('combobox', { name: 'Hostname' });
+    await user.type(box, 'db');
+    const retry = await screen.findByRole('option', { name: 'Retry' }, { timeout: 3000 });
+    expect(screen.getByText('Couldn’t load options.')).toBeInTheDocument();
+    await user.click(retry);
+    expect(await screen.findByRole('option', { name: 'db.internal' }, { timeout: 3000 })).toBeInTheDocument();
+    expect(box).toHaveValue('db');
+  });
+});
+
 describe('Autocomplete a11y', () => {
   const examples = {
     regions: AutocompleteRegions,
@@ -580,6 +628,7 @@ describe('Autocomplete a11y', () => {
     grouped: AutocompleteGrouped,
     inline: AutocompleteInline,
     states: AutocompleteStates,
+    items: AutocompleteItems,
   };
 
   for (const theme of ['dark', 'light', 'high_contrast']) {
