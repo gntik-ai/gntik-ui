@@ -608,6 +608,20 @@ describe('Autocomplete live examples', () => {
     expect(screen.getByText('Picked a Small model.')).toBeInTheDocument();
   });
 
+  it('object items: family labels and the picked message follow the locale', async () => {
+    const user = userEvent.setup();
+    render(
+      <I18nProvider locale="es">
+        <AutocompleteItems />
+      </I18nProvider>,
+    );
+    await user.type(screen.getByRole('combobox', { name: 'Modelo' }), 'sma');
+    const option = await screen.findByRole('option');
+    expect(option).toHaveTextContent('model-smallPequeño');
+    await user.click(option);
+    expect(screen.getByText('Se eligió un modelo Pequeño.')).toBeInTheDocument();
+  });
+
   it('async: the first request fails with a Retry row that succeeds and keeps the text', async () => {
     const user = userEvent.setup();
     render(<AutocompleteAsync />);

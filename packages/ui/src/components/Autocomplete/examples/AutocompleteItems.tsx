@@ -4,13 +4,13 @@ import { Autocomplete } from '../Autocomplete';
 
 interface Model {
   id: string;
-  family: string;
+  family: 'familyLarge' | 'familySmall' | 'familyMini';
 }
 
 const MODELS: Model[] = [
-  { id: 'model-large', family: 'Large' },
-  { id: 'model-small', family: 'Small' },
-  { id: 'model-mini', family: 'Mini' },
+  { id: 'model-large', family: 'familyLarge' },
+  { id: 'model-small', family: 'familySmall' },
+  { id: 'model-mini', family: 'familyMini' },
 ];
 
 /** Object items: `itemToString` fills the input, `renderItem` shapes each row and `onItemSelect` gets the full item. */
@@ -27,14 +27,14 @@ export default function AutocompleteItems() {
         renderItem={(model) => (
           <span className="flex w-full items-center justify-between gap-3">
             <span>{model.id}</span>
-            <span className="text-[12px] text-muted-foreground">{model.family}</span>
+            <span className="text-[12px] text-muted-foreground">{t(`autocomplete.examples.${model.family}`)}</span>
           </span>
         )}
         onItemSelect={setPicked}
       />
       <p className="mt-2 text-[12px] text-muted-foreground">
         {picked
-          ? t('autocomplete.examples.modelPicked', { family: picked.family })
+          ? t('autocomplete.examples.modelPicked', { family: t(`autocomplete.examples.${picked.family}`) })
           : t('autocomplete.examples.modelHint')}
       </p>
     </div>
