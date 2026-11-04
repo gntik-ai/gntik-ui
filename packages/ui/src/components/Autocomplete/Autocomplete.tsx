@@ -263,7 +263,8 @@ export function Autocomplete<Item = string>({
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key !== 'Enter' || completion === null || highlightedRef.current !== undefined || !first) return;
+    if (event.key !== 'Enter' || completion === null || highlightedRef.current !== undefined || first === undefined)
+      return;
     if (event.nativeEvent.isComposing) return;
     event.preventDefault();
     pick(first);

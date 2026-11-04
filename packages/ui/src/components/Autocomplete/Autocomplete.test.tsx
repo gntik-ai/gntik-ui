@@ -347,6 +347,40 @@ describe('Autocomplete inline completion (mode="both")', () => {
     expect(input()).toHaveFocus();
   });
 
+  it('Enter accepts a completion whose item is falsy', async () => {
+    const user = userEvent.setup();
+    const onItemSelect = vi.fn();
+    render(<Autocomplete<boolean> items={[false, true]} label="Flag" mode="both" onItemSelect={onItemSelect} />);
+    const flag = screen.getByRole<HTMLInputElement>('combobox', { name: 'Flag' });
+    await user.type(flag, 'f');
+    await waitFor(() => expect(flag).toHaveValue('false'));
+    await user.keyboard('{Enter}');
+    expect(flag).toHaveValue('false');
+    expect(onItemSelect).toHaveBeenCalledTimes(1);
+    expect(onItemSelect).toHaveBeenCalledWith(false);
+  });
+
+  it('Enter accepts a completion whose item is the number 0', async () => {
+    const user = userEvent.setup();
+    const onItemSelect = vi.fn();
+    render(
+      <Autocomplete<number>
+        items={[0, 1]}
+        itemToString={(n) => (n === 0 ? 'zero' : 'one')}
+        label="Count"
+        mode="both"
+        onItemSelect={onItemSelect}
+      />,
+    );
+    const count = screen.getByRole<HTMLInputElement>('combobox', { name: 'Count' });
+    await user.type(count, 'z');
+    await waitFor(() => expect(count).toHaveValue('zero'));
+    await user.keyboard('{Enter}');
+    expect(count).toHaveValue('zero');
+    expect(onItemSelect).toHaveBeenCalledTimes(1);
+    expect(onItemSelect).toHaveBeenCalledWith(0);
+  });
+
   it('leaves text that is not a prefix untouched', async () => {
     const user = userEvent.setup();
     render(<Harness mode="both" />);
