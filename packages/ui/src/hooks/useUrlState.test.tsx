@@ -182,7 +182,7 @@ it('replaces while typing and every consumer sees each value before the write la
   expect(new URLSearchParams(location.search).get('q')).toBe('deploy');
 });
 
-it('preserves newer input when a router acknowledges an earlier write', () => {
+it('shares updates when an adapter notifies synchronously inside setSearch', () => {
   vi.useFakeTimers();
   let search = '';
   const listeners = new Set<() => void>();
@@ -196,10 +196,7 @@ it('preserves newer input when a router acknowledges an earlier write', () => {
     },
     setSearch(next) {
       search = next;
-      setTimeout(() => {
-        search = next;
-        listeners.forEach((listener) => listener());
-      }, 80);
+      listeners.forEach((listener) => listener());
     },
   };
   const a = renderHook(() => useUrlState({ q: urlParam.string() }, { adapter }));
@@ -219,16 +216,16 @@ it('preserves newer input when a router acknowledges an earlier write', () => {
   expect(b.result.current[0].q).toBe('deploy');
 });
 
-it('recognizes a delayed router acknowledgement after a batch returns to its original search', () => {
+it('cancels pending input on external navigation after a batch returns to its original search', () => {
   vi.useFakeTimers();
   let search = '';
-  let acknowledge = () => {};
+  let navigate = () => {};
   const adapter: UrlStateAdapter = {
     getSearch: () => search,
     subscribe(listener) {
-      acknowledge = listener;
+      navigate = listener;
       return () => {
-        acknowledge = () => {};
+        navigate = () => {};
       };
     },
     setSearch(next) {
@@ -244,10 +241,10 @@ it('recognizes a delayed router acknowledgement after a batch returns to its ori
   });
   act(() => vi.advanceTimersByTime(50));
   act(() => result.current[1]({ q: 'deploy' }));
-  act(() => acknowledge());
-  expect(result.current[0].q).toBe('deploy');
+  act(() => navigate());
+  expect(result.current[0].q).toBe('api');
   act(() => vi.advanceTimersByTime(50));
-  expect(adapter.getSearch()).toBe('?q=deploy');
+  expect(adapter.getSearch()).toBe('?q=api');
 });
 
 it('restores every consumer on Back and Forward and discards a pending write on popstate', async () => {

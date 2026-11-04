@@ -2,7 +2,9 @@ import type { UrlHistoryMode } from './url-param';
 
 /**
  * Memoize adapters for their lifetime. setSearch must update getSearch synchronously.
- * Notify on navigation and commits; an older own commit must retain the latest requested search.
+ * Notify on external navigation, including pathname changes with an unchanged search.
+ * Do not notify on asynchronous acknowledgements of setSearch: retain the latest requested
+ * snapshot when older commits arrive. Synchronous setSearch notifications are supported.
  */
 export interface UrlStateAdapter {
   getSearch(): string;
@@ -32,7 +34,7 @@ const stores = new WeakMap<UrlStateAdapter, ReturnType<typeof createStore>>();
 function createStore(adapter: UrlStateAdapter) {
   const listeners = new Set<() => void>();
   let pending: string | undefined;
-  let lastWritten: string | undefined;
+  let writing = false;
   let historyMode: UrlHistoryMode = 'replace';
   let pathname: string | undefined;
   const currentPath = () =>
@@ -44,7 +46,6 @@ function createStore(adapter: UrlStateAdapter) {
     if (timer !== undefined) clearTimeout(timer);
     timer = undefined;
     pending = undefined;
-    lastWritten = undefined;
     historyMode = 'replace';
   };
   return {
@@ -57,12 +58,10 @@ function createStore(adapter: UrlStateAdapter) {
       listeners.add(listener);
       if (listeners.size === 1)
         unsubscribe = adapter.subscribe(() => {
-          // Router commits can acknowledge our previous write while newer input is pending.
-          // Browser popstate always represents navigation, even when the search is unchanged.
-          if (adapter === browserAdapter || adapter.getSearch() !== lastWritten) cancel();
-          // Consume acknowledgements once: a later notification with the same search
-          // can be navigation to another route and must cancel pending input.
-          else lastWritten = undefined;
+          // Own writes already notify below. Every other adapter event is navigation,
+          // even when the search matches an outstanding write on a different route.
+          if (writing) return;
+          cancel();
           notify();
         });
       return () => {
@@ -98,15 +97,15 @@ function createStore(adapter: UrlStateAdapter) {
             return;
           }
           const writeMode = historyMode;
-          const previousWritten = lastWritten;
-          lastWritten = next;
+          writing = true;
           try {
             adapter.setSearch(next, writeMode);
             pending = undefined;
             historyMode = 'replace';
           } catch {
-            lastWritten = previousWritten;
             /* SecurityError: retain the shared in-memory snapshot until navigation. */
+          } finally {
+            writing = false;
           }
           notify();
         },

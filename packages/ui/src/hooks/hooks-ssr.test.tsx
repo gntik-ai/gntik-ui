@@ -87,7 +87,5 @@ it('renders the URL hook defaults without a browser adapter accessing window', (
     return <span>{JSON.stringify(value)}</span>;
   }
   const html = renderToString(<Defaults />);
-  expect(html).toContain('all');
-  expect(html).toContain('1');
-  expect(html).toContain('[]');
+  expect(JSON.parse(textOf(html).replace(/&quot;/g, '"'))).toEqual({ q: 'all', page: 1, filters: [] });
 });

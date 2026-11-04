@@ -49,7 +49,7 @@ throttleMs SHALL default to 50. Values SHALL update immediately for every hook b
 
 ### Requirement: Back and forward restore the state in every hook
 
-After a history navigation or a write by another hook, every hook reading an affected key SHALL re-render with the value now in the URL. Router acknowledgements of the store's own writes SHALL preserve newer pending updates; router adapters SHALL keep the latest requested snapshot when earlier commits arrive.
+After a history navigation or a write by another hook, every hook reading an affected key SHALL re-render with the value now in the URL. Router acknowledgements of the store's own writes SHALL preserve newer pending updates; router adapters SHALL keep the latest requested snapshot when earlier commits arrive. Adapters SHALL notify subscribers on external navigation, including pathname changes with unchanged search, and SHALL NOT notify on asynchronous acknowledgements of setSearch. Synchronous notifications inside setSearch SHALL be supported; the store SHALL notify its consumers after its own writes.
 
 #### Scenario: Back
 
@@ -65,6 +65,13 @@ After a history navigation or a write by another hook, every hook reading an aff
 - **THEN** both hooks retain the newer query
 - **AND** typing deploy ends with q=deploy in both hooks and the URL
 
+#### Scenario: Overlapping router acknowledgements
+
+- **GIVEN** writes for q=a and q=ab are both in flight with 150 ms router latency
+- **AND** q=abc is pending when the second acknowledgement arrives
+- **WHEN** the router acknowledges q=ab
+- **THEN** both hooks retain q=abc and the final URL contains q=abc
+
 ### Requirement: Navigation and lifetime govern pending writes
 
 One store per adapter SHALL be held in a WeakMap. Its snapshot SHALL use pending search before adapter search. Subscribers SHALL observe writes and adapter notifications. Popstate SHALL discard pending writes. The last unsubscription SHALL cancel pending work; a browser write SHALL NOT land on a pathname different from the one where it was scheduled. Default listeners SHALL attach lazily and clean up.
@@ -74,6 +81,12 @@ One store per adapter SHALL be held in a WeakMap. Its snapshot SHALL use pending
 - **GIVEN** a pending query update
 - **WHEN** popstate arrives or the pathname changes
 - **THEN** the old update never overwrites the restored or new route
+
+#### Scenario: Different route carrying an unacknowledged search
+
+- **GIVEN** q=a is written but not yet acknowledged and q=pending is scheduled
+- **WHEN** navigation reaches another pathname carrying q=a
+- **THEN** every hook returns q=a and the pending write never changes the new route
 
 ### Requirement: A router adapter replaces the browser history
 

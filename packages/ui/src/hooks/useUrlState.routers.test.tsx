@@ -83,7 +83,11 @@ function routerRecipe(kind: 'React Router' | 'Next.js', commitMs: number, supers
   return {
     Provider,
     getSearch: () => location.search,
-    commit,
+    getPathname: () => location.pathname,
+    commit(next: typeof location) {
+      clearTimeout(navigation);
+      commit(next);
+    },
     back() {
       const previous = entries[entry - 1];
       if (previous) {
@@ -93,6 +97,76 @@ function routerRecipe(kind: 'React Router' | 'Next.js', commitMs: number, supers
     },
   };
 }
+
+it.each(['React Router', 'Next.js'] as const)(
+  '%s recipe preserves pending input across two in-flight acknowledgements',
+  (kind) => {
+    vi.useFakeTimers();
+    const router = routerRecipe(kind, 150);
+    const { result } = renderHook(
+      () => ({ a: useUrlState({ q: urlParam.string() }), b: useUrlState({ q: urlParam.string() }) }),
+      { wrapper: router.Provider },
+    );
+    act(() => result.current.a[1]({ q: 'a' }));
+    act(() => vi.advanceTimersByTime(50)); // First write commits at t=200.
+    act(() => vi.advanceTimersByTime(10));
+    act(() => result.current.a[1]({ q: 'ab' }));
+    act(() => vi.advanceTimersByTime(50)); // Second write commits at t=260.
+    act(() => vi.advanceTimersByTime(90));
+    act(() => vi.advanceTimersByTime(15));
+    act(() => result.current.a[1]({ q: 'abc' }));
+    act(() => vi.advanceTimersByTime(47)); // Second acknowledgement, before the next write.
+    expect(result.current.a[0].q).toBe('abc');
+    expect(result.current.b[0].q).toBe('abc');
+    act(() => vi.runAllTimers());
+    expect(router.getSearch()).toBe('?q=abc');
+    expect(result.current.a[0].q).toBe('abc');
+    expect(result.current.b[0].q).toBe('abc');
+  },
+);
+
+it.each(['React Router', 'Next.js'] as const)(
+  '%s recipe cancels pending input on another route with an unacknowledged search',
+  (kind) => {
+    vi.useFakeTimers();
+    const router = routerRecipe(kind, 150);
+    const { result } = renderHook(
+      () => ({ a: useUrlState({ q: urlParam.string() }), b: useUrlState({ q: urlParam.string() }) }),
+      { wrapper: router.Provider },
+    );
+    act(() => result.current.a[1]({ q: 'a' }));
+    act(() => vi.advanceTimersByTime(50));
+    act(() => result.current.a[1]({ q: 'pending' }));
+    act(() => router.commit({ pathname: '/other', search: '?q=a', hash: '', state: null }));
+    expect(result.current.a[0].q).toBe('a');
+    expect(result.current.b[0].q).toBe('a');
+    act(() => vi.runAllTimers());
+    expect(router.getPathname()).toBe('/other');
+    expect(router.getSearch()).toBe('?q=a');
+  },
+);
+
+it.each(['React Router', 'Next.js'] as const)(
+  '%s recipe preserves pending input when a no-op batch precedes an acknowledgement',
+  (kind) => {
+    vi.useFakeTimers();
+    const router = routerRecipe(kind, 150);
+    const { result } = renderHook(() => useUrlState({ q: urlParam.string() }), { wrapper: router.Provider });
+    act(() => result.current[1]({ q: 'api' }));
+    act(() => vi.advanceTimersByTime(50));
+    act(() => {
+      result.current[1]({ q: 'temporary' });
+      result.current[1]({ q: 'api' });
+    });
+    act(() => vi.advanceTimersByTime(120));
+    act(() => result.current[1]({ q: 'deploy' }));
+    act(() => vi.advanceTimersByTime(30));
+    expect(result.current[0].q).toBe('deploy');
+    act(() => vi.runAllTimers());
+    expect(router.getSearch()).toBe('?q=deploy');
+    expect(result.current[0].q).toBe('deploy');
+  },
+);
 
 it.each([
   ['React Router', 80],
