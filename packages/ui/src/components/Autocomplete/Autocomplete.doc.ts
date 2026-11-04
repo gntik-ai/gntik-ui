@@ -22,14 +22,7 @@ export const doc: ComponentDoc = {
   items={['us-east-1', 'us-west-2']}
   onItemSelect={(item) => {}}
 />`,
-  dataAttributes: [
-    ['data-disabled', 'inputGroup', 'The control cannot be changed or activated.'],
-    ['data-invalid', 'inputGroup', 'The control value is invalid.'],
-    ['data-starting-style', 'popup', 'The part is entering.'],
-    ['data-ending-style', 'popup', 'The part is leaving.'],
-    ['data-empty', 'list', 'There are no items to show.'],
-    ['data-highlighted', 'item', 'The item is highlighted for keyboard or pointer navigation.'],
-  ],
+  dataAttributes: [['data-invalid', 'invalidGroup', 'The control value is invalid.']],
   tokens: [
     'background',
     'border',
