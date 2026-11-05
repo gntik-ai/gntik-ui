@@ -70,6 +70,7 @@ export * from './components/Checkbox';
 export * from './components/ChoiceCard';
 export * from './components/CodeBlock';
 export * from './components/Collapsible';
+export * from './components/Autocomplete';
 export * from './components/Combobox';
 export * from './components/SearchableSelect';
 export * from './components/CommandPalette';

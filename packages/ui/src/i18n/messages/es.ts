@@ -12,6 +12,7 @@ import { editableTextEs } from './editable-text-messages';
 import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
 import { searchableSelectEs } from './searchable-select-messages';
+import { autocompleteEs } from './autocomplete-messages';
 import { cspEs } from './csp-messages';
 import { navigationEs } from './navigation-messages';
 import { logoCloudEs } from './logo-cloud-messages';
@@ -38,6 +39,7 @@ export const es: Messages = {
   ...motionEs,
   ...markdownEs,
   ...searchableSelectEs,
+  ...autocompleteEs,
   'footer.label': 'Pie de página',
   'footer.legal': 'Legal',
   'footer.social': 'Redes sociales',
@@ -747,8 +749,6 @@ export const es: Messages = {
   'diff.old': 'Anterior',
   'diff.new': 'Nuevo',
   // Batch C: async combobox, terminal
-  'combobox.create': 'Crear «{label}»',
-  'combobox.loadFailed': 'No se pudieron cargar las opciones.',
   'terminal.label': 'Salida de terminal',
   'terminal.toolbar': 'Acciones de terminal',
   'terminal.jumpToLatest': 'Ir a lo último',

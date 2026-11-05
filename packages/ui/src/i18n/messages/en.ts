@@ -12,6 +12,7 @@ import { editableTextEn } from './editable-text-messages';
 import { motionEn } from './motion-messages';
 import { markdownEn } from './markdown-messages';
 import { searchableSelectEn } from './searchable-select-messages';
+import { autocompleteEn } from './autocomplete-messages';
 import { cspEn } from './csp-messages';
 import { navigationEn } from './navigation-messages';
 import { logoCloudEn } from './logo-cloud-messages';
@@ -37,6 +38,7 @@ export const en = {
   ...motionEn,
   ...markdownEn,
   ...searchableSelectEn,
+  ...autocompleteEn,
   'footer.label': 'Footer',
   'footer.legal': 'Legal',
   'footer.social': 'Social links',
@@ -747,8 +749,6 @@ export const en = {
   'diff.old': 'Old',
   'diff.new': 'New',
   // Batch C: async combobox, terminal
-  'combobox.create': 'Create “{label}”',
-  'combobox.loadFailed': 'Couldn’t load options.',
   'terminal.label': 'Terminal output',
   'terminal.toolbar': 'Terminal actions',
   'terminal.jumpToLatest': 'Jump to latest',
