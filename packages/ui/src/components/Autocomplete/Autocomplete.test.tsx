@@ -219,6 +219,70 @@ describe('Autocomplete Escape', () => {
   });
 });
 
+describe('Autocomplete Escape after a pick, inside a Dialog', () => {
+  async function openDialog(user: ReturnType<typeof userEvent.setup>, props: Partial<AutocompleteProps<string>>) {
+    render(
+      <Dialog>
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent>
+          <DialogTitle>Settings</DialogTitle>
+          <Harness {...props} />
+        </DialogContent>
+      </Dialog>,
+    );
+    await user.click(screen.getByRole('button', { name: 'Open' }));
+    await user.type(await screen.findByRole('combobox', { name: 'Region' }), 'west');
+    await screen.findByRole('listbox');
+  }
+
+  const popupClosed = () => waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument());
+
+  it('after a keyboard pick and the popup closing, one Escape closes the Dialog and changes nothing', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    const onItemSelect = vi.fn();
+    await openDialog(user, { onValueChange, onItemSelect });
+    await user.keyboard('{ArrowDown}{Enter}');
+    await popupClosed();
+    expect(input()).toHaveValue('us-west-2');
+    onValueChange.mockClear();
+    onItemSelect.mockClear();
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(onValueChange).not.toHaveBeenCalled();
+    expect(onItemSelect).not.toHaveBeenCalled();
+  });
+
+  it('after a pointer pick and the popup closing, one Escape closes the Dialog and changes nothing', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    const onItemSelect = vi.fn();
+    await openDialog(user, { onValueChange, onItemSelect });
+    await user.click(await screen.findByRole('option', { name: 'us-west-2' }));
+    await popupClosed();
+    expect(input()).toHaveValue('us-west-2');
+    onValueChange.mockClear();
+    onItemSelect.mockClear();
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(onValueChange).not.toHaveBeenCalled();
+    expect(onItemSelect).not.toHaveBeenCalled();
+  });
+
+  it('with the popup open, even after a pick and more typing, Escape closes only the popup and keeps the text', async () => {
+    const user = userEvent.setup();
+    await openDialog(user, {});
+    await user.keyboard('{ArrowDown}{Enter}');
+    await popupClosed();
+    await user.type(input(), '-x');
+    await screen.findByRole('listbox');
+    await user.keyboard('{Escape}');
+    await popupClosed();
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(input()).toHaveValue('us-west-2-x');
+  });
+});
+
 describe('Autocomplete groups', () => {
   const groups = [
     { label: 'Americas', items: ['us-east-1', 'us-west-2'] },
@@ -551,6 +615,7 @@ describe('Autocomplete in a Field', () => {
     await user.type(box, 'us-w');
     await waitFor(() => expect(box).toHaveValue('us-west-2'));
     box.form!.requestSubmit();
+    expect(box).not.toHaveAttribute('name');
     expect(onSubmit.mock.calls[0]?.[0].getAll('region')).toEqual(['us-w']);
   });
 
@@ -574,26 +639,34 @@ describe('Autocomplete in a Field', () => {
     await user.type(box, 'us-w');
     await waitFor(() => expect(box).toHaveValue('us-west-2'));
     box.form!.requestSubmit();
+    expect(box).not.toHaveAttribute('name');
     expect(onSubmit.mock.calls[0]?.[0].getAll('region')).toEqual(['us-w']);
   });
 
-  it('Field validation sees the typed text, never the inline completion', async () => {
-    const user = userEvent.setup();
-    const validate = vi.fn(() => null);
-    render(
-      <Field name="region" validationMode="onChange" validate={validate}>
-        <FieldLabel>Region</FieldLabel>
-        <Autocomplete items={regions} mode="both" />
-      </Field>,
-    );
-    const box = input();
-    await user.type(box, 'us-w');
-    await waitFor(() => expect(box).toHaveValue('us-west-2'));
-    const seen = validate.mock.calls.map((call) => (call as unknown[])[0]);
-    expect(seen.length).toBeGreaterThan(0);
-    expect(seen).not.toContain('us-west-2');
-    expect(seen[seen.length - 1]).toBe('us-w');
-  });
+  it.each(['onChange', 'onBlur'] as const)(
+    'Field validation (%s) sees the typed text, never the inline completion',
+    async (validationMode) => {
+      const user = userEvent.setup();
+      const validate = vi.fn(() => null);
+      render(
+        <>
+          <Field name="region" validationMode={validationMode} validate={validate}>
+            <FieldLabel>Region</FieldLabel>
+            <Autocomplete items={regions} mode="both" />
+          </Field>
+          <button type="button">elsewhere</button>
+        </>,
+      );
+      const box = input();
+      await user.type(box, 'us-w');
+      await waitFor(() => expect(box).toHaveValue('us-west-2'));
+      await user.click(screen.getByText('elsewhere'));
+      await waitFor(() => expect(validate).toHaveBeenCalled());
+      const seen = validate.mock.calls.map((call) => (call as unknown[])[0]);
+      expect(seen).not.toContain('us-west-2');
+      expect(seen[seen.length - 1]).toBe('us-w');
+    },
+  );
 
   it('dropping the name prop stops the field from serialising', () => {
     const read = (ui: ReactNode) => {
@@ -607,6 +680,7 @@ describe('Autocomplete in a Field', () => {
     expect(data().getAll('host')).toEqual(['db.int']);
     rerender(read(<Autocomplete items={regions} label="Region" defaultValue="db.int" />));
     expect(data().getAll('host')).toEqual([]);
+    expect(screen.getByTestId('form').querySelector('[name="host"]')).toBeNull();
   });
 
   it('dropping the name inside a named Field stops the field from serialising', () => {
@@ -623,6 +697,7 @@ describe('Autocomplete in a Field', () => {
     expect(data().getAll('host')).toEqual(['db.int']);
     rerender(tree(undefined));
     expect(data().getAll('host')).toEqual([]);
+    expect(screen.getByTestId('form').querySelector('[name="host"]')).toBeNull();
   });
 
   it('a disabled named Field submits nothing', () => {
@@ -644,13 +719,57 @@ describe('Autocomplete in a Field', () => {
     expect(onSubmit.mock.calls[0]?.[0].getAll('region')).toEqual([]);
   });
 
-  it('standalone invalid sets aria-invalid and a destructive border class', () => {
-    const { container } = render(<Harness invalid />);
-    expect(input()).toHaveAttribute('aria-invalid', 'true');
-    // The destructive border is keyed on the input's aria-invalid: its group must carry that rule and contain that input.
-    const group = container.querySelector('[class*="has-[input[aria-invalid=true]]:border-destructive"]');
-    expect(group).not.toBeNull();
-    expect(group!.querySelector('input[aria-invalid="true"]')).toBe(input());
+  // vitest runs with css: false, so the compiled Tailwind rules are absent here. This stylesheet is test-authored and
+  // keyed on the rendered state (the group that holds an aria-invalid input, or carries data-invalid), so it proves
+  // the rendered element exposes that state to CSS. That the compiled CSS paints the border is proved in a real
+  // browser by apps/docs/e2e/autocomplete.a11y.spec.js, which PR CI runs.
+  const BORDER_VALID = 'rgb(0, 0, 255)';
+  const BORDER_INVALID = 'rgb(255, 0, 0)';
+  function withStateStylesheet() {
+    const style = document.createElement('style');
+    style.textContent = `
+      [role="group"] { border: 1px solid ${BORDER_VALID}; }
+      [role="group"][data-invalid], [role="group"]:has(input[aria-invalid="true"]) { border-color: ${BORDER_INVALID}; }`;
+    document.head.append(style);
+    return () => style.remove();
+  }
+  const groupOf = (box: HTMLElement) => box.closest<HTMLElement>('[role="group"]')!;
+
+  it('standalone invalid sets aria-invalid and the rendered group reads as invalid, unlike a valid one', () => {
+    const remove = withStateStylesheet();
+    render(
+      <>
+        <Autocomplete<string> invalid items={regions} label="Bad" />
+        <Autocomplete<string> items={regions} label="Good" />
+      </>,
+    );
+    const bad = screen.getByRole('combobox', { name: 'Bad' });
+    const good = screen.getByRole('combobox', { name: 'Good' });
+    expect(bad).toHaveAttribute('aria-invalid', 'true');
+    expect(getComputedStyle(groupOf(bad)).borderTopColor).toBe(BORDER_INVALID);
+    expect(getComputedStyle(groupOf(good)).borderTopColor).toBe(BORDER_VALID);
+    remove();
+  });
+
+  it('an invalid Field makes the rendered group read as invalid, unlike a valid Field', () => {
+    const remove = withStateStylesheet();
+    render(
+      <>
+        <Field invalid>
+          <FieldLabel>Bad</FieldLabel>
+          <Autocomplete<string> items={regions} />
+        </Field>
+        <Field>
+          <FieldLabel>Good</FieldLabel>
+          <Autocomplete<string> items={regions} />
+        </Field>
+      </>,
+    );
+    const bad = screen.getByRole('combobox', { name: 'Bad' });
+    const good = screen.getByRole('combobox', { name: 'Good' });
+    expect(getComputedStyle(groupOf(bad)).borderTopColor).toBe(BORDER_INVALID);
+    expect(getComputedStyle(groupOf(good)).borderTopColor).toBe(BORDER_VALID);
+    remove();
   });
 
   it('standalone disabled disables the input', () => {

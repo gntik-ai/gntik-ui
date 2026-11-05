@@ -232,8 +232,12 @@ export function Autocomplete<Item = string>({
   };
 
   const handleValueChange = (next: string, details: BaseAutocomplete.Root.ChangeEventDetails) => {
-    // Base clears the input on Escape; a free-text field keeps what was typed.
-    if (details.reason === 'escape-key') return;
+    // Base clears the input on Escape; a free-text field keeps what was typed. Base also swallows Escape on a
+    // closed popup once a suggestion was picked, so let it reach an enclosing Dialog.
+    if (details.reason === 'escape-key') {
+      details.allowPropagation();
+      return;
+    }
     if (details.reason === 'item-press') {
       const item = itemOfPress(details.event, next);
       if (item !== undefined && isSpecialItem(item)) {

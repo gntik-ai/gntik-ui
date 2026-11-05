@@ -10,6 +10,7 @@
 
 - [x] 2.1 Autocomplete.test.tsx: free text on Tab and blur, form submit, keyboard and pointer picks, Escape (including an enclosing Dialog), groups, limit in en and es, inline completion, clearable, Field wiring, every doc keyboard row, axe on the examples in three themes.
 - [x] 2.2 Autocomplete.async.test.tsx: debounce, abort of stale requests, loading and error status, Retry, limit, stale results never complete.
+- [x] 2.3 Escape after a keyboard or pointer pick reaches an enclosing Dialog (`allowPropagation`); the invalid test reads the computed border instead of a class; apps/docs/e2e/autocomplete.a11y.spec.js checks the painted border in dark, light and high_contrast.
 
 ## 3. Docs and release
 

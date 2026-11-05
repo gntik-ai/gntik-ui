@@ -32,6 +32,25 @@ Escape SHALL close an open popup and keep the text; on a closed popup it MUST ke
 - **THEN** the first press closes the popup and the second closes the Dialog
 - **AND** the text is `west` throughout
 
+#### Scenario: Escape after a keyboard pick
+
+- **GIVEN** the field is inside a Dialog and the user picked a suggestion with ArrowDown and Enter
+- **WHEN** the popup has closed and the user presses Escape once
+- **THEN** the Dialog closes
+- **AND** the input held the picked text until then, and that press caused no `onValueChange` or `onItemSelect` call
+
+#### Scenario: Escape after a pointer pick
+
+- **GIVEN** the field is inside a Dialog and the user clicked a suggestion
+- **WHEN** the popup has closed and the user presses Escape once
+- **THEN** the Dialog closes with the same outcome as after a keyboard pick
+
+#### Scenario: Escape while the popup is open
+
+- **GIVEN** the popup is open, including after a pick followed by more typing
+- **WHEN** the user presses Escape
+- **THEN** only the popup closes, the Dialog stays open and the text is unchanged
+
 ### Requirement: Picking a suggestion fills the input and reports the item
 
 When the user picks a suggestion with Enter, a click or a press-drag-release, Autocomplete SHALL set the input text to `itemToString(item)`, call `onItemSelect` exactly once with the full item, close the popup and keep focus in the input.
@@ -102,7 +121,7 @@ With `mode` `both`, Autocomplete SHALL, only after an inserted character outside
 
 ### Requirement: Autocomplete takes label, description, invalid and disabled from Field
 
-Inside `Field`, Autocomplete SHALL be named by `FieldLabel`, described by `FieldDescription` and `FieldError`, set `aria-invalid` when the field is invalid, and disable the input and its clear button when the field is disabled. Standalone `invalid` SHALL set `aria-invalid` and a visible destructive border.
+Inside `Field`, Autocomplete SHALL be named by `FieldLabel`, described by `FieldDescription` and `FieldError`, set `aria-invalid` when the field is invalid, and disable the input and its clear button when the field is disabled. Standalone `invalid` SHALL set `aria-invalid` and a visible destructive border, checked on the rendered element: the computed border colour of an invalid group differs from a valid one, standalone and inside an invalid Field, in every theme.
 
 #### Scenario: Invalid field
 
@@ -110,6 +129,22 @@ Inside `Field`, Autocomplete SHALL be named by `FieldLabel`, described by `Field
 - **WHEN** the Autocomplete renders
 - **THEN** the input is named "Model id" and described by the description
 - **AND** the input has `aria-invalid="true"`
+
+### Requirement: The form value is the typed text and only the hidden input is named
+
+With `mode` `both`, `Field` validation (`onChange` and `onBlur`) and `FormData` SHALL see the typed text (for example `us-w`) and never the displayed completion. The visible input MUST NOT carry a `name`, with or without the `name` prop inside a named Field, so `FormData.getAll(name)` has exactly one entry; a disabled Field submits none. Rendering without `name` after rendering with it, or a named Field without its name, SHALL leave no element with that name and `FormData.getAll` empty once effects flush.
+
+#### Scenario: Typed text in the form
+
+- **GIVEN** `mode` is `both` inside a named Field
+- **WHEN** the user types `us-w` and the input shows `us-west-2`
+- **THEN** `FormData.getAll(name)` is `["us-w"]` and validation never received `us-west-2`
+
+#### Scenario: Clearing the name
+
+- **GIVEN** the field was rendered with `name` `host`
+- **WHEN** it is rendered again without `name`
+- **THEN** `FormData.getAll("host")` is empty and no element in the form keeps that name
 
 ### Requirement: Clearable
 

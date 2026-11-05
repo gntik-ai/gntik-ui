@@ -3098,7 +3098,7 @@ Keyboard:
 | ArrowDown / ArrowUp | Moves the highlight between suggestions |
 | Enter on a highlighted option | Fills the input with the option, reports it with onItemSelect and closes |
 | Enter with nothing highlighted | Keeps the typed text and submits the owning form |
-| Escape | Closes the popup and keeps the text; with the popup closed it never clears the text |
+| Escape | Closes the popup and keeps the text; with the popup closed it never clears the text and reaches an enclosing Dialog |
 | Tab | Leaves the field with the typed text as the value |
 | Enter (mode both) | Accepts the inline completion and reports its item with onItemSelect |
 
