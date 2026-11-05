@@ -577,6 +577,54 @@ describe('Autocomplete in a Field', () => {
     expect(onSubmit.mock.calls[0]?.[0].getAll('region')).toEqual(['us-w']);
   });
 
+  it('Field validation sees the typed text, never the inline completion', async () => {
+    const user = userEvent.setup();
+    const validate = vi.fn(() => null);
+    render(
+      <Field name="region" validationMode="onChange" validate={validate}>
+        <FieldLabel>Region</FieldLabel>
+        <Autocomplete items={regions} mode="both" />
+      </Field>,
+    );
+    const box = input();
+    await user.type(box, 'us-w');
+    await waitFor(() => expect(box).toHaveValue('us-west-2'));
+    const seen = validate.mock.calls.map((call) => (call as unknown[])[0]);
+    expect(seen.length).toBeGreaterThan(0);
+    expect(seen).not.toContain('us-west-2');
+    expect(seen[seen.length - 1]).toBe('us-w');
+  });
+
+  it('dropping the name prop stops the field from serialising', () => {
+    const read = (ui: ReactNode) => {
+      const form = <form data-testid="form">{ui}</form>;
+      return form;
+    };
+    const { rerender } = render(
+      read(<Autocomplete items={regions} name="host" label="Region" defaultValue="db.int" />),
+    );
+    const data = () => new FormData(screen.getByTestId<HTMLFormElement>('form'));
+    expect(data().getAll('host')).toEqual(['db.int']);
+    rerender(read(<Autocomplete items={regions} label="Region" defaultValue="db.int" />));
+    expect(data().getAll('host')).toEqual([]);
+  });
+
+  it('dropping the name inside a named Field stops the field from serialising', () => {
+    const tree = (name?: string) => (
+      <form data-testid="form">
+        <Field name={name}>
+          <FieldLabel>Region</FieldLabel>
+          <Autocomplete items={regions} defaultValue="db.int" />
+        </Field>
+      </form>
+    );
+    const { rerender } = render(tree('host'));
+    const data = () => new FormData(screen.getByTestId<HTMLFormElement>('form'));
+    expect(data().getAll('host')).toEqual(['db.int']);
+    rerender(tree(undefined));
+    expect(data().getAll('host')).toEqual([]);
+  });
+
   it('a disabled named Field submits nothing', () => {
     const onSubmit = vi.fn();
     render(

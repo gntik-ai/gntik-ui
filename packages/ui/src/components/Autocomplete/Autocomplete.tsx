@@ -1,6 +1,14 @@
 import { Autocomplete as BaseAutocomplete } from '@base-ui/react/autocomplete';
 import { RotateCw, X } from 'lucide-react';
-import { useId, useLayoutEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import {
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ComponentPropsWithRef,
+  type KeyboardEvent,
+  type ReactNode,
+} from 'react';
 import { usePortalContainer } from '../../utils/portal';
 import { useI18n, usePortalDir } from '../../i18n/I18nProvider';
 import { useFieldVariant } from '../../field-variant/field-variant-context';
@@ -199,32 +207,10 @@ export function Autocomplete<Item = string>({
     firstText.length > value.length &&
     startsWithText(firstText, value);
   const completion = completing ? value + firstText.slice(value.length) : null;
-  const displayed = completion ?? value;
 
   useLayoutEffect(() => {
     if (completion !== null) inputRef.current?.setSelectionRange(value.length, completion.length);
   }, [completion, value.length]);
-
-  // The input can show an inline completion and Base names it after the enclosing Field, whenever the Field
-  // registers. The native form value is the committed text, on a hidden input, so the visible input is unnamed
-  // as soon as its name is read.
-  const [formName, setFormName] = useState(name);
-  const [inputDisabled, setInputDisabled] = useState(false);
-  useLayoutEffect(() => {
-    const input = inputRef.current;
-    if (!input) return;
-    const sync = () => {
-      if (input.name) {
-        setFormName(input.name);
-        input.name = '';
-      }
-      setInputDisabled(input.disabled);
-    };
-    sync();
-    const observer = new MutationObserver(sync);
-    observer.observe(input, { attributes: true, attributeFilter: ['name', 'disabled'] });
-    return () => observer.disconnect();
-  }, []);
 
   const commit = (next: string) => {
     if (valueProp === undefined) setInner(next);
@@ -321,12 +307,10 @@ export function Autocomplete<Item = string>({
           {label}
         </label>
       )}
-      {/* The native form value is the committed text: the input itself can show an inline completion. */}
-      {formName && <input type="hidden" name={formName} value={value} disabled={disabled || inputDisabled} />}
       <BaseAutocomplete.Root
         items={entries}
         filter={null}
-        value={displayed}
+        value={value}
         onValueChange={handleValueChange}
         itemToStringValue={(item: unknown) => toText(item as Item)}
         onItemHighlighted={(item: unknown) => {
@@ -356,6 +340,18 @@ export function Autocomplete<Item = string>({
             placeholder={placeholder}
             className={cn(v.input(), extra.input())}
             onKeyDown={onKeyDown}
+            // Base keeps the typed text (so Field validation and onValueChange see it); only the DOM input shows the
+            // inline completion, and the native form value is the typed text on a hidden input, as Base names the
+            // visible one after the enclosing Field or the name prop.
+            render={(inputProps) => {
+              const { name: formName, ...rest } = inputProps as ComponentPropsWithRef<'input'>;
+              return (
+                <>
+                  <input {...rest} value={completion !== null && rest.value === value ? completion : rest.value} />
+                  {formName && <input type="hidden" name={formName} value={value} disabled={rest.disabled} />}
+                </>
+              );
+            }}
             onBlur={() => setCompleteFor(null)}
           />
           {clearable && value !== '' && (
