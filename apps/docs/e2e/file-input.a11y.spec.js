@@ -94,6 +94,16 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     };
     expect(await dialog.evaluate(scan)).toEqual([]);
     await dialog.getByRole('button', { name: 'Close', exact: true }).click();
+    await component.getByRole('button', { name: 'Import in a popover' }).click();
+    const popover = page.getByRole('dialog', { name: 'Import workflow' });
+    await pick(page, popover.getByRole('button', { name: 'Import workflow', exact: true }), {
+      ...workflow,
+      name: 'popover-flow.yaml',
+    });
+    await expect(popover).toBeVisible();
+    await expect(component.getByRole('status').filter({ hasText: 'popover-flow.yaml' })).toBeVisible();
+    expect(await popover.evaluate(scan)).toEqual([]);
+    await page.keyboard.press('Escape');
     expect(await component.evaluate(scan)).toEqual([]);
   });
 }

@@ -10,6 +10,7 @@
 ## 2. Tests
 
 - [x] 2.1 Add field value, rejection, keyboard, clear, disabled/invalid, locale, named-input synchronization and reset tests.
+- [x] 2.5 Cover real picker clicks in Popovers and modal/non-modal Dialogs, including callback delivery, cancellation, outside-block input scope and cleanup. Cover both consumer blocks in Popovers and add a localized live Popover preview with browser coverage for PR CI.
 - [x] 2.2 Add trigger and hook keyboard, attributes, cancellation, reset, unmount and SSR tests.
 - [x] 2.3 Add consumer picker scope/hidden-action tests; retain other existing assertions.
 - [x] 2.4 Add examples with axe checks in three themes and native FormData/modal browser coverage. Correct the form locators and cover real reset-button clicks with controlled values, unchanged/changed defaultValue, and React-prevented reset. Local browser execution is skipped: server listen and Chromium launch are denied by the sandbox; PR CI must run the focused spec.

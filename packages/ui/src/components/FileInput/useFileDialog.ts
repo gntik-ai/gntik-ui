@@ -55,10 +55,16 @@ export function useFileDialog({
   }, [accept, multiple, directory, capture, disabled, container]);
   return {
     files,
-    open() {
-      if (disabled || !input.current) return;
-      input.current.value = '';
-      input.current.click();
+    open(event?: { currentTarget: EventTarget | null }) {
+      const picker = input.current;
+      if (disabled || !picker) return;
+      const source = event?.currentTarget ?? picker.ownerDocument.activeElement;
+      // A body-mounted picker is an outside press for non-modal overlays. Keep it
+      // outside the control/block, but inside the activating dialog's surface.
+      const surface = source instanceof Element ? source.closest('[role="dialog"], [role="alertdialog"]') : null;
+      (surface ?? container ?? picker.ownerDocument.body).append(picker);
+      picker.value = '';
+      picker.click();
     },
     reset() {
       if (input.current) input.current.value = '';

@@ -119,7 +119,7 @@ export function FileInput(props: FileInputProps) {
               <span id={valueId} className={s.value()}>
                 {files.length ? (
                   props.renderValue ? (
-                    props.renderValue(files)
+                    <span className={s.name()}>{props.renderValue(files)}</span>
                   ) : files.length > 1 ? (
                     t('fileInput.count', { count: files.length })
                   ) : (

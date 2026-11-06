@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useI18n } from '../../../i18n';
 import { Button } from '../../Button';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../../Dialog';
+import { Popover, PopoverContent, PopoverTrigger } from '../../Popover';
 import { FileTrigger } from '../FileTrigger';
 
 export default function FileInputTrigger() {
@@ -28,6 +29,14 @@ export default function FileInputTrigger() {
           </FileTrigger>
         </DialogContent>
       </Dialog>
+      <Popover>
+        <PopoverTrigger render={<Button variant="secondary" />}>{t('fileInput.example.popover')}</PopoverTrigger>
+        <PopoverContent aria-label={t('fileInput.example.import')}>
+          <FileTrigger accept=".yaml" onSelect={setFiles}>
+            {t('fileInput.example.import')}
+          </FileTrigger>
+        </PopoverContent>
+      </Popover>
       <span role="status" className="text-sm text-muted-foreground">
         {files.map((file) => file.name).join(', ')}
       </span>

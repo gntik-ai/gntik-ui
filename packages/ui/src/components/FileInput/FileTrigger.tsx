@@ -34,11 +34,11 @@ export function FileTrigger({
       {...props}
       nativeButton={nativeButton}
       render={render ?? <Button variant="secondary" />}
-      type="button"
+      type={nativeButton ? 'button' : undefined}
       disabled={disabled}
       onClick={(event) => {
         onClick?.(event);
-        if (!event.defaultPrevented) open();
+        if (!event.defaultPrevented) open(event);
       }}
     >
       {children ?? (render ? undefined : t(multiple ? 'fileInput.chooseMany' : 'fileInput.choose'))}

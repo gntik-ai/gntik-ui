@@ -28,6 +28,10 @@ it.each(['dark', 'light', 'high_contrast'])(
         await userEvent.click(screen.getByRole('button', { name: 'Import in a dialog' }));
         expect(screen.getByRole('dialog')).toBeInTheDocument();
         await expectNoAxeViolations();
+        await userEvent.click(screen.getByRole('button', { name: 'Close' }));
+        await userEvent.click(screen.getByRole('button', { name: 'Import in a popover' }));
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+        await expectNoAxeViolations();
       }
       view.unmount();
     }

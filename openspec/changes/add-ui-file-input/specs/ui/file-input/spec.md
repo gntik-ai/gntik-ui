@@ -77,6 +77,13 @@ FileTrigger SHALL support click, Enter and Space, custom render elements, onSele
 - **THEN** its attached picker opens
 - **AND** server rendering useFileDialog touches no document
 
+#### Scenario: Selection in a non-modal overlay
+
+- **GIVEN** FileInput, FileTrigger or useFileDialog is used inside a Popover or non-modal Dialog
+- **WHEN** its trigger opens the picker and the user selects a file
+- **THEN** the overlay stays open and the selection callback receives the file
+- **AND** the picker stays outside the control or block container, inside the activating dialog surface
+
 ### Requirement: Consumer actions own their picker lifecycle
 
 ProfileHeader and ChatComposer SHALL contain no input of type file. Hidden avatar or attachment actions MUST leave no picker in the document. Existing validation, accept, multiple, accessible names and keyboard behavior MUST be preserved.

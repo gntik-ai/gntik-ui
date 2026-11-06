@@ -1,6 +1,33 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FileTrigger } from './FileTrigger';
+import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
+
+it.each(['click', 'Enter', 'Space'])(
+  'keeps a Popover open and delivers files on %s with a real picker click',
+  async (key) => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    render(
+      <Popover defaultOpen>
+        <PopoverTrigger>Open import</PopoverTrigger>
+        <PopoverContent aria-label="Import files">
+          <FileTrigger onSelect={onSelect}>Import workflow</FileTrigger>
+        </PopoverContent>
+      </Popover>,
+    );
+    await waitFor(() => expect(screen.getByRole('dialog', { name: 'Import files' })).toBeVisible());
+    const input = document.querySelector<HTMLInputElement>('input[type=file]')!;
+    const trigger = screen.getByRole('button', { name: 'Import workflow' });
+    trigger.focus();
+    if (key === 'click') fireEvent.click(trigger);
+    else await user.keyboard(key === 'Enter' ? '{Enter}' : ' ');
+    const file = new File(['workflow'], 'flow.yaml');
+    fireEvent.change(input, { target: { files: [file] } });
+    expect(screen.getByRole('dialog', { name: 'Import files' })).toBeVisible();
+    expect(onSelect).toHaveBeenCalledExactlyOnceWith([file]);
+  },
+);
 
 it.each(['click', 'Enter', 'Space'])('FileTrigger opens on %s without submitting its form', async (key) => {
   const user = userEvent.setup();
@@ -47,6 +74,7 @@ it.each(['click', 'Enter', 'Space'])('supports a non-button render element on %s
   const user = userEvent.setup();
   render(<FileTrigger render={<span aria-label="Import" />} />);
   const trigger = screen.getByRole('button', { name: 'Import' });
+  expect(trigger).not.toHaveAttribute('type');
   const input = document.querySelector<HTMLInputElement>('input[type=file]')!;
   const click = vi.spyOn(input, 'click');
   await user.tab();
