@@ -1,6 +1,6 @@
-import { Avatar, Badge, Button, IconButton, cn } from '@gntik-ai/ui';
+import { Avatar, Badge, Button, IconButton, FileTrigger, cn } from '@gntik-ai/ui';
 import { Camera, Pencil } from '@gntik-ai/icons';
-import { useRef, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { profile as defaultProfile, type Profile } from './fixtures';
 
 export type { Profile, ProfileMetaItem } from './fixtures';
@@ -26,7 +26,6 @@ export function ProfileHeader({
   headingLevel: Heading = 'h1',
   className,
 }: ProfileHeaderProps) {
-  const fileRef = useRef<HTMLInputElement | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
   const pick = (file: File) => {
@@ -45,27 +44,21 @@ export function ProfileHeader({
       <div className="relative w-fit shrink-0">
         <Avatar size="xl" name={profile.name} src={preview ?? profile.avatarUrl} />
         {onAvatarChange && (
-          <>
-            <IconButton
-              icon={Camera}
-              label="Change avatar"
-              size="sm"
-              variant="secondary"
-              className="absolute -end-1 -bottom-1 rounded-full"
-              onClick={() => fileRef.current?.click()}
-            />
-            <input
-              ref={fileRef}
-              type="file"
-              accept="image/*"
-              hidden
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) pick(file);
-                e.target.value = '';
-              }}
-            />
-          </>
+          <FileTrigger
+            accept="image/*"
+            onSelect={(files) => {
+              if (files[0]) pick(files[0]);
+            }}
+            render={
+              <IconButton
+                icon={Camera}
+                label="Change avatar"
+                size="sm"
+                variant="secondary"
+                className="absolute -end-1 -bottom-1 rounded-full"
+              />
+            }
+          />
         )}
       </div>
       <div className="min-w-0 flex-1">

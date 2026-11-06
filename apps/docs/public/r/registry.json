@@ -418,6 +418,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -610,6 +615,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -1127,6 +1137,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -1337,6 +1352,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -1526,6 +1546,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -1718,6 +1743,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -2021,6 +2051,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -2212,6 +2247,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -2533,6 +2573,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -2710,6 +2755,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -2962,6 +3012,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -3686,6 +3741,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -4057,6 +4117,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -4259,6 +4324,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -4757,6 +4827,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -5252,6 +5327,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -5693,6 +5773,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -5912,6 +5997,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -6147,6 +6237,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -6371,6 +6466,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -6638,6 +6738,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -6835,6 +6940,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -7055,6 +7165,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -7281,6 +7396,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -7466,6 +7586,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -7670,6 +7795,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -7869,6 +7999,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -8327,6 +8462,216 @@
           "path": "packages/ui/src/doc.ts",
           "type": "registry:ui",
           "target": "components/doc.ts"
+        }
+      ]
+    },
+    {
+      "name": "file-input",
+      "type": "registry:ui",
+      "title": "FileInput",
+      "description": "Compact file selection with a file icon, name and localized size, or a count for several files. clearable defaults to false; renderValue replaces the single-file or count display. accept and maxSize use shared file validation; mixed picks keep accepted files and report rejected files through onReject. Field supplies the label, disabled/invalid state and descriptions (use FieldError match for an externally invalid field). FileTrigger opens a picker from a render element, defaulting to a secondary Button; onSelect receives File[]. useFileDialog({ accept, multiple, directory, capture, disabled, onChange }) returns { open, reset, files }, renders nothing and creates its attached hidden input only in an effect. reset clears hook files without firing onChange. Picker inputs are unnamed, reset before opening and removed on unmount; cancellation preserves values. With name, FileInput maintains a separate form input. Native FormData submission requires constructible DataTransfer and writable input.files; without them controlled display and callbacks still work, but use the value to submit files yourself. Form reset restores defaultValue for uncontrolled fields and re-syncs a controlled value. directory maps to webkitdirectory; capture is user or environment. These picker helpers live with FileInput, outside the hooks entry point. ProfileHeader and ChatComposer use FileTrigger, so their picker is attached outside the block container and exists only while its action is shown.",
+      "author": "gntik-ai",
+      "dependencies": [
+        "@base-ui/react@^1.9.0",
+        "lucide-react@^1.48.0"
+      ],
+      "registryDependencies": [
+        "https://ui.gntik.ai/r/gntik-tokens.json",
+        "https://ui.gntik.ai/r/button.json",
+        "https://ui.gntik.ai/r/input.json",
+        "https://ui.gntik.ai/r/thumbnail.json",
+        "https://ui.gntik.ai/r/ui-utils.json"
+      ],
+      "categories": [
+        "component",
+        "Forms"
+      ],
+      "meta": {
+        "kind": "component",
+        "package": "@gntik-ai/ui",
+        "status": "beta",
+        "source": "packages/ui/src/components/FileInput/FileInput.doc.ts"
+      },
+      "files": [
+        {
+          "path": "packages/ui/src/components/FileInput/FileInput.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/file-input/FileInput.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/FileInput/FileTrigger.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/file-input/FileTrigger.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/FileInput/file-input.variants.ts",
+          "type": "registry:ui",
+          "target": "components/ui/file-input/file-input.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/FileInput/index.ts",
+          "type": "registry:ui",
+          "target": "components/ui/file-input/index.ts"
+        },
+        {
+          "path": "packages/ui/src/components/FileInput/useFileDialog.ts",
+          "type": "registry:ui",
+          "target": "components/ui/file-input/useFileDialog.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "type": "registry:ui",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/time-zone.ts"
+        },
+        {
+          "path": "packages/ui/src/components/FileInput/FileInput.doc.ts",
+          "type": "registry:ui",
+          "target": "components/ui/file-input/FileInput.doc.ts"
         }
       ]
     },
@@ -8973,6 +9318,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -9260,6 +9610,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -9581,6 +9936,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -9874,6 +10234,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -10066,6 +10431,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -10256,6 +10626,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -10459,6 +10834,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -10700,6 +11080,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -10977,6 +11362,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -11167,6 +11557,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -11366,6 +11761,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -11857,6 +12257,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -12089,6 +12494,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -12596,6 +13006,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -12990,6 +13405,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -13188,6 +13608,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -13520,6 +13945,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -13717,6 +14147,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -13906,6 +14341,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -14105,6 +14545,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -14279,6 +14724,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -14581,6 +15031,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -14811,6 +15266,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -15147,6 +15607,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -15333,6 +15798,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -15619,6 +16089,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -15820,6 +16295,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -16083,6 +16563,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -16522,6 +17007,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -17001,6 +17491,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -17537,6 +18032,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -17883,6 +18383,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -18079,6 +18584,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -18366,6 +18876,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -18796,6 +19311,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -19341,6 +19861,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -19934,6 +20459,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -20217,6 +20747,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -20389,6 +20924,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -20715,6 +21255,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -21119,6 +21664,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -21443,6 +21993,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -21857,6 +22412,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -22046,6 +22606,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -22249,6 +22814,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -22609,6 +23179,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -22799,6 +23374,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -23011,6 +23591,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -23247,6 +23832,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -23444,6 +24034,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -23635,6 +24230,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -23873,6 +24473,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -24118,6 +24723,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -24427,6 +25037,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -24620,6 +25235,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -24861,6 +25481,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -25063,6 +25688,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -25395,6 +26025,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -25566,6 +26201,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -26027,6 +26667,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -26301,6 +26946,11 @@
           "target": "components/i18n/messages/field-variant-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/hook-example-messages.ts"
@@ -26490,6 +27140,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -26731,6 +27386,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -26993,6 +27653,11 @@
           "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",

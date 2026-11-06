@@ -1,3 +1,4 @@
+import { fileInputEs } from './file-input-messages';
 import { fieldSizesEs } from './field-size-messages';
 import { treeListEs } from './tree-list-messages';
 import { toolCallEs } from './tool-call-es';
@@ -19,6 +20,7 @@ import { logoCloudEs } from './logo-cloud-messages';
 import { hookExampleEs } from './hook-example-messages';
 import type { Messages } from './en';
 export const es: Messages = {
+  ...fileInputEs,
   ...fieldSizesEs,
   ...toolCallEs,
   ...treeListEs,
@@ -546,8 +548,6 @@ export const es: Messages = {
   'upload.label': 'Subir archivos',
   'upload.files': 'Archivos',
   'upload.failed': 'Error al subir',
-  'upload.typeRejected': 'Tipo de archivo no admitido',
-  'upload.tooLarge': 'Supera el límite de {size}',
   'upload.drop': 'Arrastra archivos aquí o',
   'upload.uploading': 'Subiendo {name}',
   'upload.notUploaded': '{error} · sin subir',

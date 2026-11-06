@@ -15,10 +15,10 @@ describe('ProfileHeader', () => {
   it('edits and changes the avatar', async () => {
     const onEdit = vi.fn();
     const onAvatarChange = vi.fn();
-    const { container } = render(<ProfileHeader onEdit={onEdit} onAvatarChange={onAvatarChange} />);
+    render(<ProfileHeader onEdit={onEdit} onAvatarChange={onAvatarChange} />);
     await userEvent.click(screen.getByRole('button', { name: 'Edit profile' }));
     expect(onEdit).toHaveBeenCalledOnce();
-    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     const click = vi.spyOn(input, 'click');
     await userEvent.click(screen.getByRole('button', { name: 'Change avatar' }));
     expect(click).toHaveBeenCalled();

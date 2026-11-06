@@ -34,8 +34,8 @@ describe('ChatDemo', () => {
   });
 
   it('sends attachments with the message and rates the reply', () => {
-    const { container } = render(<ChatDemo />);
-    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+    render(<ChatDemo />);
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     const file = new File(['a,b'], 'data.csv', { type: 'text/csv' });
     fireEvent.change(input, { target: { files: [file] } });
     expect(screen.getByRole('list', { name: 'Attachments' })).toHaveTextContent('data.csv');

@@ -1,3 +1,4 @@
+import { fileInputEn } from './file-input-messages';
 import { fieldSizesEn } from './field-size-messages';
 import { treeListEn } from './tree-list-messages';
 import { toolCallEn } from './tool-call-en';
@@ -18,6 +19,7 @@ import { navigationEn } from './navigation-messages';
 import { logoCloudEn } from './logo-cloud-messages';
 import { hookExampleEn } from './hook-example-messages';
 export const en = {
+  ...fileInputEn,
   ...fieldSizesEn,
   ...toolCallEn,
   ...treeListEn,
@@ -546,8 +548,6 @@ export const en = {
   'upload.label': 'Upload files',
   'upload.files': 'Files',
   'upload.failed': 'Upload failed',
-  'upload.typeRejected': 'File type not accepted',
-  'upload.tooLarge': 'Exceeds the {size} limit',
   'upload.drop': 'Drag files here or',
   'upload.uploading': 'Uploading {name}',
   'upload.notUploaded': '{error} · not uploaded',
