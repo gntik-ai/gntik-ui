@@ -65,10 +65,11 @@ export function FileInput(props: FileInputProps) {
     const form = control.current?.form;
     if (!form) return;
     const reset = (event: Event) => {
-      // The native reset clears files after dispatch; restore them after that default action.
-      queueMicrotask(() => {
+      // A trusted event can drain microtasks before bubbling or the native reset finishes.
+      // Wait for both so preventDefault is final and unchanged values are restored too.
+      setTimeout(() => {
         if (!event.defaultPrevented) resetForm();
-      });
+      }, 0);
     };
     form.addEventListener('reset', reset);
     return () => form.removeEventListener('reset', reset);

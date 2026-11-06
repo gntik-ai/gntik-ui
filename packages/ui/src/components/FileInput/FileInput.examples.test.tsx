@@ -7,6 +7,7 @@ import FileInputMultiple from './examples/FileInputMultiple';
 import FileInputStates from './examples/FileInputStates';
 import FileInputTrigger from './examples/FileInputTrigger';
 import FileInputDialogHook from './examples/FileInputDialogHook';
+import FileInputReset from './examples/FileInputReset';
 
 it.each(['dark', 'light', 'high_contrast'])(
   'examples are axe clean in %s, including a modal trigger',
@@ -19,6 +20,7 @@ it.each(['dark', 'light', 'high_contrast'])(
       FileInputStates,
       FileInputTrigger,
       FileInputDialogHook,
+      FileInputReset,
     ]) {
       const view = render(<Example />);
       await expectNoAxeViolations();

@@ -28,7 +28,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     const component = page.locator('#ui-FileInput');
     await expect(component).toBeVisible();
     const control = component.getByRole('button', { name: /Service account key/ });
-    const form = component.locator('form').filter({ has: control });
+    const form = control.locator('xpath=ancestor::form');
     await pick(page, control, json);
     await expect(control).toHaveAccessibleName(/Service account key.*sa-prod.json/);
     await expect(control).toContainText('2.3 kB');
@@ -38,7 +38,7 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
     const [chooser] = await Promise.all([page.waitForEvent('filechooser'), control.click()]);
     expect(await submitted(form, 'credentials')).toEqual({ name: 'sa-prod.json', size: 2345 });
     await chooser.setFiles([]);
-    await page.locator('input[type=file]:not([name])').first().dispatchEvent('cancel');
+    await chooser.element().dispatchEvent('cancel');
     expect(await submitted(form, 'credentials')).toEqual({ name: 'sa-prod.json', size: 2345 });
     await form.getByRole('button', { name: 'Clear file' }).click();
     await expect(control).toBeFocused();
@@ -51,11 +51,31 @@ for (const theme of ['dark', 'light', 'high_contrast']) {
 
     // Controlled form reset reassigns the parent's value after the browser clears input.files.
     const certificate = component.getByRole('button', { name: /^Certificate / });
-    const certificateForm = component.locator('form').filter({ has: certificate });
+    const certificateForm = certificate.locator('xpath=ancestor::form');
     await pick(page, certificate, { name: 'new.pem', mimeType: '', buffer: Buffer.from('certificate') });
     await certificateForm.getByRole('button', { name: 'Reset files' }).click();
     await expect(certificate).toContainText('new.pem');
-    expect(await submitted(certificateForm, 'certificate')).toEqual({ name: 'new.pem', size: 11 });
+    await expect.poll(() => submitted(certificateForm, 'certificate')).toEqual({ name: 'new.pem', size: 11 });
+
+    const defaultCertificate = component.getByRole('button', { name: /^Default certificate / });
+    const defaultForm = defaultCertificate.locator('xpath=ancestor::form');
+    const resetDefault = defaultForm.getByRole('button', { name: 'Reset files' });
+    // Reset must reassign files even when defaultValue (and therefore React state) is unchanged.
+    await resetDefault.click();
+    await expect(defaultCertificate).toContainText('default.pem');
+    await expect.poll(() => submitted(defaultForm, 'defaultCertificate')).toEqual({ name: 'default.pem', size: 11 });
+    const replacement = { name: 'replacement.pem', mimeType: '', buffer: Buffer.from('new certificate') };
+    await pick(page, defaultCertificate, replacement);
+    await resetDefault.click();
+    await expect(defaultCertificate).toContainText('default.pem');
+    await expect.poll(() => submitted(defaultForm, 'defaultCertificate')).toEqual({ name: 'default.pem', size: 11 });
+
+    // The React onReset handler runs after the control's native listener. Its veto must win.
+    await pick(page, defaultCertificate, replacement);
+    await component.getByRole('checkbox', { name: 'Keep selection on reset' }).check();
+    await resetDefault.click();
+    await expect(defaultCertificate).toContainText('replacement.pem');
+    expect(await submitted(defaultForm, 'defaultCertificate')).toEqual({ name: 'replacement.pem', size: 15 });
 
     const workflow = { name: 'flow.yaml', mimeType: '', buffer: Buffer.from('steps: []') };
     await pick(page, component.getByRole('button', { name: 'Import workflow', exact: true }), workflow);

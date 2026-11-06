@@ -1,11 +1,11 @@
 export const fileInputEn = {
-  'upload.typeRejected': 'File type not accepted',
-  'upload.tooLarge': 'Exceeds the {size} limit',
   'fileInput.example.serviceAccount': 'Service account key',
   'fileInput.example.certificate': 'Certificate',
   'fileInput.example.multiple': 'Attachments',
   'fileInput.example.customValue': 'Selected: {names}',
   'fileInput.example.reset': 'Reset files',
+  'fileInput.example.defaultValue': 'Default certificate',
+  'fileInput.example.preserveReset': 'Keep selection on reset',
   'fileInput.example.import': 'Import workflow',
   'fileInput.example.dialog': 'Import in a dialog',
   'fileInput.example.directory': 'Import folder',
@@ -22,13 +22,13 @@ export const fileInputEn = {
 } as const;
 
 export const fileInputEs = {
-  'upload.typeRejected': 'Tipo de archivo no admitido',
-  'upload.tooLarge': 'Supera el límite de {size}',
   'fileInput.example.serviceAccount': 'Clave de cuenta de servicio',
   'fileInput.example.certificate': 'Certificado',
   'fileInput.example.multiple': 'Adjuntos',
   'fileInput.example.customValue': 'Seleccionados: {names}',
   'fileInput.example.reset': 'Restablecer archivos',
+  'fileInput.example.defaultValue': 'Certificado predeterminado',
+  'fileInput.example.preserveReset': 'Conservar selección al restablecer',
   'fileInput.example.import': 'Importar flujo',
   'fileInput.example.dialog': 'Importar en un diálogo',
   'fileInput.example.directory': 'Importar carpeta',

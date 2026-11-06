@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Field, FieldDescription, FieldError, FieldLabel } from '../Field';
 import { I18nProvider } from '../../i18n';
 import { FileInput } from './FileInput';
@@ -130,6 +130,29 @@ it('inherits disabled and invalid Field state, including its sibling clear butto
   expect(screen.getByRole('button', { name: /Key/ })).toHaveAccessibleDescription('Key is invalid');
 });
 
+it('honors React-prevented resets when native listeners drain microtasks before bubbling', async () => {
+  // Model the trusted-event callback checkpoint absent from jsdom. Real clicks are covered in Playwright.
+  vi.useFakeTimers({ toFake: ['queueMicrotask'] });
+  try {
+    const onReset = vi.fn((event: React.FormEvent<HTMLFormElement>) => event.preventDefault());
+    const { container } = render(
+      <form onReset={onReset}>
+        <FileInput defaultValue={json} />
+        <button type="reset">Reset</button>
+      </form>,
+    );
+    const other = new File(['other'], 'other.json');
+    fireEvent.change(picker(), { target: { files: [other] } });
+    container.querySelector('form')!.addEventListener('reset', () => vi.runAllTicks());
+    fireEvent.click(screen.getByRole('button', { name: 'Reset' }));
+    expect(onReset).toHaveBeenCalledOnce();
+    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    expect(screen.getByRole('button', { name: /Choose file/ })).toHaveTextContent('other.json');
+  } finally {
+    vi.useRealTimers();
+  }
+});
+
 it('synchronizes the separate named input and restores defaults or controlled values on form reset', async () => {
   // jsdom has no native DataTransfer: this verifies synchronization, not native FormData.
   class Transfer {
@@ -157,7 +180,7 @@ it('synchronizes the separate named input and restores defaults or controlled va
   fireEvent.change(picker(), { target: { files: [other] } });
   expect(Array.from(named().files!)).toEqual([other]);
   await act(() => container.querySelector('form')!.reset());
-  expect(screen.getByRole('button', { name: /Choose file/ })).toHaveTextContent('sa-prod.json');
+  await waitFor(() => expect(screen.getByRole('button', { name: /Choose file/ })).toHaveTextContent('sa-prod.json'));
   expect(Array.from(named().files!)).toEqual([json]);
   fireEvent.click(screen.getByRole('button', { name: 'Clear file' }));
   expect(named().value).toBe('');

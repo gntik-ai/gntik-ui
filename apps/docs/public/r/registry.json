@@ -493,6 +493,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -690,6 +695,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -1212,6 +1222,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:lib",
           "target": "components/i18n/time-zone.ts"
@@ -1427,6 +1442,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -1621,6 +1641,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -1818,6 +1843,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -2126,6 +2156,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -2322,6 +2357,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -2648,6 +2688,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -2830,6 +2875,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -3087,6 +3137,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -3816,6 +3871,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -4192,6 +4252,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -4399,6 +4464,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -4902,6 +4972,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -5402,6 +5477,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -5848,6 +5928,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -6072,6 +6157,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6312,6 +6402,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -6541,6 +6636,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -6813,6 +6913,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -7015,6 +7120,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7240,6 +7350,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7471,6 +7586,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -7661,6 +7781,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -7870,6 +7995,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -8074,6 +8204,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -8662,6 +8797,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -9393,6 +9533,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -9685,6 +9830,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10011,6 +10161,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:lib",
           "target": "components/i18n/time-zone.ts"
@@ -10309,6 +10464,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -10506,6 +10666,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -10701,6 +10866,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -10909,6 +11079,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11155,6 +11330,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11437,6 +11617,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -11632,6 +11817,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -11836,6 +12026,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -12332,6 +12527,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -12569,6 +12769,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -13081,6 +13286,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -13480,6 +13690,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -13683,6 +13898,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14020,6 +14240,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -14222,6 +14447,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -14416,6 +14646,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -14620,6 +14855,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -14799,6 +15039,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15106,6 +15351,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -15341,6 +15591,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -15682,6 +15937,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -15873,6 +16133,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16164,6 +16429,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -16370,6 +16640,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -16638,6 +16913,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -17082,6 +17362,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -17566,6 +17851,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -18107,6 +18397,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -18458,6 +18753,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -18659,6 +18959,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -18951,6 +19256,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -19386,6 +19696,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -19936,6 +20251,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -20534,6 +20854,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -20822,6 +21147,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -20999,6 +21329,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -21330,6 +21665,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -21739,6 +22079,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:lib",
           "target": "components/i18n/time-zone.ts"
@@ -22068,6 +22413,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -22487,6 +22837,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -22681,6 +23036,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -22889,6 +23249,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -23254,6 +23619,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -23449,6 +23819,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -23666,6 +24041,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -23907,6 +24287,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -24109,6 +24494,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -24305,6 +24695,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -24548,6 +24943,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -24798,6 +25198,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -25112,6 +25517,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -25310,6 +25720,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -25556,6 +25971,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -25763,6 +26183,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -26100,6 +26525,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -26276,6 +26706,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -26742,6 +27177,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -27021,6 +27461,11 @@
           "target": "components/i18n/messages/typography-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/time-zone.ts",
           "type": "registry:ui",
           "target": "components/i18n/time-zone.ts"
@@ -27215,6 +27660,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -27461,6 +27911,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:lib",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:lib",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
@@ -27728,6 +28183,11 @@
           "path": "packages/ui/src/i18n/messages/typography-messages.ts",
           "type": "registry:ui",
           "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "type": "registry:ui",
+          "target": "components/i18n/messages/upload-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/time-zone.ts",
