@@ -42,3 +42,16 @@ it('renders a custom control and respects disabled and prevented clicks', async 
   await user.click(screen.getByRole('button', { name: 'Import' }));
   expect(click).not.toHaveBeenCalled();
 });
+
+it.each(['click', 'Enter', 'Space'])('supports a non-button render element on %s', async (key) => {
+  const user = userEvent.setup();
+  render(<FileTrigger render={<span aria-label="Import" />} />);
+  const trigger = screen.getByRole('button', { name: 'Import' });
+  const input = document.querySelector<HTMLInputElement>('input[type=file]')!;
+  const click = vi.spyOn(input, 'click');
+  await user.tab();
+  expect(trigger).toHaveFocus();
+  if (key === 'click') await user.click(trigger);
+  else await user.keyboard(key === 'Enter' ? '{Enter}' : ' ');
+  expect(click).toHaveBeenCalledOnce();
+});

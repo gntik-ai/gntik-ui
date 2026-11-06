@@ -12,6 +12,13 @@ export default function FileInputTrigger() {
       <FileTrigger accept=".yaml" onSelect={setFiles}>
         {t('fileInput.example.import')}
       </FileTrigger>
+      <FileTrigger
+        accept=".yaml"
+        onSelect={setFiles}
+        render={<span className="rounded-md border border-border px-3 py-2 text-sm text-foreground focus-ring" />}
+      >
+        {t('fileInput.choose')}
+      </FileTrigger>
       <Dialog>
         <DialogTrigger render={<Button variant="secondary" />}>{t('fileInput.example.dialog')}</DialogTrigger>
         <DialogContent>

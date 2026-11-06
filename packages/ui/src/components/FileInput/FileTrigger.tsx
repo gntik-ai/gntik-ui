@@ -1,3 +1,4 @@
+import { isValidElement } from 'react';
 import { Button as BaseButton } from '@base-ui/react/button';
 import { useI18n } from '../../i18n';
 import { Button } from '../Button/Button';
@@ -19,14 +20,19 @@ export function FileTrigger({
   onSelect,
   onClick,
   render,
+  nativeButton: nativeButtonProp,
   children,
   ...props
 }: FileTriggerProps) {
   const { t } = useI18n();
   const { open } = useFileDialog({ accept, multiple, directory, capture, disabled, onChange: onSelect });
+  const nativeButton =
+    nativeButtonProp ??
+    !(isValidElement(render) && typeof render.type === 'string' && render.type !== 'button' && render.type !== 'input');
   return (
     <BaseButton
       {...props}
+      nativeButton={nativeButton}
       render={render ?? <Button variant="secondary" />}
       type="button"
       disabled={disabled}
