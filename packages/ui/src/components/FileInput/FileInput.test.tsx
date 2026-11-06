@@ -197,11 +197,44 @@ it('synchronizes the separate named input and restores defaults or controlled va
   vi.unstubAllGlobals();
 });
 
-it('keeps controlled values usable without DataTransfer', () => {
-  vi.stubGlobal('DataTransfer', undefined);
-  const { rerender } = render(<FileInput name="credentials" value={json} />);
-  expect(screen.getByRole('button')).toHaveTextContent('sa-prod.json');
-  rerender(<FileInput name="credentials" value={null} />);
-  expect(screen.getByRole('button')).toHaveTextContent('No file chosen');
-  vi.unstubAllGlobals();
-});
+it.each(['missing', 'constructor throws', 'assignment throws'])(
+  'keeps controlled selection and clear usable when native file synchronization is unavailable: %s',
+  (platform) => {
+    class Transfer {
+      constructor() {
+        if (platform === 'constructor throws') throw new TypeError('DataTransfer is not constructible');
+      }
+      files: File[] = [];
+      items = { add: (file: File) => this.files.push(file) };
+    }
+    vi.stubGlobal('DataTransfer', platform === 'missing' ? undefined : Transfer);
+    const setter =
+      platform === 'assignment throws'
+        ? vi.spyOn(HTMLInputElement.prototype, 'files', 'set').mockImplementation(() => {
+            throw new TypeError('File assignment is unavailable');
+          })
+        : undefined;
+    try {
+      const onValueChange = vi.fn();
+      const { container, rerender } = render(
+        <FileInput name="credentials" value={json} clearable onValueChange={onValueChange} />,
+      );
+      const control = screen.getByRole('button', { name: /Choose file/ });
+      const other = new File(['other'], 'other.json', { type: 'application/json' });
+      fireEvent.change(picker(), { target: { files: [other] } });
+      expect(onValueChange).toHaveBeenLastCalledWith(other);
+      expect(control).toHaveTextContent('sa-prod.json');
+      fireEvent.click(screen.getByRole('button', { name: 'Clear file' }));
+      expect(onValueChange).toHaveBeenLastCalledWith(null);
+      expect(control).toHaveFocus();
+      expect(control).toHaveTextContent('sa-prod.json');
+      rerender(<FileInput name="credentials" value={null} clearable onValueChange={onValueChange} />);
+      expect(control).toHaveTextContent('No file chosen');
+      expect(screen.queryByRole('button', { name: 'Clear file' })).not.toBeInTheDocument();
+      expect(container.querySelector<HTMLInputElement>('input[name=credentials]')!.value).toBe('');
+    } finally {
+      setter?.mockRestore();
+      vi.unstubAllGlobals();
+    }
+  },
+);
