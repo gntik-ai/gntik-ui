@@ -35,6 +35,10 @@ export interface SearchFieldProps extends Omit<
 
 const noLabels = createFieldLabelStore();
 
+const subscribeNever = () => () => {};
+const getTrue = () => true;
+const getFalse = () => false;
+
 const isMac = (os: Os) => os === 'macos' || os === 'ios';
 
 const ARIA_KEYS: Record<string, string> = {
@@ -140,12 +144,15 @@ export function SearchField({
       </span>
     ) : undefined;
 
-  // aria-label outranks a native label, so below a Field the default name is left to the Field's label. The server
-  // render sees a label that precedes this control (it marks itself while rendering) but not one that follows it,
-  // so a Field without a label, or with a later one, gets the default name until hydration drops it for the label.
+  // aria-label outranks a native label, so below a Field the default name must not be an aria-label while a Field
+  // label may name the control. The server render sees a label that precedes this control but not one that follows
+  // it, so until hydration settles it, an unlabeled-so-far Field names the control through `title`, which a label
+  // outranks. Once mounted the Field's label registry is exact: a label drops the default name, none gets aria-label.
   const labels = field?.labels ?? noLabels;
   const fieldLabelled = useSyncExternalStore(labels.subscribe, labels.has, labels.rendered);
+  const settled = useSyncExternalStore(subscribeNever, getTrue, getFalse);
   const named = props['aria-label'] || props['aria-labelledby'] || fieldLabelled;
+  const provisional = !named && !!field && !settled;
 
   return (
     <Input
@@ -160,7 +167,8 @@ export function SearchField({
       trailingAddon={trailingAddon ?? hint}
       inputClassName={cn(searchFieldVariants().input(), inputClassName)}
       placeholder={placeholder ?? t('common.searchPlaceholder')}
-      aria-label={named ? props['aria-label'] : t('common.search')}
+      aria-label={named || provisional ? props['aria-label'] : t('common.search')}
+      title={provisional ? t('common.search') : props.title}
       aria-busy={pending || undefined}
       aria-keyshortcuts={described?.aria}
       {...(value === undefined ? { defaultValue } : { value })}

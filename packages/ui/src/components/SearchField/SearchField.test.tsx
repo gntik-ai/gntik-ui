@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
+import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { useForm } from 'react-hook-form';
 import { Form, FormField } from '../../forms/FormField';
@@ -128,6 +129,49 @@ describe('SearchField naming', () => {
       </Field>,
     );
     expect(screen.getByRole('searchbox', { name: 'Search' })).toBeInTheDocument();
+  });
+
+  it('server-renders a Field label that follows the control as the name', () => {
+    const html = renderToString(
+      <Field>
+        <SearchField />
+        <FieldLabel>Search deployments</FieldLabel>
+      </Field>,
+    );
+    expect(html).not.toContain('aria-label=');
+    container.innerHTML = html;
+    expect(screen.getByRole('searchbox', { name: 'Search deployments' })).toBeInTheDocument();
+  });
+
+  it('hydrates a control followed by its Field label to the label name without a title', async () => {
+    const tree = (
+      <Field>
+        <SearchField />
+        <FieldLabel>Search deployments</FieldLabel>
+      </Field>
+    );
+    container.innerHTML = renderToString(tree);
+    await act(async () => {
+      hydrateRoot(container, tree);
+    });
+    const input = screen.getByRole('searchbox', { name: 'Search deployments' });
+    expect(input).not.toHaveAttribute('aria-label');
+    expect(input).not.toHaveAttribute('title');
+  });
+
+  it('hydrates an unlabeled Field to the default aria-label without a title', async () => {
+    const tree = (
+      <Field>
+        <SearchField />
+      </Field>
+    );
+    container.innerHTML = renderToString(tree);
+    await act(async () => {
+      hydrateRoot(container, tree);
+    });
+    const input = screen.getByRole('searchbox', { name: 'Search' });
+    expect(input).toHaveAttribute('aria-label', 'Search');
+    expect(input).not.toHaveAttribute('title');
   });
 
   it('server-renders the default name in a Field without a label', () => {
