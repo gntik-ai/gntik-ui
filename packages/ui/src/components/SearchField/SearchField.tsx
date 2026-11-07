@@ -5,7 +5,7 @@ import { parseHotkey } from '../../hooks/parse-hotkey';
 import { useOs, type Os } from '../../hooks/useOs';
 import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
-import { createFieldLabelStore, InFieldContext } from '../../utils/in-field-context';
+import { createFieldLabelStore, FieldsetDisabledContext, InFieldContext } from '../../utils/in-field-context';
 import { Input, InputKbd, type InputProps } from '../Input';
 import { Spinner } from '../Spinner';
 import { searchFieldVariants } from './search-field.variants';
@@ -99,7 +99,8 @@ export function SearchField({
   ...props
 }: SearchFieldProps) {
   const field = useContext(InFieldContext);
-  const disabled = disabledProp || field?.disabled;
+  const inDisabledFieldset = useContext(FieldsetDisabledContext);
+  const disabled = disabledProp || field?.disabled || inDisabledFieldset;
   const { t } = useI18n();
   const os = useOs();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -140,10 +141,10 @@ export function SearchField({
     ) : undefined;
 
   // aria-label outranks a native label, so below a Field the default name is left to the Field's label. The server
-  // render cannot tell whether a label follows this control, so it assumes one does; a Field without a label gets
-  // the default name on hydration.
+  // render sees a label that precedes this control (it marks itself while rendering) but not one that follows it,
+  // so a Field without a label, or with a later one, gets the default name until hydration drops it for the label.
   const labels = field?.labels ?? noLabels;
-  const fieldLabelled = useSyncExternalStore(labels.subscribe, labels.has, () => field !== null);
+  const fieldLabelled = useSyncExternalStore(labels.subscribe, labels.has, labels.rendered);
   const named = props['aria-label'] || props['aria-labelledby'] || fieldLabelled;
 
   return (

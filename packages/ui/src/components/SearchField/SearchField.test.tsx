@@ -130,16 +130,26 @@ describe('SearchField naming', () => {
     expect(screen.getByRole('searchbox', { name: 'Search' })).toBeInTheDocument();
   });
 
-  it('server-renders a Field label that follows the control as the name, not the default aria-label', () => {
+  it('server-renders the default name in a Field without a label', () => {
     const html = renderToString(
       <Field>
         <SearchField />
-        <FieldLabel>Search deployments</FieldLabel>
       </Field>,
     );
-    expect(html).not.toContain('aria-label=');
     container.innerHTML = html;
-    expect(screen.getByRole('searchbox', { name: 'Search deployments' })).toBeInTheDocument();
+    expect(screen.getByRole('searchbox', { name: 'Search' })).toBeInTheDocument();
+  });
+
+  it('server-renders the localized default name in a Field without a label', () => {
+    const html = renderToString(
+      <I18nProvider locale="es">
+        <Field>
+          <SearchField />
+        </Field>
+      </I18nProvider>,
+    );
+    container.innerHTML = html;
+    expect(screen.getByRole('searchbox', { name: 'Buscar' })).toBeInTheDocument();
   });
 
   it('names a control that precedes its Field label by that label once rendered', () => {
@@ -518,6 +528,21 @@ describe('SearchField shortcut', () => {
     expect(screen.getByRole('searchbox', { name: 'Enabled' })).toHaveFocus();
     const disabled = screen.getByRole('searchbox', { name: 'Disabled search' });
     expect(disabled).not.toHaveAttribute('aria-keyshortcuts');
+    expect(container.querySelectorAll('kbd')).toHaveLength(0);
+  });
+
+  it('does not respond directly inside a disabled Fieldset and leaves slash to an enabled field', async () => {
+    const { container } = render(
+      <>
+        <SearchField aria-label="Enabled" shortcut="/" />
+        <Fieldset disabled>
+          <SearchField aria-label="Disabled" shortcut="/" />
+        </Fieldset>
+      </>,
+    );
+    await userEvent.keyboard('/');
+    expect(screen.getByRole('searchbox', { name: 'Enabled' })).toHaveFocus();
+    expect(screen.getByRole('searchbox', { name: 'Disabled' })).not.toHaveAttribute('aria-keyshortcuts');
     expect(container.querySelectorAll('kbd')).toHaveLength(0);
   });
 
