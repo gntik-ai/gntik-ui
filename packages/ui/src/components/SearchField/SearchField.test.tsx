@@ -19,6 +19,15 @@ afterEach(() => {
 });
 
 describe('SearchField naming', () => {
+  const container = document.createElement('div');
+  beforeEach(() => {
+    document.body.append(container);
+  });
+  afterEach(() => {
+    container.remove();
+    container.innerHTML = '';
+  });
+
   it('renders one searchbox with the given name and a decorative icon', () => {
     const { container } = render(<SearchField aria-label="Search logs" />);
     expect(screen.getAllByRole('searchbox')).toHaveLength(1);
@@ -81,6 +90,35 @@ describe('SearchField naming', () => {
       </>,
     );
     expect(screen.getByRole('searchbox', { name: 'Audit events' })).toBeInTheDocument();
+  });
+
+  it('server-renders a Field label as the name, not the default aria-label', () => {
+    const html = renderToString(
+      <Field>
+        <FieldLabel>Search deployments</FieldLabel>
+        <SearchField />
+      </Field>,
+    );
+    expect(html).not.toContain('aria-label=');
+    container.innerHTML = html;
+    expect(screen.getByRole('searchbox', { name: 'Search deployments' })).toBeInTheDocument();
+  });
+
+  it('server-renders a FormField label as the name, not the default aria-label', () => {
+    function Example() {
+      const form = useForm({ defaultValues: { q: '' } });
+      return (
+        <Form form={form} onSubmit={() => {}}>
+          <FormField name="q" label="Find members">
+            {(props) => <SearchField {...props} value={undefined} />}
+          </FormField>
+        </Form>
+      );
+    }
+    const html = renderToString(<Example />);
+    expect(html).not.toContain('aria-label=');
+    container.innerHTML = html;
+    expect(screen.getByRole('searchbox', { name: 'Find members' })).toBeInTheDocument();
   });
 
   it('server-renders the default name', () => {

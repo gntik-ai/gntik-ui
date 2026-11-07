@@ -1,10 +1,11 @@
 import { Search } from 'lucide-react';
-import { useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
+import { useContext, useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
 import { useHotkeys } from '../../hooks/useHotkeys';
 import { parseHotkey } from '../../hooks/parse-hotkey';
 import { useOs, type Os } from '../../hooks/useOs';
 import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { InFieldContext } from '../../utils/in-field-context';
 import { Input, InputKbd, type InputProps } from '../Input';
 import { Spinner } from '../Spinner';
 import { searchFieldVariants } from './search-field.variants';
@@ -134,8 +135,10 @@ export function SearchField({
       </span>
     ) : undefined;
 
-  // A name from aria-label would be skipped by a native label; an aria-labelledby (Base UI's Field label) outranks it.
-  const named = props['aria-label'] || props['aria-labelledby'];
+  // aria-label outranks a native label, and Base UI wires a Field label only after hydration, so inside a Field the
+  // default name is left to the label from the first (server) render on.
+  const inField = useContext(InFieldContext);
+  const named = props['aria-label'] || props['aria-labelledby'] || inField;
 
   return (
     <Input

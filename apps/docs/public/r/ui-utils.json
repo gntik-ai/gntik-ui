@@ -239,6 +239,12 @@
       "content": "import type { ReactNode } from 'react';\nimport { matchRanges } from './match-text';\nimport { tv } from './tv';\n\nconst s = tv({ slots: { mark: 'rounded-[3px] bg-warning/16 text-warning-chip-text' } })();\n\n/** Canonical mark style, shared with the JsonViewer variants. */\nexport const highlightMarkClass = s.mark();\n\n/** Shared internal plain-text highlight, retaining original Unicode offsets and styling. */\nexport function highlight(text: string, query: string, locale?: string): ReactNode {\n  const out: ReactNode[] = [];\n  let from = 0;\n  for (const [start, end] of matchRanges(text, query, { locale })) {\n    out.push(text.slice(from, start));\n    out.push(\n      <mark key={start} className={s.mark()}>\n        {text.slice(start, end)}\n      </mark>,\n    );\n    from = end;\n  }\n  out.push(text.slice(from));\n  return out;\n}\n"
     },
     {
+      "path": "packages/ui/src/utils/in-field-context.ts",
+      "type": "registry:ui",
+      "target": "components/utils/in-field-context.ts",
+      "content": "import { createContext } from 'react';\n\n/** True below a kit `Field` (and so a `FormField`): its label, not a default aria-label, names the control. */\nexport const InFieldContext = createContext(false);\n"
+    },
+    {
       "path": "packages/ui/src/utils/input-size-context.ts",
       "type": "registry:ui",
       "target": "components/utils/input-size-context.ts",
