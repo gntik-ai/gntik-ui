@@ -5,20 +5,13 @@ import {
   Checkbox,
   CheckboxGroup,
   CodeBlock,
-  Dialog,
-  DialogBody,
   DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
   Field,
   FieldError,
   FieldLabel,
   Fieldset,
   FieldsetLegend,
+  FormDialog,
   Input,
   Select,
   SelectContent,
@@ -26,7 +19,7 @@ import {
   SelectTrigger,
 } from '@gntik-ai/ui';
 import { KeyRound } from '@gntik-ai/icons';
-import { useState, type ReactElement } from 'react';
+import { Children, cloneElement, useEffect, useRef, useState, type ReactElement, type ReactNode } from 'react';
 import { apiKeyExpiries, apiKeyScopes, generateDemoSecret, type ApiKeyExpiry, type ApiKeyScope } from './fixtures';
 
 export type { ApiKeyExpiry, ApiKeyScope } from './fixtures';
@@ -82,158 +75,154 @@ export function CreateApiKeyDialog({
   expiries = apiKeyExpiries,
   defaultExpiry = '90d',
   onCreate = () => generateDemoSecret(),
-  open: openProp,
+  open,
   defaultOpen = false,
   onOpenChange,
   trigger = <Button icon={KeyRound} />,
 }: CreateApiKeyDialogProps) {
   const { t } = useI18n();
-  const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [name, setName] = useState('');
   const [selected, setSelected] = useState<string[]>([]);
   const [expiry, setExpiry] = useState(defaultExpiry);
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [secret, setSecret] = useState<string | null>(null);
-  const open = openProp ?? innerOpen;
+  // Bumped whenever an opening ends, so a submit that settles later can't touch a reopened dialog.
+  const opening = useRef(0);
+  useEffect(() => {
+    opening.current += 1;
+  }, [open]);
   const nameInvalid = submitted && name.trim() === '';
   const scopesInvalid = submitted && selected.length === 0;
+  const formTitle = labels?.title ?? t('createApiKey.title');
 
-  const setOpen = (next: boolean) => {
-    if (loading && !next) return;
-    if (!next) {
-      setName('');
-      setSelected([]);
-      setExpiry(defaultExpiry);
-      setSubmitted(false);
-      setError(null);
-      setSecret(null);
-    }
-    setInnerOpen(next);
-    onOpenChange?.(next);
+  // Reset runs once the dialog has closed, so the secret stays until the exit animation ends.
+  const reset = () => {
+    opening.current += 1;
+    setName('');
+    setSelected([]);
+    setExpiry(defaultExpiry);
+    setSubmitted(false);
+    setError(null);
+    setSecret(null);
   };
 
-  const submit = async () => {
+  const create = async () => {
+    const current = opening.current;
+    try {
+      const created = await onCreate({ name: name.trim(), scopes: selected, expiry });
+      if (current === opening.current) setSecret(created);
+    } catch (e) {
+      if (current === opening.current) {
+        setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('createApiKey.fallbackError')));
+      }
+    }
+    return false;
+  };
+
+  const submit = () => {
+    // The secret step has nothing to submit: a second submit must never mint another key.
+    if (secret != null) return false;
     setSubmitted(true);
     setError(null);
-    if (name.trim() === '' || selected.length === 0) return;
-    setLoading(true);
-    try {
-      const value = await onCreate({ name: name.trim(), scopes: selected, expiry });
-      setSecret(value);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('createApiKey.fallbackError')));
-    }
-    setLoading(false);
+    if (name.trim() === '' || selected.length === 0) return false;
+    return create();
   };
 
+  // The title swaps on the secret step, but the trigger keeps naming the action that opens the dialog.
+  const triggerHasChildren =
+    trigger != null && Children.count((trigger.props as { children?: ReactNode }).children) > 0;
+  const labelledTrigger = trigger == null || triggerHasChildren ? trigger : cloneElement(trigger, undefined, formTitle);
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      {trigger && <DialogTrigger render={trigger}>{labels?.title ?? t('createApiKey.title')}</DialogTrigger>}
-      <DialogContent size="lg">
-        {secret == null ? (
-          <>
-            <DialogHeader>
-              <DialogTitle>{labels?.title ?? t('createApiKey.title')}</DialogTitle>
-              <DialogDescription>{labels?.description ?? t('createApiKey.description')}</DialogDescription>
-            </DialogHeader>
-            <form
-              noValidate
-              onSubmit={(e) => {
-                e.preventDefault();
-                void submit();
-              }}
-            >
-              <DialogBody className="grid gap-5">
-                <Field invalid={nameInvalid}>
-                  <FieldLabel required>{labels?.name ?? t('createApiKey.name')}</FieldLabel>
-                  <Input
-                    value={name}
-                    onValueChange={setName}
-                    placeholder={labels?.namePlaceholder ?? t('createApiKey.namePlaceholder')}
-                    required
-                    autoComplete="off"
-                  />
-                  <FieldError match={nameInvalid}>{labels?.nameRequired ?? t('createApiKey.nameRequired')}</FieldError>
-                </Field>
-                <Fieldset
-                  render={<CheckboxGroup value={selected} onValueChange={setSelected} />}
-                  aria-invalid={scopesInvalid || undefined}
-                >
-                  <FieldsetLegend>{labels?.scopes ?? t('createApiKey.scopes')}</FieldsetLegend>
-                  {scopes.map((s) => (
-                    <Checkbox
-                      key={s.value}
-                      value={s.value}
-                      label={<span className="font-mono">{s.label}</span>}
-                      description={s.description}
-                    />
-                  ))}
-                  {scopesInvalid && (
-                    <p className="text-[12.5px] text-destructive-text">
-                      {labels?.scopesRequired ?? t('createApiKey.scopesRequired')}
-                    </p>
-                  )}
-                </Fieldset>
-                <Field>
-                  <FieldLabel>{labels?.expiration ?? t('createApiKey.expiration')}</FieldLabel>
-                  <Select value={expiry} onValueChange={(v) => v != null && setExpiry(v)} items={expiries}>
-                    <SelectTrigger className="w-full sm:w-56" />
-                    <SelectContent>
-                      {expiries.map((x) => (
-                        <SelectItem key={x.value} value={x.value}>
-                          {x.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-                {error && (
-                  <Alert
-                    tone="destructive"
-                    title={labels?.errorTitle ?? t('createApiKey.errorTitle')}
-                    description={error}
-                  />
-                )}
-              </DialogBody>
-              <DialogFooter>
-                <DialogClose render={<Button variant="ghost" disabled={loading} />}>
-                  {labels?.cancel ?? t('createApiKey.cancel')}
-                </DialogClose>
-                <Button type="submit" loading={loading}>
-                  {labels?.submit ?? t('createApiKey.submit')}
-                </Button>
-              </DialogFooter>
-            </form>
-          </>
-        ) : (
-          <>
-            <DialogHeader>
-              <DialogTitle>{labels?.successTitle ?? t('createApiKey.successTitle')}</DialogTitle>
-              <DialogDescription>
-                {labels?.successDescription ?? t('createApiKey.successDescription')}
-              </DialogDescription>
-            </DialogHeader>
-            <DialogBody className="grid gap-4">
-              <Alert
-                tone="warning"
-                title={labels?.warningTitle ?? t('createApiKey.warningTitle')}
-                description={labels?.warningDescription ?? t('createApiKey.warningDescription')}
+    <FormDialog
+      size="lg"
+      title={secret == null ? formTitle : (labels?.successTitle ?? t('createApiKey.successTitle'))}
+      description={
+        secret == null
+          ? (labels?.description ?? t('createApiKey.description'))
+          : (labels?.successDescription ?? t('createApiKey.successDescription'))
+      }
+      trigger={labelledTrigger ?? undefined}
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      onSubmit={submit}
+      onClosed={reset}
+      cancelLabel={labels?.cancel ?? t('createApiKey.cancel')}
+      submitLabel={labels?.submit ?? t('createApiKey.submit')}
+      footer={
+        secret == null ? undefined : (
+          <DialogClose render={<Button />}>{labels?.done ?? t('createApiKey.done')}</DialogClose>
+        )
+      }
+      summary={
+        error && (
+          <Alert tone="destructive" title={labels?.errorTitle ?? t('createApiKey.errorTitle')} description={error} />
+        )
+      }
+    >
+      {secret == null ? (
+        <>
+          <Field invalid={nameInvalid}>
+            <FieldLabel required>{labels?.name ?? t('createApiKey.name')}</FieldLabel>
+            <Input
+              value={name}
+              onValueChange={setName}
+              placeholder={labels?.namePlaceholder ?? t('createApiKey.namePlaceholder')}
+              required
+              autoComplete="off"
+            />
+            <FieldError match={nameInvalid}>{labels?.nameRequired ?? t('createApiKey.nameRequired')}</FieldError>
+          </Field>
+          <Fieldset
+            render={<CheckboxGroup value={selected} onValueChange={setSelected} />}
+            aria-invalid={scopesInvalid || undefined}
+          >
+            <FieldsetLegend>{labels?.scopes ?? t('createApiKey.scopes')}</FieldsetLegend>
+            {scopes.map((s) => (
+              <Checkbox
+                key={s.value}
+                value={s.value}
+                label={<span className="font-mono">{s.label}</span>}
+                description={s.description}
               />
-              <CodeBlock
-                code={secret}
-                label={labels?.secretLabel ?? t('createApiKey.secretLabel')}
-                wrapToggle={false}
-                defaultWrap
-              />
-            </DialogBody>
-            <DialogFooter>
-              <DialogClose render={<Button />}>{labels?.done ?? t('createApiKey.done')}</DialogClose>
-            </DialogFooter>
-          </>
-        )}
-      </DialogContent>
-    </Dialog>
+            ))}
+            {scopesInvalid && (
+              <p className="text-[12.5px] text-destructive-text">
+                {labels?.scopesRequired ?? t('createApiKey.scopesRequired')}
+              </p>
+            )}
+          </Fieldset>
+          <Field>
+            <FieldLabel>{labels?.expiration ?? t('createApiKey.expiration')}</FieldLabel>
+            <Select value={expiry} onValueChange={(v) => v != null && setExpiry(v)} items={expiries}>
+              <SelectTrigger className="w-full sm:w-56" />
+              <SelectContent>
+                {expiries.map((x) => (
+                  <SelectItem key={x.value} value={x.value}>
+                    {x.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </Field>
+        </>
+      ) : (
+        <>
+          <Alert
+            tone="warning"
+            title={labels?.warningTitle ?? t('createApiKey.warningTitle')}
+            description={labels?.warningDescription ?? t('createApiKey.warningDescription')}
+          />
+          <CodeBlock
+            code={secret}
+            label={labels?.secretLabel ?? t('createApiKey.secretLabel')}
+            wrapToggle={false}
+            defaultWrap
+          />
+        </>
+      )}
+    </FormDialog>
   );
 }

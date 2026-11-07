@@ -23,6 +23,8 @@ export interface DialogContentProps extends Omit<BaseDialog.Popup.Props, 'classN
   closeLabel?: string;
   /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BaseDialog.Portal.Props['container'];
+  /** Keep the content in the DOM, hidden, while the dialog is closed. Default: unmounted on close. */
+  keepMounted?: boolean;
   children?: ReactNode;
 }
 
@@ -37,6 +39,7 @@ export function DialogContent({
   showClose = true,
   closeLabel: closeLabelProp,
   container,
+  keepMounted,
   children,
   ...props
 }: DialogContentProps) {
@@ -46,7 +49,7 @@ export function DialogContent({
   const dir = usePortalDir();
   const v = dialogVariants({ size, presentation });
   return (
-    <BaseDialog.Portal container={container ?? portalContainer}>
+    <BaseDialog.Portal container={container ?? portalContainer} keepMounted={keepMounted}>
       <BaseDialog.Backdrop className={v.backdrop()} />
       <BaseDialog.Viewport dir={dir} className={v.viewport()}>
         <BaseDialog.Popup className={cn(v.popup(), className)} {...props}>

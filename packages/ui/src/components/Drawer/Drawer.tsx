@@ -50,6 +50,8 @@ export interface DrawerContentProps extends Omit<BaseDrawer.Popup.Props, 'classN
   closeLabel?: string;
   /** Portal container; defaults to the nearest ThemeScope, otherwise document.body. */
   container?: BaseDrawer.Portal.Props['container'];
+  /** Keep the content in the DOM, hidden, while the drawer is closed. Default: unmounted on close. */
+  keepMounted?: boolean;
   children?: ReactNode;
 }
 
@@ -64,6 +66,7 @@ export function DrawerContent({
   showClose = true,
   closeLabel,
   container,
+  keepMounted,
   children,
   ...props
 }: DrawerContentProps) {
@@ -73,7 +76,7 @@ export function DrawerContent({
   const side = useContext(SideContext);
   const v = drawerVariants({ side, size });
   return (
-    <BaseDrawer.Portal container={container ?? portalContainer}>
+    <BaseDrawer.Portal container={container ?? portalContainer} keepMounted={keepMounted}>
       <BaseDrawer.Backdrop className={v.backdrop()} />
       <BaseDrawer.Viewport dir={dir} className={v.viewport()}>
         <BaseDrawer.Popup className={cn(v.popup(), className)} {...props}>

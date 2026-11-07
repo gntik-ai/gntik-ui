@@ -2,19 +2,11 @@ import {
   useI18n,
   Alert,
   Button,
-  Dialog,
-  DialogBody,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
   Field,
   FieldDescription,
   FieldError,
   FieldLabel,
+  FormDialog,
   Select,
   SelectContent,
   SelectItem,
@@ -23,7 +15,7 @@ import {
   TokenInput,
 } from '@gntik-ai/ui';
 import { UserPlus } from '@gntik-ai/icons';
-import { useState, type ReactElement } from 'react';
+import { useEffect, useRef, useState, type ReactElement } from 'react';
 import { EMAIL_RE, memberRoles, type RoleOption } from './fixtures';
 
 export type { RoleOption } from './fixtures';
@@ -77,7 +69,7 @@ export function InviteMembersDialog({
   defaultRole = 'member',
   onInvite,
   maxInvites = 20,
-  open: openProp,
+  open,
   defaultOpen = false,
   onOpenChange,
   trigger = <Button icon={UserPlus} />,
@@ -89,14 +81,17 @@ export function InviteMembersDialog({
   const description = descriptionProp ?? labels?.description ?? t('inviteMembers.description');
   const emailError = (email: string) =>
     EMAIL_RE.test(email) ? null : (labels?.emailInvalid?.(email) ?? t('inviteMembers.emailInvalid', { email }));
-  const [innerOpen, setInnerOpen] = useState(defaultOpen);
   const [emails, setEmails] = useState<string[]>([]);
   const [role, setRole] = useState(defaultRole);
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const open = openProp ?? innerOpen;
+
+  // Bumped whenever an opening ends, so a submit that settles later can't touch a reopened dialog.
+  const opening = useRef(0);
+  useEffect(() => {
+    opening.current += 1;
+  }, [open]);
 
   const invalidCount = emails.filter((e) => emailError(e)).length;
   const emailsProblem =
@@ -107,112 +102,98 @@ export function InviteMembersDialog({
         : null;
   const showEmailError = submitted && emailsProblem != null;
 
-  const setOpen = (next: boolean) => {
-    if (loading && !next) return;
-    if (!next) {
-      setEmails([]);
-      setRole(defaultRole);
-      setMessage('');
-      setSubmitted(false);
-      setError(null);
-    }
-    setInnerOpen(next);
-    onOpenChange?.(next);
+  const reset = () => {
+    opening.current += 1;
+    setEmails([]);
+    setRole(defaultRole);
+    setMessage('');
+    setSubmitted(false);
+    setError(null);
   };
 
-  const submit = async () => {
-    setSubmitted(true);
-    setError(null);
-    if (emailsProblem) return;
-    setLoading(true);
+  const send = async () => {
+    const current = opening.current;
     try {
       await onInvite?.({ emails, role, message: message.trim() });
-      setLoading(false);
-      setOpen(false);
     } catch (e) {
-      setLoading(false);
-      setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('inviteMembers.fallbackError')));
+      if (current === opening.current) {
+        setError(e instanceof Error ? e.message : (labels?.fallbackError ?? t('inviteMembers.fallbackError')));
+      }
+      return false;
     }
+  };
+
+  const submit = () => {
+    setSubmitted(true);
+    setError(null);
+    return emailsProblem ? false : send();
   };
 
   const roleLabel = roles.find((r) => r.value === role)?.description;
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      {trigger && <DialogTrigger render={trigger}>{title}</DialogTrigger>}
-      <DialogContent size="lg">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-        <form
-          noValidate
-          onSubmit={(e) => {
-            e.preventDefault();
-            void submit();
-          }}
+    <FormDialog
+      size="lg"
+      title={title}
+      description={description}
+      trigger={trigger ?? undefined}
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      onSubmit={submit}
+      onClosed={reset}
+      cancelLabel={labels?.cancel ?? t('inviteMembers.cancel')}
+      submitLabel={
+        emails.length > 1
+          ? (labels?.submitMany?.(emails.length) ?? t('inviteMembers.submitMany', { count: emails.length }))
+          : (labels?.submit ?? t('inviteMembers.submit'))
+      }
+      summary={
+        error && (
+          <Alert tone="destructive" title={labels?.errorTitle ?? t('inviteMembers.errorTitle')} description={error} />
+        )
+      }
+    >
+      <Field invalid={showEmailError}>
+        <FieldLabel required>{labels?.emails ?? t('inviteMembers.emails')}</FieldLabel>
+        <TokenInput
+          value={emails}
+          onValueChange={setEmails}
+          validate={emailError}
+          maxItems={maxInvites}
+          placeholder={labels?.placeholder ?? t('inviteMembers.placeholder')}
+          listLabel={labels?.listLabel ?? t('inviteMembers.listLabel')}
+          invalid={showEmailError}
+        />
+        <FieldError match={showEmailError}>{emailsProblem}</FieldError>
+      </Field>
+      <Field>
+        <FieldLabel>{labels?.role ?? t('inviteMembers.role')}</FieldLabel>
+        <Select
+          value={role}
+          onValueChange={(v) => v != null && setRole(v)}
+          items={roles.map(({ value, label }) => ({ value, label }))}
         >
-          <DialogBody className="grid gap-5">
-            <Field invalid={showEmailError}>
-              <FieldLabel required>{labels?.emails ?? t('inviteMembers.emails')}</FieldLabel>
-              <TokenInput
-                value={emails}
-                onValueChange={setEmails}
-                validate={emailError}
-                maxItems={maxInvites}
-                placeholder={labels?.placeholder ?? t('inviteMembers.placeholder')}
-                listLabel={labels?.listLabel ?? t('inviteMembers.listLabel')}
-                invalid={showEmailError}
-              />
-              <FieldError match={showEmailError}>{emailsProblem}</FieldError>
-            </Field>
-            <Field>
-              <FieldLabel>{labels?.role ?? t('inviteMembers.role')}</FieldLabel>
-              <Select
-                value={role}
-                onValueChange={(v) => v != null && setRole(v)}
-                items={roles.map(({ value, label }) => ({ value, label }))}
-              >
-                <SelectTrigger className="w-full" />
-                <SelectContent>
-                  {roles.map((r) => (
-                    <SelectItem key={r.value} value={r.value}>
-                      {r.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {roleLabel && <FieldDescription>{roleLabel}</FieldDescription>}
-            </Field>
-            <Field>
-              <FieldLabel>{labels?.message ?? t('inviteMembers.message')}</FieldLabel>
-              <Textarea
-                rows={3}
-                value={message}
-                onValueChange={setMessage}
-                placeholder={labels?.messagePlaceholder ?? t('inviteMembers.messagePlaceholder')}
-              />
-            </Field>
-            {error && (
-              <Alert
-                tone="destructive"
-                title={labels?.errorTitle ?? t('inviteMembers.errorTitle')}
-                description={error}
-              />
-            )}
-          </DialogBody>
-          <DialogFooter>
-            <DialogClose render={<Button variant="ghost" disabled={loading} />}>
-              {labels?.cancel ?? t('inviteMembers.cancel')}
-            </DialogClose>
-            <Button type="submit" loading={loading}>
-              {emails.length > 1
-                ? (labels?.submitMany?.(emails.length) ?? t('inviteMembers.submitMany', { count: emails.length }))
-                : (labels?.submit ?? t('inviteMembers.submit'))}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+          <SelectTrigger className="w-full" />
+          <SelectContent>
+            {roles.map((r) => (
+              <SelectItem key={r.value} value={r.value}>
+                {r.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {roleLabel && <FieldDescription>{roleLabel}</FieldDescription>}
+      </Field>
+      <Field>
+        <FieldLabel>{labels?.message ?? t('inviteMembers.message')}</FieldLabel>
+        <Textarea
+          rows={3}
+          value={message}
+          onValueChange={setMessage}
+          placeholder={labels?.messagePlaceholder ?? t('inviteMembers.messagePlaceholder')}
+        />
+      </Field>
+    </FormDialog>
   );
 }

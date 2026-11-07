@@ -25,5 +25,5 @@ export const meta: BlockMeta = {
     { key: 'submit', type: 'string', state: 'Default content and accessible names' },
     { key: 'submitMany', type: '(count: number) => string', state: 'Default content and accessible names' },
   ] satisfies Array<{ key: keyof InviteMembersDialogLabels; type: string; state: string }>,
-  uses: ['Dialog', 'TokenInput', 'Select', 'Textarea', 'Field', 'Button', 'Alert'],
+  uses: ['FormDialog', 'Dialog', 'TokenInput', 'Select', 'Textarea', 'Field', 'Button', 'Alert'],
 };

@@ -11,6 +11,7 @@ import { layersEn } from './layer-messages';
 import { catalogPreviewEn } from './catalog-preview-messages';
 import { typographyEn } from './typography-messages';
 import { editableTextEn } from './editable-text-messages';
+import { formDialogEn } from './form-dialog-messages';
 import { motionEn } from './motion-messages';
 import { markdownEn } from './markdown-messages';
 import { searchableSelectEn } from './searchable-select-messages';
@@ -39,6 +40,7 @@ export const en = {
   ...catalogPreviewEn,
   ...typographyEn,
   ...editableTextEn,
+  ...formDialogEn,
   ...motionEn,
   ...markdownEn,
   ...searchableSelectEn,
