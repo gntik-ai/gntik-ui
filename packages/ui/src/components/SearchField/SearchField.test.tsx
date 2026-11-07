@@ -121,6 +121,26 @@ describe('SearchField naming', () => {
     expect(screen.getByRole('searchbox', { name: 'Find members' })).toBeInTheDocument();
   });
 
+  it('keeps the default name inside a Field that has no label', () => {
+    render(
+      <Field>
+        <SearchField />
+      </Field>,
+    );
+    expect(screen.getByRole('searchbox', { name: 'Search' })).toBeInTheDocument();
+  });
+
+  it('server-renders the default name inside a Field that has no label', () => {
+    const html = renderToString(
+      <Field>
+        <SearchField />
+      </Field>,
+    );
+    expect(html).toContain('aria-label="Search"');
+    container.innerHTML = html;
+    expect(screen.getByRole('searchbox', { name: 'Search' })).toBeInTheDocument();
+  });
+
   it('server-renders the default name', () => {
     const html = renderToString(<SearchField />);
     expect(html).toContain('aria-label="Search"');
@@ -452,6 +472,19 @@ describe('SearchField shortcut', () => {
 
   it('does not respond, show a hint or announce a shortcut when disabled', async () => {
     const { container } = render(<SearchField aria-label="Search" shortcut="/" disabled />);
+    await userEvent.keyboard('/');
+    expect(screen.getByRole('searchbox')).not.toHaveFocus();
+    expect(container.querySelector('kbd')).toBeNull();
+    expect(screen.getByRole('searchbox')).not.toHaveAttribute('aria-keyshortcuts');
+  });
+
+  it('does not respond, show a hint or announce a shortcut inside a disabled Field', async () => {
+    const { container } = render(
+      <Field disabled>
+        <FieldLabel>Search deployments</FieldLabel>
+        <SearchField shortcut="/" />
+      </Field>,
+    );
     await userEvent.keyboard('/');
     expect(screen.getByRole('searchbox')).not.toHaveFocus();
     expect(container.querySelector('kbd')).toBeNull();

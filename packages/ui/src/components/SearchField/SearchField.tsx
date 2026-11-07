@@ -1,11 +1,11 @@
 import { Search } from 'lucide-react';
-import { useContext, useEffect, useImperativeHandle, useRef, useState, type Ref } from 'react';
+import { useContext, useEffect, useImperativeHandle, useRef, useState, useSyncExternalStore, type Ref } from 'react';
 import { useHotkeys } from '../../hooks/useHotkeys';
 import { parseHotkey } from '../../hooks/parse-hotkey';
 import { useOs, type Os } from '../../hooks/useOs';
 import { useI18n } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
-import { InFieldContext } from '../../utils/in-field-context';
+import { createFieldLabelStore, InFieldContext } from '../../utils/in-field-context';
 import { Input, InputKbd, type InputProps } from '../Input';
 import { Spinner } from '../Spinner';
 import { searchFieldVariants } from './search-field.variants';
@@ -32,6 +32,8 @@ export interface SearchFieldProps extends Omit<
   /** One key combination (`/`, `mod+k`) that focuses the field and selects its text. Sequences are not supported. */
   shortcut?: string;
 }
+
+const noLabels = createFieldLabelStore();
 
 const isMac = (os: Os) => os === 'macos' || os === 'ios';
 
@@ -93,9 +95,11 @@ export function SearchField({
   onKeyDown,
   onFocus,
   onBlur,
-  disabled,
+  disabled: disabledProp,
   ...props
 }: SearchFieldProps) {
+  const field = useContext(InFieldContext);
+  const disabled = disabledProp || field?.disabled;
   const { t } = useI18n();
   const os = useOs();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -135,10 +139,11 @@ export function SearchField({
       </span>
     ) : undefined;
 
-  // aria-label outranks a native label, and Base UI wires a Field label only after hydration, so inside a Field the
-  // default name is left to the label from the first (server) render on.
-  const inField = useContext(InFieldContext);
-  const named = props['aria-label'] || props['aria-labelledby'] || inField;
+  // aria-label outranks a native label, and Base UI wires a Field label only after hydration, so below a Field with
+  // a label the default name is left to that label from the first (server) render on.
+  const labels = field?.labels ?? noLabels;
+  const fieldLabelled = useSyncExternalStore(labels.subscribe, labels.has, labels.has);
+  const named = props['aria-label'] || props['aria-labelledby'] || fieldLabelled;
 
   return (
     <Input

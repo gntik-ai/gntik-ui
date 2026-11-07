@@ -1,9 +1,9 @@
 import { Field as BaseField } from '@base-ui/react/field';
 import { Fieldset as BaseFieldset } from '@base-ui/react/fieldset';
 import { CircleAlert } from 'lucide-react';
-import type { HTMLAttributes, ReactNode, Ref } from 'react';
+import { useContext, useMemo, useState, type HTMLAttributes, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
-import { InFieldContext } from '../../utils/in-field-context';
+import { createFieldLabelStore, InFieldContext, useRegisterFieldLabel } from '../../utils/in-field-context';
 import { fieldVariants } from './field.variants';
 
 const s = fieldVariants();
@@ -19,8 +19,11 @@ export interface FieldProps extends Omit<BaseField.Root.Props, 'className'> {
  * Pass `invalid` to drive the error from outside (e.g. a form library).
  */
 export function Field({ className, ...props }: FieldProps) {
+  const [labels] = useState(createFieldLabelStore);
+  const disabled = props.disabled ?? false;
+  const value = useMemo(() => ({ labels, disabled }), [labels, disabled]);
   return (
-    <InFieldContext value>
+    <InFieldContext value={value}>
       <BaseField.Root className={cn(s.root(), className)} {...props} />
     </InFieldContext>
   );
@@ -35,6 +38,7 @@ export interface FieldLabelProps extends Omit<BaseField.Label.Props, 'className'
 
 /** Visible label; clicking it focuses the field's control. */
 export function FieldLabel({ className, required, children, ...props }: FieldLabelProps) {
+  useRegisterFieldLabel(useContext(InFieldContext));
   return (
     <BaseField.Label className={cn(s.label(), className)} {...props}>
       {children}
