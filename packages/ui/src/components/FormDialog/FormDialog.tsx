@@ -90,8 +90,15 @@ interface FormDialogDrawerProps {
 
 export type FormDialogProps = FormDialogBaseProps & (FormDialogDialogProps | FormDialogDrawerProps);
 
-const FIRST_FIELD =
-  'input:not([type="hidden"]):not([type="file"]):not(:disabled), textarea:not(:disabled), select:not(:disabled), [role="combobox"]:not(:disabled), button[data-slot="file-input"]:not(:disabled)';
+const FIRST_FIELD = [
+  'input:not([type="hidden"]):not([hidden]):not(:disabled)',
+  'textarea:not(:disabled)',
+  'select:not(:disabled)',
+  '[role="combobox"]:not(:disabled)',
+  'button[data-slot="file-input"]:not(:disabled)',
+  '[data-slot="dropzone"][tabindex="0"]',
+  'button[data-slot="dropzone-trigger"]:not(:disabled)',
+].join(', ');
 
 const isThenable = (value: unknown): value is PromiseLike<FormDialogResult> =>
   typeof value === 'object' && value !== null && typeof (value as { then?: unknown }).then === 'function';

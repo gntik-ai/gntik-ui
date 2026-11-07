@@ -71,11 +71,15 @@ export function useDropzone({
     // As in LiveAnnouncer, make repeated messages observable to assistive technology.
     setAnnouncement((previous) => (previous === message ? `${message}\u00a0` : message));
   };
-  const rootProps: HTMLAttributes<HTMLElement> & { 'data-drag-state': DragState } = {
+  const rootProps: HTMLAttributes<HTMLElement> & {
+    'data-drag-state': DragState;
+    'data-slot': string;
+  } = {
     role: activateOnClick ? 'button' : undefined,
     tabIndex: activateOnClick && !disabled ? 0 : undefined,
     'aria-disabled': disabled || undefined,
     'data-drag-state': dragState,
+    'data-slot': 'dropzone',
     'aria-label': activateOnClick ? t('dropzone.label') : undefined,
     onClick: activateOnClick ? open : undefined,
     onKeyDown: activateOnClick

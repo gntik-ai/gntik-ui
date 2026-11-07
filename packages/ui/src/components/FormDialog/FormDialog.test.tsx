@@ -6,6 +6,7 @@ import { I18nProvider } from '../../i18n';
 import { Button } from '../Button';
 import { FileInput } from '../FileInput';
 import { DialogClose } from '../Dialog';
+import { Dropzone, DropzoneTrigger } from '../Dropzone';
 import { DrawerClose } from '../Drawer';
 import { Input } from '../Input';
 import { FormDialog, type FormDialogProps, type FormDialogResult } from './FormDialog';
@@ -150,6 +151,42 @@ describe('FormDialog', () => {
     );
     await openDialog(user);
     await waitFor(() => expect(screen.getByRole('button', { name: /Choose file/ })).toHaveFocus());
+  });
+
+  it.each(variants)('focuses a leading native file input in the %s variant', async (_n, p) => {
+    const user = userEvent.setup();
+    render(
+      <FormDialog title="New quota" trigger={<Button />} onSubmit={() => undefined} {...p}>
+        <input type="file" name="attachment" aria-label="Attachment" />
+        <Input name="notes" aria-label="Notes" />
+      </FormDialog>,
+    );
+    await openDialog(user);
+    await waitFor(() => expect(screen.getByLabelText('Attachment')).toHaveFocus());
+  });
+
+  it.each(variants)('focuses a leading Dropzone, click-to-open or with a trigger, in the %s variant', async (_n, p) => {
+    const user = userEvent.setup();
+    const { unmount } = render(
+      <FormDialog title="New quota" trigger={<Button />} onSubmit={() => undefined} {...p}>
+        <Dropzone />
+        <Input name="notes" aria-label="Notes" />
+      </FormDialog>,
+    );
+    await openDialog(user);
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Drop files here' })).toHaveFocus());
+    unmount();
+
+    render(
+      <FormDialog title="New quota" trigger={<Button />} onSubmit={() => undefined} {...p}>
+        <Dropzone activateOnClick={false}>
+          <DropzoneTrigger>Browse</DropzoneTrigger>
+        </Dropzone>
+        <Input name="notes" aria-label="Notes" />
+      </FormDialog>,
+    );
+    await openDialog(user);
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Browse' })).toHaveFocus());
   });
 
   it('submits once from the submit button', async () => {

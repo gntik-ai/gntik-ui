@@ -96,6 +96,7 @@ export function DropzoneTrigger({ disabled, onClick, children, ...props }: Butto
   return (
     <Button
       {...props}
+      data-slot="dropzone-trigger"
       disabled={disabled || zone.disabled}
       onClick={(event) => {
         onClick?.(event);
