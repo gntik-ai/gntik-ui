@@ -95,6 +95,40 @@ describe('FormDialog', () => {
     expect(Object.fromEntries(data)).toEqual({ name: 'monthly', limit: '100' });
   });
 
+  it.each(variants)(
+    'puts focus in the first field, not the popup or a summary link, in the %s variant',
+    async (_n, p) => {
+      const user = userEvent.setup();
+      render(
+        <FormDialog
+          title="New quota"
+          trigger={<Button />}
+          onSubmit={() => undefined}
+          summary={<a href="#limit">Limit is required</a>}
+          {...p}
+        >
+          <input type="hidden" name="token" defaultValue="t" />
+          <Input name="name" aria-label="Quota name" />
+          <Input name="limit" aria-label="Limit" />
+        </FormDialog>,
+      );
+      await openDialog(user);
+      await waitFor(() => expect(screen.getByRole('textbox', { name: 'Quota name' })).toHaveFocus());
+    },
+  );
+
+  it.each(variants)('skips disabled fields when focusing the first field in the %s variant', async (_n, p) => {
+    const user = userEvent.setup();
+    render(
+      <FormDialog title="New quota" trigger={<Button />} onSubmit={() => undefined} {...p}>
+        <Input name="name" aria-label="Quota name" disabled />
+        <Input name="limit" aria-label="Limit" />
+      </FormDialog>,
+    );
+    await openDialog(user);
+    await waitFor(() => expect(screen.getByRole('textbox', { name: 'Limit' })).toHaveFocus());
+  });
+
   it('submits once from the submit button', async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn<Submit>();

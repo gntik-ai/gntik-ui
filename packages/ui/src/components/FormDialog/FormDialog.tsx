@@ -90,6 +90,9 @@ interface FormDialogDrawerProps {
 
 export type FormDialogProps = FormDialogBaseProps & (FormDialogDialogProps | FormDialogDrawerProps);
 
+const FIRST_FIELD =
+  'input:not([type="hidden"]):not(:disabled), textarea:not(:disabled), select:not(:disabled), [role="combobox"]:not(:disabled)';
+
 const isThenable = (value: unknown): value is PromiseLike<FormDialogResult> =>
   typeof value === 'object' && value !== null && typeof (value as { then?: unknown }).then === 'function';
 
@@ -126,6 +129,7 @@ export function FormDialog({
   const pendingRef = useRef(false);
   // Bumped when the dialog closes or unmounts so a result that settles later is ignored.
   const generation = useRef(0);
+  const formRef = useRef<HTMLFormElement>(null);
 
   // A close that did not come from this component (the parent set `open` to false) drops pending state and the error.
   const [wasOpen, setWasOpen] = useState(open);
@@ -205,6 +209,9 @@ export function FormDialog({
     if (!isOpen) onClosed?.();
   };
 
+  // The popup, or a link in `summary`, would otherwise take the focus the first field should have.
+  const focusFirstField = () => formRef.current?.querySelector<HTMLElement>(FIRST_FIELD) ?? true;
+
   const triggerChildren = isValidElement<{ children?: ReactNode }>(trigger) ? trigger.props.children : undefined;
   const triggerLabel = Children.count(triggerChildren) > 0 ? triggerChildren : title;
 
@@ -223,7 +230,7 @@ export function FormDialog({
         <Title>{title}</Title>
         {description != null && <Description>{description}</Description>}
       </Header>
-      <form noValidate aria-busy={pending || undefined} className={v.form()} onSubmit={submit}>
+      <form ref={formRef} noValidate aria-busy={pending || undefined} className={v.form()} onSubmit={submit}>
         <Body className={v.body()}>
           {error != null && <Alert tone="destructive" role="alert" description={error} />}
           {summary}
@@ -247,7 +254,11 @@ export function FormDialog({
     return (
       <Drawer side={side} open={open} onOpenChange={handleOpenChange} onOpenChangeComplete={handleOpenChangeComplete}>
         {trigger && <DrawerTrigger render={trigger}>{triggerLabel}</DrawerTrigger>}
-        <DrawerContent size={size as DrawerContentProps['size']} keepMounted={keepMounted}>
+        <DrawerContent
+          size={size as DrawerContentProps['size']}
+          keepMounted={keepMounted}
+          initialFocus={focusFirstField}
+        >
           {inner}
         </DrawerContent>
       </Drawer>
@@ -256,7 +267,7 @@ export function FormDialog({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange} onOpenChangeComplete={handleOpenChangeComplete}>
       {trigger && <DialogTrigger render={trigger}>{triggerLabel}</DialogTrigger>}
-      <DialogContent size={size as DialogContentProps['size']} keepMounted={keepMounted}>
+      <DialogContent size={size as DialogContentProps['size']} keepMounted={keepMounted} initialFocus={focusFirstField}>
         {inner}
       </DialogContent>
     </Dialog>
