@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { I18nProvider } from '../i18n';
 import { expectNoAxeViolations } from '../test/a11y';
 import FormBindingsHelpers from './examples/FormBindingsHelpers';
 import FormBindings from './examples/FormBindings';
+import FormDialogForm from './examples/FormDialogForm';
 import FormInviteMember from './examples/FormInviteMember';
 
 it.each(['dark', 'light', 'high_contrast'])('form examples have no axe violations in %s', async (theme) => {
@@ -80,4 +81,20 @@ it('submits fields mapped by the public helpers without FormField', async () => 
   await user.click(screen.getByRole('button', { name: 'Save' }));
   expect(await screen.findByText('Saved 2 seats. Notifications: Yes.')).toBeInTheDocument();
   await expectNoAxeViolations();
+});
+
+it.each(['dark', 'light', 'high_contrast'])('the form dialog example has no axe violations in %s', async (theme) => {
+  document.documentElement.className = theme === 'light' ? '' : theme;
+  const user = userEvent.setup();
+  const view = render(<FormDialogForm />);
+  await expectNoAxeViolations();
+  await user.click(screen.getByRole('button', { name: 'New quota (form)' }));
+  const dialog = await screen.findByRole('dialog', { name: 'New quota (form)' });
+  await expectNoAxeViolations(dialog);
+  await user.click(screen.getByRole('button', { name: 'Save' }));
+  expect(await screen.findByText('Enter a quota name.')).toBeVisible();
+  await waitFor(() => expect(screen.getByRole('textbox', { name: /Quota name/ })).toHaveFocus());
+  await expectNoAxeViolations(dialog);
+  view.unmount();
+  document.documentElement.className = '';
 });

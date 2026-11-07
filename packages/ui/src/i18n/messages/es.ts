@@ -11,6 +11,7 @@ import { layersEs } from './layer-messages';
 import { catalogPreviewEs } from './catalog-preview-messages';
 import { typographyEs } from './typography-messages';
 import { editableTextEs } from './editable-text-messages';
+import { formDialogEs } from './form-dialog-messages';
 import { motionEs } from './motion-messages';
 import { markdownEs } from './markdown-messages';
 import { searchableSelectEs } from './searchable-select-messages';
@@ -40,6 +41,7 @@ export const es: Messages = {
   ...catalogPreviewEs,
   ...typographyEs,
   ...editableTextEs,
+  ...formDialogEs,
   ...motionEs,
   ...markdownEs,
   ...searchableSelectEs,

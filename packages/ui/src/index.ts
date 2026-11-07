@@ -84,6 +84,7 @@ export * from './components/Dialog';
 export * from './components/DialogsProvider';
 export * from './components/DiffViewer';
 export * from './components/Drawer';
+export * from './components/FormDialog';
 export * from './components/EmptyState';
 export * from './components/Field';
 export * from './components/Grid';
