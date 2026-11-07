@@ -4080,6 +4080,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4229,6 +4233,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -4463,6 +4471,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4617,6 +4629,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -4765,6 +4781,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -4948,6 +4968,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -5097,6 +5121,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -5310,6 +5338,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -5488,6 +5520,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -5928,6 +5964,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6139,6 +6179,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6299,6 +6343,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -6550,6 +6598,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6729,6 +6781,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -6895,6 +6951,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -7074,6 +7134,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7233,6 +7297,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7389,6 +7457,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -7566,6 +7638,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -7728,6 +7804,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -7895,6 +7975,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8046,6 +8130,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -8207,6 +8295,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8364,6 +8456,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -8594,6 +8690,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -8669,6 +8769,164 @@
         "ui-utils"
       ],
       "docs": "packages/ui/src/components/FileInput/FileInput.doc.ts"
+    },
+    {
+      "id": "form-dialog",
+      "kind": "component",
+      "name": "FormDialog",
+      "package": "@gntik-ai/ui",
+      "group": "Overlays",
+      "status": "beta",
+      "description": "A Dialog (or, with variant=\"drawer\", a Drawer) that hosts a form and owns its lifecycle. It needs no form library: children are the fields, and onSubmit receives the form's FormData. onSubmit may return nothing or true (closes, focus returns to the trigger), false (stays open, no message: the caller handled it), a string (stays open and shows it) or a promise of those; a thrown error or rejection shows its message, or the catalog text formDialog.failed. The body is a <form noValidate>: Enter in a field or the submit button submits once, and the submit event does not reach an outer form that renders the dialog. A synchronous result never enters the pending state. While a promise is pending the submit button is aria-busy (still focusable), Cancel is disabled, the form is aria-busy, and Escape, the backdrop, the close button, a drawer swipe, a custom footer's close control and repeat submits do nothing; onOpenChange is not called for them. A parent that sets open to false is always honoured, and the late result is ignored. Set a request timeout in onSubmit, because users cannot close the dialog while it is pending. The error shows in a destructive Alert at the top of the body and clears on the next submit and on close; summary adds a slot under it. Without keepMounted the content unmounts on close, so uncontrolled fields start empty on the next open; with it they keep their text. onClosed runs once after every close, when the exit animation ends, including a parent-driven one. Unlike DataTable's onCellEdit, false is silent here. size is typed per variant (dialog sm to xl, drawer sm to lg) and side is drawer-only. A trigger without children is labelled by title. useFormDialog(form, save) from @gntik-ai/ui/forms wires react-hook-form validation, parsed values and reset on close.",
+      "files": [
+        {
+          "path": "packages/ui/src/components/FormDialog/FormDialog.tsx",
+          "target": "components/ui/form-dialog/FormDialog.tsx"
+        },
+        {
+          "path": "packages/ui/src/components/FormDialog/form-dialog.variants.ts",
+          "target": "components/ui/form-dialog/form-dialog.variants.ts"
+        },
+        {
+          "path": "packages/ui/src/components/FormDialog/index.ts",
+          "target": "components/ui/form-dialog/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/I18nProvider.tsx",
+          "target": "components/i18n/I18nProvider.tsx"
+        },
+        {
+          "path": "packages/ui/src/i18n/format.ts",
+          "target": "components/i18n/format.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/auth-form-messages.ts",
+          "target": "components/i18n/messages/auth-form-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/autocomplete-messages.ts",
+          "target": "components/i18n/messages/autocomplete-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/catalog-preview-messages.ts",
+          "target": "components/i18n/messages/catalog-preview-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/en.ts",
+          "target": "components/i18n/messages/chat-composer/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/chat-composer/es.ts",
+          "target": "components/i18n/messages/chat-composer/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/csp-messages.ts",
+          "target": "components/i18n/messages/csp-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/editable-text-messages.ts",
+          "target": "components/i18n/messages/editable-text-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/en.ts",
+          "target": "components/i18n/messages/en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/es.ts",
+          "target": "components/i18n/messages/es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-size-messages.ts",
+          "target": "components/i18n/messages/field-size-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/field-variant-messages.ts",
+          "target": "components/i18n/messages/field-variant-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
+          "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
+          "target": "components/i18n/messages/hook-example-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/index.ts",
+          "target": "components/i18n/messages/index.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/kit-messages.ts",
+          "target": "components/i18n/messages/kit-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/layer-messages.ts",
+          "target": "components/i18n/messages/layer-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/logo-cloud-messages.ts",
+          "target": "components/i18n/messages/logo-cloud-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/markdown-messages.ts",
+          "target": "components/i18n/messages/markdown-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/motion-messages.ts",
+          "target": "components/i18n/messages/motion-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/navigation-messages.ts",
+          "target": "components/i18n/messages/navigation-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/searchable-select-messages.ts",
+          "target": "components/i18n/messages/searchable-select-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/table-menu-messages.ts",
+          "target": "components/i18n/messages/table-menu-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-en.ts",
+          "target": "components/i18n/messages/tool-call-en.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tool-call-es.ts",
+          "target": "components/i18n/messages/tool-call-es.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/tree-list-messages.ts",
+          "target": "components/i18n/messages/tree-list-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/typography-messages.ts",
+          "target": "components/i18n/messages/typography-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/upload-messages.ts",
+          "target": "components/i18n/messages/upload-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/time-zone.ts",
+          "target": "components/i18n/time-zone.ts"
+        }
+      ],
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "alert",
+        "button",
+        "dialog",
+        "drawer",
+        "ui-utils"
+      ],
+      "docs": "packages/ui/src/components/FormDialog/FormDialog.doc.ts"
     },
     {
       "id": "grid",
@@ -8781,6 +9039,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -8932,6 +9194,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -9128,6 +9394,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9286,6 +9556,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9435,6 +9709,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -9596,6 +9874,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -9747,6 +10029,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -9914,6 +10200,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -10063,6 +10353,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -10218,6 +10512,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -10454,6 +10752,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -10609,6 +10911,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -10888,6 +11194,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11083,6 +11393,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11243,6 +11557,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -11440,6 +11758,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11601,6 +11923,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -11750,6 +12076,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -11904,6 +12234,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -12061,6 +12395,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12214,6 +12552,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -12389,6 +12731,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12543,6 +12889,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -12693,6 +13043,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -12852,6 +13206,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -13042,6 +13400,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -13306,6 +13668,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -13464,6 +13830,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -13657,6 +14027,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -13810,6 +14184,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -14003,6 +14381,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -14246,6 +14628,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14418,6 +14804,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -14664,6 +15054,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -14881,6 +15275,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15030,6 +15428,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -15188,6 +15590,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -15452,6 +15858,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15608,6 +16018,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -15777,6 +16191,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -15930,6 +16348,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -16086,6 +16508,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16235,6 +16661,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -16419,6 +16849,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16580,6 +17014,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -16809,6 +17247,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -16957,6 +17399,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -17115,6 +17561,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -17281,6 +17731,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -17504,6 +17958,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -17652,6 +18110,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -17925,6 +18387,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18088,6 +18554,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18236,6 +18706,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -18396,6 +18870,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18537,6 +19015,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -18691,6 +19173,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -18842,6 +19328,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -19001,6 +19491,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -19155,6 +19649,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -19303,6 +19801,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -19457,6 +19959,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -19608,6 +20114,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -19769,6 +20279,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -19920,6 +20434,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
@@ -20076,6 +20594,10 @@
           "target": "components/i18n/messages/file-input-messages.ts"
         },
         {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
+        },
+        {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",
           "target": "components/i18n/messages/hook-example-messages.ts"
         },
@@ -20226,6 +20748,10 @@
         {
           "path": "packages/ui/src/i18n/messages/file-input-messages.ts",
           "target": "components/i18n/messages/file-input-messages.ts"
+        },
+        {
+          "path": "packages/ui/src/i18n/messages/form-dialog-messages.ts",
+          "target": "components/i18n/messages/form-dialog-messages.ts"
         },
         {
           "path": "packages/ui/src/i18n/messages/hook-example-messages.ts",

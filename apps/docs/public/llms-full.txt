@@ -1,6 +1,6 @@
 # gntik-ui
 
-> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 133 components, 12 layouts, 79 blocks, 61 templates.
+> The product-agnostic design system of gntik-ai: React 19 + Tailwind CSS 4 components on Base UI, layouts, page blocks and page templates over one frozen token layer (green hue 145, Geist + Geist Mono, dark default + light + high-contrast themes). Products differ only by a brand preset (name + logo). 134 components, 12 layouts, 79 blocks, 61 templates.
 
 Packages are published as `@gntik-ai/*` on npmjs.org: `@gntik-ai/tokens` (the brand), `@gntik-ai/ui` (components, layouts, ThemeProvider, presets), `@gntik-ai/blocks`, `@gntik-ai/templates` (pages, `ConsoleShell`), `@gntik-ai/chat`, `@gntik-ai/icons`, `@gntik-ai/charts`, `@gntik-ai/flow`, `@gntik-ai/editor`, and the `gntik-ui` CLI. Build pages from a template first, then layouts + blocks, then components. Styling uses token classes only: no hex or Tailwind palette colours, no gradients or glow, no `dark:` variants.
 
@@ -7397,6 +7397,62 @@ export default function DrawerBottomSheet() {
 }
 ```
 
+### FormDialog (`form-dialog`)
+
+A Dialog (or, with variant="drawer", a Drawer) that hosts a form and owns its lifecycle. It needs no form library: children are the fields, and onSubmit receives the form's FormData. onSubmit may return nothing or true (closes, focus returns to the trigger), false (stays open, no message: the caller handled it), a string (stays open and shows it) or a promise of those; a thrown error or rejection shows its message, or the catalog text formDialog.failed. The body is a <form noValidate>: Enter in a field or the submit button submits once, and the submit event does not reach an outer form that renders the dialog. A synchronous result never enters the pending state. While a promise is pending the submit button is aria-busy (still focusable), Cancel is disabled, the form is aria-busy, and Escape, the backdrop, the close button, a drawer swipe, a custom footer's close control and repeat submits do nothing; onOpenChange is not called for them. A parent that sets open to false is always honoured, and the late result is ignored. Set a request timeout in onSubmit, because users cannot close the dialog while it is pending. The error shows in a destructive Alert at the top of the body and clears on the next submit and on close; summary adds a slot under it. Without keepMounted the content unmounts on close, so uncontrolled fields start empty on the next open; with it they keep their text. onClosed runs once after every close, when the exit animation ends, including a parent-driven one. Unlike DataTable's onCellEdit, false is silent here. size is typed per variant (dialog sm to xl, drawer sm to lg) and side is drawer-only. A trigger without children is labelled by title. useFormDialog(form, save) from @gntik-ai/ui/forms wires react-hook-form validation, parsed values and reset on close.
+
+- Package: `@gntik-ai/ui` · export `FormDialog` · group Overlays · status beta
+- Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/ui/src/components/FormDialog/FormDialog.doc.ts
+- Primitive: `@base-ui/react/dialog`
+- ARIA pattern: dialog (modal) with a form
+- Registry dependencies: alert, button, dialog, drawer, ui-utils
+- Install: `gntik-ui add form-dialog`; own the source with `gntik-ui eject form-dialog`
+
+Keyboard:
+
+| Key | Behaviour |
+| --- | --- |
+| Enter / Space | On the trigger: opens the dialog and moves focus to the first field |
+| Tab / Shift+Tab | Cycles focus within the dialog (focus is trapped) |
+| Enter | In a text field or on the submit button: submits once; ignored while a submit is pending |
+| Escape | Closes the dialog and returns focus to the trigger; ignored while a submit is pending |
+
+Tokens: popover, popover-foreground, border, destructive, muted-foreground, focus-ring
+
+Usage:
+
+```tsx
+import { useI18n } from '@gntik-ai/ui';
+import { Button } from '@gntik-ai/ui';
+import { Field, FieldLabel } from '@gntik-ai/ui';
+import { Input } from '@gntik-ai/ui';
+import { FormDialog } from '@gntik-ai/ui';
+
+const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+/** Create dialog: the submit is pending for a moment, then the dialog closes and resets. */
+export default function FormDialogCreate() {
+  const { t } = useI18n();
+  return (
+    <FormDialog
+      title={t('formDialog.example.openCreate')}
+      description={t('formDialog.example.createDescription')}
+      trigger={<Button />}
+      onSubmit={() => wait(600)}
+    >
+      <Field>
+        <FieldLabel>{t('formDialog.example.name')}</FieldLabel>
+        <Input name="name" placeholder={t('formDialog.example.namePlaceholder')} autoComplete="off" />
+      </Field>
+      <Field>
+        <FieldLabel>{t('formDialog.example.limit')}</FieldLabel>
+        <Input name="limit" inputMode="numeric" defaultValue="10000" autoComplete="off" />
+      </Field>
+    </FormDialog>
+  );
+}
+```
+
 ### HoverCard (`hover-card`)
 
 Rich preview of a link destination — a member, project or resource — shown on hover or keyboard focus after a short delay. Parts: HoverCard, HoverCardTrigger (a real link), HoverCardContent. The preview is supplementary: never put the only copy of an action or fact inside it.
@@ -10208,7 +10264,7 @@ Two-step dialog: name, scopes and expiry, then the secret shown once in a copyab
 
 - Package: `@gntik-ai/blocks` · export `CreateApiKeyDialog` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/CreateApiKeyDialog/block.meta.ts
-- Composes: Dialog, Field, Input, CheckboxGroup, Checkbox, Select, CodeBlock, Alert, Button
+- Composes: FormDialog, Dialog, Field, Input, CheckboxGroup, Checkbox, Select, CodeBlock, Alert, Button
 - Preview: /preview.html?kind=block&id=create-api-key-dialog
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add create-api-key-dialog`
 
@@ -10473,7 +10529,7 @@ Dialog to invite people by email (validated chips) with a role and an optional m
 
 - Package: `@gntik-ai/blocks` · export `InviteMembersDialog` · group forms · status stable
 - Docs: https://github.com/gntik-ai/gntik-ui/blob/main/packages/blocks/src/forms/InviteMembersDialog/block.meta.ts
-- Composes: Dialog, TokenInput, Select, Textarea, Field, Button, Alert
+- Composes: FormDialog, Dialog, TokenInput, Select, Textarea, Field, Button, Alert
 - Preview: /preview.html?kind=block&id=invite-members-dialog
 - Install: import from `@gntik-ai/blocks`, or copy the source with `gntik-ui add invite-members-dialog`
 

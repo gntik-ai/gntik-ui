@@ -27,5 +27,16 @@ export const meta: BlockMeta = {
     { key: 'secretLabel', type: 'string', state: 'Default content and accessible names' },
     { key: 'done', type: 'string', state: 'Async feedback' },
   ] satisfies Array<{ key: keyof CreateApiKeyDialogLabels; type: string; state: string }>,
-  uses: ['Dialog', 'Field', 'Input', 'CheckboxGroup', 'Checkbox', 'Select', 'CodeBlock', 'Alert', 'Button'],
+  uses: [
+    'FormDialog',
+    'Dialog',
+    'Field',
+    'Input',
+    'CheckboxGroup',
+    'Checkbox',
+    'Select',
+    'CodeBlock',
+    'Alert',
+    'Button',
+  ],
 };
