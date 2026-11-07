@@ -1,5 +1,26 @@
 # @gntik-ai/editor
 
+## 0.12.0
+
+### Minor Changes
+
+- 835f174: Support palette-scoped fonts, optional self-hosted Inter, upright emphasis, sentence-case labels and live editor typography while retaining shared theme colours.
+
+### Patch Changes
+
+- Updated dependencies [d8fe894]
+- Updated dependencies [01125b0]
+- Updated dependencies [e12e80a]
+- Updated dependencies [3860511]
+- Updated dependencies [23fe298]
+- Updated dependencies [835f174]
+- Updated dependencies [e7d905b]
+- Updated dependencies [36ea76d]
+- Updated dependencies [cd9b1bd]
+- Updated dependencies [8a8df93]
+- Updated dependencies [b2e70bb]
+  - @gntik-ai/tokens@0.4.0
+
 ## 0.11.0
 
 ### Patch Changes
