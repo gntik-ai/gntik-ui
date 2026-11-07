@@ -95,6 +95,7 @@ const FIRST_FIELD = [
   'textarea:not(:disabled)',
   'select:not(:disabled)',
   '[role="combobox"]:not(:disabled)',
+  '[role="spinbutton"]:not([aria-disabled="true"])',
   'button[data-slot="file-input"]:not(:disabled)',
   '[data-slot="dropzone"][tabindex="0"]',
   'button[data-slot="dropzone-trigger"]:not(:disabled)',

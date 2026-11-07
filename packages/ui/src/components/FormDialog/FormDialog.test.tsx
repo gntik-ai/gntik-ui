@@ -6,6 +6,7 @@ import { I18nProvider } from '../../i18n';
 import { Button } from '../Button';
 import { FileInput } from '../FileInput';
 import { DialogClose } from '../Dialog';
+import { DateField } from '../DateField';
 import { Dropzone, DropzoneTrigger } from '../Dropzone';
 import { DrawerClose } from '../Drawer';
 import { Input } from '../Input';
@@ -187,6 +188,28 @@ describe('FormDialog', () => {
     );
     await openDialog(user);
     await waitFor(() => expect(screen.getByRole('button', { name: 'Browse' })).toHaveFocus());
+  });
+
+  it.each(variants)('focuses a leading DateField segment, enabled or not, in the %s variant', async (_n, p) => {
+    const user = userEvent.setup();
+    const { unmount } = render(
+      <FormDialog title="New quota" trigger={<Button />} onSubmit={() => undefined} {...p}>
+        <DateField name="starts" aria-label="Starts" />
+        <Input name="notes" aria-label="Notes" />
+      </FormDialog>,
+    );
+    await openDialog(user);
+    await waitFor(() => expect(screen.getAllByRole('spinbutton')[0]).toHaveFocus());
+    unmount();
+
+    render(
+      <FormDialog title="New quota" trigger={<Button />} onSubmit={() => undefined} {...p}>
+        <DateField name="starts" aria-label="Starts" disabled />
+        <Input name="notes" aria-label="Notes" />
+      </FormDialog>,
+    );
+    await openDialog(user);
+    await waitFor(() => expect(screen.getByLabelText('Notes')).toHaveFocus());
   });
 
   it('submits once from the submit button', async () => {
