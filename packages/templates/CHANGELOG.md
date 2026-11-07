@@ -1,5 +1,101 @@
 # @gntik-ai/templates
 
+## 0.12.0
+
+### Minor Changes
+
+- 00d65be: Add NavigationProvider, useNavigation, useActivePage, useDocumentTitle, navFromRoutes and getActivePage: one route tree for the sidebar groups, active page, breadcrumbs and document title, and ConsoleShell derives its nav, current item and trail from it when they are omitted inside a provider.
+- 9893fc4: Add experimental streaming chat hooks and backend adapters, with optional adapter support in the assistant template.
+- 68b6d35: Add optional comment body rendering and localized composer hints, with safe Markdown in scorecard commentary.
+- 01125b0: Add an in-app reduced-motion preference, scoped motion utilities and an appearance settings switch.
+- d389dd5: Scale large password, secret and addon controls (implicit icon addons in existing lg Inputs now use md), add opt-in large auth fields, and match the SSO email field to its large submit button.
+- b725ef5: Add optional tenant selection, workspace context, account-menu content and brand slots to the console shell and sidebar.
+- 835f174: Support palette-scoped fonts, optional self-hosted Inter, upright emphasis, sentence-case labels and live editor typography while retaining shared theme colours.
+- 5131991: Add shared, scoped hotkeys and a shortcut registry; wire keyboard-shortcut help and search, and use Command+K on macOS/iOS (Ctrl+K no longer opens the command palette there).
+- f805096: Add typed useUrlState query state and opt-in resource-index search, filter and sort URL synchronization.
+
+### Patch Changes
+
+- 7e30223: Add the localized SiteFooter block with three layouts, social links and optional theme controls, and reuse it in public templates.
+- 52eee4d: A rejected contact onSubmit now shows a visitor-facing error with localized default text or submitErrorMessage, preserving form values for another attempt.
+- 5ec552c: Add accessible conversation history with recency groups, row actions that preserve a single Tab stop, windowing, an optional chat sidebar, and localized messaging history.
+- 3860511: Add eleven named typography roles, Tailwind utilities and design-tool exports, and adopt them in Text and Heading.
+  
+  Font-size overrides through Text or Heading className now replace the entire role, including its weight, tracking and leading defaults. Add explicit utilities to keep those styles, for example `text-[32px] font-bold tracking-tight` for display text or `text-[12px] font-medium leading-tight` for labels. Preserve the sign-in brand headline's bold weight and tight tracking at its custom size.
+- 3ffe148: Add useClipboard for custom copy actions and share fallback writes and accurate feedback across kit copy controls.
+- b2e70bb: Add keyboard-only focus-ring and focus-ring-inset utilities and migrate kit outlines; upgrade @gntik-ai/tokens to this minor release before copying migrated registry sources.
+- Updated dependencies [b834b67]
+- Updated dependencies [061c035]
+- Updated dependencies [999e562]
+- Updated dependencies [7e30223]
+- Updated dependencies [ca13aa1]
+- Updated dependencies [87bc7c2]
+- Updated dependencies [83304af]
+- Updated dependencies [53c1966]
+- Updated dependencies [00d65be]
+- Updated dependencies [56328a3]
+- Updated dependencies [4c40e8a]
+- Updated dependencies [817065a]
+- Updated dependencies [34ab430]
+- Updated dependencies [0efd57c]
+- Updated dependencies [e8c3141]
+- Updated dependencies [f53c719]
+- Updated dependencies [8ac6dd2]
+- Updated dependencies [9893fc4]
+- Updated dependencies [cf75c90]
+- Updated dependencies [68b6d35]
+- Updated dependencies [677f84a]
+- Updated dependencies [c08a0a1]
+- Updated dependencies [52eee4d]
+- Updated dependencies [dc1f24f]
+- Updated dependencies [5ec552c]
+- Updated dependencies [d8fe894]
+- Updated dependencies [0ad5913]
+- Updated dependencies [4e0b564]
+- Updated dependencies [834d3a8]
+- Updated dependencies [e5d1b97]
+- Updated dependencies [a07ac3f]
+- Updated dependencies [41a4991]
+- Updated dependencies [db3ef71]
+- Updated dependencies [01125b0]
+- Updated dependencies [3283108]
+- Updated dependencies [d389dd5]
+- Updated dependencies [8e812fe]
+- Updated dependencies [b7ea024]
+- Updated dependencies [e12e80a]
+- Updated dependencies [3860511]
+- Updated dependencies [7bcabbd]
+- Updated dependencies [23fe298]
+- Updated dependencies [b725ef5]
+- Updated dependencies [835f174]
+- Updated dependencies [8b4238e]
+- Updated dependencies [c9370fd]
+- Updated dependencies [217b4e1]
+- Updated dependencies [a69fe31]
+- Updated dependencies [5e0f529]
+- Updated dependencies [e7d905b]
+- Updated dependencies [c7cf144]
+- Updated dependencies [3ffe148]
+- Updated dependencies [36ea76d]
+- Updated dependencies [5131991]
+- Updated dependencies [cd9b1bd]
+- Updated dependencies [c064156]
+- Updated dependencies [8a8df93]
+- Updated dependencies [e545f3e]
+- Updated dependencies [b2e70bb]
+- Updated dependencies [1eb473d]
+- Updated dependencies [18b64f6]
+- Updated dependencies [8ea8e6f]
+- Updated dependencies [f805096]
+- Updated dependencies [0124118]
+  - @gntik-ai/blocks@0.12.0
+  - @gntik-ai/ui@0.12.0
+  - @gntik-ai/chat@0.12.0
+  - @gntik-ai/charts@0.12.0
+  - @gntik-ai/tokens@0.4.0
+  - @gntik-ai/flow@0.12.0
+  - @gntik-ai/editor@0.12.0
+
 ## 0.11.0
 
 ### Minor Changes

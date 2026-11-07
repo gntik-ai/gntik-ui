@@ -1,5 +1,95 @@
 # @gntik-ai/blocks
 
+## 0.12.0
+
+### Minor Changes
+
+- b834b67: Add useTableData for abortable, cached server pages and cursor lists with explicit reloads, retryable errors and safe cursor revalidation.
+- 7e30223: Add the localized SiteFooter block with three layouts, social links and optional theme controls, and reuse it in public templates.
+- 4c40e8a: Reflow KpiRow, ResourceCardGrid, PageHeader, FormSection and ChartCard by container width; use the new containerClassName for KpiRow/ResourceCardGrid wrapper placement or visibility, keep className on the list, and replace viewport overrides such as lg:grid-cols-2 with container variants because they no longer merge with the internal classes and may compete by CSS order. FormSection keeps className on its section, so grid utilities such as `gap-x-*` and `grid-cols-*` no longer style its inner layout grid.
+- 68b6d35: Add optional comment body rendering and localized composer hints, with safe Markdown in scorecard commentary.
+- dc1f24f: Add controlled and deferred file uploads, preprocessing, abortable uploads and removal vetoes with localized labels, preserving batched controlled updates without retaining declined changes and using the current row for asynchronous removals; UploadStatus adds 'pending' (update exhaustive switches), and onRemove now runs before removal and can veto it.
+- 0ad5913: Add opt-in DataTable CSV export, delegated exports and safe copying of selected rows with English and Spanish labels, preserved keyboard focus while busy and complete client-only clipboard output.
+- 834d3a8: Add provider display time zones, DST-safe conversion helpers and zone-aware scheduling calendars while preserving existing runtime and cron behavior.
+- d389dd5: Scale large password, secret and addon controls (implicit icon addons in existing lg Inputs now use md), add opt-in large auth fields, and match the SSO email field to its large submit button.
+- b725ef5: Add optional tenant selection, workspace context, account-menu content and brand slots to the console shell and sidebar.
+- 835f174: Support palette-scoped fonts, optional self-hosted Inter, upright emphasis, sentence-case labels and live editor typography while retaining shared theme colours.
+- c7cf144: Add server DataTable sorting and one onQueryChange callback per query action; server tables already passing onSortChange will now show sort buttons for sortable columns.
+- e545f3e: Add a static LogoCloud marketing block with responsive layouts and localized English and Spanish captions.
+
+### Patch Changes
+
+- 999e562: Add accessible EditableText with async saves and a shared inline editing hook that preserves DataTable cell editing.
+- 83304af: Add Dropzone and useDropzone with shared file validation, picker access, accept/reject feedback and safe disabled drops, while preserving upload and chat drop behavior.
+- 677f84a: Add FileInput, FileTrigger and useFileDialog for accessible compact file selection and native form values, including restored defaults and preserved controlled values after form reset, support for cancelled resets, and preserved selections inside modal and non-modal overlays, continued picker attachment when an activating overlay closes, and consistently sized clear actions; ProfileHeader and ChatComposer pickers now attach outside their block containers and disappear when their actions are hidden.
+- a07ac3f: Allow FirstRunEmpty to hide its primary action with a null or empty label.
+- 41a4991: Report failed clipboard writes in chat, DescriptionListCard and LogViewer; onCopy and onCopyLine now fire only after successful writes, so click-based analytics may record fewer events.
+- e12e80a: Add named z-index layers and move kit overlays and sticky surfaces onto them; toasts and popups stay above modals, and app z-50 now sits under kit overlays.
+- 3ffe148: Add useClipboard for custom copy actions and share fallback writes and accurate feedback across kit copy controls.
+- 5131991: Add shared, scoped hotkeys and a shortcut registry; wire keyboard-shortcut help and search, and use Command+K on macOS/iOS (Ctrl+K no longer opens the command palette there).
+- cd9b1bd: Add SSR-safe media query and breakpoint hooks with shared breakpoint tokens, and use them for responsive panels and reduced-motion behaviour. Preserve upward log scrolling when wrapped rows finish measuring.
+- b2e70bb: Add keyboard-only focus-ring and focus-ring-inset utilities and migrate kit outlines; upgrade @gntik-ai/tokens to this minor release before copying migrated registry sources.
+- Updated dependencies [061c035]
+- Updated dependencies [999e562]
+- Updated dependencies [7e30223]
+- Updated dependencies [ca13aa1]
+- Updated dependencies [87bc7c2]
+- Updated dependencies [83304af]
+- Updated dependencies [53c1966]
+- Updated dependencies [00d65be]
+- Updated dependencies [56328a3]
+- Updated dependencies [817065a]
+- Updated dependencies [34ab430]
+- Updated dependencies [e8c3141]
+- Updated dependencies [8ac6dd2]
+- Updated dependencies [cf75c90]
+- Updated dependencies [68b6d35]
+- Updated dependencies [677f84a]
+- Updated dependencies [c08a0a1]
+- Updated dependencies [52eee4d]
+- Updated dependencies [dc1f24f]
+- Updated dependencies [5ec552c]
+- Updated dependencies [d8fe894]
+- Updated dependencies [0ad5913]
+- Updated dependencies [4e0b564]
+- Updated dependencies [834d3a8]
+- Updated dependencies [e5d1b97]
+- Updated dependencies [db3ef71]
+- Updated dependencies [01125b0]
+- Updated dependencies [3283108]
+- Updated dependencies [d389dd5]
+- Updated dependencies [8e812fe]
+- Updated dependencies [b7ea024]
+- Updated dependencies [e12e80a]
+- Updated dependencies [3860511]
+- Updated dependencies [7bcabbd]
+- Updated dependencies [23fe298]
+- Updated dependencies [835f174]
+- Updated dependencies [8b4238e]
+- Updated dependencies [c9370fd]
+- Updated dependencies [217b4e1]
+- Updated dependencies [a69fe31]
+- Updated dependencies [5e0f529]
+- Updated dependencies [e7d905b]
+- Updated dependencies [3ffe148]
+- Updated dependencies [36ea76d]
+- Updated dependencies [5131991]
+- Updated dependencies [cd9b1bd]
+- Updated dependencies [c064156]
+- Updated dependencies [8a8df93]
+- Updated dependencies [e545f3e]
+- Updated dependencies [b2e70bb]
+- Updated dependencies [1eb473d]
+- Updated dependencies [18b64f6]
+- Updated dependencies [8ea8e6f]
+- Updated dependencies [f805096]
+- Updated dependencies [0124118]
+  - @gntik-ai/ui@0.12.0
+  - @gntik-ai/charts@0.12.0
+  - @gntik-ai/tokens@0.4.0
+  - @gntik-ai/flow@0.12.0
+  - @gntik-ai/editor@0.12.0
+
 ## 0.11.0
 
 ### Minor Changes

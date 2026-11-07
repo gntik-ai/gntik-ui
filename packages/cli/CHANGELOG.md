@@ -1,5 +1,16 @@
 # @gntik-ai/cli
 
+## 0.12.0
+
+### Minor Changes
+
+- 23fe298: Add an opt-in page baseline with themed colours, selection, scrollbars, root isolation and Safari backdrop setup, and include it during project initialization.
+
+### Patch Changes
+
+- c5a09ab: `gntik-ui add` and `eject` now recommend the real hook names from `@gntik-ai/ui/hooks` for the ui-hooks item instead of a nonexistent `Hooks` export.
+- 3283108: Add KitProvider and useApp with scoped settings, subtree-safe nested themes, shared app actions and portal destinations including full-screen file drops, and scaffold KitProvider roots.
+
 ## 0.5.0
 
 ### Patch Changes
