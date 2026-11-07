@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { I18nProvider } from '../../i18n';
 import { Button } from '../Button';
+import { FileInput } from '../FileInput';
 import { DialogClose } from '../Dialog';
 import { DrawerClose } from '../Drawer';
 import { Input } from '../Input';
@@ -127,6 +128,28 @@ describe('FormDialog', () => {
     );
     await openDialog(user);
     await waitFor(() => expect(screen.getByRole('textbox', { name: 'Limit' })).toHaveFocus());
+  });
+
+  it.each(variants)('focuses a leading FileInput picker, named or not, in the %s variant', async (_n, p) => {
+    const user = userEvent.setup();
+    const { unmount } = render(
+      <FormDialog title="New quota" trigger={<Button />} onSubmit={() => undefined} {...p}>
+        <FileInput />
+        <Input name="notes" aria-label="Notes" />
+      </FormDialog>,
+    );
+    await openDialog(user);
+    await waitFor(() => expect(screen.getByRole('button', { name: /Choose file/ })).toHaveFocus());
+    unmount();
+
+    render(
+      <FormDialog title="New quota" trigger={<Button />} onSubmit={() => undefined} {...p}>
+        <FileInput name="attachment" />
+        <Input name="notes" aria-label="Notes" />
+      </FormDialog>,
+    );
+    await openDialog(user);
+    await waitFor(() => expect(screen.getByRole('button', { name: /Choose file/ })).toHaveFocus());
   });
 
   it('submits once from the submit button', async () => {

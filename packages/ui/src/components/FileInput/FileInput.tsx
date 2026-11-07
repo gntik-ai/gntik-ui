@@ -107,6 +107,7 @@ export function FileInput(props: FileInputProps) {
               ref={control}
               id={p.id}
               type="button"
+              data-slot="file-input"
               disabled={p.disabled || props.disabled}
               aria-invalid={props.invalid || p['aria-invalid']}
               aria-describedby={p['aria-describedby']}
