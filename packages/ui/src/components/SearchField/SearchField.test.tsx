@@ -7,7 +7,7 @@ import { Form, FormField } from '../../forms/FormField';
 import { I18nProvider } from '../../i18n';
 import { expectNoAxeViolations } from '../../test/a11y';
 import { Dialog, DialogContent, DialogTitle } from '../Dialog';
-import { Field, FieldLabel } from '../Field';
+import { Field, FieldLabel, Fieldset } from '../Field';
 import { SearchField } from './SearchField';
 import { searchFieldDoc } from './index';
 import SearchFieldBasic from './examples/SearchFieldBasic';
@@ -130,15 +130,26 @@ describe('SearchField naming', () => {
     expect(screen.getByRole('searchbox', { name: 'Search' })).toBeInTheDocument();
   });
 
-  it('server-renders the default name inside a Field that has no label', () => {
+  it('server-renders a Field label that follows the control as the name, not the default aria-label', () => {
     const html = renderToString(
       <Field>
         <SearchField />
+        <FieldLabel>Search deployments</FieldLabel>
       </Field>,
     );
-    expect(html).toContain('aria-label="Search"');
+    expect(html).not.toContain('aria-label=');
     container.innerHTML = html;
-    expect(screen.getByRole('searchbox', { name: 'Search' })).toBeInTheDocument();
+    expect(screen.getByRole('searchbox', { name: 'Search deployments' })).toBeInTheDocument();
+  });
+
+  it('names a control that precedes its Field label by that label once rendered', () => {
+    render(
+      <Field>
+        <SearchField />
+        <FieldLabel>Search deployments</FieldLabel>
+      </Field>,
+    );
+    expect(screen.getByRole('searchbox', { name: 'Search deployments' })).toBeInTheDocument();
   });
 
   it('server-renders the default name', () => {
@@ -489,6 +500,25 @@ describe('SearchField shortcut', () => {
     expect(screen.getByRole('searchbox')).not.toHaveFocus();
     expect(container.querySelector('kbd')).toBeNull();
     expect(screen.getByRole('searchbox')).not.toHaveAttribute('aria-keyshortcuts');
+  });
+
+  it('does not respond inside a disabled Fieldset and leaves slash to an enabled field', async () => {
+    const { container } = render(
+      <>
+        <SearchField aria-label="Enabled" shortcut="/" />
+        <Fieldset disabled>
+          <Field>
+            <FieldLabel>Disabled search</FieldLabel>
+            <SearchField shortcut="/" />
+          </Field>
+        </Fieldset>
+      </>,
+    );
+    await userEvent.keyboard('/');
+    expect(screen.getByRole('searchbox', { name: 'Enabled' })).toHaveFocus();
+    const disabled = screen.getByRole('searchbox', { name: 'Disabled search' });
+    expect(disabled).not.toHaveAttribute('aria-keyshortcuts');
+    expect(container.querySelectorAll('kbd')).toHaveLength(0);
   });
 
   it('removes its binding on unmount', async () => {

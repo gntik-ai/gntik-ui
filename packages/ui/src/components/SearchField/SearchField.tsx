@@ -139,10 +139,11 @@ export function SearchField({
       </span>
     ) : undefined;
 
-  // aria-label outranks a native label, and Base UI wires a Field label only after hydration, so below a Field with
-  // a label the default name is left to that label from the first (server) render on.
+  // aria-label outranks a native label, so below a Field the default name is left to the Field's label. The server
+  // render cannot tell whether a label follows this control, so it assumes one does; a Field without a label gets
+  // the default name on hydration.
   const labels = field?.labels ?? noLabels;
-  const fieldLabelled = useSyncExternalStore(labels.subscribe, labels.has, labels.has);
+  const fieldLabelled = useSyncExternalStore(labels.subscribe, labels.has, () => field !== null);
   const named = props['aria-label'] || props['aria-labelledby'] || fieldLabelled;
 
   return (

@@ -3,7 +3,12 @@ import { Fieldset as BaseFieldset } from '@base-ui/react/fieldset';
 import { CircleAlert } from 'lucide-react';
 import { useContext, useMemo, useState, type HTMLAttributes, type ReactNode, type Ref } from 'react';
 import { cn } from '../../utils/cn';
-import { createFieldLabelStore, InFieldContext, useRegisterFieldLabel } from '../../utils/in-field-context';
+import {
+  createFieldLabelStore,
+  FieldsetDisabledContext,
+  InFieldContext,
+  useRegisterFieldLabel,
+} from '../../utils/in-field-context';
 import { fieldVariants } from './field.variants';
 
 const s = fieldVariants();
@@ -20,7 +25,8 @@ export interface FieldProps extends Omit<BaseField.Root.Props, 'className'> {
  */
 export function Field({ className, ...props }: FieldProps) {
   const [labels] = useState(createFieldLabelStore);
-  const disabled = props.disabled ?? false;
+  const inDisabledFieldset = useContext(FieldsetDisabledContext);
+  const disabled = (props.disabled ?? false) || inDisabledFieldset;
   const value = useMemo(() => ({ labels, disabled }), [labels, disabled]);
   return (
     <InFieldContext value={value}>
@@ -98,7 +104,13 @@ export interface FieldsetProps extends Omit<BaseFieldset.Root.Props, 'className'
 
 /** Groups related fields (or a checkbox/radio group) under a shared legend. */
 export function Fieldset({ className, ...props }: FieldsetProps) {
-  return <BaseFieldset.Root className={cn(s.fieldset(), className)} {...props} />;
+  const inDisabledFieldset = useContext(FieldsetDisabledContext);
+  const disabled = (props.disabled ?? false) || inDisabledFieldset;
+  return (
+    <FieldsetDisabledContext value={disabled}>
+      <BaseFieldset.Root className={cn(s.fieldset(), className)} {...props} />
+    </FieldsetDisabledContext>
+  );
 }
 
 export interface FieldsetLegendProps extends Omit<BaseFieldset.Legend.Props, 'className'> {
